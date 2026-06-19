@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ims-paper: #fbf8f2;
+  --ims-surface: #fffdf9;
+  --ims-ink: #14213d;
+  --ims-brass: #c47d46;
+  --ims-brass-soft: rgba(196, 125, 70, 0.18);
+  --ims-accent-soft: rgba(196, 125, 70, 0.1);
+  --ims-border: rgba(20, 33, 61, 0.12);
+  --ims-muted: rgba(20, 33, 61, 0.68);
+}
+
+html {
+  background: var(--ims-paper);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body), sans-serif;
+  background: var(--ims-paper);
+  color: var(--ims-ink);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: rgba(196, 125, 70, 0.28);
+}
