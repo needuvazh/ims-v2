@@ -1,45 +1,104 @@
-# Functional Requirement Document (FRD)
+# Functional Requirement Document
 
-## Module 10: Faculty Or Trainer Management
+## Module 10: Faculty / Trainer Management
 
-**Version:** 1.0
+**Version:** 1.1
 **Module Code:** TRN
+**Phase:** Phase 1
+**Owned Bounded Context:** Faculty / Trainer Management
 
 **Dependencies:**
 
 * Organization Management
-* Identity & Access
+* Identity & Access Management
 * Document Management
+* Course & Batch Management
+* Scheduling & Timetable Management
 
 **Provides Data To:**
 
-* Scheduling & Timetable
+* Scheduling & Timetable Management
 * Attendance Management
-* Course Completion
-* Corporate Training
-* Future Payroll Module
+* Exam, Result & Completion Management
+* Corporate Training Management
+* Reporting & Dashboards
+* Audit & Compliance
 
 ---
 
 # 1. Business Purpose
 
-Trainer Management is responsible for managing trainers, qualifications, documents, availability, assignments, utilization, and training delivery.
+Faculty / Trainer Management maintains trainer master data and delivery authorization.
 
-The module shall support:
+The context owns trainer profiles, classifications, qualifications, documents, availability, course authorization, assignment history, utilization reporting inputs, and trainer portal read views.
 
-* Trainer Profile Management
-* Trainer Classification
-* Trainer Qualifications
-* Trainer Documents
-* Trainer Availability
-* Trainer Assignment
-* Trainer Utilization Tracking
-* Corporate Trainer Assignment
-* Trainer Performance Metrics
+This module does not own scheduling or payroll. It provides trainer capabilities and constraints to downstream modules.
 
 ---
 
-# 2. Trainer Types
+# 2. Scope
+
+## 2.1 In Scope
+
+* Trainer profile management
+* Trainer classification
+* Trainer qualification tracking
+* Trainer document tracking
+* Trainer availability management
+* Trainer-course authorization
+* Trainer assignment tracking
+* Trainer utilization summaries
+* Corporate trainer assignment tracking
+* Trainer portal read access
+* Expiry monitoring
+
+## 2.2 Out of Scope for Phase 1
+
+* Payroll processing
+* Salary calculation
+* Timesheet-to-payroll automation
+* Employee master management
+
+---
+
+# 3. Business Principles
+
+* Trainer is a domain entity, not an employee proxy.
+* Trainers may be full-time, part-time, freelance, guest, or corporate delivery resources.
+* A trainer may belong to one or more branches.
+* A trainer may be authorized for one or more courses.
+* Trainer availability must be validated before scheduling assigns sessions.
+* Trainer assignments must not overlap in time.
+* Trainer document and certification expiry must generate alerts.
+* Expired authorization must block new assignments.
+* Corporate delivery assignments are still trainer assignments and remain within this context.
+
+---
+
+# 4. Owned Concepts
+
+The Trainer context owns:
+
+* Trainer
+* TrainerQualification
+* TrainerDocument
+* TrainerAvailability
+* TrainerCourseAuthorization
+* TrainerAssignment
+* TrainerUtilizationSnapshot
+* TrainerPortalAccess
+
+Notes:
+
+* Schedule sessions are owned by Scheduling & Timetable Management.
+* Trainers are referenced by scheduling, attendance, and completion contexts.
+* Payroll is intentionally excluded from this context.
+
+---
+
+# 5. Business Model
+
+## 5.1 Trainer Types
 
 The system shall support:
 
@@ -51,53 +110,114 @@ Guest Trainer
 Corporate Trainer
 ```
 
----
+Rules:
 
-# 3. Trainer Lifecycle
+* Trainer type is a classification and not a payroll indicator.
+* A trainer may change type through authorized update.
+
+## 5.2 Trainer Lifecycle
 
 ```text
 Draft
-   ↓
+  ↓
 Active
-   ↓
+  ↓
 Inactive
-   ↓
+  ↓
 Archived
 ```
 
-Alternative Flow
+Alternative:
 
 ```text
 Active
-   ↓
+  ↓
 Suspended
 ```
 
----
+Rules:
 
-# 4. Trainer Profile Structure
+* Draft may be used for incomplete trainer profiles.
+* Active trainers may be assigned to courses, batches, or sessions.
+* Inactive or suspended trainers cannot be assigned to new delivery work.
+* Archived trainers remain available for history and reporting.
+
+## 5.3 Qualification Lifecycle
 
 ```text
-Personal Information
-Contact Information
-Professional Information
-Qualifications
-Documents
-Availability
-Assignments
-Performance Metrics
-Audit History
+Uploaded
+  ↓
+Pending Verification
+  ↓
+Approved
 ```
+
+Alternative:
+
+```text
+Pending Verification
+  ↓
+Rejected
+```
+
+Alternative:
+
+```text
+Approved
+  ↓
+Expired
+```
+
+## 5.4 Document Lifecycle
+
+```text
+Uploaded
+  ↓
+Pending Verification
+  ↓
+Approved
+```
+
+Alternative:
+
+```text
+Pending Verification
+  ↓
+Rejected
+```
+
+Alternative:
+
+```text
+Approved
+  ↓
+Expired
+```
+
+## 5.5 Availability Lifecycle
+
+```text
+Draft
+  ↓
+Active
+  ↓
+Inactive
+```
+
+Rules:
+
+* Availability defines when a trainer may be scheduled.
+* Unavailable dates override recurring availability.
 
 ---
 
-# 5. Screens
+# 6. Screens
 
 ## TRN-UI-001 Trainer List Screen
 
 ### Purpose
 
-View all trainers.
+View and manage trainers.
 
 ### Columns
 
@@ -121,6 +241,7 @@ Trainer Type
 Status
 Course
 Availability
+Search
 ```
 
 ### Actions
@@ -134,6 +255,7 @@ Deactivate
 Suspend
 Assign Course
 Assign Batch
+View Utilization
 ```
 
 ### Permissions
@@ -144,18 +266,17 @@ TRAINER_CREATE
 TRAINER_EDIT
 TRAINER_ACTIVATE
 TRAINER_DEACTIVATE
+TRAINER_SUSPEND
 TRAINER_ASSIGN
 ```
 
 ---
 
-# 6. Create / Edit Trainer
-
 ## TRN-UI-002 Trainer Profile Screen
 
-### Section 1: Personal Information
+### Sections
 
-Fields:
+#### Personal Information
 
 ```text
 Trainer Code
@@ -168,11 +289,7 @@ Nationality
 Photo
 ```
 
----
-
-### Section 2: Contact Information
-
-Fields:
+#### Contact Information
 
 ```text
 Mobile Number
@@ -183,11 +300,7 @@ Country
 City
 ```
 
----
-
-### Section 3: Professional Information
-
-Fields:
+#### Professional Information
 
 ```text
 Trainer Type
@@ -198,11 +311,7 @@ Branch
 Status
 ```
 
----
-
-### Section 4: Certifications
-
-Fields:
+#### Certifications
 
 ```text
 Certification Name
@@ -211,32 +320,24 @@ Issue Date
 Expiry Date
 ```
 
----
-
 ### Business Rules
 
-* Trainer Code auto-generated.
-* Trainer Code unique.
-* Email unique.
-* Trainer may belong to multiple courses.
-* Trainer may serve multiple branches.
-
----
+* Trainer code must be auto-generated.
+* Trainer code must be unique.
+* Email must be unique if provided.
+* Trainer may belong to multiple branches.
+* Trainer profile changes must be audited.
 
 ### Validations
 
-Required:
-
-```text
-Trainer Name
-Trainer Type
-Mobile Number
-Primary Specialization
-```
+* First Name is required.
+* Mobile Number is required.
+* Trainer Type is required.
+* Primary Specialization is required.
+* At least one branch is required.
+* Years Of Experience cannot be negative.
 
 ---
-
-# 7. Trainer Qualification Management
 
 ## TRN-UI-003 Qualifications Screen
 
@@ -252,33 +353,17 @@ Institution
 Year Completed
 Grade
 Certificate Attachment
+Status
 ```
-
-### Examples
-
-```text
-B.Tech
-MBA
-NEBOSH
-IOSH
-PMP
-OSHA
-Cisco
-Microsoft
-AWS
-```
-
----
 
 ### Business Rules
 
-* Multiple qualifications allowed.
+* Multiple qualifications are allowed.
 * Qualification certificates may be uploaded.
-* Qualification history retained.
+* Qualification history must be retained.
+* Qualification expiry must generate alerts when applicable.
 
 ---
-
-# 8. Trainer Document Management
 
 ## TRN-UI-004 Trainer Documents
 
@@ -295,8 +380,6 @@ Photo
 Other Attachments
 ```
 
----
-
 ### Document Status
 
 ```text
@@ -307,17 +390,14 @@ Rejected
 Expired
 ```
 
----
-
 ### Business Rules
 
-* Expiry dates supported.
+* Expiry dates are supported.
 * Expired documents should generate alerts.
-* Verification history retained.
+* Verification history must be retained.
+* Document approval status must be visible to scheduling and audit views.
 
 ---
-
-# 9. Trainer Availability Management
 
 ## TRN-UI-005 Availability Screen
 
@@ -332,37 +412,29 @@ Available Days
 Available From Time
 Available To Time
 Unavailable Dates
+Status
 ```
-
----
 
 ### Example
 
 ```text
 Monday-Friday
-
-09:00 AM
-to
-05:00 PM
+09:00 AM to 05:00 PM
 ```
-
----
 
 ### Business Rules
 
-* Availability used by Scheduling Engine.
+* Availability is used by Scheduling & Timetable Management.
 * Scheduling outside availability requires override permission.
 * Unavailable dates block assignments.
 
 ---
 
-# 10. Trainer Assignment Management
-
 ## TRN-UI-006 Assignment Screen
 
 ### Purpose
 
-Assign trainers to courses and batches.
+Assign trainers to courses, batches, or corporate delivery work.
 
 ### Fields
 
@@ -370,6 +442,9 @@ Assign trainers to courses and batches.
 Trainer
 Course
 Batch
+Corporate Customer
+Corporate Contract
+Delivery Location
 Assignment Type
 Assigned From
 Assigned To
@@ -382,19 +457,18 @@ Primary Trainer
 Assistant Trainer
 Guest Trainer
 Evaluator
+Corporate Trainer
 ```
-
----
 
 ### Business Rules
 
-* Multiple trainers per batch allowed.
-* Trainer overlap validation required.
-* Trainer availability validation required.
+* Multiple trainers per batch are allowed.
+* Trainer overlap validation is required.
+* Trainer availability validation is required.
+* Trainer must be authorized for the course where configured.
+* Corporate assignments are tracked separately as assignment records, not as a separate trainer type.
 
 ---
-
-# 11. Trainer Course Mapping
 
 ## TRN-UI-007 Trainer Course Matrix
 
@@ -411,39 +485,19 @@ Valid From
 Valid To
 ```
 
----
-
 ### Business Rules
 
 * Trainer should only be assigned to approved courses.
 * Expired authorization should prevent assignment.
+* Course authorization changes must be auditable.
 
 ---
 
-# 12. Corporate Trainer Assignment
+## TRN-UI-008 Trainer Dashboard
 
-## TRN-UI-008 Corporate Assignment
+### Purpose
 
-### Additional Fields
-
-```text
-Corporate Customer
-Corporate Contract
-Delivery Location
-```
-
----
-
-### Business Rules
-
-* Corporate trainers may deliver training at customer locations.
-* Corporate assignments tracked separately.
-
----
-
-# 13. Trainer Performance Dashboard
-
-## TRN-UI-009 Trainer Dashboard
+Show trainer delivery performance.
 
 ### Metrics
 
@@ -456,8 +510,6 @@ Completion Rate
 Certificates Issued
 ```
 
----
-
 ### Future Metrics
 
 ```text
@@ -469,9 +521,7 @@ Not in Phase 1.
 
 ---
 
-# 14. Trainer Utilization
-
-## TRN-UI-010 Utilization Report
+## TRN-UI-009 Utilization Report
 
 ### Metrics
 
@@ -491,25 +541,23 @@ Available Hours
 100
 ```
 
----
-
 ### Example
 
 ```text
 Available = 160 Hours
-
 Assigned = 120 Hours
-
 Utilization = 75%
 ```
 
 ---
 
-# 15. Trainer Portal View
+## TRN-UI-010 Trainer Portal View
 
-Phase 1 Read-Only.
+### Purpose
 
-Trainer may view:
+Provide read-only trainer self-service access.
+
+### Views
 
 ```text
 Assigned Courses
@@ -517,273 +565,158 @@ Assigned Batches
 Timetable
 Attendance Pending
 Upcoming Sessions
+Document Expiry
 ```
+
+### Business Rules
+
+* Phase 1 portal view is read-only.
+* Trainer may access only own data.
+* Sensitive profile fields must remain protected.
 
 ---
 
-# 16. Functional Requirements
+# 7. Functional Requirements
 
-## FR-TRN-001 Trainer Creation
+## FR-TRN-001 Create Trainer
 
 The system shall allow authorized users to create trainers.
 
----
-
-## FR-TRN-002 Trainer Update
+## FR-TRN-002 Update Trainer
 
 The system shall allow authorized users to update trainers.
 
----
-
-## FR-TRN-003 Trainer Classification
+## FR-TRN-003 Classify Trainers
 
 The system shall support multiple trainer types.
 
----
-
-## FR-TRN-004 Qualification Tracking
+## FR-TRN-004 Track Qualifications
 
 The system shall track trainer qualifications.
 
----
-
-## FR-TRN-005 Trainer Document Tracking
+## FR-TRN-005 Track Documents
 
 The system shall track trainer documents.
 
----
-
-## FR-TRN-006 Availability Management
+## FR-TRN-006 Manage Availability
 
 The system shall support trainer availability management.
 
----
-
-## FR-TRN-007 Trainer Assignment
-
-The system shall support trainer assignments.
-
----
-
-## FR-TRN-008 Course Authorization
+## FR-TRN-007 Authorize Courses
 
 The system shall support trainer-course authorization mapping.
 
----
+## FR-TRN-008 Assign Trainers
 
-## FR-TRN-009 Corporate Trainer Assignment
+The system shall support trainer assignments to courses, batches, and corporate delivery work.
 
-The system shall support corporate trainer assignments.
-
----
-
-## FR-TRN-010 Utilization Tracking
-
-The system shall support trainer utilization reporting.
-
----
-
-## FR-TRN-011 Expiry Monitoring
+## FR-TRN-009 Monitor Expiry
 
 The system shall monitor document and certification expiry.
 
----
+## FR-TRN-010 View Utilization
 
-## FR-TRN-012 Trainer Audit Tracking
+The system shall support trainer utilization reporting.
+
+## FR-TRN-011 Trainer Portal Access
+
+The system shall provide read-only trainer portal access.
+
+## FR-TRN-012 Audit Trainer Changes
 
 The system shall maintain trainer audit history.
 
 ---
 
-# 17. Notifications
+# 8. Audit Events
 
-### Trainer Assigned
-
-Notify:
+The following audit events shall be supported:
 
 ```text
-Trainer
-Branch Manager
-Coordinator
+TrainerCreated
+TrainerUpdated
+TrainerActivated
+TrainerDeactivated
+TrainerSuspended
+TrainerQualificationAdded
+TrainerQualificationUpdated
+TrainerDocumentUploaded
+TrainerDocumentVerified
+TrainerDocumentRejected
+TrainerAvailabilityUpdated
+TrainerCourseAuthorized
+TrainerCourseAuthorizationExpired
+TrainerAssigned
+TrainerRemoved
+TrainerPortalAccessCreated
+TrainerStatusChanged
+```
+
+Rules:
+
+* Trainer profile, authorization, document, and availability changes must be audited.
+* Audit records must capture actor, timestamp, and reason where applicable.
+
+---
+
+# 9. Domain Errors
+
+The module shall distinguish between validation and business-rule errors such as:
+
+```text
+TrainerCodeAlreadyExists
+TrainerEmailAlreadyExists
+TrainerInactive
+TrainerSuspended
+TrainerArchived
+TrainerAssignmentConflict
+TrainerAvailabilityConflict
+TrainerCourseNotAuthorized
+DocumentExpired
+DocumentVerificationRequired
+QualificationExpired
+BranchInactive
+CourseInactive
+CorporateContractInactive
+InvalidAvailabilityRange
+InvalidAssignmentRange
 ```
 
 ---
 
-### Trainer Removed
+# 10. Reporting and Operational Views
 
-Notify:
-
-```text
-Trainer
-Branch Manager
-```
-
----
-
-### Certification Expiring
-
-Notify:
-
-```text
-Trainer
-Branch Manager
-```
-
-30 days before expiry.
-
----
-
-### Document Expiring
-
-Notify:
-
-```text
-Trainer
-Admin
-```
-
-Configurable reminder period.
-
----
-
-# 18. Reports
-
-## Operational Reports
+The Trainer context shall support the following read views:
 
 ```text
 Trainer List Report
 Trainer Assignment Report
 Trainer Availability Report
-```
-
----
-
-## Management Reports
-
-```text
 Trainer Utilization Report
 Trainer Workload Report
 Trainer Activity Report
-```
-
----
-
-## Compliance Reports
-
-```text
 Expired Certifications
 Expiring Certifications
 Expired Documents
 Expiring Documents
-```
-
----
-
-## Corporate Reports
-
-```text
 Corporate Trainer Allocation Report
 Corporate Delivery Report
 ```
 
----
-
-# 19. Audit Requirements
-
-Audit:
-
-```text
-Trainer Created
-Trainer Updated
-Trainer Assigned
-Trainer Removed
-Availability Updated
-Qualification Added
-Qualification Updated
-Document Verified
-Status Changed
-```
-
-Capture:
-
-```text
-User
-Action
-Timestamp
-Old Value
-New Value
-Reason
-```
+These are read models and operational views, not separate owned entities.
 
 ---
 
-# 20. Critical Design Decisions
+# 11. FRD Improvement Notes
 
-### Trainer vs Employee
+This module should remain the single source of truth for:
 
-Recommended:
+* trainer profiles
+* qualifications
+* documents
+* availability
+* course authorization
+* trainer assignments
+* utilization summaries
 
-```text
-Trainer
-```
-
-as primary entity.
-
-Not:
-
-```text
-Employee
-```
-
-Reason:
-
-Many trainers are freelance and corporate resources.
-
----
-
-### Availability-Driven Scheduling
-
-Scheduling engine should always use:
-
-```text
-Trainer Availability
-```
-
-before assigning sessions.
-
----
-
-### Qualification-Based Assignment
-
-Trainer assignment should validate:
-
-```text
-Trainer
-   ↓
-Authorized Course
-```
-
-before allowing assignment.
-
----
-
-# 21. Integration Points
-
-### Consumes
-
-```text
-Identity & Access
-Document Management
-Organization Management
-```
-
-### Provides Data To
-
-```text
-Scheduling
-Attendance
-Completion
-Corporate Training
-Reporting
-Future Payroll
-```
+It should not own scheduling sessions or payroll.

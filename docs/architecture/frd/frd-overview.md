@@ -124,7 +124,21 @@ Use the following template for every module:
 | Module 2: Organization Management | Organization Management | Institute, Branch, Department, Classroom |
 | Module 3: Lead & Inquiry Management | Lead & Inquiry Management | Inquiry, Lead, LeadSource, LeadStage, FollowUp, Campaign |
 | Module 4: Admission & Enrollment Management | Admission & Enrollment Management | Admission, Enrollment, Student, StudentIdentity, StudentIDCard |
-| Module 5: Student Management | Admission & Enrollment Management | Student profile and identity configuration |
+| Module 5: Student Management | Admission & Enrollment Management | Student profile, identity fields, portal access, emergency contact |
+| Module 6: Course & Batch Management | Course & Batch Management | Course, CoursePricing, CourseCompletionRule, Batch, BatchTrainer, WaitingList |
+| Module 7: Scheduling & Timetable Management | Scheduling & Timetable Management | Schedule, ScheduleSession, TrainerAvailability |
+| Module 8: Attendance Management | Attendance Management | AttendanceSession, AttendanceRecord, AttendanceCorrection, AttendanceLock |
+| Module 9: Fee & Finance Management | Fee & Finance Management | FeePlan, InstallmentPlan, EnrollmentFeeAccount, Payment, Receipt, Discount, Refund |
+| Module 10: Faculty / Trainer Management | Faculty / Trainer Management | Trainer, TrainerQualification, TrainerDocument, TrainerAvailability, TrainerAssignment |
+| Module 11: Corporate Training Management | Corporate Training Management | CorporateAccount, CorporateContactPerson, CorporateContract, CorporateProgram, CorporateParticipant |
+| Module 12: Exam, Result & Completion Management | Exam, Result & Completion Management | CourseExam, ExamResult, CompletionEvaluation, CourseCompletion, CompletionApproval |
+| Module 13: Certificate Management | Certificate Management | CertificateTemplate, CertificateTemplateVersion, Certificate, CertificateVerificationLog |
+| Module 14: Document Management | Document Management | DocumentType, Document, DocumentVersion, DocumentVerification |
+| Module 15: Communication Management | Communication Management | CommunicationTemplate, CommunicationLog, SystemNotification |
+| Module 16: Reports & Dashboard Management | Reporting & Analytics | ReportDefinition, DashboardWidget, MetricSnapshot |
+| Module 17: Identity, Access Control & Security Management (RBAC) | Identity & Access Management | User, Role, Permission, UserRole, RolePermission, AccessPolicy, Session |
+| Module 18: Audit, Compliance & Activity Tracking | Audit & Compliance | AuditLog, ApprovalLog |
+| Module 19: Lead, Inquiry & CRM Management | Lead & Inquiry Management | Inquiry, Lead, LeadSource, LeadStage, FollowUp, Campaign |
 
 ---
 
@@ -151,7 +165,21 @@ Phase 1 focuses on core institute operations.
 
 ---
 
-# 4. Out of Scope for Phase 1
+# 4. Phase 2 Functional Scope
+
+Phase 2 extends the platform with supporting operational and analytical capabilities.
+
+## Phase 2 Modules
+
+1. Communication Management
+2. Reports & Dashboard Management
+3. Identity, Access Control & Security Management (RBAC)
+4. Audit, Compliance & Activity Tracking
+5. Lead, Inquiry & CRM Management
+
+---
+
+# 5. Out of Scope for Phase 1
 
 The following are excluded from Phase 1:
 
@@ -170,9 +198,9 @@ The following are excluded from Phase 1:
 
 ---
 
-# 5. Common Functional Standards
+# 6. Common Functional Standards
 
-## 5.1 Common List Screen Features
+## 6.1 Common List Screen Features
 
 Most list screens should support:
 
@@ -189,7 +217,7 @@ Most list screens should support:
 
 ---
 
-## 5.2 Common Form Features
+## 6.2 Common Form Features
 
 Most forms should support:
 
@@ -205,7 +233,7 @@ Most forms should support:
 
 ---
 
-## 5.3 Common Audit Rules
+## 6.3 Common Audit Rules
 
 The system shall record audit logs for:
 

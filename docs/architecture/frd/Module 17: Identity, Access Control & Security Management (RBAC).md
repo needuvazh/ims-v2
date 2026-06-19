@@ -1,98 +1,122 @@
-# Functional Requirement Document (FRD)
+# Functional Requirement Document
 
 ## Module 17: Identity, Access Control & Security Management (RBAC)
 
-**Version:** 1.0
+**Version:** 1.1
 **Module Code:** IAM
+**Phase:** Phase 1
+**Owned Bounded Context:** Identity & Access Management
 
 **Dependencies:**
 
 * Organization Management
-* Branch Management
 
 **Provides Data To:**
 
 * All Business Modules
-* Audit Management
-* Approval Workflows
+* Audit & Compliance
+* Reporting & Dashboard Management
 * Future SSO Integration
 
 ---
 
 # 1. Business Purpose
 
-Identity & Access Management (IAM) is responsible for authentication, authorization, role management, user lifecycle management, permission enforcement, security auditing, and approval authorization.
+Identity & Access Management authenticates users, assigns access, enforces branch scope, and records security activity.
 
-The module shall support:
-
-* User Management
-* Dynamic Role Builder
-* Permission Builder
-* Menu Security
-* Action Security
-* Data Security
-* Authentication
-* Password Policies
-* Session Management
-* Audit Logging
-* Approval Authorization
+The context owns user accounts, roles, permissions, role assignments, access policies, sessions, and password policy. Business modules must call this context for permission checks instead of duplicating authorization logic.
 
 ---
 
-# 2. Security Architecture
+# 2. Scope
 
-```text
-User
-   ↓
-Authentication
-   ↓
-Role Assignment
-   ↓
-Permission Evaluation
-   ↓
-Data Access Validation
-   ↓
-Business Action
-```
+## 2.1 In Scope
 
----
+* User management
+* Dynamic role management
+* Permission management
+* Menu, action, and report access
+* Branch-scoped authorization
+* Session management
+* Password policy enforcement
+* Login history tracking
+* Approval authorization
 
-# 3. Identity Architecture
+## 2.2 Out of Scope for Phase 1
 
-```text
-User
-   ↓
-Role
-   ↓
-Permission
-   ↓
-Menu Access
-   ↓
-Action Access
-```
+* Hardcoded roles
+* External SSO federation
+* Workforce HR master data
+* Public self-registration
 
 ---
 
-# 4. Authentication Methods
+# 3. Owned Concepts
 
-Phase 1
+The IAM context owns:
+
+* User
+* Role
+* Permission
+* UserRole
+* RolePermission
+* AccessPolicy
+* Session
+* PasswordPolicy
+* LoginHistory
+
+---
+
+# 4. Business Principles
+
+* Roles must be configurable at runtime.
+* Permissions must support action-level, menu-level, and report-level access.
+* UI visibility is not authorization.
+* Branch-scoped access must be enforced server-side.
+* Counselor access is limited to assigned leads by default.
+* Branch manager access is limited to assigned branch data unless an explicit permission extends it.
+* Approval permissions must be explicit and auditable.
+* Password and session policies must be configurable without code changes.
+
+---
+
+# 5. Business Model
+
+## 5.1 Authentication Methods
+
+Phase 1:
 
 ```text
 Email + Password
 ```
 
-Future
+Future:
 
 ```text
 Mobile OTP
 Google SSO
 Microsoft SSO
 LDAP
+MFA
 ```
 
----
+## 5.2 User Lifecycle
 
-# 5. User Lifecycle
+```text
+Draft
+  ↓
+Invited
+  ↓
+Active
+  ↓
+Locked
+  ↓
+Inactive
+  ↓
+Archived
+```
+
+## 5.3 Role Lifecycle
 
 ```text
 Draft
@@ -102,31 +126,27 @@ Active
 Inactive
 ```
 
-Alternative
+## 5.4 Session Lifecycle
+
+```text
+Created
+  ↓
+Active
+  ↓
+Expired
+```
+
+Alternative:
 
 ```text
 Active
-   ↓
-Locked
+  ↓
+Revoked
 ```
 
 ---
 
-### Password Reset Flow
-
-```text
-User
-  ↓
-Forgot Password
-  ↓
-Email Link
-  ↓
-Reset Password
-```
-
----
-
-# 6. User Management
+# 6. Screens
 
 ## IAM-UI-001 User List
 
@@ -136,19 +156,11 @@ Reset Password
 User ID
 Full Name
 Email
+Branch
 Role Count
 Status
 Last Login
 Actions
-```
-
-### Filters
-
-```text
-Branch
-Department
-Role
-Status
 ```
 
 ### Actions
@@ -160,113 +172,26 @@ Assign Roles
 Reset Password
 Lock User
 Deactivate User
+Revoke Sessions
 ```
 
-### Permissions
+## IAM-UI-002 User Form
 
-```text
-USER_VIEW
-USER_CREATE
-USER_EDIT
-USER_LOCK
-USER_RESET_PASSWORD
-```
-
----
-
-# 7. Create User
-
-## IAM-UI-002 User Screen
-
-### Personal Information
-
-Fields
+### Fields
 
 ```text
 First Name
 Last Name
 Email
 Mobile Number
-```
-
----
-
-### Organization Information
-
-Fields
-
-```text
+Username
 Branch
 Department
 Designation
-```
-
----
-
-### Security Information
-
-Fields
-
-```text
-Username
-Password
 Status
 ```
 
----
-
-### Business Rules
-
-* Email must be unique.
-* Username must be unique.
-* User may belong to multiple roles.
-* User may belong to multiple branches.
-
----
-
-# 8. Dynamic Role Builder
-
-## IAM-UI-003 Role List
-
-### Columns
-
-```text
-Role Code
-Role Name
-Status
-User Count
-Actions
-```
-
-### Actions
-
-```text
-Create Role
-Edit Role
-Clone Role
-Deactivate Role
-```
-
----
-
-### Examples
-
-```text
-Branch Manager
-Counselor
-Trainer
-Accountant
-Academic Coordinator
-Corporate Coordinator
-```
-
-No hard-coded roles.
-
----
-
-# 9. Create Role
-
-## IAM-UI-004 Role Builder
+## IAM-UI-003 Role Builder
 
 ### Fields
 
@@ -277,615 +202,102 @@ Description
 Status
 ```
 
----
-
 ### Actions
 
 ```text
-Assign Menus
-Assign Permissions
-Assign Data Scope
-Save
+Create Role
+Clone Role
+Edit Role
+Deactivate Role
 ```
 
----
+## IAM-UI-004 Permission Matrix
 
-### Business Rules
-
-* Roles fully configurable.
-* Roles reusable.
-* Roles may be cloned.
-
----
-
-# 10. Permission Builder
-
-## IAM-UI-005 Permission Assignment
-
-### Permission Structure
+### Areas
 
 ```text
-Module
-    ↓
-Feature
-    ↓
-Action
+Menu Permissions
+Action Permissions
+Report Permissions
+Approval Permissions
+Branch Scope Rules
 ```
 
----
-
-### Example
-
-```text
-Student Management
-      ↓
-Student
-      ↓
-View
-Create
-Edit
-Delete
-Approve
-Export
-```
-
----
-
-### Supported Actions
-
-```text
-View
-Create
-Edit
-Delete
-Approve
-Reject
-Print
-Export
-Upload
-Download
-```
-
----
-
-# 11. Menu Security
-
-## IAM-UI-006 Menu Access
-
-### Example
-
-```text
-Student Management
-Finance
-Attendance
-Corporate Training
-Reports
-```
-
----
-
-### Permissions
-
-```text
-Menu Visible
-Menu Hidden
-```
-
----
-
-### Business Rules
-
-* Menu hidden if user lacks permission.
-* Menu hierarchy supported.
-
----
-
-# 12. Data Scope Security
-
-## IAM-UI-007 Data Access Rules
-
-### Scope Types
-
-```text
-All Data
-Branch Data
-Department Data
-Self Data
-Assigned Data
-```
-
----
-
-### Examples
-
-Branch Manager
-
-```text
-Own Branch Only
-```
-
----
-
-Counselor
-
-```text
-Assigned Leads Only
-```
-
----
-
-Trainer
-
-```text
-Assigned Batches Only
-```
-
----
-
-### Business Rules
-
-* Data scope evaluated on every query.
-* Scope independent from menu permissions.
-
----
-
-# 13. Multi-Role Support
-
-## User Role Assignment
-
-A user may have:
-
-```text
-Role A
-Role B
-Role C
-```
-
----
-
-### Example
-
-```text
-Trainer
-+
-Academic Coordinator
-```
-
----
-
-### Business Rules
-
-Effective permissions:
-
-```text
-Union Of Permissions
-```
-
----
-
-# 14. Approval Authorization
-
-## IAM-UI-008 Approval Matrix
-
-### Approval Types
-
-```text
-Refund Approval
-Completion Approval
-Certificate Approval
-Payroll Approval
-```
-
----
-
-### Configuration
-
-```text
-Approval Type
-Approver Role
-Escalation Role
-```
-
----
-
-### Business Rules
-
-* Approval rights permission-based.
-* Approval history retained.
-
----
-
-# 15. Password Policy
-
-## IAM-UI-009 Password Policy
-
-### Configurable Rules
-
-```text
-Minimum Length
-Uppercase Required
-Lowercase Required
-Numeric Required
-Special Character Required
-Expiry Days
-```
-
----
-
-### Example
-
-```text
-Minimum Length = 8
-```
-
----
-
-### Business Rules
-
-* Passwords encrypted.
-* Password history retained.
-
----
-
-# 16. Session Management
-
-## IAM-UI-010 Active Sessions
+## IAM-UI-005 Session Monitor
 
 ### Columns
 
 ```text
 User
-Login Time
-Last Activity
-IP Address
 Device
-```
-
----
-
-### Actions
-
-```text
-Terminate Session
-Terminate All Sessions
-```
-
----
-
-### Business Rules
-
-* Session timeout configurable.
-* Concurrent sessions configurable.
-
----
-
-# 17. Login Audit
-
-## IAM-UI-011 Login History
-
-### Columns
-
-```text
-User
-Login Time
-Logout Time
 IP Address
+Created At
+Last Activity
 Status
+Actions
 ```
 
 ---
 
-### Status
+# 7. Functional Requirements
+
+* The system shall create and manage users with unique email and username values.
+* The system shall allow administrators to assign multiple roles to a user.
+* The system shall enforce branch scope on every protected action.
+* The system shall support configurable access policies for menu, action, report, and approval access.
+* The system shall record login attempts, successful logins, failed logins, and password resets.
+* The system shall allow session revocation from the admin console.
+* The system shall support password policy configuration without code changes.
+* The system shall support future MFA and SSO integrations through adapters.
+
+---
+
+# 8. Audit Events
+
+The module shall emit audit events for:
 
 ```text
-Success
-Failed
-Locked
+UserCreated
+UserUpdated
+UserLocked
+UserDeactivated
+RoleCreated
+RoleUpdated
+RoleDeactivated
+PermissionGranted
+PermissionRevoked
+LoginSucceeded
+LoginFailed
+PasswordResetRequested
+PasswordResetCompleted
+SessionRevoked
 ```
 
 ---
 
-### Business Rules
-
-* Failed login tracking required.
-* Suspicious activity reporting supported.
-
----
-
-# 18. Security Dashboard
-
-## IAM-UI-012 Security Dashboard
-
-### KPIs
+# 9. Domain Errors
 
 ```text
-Active Users
-Locked Users
-Failed Logins
-Active Sessions
-Role Count
-Permission Count
+USER_NOT_FOUND
+USER_ALREADY_EXISTS
+USER_LOCKED
+ROLE_NOT_FOUND
+PERMISSION_DENIED
+PASSWORD_POLICY_VIOLATION
+SESSION_NOT_FOUND
+BRANCH_SCOPE_VIOLATION
 ```
 
 ---
 
-### Alerts
+# 10. Reporting Views
 
 ```text
-Multiple Failed Logins
-Password Expiry
-Inactive Accounts
+Users by Role
+Users by Branch
+Failed Login Summary
+Permission Change History
+Session Activity
+Approval Access Summary
 ```
 
----
-
-# 19. Functional Requirements
-
-## FR-IAM-001 User Management
-
-The system shall support user lifecycle management.
-
----
-
-## FR-IAM-002 Dynamic Role Builder
-
-The system shall support configurable roles.
-
----
-
-## FR-IAM-003 Permission Builder
-
-The system shall support configurable permissions.
-
----
-
-## FR-IAM-004 Menu Authorization
-
-The system shall support menu-level security.
-
----
-
-## FR-IAM-005 Data Scope Security
-
-The system shall support row-level access control.
-
----
-
-## FR-IAM-006 Multi-Role Assignment
-
-The system shall support multiple roles per user.
-
----
-
-## FR-IAM-007 Approval Authorization
-
-The system shall support configurable approval authority.
-
----
-
-## FR-IAM-008 Password Policies
-
-The system shall support configurable password policies.
-
----
-
-## FR-IAM-009 Session Management
-
-The system shall support session tracking and termination.
-
----
-
-## FR-IAM-010 Login Audit
-
-The system shall maintain login history.
-
----
-
-## FR-IAM-011 Security Dashboard
-
-The system shall provide security monitoring.
-
----
-
-## FR-IAM-012 Audit Trail
-
-The system shall maintain complete security audit history.
-
----
-
-# 20. Notifications
-
-### Password Expiry
-
-Notify:
-
-```text
-User
-```
-
----
-
-### Account Locked
-
-Notify:
-
-```text
-User
-Administrator
-```
-
----
-
-### Multiple Failed Logins
-
-Notify:
-
-```text
-Administrator
-```
-
----
-
-### Role Changed
-
-Notify:
-
-```text
-Affected User
-```
-
----
-
-# 21. Reports
-
-## Security Reports
-
-```text
-User Report
-Role Report
-Permission Report
-Login History Report
-Failed Login Report
-```
-
----
-
-## Audit Reports
-
-```text
-User Activity Report
-Role Change Report
-Permission Change Report
-Approval Activity Report
-```
-
----
-
-## Compliance Reports
-
-```text
-Inactive Users
-Locked Accounts
-Password Expiry Report
-```
-
----
-
-# 22. Audit Requirements
-
-Audit:
-
-```text
-User Created
-User Updated
-Role Created
-Role Modified
-Permission Changed
-Password Reset
-User Locked
-User Unlocked
-Session Terminated
-```
-
-Capture:
-
-```text
-User
-Timestamp
-Action
-Old Value
-New Value
-IP Address
-```
-
----
-
-# 23. Critical Design Decisions
-
-### Dynamic RBAC
-
-Recommended:
-
-```text
-Role
-   ↓
-Permission
-   ↓
-Action
-```
-
-Never hard-code permissions.
-
----
-
-### Permission Granularity
-
-Recommended:
-
-```text
-Module
-Feature
-Action
-```
-
-instead of simple role checks.
-
----
-
-### Data Security Layer
-
-Recommended:
-
-```text
-Role Permission
-       +
-Data Scope
-```
-
-for every query.
-
----
-
-### Approval Security
-
-Approval authority should come from:
-
-```text
-Permission
-```
-
-not role names.
-
----
-
-### Future SSO Readiness
-
-Authentication architecture should support:
-
-```text
-Local Authentication
-SSO Authentication
-```
-
-through pluggable providers.
-
----
-
-# 24. Integration Points
-
-### Consumes
-
-```text
-Organization Management
-Branch Management
-```
-
-### Provides Data To
-
-```text
-All Business Modules
-Audit Framework
-Approval Workflows
-Reporting
-Future SSO Integration
-```

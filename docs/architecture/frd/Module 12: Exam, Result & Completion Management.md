@@ -1,68 +1,103 @@
-# Functional Requirement Document (FRD)
+# Functional Requirement Document
 
 ## Module 12: Exam, Result & Completion Management
 
-**Version:** 1.0
+**Version:** 1.1
 **Module Code:** CMP
+**Phase:** Phase 1
+**Owned Bounded Context:** Exam, Result & Completion Management
 
 **Dependencies:**
 
-* Student Management
-* Enrollment Management
+* Admission & Enrollment Management
 * Attendance Management
 * Course & Batch Management
 * Fee & Finance Management
+* Faculty / Trainer Management
 
 **Provides Data To:**
 
 * Certificate Management
-* Reporting
-* Student Portal
-* Corporate Reporting
+* Student Management
+* Corporate Training Management
+* Reporting & Dashboards
+* Audit & Compliance
 
 ---
 
 # 1. Business Purpose
 
-Exam, Result & Completion Management is responsible for evaluating student eligibility, recording assessments, publishing results, approving completion, and preparing students for certificate issuance.
+Exam, Result & Completion Management evaluates learner completion eligibility, manages exam definition and result publication, and controls completion approval and rejection workflows.
 
-The module shall support:
+The context owns completion evaluation, exam setup, result recording, and completion approvals.
 
-* Course Completion Tracking
-* Completion Eligibility Evaluation
-* Exam Management
-* Assessment Results
-* Completion Approval Workflow
-* Corporate Completion Reporting
-* Student Progress Tracking
+Completion status is the gate that feeds certificate eligibility and downstream reporting.
 
 ---
 
-# 2. Completion Architecture
+# 2. Scope
 
-```text id="v0p6km"
-Course
-    ↓
-Enrollment
-    ↓
-Attendance
-    ↓
-Exam (Optional)
-    ↓
-Completion Evaluation
-    ↓
-Completion Approval
-    ↓
-Certificate Eligibility
-```
+## 2.1 In Scope
+
+* Completion eligibility evaluation
+* Completion approval workflow
+* Completion rejection workflow
+* Exam creation
+* Exam scheduling
+* Result entry
+* Result publication
+* Student progress view
+* Walk-in completion processing
+* Corporate completion tracking
+
+## 2.2 Out of Scope for Phase 1
+
+* Certificate issuance
+* Attendance marking
+* Fee collection
+* Payment capture
 
 ---
 
-# 3. Completion Models
+# 3. Business Principles
+
+* Completion eligibility is rule-driven and consumes attendance, exam, and fee clearance data.
+* Completion approval is an auditable decision and cannot be bypassed where required by course policy.
+* Exam results become read-only after publication unless authorized override exists.
+* Walk-in completion is a specialized completion orchestration path.
+* Corporate completion reporting is derived from the same completion model.
+* Completed status cannot be edited directly.
+* Rejected completion must retain a reason.
+
+---
+
+# 4. Owned Concepts
+
+The Completion context owns:
+
+* CourseExam
+* ExamResult
+* CompletionEvaluation
+* CourseCompletion
+* CompletionApproval
+* CompletionApprovalLog
+* ResultPublicationBatch
+
+Notes:
+
+* Enrollment, Student, Course, Batch, and Attendance are referenced from other contexts.
+* Completion is the final academic decision before certificate eligibility.
+* Exams are configured against course and optional batch scope.
+
+---
+
+# 5. Business Model
+
+## 5.1 Completion Models
 
 The system shall support:
 
-```text id="gzwcc6"
+```text
 Completion Only
 Attendance Based
 Exam Based
@@ -71,53 +106,79 @@ Manual Approval
 Walk-In Completion
 ```
 
-Configured at Course level.
+Rules:
 
----
+* Completion model is configured at course level.
+* Completion requirements are inherited by batches.
+* Walk-in completion must be explicitly allowed by course configuration.
 
-# 4. Completion Lifecycle
+## 5.2 Completion Lifecycle
 
-```text id="5dbm8e"
+```text
 Not Started
-      ↓
+  ↓
 In Progress
-      ↓
+  ↓
 Eligible
-      ↓
+  ↓
 Pending Approval
-      ↓
+  ↓
 Completed
 ```
 
 Alternative:
 
-```text id="mfjlwm"
+```text
 Pending Approval
-       ↓
+  ↓
 Rejected
 ```
 
----
+Rules:
 
-# 5. Exam Lifecycle
+* Eligibility must be evaluated before approval.
+* Completed completions are historical records.
+* Rejected completions must preserve the reason.
 
-```text id="u6ybz8"
+## 5.3 Exam Lifecycle
+
+```text
 Draft
-   ↓
+  ↓
 Scheduled
-   ↓
+  ↓
 Conducted
-   ↓
+  ↓
 Results Published
 ```
 
 Alternative:
 
-```text id="q0of6x"
+```text
 Scheduled
-   ↓
+  ↓
 Cancelled
 ```
+
+Rules:
+
+* Exam belongs to a course.
+* Exam may optionally belong to a batch.
+* Published results are read-only.
+
+## 5.4 Result Lifecycle
+
+```text
+Draft
+  ↓
+Published
+```
+
+Rules:
+
+* Result entries may be saved as draft before publication.
+* Published results require authorized override for changes.
+* Result publication generates notifications.
 
 ---
 
@@ -131,27 +192,26 @@ Provide completion overview.
 
 ### Widgets
 
-```text id="4r7byv"
+```text
 Pending Evaluations
-Eligible Students
+Eligible Learners
 Pending Approvals
-Completed Students
-Rejected Students
+Completed Learners
+Rejected Learners
 ```
 
 ### Filters
 
-```text id="e8mg3w"
+```text
 Branch
 Course
 Batch
 Completion Status
 Date Range
+Search
 ```
 
 ---
-
-# 7. Completion Evaluation
 
 ## CMP-UI-002 Completion Evaluation Screen
 
@@ -161,93 +221,77 @@ Evaluate completion eligibility.
 
 ### Student Information
 
-```text id="9fjlwm"
+```text
 Student
 Enrollment
 Course
 Batch
 ```
 
----
-
 ### Eligibility Criteria
 
-Display:
-
-```text id="mhvnqf"
+```text
 Attendance %
 Attendance Eligibility
-
 Exam Score
 Exam Eligibility
-
 Fee Clearance
-
 Completion Approval Required
 ```
 
----
-
 ### Evaluation Result
 
-```text id="iy76sd"
+```text
 Eligible
 Not Eligible
 ```
 
----
-
 ### Actions
 
-```text id="3v4z8r"
+```text
 Evaluate
 Approve Completion
 Reject Completion
 ```
 
----
-
 ### Business Rules
 
-Eligibility evaluation must use course configuration.
+* Eligibility evaluation must use configured course rules.
+* Fee clearance must be consumed from Finance.
+* Attendance eligibility must be consumed from Attendance.
+* Exam eligibility must be consumed from exam results.
 
 ---
-
-# 8. Completion Approval
 
 ## CMP-UI-003 Completion Approval Screen
 
 ### Fields
 
-```text id="vlm8jw"
+```text
 Completion Decision
 Remarks
 ```
 
 ### Decisions
 
-```text id="i5fprk"
+```text
 Approve
 Reject
 ```
 
----
-
 ### Business Rules
 
-* Remarks mandatory when rejected.
+* Remarks are mandatory when rejected.
 * Approval must be audited.
 * Completed status cannot be edited directly.
 
 ---
 
-# 9. Exam Management
-
 ## CMP-UI-004 Exam List
 
 ### Columns
 
-```text id="a4xw9t"
+```text
 Exam Code
 Exam Name
 Course
@@ -259,7 +303,7 @@ Actions
 
 ### Actions
 
-```text id="7d3xtc"
+```text
 Create Exam
 Edit Exam
 Schedule Exam
@@ -267,11 +311,9 @@ Cancel Exam
 Publish Results
 ```
 
----
-
 ### Permissions
 
-```text id="sykq1l"
+```text
 EXAM_VIEW
 EXAM_CREATE
 EXAM_EDIT
@@ -280,13 +322,11 @@ EXAM_PUBLISH
 
 ---
 
-# 10. Create Exam
-
 ## CMP-UI-005 Exam Screen
 
 ### Fields
 
-```text id="x7jclm"
+```text
 Exam Code
 Exam Name
 Course
@@ -297,70 +337,50 @@ Maximum Mark
 Status
 ```
 
----
-
-### Examples
-
-```text id="0q6rvk"
-Pass Mark = 70
-
-Maximum Mark = 100
-```
-
----
-
 ### Business Rules
 
-* Exam belongs to Course.
-* Exam may belong to Batch.
+* Exam belongs to a course.
+* Exam may belong to a batch.
 * Course may have multiple exams.
-* Pass Mark < Maximum Mark.
+* Pass Mark must be less than Maximum Mark.
 
 ---
-
-# 11. Result Entry
 
 ## CMP-UI-006 Result Entry Screen
 
 ### Columns
 
-```text id="y6xwdr"
+```text
 Student
 Marks Obtained
 Result
 Remarks
 ```
 
----
-
 ### Result Calculation
 
-```text id="pw8w68"
+```text
 Marks >= Pass Mark
 ```
 
 Result:
 
-```text id="s30xkq"
+```text
 Pass
 ```
 
 Else:
 
-```text id="xwptiu"
+```text
 Fail
 ```
 
----
-
 ### Actions
 
-```text id="yapxou"
+```text
 Save Draft
 Publish Results
 ```
-
----
 
 ### Business Rules
 
@@ -370,65 +390,46 @@ Publish Results
 
 ---
 
-# 12. Result Publication
-
 ## CMP-UI-007 Publish Results
 
 ### Actions
 
-```text id="n6hy5k"
+```text
 Publish
 Cancel
 ```
 
----
-
 ### Business Rules
 
-After publication:
-
-```text id="4j41k8"
-Students may view results.
-```
+* Students may view results after publication.
+* Result publication generates notifications.
 
 ---
-
-### Notifications
-
-Generated automatically.
-
----
-
-# 13. Walk-In Completion
 
 ## CMP-UI-008 Walk-In Completion Screen
 
 ### Fields
 
-```text id="gtg7q9"
+```text
 Student
 Course
 Trainer Approval
 Remarks
 ```
 
----
-
 ### Business Rules
 
-* Course must support Walk-In Completion.
-* Trainer approval mandatory.
+* Course must support walk-in completion.
+* Trainer approval is mandatory.
 * Completion must be auditable.
 
 ---
-
-# 14. Corporate Completion
 
 ## CMP-UI-009 Corporate Completion Dashboard
 
 ### Metrics
 
-```text id="q2m0cg"
+```text
 Participants
 Completed
 Pending
@@ -436,395 +437,172 @@ Failed
 Rejected
 ```
 
----
-
 ### Filters
 
-```text id="9zpw6g"
+```text
 Customer
 Contract
 Program
 Course
+Search
 ```
-
----
 
 ### Business Rules
 
-* Completion statistics available to Corporate Reports.
-* Completion grouped by:
-
-  * Customer
-  * Contract
-  * Program
+* Completion statistics must be available to corporate reports.
+* Completion must be grouped by customer, contract, and program.
 
 ---
-
-# 15. Completion Eligibility Engine
-
-This is the most critical component.
-
----
-
-## Attendance Rule
-
-Example:
-
-```text id="muvpsn"
-Minimum Attendance = 80%
-```
-
-Student:
-
-```text id="bl4jqn"
-Attendance = 85%
-```
-
-Result:
-
-```text id="9vjlwm"
-Pass
-```
-
----
-
-## Exam Rule
-
-Example:
-
-```text id="yw89fk"
-Pass Mark = 70
-```
-
-Student:
-
-```text id="s6yt8g"
-Score = 75
-```
-
-Result:
-
-```text id="6xdtlo"
-Pass
-```
-
----
-
-## Fee Clearance Rule
-
-Example:
-
-```text id="vmlgzn"
-Outstanding = 0
-```
-
-Result:
-
-```text id="x1d9wu"
-Eligible
-```
-
----
-
-## Combined Rule
-
-```text id="ygvow8"
-Attendance Passed
-AND
-Exam Passed
-AND
-Fee Cleared
-```
-
-Result:
-
-```text id="6ks1gh"
-Completion Eligible
-```
-
----
-
-# 16. Student Progress View
 
 ## CMP-UI-010 Progress Dashboard
 
 ### Student View
 
-Display:
-
-```text id="mjvnmb"
+```text
 Attendance %
 Exam Score
 Completion Status
 Certificate Eligibility
 ```
 
-Read-only.
+### Business Rules
+
+* Read-only access.
+* Visible only for the relevant learner.
 
 ---
 
-# 17. Functional Requirements
+# 7. Functional Requirements
 
-## FR-CMP-001 Completion Evaluation
+## FR-CMP-001 Evaluate Completion Eligibility
 
-The system shall evaluate student completion eligibility.
+The system shall evaluate learner completion eligibility.
 
----
-
-## FR-CMP-002 Completion Approval
+## FR-CMP-002 Approve Completion
 
 The system shall support completion approval workflow.
 
----
-
-## FR-CMP-003 Completion Rejection
+## FR-CMP-003 Reject Completion
 
 The system shall support completion rejection workflow.
 
----
-
-## FR-CMP-004 Exam Creation
+## FR-CMP-004 Create Exam
 
 The system shall support exam creation.
 
----
-
-## FR-CMP-005 Exam Scheduling
+## FR-CMP-005 Schedule Exam
 
 The system shall support exam scheduling.
 
----
-
-## FR-CMP-006 Result Entry
+## FR-CMP-006 Enter Results
 
 The system shall support result entry.
 
----
-
-## FR-CMP-007 Result Publication
+## FR-CMP-007 Publish Results
 
 The system shall support result publication.
 
----
-
-## FR-CMP-008 Walk-In Completion
+## FR-CMP-008 Support Walk-In Completion
 
 The system shall support walk-in completion processing.
 
----
-
-## FR-CMP-009 Corporate Completion
+## FR-CMP-009 Track Corporate Completion
 
 The system shall support corporate completion tracking.
 
----
+## FR-CMP-010 View Student Progress
 
-## FR-CMP-010 Eligibility Evaluation
+The system shall support read-only student progress views.
 
-The system shall support configurable eligibility rules.
+## FR-CMP-011 Audit Completion Decisions
 
----
-
-## FR-CMP-011 Student Progress Tracking
-
-The system shall support progress tracking.
+The system shall audit completion evaluation, approval, and rejection.
 
 ---
 
-## FR-CMP-012 Completion Audit Trail
+# 8. Audit Events
 
-The system shall maintain complete completion history.
+The following audit events shall be supported:
+
+```text
+CompletionEvaluated
+CompletionApproved
+CompletionRejected
+CompletionApprovalLogged
+ExamCreated
+ExamScheduled
+ExamCancelled
+ResultDraftSaved
+ResultPublished
+ResultPublicationRevised
+WalkInCompletionApproved
+CorporateCompletionEvaluated
+StudentProgressViewed
+```
+
+Rules:
+
+* Completion decisions must be auditable.
+* Rejection must store the reason.
+* Published results must remain historically visible.
 
 ---
 
-# 18. Notifications
+# 9. Domain Errors
 
-### Completion Approved
+The module shall distinguish between validation and business-rule errors such as:
 
-Notify:
-
-```text id="vcw3sb"
-Student
-Counselor
-Branch Manager
+```text
+CompletionNotEligible
+CompletionAlreadyApproved
+CompletionAlreadyRejected
+CompletionAlreadyCompleted
+CompletionDecisionRequired
+RejectedReasonRequired
+ExamAlreadyPublished
+ExamCancelled
+ResultAlreadyPublished
+MarksExceedMaximum
+PassMarkInvalid
+WalkInCompletionNotAllowed
+FeeClearanceNotMet
+AttendanceNotMet
+ExamNotPassed
+ApprovalRequired
+CorporateCompletionContextInvalid
+InvalidCompletionStateTransition
 ```
 
 ---
 
-### Completion Rejected
+# 10. Reporting and Operational Views
 
-Notify:
+The Completion context shall support the following read views:
 
-```text id="vl8wz7"
-Student
-Counselor
-```
-
----
-
-### Exam Scheduled
-
-Notify:
-
-```text id="e6ukru"
-Trainer
-Students
-Coordinator
-```
-
----
-
-### Results Published
-
-Notify:
-
-```text id="2ng6hv"
-Students
-Trainer
-Coordinator
-```
-
----
-
-# 19. Reports
-
-## Completion Reports
-
-```text id="t2vjlwm"
-Completion Report
-Pending Completion Report
-Rejected Completion Report
-```
-
----
-
-## Exam Reports
-
-```text id="64e9pw"
-Exam Results Report
-Pass Percentage Report
-Fail Percentage Report
-```
-
----
-
-## Student Reports
-
-```text id="2v3opm"
-Student Progress Report
+```text
+Completion Dashboard
+Exam List
+Result List
+Student Progress View
+Corporate Completion Dashboard
 Completion Eligibility Report
+Exam Report
+Result Publication Report
+Walk-In Completion Summary
 ```
+
+These are read models and operational views, not separate owned entities.
 
 ---
 
-## Corporate Reports
+# 11. FRD Improvement Notes
 
-```text id="42cm4l"
-Corporate Completion Report
-Corporate Result Report
-```
+This module should remain the single source of truth for:
 
----
+* exam definition
+* result entry and publication
+* completion eligibility
+* completion approval and rejection
+* walk-in completion approval
 
-# 20. Audit Requirements
-
-Audit:
-
-```text id="dxxzsk"
-Completion Evaluated
-Completion Approved
-Completion Rejected
-Exam Created
-Exam Updated
-Result Entered
-Results Published
-```
-
-Capture:
-
-```text id="7nqjlwm"
-User
-Action
-Timestamp
-Old Value
-New Value
-Reason
-```
-
----
-
-# 21. Critical Design Decisions
-
-### Completion First Architecture
-
-Recommended:
-
-```text id="3oz3ks"
-Completion
-      ↓
-Certificate
-```
-
-Not:
-
-```text id="i0s7xj"
-Exam
-      ↓
-Certificate
-```
-
-Reason:
-
-Many courses have no exams.
-
----
-
-### Immutable Published Results
-
-Published results should be:
-
-```text id="9x1jtl"
-Read Only
-```
-
-Any changes require:
-
-```text id="jlyi2d"
-Authorized Override
-```
-
-with audit.
-
----
-
-### Eligibility Engine
-
-Implement as:
-
-```text id="pwjlwm"
-Rule Evaluation Service
-```
-
-so future AI recommendations can use the same rules.
-
----
-
-# 22. Integration Points
-
-### Consumes
-
-```text id="8lqf5n"
-Attendance
-Finance
-Enrollment
-Course Rules
-```
-
-### Provides Data To
-
-```text id="7um4pc"
-Certificate Management
-Reporting
-Student Portal
-Corporate Reporting
-```
+It should not own attendance marking or certificate issuance.

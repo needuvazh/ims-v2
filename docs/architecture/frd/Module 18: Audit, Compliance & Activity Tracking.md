@@ -1,139 +1,145 @@
-# Functional Requirement Document (FRD)
+# Functional Requirement Document
 
 ## Module 18: Audit, Compliance & Activity Tracking
 
-**Version:** 1.0
+**Version:** 1.1
 **Module Code:** AUD
+**Phase:** Phase 1
+**Owned Bounded Context:** Audit & Compliance
 
 **Dependencies:**
 
-* Identity & Access Management (RBAC)
+* Identity & Access Management
 * All Business Modules
 
 **Provides Data To:**
 
-* Reporting
-* Compliance
+* Management
 * Security Monitoring
-* Management Dashboards
-* Future AI Analytics
+* Compliance Review
+* Reporting & Dashboard Management
 
 ---
 
 # 1. Business Purpose
 
-Audit, Compliance & Activity Tracking is responsible for recording, monitoring, reporting, and governing all significant business and system activities.
+Audit & Compliance records significant business and system events, preserves immutable history, and supports investigations and compliance reviews.
 
-The module shall support:
-
-* Activity Tracking
-* Audit Logging
-* Compliance Monitoring
-* Approval Tracking
-* User Activity Monitoring
-* Data Change History
-* Security Monitoring
-* Regulatory Reporting
-* Investigation Support
+The context owns audit logs and approval logs. It consumes events from other domains, but it does not make the original business decision.
 
 ---
 
-# 2. Audit Architecture
+# 2. Scope
+
+## 2.1 In Scope
+
+* Immutable audit logging
+* Approval trail tracking
+* Security event tracking
+* User activity tracking
+* Data change history
+* Export for investigation
+* Retention configuration
+* Compliance summary views
+
+## 2.2 Out of Scope for Phase 1
+
+* Automated legal case management
+* External GRC platform integration
+* Manual spreadsheet-based audit correction
+
+---
+
+# 3. Owned Concepts
+
+The Audit context owns:
+
+* AuditLog
+* ApprovalLog
+
+Supporting configuration may include retention and export policy settings.
+
+---
+
+# 4. Business Principles
+
+* Audit records must be append-only.
+* Audit records must not be editable after capture.
+* Sensitive payloads must be redacted before storage where required.
+* Approval history must preserve each approval step and actor.
+* Every finance, certificate, completion, attendance, and RBAC change must be auditable.
+* Failed and denied access attempts must be captured.
+* Audit exports must be permission-controlled and themselves logged.
+
+---
+
+# 5. Audit Model
+
+## 5.1 Audit Categories
 
 ```text
-Business Action
-        ↓
-Audit Event
-        ↓
-Audit Store
-        ↓
-Compliance Engine
-        ↓
-Reports
+Authentication
+Authorization
+User Management
+Lead Management
+Enrollment
+Finance
+Attendance
+Completion
+Certificate
+Document
+Communication
+System
+Approval
 ```
 
----
-
-# 3. Audit Event Categories
-
-The system shall support:
-
-```text
-Authentication Events
-Authorization Events
-User Management Events
-Student Events
-Finance Events
-Corporate Events
-Document Events
-Certificate Events
-Approval Events
-System Events
-```
-
----
-
-# 4. Audit Severity Levels
+## 5.2 Severity Levels
 
 ```text
 Info
 Warning
 Critical
+Security
 Compliance
-Security
 ```
 
----
-
-### Examples
-
-Info
-
-```text
-Student Updated
-```
-
-Warning
-
-```text
-Attendance Reopened
-```
-
-Critical
-
-```text
-Refund Approved
-```
-
-Security
-
-```text
-Multiple Failed Logins
-```
-
----
-
-# 5. Audit Lifecycle
+## 5.3 Audit Lifecycle
 
 ```text
 Captured
-     ↓
+  ↓
 Stored
-     ↓
+  ↓
 Indexed
-     ↓
+  ↓
 Reported
+  ↓
+Archived
+```
+
+## 5.4 Approval Lifecycle
+
+```text
+Requested
+  ↓
+Under Review
+  ↓
+Approved
+```
+
+Alternative:
+
+```text
+Under Review
+  ↓
+Rejected
 ```
 
 ---
 
-# 6. Activity Tracking Dashboard
+# 6. Screens
 
-## AUD-UI-001 Activity Dashboard
-
-### Purpose
-
-Provide centralized activity monitoring.
+## AUD-UI-001 Audit Dashboard
 
 ### Widgets
 
@@ -143,9 +149,8 @@ Critical Activities
 Pending Approvals
 Security Alerts
 Compliance Alerts
+Export Requests
 ```
-
----
 
 ### Filters
 
@@ -154,12 +159,9 @@ Module
 User
 Branch
 Severity
+Category
 Date Range
 ```
-
----
-
-# 7. Audit Event Repository
 
 ## AUD-UI-002 Audit Log Viewer
 
@@ -168,683 +170,102 @@ Date Range
 ```text
 Timestamp
 User
+Branch
 Module
 Entity
 Action
 Severity
 Status
+Actions
 ```
-
----
 
 ### Actions
 
 ```text
 View Details
-Export
-Filter
 Search
+Filter
+Export
 ```
 
----
-
-### Permissions
-
-```text
-AUDIT_VIEW
-AUDIT_EXPORT
-AUDIT_ADMIN
-```
-
----
-
-# 8. Audit Event Details
-
-## AUD-UI-003 Audit Detail Screen
+## AUD-UI-003 Audit Detail
 
 ### Sections
 
-#### Event Information
-
 ```text
-Event ID
-Timestamp
-User
-IP Address
-Device
-```
-
----
-
-#### Business Context
-
-```text
-Module
-Entity
-Entity ID
-Action
-```
-
----
-
-#### Data Changes
-
-```text
+Event Metadata
+Business Context
 Old Value
 New Value
+Approval Trail
+Additional Notes
 ```
 
----
-
-#### Additional Metadata
-
-```text
-Reason
-Remarks
-Reference Number
-```
-
----
-
-# 9. User Activity Tracking
-
-## AUD-UI-004 User Activity Screen
-
-### Activities
-
-```text
-Login
-Logout
-Create
-Update
-Delete
-Approve
-Reject
-Export
-Download
-```
-
----
-
-### Filters
-
-```text
-User
-Module
-Date Range
-Action
-```
-
----
-
-### Business Rules
-
-* Every significant user action tracked.
-* Read-only access configurable.
-
----
-
-# 10. Data Change History
-
-## AUD-UI-005 Data Change Viewer
-
-### Purpose
-
-Track changes to business records.
-
-### Example
-
-Student Update
-
-```text
-Field: Mobile Number
-
-Old: 987654321
-
-New: 999999999
-```
-
----
-
-### Supported Modules
-
-```text
-Student
-Finance
-Attendance
-Completion
-Certificate
-Corporate
-Document
-```
-
----
-
-### Business Rules
-
-* Field-level tracking required.
-* Historical values retained.
-
----
-
-# 11. Approval Audit Tracking
-
-## AUD-UI-006 Approval History
-
-### Supported Approvals
-
-```text
-Refund Approval
-Completion Approval
-Certificate Approval
-Document Approval
-Payroll Approval
-```
-
----
+## AUD-UI-004 Approval Log Viewer
 
 ### Columns
 
 ```text
-Approval Type
-Entity
-Approver
-Decision
-Timestamp
-Remarks
-```
-
----
-
-### Business Rules
-
-* Approval chain preserved.
-* Rejections retained permanently.
-
----
-
-# 12. Security Monitoring
-
-## AUD-UI-007 Security Events
-
-### Events
-
-```text
-Failed Login
-Account Lock
-Password Reset
-Role Change
-Permission Change
-Session Termination
-```
-
----
-
-### Severity
-
-```text
-Warning
-Critical
-Security
-```
-
----
-
-### Business Rules
-
-* Security alerts generated automatically.
-* Security events searchable.
-
----
-
-# 13. Compliance Monitoring
-
-## AUD-UI-008 Compliance Dashboard
-
-### Metrics
-
-```text
-Expired Documents
-Missing Documents
-Pending Approvals
-Revoked Certificates
-Expired Trainer Licenses
-```
-
----
-
-### Compliance Areas
-
-```text
-Students
-Trainers
-Corporate Customers
-Certificates
-Contracts
-```
-
----
-
-### Business Rules
-
-* Compliance status updated daily.
-* Compliance breaches highlighted.
-
----
-
-# 14. Data Access Audit
-
-## AUD-UI-009 Data Access Report
-
-### Purpose
-
-Track sensitive data access.
-
-### Examples
-
-```text
-Student Profile Viewed
-Corporate Contract Viewed
-Financial Report Downloaded
-Certificate Verified
-```
-
----
-
-### Business Rules
-
-* Sensitive access tracked.
-* Download activities tracked.
-
----
-
-# 15. Export & Download Audit
-
-## AUD-UI-010 Export Activity
-
-### Track
-
-```text
-Excel Export
-PDF Export
-CSV Export
-Bulk Download
-```
-
----
-
-### Capture
-
-```text
-User
-Report
-Filters
-Timestamp
-```
-
----
-
-### Business Rules
-
-* Exports auditable.
-* High-volume exports flagged.
-
----
-
-# 16. System Activity Monitoring
-
-## AUD-UI-011 System Events
-
-### Events
-
-```text
-Configuration Changes
-Master Data Changes
-Role Changes
-Permission Changes
-Workflow Changes
-```
-
----
-
-### Business Rules
-
-* Configuration changes require audit.
-* Previous values retained.
-
----
-
-# 17. Investigation Support
-
-## AUD-UI-012 Investigation Search
-
-### Search By
-
-```text
-User
-Entity
-Action
 Reference Number
-Date Range
+Requested By
+Reviewed By
+Decision
+Decision Date
+Module
+Actions
 ```
 
 ---
 
-### Purpose
+# 7. Functional Requirements
 
-Support:
+* The system shall capture significant events from all business modules.
+* The system shall capture old and new values where a change is recorded.
+* The system shall record the actor, branch, IP address, and timestamp when available.
+* The system shall support searching and filtering by module, entity, user, severity, and date range.
+* The system shall support export of audit records by authorized users.
+* The system shall retain approval steps for finance, completion, certificate, and access-control actions.
+* The system shall keep audit storage append-only.
+* The system shall support retention and archival policy configuration.
+
+---
+
+# 8. Audit Events
+
+The module shall ingest and normalize audit events for:
 
 ```text
-Internal Investigation
-Audit Review
-Compliance Verification
+BusinessChangeCaptured
+ApprovalActionCaptured
+AccessDeniedCaptured
+SecurityEventCaptured
+ExportRequested
+ExportCompleted
 ```
 
 ---
 
-# 18. Retention Policies
-
-## Audit Retention
-
-### Recommended
+# 9. Domain Errors
 
 ```text
-Audit Logs = 7 Years
-
-Security Logs = 7 Years
-
-Approval Logs = Permanent
-
-Certificate Audit = Permanent
+AUDIT_EVENT_INVALID
+AUDIT_EVENT_DUPLICATE
+AUDIT_RECORD_NOT_FOUND
+AUDIT_ACCESS_DENIED
+EXPORT_NOT_ALLOWED
+RETENTION_POLICY_INVALID
 ```
 
 ---
 
-### Business Rules
-
-* Archived records searchable.
-* Retention configurable.
-
----
-
-# 19. Functional Requirements
-
-## FR-AUD-001 Activity Tracking
-
-The system shall track user activities.
-
----
-
-## FR-AUD-002 Audit Logging
-
-The system shall capture audit events.
-
----
-
-## FR-AUD-003 Field Change Tracking
-
-The system shall record field-level changes.
-
----
-
-## FR-AUD-004 Approval History
-
-The system shall track approval workflows.
-
----
-
-## FR-AUD-005 Security Monitoring
-
-The system shall monitor security events.
-
----
-
-## FR-AUD-006 Compliance Monitoring
-
-The system shall monitor compliance status.
-
----
-
-## FR-AUD-007 Data Access Auditing
-
-The system shall track sensitive data access.
-
----
-
-## FR-AUD-008 Export Auditing
-
-The system shall audit exports and downloads.
-
----
-
-## FR-AUD-009 Investigation Support
-
-The system shall support audit investigations.
-
----
-
-## FR-AUD-010 Retention Management
-
-The system shall support configurable retention policies.
-
----
-
-## FR-AUD-011 Audit Reporting
-
-The system shall provide audit reports.
-
----
-
-## FR-AUD-012 Immutable Audit Records
-
-The system shall prevent modification of audit records.
-
----
-
-# 20. Notifications
-
-### Security Alert
-
-Notify:
+# 10. Reporting Views
 
 ```text
-Administrator
-Security Officer
+Critical Events Summary
+Approval Trail Summary
+Security Alert Summary
+Branch Activity Summary
+Module Activity Summary
+Export History
 ```
 
----
-
-### Compliance Breach
-
-Notify:
-
-```text
-Branch Manager
-Compliance Officer
-```
-
----
-
-### Excessive Failed Logins
-
-Notify:
-
-```text
-Administrator
-```
-
----
-
-### Critical Approval
-
-Notify:
-
-```text
-Management
-```
-
----
-
-# 21. Reports
-
-## Audit Reports
-
-```text
-User Activity Report
-Audit Trail Report
-Approval History Report
-Change History Report
-```
-
----
-
-## Security Reports
-
-```text
-Failed Login Report
-Role Change Report
-Permission Change Report
-Sensitive Access Report
-```
-
----
-
-## Compliance Reports
-
-```text
-Compliance Status Report
-Expired Documents Report
-Certificate Compliance Report
-Contract Compliance Report
-```
-
----
-
-## Investigation Reports
-
-```text
-Entity Audit Report
-User Investigation Report
-Activity Timeline Report
-```
-
----
-
-# 22. Audit Requirements
-
-Audit itself must be audited.
-
-Track:
-
-```text
-Audit Search
-Audit Export
-Audit Configuration Change
-Retention Policy Change
-```
-
-Capture:
-
-```text
-User
-Timestamp
-Action
-IP Address
-Filters Used
-```
-
----
-
-# 23. Critical Design Decisions
-
-### Event-Based Audit Framework
-
-Recommended:
-
-```text
-Business Event
-        ↓
-Audit Event
-        ↓
-Audit Store
-```
-
-Instead of modules writing directly to audit tables.
-
----
-
-### Immutable Audit Store
-
-Audit records should be:
-
-```text
-Append Only
-```
-
-Never updated.
-
-Never deleted.
-
----
-
-### Sensitive Data Masking
-
-Examples:
-
-```text
-Password
-Card Number
-OTP
-```
-
-Must never be stored in audit logs.
-
----
-
-### Compliance First Design
-
-Audit should satisfy:
-
-```text
-Corporate Audits
-ISO Audits
-Training Accreditation Audits
-Financial Audits
-```
-
----
-
-### Centralized Audit Service
-
-Recommended:
-
-```text
-Single Audit Service
-```
-
-consumed by every module.
-
----
-
-# 24. Integration Points
-
-### Consumes
-
-```text
-All Business Modules
-IAM
-Finance
-Certificates
-Documents
-Corporate Training
-```
-
-### Provides Data To
-
-```text
-Compliance
-Reporting
-Management Dashboard
-Security Monitoring
-Future AI Analytics
-```

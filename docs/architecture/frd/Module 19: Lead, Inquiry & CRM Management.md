@@ -1,89 +1,88 @@
-# Functional Requirement Document (FRD)
+# Functional Requirement Document
 
 ## Module 19: Lead, Inquiry & CRM Management
 
-**Version:** 1.0
+**Version:** 1.1
 **Module Code:** CRM
+**Phase:** Phase 1
+**Owned Bounded Context:** Lead & Inquiry Management
 
 **Dependencies:**
 
 * Communication Management
 * Identity & Access Management
-* Course Management
+* Organization Management
+* Course & Batch Management
 * Corporate Training Management
+* Admission & Enrollment Management
 
 **Provides Data To:**
 
-* Student Admissions
-* Corporate Customer Management
-* Reporting & Analytics
-* Future AI Lead Scoring
-* Future AI Counselor Assistant
+* Admissions & Enrollment Management
+* Corporate Training Management
+* Reporting & Dashboard Management
+* Audit & Compliance
 
 ---
 
 # 1. Business Purpose
 
-Lead, Inquiry & CRM Management is responsible for managing prospective students and corporate customers throughout the sales lifecycle.
+Lead & Inquiry Management captures prospects, manages follow-ups, routes assignments, and tracks conversion through the sales funnel.
 
-The module shall support:
-
-* Lead Management
-* Inquiry Management
-* Follow-Up Tracking
-* Counselor Assignment
-* Lead Pipeline
-* Campaign Tracking
-* Corporate Lead Management
-* Lead Conversion
-* CRM Activities
-* Lead Analytics
+The context owns inquiries, leads, lead sources, lead stages, follow-ups, and campaigns. It creates handoff records for admission or corporate processes, but it does not own enrollment or contract execution.
 
 ---
 
-# 2. CRM Architecture
+# 2. Scope
 
-## Student Lead Flow
+## 2.1 In Scope
 
-```text
-Lead
- ↓
-Inquiry
- ↓
-Follow-Up
- ↓
-Interested
- ↓
-Admission
- ↓
-Student
-```
+* Inquiry intake
+* Lead capture
+* Counselor assignment
+* Follow-up tracking
+* Lead stage management
+* Campaign tagging
+* Lead conversion handoff
+* Lead analytics support
 
----
+## 2.2 Out of Scope for Phase 1
 
-## Corporate Lead Flow
-
-```text
-Corporate Lead
-      ↓
-Prospect
-      ↓
-Meeting
-      ↓
-Proposal
-      ↓
-Negotiation
-      ↓
-Won
-      ↓
-Corporate Customer
-```
+* Admission lifecycle ownership
+* Enrollment lifecycle ownership
+* Corporate contract ownership
+* Payment receipt ownership
 
 ---
 
-# 3. Lead Sources
+# 3. Owned Concepts
 
-The system shall support:
+The CRM context owns:
+
+* Inquiry
+* Lead
+* LeadSource
+* LeadStage
+* FollowUp
+* Campaign
+
+---
+
+# 4. Business Principles
+
+* Inquiry is a lighter intake record than a qualified lead.
+* One inquiry may convert into one lead, and one lead may generate one admission or corporate handoff.
+* Walk-in is a lead source, not a separate lifecycle.
+* Counselor assignment must respect branch scope and workload rules.
+* Lost leads must remain available for reporting and reactivation.
+* Communication history should be linked to the lead without owning the message delivery layer.
+* Conversion handoff must not mutate downstream admission or corporate records directly.
+
+---
+
+# 5. Business Model
+
+## 5.1 Lead Sources
 
 ```text
 Walk-In
@@ -94,67 +93,100 @@ Facebook
 Instagram
 Google Ads
 Referral
+Corporate Referral
+Campaign
+```
+
+## 5.2 Lead Types
+
+```text
+Student Lead
 Corporate Lead
 ```
 
----
-
-### Business Rules
-
-* Sources configurable.
-* New sources may be added.
-
----
-
-# 4. Lead Lifecycle
-
-## Student Lead
+## 5.3 Inquiry Lifecycle
 
 ```text
 New
- ↓
+  ↓
 Contacted
- ↓
+  ↓
+Qualified
+  ↓
+Converted
+```
+
+Alternative:
+
+```text
+Qualified
+  ↓
+Closed
+```
+
+## 5.4 Lead Lifecycle
+
+```text
+New
+  ↓
+Contacted
+  ↓
 Follow-Up
- ↓
+  ↓
 Interested
- ↓
+  ↓
 Won
 ```
 
-Alternative
+Alternative:
 
 ```text
 Interested
- ↓
+  ↓
 Lost
 ```
 
----
+```text
+Won
+  ↓
+Handoff Completed
+```
 
-## Corporate Lead
+## 5.5 Follow-Up Lifecycle
 
 ```text
-New
- ↓
-Meeting Scheduled
- ↓
-Proposal Submitted
- ↓
-Negotiation
- ↓
-Won
+Planned
+  ↓
+Due
+  ↓
+Completed
+```
+
+Alternative:
+
+```text
+Due
+  ↓
+Missed
+```
+
+## 5.6 Campaign Lifecycle
+
+```text
+Draft
+  ↓
+Scheduled
+  ↓
+Running
+  ↓
+Completed
 ```
 
 ---
 
-# 5. Screens
+# 6. Screens
 
-## CRM-UI-001 Lead Dashboard
-
-### Purpose
-
-Provide lead overview.
+## CRM-UI-001 CRM Dashboard
 
 ### Widgets
 
@@ -171,17 +203,30 @@ Conversion Rate
 
 ```text
 Branch
-Course
 Counselor
+Course
 Source
+Lead Type
 Date Range
 ```
 
----
+## CRM-UI-002 Inquiry List
 
-# 6. Lead Management
+### Columns
 
-## CRM-UI-002 Lead List
+```text
+Inquiry Number
+Name
+Mobile Number
+Source
+Interested Course
+Branch
+Status
+Created Date
+Actions
+```
+
+## CRM-UI-003 Lead List
 
 ### Columns
 
@@ -190,768 +235,110 @@ Lead Number
 Lead Name
 Lead Type
 Source
-Course
 Counselor
+Stage
 Status
 Created Date
 Actions
-```
-
-### Lead Types
-
-```text
-Student Lead
-Corporate Lead
 ```
 
 ### Actions
 
 ```text
 Create Lead
-View Lead
-Edit Lead
 Assign Counselor
+Add Follow-Up
 Convert
 Mark Lost
+Reactivate
 ```
 
-### Permissions
+## CRM-UI-004 Follow-Up Queue
 
-```text
-LEAD_VIEW
-LEAD_CREATE
-LEAD_EDIT
-LEAD_ASSIGN
-LEAD_CONVERT
-```
-
----
-
-# 7. Create Lead
-
-## CRM-UI-003 Lead Screen
-
-### Personal Information
-
-Fields
+### Columns
 
 ```text
 Lead Number
-First Name
-Last Name
-Mobile Number
-Email
-Nationality
-```
-
----
-
-### Inquiry Information
-
-Fields
-
-```text
-Interested Course
-Preferred Branch
-Lead Source
-Lead Status
-```
-
----
-
-### Additional Information
-
-Fields
-
-```text
-Budget
-Expected Start Date
-Remarks
-```
-
----
-
-### Business Rules
-
-* Lead Number auto-generated.
-* Duplicate detection enabled.
-* Mobile Number preferred unique identifier.
-
----
-
-# 8. Corporate Lead Management
-
-## CRM-UI-004 Corporate Lead Screen
-
-### Company Information
-
-Fields
-
-```text
-Company Name
-Industry
-Website
-```
-
----
-
-### Contact Person
-
-Fields
-
-```text
-Contact Name
-Designation
-Mobile
-Email
-```
-
----
-
-### Opportunity Information
-
-Fields
-
-```text
-Training Requirement
-Expected Participants
-Expected Budget
-Expected Start Date
-```
-
----
-
-### Business Rules
-
-* Corporate lead may become corporate customer.
-* Multiple opportunities supported.
-
----
-
-# 9. Counselor Assignment
-
-## CRM-UI-005 Assignment Screen
-
-### Assignment Rules
-
-Supported:
-
-```text
-Manual Assignment
-Branch Based
-Course Based
-Round Robin
-```
-
----
-
-### Fields
-
-```text
+Lead Name
 Counselor
-Assignment Date
-Remarks
-```
-
----
-
-### Business Rules
-
-* Reassignment tracked.
-* Assignment history retained.
-
----
-
-# 10. Follow-Up Management
-
-## CRM-UI-006 Follow-Up Screen
-
-### Fields
-
-```text
-Lead
-Follow-Up Date
-Follow-Up Time
-Activity Type
-Remarks
-Outcome
-```
-
----
-
-### Activity Types
-
-```text
-Call
-Meeting
-WhatsApp
-SMS
-Email
-Walk-In Visit
-```
-
----
-
-### Outcomes
-
-```text
-Interested
-Not Interested
-Follow-Up Required
-Proposal Requested
-```
-
----
-
-### Business Rules
-
-* Follow-up date mandatory.
-* History retained.
-* Notifications generated.
-
----
-
-# 11. Lead Activity Timeline
-
-## CRM-UI-007 Lead Timeline
-
-### Activities
-
-```text
-Lead Created
-Call Logged
-Meeting Conducted
-WhatsApp Sent
-Email Sent
-Status Changed
-```
-
----
-
-### Business Rules
-
-* Timeline immutable.
-* Activities ordered chronologically.
-
----
-
-# 12. Lead Conversion
-
-## CRM-UI-008 Convert Lead
-
-### Student Lead
-
-Convert to:
-
-```text
-Student Admission
-```
-
----
-
-### Corporate Lead
-
-Convert to:
-
-```text
-Corporate Customer
-```
-
----
-
-### Business Rules
-
-* Conversion creates related entity.
-* Conversion history retained.
-* Lead remains available for reporting.
-
----
-
-# 13. Lost Lead Management
-
-## CRM-UI-009 Lost Lead Screen
-
-### Fields
-
-```text
-Lost Reason
-Remarks
-```
-
----
-
-### Reasons
-
-```text
-Price
-Competitor
-No Response
-Course Not Available
-Timing Issue
-Other
-```
-
----
-
-### Business Rules
-
-* Lost reason mandatory.
-* Lost analysis available in reports.
-
----
-
-# 14. Meeting Management
-
-## CRM-UI-010 Meeting Tracker
-
-### Fields
-
-```text
-Lead
-Meeting Date
-Meeting Type
-Location
-Outcome
-```
-
----
-
-### Meeting Types
-
-```text
-Phone Meeting
-Office Meeting
-Customer Site Visit
-Online Meeting
-```
-
----
-
-### Business Rules
-
-* Meeting history retained.
-* Meeting outcomes tracked.
-
----
-
-# 15. Proposal Tracking
-
-## CRM-UI-011 Proposal Tracker
-
-### Applicable To
-
-```text
-Corporate Leads
-```
-
----
-
-### Fields
-
-```text
-Proposal Number
-Proposal Date
-Proposal Value
+Due Date
 Status
+Priority
+Actions
 ```
 
----
+## CRM-UI-005 Campaign List
 
-### Status
-
-```text
-Draft
-Submitted
-Accepted
-Rejected
-```
-
----
-
-### Business Rules
-
-* Multiple proposals supported.
-* Proposal history retained.
-
----
-
-# 16. Campaign Tracking
-
-## CRM-UI-012 Campaign Management
-
-### Fields
+### Columns
 
 ```text
+Campaign Code
 Campaign Name
-Campaign Type
+Channel
+Status
 Start Date
 End Date
-Budget
-Status
+Actions
 ```
 
 ---
 
-### Campaign Types
+# 7. Functional Requirements
+
+* The system shall allow capture of inquiries from web, phone, walk-in, and campaign sources.
+* The system shall allow conversion from inquiry to lead without losing original source data.
+* The system shall allow counselors to be assigned by branch and workload.
+* The system shall allow follow-up scheduling, completion, and overdue tracking.
+* The system shall allow lead stage configuration and lead status progression.
+* The system shall allow lead conversion handoff to downstream admission or corporate workflows.
+* The system shall preserve lead history after loss, conversion, or reactivation.
+* The system shall link communication history to leads without owning delivery infrastructure.
+
+---
+
+# 8. Audit Events
+
+The module shall emit audit events for:
 
 ```text
-Facebook
-Google Ads
-WhatsApp
-Email
-Referral
-Events
+InquiryCreated
+InquiryUpdated
+LeadCreated
+LeadUpdated
+CounselorAssigned
+FollowUpScheduled
+FollowUpCompleted
+LeadConverted
+LeadMarkedLost
+CampaignCreated
+CampaignUpdated
 ```
 
 ---
 
-### Business Rules
-
-* Leads linked to campaigns.
-* Campaign performance measurable.
-
----
-
-# 17. Lead Analytics Dashboard
-
-## CRM-UI-013 Analytics
-
-### KPIs
+# 9. Domain Errors
 
 ```text
-Total Leads
-Won Leads
-Lost Leads
-Conversion Rate
-Average Conversion Time
+INQUIRY_ALREADY_CONVERTED
+LEAD_ALREADY_WON
+LEAD_ALREADY_LOST
+COUNSELOR_NOT_ASSIGNED
+BRANCH_SCOPE_VIOLATION
+FOLLOW_UP_OVERDUE
+CAMPAIGN_INACTIVE
+SOURCE_INACTIVE
 ```
 
 ---
 
-### Charts
+# 10. Reporting Views
 
 ```text
-Lead Source Distribution
-Conversion Funnel
+Lead Funnel
+Inquiry Conversion Rate
+Follow-Up Due List
 Counselor Performance
-Campaign Performance
-```
-
----
-
-# 18. Counselor Dashboard
-
-## CRM-UI-014 Counselor View
-
-### KPIs
-
-```text
-Assigned Leads
-Pending Follow-Ups
-Today's Follow-Ups
-Won Leads
-Conversion Rate
-```
-
----
-
-### Future AI Widget
-
-```text
-Suggested Next Follow-Up
-```
-
----
-
-# 19. AI Readiness Requirements
-
-Store:
-
-```text
-Lead History
-Follow-Up History
-Communication History
-Meeting Outcomes
-Lost Reasons
-Conversion Time
-```
-
----
-
-### Future AI Features
-
-```text
-Lead Scoring
-Conversion Prediction
-Course Recommendation
-Counselor Assistant
-```
-
----
-
-# 20. Functional Requirements
-
-## FR-CRM-001 Lead Management
-
-The system shall support lead management.
-
----
-
-## FR-CRM-002 Corporate Lead Management
-
-The system shall support corporate lead management.
-
----
-
-## FR-CRM-003 Lead Assignment
-
-The system shall support counselor assignment.
-
----
-
-## FR-CRM-004 Follow-Up Tracking
-
-The system shall support follow-up management.
-
----
-
-## FR-CRM-005 Activity Tracking
-
-The system shall support lead activity tracking.
-
----
-
-## FR-CRM-006 Lead Conversion
-
-The system shall support lead conversion.
-
----
-
-## FR-CRM-007 Lost Lead Analysis
-
-The system shall support lost lead tracking.
-
----
-
-## FR-CRM-008 Meeting Tracking
-
-The system shall support meeting management.
-
----
-
-## FR-CRM-009 Proposal Tracking
-
-The system shall support proposal management.
-
----
-
-## FR-CRM-010 Campaign Tracking
-
-The system shall support campaign tracking.
-
----
-
-## FR-CRM-011 Lead Analytics
-
-The system shall provide CRM analytics.
-
----
-
-## FR-CRM-012 AI Data Collection
-
-The system shall store AI-ready CRM data.
-
----
-
-# 21. Notifications
-
-### Follow-Up Due
-
-Notify:
-
-```text
-Assigned Counselor
-```
-
----
-
-### Lead Assigned
-
-Notify:
-
-```text
-Assigned Counselor
-```
-
----
-
-### Lead Converted
-
-Notify:
-
-```text
-Branch Manager
-Counselor
-```
-
----
-
-### Proposal Accepted
-
-Notify:
-
-```text
-Sales Manager
-Corporate Coordinator
-```
-
----
-
-# 22. Reports
-
-## Lead Reports
-
-```text
-Lead Source Report
-Lead Conversion Report
-Lead Funnel Report
-Lost Lead Report
-```
-
----
-
-## Counselor Reports
-
-```text
-Counselor Performance
-Follow-Up Report
-Conversion Report
-```
-
----
-
-## Campaign Reports
-
-```text
-Campaign Performance
-Lead Acquisition Report
-Lead Source ROI
-```
-
----
-
-## Corporate Reports
-
-```text
-Corporate Lead Report
-Proposal Report
-Corporate Conversion Report
-```
-
----
-
-# 23. Audit Requirements
-
-Audit:
-
-```text
-Lead Created
-Lead Updated
-Lead Assigned
-Follow-Up Added
-Status Changed
-Lead Converted
-Proposal Submitted
-Proposal Accepted
-```
-
-Capture:
-
-```text
-User
-Timestamp
-Action
-Old Value
-New Value
-Remarks
-```
-
----
-
-# 24. Critical Design Decisions
-
-### Lead As Aggregate Root
-
-Recommended:
-
-```text
-Lead
- ↓
-Activities
- ↓
-Follow-Ups
- ↓
-Meetings
- ↓
-Communications
-```
-
----
-
-### Lead Conversion
-
-Never delete leads.
-
-Use:
-
-```text
-Lead
- ↓
-Converted Entity
-```
-
-relationship.
-
----
-
-### Activity Timeline
-
-Recommended:
-
-```text
-Immutable Timeline
-```
-
-for complete sales history.
-
----
-
-### AI-Ready CRM
-
-Capture every interaction.
-
-Reason:
-
-Future AI features depend on historical lead behavior.
-
----
-
-# 25. Integration Points
-
-### Consumes
-
-```text
-Communication Management
-Course Management
-Identity Management
-```
-
-### Provides Data To
-
-```text
-Admissions
-Corporate Training
-Reporting
-AI Lead Scoring
-AI Counselor Assistant
+Source Performance
+Branch Conversion Summary
+Campaign Response Summary
 ```

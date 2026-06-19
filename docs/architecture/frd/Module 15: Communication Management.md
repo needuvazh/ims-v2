@@ -1,75 +1,100 @@
-# Functional Requirement Document (FRD)
+# Functional Requirement Document
 
 ## Module 15: Communication Management
 
-**Version:** 1.0
+**Version:** 1.1
 **Module Code:** COM
+**Phase:** Phase 2
+**Owned Bounded Context:** Communication Management
 
 **Dependencies:**
 
 * Identity & Access Management
-* Student Management
-* Corporate Training Management
-* Lead Management
+* Lead, Inquiry & CRM Management
+* Admission & Enrollment Management
+* Fee & Finance Management
+* Certificate Management
+* Audit & Compliance
+* External Messaging Adapters
 
 **Provides Data To:**
 
 * All Business Modules
-* Reporting
-* Future Marketing Automation
-* Future AI Assistant
+* Student Portal
+* Trainer Portal
+* Corporate Portal
+* Reporting & Dashboard Management
 
 ---
 
 # 1. Business Purpose
 
-Communication Management is responsible for creating, managing, delivering, tracking, and auditing communications sent through multiple channels.
+Communication Management creates, schedules, sends, tracks, and audits messages that originate from institute business events.
 
-The module shall support:
-
-* System Notifications
-* Email Communication
-* SMS Communication
-* WhatsApp Communication
-* Template Management
-* Communication History
-* Campaign Messaging
-* Bulk Messaging
-* Delivery Tracking
+The context owns templates, notification logs, and system notifications. Channel delivery is executed through external adapters, but communication intent and history remain owned here.
 
 ---
 
-# 2. Communication Architecture
+# 2. Scope
 
-```text
-Business Event
-      ↓
-Communication Rule
-      ↓
-Template
-      ↓
-Channel
-      ↓
-Delivery
-      ↓
-History
-```
+## 2.1 In Scope
 
-Example:
+* Template management
+* System notifications
+* Operational messaging
+* Transactional messaging
+* Reminder messaging
+* Delivery tracking
+* Message history
+* Communication audit trail
 
-```text
-Installment Due
-      ↓
-Fee Reminder Template
-      ↓
-SMS + Email
-      ↓
-Delivery Log
-```
+## 2.2 Out of Scope for Phase 1
+
+* Full marketing automation
+* AI-generated content
+* Two-way conversational chatbot
+* Campaign attribution engine
 
 ---
 
-# 3. Communication Channels
+# 3. Owned Concepts
+
+The Communication context owns:
+
+* CommunicationTemplate
+* CommunicationLog
+* SystemNotification
+
+Optional supporting records may include delivery attempts and recipient preferences, but the owning message state remains inside this context.
+
+---
+
+# 4. Business Principles
+
+* Communication must be triggered by a business event or an explicit approved action.
+* A template must be active for its channel before it can be used for dispatch.
+* Message history must retain the original payload and delivery outcome.
+* User preferences and branch rules must be respected where applicable.
+* External delivery failures must not delete the original communication record.
+* Sensitive content must be minimized in logs.
+* Notification visibility in the UI does not replace channel delivery history.
+
+---
+
+# 5. Business Model
+
+## 5.1 Communication Types
+
+```text
+Transactional
+Operational
+Reminder
+Alert
+Notification
+Approval Request
+```
+
+## 5.2 Communication Channels
 
 Phase 1:
 
@@ -84,29 +109,23 @@ Future:
 
 ```text
 Push Notification
-Mobile App Notification
 Voice Call
 Chatbot
 ```
 
----
-
-# 4. Communication Types
-
-The system shall support:
+## 5.3 Template Lifecycle
 
 ```text
-Transactional
-Operational
-Marketing
-Campaign
-Reminder
-Alert
+Draft
+  ↓
+Active
+  ↓
+Inactive
+  ↓
+Archived
 ```
 
----
-
-# 5. Communication Lifecycle
+## 5.4 Communication Lifecycle
 
 ```text
 Draft
@@ -120,22 +139,32 @@ Alternative:
 
 ```text
 Queued
-   ↓
+  ↓
 Failed
 ```
 
----
-
-### Campaign Lifecycle
+```text
+Sent
+  ↓
+Delivered
+```
 
 ```text
-Draft
+Delivered
   ↓
-Scheduled
+Read
+```
+
+## 5.5 System Notification Lifecycle
+
+```text
+Created
   ↓
-Running
+Visible
   ↓
-Completed
+Read
+  ↓
+Dismissed
 ```
 
 ---
@@ -144,34 +173,27 @@ Completed
 
 ## COM-UI-001 Communication Dashboard
 
-### Purpose
-
-Provide communication overview.
-
 ### Widgets
 
 ```text
 Messages Sent Today
 Failed Messages
 Pending Queue
-SMS Usage
-WhatsApp Usage
-Email Usage
-Campaign Summary
+Unread Notifications
+Template Usage
+Channel Usage
 ```
 
 ### Filters
 
 ```text
 Channel
-Date Range
-Message Type
+Type
 Status
+Date Range
+Branch
+Module
 ```
-
----
-
-# 7. Template Management
 
 ## COM-UI-002 Template List
 
@@ -195,22 +217,10 @@ Edit Template
 Preview
 Activate
 Deactivate
+Archive
 ```
 
-### Permissions
-
-```text
-TEMPLATE_VIEW
-TEMPLATE_CREATE
-TEMPLATE_EDIT
-TEMPLATE_ACTIVATE
-```
-
----
-
-# 8. Template Configuration
-
-## COM-UI-003 Template Screen
+## COM-UI-003 Template Editor
 
 ### Fields
 
@@ -221,746 +231,88 @@ Channel
 Language
 Message Type
 Subject
-Template Content
+Body
 Status
 ```
 
----
-
-### Channels
-
-```text
-Email
-SMS
-WhatsApp
-Notification
-```
-
----
-
-### Languages
-
-```text
-English
-Arabic
-```
-
----
-
-### Placeholder Support
-
-Supported variables:
-
-```text
-StudentName
-CourseName
-BatchName
-TrainerName
-FeeAmount
-DueDate
-CertificateNumber
-CorporateCustomer
-```
-
-Example:
-
-```text
-Dear {{StudentName}}
-
-Your fee of {{FeeAmount}} is due on {{DueDate}}.
-```
-
----
-
-### Business Rules
-
-* Templates version controlled.
-* Templates may be activated/deactivated.
-* Placeholder validation required.
-
----
-
-# 9. Notification Center
-
-## COM-UI-004 Notification Center
-
-### Purpose
-
-Provide in-system notifications.
-
-### Categories
-
-```text
-Lead Follow-Up
-Attendance
-Finance
-Documents
-Completion
-Certificates
-Corporate Training
-System Alerts
-```
-
----
-
-### Actions
-
-```text
-Mark Read
-Mark Unread
-View Details
-Archive
-```
-
----
-
-### Business Rules
-
-* Notifications user-specific.
-* Read status tracked.
-
----
-
-# 10. Email Communication
-
-## COM-UI-005 Email Composer
-
-### Fields
-
-```text
-Recipients
-CC
-BCC
-Subject
-Message
-Attachments
-```
-
----
-
-### Actions
-
-```text
-Send
-Save Draft
-Preview
-```
-
----
-
-### Business Rules
-
-* Email history retained.
-* Attachments supported.
-* Template insertion supported.
-
----
-
-# 11. SMS Communication
-
-## COM-UI-006 SMS Composer
-
-### Fields
-
-```text
-Recipients
-Message
-Template
-```
-
----
-
-### Actions
-
-```text
-Send
-Preview
-```
-
----
-
-### Business Rules
-
-* Character count displayed.
-* Delivery status tracked.
-* SMS consumption tracked.
-
----
-
-# 12. WhatsApp Communication
-
-## COM-UI-007 WhatsApp Composer
-
-### Fields
-
-```text
-Recipients
-Template
-Message
-Attachments
-```
-
----
-
-### Actions
-
-```text
-Send
-Preview
-```
-
----
-
-### Business Rules
-
-* Approved template usage supported.
-* Delivery status tracked.
-* Communication history retained.
-
----
-
-# 13. Bulk Communication
-
-## COM-UI-008 Bulk Messaging
-
-### Recipient Sources
-
-```text
-Students
-Leads
-Corporate Participants
-Trainers
-Custom Upload
-```
-
----
-
-### Filters
-
-```text
-Branch
-Course
-Batch
-Status
-```
-
----
-
-### Actions
-
-```text
-Send Bulk SMS
-Send Bulk Email
-Send Bulk WhatsApp
-```
-
----
-
-### Business Rules
-
-* Preview before sending.
-* Estimated recipient count shown.
-* Communication history retained.
-
----
-
-# 14. Campaign Management
-
-## COM-UI-009 Campaign List
+## COM-UI-004 Communication Log
 
 ### Columns
 
 ```text
-Campaign Code
-Campaign Name
-Channel
-Audience
-Start Date
-End Date
-Status
-```
-
----
-
-### Actions
-
-```text
-Create Campaign
-Schedule Campaign
-Start Campaign
-Stop Campaign
-```
-
----
-
-### Campaign Types
-
-```text
-Marketing
-Lead Nurturing
-Course Promotion
-Corporate Outreach
-Events
-```
-
----
-
-# 15. Campaign Configuration
-
-## COM-UI-010 Campaign Screen
-
-### Fields
-
-```text
-Campaign Name
-Campaign Type
-Channel
-Target Audience
-Template
-Schedule Date
-```
-
----
-
-### Audience Types
-
-```text
-Leads
-Students
-Corporate Customers
-Corporate Contacts
-Trainers
-```
-
----
-
-### Business Rules
-
-* Campaign delivery tracked.
-* Campaign statistics retained.
-
----
-
-# 16. Communication History
-
-## COM-UI-011 Communication History
-
-### Columns
-
-```text
-Date
-Channel
+Communication Number
 Recipient
-Message Type
+Channel
+Type
 Status
-Triggered By
+Created At
+Sent At
+Actions
 ```
-
----
-
-### Status
-
-```text
-Queued
-Sent
-Delivered
-Read
-Failed
-```
-
----
 
 ### Actions
 
 ```text
-View Message
+View
 Resend
+Mark Read
 Export
 ```
 
 ---
 
-### Business Rules
+# 7. Functional Requirements
 
-* Immutable history.
-* Search supported.
-* Delivery details retained.
+* The system shall allow authorized users to configure templates by channel, language, and type.
+* The system shall allow business events to enqueue communications through the communication service.
+* The system shall record send, delivery, read, and failure outcomes.
+* The system shall support system notifications inside the application.
+* The system shall support Arabic and English templates where required.
+* The system shall respect opt-in, opt-out, and branch visibility rules where configured.
+* The system shall allow retry only through controlled application flow.
+* The system shall keep the original template snapshot used for each communication.
 
 ---
 
-# 17. Automated Communication Rules
+# 8. Audit Events
 
-## COM-UI-012 Automation Rules
-
-### Examples
+The module shall emit audit events for:
 
 ```text
-Lead Follow-Up Reminder
-Installment Due Reminder
-Attendance Below Threshold
-Certificate Issued
-Document Expiry Alert
-Contract Expiry Alert
+CommunicationTemplateCreated
+CommunicationTemplateUpdated
+CommunicationQueued
+CommunicationSent
+CommunicationDelivered
+CommunicationFailed
+SystemNotificationCreated
+SystemNotificationRead
+SystemNotificationDismissed
 ```
 
 ---
 
-### Fields
+# 9. Domain Errors
 
 ```text
-Rule Name
-Trigger Event
-Channel
-Template
-Enabled
+TEMPLATE_INACTIVE
+TEMPLATE_NOT_FOUND
+CHANNEL_NOT_AVAILABLE
+RECIPIENT_OPTED_OUT
+COMMUNICATION_ALREADY_SENT
+COMMUNICATION_RETRY_NOT_ALLOWED
+COMMUNICATION_PAYLOAD_INVALID
 ```
 
 ---
 
-### Business Rules
-
-* Rules configurable.
-* Multiple channels per rule supported.
-
----
-
-# 18. Communication Consumption Tracking
-
-## COM-UI-013 Usage Dashboard
-
-### Metrics
+# 10. Reporting Views
 
 ```text
-SMS Sent
-WhatsApp Sent
-Emails Sent
-Failed Deliveries
-```
-
----
-
-### Breakdown
-
-```text
-Daily
-Weekly
-Monthly
-```
-
----
-
-### Business Rules
-
-* Consumption tracked by channel.
-* Historical reporting retained.
-
----
-
-# 19. Student Portal Communication View
-
-Students may view:
-
-```text
-Notifications
-Announcements
-Certificate Messages
-Fee Reminders
-```
-
-Read-only.
-
----
-
-# 20. Corporate Communication View
-
-Corporate users may view:
-
-```text
-Program Notifications
-Completion Updates
-Invoice Notifications
-Certificate Updates
-```
-
-Future portal capability.
-
----
-
-# 21. Functional Requirements
-
-## FR-COM-001 Template Management
-
-The system shall support communication templates.
-
----
-
-## FR-COM-002 Placeholder Engine
-
-The system shall support dynamic placeholders.
-
----
-
-## FR-COM-003 Notification Center
-
-The system shall provide user notifications.
-
----
-
-## FR-COM-004 Email Communication
-
-The system shall support email communication.
-
----
-
-## FR-COM-005 SMS Communication
-
-The system shall support SMS communication.
-
----
-
-## FR-COM-006 WhatsApp Communication
-
-The system shall support WhatsApp communication.
-
----
-
-## FR-COM-007 Bulk Messaging
-
-The system shall support bulk communications.
-
----
-
-## FR-COM-008 Campaign Management
-
-The system shall support campaign communications.
-
----
-
-## FR-COM-009 Communication History
-
-The system shall maintain communication history.
-
----
-
-## FR-COM-010 Automated Rules
-
-The system shall support event-based communication.
-
----
-
-## FR-COM-011 Delivery Tracking
-
-The system shall track message delivery status.
-
----
-
-## FR-COM-012 Communication Audit Trail
-
-The system shall maintain communication audit history.
-
----
-
-# 22. Notifications
-
-### Template Failure
-
-Notify:
-
-```text
-Administrator
-```
-
----
-
-### Delivery Failure
-
-Notify:
-
-```text
-Sender
-```
-
----
-
-### Campaign Completed
-
-Notify:
-
-```text
-Campaign Owner
-Management
-```
-
----
-
-### Communication Quota Reached
-
-Notify:
-
-```text
-Administrator
-Management
-```
-
----
-
-# 23. Reports
-
-## Operational Reports
-
-```text
-Communication Log Report
-Failed Message Report
-Daily Communication Report
-```
-
----
-
-## Campaign Reports
-
-```text
-Campaign Delivery Report
-Campaign Response Report
-Campaign Reach Report
-```
-
----
-
-## Usage Reports
-
-```text
-SMS Usage Report
-WhatsApp Usage Report
-Email Usage Report
-```
-
----
-
-## Management Reports
-
-```text
-Communication Trends
-Channel Effectiveness
-Delivery Success Rate
-```
-
----
-
-# 24. Audit Requirements
-
-Audit:
-
-```text
-Template Created
-Template Updated
-Message Sent
-Message Failed
-Campaign Created
-Campaign Executed
-Rule Modified
-```
-
-Capture:
-
-```text
-User
-Action
-Timestamp
-Old Value
-New Value
-Reason
-```
-
----
-
-# 25. Critical Design Decisions
-
-### Event-Driven Communication
-
-Recommended:
-
-```text
-Business Event
-       ↓
-Communication Event
-       ↓
-Channel Delivery
-```
-
-Instead of direct module-to-SMS integration.
-
-Reason:
-
-Keeps modules decoupled.
-
----
-
-### Unified Communication History
-
-Recommended:
-
-```text
-Communication Log
-```
-
-single table/service for:
-
-```text
-Email
-SMS
-WhatsApp
-Notifications
-```
-
----
-
-### Template Engine
-
-Recommended:
-
-```text
-Handlebars / Liquid Style
-```
-
-placeholder rendering engine.
-
----
-
-### Queue-Based Delivery
-
-Recommended:
-
-```text
-Business Action
-      ↓
-Queue
-      ↓
-Channel Provider
-```
-
-for scalability and reliability.
-
----
-
-# 26. Integration Points
-
-### Consumes
-
-```text
-Lead Management
-Finance
-Attendance
-Completion
-Certificates
-Documents
-Corporate Training
-```
-
-### Provides Data To
-
-```text
-All Business Modules
-Reporting
-Future AI Assistant
-Marketing Automation
+Channel Usage
+Message Delivery Success Rate
+Failed Delivery Queue
+Template Effectiveness
+Unread Notification Count
+Branch Communication Summary
 ```

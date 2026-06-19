@@ -1,17 +1,20 @@
-# Functional Requirement Document (FRD)
+# Functional Requirement Document
 
 ## Module 13: Certificate Management
 
-**Version:** 1.0
+**Version:** 1.1
 **Module Code:** CERT
+**Phase:** Phase 1
+**Owned Bounded Context:** Certificate Management
 
 **Dependencies:**
 
-* Student Management
-* Enrollment Management
+* Exam, Result & Completion Management
+* Admission & Enrollment Management
 * Course & Batch Management
-* Completion Management
 * Corporate Training Management
+* Identity & Access Management
+* Document Management
 
 **Provides Data To:**
 
@@ -24,44 +27,75 @@
 
 # 1. Business Purpose
 
-Certificate Management is responsible for generating, issuing, verifying, reissuing, and tracking certificates awarded to students and corporate participants.
+Certificate Management generates, issues, verifies, reissues, and revokes certificates for learners and corporate participants.
 
-The module shall support:
+The context owns certificate templates, certificate numbers, certificate issuance, public verification, reissue, and revocation history.
 
-* Certificate Templates
-* Certificate Generation
-* Certificate Approval
-* Certificate Issuance
-* QR Verification
-* Public Verification Portal
-* Corporate Certificates
-* Arabic & English Certificates
-* Certificate Reissue
-* Certificate Audit Tracking
+Certificate issuance is allowed only after approved completion eligibility is available from the completion context.
 
 ---
 
-# 2. Certificate Architecture
+# 2. Scope
 
-```text
-Course
-    ↓
-Enrollment
-    ↓
-Completion Approved
-    ↓
-Certificate Eligibility
-    ↓
-Certificate Generated
-    ↓
-Certificate Issued
-    ↓
-Certificate Verification
-```
+## 2.1 In Scope
+
+* Certificate template management
+* Certificate generation
+* Certificate approval
+* Certificate issuance
+* QR verification
+* Public verification portal data
+* Certificate reissue
+* Certificate revocation
+* Arabic and English certificate support
+* Corporate certificate branding metadata
+* Certificate audit tracking
+
+## 2.2 Out of Scope for Phase 1
+
+* Certificate design marketplace
+* Dynamic CMS-based template authoring
+* Student-uploaded certificate generation
 
 ---
 
-# 3. Certificate Types
+# 3. Business Principles
+
+* Certificate issuance must be based on approved completion eligibility.
+* Certificates are immutable after issuance.
+* Issued certificate PDFs must be preserved.
+* Template changes must not affect already issued certificates.
+* Certificate numbers must be unique and never reused.
+* Public verification must expose only safe verification data.
+* Reissue creates a new issued artifact while preserving the original certificate history.
+* Revocation must retain history and verification trail.
+* Arabic certificates must support RTL rendering.
+
+---
+
+# 4. Owned Concepts
+
+The Certificate context owns:
+
+* CertificateTemplate
+* CertificateTemplateVersion
+* Certificate
+* CertificateVerificationLog
+* CertificateReissueRequest
+* CertificateRevocationLog
+* CertificateNumberPolicy
+
+Notes:
+
+* Completion eligibility is consumed from Exam, Result & Completion Management.
+* Student and Corporate Participant are referenced from upstream contexts.
+* Certificate storage and PDF snapshot generation may use document storage infrastructure, but certificate ownership remains here.
+
+---
+
+# 5. Business Model
+
+## 5.1 Certificate Types
 
 The system shall support:
 
@@ -74,17 +108,20 @@ Walk-In Training Certificate
 Custom Certificate
 ```
 
----
+Rules:
 
-# 4. Certificate Lifecycle
+* Certificate type determines required issuance data and template binding.
+* Course completion and corporate certificate issuance must respect completion approval state.
+
+## 5.2 Certificate Lifecycle
 
 ```text
 Draft
-   ↓
+  ↓
 Generated
-   ↓
+  ↓
 Pending Approval
-   ↓
+  ↓
 Issued
 ```
 
@@ -92,27 +129,64 @@ Alternative:
 
 ```text
 Generated
-     ↓
+  ↓
 Rejected
 ```
 
----
-
-### Reissue Flow
+Alternative:
 
 ```text
 Issued
-   ↓
+  ↓
+Revoked
+```
+
+## 5.3 Reissue Lifecycle
+
+```text
+Issued
+  ↓
 Reissue Requested
-   ↓
+  ↓
 Approved
-   ↓
+  ↓
 Reissued
 ```
 
+Alternative:
+
+```text
+Reissue Requested
+  ↓
+Rejected
+```
+
+Rules:
+
+* Reissue must keep the original certificate record.
+* Reissue must assign a new unique certificate number.
+* Reissue must retain reason and approval trail.
+
+## 5.4 Template Lifecycle
+
+```text
+Draft
+  ↓
+Active
+  ↓
+Inactive
+  ↓
+Archived
+```
+
+Rules:
+
+* One active template per certificate type, language, and course-specific combination is allowed where configured.
+* Template updates must create a new version or use authorized override rules.
+
 ---
 
-# 5. Screens
+# 6. Screens
 
 ## CERT-UI-001 Certificate Dashboard
 
@@ -128,6 +202,7 @@ Certificates Issued
 Pending Approval
 Pending Reissue
 Rejected Certificates
+Revoked Certificates
 ```
 
 ### Filters
@@ -139,11 +214,10 @@ Batch
 Certificate Type
 Status
 Date Range
+Search
 ```
 
 ---
-
-# 6. Certificate Template Management
 
 ## CERT-UI-002 Certificate Template List
 
@@ -166,6 +240,7 @@ Edit Template
 Preview Template
 Activate
 Deactivate
+Archive
 ```
 
 ### Permissions
@@ -175,25 +250,28 @@ CERT_TEMPLATE_VIEW
 CERT_TEMPLATE_CREATE
 CERT_TEMPLATE_EDIT
 CERT_TEMPLATE_ACTIVATE
+CERT_TEMPLATE_DEACTIVATE
+CERT_TEMPLATE_ARCHIVE
 ```
 
 ---
 
 ## CERT-UI-003 Certificate Template Screen
 
-### Template Information
-
-Fields:
+### Fields
 
 ```text
 Template Code
 Template Name
 Certificate Type
 Language
+Course
 Status
+Template File
+Placeholder Configuration
+Effective Start Date
+Effective End Date
 ```
-
----
 
 ### Supported Languages
 
@@ -202,11 +280,7 @@ English
 Arabic
 ```
 
----
-
 ### Template Placeholders
-
-Supported Variables:
 
 ```text
 StudentName
@@ -219,31 +293,20 @@ TrainerName
 CorporateCustomer
 ```
 
-Example:
-
-```text
-This is to certify that {{StudentName}}
-has successfully completed
-{{CourseName}}
-```
-
----
-
 ### Business Rules
 
-* Multiple templates allowed.
-* One active template per certificate type and language.
-* Template changes should not affect previously issued certificates.
+* Multiple templates are allowed.
+* One active template per certificate type and language is allowed.
+* Template changes must not affect previously issued certificates.
+* Arabic templates must support RTL rendering.
 
 ---
-
-# 7. Certificate Generation
 
 ## CERT-UI-004 Generate Certificate
 
 ### Purpose
 
-Generate certificates for eligible students.
+Generate certificates for eligible learners.
 
 ### Filters
 
@@ -252,9 +315,9 @@ Branch
 Course
 Batch
 Completion Status
+Certificate Type
+Search
 ```
-
----
 
 ### Actions
 
@@ -264,27 +327,15 @@ Preview Certificate
 Bulk Generate
 ```
 
----
-
 ### Business Rules
 
-Certificate generation allowed only if:
-
-```text
-Completion Approved
-AND
-Attendance Eligible
-AND
-Exam Passed (if required)
-AND
-Fee Cleared (if required)
-```
+* Certificate generation is allowed only when completion eligibility is approved.
+* Generated certificate data must be immutable after issuance.
+* Bulk generation must validate each target record independently.
 
 ---
 
-# 8. Certificate Approval
-
-## CERT-UI-005 Certificate Approval Screen
+## CERT-UI-005 Certificate Approval
 
 ### Fields
 
@@ -300,17 +351,13 @@ Approve
 Reject
 ```
 
----
-
 ### Business Rules
 
-* Approval required only if enabled.
+* Approval is required only if enabled by policy.
 * Rejection requires remarks.
-* Approval action audited.
+* Approval action must be audited.
 
 ---
-
-# 9. Certificate Issuance
 
 ## CERT-UI-006 Certificate Issue Screen
 
@@ -324,8 +371,6 @@ Issue Date
 Status
 ```
 
----
-
 ### Actions
 
 ```text
@@ -335,45 +380,15 @@ Print Certificate
 Email Certificate
 ```
 
----
-
 ### Business Rules
 
-* Certificate Number unique.
-* Certificate immutable after issuance.
-* PDF snapshot preserved permanently.
+* Certificate number must be unique.
+* Certificate must be immutable after issuance.
+* PDF snapshot must be preserved permanently.
 
 ---
 
-# 10. Certificate Numbering
-
-### Format
-
-Tenant configurable.
-
-Examples:
-
-```text
-CERT-2026-00001
-
-IOSH-2026-00001
-
-ALS-000001
-```
-
----
-
-### Business Rules
-
-* Certificate Number unique globally.
-* Number cannot be modified after issuance.
-* Numbers never reused.
-
----
-
-# 11. QR Verification
-
-## CERT-UI-007 QR Generation
+## CERT-UI-007 QR Verification
 
 ### Purpose
 
@@ -381,29 +396,17 @@ Generate verification QR code.
 
 ### QR Content
 
-Contains:
-
 ```text
 Certificate Verification URL
 ```
 
-Example:
-
-```text
-https://verify.company.com/certificate/CERT-2026-00001
-```
-
----
-
 ### Business Rules
 
-* QR automatically generated.
-* QR embedded on certificate PDF.
-* QR remains valid after issuance.
+* QR code is automatically generated.
+* QR code must be embedded on the certificate PDF.
+* QR verification must resolve to safe public data only.
 
 ---
-
-# 12. Public Verification Portal
 
 ## CERT-UI-008 Public Verification
 
@@ -417,162 +420,78 @@ OR
 Scan QR Code
 ```
 
----
-
 ### Display
 
 ```text
 Certificate Number
-Student Name
-Course Name
+Certificate Type
+Issued To
+Course
 Issue Date
-Certificate Status
+Status
+Verification Result
 ```
-
----
-
-### Verification Status
-
-```text
-Valid
-Invalid
-Revoked
-Expired
-```
-
----
 
 ### Business Rules
 
-* No login required.
-* Verification available 24/7.
-* Revoked certificates must display status.
+* Public verification must not expose private learner data.
+* Revoked and reissued states must be visible.
 
 ---
-
-# 13. Certificate Reissue
 
 ## CERT-UI-009 Reissue Request
 
 ### Fields
 
 ```text
-Certificate Number
+Certificate
 Reason
+Remarks
 ```
-
-### Reasons
-
-```text
-Lost Certificate
-Damaged Certificate
-Name Correction
-Format Update
-```
-
----
 
 ### Actions
 
 ```text
-Submit Request
-Approve
-Reject
+Submit
+Cancel
 ```
-
----
 
 ### Business Rules
 
-* Original certificate remains in history.
-* Reissued certificate references original certificate.
-* Reissue action audited.
+* Reissue requires a reason.
+* Reissue must preserve original certificate history.
+* Reissued certificate must get a new certificate number.
 
 ---
-
-# 14. Corporate Certificates
 
 ## CERT-UI-010 Corporate Certificate Settings
 
 ### Additional Fields
 
 ```text
-Corporate Customer Name
-Corporate Logo
-Program Name
-Contract Reference
+Corporate Customer
+Branding Name
+Logo
+Footer Text
+Signature Configuration
 ```
-
----
 
 ### Business Rules
 
-* Corporate branding optional.
-* Corporate certificates linked to training programs.
+* Corporate branding settings are applied only when configured.
+* Corporate branding must not alter core verification data.
 
 ---
-
-# 15. Arabic Certificate Support
-
-### Supported Templates
-
-```text
-English
-Arabic
-```
-
----
-
-### Business Rules
-
-* Separate template per language.
-* RTL rendering supported.
-* Arabic certificates printable.
-
----
-
-# 16. Student Portal Certificate View
-
-Students may view:
-
-```text
-Issued Certificates
-Certificate Status
-Download PDF
-Verification QR
-```
-
-Read-only.
-
----
-
-# 17. Corporate Certificate Reports
-
-Corporate users may view:
-
-```text
-Participants
-Completion Status
-Certificates Issued
-Certificates Pending
-```
-
-Future portal feature.
-
----
-
-# 18. Certificate Revocation
 
 ## CERT-UI-011 Revoke Certificate
 
 ### Fields
 
 ```text
-Certificate Number
+Certificate
 Reason
+Remarks
 ```
-
----
 
 ### Actions
 
@@ -581,306 +500,153 @@ Revoke
 Cancel
 ```
 
----
-
-### Reasons
-
-```text
-Issued In Error
-Fraudulent Record
-Duplicate Certificate
-Compliance Issue
-```
-
----
-
 ### Business Rules
 
-* Revocation requires authorization.
-* Revoked certificates remain in history.
-* Verification portal displays Revoked status.
+* Revoke requires reason and audit trail.
+* Revoked certificates remain verifiable as revoked.
 
 ---
 
-# 19. Functional Requirements
+# 7. Functional Requirements
 
-## FR-CERT-001 Template Management
+## FR-CERT-001 Manage Templates
 
 The system shall support certificate template management.
 
----
+## FR-CERT-002 Generate Certificates
 
-## FR-CERT-002 Certificate Generation
+The system shall generate certificates for eligible completion records.
 
-The system shall generate certificates automatically.
+## FR-CERT-003 Validate Eligibility
 
----
+The system shall validate certificate eligibility before issuance.
 
-## FR-CERT-003 Eligibility Validation
+## FR-CERT-004 Approve Certificates
 
-The system shall validate certificate eligibility.
+The system shall support certificate approval when enabled.
 
----
+## FR-CERT-005 Issue Certificates
 
-## FR-CERT-004 Certificate Approval
+The system shall issue certificates after approval.
 
-The system shall support approval workflow.
+## FR-CERT-006 Number Certificates
 
----
+The system shall generate unique certificate numbers.
 
-## FR-CERT-005 Certificate Issuance
+## FR-CERT-007 Generate QR Verification
 
-The system shall support certificate issuance.
-
----
-
-## FR-CERT-006 Certificate Numbering
-
-The system shall support configurable certificate numbering.
-
----
-
-## FR-CERT-007 QR Verification
-
-The system shall generate QR-based verification.
-
----
+The system shall generate QR verification for issued certificates.
 
 ## FR-CERT-008 Public Verification Portal
 
-The system shall provide public certificate verification.
+The system shall provide a public verification view for safe certificate verification.
 
----
-
-## FR-CERT-009 Certificate Reissue
+## FR-CERT-009 Reissue Certificates
 
 The system shall support certificate reissue.
 
----
-
 ## FR-CERT-010 Corporate Certificates
 
-The system shall support corporate-branded certificates.
-
----
+The system shall support corporate certificate branding.
 
 ## FR-CERT-011 Arabic Certificates
 
 The system shall support Arabic certificate templates.
 
----
-
-## FR-CERT-012 Certificate Revocation
+## FR-CERT-012 Revoke Certificates
 
 The system shall support certificate revocation.
 
----
+## FR-CERT-013 Audit Certificate History
 
-## FR-CERT-013 Certificate Audit Trail
-
-The system shall maintain certificate history.
+The system shall maintain certificate audit trails.
 
 ---
 
-# 20. Notifications
+# 8. Audit Events
 
-### Certificate Generated
-
-Notify:
+The following audit events shall be supported:
 
 ```text
-Student
-Coordinator
+CertificateTemplateCreated
+CertificateTemplateUpdated
+CertificateTemplateActivated
+CertificateTemplateDeactivated
+CertificateGenerated
+CertificateApproved
+CertificateIssued
+CertificateQRCodeGenerated
+CertificateVerificationViewed
+CertificateReissueRequested
+CertificateReissued
+CertificateRevoked
+CertificatePdfSnapshotCreated
+CertificateNumberGenerated
+```
+
+Rules:
+
+* Certificate generation, approval, issuance, reissue, and revocation must be auditable.
+* Public verification access must be logged.
+* PDF snapshot creation must be preserved.
+
+---
+
+# 9. Domain Errors
+
+The module shall distinguish between validation and business-rule errors such as:
+
+```text
+CertificateEligibilityNotMet
+CertificateAlreadyIssued
+CertificateAlreadyRevoked
+CertificateAlreadyReissued
+CertificateApprovalRequired
+TemplateInactive
+TemplateNotFound
+TemplateLanguageNotSupported
+TemplateVersionConflict
+CertificateNumberAlreadyExists
+InvalidCertificateStateTransition
+ReissueReasonRequired
+RevocationReasonRequired
+PublicVerificationNotFound
+CorporateBrandingNotConfigured
+CompletionApprovalMissing
+StudentInactive
+CorporateParticipantInactive
 ```
 
 ---
 
-### Certificate Approved
+# 10. Reporting and Operational Views
 
-Notify:
-
-```text
-Student
-Counselor
-```
-
----
-
-### Certificate Issued
-
-Notify:
+The Certificate context shall support the following read views:
 
 ```text
-Student
-Branch Manager
-```
-
----
-
-### Reissue Requested
-
-Notify:
-
-```text
-Admin
-Coordinator
-```
-
----
-
-### Certificate Revoked
-
-Notify:
-
-```text
-Management
-Coordinator
-```
-
----
-
-# 21. Reports
-
-## Operational Reports
-
-```text
-Certificate Generation Report
-Certificate Issue Report
-Pending Certificate Report
-```
-
----
-
-## Compliance Reports
-
-```text
-Certificate Verification Report
-Revoked Certificate Report
-Reissued Certificate Report
-```
-
----
-
-## Corporate Reports
-
-```text
+Certificate Dashboard
+Template List
+Issued Certificate List
+Pending Approval List
+Reissue Queue
+Revoked Certificate List
+Public Verification Lookup
 Corporate Certificate Report
-Corporate Completion Certificate Report
+Audit History
 ```
+
+These are read models and operational views, not separate owned entities.
 
 ---
 
-## Management Reports
+# 11. FRD Improvement Notes
 
-```text
-Certificates By Course
-Certificates By Branch
-Certificates By Trainer
-```
+This module should remain the single source of truth for:
 
----
+* certificate templates
+* certificate numbering
+* issuance and immutability
+* verification and QR traceability
+* reissue and revocation
 
-# 22. Audit Requirements
-
-Audit:
-
-```text
-Template Created
-Template Updated
-Certificate Generated
-Certificate Approved
-Certificate Rejected
-Certificate Issued
-Certificate Reissued
-Certificate Revoked
-```
-
-Capture:
-
-```text
-User
-Action
-Timestamp
-Old Value
-New Value
-Reason
-```
-
----
-
-# 23. Critical Design Decisions
-
-### Certificate Snapshot Strategy
-
-Recommended:
-
-```text
-Generate PDF Snapshot
-Store Snapshot
-```
-
-Reason:
-
-Future template changes must not affect historical certificates.
-
----
-
-### Verification Source
-
-Verification should use:
-
-```text
-Certificate Number
-```
-
-as primary key.
-
-Not student name.
-
----
-
-### Immutable Issued Certificates
-
-Issued certificates should never be edited.
-
-Use:
-
-```text
-Reissue
-```
-
-instead of update.
-
----
-
-### QR Verification
-
-QR should point to:
-
-```text
-Public Verification Endpoint
-```
-
-rather than embedding raw student data.
-
----
-
-# 24. Integration Points
-
-### Consumes
-
-```text
-Completion Management
-Student Management
-Corporate Training
-Course Rules
-```
-
-### Provides Data To
-
-```text
-Student Portal
-Verification Portal
-Reporting
-Compliance
-```
+It should not own completion eligibility or attendance calculation.

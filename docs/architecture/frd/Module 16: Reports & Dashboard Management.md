@@ -1,71 +1,93 @@
-# Functional Requirement Document (FRD)
+# Functional Requirement Document
 
 ## Module 16: Reports & Dashboard Management
 
-**Version:** 1.0
+**Version:** 1.1
 **Module Code:** RPT
+**Phase:** Phase 2
+**Owned Bounded Context:** Reporting & Analytics
 
 **Dependencies:**
 
-* Lead Management
-* Student Management
+* Lead, Inquiry & CRM Management
+* Admission & Enrollment Management
 * Course & Batch Management
-* Scheduling
-* Attendance
-* Finance
-* Corporate Training
-* Completion
-* Certificates
-* Communication
+* Scheduling & Timetable Management
+* Attendance Management
+* Fee & Finance Management
+* Corporate Training Management
+* Exam, Result & Completion Management
+* Certificate Management
+* Communication Management
+* Identity & Access Management
+* Audit & Compliance
 
 **Provides Data To:**
 
 * Management
-* Operations Team
+* Branch Operations
+* Finance
+* Counselors
+* Trainers
 * Corporate Coordinators
-* Future AI Analytics Platform
+* Compliance Review
 
 ---
 
 # 1. Business Purpose
 
-Reports & Dashboard Management is responsible for aggregating operational, academic, financial, corporate, and compliance data into actionable dashboards and reports.
+Reporting & Analytics turns operational data into dashboards, scorecards, reports, and exports.
 
-The module shall support:
-
-* Operational Dashboards
-* Executive Dashboards
-* Financial Dashboards
-* Corporate Training Dashboards
-* Attendance Analytics
-* Completion Analytics
-* Ad-Hoc Reporting
-* Export Framework
-* KPI Monitoring
+The context owns report definitions, dashboard widgets, and metric snapshots. It consumes read models from source domains and must not own transactional source data.
 
 ---
 
-# 2. Reporting Architecture
+# 2. Scope
 
-```text
-Business Domains
-       ↓
-Reporting Data Layer
-       ↓
-KPI Engine
-       ↓
-Dashboard Widgets
-       ↓
-Reports
-       ↓
-Exports
-```
+## 2.1 In Scope
+
+* Dashboard configuration
+* Role-aware widgets
+* KPI cards and trend views
+* Read-only reports
+* Scheduled exports
+* Snapshot-based metrics
+* Filter presets
+* Drill-down navigation
+
+## 2.2 Out of Scope for Phase 1
+
+* Operational write actions
+* Source data correction
+* Embedded workflow approval
+* Predictive AI scoring
 
 ---
 
-# 3. Dashboard Types
+# 3. Owned Concepts
 
-The system shall support:
+The Reporting context owns:
+
+* ReportDefinition
+* DashboardWidget
+* MetricSnapshot
+
+---
+
+# 4. Business Principles
+
+* Reporting must be read-only against operational source systems.
+* Dashboards must respect role and branch scope defined in IAM.
+* Metrics should come from approved read models or snapshots.
+* Report definitions may be configured, but the report calculation logic belongs to the reporting context.
+* Sensitive fields must be masked or omitted based on access policy.
+* Exported reports must be auditable.
+
+---
+
+# 5. Business Model
+
+## 5.1 Dashboard Types
 
 ```text
 Executive Dashboard
@@ -77,11 +99,7 @@ Corporate Dashboard
 Operations Dashboard
 ```
 
----
-
-# 4. Report Categories
-
-The system shall support:
+## 5.2 Report Categories
 
 ```text
 Lead Reports
@@ -96,38 +114,53 @@ Communication Reports
 Audit Reports
 ```
 
+## 5.3 Report Lifecycle
+
+```text
+Draft
+  ↓
+Active
+  ↓
+Archived
+```
+
+## 5.4 Widget Lifecycle
+
+```text
+Draft
+  ↓
+Active
+  ↓
+Inactive
+```
+
 ---
 
-# 5. Dashboard Framework
+# 6. Screens
 
 ## RPT-UI-001 Dashboard Home
-
-### Purpose
-
-Provide role-based dashboard visibility.
 
 ### Widgets
 
 ```text
 KPI Cards
-Charts
+Trend Charts
 Tables
 Alerts
-Notifications
 Pending Actions
+Announcements
 ```
 
----
+### Filters
 
-### Business Rules
-
-* Dashboard should be role-driven.
-* Widgets configurable by role.
-* Refresh interval configurable.
-
----
-
-# 6. Executive Dashboard
+```text
+Branch
+Date Range
+Course
+Batch
+Counselor
+Trainer
+```
 
 ## RPT-UI-002 Executive Dashboard
 
@@ -135,42 +168,15 @@ Pending Actions
 
 ```text
 Total Students
-Active Students
+Active Enrollments
 New Admissions
 Revenue
 Outstanding Fees
 Lead Conversion Rate
-Corporate Revenue
-Trainer Utilization
+Attendance Rate
 Completion Rate
 Certificate Issuance Rate
 ```
-
----
-
-### Charts
-
-```text
-Monthly Admissions
-Monthly Revenue
-Lead Funnel
-Course Performance
-Branch Performance
-```
-
----
-
-### Actions
-
-```text
-Export Dashboard
-Drill Down
-View Reports
-```
-
----
-
-# 7. Branch Dashboard
 
 ## RPT-UI-003 Branch Dashboard
 
@@ -185,739 +191,79 @@ Outstanding Fees
 Upcoming Completions
 ```
 
----
+## RPT-UI-004 Report Library
 
-### Charts
-
-```text
-Attendance Trend
-Admission Trend
-Collection Trend
-```
-
----
-
-# 8. Counselor Dashboard
-
-## RPT-UI-004 Counselor Dashboard
-
-### KPIs
+### Columns
 
 ```text
-Assigned Leads
-Pending Follow-Ups
-Converted Leads
-Lost Leads
-Conversion Rate
-```
-
----
-
-### Pipeline View
-
-```text
-New
-Contacted
-Interested
-Negotiation
-Won
-Lost
-```
-
----
-
-### Future AI Widget
-
-```text
-Suggested Follow-Ups
-```
-
----
-
-# 9. Finance Dashboard
-
-## RPT-UI-005 Finance Dashboard
-
-### KPIs
-
-```text
-Today's Collection
-Monthly Collection
-Outstanding Amount
-Refund Requests
-Pending Refunds
-Corporate Receivables
-```
-
----
-
-### Charts
-
-```text
-Revenue Trend
-Outstanding Trend
-Collection Trend
-```
-
----
-
-# 10. Trainer Dashboard
-
-## RPT-UI-006 Trainer Dashboard
-
-### KPIs
-
-```text
-Assigned Batches
-Assigned Sessions
-Attendance Pending
-Completion Pending
-Utilization %
-```
-
----
-
-### Charts
-
-```text
-Workload Trend
-Utilization Trend
-```
-
----
-
-# 11. Corporate Dashboard
-
-## RPT-UI-007 Corporate Dashboard
-
-### KPIs
-
-```text
-Active Customers
-Active Contracts
-Programs Running
-Corporate Revenue
-Pending Renewals
-```
-
----
-
-### Charts
-
-```text
-Revenue By Customer
-Revenue By Contract
-Program Completion Trend
-```
-
----
-
-# 12. Lead Reports
-
-## RPT-UI-008 Lead Reports
-
-### Reports
-
-```text
-Lead Source Report
-Lead Conversion Report
-Lead Funnel Report
-Counselor Performance Report
-Campaign Performance Report
-```
-
----
-
-### Filters
-
-```text
-Date Range
-Branch
-Counselor
-Course
-Campaign
-```
-
----
-
-# 13. Student Reports
-
-## RPT-UI-009 Student Reports
-
-### Reports
-
-```text
-Student Strength Report
-Active Students Report
-Course Enrollment Report
-Branch Enrollment Report
-Student Status Report
-```
-
----
-
-### Student Status
-
-```text
-Inquiry
-Applied
-Admitted
-Active
-Completed
-Dropped
-Suspended
-Alumni
-```
-
----
-
-# 14. Attendance Reports
-
-## RPT-UI-010 Attendance Reports
-
-### Reports
-
-```text
-Daily Attendance
-Batch Attendance
-Student Attendance
-Low Attendance Report
-Attendance Trend Report
-```
-
----
-
-### KPIs
-
-```text
-Attendance %
-Present
-Absent
-Late
-Excused
-```
-
----
-
-# 15. Finance Reports
-
-## RPT-UI-011 Finance Reports
-
-### Reports
-
-```text
-Fee Collection Report
-Outstanding Fee Report
-Discount Report
-Refund Report
-Revenue Report
-```
-
----
-
-### Financial Dimensions
-
-```text
-Branch
-Course
-Department
-Trainer
-Corporate Customer
-```
-
----
-
-# 16. Trainer Reports
-
-## RPT-UI-012 Trainer Reports
-
-### Reports
-
-```text
-Trainer Utilization Report
-Trainer Assignment Report
-Trainer Performance Report
-Trainer Availability Report
-```
-
----
-
-### KPIs
-
-```text
-Assigned Hours
-Available Hours
-Utilization %
-```
-
----
-
-# 17. Corporate Reports
-
-## RPT-UI-013 Corporate Reports
-
-### Reports
-
-```text
-Corporate Revenue Report
-Contract Report
-Program Report
-Participant Report
-Renewal Report
-```
-
----
-
-### KPIs
-
-```text
-Revenue
-Completion Rate
-Attendance Rate
-Participant Count
-```
-
----
-
-# 18. Completion Reports
-
-## RPT-UI-014 Completion Reports
-
-### Reports
-
-```text
-Completion Report
-Completion Pending Report
-Exam Result Report
-Pass/Fail Report
-```
-
----
-
-### KPIs
-
-```text
-Completion %
-Pass %
-Fail %
-```
-
----
-
-# 19. Certificate Reports
-
-## RPT-UI-015 Certificate Reports
-
-### Reports
-
-```text
-Certificates Issued
-Certificates Pending
-Certificates Reissued
-Certificates Revoked
-```
-
----
-
-### KPIs
-
-```text
-Issue Rate
-Verification Count
-```
-
----
-
-# 20. Communication Reports
-
-## RPT-UI-016 Communication Reports
-
-### Reports
-
-```text
-SMS Usage Report
-WhatsApp Usage Report
-Email Usage Report
-Campaign Delivery Report
-```
-
----
-
-### KPIs
-
-```text
-Sent
-Delivered
-Read
-Failed
-```
-
----
-
-# 21. Audit Reports
-
-## RPT-UI-017 Audit Reports
-
-### Reports
-
-```text
-User Activity Report
-Data Change Report
-Approval History
-Login History
-```
-
----
-
-### Filters
-
-```text
-User
-Action
-Date Range
-Module
-```
-
----
-
-# 22. Export Framework
-
-## Supported Formats
-
-```text
-PDF
-Excel
-CSV
-```
-
----
-
-### Export Capabilities
-
-```text
-Dashboard Export
-Report Export
-Scheduled Export
-```
-
----
-
-### Business Rules
-
-* Exports should honor security permissions.
-* Large exports processed asynchronously.
-
----
-
-# 23. Scheduled Reports
-
-## RPT-UI-018 Scheduled Reports
-
-### Purpose
-
-Automatically generate reports.
-
-### Frequency
-
-```text
-Daily
-Weekly
-Monthly
-Quarterly
-```
-
----
-
-### Delivery
-
-```text
-Email
-Notification Center
-```
-
----
-
-### Business Rules
-
-* Role permissions enforced.
-* Report history retained.
-
----
-
-# 24. KPI Engine
-
-## Examples
-
-### Lead Conversion
-
-```text
-Won Leads
-÷
-Total Leads
-×
-100
-```
-
----
-
-### Attendance %
-
-```text
-Present Sessions
-÷
-Total Sessions
-×
-100
-```
-
----
-
-### Trainer Utilization
-
-```text
-Assigned Hours
-÷
-Available Hours
-×
-100
-```
-
----
-
-### Completion Rate
-
-```text
-Completed Students
-÷
-Eligible Students
-×
-100
-```
-
----
-
-# 25. Functional Requirements
-
-## FR-RPT-001 Dashboard Framework
-
-The system shall provide configurable dashboards.
-
----
-
-## FR-RPT-002 Executive Dashboard
-
-The system shall provide executive analytics.
-
----
-
-## FR-RPT-003 Branch Dashboard
-
-The system shall provide branch-level analytics.
-
----
-
-## FR-RPT-004 Operational Reports
-
-The system shall support operational reporting.
-
----
-
-## FR-RPT-005 Financial Reports
-
-The system shall support financial reporting.
-
----
-
-## FR-RPT-006 Corporate Reports
-
-The system shall support corporate reporting.
-
----
-
-## FR-RPT-007 KPI Engine
-
-The system shall calculate configurable KPIs.
-
----
-
-## FR-RPT-008 Export Framework
-
-The system shall support report exports.
-
----
-
-## FR-RPT-009 Scheduled Reports
-
-The system shall support automated report delivery.
-
----
-
-## FR-RPT-010 Drill-Down Reporting
-
-The system shall support report drill-down.
-
----
-
-## FR-RPT-011 Role-Based Reporting
-
-The system shall enforce role-based access.
-
----
-
-## FR-RPT-012 Report Audit Trail
-
-The system shall maintain report access history.
-
----
-
-# 26. Notifications
-
-### Scheduled Report Generated
-
-Notify:
-
-```text
-Report Subscriber
-```
-
----
-
-### Report Generation Failed
-
-Notify:
-
-```text
-Administrator
-```
-
----
-
-### KPI Threshold Breached
-
-Notify:
-
-```text
-Management
-Branch Manager
-```
-
-Examples:
-
-```text
-Attendance < 70%
-Outstanding Fees > Limit
-```
-
----
-
-# 27. Audit Requirements
-
-Audit:
-
-```text
-Dashboard Viewed
-Report Generated
-Report Exported
-Report Scheduled
-Schedule Modified
-```
-
-Capture:
-
-```text
-User
-Timestamp
+Report Code
 Report Name
-Filters Used
-Export Format
+Category
+Owner
+Status
+Last Run
+Actions
+```
+
+### Actions
+
+```text
+Run
+Schedule
+Export
+Clone
+Archive
 ```
 
 ---
 
-# 28. Critical Design Decisions
+# 7. Functional Requirements
 
-### Reporting Database
+* The system shall allow authorized users to create and manage dashboard definitions.
+* The system shall support role-based widget visibility and branch scope.
+* The system shall support filters by branch, date, course, batch, counselor, trainer, and status.
+* The system shall allow scheduled and on-demand report generation.
+* The system shall generate exports in approved formats.
+* The system shall use snapshots or read models for heavy metrics where needed.
+* The system shall track report execution history.
+* The system shall support drill-down from summary widgets to detail views.
 
-Recommended:
+---
+
+# 8. Audit Events
+
+The module shall emit audit events for:
 
 ```text
-Operational Database
-        ↓
-Reporting Views
-```
-
-Phase 1.
-
-Future:
-
-```text
-Operational DB
-       ↓
-Data Warehouse
-       ↓
-BI Layer
+ReportDefinitionCreated
+ReportDefinitionUpdated
+DashboardWidgetConfigured
+ReportExecuted
+ReportExported
+ReportScheduled
+MetricSnapshotGenerated
 ```
 
 ---
 
-### KPI Service
-
-Recommended:
+# 9. Domain Errors
 
 ```text
-Central KPI Engine
-```
-
-Instead of KPI calculations spread across modules.
-
----
-
-### Drill-Down Capability
-
-Every KPI should support:
-
-```text
-Card
-  ↓
-Summary Report
-  ↓
-Detailed Report
+REPORT_NOT_AVAILABLE
+REPORT_ACCESS_DENIED
+REPORT_DATA_STALE
+EXPORT_FORMAT_NOT_SUPPORTED
+EXPORT_LIMIT_EXCEEDED
+WIDGET_NOT_ALLOWED_FOR_ROLE
+METRIC_SNAPSHOT_UNAVAILABLE
 ```
 
 ---
 
-### Future AI Readiness
+# 10. Reporting Governance
 
-All KPIs should be stored historically for:
+* Source data must never be mutated from this module.
+* Report calculations must be documented and versioned.
+* Sensitive dashboards must respect IAM branch and permission rules.
+* Exports must be logged for compliance and investigation.
 
-```text
-Forecasting
-Trend Analysis
-AI Insights
-```
-
----
-
-# 29. Integration Points
-
-### Consumes
-
-```text
-Lead Management
-Student Management
-Attendance
-Finance
-Corporate Training
-Completion
-Certificates
-Communication
-```
-
-### Provides Data To
-
-```text
-Management
-Operations
-Corporate Teams
-Future AI Platform
-```
