@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@ims/audit": "workspace:*",
+    "@ims/database": "workspace:*",
     "@ims/identity-access": "workspace:*",
     "@ims/organization": "workspace:*",
     "@ims/shared-auth": "workspace:*",

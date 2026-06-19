@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
     '@ims/audit',
     '@ims/identity-access',
     '@ims/organization',
+    '@ims/database',
   ],
 };
 
