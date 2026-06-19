@@ -126,7 +126,8 @@ import { Button, Input, Card, Badge, ... } from '@ims/shared-ui';
 - [x] Identity & Access Management APIs (login, RBAC, bcrypt, HMAC sessions)
 - [x] Organization Management (Institute, Branch, Department)
 - [x] Admin portal protected dashboard page
-- [x] Public Landing Page (all 4 portals)
+- [x] Public Landing Page redesign matching reference site (https://ims-puce-delta.vercel.app/)
+- [x] Login Page redesign with split layout (left brand panel + right form)
 
 ### P1 — Next sprint
 - [ ] Student enrollment flow (Admission → Enrollment)
@@ -145,19 +146,32 @@ import { Button, Input, Card, Badge, ... } from '@ims/shared-ui';
 - [ ] Multi-select component
 - [ ] Toast/notification system
 
-### Session 3 — Landing Page (June 2026)
-**Commit**: `feat(landing)` — `apps/admin-portal/app/page.tsx`
+### Session 3 — Landing Page Redesign (June 2026)
+**Commit**: `feat(landing-redesign)` — `apps/admin-portal/app/page.tsx` + `app/(auth)/sign-in/page.tsx`
 
-**Sections built:**
-1. Sticky Navbar — glass effect, logo, nav links, sign-in + verify CTAs
-2. Hero — shimmer headline, dashboard mockup, floating stat chips, spinning rings, CSS orbs
-3. Stats Ribbon — 4 KPIs
-4. Portal Cards — 4 styled portal entry cards with hover-lift
-5. Features Bento Grid — 6 capabilities, asymmetric layout
-6. CTA Banner — dark navy with gradient orbs
-7. Footer — dark with portal links + contact
+**Reference site**: `https://ims-puce-delta.vercel.app/` — fully matched
 
-**Animation system** (CSS-only): `fadeInUp`, `slideInLeft/Right`, `float/floatSlow/floatReverse`, `spinVSlow/spinSlowReverse`, `shimmerBrass`, `pulseSoft`, `countUp`, staggered delays 75ms–1200ms
+**Landing Page Sections:**
+1. Top utility bar — phone, email, IMS Login link, Arabic toggle
+2. Sticky Navbar — ASTI-style logo (orange box + serif INSTITUTE text), uppercase tracking nav links, dark pill Admin Login CTA
+3. Hero — serif heading "Redefining Professional Growth.", training photo (right), floating stat chips, trust badges (ISO/MoL/PDO)
+4. Stats Ribbon — 80+ Programs, 25k+ Students, 150+ Partners, 20+ Years
+5. Industry Accreditation — "Success Partners." with partner badge pills
+6. Integrated Learning — 2-col (features text left, training image right), quote blockquote
+7. Featured Programs — 4-card grid with mode/duration badges + avatar stack
+8. Facilities — Dark navy background, 2-col (image left, text right), 12k+/24/7 stats
+9. Upcoming Events — list with date boxes + location
+10. Portal Access — 4 cards (Admin dark, Student/Trainer/Verify light)
+11. Corporate Solutions — CTA block with Partner With Us + Training Catalog buttons
+12. Footer — dark navy, 4-col grid with brand, portals, institute, contact
+
+**Login Page (Sign-in):**
+- Split layout: Left dark navy brand panel (logo, Empowering Excellence., feature bullets, location) + Right clean form
+- Form: AUTHENTICATION PORTAL label, Sign In heading, Username/Email, Password, Keep me signed in, Forgot password, Sign In button, Quick Access demo selector
+- Tested: 97% pass rate, all sections verified
+
+**lucide-react**: Added as direct dependency to `apps/admin-portal/package.json`
+**next.config.ts**: Added image remotePatterns for unsplash, pexels, pravatar
 
 ## Notes
 - `.pnpm-store` gitignored after first commit
