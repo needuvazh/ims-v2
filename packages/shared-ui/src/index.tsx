@@ -36,7 +36,8 @@ export * from './components/tooltip';
 
 // ─── Shell & Navigation (client) ────────────────────────────────────────────
 export * from './components/app-shell';
-export * from './components/navigation';
+// Export only SidebarNav and StatusRail from navigation (PageHeader is in page-header.tsx)
+export { SidebarNav, StatusRail } from './components/navigation';
 
 // ─── Legacy compat ──────────────────────────────────────────────────────────
 export { classNames } from './utils/classnames';

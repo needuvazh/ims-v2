@@ -285,7 +285,7 @@ export default function UIPreviewPage() {
           <SearchInput
             placeholder="Search students…"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
             onClear={() => setSearchQuery('')}
             className="w-64"
           />
@@ -395,7 +395,7 @@ export default function UIPreviewPage() {
           page={currentPage}
           totalPages={12}
           totalCount={238}
-          buildHref={(p) => `?page=${p}`}
+          buildHref={(p: number) => `?page=${p}`}
         />
       </Section>
 

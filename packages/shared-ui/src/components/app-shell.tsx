@@ -32,7 +32,7 @@ function SidebarContent({
   items,
   aside,
   onClose,
-}: AppShellProps & { onClose?: () => void }) {
+}: Omit<AppShellProps, 'children'> & { onClose?: () => void }) {
   return (
     <div className="flex h-full flex-col p-5">
       {/* Header */}
