@@ -21,14 +21,14 @@ export default function SignInPage() {
   return (
     <div
       className="flex min-h-screen"
-      style={{ background: '#FAF8F2', fontFamily: 'var(--font-body, Manrope, sans-serif)' }}
+      style={{ background: '#FAFAF8', fontFamily: 'var(--font-body, Manrope, sans-serif)' }}
       data-testid="sign-in-page"
     >
 
       {/* ═══ LEFT PANEL — Brand ═══════════════════════════════════════ */}
       <div
         className="relative hidden w-[45%] flex-shrink-0 flex-col justify-between overflow-hidden p-12 lg:flex xl:w-[42%]"
-        style={{ background: '#14213d' }}
+        style={{ background: '#0F172A' }}
         data-testid="sign-in-brand-panel"
       >
         {/* Background decoration */}
@@ -48,13 +48,13 @@ export default function SignInPage() {
           {/* Logo box (large orange square matching reference) */}
           <div
             className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl"
-            style={{ background: '#c47d46' }}
+            style={{ background: 'linear-gradient(135deg, #EA580C, #C2410C)' }}
           >
             <GraduationCap className="h-10 w-10 text-white" />
           </div>
           <p
             className="mb-1 text-[9px] font-bold uppercase tracking-[0.28em]"
-            style={{ color: '#c47d46' }}
+            style={{ color: '#EA580C' }}
           >
             Al-Saud Training Institute
           </p>
@@ -109,7 +109,7 @@ export default function SignInPage() {
         <div className="mb-8 flex flex-col items-center text-center lg:hidden">
           <div
             className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl"
-            style={{ background: '#c47d46' }}
+            style={{ background: 'linear-gradient(135deg, #EA580C, #C2410C)' }}
           >
             <GraduationCap className="h-7 w-7 text-white" />
           </div>
@@ -123,7 +123,7 @@ export default function SignInPage() {
           <div className="mb-8">
             <p
               className="mb-2 text-xs font-semibold uppercase tracking-[0.24em]"
-              style={{ color: '#c47d46' }}
+              style={{ color: '#EA580C' }}
               data-testid="sign-in-subtitle"
             >
               Authentication Portal
@@ -207,7 +207,7 @@ export default function SignInPage() {
             <button
               type="submit"
               disabled={isPending}
-              className="w-full rounded-xl bg-[#14213d] py-3 text-sm font-semibold text-white transition-all hover:bg-[#c47d46] disabled:cursor-not-allowed disabled:opacity-60 active:scale-[0.98]"
+              className="w-full rounded-xl bg-[#0F172A] py-3 text-sm font-semibold text-white transition-all hover:bg-[#EA580C] disabled:cursor-not-allowed disabled:opacity-60 active:scale-[0.98]"
               data-testid="sign-in-submit"
             >
               {isPending ? 'Signing in…' : 'Sign In'}
