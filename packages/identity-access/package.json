@@ -12,6 +12,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
+    "@ims/audit": "workspace:*",
     "@ims/shared-auth": "workspace:*",
     "@ims/shared-kernel": "workspace:*",
     "bcryptjs": "^3.0.3",

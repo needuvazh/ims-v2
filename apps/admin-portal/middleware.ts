@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { decodeSession, sessionCookieName } from '@ims/shared-auth';
 
-const protectedRoutes = ['/dashboard', '/organization', '/identity'];
+const protectedRoutes = ['/dashboard', '/organization', '/identity', '/ui-preview'];
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const session = decodeSession(request.cookies.get(sessionCookieName)?.value);
+  const session = await decodeSession(request.cookies.get(sessionCookieName)?.value);
 
   if (protectedRoutes.some((route) => pathname.startsWith(route)) && !session) {
     const url = request.nextUrl.clone();
@@ -24,5 +24,11 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/organization/:path*', '/identity/:path*', '/sign-in'],
+  matcher: [
+    '/dashboard/:path*',
+    '/organization/:path*',
+    '/identity/:path*',
+    '/ui-preview/:path*',
+    '/sign-in',
+  ],
 };

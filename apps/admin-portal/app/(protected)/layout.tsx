@@ -1,12 +1,16 @@
 import type { ReactNode } from 'react';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { decodeSession, sessionCookieName } from '@ims/shared-auth';
 import { AppShell } from '@ims/shared-ui';
 import { resolvePortalNavigation, resolvePortalShellUser } from '@ims/identity-access';
 
 export default async function ProtectedLayout({ children }: { children: ReactNode }) {
   const cookieStore = await cookies();
-  const session = decodeSession(cookieStore.get(sessionCookieName)?.value);
+  const session = await decodeSession(cookieStore.get(sessionCookieName)?.value);
+
+  if (!session) redirect('/sign-in');
+
   const shellUser = resolvePortalShellUser(session);
   const nav = resolvePortalNavigation('admin', session);
 
@@ -16,7 +20,11 @@ export default async function ProtectedLayout({ children }: { children: ReactNod
       branchName="Central Campus"
       userName={shellUser.userName}
       items={nav}
-      aside={<p className="text-xs leading-5 text-[color:var(--ims-muted)]">Branch-scoped access is enforced on every mutation path.</p>}
+      aside={
+        <p className="text-xs leading-5 text-[color:var(--ims-muted)]">
+          Branch-scoped access is enforced on every mutation path.
+        </p>
+      }
     >
       {children}
     </AppShell>

@@ -11,10 +11,22 @@
     "lint": "eslint .",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "prisma:generate": "prisma generate --schema prisma/schema.prisma"
+    "prisma:generate": "prisma generate --schema prisma/schema.prisma",
+    "seed": "ts-node --esm prisma/seed.ts"
+  },
+  "prisma": {
+    "seed": "ts-node --esm prisma/seed.ts"
   },
   "dependencies": {
+    "@ims/audit": "workspace:*",
+    "@ims/identity-access": "workspace:*",
+    "@ims/organization": "workspace:*",
+    "@ims/shared-kernel": "workspace:*",
     "@prisma/client": "^6.0.0",
-    "@ims/shared-kernel": "workspace:*"
+    "bcryptjs": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^3.0.0",
+    "ts-node": "^10.9.2"
   }
 }

@@ -1,37 +1,74 @@
-import Link from 'next/link';
-import { Button, Card, Input, PageHeader } from '@ims/shared-ui';
-import { signInAction } from './actions';
+'use client';
 
-export const metadata = {
-  title: 'Sign in | IMS Admin',
-};
+import { useActionState } from 'react';
+import { Alert, Button, Input } from '@ims/shared-ui';
+import { signInAction, type SignInState } from './actions';
+
+const initialState: SignInState = {};
+
+export const metadata = { title: 'Sign in | IMS Admin' };
 
 export default function SignInPage() {
+  const [state, formAction, isPending] = useActionState(signInAction, initialState);
+
   return (
-    <main className="w-full max-w-lg">
-      <Card className="space-y-6">
-        <PageHeader
-          eyebrow="Authentication"
-          title="Sign in to the admin portal"
-          description="This foundation build uses a demo session until the real identity provider is wired in."
-        />
-        <form action={signInAction} className="space-y-4">
-          <label className="block space-y-2">
-            <span className="text-sm font-medium">Email</span>
-            <Input name="email" type="email" autoComplete="email" placeholder="admin@example.com" />
-          </label>
-          <label className="block space-y-2">
-            <span className="text-sm font-medium">Password</span>
-            <Input name="password" type="password" autoComplete="current-password" placeholder="••••••••" />
-          </label>
-          <div className="flex items-center justify-between gap-3 pt-2">
-            <Button type="submit">Sign in</Button>
-            <Link className="text-sm font-medium text-[color:var(--ims-brass)]" href="/">
-              Back to overview
-            </Link>
-          </div>
-        </form>
-      </Card>
-    </main>
+    <div className="flex min-h-screen items-center justify-center bg-[color:var(--ims-paper)] p-4">
+      <div className="w-full max-w-sm space-y-8">
+        {/* Brand */}
+        <div className="text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[color:var(--ims-muted)]">
+            Al-Saud Training Institute
+          </p>
+          <h1 className="mt-2 font-[family-name:var(--font-display,serif)] text-4xl font-semibold tracking-tight text-[color:var(--ims-ink)]">
+            Admin Portal
+          </h1>
+          <p className="mt-1 text-sm text-[color:var(--ims-muted)]">
+            Sign in to manage your institute
+          </p>
+        </div>
+
+        {/* Form Card */}
+        <div className="rounded-[32px] border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-8 shadow-[0_18px_50px_rgba(17,24,39,0.08)]">
+          <form action={formAction} className="space-y-5">
+            {state.error && (
+              <Alert variant="error" description={state.error} data-testid="sign-in-error" />
+            )}
+
+            <Input
+              name="email"
+              type="email"
+              label="Email address"
+              placeholder="admin@example.com"
+              autoComplete="email"
+              required
+              data-testid="sign-in-email"
+            />
+
+            <Input
+              name="password"
+              type="password"
+              label="Password"
+              placeholder="••••••••"
+              autoComplete="current-password"
+              required
+              data-testid="sign-in-password"
+            />
+
+            <Button
+              type="submit"
+              loading={isPending}
+              className="w-full"
+              data-testid="sign-in-submit"
+            >
+              Sign in
+            </Button>
+          </form>
+        </div>
+
+        <p className="text-center text-xs text-[color:var(--ims-muted)]">
+          IMS v2 · Secure admin access only
+        </p>
+      </div>
+    </div>
   );
 }

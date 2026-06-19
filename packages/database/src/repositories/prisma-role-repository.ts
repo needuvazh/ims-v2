@@ -94,8 +94,16 @@ export class PrismaRoleRepository implements RoleRepository {
     for (const perm of permissions) {
       await this.prisma.permission.upsert({
         where: { permissionCode: perm.permissionCode },
-        create: { id: crypto.randomUUID(), ...perm, status: 'Active' },
-        update: { description: perm.description },
+        create: {
+          id: crypto.randomUUID(),
+          moduleCode: perm.moduleCode,
+          featureCode: perm.featureCode,
+          actionCode: perm.actionCode,
+          permissionCode: perm.permissionCode,
+          description: perm.description ?? null,
+          status: 'Active',
+        },
+        update: { description: perm.description ?? null },
       });
     }
   }

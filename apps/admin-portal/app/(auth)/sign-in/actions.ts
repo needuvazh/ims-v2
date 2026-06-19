@@ -3,31 +3,47 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
-import { createDemoSession, encodeSession, sessionCookieName } from '@ims/shared-auth';
+import { sessionCookieName } from '@ims/shared-auth';
+import { DomainError } from '@ims/shared-kernel';
+import { authService } from '../../lib/runtime';
 
 const signInSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(4),
+  email: z.string().trim().email().toLowerCase(),
+  password: z.string().min(1),
 });
 
-export async function signInAction(formData: FormData) {
+export type SignInState = {
+  error?: string;
+};
+
+export async function signInAction(_prev: SignInState, formData: FormData): Promise<SignInState> {
   const parsed = signInSchema.safeParse({
     email: formData.get('email'),
     password: formData.get('password'),
   });
 
   if (!parsed.success) {
-    throw new Error('Enter a valid email address and password.');
+    return { error: 'Please enter a valid email and password.' };
   }
 
-  const session = createDemoSession('55555555-5555-5555-5555-555555555555');
-  const cookieStore = await cookies();
+  let sessionToken: string;
+  try {
+    const result = await authService.signIn(parsed.data);
+    sessionToken = result.sessionToken;
+  } catch (err) {
+    if (err instanceof DomainError) {
+      return { error: err.message };
+    }
+    return { error: 'Something went wrong. Please try again.' };
+  }
 
-  cookieStore.set(sessionCookieName, encodeSession(session), {
+  const cookieStore = await cookies();
+  cookieStore.set(sessionCookieName, sessionToken, {
     httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
     path: '/',
-    secure: process.env.NODE_ENV === 'production',
+    maxAge: 60 * 60 * 8, // 8 hours
   });
 
   redirect('/dashboard');

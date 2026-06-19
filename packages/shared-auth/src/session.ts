@@ -105,3 +105,14 @@ export function resolveActiveBranchId(session: Session): BranchId | null {
 export function resolveUserId(session: Session): Uuid {
   return session.userId as Uuid;
 }
+
+/** @deprecated Use the real authService.signIn() instead. Test helper only. */
+export function createDemoSession(userId: string): Session {
+  return {
+    userId,
+    displayName: 'Demo User',
+    roles: ['SUPER_ADMIN'],
+    permissions: ['dashboard.view', 'organization.manage', 'identity.read', 'identity.write'],
+    activeBranchId: null,
+  };
+}
