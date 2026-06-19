@@ -37,6 +37,8 @@
     }
   },
   "dependencies": {
-    "@prisma/client": "6.19.3"
+    "@prisma/client": "6.19.3",
+    "framer-motion": "^12.40.0",
+    "next": "^16.2.9"
   }
 }

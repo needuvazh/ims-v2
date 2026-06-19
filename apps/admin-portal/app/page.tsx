@@ -1,22 +1,12 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
-  ArrowRight,
-  Award,
-  BookOpen,
-  Building2,
-  CheckCircle,
-  ChevronRight,
-  Clock,
-  GraduationCap,
-  Mail,
-  MapPin,
-  Phone,
-  Shield,
-  Users,
+  ArrowRight, Award, BookOpen, Building2, CheckCircle, ChevronRight,
+  Clock, GraduationCap, Mail, MapPin, Phone, Shield, Users, Sparkles, Play, Star
 } from 'lucide-react';
-import { AnimateIn } from './components/animate-in';
-import { CountUp } from './components/count-up';
-import { StickyNav } from './components/sticky-nav';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 
 /* ─── Data ─────────────────────────────────────────────────────────────── */
 const NAV = [
@@ -29,825 +19,318 @@ const NAV = [
 ];
 
 const STATS = [
-  { value: '80+',  suffix: '', label: 'Global Programs',   num: '80+'  },
-  { value: '25k+', suffix: '', label: 'Students Trained',  num: '25k+' },
-  { value: '150+', suffix: '', label: 'Success Partners',  num: '150+' },
-  { value: '20+',  suffix: '', label: 'Years Experience',  num: '20+'  },
+  { value: '80+',  label: 'Global Programs',   color: '#EC4899' },
+  { value: '25k+', label: 'Students Trained',  color: '#8B5CF6' },
+  { value: '150+', label: 'Success Partners',  color: '#06B6D4' },
+  { value: '20+',  label: 'Years Experience',  color: '#F59E0B' },
 ];
 
 const PARTNERS = ['ISO 9001', 'PDO Approved', 'MoL Certified', 'NEBOSH', 'IOSH', 'PMI Authorized'];
 
 const FEATURES = [
-  { icon: Shield,    title: 'Strategic Vision',   desc: 'Aligning training goals with national workforce development targets.' },
-  { icon: Building2, title: 'Modern Facilities',  desc: 'High-spec classrooms, simulation labs, and collaborative spaces.'   },
-  { icon: Users,     title: 'Certified Trainers', desc: 'Expert instructors with global certifications and industry experience.' },
+  { icon: Shield,    title: 'Strategic Vision',   desc: 'Aligning training goals with national workforce development targets.', color: '#8B5CF6' },
+  { icon: Building2, title: 'Modern Facilities',  desc: 'High-spec classrooms, simulation labs, and collaborative spaces.', color: '#EC4899'   },
+  { icon: Users,     title: 'Certified Trainers', desc: 'Expert instructors with global certifications and industry experience.', color: '#06B6D4' },
 ];
 
 const PROGRAMS = [
-  { tag: 'Safety',    title: 'Process Safety Fundamentals',          mode: 'Classroom', hours: '8 hrs'  },
-  { tag: 'Language',  title: 'IELTS Preparation Course',             mode: 'Classroom', hours: '40 hrs' },
-  { tag: 'Project',   title: 'Project Management Professional',      mode: 'Blended',   hours: '5 days' },
-  { tag: 'Engineering', title: 'Industrial Safety & Risk Assessment', mode: 'Classroom', hours: '3 days' },
+  { tag: 'Safety',    title: 'Process Safety Fundamentals',          mode: 'Classroom', hours: '8 hrs', color: '#EC4899'  },
+  { tag: 'Language',  title: 'IELTS Preparation Course',             mode: 'Classroom', hours: '40 hrs', color: '#8B5CF6' },
+  { tag: 'Project',   title: 'Project Management Professional',      mode: 'Blended',   hours: '5 days', color: '#F59E0B' },
+  { tag: 'Engineering', title: 'Industrial Safety & Risk Assessment', mode: 'Classroom', hours: '3 days', color: '#06B6D4' },
 ];
 
 const EVENTS = [
-  { month: 'JUL', day: '15', title: 'IELTS Information Session',  place: 'Main Campus',        time: '10:00 AM' },
-  { month: 'JUL', day: '22', title: 'Process Safety Workshop',    place: 'Training Centre B',  time: '09:00 AM' },
-  { month: 'AUG', day: '05', title: 'Corporate Training Expo',    place: 'Conference Hall',    time: '08:30 AM' },
+  { month: 'JUL', day: '15', title: 'IELTS Information Session',  place: 'Main Campus',        time: '10:00 AM', color: '#8B5CF6' },
+  { month: 'JUL', day: '22', title: 'Process Safety Workshop',    place: 'Training Centre B',  time: '09:00 AM', color: '#EC4899' },
+  { month: 'AUG', day: '05', title: 'Corporate Training Expo',    place: 'Conference Hall',    time: '08:30 AM', color: '#06B6D4' },
 ];
 
 const PORTALS = [
-  { id: 'admin',   label: 'Admin Portal',       cta: 'Sign In as Admin',  desc: 'Full control over institute operations — branches, staff, enrollment, fees.',      icon: Shield,       href: '/sign-in', dark: true  },
-  { id: 'student', label: 'Student Portal',     cta: 'Student Login',     desc: 'Access courses, attendance, results, certificates, and fee payments.',               icon: GraduationCap, href: '#',       dark: false },
-  { id: 'trainer', label: 'Trainer Portal',     cta: 'Trainer Login',     desc: 'Mark attendance, upload content, track progress, and schedule sessions.',            icon: BookOpen,     href: '#',        dark: false },
-  { id: 'verify',  label: 'Certificate Verify', cta: 'Verify Now',        desc: 'Instantly verify the authenticity of any certificate issued by the institute.',      icon: Award,        href: '#',        dark: false },
+  { id: 'admin',   label: 'Admin Portal',       cta: 'Sign In as Admin',  desc: 'Full control over institute operations.',      icon: Shield,       href: '/sign-in', color: '#8B5CF6' },
+  { id: 'student', label: 'Student Portal',     cta: 'Student Login',     desc: 'Access courses, attendance, and results.',      icon: GraduationCap, href: 'http://student-portal.localhost', color: '#EC4899' },
+  { id: 'trainer', label: 'Trainer Portal',     cta: 'Trainer Login',     desc: 'Mark attendance, upload content.',              icon: BookOpen,     href: 'http://trainer-portal.localhost', color: '#06B6D4' },
+  { id: 'verify',  label: 'Verify Certificate', cta: 'Verify Now',        desc: 'Verify authenticity of certificates.',          icon: Award,        href: '#',        color: '#F59E0B' },
 ];
+
+/* ─── StickyNav ─────────────────────────────────────────────────────────── */
+function StickyNav() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  return (
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/80 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'}`}
+    >
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8">
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white shadow-lg transition-transform group-hover:scale-110 group-hover:rotate-3">
+            <Sparkles className="h-6 w-6" />
+          </div>
+          <div className="hidden sm:block">
+            <span className={`block text-[10px] font-bold uppercase tracking-widest ${scrolled ? 'text-violet-600' : 'text-violet-200'}`}>Al-Saud Training</span>
+            <span className={`block text-lg font-black tracking-tight ${scrolled ? 'text-slate-900' : 'text-white'}`}>Institute</span>
+          </div>
+        </Link>
+
+        <nav className="hidden md:flex items-center gap-8">
+          {NAV.map((link) => (
+            <Link key={link.label} href={link.href} className={`text-xs font-bold tracking-widest transition-colors hover:text-fuchsia-500 ${scrolled ? 'text-slate-600' : 'text-slate-200'}`}>
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-4">
+          <Link href="/sign-in" className="rounded-full bg-slate-900 px-6 py-2.5 text-xs font-bold text-white transition-all hover:bg-violet-600 hover:shadow-[0_0_20px_rgba(124,58,237,0.4)] hover:-translate-y-0.5">
+            Admin Login
+          </Link>
+        </div>
+      </div>
+    </motion.header>
+  );
+}
 
 /* ─── Component ─────────────────────────────────────────────────────────── */
 export default function LandingPage() {
+  const { scrollYProgress } = useScroll();
+  const yHero = useTransform(scrollYProgress, [0, 1], [0, 300]);
+  const opacityHero = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
   return (
-    <div
-      className="min-h-screen overflow-x-hidden text-[#0F172A]"
-      style={{ background: '#FAFAF8', fontFamily: 'var(--font-body, Manrope, sans-serif)' }}
-    >
-
-      {/* ══ TOP UTILITY BAR ══════════════════════════════════════════════ */}
-      <div
-        className="hidden border-b border-[rgba(15,23,42,0.08)] px-6 py-2 text-xs lg:block"
-        style={{ background: '#0F172A' }}
-        data-testid="utility-bar"
-      >
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <div className="flex items-center gap-6 text-white/50">
-            <a href="tel:+96896589150" className="flex items-center gap-1.5 transition-colors hover:text-white/80">
-              <Phone className="h-3 w-3" /> +968 9658 9150
-            </a>
-            <a href="mailto:contactus@alsaud-intl.com" className="flex items-center gap-1.5 transition-colors hover:text-white/80">
-              <Mail className="h-3 w-3" /> contactus@alsaud-intl.com
-            </a>
-          </div>
-          <div className="flex items-center gap-4 text-white/50">
-            <Link href="/sign-in" className="font-semibold text-[#EA580C] transition-colors hover:text-[#f97316]" data-testid="utility-ims-login">
-              IMS Login
-            </Link>
-            <span className="opacity-30">|</span>
-            <span className="cursor-pointer transition-colors hover:text-white/80">العربية</span>
-          </div>
-        </div>
-      </div>
-
-      {/* ══ MAIN NAVBAR ══════════════════════════════════════════════════ */}
+    <div className="min-h-screen overflow-x-hidden bg-[#FAFAFA] text-slate-900 font-sans">
       <StickyNav />
 
       {/* ══ HERO ════════════════════════════════════════════════════════ */}
-      <section
-        className="relative overflow-hidden"
-        style={{ background: '#0F172A' }}
-        data-testid="hero-section"
-      >
-        {/* Animated background orbs */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-          <div
-            className="animate-morph-blob animate-float-slow absolute -left-32 -top-32 h-[600px] w-[600px] opacity-20"
-            style={{ background: 'radial-gradient(circle, rgba(234,88,12,0.6) 0%, transparent 70%)' }}
-          />
-          <div
-            className="animate-morph-blob animate-float-rev absolute -right-24 bottom-0 h-[500px] w-[500px] opacity-15"
-            style={{ background: 'radial-gradient(circle, rgba(234,88,12,0.4) 0%, transparent 70%)', animationDelay: '4s' }}
-          />
-          {/* Dot grid */}
-          <div className="dot-grid-light absolute inset-0 opacity-40" />
-          {/* Spinning ring */}
-          <div
-            className="animate-spin-vslow absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed"
-            style={{ borderColor: 'rgba(234,88,12,0.12)' }}
-          />
-          <div
-            className="animate-spin-rev absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full border"
-            style={{ borderColor: 'rgba(255,255,255,0.04)' }}
-          />
-        </div>
+      <section className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-slate-950">
+        <motion.div style={{ y: yHero, opacity: opacityHero }} className="absolute inset-0 pointer-events-none">
+          {/* Vibrant colorful blobs */}
+          <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-violet-600/30 blur-[120px]" />
+          <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-fuchsia-600/20 blur-[120px]" />
+          <div className="absolute top-[20%] right-[10%] w-[300px] h-[300px] rounded-full bg-cyan-400/20 blur-[100px]" />
+          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
+        </motion.div>
 
-        <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-16 lg:px-8 lg:pb-32 lg:pt-20">
-          <div className="flex flex-col items-center gap-14 lg:flex-row lg:items-center lg:gap-12">
-
-            {/* Text column */}
-            <div className="flex-1 text-center lg:text-left" data-testid="hero-text">
-              {/* Eyebrow */}
-              <div
-                className="animate-fade-in-up mb-5 inline-flex items-center gap-2 rounded-full border px-4 py-1.5"
-                style={{ borderColor: 'rgba(234,88,12,0.35)', background: 'rgba(234,88,12,0.1)' }}
-                data-testid="hero-badge"
-              >
-                <span className="animate-pulse-soft h-1.5 w-1.5 rounded-full bg-[#EA580C]" />
-                <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#f97316]">
-                  Al-Saud Training Institute
-                </span>
+        <div className="relative mx-auto max-w-7xl px-6 py-24 lg:px-8 z-10 flex flex-col lg:flex-row items-center gap-16">
+          <div className="flex-1 text-center lg:text-left">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 mb-6">
+                <Star className="h-3.5 w-3.5 text-violet-400" />
+                <span className="text-[10px] font-bold uppercase tracking-widest text-violet-300">Level up your skills</span>
               </div>
-
-              {/* Headline */}
-              <h1
-                className="mb-6 leading-[1.04] tracking-tight text-white"
-                style={{ fontFamily: 'var(--font-display, Georgia, serif)', fontSize: 'clamp(2.8rem, 6vw, 5rem)', fontWeight: 700 }}
-                data-testid="hero-heading"
-              >
-                <span className="animate-fade-in-up block">Redefining</span>
-                <span className="animate-fade-in-up delay-100 block text-gradient-orange">Professional</span>
-                <span className="animate-fade-in-up delay-200 block">Growth.</span>
+              <h1 className="text-5xl lg:text-7xl font-black tracking-tight text-white mb-6 leading-[1.1]">
+                Learn today. <br/>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400">
+                  Lead tomorrow.
+                </span>
               </h1>
-
-              {/* Subtitle */}
-              <p
-                className="animate-fade-in-up delay-300 mb-8 max-w-lg text-base leading-relaxed lg:mx-0"
-                style={{ color: 'rgba(255,255,255,0.58)' }}
-                data-testid="hero-subtitle"
-              >
-                Building a future-ready workforce through international accreditations,
-                world-class facilities, and industry-leading expertise.
+              <p className="text-lg text-slate-300 mb-10 max-w-xl mx-auto lg:mx-0">
+                Unlock your potential with world-class training, expert instructors, and a vibrant community dedicated to your success.
               </p>
-
-              {/* CTAs */}
-              <div
-                className="animate-fade-in-up delay-400 mb-8 flex flex-wrap justify-center gap-3 lg:justify-start"
-                data-testid="hero-ctas"
-              >
-                <a
-                  href="#programs"
-                  className="group flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold text-white transition-all active:scale-[0.97]"
-                  style={{ background: 'linear-gradient(135deg, #EA580C, #C2410C)', boxShadow: '0 6px 22px rgba(234,88,12,0.45)' }}
-                  data-testid="hero-cta-browse"
-                >
-                  Browse Programs
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </a>
-                <a
-                  href="#about"
-                  className="rounded-full px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-white/10 active:scale-[0.97]"
-                  style={{ border: '1px solid rgba(255,255,255,0.2)' }}
-                  data-testid="hero-cta-about"
-                >
-                  About Us
-                </a>
+              
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
+                <Link href="#programs" className="rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 px-8 py-4 text-sm font-bold text-white shadow-[0_0_40px_rgba(139,92,246,0.4)] transition-all hover:scale-105 hover:shadow-[0_0_60px_rgba(139,92,246,0.6)] flex items-center gap-2">
+                  Explore Programs <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link href="#about" className="rounded-full border-2 border-white/20 bg-white/5 px-8 py-4 text-sm font-bold text-white backdrop-blur-md transition-all hover:bg-white/10 hover:scale-105 flex items-center gap-2">
+                  <Play className="h-4 w-4" /> Watch Video
+                </Link>
               </div>
-
-              {/* Trust badges */}
-              <div
-                className="animate-fade-in-up delay-500 flex flex-wrap justify-center gap-5 text-xs lg:justify-start"
-                style={{ color: 'rgba(255,255,255,0.42)' }}
-              >
-                {['ISO 9001 Accredited', 'MoL Certified', 'PDO Approved'].map((item) => (
-                  <span key={item} className="flex items-center gap-1.5">
-                    <CheckCircle className="h-3.5 w-3.5 text-[#EA580C]" />
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Image column */}
-            <div
-              className="animate-fade-in-right delay-200 relative w-full max-w-[420px] flex-shrink-0 lg:max-w-[520px]"
-              data-testid="hero-image"
-            >
-              {/* Main image card */}
-              <div
-                className="animate-float-slow relative overflow-hidden rounded-2xl"
-                style={{
-                  boxShadow: '0 32px 80px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.06)',
-                  animationDelay: '0.3s',
-                }}
-              >
-                <img
-                  src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85&w=1200"
-                  alt="Al-Saud Training Institute"
-                  className="h-[300px] w-full object-cover lg:h-[420px]"
-                  style={{ filter: 'brightness(0.9)' }}
-                />
-                {/* Gradient overlay on image */}
-                <div
-                  className="absolute inset-0"
-                  style={{ background: 'linear-gradient(to top, rgba(15,23,42,0.6) 0%, transparent 50%)' }}
-                />
-              </div>
-
-              {/* Floating chip — students */}
-              <div
-                className="animate-float absolute -bottom-5 -left-5 rounded-2xl px-5 py-3.5"
-                style={{
-                  background: 'linear-gradient(135deg, #EA580C, #C2410C)',
-                  boxShadow: '0 12px 32px rgba(234,88,12,0.4)',
-                  animationDelay: '1s',
-                }}
-                data-testid="hero-chip-students"
-              >
-                <p className="text-xl font-bold text-white">25k+</p>
-                <p className="text-[10px] font-semibold uppercase tracking-widest text-white/70">Students Trained</p>
-              </div>
-
-              {/* Floating chip — programs */}
-              <div
-                className="animate-float-rev absolute -right-5 -top-5 rounded-2xl px-5 py-3.5"
-                style={{
-                  background: 'rgba(255,255,255,0.08)',
-                  border: '1px solid rgba(255,255,255,0.14)',
-                  backdropFilter: 'blur(16px)',
-                  boxShadow: '0 12px 32px rgba(0,0,0,0.3)',
-                  animationDelay: '0.5s',
-                }}
-                data-testid="hero-chip-programs"
-              >
-                <p className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-display, serif)' }}>80+</p>
-                <p className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.5)' }}>Programs</p>
-              </div>
-
-              {/* Floating chip — live */}
-              <div
-                className="absolute right-4 bottom-4 flex items-center gap-2 rounded-xl px-3 py-2"
-                style={{
-                  background: 'rgba(15,23,42,0.7)',
-                  backdropFilter: 'blur(12px)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                }}
-              >
-                <div className="relative">
-                  <div className="h-2 w-2 rounded-full bg-[#EA580C]" />
-                  <div className="pulse-ring absolute inset-0 rounded-full" />
-                </div>
-                <p className="text-[10px] font-semibold text-white">Live Enrollment Open</p>
-              </div>
-            </div>
-
+            </motion.div>
           </div>
-        </div>
 
-        {/* Bottom wave divider */}
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[rgba(234,88,12,0.4)] to-transparent" />
+          <motion.div 
+            className="flex-1 relative w-full max-w-lg"
+            initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+          >
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-violet-900/50 border border-white/10 aspect-[4/5] lg:aspect-square bg-slate-800">
+              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1000&auto=format&fit=crop" alt="Students" className="w-full h-full object-cover mix-blend-luminosity opacity-80" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
+            </div>
+
+            {/* Floating Badges */}
+            <motion.div 
+              animate={{ y: [0, -15, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -bottom-6 -left-6 rounded-2xl bg-white p-4 shadow-xl border border-slate-100 flex items-center gap-4"
+            >
+              <div className="bg-fuchsia-100 p-3 rounded-xl">
+                <Users className="h-6 w-6 text-fuchsia-600" />
+              </div>
+              <div>
+                <p className="text-2xl font-black text-slate-900">25k+</p>
+                <p className="text-[10px] font-bold uppercase text-slate-500">Students</p>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              animate={{ y: [0, 15, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-6 -right-6 rounded-2xl bg-slate-900 p-4 shadow-xl border border-slate-800 flex items-center gap-4"
+            >
+              <div className="bg-cyan-500/20 p-3 rounded-xl">
+                <Award className="h-6 w-6 text-cyan-400" />
+              </div>
+              <div>
+                <p className="text-2xl font-black text-white">98%</p>
+                <p className="text-[10px] font-bold uppercase text-cyan-200">Success Rate</p>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+        
+        {/* Wave divider */}
+        <div className="absolute bottom-0 w-full overflow-hidden leading-none">
+          <svg className="relative block w-full h-[50px] md:h-[100px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118,130.85,130.4,201.5,123.63,243.6,119.5,285.5,107.5,321.39,56.44Z" className="fill-[#FAFAFA]"></path>
+          </svg>
+        </div>
       </section>
 
-      {/* ══ STATS RIBBON ════════════════════════════════════════════════ */}
-      <section
-        className="border-b border-[rgba(15,23,42,0.08)] bg-white px-6 py-14 lg:px-8"
-        data-testid="stats-section"
-      >
-        <div className="mx-auto max-w-7xl">
-          <div className="grid grid-cols-2 divide-x divide-[rgba(15,23,42,0.08)] md:grid-cols-4">
+      {/* ══ STATS ═══════════════════════════════════════════════════════ */}
+      <section className="py-20 relative z-10 bg-[#FAFAFA]">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {STATS.map((stat, i) => (
-              <div
-                key={stat.label}
-                className="flex flex-col items-center gap-2 px-6 py-2 text-center"
-                data-testid={`stat-${i}`}
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="flex flex-col items-center text-center p-6 rounded-3xl bg-white shadow-xl shadow-slate-200/50 border border-slate-100 hover:-translate-y-2 transition-transform"
               >
-                <span
-                  className="text-5xl font-bold tracking-tight text-gradient-orange lg:text-6xl"
-                  style={{ fontFamily: 'var(--font-display, Georgia, serif)' }}
-                >
-                  <CountUp value={stat.num} />
-                </span>
-                <span className="section-eyebrow text-[rgba(15,23,42,0.5)]" style={{ color: undefined }}>
-                  {stat.label}
-                </span>
-              </div>
+                <span className="text-4xl md:text-5xl font-black mb-2" style={{ color: stat.color }}>{stat.value}</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-slate-500">{stat.label}</span>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ══ INDUSTRY ACCREDITATION ══════════════════════════════════════ */}
-      <section className="px-6 py-16 lg:px-8" data-testid="accreditation-section">
-        <div className="mx-auto max-w-7xl">
-          <AnimateIn>
-            <p className="section-eyebrow mb-3">Industry Accreditation</p>
-            <h2
-              className="mb-4 text-4xl font-semibold tracking-tight text-[#0F172A] sm:text-5xl"
-              style={{ fontFamily: 'var(--font-display, Georgia, serif)' }}
+      {/* ══ PORTALS ═════════════════════════════════════════════════════ */}
+      <section className="py-24 bg-white relative overflow-hidden">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-16">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+              className="text-4xl md:text-5xl font-black text-slate-900 mb-4"
             >
-              Success Partners.
-            </h2>
-            <p className="mb-8 max-w-2xl text-base leading-relaxed text-[rgba(15,23,42,0.55)]">
-              Accredited by the world&apos;s leading professional organizations — our certifications
-              are recognized globally across industries.
-            </p>
-          </AnimateIn>
-          <AnimateIn delay={100}>
-            <div className="flex flex-wrap items-center gap-4" data-testid="partner-logos">
-              {PARTNERS.map((p) => (
-                <div
-                  key={p}
-                  className="hover-lift flex h-12 items-center justify-center rounded-xl border border-[rgba(15,23,42,0.1)] bg-white px-5 text-[11px] font-bold uppercase tracking-widest text-[rgba(15,23,42,0.4)] shadow-sm transition-all hover:border-[#EA580C]/30 hover:text-[#EA580C]"
-                >
-                  {p}
-                </div>
-              ))}
-            </div>
-          </AnimateIn>
-        </div>
-      </section>
-
-      {/* ══ INTEGRATED LEARNING ═════════════════════════════════════════ */}
-      <section id="about" className="bg-white px-6 py-20 lg:px-8" data-testid="learning-section">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col gap-14 lg:flex-row lg:items-center lg:gap-20">
-
-            {/* Text */}
-            <div className="flex-1">
-              <AnimateIn>
-                <p className="section-eyebrow mb-3">Integrated Learning</p>
-                <h2
-                  className="mb-8 text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl"
-                  style={{ fontFamily: 'var(--font-display, Georgia, serif)' }}
-                >
-                  Market Relevant
-                  <br />
-                  <span className="text-gradient-orange">Programs</span> for
-                  <br />
-                  Professional Growth.
-                </h2>
-              </AnimateIn>
-
-              <div className="space-y-6">
-                {FEATURES.map((feat, i) => {
-                  const Icon = feat.icon;
-                  return (
-                    <AnimateIn key={feat.title} delay={i * 100}>
-                      <div
-                        className="group flex items-start gap-4 rounded-2xl p-4 transition-all hover:bg-[rgba(234,88,12,0.04)]"
-                        data-testid={`feature-${feat.title.toLowerCase().replace(/\s+/g, '-')}`}
-                      >
-                        <div
-                          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-transform group-hover:scale-110"
-                          style={{ background: 'rgba(234,88,12,0.1)' }}
-                        >
-                          <Icon className="h-5 w-5 text-[#EA580C]" />
-                        </div>
-                        <div>
-                          <p className="section-eyebrow mb-1">{feat.title}</p>
-                          <p className="text-sm leading-relaxed text-[rgba(15,23,42,0.6)]">{feat.desc}</p>
-                        </div>
-                      </div>
-                    </AnimateIn>
-                  );
-                })}
-              </div>
-
-              <AnimateIn delay={300}>
-                <blockquote
-                  className="mt-10 rounded-2xl p-5"
-                  style={{ background: 'rgba(234,88,12,0.06)', borderLeft: '3px solid #EA580C' }}
-                >
-                  <p className="text-base italic leading-relaxed text-[rgba(15,23,42,0.65)]">
-                    &ldquo;Excellence is not an act, but a habit. We build that habit here.&rdquo;
-                  </p>
-                </blockquote>
-              </AnimateIn>
-            </div>
-
-            {/* Image */}
-            <AnimateIn direction="right" className="relative w-full max-w-md flex-shrink-0 lg:max-w-lg">
-              <div className="overflow-hidden rounded-2xl" style={{ boxShadow: '0 24px 60px rgba(15,23,42,0.14)' }}>
-                <img
-                  src="https://images.unsplash.com/photo-1758691736067-b309ee3ef7b9?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85&w=900"
-                  alt="Training Classroom"
-                  className="h-[360px] w-full object-cover transition-transform duration-700 hover:scale-105 lg:h-[480px]"
-                />
-              </div>
-              {/* Decorative accent */}
-              <div
-                className="absolute -bottom-4 -right-4 h-28 w-28 rounded-2xl"
-                style={{ background: 'linear-gradient(135deg, rgba(234,88,12,0.2), rgba(234,88,12,0.05))' }}
-              />
-              {/* Stat overlay */}
-              <div
-                className="absolute bottom-6 left-6 rounded-xl px-5 py-4"
-                style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', boxShadow: '0 10px 30px rgba(15,23,42,0.15)' }}
-              >
-                <p className="text-2xl font-bold text-[#0F172A]" style={{ fontFamily: 'var(--font-display, serif)' }}>98%</p>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-[#EA580C]">Placement Rate</p>
-              </div>
-            </AnimateIn>
+              Choose Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-fuchsia-500">Portal</span>
+            </motion.h2>
+            <p className="text-slate-500 max-w-2xl mx-auto text-lg">Sign in to your dedicated workspace to manage your learning journey.</p>
           </div>
-        </div>
-      </section>
 
-      {/* ══ FEATURED PROGRAMS ═══════════════════════════════════════════ */}
-      <section id="programs" className="px-6 py-20 lg:px-8" data-testid="programs-section">
-        <div className="mx-auto max-w-7xl">
-          <AnimateIn>
-            <div className="mb-10 flex items-end justify-between">
-              <div>
-                <p className="section-eyebrow mb-2">Our Portfolio</p>
-                <h2
-                  className="text-4xl font-semibold tracking-tight text-[#0F172A] sm:text-5xl"
-                  style={{ fontFamily: 'var(--font-display, Georgia, serif)' }}
-                >
-                  Featured Programs.
-                </h2>
-              </div>
-              <a
-                href="#programs"
-                className="hidden items-center gap-1.5 text-sm font-semibold text-[#EA580C] transition-colors hover:text-[#0F172A] sm:flex"
-              >
-                View Full Directory <ChevronRight className="h-4 w-4" />
-              </a>
-            </div>
-          </AnimateIn>
-
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {PROGRAMS.map((prog, i) => (
-              <AnimateIn key={prog.title} delay={i * 80} className="h-full">
-                <div
-                  className="group flex h-full cursor-pointer flex-col gap-4 rounded-2xl border border-[rgba(15,23,42,0.08)] bg-white p-6 transition-all hover:-translate-y-1 hover:border-[#EA580C]/25 hover:shadow-[0_16px_40px_rgba(15,23,42,0.1)]"
-                  data-testid={`program-${i}`}
-                  style={{ willChange: 'transform' }}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <span
-                      className="rounded-lg px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-[#EA580C]"
-                      style={{ background: 'rgba(234,88,12,0.1)' }}
-                    >
-                      {prog.mode}
-                    </span>
-                    <span className="flex items-center gap-1 text-[10px] text-[rgba(15,23,42,0.4)]">
-                      <Clock className="h-3 w-3" /> {prog.hours}
-                    </span>
-                  </div>
-                  <h3 className="flex-1 text-sm font-semibold leading-snug text-[#0F172A]">
-                    {prog.title}
-                  </h3>
-                  <div className="flex items-center justify-between">
-                    <span
-                      className="rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-widest"
-                      style={{ background: 'rgba(15,23,42,0.06)', color: 'rgba(15,23,42,0.5)' }}
-                    >
-                      {prog.tag}
-                    </span>
-                    <div className="flex -space-x-2">
-                      {[1, 2, 3].map((n) => (
-                        <img
-                          key={n}
-                          src={`https://i.pravatar.cc/100?u=${n + i * 3}`}
-                          alt=""
-                          className="h-6 w-6 rounded-full border-2 border-white object-cover"
-                        />
-                      ))}
-                      <div
-                        className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-white text-[8px] font-bold text-white"
-                        style={{ background: '#EA580C' }}
-                      >
-                        +12
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </AnimateIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ══ FACILITIES ══════════════════════════════════════════════════ */}
-      <section
-        id="facilities"
-        className="relative overflow-hidden px-6 py-20 lg:px-8"
-        style={{ background: '#0F172A' }}
-        data-testid="facilities-section"
-      >
-        {/* BG decoration */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-          <div className="dot-grid-light absolute inset-0 opacity-30" />
-          <div
-            className="animate-float-slow absolute -right-32 top-0 h-[400px] w-[400px] opacity-15"
-            style={{ background: 'radial-gradient(circle, rgba(234,88,12,0.5) 0%, transparent 70%)' }}
-          />
-        </div>
-
-        <div className="relative mx-auto max-w-7xl">
-          <div className="flex flex-col gap-14 lg:flex-row lg:items-center lg:gap-20">
-
-            {/* Image */}
-            <AnimateIn direction="left" className="relative w-full max-w-lg flex-shrink-0">
-              <div className="overflow-hidden rounded-2xl" style={{ boxShadow: '0 24px 60px rgba(0,0,0,0.4)' }}>
-                <img
-                  src="https://images.pexels.com/photos/36834057/pexels-photo-36834057.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                  alt="Training Facilities"
-                  className="h-[320px] w-full object-cover transition-transform duration-700 hover:scale-105 lg:h-[420px]"
-                />
-              </div>
-              <div
-                className="absolute -bottom-3 -left-3 h-24 w-24 rounded-2xl"
-                style={{ background: 'rgba(234,88,12,0.25)' }}
-              />
-            </AnimateIn>
-
-            {/* Text */}
-            <div className="flex-1">
-              <AnimateIn direction="right">
-                <p className="section-eyebrow mb-3 text-[#EA580C]">Infrastructure</p>
-                <h2
-                  className="mb-6 text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl"
-                  style={{ fontFamily: 'var(--font-display, Georgia, serif)' }}
-                >
-                  World-Class
-                  <br />
-                  <span className="text-gradient-orange">Training</span>
-                  <br />
-                  Facilities.
-                </h2>
-                <p className="mb-8 max-w-md text-base leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>
-                  High-spec classrooms, advanced computer labs, and realistic simulation zones
-                  designed to mimic industry environments for focused, practical learning.
-                </p>
-              </AnimateIn>
-
-              <div className="flex flex-wrap gap-10">
-                {[{ val: '12k+', label: 'Sq. Meter Campus' }, { val: '24/7', label: 'Support Access' }, { val: '98%', label: 'Satisfaction Rate' }].map((item) => (
-                  <AnimateIn key={item.label}>
-                    <div>
-                      <p className="text-3xl font-bold text-white" style={{ fontFamily: 'var(--font-display, serif)' }}>{item.val}</p>
-                      <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.4)' }}>{item.label}</p>
-                    </div>
-                  </AnimateIn>
-                ))}
-              </div>
-
-              <AnimateIn delay={200}>
-                <div className="mt-10">
-                  <a
-                    href="#facilities"
-                    className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-white/10"
-                    style={{ border: '1px solid rgba(255,255,255,0.18)' }}
-                  >
-                    Virtual Tour <ArrowRight className="h-4 w-4" />
-                  </a>
-                </div>
-              </AnimateIn>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ══ UPCOMING EVENTS ═════════════════════════════════════════════ */}
-      <section id="events" className="bg-white px-6 py-20 lg:px-8" data-testid="events-section">
-        <div className="mx-auto max-w-7xl">
-          <AnimateIn>
-            <div className="mb-10 flex items-end justify-between">
-              <div>
-                <p className="section-eyebrow mb-2">Stay Informed</p>
-                <h2
-                  className="text-4xl font-semibold tracking-tight text-[#0F172A] sm:text-5xl"
-                  style={{ fontFamily: 'var(--font-display, Georgia, serif)' }}
-                >
-                  Upcoming Events.
-                </h2>
-              </div>
-              <a
-                href="#events"
-                className="hidden items-center gap-1.5 text-sm font-semibold text-[#EA580C] hover:text-[#0F172A] sm:flex"
-              >
-                View All Calendar <ChevronRight className="h-4 w-4" />
-              </a>
-            </div>
-          </AnimateIn>
-
-          <div className="divide-y divide-[rgba(15,23,42,0.07)]">
-            {EVENTS.map((evt, i) => (
-              <AnimateIn key={evt.title} delay={i * 80}>
-                <div
-                  className="group flex cursor-pointer items-center justify-between py-5 transition-all hover:bg-[rgba(234,88,12,0.03)]"
-                  data-testid={`event-${i}`}
-                >
-                  <div className="flex items-center gap-5">
-                    <div
-                      className="flex w-14 flex-col items-center justify-center rounded-2xl py-2.5 text-center"
-                      style={{ background: 'rgba(234,88,12,0.08)' }}
-                    >
-                      <span className="text-[9px] font-bold uppercase tracking-widest text-[#EA580C]">{evt.month}</span>
-                      <span className="text-2xl font-bold text-[#0F172A]" style={{ fontFamily: 'var(--font-display, serif)' }}>{evt.day}</span>
-                    </div>
-                    <div>
-                      <p className="font-semibold text-[#0F172A] transition-colors group-hover:text-[#EA580C]">{evt.title}</p>
-                      <p className="flex items-center gap-1.5 text-xs text-[rgba(15,23,42,0.45)]">
-                        <MapPin className="h-3 w-3" /> {evt.place} · {evt.time}
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    className="flex h-8 w-8 items-center justify-center rounded-full transition-all group-hover:bg-[rgba(234,88,12,0.1)]"
-                  >
-                    <ChevronRight className="h-4 w-4 text-[rgba(15,23,42,0.3)] transition-colors group-hover:text-[#EA580C]" />
-                  </div>
-                </div>
-              </AnimateIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ══ PORTAL ACCESS ═══════════════════════════════════════════════ */}
-      <section id="portals" className="px-6 py-20 lg:px-8" data-testid="portals-section">
-        <div className="mx-auto max-w-7xl">
-          <AnimateIn className="mb-12 text-center">
-            <p className="section-eyebrow mx-auto mb-3 justify-center">Portal Access</p>
-            <h2
-              className="text-4xl font-semibold tracking-tight text-[#0F172A] sm:text-5xl"
-              style={{ fontFamily: 'var(--font-display, Georgia, serif)' }}
-            >
-              Your Gateway Awaits.
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-base text-[rgba(15,23,42,0.55)]">
-              Each portal is purpose-built — delivering the right tools at the right time.
-            </p>
-          </AnimateIn>
-
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {PORTALS.map((portal, i) => {
               const Icon = portal.icon;
               return (
-                <AnimateIn key={portal.id} delay={i * 80} direction="scale">
-                  <Link
-                    href={portal.href}
-                    className={`group flex h-full flex-col gap-5 rounded-2xl p-7 transition-all hover:-translate-y-1 ${
-                      portal.dark
-                        ? 'text-white'
-                        : 'border border-[rgba(15,23,42,0.08)] bg-white hover:border-[#EA580C]/25 hover:shadow-[0_16px_40px_rgba(15,23,42,0.1)]'
-                    }`}
-                    style={
-                      portal.dark
-                        ? {
-                            background: 'linear-gradient(135deg, #0F172A 60%, #1e293b)',
-                            boxShadow: '0 16px 40px rgba(15,23,42,0.3)',
-                          }
-                        : {}
-                    }
-                    data-testid={`portal-${portal.id}`}
-                  >
-                    <div
-                      className="flex h-12 w-12 items-center justify-center rounded-xl transition-transform group-hover:scale-110"
-                      style={
-                        portal.dark
-                          ? { background: 'linear-gradient(135deg, #EA580C, #C2410C)' }
-                          : { background: 'rgba(234,88,12,0.1)' }
-                      }
-                    >
-                      <Icon className={`h-5 w-5 ${portal.dark ? 'text-white' : 'text-[#EA580C]'}`} />
-                    </div>
-
-                    <div className="flex-1">
-                      <h3 className={`mb-2 text-base font-bold ${portal.dark ? 'text-white' : 'text-[#0F172A]'}`}>
-                        {portal.label}
-                      </h3>
-                      <p className={`text-sm leading-relaxed ${portal.dark ? 'text-white/55' : 'text-[rgba(15,23,42,0.55)]'}`}>
-                        {portal.desc}
-                      </p>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <span className={`text-xs font-semibold ${portal.dark ? 'text-[#f97316]' : 'text-[#EA580C]'}`}>
-                        {portal.cta}
-                      </span>
-                      <ArrowRight className={`h-4 w-4 transition-transform group-hover:translate-x-1 ${portal.dark ? 'text-[#EA580C]' : 'text-[rgba(15,23,42,0.3)]'}`} />
+                <motion.div
+                  key={portal.id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, type: "spring" }}
+                >
+                  <Link href={portal.href} className="block h-full relative group">
+                    <div className="h-full p-8 rounded-3xl bg-[#FAFAFA] border border-slate-100 transition-all duration-300 hover:shadow-2xl hover:bg-white overflow-hidden">
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-white/0 to-white/50 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-150" style={{ backgroundImage: `linear-gradient(to bottom right, transparent, ${portal.color}20)` }} />
+                      
+                      <div className="relative z-10">
+                        <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 shadow-lg transform group-hover:-translate-y-2 transition-all" style={{ backgroundColor: portal.color }}>
+                          <Icon className="h-7 w-7 text-white" />
+                        </div>
+                        <h3 className="text-xl font-bold text-slate-900 mb-2">{portal.label}</h3>
+                        <p className="text-sm text-slate-500 mb-8">{portal.desc}</p>
+                        
+                        <div className="flex items-center text-sm font-bold mt-auto" style={{ color: portal.color }}>
+                          {portal.cta}
+                          <ArrowRight className="ml-2 h-4 w-4 transform group-hover:translate-x-2 transition-transform" />
+                        </div>
+                      </div>
                     </div>
                   </Link>
-                </AnimateIn>
+                </motion.div>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* ══ CORPORATE SOLUTIONS ═════════════════════════════════════════ */}
-      <section id="contact" className="bg-white px-6 py-20 lg:px-8" data-testid="corporate-section">
-        <div className="mx-auto max-w-7xl">
-          <AnimateIn>
-            <div
-              className="relative overflow-hidden rounded-3xl p-10 lg:p-16"
-              style={{ background: 'linear-gradient(135deg, #0F172A 0%, #1e293b 100%)' }}
-            >
-              {/* Decorative orbs */}
-              <div
-                className="pointer-events-none absolute -left-20 -top-20 h-64 w-64 rounded-full opacity-30"
-                style={{ background: 'radial-gradient(circle, rgba(234,88,12,0.5), transparent 70%)' }}
-              />
-              <div
-                className="pointer-events-none absolute -bottom-20 -right-20 h-80 w-80 rounded-full opacity-20"
-                style={{ background: 'radial-gradient(circle, rgba(234,88,12,0.4), transparent 70%)' }}
-              />
-              <div className="dot-grid-light absolute inset-0 opacity-20" />
+      {/* ══ FEATURES ════════════════════════════════════════════════════ */}
+      <section id="about" className="py-24 bg-slate-950 relative overflow-hidden text-white">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-violet-600/20 blur-[120px] rounded-full pointer-events-none" />
+        
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
+          <div className="flex flex-col lg:flex-row gap-16 items-center">
+            <div className="flex-1">
+              <motion.h2 
+                initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+                className="text-4xl md:text-5xl font-black mb-6"
+              >
+                Why Learn With Us?
+              </motion.h2>
+              <motion.p 
+                initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
+                className="text-slate-400 text-lg mb-10"
+              >
+                We blend modern technology with expert instruction to provide an unparalleled learning experience.
+              </motion.p>
 
-              <div className="relative flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-20">
-                <div className="flex-1">
-                  <p className="section-eyebrow mb-3 text-[#EA580C]">Corporate Solutions</p>
-                  <h2
-                    className="mb-5 text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl"
-                    style={{ fontFamily: 'var(--font-display, Georgia, serif)' }}
-                  >
-                    Empower Your Workforce
-                    <br />
-                    <span className="text-gradient-orange">With Custom Training.</span>
-                  </h2>
-                  <p className="max-w-lg text-base leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>
-                    We design bespoke learning pathways aligned with your institutional goals
-                    and industry benchmarks, trusted by 150+ corporate partners.
-                  </p>
-                </div>
-                <div className="flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
-                  <Link
-                    href="/sign-in"
-                    className="rounded-full px-7 py-3.5 text-center text-sm font-bold text-white transition-all active:scale-[0.97]"
-                    style={{ background: 'linear-gradient(135deg, #EA580C, #C2410C)', boxShadow: '0 6px 22px rgba(234,88,12,0.4)' }}
-                    data-testid="corporate-partner-cta"
-                  >
-                    Partner With Us
-                  </Link>
-                  <a
-                    href="#programs"
-                    className="rounded-full px-7 py-3.5 text-center text-sm font-semibold text-white transition-all hover:bg-white/10 active:scale-[0.97]"
-                    style={{ border: '1px solid rgba(255,255,255,0.2)' }}
-                    data-testid="corporate-catalog-cta"
-                  >
-                    Training Catalog
-                  </a>
-                </div>
+              <div className="space-y-6">
+                {FEATURES.map((feat, i) => {
+                  const Icon = feat.icon;
+                  return (
+                    <motion.div 
+                      key={i}
+                      initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 + i * 0.1 }}
+                      className="flex gap-4 p-4 rounded-2xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/10"
+                    >
+                      <div className="flex-shrink-0 mt-1 w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${feat.color}20`, color: feat.color }}>
+                        <Icon className="h-6 w-6" />
+                      </div>
+                      <div>
+                        <h4 className="text-xl font-bold mb-1">{feat.title}</h4>
+                        <p className="text-slate-400 text-sm leading-relaxed">{feat.desc}</p>
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </div>
             </div>
-          </AnimateIn>
+
+            <motion.div 
+              className="flex-1 relative w-full"
+              initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
+            >
+               <div className="grid grid-cols-2 gap-4">
+                 <img src="https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?q=80&w=500&auto=format&fit=crop" className="rounded-3xl w-full h-64 object-cover mt-10" alt="Students" />
+                 <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=500&auto=format&fit=crop" className="rounded-3xl w-full h-64 object-cover" alt="Classroom" />
+               </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
       {/* ══ FOOTER ══════════════════════════════════════════════════════ */}
-      <footer
-        className="px-6 pb-10 pt-14 lg:px-8"
-        style={{ background: '#0F172A' }}
-        data-testid="footer"
-      >
-        <div className="mx-auto max-w-7xl">
-          <div className="grid grid-cols-2 gap-8 border-b border-white/8 pb-10 md:grid-cols-4">
-            {/* Brand */}
-            <div className="col-span-2 md:col-span-1">
-              <div className="mb-4 flex items-center gap-3">
-                <div
-                  className="flex h-10 w-10 items-center justify-center rounded-xl"
-                  style={{ background: 'linear-gradient(135deg, #EA580C, #C2410C)' }}
-                >
-                  <GraduationCap className="h-5 w-5 text-white" />
-                </div>
-                <div>
-                  <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#EA580C]">Al-Saud Training</p>
-                  <p className="text-sm font-bold uppercase tracking-widest text-white" style={{ fontFamily: 'var(--font-display, serif)' }}>
-                    Institute
-                  </p>
-                </div>
-              </div>
-              <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                Empowering professional education across the Gulf region.
-              </p>
-            </div>
-
-            {/* Portals */}
-            <div>
-              <p className="mb-4 text-[9px] font-bold uppercase tracking-[0.24em] text-[#EA580C]">Portals</p>
-              <ul className="space-y-2.5 text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                <li><Link href="/sign-in" className="transition-colors hover:text-white" data-testid="footer-admin">Admin Portal</Link></li>
-                <li><a href="#" className="transition-colors hover:text-white" data-testid="footer-student">Student Portal</a></li>
-                <li><a href="#" className="transition-colors hover:text-white" data-testid="footer-trainer">Trainer Portal</a></li>
-                <li><a href="#" className="transition-colors hover:text-white" data-testid="footer-verify">Certificate Verify</a></li>
-              </ul>
-            </div>
-
-            {/* Institute */}
-            <div>
-              <p className="mb-4 text-[9px] font-bold uppercase tracking-[0.24em] text-[#EA580C]">Institute</p>
-              <ul className="space-y-2.5 text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                <li><a href="#programs"  className="transition-colors hover:text-white">Programs</a></li>
-                <li><a href="#facilities" className="transition-colors hover:text-white">Facilities</a></li>
-                <li><a href="#events"    className="transition-colors hover:text-white">Events</a></li>
-                <li><a href="#about"     className="transition-colors hover:text-white">About</a></li>
-              </ul>
-            </div>
-
-            {/* Contact */}
-            <div>
-              <p className="mb-4 text-[9px] font-bold uppercase tracking-[0.24em] text-[#EA580C]">Contact</p>
-              <address className="space-y-2.5 text-sm not-italic" style={{ color: 'rgba(255,255,255,0.45)' }}>
-                <p className="flex items-center gap-2"><Phone className="h-3.5 w-3.5 shrink-0 text-[#EA580C]" />+968 9658 9150</p>
-                <p className="flex items-center gap-2"><Mail className="h-3.5 w-3.5 shrink-0 text-[#EA580C]" />contactus@alsaud-intl.com</p>
-                <p className="flex items-start gap-2"><MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#EA580C]" />Muscat, Sultanate of Oman</p>
-              </address>
-            </div>
-          </div>
-
-          <div
-            className="mt-8 flex flex-col items-center justify-between gap-3 text-xs sm:flex-row"
-            style={{ color: 'rgba(255,255,255,0.25)' }}
-            data-testid="footer-bottom"
-          >
-            <p>© {new Date().getFullYear()} Al-Saud Training Institute. All rights reserved.</p>
-            <div className="flex gap-5">
-              <a href="#" className="transition-colors hover:text-white/60">Privacy Policy</a>
-              <a href="#" className="transition-colors hover:text-white/60">Terms of Service</a>
-            </div>
-          </div>
-        </div>
+      <footer className="bg-slate-900 py-12 text-center text-slate-500 relative z-10 border-t border-slate-800">
+        <p className="text-sm">© {new Date().getFullYear()} Al-Saud Training Institute. All rights reserved.</p>
       </footer>
+
     </div>
   );
 }
