@@ -146,6 +146,25 @@ import { Button, Input, Card, Badge, ... } from '@ims/shared-ui';
 - [ ] Multi-select component
 - [ ] Toast/notification system
 
+### Session 4 — Animated Modern Redesign (June 2026)
+**Commit**: `feat(landing-v2-animated)` — Bold orange-red + dark hero + scroll animations
+
+**Color system update**: `#EA580C` (bold orange-red) replaces `#c47d46` everywhere; `#0F172A` replaces `#14213d`
+
+**Animation system** (new `globals.css` + 2 client components):
+- `AnimateIn` — IntersectionObserver scroll-triggered fade-in (up/left/right/scale directions + delay prop)
+- `CountUp` — requestAnimationFrame cubic-ease-out number counter on scroll
+- CSS keyframes: `fadeInUp/Down/Left/Right`, `scaleIn`, `float`, `floatSlow/Reverse`, `morphBlob`, `gradientShift`, `shimmerOrange`, `glowBeat`, `pulseRing`, `popIn`, `spinVSlow/Reverse`
+- `.section-eyebrow` — orange line prefix utility
+- `.text-gradient-orange` — animated gradient text shimmer
+- `.hover-lift`, `.glass`, `.glass-dark`, `.dot-grid`, `.noise-overlay`, `.btn-glow`
+
+**Hero**: Dark navy `#0F172A` with animated morph blob orbs + dot grid + spinning ring decorations; gradient text on "Professional"; floating chips; "Live Enrollment Open" badge
+
+**Stats Ribbon**: CountUp number animation, orange gradient serif numbers
+
+**All sections updated**: AnimateIn scroll triggers, new orange accent, dark facilities section, Corporate Solutions as dark rounded card
+
 ### Session 3 — Landing Page Redesign (June 2026)
 **Commit**: `feat(landing-redesign)` — `apps/admin-portal/app/page.tsx` + `app/(auth)/sign-in/page.tsx`
 
