@@ -1,74 +1,107 @@
-# Functional Requirement Document (FRD)
+# Functional Requirement Document
 
 ## Module 5: Student Management
 
-**Version:** 1.0
+**Version:** 1.1
 **Module Code:** STD
+**Phase:** Phase 1
+**Owned Bounded Context:** Admission & Enrollment Management
+
 **Dependencies:**
 
-* Identity & Access
+* Identity & Access Management
 * Organization Management
 * Admission & Enrollment Management
 * Document Management
+
+**Provides Data To:**
+
+* Admission & Enrollment Management
+* Scheduling & Timetable Management
+* Attendance Management
+* Exam, Result & Completion Management
+* Certificate Management
+* Communication Management
+* Reporting & Dashboards
+* Audit & Compliance
+* Student Portal
 
 ---
 
 # 1. Business Purpose
 
-Student Management is responsible for maintaining the master student record throughout the student's lifecycle.
+Student Management maintains the master learner profile used across IMS.
 
-The module shall support:
+The module owns the student profile, identity configuration, emergency contacts, portal access, and student-facing history summaries.
 
-* Student Profile Management
-* Student Identity Information
-* Student Lifecycle Tracking
-* Student Documents
-* Emergency Contacts
-* Student Portal Access
-* Student History
-* Student Status Management
-
-The Student entity shall be considered the single source of truth for all learner information.
+The Student entity is the single source of truth for learner profile information, but it does not own admission, enrollment, attendance, completion, or certificate lifecycle behavior.
 
 ---
 
-# 2. Student Lifecycle
+# 2. Scope
 
-The system shall support the following student lifecycle:
+## 2.1 In Scope
 
-```text
-Inquiry
-   ↓
-Applied
-   ↓
-Admitted
-   ↓
-Active
-   ↓
-Completed
-   ↓
-Alumni
-```
+* Student profile management
+* Student number generation
+* Configurable identity fields
+* Identity value capture
+* Emergency contact management
+* Student portal access
+* Student status management
+* Student history views
+* Read-only enrollment summary
+* Read-only attendance summary
+* Read-only completion summary
+* Read-only certificate summary
 
-Alternative paths:
+## 2.2 Out of Scope for Phase 1
 
-```text
-Active
-   ↓
-Suspended
-
-Active
-   ↓
-Dropped
-```
+* Parent portal
+* AI enrichment
+* Full CRM profile management
+* Admission approval
+* Enrollment lifecycle control
 
 ---
 
-# 3. Student Number Generation
+# 3. Business Principles
 
-### Configuration
+* Student is a master profile, not a duplicate lifecycle of admission or enrollment.
+* A student may exist without enrollment.
+* A student may have multiple enrollments over time.
+* Student numbers must be unique and never reused.
+* Duplicate detection must evaluate configured identity fields in addition to phone and email.
+* Student portal access is optional and must be explicitly enabled.
+* Student summaries displayed in this module are projections from other owned contexts.
+* Student status changes must be auditable.
 
-Student Number shall be configurable.
+---
+
+# 4. Owned Concepts
+
+The Student context owns:
+
+* Student
+* StudentIdentityField
+* StudentIdentityValue
+* StudentEmergencyContact
+* StudentPortalAccess
+* StudentNumberPolicy
+
+Notes:
+
+* `EnrollmentSummary`, `AttendanceSummary`, `CompletionSummary`, and `CertificateSummary` are read models.
+* `Admission` and `Enrollment` remain owned by Admission & Enrollment Management.
+* `Document` remains owned by Document Management, although the student module may surface document views.
+
+---
+
+# 5. Student Model
+
+## 5.1 Student Number
+
+The system shall support configurable student number generation.
 
 Examples:
 
@@ -78,40 +111,77 @@ ALS-00001
 BR01-00001
 ```
 
-### Business Rules
+Rules:
 
-* Student Number must be unique.
-* Student Number generated automatically.
-* Student Number cannot be edited after creation.
-* Historical Student Numbers must never be reused.
+* Student number must be auto-generated.
+* Student number must be unique.
+* Student number cannot be edited after creation.
+* Historical student numbers must never be reused.
 
----
-
-# 4. Student Profile Structure
-
-Student Profile consists of:
+## 5.2 Student Status Lifecycle
 
 ```text
-Personal Information
-Contact Information
-Identity Information
-Address Information
-Emergency Contacts
-Enrollment Summary
-Documents
-Portal Access
-Audit History
+Draft
+  ↓
+Active
+  ↓
+Inactive
 ```
+
+Alternative:
+
+```text
+Active
+  ↓
+Suspended
+```
+
+Alternative:
+
+```text
+Active
+  ↓
+Archived
+```
+
+Rules:
+
+* Draft may be used for incomplete manually created profiles.
+* Active is the normal operational status.
+* Inactive students cannot be used for new enrollments.
+* Suspended students require authorization before new enrollment actions.
+* Archived students remain visible for historical reporting.
+
+## 5.3 Identity Configuration
+
+The system shall support configurable identity fields.
+
+Examples:
+
+```text
+Civil ID
+Passport Number
+Visa Number
+Employer
+National ID
+Resident Card Number
+```
+
+Rules:
+
+* Identity fields must be configurable by branch or institute policy if required.
+* Required identity fields must be enforced at the boundary.
+* Unique identity fields must not duplicate existing active values.
 
 ---
 
-# 5. Screens
+# 6. Screens
 
 ## STD-UI-001 Student List Screen
 
 ### Purpose
 
-View all students.
+View and manage student profiles.
 
 ### Columns
 
@@ -122,8 +192,8 @@ Phone
 Email
 Nationality
 Branch
-Current Status
-Active Enrollments
+Status
+Enrollment Count
 Created Date
 Actions
 ```
@@ -133,11 +203,10 @@ Actions
 ```text
 Branch
 Status
-Course
-Batch
 Nationality
 Enrollment Type
 Created Date Range
+Search
 ```
 
 ### Actions
@@ -159,6 +228,7 @@ STUDENT_CREATE
 STUDENT_EDIT
 STUDENT_STATUS_CHANGE
 STUDENT_EXPORT
+STUDENT_PORTAL_CREATE
 ```
 
 ---
@@ -167,20 +237,18 @@ STUDENT_EXPORT
 
 ### Purpose
 
-Create student manually without admission flow.
+Create a student manually without admission flow.
 
 Used for:
 
 ```text
 Walk-In Training
-Corporate Participants
+Corporate Participant Linked Profile
 Data Migration
 Direct Registration
 ```
 
 ### Section 1: Personal Information
-
-Fields:
 
 ```text
 First Name
@@ -194,8 +262,6 @@ Photo
 
 ### Section 2: Contact Information
 
-Fields:
-
 ```text
 Mobile Number
 Alternate Number
@@ -204,8 +270,6 @@ Preferred Contact Method
 ```
 
 ### Section 3: Address Information
-
-Fields:
 
 ```text
 Country
@@ -217,20 +281,12 @@ Postal Code
 
 ### Section 4: Identity Information
 
-Fields are configurable.
-
-Examples:
-
 ```text
-Civil ID
-Passport Number
-Visa Number
-Employer
+Identity Field
+Identity Value
 ```
 
 ### Section 5: Emergency Contact
-
-Fields:
 
 ```text
 Contact Name
@@ -239,29 +295,20 @@ Phone Number
 Email
 ```
 
----
-
 ### Validations
 
-Required:
-
-```text
-First Name
-Mobile Number
-Nationality
-```
+* First Name is required.
+* Mobile Number is required.
+* Nationality is required.
+* Email must be valid if provided.
+* Required identity fields must be provided.
 
 ### Business Rules
 
-* Duplicate detection should check:
-
-  * Mobile Number
-  * Email
-  * Passport Number (if configured)
-
+* Duplicate detection should check mobile number, email, and configured identity fields.
 * Student profile can be created without enrollment.
-
-* Student status defaults to Admitted.
+* Student status defaults to Draft for manual creation unless a policy says otherwise.
+* Student creation must be audited.
 
 ---
 
@@ -301,12 +348,12 @@ Present Days
 Absent Days
 ```
 
-#### Financial Summary
+#### Completion Summary
 
 ```text
-Total Fees
-Paid Amount
-Outstanding Amount
+Completion Status
+Eligibility Status
+Approval Status
 ```
 
 #### Certificates
@@ -333,15 +380,13 @@ Profile Changes
 Status Changes
 ```
 
----
-
 ### Actions
 
 ```text
 Edit Profile
 Change Status
 Upload Document
-Generate Login
+Generate Portal Login
 View Enrollments
 View Certificates
 ```
@@ -352,7 +397,7 @@ View Certificates
 
 ### Purpose
 
-Manage student lifecycle.
+Manage student profile status.
 
 ### Fields
 
@@ -366,22 +411,19 @@ Remarks
 ### Allowed Status Changes
 
 ```text
-Applied → Admitted
-Admitted → Active
-Active → Completed
+Draft → Active
 Active → Suspended
-Active → Dropped
-Completed → Alumni
+Active → Inactive
+Active → Archived
+Suspended → Active
+Inactive → Archived
 ```
-
----
 
 ### Business Rules
 
 * Status changes must be audited.
-* Suspended students cannot enroll in new courses.
-* Dropped students cannot be activated without authorization.
-* Completed students remain visible historically.
+* Suspended students cannot enroll in new courses without authorization.
+* Inactive or archived students remain visible historically.
 
 ---
 
@@ -389,351 +431,186 @@ Completed → Alumni
 
 ### Purpose
 
-Generate student portal credentials.
+Enable or disable student portal access.
 
 ### Fields
 
 ```text
-Student Number
-Portal Username
-Portal Email
+Student
+Login Email
+Temporary Password
 Status
+Last Login At
 ```
 
 ### Actions
 
 ```text
-Generate Access
+Generate Login
 Reset Password
 Deactivate Access
+Activate Access
 ```
 
 ### Business Rules
 
-* One portal account per student.
-* Portal account should use Identity & Access module.
-* Portal activation should be audited.
+* Portal access is optional.
+* Portal access must be explicitly granted.
+* Login credentials must be managed by IAM.
+* Student profile data must not expose password values.
 
 ---
 
-# 6. Student Identity Management
+## STD-UI-006 Identity Field Configuration
 
-## Configurable Identity Fields
+### Purpose
 
-The system shall support configurable identity fields.
+Configure student identity fields.
 
-Examples:
-
-```text
-Civil ID
-Passport Number
-Visa Number
-Nationality
-Employer
-Driving License
-National ID
-```
-
-### Configuration Properties
-
-Each field shall support:
+### Fields
 
 ```text
 Field Name
+Field Code
 Field Type
 Required
 Unique
-Visible
 Display Order
-```
-
----
-
-### Business Rules
-
-* Identity fields must be configurable.
-* Certain fields may be unique.
-* Validation rules depend on configuration.
-
----
-
-# 7. Student Documents
-
-Student documents are managed by Document Management module.
-
-### Supported Examples
-
-```text
-Passport
-Civil ID
-Visa
-Photo
-Qualification Certificate
-Employment Letter
-Other Attachments
-```
-
-### Document Status
-
-```text
-Uploaded
-Pending Verification
-Approved
-Rejected
+Status
+Effective Start Date
+Effective End Date
 ```
 
 ### Business Rules
 
-* Required documents depend on configuration.
-* Student profile should display document status summary.
-* Rejected documents should capture rejection reason.
+* Identity fields are configurable master data.
+* Required and unique flags must be enforced at student creation and update.
+* Deactivated fields cannot be used for new values.
 
 ---
 
-# 8. Student Portal Features
+# 7. Functional Requirements
 
-Phase 1 Student Portal shall allow students to view:
-
-```text
-Profile
-Enrollments
-Attendance
-Fee Summary
-Receipts
-Certificates
-Notifications
-Documents
-Timetable
-```
-
-### Phase 1 Restrictions
-
-Students cannot:
-
-```text
-Modify Attendance
-Modify Fees
-Generate Certificates
-Approve Documents
-```
-
----
-
-# 9. Functional Requirements
-
-## FR-STD-001 Student Creation
+## FR-STD-001 Create Student
 
 The system shall allow authorized users to create student profiles.
 
----
-
-## FR-STD-002 Student Update
+## FR-STD-002 Update Student
 
 The system shall allow authorized users to update student profiles.
 
----
+## FR-STD-003 Detect Duplicate Student
 
-## FR-STD-003 Student Duplicate Detection
+The system shall warn on duplicate mobile number, email, or configured identity fields.
 
-The system shall warn users when duplicate students are detected.
+## FR-STD-004 Generate Student Number
 
----
+The system shall generate unique student numbers automatically.
 
-## FR-STD-004 Student Number Generation
+## FR-STD-005 Manage Student Status
 
-The system shall generate unique student numbers.
+The system shall allow authorized users to change student status.
 
----
+## FR-STD-006 Configure Identity Fields
 
-## FR-STD-005 Student Status Management
-
-The system shall support configurable student lifecycle management.
-
----
-
-## FR-STD-006 Identity Field Configuration
-
-The system shall support configurable student identity fields.
-
----
+The system shall allow authorized users to configure student identity fields.
 
 ## FR-STD-007 Student Enrollment Visibility
 
-The system shall display all enrollments associated with a student.
-
----
+The system shall show student enrollment summaries as read-only projections.
 
 ## FR-STD-008 Student Document Visibility
 
-The system shall display all student documents and verification statuses.
-
----
+The system shall show student document summaries as read-only projections.
 
 ## FR-STD-009 Student Financial Summary
 
-The system shall display fee and payment summaries for each student.
-
----
+The system shall show student financial summaries as read-only projections.
 
 ## FR-STD-010 Student Certificate Visibility
 
-The system shall display certificates issued to the student.
-
----
+The system shall show student certificate summaries as read-only projections.
 
 ## FR-STD-011 Student Portal Access
 
-The system shall support portal access for students.
-
----
+The system shall allow authorized users to create and manage student portal access.
 
 ## FR-STD-012 Student Audit Tracking
 
-The system shall audit all profile updates and status changes.
+The system shall audit student profile changes and status changes.
 
 ---
 
-# 10. Notifications
+# 8. Audit Events
 
-### Student Portal Created
-
-Notify:
+The following audit events shall be supported:
 
 ```text
-Student
-Admission Creator
+StudentCreated
+StudentUpdated
+StudentStatusChanged
+StudentNumberGenerated
+StudentPortalAccessCreated
+StudentPortalAccessUpdated
+IdentityFieldCreated
+IdentityFieldUpdated
+IdentityFieldDeactivated
+EmergencyContactUpdated
 ```
+
+Rules:
+
+* Profile changes and status changes must be auditable.
+* Password values must never appear in student audit records.
+* Identity value changes should include the reason where applicable.
 
 ---
 
-### Student Status Changed
+# 9. Domain Errors
 
-Notify:
-
-```text
-Branch Manager
-Relevant Counselor
-```
-
----
-
-### Document Rejected
-
-Notify:
+The module shall distinguish between validation and business-rule errors such as:
 
 ```text
-Student
-Document Verifier
-```
-
----
-
-# 11. Reports
-
-## Operational Reports
-
-```text
-Student List Report
-Student Status Report
-Student Nationality Report
-Student Enrollment Summary
-```
-
-## Management Reports
-
-```text
-Active Students
-Completed Students
-Dropped Students
-Suspended Students
-Alumni Report
-```
-
-## Compliance Reports
-
-```text
-Missing Documents Report
-Expired Identity Document Report
-Student Verification Report
+DuplicateStudentDetected
+StudentNumberAlreadyExists
+IdentityFieldRequired
+IdentityFieldDuplicate
+StudentStatusChangeNotAllowed
+StudentPortalAlreadyExists
+StudentInactive
+StudentArchived
+InvalidIdentityFieldConfiguration
+BranchScopeViolation
 ```
 
 ---
 
-# 12. Audit Requirements
+# 10. Reporting and Operational Views
 
-Audit the following:
-
-```text
-Student Created
-Student Updated
-Student Status Changed
-Identity Field Updated
-Portal Access Created
-Portal Access Disabled
-```
-
-Each audit record must capture:
+The Student context shall support the following read views:
 
 ```text
-User
-Action
-Timestamp
-Old Value
-New Value
-Reason
+Student List
+Student Profile
+Enrollment Summary
+Attendance Summary
+Completion Summary
+Certificate Summary
+Student History
 ```
+
+These are read models and operational views, not separate owned entities.
 
 ---
 
-# 13. Open Design Decisions
+# 11. FRD Improvement Notes
 
-### Student Merge
+This module should remain the single source of truth for:
 
-Future enhancement:
+* student profile data
+* student number policy
+* identity field policy
+* portal access
+* student-facing summaries
 
-```text
-Merge Duplicate Student Records
-```
-
-Not included in Phase 1.
-
-### Student Transfer
-
-Future enhancement:
-
-```text
-Transfer Between Branches
-Transfer Between Courses
-Transfer Between Batches
-```
-
-Not included in Phase 1.
-
-### Parent Portal
-
-Excluded from current roadmap.
-
----
-
-# 14. Integration Points
-
-### Consumes
-
-```text
-Admission Module
-Identity & Access
-Document Management
-```
-
-### Provides Data To
-
-```text
-Enrollment
-Attendance
-Finance
-Communication
-Completion
-Certificate
-Reporting
-Student Portal
-```
+It should not own admission, enrollment, attendance, completion, or certificate lifecycle rules.

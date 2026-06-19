@@ -1,81 +1,105 @@
-# Functional Requirement Document (FRD)
+# Functional Requirement Document
 
 ## Module 9: Fee & Finance Management
 
-**Version:** 1.0
+**Version:** 1.1
 **Module Code:** FIN
+**Phase:** Phase 1
+**Owned Bounded Context:** Fee & Finance Management
 
 **Dependencies:**
 
-* Student Management
-* Enrollment Management
+* Admission & Enrollment Management
 * Course & Batch Management
 * Corporate Training Management
+* Identity & Access Management
 
 **Provides Data To:**
 
-* Completion Management
+* Exam, Result & Completion Management
 * Certificate Management
 * Reporting & Dashboards
+* Audit & Compliance
 * Corporate Billing
-* Future Tally Integration
 
 ---
 
 # 1. Business Purpose
 
-Fee & Finance Management is responsible for managing student fees, corporate invoices, discounts, installment plans, payments, refunds, receipts, and outstanding balances.
+Fee & Finance Management handles operational finance for student enrollments and corporate training contracts.
 
-The module shall support:
+The context owns fee plans, installment plans, enrollment fee accounts, payments, receipts, discounts, refunds, and corporate invoices.
 
-* Fee Plans
-* Installment Plans
-* Student Billing
-* Corporate Billing
-* Discounts
-* Scholarships
-* Refunds
-* Receipts
-* Outstanding Tracking
-* Financial Reporting
+Phase 1 covers operational finance only and does not include full general ledger accounting or payment gateway automation.
 
 ---
 
-# 2. Finance Architecture
+# 2. Scope
 
-## Individual Student
+## 2.1 In Scope
 
-```text
-Course
-      ↓
-Fee Plan
-      ↓
-Enrollment
-      ↓
-Fee Account
-      ↓
-Payment
-      ↓
-Receipt
-```
+* Fee plan management
+* Installment plan management
+* Enrollment fee account management
+* Payment recording
+* Receipt generation
+* Discount management
+* Refund request and approval workflow
+* Corporate invoice management
+* Outstanding balance tracking
+* Fee clearance evaluation
+* Financial statements and reports
 
----
+## 2.2 Out of Scope for Phase 1
 
-## Corporate Training
-
-```text
-Corporate Contract
-         ↓
-Corporate Invoice
-         ↓
-Payment
-         ↓
-Receipt
-```
+* Full general ledger
+* Bank reconciliation automation
+* Payment gateway automation
+* Accounting ledger posting
+* Payroll
 
 ---
 
-# 3. Supported Currencies
+# 3. Business Principles
+
+* Finance is operational and transaction focused in Phase 1.
+* Fee plans are versioned and must preserve historical snapshots.
+* An enrollment fee account is created from an enrollment and captures the active fee plan snapshot.
+* Payments are posted records and must be immutable after posting.
+* Receipts are immutable after issuance.
+* Discounts and refunds require controlled authorization and auditability.
+* Corporate invoices are tied to corporate contracts or corporate programs.
+* Finance actions must be auditable.
+* Fee clearance eligibility is consumed by completion and certificate modules.
+
+---
+
+# 4. Owned Concepts
+
+The Finance context owns:
+
+* FeePlan
+* InstallmentPlan
+* EnrollmentFeeAccount
+* FeeAccountInstallment
+* Payment
+* Receipt
+* Discount
+* Refund
+* CorporateInvoice
+* FeeClearancePolicy
+
+Notes:
+
+* Course pricing remains owned by Course & Batch Management.
+* Enrollment, Student, Corporate Contract, and Corporate Participant are referenced from other contexts.
+* Finance stores snapshots so later catalog changes do not rewrite posted financial history.
+
+---
+
+# 5. Business Model
+
+## 5.1 Supported Currencies
 
 The system shall support:
 
@@ -89,13 +113,11 @@ QAR
 BHD
 ```
 
-Additional currencies configurable.
+Additional currencies may be configured if policy allows.
 
----
+## 5.2 Supported Billing Models
 
-# 4. Supported Billing Models
-
-## Student Billing
+### Student Billing
 
 ```text
 One-Time Fee
@@ -104,9 +126,7 @@ Scholarship
 Discounted Fee
 ```
 
----
-
-## Corporate Billing
+### Corporate Billing
 
 ```text
 Per Student
@@ -115,37 +135,81 @@ Per Hour
 Fixed Contract Value
 ```
 
----
-
-# 5. Finance Lifecycle
-
-## Enrollment Fee Account
+## 5.3 Fee Plan Lifecycle
 
 ```text
 Draft
-    ↓
+  ↓
+Active
+  ↓
+Inactive
+  ↓
+Archived
+```
+
+Rules:
+
+* Fee plans are versioned by effective dates.
+* Only one active fee plan should exist per course, branch, currency, and pricing basis combination.
+* Historical fee plans must remain unchanged.
+
+## 5.4 Enrollment Fee Account Lifecycle
+
+```text
+Draft
+  ↓
 Pending Payment
-    ↓
+  ↓
 Partially Paid
-    ↓
+  ↓
 Paid
-    ↓
+  ↓
 Closed
 ```
 
----
+Rules:
 
-## Refund
+* Fee accounts are created from enrollment.
+* The fee account must snapshot fee plan, tax, discount, and installment structure.
+* Fee account status must reflect the current outstanding position.
+
+## 5.5 Payment Lifecycle
+
+```text
+Posted
+  ↓
+Cancelled
+```
+
+Rules:
+
+* Posted payments are immutable.
+* Cancelled payments remain in history and do not delete the original record.
+
+## 5.6 Refund Lifecycle
 
 ```text
 Requested
-      ↓
+  ↓
 Under Review
-      ↓
+  ↓
 Approved
-      ↓
+  ↓
 Processed
 ```
+
+Alternative:
+
+```text
+Under Review
+  ↓
+Rejected
+```
+
+Rules:
+
+* Refunds do not alter original posted payment history.
+* Refund approval follows configured workflow and authorization.
 
 ---
 
@@ -155,7 +219,7 @@ Processed
 
 ### Purpose
 
-Manage course fee plans.
+Manage fee plans.
 
 ### Columns
 
@@ -176,6 +240,7 @@ Create
 Edit
 Activate
 Deactivate
+Archive
 View Installments
 ```
 
@@ -186,11 +251,11 @@ FEEPLAN_VIEW
 FEEPLAN_CREATE
 FEEPLAN_EDIT
 FEEPLAN_ACTIVATE
+FEEPLAN_DEACTIVATE
+FEEPLAN_ARCHIVE
 ```
 
 ---
-
-# 7. Create Fee Plan
 
 ## FIN-UI-002 Fee Plan Screen
 
@@ -204,34 +269,30 @@ Currency
 Base Amount
 Tax Applicable
 Tax Percentage
+Pricing Basis
 Status
+Effective Start Date
+Effective End Date
 ```
-
----
 
 ### Business Rules
 
-* Multiple fee plans allowed.
-* One active fee plan per pricing combination.
+* Multiple fee plans are allowed.
+* One active fee plan per pricing combination is allowed.
 * Historical fee plans must remain unchanged.
+* Fee plans may reference a course pricing source for traceability.
+
+### Validations
+
+* Fee Plan Name is required.
+* Course is required.
+* Branch is required.
+* Currency is required.
+* Base Amount must be greater than or equal to zero.
+* Tax Percentage cannot be negative.
+* Effective Start Date is required.
 
 ---
-
-### Example
-
-```text
-IOSH Individual
-
-Amount: 100 OMR
-
-VAT: 5%
-
-Total: 105 OMR
-```
-
----
-
-# 8. Installment Plan Management
 
 ## FIN-UI-003 Installment Plan Screen
 
@@ -247,36 +308,18 @@ Installment Name
 Due Date Rule
 Amount
 Display Order
+Status
 ```
-
----
-
-### Example
-
-```text
-Admission Fee = 100 OMR
-
-Installment 1 = 200 OMR
-
-Installment 2 = 200 OMR
-```
-
----
 
 ### Business Rules
 
-* Total installment amount must equal fee plan total.
-* Installment plans may vary by:
-
-  * Branch
-  * Course
-  * Fee Plan
+* Total installment amount must equal the fee plan total amount unless authorized override exists.
+* Installment plans may vary by branch, course, and fee plan.
+* Historical installment plans must remain unchanged once used.
 
 ---
 
-# 9. Enrollment Fee Account
-
-## FIN-UI-004 Student Fee Account
+## FIN-UI-004 Enrollment Fee Account
 
 ### Purpose
 
@@ -310,8 +353,6 @@ Amount
 Status
 ```
 
----
-
 ### Status
 
 ```text
@@ -319,9 +360,8 @@ Pending
 Partially Paid
 Paid
 Overdue
+Closed
 ```
-
----
 
 ### Actions
 
@@ -330,11 +370,10 @@ Record Payment
 Apply Discount
 Request Refund
 Print Statement
+Recalculate Snapshot
 ```
 
 ---
-
-# 10. Payment Management
 
 ## FIN-UI-005 Record Payment
 
@@ -346,6 +385,7 @@ Enrollment
 Payment Date
 Payment Mode
 Amount
+Currency
 Reference Number
 Remarks
 ```
@@ -360,8 +400,6 @@ Cheque
 Online Transfer
 ```
 
----
-
 ### Actions
 
 ```text
@@ -369,17 +407,14 @@ Save
 Generate Receipt
 ```
 
----
-
 ### Business Rules
 
-* Payment cannot exceed outstanding balance.
-* Payment automatically updates fee account.
-* Receipt generated automatically.
+* Payment cannot exceed outstanding balance unless advance payment policy allows it.
+* Payment automatically updates the fee account.
+* Receipt is generated automatically after successful posting.
+* Payment record must be immutable after posting.
 
 ---
-
-# 11. Receipt Management
 
 ## FIN-UI-006 Receipt Screen
 
@@ -394,8 +429,6 @@ Refund Receipt
 Corporate Invoice
 ```
 
----
-
 ### Receipt Information
 
 ```text
@@ -407,8 +440,6 @@ Currency
 Payment Mode
 ```
 
----
-
 ### Actions
 
 ```text
@@ -417,17 +448,13 @@ Download PDF
 Email
 ```
 
----
-
 ### Business Rules
 
-* Receipt Number must be unique.
+* Receipt number must be unique.
 * Receipt must be immutable after issuance.
-* Cancelled receipt requires audit trail.
+* Cancelled receipt requires audit trail and reversal policy.
 
 ---
-
-# 12. Discount Management
 
 ## FIN-UI-007 Discount Screen
 
@@ -441,16 +468,12 @@ Early Bird
 Manual Discount
 ```
 
----
-
 ### Discount Modes
 
 ```text
 Fixed Amount
 Percentage
 ```
-
----
 
 ### Fields
 
@@ -462,31 +485,14 @@ Reason
 Approver
 ```
 
----
-
 ### Business Rules
 
 * Discounts should reduce payable amount.
 * Discount approval may be required.
 * Discount history must be retained.
+* Discount changes must not mutate issued receipts.
 
 ---
-
-### Example
-
-```text
-Course Fee = 500 OMR
-
-Scholarship = 20%
-
-Discount = 100 OMR
-
-Net Fee = 400 OMR
-```
-
----
-
-# 13. Refund Management
 
 ## FIN-UI-008 Refund Request
 
@@ -507,16 +513,12 @@ Full Refund
 Partial Refund
 ```
 
----
-
 ### Actions
 
 ```text
 Submit
 Cancel
 ```
-
----
 
 ### Business Rules
 
@@ -526,23 +528,19 @@ Cancel
 
 ---
 
-# 14. Refund Approval Workflow
-
 ## FIN-UI-009 Refund Approval
 
 ### Workflow
 
 ```text
 Requester
-     ↓
+  ↓
 Finance Review
-     ↓
+  ↓
 Branch Manager Approval
-     ↓
+  ↓
 Processed
 ```
-
----
 
 ### Fields
 
@@ -558,16 +556,12 @@ Approve
 Reject
 ```
 
----
-
 ### Business Rules
 
-* Approval action audited.
-* Rejection reason mandatory.
+* Approval action must be audited.
+* Rejection reason is mandatory.
 
 ---
-
-# 15. Corporate Billing
 
 ## FIN-UI-010 Corporate Invoice
 
@@ -578,8 +572,6 @@ Advance Invoice
 Milestone Invoice
 Final Invoice
 ```
-
----
 
 ### Fields
 
@@ -594,8 +586,6 @@ Currency
 Due Date
 ```
 
----
-
 ### Actions
 
 ```text
@@ -605,368 +595,187 @@ Download PDF
 Record Payment
 ```
 
----
-
 ### Business Rules
 
-* Corporate invoices linked to contracts.
-* Multiple invoices per contract allowed.
-* Outstanding balances tracked separately.
+* Corporate invoices are linked to contracts or corporate programs.
+* Multiple invoices per contract are allowed.
+* Outstanding balances must be tracked separately.
 
 ---
-
-# 16. Fee Clearance Engine
-
-Fee Clearance determines eligibility for:
-
-```text
-Completion
-Certificate Generation
-```
-
----
-
-### Rules
-
-Example:
-
-```text
-Outstanding Amount = 0
-```
-
-Result:
-
-```text
-Fee Cleared
-```
-
-Else:
-
-```text
-Not Cleared
-```
-
----
-
-### Business Rules
-
-Course completion rule may require:
-
-```text
-Fee Clearance = Mandatory
-```
-
----
-
-# 17. Student Financial Statement
 
 ## FIN-UI-011 Financial Statement
+
+### Purpose
+
+Provide finance summary and statements.
 
 ### Sections
 
 ```text
-Fee Summary
-Payments
-Discounts
-Refunds
-Outstanding
-```
-
----
-
-### Actions
-
-```text
-Print
-Export PDF
-```
-
----
-
-# 18. Student Portal Financial View
-
-Students may view:
-
-```text
-Fee Summary
-Installments
-Payments
-Receipts
+Fee Plan Summary
+Enrollment Fee Summary
 Outstanding Balance
-```
-
-Read-only.
-
----
-
-# 19. Functional Requirements
-
-## FR-FIN-001 Fee Plan Management
-
-The system shall support fee plan management.
-
----
-
-## FR-FIN-002 Installment Plans
-
-The system shall support installment schedules.
-
----
-
-## FR-FIN-003 Fee Account Creation
-
-The system shall automatically create fee accounts upon enrollment.
-
----
-
-## FR-FIN-004 Payment Recording
-
-The system shall support payment recording.
-
----
-
-## FR-FIN-005 Receipt Generation
-
-The system shall generate receipts automatically.
-
----
-
-## FR-FIN-006 Discount Management
-
-The system shall support discounts.
-
----
-
-## FR-FIN-007 Refund Requests
-
-The system shall support refunds.
-
----
-
-## FR-FIN-008 Refund Approval Workflow
-
-The system shall support refund approval workflows.
-
----
-
-## FR-FIN-009 Corporate Billing
-
-The system shall support corporate invoicing.
-
----
-
-## FR-FIN-010 Outstanding Tracking
-
-The system shall track outstanding balances.
-
----
-
-## FR-FIN-011 Fee Clearance Validation
-
-The system shall support fee clearance validation.
-
----
-
-## FR-FIN-012 Multi-Currency Support
-
-The system shall support multi-currency fee management.
-
----
-
-# 20. Notifications
-
-### Payment Received
-
-Notify:
-
-```text
-Student
-Accountant
+Payment Summary
+Refund Summary
+Corporate Invoice Summary
 ```
 
 ---
 
-### Installment Due
+# 7. Functional Requirements
 
-Notify:
+## FR-FIN-001 Manage Fee Plans
+
+The system shall allow authorized users to create, update, activate, deactivate, and archive fee plans.
+
+## FR-FIN-002 Manage Installment Plans
+
+The system shall allow authorized users to create and maintain installment plans for fee plans.
+
+## FR-FIN-003 Create Fee Account
+
+The system shall create an enrollment fee account from an enrollment and fee plan snapshot.
+
+## FR-FIN-004 Record Payment
+
+The system shall allow authorized users to record posted payments.
+
+## FR-FIN-005 Generate Receipt
+
+The system shall generate a receipt after payment posting.
+
+## FR-FIN-006 Manage Discounts
+
+The system shall allow authorized users to apply and manage discounts.
+
+## FR-FIN-007 Request Refunds
+
+The system shall allow authorized users to request refunds.
+
+## FR-FIN-008 Approve Refunds
+
+The system shall allow authorized users to approve or reject refunds.
+
+## FR-FIN-009 Generate Corporate Invoices
+
+The system shall allow authorized users to generate corporate invoices.
+
+## FR-FIN-010 Track Outstanding Balances
+
+The system shall calculate and display outstanding balances.
+
+## FR-FIN-011 Evaluate Fee Clearance
+
+The system shall evaluate fee clearance for completion and certificate eligibility.
+
+## FR-FIN-012 Preserve Financial History
+
+The system shall preserve historical fee plans, installment plans, payments, and receipts.
+
+## FR-FIN-013 Finance Audit Trail
+
+The system shall audit all finance actions.
+
+---
+
+# 8. Audit Events
+
+The following audit events shall be supported:
 
 ```text
-Student
-Counselor
+FeePlanCreated
+FeePlanUpdated
+FeePlanActivated
+FeePlanDeactivated
+FeePlanArchived
+InstallmentPlanCreated
+InstallmentPlanUpdated
+EnrollmentFeeAccountCreated
+EnrollmentFeeAccountRecalculated
+PaymentRecorded
+PaymentCancelled
+ReceiptGenerated
+ReceiptCancelled
+DiscountApplied
+DiscountApproved
+RefundRequested
+RefundApproved
+RefundRejected
+RefundProcessed
+CorporateInvoiceCreated
+CorporateInvoiceUpdated
+CorporateInvoicePaid
+FeeClearanceEvaluated
+```
+
+Rules:
+
+* Finance actions must always be audited.
+* Posted payments and issued receipts must remain historically visible.
+* Audit records must capture actor, timestamp, amount, and reason where applicable.
+
+---
+
+# 9. Domain Errors
+
+The module shall distinguish between validation and business-rule errors such as:
+
+```text
+FeePlanAlreadyExists
+FeePlanInactive
+FeePlanArchived
+InstallmentTotalMismatch
+EnrollmentFeeAccountAlreadyExists
+PaymentExceedsOutstandingBalance
+PaymentAlreadyPosted
+ReceiptAlreadyIssued
+ReceiptCancellationNotAllowed
+DiscountApprovalRequired
+DiscountExceededPolicy
+RefundAmountExceedsPaidAmount
+RefundAlreadyProcessed
+CorporateInvoiceAlreadyExists
+FeeClearanceNotMet
+BranchInactive
+CourseInactive
+EnrollmentInactive
+CorporateContractInactive
+InvalidCurrency
 ```
 
 ---
 
-### Refund Requested
+# 10. Reporting and Operational Views
 
-Notify:
-
-```text
-Finance Team
-```
-
----
-
-### Refund Approved
-
-Notify:
+The Finance context shall support the following read views:
 
 ```text
-Student
-Accountant
-```
-
----
-
-### Outstanding Balance Alert
-
-Notify:
-
-```text
-Student
-Counselor
-```
-
----
-
-# 21. Reports
-
-## Operational Reports
-
-```text
-Daily Collection Report
+Fee Plan Report
+Installment Plan Report
+Enrollment Fee Account Report
 Payment Register
 Receipt Register
-```
-
----
-
-## Finance Reports
-
-```text
-Outstanding Fees Report
-Fee Collection Report
 Discount Report
 Refund Report
-```
-
----
-
-## Corporate Reports
-
-```text
 Corporate Invoice Report
-Corporate Collection Report
-Contract Revenue Report
+Outstanding Balance Report
+Fee Clearance Report
 ```
+
+These are read models and operational views, not separate owned entities.
 
 ---
 
-## Management Reports
+# 11. FRD Improvement Notes
 
-```text
-Revenue by Course
-Revenue by Branch
-Revenue by Department
-Monthly Revenue Trend
-```
+This module should remain the single source of truth for:
 
----
+* fee plans
+* installment plans
+* fee account snapshots
+* payments and receipts
+* discounts and refunds
+* corporate invoices
+* fee clearance evaluation
 
-# 22. Audit Requirements
-
-Audit:
-
-```text
-Fee Plan Created
-Fee Plan Updated
-Payment Recorded
-Receipt Generated
-Discount Applied
-Refund Requested
-Refund Approved
-Refund Rejected
-```
-
-Capture:
-
-```text
-User
-Action
-Timestamp
-Old Value
-New Value
-Reason
-```
-
----
-
-# 23. Critical Design Decisions
-
-### Ledger vs Simple Accounting
-
-Phase 1:
-
-```text
-Operational Finance
-```
-
-Not:
-
-```text
-General Ledger Accounting
-```
-
-Reason:
-
-Tally integration planned later.
-
----
-
-### Immutable Receipts
-
-Recommended:
-
-```text
-Receipts cannot be edited.
-```
-
-Only:
-
-```text
-Cancel + Reissue
-```
-
----
-
-### Historical Pricing Preservation
-
-Payment calculations must use:
-
-```text
-Enrollment-Time Fee Snapshot
-```
-
-Not current fee plan.
-
----
-
-# 24. Integration Points
-
-### Consumes
-
-```text
-Enrollment
-Corporate Training
-Course Pricing
-```
-
-### Provides Data To
-
-```text
-Completion
-Certificate
-Reporting
-Student Portal
-Future Tally Integration
-```
+It should not own course pricing, enrollment lifecycle, completion approval, or certificate issuance.

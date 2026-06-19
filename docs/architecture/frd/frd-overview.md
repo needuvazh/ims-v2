@@ -38,7 +38,97 @@ This document will guide:
 
 ---
 
-# 2. Phase 1 Functional Scope
+# 2. FRD Standards
+
+## 2.1 Canonical Terminology
+
+Use these terms consistently across FRD, APIs, UI, and schema discussions:
+
+* `Lead` for a managed prospect record
+* `Inquiry` for the intake record before qualification
+* `Admission` for the pre-enrollment approval record
+* `Enrollment` for the central learning lifecycle record
+* `Student` for the learner profile master record
+* `Corporate Participant` for a corporate learner before linked student profile creation
+* `Walk-In` for the special short-duration orchestration path, not a separate lifecycle
+* `Course` for the training offering definition
+* `Batch` for the deliverable training group
+* `Branch` for the operational partition boundary
+* `Completion` for the eligibility and approval outcome before certificate issuance
+* `Certificate` for the issued proof of completion
+
+## 2.2 Writing Rules
+
+Every module FRD shall include:
+
+* Business purpose
+* Owned bounded context
+* Scope
+* Owned concepts
+* Lifecycle rules
+* Screens
+* Functional requirements
+* Audit events
+* Domain errors
+* Reporting views
+* FRD improvement notes
+
+Every screen section shall include:
+
+* Purpose
+* Fields or columns
+* Actions
+* Permissions
+* Business rules
+* Validations where relevant
+
+Every stateful requirement shall specify:
+
+* Allowed transitions
+* Disallowed transitions
+* Audit expectation
+* Error conditions
+
+## 2.3 Module Ownership Rules
+
+* One module owns one bounded context.
+* Other modules may reference the owner by ID, but they must not mutate that lifecycle directly.
+* Read models are not ownership boundaries.
+* UI visibility is not authorization.
+* Branch scope must be enforced server-side where relevant.
+
+## 2.4 Standard Module Template
+
+Use the following template for every module:
+
+```text
+1. Module header
+2. Business purpose
+3. Scope
+4. Business principles
+5. Owned concepts
+6. Business model / lifecycle rules
+7. Screens
+8. Functional requirements
+9. Audit events
+10. Domain errors
+11. Reporting and operational views
+12. FRD improvement notes
+```
+
+## 2.5 Traceability Matrix
+
+| FRD Module | DDD Bounded Context | Primary Data Ownership |
+| --- | --- | --- |
+| Module 1: Identity & Access Management | Identity & Access Management | User, Role, Permission, Menu, AccessPolicy |
+| Module 2: Organization Management | Organization Management | Institute, Branch, Department, Classroom |
+| Module 3: Lead & Inquiry Management | Lead & Inquiry Management | Inquiry, Lead, LeadSource, LeadStage, FollowUp, Campaign |
+| Module 4: Admission & Enrollment Management | Admission & Enrollment Management | Admission, Enrollment, Student, StudentIdentity, StudentIDCard |
+| Module 5: Student Management | Admission & Enrollment Management | Student profile and identity configuration |
+
+---
+
+# 3. Phase 1 Functional Scope
 
 Phase 1 focuses on core institute operations.
 
@@ -61,7 +151,7 @@ Phase 1 focuses on core institute operations.
 
 ---
 
-# 3. Out of Scope for Phase 1
+# 4. Out of Scope for Phase 1
 
 The following are excluded from Phase 1:
 
@@ -80,9 +170,9 @@ The following are excluded from Phase 1:
 
 ---
 
-# 4. Common Functional Standards
+# 5. Common Functional Standards
 
-## 4.1 Common List Screen Features
+## 5.1 Common List Screen Features
 
 Most list screens should support:
 
@@ -99,7 +189,7 @@ Most list screens should support:
 
 ---
 
-## 4.2 Common Form Features
+## 5.2 Common Form Features
 
 Most forms should support:
 
@@ -115,7 +205,7 @@ Most forms should support:
 
 ---
 
-## 4.3 Common Audit Rules
+## 5.3 Common Audit Rules
 
 The system shall record audit logs for:
 

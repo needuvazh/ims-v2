@@ -1,123 +1,207 @@
-# Functional Requirement Document (FRD)
+# Functional Requirement Document
 
 ## Module 4: Admission & Enrollment Management
 
-**Version:** 1.0
+**Version:** 1.1
 **Module Code:** ADM
+**Phase:** Phase 1
+**Owned Bounded Context:** Admission & Enrollment Management
+
 **Dependencies:**
 
-* Identity & Access
+* Identity & Access Management
 * Organization Management
 * Lead & Inquiry Management
+* Course & Batch Management
+* Fee & Finance Management
+
+**Provides Data To:**
+
+* Student Management
+* Scheduling & Timetable Management
+* Attendance Management
+* Exam, Result & Completion Management
+* Certificate Management
+* Reporting & Dashboards
+* Audit & Compliance
 
 ---
 
 # 1. Business Purpose
 
-Admission & Enrollment Management is responsible for converting prospective students into registered students and enrolling them into courses and batches.
+Admission & Enrollment Management controls the transition from inquiry or direct registration into a confirmed student enrollment.
 
-This module acts as the bridge between:
+This context owns the pre-enrollment approval record, the enrollment lifecycle, and the handoff into downstream operational modules.
 
-```text
-Lead Management
-        ↓
-Admission
-        ↓
-Student
-        ↓
-Enrollment
-        ↓
-Course / Batch
-        ↓
-Finance / Attendance / Completion
-```
-
-The Enrollment entity is the central business aggregate of the IMS platform.
+Enrollment is the central lifecycle object for learning delivery, finance linkage, attendance readiness, completion readiness, and certificate eligibility.
 
 ---
 
-# 2. Business Process Flow
+# 2. Scope
 
-## Standard Admission Flow
+## 2.1 In Scope
 
-```text
-Lead Created
-      ↓
-Lead Qualified
-      ↓
-Lead Won
-      ↓
-Admission Created
-      ↓
-Student Created
-      ↓
-Enrollment Created
-      ↓
-Course Assigned
-      ↓
-Batch Assigned
-      ↓
-Fee Plan Assigned
-      ↓
-Enrollment Activated
-```
+* Admission creation
+* Admission approval
+* Admission rejection
+* Admission cancellation
+* Direct admission
+* Student registration
+* Enrollment creation
+* Enrollment confirmation
+* Enrollment activation
+* Enrollment update before activation
+* Enrollment drop and cancellation
+* Batch assignment
+* Waiting list handling
+* Fee account creation trigger
+* Walk-in enrollment orchestration
+* Lead-to-admission conversion handoff
+* Enrollment activity timeline
 
----
+## 2.2 Out of Scope for Phase 1
 
-## Direct Admission Flow
-
-Used when student walks directly into institute.
-
-```text
-Direct Admission
-      ↓
-Student Created
-      ↓
-Enrollment Created
-      ↓
-Course Assigned
-      ↓
-Batch Assigned
-```
-
-Lead creation is optional.
+* Corporate contract ownership
+* Payment gateway automation
+* Attendance marking
+* Completion approval
+* Certificate issuance
 
 ---
 
-# 3. Admission Status Lifecycle
+# 3. Business Principles
 
-The system shall support:
+* Admission and Enrollment are separate concepts.
+* Admission is a pre-enrollment approval record.
+* Enrollment is the active lifecycle record used by downstream modules.
+* A student may have multiple enrollments over time.
+* A lead may be converted into an admission before enrollment.
+* Direct admission is allowed when no lead exists.
+* Walk-in is not a separate learner lifecycle. It is an orchestration path over admission, enrollment, finance, and completion rules.
+* Batch capacity must be validated before enrollment confirmation.
+* Waiting list must be used when the batch is full and waiting list is enabled.
+* Fee account creation must be triggered when enrollment is created.
+* Inactive courses and inactive branches cannot be used for new admissions or enrollments.
+* Enrollment data must be available to scheduling, attendance, completion, and certificate modules only after the required lifecycle state is reached.
+
+---
+
+# 4. Owned Concepts
+
+The Admission & Enrollment context owns:
+
+* Admission
+* Enrollment
+* Student
+* StudentIdentity
+* StudentIDCard
+* EnrollmentFeeAccount
+* WaitingListEntry
+
+Notes:
+
+* Student is the registration and learner record used by enrollment and downstream read models.
+* Other contexts may project student data, but they must not own admission or enrollment lifecycle rules.
+* Fee account creation is a lifecycle trigger, not a separate ownership boundary.
+
+---
+
+# 5. Business Model
+
+## 5.1 Admission Lifecycle
 
 ```text
 Draft
+  ↓
 Pending Documents
+  ↓
 Pending Approval
+  ↓
 Approved
-Rejected
-Cancelled
-Completed
 ```
 
----
+Alternative:
 
-# 4. Enrollment Status Lifecycle
+```text
+Pending Approval
+  ↓
+Rejected
+```
 
-The system shall support:
+Alternative:
 
 ```text
 Draft
-Pending Fee
-Confirmed
-Active
-Completed
-Dropped
+  ↓
 Cancelled
+```
+
+Rules:
+
+* Approved admissions become eligible for enrollment.
+* Rejected admissions require a reason.
+* Cancelled admissions remain in history.
+
+## 5.2 Enrollment Lifecycle
+
+```text
+Draft
+  ↓
+Pending Fee
+  ↓
+Confirmed
+  ↓
+Active
+  ↓
+Completed
+```
+
+Alternative paths:
+
+```text
+Draft
+  ↓
+Dropped
+```
+
+```text
+Draft
+  ↓
+Cancelled
+```
+
+```text
+Completed
+  ↓
 Certificate Issued
 ```
 
+Rules:
+
+* Draft and Pending Fee enrollments may be edited with authorized action.
+* Confirmed enrollments may be activated.
+* Active enrollments are the source of truth for attendance and timetable visibility.
+* Completed enrollments become the source of truth for completion and certificate workflows.
+
+## 5.3 Enrollment Types
+
+The system shall support:
+
+```text
+Regular
+Corporate
+Walk-In
+```
+
+Rules:
+
+* Regular enrollment is used for individual learners.
+* Corporate enrollment is used when the learner participates under a corporate training arrangement.
+* Walk-In enrollment is used for same-day or short-duration completion flows.
+
 ---
 
-# 5. Screens
+# 6. Screens
 
 ## ADM-UI-001 Admission List Screen
 
@@ -147,6 +231,7 @@ Course
 Admission Status
 Admission Date
 Created By
+Search
 ```
 
 ### Actions
@@ -180,7 +265,7 @@ ADMISSION_EXPORT
 
 ### Purpose
 
-Create new admission.
+Create a new admission record.
 
 ### Sections
 
@@ -195,6 +280,7 @@ Phone
 Email
 Nationality
 Address
+Identity Document Reference
 ```
 
 #### Section 2: Admission Information
@@ -205,6 +291,7 @@ Admission Date
 Admission Type
 Referral Source
 Lead Reference
+Remarks
 ```
 
 #### Section 3: Course Selection
@@ -213,6 +300,7 @@ Lead Reference
 Department
 Course
 Preferred Batch
+Enrollment Type
 ```
 
 #### Section 4: Documents
@@ -225,33 +313,25 @@ Qualification Certificates
 Photo
 ```
 
-Document types are configurable.
-
----
-
 ### Business Rules
 
-* Admission Number must be auto-generated.
-* Admission Date defaults to current date.
-* Student phone number should be checked for duplicates.
-* Existing student warning should be shown.
+* Admission number must be auto-generated.
+* Admission date defaults to the current date.
+* Duplicate student warning should appear for matching phone, email, or configured identity fields.
+* Lead reference is optional for direct admission.
 * Admission can be saved as Draft.
-* Admission can proceed even if optional documents are missing.
+* Admission may proceed even if optional documents are missing.
 * Mandatory documents depend on configured document rules.
-
----
+* Admission must not be approved if required documents are missing.
 
 ### Validations
 
-Required:
-
-```text
-Student Name
-Phone
-Branch
-Course
-Admission Date
-```
+* First Name is required.
+* Phone is required.
+* Branch is required.
+* Course is required.
+* Admission Date is required.
+* Email must be valid if provided.
 
 ---
 
@@ -259,27 +339,14 @@ Admission Date
 
 ### Sections
 
-#### Admission Summary
-
 ```text
-Admission Number
-Status
-Branch
-Created By
-Created Date
+Admission Summary
+Student Information
+Course Selection
+Documents
+Notes
+Audit History
 ```
-
-#### Student Information
-
-#### Course Selection
-
-#### Documents
-
-#### Notes
-
-#### Audit History
-
----
 
 ### Actions
 
@@ -289,6 +356,7 @@ Approve
 Reject
 Cancel
 Create Enrollment
+View Timeline
 ```
 
 ---
@@ -297,12 +365,13 @@ Create Enrollment
 
 ### Purpose
 
-Approve admission before enrollment.
+Approve or reject admission before enrollment.
 
 ### Fields
 
 ```text
 Approval Remarks
+Rejection Reason
 ```
 
 ### Actions
@@ -312,19 +381,20 @@ Approve
 Reject
 ```
 
----
-
 ### Business Rules
 
-* Only authorized users may approve.
-* Rejected admission requires remarks.
+* Only pending admissions can be approved.
+* Rejected admission requires a reason.
 * Approval action must be audited.
+* Approved admission becomes eligible for enrollment creation.
 
 ---
 
-# 6. Enrollment Screens
-
 ## ADM-UI-005 Enrollment List Screen
+
+### Purpose
+
+View and manage enrollments.
 
 ### Columns
 
@@ -349,6 +419,7 @@ Batch
 Enrollment Status
 Enrollment Type
 Date Range
+Search
 ```
 
 ### Actions
@@ -357,10 +428,24 @@ Date Range
 Create Enrollment
 View Enrollment
 Edit Enrollment
+Confirm Enrollment
 Activate Enrollment
 Drop Enrollment
 Cancel Enrollment
 Export
+```
+
+### Permissions
+
+```text
+ENROLLMENT_VIEW
+ENROLLMENT_CREATE
+ENROLLMENT_EDIT
+ENROLLMENT_CONFIRM
+ENROLLMENT_ACTIVATE
+ENROLLMENT_DROP
+ENROLLMENT_CANCEL
+ENROLLMENT_EXPORT
 ```
 
 ---
@@ -369,29 +454,33 @@ Export
 
 ### Purpose
 
-Enroll student into a course and batch.
+Enroll a student into a course and batch.
 
-### Section 1: Student
+### Sections
+
+#### Section 1: Student
 
 ```text
 Student Number
 Student Name
+Admission Reference
 ```
 
-### Section 2: Course
+#### Section 2: Course
 
 ```text
 Department
 Course
 ```
 
-### Section 3: Batch
+#### Section 3: Batch
 
 ```text
 Batch
+Waiting List Option
 ```
 
-### Section 4: Enrollment Details
+#### Section 4: Enrollment Details
 
 ```text
 Enrollment Type
@@ -400,42 +489,26 @@ Expected Completion Date
 Remarks
 ```
 
----
-
-### Enrollment Types
-
-```text
-Regular
-Corporate
-Walk-In
-```
-
----
-
 ### Business Rules
 
-* Enrollment Number must be auto-generated.
+* Enrollment number must be auto-generated.
 * Student must exist.
 * Course must be active.
-* Batch must be active.
-* Batch capacity validation required.
-* Waiting list option should appear when batch is full.
-* Enrollment automatically creates Enrollment Fee Account.
-* Enrollment automatically becomes available for attendance tracking.
-
----
+* Branch must be active.
+* Batch must be active and open for enrollment.
+* Batch capacity validation is required.
+* Waiting list option should appear when the batch is full and waiting list is enabled.
+* Enrollment creation must trigger fee account creation.
+* Enrollment must become available for downstream scheduling, attendance, completion, and certificate modules based on lifecycle state.
 
 ### Validations
 
-Required:
-
-```text
-Student
-Course
-Batch
-Enrollment Type
-Enrollment Date
-```
+* Student is required.
+* Branch is required.
+* Course is required.
+* Batch is required.
+* Enrollment Type is required.
+* Enrollment Date is required.
 
 ---
 
@@ -443,205 +516,256 @@ Enrollment Date
 
 ### Sections
 
-#### Enrollment Summary
-
 ```text
-Enrollment Number
-Status
-Enrollment Date
+Enrollment Summary
+Student Information
+Course Information
+Batch Information
+Fee Summary
+Attendance Summary
+Completion Status
+Certificate Status
+Audit History
 ```
-
-#### Student Information
-
-#### Course Information
-
-#### Batch Information
-
-#### Fee Summary
-
-#### Attendance Summary
-
-#### Completion Status
-
-#### Certificate Status
-
-#### Audit History
-
----
 
 ### Actions
 
 ```text
 Edit
+Confirm
 Activate
 Drop
 Cancel
 View Fee Account
-View Attendance
-View Completion
-View Certificate
+View Timeline
 ```
+
+---
+
+## ADM-UI-008 Waiting List Screen
+
+### Purpose
+
+Manage waiting list entries for full batches.
+
+### Columns
+
+```text
+Waiting List Number
+Course
+Batch
+Student
+Requested Date
+Status
+Actions
+```
+
+### Actions
+
+```text
+Add to Waiting List
+Promote to Enrollment
+Remove
+Export
+```
+
+### Business Rules
+
+* Waiting list is used only when the batch is full and waiting list is enabled.
+* Waiting list entries must preserve request order unless authorized prioritization is allowed.
+* Promotion from waiting list to enrollment must revalidate capacity.
+
+---
+
+## ADM-UI-009 Walk-In Enrollment Screen
+
+### Purpose
+
+Support same-day or short-duration enrollment and completion orchestration.
+
+### Fields
+
+```text
+Student
+Course
+Branch
+Batch
+Enrollment Date
+Trainer
+Fee Status
+Completion Eligibility
+Remarks
+```
+
+### Business Rules
+
+* Course must explicitly allow walk-in completion.
+* Walk-in enrollment uses the same enrollment lifecycle.
+* Same-day completion may be allowed only through the walk-in flow.
+* Walk-in completion must be auditable.
 
 ---
 
 # 7. Functional Requirements
 
-## FR-ADM-001 Admission Creation
+## FR-ADM-001 Create Admission
 
 The system shall allow authorized users to create admissions.
 
----
+## FR-ADM-002 Approve Admission
 
-## FR-ADM-002 Admission Approval
+The system shall allow authorized users to approve admissions.
 
-The system shall support admission approval workflow.
+## FR-ADM-003 Reject Admission
 
----
+The system shall allow authorized users to reject admissions with a mandatory reason.
 
-## FR-ADM-003 Admission Rejection
+## FR-ADM-004 Cancel Admission
 
-The system shall support admission rejection with mandatory remarks.
+The system shall allow authorized users to cancel admissions.
 
----
+## FR-ADM-005 Direct Admission
 
-## FR-ADM-004 Student Creation
+The system shall allow direct admission without a lead reference.
 
-The system shall create a student profile as part of admission processing.
+## FR-ADM-006 Register Student
 
----
+The system shall create or register the learner record required for enrollment.
 
-## FR-ADM-005 Enrollment Creation
+## FR-ADM-007 Create Enrollment
 
-The system shall allow students to be enrolled into courses and batches.
+The system shall allow authorized users to create enrollments.
 
----
+## FR-ADM-008 Confirm Enrollment
 
-## FR-ADM-006 Batch Capacity Validation
+The system shall allow authorized users to confirm enrollments after validation.
 
-The system shall prevent enrollment when batch capacity is reached unless waiting list process is used.
+## FR-ADM-009 Activate Enrollment
 
----
+The system shall allow authorized users to activate confirmed enrollments.
 
-## FR-ADM-007 Waiting List Support
+## FR-ADM-010 Update Enrollment Before Activation
 
-The system shall allow students to be added to waiting list when batch is full.
+The system shall allow authorized users to update draft and pending-fee enrollments.
 
----
-
-## FR-ADM-008 Enrollment Activation
-
-The system shall activate enrollment after successful creation.
-
----
-
-## FR-ADM-009 Enrollment Drop
+## FR-ADM-011 Drop Enrollment
 
 The system shall allow authorized users to drop enrollments.
 
----
+## FR-ADM-012 Cancel Enrollment
 
-## FR-ADM-010 Enrollment Cancellation
+The system shall allow authorized users to cancel enrollments.
 
-The system shall support enrollment cancellation.
+## FR-ADM-013 Batch Capacity Validation
 
----
+The system shall prevent enrollment beyond batch capacity.
 
-## FR-ADM-011 Fee Account Creation
+## FR-ADM-014 Waiting List Management
 
-The system shall automatically create Enrollment Fee Account upon enrollment.
+The system shall support waiting list entry, promotion, and removal.
 
----
+## FR-ADM-015 Fee Account Trigger
 
-## FR-ADM-012 Attendance Integration
+The system shall create an enrollment fee account when a new enrollment is created.
 
-The system shall make enrolled students available to attendance module.
+## FR-ADM-016 Lead Conversion Handoff
 
----
+The system shall allow qualified leads to be handed off from Lead & Inquiry Management into Admission creation.
 
-## FR-ADM-013 Completion Integration
+## FR-ADM-017 Walk-In Orchestration
 
-The system shall make enrolled students available to completion module.
-
----
-
-## FR-ADM-014 Certificate Eligibility Integration
-
-The system shall make enrollment data available to certificate eligibility engine.
+The system shall support walk-in enrollment and same-day completion orchestration.
 
 ---
 
-# 8. Notifications
+# 8. Audit Events
 
-## Admission Approved
-
-Notify:
+The following audit events shall be supported:
 
 ```text
-Counselor
-Admission Creator
-Branch Manager
+AdmissionCreated
+AdmissionUpdated
+AdmissionApproved
+AdmissionRejected
+AdmissionCancelled
+StudentRegistered
+EnrollmentCreated
+EnrollmentUpdated
+EnrollmentConfirmed
+EnrollmentActivated
+EnrollmentDropped
+EnrollmentCancelled
+WaitingListEntryCreated
+WaitingListEntryPromoted
+WalkInEnrollmentCreated
+WalkInCompletionApproved
+FeeAccountCreatedFromEnrollment
+LeadConvertedToAdmission
+```
+
+Rules:
+
+* Admission approval, rejection, cancellation, enrollment confirmation, activation, and walk-in completion must be auditable.
+* Lost or rejected states must retain reasons.
+* Fee account creation triggered by enrollment must be auditable.
+
+---
+
+# 9. Domain Errors
+
+The module shall distinguish between validation and business-rule errors such as:
+
+```text
+AdmissionAlreadyApproved
+AdmissionAlreadyRejected
+AdmissionNotEligibleForEnrollment
+EnrollmentAlreadyConfirmed
+EnrollmentAlreadyActive
+EnrollmentNotEditable
+EnrollmentCapacityExceeded
+WaitingListNotEnabled
+CourseInactive
+BranchInactive
+BatchInactive
+BatchNotOpenForEnrollment
+StudentInactive
+WalkInCompletionNotAllowed
+LeadConversionInvalid
+DuplicateStudentDetected
+InvalidEnrollmentType
 ```
 
 ---
 
-## Enrollment Created
+# 10. Reporting and Operational Views
 
-Notify:
+The Admission & Enrollment context shall support the following read views:
 
 ```text
-Student
-Counselor
-Branch Manager
+Admission List
+Enrollment List
+Waiting List
+Admission Status Summary
+Enrollment Status Summary
+Enrollment Timeline
+Branch Enrollment Summary
+Walk-In Completion Summary
 ```
 
-Phase 1 uses system notifications only.
+These are read models and operational views, not separate owned entities.
 
 ---
 
-# 9. Reports
+# 11. FRD Improvement Notes
 
-## Admission Reports
+This module should remain the single source of truth for:
 
-```text
-Admission Count By Branch
-Admission Count By Course
-Admission Conversion Report
-Admission Rejection Report
-```
+* admission approval
+* direct admission
+* enrollment lifecycle
+* waiting list behavior
+* fee account creation trigger
+* walk-in orchestration
+* lead-to-admission handoff
 
-## Enrollment Reports
-
-```text
-Enrollment Count By Course
-Enrollment Count By Batch
-Enrollment Status Report
-Waiting List Report
-```
-
----
-
-# 10. Audit Requirements
-
-Audit the following actions:
-
-```text
-Admission Created
-Admission Updated
-Admission Approved
-Admission Rejected
-Enrollment Created
-Enrollment Updated
-Enrollment Dropped
-Enrollment Cancelled
-```
-
-Each audit record must capture:
-
-```text
-User
-Action
-Timestamp
-Old Value
-New Value
-Reason
-```
+It should not own attendance marking, completion approval, or certificate issuance.

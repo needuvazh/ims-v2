@@ -1,71 +1,117 @@
-# Functional Requirement Document (FRD)
+# Functional Requirement Document
 
 ## Module 6: Course & Batch Management
 
-**Version:** 1.0
+**Version:** 1.2
 **Module Code:** CRS
+**Phase:** Phase 1
+**Owned Bounded Context:** Course & Batch Management
+
 **Dependencies:**
 
 * Organization Management
-* Student Management
-* Admission & Enrollment
-* Faculty Management
-* Scheduling Management
-* Finance Management
-* Completion Management
+* Admission & Enrollment Management
+* Faculty / Trainer Management
+* Scheduling & Timetable Management
+* Fee & Finance Management
+
+**Provides Data To:**
+
+* Admission & Enrollment Management
+* Scheduling & Timetable Management
+* Attendance Management
+* Fee & Finance Management
+* Exam, Result & Completion Management
+* Certificate Management
+* Corporate Training Management
+* Walk-In Enrollment & Completion Flow
+* Reporting & Dashboards
+* Audit & Compliance
 
 ---
 
 # 1. Business Purpose
 
-Course & Batch Management is responsible for defining the institute's training offerings and organizing students into executable training batches.
+Course & Batch Management defines the training catalog and the executable delivery structure used across IMS.
 
-The module shall support:
+The context owns course definitions, pricing versions, course completion rules, batches, trainer assignment rules, capacity rules, and waiting list behavior.
 
-* Course Catalog Management
-* Course Pricing Management
-* Course Duration Management
-* Course Completion Rules
-* Batch Management
-* Trainer Assignment
-* Capacity Management
-* Waiting List Management
-* Corporate Training Programs
-* Walk-In Training Programs
+Course & Batch rules are consumed by enrollment, scheduling, attendance, completion, and certificate workflows, but they are not owned by those modules.
 
 ---
 
-# 2. Business Hierarchy
+# 2. Scope
 
-```text
-Branch
-    ↓
-Department
-    ↓
-Course
-    ↓
-Batch
-    ↓
-Enrollment
-```
+## 2.1 In Scope
 
-Example:
+* Course catalog management
+* Course effective dating
+* Course activation and archival
+* Course pricing management
+* Course completion rule management
+* Batch creation and lifecycle management
+* Batch capacity management
+* Batch enrollment opening and closing
+* Waiting list management
+* Trainer assignment to batches
+* Course and batch lookup views
+* Corporate-specific and walk-in-specific batch configuration support
 
-```text
-Muscat Branch
-    ↓
-Safety Training
-    ↓
-IOSH Managing Safely
-    ↓
-IOSH-JAN-2026-MORNING
-```
+## 2.2 Out of Scope for Phase 1
+
+* Corporate contract ownership
+* Enrollment ownership
+* Attendance ownership
+* Completion approval ownership
+* Certificate ownership
 
 ---
 
-# 3. Course Types
+# 3. Business Principles
 
-The system shall support:
+* A course defines what is taught.
+* A batch defines how, when, and where a course is delivered.
+* A batch belongs to exactly one course and one branch.
+* A course belongs to exactly one branch and one department.
+* Pricing may vary by branch, customer type, batch type, and currency.
+* Completion rules are defined at course level and inherited by batches.
+* Historical pricing and historical completion rules must remain preserved.
+* Existing enrollments must not be retroactively changed by pricing or course updates.
+* Inactive courses cannot accept new batches or enrollments.
+* Inactive batches cannot be used for new enrollment actions.
+* Waiting list is used only when capacity is reached and waiting list is enabled.
+* Trainer assignment must prevent overlapping batch assignments.
+* Walk-in completion is allowed only when the course explicitly permits it.
+* Corporate and walk-in delivery can use the same course and batch structures, but they do not own separate lifecycles here.
+
+---
+
+# 4. Owned Concepts
+
+The Course & Batch context owns:
+
+* Course
+* CoursePricing
+* CourseCompletionRule
+* Batch
+* BatchTrainer
+* WaitingListEntry
+
+Notes:
+
+* Pricing is versioned by effective dates.
+* Completion rule changes must not retroactively alter completed enrollments.
+* Other contexts may reference `CourseId` and `BatchId`, but they must not own course or batch lifecycle rules.
+
+---
+
+# 5. Business Model
+
+## 5.1 Course Classification
+
+The system shall support configurable course classifications and delivery patterns.
+
+Examples:
 
 ```text
 Individual Training
@@ -77,9 +123,13 @@ Online Live Training
 Walk-In Training
 ```
 
----
+Rules:
 
-# 4. Course Duration Types
+* Course classification is a planning and pricing attribute.
+* Course classification must not create separate lifecycle models.
+* Batch type and customer type may be used as pricing dimensions.
+
+## 5.2 Course Duration Types
 
 The system shall support:
 
@@ -97,39 +147,106 @@ Examples:
 20 Sessions
 ```
 
----
-
-# 5. Course Lifecycle
+## 5.3 Course Lifecycle
 
 ```text
 Draft
-↓
+  ↓
 Active
-↓
+  ↓
 Inactive
-↓
+  ↓
 Archived
 ```
 
----
+Rules:
 
-# 6. Batch Lifecycle
+* Draft courses are not available for new enrollments.
+* Active courses may accept new batches and enrollments.
+* Inactive courses remain searchable for history.
+* Archived courses remain available for reporting only.
+* A course can be offered only when the current date is within the effective date range or effective end date is null.
+
+## 5.4 Course Pricing Lifecycle
 
 ```text
 Draft
-↓
+  ↓
+Active
+  ↓
+Inactive
+```
+
+Rules:
+
+* Only one active pricing record is allowed per course, branch, customer type, batch type, and currency combination.
+* Pricing changes must not affect existing enrollments.
+* Historical pricing must be preserved.
+
+## 5.5 Course Completion Rule Lifecycle
+
+```text
+Draft
+  ↓
+Active
+  ↓
+Inactive
+```
+
+Rules:
+
+* Only one active completion rule per course is allowed.
+* Completion rules must be evaluated by downstream completion and certificate modules.
+* Completion rule changes must not retroactively affect completed enrollments.
+
+## 5.6 Batch Lifecycle
+
+```text
+Draft
+  ↓
 Open For Enrollment
-↓
+  ↓
 In Progress
-↓
+  ↓
 Completed
-↓
+```
+
+Alternative:
+
+```text
+Draft
+  ↓
 Cancelled
 ```
 
+Rules:
+
+* Open For Enrollment is required before new enrollments may be accepted.
+* In Progress indicates delivery has started.
+* Completed batches are historical records.
+* Cancelled batches remain visible historically.
+* Batch capacity must be enforced before enrollment confirmation.
+
+## 5.7 Waiting List Lifecycle
+
+```text
+Requested
+  ↓
+Waiting
+  ↓
+Promoted
+  ↓
+Closed
+```
+
+Rules:
+
+* Waiting list entries preserve request order unless authorized prioritization is allowed.
+* Promotion to enrollment must revalidate batch capacity.
+
 ---
 
-# 7. Screens
+# 6. Screens
 
 ## CRS-UI-001 Course List Screen
 
@@ -143,7 +260,8 @@ View and manage courses.
 Course Code
 Course Name
 Department
-Course Type
+Branch
+Course Classification
 Duration Type
 Duration
 Status
@@ -155,19 +273,22 @@ Actions
 ```text
 Branch
 Department
-Course Type
+Course Classification
 Status
+Search
 ```
 
 ### Actions
 
 ```text
 Create Course
+View Course
 Edit Course
 Activate Course
 Deactivate Course
 Archive Course
 View Pricing
+View Completion Rules
 View Batches
 ```
 
@@ -186,39 +307,28 @@ COURSE_ARCHIVE
 
 ## CRS-UI-002 Create / Edit Course Screen
 
-### Section 1: Basic Information
+### Sections
 
-Fields:
+#### Section 1: Basic Information
 
 ```text
 Course Code
 Course Name
 Department
+Branch
 Description
-Course Type
+Course Classification
 Status
 ```
 
-### Section 2: Duration
-
-Fields:
+#### Section 2: Duration
 
 ```text
 Duration Type
 Duration Value
 ```
 
-Examples:
-
-```text
-Hours → 40
-Sessions → 20
-Days → 30
-```
-
-### Section 3: Enrollment Rules
-
-Fields:
+#### Section 3: Enrollment Rules
 
 ```text
 Allow Direct Enrollment
@@ -227,9 +337,7 @@ Allow Walk-In Completion
 Allow Corporate Enrollment
 ```
 
-### Section 4: Completion Rules
-
-Fields:
+#### Section 4: Completion Rules
 
 ```text
 Completion Type
@@ -239,30 +347,26 @@ Manual Approval Required
 Certificate Eligible
 ```
 
----
-
 ### Business Rules
 
-* Course Code must be unique.
-* Course Name must be unique within department.
+* Course code must be unique.
+* Course name must be unique within branch and department scope.
+* Course must belong to an active branch and active department.
 * Inactive courses cannot accept new enrollments.
-* Archived courses remain available for reporting.
-* Existing enrollments remain valid even if course becomes inactive.
-
----
+* Archived courses remain available for reports.
+* Existing enrollments remain valid if course becomes inactive.
+* Course changes must not alter completed enrollments.
 
 ### Validations
 
-Required:
-
-```text
-Course Code
-Course Name
-Department
-Course Type
-Duration Type
-Duration Value
-```
+* Course Code is required.
+* Course Name is required.
+* Department is required.
+* Branch is required.
+* Course Classification is required.
+* Duration Type is required.
+* Duration Value is required.
+* Duration Value must be greater than zero.
 
 ---
 
@@ -270,7 +374,7 @@ Duration Value
 
 ### Purpose
 
-Configure pricing.
+Configure versioned pricing for a course.
 
 ### Pricing Dimensions
 
@@ -295,80 +399,53 @@ Walk-In
 Base Price
 Tax Applicable
 Tax Percentage
-Effective Date
-Expiry Date
+Effective Start Date
+Effective End Date
 Status
 ```
-
----
-
-### Examples
-
-```text
-IOSH
-
-Individual = 100 OMR
-
-Corporate = 80 OMR
-
-Weekend Batch = 120 OMR
-
-Fast Track = 150 OMR
-```
-
----
 
 ### Business Rules
 
 * Multiple pricing versions may exist.
-* Only one active pricing record per combination.
-* Pricing changes should not affect existing enrollments.
+* Only one active pricing record is allowed per pricing combination.
+* Pricing changes must not affect existing enrollments.
+* Historical pricing must be preserved.
 
 ---
 
 ## CRS-UI-004 Course Completion Rules Screen
 
-### Completion Types
+### Purpose
 
-```text
-Completion Only
-Attendance Based
-Exam Based
-Exam + Attendance
-Manual Approval
-Walk-In Completion
-```
+Configure completion rules for a course.
 
 ### Fields
 
 ```text
+Completion Type
 Minimum Attendance %
 Exam Required
 Manual Approval Required
 Fee Clearance Required
 Certificate Eligible
+Status
+Effective Start Date
+Effective End Date
 ```
-
----
 
 ### Business Rules
 
-Certificate eligibility must evaluate:
-
-```text
-Attendance
-Exam
-Completion Approval
-Fee Clearance
-```
-
-Based on configured rules.
+* Only one active completion rule per course is allowed.
+* Completion rule changes must not retroactively affect completed enrollments.
+* Completion rules are consumed by completion and certificate modules.
 
 ---
 
-# 8. Batch Management
-
 ## CRS-UI-005 Batch List Screen
+
+### Purpose
+
+View and manage batches.
 
 ### Columns
 
@@ -393,12 +470,14 @@ Course
 Status
 Trainer
 Date Range
+Search
 ```
 
 ### Actions
 
 ```text
 Create Batch
+View Batch
 Edit Batch
 Open Enrollment
 Close Enrollment
@@ -408,8 +487,6 @@ View Waiting List
 Complete Batch
 Cancel Batch
 ```
-
----
 
 ### Permissions
 
@@ -426,9 +503,9 @@ BATCH_CANCEL
 
 ## CRS-UI-006 Create / Edit Batch Screen
 
-### Section 1: Batch Information
+### Sections
 
-Fields:
+#### Section 1: Batch Information
 
 ```text
 Batch Code
@@ -440,27 +517,21 @@ End Date
 Status
 ```
 
-### Section 2: Capacity
-
-Fields:
+#### Section 2: Capacity
 
 ```text
 Maximum Capacity
 Waiting List Enabled
 ```
 
-### Section 3: Trainer Assignment
-
-Fields:
+#### Section 3: Trainer Assignment
 
 ```text
 Primary Trainer
 Additional Trainers
 ```
 
-### Section 4: Enrollment Configuration
-
-Fields:
+#### Section 4: Enrollment Configuration
 
 ```text
 Open Enrollment Date
@@ -468,30 +539,42 @@ Close Enrollment Date
 Allow Overbooking
 ```
 
----
-
 ### Business Rules
 
-* Batch Code must be unique.
-* Batch must belong to a course.
-* Batch must belong to a branch.
+* Batch code must be unique.
+* Batch must belong to an active course.
+* Batch must belong to an active branch.
 * Capacity must be greater than zero.
-* Enrollment should stop when capacity is reached.
+* Enrollment should stop when capacity is reached unless overbooking is explicitly allowed.
 * Waiting list should be available if enabled.
+* Batch changes must not invalidate historical attendance or completion records.
+
+### Validations
+
+* Batch Code is required.
+* Batch Name is required.
+* Course is required.
+* Branch is required.
+* Start Date is required.
+* End Date is required.
+* Capacity is required.
 
 ---
 
-# 9. Waiting List Management
-
 ## CRS-UI-007 Waiting List Screen
+
+### Purpose
+
+Manage waiting list entries for full batches.
 
 ### Columns
 
 ```text
-Student Name
-Lead Name
+Waiting List Number
+Course
+Batch
+Student
 Requested Date
-Priority
 Status
 Actions
 ```
@@ -499,388 +582,243 @@ Actions
 ### Actions
 
 ```text
-Move To Enrollment
-Remove From Waiting List
+Add to Waiting List
+Promote to Enrollment
+Remove
+Export
 ```
-
----
 
 ### Business Rules
 
-When a seat becomes available:
-
-```text
-First Waiting Student
-       ↓
-Offer Enrollment
-```
-
-Priority ordering:
-
-```text
-Requested Date
-Priority
-```
+* Waiting list is used only when the batch is full and waiting list is enabled.
+* Waiting list entries must preserve request order unless authorized prioritization is allowed.
+* Promotion from waiting list to enrollment must revalidate capacity.
 
 ---
 
-# 10. Trainer Assignment
-
 ## CRS-UI-008 Trainer Assignment Screen
+
+### Purpose
+
+Assign trainers to batches.
 
 ### Fields
 
 ```text
+Batch
 Trainer
 Role
 Assigned From
 Assigned To
+Assignment Type
 ```
 
 ### Trainer Roles
 
 ```text
-Primary Trainer
-Assistant Trainer
-Guest Trainer
+Primary
+Assistant
+Observer
+Corporate Trainer
+Walk-In Trainer
 ```
-
----
 
 ### Business Rules
 
-* Multiple trainers allowed.
-* Trainer availability validation required.
-* Trainer cannot be assigned to overlapping batches.
+* Trainer assignment must respect trainer availability.
+* Trainer assignment must prevent overlapping batch assignments.
+* Trainer assignment changes must be auditable.
 
 ---
 
-# 11. Walk-In Training Support
+## CRS-UI-009 Course and Batch Lookup
 
-The system shall support training where:
+### Purpose
 
-```text
-Student walks in
-Completes training
-Receives certificate
-```
+Provide lookup views for downstream modules.
 
-without joining regular batch.
-
----
-
-### Walk-In Enrollment Flow
+### Lookups
 
 ```text
-Student
-   ↓
-Walk-In Enrollment
-   ↓
-Walk-In Completion
-   ↓
-Certificate
+Active Courses
+Open Batches
+Course Pricing
+Completion Rules
+Waiting List Availability
 ```
 
 ---
 
-### Business Rules
+# 7. Functional Requirements
 
-* Course must allow walk-in completion.
-* Walk-in completion requires trainer approval.
-* Walk-in completion must be auditable.
-
----
-
-# 12. Corporate Training Support
-
-The system shall support:
-
-```text
-Corporate Contract
-        ↓
-Corporate Program
-        ↓
-Corporate Batch
-        ↓
-Corporate Participants
-```
-
-### Additional Batch Fields
-
-```text
-Corporate Customer
-Contract Reference
-Delivery Location
-```
-
----
-
-### Business Rules
-
-* Corporate batch may not have public enrollment.
-* Corporate pricing should come from contract when available.
-* Corporate participants may bypass standard lead flow.
-
----
-
-# 13. Functional Requirements
-
-## FR-CRS-001 Course Creation
+## FR-CRS-001 Create Course
 
 The system shall allow authorized users to create courses.
 
----
+## FR-CRS-002 Update Course
 
-## FR-CRS-002 Course Pricing
+The system shall allow authorized users to update courses.
 
-The system shall support multiple pricing models.
+## FR-CRS-003 Activate or Deactivate Course
 
----
+The system shall allow authorized users to activate or deactivate courses.
 
-## FR-CRS-003 Course Completion Rules
+## FR-CRS-004 Archive Course
 
-The system shall support configurable completion rules.
+The system shall allow authorized users to archive courses.
 
----
+## FR-CRS-005 Manage Course Pricing
 
-## FR-CRS-004 Course Activation
+The system shall allow authorized users to manage versioned course pricing.
 
-The system shall allow courses to be activated and deactivated.
+## FR-CRS-006 Manage Completion Rules
 
----
+The system shall allow authorized users to manage course completion rules.
 
-## FR-CRS-005 Batch Creation
+## FR-CRS-007 Create Batch
 
 The system shall allow authorized users to create batches.
 
+## FR-CRS-008 Update Batch
+
+The system shall allow authorized users to update batches.
+
+## FR-CRS-009 Open Batch for Enrollment
+
+The system shall allow authorized users to open batches for enrollment.
+
+## FR-CRS-010 Close Batch Enrollment
+
+The system shall allow authorized users to close batch enrollment.
+
+## FR-CRS-011 Complete Batch
+
+The system shall allow authorized users to mark batches as completed.
+
+## FR-CRS-012 Cancel Batch
+
+The system shall allow authorized users to cancel batches.
+
+## FR-CRS-013 Validate Capacity
+
+The system shall prevent enrollment beyond batch capacity unless overbooking is explicitly allowed.
+
+## FR-CRS-014 Manage Waiting List
+
+The system shall support waiting list entry, promotion, and removal.
+
+## FR-CRS-015 Assign Trainers
+
+The system shall allow authorized users to assign trainers to batches.
+
+## FR-CRS-016 Validate Trainer Conflicts
+
+The system shall prevent overlapping trainer assignments.
+
+## FR-CRS-017 Support Walk-In Completion
+
+The system shall allow courses to explicitly permit walk-in completion.
+
+## FR-CRS-018 Support Corporate Batch Configuration
+
+The system shall support corporate-specific batch configuration without creating a separate lifecycle model.
+
+## FR-CRS-019 Preserve Historical Pricing
+
+The system shall preserve historical pricing records.
+
+## FR-CRS-020 Preserve Historical Completion Rules
+
+The system shall preserve historical completion rule records.
+
 ---
 
-## FR-CRS-006 Capacity Validation
+# 8. Audit Events
 
-The system shall prevent enrollment beyond capacity unless overbooking is allowed.
-
----
-
-## FR-CRS-007 Waiting List Management
-
-The system shall support waiting list management.
-
----
-
-## FR-CRS-008 Trainer Assignment
-
-The system shall support assigning one or more trainers.
-
----
-
-## FR-CRS-009 Trainer Conflict Validation
-
-The system shall prevent trainer scheduling conflicts.
-
----
-
-## FR-CRS-010 Walk-In Training
-
-The system shall support walk-in training completion.
-
----
-
-## FR-CRS-011 Corporate Batch Support
-
-The system shall support corporate-specific batches.
-
----
-
-## FR-CRS-012 Pricing Versioning
-
-The system shall preserve historical pricing.
-
----
-
-## FR-CRS-013 Completion Rule Evaluation
-
-The system shall evaluate completion eligibility using configured rules.
-
----
-
-# 14. Notifications
-
-### Batch Created
-
-Notify:
+The following audit events shall be supported:
 
 ```text
-Branch Manager
-Academic Coordinator
+CourseCreated
+CourseUpdated
+CourseActivated
+CourseDeactivated
+CourseArchived
+CoursePricingCreated
+CoursePricingUpdated
+CourseCompletionRuleCreated
+CourseCompletionRuleUpdated
+BatchCreated
+BatchUpdated
+BatchOpenedForEnrollment
+BatchClosedForEnrollment
+BatchCompleted
+BatchCancelled
+TrainerAssignedToBatch
+TrainerRemovedFromBatch
+WaitingListEntryCreated
+WaitingListEntryPromoted
+```
+
+Rules:
+
+* Course, pricing, rule, batch, trainer assignment, and waiting list changes must be auditable.
+* Historical pricing and completion rules must retain the actor and effective date changes.
+
+---
+
+# 9. Domain Errors
+
+The module shall distinguish between validation and business-rule errors such as:
+
+```text
+CourseCodeAlreadyExists
+CourseNameAlreadyExists
+CourseInactive
+CourseArchived
+BatchCodeAlreadyExists
+BatchInactive
+BatchNotOpenForEnrollment
+BatchCapacityExceeded
+WaitingListNotEnabled
+TrainerConflictDetected
+TrainerAvailabilityViolation
+InvalidPricingCombination
+MultipleActivePricingRecords
+MultipleActiveCompletionRules
+InvalidEffectiveDateRange
+WalkInCompletionNotAllowed
 ```
 
 ---
 
-### Trainer Assigned
+# 10. Reporting and Operational Views
 
-Notify:
-
-```text
-Assigned Trainer
-Branch Manager
-```
-
----
-
-### Capacity Reached
-
-Notify:
+The Course & Batch context shall support the following read views:
 
 ```text
-Admissions Team
-Branch Manager
-```
-
----
-
-### Waiting List Available
-
-Notify:
-
-```text
-Admissions Team
-```
-
----
-
-# 15. Reports
-
-## Course Reports
-
-```text
-Course Catalog Report
-Course Pricing Report
-Course Popularity Report
-Course Profitability Report
-```
-
----
-
-## Batch Reports
-
-```text
-Batch Capacity Report
-Batch Utilization Report
-Batch Completion Report
-Batch Trainer Report
-```
-
----
-
-## Waiting List Reports
-
-```text
+Course List
+Batch List
+Batch Capacity Summary
 Waiting List Summary
-Course Demand Report
+Trainer Assignment Summary
+Course Pricing History
+Completion Rule History
 ```
+
+These are read models and operational views, not separate owned entities.
 
 ---
 
-## Corporate Reports
+# 11. FRD Improvement Notes
 
-```text
-Corporate Program Report
-Corporate Batch Report
-Corporate Enrollment Report
-```
+This module should remain the single source of truth for:
 
----
+* course catalog
+* versioned pricing
+* completion rules
+* batch lifecycle
+* waiting list behavior
+* trainer assignment rules
+* walk-in completion enablement
 
-# 16. Audit Requirements
-
-Audit:
-
-```text
-Course Created
-Course Updated
-Pricing Changed
-Completion Rule Changed
-Batch Created
-Batch Updated
-Trainer Assigned
-Trainer Removed
-Batch Completed
-Batch Cancelled
-Walk-In Completion Approved
-```
-
-Each audit record shall capture:
-
-```text
-User
-Action
-Timestamp
-Old Value
-New Value
-Reason
-```
-
----
-
-# 17. Critical Design Decisions
-
-### Course Versioning
-
-Future support:
-
-```text
-IOSH v1
-IOSH v2
-```
-
-Not required in Phase 1.
-
----
-
-### Batch Cloning
-
-Future support:
-
-```text
-Clone Existing Batch
-```
-
-Not required in Phase 1.
-
----
-
-### Dynamic Batch Naming
-
-Recommended for Phase 1:
-
-```text
-<CourseCode>-<Month>-<Year>-<Shift>
-
-Example:
-
-IOSH-JAN-2026-MORNING
-```
-
----
-
-# 18. Integration Points
-
-### Consumes
-
-```text
-Organization Management
-Trainer Management
-Corporate Training
-```
-
-### Provides Data To
-
-```text
-Enrollment
-Scheduling
-Attendance
-Finance
-Completion
-Certificates
-Reporting
-```
+It should not own admissions, enrollments, attendance, completion approval, or certificates.

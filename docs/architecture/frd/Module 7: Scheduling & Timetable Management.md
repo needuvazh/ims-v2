@@ -1,133 +1,169 @@
-# Functional Requirement Document (FRD)
+# Functional Requirement Document
 
 ## Module 7: Scheduling & Timetable Management
 
-**Version:** 1.0
+**Version:** 1.1
 **Module Code:** SCH
+**Phase:** Phase 1
+**Owned Bounded Context:** Scheduling & Timetable Management
+
 **Dependencies:**
 
 * Organization Management
 * Course & Batch Management
 * Faculty / Trainer Management
-* Enrollment Management
+* Admission & Enrollment Management
 
 **Provides Data To:**
 
 * Attendance Management
-* Completion Management
-* Reporting
-* Student Portal
-* Trainer Portal (Future)
+* Exam, Result & Completion Management
+* Student Management
+* Trainer Management
+* Reporting & Dashboards
+* Audit & Compliance
 
 ---
 
 # 1. Business Purpose
 
-Scheduling & Timetable Management is responsible for planning and managing training delivery.
+Scheduling & Timetable Management plans and controls the delivery calendar for batch-based and walk-in training.
 
-The module shall support:
+The context owns schedule definitions, generated sessions, resource allocation, conflict detection, rescheduling, and timetable views.
 
-* Batch Scheduling
-* Session Scheduling
-* Trainer Scheduling
-* Classroom Allocation
-* Lab Allocation
-* Conflict Detection
-* Timetable Generation
-* Rescheduling
-* Session Cancellation
-* Corporate Training Scheduling
-
-This module is the operational engine of the institute.
+The scheduling engine ensures that trainer, classroom, batch, and time-slot allocation remain conflict free unless an explicit override policy applies.
 
 ---
 
-# 2. Scheduling Hierarchy
+# 2. Scope
 
-```text
-Course
-    ↓
-Batch
-    ↓
-Schedule
-    ↓
-Session
-```
+## 2.1 In Scope
 
-Example:
+* Schedule creation
+* Session generation
+* Timetable views
+* Trainer allocation
+* Classroom allocation
+* Lab allocation where applicable
+* Conflict detection
+* Session rescheduling
+* Session cancellation
+* Session completion
+* Trainer availability validation
+* Branch, batch, trainer, and classroom timetable views
 
-```text
-IOSH Managing Safely
-       ↓
-IOSH-JAN-2026-MORNING
-       ↓
-Training Schedule
-       ↓
-Session 1
-Session 2
-Session 3
-...
-Session 20
-```
+## 2.2 Out of Scope for Phase 1
+
+* Attendance marking
+* Completion approval
+* Certificate issuance
+* Equipment scheduling
 
 ---
 
-# 3. Scheduling Types
+# 3. Business Principles
+
+* A schedule is the pattern definition.
+* A session is the concrete delivery occurrence.
+* A batch may have one or more schedules.
+* Generated sessions are the operational source of truth for attendance readiness.
+* Trainer double booking must be prevented.
+* Classroom double booking must be prevented.
+* Batch overlap conflicts must be prevented where schedules overlap for the same delivery window.
+* Sessions outside trainer availability require override permission.
+* Past sessions must not be changed through normal schedule edits.
+* Cancelled or completed sessions remain in history.
+
+---
+
+# 4. Owned Concepts
+
+The Scheduling context owns:
+
+* Schedule
+* ScheduleSession
+* TrainerAvailability
+* ConflictCheckResult
+* TimetableViewDefinition
+
+Notes:
+
+* Batch, Course, Branch, Classroom, and Trainer are referenced from other contexts.
+* Scheduling owns delivery timing and conflict policy, not batch ownership or trainer master data.
+* Attendance is created or attached downstream, but it is not owned here.
+
+---
+
+# 5. Business Model
+
+## 5.1 Schedule Types
 
 The system shall support:
 
 ```text
-Recurring Schedule
-Fixed Schedule
-Corporate Schedule
-Walk-In Schedule
+Recurring
+Fixed
+Corporate
+Walk-In
 ```
 
----
+Rules:
 
-# 4. Session Lifecycle
+* Recurring schedules are used for repeated weekly patterns.
+* Fixed schedules are used for date-bound delivery blocks.
+* Corporate schedules may use client-specific timings and locations.
+* Walk-in schedules may support short-duration or same-day delivery patterns.
+
+## 5.2 Session Lifecycle
 
 ```text
 Planned
-      ↓
+  ↓
 Scheduled
-      ↓
+  ↓
 In Progress
-      ↓
+  ↓
 Completed
 ```
 
-Alternative flows:
+Alternative:
 
 ```text
 Scheduled
-      ↓
+  ↓
 Cancelled
+```
 
+Alternative:
+
+```text
 Scheduled
-      ↓
+  ↓
 Rescheduled
 ```
 
----
+Rules:
 
-# 5. Resource Types
+* Planned sessions are generated but not yet published.
+* Scheduled sessions are visible on the timetable.
+* Completed sessions are historical records and are not editable through normal flow.
+* Cancelled sessions remain visible for audit and reporting.
+
+## 5.3 Resource Types
 
 Phase 1 supports:
 
 ```text
+Trainer
 Classroom
 Lab
-Trainer
 ```
 
-Future:
+Rules:
 
-```text
-Equipment
-Vehicle
-Meeting Room
-```
+* Equipment and other advanced resources are out of Phase 1 scope.
+* A session may require one primary trainer and optional additional trainers.
+* A session must be associated with a classroom or lab where required.
 
 ---
 
@@ -137,7 +173,7 @@ Meeting Room
 
 ### Purpose
 
-View institute schedules.
+View institute schedules and sessions.
 
 ### Views
 
@@ -160,6 +196,7 @@ Batch
 Trainer
 Classroom
 Date Range
+Session Status
 ```
 
 ### Actions
@@ -167,7 +204,8 @@ Date Range
 ```text
 Create Schedule
 Edit Schedule
-Reschedule
+Generate Sessions
+Reschedule Session
 Cancel Session
 View Conflicts
 Export Timetable
@@ -187,12 +225,17 @@ TIMETABLE_EXPORT
 
 ## SCH-UI-002 Schedule List Screen
 
+### Purpose
+
+View and manage schedules.
+
 ### Columns
 
 ```text
 Schedule Number
 Course
 Batch
+Branch
 Trainer
 Start Date
 End Date
@@ -209,6 +252,7 @@ Course
 Batch
 Trainer
 Status
+Search
 ```
 
 ### Actions
@@ -218,16 +262,27 @@ Create
 View
 Edit
 Generate Sessions
+Publish Schedule
 Cancel Schedule
+```
+
+### Permissions
+
+```text
+SCHEDULE_VIEW
+SCHEDULE_CREATE
+SCHEDULE_EDIT
+SCHEDULE_PUBLISH
+SCHEDULE_CANCEL
 ```
 
 ---
 
 ## SCH-UI-003 Create Schedule Screen
 
-### Section 1: Batch Information
+### Sections
 
-Fields:
+#### Batch Information
 
 ```text
 Batch
@@ -235,13 +290,7 @@ Course
 Branch
 ```
 
-Auto-populated from batch.
-
----
-
-### Section 2: Schedule Pattern
-
-Fields:
+#### Schedule Pattern
 
 ```text
 Schedule Type
@@ -251,20 +300,7 @@ Start Time
 End Time
 ```
 
-Schedule Types:
-
-```text
-Recurring
-Fixed
-Corporate
-Walk-In
-```
-
----
-
-### Section 3: Recurrence Pattern
-
-Fields:
+#### Recurrence Pattern
 
 ```text
 Monday
@@ -276,19 +312,7 @@ Saturday
 Sunday
 ```
 
-Example:
-
-```text
-Monday
-Wednesday
-Friday
-```
-
----
-
-### Section 4: Resource Allocation
-
-Fields:
+#### Resource Allocation
 
 ```text
 Primary Trainer
@@ -296,8 +320,6 @@ Additional Trainers
 Classroom
 Lab
 ```
-
----
 
 ### Actions
 
@@ -307,84 +329,76 @@ Save Draft
 Publish Schedule
 ```
 
----
+### Business Rules
 
-# 7. Session Generation
+* Batch information must be derived from the selected batch.
+* A schedule must belong to an active batch.
+* A schedule must belong to an active course and branch through the batch reference.
+* Conflict validation must run before publish.
+* Published schedules expose their sessions to timetable views.
+
+### Validations
+
+* Batch is required.
+* Schedule Type is required.
+* Start Date is required.
+* End Date is required.
+* Start Time is required.
+* End Time is required.
+* End Time must be after Start Time.
+* Primary Trainer is required when trainer-led delivery is configured.
+* Classroom or Lab is required where applicable.
+
+---
 
 ## SCH-UI-004 Session Generation Screen
 
 ### Purpose
 
-Automatically generate sessions.
+Generate concrete delivery sessions from a schedule.
 
 ### Example
 
-Course:
+Course duration:
 
 ```text
 40 Hours
 ```
 
-Schedule:
+Schedule pattern:
 
 ```text
-2 Hours Per Day
+2 Hours Per Session
 ```
 
-System Generates:
+Generated sessions:
 
 ```text
 20 Sessions
 ```
 
----
-
 ### Business Rules
 
-Hours-based Course:
+* Hours-based courses generate sessions by total hours and hours per session.
+* Sessions-based courses generate the configured number of sessions.
+* Fixed-duration courses generate sessions using recurrence rules.
+* Completed sessions must never be regenerated.
+* Hard conflicts must block generation unless override permission exists.
 
-```text
-Total Hours
-÷
-Hours Per Session
-=
-Total Sessions
-```
+### Validations
 
-Sessions-based Course:
-
-```text
-Course Sessions
-=
-Generated Sessions
-```
-
-Fixed Duration:
-
-```text
-Start Date
-→
-End Date
-```
+* Session count must be greater than zero.
+* Hours per session must be greater than zero when used.
+* Trainer must be assigned.
+* Classroom must be assigned where classroom-based delivery is required.
 
 ---
-
-### Validation Rules
-
-System must ensure:
-
-```text
-Session Count > 0
-Hours > 0
-Trainer Assigned
-Classroom Assigned
-```
-
----
-
-# 8. Session Management
 
 ## SCH-UI-005 Session List Screen
+
+### Purpose
+
+View and manage sessions.
 
 ### Columns
 
@@ -416,130 +430,27 @@ Complete
 
 ### Sections
 
-#### Session Information
-
 ```text
-Session Number
-Course
-Batch
-Trainer
+Session Information
+Resource Allocation
+Conflict Summary
+Attendance Link
+Notes
+Reschedule History
+Audit History
 ```
 
-#### Resource Allocation
+### Actions
 
 ```text
-Classroom
-Lab
-```
-
-#### Attendance
-
-```text
-Attendance Status
-```
-
-#### Notes
-
-```text
-Trainer Notes
-Coordinator Notes
+Edit
+Reschedule
+Cancel
+Complete
+View Timetable
 ```
 
 ---
-
-# 9. Conflict Detection Engine
-
-This is one of the most important components.
-
----
-
-## Trainer Conflict
-
-Prevent:
-
-```text
-Trainer A
-10:00 - 12:00
-Batch A
-
-Trainer A
-10:30 - 11:30
-Batch B
-```
-
-Result:
-
-```text
-Conflict
-```
-
----
-
-## Classroom Conflict
-
-Prevent:
-
-```text
-Room 101
-10:00 - 12:00
-Batch A
-
-Room 101
-10:00 - 11:00
-Batch B
-```
-
-Result:
-
-```text
-Conflict
-```
-
----
-
-## Batch Conflict
-
-Prevent:
-
-```text
-Batch A
-Session 1
-
-Batch A
-Session 2
-```
-
-at overlapping times.
-
----
-
-## Conflict Severity
-
-### Hard Conflict
-
-Must prevent save.
-
-Examples:
-
-```text
-Trainer overlap
-Classroom overlap
-```
-
-### Soft Conflict
-
-Allow save with warning.
-
-Examples:
-
-```text
-Trainer works more than preferred hours
-Classroom nearing capacity
-```
-
----
-
-# 10. Trainer Availability
 
 ## SCH-UI-007 Trainer Availability Screen
 
@@ -556,30 +467,21 @@ Unavailable Dates
 
 ```text
 Monday-Friday
-
-09:00 AM
-to
-05:00 PM
+09:00 AM to 05:00 PM
 ```
-
----
 
 ### Business Rules
 
-* Scheduling engine should validate trainer availability.
+* Trainer availability must be validated during schedule creation and session generation.
 * Sessions outside availability require override permission.
-
-Permission:
-
-```text
-TRAINER_OVERRIDE_AVAILABILITY
-```
 
 ---
 
-# 11. Classroom Scheduling
-
 ## SCH-UI-008 Classroom Schedule Screen
+
+### Purpose
+
+Visual room calendar.
 
 ### Columns
 
@@ -592,424 +494,185 @@ Trainer
 Status
 ```
 
+### Business Rules
+
+* Classroom capacity should be visible.
+* Classroom conflicts must block save unless override permission exists.
+
+---
+
+## SCH-UI-009 Conflict Review Screen
+
 ### Purpose
 
-Visual room calendar.
+Review hard and soft conflicts before publish or reschedule.
 
----
+### Conflict Types
+
+```text
+Trainer Conflict
+Classroom Conflict
+Batch Overlap
+Availability Conflict
+```
+
+### Conflict Severity
+
+```text
+Hard
+Soft
+```
 
 ### Business Rules
 
-* Classroom capacity should be displayed.
-* Over-capacity enrollment warning should appear.
-
-Example:
-
-```text
-Capacity = 20
-
-Enrollment = 25
-
-Warning
-```
+* Hard conflicts must block publication.
+* Soft conflicts may require acknowledgment or override.
+* Conflict decisions must be auditable.
 
 ---
 
-# 12. Lab Scheduling
+# 7. Functional Requirements
 
-Phase 1 support:
-
-```text
-Lab Reservation
-Lab Occupancy
-Lab Calendar
-```
-
-Same conflict rules as classroom.
-
----
-
-# 13. Rescheduling
-
-## SCH-UI-009 Reschedule Session Screen
-
-### Fields
-
-```text
-Session
-New Date
-New Start Time
-New End Time
-Reason
-```
-
-### Actions
-
-```text
-Reschedule
-Cancel
-```
-
----
-
-### Business Rules
-
-* Reason is mandatory.
-* Conflict validation required.
-* Attendance records should remain linked.
-* Audit record required.
-
----
-
-# 14. Session Cancellation
-
-## SCH-UI-010 Cancel Session Screen
-
-### Fields
-
-```text
-Cancellation Reason
-```
-
-### Actions
-
-```text
-Cancel Session
-```
-
----
-
-### Business Rules
-
-* Cancelled sessions cannot record attendance.
-* Replacement session may be scheduled later.
-* Cancellation must be audited.
-
----
-
-# 15. Corporate Training Scheduling
-
-Corporate programs may require:
-
-```text
-Customer Location
-Corporate Trainer
-Special Timing
-```
-
-Additional Fields:
-
-```text
-Corporate Customer
-Delivery Location
-Contract Reference
-```
-
----
-
-### Business Rules
-
-Corporate schedules:
-
-* May not use institute classroom.
-* May use customer location.
-* Must still support attendance tracking.
-
----
-
-# 16. Walk-In Training Scheduling
-
-Walk-In training may require:
-
-```text
-Single Session
-Same Day Completion
-Certificate Generation
-```
-
----
-
-### Business Rules
-
-* Walk-In schedule may consist of one session.
-* Completion approval still required.
-
----
-
-# 17. Student Timetable View
-
-Students should be able to view:
-
-```text
-Course
-Batch
-Trainer
-Date
-Time
-Location
-```
-
-Read-only.
-
----
-
-# 18. Trainer Timetable View
-
-Trainers should be able to view:
-
-```text
-Assigned Sessions
-Classroom
-Student Count
-Upcoming Schedule
-```
-
-Read-only in Phase 1.
-
----
-
-# 19. Functional Requirements
-
-## FR-SCH-001 Schedule Creation
+## FR-SCH-001 Create Schedule
 
 The system shall allow authorized users to create schedules.
 
----
+## FR-SCH-002 Update Schedule
 
-## FR-SCH-002 Session Generation
+The system shall allow authorized users to update schedules before publication.
 
-The system shall automatically generate sessions.
+## FR-SCH-003 Generate Sessions
 
----
+The system shall generate sessions from a schedule.
 
-## FR-SCH-003 Trainer Assignment
+## FR-SCH-004 Publish Schedule
 
-The system shall support assigning trainers.
+The system shall allow authorized users to publish schedules once conflicts are resolved.
 
----
+## FR-SCH-005 Cancel Schedule
 
-## FR-SCH-004 Classroom Allocation
+The system shall allow authorized users to cancel schedules.
 
-The system shall support classroom allocation.
+## FR-SCH-006 View Timetable
 
----
+The system shall provide timetable views by day, week, month, trainer, classroom, and batch.
 
-## FR-SCH-005 Conflict Detection
+## FR-SCH-007 Validate Trainer Availability
 
-The system shall prevent scheduling conflicts.
+The system shall validate trainer availability during schedule creation and session generation.
 
----
+## FR-SCH-008 Validate Classroom Allocation
 
-## FR-SCH-006 Trainer Availability Validation
+The system shall validate classroom allocation during schedule creation and session generation.
 
-The system shall validate trainer availability.
+## FR-SCH-009 Detect Conflicts
 
----
+The system shall detect trainer, classroom, batch overlap, and availability conflicts.
 
-## FR-SCH-007 Session Rescheduling
+## FR-SCH-010 Reschedule Session
 
-The system shall support rescheduling.
+The system shall allow authorized users to reschedule sessions.
 
----
+## FR-SCH-011 Cancel Session
 
-## FR-SCH-008 Session Cancellation
+The system shall allow authorized users to cancel sessions.
 
-The system shall support cancellation.
+## FR-SCH-012 Complete Session
 
----
+The system shall allow authorized users to mark sessions completed.
 
-## FR-SCH-009 Corporate Scheduling
+## FR-SCH-013 Support Walk-In Scheduling
 
-The system shall support corporate training schedules.
+The system shall support walk-in scheduling patterns.
 
----
+## FR-SCH-014 Support Corporate Scheduling
 
-## FR-SCH-010 Walk-In Scheduling
+The system shall support corporate scheduling patterns.
 
-The system shall support walk-in schedules.
+## FR-SCH-015 Preserve Reschedule History
 
----
-
-## FR-SCH-011 Student Timetable
-
-The system shall provide student timetable visibility.
+The system shall preserve session reschedule history.
 
 ---
 
-## FR-SCH-012 Trainer Timetable
+# 8. Audit Events
 
-The system shall provide trainer timetable visibility.
-
----
-
-# 20. Notifications
-
-### Schedule Published
-
-Notify:
+The following audit events shall be supported:
 
 ```text
-Trainer
-Branch Manager
-Coordinator
+ScheduleCreated
+ScheduleUpdated
+SchedulePublished
+ScheduleCancelled
+SessionGenerated
+SessionUpdated
+SessionRescheduled
+SessionCancelled
+SessionCompleted
+TrainerAvailabilityUpdated
+ConflictDetected
+ConflictOverridden
+```
+
+Rules:
+
+* Schedule and session lifecycle changes must be audited.
+* Conflict resolution decisions must be audited.
+* Reschedule history must be retained.
+
+---
+
+# 9. Domain Errors
+
+The module shall distinguish between validation and business-rule errors such as:
+
+```text
+TrainerConflictDetected
+ClassroomConflictDetected
+BatchOverlapDetected
+TrainerUnavailable
+ClassroomUnavailable
+BatchNotEligibleForScheduling
+ScheduleAlreadyPublished
+ScheduleNotPublishable
+SessionCompletedCannotBeEdited
+SessionCancelledCannotBeEdited
+SessionConflictOverrideRequired
+WalkInScheduleNotAllowed
+CorporateScheduleNotAllowed
+InvalidSessionTimeRange
 ```
 
 ---
 
-### Session Rescheduled
+# 10. Reporting and Operational Views
 
-Notify:
+The Scheduling context shall support the following read views:
 
 ```text
-Trainer
-Enrolled Students
-Coordinator
+Timetable Dashboard
+Schedule List
+Session List
+Trainer Timetable
+Classroom Timetable
+Batch Timetable
+Conflict Report
+Reschedule History
 ```
+
+These are read models and operational views, not separate owned entities.
 
 ---
 
-### Session Cancelled
+# 11. FRD Improvement Notes
 
-Notify:
+This module should remain the single source of truth for:
 
-```text
-Trainer
-Enrolled Students
-Coordinator
-```
+* schedule patterns
+* generated sessions
+* timetable views
+* resource allocation
+* conflict prevention
+* reschedule history
 
----
-
-### Conflict Detected
-
-Notify:
-
-```text
-Scheduling User
-```
-
-Immediately during scheduling.
-
----
-
-# 21. Reports
-
-## Operational Reports
-
-```text
-Daily Timetable
-Weekly Timetable
-Trainer Schedule
-Classroom Utilization
-Lab Utilization
-```
-
----
-
-## Management Reports
-
-```text
-Trainer Utilization
-Classroom Occupancy
-Cancelled Sessions
-Rescheduled Sessions
-```
-
----
-
-## Corporate Reports
-
-```text
-Corporate Training Calendar
-Corporate Delivery Schedule
-```
-
----
-
-# 22. Audit Requirements
-
-Audit:
-
-```text
-Schedule Created
-Schedule Updated
-Session Generated
-Session Rescheduled
-Session Cancelled
-Trainer Assigned
-Trainer Removed
-Classroom Changed
-```
-
-Capture:
-
-```text
-User
-Action
-Timestamp
-Old Value
-New Value
-Reason
-```
-
----
-
-# 23. Critical Design Decisions
-
-### Scheduling Model
-
-Recommended:
-
-```text
-Schedule
-      ↓
-Session
-```
-
-instead of storing only timetable rows.
-
-Reason:
-
-Attendance, completion tracking, and rescheduling become easier.
-
----
-
-### Conflict Engine
-
-Should be implemented as:
-
-```text
-Pre-Save Validation Service
-```
-
-not as a report.
-
----
-
-### Attendance Dependency
-
-Attendance records should always be created from Sessions.
-
-Never directly from Batch.
-
----
-
-# 24. Integration Points
-
-### Consumes
-
-```text
-Course & Batch
-Trainer Management
-Organization Management
-```
-
-### Provides Data To
-
-```text
-Attendance
-Completion
-Certificates
-Reporting
-Student Portal
-```
+It should not own attendance marking or completion approval.

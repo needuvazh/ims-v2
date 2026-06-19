@@ -1,137 +1,157 @@
-# Functional Requirement Document (FRD)
+# Functional Requirement Document
 
 ## Module 8: Attendance Management
 
-**Version:** 1.0
+**Version:** 1.1
 **Module Code:** ATT
+**Phase:** Phase 1
+**Owned Bounded Context:** Attendance Management
+
 **Dependencies:**
 
-* Student Management
-* Enrollment Management
-* Course & Batch Management
 * Scheduling & Timetable Management
+* Admission & Enrollment Management
+* Course & Batch Management
+* Identity & Access Management
 
 **Provides Data To:**
 
-* Completion Management
+* Exam, Result & Completion Management
 * Certificate Management
-* Reporting
-* Student Portal
-* Corporate Training Reports
-* Future AI Analytics
+* Student Management
+* Corporate Training Management
+* Reporting & Dashboards
+* Audit & Compliance
 
 ---
 
 # 1. Business Purpose
 
-Attendance Management is responsible for recording, tracking, validating, and reporting student participation in training sessions.
+Attendance Management records and validates learner participation for scheduled training sessions.
 
-The module shall support:
+The context owns attendance sessions, attendance records, attendance locking, attendance reopening, correction workflow, and attendance calculations.
 
-* Session Attendance
-* Attendance Corrections
-* Attendance Percentage Calculation
-* Batch Attendance Tracking
-* Student Attendance Tracking
-* Corporate Attendance Tracking
-* Trainer Attendance Entry
-* Attendance Reporting
+Attendance is generated from schedule sessions and contributes to completion and certificate eligibility.
 
 ---
 
-# 2. Attendance Architecture
+# 2. Scope
 
-Attendance shall be generated from Sessions.
+## 2.1 In Scope
 
-```text id="vjlwm7"
-Course
-    ↓
-Batch
-    ↓
-Schedule
-    ↓
-Session
-    ↓
-Attendance Session
-    ↓
-Attendance Records
-```
+* Attendance session creation from schedule sessions
+* Manual attendance marking
+* Mark all present / mark all absent actions
+* Attendance locking
+* Attendance reopening
+* Attendance correction requests
+* Student attendance summaries
+* Batch attendance summaries
+* Corporate attendance summaries
+* Attendance percentage calculation
+* Attendance eligibility calculation
 
----
+## 2.2 Out of Scope for Phase 1
 
-# 3. Attendance Types
-
-Phase 1 supports:
-
-```text id="d6jlwm"
-Manual Attendance
-```
-
-Future versions:
-
-```text id="y8s6u7"
-QR Attendance
-Biometric Attendance
-RFID Attendance
-Mobile Check-In
-```
+* Biometric capture
+* RFID / QR device integration
+* Mobile self check-in
+* Automated facial recognition
 
 ---
 
-# 4. Attendance Lifecycle
+# 3. Business Principles
 
-## Attendance Session
+* Attendance must be session-based.
+* Attendance records must belong to a schedule session.
+* Only enrolled learners for the batch may be marked.
+* Cancelled sessions cannot accept attendance.
+* Attendance should not be editable once locked unless reopened by authorized action.
+* Attendance corrections must retain the original value in history.
+* Attendance contributes to course completion and certificate eligibility.
+* Trainer can mark attendance for assigned sessions.
+* Administrative correction and reopen actions must be permission controlled and audited.
 
-```text id="if97kq"
+---
+
+# 4. Owned Concepts
+
+The Attendance context owns:
+
+* AttendanceSession
+* AttendanceRecord
+* AttendanceCorrection
+* AttendanceLock
+* AttendancePolicy
+
+Notes:
+
+* AttendanceSession is derived from a schedule session.
+* Enrollment and Student are referenced from Admission & Enrollment Management.
+* ScheduleSession is referenced from Scheduling & Timetable Management.
+* Completion and certificate decisions consume attendance data but do not own it.
+
+---
+
+# 5. Business Model
+
+## 5.1 Attendance Session Lifecycle
+
+```text
 Not Open
-     ↓
+  ↓
 Open
-     ↓
+  ↓
 Attendance Marked
-     ↓
+  ↓
 Locked
 ```
 
----
+Alternative:
 
-## Attendance Record
+```text
+Open
+  ↓
+Reopened
+```
 
-```text id="6rvq2v"
+Rules:
+
+* Attendance sessions are opened from eligible schedule sessions.
+* Attendance is marked while the session is open.
+* Locked attendance cannot be modified unless reopened.
+* Reopened attendance must preserve prior values in history.
+
+## 5.2 Attendance Record Status
+
+```text
 Present
 Absent
 Late
 Excused
 ```
 
----
+Rules:
 
-# 5. Attendance Ownership
+* Attendance statuses must be configurable only if policy allows.
+* Status values must remain stable enough for reporting and eligibility rules.
 
-### Attendance Entry
+## 5.3 Attendance Types
 
-Phase 1:
+Phase 1 supports:
 
-```text id="zcyi4q"
-Trainer
+```text
+Manual Attendance
 ```
 
-may record attendance.
+Future versions:
 
-Administrative override available.
-
----
-
-### Attendance Correction
-
-Phase 1:
-
-```text id="2ncknl"
-Trainer
-Branch Manager
-Academic Coordinator
+```text
+QR Attendance
+Biometric Attendance
+RFID Attendance
+Mobile Check-In
 ```
-
-based on permissions.
 
 ---
 
@@ -145,7 +165,7 @@ Provide attendance overview.
 
 ### Widgets
 
-```text id="4gth5z"
+```text
 Today's Sessions
 Pending Attendance
 Completed Attendance
@@ -155,7 +175,7 @@ Absent Students
 
 ### Filters
 
-```text id="c44xak"
+```text
 Branch
 Course
 Batch
@@ -165,13 +185,15 @@ Date Range
 
 ---
 
-# 7. Attendance Session List
-
 ## ATT-UI-002 Attendance Session List
+
+### Purpose
+
+View attendance sessions.
 
 ### Columns
 
-```text id="xukdju"
+```text
 Session Number
 Course
 Batch
@@ -184,36 +206,37 @@ Actions
 
 ### Filters
 
-```text id="c5gbh5"
+```text
 Branch
 Course
 Batch
 Trainer
 Date
 Status
+Search
 ```
 
 ### Actions
 
-```text id="9pp1gs"
+```text
 Mark Attendance
 View Attendance
 Lock Attendance
 Reopen Attendance
+Export
 ```
 
 ### Permissions
 
-```text id="l1d5yo"
+```text
 ATTENDANCE_VIEW
 ATTENDANCE_MARK
 ATTENDANCE_LOCK
 ATTENDANCE_REOPEN
+ATTENDANCE_EXPORT
 ```
 
 ---
-
-# 8. Mark Attendance Screen
 
 ## ATT-UI-003 Mark Attendance
 
@@ -223,9 +246,7 @@ Mark attendance for a session.
 
 ### Session Information
 
-Display:
-
-```text id="5lg6qs"
+```text
 Course
 Batch
 Trainer
@@ -234,13 +255,9 @@ Time
 Classroom
 ```
 
----
-
 ### Student Attendance Grid
 
-Columns:
-
-```text id="yg6v34"
+```text
 Student Number
 Student Name
 Attendance Status
@@ -249,91 +266,69 @@ Remarks
 
 ### Attendance Status
 
-```text id="3m9u3e"
+```text
 Present
 Absent
 Late
 Excused
 ```
 
----
-
 ### Bulk Actions
 
-```text id="s46x7x"
+```text
 Mark All Present
 Mark All Absent
 ```
 
----
-
 ### Actions
 
-```text id="wvrtkg"
+```text
 Save Draft
 Submit Attendance
 ```
 
----
-
 ### Business Rules
 
 * Only enrolled students should appear.
-* Attendance must be linked to Session.
+* Attendance must be linked to a schedule session.
 * Attendance cannot be entered for cancelled sessions.
-* Attendance cannot be entered before session start.
-* Attendance should default to Present when using "Mark All Present".
+* Attendance cannot be entered before session start unless override permission exists.
+* Attendance should default to Present when using mark-all-present.
+* Trainer can mark attendance only for assigned sessions.
+
+### Validations
+
+* Records are required.
+* Enrollment ID is required.
+* Student ID is required.
+* Attendance status is required.
+* Attendance status must be valid.
 
 ---
-
-# 9. Attendance Details Screen
 
 ## ATT-UI-004 Attendance Details
 
 ### Sections
 
-#### Session Information
-
-```text id="1okmh5"
-Session
-Batch
-Trainer
-Date
-Time
+```text
+Session Information
+Attendance Summary
+Attendance Records
+Correction History
+Audit History
 ```
-
-#### Attendance Summary
-
-```text id="owh6pv"
-Total Students
-Present
-Absent
-Late
-Excused
-Attendance %
-```
-
-#### Attendance Records
-
-```text id="ekff0x"
-Student
-Status
-Remarks
-```
-
----
 
 ### Actions
 
-```text id="b22s5e"
+```text
 Print Attendance
 Export Attendance
 Request Correction
+Lock Attendance
+Reopen Attendance
 ```
 
 ---
-
-# 10. Attendance Locking
 
 ## ATT-UI-005 Lock Attendance
 
@@ -343,66 +338,40 @@ Prevent accidental changes.
 
 ### Actions
 
-```text id="e0vup0"
+```text
 Lock Attendance
 ```
 
----
-
 ### Business Rules
 
-After locking:
-
-```text id="a2ks8x"
-Attendance cannot be modified.
-```
-
-Unless:
-
-```text id="w7g2ql"
-Attendance Reopen Permission
-```
-
-exists.
+* Only marked attendance can be locked.
+* Locked attendance cannot be modified without reopen permission.
+* Lock action must be audited.
 
 ---
-
-### Lock Permissions
-
-```text id="o1q65w"
-ATTENDANCE_LOCK
-```
-
----
-
-# 11. Attendance Reopen
 
 ## ATT-UI-006 Reopen Attendance
 
 ### Fields
 
-```text id="fru0al"
+```text
 Reason
 ```
 
 ### Actions
 
-```text id="8vxpnf"
+```text
 Reopen
 Cancel
 ```
 
----
-
 ### Business Rules
 
-* Reason mandatory.
+* Reason is mandatory.
 * Reopen action must be audited.
 * Previous values must be retained in audit history.
 
 ---
-
-# 12. Attendance Correction
 
 ## ATT-UI-007 Attendance Correction Request
 
@@ -412,32 +381,27 @@ Correct attendance after submission.
 
 ### Fields
 
-```text id="tw79zg"
+```text
 Student
 Original Status
 New Status
 Reason
 ```
 
----
-
 ### Actions
 
-```text id="3mjl7o"
+```text
 Submit Correction
 ```
-
----
 
 ### Business Rules
 
 * Correction requires reason.
-* Correction request should be audited.
+* Original status must be retained.
 * Correction history must be preserved.
+* If approval workflow is enabled, the correction remains pending until approved.
 
 ---
-
-# 13. Student Attendance Summary
 
 ## ATT-UI-008 Student Attendance View
 
@@ -447,7 +411,7 @@ View student attendance across enrollments.
 
 ### Columns
 
-```text id="f4r87n"
+```text
 Course
 Batch
 Total Sessions
@@ -455,26 +419,27 @@ Present
 Absent
 Late
 Attendance %
+Eligibility Status
 ```
-
----
 
 ### Actions
 
-```text id="l30gk5"
+```text
 View Session Details
 Export
 ```
 
 ---
 
-# 14. Batch Attendance Summary
-
 ## ATT-UI-009 Batch Attendance Report
+
+### Purpose
+
+Provide batch attendance and eligibility summary.
 
 ### Columns
 
-```text id="2z9nwx"
+```text
 Student
 Present
 Absent
@@ -483,95 +448,9 @@ Attendance %
 Eligibility Status
 ```
 
----
+### Business Rules
 
-### Eligibility Status
-
-```text id="6v1evz"
-Eligible
-Not Eligible
-```
-
-based on course completion rules.
-
----
-
-# 15. Attendance Percentage Engine
-
-## Formula
-
-### Basic Formula
-
-```text id="mqln44"
-Present Sessions
-÷
-Total Conducted Sessions
-×
-100
-```
-
----
-
-### Example
-
-```text id="2kb91w"
-Present = 18
-
-Total = 20
-
-Attendance = 90%
-```
-
----
-
-### Excluded Status
-
-Configurable:
-
-```text id="yrtndw"
-Excused
-```
-
-may be excluded from denominator.
-
----
-
-# 16. Course Completion Integration
-
-Attendance contributes to:
-
-```text id="ztzqwo"
-Course Completion
-Certificate Eligibility
-```
-
----
-
-### Example
-
-Course Rule:
-
-```text id="g4mclo"
-Minimum Attendance = 80%
-```
-
-Student:
-
-```text id="1yv6wx"
-Attendance = 75%
-```
-
-Result:
-
-```text id="slvtg5"
-Not Eligible
-```
-
----
-
-# 17. Corporate Attendance
-
-Corporate programs require attendance reports.
+* Eligibility status is derived from course completion rules.
 
 ---
 
@@ -579,7 +458,7 @@ Corporate programs require attendance reports.
 
 ### Columns
 
-```text id="8udkny"
+```text
 Employee Name
 Course
 Session Count
@@ -589,317 +468,151 @@ Completion Status
 
 ### Filters
 
-```text id="wn40sk"
+```text
 Corporate Customer
 Program
 Date Range
 ```
 
----
-
 ### Business Rules
 
-* Attendance must be available to Corporate Reports.
+* Attendance must be available to corporate reports.
 * Attendance must support contract reporting.
 
 ---
 
-# 18. Walk-In Attendance
+# 7. Functional Requirements
 
-Walk-In programs may have:
+## FR-ATT-001 Create Attendance Session
 
-```text id="lzgk9n"
-Single Session
+The system shall create attendance sessions from schedule sessions.
+
+## FR-ATT-002 Mark Attendance
+
+The system shall allow authorized users to mark attendance for enrolled learners.
+
+## FR-ATT-003 Mark All Present or Absent
+
+The system shall support bulk mark-all-present and mark-all-absent actions.
+
+## FR-ATT-004 Lock Attendance
+
+The system shall allow authorized users to lock attendance after verification.
+
+## FR-ATT-005 Reopen Attendance
+
+The system shall allow authorized users to reopen locked attendance with a reason.
+
+## FR-ATT-006 Request Attendance Correction
+
+The system shall allow corrections to attendance records with an audit trail.
+
+## FR-ATT-007 Calculate Attendance Percentage
+
+The system shall calculate attendance percentage using configured policy.
+
+## FR-ATT-008 View Student Attendance
+
+The system shall provide student attendance summaries.
+
+## FR-ATT-009 View Batch Attendance
+
+The system shall provide batch attendance summaries.
+
+## FR-ATT-010 View Corporate Attendance
+
+The system shall provide corporate attendance summaries.
+
+## FR-ATT-011 Evaluate Attendance Eligibility
+
+The system shall evaluate attendance eligibility for completion and certificates.
+
+## FR-ATT-012 Audit Attendance Changes
+
+The system shall audit attendance marking, locking, reopening, and corrections.
+
+---
+
+# 8. Audit Events
+
+The following audit events shall be supported:
+
+```text
+AttendanceSessionOpened
+AttendanceMarked
+AttendanceSubmitted
+AttendanceLocked
+AttendanceReopened
+AttendanceCorrectionRequested
+AttendanceCorrectionApproved
+AttendanceCorrectionRejected
+AttendancePercentageCalculated
+AttendanceEligibilityEvaluated
 ```
 
-attendance.
+Rules:
+
+* Attendance changes must be auditable.
+* Lock and reopen actions must preserve previous values.
+* Correction actions must include reason and actor.
 
 ---
 
-### Business Rules
+# 9. Domain Errors
 
-* Attendance still required.
-* Attendance contributes to completion approval.
+The module shall distinguish between validation and business-rule errors such as:
 
----
-
-# 19. Student Portal Attendance View
-
-Students should view:
-
-```text id="7wg8ti"
-Attendance %
-Present Count
-Absent Count
-Session History
-```
-
-Read-only.
-
----
-
-# 20. Trainer Attendance View
-
-Trainers should view:
-
-```text id="b9a6l2"
-Upcoming Sessions
-Attendance Pending
-Attendance Submitted
-```
-
----
-
-# 21. Functional Requirements
-
-## FR-ATT-001 Attendance Session Creation
-
-The system shall create attendance sessions from scheduled sessions.
-
----
-
-## FR-ATT-002 Attendance Marking
-
-The system shall allow authorized users to record attendance.
-
----
-
-## FR-ATT-003 Attendance Locking
-
-The system shall allow attendance to be locked.
-
----
-
-## FR-ATT-004 Attendance Reopening
-
-The system shall support reopening attendance.
-
----
-
-## FR-ATT-005 Attendance Correction
-
-The system shall support attendance corrections.
-
----
-
-## FR-ATT-006 Attendance Percentage Calculation
-
-The system shall calculate attendance percentages.
-
----
-
-## FR-ATT-007 Student Attendance Tracking
-
-The system shall track attendance by student.
-
----
-
-## FR-ATT-008 Batch Attendance Tracking
-
-The system shall track attendance by batch.
-
----
-
-## FR-ATT-009 Corporate Attendance Reporting
-
-The system shall support corporate attendance reporting.
-
----
-
-## FR-ATT-010 Attendance Eligibility Evaluation
-
-The system shall support completion eligibility evaluation using attendance.
-
----
-
-## FR-ATT-011 Attendance Audit Trail
-
-The system shall maintain a complete attendance audit trail.
-
----
-
-# 22. Notifications
-
-### Attendance Pending
-
-Notify:
-
-```text id="8mwl7r"
-Trainer
-```
-
-before session end.
-
----
-
-### Attendance Not Submitted
-
-Notify:
-
-```text id="2gfj4x"
-Trainer
-Branch Manager
-```
-
-after configurable time.
-
----
-
-### Attendance Corrected
-
-Notify:
-
-```text id="7wxygl"
-Trainer
-Branch Manager
+```text
+AttendanceSessionNotOpen
+AttendanceSessionAlreadyLocked
+AttendanceSessionAlreadyReopened
+AttendanceCannotBeMarkedBeforeStart
+AttendanceCannotBeMarkedForCancelledSession
+LearnerNotEnrolledInBatch
+AttendanceLockedCannotBeModified
+CorrectionReasonRequired
+CorrectionNotAllowed
+ReopenReasonRequired
+AttendanceOverrideRequired
+InvalidAttendanceStatus
+StudentInactive
+BatchInactive
+SessionInactive
+BranchScopeViolation
+TrainerScopeViolation
+StudentSelfScopeViolation
 ```
 
 ---
 
-### Attendance Below Threshold
+# 10. Reporting and Operational Views
 
-Notify:
+The Attendance context shall support the following read views:
 
-```text id="k1s8vz"
-Student
-Counselor
-```
-
-when attendance falls below completion requirement.
-
----
-
-# 23. Reports
-
-## Operational Reports
-
-```text id="pbcrxj"
-Daily Attendance Report
-Batch Attendance Report
-Trainer Attendance Report
-```
-
----
-
-## Student Reports
-
-```text id="9m8rvi"
+```text
+Attendance Dashboard
+Attendance Session List
+Attendance Details
 Student Attendance Summary
-Attendance Eligibility Report
+Batch Attendance Summary
+Corporate Attendance Summary
+Attendance Register
+Correction History
 ```
+
+These are read models and operational views, not separate owned entities.
 
 ---
 
-## Management Reports
+# 11. FRD Improvement Notes
 
-```text id="n9zk7l"
-Attendance Trend Report
-Low Attendance Report
-Branch Attendance Report
-```
+This module should remain the single source of truth for:
 
----
+* attendance sessions
+* attendance records
+* locking and reopening
+* correction workflow
+* attendance calculations
+* eligibility support
 
-## Corporate Reports
-
-```text id="sg6khy"
-Corporate Attendance Report
-Corporate Completion Report
-```
-
----
-
-# 24. Audit Requirements
-
-Audit:
-
-```text id="sqk6ep"
-Attendance Marked
-Attendance Updated
-Attendance Locked
-Attendance Reopened
-Attendance Corrected
-```
-
-Capture:
-
-```text id="l0b22m"
-User
-Action
-Timestamp
-Old Value
-New Value
-Reason
-```
-
----
-
-# 25. Critical Design Decisions
-
-### Session-Based Attendance
-
-Recommended:
-
-```text id="12u8hi"
-Session
-      ↓
-Attendance
-```
-
-not
-
-```text id="aqoc4i"
-Batch
-      ↓
-Attendance
-```
-
-Reason:
-
-Supports:
-
-* Trainer tracking
-* Rescheduling
-* Completion rules
-* Corporate reporting
-
----
-
-### Attendance Locking
-
-Recommended mandatory.
-
-Reason:
-
-Prevents accidental modifications.
-
----
-
-### Attendance Correction Workflow
-
-Maintain immutable audit history.
-
-Never overwrite original attendance without audit record.
-
----
-
-# 26. Integration Points
-
-### Consumes
-
-```text id="jv3wt2"
-Scheduling & Timetable
-Enrollment
-Student Management
-```
-
-### Provides Data To
-
-```text id="xsh5th"
-Completion Management
-Certificate Management
-Reporting
-Student Portal
-Corporate Reports
-Future AI Analytics
-```
+It should not own schedule sessions, enrollment lifecycle, or completion approval.
