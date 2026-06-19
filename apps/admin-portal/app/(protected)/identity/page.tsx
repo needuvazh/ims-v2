@@ -19,6 +19,8 @@ import { Shield, Users } from 'lucide-react';
 import { CreateUserForm } from './create-user-form';
 import { CreateRoleForm } from './create-role-form';
 
+import { ManageRolesDialog } from './manage-roles-dialog';
+import { ManagePermissionsDialog } from './manage-permissions-dialog';
 export const metadata = { title: 'Identity & Access | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
@@ -66,6 +68,7 @@ export default async function IdentityPage() {
                     <TableHead>User</TableHead>
                     <TableHead>Type</TableHead>
                     <TableHead>Status</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -91,6 +94,9 @@ export default async function IdentityPage() {
                         }>
                           {user.status}
                         </Badge>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <ManageRolesDialog userId={user.id} userName={user.fullName} allRoles={roles} />
                       </TableCell>
                     </TableRow>
                   ))}
@@ -121,6 +127,7 @@ export default async function IdentityPage() {
                     <TableHead>Name</TableHead>
                     <TableHead>Permissions</TableHead>
                     <TableHead>Status</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -133,6 +140,9 @@ export default async function IdentityPage() {
                       </TableCell>
                       <TableCell>
                         <Badge variant={role.status === 'Active' ? 'success' : 'muted'}>{role.status}</Badge>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <ManagePermissionsDialog role={role} allPermissions={permissions} />
                       </TableCell>
                     </TableRow>
                   ))}

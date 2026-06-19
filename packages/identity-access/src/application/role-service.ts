@@ -120,4 +120,22 @@ export class RoleService {
       details: { permissionId },
     });
   }
+
+  async removePermission(roleId: string, permissionId: string, context: RoleCommandContext): Promise<void> {
+    const role = await this.roleRepository.findById(roleId);
+    if (!role) throw new DomainError('not_found', `Role ${roleId} not found.`);
+
+    await this.roleRepository.removePermission(roleId, permissionId);
+
+    await this.auditRepository.append({
+      id: crypto.randomUUID(),
+      actorId: context.actorId,
+      branchId: null,
+      action: 'identity.permission_removed',
+      entityType: 'Role',
+      entityId: roleId,
+      occurredAt: new Date(),
+      details: { permissionId },
+    });
+  }
 }

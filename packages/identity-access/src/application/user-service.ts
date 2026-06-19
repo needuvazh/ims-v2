@@ -47,6 +47,10 @@ export class UserService {
     return user;
   }
 
+
+  async listRolesForUser(userId: string): Promise<Array<{ id: string; roleCode: string; roleName: string }>> {
+    return this.userRepository.listRolesForUser(userId);
+  }
   async createUser(command: CreateUserCommand, context: UserCommandContext): Promise<UserProfile> {
     const validated = createUserCommandSchema.parse(command);
 
@@ -136,6 +140,24 @@ export class UserService {
       actorId: context.actorId,
       branchId: null,
       action: 'identity.role_assigned',
+      entityType: 'User',
+      entityId: userId,
+      occurredAt: new Date(),
+      details: { roleId },
+    });
+  }
+
+  async removeRole(userId: string, roleId: string, context: UserCommandContext): Promise<void> {
+    const user = await this.userRepository.findById(userId);
+    if (!user) throw new DomainError('not_found', `User ${userId} not found.`);
+
+    await this.userRepository.removeRole(userId, roleId);
+
+    await this.auditRepository.append({
+      id: crypto.randomUUID(),
+      actorId: context.actorId,
+      branchId: null,
+      action: 'identity.role_removed',
       entityType: 'User',
       entityId: userId,
       occurredAt: new Date(),

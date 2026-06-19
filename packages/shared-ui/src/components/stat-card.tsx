@@ -26,7 +26,7 @@ export function StatCard({
     return (
       <div
         className={cn(
-          'rounded-[28px] border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-6',
+          'rounded-[28px] border border-[color:var(--ims-border)] bg-white/80 backdrop-blur-xl p-6',
           className,
         )}
         {...props}
@@ -43,7 +43,7 @@ export function StatCard({
   return (
     <div
       className={cn(
-        'rounded-[28px] border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-6 transition-shadow hover:shadow-[0_10px_30px_rgba(17,24,39,0.08)]',
+        'rounded-[28px] border border-[color:var(--ims-border)] bg-white/80 backdrop-blur-xl p-6 transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_16px_48px_rgba(20,33,61,0.12)] group',
         className,
       )}
       {...props}
@@ -82,7 +82,7 @@ export function StatCard({
           )}
         </div>
         {icon && (
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[color:var(--ims-accent-soft)] text-[color:var(--ims-brass)]">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[color:var(--ims-accent-soft)] text-[color:var(--ims-brass)] transition-transform duration-500 group-hover:scale-110">
             {icon}
           </div>
         )}

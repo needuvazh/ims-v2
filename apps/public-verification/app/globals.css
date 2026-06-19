@@ -3,14 +3,34 @@
 @tailwind utilities;
 
 :root {
-  --ims-paper: #f7f1e6;
-  --ims-surface: #fffdf9;
-  --ims-ink: #14213d;
-  --ims-brass: #9b6a44;
-  --ims-brass-soft: rgba(155, 106, 68, 0.18);
-  --ims-accent-soft: rgba(155, 106, 68, 0.1);
-  --ims-border: rgba(20, 33, 61, 0.12);
-  --ims-muted: rgba(20, 33, 61, 0.68);
+
+  --ims-paper:       #FAF8F4;
+  --ims-surface:     #FFFFFF;
+  --ims-ink:         #14213d;
+  --ims-muted:       #3a4a6b;
+  --ims-brass:       #c47d46;
+  --ims-brass-soft:  rgba(196, 125, 70, 0.16);
+  --ims-accent-soft: rgba(196, 125, 70, 0.09);
+  --ims-border:      #e8e4db;
+
+  --ims-ring:        rgba(196, 125, 70, 0.5);
+  --ims-radius-sm:   0.5rem;
+  --ims-radius:      0.875rem;
+  --ims-radius-lg:   1.25rem;
+  --ims-radius-xl:   1.75rem;
+  --ims-radius-2xl:  2rem;
+  --ims-success:     #166534;
+  --ims-success-bg:  #f0fdf4;
+  --ims-success-border: rgba(22, 101, 52, 0.25);
+  --ims-warning:     #92400e;
+  --ims-warning-bg:  #fffbeb;
+  --ims-warning-border: rgba(146, 64, 14, 0.25);
+  --ims-error:       #991b1b;
+  --ims-error-bg:    #fef2f2;
+  --ims-error-border: rgba(153, 27, 27, 0.25);
+  --ims-info:        #1e3a5f;
+  --ims-info-bg:     #eff6ff;
+  --ims-info-border: rgba(30, 58, 95, 0.22);
 }
 
 html, body {

@@ -4,15 +4,17 @@
 
 /* ─── Light Mode Tokens ─── */
 :root {
-  --ims-paper:       #FAFAF8;
+
+  --ims-paper:       #FAF8F4;
   --ims-surface:     #FFFFFF;
-  --ims-ink:         #0F172A;
-  --ims-muted:       rgba(15, 23, 42, 0.55);
-  --ims-brass:       #EA580C;
-  --ims-brass-soft:  rgba(234, 88, 12, 0.16);
-  --ims-accent-soft: rgba(234, 88, 12, 0.09);
-  --ims-border:      rgba(15, 23, 42, 0.1);
-  --ims-ring:        rgba(234, 88, 12, 0.5);
+  --ims-ink:         #14213d;
+  --ims-muted:       #3a4a6b;
+  --ims-brass:       #c47d46;
+  --ims-brass-soft:  rgba(196, 125, 70, 0.16);
+  --ims-accent-soft: rgba(196, 125, 70, 0.09);
+  --ims-border:      #e8e4db;
+
+  --ims-ring:        rgba(196, 125, 70, 0.5);
   --ims-radius-sm:   0.5rem;
   --ims-radius:      0.875rem;
   --ims-radius-lg:   1.25rem;

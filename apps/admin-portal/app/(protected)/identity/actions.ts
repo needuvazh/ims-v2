@@ -62,6 +62,32 @@ export async function assignRoleToUserAction(userId: string, roleId: string): Pr
   }
 }
 
+export async function toggleUserRoleAction(userId: string, roleId: string, assign: boolean): Promise<ActionResult> {
+  try {
+    const actorId = await getActorId();
+    const { userService } = await import('../../lib/runtime');
+    if (assign) {
+      await userService.assignRole(userId, roleId, { actorId: actorId as any });
+    } else {
+      await userService.removeRole(userId, roleId, { actorId: actorId as any });
+    }
+    revalidatePath('/identity');
+    return { success: true };
+  } catch (err) {
+    return { success: false, error: err instanceof DomainError ? err.message : 'Failed to toggle role.' };
+  }
+}
+
+export async function getUserRolesAction(userId: string): Promise<ActionResult<{ id: string; roleCode: string; roleName: string }[]>> {
+  try {
+    const { userService } = await import('../../lib/runtime');
+    const roles = await userService.listRolesForUser(userId);
+    return { success: true, data: roles };
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : 'Failed to fetch roles.' };
+  }
+}
+
 // ── Roles ──────────────────────────────────────────────────────────────────
 
 export async function createRoleAction(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
@@ -78,5 +104,33 @@ export async function createRoleAction(_prev: ActionResult, formData: FormData):
     return { success: true };
   } catch (err) {
     return { success: false, error: err instanceof DomainError ? err.message : 'Failed to create role.' };
+  }
+}
+
+export async function updateRoleStatusAction(roleId: string, status: string): Promise<ActionResult> {
+  try {
+    const actorId = await getActorId();
+    const { roleService } = await import('../../lib/runtime');
+    await roleService.updateRole(roleId, { status: status as any }, { actorId: actorId as any });
+    revalidatePath('/identity');
+    return { success: true };
+  } catch (err) {
+    return { success: false, error: err instanceof DomainError ? err.message : 'Failed to update role.' };
+  }
+}
+
+export async function toggleRolePermissionAction(roleId: string, permissionId: string, assign: boolean): Promise<ActionResult> {
+  try {
+    const actorId = await getActorId();
+    const { roleService } = await import('../../lib/runtime');
+    if (assign) {
+      await roleService.assignPermission(roleId, permissionId, { actorId: actorId as any });
+    } else {
+      await roleService.removePermission(roleId, permissionId, { actorId: actorId as any });
+    }
+    revalidatePath('/identity');
+    return { success: true };
+  } catch (err) {
+    return { success: false, error: err instanceof DomainError ? err.message : 'Failed to toggle permission.' };
   }
 }

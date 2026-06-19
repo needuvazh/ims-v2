@@ -18,7 +18,8 @@ describe('organization service', () => {
       { actorId: createUuid('33333333-3333-3333-3333-333333333333') },
     );
 
-    expect(result.institute.instituteCode).toBe('IMS');
+    expect(result.instituteCode).toBe('IMS');
+    expect(result.instituteCode).toBe('IMS');
     expect(audit.list()).toHaveLength(1);
   });
 });
