@@ -10,13 +10,13 @@ import {
   GraduationCap,
   Mail,
   MapPin,
-  Menu,
   Phone,
   Shield,
   Users,
 } from 'lucide-react';
 import { AnimateIn } from './components/animate-in';
 import { CountUp } from './components/count-up';
+import { StickyNav } from './components/sticky-nav';
 
 /* ─── Data ─────────────────────────────────────────────────────────────── */
 const NAV = [
@@ -97,62 +97,7 @@ export default function LandingPage() {
       </div>
 
       {/* ══ MAIN NAVBAR ══════════════════════════════════════════════════ */}
-      <header
-        className="sticky top-0 z-50 border-b border-[rgba(15,23,42,0.08)]"
-        style={{ background: 'rgba(250,250,248,0.9)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
-        data-testid="main-nav"
-      >
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
-          {/* Logo */}
-          <Link href="/" className="flex shrink-0 items-center gap-3" data-testid="nav-logo">
-            <div
-              className="flex h-10 w-10 items-center justify-center rounded-xl"
-              style={{ background: 'linear-gradient(135deg, #EA580C, #C2410C)' }}
-            >
-              <GraduationCap className="h-5 w-5 text-white" />
-            </div>
-            <div className="hidden sm:block leading-tight">
-              <p className="text-[8px] font-bold uppercase tracking-[0.24em] text-[#EA580C]">Al-Saud Training</p>
-              <p className="text-sm font-bold uppercase tracking-[0.14em] text-[#0F172A]" style={{ fontFamily: 'var(--font-display, Georgia, serif)' }}>
-                Institute
-              </p>
-            </div>
-          </Link>
-
-          {/* Desktop nav */}
-          <nav className="hidden items-center gap-7 xl:flex">
-            {NAV.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="text-[10.5px] font-semibold tracking-[0.18em] text-[rgba(15,23,42,0.55)] transition-colors hover:text-[#0F172A]"
-                data-testid={`nav-${link.label.toLowerCase()}`}
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-
-          {/* CTA */}
-          <div className="flex items-center gap-3">
-            <Link
-              href="/sign-in"
-              className="rounded-full px-5 py-2.5 text-[10.5px] font-bold uppercase tracking-[0.18em] text-white transition-all active:scale-[0.97]"
-              style={{ background: 'linear-gradient(135deg, #EA580C, #C2410C)', boxShadow: '0 4px 14px rgba(234,88,12,0.35)' }}
-              data-testid="nav-admin-login"
-            >
-              Admin Login
-            </Link>
-            <button
-              className="rounded-xl border border-[rgba(15,23,42,0.12)] p-2.5 transition-colors hover:bg-[rgba(234,88,12,0.06)] xl:hidden"
-              aria-label="Open menu"
-              data-testid="nav-mobile-menu"
-            >
-              <Menu className="h-5 w-5 text-[#0F172A]" />
-            </button>
-          </div>
-        </div>
-      </header>
+      <StickyNav />
 
       {/* ══ HERO ════════════════════════════════════════════════════════ */}
       <section
