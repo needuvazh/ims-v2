@@ -1,18 +1,31 @@
-import type { PropsWithChildren } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
+import { cn } from '../utils/cn';
 import { Card } from './card';
 
-export function EmptyState({
-  title,
-  description,
-  children,
-}: PropsWithChildren<{ title: string; description: string }>) {
+export interface EmptyStateProps extends HTMLAttributes<HTMLDivElement> {
+  icon?: ReactNode;
+  title: string;
+  description?: string;
+  action?: ReactNode;
+}
+
+/** Server-compatible empty state component. */
+export function EmptyState({ icon, title, description, action, className, ...props }: EmptyStateProps) {
   return (
-    <Card className="flex flex-col gap-4 border-dashed">
-      <div className="space-y-2">
-        <h3 className="text-lg font-semibold text-[color:var(--ims-ink)]">{title}</h3>
-        <p className="max-w-xl text-sm leading-6 text-[color:var(--ims-muted)]">{description}</p>
-      </div>
-      {children}
+    <Card
+      className={cn('flex flex-col items-center border-dashed py-12 text-center', className)}
+      {...props}
+    >
+      {icon && (
+        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[color:var(--ims-accent-soft)] text-[color:var(--ims-brass)]">
+          {icon}
+        </div>
+      )}
+      <h3 className="text-base font-semibold text-[color:var(--ims-ink)]">{title}</h3>
+      {description && (
+        <p className="mt-1.5 max-w-sm text-sm text-[color:var(--ims-muted)]">{description}</p>
+      )}
+      {action && <div className="mt-5">{action}</div>}
     </Card>
   );
 }

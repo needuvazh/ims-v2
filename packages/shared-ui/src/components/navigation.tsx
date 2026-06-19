@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { PropsWithChildren, ReactNode } from 'react';
-import { classNames } from '../utils/classnames';
+import { cn } from '../utils/cn';
 
 type NavigationItem = {
   href: string;
@@ -8,6 +8,7 @@ type NavigationItem = {
   current?: boolean;
 };
 
+/** @deprecated Use AppShell which includes its own sidebar navigation. */
 export function SidebarNav({ items }: { items: NavigationItem[] }) {
   return (
     <nav className="space-y-1">
@@ -15,12 +16,13 @@ export function SidebarNav({ items }: { items: NavigationItem[] }) {
         <Link
           key={item.href}
           href={item.href}
-          className={classNames(
+          className={cn(
             'block rounded-2xl px-4 py-3 text-sm font-medium transition',
             item.current
               ? 'bg-[color:var(--ims-ink)] text-[color:var(--ims-paper)]'
               : 'text-[color:var(--ims-ink)] hover:bg-[color:var(--ims-accent-soft)]',
           )}
+          aria-current={item.current ? 'page' : undefined}
         >
           {item.label}
         </Link>
@@ -29,6 +31,7 @@ export function SidebarNav({ items }: { items: NavigationItem[] }) {
   );
 }
 
+/** @deprecated Use PageHeader from page-header.tsx */
 export function PageHeader({
   eyebrow,
   title,
