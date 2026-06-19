@@ -25,6 +25,46 @@ ims-v2/
 
 ## What's Been Implemented (June 2026)
 
+### Session 1 — Shared UI Component Library
+(See full component list in previous section)
+
+### Session 2 — IAM + Organization Management APIs (June 2026)
+
+#### Commits
+1. `feat(iam+org)` — HMAC-signed sessions, IAM domain+services, org domain, Prisma repos
+2. `feat(admin-portal)` — sign-in/sign-out, dashboard, organization CRUD, identity CRUD
+
+#### Architecture
+```
+packages/
+  shared-auth/      → Session (HMAC-SHA256 signed), permission helpers
+  identity-access/  → Domain: User, Role, Permission types + commands
+                      App: AuthService (bcrypt login), UserService, RoleService
+                      Navigation: resolvePortalNavigation, resolvePortalShellUser
+  organization/     → Domain: Institute, Branch, Department, commands
+                      App: OrganizationService (full CRUD + pagination)
+  database/         → Prisma repositories: User, Role, Organization, Audit
+                      Seed script: admin@ims.com / Admin@123456
+apps/
+  admin-portal/     → Sign-in page, protected layout, dashboard, /organization, /identity
+```
+
+#### Key Security Decisions
+- **Passwords**: bcryptjs, cost factor 12
+- **Sessions**: HMAC-SHA256 signed (not JWT), 8-hour expiry, httpOnly cookie
+- **Route protection**: Next.js Edge middleware + server component guard
+- **Audit log**: All mutations append an audit entry
+
+#### Env Required
+- `DATABASE_URL` — PostgreSQL connection string  
+- `SESSION_SECRET` — min 32 bytes base64
+- `NEXT_PUBLIC_APP_URL` — app base URL
+
+#### Seed Credentials
+- Email: `admin@ims.com`
+- Password: `Admin@123456`
+
+
 ### Commit History
 1. `chore(shared-ui)` — Added clsx, tailwind-merge, CVA, lucide-react, Radix UI deps; cn() utility; design tokens (light + dark); tailwind configs with `darkMode: 'class'`
 2. `chore` — Fixed .pnpm-store gitignore
