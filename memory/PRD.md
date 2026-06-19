@@ -122,15 +122,18 @@ import { Button, Input, Card, Badge, ... } from '@ims/shared-ui';
 
 ## Backlog / Next Steps
 
-### P0 — Current sprint
-- [ ] Identity & Access Management APIs (login, RBAC, branch-scoped permissions)
-- [ ] Organization Management (Institute, Branch, Department)
-- [ ] Admin portal protected dashboard page
+### P0 — DONE ✅
+- [x] Identity & Access Management APIs (login, RBAC, bcrypt, HMAC sessions)
+- [x] Organization Management (Institute, Branch, Department)
+- [x] Admin portal protected dashboard page
+- [x] Public Landing Page (all 4 portals)
 
 ### P1 — Next sprint
 - [ ] Student enrollment flow (Admission → Enrollment)
 - [ ] Course & Batch management pages
 - [ ] Attendance tracking UI
+- [ ] Student portal landing + dashboard
+- [ ] Trainer portal landing + dashboard
 
 ### P2 — Future
 - [ ] Fee & Finance management UI
@@ -142,7 +145,21 @@ import { Button, Input, Card, Badge, ... } from '@ims/shared-ui';
 - [ ] Multi-select component
 - [ ] Toast/notification system
 
+### Session 3 — Landing Page (June 2026)
+**Commit**: `feat(landing)` — `apps/admin-portal/app/page.tsx`
+
+**Sections built:**
+1. Sticky Navbar — glass effect, logo, nav links, sign-in + verify CTAs
+2. Hero — shimmer headline, dashboard mockup, floating stat chips, spinning rings, CSS orbs
+3. Stats Ribbon — 4 KPIs
+4. Portal Cards — 4 styled portal entry cards with hover-lift
+5. Features Bento Grid — 6 capabilities, asymmetric layout
+6. CTA Banner — dark navy with gradient orbs
+7. Footer — dark with portal links + contact
+
+**Animation system** (CSS-only): `fadeInUp`, `slideInLeft/Right`, `float/floatSlow/floatReverse`, `spinVSlow/spinSlowReverse`, `shimmerBrass`, `pulseSoft`, `countUp`, staggered delays 75ms–1200ms
+
 ## Notes
-- The `.pnpm-store` was accidentally committed in the first push — removed via `git rm --cached`
-- TypeScript strict mode passes 0 errors on `packages/shared-ui`
-- Admin-portal pre-existing module-not-found errors exist across the whole codebase (dependencies not installed locally) — not related to shared-ui work
+- `.pnpm-store` gitignored after first commit
+- TypeScript strict passes 0 errors on all packages
+- Admin-portal pre-existing module-not-found errors are not related to our work (deps not locally installed)
