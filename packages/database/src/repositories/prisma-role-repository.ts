@@ -3,21 +3,34 @@ import type { RoleRepository } from '@ims/identity-access';
 import type { RoleRecord, PermissionRecord } from '@ims/identity-access';
 import type { Uuid } from '@ims/shared-kernel';
 
+type PermissionRow = {
+  id: string;
+  moduleCode: string;
+  featureCode: string;
+  actionCode: string;
+  permissionCode: string;
+  description: string | null;
+};
+
+type RoleRow = {
+  id: string;
+  roleCode: string;
+  roleName: string;
+  description: string | null;
+  status: string;
+  permissions: Array<{
+    permission: PermissionRow;
+  }>;
+};
+
 export class PrismaRoleRepository implements RoleRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  private toPermission(row: {
-    id: string; moduleCode: string; featureCode: string;
-    actionCode: string; permissionCode: string; description: string | null;
-  }): PermissionRecord {
+  private toPermission(row: PermissionRow): PermissionRecord {
     return { ...row, id: row.id as Uuid };
   }
 
-  private async toRole(row: {
-    id: string; roleCode: string; roleName: string;
-    description: string | null; status: string;
-    permissions: Array<{ permission: { id: string; moduleCode: string; featureCode: string; actionCode: string; permissionCode: string; description: string | null; } }>;
-  }): Promise<RoleRecord> {
+  private async toRole(row: RoleRow): Promise<RoleRecord> {
     return {
       id: row.id as Uuid,
       roleCode: row.roleCode,
@@ -70,7 +83,7 @@ export class PrismaRoleRepository implements RoleRepository {
       include: { permissions: { include: { permission: true } } },
       orderBy: { roleName: 'asc' },
     });
-    return Promise.all(rows.map((r) => this.toRole(r)));
+    return Promise.all(rows.map((r: RoleRow) => this.toRole(r)));
   }
 
   async assignPermission(roleId: string, permissionId: string, actorId: string): Promise<void> {

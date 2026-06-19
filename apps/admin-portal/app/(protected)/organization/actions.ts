@@ -4,7 +4,6 @@ import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import { decodeSession, sessionCookieName } from '@ims/shared-auth';
 import { DomainError } from '@ims/shared-kernel';
-import { organizationService } from '../../lib/runtime';
 
 async function getActorId(): Promise<string> {
   const cookieStore = await cookies();
@@ -23,6 +22,7 @@ export type ActionResult<T = void> = {
 export async function createInstituteAction(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
   try {
     const actorId = await getActorId();
+    const { organizationService } = await import('../../lib/runtime');
     await organizationService.createInstitute({
       instituteCode: String(formData.get('instituteCode') ?? ''),
       instituteName: String(formData.get('instituteName') ?? ''),
@@ -47,6 +47,7 @@ export async function updateInstituteAction(
 ): Promise<ActionResult> {
   try {
     const actorId = await getActorId();
+    const { organizationService } = await import('../../lib/runtime');
     await organizationService.updateInstitute(instituteId, {
       instituteName: String(formData.get('instituteName') ?? ''),
       primaryEmail: formData.get('primaryEmail') as string | null,
@@ -66,6 +67,7 @@ export async function updateInstituteAction(
 export async function createBranchAction(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
   try {
     const actorId = await getActorId();
+    const { organizationService } = await import('../../lib/runtime');
     await organizationService.createBranch({
       instituteId: String(formData.get('instituteId') ?? ''),
       branchCode: String(formData.get('branchCode') ?? ''),
@@ -87,6 +89,7 @@ export async function createBranchAction(_prev: ActionResult, formData: FormData
 export async function createDepartmentAction(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
   try {
     const actorId = await getActorId();
+    const { organizationService } = await import('../../lib/runtime');
     await organizationService.createDepartment({
       branchId: String(formData.get('branchId') ?? ''),
       departmentCode: String(formData.get('departmentCode') ?? ''),

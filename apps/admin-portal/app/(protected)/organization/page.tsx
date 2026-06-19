@@ -13,13 +13,14 @@ import {
   TableRow,
 } from '@ims/shared-ui';
 import { Building2, Plus } from 'lucide-react';
-import { organizationService } from '../lib/runtime';
 import { CreateInstituteForm } from './create-institute-form';
 import { CreateBranchForm } from './create-branch-form';
 
 export const metadata = { title: 'Organization | IMS Admin' };
+export const dynamic = 'force-dynamic';
 
 export default async function OrganizationPage() {
+  const { organizationService } = await import('../../lib/runtime');
   const [{ items: institutes }, { items: branches }] = await Promise.all([
     organizationService.listInstitutes({ pageSize: 50 }),
     organizationService.listBranches({ pageSize: 50 }),

@@ -22,7 +22,7 @@
     "@ims/identity-access": "workspace:*",
     "@ims/organization": "workspace:*",
     "@ims/shared-kernel": "workspace:*",
-    "@prisma/client": "^6.0.0",
+    "@prisma/client": "^6.19.3",
     "bcryptjs": "^3.0.3"
   },
   "devDependencies": {

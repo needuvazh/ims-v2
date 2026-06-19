@@ -4,7 +4,6 @@ import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import { decodeSession, sessionCookieName } from '@ims/shared-auth';
 import { DomainError } from '@ims/shared-kernel';
-import { userService, roleService } from '../../lib/runtime';
 
 async function getActorId(): Promise<string> {
   const cookieStore = await cookies();
@@ -23,6 +22,7 @@ export type ActionResult<T = void> = {
 export async function createUserAction(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
   try {
     const actorId = await getActorId();
+    const { userService } = await import('../../lib/runtime');
     await userService.createUser({
       fullName: String(formData.get('fullName') ?? ''),
       email: String(formData.get('email') ?? ''),
@@ -41,6 +41,7 @@ export async function createUserAction(_prev: ActionResult, formData: FormData):
 export async function updateUserStatusAction(userId: string, status: string): Promise<ActionResult> {
   try {
     const actorId = await getActorId();
+    const { userService } = await import('../../lib/runtime');
     await userService.updateUser(userId, { status: status as any }, { actorId: actorId as any });
     revalidatePath('/identity');
     return { success: true };
@@ -52,6 +53,7 @@ export async function updateUserStatusAction(userId: string, status: string): Pr
 export async function assignRoleToUserAction(userId: string, roleId: string): Promise<ActionResult> {
   try {
     const actorId = await getActorId();
+    const { userService } = await import('../../lib/runtime');
     await userService.assignRole(userId, roleId, { actorId: actorId as any });
     revalidatePath('/identity');
     return { success: true };
@@ -65,6 +67,7 @@ export async function assignRoleToUserAction(userId: string, roleId: string): Pr
 export async function createRoleAction(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
   try {
     const actorId = await getActorId();
+    const { roleService } = await import('../../lib/runtime');
     await roleService.createRole({
       roleCode: String(formData.get('roleCode') ?? ''),
       roleName: String(formData.get('roleName') ?? ''),

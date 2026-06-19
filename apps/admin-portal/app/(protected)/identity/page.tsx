@@ -16,13 +16,14 @@ import {
   TabsTrigger,
 } from '@ims/shared-ui';
 import { Shield, Users } from 'lucide-react';
-import { userService, roleService } from '../lib/runtime';
 import { CreateUserForm } from './create-user-form';
 import { CreateRoleForm } from './create-role-form';
 
 export const metadata = { title: 'Identity & Access | IMS Admin' };
+export const dynamic = 'force-dynamic';
 
 export default async function IdentityPage() {
+  const { userService, roleService } = await import('../../lib/runtime');
   const [users, roles, permissions] = await Promise.all([
     userService.listUsers(),
     roleService.listRoles(),

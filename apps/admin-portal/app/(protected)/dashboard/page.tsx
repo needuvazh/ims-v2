@@ -2,13 +2,14 @@ import { cookies } from 'next/headers';
 import { decodeSession, sessionCookieName } from '@ims/shared-auth';
 import { Badge, PageHeader, StatCard } from '@ims/shared-ui';
 import { BookOpen, Building2, GraduationCap, Users } from 'lucide-react';
-import { organizationService } from '../lib/runtime';
 
 export const metadata = { title: 'Dashboard | IMS Admin' };
+export const dynamic = 'force-dynamic';
 
 export default async function DashboardPage() {
   const cookieStore = await cookies();
   const session = await decodeSession(cookieStore.get(sessionCookieName)?.value);
+  const { organizationService } = await import('../../lib/runtime');
 
   const summary = await organizationService.listDashboardSummary();
 

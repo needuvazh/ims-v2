@@ -5,7 +5,6 @@ import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { sessionCookieName } from '@ims/shared-auth';
 import { DomainError } from '@ims/shared-kernel';
-import { authService } from '../../lib/runtime';
 
 const signInSchema = z.object({
   email: z.string().trim().email().toLowerCase(),
@@ -28,6 +27,7 @@ export async function signInAction(_prev: SignInState, formData: FormData): Prom
 
   let sessionToken: string;
   try {
+    const { authService } = await import('../../lib/runtime');
     const result = await authService.signIn(parsed.data);
     sessionToken = result.sessionToken;
   } catch (err) {

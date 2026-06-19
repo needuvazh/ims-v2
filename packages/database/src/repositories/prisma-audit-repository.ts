@@ -1,5 +1,4 @@
 import type { PrismaClient } from '@prisma/client';
-import { Prisma } from '@prisma/client';
 import type { AuditLogRepository, AuditLogEntry } from '@ims/audit';
 
 export class PrismaAuditRepository implements AuditLogRepository {
@@ -15,7 +14,7 @@ export class PrismaAuditRepository implements AuditLogRepository {
         entityType: entry.entityType,
         entityId: entry.entityId,
         occurredAt: entry.occurredAt,
-        details: (entry.details ?? {}) as Prisma.InputJsonValue,
+        details: entry.details ?? {},
       },
     });
   }
