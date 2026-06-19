@@ -1,0 +1,105 @@
+{
+  "theme": "light",
+  "archetype": "1 (Organic & Earthy / Old Money Tech)",
+  "global_colors": {
+    "background": "#FAF8F4",
+    "surface": "#FFFFFF",
+    "text_primary": "#14213d",
+    "text_secondary": "#3a4a6b",
+    "accent_primary": "#c47d46",
+    "border": "#e8e4db",
+    "muted": "#f0ebe1"
+  },
+  "typography": {
+    "font_families": {
+      "headings": "Cormorant Garamond, serif",
+      "body": "Manrope, sans-serif"
+    },
+    "hierarchy": {
+      "h1": "text-5xl sm:text-6xl lg:text-7xl tracking-tighter leading-none font-bold",
+      "h2": "text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-tight font-semibold",
+      "h3": "text-2xl sm:text-3xl leading-snug font-medium",
+      "body": "text-base sm:text-lg leading-relaxed",
+      "small": "text-sm tracking-[0.2em] uppercase font-bold"
+    }
+  },
+  "spacing_and_layout": {
+    "section_padding": "py-24 sm:py-32",
+    "container": "max-w-7xl mx-auto px-6 lg:px-8",
+    "grid_bento": "grid grid-cols-1 md:grid-cols-12 gap-8"
+  },
+  "components": [
+    {
+      "name": "Hero Section",
+      "description": "Full-width hero with bold animated headline, floating geometric patterns (via CSS keyframes), and primary CTA. High contrast with deep navy text on warm off-white background.",
+      "styles": "relative overflow-hidden min-h-[90vh] flex flex-col justify-center bg-[var(--ims-paper,#FAF8F4)] z-10",
+      "animations": "Use Tailwind animate-in, slide-in-from-bottom, fade-in for text entrance. Use custom CSS keyframes in global CSS for floating geometric particles (translateY and rotate animations)."
+    },
+    {
+      "name": "Portal Entry Cards",
+      "description": "Four portal entry cards (Admin, Student, Trainer, Public Verification).",
+      "styles": "bg-white/80 backdrop-blur-xl border border-[var(--ims-brass,#c47d46)]/20 shadow-[0_8px_32px_rgba(20,33,61,0.04)] rounded-2xl p-8 hover:-translate-y-2 hover:shadow-[0_16px_48px_rgba(20,33,61,0.12)] transition-all duration-500 ease-out group",
+      "layout": "col-span-1 md:col-span-6 lg:col-span-3 flex flex-col items-start gap-4"
+    },
+    {
+      "name": "Feature Highlights",
+      "description": "Key IMS capabilities presented in a bento-style grid to break symmetry.",
+      "styles": "bg-[var(--ims-surface,#FFFFFF)] rounded-3xl p-10 sm:p-12 border border-[var(--ims-border,#e8e4db)] overflow-hidden relative",
+      "layout": "Grid using varied spans (e.g., md:col-span-8 and md:col-span-4) for asymmetrical tension."
+    },
+    {
+      "name": "Animated Statistics Counter",
+      "description": "Bold, large serif numbers for statistics, separated by thin 1px borders.",
+      "styles": "border-y border-[var(--ims-border,#e8e4db)] py-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-[var(--ims-border,#e8e4db)]",
+      "typography": "Numbers in text-6xl Cormorant Garamond text-[var(--ims-ink,#14213d)], labels in text-sm Manrope uppercase tracking-[0.2em] text-[var(--ims-brass,#c47d46)]"
+    },
+    {
+      "name": "Footer",
+      "description": "Deep navy background footer with warm off-white text and brass accents.",
+      "styles": "bg-[var(--ims-ink,#14213d)] text-[var(--ims-paper,#FAF8F4)] py-20 px-6",
+      "typography": "Logo/Heading in text-4xl Cormorant Garamond, links in text-sm Manrope."
+    }
+  ],
+  "motion_and_interactions": {
+    "general": "No Framer Motion. Use pure CSS and Tailwind utility classes for all animations.",
+    "hover_states": "Cards elevate (hover:-translate-y-2) and increase shadow. Buttons have a slight scale (hover:scale-105) and background color shift. Icons in cards shift right (group-hover:translate-x-1).",
+    "entrance": "Staggered fade-in-up animations for grid items using standard CSS keyframes with animation-delay.",
+    "particles": "CSS keyframes `@keyframes float { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-20px) rotate(5deg); } }` applied to absolute positioned decorative SVGs in the Hero."
+  },
+  "media": {
+    "images": [
+      {
+        "category": "Hero Background / Abstract",
+        "url": "https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTJ8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGdlb21ldHJpYyUyMGFyY2hpdGVjdHVyZXxlbnwwfHx8fDE3ODE4ODI3NDB8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Abstract geometric architecture, used as a subtle, low-opacity background element or clip-path feature in the hero."
+      },
+      {
+        "category": "Feature / Student Life",
+        "url": "https://images.pexels.com/photos/10744384/pexels-photo-10744384.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Professional students in library, used for the Student Portal card or feature section."
+      },
+      {
+        "category": "Campus / Admin",
+        "url": "https://images.unsplash.com/photo-1775503059048-214026cce5cf?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODR8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjB1bml2ZXJzaXR5JTIwY2FtcHVzfGVufDB8fHx8MTc4MTg4Mjc0MHww&ixlib=rb-4.1.0&q=85",
+        "description": "Modern university campus building, used for Admin Portal card or institution highlights."
+      }
+    ],
+    "icons": "lucide-react (Standard minimalist icons for portals and features)"
+  },
+  "accessibility_and_testing": {
+    "contrast": "Ensure text meets APCA/WCAG standards. Primary text on off-white background is highly accessible.",
+    "testing_attributes": "All interactive elements (cards, buttons, links) MUST have data-testid attributes (e.g., data-testid=\"admin-portal-card\", data-testid=\"hero-cta-button\")."
+  },
+  "instructions_to_main_agent": [
+    "Create the landing page in apps/admin-portal/app/page.js using Next.js App Router.",
+    "Use pure CSS keyframes in the global CSS (or a local css module) for floating particles and entrance animations.",
+    "Do NOT use Framer Motion.",
+    "Use standard Tailwind CSS classes for layout and hover effects.",
+    "Utilize existing CSS variables if available (--ims-paper, --ims-surface, --ims-ink, --ims-brass, --ims-muted, --ims-border), otherwise default to the hex codes provided.",
+    "All cards should use a glass-morphism effect (backdrop-blur-xl bg-white/80) or a soft drop shadow on a white background, elevating on hover.",
+    "Include 'data-testid' on all interactive elements.",
+    "Load Cormorant Garamond and Manrope fonts via next/font/google.",
+    "Use the specific images provided in the media section to enrich the visual design.",
+    "Keep it a Server Component, no 'use client' unless absolutely required (which shouldn't be the case with CSS-only animations)."
+  ]
+}
