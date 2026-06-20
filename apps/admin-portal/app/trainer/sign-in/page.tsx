@@ -39,7 +39,7 @@ export default function TrainerSignInPage() {
         <div className="relative z-10 flex h-full flex-col justify-between p-12 xl:p-16 text-white">
           
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
-            <Link href="/" className="inline-flex items-center gap-3 group">
+            <Link href="/trainer" className="inline-flex items-center gap-3 group">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-cyan-600 shadow-xl transform group-hover:rotate-12 transition-transform">
                 <BookOpen className="h-6 w-6" />
               </div>
@@ -84,7 +84,7 @@ export default function TrainerSignInPage() {
       <div className="relative flex flex-1 flex-col overflow-y-auto bg-white z-0">
         
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="flex shrink-0 items-center justify-between px-8 py-6">
-          <Link href="/" className="group flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-cyan-600 transition-colors">
+          <Link href="/trainer" className="group flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-cyan-600 transition-colors">
             <div className="p-2 rounded-full bg-slate-100 group-hover:bg-cyan-100 transition-colors">
               <ArrowLeft className="h-4 w-4" />
             </div>

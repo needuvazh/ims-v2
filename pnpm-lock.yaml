@@ -94,6 +94,9 @@ importers:
       '@ims/shared-ui':
         specifier: workspace:*
         version: link:../../packages/shared-ui
+      framer-motion:
+        specifier: ^12.40.0
+        version: 12.40.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       lucide-react:
         specifier: ^1.21.0
         version: 1.21.0(react@19.2.7)
@@ -109,99 +112,6 @@ importers:
       zod:
         specifier: ^3.23.0
         version: 3.25.76
-    devDependencies:
-      autoprefixer:
-        specifier: ^10.4.0
-        version: 10.5.0(postcss@8.5.15)
-      postcss:
-        specifier: ^8.4.0
-        version: 8.5.15
-      tailwindcss:
-        specifier: ^3.4.0
-        version: 3.4.19
-
-  apps/public-verification:
-    dependencies:
-      '@ims/shared-ui':
-        specifier: workspace:*
-        version: link:../../packages/shared-ui
-      next:
-        specifier: ^16.2.9
-        version: 16.2.9(@babel/core@7.29.7)(@playwright/test@1.61.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      react:
-        specifier: ^19.0.0
-        version: 19.2.7
-      react-dom:
-        specifier: ^19.0.0
-        version: 19.2.7(react@19.2.7)
-    devDependencies:
-      autoprefixer:
-        specifier: ^10.4.0
-        version: 10.5.0(postcss@8.5.15)
-      postcss:
-        specifier: ^8.4.0
-        version: 8.5.15
-      tailwindcss:
-        specifier: ^3.4.0
-        version: 3.4.19
-
-  apps/student-portal:
-    dependencies:
-      '@ims/identity-access':
-        specifier: workspace:*
-        version: link:../../packages/identity-access
-      '@ims/shared-auth':
-        specifier: workspace:*
-        version: link:../../packages/shared-auth
-      '@ims/shared-ui':
-        specifier: workspace:*
-        version: link:../../packages/shared-ui
-      lucide-react:
-        specifier: ^1.21.0
-        version: 1.21.0(react@19.2.7)
-      next:
-        specifier: ^16.2.9
-        version: 16.2.9(@babel/core@7.29.7)(@playwright/test@1.61.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      react:
-        specifier: ^19.0.0
-        version: 19.2.7
-      react-dom:
-        specifier: ^19.0.0
-        version: 19.2.7(react@19.2.7)
-    devDependencies:
-      autoprefixer:
-        specifier: ^10.4.0
-        version: 10.5.0(postcss@8.5.15)
-      postcss:
-        specifier: ^8.4.0
-        version: 8.5.15
-      tailwindcss:
-        specifier: ^3.4.0
-        version: 3.4.19
-
-  apps/trainer-portal:
-    dependencies:
-      '@ims/identity-access':
-        specifier: workspace:*
-        version: link:../../packages/identity-access
-      '@ims/shared-auth':
-        specifier: workspace:*
-        version: link:../../packages/shared-auth
-      '@ims/shared-ui':
-        specifier: workspace:*
-        version: link:../../packages/shared-ui
-      lucide-react:
-        specifier: ^1.21.0
-        version: 1.21.0(react@19.2.7)
-      next:
-        specifier: ^16.2.9
-        version: 16.2.9(@babel/core@7.29.7)(@playwright/test@1.61.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      react:
-        specifier: ^19.0.0
-        version: 19.2.7
-      react-dom:
-        specifier: ^19.0.0
-        version: 19.2.7(react@19.2.7)
     devDependencies:
       autoprefixer:
         specifier: ^10.4.0

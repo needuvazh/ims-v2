@@ -118,9 +118,9 @@ Prefer this structure unless the repository already has an equivalent pattern:
 ims-monorepo/
   apps/
     admin-portal/
-    student-portal/
-    trainer-portal/
-    public-verification/
+      app/student/
+      app/trainer/
+      app/verify/
 
   packages/
     shared-kernel/

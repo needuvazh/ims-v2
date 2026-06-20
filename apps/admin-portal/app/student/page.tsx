@@ -24,7 +24,7 @@ export default function StudentPortalLanding() {
             </div>
             <span className="font-black text-lg tracking-tight">Student<span className="text-pink-500">Portal</span></span>
           </Link>
-          <Link href="/sign-in" className="px-5 py-2 rounded-full bg-slate-900 text-white text-sm font-bold hover:bg-pink-500 transition-colors shadow-md hover:shadow-pink-500/30">
+          <Link href="/student/sign-in" className="px-5 py-2 rounded-full bg-slate-900 text-white text-sm font-bold hover:bg-pink-500 transition-colors shadow-md hover:shadow-pink-500/30">
             Sign In
           </Link>
         </div>
@@ -56,7 +56,7 @@ export default function StudentPortalLanding() {
               Access your courses, track your progress, and stay connected with your instructors all in one vibrant place.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/sign-in" className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-pink-500 to-violet-500 text-white font-bold text-lg flex items-center justify-center gap-2 shadow-xl shadow-pink-500/30 hover:scale-105 transition-transform">
+              <Link href="/student/sign-in" className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-pink-500 to-violet-500 text-white font-bold text-lg flex items-center justify-center gap-2 shadow-xl shadow-pink-500/30 hover:scale-105 transition-transform">
                 Go to Dashboard <ArrowRight className="w-5 h-5" />
               </Link>
             </div>
@@ -112,7 +112,7 @@ export default function StudentPortalLanding() {
             <div className="relative z-10">
               <h2 className="text-4xl font-black mb-4">Ready to continue?</h2>
               <p className="text-slate-400 mb-8 max-w-xl mx-auto">Sign in to your account to view your personalized dashboard and resume your courses.</p>
-              <Link href="/sign-in" className="inline-flex px-8 py-4 rounded-2xl bg-white text-slate-900 font-bold hover:bg-pink-50 hover:text-pink-600 transition-colors shadow-lg">
+              <Link href="/student/sign-in" className="inline-flex px-8 py-4 rounded-2xl bg-white text-slate-900 font-bold hover:bg-pink-50 hover:text-pink-600 transition-colors shadow-lg">
                 Sign In Now
               </Link>
             </div>

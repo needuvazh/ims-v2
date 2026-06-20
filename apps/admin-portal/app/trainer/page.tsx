@@ -24,7 +24,7 @@ export default function TrainerPortalLanding() {
             </div>
             <span className="font-black text-lg tracking-tight">Trainer<span className="text-cyan-600">Portal</span></span>
           </Link>
-          <Link href="/sign-in" className="px-6 py-2.5 rounded-xl bg-cyan-600 text-white text-sm font-bold hover:bg-cyan-500 transition-colors shadow-md hover:shadow-cyan-500/30">
+          <Link href="/trainer/sign-in" className="px-6 py-2.5 rounded-xl bg-cyan-600 text-white text-sm font-bold hover:bg-cyan-500 transition-colors shadow-md hover:shadow-cyan-500/30">
             Trainer Login
           </Link>
         </div>
@@ -56,7 +56,7 @@ export default function TrainerPortalLanding() {
               Manage your sessions, interact with students, and deliver outstanding educational experiences.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-              <Link href="/sign-in" className="w-full sm:w-auto px-8 py-4 rounded-xl bg-cyan-600 text-white font-bold text-lg flex items-center justify-center gap-2 shadow-xl shadow-cyan-600/30 hover:scale-105 transition-transform">
+              <Link href="/trainer/sign-in" className="w-full sm:w-auto px-8 py-4 rounded-xl bg-cyan-600 text-white font-bold text-lg flex items-center justify-center gap-2 shadow-xl shadow-cyan-600/30 hover:scale-105 transition-transform">
                 Enter Workspace <ArrowRight className="w-5 h-5" />
               </Link>
             </div>
@@ -124,7 +124,7 @@ export default function TrainerPortalLanding() {
         <div className="max-w-3xl mx-auto px-6">
           <BookOpen className="w-12 h-12 mx-auto mb-6 text-cyan-400 opacity-50" />
           <h2 className="text-3xl md:text-4xl font-black mb-6">Ready for your next class?</h2>
-          <Link href="/sign-in" className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-cyan-500 text-white font-bold hover:bg-cyan-400 transition-colors shadow-lg shadow-cyan-500/20">
+          <Link href="/trainer/sign-in" className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-cyan-500 text-white font-bold hover:bg-cyan-400 transition-colors shadow-lg shadow-cyan-500/20">
             Sign In Now <ChevronRight className="w-5 h-5" />
           </Link>
         </div>

@@ -125,14 +125,14 @@ Reporting Snapshots
 
 # 5. Application Portals
 
-The system shall support multiple frontend applications inside the monorepo.
+The system shall support multiple portal experiences inside the admin portal application.
 
 ```text
 apps/
   admin-portal/
-  student-portal/
-  trainer-portal/
-  public-verification/
+    app/student/
+    app/trainer/
+    app/verify/
 ```
 
 ---
@@ -234,9 +234,9 @@ No login required.
 ims-monorepo/
   apps/
     admin-portal/
-    student-portal/
-    trainer-portal/
-    public-verification/
+      app/student/
+      app/trainer/
+      app/verify/
 
   packages/
     shared-kernel/

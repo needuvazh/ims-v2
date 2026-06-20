@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Award, ArrowLeft, CheckCircle, Search, ShieldCheck, FileText, ChevronRight, Sparkles } from 'lucide-react';
+import { Award, ArrowLeft, CheckCircle, Search, ShieldCheck, FileText, Sparkles } from 'lucide-react';
 
 export default function PublicVerificationPage() {
   const [certId, setCertId] = useState('');

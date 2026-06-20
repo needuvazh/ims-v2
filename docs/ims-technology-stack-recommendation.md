@@ -151,9 +151,9 @@ This is the best fit because:
 ims-monorepo/
   apps/
     admin-portal/
-    student-portal/
-    trainer-portal/
-    public-verification/
+      app/student/
+      app/trainer/
+      app/verify/
 
   packages/
     shared-kernel/

@@ -10,9 +10,9 @@ Stack: Next.js 16 (App Router), TypeScript strict, Tailwind CSS v3, PostgreSQL +
 ims-v2/
   apps/
     admin-portal/        Next.js, port 3000
-    student-portal/      Next.js, port 3001
-    trainer-portal/      Next.js, port 3002
-    public-verification/ Next.js
+      app/student/       Student portal routes
+      app/trainer/       Trainer portal routes
+      app/verify/        Public certificate verification routes
   packages/
     shared-ui/           ← The component library (this work)
     shared-auth/

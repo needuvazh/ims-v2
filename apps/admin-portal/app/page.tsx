@@ -48,9 +48,9 @@ const EVENTS = [
 
 const PORTALS = [
   { id: 'admin',   label: 'Admin Portal',       cta: 'Sign In as Admin',  desc: 'Full control over institute operations.',      icon: Shield,       href: '/sign-in', color: '#8B5CF6' },
-  { id: 'student', label: 'Student Portal',     cta: 'Student Login',     desc: 'Access courses, attendance, and results.',      icon: GraduationCap, href: 'http://student-portal.localhost', color: '#EC4899' },
-  { id: 'trainer', label: 'Trainer Portal',     cta: 'Trainer Login',     desc: 'Mark attendance, upload content.',              icon: BookOpen,     href: 'http://trainer-portal.localhost', color: '#06B6D4' },
-  { id: 'verify',  label: 'Verify Certificate', cta: 'Verify Now',        desc: 'Verify authenticity of certificates.',          icon: Award,        href: '#',        color: '#F59E0B' },
+  { id: 'student', label: 'Student Portal',     cta: 'Student Login',     desc: 'Access courses, attendance, and results.',      icon: GraduationCap, href: '/student', color: '#EC4899' },
+  { id: 'trainer', label: 'Trainer Portal',     cta: 'Trainer Login',     desc: 'Mark attendance, upload content.',              icon: BookOpen,     href: '/trainer', color: '#06B6D4' },
+  { id: 'verify',  label: 'Verify Certificate', cta: 'Verify Now',        desc: 'Verify authenticity of certificates.',          icon: Award,        href: '/verify',        color: '#F59E0B' },
 ];
 
 /* ─── StickyNav ─────────────────────────────────────────────────────────── */
