@@ -11,6 +11,8 @@ export * from './components/checkbox';
 export * from './components/radio-group';
 export * from './components/form-field';
 export * from './components/search-input';
+export * from './components/animate-in';
+export * from './components/count-up';
 
 // ─── Layout & Display (server) ──────────────────────────────────────────────
 export * from './components/card';

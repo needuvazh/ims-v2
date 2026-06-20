@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { CountUp } from '@ims/shared-ui';
 import {
   ArrowRight, Award, BookOpen, Building2, CheckCircle, ChevronRight,
   Clock, GraduationCap, Mail, MapPin, Phone, Shield, Users, Sparkles, Play, Star
@@ -19,10 +20,10 @@ const NAV = [
 ];
 
 const STATS = [
-  { value: '80+',  label: 'Global Programs',   color: '#EC4899' },
-  { value: '25k+', label: 'Students Trained',  color: '#8B5CF6' },
-  { value: '150+', label: 'Success Partners',  color: '#06B6D4' },
-  { value: '20+',  label: 'Years Experience',  color: '#F59E0B' },
+  { value: 80,  suffix: '+',  label: 'Global Programs',  color: '#EC4899' },
+  { value: 25,  suffix: 'k+', label: 'Students Trained', color: '#8B5CF6' },
+  { value: 150, suffix: '+',  label: 'Success Partners',  color: '#06B6D4' },
+  { value: 20,  suffix: '+',  label: 'Years Experience',  color: '#F59E0B' },
 ];
 
 const PARTNERS = ['ISO 9001', 'PDO Approved', 'MoL Certified', 'NEBOSH', 'IOSH', 'PMI Authorized'];
@@ -172,7 +173,7 @@ export default function LandingPage() {
                 <Users className="h-6 w-6 text-fuchsia-600" />
               </div>
               <div>
-                <p className="text-2xl font-black text-slate-900">25k+</p>
+                <p className="text-2xl font-black text-slate-900"><CountUp value="25" />k+</p>
                 <p className="text-[10px] font-bold uppercase text-slate-500">Students</p>
               </div>
             </motion.div>
@@ -214,7 +215,7 @@ export default function LandingPage() {
                 transition={{ delay: i * 0.1 }}
                 className="flex flex-col items-center text-center p-6 rounded-3xl bg-white shadow-xl shadow-slate-200/50 border border-slate-100 hover:-translate-y-2 transition-transform"
               >
-                <span className="text-4xl md:text-5xl font-black mb-2" style={{ color: stat.color }}>{stat.value}</span>
+                <span className="text-4xl md:text-5xl font-black mb-2" style={{ color: stat.color }}><CountUp value={String(stat.value)} />{stat.suffix}</span>
                 <span className="text-xs font-bold uppercase tracking-widest text-slate-500">{stat.label}</span>
               </motion.div>
             ))}

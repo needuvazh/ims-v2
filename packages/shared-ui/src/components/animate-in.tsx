@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, type ReactNode } from 'react';
 
-interface AnimateInProps {
+export interface AnimateInProps {
   children: ReactNode;
   className?: string;
   delay?: number;
@@ -18,8 +18,10 @@ export function AnimateIn({
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+    const element = ref.current;
+    if (!element) {
+      return;
+    }
 
     const initialTransform = {
       up: 'translateY(32px)',
@@ -28,23 +30,23 @@ export function AnimateIn({
       scale: 'scale(0.9) translateY(16px)',
     }[direction];
 
-    el.style.opacity = '0';
-    el.style.transform = initialTransform;
-    el.style.transition = `opacity 0.75s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.75s cubic-bezier(0.16,1,0.3,1) ${delay}ms`;
-    el.style.willChange = 'opacity, transform';
+    element.style.opacity = '0';
+    element.style.transform = initialTransform;
+    element.style.transition = `opacity 0.75s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.75s cubic-bezier(0.16,1,0.3,1) ${delay}ms`;
+    element.style.willChange = 'opacity, transform';
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          el.style.opacity = '1';
-          el.style.transform = 'translateY(0) translateX(0) scale(1)';
-          observer.unobserve(el);
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0) translateX(0) scale(1)';
+          observer.unobserve(element);
         }
       },
-      { threshold: 0.08, rootMargin: '0px 0px -48px 0px' }
+      { threshold: 0.08, rootMargin: '0px 0px -48px 0px' },
     );
 
-    observer.observe(el);
+    observer.observe(element);
     return () => observer.disconnect();
   }, [delay, direction]);
 

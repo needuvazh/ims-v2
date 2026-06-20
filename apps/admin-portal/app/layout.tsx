@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { Cormorant_Garamond, IBM_Plex_Mono, Manrope } from 'next/font/google';
+import '@ims/shared-ui/styles.css';
 import './globals.css';
 
 const bodyFont = Manrope({

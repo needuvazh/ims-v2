@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
     '@ims/shared-kernel',
     '@ims/shared-auth',
     '@ims/shared-ui',
+    '@ims/portal-ui',
     '@ims/audit',
     '@ims/identity-access',
     '@ims/organization',

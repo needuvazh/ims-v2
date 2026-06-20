@@ -14,6 +14,7 @@
     "@ims/audit": "workspace:*",
     "@ims/database": "workspace:*",
     "@ims/identity-access": "workspace:*",
+    "@ims/portal-ui": "workspace:*",
     "@ims/organization": "workspace:*",
     "@ims/shared-auth": "workspace:*",
     "@ims/shared-kernel": "workspace:*",

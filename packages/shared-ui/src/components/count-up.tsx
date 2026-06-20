@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-interface CountUpProps {
+export interface CountUpProps {
   value: string;
   duration?: number;
 }
@@ -13,10 +13,11 @@ export function CountUp({ value, duration = 1800 }: CountUpProps) {
   const started = useRef(false);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+    const element = ref.current;
+    if (!element) {
+      return;
+    }
 
-    // Parse "80+" → { num: 80, suffix: '+' } | "25k+" → { num: 25, suffix: 'k+' }
     const match = value.match(/^([\d.]+)(.*)$/);
     if (!match) {
       setDisplay(value);
@@ -35,10 +36,10 @@ export function CountUp({ value, duration = 1800 }: CountUpProps) {
           const tick = (now: number) => {
             const elapsed = now - startTime;
             const progress = Math.min(elapsed / duration, 1);
-            // Cubic ease-out
             const eased = 1 - Math.pow(1 - progress, 3);
             const current = Math.floor(eased * target);
             setDisplay(`${current}${suffix}`);
+
             if (progress < 1) {
               requestAnimationFrame(tick);
             } else {
@@ -47,15 +48,15 @@ export function CountUp({ value, duration = 1800 }: CountUpProps) {
           };
 
           requestAnimationFrame(tick);
-          observer.unobserve(el);
+          observer.unobserve(element);
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.5 },
     );
 
-    observer.observe(el);
+    observer.observe(element);
     return () => observer.disconnect();
-  }, [value, duration]);
+  }, [duration, value]);
 
   return <span ref={ref}>{display}</span>;
 }
