@@ -4,13 +4,32 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { BookOpen, ArrowLeft, Mail, Lock, Eye, EyeOff, Sparkles, ChevronRight, ClipboardCheck } from 'lucide-react';
+import {
+  createRequiredInputValidationHandlers,
+  validateRequiredInput,
+} from '@ims/shared-ui';
 import { PortalAuthHeroPanel, PortalAuthLayout } from '@ims/portal-ui';
 
 export default function TrainerSignInPage() {
   const [showPass, setShowPass] = useState(false);
   const [isPending, setIsPending] = useState(false);
+  const emailValidation = createRequiredInputValidationHandlers('Email Address');
+  const passwordValidation = createRequiredInputValidationHandlers('Password');
 
   const handleSubmit = (event: React.FormEvent) => {
+    const form = event.currentTarget as HTMLFormElement;
+    const emailInput = form.elements.namedItem('email') as HTMLInputElement | null;
+    const passwordInput = form.elements.namedItem('password') as HTMLInputElement | null;
+
+    const isEmailValid = validateRequiredInput(emailInput, 'Email Address');
+    const isPasswordValid = validateRequiredInput(passwordInput, 'Password');
+
+    if (!isEmailValid || !isPasswordValid) {
+      event.preventDefault();
+      form.reportValidity();
+      return;
+    }
+
     event.preventDefault();
     setIsPending(true);
     setTimeout(() => setIsPending(false), 1500);
@@ -108,7 +127,7 @@ export default function TrainerSignInPage() {
         <p className="text-sm text-slate-500">Secure access to your teaching tools.</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} noValidate className="space-y-5">
         <div className="space-y-1.5">
           <label className="ml-1 text-xs font-bold text-slate-700">Email Address</label>
           <div className="relative group">
@@ -119,6 +138,7 @@ export default function TrainerSignInPage() {
               type="email"
               placeholder="trainer@example.com"
               required
+              {...emailValidation}
               className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-4 text-sm text-slate-900 outline-none transition-all focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/10"
             />
           </div>
@@ -137,6 +157,7 @@ export default function TrainerSignInPage() {
               type={showPass ? 'text' : 'password'}
               placeholder="••••••••••"
               required
+              {...passwordValidation}
               className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-12 text-sm text-slate-900 outline-none transition-all focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/10"
             />
             <button

@@ -1,5 +1,6 @@
 // ─── Utilities ─────────────────────────────────────────────────────────────
 export * from './utils/cn';
+export * from './utils/native-validation';
 
 // ─── Form Components (client) ───────────────────────────────────────────────
 export * from './components/button';

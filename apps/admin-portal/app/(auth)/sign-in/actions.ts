@@ -2,14 +2,9 @@
 
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { z } from 'zod';
 import { sessionCookieName } from '@ims/shared-auth';
 import { DomainError } from '@ims/shared-kernel';
-
-const signInSchema = z.object({
-  email: z.string().trim().email().toLowerCase(),
-  password: z.string().min(1),
-});
+import { signInSchema } from './schema';
 
 export type SignInState = {
   error?: string;

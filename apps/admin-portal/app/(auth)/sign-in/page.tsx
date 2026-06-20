@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { Alert, CountUp } from '@ims/shared-ui';
 import { PortalAuthHeroPanel, PortalAuthLayout } from '@ims/portal-ui';
 import { signInAction, type SignInState } from './actions';
+import { parseSignInFieldErrors, type SignInFieldErrors } from './schema';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const initialState: SignInState = {};
@@ -27,6 +28,19 @@ const TRUST = [
 export default function SignInPage() {
   const [state, formAction, isPending] = useActionState(signInAction, initialState);
   const [showPass, setShowPass] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<SignInFieldErrors>({});
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const errors = parseSignInFieldErrors(new FormData(event.currentTarget));
+
+    if (errors.email || errors.password) {
+      event.preventDefault();
+      setFieldErrors(errors);
+      return;
+    }
+
+    setFieldErrors({});
+  };
 
   return (
     <PortalAuthLayout
@@ -148,7 +162,7 @@ export default function SignInPage() {
         <p className="text-sm text-slate-500">Sign in to manage the admin portal securely.</p>
       </div>
 
-      <form action={formAction} className="space-y-5">
+      <form action={formAction} onSubmit={handleSubmit} noValidate className="space-y-5">
         <AnimatePresence>
           {state.error ? (
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
@@ -168,11 +182,17 @@ export default function SignInPage() {
               name="email"
               type="email"
               placeholder="admin@ims.com"
-              required
+              aria-invalid={Boolean(fieldErrors.email)}
+              aria-describedby={fieldErrors.email ? 'si-email-error' : undefined}
               className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-4 text-sm text-slate-900 outline-none transition-all focus:border-violet-500 focus:bg-white focus:ring-4 focus:ring-violet-500/10"
               data-testid="sign-in-email"
             />
           </div>
+          {fieldErrors.email ? (
+            <p id="si-email-error" role="alert" className="ml-1 text-xs font-medium text-rose-600">
+              {fieldErrors.email}
+            </p>
+          ) : null}
         </div>
 
         <div className="space-y-1.5">
@@ -189,7 +209,8 @@ export default function SignInPage() {
               name="password"
               type={showPass ? 'text' : 'password'}
               placeholder="••••••••••"
-              required
+              aria-invalid={Boolean(fieldErrors.password)}
+              aria-describedby={fieldErrors.password ? 'si-password-error' : undefined}
               className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-12 text-sm text-slate-900 outline-none transition-all focus:border-violet-500 focus:bg-white focus:ring-4 focus:ring-violet-500/10"
               data-testid="sign-in-password"
             />
@@ -201,6 +222,11 @@ export default function SignInPage() {
               {showPass ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </button>
           </div>
+          {fieldErrors.password ? (
+            <p id="si-password-error" role="alert" className="ml-1 text-xs font-medium text-rose-600">
+              {fieldErrors.password}
+            </p>
+          ) : null}
         </div>
 
         <label className="group ml-1 flex w-fit cursor-pointer items-center gap-3 text-sm text-slate-600">
