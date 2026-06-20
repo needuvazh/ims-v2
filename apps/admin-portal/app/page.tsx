@@ -92,7 +92,7 @@ function StickyNav() {
 
         <div className="flex items-center gap-4">
           <Link href="/sign-in" className="rounded-full bg-slate-900 px-6 py-2.5 text-xs font-bold text-white transition-all hover:bg-violet-600 hover:shadow-[0_0_20px_rgba(124,58,237,0.4)] hover:-translate-y-0.5">
-            Admin Login
+            Login
           </Link>
         </div>
       </div>

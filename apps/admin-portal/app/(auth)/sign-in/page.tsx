@@ -5,7 +5,7 @@ import {
   Eye, EyeOff, ArrowLeft, Lock, Mail, Users, Award, TrendingUp, CheckCircle2, ChevronRight, Sparkles
 } from 'lucide-react';
 import Link from 'next/link';
-import { Alert } from '@ims/shared-ui';
+import { Alert, CountUp } from '@ims/shared-ui';
 import { PortalAuthHeroPanel, PortalAuthLayout } from '@ims/portal-ui';
 import { signInAction, type SignInState } from './actions';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -106,7 +106,9 @@ export default function SignInPage() {
                       <div className="rounded-xl bg-white/10 p-2 text-fuchsia-300">
                         <Icon className="h-5 w-5" />
                       </div>
-                      <p className="text-2xl font-black">{stat.value}</p>
+                      <p className="text-2xl font-black">
+                        <CountUp value={stat.value} />
+                      </p>
                       <p className="text-[10px] font-bold uppercase tracking-widest text-white/50">{stat.label}</p>
                     </div>
                   );

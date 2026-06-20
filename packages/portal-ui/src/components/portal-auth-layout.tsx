@@ -24,7 +24,7 @@ export function PortalAuthLayout({
         initial={{ x: '-100%' }}
         animate={{ x: 0 }}
         transition={{ type: 'spring', stiffness: 80, damping: 20 }}
-        className={`relative hidden h-screen flex-col overflow-hidden rounded-r-[3rem] shadow-2xl lg:flex ${heroWidthClassName}`}
+        className={`relative hidden h-screen flex-col overflow-hidden shadow-2xl lg:flex ${heroWidthClassName}`}
       >
         {hero}
       </motion.aside>
