@@ -184,6 +184,28 @@ Alternatives considered:
 - Use a single ID for both request correlation and trace identity.
   - Rejected because it blurs two different debugging concerns and makes the contract harder to evolve.
 
+### 10. Standardize the request-header contract and bootstrap fallback
+
+Use `x-request-id` as the canonical request correlation header and mirror it to `x-correlation-id` on outgoing responses. Accept `x-request-id`, `x-correlation-id`, and the legacy `x-ims-request-id` as inbound correlation sources. Use `x-trace-id` as the explicit trace header when a trace is available, and continue to accept `traceparent` or the legacy `x-ims-trace-id` for upstream trace continuity.
+
+Middleware, route handlers, and redirect responses should all apply the same response-header contract so support tooling sees a consistent correlation ID even when the request ends in a redirect.
+
+For local startup, "safe local default" means the bootstrap layer may no-op when exporter environment variables are absent. That keeps development runnable without requiring OTLP or any vendor backend, while still allowing traces and metrics to be enabled by environment when desired.
+
+Rationale:
+
+- A single canonical request header avoids ambiguity in logs and response handling.
+- Mirroring the request ID to a correlation alias keeps backward compatibility for existing tooling.
+- Redirect responses are still support-relevant and should carry the same correlation metadata as 200 responses.
+- A no-op fallback is safer than a partially configured exporter that can break startup.
+
+Alternatives considered:
+
+- Support multiple unrelated request-id headers with no canonical name.
+  - Rejected because it complicates search, support tooling, and future docs.
+- Fail startup when exporter settings are missing.
+  - Rejected because observability should not block development or local review.
+
 ## Risks / Trade-offs
 
 - [Risk] App startup may fail if OpenTelemetry setup depends on missing exporter env vars. -> Mitigation: make exporters optional and default to no-op or stdout-safe local behavior.
@@ -215,8 +237,6 @@ No persistence migration is required for this change.
 
 ## Open Questions
 
-- Which exporter targets should be supported in Phase 1: stdout only, OTLP, or both?
-- Should the trace identifier header be added to every API route or only to mutating routes and error responses?
 - Should the initial logger helper be built on a dedicated logging library or a thin JSON wrapper around console output?
 - Should the observability package expose a shared request-context API for future worker processes as well as Next.js routes?
 - Should public certificate verification routes use the same trace header policy as protected admin routes?
