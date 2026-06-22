@@ -19,6 +19,8 @@ type RoleRow = {
   roleName: string;
   description: string | null;
   status: string;
+  effectiveStartDate: Date;
+  effectiveEndDate: Date | null;
   permissions: Array<{
     permission: PermissionRow;
   }>;
@@ -38,43 +40,53 @@ export class PrismaRoleRepository implements RoleRepository {
       roleName: row.roleName,
       description: row.description,
       status: row.status as RoleRecord['status'],
+      effectiveStartDate: row.effectiveStartDate,
+      effectiveEndDate: row.effectiveEndDate,
       permissions: row.permissions.map((rp) => this.toPermission(rp.permission)),
     };
   }
 
   async findById(roleId: string): Promise<RoleRecord | null> {
-    const row = await this.prisma.role.findFirst({
+    const row = (await this.prisma.role.findFirst({
       where: { id: roleId, isDeleted: false },
       include: { permissions: { include: { permission: true } } },
-    });
+    })) as RoleRow | null;
     return row ? this.toRole(row) : null;
   }
 
   async findByCode(roleCode: string): Promise<RoleRecord | null> {
-    const row = await this.prisma.role.findFirst({
+    const row = (await this.prisma.role.findFirst({
       where: { roleCode, isDeleted: false },
       include: { permissions: { include: { permission: true } } },
-    });
+    })) as RoleRow | null;
     return row ? this.toRole(row) : null;
   }
 
   async create(role: RoleRecord): Promise<RoleRecord> {
-    const row = await this.prisma.role.create({
-      data: { id: role.id, roleCode: role.roleCode, roleName: role.roleName, description: role.description, status: role.status },
+    const row = (await this.prisma.role.create({
+      data: {
+        id: role.id,
+        roleCode: role.roleCode,
+        roleName: role.roleName,
+        description: role.description,
+        status: role.status,
+        effectiveStartDate: role.effectiveStartDate ?? undefined,
+        effectiveEndDate: role.effectiveEndDate ?? null,
+      },
       include: { permissions: { include: { permission: true } } },
-    });
+    })) as RoleRow;
     return this.toRole(row);
   }
 
   async update(
     roleId: string,
-    updates: Partial<Pick<RoleRecord, 'roleName' | 'description' | 'status'>>,
+    updates: Partial<Pick<RoleRecord, 'roleName' | 'description' | 'status' | 'effectiveStartDate' | 'effectiveEndDate'>>,
   ): Promise<RoleRecord> {
-    const row = await this.prisma.role.update({
+    const row = (await this.prisma.role.update({
       where: { id: roleId },
       data: { ...updates, updatedAt: new Date() },
       include: { permissions: { include: { permission: true } } },
-    });
+    })) as RoleRow;
     return this.toRole(row);
   }
 

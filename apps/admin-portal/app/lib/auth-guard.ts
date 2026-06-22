@@ -2,22 +2,33 @@ import { cookies } from 'next/headers';
 import { decodeSession, sessionCookieName, hasPermission, isAuthorizedForBranch } from '@ims/shared-auth';
 import type { Session } from '@ims/shared-auth';
 import { DomainError } from '@ims/shared-kernel';
+import nodeCrypto from 'crypto';
 
 /**
  * Retrieve the current active session.
- * Throws a DomainError('unauthorized') if no session exists or is expired/invalid.
+ * Throws a DomainError('unauthorized') if no session exists or is expired/invalid/revoked.
  */
 export async function getSession(): Promise<Session> {
   const cookieStore = await cookies();
   const token = cookieStore.get(sessionCookieName)?.value;
   const session = await decodeSession(token);
-  if (!session) {
+  if (!session || !token) {
     throw new DomainError('unauthorized', 'Authentication required. Please sign in.');
   }
 
-  // Enforce database check to prevent bypass of deactivated or locked users
+  // Enforce database check to prevent bypass of deactivated, locked, or revoked sessions
   try {
-    const { userService } = await import('./runtime');
+    const { userService, sessionRepository } = await import('./runtime');
+
+    // 1. Verify session status in database
+    const tokenHash = nodeCrypto.createHash('sha256').update(token).digest('hex');
+    const dbSession = await sessionRepository.getSessionByHash(tokenHash);
+
+    if (!dbSession || dbSession.status !== 'Active' || new Date() > dbSession.expiresAt) {
+      throw new DomainError('unauthorized', 'Session has been revoked or expired.');
+    }
+
+    // 2. Verify user status
     const user = await userService.getUser(session.userId);
     
     if (user.status === 'Inactive') {
@@ -26,9 +37,20 @@ export async function getSession(): Promise<Session> {
     if (user.status === 'Locked') {
       throw new DomainError('locked_user_cannot_login', 'Your account is locked. Contact your administrator.');
     }
+
+    // 3. Verify user effective dates
+    const now = new Date();
+    const userStartDate = user.effectiveStartDate;
+    if ((userStartDate && userStartDate > now) || (user.effectiveEndDate && user.effectiveEndDate < now)) {
+      throw new DomainError('unauthorized', 'Your account is not currently within its active date range.');
+    }
   } catch (err) {
     if (err instanceof DomainError) {
-      if (err.code === 'inactive_user_cannot_login' || err.code === 'locked_user_cannot_login') {
+      if (
+        err.code === 'inactive_user_cannot_login' ||
+        err.code === 'locked_user_cannot_login' ||
+        err.code === 'unauthorized'
+      ) {
         throw err;
       }
     }

@@ -34,6 +34,8 @@ type UserWithCredentialsRow = {
   isDeleted: boolean;
   effectiveStartDate: Date;
   effectiveEndDate: Date | null;
+  failedLoginAttempts: number;
+  lockoutUntil: Date | null;
   roles: UserRoleRow[];
   dataScopes: UserDataScopeRow[];
 };
@@ -78,14 +80,28 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
   }
 
   async findByEmailWithCredentials(email: string): Promise<UserWithCredentials | null> {
+    const now = new Date();
     const row = (await this.prisma.user.findUnique({
       where: { email },
       include: {
         roles: {
+          where: {
+            role: {
+              status: 'Active',
+              effectiveStartDate: { lte: now },
+              OR: [
+                { effectiveEndDate: null },
+                { effectiveEndDate: { gte: now } }
+              ]
+            }
+          },
           include: {
             role: {
               include: {
-                permissions: { include: { permission: true } },
+                permissions: {
+                  where: { permission: { status: 'Active' } },
+                  include: { permission: true }
+                },
               },
             },
           },
@@ -121,6 +137,8 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
       dataScopes,
       effectiveStartDate: row.effectiveStartDate,
       effectiveEndDate: row.effectiveEndDate,
+      failedLoginAttempts: row.failedLoginAttempts,
+      lockoutUntil: row.lockoutUntil,
     };
   }
 
@@ -212,5 +230,33 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
       roleCode: row.role.roleCode,
       roleName: row.role.roleName,
     }));
+  }
+
+  async incrementFailedAttempts(userId: string, lockoutMinutes = 15): Promise<void> {
+    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+    if (!user) return;
+
+    const attempts = user.failedLoginAttempts + 1;
+    const lockoutUntil = attempts >= 5 ? new Date(Date.now() + lockoutMinutes * 60 * 1000) : null;
+    const status = attempts >= 5 ? 'Locked' : user.status;
+
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        failedLoginAttempts: attempts,
+        lockoutUntil,
+        status,
+      },
+    });
+  }
+
+  async resetFailedAttempts(userId: string): Promise<void> {
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        failedLoginAttempts: 0,
+        lockoutUntil: null,
+      },
+    });
   }
 }

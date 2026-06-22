@@ -23,6 +23,8 @@ export type UserWithCredentials = UserProfile & {
   roles: string[];        // role codes
   permissions: string[];  // permission codes
   dataScopes: UserDataScopeDto[];
+  failedLoginAttempts?: number;
+  lockoutUntil?: Date | null;
 };
 
 // Password Complexity: min 8 chars, 1 uppercase, 1 lowercase, 1 digit, 1 special char

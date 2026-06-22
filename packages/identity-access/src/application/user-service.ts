@@ -18,7 +18,10 @@ export interface UserRepository {
   findById(userId: string): Promise<UserProfile | null>;
   findByEmail(email: string): Promise<UserProfile | null>;
   create(profile: UserProfile, passwordHash: string): Promise<UserProfile>;
-  update(userId: string, updates: Partial<Pick<UserProfile, 'fullName' | 'phone' | 'userType' | 'status'>>): Promise<UserProfile>;
+  update(
+    userId: string,
+    updates: Partial<Pick<UserProfile, 'fullName' | 'phone' | 'userType' | 'status' | 'effectiveStartDate' | 'effectiveEndDate'>>,
+  ): Promise<UserProfile>;
   updatePassword(userId: string, passwordHash: string): Promise<void>;
   list(filters?: UserListFilters): Promise<UserProfile[]>;
   assignRole(userId: string, roleId: string, actorId: string): Promise<void>;

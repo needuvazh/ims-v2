@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs';
+import nodeCrypto from 'crypto';
 import { encodeSession, type Session } from '@ims/shared-auth';
 import { DomainError } from '@ims/shared-kernel';
 import type { UserWithCredentials } from '../domain/user';
@@ -8,6 +9,20 @@ import type { AuditLogRepository } from '@ims/audit';
 export interface AuthUserRepository {
   findByEmailWithCredentials(email: string): Promise<UserWithCredentials | null>;
   recordLastLogin(userId: string): Promise<void>;
+  incrementFailedAttempts(userId: string, lockoutMinutes?: number): Promise<void>;
+  resetFailedAttempts(userId: string): Promise<void>;
+}
+
+export interface AuthSessionRepository {
+  createSession(session: {
+    userId: string;
+    tokenHash: string;
+    userAgent: string | null;
+    ipAddress: string | null;
+    expiresAt: Date;
+  }): Promise<void>;
+  getSessionByHash(tokenHash: string): Promise<{ status: string; expiresAt: Date } | null>;
+  revokeSessionByHash(tokenHash: string): Promise<void>;
 }
 
 export type SignInResult = {
@@ -25,10 +40,14 @@ export type SignInResult = {
 export class AuthService {
   constructor(
     private readonly userRepository: AuthUserRepository,
+    private readonly sessionRepository: AuthSessionRepository,
     private readonly auditRepository: AuditLogRepository,
   ) {}
 
-  async signIn(command: SignInCommand): Promise<SignInResult> {
+  async signIn(
+    command: SignInCommand,
+    metadata?: { userAgent?: string | null; ipAddress?: string | null }
+  ): Promise<SignInResult> {
     const validated = signInCommandSchema.parse(command);
 
     const user = await this.userRepository.findByEmailWithCredentials(validated.email);
@@ -50,6 +69,7 @@ export class AuthService {
       throw invalidError;
     }
 
+    // 1. Check user status (Inactive/Draft)
     if (user.status === 'Inactive' || user.status === 'Draft') {
       await this.auditRepository.append({
         id: crypto.randomUUID(),
@@ -64,7 +84,27 @@ export class AuthService {
       throw new DomainError('inactive_user_cannot_login', 'Your account is not active. Contact your administrator.');
     }
 
+    // 2. Lockout evaluation
+    const now = new Date();
     if (user.status === 'Locked') {
+      if (user.lockoutUntil && user.lockoutUntil > now) {
+        await this.auditRepository.append({
+          id: crypto.randomUUID(),
+          actorId: user.id,
+          branchId: null,
+          action: 'identity.login_failed',
+          entityType: 'User',
+          entityId: user.id,
+          occurredAt: new Date(),
+          details: { email: user.email, reason: 'status_locked' },
+        });
+        throw new DomainError('locked_user_cannot_login', 'Your account is locked. Contact your administrator.');
+      }
+    }
+
+    // 3. User effective dating range validation
+    const userStartDate = user.effectiveStartDate;
+    if ((userStartDate && userStartDate > now) || (user.effectiveEndDate && user.effectiveEndDate < now)) {
       await this.auditRepository.append({
         id: crypto.randomUUID(),
         actorId: user.id,
@@ -73,13 +113,15 @@ export class AuthService {
         entityType: 'User',
         entityId: user.id,
         occurredAt: new Date(),
-        details: { email: user.email, reason: 'status_locked' },
+        details: { email: user.email, reason: 'effective_dating_violation' },
       });
-      throw new DomainError('locked_user_cannot_login', 'Your account is locked. Contact your administrator.');
+      throw new DomainError('unauthorized', 'Your account is not currently within its active date range.');
     }
 
+    // 4. Password validation and Lockout updates
     const passwordMatch = await bcrypt.compare(validated.password, user.passwordHash);
     if (!passwordMatch) {
+      await this.userRepository.incrementFailedAttempts(user.id);
       await this.auditRepository.append({
         id: crypto.randomUUID(),
         actorId: user.id,
@@ -93,6 +135,8 @@ export class AuthService {
       throw invalidError;
     }
 
+    // Success resets failed attempts
+    await this.userRepository.resetFailedAttempts(user.id);
     await this.userRepository.recordLastLogin(user.id);
 
     await this.auditRepository.append({
@@ -124,6 +168,16 @@ export class AuthService {
     };
 
     const sessionToken = await encodeSession(session);
+
+    // Persist active session in database
+    const tokenHash = nodeCrypto.createHash('sha256').update(sessionToken).digest('hex');
+    await this.sessionRepository.createSession({
+      userId: user.id,
+      tokenHash,
+      userAgent: metadata?.userAgent ?? null,
+      ipAddress: metadata?.ipAddress ?? null,
+      expiresAt: new Date(session.expiresAt),
+    });
 
     return { sessionToken, session };
   }

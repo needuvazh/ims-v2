@@ -20,13 +20,25 @@ This design implements a database-level refactoring to support these requirement
 
 ### 1. Introduce `UserSession` and `LoginHistory` Models
 We will add `UserSession` and `LoginHistory` tables to the PostgreSQL schema.
-- `UserSession` stores active tokens (using a secure `tokenHash` representation), client metadata (IP, user agent), and lifecycle status (`Active`, `Expired`, `Revoked`).
+- `UserSession` stores active tokens (using a secure SHA-256 `tokenHash` representation of the session token), client metadata (IP, user agent), and lifecycle status (`Active`, `Expired`, `Revoked`).
 - `LoginHistory` tracks successful and failed login attempts.
+- **Session Lifecycle Hooks:**
+  - **Login:** On successful authentication, `AuthService.signIn` writes an `Active` session record to `UserSession`.
+  - **Verification:** The Next.js Server Components guard (`auth-guard.ts` -> `getSession`) hashes the incoming token and checks `UserSession.status === 'Active'`. If the session is `Revoked` or `Expired`, access is denied.
+  - **Logout:** The sign-out handler (`sign-out/route.ts`) hashes the token and marks the session as `Revoked` in the database.
 
 *Rationale*: Directly fulfills FRD specifications Section 4 (Owned Concepts) and Section 12 (Operational Views for Active Sessions and Login History).
 
 ### 2. Add Effective Dates & Lockout Fields
 We will add `effectiveStartDate` and `effectiveEndDate` to `User` and `Role` models, and add `failedLoginAttempts` and `lockoutUntil` to the `User` model.
+- **Brute-Force Lockout Mechanics:**
+  - Max failed login attempts threshold is **5**.
+  - On the 5th consecutive failure, the user's status transitions to `Locked` and `lockoutUntil` is set to 15 minutes in the future.
+  - Success resets `failedLoginAttempts` to `0` and clears `lockoutUntil`.
+  - Admin unlock transitions status back to `Active` and clears `failedLoginAttempts` and `lockoutUntil`.
+- **Effective Dating Checks:**
+  - **User-level:** During `AuthService.signIn` and `auth-guard.ts` validation, verify that `effectiveStartDate <= now` and `effectiveEndDate >= now` (or `null`).
+  - **Role-level:** The query `findByEmailWithCredentials` filters roles to load only those with status `Active`, `effectiveStartDate <= now`, and `effectiveEndDate >= now` (or `null`). Expired or deactivated roles are excluded from session token creation.
 
 *Rationale*: Satisfies screen design requirements (IAM-UI-003, IAM-UI-004, IAM-UI-005) and brute-force lockout rules.
 

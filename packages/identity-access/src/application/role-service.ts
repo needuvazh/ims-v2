@@ -14,7 +14,10 @@ export interface RoleRepository {
   findById(roleId: string): Promise<RoleRecord | null>;
   findByCode(roleCode: string): Promise<RoleRecord | null>;
   create(role: RoleRecord): Promise<RoleRecord>;
-  update(roleId: string, updates: Partial<Pick<RoleRecord, 'roleName' | 'description' | 'status'>>): Promise<RoleRecord>;
+  update(
+    roleId: string,
+    updates: Partial<Pick<RoleRecord, 'roleName' | 'description' | 'status' | 'effectiveStartDate' | 'effectiveEndDate'>>,
+  ): Promise<RoleRecord>;
   list(): Promise<RoleRecord[]>;
   assignPermission(roleId: string, permissionId: string, actorId: string): Promise<void>;
   removePermission(roleId: string, permissionId: string): Promise<void>;
@@ -68,6 +71,8 @@ export class RoleService {
       roleName: validated.roleName,
       description: validated.description ?? null,
       status: 'Active',
+      effectiveStartDate: validated.effectiveStartDate,
+      effectiveEndDate: validated.effectiveEndDate,
       permissions: [],
     };
 
