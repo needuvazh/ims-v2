@@ -3,8 +3,8 @@
 
 # PostgreSQL connection string (required)
 # Local Docker Compose default:
-# postgresql://postgres:postgres@localhost:5432/ims_dev?schema=public
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/ims_dev?schema=public"
+# postgresql://postgres:postgres@localhost:5435/ims_dev?schema=public
+DATABASE_URL="postgresql://postgres:postgres@localhost:5435/ims_dev?schema=public"
 
 # Session secret — minimum 32 random bytes, base64 encoded
 # Generate with: node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"

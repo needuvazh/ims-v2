@@ -1,18 +1,16 @@
 'use server';
 
-import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
-import { decodeSession, sessionCookieName } from '@ims/shared-auth';
 import { createUuid, type Uuid, DomainError } from '@ims/shared-kernel';
 import type { RoleStatus, UserStatus } from '@ims/identity-access';
 import { createStructuredLogger, getCurrentRequestContext, withServerActionObservability } from '../../lib/observability';
+import { assertPermission, getSession } from '../../lib/auth-guard';
 
 const ZERO_UUID = '00000000-0000-0000-0000-000000000000';
 
 async function getActorId(): Promise<Uuid> {
-  const cookieStore = await cookies();
-  const session = await decodeSession(cookieStore.get(sessionCookieName)?.value);
-  return createUuid(session?.userId ?? ZERO_UUID);
+  const session = await getSession();
+  return createUuid(session.userId);
 }
 
 function isUserStatus(status: string): status is UserStatus {
@@ -36,6 +34,7 @@ export async function createUserAction(_prev: ActionResult, formData: FormData):
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
     try {
+      await assertPermission('identity.write');
       const actorId = await getActorId();
       const { userService } = await import('../../lib/runtime');
       await userService.createUser({
@@ -65,6 +64,7 @@ export async function updateUserStatusAction(userId: string, status: string): Pr
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
     try {
+      await assertPermission('identity.write');
       const actorId = await getActorId();
       const { userService } = await import('../../lib/runtime');
       if (!isUserStatus(status)) {
@@ -90,6 +90,7 @@ export async function assignRoleToUserAction(userId: string, roleId: string): Pr
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
     try {
+      await assertPermission('identity.write');
       const actorId = await getActorId();
       const { userService } = await import('../../lib/runtime');
       await userService.assignRole(userId, roleId, { actorId });
@@ -112,6 +113,7 @@ export async function toggleUserRoleAction(userId: string, roleId: string, assig
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
     try {
+      await assertPermission('identity.write');
       const actorId = await getActorId();
       const { userService } = await import('../../lib/runtime');
       if (assign) {
@@ -150,6 +152,7 @@ export async function createRoleAction(_prev: ActionResult, formData: FormData):
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
     try {
+      await assertPermission('identity.role.manage');
       const actorId = await getActorId();
       const { roleService } = await import('../../lib/runtime');
       await roleService.createRole({
@@ -177,6 +180,7 @@ export async function updateRoleStatusAction(roleId: string, status: string): Pr
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
     try {
+      await assertPermission('identity.role.manage');
       const actorId = await getActorId();
       const { roleService } = await import('../../lib/runtime');
       if (!isRoleStatus(status)) {
@@ -202,6 +206,7 @@ export async function toggleRolePermissionAction(roleId: string, permissionId: s
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
     try {
+      await assertPermission('identity.role.manage');
       const actorId = await getActorId();
       const { roleService } = await import('../../lib/runtime');
       if (assign) {

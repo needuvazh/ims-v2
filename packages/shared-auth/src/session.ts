@@ -3,12 +3,23 @@ import type { BranchId, Uuid } from '@ims/shared-kernel';
 
 export const sessionCookieName = 'ims_session';
 
+export const userDataScopeSchema = z.object({
+  scopeType: z.string(),
+  branchId: z.string().uuid().nullable().optional(),
+  departmentId: z.string().uuid().nullable().optional(),
+  assignedOnly: z.boolean().default(false),
+});
+
+export type UserDataScopeDto = z.infer<typeof userDataScopeSchema>;
+
 export const sessionSchema = z.object({
   userId: z.string().uuid(),
   displayName: z.string().min(1),
   roles: z.array(z.string().min(1)).default([]),
   permissions: z.array(z.string().min(1)).default([]),
+  dataScopes: z.array(userDataScopeSchema).default([]),
   activeBranchId: z.string().uuid().nullable().optional(),
+  expiresAt: z.number(),
 });
 
 export type Session = z.infer<typeof sessionSchema>;
@@ -29,12 +40,6 @@ function base64UrlDecode(input: string): string {
   return new TextDecoder().decode(bytes);
 }
 
-function bufferToBase64Url(buffer: Uint8Array): string {
-  let binary = '';
-  for (const byte of buffer) binary += String.fromCharCode(byte);
-  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/u, '');
-}
-
 // ─── HMAC-SHA256 (Web Crypto API, Edge + Node compatible) ────────────────────
 
 async function hmacSign(message: string, secret: string): Promise<string> {
@@ -47,7 +52,10 @@ async function hmacSign(message: string, secret: string): Promise<string> {
     ['sign'],
   );
   const sig = await crypto.subtle.sign('HMAC', key, enc.encode(message));
-  return bufferToBase64Url(new Uint8Array(sig));
+  const buffer = new Uint8Array(sig);
+  let binary = '';
+  for (const byte of buffer) binary += String.fromCharCode(byte);
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/u, '');
 }
 
 async function hmacVerify(message: string, signature: string, secret: string): Promise<boolean> {
@@ -81,7 +89,7 @@ export async function encodeSession(session: Session): Promise<string> {
 
 /**
  * Verify HMAC signature and decode a session cookie value.
- * Returns null if the value is missing, malformed, or tampered with.
+ * Returns null if the value is missing, malformed, expired, or tampered with.
  */
 export async function decodeSession(value: string | undefined | null): Promise<Session | null> {
   if (!value) return null;
@@ -92,7 +100,11 @@ export async function decodeSession(value: string | undefined | null): Promise<S
     const signature = value.slice(dotIdx + 1);
     if (!(await hmacVerify(payload, signature, getSessionSecret()))) return null;
     const raw = JSON.parse(base64UrlDecode(payload));
-    return sessionSchema.parse(raw);
+    const session = sessionSchema.parse(raw);
+    if (Date.now() > session.expiresAt) {
+      return null;
+    }
+    return session;
   } catch {
     return null;
   }
@@ -110,9 +122,18 @@ export function resolveUserId(session: Session): Uuid {
 export function createDemoSession(userId: string): Session {
   return {
     userId,
-    displayName: 'Demo User',
-    roles: ['SUPER_ADMIN'],
+    displayName: 'IMS Admin',
+    roles: ['Admin'],
     permissions: ['dashboard.view', 'organization.manage', 'identity.read', 'identity.write'],
+    dataScopes: [
+      {
+        scopeType: 'All',
+        branchId: null,
+        departmentId: null,
+        assignedOnly: false,
+      },
+    ],
     activeBranchId: null,
+    expiresAt: Date.now() + 24 * 60 * 60 * 1000,
   };
 }

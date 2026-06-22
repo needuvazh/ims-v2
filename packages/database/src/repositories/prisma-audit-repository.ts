@@ -14,7 +14,7 @@ export class PrismaAuditRepository implements AuditLogRepository {
         entityType: entry.entityType,
         entityId: entry.entityId,
         occurredAt: entry.occurredAt,
-        details: entry.details ?? {},
+        details: (entry.details as any) ?? {},
       },
     });
   }

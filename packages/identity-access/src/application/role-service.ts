@@ -53,6 +53,15 @@ export class RoleService {
     const existing = await this.roleRepository.findByCode(validated.roleCode);
     if (existing) throw new DomainError('conflict', `Role code ${validated.roleCode} already exists.`);
 
+    const allPermissions = await this.roleRepository.listPermissions();
+    for (const permId of validated.permissionIds) {
+      const permission = allPermissions.find(p => p.id === permId);
+      if (!permission) throw new DomainError('not_found', `Permission ${permId} not found.`);
+      if (permission.status !== 'Active') {
+        throw new DomainError('precondition_failed', `Cannot assign permission: Permission ${permission.permissionCode} is not active.`);
+      }
+    }
+
     const role: RoleRecord = {
       id: crypto.randomUUID() as Uuid,
       roleCode: validated.roleCode,
@@ -89,11 +98,16 @@ export class RoleService {
 
     const updated = await this.roleRepository.update(roleId, validated);
 
+    let auditAction = 'identity.role_updated';
+    if (validated.status === 'Inactive' && existing.status !== 'Inactive') {
+      auditAction = 'identity.role_deactivated';
+    }
+
     await this.auditRepository.append({
       id: crypto.randomUUID(),
       actorId: context.actorId,
       branchId: null,
-      action: 'identity.role_updated',
+      action: auditAction,
       entityType: 'Role',
       entityId: roleId,
       occurredAt: new Date(),
@@ -106,6 +120,14 @@ export class RoleService {
   async assignPermission(roleId: string, permissionId: string, context: RoleCommandContext): Promise<void> {
     const role = await this.roleRepository.findById(roleId);
     if (!role) throw new DomainError('not_found', `Role ${roleId} not found.`);
+
+    const allPermissions = await this.roleRepository.listPermissions();
+    const permission = allPermissions.find(p => p.id === permissionId);
+    if (!permission) throw new DomainError('not_found', `Permission ${permissionId} not found.`);
+
+    if (permission.status !== 'Active') {
+      throw new DomainError('precondition_failed', `Cannot assign permission: Permission ${permission.permissionCode} is not active.`);
+    }
 
     await this.roleRepository.assignPermission(roleId, permissionId, context.actorId);
 

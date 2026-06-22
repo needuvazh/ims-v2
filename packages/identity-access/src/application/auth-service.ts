@@ -3,6 +3,7 @@ import { encodeSession, type Session } from '@ims/shared-auth';
 import { DomainError } from '@ims/shared-kernel';
 import type { UserWithCredentials } from '../domain/user';
 import { signInCommandSchema, type SignInCommand } from '../domain/user';
+import type { AuditLogRepository } from '@ims/audit';
 
 export interface AuthUserRepository {
   findByEmailWithCredentials(email: string): Promise<UserWithCredentials | null>;
@@ -22,7 +23,10 @@ export type SignInResult = {
  *  - Invalid credentials: always throw a generic error to prevent user enumeration.
  */
 export class AuthService {
-  constructor(private readonly userRepository: AuthUserRepository) {}
+  constructor(
+    private readonly userRepository: AuthUserRepository,
+    private readonly auditRepository: AuditLogRepository,
+  ) {}
 
   async signIn(command: SignInCommand): Promise<SignInResult> {
     const validated = signInCommandSchema.parse(command);
@@ -32,27 +36,91 @@ export class AuthService {
     // Generic error — do not reveal whether email exists.
     const invalidError = new DomainError('unauthorized', 'Invalid email or password.');
 
-    if (!user) throw invalidError;
+    if (!user) {
+      await this.auditRepository.append({
+        id: crypto.randomUUID(),
+        actorId: null,
+        branchId: null,
+        action: 'identity.login_failed',
+        entityType: 'User',
+        entityId: 'unknown',
+        occurredAt: new Date(),
+        details: { email: validated.email, reason: 'user_not_found' },
+      });
+      throw invalidError;
+    }
 
     if (user.status === 'Inactive' || user.status === 'Draft') {
-      throw new DomainError('forbidden', 'Your account is not active. Contact your administrator.');
+      await this.auditRepository.append({
+        id: crypto.randomUUID(),
+        actorId: user.id,
+        branchId: null,
+        action: 'identity.login_failed',
+        entityType: 'User',
+        entityId: user.id,
+        occurredAt: new Date(),
+        details: { email: user.email, reason: `status_${user.status.toLowerCase()}` },
+      });
+      throw new DomainError('inactive_user_cannot_login', 'Your account is not active. Contact your administrator.');
     }
 
     if (user.status === 'Locked') {
-      throw new DomainError('forbidden', 'Your account is locked. Contact your administrator.');
+      await this.auditRepository.append({
+        id: crypto.randomUUID(),
+        actorId: user.id,
+        branchId: null,
+        action: 'identity.login_failed',
+        entityType: 'User',
+        entityId: user.id,
+        occurredAt: new Date(),
+        details: { email: user.email, reason: 'status_locked' },
+      });
+      throw new DomainError('locked_user_cannot_login', 'Your account is locked. Contact your administrator.');
     }
 
     const passwordMatch = await bcrypt.compare(validated.password, user.passwordHash);
-    if (!passwordMatch) throw invalidError;
+    if (!passwordMatch) {
+      await this.auditRepository.append({
+        id: crypto.randomUUID(),
+        actorId: user.id,
+        branchId: null,
+        action: 'identity.login_failed',
+        entityType: 'User',
+        entityId: user.id,
+        occurredAt: new Date(),
+        details: { email: user.email, reason: 'invalid_password' },
+      });
+      throw invalidError;
+    }
 
     await this.userRepository.recordLastLogin(user.id);
+
+    await this.auditRepository.append({
+      id: crypto.randomUUID(),
+      actorId: user.id,
+      branchId: null,
+      action: 'identity.login_succeeded',
+      entityType: 'User',
+      entityId: user.id,
+      occurredAt: new Date(),
+      details: { email: user.email },
+    });
+
+    // Default activeBranchId if user has exactly one branch scope
+    let activeBranchId: string | null = null;
+    const branchScopes = user.dataScopes.filter((s) => s.scopeType === 'Branch' && s.branchId);
+    if (branchScopes.length === 1 && branchScopes[0].branchId) {
+      activeBranchId = branchScopes[0].branchId;
+    }
 
     const session: Session = {
       userId: user.id,
       displayName: user.fullName,
       roles: user.roles,
       permissions: user.permissions,
-      activeBranchId: null,
+      dataScopes: user.dataScopes,
+      activeBranchId,
+      expiresAt: Date.now() + 8 * 60 * 60 * 1000,
     };
 
     const sessionToken = await encodeSession(session);

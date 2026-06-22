@@ -9,6 +9,8 @@ export type RoleRecord = {
   roleName: string;
   description: string | null;
   status: RoleStatus;
+  effectiveStartDate?: Date;
+  effectiveEndDate?: Date | null;
   permissions: PermissionRecord[];
 };
 
@@ -19,6 +21,7 @@ export type PermissionRecord = {
   actionCode: string;
   permissionCode: string;
   description: string | null;
+  status: string;
 };
 
 export const createRoleCommandSchema = z.object({
@@ -26,12 +29,16 @@ export const createRoleCommandSchema = z.object({
   roleName: z.string().trim().min(2).max(150),
   description: z.string().trim().nullable().optional(),
   permissionIds: z.array(z.string().uuid()).default([]),
+  effectiveStartDate: z.coerce.date().optional(),
+  effectiveEndDate: z.coerce.date().nullable().optional(),
 });
 
 export const updateRoleCommandSchema = z.object({
   roleName: z.string().trim().min(2).max(150).optional(),
   description: z.string().trim().nullable().optional(),
   status: z.enum(['Draft', 'Active', 'Inactive', 'Archived']).optional(),
+  effectiveStartDate: z.coerce.date().optional(),
+  effectiveEndDate: z.coerce.date().nullable().optional(),
 });
 
 export type CreateRoleCommand = z.infer<typeof createRoleCommandSchema>;

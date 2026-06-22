@@ -12,6 +12,7 @@ import {
   type UserListFilters,
 } from '../domain/user';
 import type { AuditLogRepository } from '@ims/audit';
+import type { RoleRepository } from './role-service';
 
 export interface UserRepository {
   findById(userId: string): Promise<UserProfile | null>;
@@ -34,6 +35,7 @@ export type UserCommandContext = { actorId: Uuid };
 export class UserService {
   constructor(
     private readonly userRepository: UserRepository,
+    private readonly roleRepository: RoleRepository,
     private readonly auditRepository: AuditLogRepository,
   ) {}
 
@@ -66,11 +68,18 @@ export class UserService {
       phone: validated.phone ?? null,
       userType: validated.userType,
       status: 'Active',
+      effectiveStartDate: validated.effectiveStartDate,
+      effectiveEndDate: validated.effectiveEndDate,
     };
 
     const saved = await this.userRepository.create(profile, passwordHash);
 
     for (const roleId of validated.roleIds) {
+      const role = await this.roleRepository.findById(roleId);
+      if (!role) throw new DomainError('not_found', `Role ${roleId} not found.`);
+      if (role.status !== 'Active') {
+        throw new DomainError('precondition_failed', `Cannot assign role: Role ${role.roleCode} is not active.`);
+      }
       await this.userRepository.assignRole(saved.id, roleId, context.actorId);
     }
 
@@ -95,11 +104,19 @@ export class UserService {
 
     const updated = await this.userRepository.update(userId, validated);
 
+    // Map status updates to specific security audit events
+    let auditAction = 'identity.user_updated';
+    if (validated.status && validated.status !== existing.status) {
+      if (validated.status === 'Active') auditAction = 'identity.user_activated';
+      if (validated.status === 'Inactive') auditAction = 'identity.user_deactivated';
+      if (validated.status === 'Locked') auditAction = 'identity.user_locked';
+    }
+
     await this.auditRepository.append({
       id: crypto.randomUUID(),
       actorId: context.actorId,
       branchId: null,
-      action: 'identity.user_updated',
+      action: auditAction,
       entityType: 'User',
       entityId: userId,
       occurredAt: new Date(),
@@ -132,6 +149,13 @@ export class UserService {
   async assignRole(userId: string, roleId: string, context: UserCommandContext): Promise<void> {
     const user = await this.userRepository.findById(userId);
     if (!user) throw new DomainError('not_found', `User ${userId} not found.`);
+
+    const role = await this.roleRepository.findById(roleId);
+    if (!role) throw new DomainError('not_found', `Role ${roleId} not found.`);
+
+    if (role.status !== 'Active') {
+      throw new DomainError('precondition_failed', `Cannot assign role: Role ${role.roleCode} is not active.`);
+    }
 
     await this.userRepository.assignRole(userId, roleId, context.actorId);
 

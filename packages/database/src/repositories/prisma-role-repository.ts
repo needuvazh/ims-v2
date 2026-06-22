@@ -10,6 +10,7 @@ type PermissionRow = {
   actionCode: string;
   permissionCode: string;
   description: string | null;
+  status: string;
 };
 
 type RoleRow = {

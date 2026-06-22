@@ -264,16 +264,31 @@ export default function SignInPage() {
           className="w-full cursor-pointer rounded-xl border-2 border-slate-200 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700 outline-none transition-colors hover:border-slate-300"
           defaultValue=""
           onChange={(event) => {
-            const value = event.target.value;
-            if (!value) return;
+            const selectedEmail = event.target.value;
+            if (!selectedEmail) return;
+            const demoUsers = [
+              { email: 'admin@ims.com', password: 'Password@123' },
+              { email: 'manager.riyadh@ims.com', password: 'Password@123' },
+              { email: 'manager.muscat@ims.com', password: 'Password@123' },
+              { email: 'counselor.riyadh@ims.com', password: 'Password@123' },
+            ];
+            const demoUser = demoUsers.find(u => u.email === selectedEmail);
+            if (!demoUser) return;
             const emailInput = document.querySelector<HTMLInputElement>('[data-testid="sign-in-email"]');
+            const passwordInput = document.querySelector<HTMLInputElement>('[data-testid="sign-in-password"]');
             if (emailInput) {
-              emailInput.value = value;
+              emailInput.value = demoUser.email;
+            }
+            if (passwordInput) {
+              passwordInput.value = demoUser.password;
             }
           }}
         >
           <option value="" disabled>Select a demo role...</option>
-          <option value="admin@ims.com">Admin Portal (admin@ims.com)</option>
+          <option value="admin@ims.com">Super Admin (admin@ims.com)</option>
+          <option value="manager.riyadh@ims.com">Riyadh Branch Manager (manager.riyadh@ims.com)</option>
+          <option value="manager.muscat@ims.com">Muscat Branch Manager (manager.muscat@ims.com)</option>
+          <option value="counselor.riyadh@ims.com">Riyadh Counselor (counselor.riyadh@ims.com)</option>
         </select>
       </div>
     </PortalAuthLayout>

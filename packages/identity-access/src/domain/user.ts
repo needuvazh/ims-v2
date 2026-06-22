@@ -11,22 +11,37 @@ export type UserProfile = {
   phone: string | null;
   userType: string;
   status: UserStatus;
+  effectiveStartDate?: Date;
+  effectiveEndDate?: Date | null;
 };
+
+import type { UserDataScopeDto } from '@ims/shared-auth';
 
 /** Credentials + loaded roles/permissions — NEVER leave the server. */
 export type UserWithCredentials = UserProfile & {
   passwordHash: string;
   roles: string[];        // role codes
   permissions: string[];  // permission codes
+  dataScopes: UserDataScopeDto[];
 };
+
+// Password Complexity: min 8 chars, 1 uppercase, 1 lowercase, 1 digit, 1 special char
+export const passwordSchema = z.string()
+  .min(8, 'Password must be at least 8 characters long')
+  .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+  .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+  .regex(/[0-9]/, 'Password must contain at least one number')
+  .regex(/[^A-Za-z0-9]/, 'Password must contain at least one special character');
 
 export const createUserCommandSchema = z.object({
   fullName: z.string().trim().min(2).max(200),
   email: z.string().trim().email().toLowerCase(),
   phone: z.string().trim().nullable().optional(),
   userType: z.string().min(1).max(50),
-  password: z.string().min(8),
+  password: passwordSchema,
   roleIds: z.array(z.string().uuid()).default([]),
+  effectiveStartDate: z.coerce.date().optional(),
+  effectiveEndDate: z.coerce.date().nullable().optional(),
 });
 
 export const updateUserCommandSchema = z.object({
@@ -34,11 +49,13 @@ export const updateUserCommandSchema = z.object({
   phone: z.string().trim().nullable().optional(),
   userType: z.string().min(1).max(50).optional(),
   status: z.enum(['Draft', 'Active', 'Inactive', 'Locked']).optional(),
+  effectiveStartDate: z.coerce.date().optional(),
+  effectiveEndDate: z.coerce.date().nullable().optional(),
 });
 
 export const changePasswordCommandSchema = z.object({
   userId: z.string().uuid(),
-  newPassword: z.string().min(8),
+  newPassword: passwordSchema,
 });
 
 export const signInCommandSchema = z.object({

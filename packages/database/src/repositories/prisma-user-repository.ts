@@ -16,6 +16,13 @@ type UserRoleRow = {
   };
 };
 
+type UserDataScopeRow = {
+  scopeType: string;
+  branchId: string | null;
+  departmentId: string | null;
+  assignedOnly: boolean;
+};
+
 type UserWithCredentialsRow = {
   id: string;
   fullName: string;
@@ -25,7 +32,10 @@ type UserWithCredentialsRow = {
   status: string;
   passwordHash: string;
   isDeleted: boolean;
+  effectiveStartDate: Date;
+  effectiveEndDate: Date | null;
   roles: UserRoleRow[];
+  dataScopes: UserDataScopeRow[];
 };
 
 type UserProfileRow = {
@@ -36,6 +46,8 @@ type UserProfileRow = {
   userType: string;
   status: string;
   isDeleted: boolean;
+  effectiveStartDate: Date;
+  effectiveEndDate: Date | null;
 };
 
 type UserRoleListRow = {
@@ -51,9 +63,18 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
 
   private toProfile(row: {
     id: string; fullName: string; email: string; phone: string | null;
-    userType: string; status: string;
+    userType: string; status: string; effectiveStartDate: Date; effectiveEndDate: Date | null;
   }): UserProfile {
-    return { ...row, id: row.id as Uuid, status: row.status as UserProfile['status'] };
+    return { 
+      id: row.id as Uuid,
+      fullName: row.fullName,
+      email: row.email,
+      phone: row.phone,
+      userType: row.userType,
+      status: row.status as UserProfile['status'],
+      effectiveStartDate: row.effectiveStartDate,
+      effectiveEndDate: row.effectiveEndDate,
+    };
   }
 
   async findByEmailWithCredentials(email: string): Promise<UserWithCredentials | null> {
@@ -69,6 +90,7 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
             },
           },
         },
+        dataScopes: true,
       },
     })) as UserWithCredentialsRow | null;
 
@@ -78,6 +100,13 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
     const permissions = row.roles.flatMap((userRole: UserRoleRow) =>
       userRole.role.permissions.map((permissionRow: PermissionCodeRow) => permissionRow.permission.permissionCode),
     );
+
+    const dataScopes = (row.dataScopes || []).map((ds) => ({
+      scopeType: ds.scopeType,
+      branchId: ds.branchId,
+      departmentId: ds.departmentId,
+      assignedOnly: ds.assignedOnly,
+    }));
 
     return {
       id: row.id as Uuid,
@@ -89,6 +118,9 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
       passwordHash: row.passwordHash,
       roles: [...new Set(roles)],
       permissions: [...new Set(permissions)],
+      dataScopes,
+      effectiveStartDate: row.effectiveStartDate,
+      effectiveEndDate: row.effectiveEndDate,
     };
   }
 
@@ -109,7 +141,7 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
   }
 
   async create(profile: UserProfile, passwordHash: string): Promise<UserProfile> {
-    const row = await this.prisma.user.create({
+    const row = (await this.prisma.user.create({
       data: {
         id: profile.id,
         fullName: profile.fullName,
@@ -118,19 +150,21 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
         userType: profile.userType,
         status: profile.status,
         passwordHash,
+        effectiveStartDate: profile.effectiveStartDate ?? undefined,
+        effectiveEndDate: profile.effectiveEndDate ?? null,
       },
-    });
+    })) as UserProfileRow;
     return this.toProfile(row);
   }
 
   async update(
     userId: string,
-    updates: Partial<Pick<UserProfile, 'fullName' | 'phone' | 'userType' | 'status'>>,
+    updates: Partial<Pick<UserProfile, 'fullName' | 'phone' | 'userType' | 'status' | 'effectiveStartDate' | 'effectiveEndDate'>>,
   ): Promise<UserProfile> {
-    const row = await this.prisma.user.update({
+    const row = (await this.prisma.user.update({
       where: { id: userId },
       data: { ...updates, updatedAt: new Date() },
-    });
+    })) as UserProfileRow;
     return this.toProfile(row);
   }
 

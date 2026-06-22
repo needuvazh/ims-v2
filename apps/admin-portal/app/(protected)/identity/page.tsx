@@ -24,7 +24,10 @@ import { ManagePermissionsDialog } from './manage-permissions-dialog';
 export const metadata = { title: 'Identity & Access | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
+import { assertPermission } from '../../lib/auth-guard';
+
 export default async function IdentityPage() {
+  await assertPermission('identity.read');
   const { userService, roleService } = await import('../../lib/runtime');
   const [users, roles, permissions] = await Promise.all([
     userService.listUsers(),

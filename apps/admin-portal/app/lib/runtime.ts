@@ -18,6 +18,6 @@ const roleRepository = new PrismaRoleRepository(prisma);
 
 // ─── Application Services ─────────────────────────────────────────────────
 export const organizationService = new OrganizationService(organizationRepository, auditRepository);
-export const authService = new AuthService(userRepository);
-export const userService = new UserService(userRepository, auditRepository);
+export const authService = new AuthService(userRepository, auditRepository);
+export const userService = new UserService(userRepository, roleRepository, auditRepository);
 export const roleService = new RoleService(roleRepository, auditRepository);

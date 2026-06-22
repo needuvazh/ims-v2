@@ -19,7 +19,10 @@ import { CreateBranchForm } from './create-branch-form';
 export const metadata = { title: 'Organization | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
+import { assertPermission } from '../../lib/auth-guard';
+
 export default async function OrganizationPage() {
+  await assertPermission('organization.manage');
   const { organizationService } = await import('../../lib/runtime');
   const [{ items: institutes }, { items: branches }] = await Promise.all([
     organizationService.listInstitutes({ pageSize: 50 }),

@@ -1,17 +1,13 @@
 'use server';
 
-import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
-import { decodeSession, sessionCookieName } from '@ims/shared-auth';
 import { createUuid, type Uuid, DomainError } from '@ims/shared-kernel';
 import { createStructuredLogger, getCurrentRequestContext, withServerActionObservability } from '../../lib/observability';
-
-const ZERO_UUID = '00000000-0000-0000-0000-000000000000';
+import { assertPermission, assertBranchScope, getSession } from '../../lib/auth-guard';
 
 async function getActorId(): Promise<Uuid> {
-  const cookieStore = await cookies();
-  const session = await decodeSession(cookieStore.get(sessionCookieName)?.value);
-  return createUuid(session?.userId ?? ZERO_UUID);
+  const session = await getSession();
+  return createUuid(session.userId);
 }
 
 export type ActionResult<T = void> = {
@@ -27,6 +23,7 @@ export async function createInstituteAction(_prev: ActionResult, formData: FormD
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
     try {
+      await assertPermission('organization.manage');
       const actorId = await getActorId();
       const { organizationService } = await import('../../lib/runtime');
       await organizationService.createInstitute({
@@ -62,6 +59,7 @@ export async function updateInstituteAction(
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
     try {
+      await assertPermission('organization.manage');
       const actorId = await getActorId();
       const { organizationService } = await import('../../lib/runtime');
       await organizationService.updateInstitute(instituteId, {
@@ -92,6 +90,7 @@ export async function createBranchAction(_prev: ActionResult, formData: FormData
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
     try {
+      await assertPermission('organization.manage');
       const actorId = await getActorId();
       const { organizationService } = await import('../../lib/runtime');
       await organizationService.createBranch({
@@ -124,10 +123,13 @@ export async function createDepartmentAction(_prev: ActionResult, formData: Form
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
     try {
+      await assertPermission('organization.manage');
+      const branchId = String(formData.get('branchId') ?? '');
+      await assertBranchScope(branchId);
       const actorId = await getActorId();
       const { organizationService } = await import('../../lib/runtime');
       await organizationService.createDepartment({
-        branchId: String(formData.get('branchId') ?? ''),
+        branchId,
         departmentCode: String(formData.get('departmentCode') ?? ''),
         departmentName: String(formData.get('departmentName') ?? ''),
         description: formData.get('description') as string | null,

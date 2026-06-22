@@ -10,7 +10,13 @@ export default defineConfig({
       '**/src/**/*.test.tsx',
       '**/app/**/*.test.ts',
       '**/app/**/*.test.tsx',
-      'tests/**/*.spec.ts',
+    ],
+    exclude: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/.kanbots/**',
+      '**/cypress/**',
+      '**/.{idea,git,cache,output,temp}/**',
     ],
   },
 });
