@@ -1,6 +1,6 @@
 # IMS Project Status
 
-Last updated: 2026-06-20
+Last updated: 2026-06-22
 
 ## Current Completion
 
@@ -10,13 +10,15 @@ Basis:
 
 - The FRD scope currently contains **226 functional requirements** across 19 module files.
 - About **9-10 requirement-equivalents** have meaningful implementation.
-- This estimate counts implemented business behavior, not only scaffolding, UI placeholders, or documentation.
+- This estimate counts implemented business behavior, not scaffolding, UI placeholders, or documentation.
+- The recent observability work improves production readiness, but it is NFR/platform work and does not materially change FRD completion.
 
 Current implementation state:
 
 - Foundation monorepo is in place with pnpm, Turborepo, TypeScript, Next.js, Prisma, PostgreSQL configuration, Tailwind, Vitest, and Playwright.
+- Shared observability package, app-root instrumentation, request-correlation propagation, structured logging, and health/sign-out response headers are implemented and archived.
 - Admin portal has sign-in, dashboard, identity management, organization management, UI preview, and basic protected layout surfaces.
-- Domain/application packages exist for shared kernel, shared auth, shared UI, portal UI, audit, identity access, organization, and database.
+- Domain/application packages exist for shared kernel, shared auth, shared UI, portal UI, audit, identity access, organization, database, and observability.
 - Prisma schema currently covers identity, organization, audit log, and outbox foundation tables.
 - Student portal, trainer portal, and public certificate verification routes exist as shells only. Their real workflows are pending.
 
@@ -24,7 +26,7 @@ Current implementation state:
 
 | Area                       | Current status     | Completion estimate | What is implemented                                                                                                                                      | What is still pending                                                                                                                                                                                         |
 | -------------------------- | ------------------ | ------------------: | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Platform foundation        | Partially complete |                 55% | Monorepo, shared packages, Prisma package, Next.js app, Tailwind, tests setup                                                                            | CI hardening, migration checks, production env strategy, worker package, object storage adapter, observability                                                                                                |
+| Platform foundation        | Partially complete |                 60% | Monorepo, shared packages, Prisma package, Next.js app, Tailwind, tests setup, observability package, app instrumentation, correlation headers, route logging | CI hardening, migration checks, production env strategy, worker package, object storage adapter                                                                                                                |
 | Identity & Access          | Partially complete |                 30% | User service, role service, auth service, bcrypt password hashing, signed session cookie, permissions seed, user/role UI, role and permission assignment | Full dynamic RBAC policy model, branch scope enforcement on every protected action, password policy, login history, failed login audit, session revocation, approval permissions, route/API contract coverage |
 | Organization               | Partially complete |                 35% | Institute, branch, and department create/list/update application services, Prisma tables, admin UI, audit append calls                                   | Classroom management service/UI, effective dating behavior, branch ownership policy, organization hierarchy view, branch-scoped authorization, full API contracts                                             |
 | Audit & Compliance         | Minimal foundation |                 10% | AuditLog model, audit repository, append calls from identity and organization services                                                                   | ApprovalLog, immutable audit viewer, search/filter/export, retention policy, severity/category model, audit coverage for sensitive workflows                                                                  |
@@ -46,15 +48,15 @@ Current implementation state:
 
 Active changes:
 
-| Change                | Status                | Completed                                                                                                                                                          | Pending                                                   |
-| --------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------- |
-| `build-observability` | Proposal drafted only | Proposal describes shared observability, request correlation, trace headers, structured logs, OpenTelemetry bootstrap, and future reuse by student/trainer portals | Design, specs, tasks, implementation, tests, verification |
+| Change | Status |
+| ------ | ------ |
+| None   | No active OpenSpec changes are currently open. |
 
 Archived changes:
 
-| Archive                                     | Status                                                    |
-| ------------------------------------------- | --------------------------------------------------------- |
-| None found under `openspec/changes/archive` | No archived OpenSpec implementation has been recorded yet |
+| Archive | Status |
+| ------- | ------ |
+| `build-observability` at `openspec/changes/archive/2026-06-22-build-observability` | Archived and synced to main specs |
 
 Standing rule:
 
@@ -98,16 +100,15 @@ Critical pending items blocking meaningful percentage growth:
 
 The fastest responsible way to increase the completion percentage is to finish foundational cross-cutting work first, then implement the Enrollment-centered workflow chain.
 
-| Priority | OpenSpec change to create or continue               |                Expected percentage movement | Why this moves the project forward                                                                                                       |
-| -------- | --------------------------------------------------- | ------------------------------------------: | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| 1        | `complete-rbac-branch-authorization`                |                                  4% -> 6-7% | Unlocks protected workflows safely by enforcing permissions and branch scope server-side.                                                |
-| 2        | `complete-organization-foundation`                  |                                6-7% -> 8-9% | Finishes classroom, hierarchy, effective dating, and branch ownership needed by scheduling, enrollment, and reporting.                   |
-| 3        | `build-enrollment-aggregate-foundation`             |                              8-9% -> 11-13% | Adds the central lifecycle aggregate required by admission, finance, attendance, completion, certificates, corporate, and walk-in flows. |
-| 4        | `implement-lead-admission-handoff`                  |                            11-13% -> 14-16% | Starts the lead-to-student business path and creates the upstream source for admissions.                                                 |
-| 5        | `implement-course-batch-foundation`                 |                            14-16% -> 18-21% | Adds courses, pricing, completion rules, batches, waiting list, and trainer assignment references needed by enrollment.                  |
-| 6        | `implement-manual-finance-workflow`                 |                            18-21% -> 23-27% | Adds one of the highest-value IMS workflows: fee account, manual payment, receipt, due calculation, discount/refund controls, and audit. |
+| Priority | OpenSpec change to create or continue    |                Expected percentage movement | Why this moves the project forward                                                                                                       |
+| -------- | ---------------------------------------- | ------------------------------------------: | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| 1        | `complete-rbac-branch-authorization`     |                                  4% -> 6-7% | Unlocks protected workflows safely by enforcing permissions and branch scope server-side.                                                |
+| 2        | `complete-organization-foundation`       |                                6-7% -> 8-9% | Finishes classroom, hierarchy, effective dating, and branch ownership needed by scheduling, enrollment, and reporting.                   |
+| 3        | `build-enrollment-aggregate-foundation`  |                              8-9% -> 11-13% | Adds the central lifecycle aggregate required by admission, finance, attendance, completion, certificates, corporate, and walk-in flows. |
+| 4        | `implement-lead-admission-handoff`       |                            11-13% -> 14-16% | Starts the lead-to-student business path and creates the upstream source for admissions.                                                 |
+| 5        | `implement-course-batch-foundation`      |                            14-16% -> 18-21% | Adds courses, pricing, completion rules, batches, waiting list, and trainer assignment references needed by enrollment.                  |
+| 6        | `implement-manual-finance-workflow`      |                            18-21% -> 23-27% | Adds one of the highest-value IMS workflows: fee account, manual payment, receipt, due calculation, discount/refund controls, and audit. |
 | 7        | `implement-attendance-completion-certificate-chain` |                            23-27% -> 30-36% | Connects attendance to completion approval, eligibility, certificate generation, and public verification.                                |
-| 8        | Continue `build-observability`                      | Adds NFR readiness, not much FRD percentage | Improves production readiness and supportability but does not directly complete many FRD business workflows.                             |
 
 ## Recommended Immediate OpenSpec Work
 
@@ -161,6 +162,7 @@ Recommended checks before marking future implementation changes complete:
 - UI shells and preview components do not count as completed business workflows.
 - Student and trainer portals are future workflow surfaces, not completed modules.
 - Corporate Training, Communication, Reporting, and advanced integrations can remain behind core Enrollment-centered workflows unless the user reprioritizes them.
+- Observability infrastructure is treated as platform/NFR work and is tracked separately from FRD completion.
 
 ## Open Questions
 
