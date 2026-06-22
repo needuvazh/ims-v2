@@ -65,10 +65,21 @@ export const signInCommandSchema = z.object({
   password: z.string().min(1),
 });
 
+export const requestResetCommandSchema = z.object({
+  email: z.string().trim().email().toLowerCase(),
+});
+
+export const resetPasswordCommandSchema = z.object({
+  token: z.string().min(1),
+  password: passwordSchema,
+});
+
 export type CreateUserCommand = z.infer<typeof createUserCommandSchema>;
 export type UpdateUserCommand = z.infer<typeof updateUserCommandSchema>;
 export type ChangePasswordCommand = z.infer<typeof changePasswordCommandSchema>;
 export type SignInCommand = z.infer<typeof signInCommandSchema>;
+export type RequestResetCommand = z.infer<typeof requestResetCommandSchema>;
+export type ResetPasswordCommand = z.infer<typeof resetPasswordCommandSchema>;
 
 export type UserListFilters = {
   status?: UserStatus;

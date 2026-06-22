@@ -52,6 +52,7 @@ model User {
   managedBranches     Branch[]         @relation("BranchManager")
   sessions            UserSession[]
   loginRecords        LoginHistory[]
+  resetTokens         PasswordResetToken[]
 
   createdAt           DateTime         @default(now()) @db.Timestamptz(6)
   createdBy           String?          @db.Uuid
@@ -191,6 +192,20 @@ model LoginHistory {
   @@index([userId])
   @@index([occurredAt])
   @@map("login_history")
+}
+
+model PasswordResetToken {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  tokenHash String   @unique @db.VarChar(255)
+  expiresAt DateTime @db.Timestamptz(6)
+  usedAt    DateTime? @db.Timestamptz(6)
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@map("password_reset_tokens")
 }
 
 model Institute {

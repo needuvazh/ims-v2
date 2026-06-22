@@ -259,4 +259,17 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
       },
     });
   }
+
+  async updatePasswordAndUnlock(userId: string, passwordHash: string): Promise<void> {
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        passwordHash,
+        failedLoginAttempts: 0,
+        lockoutUntil: null,
+        status: 'Active',
+        updatedAt: new Date(),
+      },
+    });
+  }
 }

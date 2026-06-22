@@ -198,7 +198,7 @@ export default function SignInPage() {
         <div className="space-y-1.5">
           <div className="ml-1 flex items-center justify-between">
             <label htmlFor="si-password" className="text-xs font-bold text-slate-700">Password</label>
-            <a href="#" className="text-xs font-bold text-violet-600 transition-colors hover:text-fuchsia-600">Forgot?</a>
+            <Link href="/forgot-password" className="text-xs font-bold text-violet-600 transition-colors hover:text-fuchsia-600">Forgot?</Link>
           </div>
           <div className="relative group">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">

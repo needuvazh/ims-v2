@@ -43,4 +43,13 @@ export class PrismaAuthSessionRepository implements AuthSessionRepository {
       },
     });
   }
+
+  async revokeAllSessionsForUser(userId: string): Promise<void> {
+    await this.prisma.userSession.updateMany({
+      where: { userId, status: 'Active' },
+      data: {
+        status: 'Revoked',
+      },
+    });
+  }
 }

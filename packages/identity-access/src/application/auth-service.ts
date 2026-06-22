@@ -1,9 +1,16 @@
 import bcrypt from 'bcryptjs';
 import nodeCrypto from 'crypto';
 import { encodeSession, type Session } from '@ims/shared-auth';
-import { DomainError } from '@ims/shared-kernel';
+import { DomainError, type Uuid } from '@ims/shared-kernel';
 import type { UserWithCredentials } from '../domain/user';
-import { signInCommandSchema, type SignInCommand } from '../domain/user';
+import {
+  signInCommandSchema,
+  requestResetCommandSchema,
+  resetPasswordCommandSchema,
+  type SignInCommand,
+  type RequestResetCommand,
+  type ResetPasswordCommand,
+} from '../domain/user';
 import type { AuditLogRepository } from '@ims/audit';
 
 export interface AuthUserRepository {
@@ -11,6 +18,7 @@ export interface AuthUserRepository {
   recordLastLogin(userId: string): Promise<void>;
   incrementFailedAttempts(userId: string, lockoutMinutes?: number): Promise<void>;
   resetFailedAttempts(userId: string): Promise<void>;
+  updatePasswordAndUnlock(userId: string, passwordHash: string): Promise<void>;
 }
 
 export interface AuthSessionRepository {
@@ -23,6 +31,21 @@ export interface AuthSessionRepository {
   }): Promise<void>;
   getSessionByHash(tokenHash: string): Promise<{ status: string; expiresAt: Date } | null>;
   revokeSessionByHash(tokenHash: string): Promise<void>;
+  revokeAllSessionsForUser(userId: string): Promise<void>;
+}
+
+export interface AuthResetTokenRepository {
+  createToken(data: {
+    userId: string;
+    tokenHash: string;
+    expiresAt: Date;
+  }): Promise<void>;
+  findActiveTokenByHash(tokenHash: string): Promise<{
+    userId: string;
+    expiresAt: Date;
+    usedAt: Date | null;
+  } | null>;
+  markTokenAsUsed(tokenHash: string): Promise<void>;
 }
 
 export type SignInResult = {
@@ -41,8 +64,76 @@ export class AuthService {
   constructor(
     private readonly userRepository: AuthUserRepository,
     private readonly sessionRepository: AuthSessionRepository,
+    private readonly resetTokenRepository: AuthResetTokenRepository,
     private readonly auditRepository: AuditLogRepository,
   ) {}
+
+  async requestPasswordReset(command: RequestResetCommand): Promise<void> {
+    const validated = requestResetCommandSchema.parse(command);
+    const user = await this.userRepository.findByEmailWithCredentials(validated.email);
+
+    // Secure design against enumeration - return generic response and don't create token for inactive or missing accounts
+    if (!user || user.status === 'Inactive' || user.status === 'Draft') {
+      console.log(`[Password Reset Info] Requested for ${validated.email} but user is not active or does not exist.`);
+      return;
+    }
+
+    const rawToken = nodeCrypto.randomBytes(32).toString('hex');
+    const tokenHash = nodeCrypto.createHash('sha256').update(rawToken).digest('hex');
+    const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+
+    await this.resetTokenRepository.createToken({
+      userId: user.id,
+      tokenHash,
+      expiresAt,
+    });
+
+    await this.auditRepository.append({
+      id: crypto.randomUUID() as Uuid,
+      actorId: user.id,
+      branchId: null,
+      action: 'identity.password_reset_requested',
+      entityType: 'User',
+      entityId: user.id,
+      occurredAt: new Date(),
+      details: { email: user.email },
+    });
+
+    // Output reset link to console/stdout logs (Phase 1 context)
+    console.log(`\n======================================================`);
+    console.log(`[PASSWORD RESET LINK GENERATED]`);
+    console.log(`User ID: ${user.id}`);
+    console.log(`Email:   ${user.email}`);
+    console.log(`Link:    http://localhost:3000/reset-password?token=${rawToken}`);
+    console.log(`======================================================\n`);
+  }
+
+  async resetPassword(command: ResetPasswordCommand): Promise<void> {
+    const validated = resetPasswordCommandSchema.parse(command);
+    const tokenHash = nodeCrypto.createHash('sha256').update(validated.token).digest('hex');
+
+    const tokenRecord = await this.resetTokenRepository.findActiveTokenByHash(tokenHash);
+
+    if (!tokenRecord || tokenRecord.usedAt !== null || tokenRecord.expiresAt < new Date()) {
+      throw new DomainError('invalid_reset_token', 'Invalid or expired password reset token.');
+    }
+
+    const passwordHash = await AuthService.hashPassword(validated.password);
+    await this.userRepository.updatePasswordAndUnlock(tokenRecord.userId, passwordHash);
+    await this.sessionRepository.revokeAllSessionsForUser(tokenRecord.userId);
+    await this.resetTokenRepository.markTokenAsUsed(tokenHash);
+
+    await this.auditRepository.append({
+      id: crypto.randomUUID() as Uuid,
+      actorId: tokenRecord.userId as Uuid,
+      branchId: null,
+      action: 'identity.password_reset_completed',
+      entityType: 'User',
+      entityId: tokenRecord.userId,
+      occurredAt: new Date(),
+      details: {},
+    });
+  }
 
   async signIn(
     command: SignInCommand,

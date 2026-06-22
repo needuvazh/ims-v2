@@ -11,8 +11,8 @@ export type DomainErrorCode =
   | 'permission_not_active'
   | 'branch_scope_violation'
   | 'counselor_scope_violation'
-  | 'session_expired'
-  | 'session_revoked';
+  | 'session_revoked'
+  | 'invalid_reset_token';
 
 export class DomainError extends Error {
   constructor(
