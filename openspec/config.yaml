@@ -1,20 +1,298 @@
 schema: spec-driven
 
-# Project context (optional)
-# This is shown to AI when creating artifacts.
-# Add your tech stack, conventions, style guides, domain knowledge, etc.
-# Example:
-#   context: |
-#     Tech stack: TypeScript, React, Node.js
-#     We use conventional commits
-#     Domain: e-commerce platform
+context: |
+  Role: Act as a senior OpenSpec engineer for the Institute Management System
+  (IMS). Own the clarity, traceability, implementation readiness, verification,
+  and archive quality of every OpenSpec change.
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+  IMS is a single-client training institute platform implemented as a TypeScript
+  modular monolith in a pnpm + Turborepo monorepo. Use Next.js App Router for
+  the admin portal, future student portal, future trainer portal, and public
+  certificate verification portal. Keep route handlers and server actions thin;
+  business behavior belongs in domain-oriented packages and application
+  services.
+
+  Required stack and conventions:
+    - TypeScript strict mode, React, Next.js, Tailwind CSS, Zod, Prisma,
+      PostgreSQL, Vitest, Playwright, pnpm, and Turborepo.
+    - Domain packages expose small public APIs. Do not import another bounded
+      context's internal files.
+    - Repository interfaces belong near the owning domain/application package;
+      Prisma implementations belong in infrastructure/database adapters.
+    - API boundaries validate with Zod, authenticate, authorize server-side,
+      call one application service, return stable DTOs, and map domain errors
+      to documented HTTP responses.
+    - Do not leak Prisma models into API contracts or domain models.
+
+  Source precedence:
+    - AGENTS.md and docs/agent-instructions/IMS-Codex-Instruction-Package.md are
+      the working rules for agents.
+    - OpenSpec specs under openspec/specs/ are canonical once created.
+    - FRD, API specification, database, NFR, DDD, ARD, and technology-stack docs
+      are source requirements for new or changed capabilities.
+    - docs/project-status.md is the current implementation snapshot, not the
+      source of business truth.
+    - docs/architecture/stories/Development Implementation Plan.md is a delivery
+      planning input only. It must not override AGENTS.md, ARD, NFR, the
+      technology-stack recommendation, or this config. In particular, references
+      to Redis, Keycloak, external brokers, or other deferred infrastructure are
+      not approval to introduce them.
+    - When documents conflict, name the conflict in the proposal or design and
+      select the least risky option that preserves Enrollment ownership, dynamic
+      RBAC, branch scope, auditability, and the modular monolith.
+
+  IMS bounded-context ownership:
+    - Identity & Access owns User, Role, Permission, UserRole, RolePermission,
+      AccessPolicy, Session, password policy, login audit, and secure access
+      behavior.
+    - Organization owns Institute, Branch, Department, and Classroom.
+    - Lead & Inquiry owns Inquiry, Lead, LeadSource, LeadStage, FollowUp, and
+      Campaign. Lead conversion hands data to Admission & Enrollment; it does
+      not create Admission or Enrollment records directly.
+    - Admission & Enrollment owns Student, Admission, Enrollment,
+      StudentIdentity, StudentIDCard, and the Enrollment lifecycle.
+    - Enrollment is the central lifecycle aggregate for regular, corporate, and
+      walk-in journeys. Do not create separate lifecycle models for walk-in or
+      corporate flows when Enrollment applies.
+    - Course & Batch owns Course, CoursePricing, CourseCompletionRule, Batch,
+      BatchTrainer, and WaitingList.
+    - Walk-In Enrollment & Completion Flow is an application orchestration over
+      Enrollment, Course rules, Finance, Completion, and Certificate. It must
+      not own a separate learner lifecycle or duplicate core state.
+    - Scheduling owns ScheduleSession, timetable rules, trainer conflict rules,
+      classroom conflict rules, and batch overlap rules.
+    - Attendance owns AttendanceRecord, AttendanceCorrection, AttendanceLock,
+      and attendance calculations.
+    - Finance owns FeePlan, InstallmentPlan, EnrollmentFeeAccount,
+      FeeAccountInstallment, Payment, Receipt, Discount, Refund, due tracking,
+      manual payment audit, and finance approval behavior.
+    - Trainer Management owns Trainer, TrainerQualification, TrainerDocument,
+      TrainerAvailability, TrainerAssignment, and TrainerPayment.
+    - Corporate Training owns CorporateAccount, CorporateContactPerson,
+      CorporateContract, CorporateProgram, and CorporateParticipant.
+      Corporate learner execution still uses Enrollment when lifecycle tracking
+      is required.
+    - Completion owns Exam, Result, CourseCompletion, CompletionEvaluation,
+      CompletionApproval, and completion approval behavior.
+    - Certificates owns CertificateTemplate, CertificateTemplateVersion,
+      Certificate, CertificateVerificationLog, CertificateReissueRequest,
+      CertificateRevocationLog, and certificate number policy.
+    - Documents owns DocumentType, Document, DocumentVersion,
+      DocumentVerification, document status, and verification workflow.
+    - Communication owns CommunicationTemplate, CommunicationLog, and
+      SystemNotification. External delivery providers stay behind integration
+      adapters.
+    - Reporting owns read models, ReportDefinition, DashboardWidget, and
+      MetricSnapshot.
+    - Audit owns AuditLog and ApprovalLog.
+    - Integrations owns anti-corruption adapters for storage, email, SMS,
+      WhatsApp, payment gateways, future AI providers, and other vendors.
+      Vendor payloads must not enter domain models directly.
+
+  Phase guidance:
+    - Phase 1 focuses on Identity & Access, Organization, Lead & Inquiry,
+      Admission & Enrollment, Student, Course & Batch, Walk-In orchestration,
+      Scheduling, Attendance, Finance, Trainer Management, Completion,
+      Certificate, Document, and Audit.
+    - Corporate Training, Communication, Reporting dashboards, online payment
+      automation, advanced integrations, SaaS tenancy, CMS, mobile apps, and AI
+      are deferred unless explicitly reprioritized.
+    - If a lower-priority or deferred capability is proposed, the proposal must
+      state why it should be pulled forward and what Phase 1 dependency it
+      unlocks.
+
+  Critical rules:
+    - Never bypass Enrollment application services to mutate enrollment
+      lifecycle state.
+    - Never hardcode roles or permissions. Dynamic RBAC and branch scoping are
+      mandatory for protected workflows.
+    - UI hiding is not authorization.
+    - Sensitive Finance, Attendance, Completion, Certificate, Document
+      Verification, RBAC, and Audit changes require audit logs and targeted
+      tests.
+    - Use in-process domain events and a transactional outbox for Phase 1 side
+      effects. Do not add brokers, Redis queues, CQRS, event sourcing,
+      microservices, or a separate backend framework without documented
+      justification and an ADR-level decision.
+    - Keep shared-kernel small: stable IDs, Money, DateRange,
+      EffectiveDateRange, status primitives, audit metadata, branch scoping
+      primitives, and other stable cross-context primitives only.
+
+  Portal roadmap:
+    - Admin portal is the first operational surface.
+    - Student portal is a future user-facing surface for profile, enrollment,
+      fees, attendance, completion, certificates, and document workflows.
+    - Trainer portal is a future user-facing surface for schedule, attendance,
+      assigned batches, completion recommendations, trainer documents, and
+      trainer payment visibility.
+    - Public certificate verification is a public portal and must be highly
+      available, minimal, secure, and not expose private student data.
+
+  Documentation sources to consult before OpenSpec work:
+    - AGENTS.md
+    - docs/agent-instructions/IMS-Codex-Instruction-Package.md
+    - openspec/specs/
+    - docs/architecture/frd/
+    - docs/architecture/api-specification/
+    - docs/architecture/database/
+    - docs/architecture/nfr/
+    - docs/architecture/ddd/
+    - docs/architecture/ard/
+    - docs/architecture/brd/
+    - docs/ims-technology-stack-recommendation.md
+    - docs/project-status.md
+    - Existing openspec/changes and openspec/changes/archive entries.
+
+rules:
+  lifecycle:
+    - >-
+      Every non-trivial implementation change must follow the artifact sequence:
+      proposal.md, design.md, tasks.md, spec delta files, implementation,
+      verification note, archive.
+    - >-
+      Do not implement a change until proposal, design, tasks, and relevant spec
+      deltas exist, unless the work is a narrow documentation/config correction
+      with no product behavior change.
+    - >-
+      If openspec/specs/ has no baseline spec for an affected capability, the
+      change must either create that baseline spec first or explicitly mark the
+      capability as new.
+    - >-
+      Keep one active change focused on one coherent business or platform
+      capability. Split changes when different bounded contexts own unrelated
+      behavior.
+
+  traceability:
+    - >-
+      Every proposal and design must cite the relevant FRD module file, FRD
+      requirement IDs or "The system shall" bullets, API spec file, database
+      section, NFR IDs, and existing OpenSpec spec files where applicable.
+    - >-
+      When a change touches duplicate or overlapping FRD material, identify the
+      canonical owner. Module 1 and Module 17 both map to Identity & Access;
+      Module 3 and Module 19 both map to Lead & Inquiry. Avoid double-counting
+      completion.
+    - >-
+      State phase impact as Phase 1, Phase 2, future/deferred, or cross-phase.
+      Deferred scope needs explicit justification before implementation.
+    - >-
+      State whether the change affects Enrollment, Finance, Attendance,
+      Completion, Certificate, RBAC, Document Verification, Audit, public
+      verification, or external integrations.
+    - >-
+      For all API-facing changes, include endpoint route, request DTO, response
+      DTO, Zod schema, required permission, branch-scope behavior, validation
+      failures, domain errors, audit behavior, and event/outbox behavior.
+    - >-
+      For persistence changes, state table ownership, migration path, rollback
+      or mitigation plan, indexes, constraints, soft-delete/effective-dating
+      behavior, and audit fields.
+
+  proposal:
+    - State the owning bounded context and affected upstream/downstream contexts.
+    - >-
+      Include business value, non-goals, phase impact, data ownership,
+      authorization, branch scope, audit impact, event/outbox impact, NFR impact,
+      and test impact.
+    - >-
+      Mention admin, student, trainer, and public verification portal impact when
+      a workflow can surface in more than one portal.
+    - >-
+      Name source-document conflicts and the selected resolution when docs
+      disagree.
+    - >-
+      Do not propose microservices, CQRS, event sourcing, Redis, external
+      brokers, online payment automation, SaaS tenancy, CMS, mobile apps, or AI
+      features unless the change explicitly requires and justifies them.
+
+  design:
+    - >-
+      Keep domain logic in aggregate methods, domain services, or application
+      services; delivery adapters must stay thin.
+    - >-
+      Define command/query DTOs, Zod validation, repository interfaces,
+      application-service transaction boundaries, domain errors, permissions,
+      branch-scoping rules, audit events, and domain/outbox events where
+      relevant.
+    - Preserve bounded-context ownership and avoid cross-context write-path joins.
+    - >-
+      Define how cross-context reads are performed: public query interface, read
+      model, snapshot, or reporting projection. Do not use write-path joins to
+      bypass ownership.
+    - >-
+      Describe migrations and rollback or mitigation notes for persistence
+      changes.
+    - >-
+      Include NFR handling for security, performance, reliability, auditability,
+      accessibility, observability, backup/recovery, localization, and
+      responsive behavior when relevant.
+    - >-
+      Include an explicit anti-corruption boundary for every vendor or external
+      service payload.
+
+  tasks:
+    - >-
+      Break work by bounded context and layer: domain, application, persistence,
+      delivery, UI, tests, docs, observability, and rollout.
+    - >-
+      Include targeted tests for every changed invariant, status transition,
+      permission check, branch scope, audit requirement, event/outbox behavior,
+      and API contract.
+    - >-
+      Include UI tests for important forms, empty states, loading states,
+      validation failures, permission-based visibility, and successful
+      submissions when UI changes.
+    - >-
+      Include verification commands for typecheck, lint, unit tests, integration
+      tests where available, Playwright where relevant, Prisma validation,
+      migration checks, and affected builds.
+    - >-
+      Include docs/project-status.md update work when archiving or when the
+      implementation materially changes FRD completion.
+
+  specs:
+    - Use stable IMS domain language and event names.
+    - >-
+      Include permissions, branch scope, validation failures, domain errors,
+      audit behavior, lifecycle events, outbox behavior, and NFR expectations in
+      requirement deltas.
+    - >-
+      Requirements must be testable. Avoid broad intent statements without
+      observable behavior or acceptance criteria.
+    - >-
+      Use MUST/SHALL language for requirements and SHOULD/MAY only for
+      intentionally optional behavior.
+
+  verification:
+    - >-
+      Before claiming completion, compare implementation against proposal,
+      design, tasks, spec deltas, FRD/API/database/NFR references, and
+      docs/project-status.md.
+    - >-
+      Report commands actually run, commands skipped, failures, residual risk,
+      and any manual verification performed.
+    - >-
+      Verification must check that route handlers/server actions are thin,
+      application services enforce authorization and branch scope, domain logic
+      is not in UI or delivery adapters, and Prisma models are not leaked into
+      API/domain contracts.
+
+  archive:
+    - >-
+      Before archiving, inspect the change proposal, design, tasks, specs,
+      implementation status, verification evidence, and any source-document
+      conflicts.
+    - >-
+      Archive only after implementation is complete or explicitly mark the
+      archive as abandoned/superseded with rationale.
+    - >-
+      After every successful OpenSpec archive operation, create or update
+      docs/project-status.md in the same turn.
+    - >-
+      The status update must summarize what the archived proposal completed, the
+      FRD-based completion percentage movement, pending scope, next action
+      items, assumptions, open questions, and verification commands that were
+      not run.
+    - >-
+      If docs/project-status.md already exists, preserve prior useful history and
+      update the current snapshot instead of deleting project context.

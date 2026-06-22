@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
     '@ims/portal-ui',
     '@ims/audit',
     '@ims/identity-access',
+    '@ims/observability',
     '@ims/organization',
     '@ims/database',
   ],
