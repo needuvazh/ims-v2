@@ -4,14 +4,15 @@ Last updated: 2026-06-22
 
 ## Current Completion
 
-Current FRD-based completion: **about 7%**
+Current FRD-based completion: **about 10%**
 
 Basis:
 
 - The FRD scope currently contains **226 functional requirements** across 19 module files.
-- About **15-16 requirement-equivalents** have meaningful implementation.
+- About **21-22 requirement-equivalents** have meaningful implementation.
 - This estimate counts implemented business behavior, not scaffolding, UI placeholders, or documentation.
 - The recent RBAC and branch authorization work completes the core access control layer and increases FRD completion.
+- The recent IAM database schema refactoring and self-service password reset implementations complete the core security, account management, and session-tracking lifecycle.
 
 Current implementation state:
 
@@ -19,17 +20,17 @@ Current implementation state:
 - Shared observability package, app-root instrumentation, request-correlation propagation, structured logging, and health/sign-out response headers are implemented and archived.
 - Admin portal has sign-in, dashboard, identity management, organization management, UI preview, and basic protected layout surfaces.
 - Domain/application packages exist for shared kernel, shared auth, shared UI, portal UI, audit, identity access, organization, database, and observability.
-- Prisma schema currently covers identity, organization, audit log, and outbox foundation tables.
+- Prisma schema covers identity (including database-backed sessions, password reset tokens, and active dating), organization, audit log, and outbox foundation tables.
 - Student portal, trainer portal, and public certificate verification routes exist as shells only. Their real workflows are pending.
 
 ## Completion by Area
 
 | Area                       | Current status     | Completion estimate | What is implemented                                                                                                                                      | What is still pending                                                                                                                                                                                         |
 | -------------------------- | ------------------ | ------------------: | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Platform foundation        | Partially complete |                 60% | Monorepo, shared packages, Prisma package, Next.js app, Tailwind, tests setup, observability package, app instrumentation, correlation headers, route logging | CI hardening, migration checks, production env strategy, worker package, object storage adapter                                                                                                                |
-| Identity & Access          | Partially complete |                 45% | User service, role service, auth service, bcrypt password hashing, signed session cookie, permissions seed, user/role UI, role and permission assignment, server-side action guards, branch scope loading & layout integration | counselor scope checks, password policy, login history, failed login audit, session revocation, approval permissions, route/API contract coverage |
+| Platform foundation        | Partially complete |                 60% | Monorepo, shared packages, Prisma package, Next.js app, Tailwind, tests setup, observability package, app instrumentation, correlation headers, route logging | CI hardening, migration checks, production env strategy, worker package, object storage adapter                                                                                 |
+| Identity & Access          | Partially complete |                 75% | User service, role service, auth service, bcrypt password hashing, signed session cookie, permissions seed, user/role UI, role and permission assignment, server-side action guards, branch scope loading & layout integration, database-backed session tracking, session revocation on sign-out, failed login lockout and lockout duration, password reset tokens and forgot/reset password UI pages with complexity rules, active dating for users and roles, and expanded seeding for all FRD roles/permissions | counselor scope checks, approval permissions, final mapping of routes/API contracts with permissions |
 | Organization               | Partially complete |                 35% | Institute, branch, and department create/list/update application services, Prisma tables, admin UI, audit append calls                                   | Classroom management service/UI, effective dating behavior, branch ownership policy, organization hierarchy view, branch-scoped authorization, full API contracts                                             |
-| Audit & Compliance         | Minimal foundation |                 10% | AuditLog model, audit repository, append calls from identity and organization services                                                                   | ApprovalLog, immutable audit viewer, search/filter/export, retention policy, severity/category model, audit coverage for sensitive workflows                                                                  |
+| Audit & Compliance         | Minimal foundation |                 15% | AuditLog model, audit repository, append calls from identity and organization services, and audit logging for password reset requests, reset success, and account lockouts | ApprovalLog, immutable audit viewer, search/filter/export, retention policy, severity/category model, audit coverage for sensitive workflows |
 | Shared UI and portal shell | Partially complete |                 25% | Common UI components, admin shell, student/trainer/verify route shells                                                                                   | Real student portal workflows, real trainer portal workflows, certificate verification backend, permission-aware navigation backed by real business data                                                      |
 | Lead & Inquiry / CRM       | Not started        |                  0% | None beyond documentation                                                                                                                                | Inquiry, lead, source/stage, counselor assignment, follow-ups, conversion handoff, reports, audit                                                                                                             |
 | Admission & Enrollment     | Not started        |                  0% | None                                                                                                                                                     | Student admission, central Enrollment aggregate, enrollment lifecycle, walk-in flow, corporate participant link, enrollment events                                                                            |
@@ -55,9 +56,11 @@ Active changes:
 Archived changes:
 
 | Archive | Status |
-| ------- | ------ |
+| ------- | ------- |
 | `build-observability` at `openspec/changes/archive/2026-06-22-build-observability` | Archived and synced to main specs |
 | `rbac-branch-auth-foundation` at `openspec/changes/archive/2026-06-22-rbac-branch-auth-foundation` | Archived and synced to main specs |
+| `iam-database-refactor` at `openspec/changes/archive/2026-06-22-iam-database-refactor` | Archived and synced to main specs |
+| `implement-forgot-password` at `openspec/changes/archive/2026-06-22-implement-forgot-password` | Archived and synced to main specs |
 
 Standing rule:
 
@@ -68,7 +71,7 @@ Standing rule:
 Critical pending items blocking meaningful percentage growth:
 
 1. **RBAC and branch authorization foundation [COMPLETED]**
-   Dynamic RBAC is fully implemented with dynamic server-side action guards, branch-scope session propagation, and layout resolution. Dynamic user data scope assignment interface and counselor lead filters are remaining as future refinements.
+   Dynamic RBAC is fully implemented with dynamic server-side action guards, branch-scope session propagation, and layout resolution. The database schema refactoring and self-service password reset are also fully completed, including database-backed session tracking, lockout policy, active dating, token reset UI, and audit/outbox logging. Dynamic user data scope assignment interface and counselor lead filters are remaining as future refinements.
 
 2. **Organization completion**
    Institute, branch, and department are started. Classroom management, hierarchy view, effective dating, branch ownership, and scoped authorization are pending.
@@ -103,13 +106,13 @@ The fastest responsible way to increase the completion percentage is to finish f
 
 | Priority | OpenSpec change to create or continue    |                Expected percentage movement | Why this moves the project forward                                                                                                       |
 | -------- | ---------------------------------------- | ------------------------------------------: | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| 1        | `complete-rbac-branch-authorization`     |                                  4% -> 6-7% | Unlocks protected workflows safely by enforcing permissions and branch scope server-side.                                                |
-| 2        | `complete-organization-foundation`       |                                6-7% -> 8-9% | Finishes classroom, hierarchy, effective dating, and branch ownership needed by scheduling, enrollment, and reporting.                   |
-| 3        | `build-enrollment-aggregate-foundation`  |                              8-9% -> 11-13% | Adds the central lifecycle aggregate required by admission, finance, attendance, completion, certificates, corporate, and walk-in flows. |
-| 4        | `implement-lead-admission-handoff`       |                            11-13% -> 14-16% | Starts the lead-to-student business path and creates the upstream source for admissions.                                                 |
-| 5        | `implement-course-batch-foundation`      |                            14-16% -> 18-21% | Adds courses, pricing, completion rules, batches, waiting list, and trainer assignment references needed by enrollment.                  |
-| 6        | `implement-manual-finance-workflow`      |                            18-21% -> 23-27% | Adds one of the highest-value IMS workflows: fee account, manual payment, receipt, due calculation, discount/refund controls, and audit. |
-| 7        | `implement-attendance-completion-certificate-chain` |                            23-27% -> 30-36% | Connects attendance to completion approval, eligibility, certificate generation, and public verification.                                |
+| -        | `[COMPLETED] rbac-branch-auth-foundation` |                                          - | Completed baseline authentication, dynamic RBAC, active-dating, lockout policy, database session tracking, and self-service password reset. |
+| 1        | `complete-organization-foundation`       |                             10% -> 11-12% | Finishes classroom, hierarchy, effective dating, and branch ownership needed by scheduling, enrollment, and reporting.                   |
+| 2        | `build-enrollment-aggregate-foundation`  |                            12% -> 14-16% | Adds the central lifecycle aggregate required by admission, finance, attendance, completion, certificates, corporate, and walk-in flows. |
+| 3        | `implement-lead-admission-handoff`       |                            16% -> 18-20% | Starts the lead-to-student business path and creates the upstream source for admissions.                                                 |
+| 4        | `implement-course-batch-foundation`      |                            20% -> 23-26% | Adds courses, pricing, completion rules, batches, waiting list, and trainer assignment references needed by enrollment.                  |
+| 5        | `implement-manual-finance-workflow`      |                            26% -> 31-35% | Adds one of the highest-value IMS workflows: fee account, manual payment, receipt, due calculation, discount/refund controls, and audit. |
+| 6        | `implement-attendance-completion-certificate-chain` |                            35% -> 42-48% | Connects attendance to completion approval, eligibility, certificate generation, and public verification.                                |
 
 ## Recommended Immediate OpenSpec Work
 
@@ -118,10 +121,10 @@ Next three OpenSpec proposals should be:
 1. `complete-organization-foundation`
    Scope: classroom aggregate/service, effective dating, hierarchy query, branch ownership checks, API/server-action contracts, tests.
 
-3. `build-enrollment-aggregate-foundation`
+2. `build-enrollment-aggregate-foundation`
    Scope: Enrollment aggregate, statuses, admission link, course/batch references, branch scope, lifecycle events, repository interface, Prisma schema, tests.
 
-These three changes should move the project from foundation-only into a safer workflow-ready baseline.
+These changes should move the project from foundation-only into a safer workflow-ready baseline.
 
 ## Future Portal Plan
 
