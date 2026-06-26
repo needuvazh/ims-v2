@@ -6,16 +6,23 @@ import type { OrganizationHierarchyNode, RecordStatus } from '@ims/organization'
 import { isGlobalScope, getAuthorizedBranchIds } from '@ims/shared-auth';
 import { createStructuredLogger, getCurrentRequestContext, withServerActionObservability } from '../../lib/observability';
 import { assertPermission, assertAnyPermission, assertBranchScope, getSession } from '../../lib/auth-guard';
+import { buildOrganizationActionFailure, extractFormValues } from './organization-form-errors';
 
 async function getActorId(): Promise<Uuid> {
   const session = await getSession();
   return createUuid(session.userId);
 }
 
+function isDomainError(err: unknown): err is DomainError {
+  return err instanceof DomainError || (err instanceof Error && err.name === 'DomainError');
+}
+
 export type ActionResult<T = void> = {
   success: boolean;
   data?: T;
   error?: string;
+  fieldErrors?: Record<string, string>;
+  values?: Record<string, string>;
 };
 
 // ── Institute ──────────────────────────────────────────────────────────────
@@ -23,6 +30,7 @@ export type ActionResult<T = void> = {
 export async function createInstituteAction(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
   return withServerActionObservability(async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+    const values = extractFormValues(formData);
 
     try {
       await assertPermission('organization.manage');
@@ -43,12 +51,19 @@ export async function createInstituteAction(_prev: ActionResult, formData: FormD
       revalidatePath('/organization');
       return { success: true };
     } catch (err) {
-      if (err instanceof DomainError) {
-        logger.warn('organization.institute.create.failed', { status: 'failed', message: err.message, error: err });
-        return { success: false, error: err.message };
-      }
-      logger.error('organization.institute.create.failed', { status: 'failed', message: 'Failed to create institute.', error: err as Error });
-      return { success: false, error: 'Failed to create institute.' };
+      logger.warn('organization.institute.create.failed', { status: 'failed', message: err instanceof Error ? err.message : 'unknown', error: err instanceof Error ? err : undefined });
+      const failure = buildOrganizationActionFailure(err, 'Failed to create institute.', values, {
+        domain: {
+          institute_code_already_exists: 'instituteCode',
+        },
+        prisma: {
+          instituteCode: 'instituteCode',
+        },
+        prismaMessages: {
+          instituteCode: 'Institute Code already exists. Please use a different Institute Code.',
+        },
+      });
+      return { success: false, ...failure };
     }
   }, { action: 'organization.createInstitute', route: '/organization' });
 }
@@ -60,6 +75,7 @@ export async function updateInstituteAction(
 ): Promise<ActionResult> {
   return withServerActionObservability(async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+    const values = extractFormValues(formData);
 
     try {
       await assertPermission('organization.manage');
@@ -80,12 +96,19 @@ export async function updateInstituteAction(
       revalidatePath('/organization');
       return { success: true };
     } catch (err) {
-      if (err instanceof DomainError) {
-        logger.warn('organization.institute.update.failed', { status: 'failed', message: err.message, error: err });
-        return { success: false, error: err.message };
-      }
-      logger.error('organization.institute.update.failed', { status: 'failed', message: 'Failed to update institute.', error: err as Error });
-      return { success: false, error: 'Failed to update institute.' };
+      logger.warn('organization.institute.update.failed', { status: 'failed', message: err instanceof Error ? err.message : 'unknown', error: err instanceof Error ? err : undefined });
+      const failure = buildOrganizationActionFailure(err, 'Failed to update institute.', values, {
+        domain: {
+          institute_code_already_exists: 'instituteCode',
+        },
+        prisma: {
+          instituteCode: 'instituteCode',
+        },
+        prismaMessages: {
+          instituteCode: 'Institute Code already exists. Please use a different Institute Code.',
+        },
+      });
+      return { success: false, ...failure };
     }
   }, { action: 'organization.updateInstitute', route: '/organization' });
 }
@@ -95,6 +118,7 @@ export async function updateInstituteAction(
 export async function createBranchAction(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
   return withServerActionObservability(async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+    const values = extractFormValues(formData);
 
     try {
       await assertAnyPermission(['organization.manage', 'organization.branch.manage']);
@@ -121,12 +145,21 @@ export async function createBranchAction(_prev: ActionResult, formData: FormData
       revalidatePath('/organization');
       return { success: true };
     } catch (err) {
-      if (err instanceof DomainError) {
-        logger.warn('organization.branch.create.failed', { status: 'failed', message: err.message, error: err });
-        return { success: false, error: err.message };
-      }
-      logger.error('organization.branch.create.failed', { status: 'failed', message: 'Failed to create branch.', error: err as Error });
-      return { success: false, error: 'Failed to create branch.' };
+      logger.warn('organization.branch.create.failed', { status: 'failed', message: err instanceof Error ? err.message : 'unknown', error: err instanceof Error ? err : undefined });
+      const failure = buildOrganizationActionFailure(err, 'Failed to create branch.', values, {
+        domain: {
+          branch_code_already_exists: 'branchCode',
+          inactive_branch_cannot_be_used: 'instituteId',
+          precondition_failed: 'branchManagerId',
+        },
+        prisma: {
+          branchCode: 'branchCode',
+        },
+        prismaMessages: {
+          branchCode: 'Branch Code already exists. Please use a different Branch Code.',
+        },
+      });
+      return { success: false, ...failure };
     }
   }, { action: 'organization.createBranch', route: '/organization' });
 }
@@ -138,6 +171,7 @@ export async function updateBranchAction(
 ): Promise<ActionResult> {
   return withServerActionObservability(async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+    const values = extractFormValues(formData);
 
     try {
       await assertAnyPermission(['organization.manage', 'organization.branch.manage']);
@@ -165,12 +199,14 @@ export async function updateBranchAction(
       revalidatePath('/organization');
       return { success: true };
     } catch (err) {
-      if (err instanceof DomainError) {
-        logger.warn('organization.branch.update.failed', { status: 'failed', message: err.message, error: err });
-        return { success: false, error: err.message };
-      }
-      logger.error('organization.branch.update.failed', { status: 'failed', message: 'Failed to update branch.', error: err as Error });
-      return { success: false, error: 'Failed to update branch.' };
+      logger.warn('organization.branch.update.failed', { status: 'failed', message: err instanceof Error ? err.message : 'unknown', error: err instanceof Error ? err : undefined });
+      const failure = buildOrganizationActionFailure(err, 'Failed to update branch.', values, {
+        domain: {
+          precondition_failed: 'branchManagerId',
+          inactive_branch_cannot_be_used: 'status',
+        },
+      });
+      return { success: false, ...failure };
     }
   }, { action: 'organization.updateBranch', route: '/organization' });
 }
@@ -180,6 +216,7 @@ export async function updateBranchAction(
 export async function createDepartmentAction(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
   return withServerActionObservability(async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+    const values = extractFormValues(formData);
 
     try {
       await assertAnyPermission(['organization.manage', 'organization.department.manage']);
@@ -205,12 +242,21 @@ export async function createDepartmentAction(_prev: ActionResult, formData: Form
       revalidatePath('/organization');
       return { success: true };
     } catch (err) {
-      if (err instanceof DomainError) {
-        logger.warn('organization.department.create.failed', { status: 'failed', message: err.message, error: err });
-        return { success: false, error: err.message };
-      }
-      logger.error('organization.department.create.failed', { status: 'failed', message: 'Failed to create department.', error: err as Error });
-      return { success: false, error: 'Failed to create department.' };
+      logger.warn('organization.department.create.failed', { status: 'failed', message: err instanceof Error ? err.message : 'unknown', error: err instanceof Error ? err : undefined });
+      const failure = buildOrganizationActionFailure(err, 'Failed to create department.', values, {
+        domain: {
+          department_code_already_exists: 'departmentCode',
+          inactive_branch_cannot_be_used: 'branchId',
+          precondition_failed: 'departmentHeadId',
+        },
+        prisma: {
+          departmentCode: 'departmentCode',
+        },
+        prismaMessages: {
+          departmentCode: 'Department Code already exists in this branch. Please use a different Department Code.',
+        },
+      });
+      return { success: false, ...failure };
     }
   }, { action: 'organization.createDepartment', route: '/organization' });
 }
@@ -222,6 +268,7 @@ export async function updateDepartmentAction(
 ): Promise<ActionResult> {
   return withServerActionObservability(async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+    const values = extractFormValues(formData);
 
     try {
       await assertAnyPermission(['organization.manage', 'organization.department.manage']);
@@ -248,12 +295,14 @@ export async function updateDepartmentAction(
       revalidatePath('/organization');
       return { success: true };
     } catch (err) {
-      if (err instanceof DomainError) {
-        logger.warn('organization.department.update.failed', { status: 'failed', message: err.message, error: err });
-        return { success: false, error: err.message };
-      }
-      logger.error('organization.department.update.failed', { status: 'failed', message: 'Failed to update department.', error: err as Error });
-      return { success: false, error: 'Failed to update department.' };
+      logger.warn('organization.department.update.failed', { status: 'failed', message: err instanceof Error ? err.message : 'unknown', error: err instanceof Error ? err : undefined });
+      const failure = buildOrganizationActionFailure(err, 'Failed to update department.', values, {
+        domain: {
+          inactive_branch_cannot_be_used: 'status',
+          precondition_failed: 'departmentHeadId',
+        },
+      });
+      return { success: false, ...failure };
     }
   }, { action: 'organization.updateDepartment', route: '/organization' });
 }
@@ -263,6 +312,7 @@ export async function updateDepartmentAction(
 export async function createClassroomAction(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
   return withServerActionObservability(async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+    const values = extractFormValues(formData);
 
     try {
       await assertAnyPermission(['organization.manage', 'organization.classroom.manage']);
@@ -287,12 +337,20 @@ export async function createClassroomAction(_prev: ActionResult, formData: FormD
       revalidatePath('/organization');
       return { success: true };
     } catch (err) {
-      if (err instanceof DomainError) {
-        logger.warn('organization.classroom.create.failed', { status: 'failed', message: err.message, error: err });
-        return { success: false, error: err.message };
-      }
-      logger.error('organization.classroom.create.failed', { status: 'failed', message: 'Failed to create classroom.', error: err as Error });
-      return { success: false, error: 'Failed to create classroom.' };
+      logger.warn('organization.classroom.create.failed', { status: 'failed', message: err instanceof Error ? err.message : 'unknown', error: err instanceof Error ? err : undefined });
+      const failure = buildOrganizationActionFailure(err, 'Failed to create classroom.', values, {
+        domain: {
+          classroom_name_already_exists: 'classroomName',
+          inactive_branch_cannot_be_used: 'branchId',
+        },
+        prisma: {
+          classroomName: 'classroomName',
+        },
+        prismaMessages: {
+          classroomName: 'Classroom Name already exists in this branch. Please use a different Classroom Name.',
+        },
+      });
+      return { success: false, ...failure };
     }
   }, { action: 'organization.createClassroom', route: '/organization' });
 }
@@ -304,6 +362,7 @@ export async function updateClassroomAction(
 ): Promise<ActionResult> {
   return withServerActionObservability(async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+    const values = extractFormValues(formData);
 
     try {
       await assertAnyPermission(['organization.manage', 'organization.classroom.manage']);
@@ -330,12 +389,13 @@ export async function updateClassroomAction(
       revalidatePath('/organization');
       return { success: true };
     } catch (err) {
-      if (err instanceof DomainError) {
-        logger.warn('organization.classroom.update.failed', { status: 'failed', message: err.message, error: err });
-        return { success: false, error: err.message };
-      }
-      logger.error('organization.classroom.update.failed', { status: 'failed', message: 'Failed to update classroom.', error: err as Error });
-      return { success: false, error: 'Failed to update classroom.' };
+      logger.warn('organization.classroom.update.failed', { status: 'failed', message: err instanceof Error ? err.message : 'unknown', error: err instanceof Error ? err : undefined });
+      const failure = buildOrganizationActionFailure(err, 'Failed to update classroom.', values, {
+        domain: {
+          inactive_branch_cannot_be_used: 'status',
+        },
+      });
+      return { success: false, ...failure };
     }
   }, { action: 'organization.updateClassroom', route: '/organization' });
 }
@@ -371,7 +431,7 @@ export async function getOrganizationHierarchyAction(
       logger.info('organization.hierarchy.get.succeeded', { status: 'success', entityId: instituteId, entityType: 'Institute' });
       return { success: true, data: hierarchy };
     } catch (err) {
-      if (err instanceof DomainError) {
+      if (isDomainError(err)) {
         logger.warn('organization.hierarchy.get.failed', { status: 'failed', message: err.message, error: err });
         return { success: false, error: err.message };
       }

@@ -27,6 +27,16 @@ export interface UserRepository {
   assignRole(userId: string, roleId: string, actorId: string): Promise<void>;
   removeRole(userId: string, roleId: string): Promise<void>;
   listRolesForUser(userId: string): Promise<Array<{ id: string; roleCode: string; roleName: string }>>;
+  replaceDataScopes(
+    userId: string,
+    scopes: Array<{
+      scopeType: string;
+      branchId: string | null;
+      departmentId: string | null;
+      assignedOnly: boolean;
+    }>,
+    actorId: string,
+  ): Promise<void>;
 }
 
 export type UserCommandContext = { actorId: Uuid };
@@ -63,6 +73,26 @@ export class UserService {
     if (existing) throw new DomainError('conflict', 'A user with that email already exists.');
 
     const passwordHash = await bcrypt.hash(validated.password, 12);
+    const effectiveStatus = validated.status ?? 'Active';
+    const normalizedBranchIds = [...new Set(validated.branchIds)];
+
+    if (normalizedBranchIds.length === 0 && !['Owner', 'Management'].includes(validated.userType)) {
+      throw new DomainError('precondition_failed', 'At least one branch is required unless the user has global scope.');
+    }
+
+    const dataScopes = normalizedBranchIds.length > 0
+      ? normalizedBranchIds.map((branchId) => ({
+          scopeType: 'Branch',
+          branchId,
+          departmentId: null,
+          assignedOnly: validated.assignedOnly ?? false,
+        }))
+      : [{
+          scopeType: 'All',
+          branchId: null,
+          departmentId: null,
+          assignedOnly: false,
+        }];
 
     const profile: UserProfile = {
       id: crypto.randomUUID() as Uuid,
@@ -70,7 +100,9 @@ export class UserService {
       email: validated.email,
       phone: validated.phone ?? null,
       userType: validated.userType,
-      status: 'Active',
+      status: effectiveStatus,
+      roleCount: validated.roleIds.length,
+      dataScopes,
       effectiveStartDate: validated.effectiveStartDate,
       effectiveEndDate: validated.effectiveEndDate,
     };
@@ -85,6 +117,10 @@ export class UserService {
       }
       await this.userRepository.assignRole(saved.id, roleId, context.actorId);
     }
+
+    await this.userRepository.replaceDataScopes(saved.id, dataScopes, context.actorId);
+    saved.roleCount = validated.roleIds.length;
+    saved.dataScopes = dataScopes;
 
     await this.auditRepository.append({
       id: crypto.randomUUID(),
@@ -105,7 +141,38 @@ export class UserService {
     const existing = await this.userRepository.findById(userId);
     if (!existing) throw new DomainError('not_found', `User ${userId} not found.`);
 
+    if (validated.branchIds !== undefined) {
+      const normalizedBranchIds = [...new Set(validated.branchIds)];
+      if (normalizedBranchIds.length === 0 && !validated.userType && existing.userType !== 'Owner' && existing.userType !== 'Management') {
+        throw new DomainError('precondition_failed', 'At least one branch is required unless the user has global scope.');
+      }
+    }
+
     const updated = await this.userRepository.update(userId, validated);
+
+    if (validated.branchIds !== undefined) {
+      const branchIds = [...new Set(validated.branchIds)];
+      const assignedOnly = validated.assignedOnly ?? existing.dataScopes?.some((scope) => scope.scopeType === 'Branch' && scope.assignedOnly) ?? false;
+      const scopes = branchIds.length > 0
+        ? branchIds.map((branchId) => ({
+            scopeType: 'Branch',
+            branchId,
+            departmentId: null,
+            assignedOnly,
+          }))
+        : [{
+            scopeType: 'All',
+            branchId: null,
+            departmentId: null,
+            assignedOnly: false,
+          }];
+      await this.userRepository.replaceDataScopes(userId, scopes, context.actorId);
+      updated.dataScopes = scopes;
+    }
+
+    if (validated.status === undefined) {
+      updated.status = existing.status;
+    }
 
     // Map status updates to specific security audit events
     let auditAction = 'identity.user_updated';

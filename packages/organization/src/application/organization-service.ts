@@ -34,6 +34,7 @@ export interface OrganizationRepository {
   // Institute
   createInstitute(input: Institute): Promise<Institute>;
   findInstituteById(id: string): Promise<Institute | null>;
+  findInstituteByCode(instituteCode: string): Promise<Institute | null>;
   updateInstitute(id: string, updates: Partial<Institute>): Promise<Institute>;
   listInstitutes(filters?: ListFilters): Promise<PaginatedResult<Institute>>;
 
@@ -142,6 +143,13 @@ export class OrganizationService {
 
   async createInstitute(command: CreateInstituteCommand, context: OrgCommandContext): Promise<Institute> {
     const validated = createInstituteCommandSchema.parse(command);
+
+    // Uniqueness: Institute Code must be unique
+    const duplicate = await this.repository.findInstituteByCode(validated.instituteCode);
+    if (duplicate) {
+      throw new DomainError('institute_code_already_exists', `Institute with code ${validated.instituteCode} already exists.`);
+    }
+
     const institute: Institute = {
       id: crypto.randomUUID() as Uuid,
       instituteCode: validated.instituteCode,

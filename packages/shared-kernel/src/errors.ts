@@ -14,6 +14,7 @@ export type DomainErrorCode =
   | 'session_revoked'
   | 'invalid_reset_token'
   | 'institute_already_exists'
+  | 'institute_code_already_exists'
   | 'branch_code_already_exists'
   | 'department_code_already_exists'
   | 'classroom_name_already_exists'

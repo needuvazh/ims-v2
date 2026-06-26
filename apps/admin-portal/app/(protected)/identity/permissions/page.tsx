@@ -1,4 +1,4 @@
-import { 
+import {
   Breadcrumbs, 
   PageHeader, 
   Table, 
@@ -19,7 +19,7 @@ export const metadata = { title: 'Permissions - Identity | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
 export default async function IdentityPermissionsPage(props: {
-  searchParams: Promise<{ page?: string; limit?: string; q?: string; module?: string }>;
+  searchParams: Promise<{ page?: string; limit?: string; q?: string; module?: string; type?: string }>;
 }) {
   const searchParams = await props.searchParams;
   const data = await loadIdentityData();
@@ -28,6 +28,7 @@ export default async function IdentityPermissionsPage(props: {
   const limit = parseInt(searchParams.limit || '10', 10);
   const q = (searchParams.q || '').toLowerCase();
   const moduleFilter = searchParams.module || '';
+  const typeFilter = searchParams.type || '';
   
   let filteredPermissions = data.permissions;
   
@@ -41,8 +42,13 @@ export default async function IdentityPermissionsPage(props: {
   if (moduleFilter) {
     filteredPermissions = filteredPermissions.filter(p => p.moduleCode === moduleFilter);
   }
+
+  if (typeFilter) {
+    filteredPermissions = filteredPermissions.filter(p => p.permissionType === typeFilter);
+  }
   
   const uniqueModules = Array.from(new Set(data.permissions.map(p => p.moduleCode))).sort();
+  const uniqueTypes = Array.from(new Set(data.permissions.map(p => p.permissionType))).sort();
   
   const totalCount = filteredPermissions.length;
   const totalPages = Math.ceil(totalCount / limit);
@@ -74,6 +80,11 @@ export default async function IdentityPermissionsPage(props: {
               key: 'module',
               label: 'Module',
               options: uniqueModules.map(m => ({ value: m, label: m }))
+            },
+            {
+              key: 'type',
+              label: 'Type',
+              options: uniqueTypes.map(type => ({ value: type, label: type }))
             }
           ]}
         />
@@ -93,6 +104,8 @@ export default async function IdentityPermissionsPage(props: {
                   <TableHead>Module</TableHead>
                   <TableHead>Feature</TableHead>
                   <TableHead>Action</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Status</TableHead>
                   <TableHead>Description</TableHead>
                 </TableRow>
               </TableHeader>
@@ -103,6 +116,10 @@ export default async function IdentityPermissionsPage(props: {
                     <TableCell>{perm.moduleCode}</TableCell>
                     <TableCell>{perm.featureCode}</TableCell>
                     <TableCell>{perm.actionCode}</TableCell>
+                    <TableCell>{perm.permissionType}</TableCell>
+                    <TableCell>
+                      <Badge variant={perm.status === 'Active' ? 'success' : 'muted'}>{perm.status}</Badge>
+                    </TableCell>
                     <TableCell className="text-[color:var(--ims-muted)]">{perm.description ?? '—'}</TableCell>
                   </TableRow>
                 ))}

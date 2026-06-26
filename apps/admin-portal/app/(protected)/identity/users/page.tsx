@@ -24,7 +24,7 @@ export const metadata = { title: 'Users - Identity | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
 export default async function IdentityUsersPage(props: {
-  searchParams: Promise<{ page?: string; limit?: string; q?: string; status?: string; type?: string }>;
+  searchParams: Promise<{ page?: string; limit?: string; q?: string; status?: string; type?: string; branchId?: string; roleId?: string }>;
 }) {
   const searchParams = await props.searchParams;
   const data = await loadIdentityData();
@@ -34,6 +34,10 @@ export default async function IdentityUsersPage(props: {
   const q = (searchParams.q || '').toLowerCase();
   const statusFilter = searchParams.status || '';
   const typeFilter = searchParams.type || '';
+  const branchFilter = searchParams.branchId || '';
+  const roleFilter = searchParams.roleId || '';
+
+  const branchById = new Map<string, string>(data.branches.map((branch) => [String(branch.id), branch.branchName]));
   
   let filteredUsers = data.users;
   
@@ -50,6 +54,18 @@ export default async function IdentityUsersPage(props: {
   
   if (typeFilter) {
     filteredUsers = filteredUsers.filter(u => u.userType === typeFilter);
+  }
+
+  if (branchFilter) {
+    filteredUsers = filteredUsers.filter((user) =>
+      (user.dataScopes ?? []).some((scope) => scope.scopeType === 'Branch' && scope.branchId === branchFilter)
+    );
+  }
+
+  if (roleFilter) {
+    filteredUsers = filteredUsers.filter((user) =>
+      (user.roleSummaries ?? []).some((role) => role.id === roleFilter)
+    );
   }
   
   const totalCount = filteredUsers.length;
@@ -86,6 +102,11 @@ export default async function IdentityUsersPage(props: {
           searchPlaceholder="Search users by name or email..."
           filters={[
             {
+              key: 'branchId',
+              label: 'Branch',
+              options: data.branches.map((branch) => ({ value: branch.id, label: branch.branchName })),
+            },
+            {
               key: 'status',
               label: 'Status',
               options: [
@@ -98,10 +119,21 @@ export default async function IdentityUsersPage(props: {
               key: 'type',
               label: 'Type',
               options: [
+                { value: 'Owner', label: 'Owner' },
                 { value: 'Admin', label: 'Admin' },
-                { value: 'Staff', label: 'Staff' },
+                { value: 'BranchManager', label: 'Branch Manager' },
+                { value: 'Counselor', label: 'Counselor' },
+                { value: 'Trainer', label: 'Trainer' },
+                { value: 'Accountant', label: 'Accountant' },
+                { value: 'AcademicCoordinator', label: 'Academic Coordinator' },
+                { value: 'Management', label: 'Management' },
                 { value: 'Student', label: 'Student' },
               ]
+            },
+            {
+              key: 'roleId',
+              label: 'Role',
+              options: data.roles.map((role) => ({ value: role.id, label: role.roleName })),
             }
           ]}
         />
@@ -117,23 +149,47 @@ export default async function IdentityUsersPage(props: {
             <Table data-testid="users-table">
               <TableHeader>
                 <TableRow>
+                  <TableHead>ID</TableHead>
                   <TableHead>User</TableHead>
+                  <TableHead>Branch</TableHead>
+                  <TableHead>Roles</TableHead>
                   <TableHead>Type</TableHead>
                   <TableHead>Status</TableHead>
+                  <TableHead>Last Login</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {paginatedUsers.map((user) => (
                   <TableRow key={user.id} data-testid={`user-row-${user.id}`}>
+                    <TableCell className="font-mono text-xs text-[color:var(--ims-muted)]">{user.id}</TableCell>
                     <TableCell>
                       <div className="flex items-center gap-3">
                         <Avatar fallback={user.fullName} size="sm" />
                         <div>
                           <p className="font-medium text-[color:var(--ims-ink)]">{user.fullName}</p>
                           <p className="text-xs text-[color:var(--ims-muted)]">{user.email}</p>
+                          <p className="text-[10px] text-[color:var(--ims-muted)]">{user.phone ?? 'No phone'}</p>
                         </div>
                       </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex flex-wrap gap-1.5">
+                        {(user.dataScopes ?? []).some((scope) => scope.scopeType === 'All') ? (
+                          <Badge variant="default">All Branches</Badge>
+                        ) : (
+                          (user.dataScopes ?? [])
+                            .filter((scope) => scope.scopeType === 'Branch' && scope.branchId)
+                            .map((scope, index) => (
+                              <Badge key={`${user.id}-${scope.branchId}-${index}`} variant="muted">
+                                {scope.branchId ? branchById.get(scope.branchId as string) ?? scope.branchId : 'Branch'}
+                              </Badge>
+                            ))
+                        )}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="default">{user.roleCount ?? user.roleSummaries?.length ?? 0}</Badge>
                     </TableCell>
                     <TableCell>
                       <Badge variant="info">{user.userType}</Badge>
@@ -143,9 +199,12 @@ export default async function IdentityUsersPage(props: {
                         user.status === 'Active' ? 'success'
                         : user.status === 'Locked' ? 'error'
                         : 'muted'
-                      }>
+                        }>
                         {user.status}
                       </Badge>
+                    </TableCell>
+                    <TableCell className="text-[color:var(--ims-muted)]">
+                      {user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleString() : 'Never'}
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex items-center justify-end gap-2">

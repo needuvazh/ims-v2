@@ -38,6 +38,13 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
     const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue ?? '');
     const value = isControlled ? controlledValue : uncontrolledValue;
 
+    // Sync uncontrolled value if defaultValue changes (e.g., when React reuses the component instance)
+    const prevDefaultValueRef = useRef(defaultValue);
+    if (defaultValue !== prevDefaultValueRef.current) {
+      prevDefaultValueRef.current = defaultValue;
+      setUncontrolledValue(defaultValue ?? '');
+    }
+
     const [open, setOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
 

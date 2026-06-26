@@ -131,6 +131,11 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
     return row && !row.isDeleted ? toInstitute(row) : null;
   }
 
+  async findInstituteByCode(instituteCode: string): Promise<Institute | null> {
+    const row = await this.prisma.institute.findFirst({ where: { instituteCode, isDeleted: false } });
+    return row ? toInstitute(row) : null;
+  }
+
   async updateInstitute(id: string, updates: Partial<Institute>): Promise<Institute> {
     const row = await this.prisma.institute.update({
       where: { id },

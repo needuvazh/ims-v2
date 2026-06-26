@@ -31,7 +31,7 @@ export default async function ViewUserPage(props: { params: Promise<{ id: string
           />
         }
       />
-      <UserForm mode="view" initialData={user} />
+      <UserForm mode="view" initialData={user} branches={data.branches} />
     </div>
   );
 }

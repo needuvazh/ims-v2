@@ -30,92 +30,95 @@ enum PermissionType {
 }
 
 model User {
-  id                  String           @id @default(uuid()) @db.Uuid
-  fullName            String           @db.VarChar(200)
-  email               String           @unique @db.VarChar(255)
-  phone               String?          @db.VarChar(30)
-  passwordHash        String           @db.Text
-  userType            String           @db.VarChar(50)
-  status              UserStatus       @default(Active)
-  lastLoginAt         DateTime?        @db.Timestamptz(6)
-  
+  id           String     @id @default(uuid()) @db.Uuid
+  fullName     String     @db.VarChar(200)
+  email        String     @unique @db.VarChar(255)
+  phone        String?    @db.VarChar(30)
+  passwordHash String     @db.Text
+  userType     String     @db.VarChar(50)
+  status       UserStatus @default(Active)
+  lastLoginAt  DateTime?  @db.Timestamptz(6)
+
   // Security & lockout fields
-  failedLoginAttempts Int              @default(0)
-  lockoutUntil        DateTime?        @db.Timestamptz(6)
+  failedLoginAttempts Int       @default(0)
+  lockoutUntil        DateTime? @db.Timestamptz(6)
 
   // Effective dating
-  effectiveStartDate  DateTime         @default(now()) @db.Date
-  effectiveEndDate    DateTime?        @db.Date
+  effectiveStartDate DateTime  @default(now()) @db.Date
+  effectiveEndDate   DateTime? @db.Date
 
-  roles               UserRole[]
-  dataScopes          UserDataScope[]
-  managedBranches     Branch[]         @relation("BranchManager")
-  sessions            UserSession[]
-  loginRecords        LoginHistory[]
-  resetTokens         PasswordResetToken[]
+  roles           UserRole[]
+  dataScopes      UserDataScope[]
+  managedBranches Branch[]             @relation("BranchManager")
+  sessions        UserSession[]
+  loginRecords    LoginHistory[]
+  resetTokens     PasswordResetToken[]
 
-  createdAt           DateTime         @default(now()) @db.Timestamptz(6)
-  createdBy           String?          @db.Uuid
-  updatedAt           DateTime?        @db.Timestamptz(6)
-  updatedBy           String?          @db.Uuid
-  deletedAt           DateTime?        @db.Timestamptz(6)
-  deletedBy           String?          @db.Uuid
-  isDeleted           Boolean          @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  leads     Lead[]         @relation("CounselorLeads")
+  followUps LeadFollowUp[] @relation("CounselorFollowUps")
 
   @@index([status])
   @@map("users")
 }
 
 model Role {
-  id                 String           @id @default(uuid()) @db.Uuid
-  roleCode           String           @unique @db.VarChar(100)
-  roleName           String           @unique @db.VarChar(150)
-  description        String?          @db.Text
-  status             RecordStatus     @default(Active)
+  id          String       @id @default(uuid()) @db.Uuid
+  roleCode    String       @unique @db.VarChar(100)
+  roleName    String       @unique @db.VarChar(150)
+  description String?      @db.Text
+  status      RecordStatus @default(Active)
 
   // Effective dating
-  effectiveStartDate DateTime         @default(now()) @db.Date
-  effectiveEndDate   DateTime?        @db.Date
+  effectiveStartDate DateTime  @default(now()) @db.Date
+  effectiveEndDate   DateTime? @db.Date
 
-  users              UserRole[]
-  permissions        RolePermission[]
+  users       UserRole[]
+  permissions RolePermission[]
 
-  createdAt          DateTime         @default(now()) @db.Timestamptz(6)
-  createdBy          String?          @db.Uuid
-  updatedAt          DateTime?        @db.Timestamptz(6)
-  updatedBy          String?          @db.Uuid
-  deletedAt          DateTime?        @db.Timestamptz(6)
-  deletedBy          String?          @db.Uuid
-  isDeleted          Boolean          @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
 
   @@map("roles")
 }
 
 model Permission {
-  id             String           @id @default(uuid()) @db.Uuid
-  moduleCode     String           @db.VarChar(100)
-  featureCode    String           @db.VarChar(100)
-  actionCode     String           @db.VarChar(100)
-  permissionCode String           @unique @db.VarChar(150)
-  permissionType PermissionType   @default(Action)
-  description    String?          @db.Text
-  status         RecordStatus     @default(Active)
+  id             String         @id @default(uuid()) @db.Uuid
+  moduleCode     String         @db.VarChar(100)
+  featureCode    String         @db.VarChar(100)
+  actionCode     String         @db.VarChar(100)
+  permissionCode String         @unique @db.VarChar(150)
+  permissionType PermissionType @default(Action)
+  description    String?        @db.Text
+  status         RecordStatus   @default(Active)
 
-  roles          RolePermission[]
+  roles RolePermission[]
 
   @@map("permissions")
 }
 
 model RolePermission {
-  id           String     @id @default(uuid()) @db.Uuid
-  roleId       String     @db.Uuid
-  permissionId String     @db.Uuid
+  id           String @id @default(uuid()) @db.Uuid
+  roleId       String @db.Uuid
+  permissionId String @db.Uuid
 
-  role         Role       @relation(fields: [roleId], references: [id])
-  permission   Permission @relation(fields: [permissionId], references: [id])
+  role       Role       @relation(fields: [roleId], references: [id])
+  permission Permission @relation(fields: [permissionId], references: [id])
 
-  createdAt    DateTime   @default(now()) @db.Timestamptz(6)
-  createdBy    String?    @db.Uuid
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  createdBy String?  @db.Uuid
 
   @@unique([roleId, permissionId])
   @@index([permissionId])
@@ -123,12 +126,12 @@ model RolePermission {
 }
 
 model UserRole {
-  id        String   @id @default(uuid()) @db.Uuid
-  userId    String   @db.Uuid
-  roleId    String   @db.Uuid
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @db.Uuid
+  roleId String @db.Uuid
 
-  user      User     @relation(fields: [userId], references: [id])
-  role      Role     @relation(fields: [roleId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+  role Role @relation(fields: [roleId], references: [id])
 
   createdAt DateTime @default(now()) @db.Timestamptz(6)
   createdBy String?  @db.Uuid
@@ -139,37 +142,37 @@ model UserRole {
 }
 
 model UserDataScope {
-  id            String   @id @default(uuid()) @db.Uuid
-  userId        String   @db.Uuid
-  scopeType     String   @db.VarChar(50)
-  branchId      String?  @db.Uuid
-  departmentId  String?  @db.Uuid
-  assignedOnly  Boolean  @default(false)
+  id           String  @id @default(uuid()) @db.Uuid
+  userId       String  @db.Uuid
+  scopeType    String  @db.VarChar(50)
+  branchId     String? @db.Uuid
+  departmentId String? @db.Uuid
+  assignedOnly Boolean @default(false)
 
-  user          User     @relation(fields: [userId], references: [id])
-  branch        Branch?  @relation(fields: [branchId], references: [id])
-  department    Department?  @relation(fields: [departmentId], references: [id])
+  user       User        @relation(fields: [userId], references: [id])
+  branch     Branch?     @relation(fields: [branchId], references: [id])
+  department Department? @relation(fields: [departmentId], references: [id])
 
-  createdAt     DateTime @default(now()) @db.Timestamptz(6)
-  createdBy     String?  @db.Uuid
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  createdBy String?  @db.Uuid
 
   @@index([userId])
   @@map("user_data_scopes")
 }
 
 model UserSession {
-  id           String    @id @default(uuid()) @db.Uuid
-  userId       String    @db.Uuid
-  tokenHash    String    @unique @db.Text
-  userAgent    String?   @db.Text
-  ipAddress    String?   @db.VarChar(45)
-  status       String    @db.VarChar(50) // "Active", "Expired", "Revoked"
-  expiresAt    DateTime  @db.Timestamptz(6)
-  lastAccessAt DateTime  @db.Timestamptz(6)
+  id           String   @id @default(uuid()) @db.Uuid
+  userId       String   @db.Uuid
+  tokenHash    String   @unique @db.Text
+  userAgent    String?  @db.Text
+  ipAddress    String?  @db.VarChar(45)
+  status       String   @db.VarChar(50) // "Active", "Expired", "Revoked"
+  expiresAt    DateTime @db.Timestamptz(6)
+  lastAccessAt DateTime @db.Timestamptz(6)
 
-  user         User      @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 
-  createdAt    DateTime  @default(now()) @db.Timestamptz(6)
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
 
   @@index([userId])
   @@index([status])
@@ -177,16 +180,16 @@ model UserSession {
 }
 
 model LoginHistory {
-  id            String    @id @default(uuid()) @db.Uuid
-  email         String    @db.VarChar(255)
-  userId        String?   @db.Uuid
-  ipAddress     String?   @db.VarChar(45)
-  userAgent     String?   @db.Text
-  status        String    @db.VarChar(50) // "Succeeded", "Failed"
-  failureReason String?   @db.VarChar(150)
-  occurredAt    DateTime  @default(now()) @db.Timestamptz(6)
+  id            String   @id @default(uuid()) @db.Uuid
+  email         String   @db.VarChar(255)
+  userId        String?  @db.Uuid
+  ipAddress     String?  @db.VarChar(45)
+  userAgent     String?  @db.Text
+  status        String   @db.VarChar(50) // "Succeeded", "Failed"
+  failureReason String?  @db.VarChar(150)
+  occurredAt    DateTime @default(now()) @db.Timestamptz(6)
 
-  user          User?     @relation(fields: [userId], references: [id])
+  user User? @relation(fields: [userId], references: [id])
 
   @@index([email])
   @@index([userId])
@@ -195,73 +198,76 @@ model LoginHistory {
 }
 
 model PasswordResetToken {
-  id        String   @id @default(uuid()) @db.Uuid
-  userId    String   @db.Uuid
-  tokenHash String   @unique @db.VarChar(255)
-  expiresAt DateTime @db.Timestamptz(6)
+  id        String    @id @default(uuid()) @db.Uuid
+  userId    String    @db.Uuid
+  tokenHash String    @unique @db.VarChar(255)
+  expiresAt DateTime  @db.Timestamptz(6)
   usedAt    DateTime? @db.Timestamptz(6)
-  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
 
-  user      User     @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 
   @@index([userId])
   @@map("password_reset_tokens")
 }
 
 model Institute {
-  id               String   @id @default(uuid()) @db.Uuid
-  instituteCode    String   @unique @db.VarChar(50)
-  instituteName    String   @db.VarChar(255)
-  registrationNumber String? @db.VarChar(100)
-  taxNumber        String?   @db.VarChar(100)
-  primaryEmail     String?   @db.VarChar(255)
-  primaryPhone     String?   @db.VarChar(30)
-  website          String?   @db.VarChar(255)
-  address          String?   @db.Text
-  country          String?   @db.VarChar(100)
-  status           RecordStatus @default(Active)
+  id                 String       @id @default(uuid()) @db.Uuid
+  instituteCode      String       @unique @db.VarChar(50)
+  instituteName      String       @db.VarChar(255)
+  registrationNumber String?      @db.VarChar(100)
+  taxNumber          String?      @db.VarChar(100)
+  primaryEmail       String?      @db.VarChar(255)
+  primaryPhone       String?      @db.VarChar(30)
+  website            String?      @db.VarChar(255)
+  address            String?      @db.Text
+  country            String?      @db.VarChar(100)
+  status             RecordStatus @default(Active)
 
-  branches         Branch[]
+  branches Branch[]
 
-  createdAt        DateTime @default(now()) @db.Timestamptz(6)
-  createdBy        String?  @db.Uuid
-  updatedAt        DateTime @updatedAt @db.Timestamptz(6)
-  updatedBy        String?  @db.Uuid
-  deletedAt        DateTime? @db.Timestamptz(6)
-  deletedBy        String?  @db.Uuid
-  isDeleted        Boolean  @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
 
   @@map("institutes")
 }
 
 model Branch {
-  id                String   @id @default(uuid()) @db.Uuid
-  instituteId       String   @db.Uuid
-  branchCode        String   @db.VarChar(50)
-  branchName        String   @db.VarChar(200)
-  address           String?  @db.Text
-  city              String?  @db.VarChar(100)
-  country           String?  @db.VarChar(100)
-  phone             String?  @db.VarChar(30)
-  email             String?  @db.VarChar(255)
-  branchManagerId   String?  @db.Uuid
-  status            RecordStatus @default(Active)
-  effectiveStartDate DateTime? @db.Date
-  effectiveEndDate   DateTime? @db.Date
+  id                 String       @id @default(uuid()) @db.Uuid
+  instituteId        String       @db.Uuid
+  branchCode         String       @db.VarChar(50)
+  branchName         String       @db.VarChar(200)
+  address            String?      @db.Text
+  city               String?      @db.VarChar(100)
+  country            String?      @db.VarChar(100)
+  phone              String?      @db.VarChar(30)
+  email              String?      @db.VarChar(255)
+  branchManagerId    String?      @db.Uuid
+  status             RecordStatus @default(Active)
+  effectiveStartDate DateTime?    @db.Date
+  effectiveEndDate   DateTime?    @db.Date
 
-  institute         Institute @relation(fields: [instituteId], references: [id])
-  branchManager     User?     @relation("BranchManager", fields: [branchManagerId], references: [id])
-  userDataScopes    UserDataScope[]
-  departments       Department[]
-  classrooms        Classroom[]
+  institute      Institute       @relation(fields: [instituteId], references: [id])
+  branchManager  User?           @relation("BranchManager", fields: [branchManagerId], references: [id])
+  userDataScopes UserDataScope[]
+  departments    Department[]
+  classrooms     Classroom[]
 
-  createdAt         DateTime @default(now()) @db.Timestamptz(6)
-  createdBy         String?  @db.Uuid
-  updatedAt         DateTime? @db.Timestamptz(6)
-  updatedBy         String?  @db.Uuid
-  deletedAt         DateTime? @db.Timestamptz(6)
-  deletedBy         String?  @db.Uuid
-  isDeleted         Boolean  @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  leads      Lead[]
+  admissions Admission[]
 
   @@unique([branchCode])
   @@index([status])
@@ -271,65 +277,65 @@ model Branch {
 }
 
 model Department {
-  id                String   @id @default(uuid()) @db.Uuid
-  branchId          String   @db.Uuid
-  departmentCode    String   @db.VarChar(50)
-  departmentName    String   @db.VarChar(200)
-  departmentHeadId  String?  @db.Uuid
-  description       String?  @db.Text
-  status            RecordStatus @default(Active)
-  effectiveStartDate DateTime? @db.Date
-  effectiveEndDate   DateTime? @db.Date
+  id                 String       @id @default(uuid()) @db.Uuid
+  branchId           String       @db.Uuid
+  departmentCode     String       @db.VarChar(50)
+  departmentName     String       @db.VarChar(200)
+  departmentHeadId   String?      @db.Uuid
+  description        String?      @db.Text
+  status             RecordStatus @default(Active)
+  effectiveStartDate DateTime?    @db.Date
+  effectiveEndDate   DateTime?    @db.Date
 
-  branch            Branch   @relation(fields: [branchId], references: [id])
-  userDataScopes    UserDataScope[]
+  branch         Branch          @relation(fields: [branchId], references: [id])
+  userDataScopes UserDataScope[]
 
-  createdAt         DateTime @default(now()) @db.Timestamptz(6)
-  createdBy         String?  @db.Uuid
-  updatedAt         DateTime? @db.Timestamptz(6)
-  updatedBy         String?  @db.Uuid
-  deletedAt         DateTime? @db.Timestamptz(6)
-  deletedBy         String?  @db.Uuid
-  isDeleted         Boolean  @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
 
   @@unique([branchId, departmentCode])
   @@map("departments")
 }
 
 model Classroom {
-  id                String   @id @default(uuid()) @db.Uuid
-  branchId          String   @db.Uuid
-  classroomName     String   @db.VarChar(150)
-  capacity          Int
-  location          String?  @db.VarChar(255)
-  status            RecordStatus @default(Active)
-  effectiveStartDate DateTime? @db.Date
-  effectiveEndDate   DateTime? @db.Date
+  id                 String       @id @default(uuid()) @db.Uuid
+  branchId           String       @db.Uuid
+  classroomName      String       @db.VarChar(150)
+  capacity           Int
+  location           String?      @db.VarChar(255)
+  status             RecordStatus @default(Active)
+  effectiveStartDate DateTime?    @db.Date
+  effectiveEndDate   DateTime?    @db.Date
 
-  branch            Branch   @relation(fields: [branchId], references: [id])
+  branch Branch @relation(fields: [branchId], references: [id])
 
-  createdAt         DateTime @default(now()) @db.Timestamptz(6)
-  createdBy         String?  @db.Uuid
-  updatedAt         DateTime? @db.Timestamptz(6)
-  updatedBy         String?  @db.Uuid
-  deletedAt         DateTime? @db.Timestamptz(6)
-  deletedBy         String?  @db.Uuid
-  isDeleted         Boolean  @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
 
   @@unique([branchId, classroomName])
   @@map("classrooms")
 }
 
 model AuditLog {
-  id           String   @id @default(uuid()) @db.Uuid
-  actorId      String?  @db.Uuid
-  branchId     String?  @db.Uuid
-  action       String   @db.VarChar(150)
-  entityType   String   @db.VarChar(150)
-  entityId     String   @db.VarChar(150)
-  occurredAt   DateTime @db.Timestamptz(6)
-  details      Json?
-  createdAt    DateTime @default(now()) @db.Timestamptz(6)
+  id         String   @id @default(uuid()) @db.Uuid
+  actorId    String?  @db.Uuid
+  branchId   String?  @db.Uuid
+  action     String   @db.VarChar(150)
+  entityType String   @db.VarChar(150)
+  entityId   String   @db.VarChar(150)
+  occurredAt DateTime @db.Timestamptz(6)
+  details    Json?
+  createdAt  DateTime @default(now()) @db.Timestamptz(6)
 
   @@index([entityType, entityId])
   @@index([action])
@@ -339,18 +345,130 @@ model AuditLog {
 }
 
 model OutboxEvent {
-  id           String   @id @default(uuid()) @db.Uuid
-  eventType    String   @db.VarChar(150)
-  aggregateType String  @db.VarChar(150)
-  aggregateId  String   @db.VarChar(150)
-  payload      Json
-  status       String   @db.VarChar(50) @default("Pending")
-  availableAt  DateTime @db.Timestamptz(6)
-  processedAt  DateTime? @db.Timestamptz(6)
-  attempts     Int      @default(0)
-  lastError    String?  @db.Text
-  createdAt    DateTime @default(now()) @db.Timestamptz(6)
+  id            String    @id @default(uuid()) @db.Uuid
+  eventType     String    @db.VarChar(150)
+  aggregateType String    @db.VarChar(150)
+  aggregateId   String    @db.VarChar(150)
+  payload       Json
+  status        String    @default("Pending") @db.VarChar(50)
+  availableAt   DateTime  @db.Timestamptz(6)
+  processedAt   DateTime? @db.Timestamptz(6)
+  attempts      Int       @default(0)
+  lastError     String?   @db.Text
+  createdAt     DateTime  @default(now()) @db.Timestamptz(6)
 
   @@index([status, availableAt])
   @@map("outbox_events")
+}
+
+enum LeadStage {
+  New
+  Contacted
+  Interested
+  Qualified
+  Converted
+  Dropped
+}
+
+enum LeadSource {
+  WalkIn
+  Web
+  Campaign
+  Referral
+  Other
+}
+
+model Lead {
+  id          String     @id @default(uuid()) @db.Uuid
+  branchId    String     @db.Uuid
+  firstName   String     @db.VarChar(100)
+  lastName    String     @db.VarChar(100)
+  email       String?    @db.VarChar(255)
+  phone       String?    @db.VarChar(30)
+  stage       LeadStage  @default(New)
+  source      LeadSource @default(Other)
+  counselorId String?    @db.Uuid
+  notes       String?    @db.Text
+
+  branch    Branch         @relation(fields: [branchId], references: [id])
+  counselor User?          @relation("CounselorLeads", fields: [counselorId], references: [id])
+  followUps LeadFollowUp[]
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  @@index([branchId])
+  @@index([counselorId])
+  @@index([stage])
+  @@map("leads")
+}
+
+model LeadFollowUp {
+  id          String   @id @default(uuid()) @db.Uuid
+  leadId      String   @db.Uuid
+  counselorId String   @db.Uuid
+  notes       String   @db.Text
+  date        DateTime @db.Timestamptz(6)
+
+  lead      Lead @relation(fields: [leadId], references: [id])
+  counselor User @relation("CounselorFollowUps", fields: [counselorId], references: [id])
+
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  createdBy String?  @db.Uuid
+
+  @@index([leadId])
+  @@map("lead_follow_ups")
+}
+
+model Student {
+  id            String       @id @default(uuid()) @db.Uuid
+  firstName     String       @db.VarChar(100)
+  lastName      String       @db.VarChar(100)
+  email         String?      @unique @db.VarChar(255)
+  phone         String?      @db.VarChar(30)
+  studentNumber String       @unique @db.VarChar(50)
+  status        RecordStatus @default(Active)
+
+  admissions Admission[]
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  @@index([email])
+  @@index([phone])
+  @@map("students")
+}
+
+model Admission {
+  id            String       @id @default(uuid()) @db.Uuid
+  studentId     String       @db.Uuid
+  branchId      String       @db.Uuid
+  admissionDate DateTime     @default(now()) @db.Timestamptz(6)
+  status        RecordStatus @default(Active)
+  leadId        String?      @db.Uuid
+
+  student Student @relation(fields: [studentId], references: [id])
+  branch  Branch  @relation(fields: [branchId], references: [id])
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  @@index([studentId])
+  @@index([branchId])
+  @@map("admissions")
 }

@@ -32,7 +32,7 @@ export default async function EditUserPage(props: { params: Promise<{ id: string
           />
         }
       />
-      <UserForm mode="edit" initialData={user} />
+      <UserForm key={user.id} mode="edit" initialData={user} branches={data.branches} />
     </div>
   );
 }

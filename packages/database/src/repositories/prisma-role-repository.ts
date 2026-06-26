@@ -9,6 +9,7 @@ type PermissionRow = {
   featureCode: string;
   actionCode: string;
   permissionCode: string;
+  permissionType: PermissionRecord['permissionType'];
   description: string | null;
   status: string;
 };
@@ -126,10 +127,11 @@ export class PrismaRoleRepository implements RoleRepository {
           featureCode: perm.featureCode,
           actionCode: perm.actionCode,
           permissionCode: perm.permissionCode,
+          permissionType: perm.permissionType,
           description: perm.description ?? null,
           status: 'Active',
         },
-        update: { description: perm.description ?? null },
+        update: { description: perm.description ?? null, permissionType: perm.permissionType },
       });
     }
   }

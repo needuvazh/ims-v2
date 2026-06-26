@@ -25,6 +25,7 @@ export class InMemoryOrganizationRepository implements OrganizationRepository {
   // Institute
   async createInstitute(input: Institute) { this.institutes = [...this.institutes, input]; return input; }
   async findInstituteById(id: string) { return this.institutes.find((i) => i.id === id) ?? null; }
+  async findInstituteByCode(instituteCode: string) { return this.institutes.find((i) => i.instituteCode === instituteCode) ?? null; }
   async updateInstitute(id: string, updates: Partial<Institute>) {
     this.institutes = this.institutes.map((i) => i.id === id ? { ...i, ...updates } : i);
     return this.institutes.find((i) => i.id === id)!;

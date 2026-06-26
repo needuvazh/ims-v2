@@ -20,6 +20,8 @@
     "@ims/shared-auth": "workspace:*",
     "@ims/shared-kernel": "workspace:*",
     "@ims/shared-ui": "workspace:*",
+    "@ims/admissions-enrollment": "workspace:*",
+    "@ims/crm-leads": "workspace:*",
     "framer-motion": "^12.40.0",
     "lucide-react": "^1.21.0",
     "next": "^16.2.9",

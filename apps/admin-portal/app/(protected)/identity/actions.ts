@@ -36,13 +36,24 @@ export async function createUserAction(_prev: ActionResult, formData: FormData):
       await assertPermission('identity.write');
       const actorId = await getActorId();
       const { userService } = await import('../../lib/runtime');
+      const branchIds = formData.getAll('branchIds').map((value) => String(value)).filter((value) => value.trim() !== '');
+      const userStatusRaw = String(formData.get('status') ?? 'Active');
       await userService.createUser({
         fullName: String(formData.get('fullName') ?? ''),
         email: String(formData.get('email') ?? ''),
         phone: formData.get('phone') as string | null,
         userType: String(formData.get('userType') ?? 'Admin') as UserType,
         password: String(formData.get('password') ?? ''),
+        status: isUserStatus(userStatusRaw) ? userStatusRaw : 'Active',
         roleIds: [],
+        branchIds,
+        assignedOnly: formData.get('assignedOnly') === 'on',
+        effectiveStartDate: formData.get('effectiveStartDate')
+          ? new Date(String(formData.get('effectiveStartDate')))
+          : undefined,
+        effectiveEndDate: formData.get('effectiveEndDate')
+          ? new Date(String(formData.get('effectiveEndDate')))
+          : null,
       }, { actorId });
       logger.info('identity.user.create.succeeded', { status: 'success' });
       revalidatePath('/identity');
@@ -56,6 +67,43 @@ export async function createUserAction(_prev: ActionResult, formData: FormData):
       return { success: false, error: 'Failed to create user.' };
     }
   }, { action: 'identity.createUser', route: '/identity' });
+}
+export async function updateUserAction(userId: string, _prev: ActionResult, formData: FormData): Promise<ActionResult> {
+  return withServerActionObservability(async () => {
+    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+
+    try {
+      await assertPermission('identity.write');
+      const actorId = await getActorId();
+      const { userService } = await import('../../lib/runtime');
+      const branchIds = formData.getAll('branchIds').map((value) => String(value)).filter((value) => value.trim() !== '');
+      const userStatusRaw = String(formData.get('status') ?? 'Active');
+      await userService.updateUser(userId, {
+        fullName: String(formData.get('fullName') ?? ''),
+        phone: formData.get('phone') as string | null,
+        userType: String(formData.get('userType') ?? 'Admin') as UserType,
+        status: isUserStatus(userStatusRaw) ? userStatusRaw : undefined,
+        branchIds,
+        assignedOnly: formData.get('assignedOnly') === 'on',
+        effectiveStartDate: formData.get('effectiveStartDate')
+          ? new Date(String(formData.get('effectiveStartDate')))
+          : undefined,
+        effectiveEndDate: formData.get('effectiveEndDate')
+          ? new Date(String(formData.get('effectiveEndDate')))
+          : null,
+      }, { actorId });
+      logger.info('identity.user.update.succeeded', { status: 'success', entityId: userId });
+      revalidatePath('/identity');
+      return { success: true };
+    } catch (err) {
+      if (err instanceof DomainError) {
+        logger.warn('identity.user.update.failed', { status: 'failed', message: err.message, error: err });
+        return { success: false, error: err.message };
+      }
+      logger.error('identity.user.update.failed', { status: 'failed', message: 'Failed to update user.', error: err as Error });
+      return { success: false, error: 'Failed to update user.' };
+    }
+  }, { action: 'identity.updateUser', route: '/identity' });
 }
 
 export async function updateUserStatusAction(userId: string, status: string, formData?: FormData): Promise<ActionResult> {
@@ -155,11 +203,19 @@ export async function createRoleAction(_prev: ActionResult, formData: FormData):
       await assertPermission('identity.role.manage');
       const actorId = await getActorId();
       const { roleService } = await import('../../lib/runtime');
+      const roleStatusRaw = String(formData.get('status') ?? 'Active');
       await roleService.createRole({
         roleCode: String(formData.get('roleCode') ?? ''),
         roleName: String(formData.get('roleName') ?? ''),
         description: formData.get('description') as string | null,
+        status: isRoleStatus(roleStatusRaw) ? roleStatusRaw : 'Active',
         permissionIds: [],
+        effectiveStartDate: formData.get('effectiveStartDate')
+          ? new Date(String(formData.get('effectiveStartDate')))
+          : undefined,
+        effectiveEndDate: formData.get('effectiveEndDate')
+          ? new Date(String(formData.get('effectiveEndDate')))
+          : null,
       }, { actorId });
       logger.info('identity.role.create.succeeded', { status: 'success' });
       revalidatePath('/identity');
@@ -183,9 +239,17 @@ export async function updateRoleAction(roleId: string, _prev: ActionResult, form
       await assertPermission('identity.role.manage');
       const actorId = await getActorId();
       const { roleService } = await import('../../lib/runtime');
+      const roleStatusRaw = String(formData.get('status') ?? 'Active');
       await roleService.updateRole(roleId, {
         roleName: String(formData.get('roleName') ?? ''),
         description: formData.get('description') as string | null,
+        status: isRoleStatus(roleStatusRaw) ? roleStatusRaw : undefined,
+        effectiveStartDate: formData.get('effectiveStartDate')
+          ? new Date(String(formData.get('effectiveStartDate')))
+          : undefined,
+        effectiveEndDate: formData.get('effectiveEndDate')
+          ? new Date(String(formData.get('effectiveEndDate')))
+          : null,
       }, { actorId });
       logger.info('identity.role.update.succeeded', { status: 'success', entityId: roleId });
       revalidatePath('/identity');

@@ -8,3 +8,6 @@ Read Module 1: Identity & Access Management.md FRD document and Can you assume t
 
 
 Read Module 1: Identity & Access Management.md FRD document and Can you assume the role of senior database technical engineer and perform review on the current database schema and seed files for any gaps and issues ? please highlight and suggest me the changes to resolve the gaps in schema design as well as seed files as well
+
+
+Can you assume the role of senior staff engineer and perform the entire project code review and suggest me how to improve the codebase, if you have any question please ask me.

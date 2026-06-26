@@ -40,6 +40,14 @@ describe('UserService Lifecycle Invariant and Audit Tests', () => {
     phone: null,
     userType: 'Admin',
     status: 'Active',
+    dataScopes: [
+      {
+        scopeType: 'Branch',
+        branchId: '7af7bcca-6d7f-4ff8-8ed6-012345678901',
+        departmentId: null,
+        assignedOnly: false,
+      },
+    ],
   };
 
   beforeEach(() => {
@@ -75,6 +83,11 @@ describe('UserService Lifecycle Invariant and Audit Tests', () => {
       assignRole: async () => {},
       removeRole: async () => {},
       listRolesForUser: async () => [],
+      replaceDataScopes: async (userId, scopes, actorId) => {
+        const u = users.get(userId);
+        if (!u) throw new Error('Not found');
+        users.set(userId, { ...u, dataScopes: scopes });
+      },
     };
 
     mockRoleRepo = {
@@ -133,6 +146,8 @@ describe('UserService Lifecycle Invariant and Audit Tests', () => {
           userType: 'Admin',
           password: 'Password123!',
           roleIds: [activeRole.id],
+          branchIds: ['7af7bcca-6d7f-4ff8-8ed6-012345678901'],
+          assignedOnly: false,
         },
         { actorId: userActorId }
       );
@@ -146,15 +161,17 @@ describe('UserService Lifecycle Invariant and Audit Tests', () => {
       await expect(
         userService.createUser(
           {
-            fullName: 'New User',
-            email: 'new@example.com',
-            phone: null,
-            userType: 'Admin',
-            password: 'Password123!',
-            roleIds: [inactiveRole.id],
-          },
-          { actorId: userActorId }
-        )
+          fullName: 'New User',
+          email: 'new@example.com',
+          phone: null,
+          userType: 'Admin',
+          password: 'Password123!',
+          roleIds: [inactiveRole.id],
+          branchIds: ['7af7bcca-6d7f-4ff8-8ed6-012345678901'],
+          assignedOnly: false,
+        },
+        { actorId: userActorId }
+      )
       ).rejects.toThrowError(
         new DomainError('precondition_failed', `Cannot assign role: Role ${inactiveRole.roleCode} is not active.`)
       );

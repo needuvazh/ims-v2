@@ -20,6 +20,7 @@ export type PermissionRecord = {
   featureCode: string;
   actionCode: string;
   permissionCode: string;
+  permissionType: 'Module' | 'Menu' | 'Action' | 'Report' | 'DataScope';
   description: string | null;
   status: string;
 };
@@ -28,6 +29,7 @@ export const createRoleCommandSchema = z.object({
   roleCode: z.string().trim().min(2).max(100).toUpperCase(),
   roleName: z.string().trim().min(2).max(150),
   description: z.string().trim().nullable().optional(),
+  status: z.enum(['Draft', 'Active', 'Inactive', 'Archived']).optional(),
   permissionIds: z.array(z.string().uuid()).default([]),
   effectiveStartDate: z.coerce.date().optional(),
   effectiveEndDate: z.coerce.date().nullable().optional(),
@@ -47,15 +49,15 @@ export type UpdateRoleCommand = z.infer<typeof updateRoleCommandSchema>;
 /** Seed permission definitions by module. */
 export const systemPermissions = [
   // Organization
-  { moduleCode: 'organization', featureCode: 'institute',  actionCode: 'manage',  permissionCode: 'organization.manage',         description: 'Manage institutes and branches.' },
-  { moduleCode: 'organization', featureCode: 'branch',     actionCode: 'manage',  permissionCode: 'organization.branch.manage',  description: 'Create and update branches.' },
-  { moduleCode: 'organization', featureCode: 'department', actionCode: 'manage',  permissionCode: 'organization.department.manage', description: 'Manage departments.' },
+  { moduleCode: 'organization', featureCode: 'institute',  actionCode: 'manage',  permissionCode: 'organization.manage',         permissionType: 'Action', description: 'Manage institutes and branches.' },
+  { moduleCode: 'organization', featureCode: 'branch',     actionCode: 'manage',  permissionCode: 'organization.branch.manage',  permissionType: 'Action', description: 'Create and update branches.' },
+  { moduleCode: 'organization', featureCode: 'department', actionCode: 'manage',  permissionCode: 'organization.department.manage', permissionType: 'Action', description: 'Manage departments.' },
   // Identity & Access
-  { moduleCode: 'identity', featureCode: 'user',       actionCode: 'read',   permissionCode: 'identity.read',        description: 'View users and roles.' },
-  { moduleCode: 'identity', featureCode: 'user',       actionCode: 'write',  permissionCode: 'identity.write',       description: 'Create and update users.' },
-  { moduleCode: 'identity', featureCode: 'role',       actionCode: 'manage', permissionCode: 'identity.role.manage', description: 'Manage roles and permissions.' },
+  { moduleCode: 'identity', featureCode: 'user',       actionCode: 'read',   permissionCode: 'identity.read',        permissionType: 'Action', description: 'View users and roles.' },
+  { moduleCode: 'identity', featureCode: 'user',       actionCode: 'write',  permissionCode: 'identity.write',       permissionType: 'Action', description: 'Create and update users.' },
+  { moduleCode: 'identity', featureCode: 'role',       actionCode: 'manage', permissionCode: 'identity.role.manage', permissionType: 'Action', description: 'Manage roles and permissions.' },
   // Dashboard
-  { moduleCode: 'dashboard', featureCode: 'summary', actionCode: 'view', permissionCode: 'dashboard.view', description: 'View dashboard summary.' },
+  { moduleCode: 'dashboard', featureCode: 'summary', actionCode: 'view', permissionCode: 'dashboard.view', permissionType: 'Menu', description: 'View dashboard summary.' },
   // Certificates
-  { moduleCode: 'certificate', featureCode: 'public', actionCode: 'verify', permissionCode: 'certificate.verify', description: 'Verify public certificates.' },
+  { moduleCode: 'certificate', featureCode: 'public', actionCode: 'verify', permissionCode: 'certificate.verify', permissionType: 'Action', description: 'Verify public certificates.' },
 ] as const;

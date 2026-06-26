@@ -1,9 +1,12 @@
 import { Breadcrumbs, PageHeader } from '@ims/shared-ui';
 import { UserForm } from '../user-form';
+import { loadIdentityData } from '../../shared-data';
 
 export const metadata = { title: 'Create User - Identity | IMS Admin' };
 
-export default function CreateUserPage() {
+export default async function CreateUserPage() {
+  const data = await loadIdentityData();
+
   return (
     <div className="space-y-8">
       <PageHeader
@@ -21,7 +24,7 @@ export default function CreateUserPage() {
           />
         }
       />
-      <UserForm mode="create" />
+      <UserForm mode="create" branches={data.branches} />
     </div>
   );
 }

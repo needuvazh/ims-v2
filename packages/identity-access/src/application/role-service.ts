@@ -70,7 +70,7 @@ export class RoleService {
       roleCode: validated.roleCode,
       roleName: validated.roleName,
       description: validated.description ?? null,
-      status: 'Active',
+      status: validated.status ?? 'Active',
       effectiveStartDate: validated.effectiveStartDate,
       effectiveEndDate: validated.effectiveEndDate,
       permissions: [],

@@ -6,25 +6,33 @@ import { UserPlus, Save } from 'lucide-react';
 import {
   Alert,
   Button,
+  Checkbox,
   Input,
   Select,
 } from '@ims/shared-ui';
 import type { UserProfile } from '@ims/identity-access';
-import { createUserAction, type ActionResult } from '../actions';
+import { createUserAction, updateUserAction, type ActionResult } from '../actions';
 
 const initialState: ActionResult = { success: false };
 
 export interface UserFormProps {
   mode: 'create' | 'edit' | 'view';
   initialData?: UserProfile;
+  branches: Array<{ id: string; branchName: string }>;
 }
 
-export function UserForm({ mode, initialData }: UserFormProps) {
+function toDateInputValue(value?: Date | null) {
+  if (!value) return '';
+  return value.toISOString().slice(0, 10);
+}
+
+export function UserForm({ mode, initialData, branches }: UserFormProps) {
   const router = useRouter();
   const [state, formAction, isPending] = useActionState(
     async (prev: ActionResult, formData: FormData) => {
-      // In a real app, you would have an updateUserAction for edit mode
-      const result = await createUserAction(prev, formData);
+      const result = mode === 'edit' && initialData
+        ? await updateUserAction(initialData.id, prev, formData)
+        : await createUserAction(prev, formData);
       if (result.success) {
         router.push('/identity/users');
       }
@@ -34,6 +42,10 @@ export function UserForm({ mode, initialData }: UserFormProps) {
   );
 
   const isView = mode === 'view';
+  const selectedBranchIds = new Set((initialData?.dataScopes ?? [])
+    .filter((scope) => scope.scopeType === 'Branch' && scope.branchId)
+    .map((scope) => scope.branchId as string));
+  const assignedOnly = initialData?.dataScopes?.some((scope) => scope.scopeType === 'Branch' && scope.assignedOnly) ?? false;
 
   return (
     <form action={formAction} className="space-y-6 bg-[color:var(--ims-surface)] p-6 rounded-2xl border border-[color:var(--ims-border)]">
@@ -56,7 +68,7 @@ export function UserForm({ mode, initialData }: UserFormProps) {
           placeholder="fatima@institute.com" 
           required 
           defaultValue={initialData?.email}
-          disabled={isView}
+          disabled={isView || mode === 'edit'}
           data-testid="user-email-input" 
         />
         <Input 
@@ -65,6 +77,21 @@ export function UserForm({ mode, initialData }: UserFormProps) {
           placeholder="+966 xx xxxx xxxx" 
           defaultValue={initialData?.phone ?? ''}
           disabled={isView}
+        />
+        <Select
+          name="status"
+          label="Status"
+          placeholder="Select status"
+          defaultValue={initialData?.status ?? 'Active'}
+          options={[
+            { value: 'Draft', label: 'Draft' },
+            { value: 'Active', label: 'Active' },
+            { value: 'Inactive', label: 'Inactive' },
+            { value: 'Locked', label: 'Locked' },
+          ]}
+          required
+          disabled={isView}
+          data-testid="user-status-select"
         />
         {mode === 'create' && (
           <Input 
@@ -96,7 +123,76 @@ export function UserForm({ mode, initialData }: UserFormProps) {
           disabled={isView}
           data-testid="user-type-select"
         />
+        <Input
+          name="effectiveStartDate"
+          type="date"
+          label="Effective Start Date"
+          defaultValue={toDateInputValue(initialData?.effectiveStartDate)}
+          disabled={isView}
+        />
+        <Input
+          name="effectiveEndDate"
+          type="date"
+          label="Effective End Date"
+          defaultValue={toDateInputValue(initialData?.effectiveEndDate ?? null)}
+          disabled={isView}
+        />
       </div>
+
+      <div className="space-y-4 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-background)] p-4">
+        <div className="space-y-1">
+          <h3 className="text-sm font-semibold text-[color:var(--ims-ink)]">Branch Scope</h3>
+          <p className="text-xs text-[color:var(--ims-muted)]">
+            Select the branches this user can access. Leave empty only for Owner or Management users with global scope.
+          </p>
+        </div>
+
+        {isView ? (
+          <div className="flex flex-wrap gap-2">
+            {(initialData?.dataScopes ?? []).some((scope) => scope.scopeType === 'All') ? (
+              <span className="rounded-full border border-[color:var(--ims-border)] px-3 py-1 text-xs font-medium text-[color:var(--ims-ink)]">
+                All Branches
+              </span>
+            ) : (
+              branches
+                .filter((branch) => selectedBranchIds.has(branch.id))
+                .map((branch) => (
+                  <span key={branch.id} className="rounded-full border border-[color:var(--ims-border)] px-3 py-1 text-xs font-medium text-[color:var(--ims-ink)]">
+                    {branch.branchName}
+                  </span>
+                ))
+            )}
+            {assignedOnly ? (
+              <span className="rounded-full border border-[color:var(--ims-border)] px-3 py-1 text-xs font-medium text-[color:var(--ims-ink)]">
+                Assigned Only
+              </span>
+            ) : null}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+            {branches.map((branch) => (
+              <label key={branch.id} className="flex items-start gap-3 rounded-xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-3">
+                <Checkbox
+                  name="branchIds"
+                  value={branch.id}
+                  defaultChecked={selectedBranchIds.has(branch.id)}
+                  className="mt-1"
+                />
+                <span className="text-sm font-medium text-[color:var(--ims-ink)]">{branch.branchName}</span>
+              </label>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {!isView && (
+        <Checkbox
+          name="assignedOnly"
+          label="Assigned only"
+          description="Limit branch access to assigned records."
+          defaultChecked={assignedOnly}
+        />
+      )}
 
       {!isView && (
         <div className="flex justify-end gap-3 pt-4">

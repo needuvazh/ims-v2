@@ -7,6 +7,7 @@ import {
   Alert,
   Button,
   Input,
+  Select,
   Textarea,
 } from '@ims/shared-ui';
 import type { RoleRecord } from '@ims/identity-access';
@@ -17,6 +18,11 @@ const initialState: ActionResult = { success: false };
 export interface RoleFormProps {
   mode: 'create' | 'edit' | 'view';
   initialData?: RoleRecord;
+}
+
+function toDateInputValue(value?: Date | null) {
+  if (!value) return '';
+  return value.toISOString().slice(0, 10);
 }
 
 export function RoleForm({ mode, initialData }: RoleFormProps) {
@@ -64,6 +70,35 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
           label="Description" 
           placeholder="Full administrative access." 
           defaultValue={initialData?.description ?? ''}
+          disabled={isView}
+        />
+        <Select
+          name="status"
+          label="Status"
+          placeholder="Select status"
+          defaultValue={initialData?.status ?? 'Active'}
+          options={[
+            { value: 'Draft', label: 'Draft' },
+            { value: 'Active', label: 'Active' },
+            { value: 'Inactive', label: 'Inactive' },
+            { value: 'Archived', label: 'Archived' },
+          ]}
+          required
+          disabled={isView}
+          data-testid="role-status-select"
+        />
+        <Input
+          name="effectiveStartDate"
+          type="date"
+          label="Effective Start Date"
+          defaultValue={toDateInputValue(initialData?.effectiveStartDate)}
+          disabled={isView}
+        />
+        <Input
+          name="effectiveEndDate"
+          type="date"
+          label="Effective End Date"
+          defaultValue={toDateInputValue(initialData?.effectiveEndDate ?? null)}
           disabled={isView}
         />
       </div>

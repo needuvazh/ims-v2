@@ -9,10 +9,18 @@ type PermissionCodeRow = {
   };
 };
 
-type UserRoleRow = {
+type UserRoleWithPermissionsRow = {
   role: {
     roleCode: string;
     permissions: PermissionCodeRow[];
+  };
+};
+
+type UserRoleSummaryRow = {
+  role: {
+    id: string;
+    roleCode: string;
+    roleName: string;
   };
 };
 
@@ -23,23 +31,6 @@ type UserDataScopeRow = {
   assignedOnly: boolean;
 };
 
-type UserWithCredentialsRow = {
-  id: string;
-  fullName: string;
-  email: string;
-  phone: string | null;
-  userType: string;
-  status: string;
-  passwordHash: string;
-  isDeleted: boolean;
-  effectiveStartDate: Date;
-  effectiveEndDate: Date | null;
-  failedLoginAttempts: number;
-  lockoutUntil: Date | null;
-  roles: UserRoleRow[];
-  dataScopes: UserDataScopeRow[];
-};
-
 type UserProfileRow = {
   id: string;
   fullName: string;
@@ -47,9 +38,12 @@ type UserProfileRow = {
   phone: string | null;
   userType: string;
   status: string;
+  lastLoginAt: Date | null;
   isDeleted: boolean;
   effectiveStartDate: Date;
   effectiveEndDate: Date | null;
+  roles?: UserRoleSummaryRow[];
+  dataScopes?: UserDataScopeRow[];
 };
 
 type UserRoleListRow = {
@@ -60,14 +54,37 @@ type UserRoleListRow = {
   };
 };
 
+type UserWithCredentialsRow = {
+  id: string;
+  fullName: string;
+  email: string;
+  phone: string | null;
+  userType: string;
+  status: string;
+  lastLoginAt: Date | null;
+  passwordHash: string;
+  isDeleted: boolean;
+  effectiveStartDate: Date;
+  effectiveEndDate: Date | null;
+  failedLoginAttempts: number;
+  lockoutUntil: Date | null;
+  roles: UserRoleWithPermissionsRow[];
+  dataScopes: UserDataScopeRow[];
+};
+
 export class PrismaUserRepository implements UserRepository, AuthUserRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  private toProfile(row: {
-    id: string; fullName: string; email: string; phone: string | null;
-    userType: string; status: string; effectiveStartDate: Date; effectiveEndDate: Date | null;
-  }): UserProfile {
-    return { 
+  private toProfile(
+    row: Pick<
+      UserProfileRow,
+      'id' | 'fullName' | 'email' | 'phone' | 'userType' | 'status' | 'lastLoginAt' | 'effectiveStartDate' | 'effectiveEndDate'
+    > & {
+      roles?: UserRoleSummaryRow[];
+      dataScopes?: UserDataScopeRow[];
+    },
+  ): UserProfile {
+    return {
       id: row.id as Uuid,
       fullName: row.fullName,
       email: row.email,
@@ -75,6 +92,19 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
       // Cast: DB stores a raw string; Zod schema at API boundary ensures only valid UserType values are written.
       userType: row.userType as UserProfile['userType'],
       status: row.status as UserProfile['status'],
+      lastLoginAt: row.lastLoginAt,
+      roleCount: row.roles?.length,
+      roleSummaries: row.roles?.map((item) => ({
+        id: item.role.id as Uuid,
+        roleCode: item.role.roleCode,
+        roleName: item.role.roleName,
+      })),
+      dataScopes: row.dataScopes?.map((scope) => ({
+        scopeType: scope.scopeType,
+        branchId: scope.branchId,
+        departmentId: scope.departmentId,
+        assignedOnly: scope.assignedOnly,
+      })),
       effectiveStartDate: row.effectiveStartDate,
       effectiveEndDate: row.effectiveEndDate,
     };
@@ -90,18 +120,15 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
             role: {
               status: 'Active',
               effectiveStartDate: { lte: now },
-              OR: [
-                { effectiveEndDate: null },
-                { effectiveEndDate: { gte: now } }
-              ]
-            }
+              OR: [{ effectiveEndDate: null }, { effectiveEndDate: { gte: now } }],
+            },
           },
           include: {
             role: {
               include: {
                 permissions: {
                   where: { permission: { status: 'Active' } },
-                  include: { permission: true }
+                  include: { permission: true },
                 },
               },
             },
@@ -113,17 +140,10 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
 
     if (!row || row.isDeleted) return null;
 
-    const roles = row.roles.map((userRole: UserRoleRow) => userRole.role.roleCode);
-    const permissions = row.roles.flatMap((userRole: UserRoleRow) =>
-      userRole.role.permissions.map((permissionRow: PermissionCodeRow) => permissionRow.permission.permissionCode),
+    const roles = row.roles.map((userRole) => userRole.role.roleCode);
+    const permissions = row.roles.flatMap((userRole) =>
+      userRole.role.permissions.map((permissionRow) => permissionRow.permission.permissionCode),
     );
-
-    const dataScopes = (row.dataScopes || []).map((ds) => ({
-      scopeType: ds.scopeType,
-      branchId: ds.branchId,
-      departmentId: ds.departmentId,
-      assignedOnly: ds.assignedOnly,
-    }));
 
     return {
       id: row.id as Uuid,
@@ -132,10 +152,16 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
       phone: row.phone,
       userType: row.userType as UserProfile['userType'],
       status: row.status as UserProfile['status'],
+      lastLoginAt: row.lastLoginAt,
       passwordHash: row.passwordHash,
       roles: [...new Set(roles)],
       permissions: [...new Set(permissions)],
-      dataScopes,
+      dataScopes: row.dataScopes.map((scope) => ({
+        scopeType: scope.scopeType,
+        branchId: scope.branchId,
+        departmentId: scope.departmentId,
+        assignedOnly: scope.assignedOnly,
+      })),
       effectiveStartDate: row.effectiveStartDate,
       effectiveEndDate: row.effectiveEndDate,
       failedLoginAttempts: row.failedLoginAttempts,
@@ -148,14 +174,46 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
   }
 
   async findById(userId: string): Promise<UserProfile | null> {
-    // Use findUnique for PK lookups — semantically correct and uses the PK index directly.
-    const row = (await this.prisma.user.findUnique({ where: { id: userId } })) as UserProfileRow | null;
-    // Exclude soft-deleted records after retrieval (findUnique does not support composite where + non-unique filter)
+    const row = (await this.prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        roles: {
+          include: {
+            role: {
+              select: {
+                id: true,
+                roleCode: true,
+                roleName: true,
+              },
+            },
+          },
+        },
+        dataScopes: true,
+      },
+    })) as UserProfileRow | null;
+
     return row && !row.isDeleted ? this.toProfile(row) : null;
   }
 
   async findByEmail(email: string): Promise<UserProfile | null> {
-    const row = (await this.prisma.user.findUnique({ where: { email } })) as UserProfileRow | null;
+    const row = (await this.prisma.user.findUnique({
+      where: { email },
+      include: {
+        roles: {
+          include: {
+            role: {
+              select: {
+                id: true,
+                roleCode: true,
+                roleName: true,
+              },
+            },
+          },
+        },
+        dataScopes: true,
+      },
+    })) as UserProfileRow | null;
+
     return row && !row.isDeleted ? this.toProfile(row) : null;
   }
 
@@ -172,7 +230,22 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
         effectiveStartDate: profile.effectiveStartDate ?? undefined,
         effectiveEndDate: profile.effectiveEndDate ?? null,
       },
+      include: {
+        roles: {
+          include: {
+            role: {
+              select: {
+                id: true,
+                roleCode: true,
+                roleName: true,
+              },
+            },
+          },
+        },
+        dataScopes: true,
+      },
     })) as UserProfileRow;
+
     return this.toProfile(row);
   }
 
@@ -191,7 +264,22 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
         ...(updates.effectiveEndDate !== undefined && { effectiveEndDate: updates.effectiveEndDate }),
         updatedAt: new Date(),
       },
+      include: {
+        roles: {
+          include: {
+            role: {
+              select: {
+                id: true,
+                roleCode: true,
+                roleName: true,
+              },
+            },
+          },
+        },
+        dataScopes: true,
+      },
     })) as UserProfileRow;
+
     return this.toProfile(row);
   }
 
@@ -205,15 +293,32 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
         isDeleted: false,
         ...(filters?.status ? { status: filters.status } : {}),
         ...(filters?.userType ? { userType: filters.userType } : {}),
-        ...(filters?.search ? {
-          OR: [
-            { fullName: { contains: filters.search, mode: 'insensitive' } },
-            { email: { contains: filters.search, mode: 'insensitive' } },
-          ],
-        } : {}),
+        ...(filters?.search
+          ? {
+              OR: [
+                { fullName: { contains: filters.search, mode: 'insensitive' } },
+                { email: { contains: filters.search, mode: 'insensitive' } },
+              ],
+            }
+          : {}),
+      },
+      include: {
+        roles: {
+          include: {
+            role: {
+              select: {
+                id: true,
+                roleCode: true,
+                roleName: true,
+              },
+            },
+          },
+        },
+        dataScopes: true,
       },
       orderBy: { fullName: 'asc' },
     })) as UserProfileRow[];
+
     return rows.map((row) => this.toProfile(row));
   }
 
@@ -234,11 +339,37 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
       where: { userId },
       include: { role: { select: { id: true, roleCode: true, roleName: true } } },
     })) as UserRoleListRow[];
-    return rows.map((row: UserRoleListRow) => ({
+
+    return rows.map((row) => ({
       id: row.role.id,
       roleCode: row.role.roleCode,
       roleName: row.role.roleName,
     }));
+  }
+
+  async replaceDataScopes(
+    userId: string,
+    scopes: Array<{
+      scopeType: string;
+      branchId: string | null;
+      departmentId: string | null;
+      assignedOnly: boolean;
+    }>,
+    actorId: string,
+  ): Promise<void> {
+    await this.prisma.$transaction([
+      this.prisma.userDataScope.deleteMany({ where: { userId } }),
+      this.prisma.userDataScope.createMany({
+        data: scopes.map((scope) => ({
+          userId,
+          scopeType: scope.scopeType,
+          branchId: scope.branchId,
+          departmentId: scope.departmentId,
+          assignedOnly: scope.assignedOnly,
+          createdBy: actorId,
+        })),
+      }),
+    ]);
   }
 
   async incrementFailedAttempts(userId: string, lockoutMinutes = 15): Promise<void> {

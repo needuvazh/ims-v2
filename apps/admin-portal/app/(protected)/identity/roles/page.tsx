@@ -51,6 +51,15 @@ export default async function IdentityRolesPage(props: {
   const offset = (page - 1) * limit;
   const paginatedRoles = filteredRoles.slice(offset, offset + limit);
 
+  function formatDate(value?: Date | null) {
+    if (!value) return '—';
+    return new Intl.DateTimeFormat('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    }).format(value);
+  }
+
   return (
     <div className="space-y-8">
       <PageHeader
@@ -83,8 +92,10 @@ export default async function IdentityRolesPage(props: {
               key: 'status',
               label: 'Status',
               options: [
+                { value: 'Draft', label: 'Draft' },
                 { value: 'Active', label: 'Active' },
                 { value: 'Inactive', label: 'Inactive' },
+                { value: 'Archived', label: 'Archived' },
               ]
             }
           ]}
@@ -103,6 +114,7 @@ export default async function IdentityRolesPage(props: {
                 <TableRow>
                   <TableHead>Code</TableHead>
                   <TableHead>Name</TableHead>
+                  <TableHead>Validity</TableHead>
                   <TableHead>Permissions</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
@@ -112,7 +124,14 @@ export default async function IdentityRolesPage(props: {
                 {paginatedRoles.map((role) => (
                   <TableRow key={role.id} data-testid={`role-row-${role.id}`}>
                     <TableCell className="font-mono text-xs text-[color:var(--ims-muted)]">{role.roleCode}</TableCell>
-                    <TableCell className="font-medium text-[color:var(--ims-ink)]">{role.roleName}</TableCell>
+                    <TableCell>
+                      <div className="font-medium text-[color:var(--ims-ink)]">{role.roleName}</div>
+                      <div className="text-xs text-[color:var(--ims-muted)] line-clamp-1">{role.description ?? '—'}</div>
+                    </TableCell>
+                    <TableCell className="text-sm text-[color:var(--ims-muted)]">
+                      <div>{formatDate(role.effectiveStartDate)}</div>
+                      <div>{role.effectiveEndDate ? `to ${formatDate(role.effectiveEndDate)}` : 'Open ended'}</div>
+                    </TableCell>
                     <TableCell>
                       <Badge variant="default">{role.permissions.length}</Badge>
                     </TableCell>

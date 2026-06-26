@@ -30,6 +30,14 @@ export type UserProfile = {
   /** Validated discriminant — use userTypeSchema for parsing untrusted input. */
   userType: UserType;
   status: UserStatus;
+  lastLoginAt?: Date | null;
+  roleCount?: number;
+  roleSummaries?: Array<{
+    id: Uuid;
+    roleCode: string;
+    roleName: string;
+  }>;
+  dataScopes?: UserDataScopeDto[];
   effectiveStartDate?: Date;
   effectiveEndDate?: Date | null;
 };
@@ -60,7 +68,10 @@ export const createUserCommandSchema = z.object({
   phone: z.string().trim().nullable().optional(),
   userType: userTypeSchema,
   password: passwordSchema,
+  status: z.enum(['Draft', 'Active', 'Inactive', 'Locked']).optional(),
   roleIds: z.array(z.string().uuid()).default([]),
+  branchIds: z.array(z.string().uuid()).default([]),
+  assignedOnly: z.boolean().optional().default(false),
   effectiveStartDate: z.coerce.date().optional(),
   effectiveEndDate: z.coerce.date().nullable().optional(),
 });
@@ -70,6 +81,8 @@ export const updateUserCommandSchema = z.object({
   phone: z.string().trim().nullable().optional(),
   userType: userTypeSchema.optional(),
   status: z.enum(['Draft', 'Active', 'Inactive', 'Locked']).optional(),
+  branchIds: z.array(z.string().uuid()).optional(),
+  assignedOnly: z.boolean().optional(),
   effectiveStartDate: z.coerce.date().optional(),
   effectiveEndDate: z.coerce.date().nullable().optional(),
 });

@@ -27,6 +27,7 @@ describe('RoleService Lifecycle Invariant and Audit Tests', () => {
     moduleCode: 'test',
     featureCode: 'test',
     actionCode: 'test',
+    permissionType: 'Action',
     description: null,
     status: 'Active',
   };
@@ -37,6 +38,7 @@ describe('RoleService Lifecycle Invariant and Audit Tests', () => {
     moduleCode: 'test',
     featureCode: 'test',
     actionCode: 'test',
+    permissionType: 'Action',
     description: null,
     status: 'Inactive',
   };
