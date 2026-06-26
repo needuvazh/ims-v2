@@ -1,5 +1,8 @@
 import type { HTMLAttributes, ReactNode } from 'react';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 import { cn } from '../utils/cn';
+import { Button } from './button';
 
 export interface PageHeaderProps extends HTMLAttributes<HTMLElement> {
   title: string;
@@ -7,6 +10,7 @@ export interface PageHeaderProps extends HTMLAttributes<HTMLElement> {
   eyebrow?: string;
   breadcrumbs?: ReactNode;
   actions?: ReactNode;
+  backUrl?: string;
 }
 
 /** Server-compatible Page Header with entrance animations. */
@@ -16,6 +20,7 @@ export function PageHeader({
   eyebrow,
   breadcrumbs,
   actions,
+  backUrl,
   className,
   ...props
 }: PageHeaderProps) {
@@ -34,9 +39,18 @@ export function PageHeader({
             {eyebrow}
           </p>
         )}
-        <h1 className="font-[family-name:var(--font-display,serif)] text-3xl tracking-tight text-[color:var(--ims-ink)] sm:text-4xl animate-fade-in-up">
-          {title}
-        </h1>
+        <div className="flex items-center gap-4 animate-fade-in-up">
+          {backUrl && (
+            <Link href={backUrl} aria-label="Go back">
+              <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full border border-[color:var(--ims-border)]">
+                <ArrowLeft className="h-4 w-4" />
+              </Button>
+            </Link>
+          )}
+          <h1 className="font-[family-name:var(--font-display,serif)] text-3xl tracking-tight text-[color:var(--ims-ink)] sm:text-4xl">
+            {title}
+          </h1>
+        </div>
         {description && (
           <p className="max-w-2xl text-sm leading-6 text-[color:var(--ims-muted)] sm:text-base animate-fade-in-up delay-100">
             {description}

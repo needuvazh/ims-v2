@@ -5,7 +5,7 @@ import { cn } from '../utils/cn';
 
 export function Table({ className, ...props }: HTMLAttributes<HTMLTableElement>) {
   return (
-    <div className="overflow-hidden rounded-[24px] border border-[color:var(--ims-border)]">
+    <div className="overflow-hidden border border-[color:var(--ims-border)]">
       <div className="overflow-x-auto">
         <table
           className={cn('w-full border-collapse bg-[color:var(--ims-surface)] text-sm', className)}

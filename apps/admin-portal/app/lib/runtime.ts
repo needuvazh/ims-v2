@@ -21,8 +21,22 @@ export const sessionRepository = new PrismaAuthSessionRepository(prisma);
 const resetTokenRepository = new PrismaAuthResetTokenRepository(prisma);
 
 // ─── Application Services ─────────────────────────────────────────────────
-export const organizationService = new OrganizationService(organizationRepository, auditRepository);
-export const authService = new AuthService(userRepository, sessionRepository, resetTokenRepository, auditRepository);
 export const userService = new UserService(userRepository, roleRepository, auditRepository);
+export const authService = new AuthService(userRepository, sessionRepository, resetTokenRepository, auditRepository);
 export const roleService = new RoleService(roleRepository, auditRepository);
+
+export const organizationService = new OrganizationService(
+  organizationRepository,
+  auditRepository,
+  {
+    isActiveUser: async (userId: string) => {
+      try {
+        const user = await userService.getUser(userId);
+        return user.status === 'Active';
+      } catch {
+        return false;
+      }
+    },
+  }
+);
 

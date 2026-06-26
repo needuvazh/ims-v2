@@ -9,7 +9,17 @@ export function resolvePortalNavigation(portal: Portal, session: Session | null)
   const items =
     portal === 'admin' ? adminNavigation : portal === 'student' ? studentNavigation : trainerNavigation;
 
-  return items.filter((item) => !item.permission || hasPermission(session, item.permission));
+  return items
+    .filter((item) => !item.permission || hasPermission(session, item.permission))
+    .map((item) => {
+      if (item.items) {
+        return {
+          ...item,
+          items: item.items.filter((sub) => !sub.permission || hasPermission(session, sub.permission)),
+        };
+      }
+      return item;
+    });
 }
 
 export function resolvePortalShellUser(session: Session | null) {

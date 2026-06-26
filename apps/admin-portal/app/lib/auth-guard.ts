@@ -81,5 +81,33 @@ export async function assertBranchScope(branchId: string): Promise<Session> {
   if (!isAuthorizedForBranch(session, branchId)) {
     throw new DomainError('forbidden', 'Access denied: you are not authorized to access this branch.');
   }
+
+  try {
+    const { organizationService } = await import('./runtime');
+    const isBranchOk = await organizationService.isBranchActive(branchId);
+    if (!isBranchOk) {
+      throw new DomainError('inactive_branch_cannot_be_used', 'Access denied: target branch is inactive or outside its effective date range.');
+    }
+  } catch (err) {
+    if (err instanceof DomainError && err.code === 'inactive_branch_cannot_be_used') {
+      throw err;
+    }
+    throw new DomainError('forbidden', 'Access denied: unable to verify branch status.');
+  }
+
+  return session;
+}
+
+/**
+ * Assert that the current user has at least one of the specified permissions.
+ * Throws unauthorized if not logged in, and forbidden if permission check fails.
+ */
+export async function assertAnyPermission(permissionCodes: string[]): Promise<Session> {
+  const session = await getSession();
+  const { hasPermission } = await import('@ims/shared-auth');
+  const hasAny = permissionCodes.some((code) => hasPermission(session, code));
+  if (!hasAny) {
+    throw new DomainError('forbidden', `Access denied: missing one of required permissions [${permissionCodes.join(', ')}].`);
+  }
   return session;
 }

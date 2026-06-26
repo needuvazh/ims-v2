@@ -5,6 +5,7 @@ import { decodeSession, sessionCookieName, isGlobalScope } from '@ims/shared-aut
 import { AppShell } from '@ims/shared-ui';
 import { resolvePortalNavigation, resolvePortalShellUser } from '@ims/identity-access';
 import { UserControls } from './user-controls';
+import { LayoutDashboard, Building2, ShieldCheck } from 'lucide-react';
 
 export default async function ProtectedLayout({ children }: { children: ReactNode }) {
   const cookieStore = await cookies();
@@ -13,7 +14,19 @@ export default async function ProtectedLayout({ children }: { children: ReactNod
   if (!session) redirect('/sign-in');
 
   const shellUser = resolvePortalShellUser(session);
-  const nav = resolvePortalNavigation('admin', session);
+  const rawNav = resolvePortalNavigation('admin', session);
+  const nav = rawNav.map((item) => {
+    if (item.href === '/dashboard') {
+      return { ...item, icon: <LayoutDashboard className="h-4.5 w-4.5" /> };
+    }
+    if (item.href === '/organization') {
+      return { ...item, icon: <Building2 className="h-4.5 w-4.5" /> };
+    }
+    if (item.href === '/identity') {
+      return { ...item, icon: <ShieldCheck className="h-4.5 w-4.5" /> };
+    }
+    return item;
+  });
 
   const isGlobal = isGlobalScope(session);
   let branches: Array<{ id: string; name: string }> = [];

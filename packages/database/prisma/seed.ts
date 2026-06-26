@@ -8,6 +8,7 @@ const systemPermissions = [
   { moduleCode: 'organization', featureCode: 'institute',   actionCode: 'manage', permissionCode: 'organization.manage',            permissionType: 'Action' as const, description: 'Manage institutes and branches.' },
   { moduleCode: 'organization', featureCode: 'branch',      actionCode: 'manage', permissionCode: 'organization.branch.manage',     permissionType: 'Action' as const, description: 'Create and update branches.' },
   { moduleCode: 'organization', featureCode: 'department',  actionCode: 'manage', permissionCode: 'organization.department.manage', permissionType: 'Action' as const, description: 'Manage departments.' },
+  { moduleCode: 'organization', featureCode: 'classroom',   actionCode: 'manage', permissionCode: 'organization.classroom.manage',  permissionType: 'Action' as const, description: 'Manage classrooms.' },
   
   // Identity & Access (RBAC)
   { moduleCode: 'identity',     featureCode: 'user',        actionCode: 'read',   permissionCode: 'identity.read',                  permissionType: 'Action' as const, description: 'View users and roles.' },
@@ -51,6 +52,7 @@ async function seed() {
 
   // 1. Clean up existing relations to prevent duplicate key errors in fresh seeds
   console.log('🧹 Cleaning old records...');
+  await prisma.passwordResetToken.deleteMany({});
   await prisma.loginHistory.deleteMany({});
   await prisma.userSession.deleteMany({});
   await prisma.userDataScope.deleteMany({});
@@ -59,6 +61,8 @@ async function seed() {
   await prisma.user.deleteMany({});
   await prisma.role.deleteMany({});
   await prisma.permission.deleteMany({});
+  await prisma.classroom.deleteMany({});
+  await prisma.department.deleteMany({});
   await prisma.branch.deleteMany({});
   await prisma.institute.deleteMany({});
 
@@ -119,7 +123,7 @@ async function seed() {
 
   // Branch Manager gets branch-scoped management permissions
   const managerPermCodes = [
-    'organization.branch.manage', 'organization.department.manage',
+    'organization.branch.manage', 'organization.department.manage', 'organization.classroom.manage',
     'identity.read', 'lead.read', 'lead.write', 'lead.convert',
     'student.read', 'student.write', 'enrollment.create',
     'payment.create', 'refund.request', 'course.manage', 'schedule.manage',
@@ -232,6 +236,86 @@ async function seed() {
     },
   });
   console.log(`  ✓ Branch created: Muscat Campus (AST-MUSCAT)`);
+
+  // Seed Riyadh Departments & Classrooms
+  const riyadhItDept = await prisma.department.create({
+    data: {
+      id: crypto.randomUUID(),
+      branchId: riyadhBranch.id,
+      departmentCode: 'AST-RIYADH-IT',
+      departmentName: 'Information Technology',
+      description: 'IT and software development training department.',
+      status: 'Active',
+      effectiveStartDate: new Date(),
+    },
+  });
+  console.log(`  ✓ Department created: Information Technology (AST-RIYADH-IT)`);
+
+  const riyadhBizDept = await prisma.department.create({
+    data: {
+      id: crypto.randomUUID(),
+      branchId: riyadhBranch.id,
+      departmentCode: 'AST-RIYADH-BIZ',
+      departmentName: 'Business Administration',
+      description: 'Management and business training department.',
+      status: 'Active',
+      effectiveStartDate: new Date(),
+    },
+  });
+  console.log(`  ✓ Department created: Business Administration (AST-RIYADH-BIZ)`);
+
+  const riyadhLabA = await prisma.classroom.create({
+    data: {
+      id: crypto.randomUUID(),
+      branchId: riyadhBranch.id,
+      classroomName: 'Lab A',
+      capacity: 25,
+      location: '1st Floor, Building A',
+      status: 'Active',
+      effectiveStartDate: new Date(),
+    },
+  });
+  console.log(`  ✓ Classroom created: Lab A (Riyadh)`);
+
+  const riyadhLecture1 = await prisma.classroom.create({
+    data: {
+      id: crypto.randomUUID(),
+      branchId: riyadhBranch.id,
+      classroomName: 'Lecture Hall 1',
+      capacity: 45,
+      location: '2nd Floor, Building A',
+      status: 'Active',
+      effectiveStartDate: new Date(),
+    },
+  });
+  console.log(`  ✓ Classroom created: Lecture Hall 1 (Riyadh)`);
+
+  // Seed Muscat Departments & Classrooms
+  const muscatEngDept = await prisma.department.create({
+    data: {
+      id: crypto.randomUUID(),
+      branchId: muscatBranch.id,
+      departmentCode: 'AST-MUSCAT-ENG',
+      departmentName: 'English Training',
+      description: 'Language training and IELTS preparation.',
+      status: 'Active',
+      effectiveStartDate: new Date(),
+    },
+  });
+  console.log(`  ✓ Department created: English Training (AST-MUSCAT-ENG)`);
+
+  const muscatRoom101 = await prisma.classroom.create({
+    data: {
+      id: crypto.randomUUID(),
+      branchId: muscatBranch.id,
+      classroomName: 'Room 101',
+      capacity: 20,
+      location: 'Ground Floor, Muscat Campus',
+      status: 'Active',
+      effectiveStartDate: new Date(),
+    },
+  });
+  console.log(`  ✓ Classroom created: Room 101 (Muscat)`);
 
   // 6. Seed Users, Roles, and Data Scopes
   const passwordHash = await bcrypt.hash('Password@123', 12);

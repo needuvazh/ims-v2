@@ -1,16 +1,18 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, type ReactNode } from 'react';
-import { Menu, X } from 'lucide-react';
+import { useState, useEffect, Suspense, type ReactNode } from 'react';
+import { Menu, X, ChevronDown } from 'lucide-react';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { cn } from '../utils/cn';
-import { Badge } from './badge';
 
 export interface NavItem {
   href: string;
   label: string;
   icon?: ReactNode;
   current?: boolean;
+  items?: NavItem[];
+  category?: string;
 }
 
 export interface AppShellProps {
@@ -24,88 +26,206 @@ export interface AppShellProps {
   className?: string;
 }
 
-function SidebarContent({
-  appName,
-  branchName,
-  userName,
-  userAvatar,
-  items,
-  aside,
-  onClose,
-}: Omit<AppShellProps, 'children'> & { onClose?: () => void }) {
+function BrandLogo({ appName, isCollapsed }: { appName: string; isCollapsed?: boolean }) {
   return (
-    <div className="flex h-full flex-col p-5">
-      {/* Header */}
-      <div className="space-y-3 border-b border-[color:var(--ims-border)] pb-5">
-        <div className="flex items-center justify-between">
-          <Badge>{appName}</Badge>
-          {onClose && (
-            <button
-              onClick={onClose}
-              className="rounded-full p-1 text-[color:var(--ims-muted)] hover:bg-[color:var(--ims-accent-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] lg:hidden"
-              aria-label="Close sidebar"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          )}
-        </div>
-        <div className="space-y-0.5">
-          <p className="font-[family-name:var(--font-display,serif)] text-xl font-semibold text-[color:var(--ims-ink)]">
+    <div className={cn("flex items-center gap-3 transition-all duration-300", isCollapsed ? "justify-center" : "px-2")}>
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white shadow-md shadow-violet-500/30">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-5 w-5"
+        >
+          <path d="m12 3-10 9h3v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8h3L12 3z" />
+        </svg>
+      </div>
+      {!isCollapsed && (
+        <div className="flex flex-col">
+          <span className="font-[family-name:var(--font-display)] text-base font-extrabold tracking-tight text-slate-800 leading-none">
             {appName}
-          </p>
-          <p className="text-xs text-[color:var(--ims-muted)]">
-            {branchName ? `Branch: ${branchName}` : 'Single-client scope'}
-          </p>
+          </span>
+          <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase mt-0.5">
+            Management Portal
+          </span>
         </div>
-      </div>
-
-      {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto py-4" aria-label="Main navigation">
-        <ul className="space-y-1">
-          {items.map((item) => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                onClick={onClose}
-                className={cn(
-                  'group flex items-center gap-3 rounded-2xl px-4 py-2.5 text-sm font-medium transition-all duration-300',
-                  item.current
-                    ? 'bg-[color:var(--ims-ink)] text-[color:var(--ims-paper)] shadow-md'
-                    : 'text-[color:var(--ims-ink)] hover:bg-[color:var(--ims-accent-soft)] hover:translate-x-1',
-                )}
-                aria-current={item.current ? 'page' : undefined}
-              >
-                {item.icon && (
-                  <span className={cn('h-4 w-4 shrink-0 transition-transform duration-300', !item.current && 'group-hover:text-[color:var(--ims-brass)] group-hover:scale-110')} aria-hidden="true">
-                    {item.icon}
-                  </span>
-                )}
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      {/* Footer / user area */}
-      <div className="space-y-3 border-t border-[color:var(--ims-border)] pt-4">
-        {userAvatar || (
-          <div className="flex items-center gap-3 rounded-2xl bg-[color:var(--ims-accent-soft)] px-4 py-2.5 hover:shadow-md transition-shadow">
-            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[color:var(--ims-ink)] text-xs font-bold text-[color:var(--ims-paper)]">
-              {userName?.[0]?.toUpperCase() ?? 'G'}
-            </div>
-            <span className="text-xs font-medium text-[color:var(--ims-ink)]">
-              {userName ?? 'Guest'}
-            </span>
-          </div>
-        )}
-        {aside}
-      </div>
+      )}
     </div>
   );
 }
 
-/** Client component App Shell with responsive sidebar. */
+function SidebarNavList({
+  items,
+  isCollapsed,
+  onClose,
+  onExpand,
+}: {
+  items: NavItem[];
+  isCollapsed?: boolean;
+  onClose?: () => void;
+  onExpand?: () => void;
+}) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
+
+  const isItemActive = (href: string) => {
+    const [itemPath] = href.split('?');
+    return pathname === itemPath;
+  };
+
+  const isParentActive = (item: NavItem) => {
+    const [itemPath] = item.href.split('?');
+    if (pathname === itemPath && !item.items) return true;
+    if (item.items) {
+      return item.items.some((subItem) => isItemActive(subItem.href));
+    }
+    return pathname === itemPath;
+  };
+
+  // Group items by category
+  const categories: Record<string, NavItem[]> = {};
+  items.forEach((item) => {
+    const cat = item.category || 'System';
+    if (!categories[cat]) categories[cat] = [];
+    categories[cat].push(item);
+  });
+
+  useEffect(() => {
+    items.forEach((item) => {
+      if (item.items && isParentActive(item)) {
+        setExpandedItems((prev) => ({ ...prev, [item.href]: true }));
+      }
+    });
+  }, [pathname, items]);
+
+  return (
+    <div className="space-y-6">
+      {Object.entries(categories).map(([categoryName, catItems]) => (
+        <div key={categoryName} className="space-y-1.5">
+          {!isCollapsed ? (
+            <p className="px-4 text-[10px] font-bold uppercase tracking-wider text-slate-400/80">
+              {categoryName}
+            </p>
+          ) : (
+            <div className="mx-4 my-2 border-t border-slate-100" />
+          )}
+
+          <ul className="space-y-1">
+            {catItems.map((item) => {
+              const hasSubmenu = item.items && item.items.length > 0;
+              const isExpanded = !!expandedItems[item.href];
+              const isActive = isParentActive(item);
+
+              return (
+                <li key={item.href} className="space-y-1">
+                  {hasSubmenu ? (
+                    <div>
+                      <button
+                        onClick={() => {
+                          if (isCollapsed && onExpand) {
+                            onExpand();
+                          }
+                          setExpandedItems((prev) => ({
+                            ...prev,
+                            [item.href]: !prev[item.href],
+                          }));
+                        }}
+                        className={cn(
+                          'group flex w-full items-center justify-between rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-300',
+                          isActive
+                            ? 'bg-white/80 text-violet-700 font-bold border border-white shadow-sm'
+                            : 'text-slate-600 hover:bg-white/60 hover:text-violet-700',
+                          isCollapsed && 'justify-center px-0'
+                        )}
+                      >
+                        <div className="flex items-center gap-3">
+                          {item.icon && (
+                            <span
+                              className={cn(
+                                'h-5 w-5 shrink-0 transition-transform duration-300',
+                                isActive ? 'text-violet-600' : 'text-slate-400 group-hover:text-violet-600 group-hover:scale-110'
+                              )}
+                              aria-hidden="true"
+                            >
+                              {item.icon}
+                            </span>
+                          )}
+                          {!isCollapsed && <span>{item.label}</span>}
+                        </div>
+                        {!isCollapsed && (
+                          <ChevronDown
+                            className={cn(
+                              'h-4 w-4 text-slate-400 transition-transform duration-300',
+                              isExpanded && 'rotate-180'
+                            )}
+                          />
+                        )}
+                      </button>
+
+                      {isExpanded && !isCollapsed && (
+                        <ul className="mt-1 ml-6 border-l border-slate-100 pl-3 space-y-1">
+                          {item.items!.map((subItem) => {
+                            const isSubActive = isItemActive(subItem.href);
+                            return (
+                              <li key={subItem.href}>
+                                <Link
+                                  href={subItem.href}
+                                  onClick={onClose}
+                                  className={cn(
+                                    'group flex items-center gap-3 rounded-md px-3 py-1.5 text-xs font-semibold transition-all duration-300',
+                                    isSubActive
+                                      ? 'bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow-sm shadow-violet-500/15'
+                                      : 'text-slate-500 hover:text-violet-700 hover:bg-white/60 hover:translate-x-1',
+                                  )}
+                                >
+                                  {subItem.label}
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      )}
+                    </div>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      onClick={onClose}
+                      className={cn(
+                        'group flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-300',
+                        isActive
+                          ? 'bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow-sm shadow-violet-500/20'
+                          : 'text-slate-600 hover:bg-white/60 hover:text-violet-700 hover:translate-x-1',
+                        isCollapsed && 'justify-center px-0 hover:translate-x-0'
+                      )}
+                      aria-current={isActive ? 'page' : undefined}
+                    >
+                      {item.icon && (
+                        <span
+                          className={cn(
+                            'h-5 w-5 shrink-0 transition-transform duration-300',
+                            isActive ? 'text-white' : 'text-slate-400 group-hover:text-violet-600 group-hover:scale-110'
+                          )}
+                          aria-hidden="true"
+                        >
+                          {item.icon}
+                        </span>
+                      )}
+                      {!isCollapsed && <span>{item.label}</span>}
+                    </Link>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function AppShell({
   appName,
   branchName,
@@ -116,95 +236,164 @@ export function AppShell({
   children,
   className,
 }: AppShellProps) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
-    <div
-      className={cn(
-        'min-h-screen bg-[color:var(--ims-paper)] text-[color:var(--ims-ink)] relative overflow-hidden',
-        className,
-      )}
-    >
-      {/* Decorative background blobs/particles to match the vibrant aesthetic */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        {/* Soft geometric blobs */}
-        <div className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full bg-[color:var(--ims-brass-soft)] blur-[120px] opacity-60 mix-blend-multiply" />
-        <div className="absolute top-1/2 -right-32 w-[500px] h-[500px] rounded-full bg-[color:var(--ims-accent-soft)] blur-[120px] opacity-60 mix-blend-multiply" />
-        
-        {/* Floating geometric particles */}
-        <svg className="absolute top-10 left-[20%] text-[color:var(--ims-brass)] opacity-20 animate-float" width="100" height="100" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2">
-          <circle cx="50" cy="50" r="40" />
-        </svg>
-        <svg className="absolute bottom-20 right-[10%] text-[color:var(--ims-ink)] opacity-[0.03] animate-float-slow delay-200" width="120" height="120" viewBox="0 0 100 100" fill="currentColor">
-          <rect x="20" y="20" width="60" height="60" rx="10" transform="rotate(15 50 50)" />
-        </svg>
-        <svg className="absolute top-1/2 left-[10%] text-[color:var(--ims-brass)] opacity-10 animate-float-rev delay-500" width="80" height="80" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="4">
-          <polygon points="50,10 90,90 10,90" />
-        </svg>
-      </div>
+    <div className={cn("min-h-screen bg-[#f8f7fb] text-[color:var(--ims-ink)] relative overflow-hidden", className)}>
+      {/* Background Effect Layer */}
+      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.15] mix-blend-overlay pointer-events-none z-0" />
+      <div className="absolute -top-[10%] -right-[5%] h-[600px] w-[600px] rounded-full bg-fuchsia-400/20 blur-[120px] pointer-events-none z-0" />
+      <div className="absolute bottom-[0%] -left-[10%] h-[700px] w-[700px] rounded-full bg-violet-400/20 blur-[120px] pointer-events-none z-0" />
 
-      <div className="mx-auto flex min-h-screen w-full max-w-[1600px] gap-6 p-4 lg:p-6 relative z-10">
-        {/* ── Desktop Sidebar ── */}
-        <aside className="hidden w-64 shrink-0 lg:flex lg:flex-col xl:w-72 animate-fade-in-left">
-          <div className="sticky top-6 flex min-h-[calc(100vh-3rem)] flex-col rounded-[32px] border border-white/40 bg-white/70 backdrop-blur-2xl shadow-[0_8px_32px_rgba(20,33,61,0.04)]">
-            <SidebarContent
-              appName={appName}
-              branchName={branchName}
-              userName={userName}
-              userAvatar={userAvatar}
-              items={items}
-              aside={aside}
-            />
-          </div>
-        </aside>
+      {/* ─── DESKTOP SIDEBAR ─── */}
+      <aside
+        className={cn(
+          "fixed inset-y-0 left-0 z-30 hidden h-screen border-r border-white/60 bg-white/70 backdrop-blur-2xl transition-all duration-300 lg:flex lg:flex-col",
+          sidebarCollapsed ? "w-20" : "w-64"
+        )}
+      >
+        <div className="flex h-16 shrink-0 items-center border-b border-slate-50 px-5">
+          <BrandLogo appName={appName} isCollapsed={sidebarCollapsed} />
+        </div>
 
-        {/* ── Mobile Overlay Sidebar ── */}
-        {sidebarOpen && (
-          <div className="fixed inset-0 z-40 lg:hidden">
-            <div
-              className="absolute inset-0 bg-[color:var(--ims-ink)]/40 backdrop-blur-sm"
-              onClick={() => setSidebarOpen(false)}
-              aria-hidden="true"
+        <div className="flex-1 overflow-y-auto px-3 py-4">
+          <Suspense fallback={
+            <div className="animate-pulse space-y-4 p-4">
+              <div className="h-10 bg-slate-100 rounded-lg" />
+              <div className="h-10 bg-slate-100 rounded-lg" />
+              <div className="h-10 bg-slate-100 rounded-lg" />
+            </div>
+          }>
+            <SidebarNavList 
+              items={items} 
+              isCollapsed={sidebarCollapsed} 
+              onExpand={() => setSidebarCollapsed(false)}
             />
-            <aside className="absolute left-0 top-0 flex h-full w-72 flex-col rounded-r-[32px] border-r border-white/40 bg-white/90 backdrop-blur-3xl shadow-2xl animate-fade-in-left">
-              <SidebarContent
-                appName={appName}
-                branchName={branchName}
-                userName={userName}
-                userAvatar={userAvatar}
-                items={items}
-                aside={aside}
-                onClose={() => setSidebarOpen(false)}
-              />
-            </aside>
+          </Suspense>
+        </div>
+
+        {!sidebarCollapsed && branchName && (
+          <div className="border-t border-slate-50 p-4">
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Branch</p>
+            <p className="text-xs font-semibold text-slate-700 mt-0.5 truncate">{branchName}</p>
           </div>
         )}
+      </aside>
 
-        {/* ── Main Content ── */}
-        <main className="flex min-w-0 flex-1 flex-col gap-6 rounded-[36px] border border-white/40 bg-white/70 backdrop-blur-2xl shadow-[0_8px_32px_rgba(20,33,61,0.04)] animate-fade-in-up">
-          {/* Mobile Top Bar */}
-          <div className="flex items-center justify-between border-b border-[color:var(--ims-border)] px-5 py-4 lg:hidden">
-            <div className="space-y-0.5">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[color:var(--ims-muted)]">
-                {appName}
-              </p>
-              <p className="text-sm font-semibold text-[color:var(--ims-ink)]">
-                {branchName ?? 'Portal'}
-              </p>
+      {/* ─── MOBILE DRAWER SIDEBAR ─── */}
+      {mobileSidebarOpen && (
+        <div className="fixed inset-0 z-40 lg:hidden">
+          <div
+            className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity"
+            onClick={() => setMobileSidebarOpen(false)}
+          />
+          <aside className="absolute inset-y-0 left-0 z-50 flex h-full w-64 flex-col bg-white border-r border-slate-100 shadow-2xl animate-fade-in-left">
+            <div className="flex h-16 shrink-0 items-center justify-between border-b border-white/50 px-5 bg-white/50 backdrop-blur-md">
+              <BrandLogo appName={appName} />
+              <button
+                onClick={() => setMobileSidebarOpen(false)}
+                className="rounded-md p-1.5 text-slate-400 hover:bg-slate-50 hover:text-slate-700"
+              >
+                <X className="h-5 w-5" />
+              </button>
             </div>
+            <div className="flex-1 overflow-y-auto px-3 py-4">
+              <Suspense fallback={
+                <div className="animate-pulse space-y-4 p-4">
+                  <div className="h-10 bg-slate-100 rounded-lg" />
+                  <div className="h-10 bg-slate-100 rounded-lg" />
+                </div>
+              }>
+                <SidebarNavList items={items} onClose={() => setMobileSidebarOpen(false)} />
+              </Suspense>
+            </div>
+          </aside>
+        </div>
+      )}
+
+      {/* ─── MAIN CONTENT WRAPPER ─── */}
+      <div
+        className={cn(
+          "flex flex-col min-h-screen transition-all duration-300 relative z-10",
+          sidebarCollapsed ? "lg:pl-20" : "lg:pl-64"
+        )}
+      >
+        {/* Sticky Header Top Navbar */}
+        <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center justify-between border-b border-white/60 bg-white/60 backdrop-blur-xl shadow-sm px-4 md:px-6 lg:px-8">
+          <div className="flex items-center gap-4">
+            {/* Collapse toggle (desktop) */}
             <button
-              onClick={() => setSidebarOpen(true)}
-              aria-label="Open navigation"
-              className="rounded-2xl border border-[color:var(--ims-border)] bg-white/50 p-2 text-[color:var(--ims-ink)] hover:bg-[color:var(--ims-accent-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)]"
+              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              className="hidden lg:flex rounded-lg p-1.5 text-slate-400 hover:bg-slate-50 hover:text-slate-700 transition-colors"
+              aria-label="Toggle sidebar"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+
+            {/* Mobile menu toggle */}
+            <button
+              onClick={() => setMobileSidebarOpen(true)}
+              className="lg:hidden rounded-lg p-1.5 text-slate-400 hover:bg-slate-50 hover:text-slate-700 transition-colors"
+              aria-label="Open sidebar"
             >
               <Menu className="h-5 w-5" />
             </button>
           </div>
 
-          {/* Page Content */}
-          <div className="flex-1 overflow-hidden p-5 lg:p-8">
-            {children}
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <button
+                onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+                className="flex items-center gap-3 pl-4 py-1.5 focus:outline-none rounded-lg hover:bg-slate-50 transition-colors"
+              >
+                {userAvatar || (
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-900 text-sm font-bold text-white shadow-sm shadow-slate-900/10">
+                    {userName?.[0]?.toUpperCase() ?? "A"}
+                  </div>
+                )}
+                <div className="hidden xl:flex flex-col text-left">
+                  <span className="text-xs font-bold text-slate-800 leading-tight">
+                    {userName ?? "Administrator"}
+                  </span>
+                  <span className="text-[10px] font-semibold text-slate-400 truncate max-w-[120px]">
+                    {branchName ?? "HQ Branch"}
+                  </span>
+                </div>
+                <ChevronDown className={cn("h-4 w-4 text-slate-400 transition-transform", profileMenuOpen && "rotate-180")} />
+              </button>
+              
+              {profileMenuOpen && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setProfileMenuOpen(false)} />
+                  <div className="absolute right-0 top-full mt-2 w-72 rounded-xl border border-slate-100 bg-white p-4 shadow-xl z-50 animate-fade-in-up">
+                    <div className="mb-4 flex items-center gap-3 border-b border-slate-50 pb-4 xl:hidden">
+                      {userAvatar || (
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-900 text-sm font-bold text-white shadow-sm shadow-slate-900/10">
+                          {userName?.[0]?.toUpperCase() ?? "A"}
+                        </div>
+                      )}
+                      <div className="flex flex-col text-left">
+                        <span className="text-sm font-bold text-slate-800 leading-tight">
+                          {userName ?? "Administrator"}
+                        </span>
+                        <span className="text-xs font-semibold text-slate-400">
+                          {branchName ?? "HQ Branch"}
+                        </span>
+                      </div>
+                    </div>
+                    {aside && <div>{aside}</div>}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
+        </header>
+
+        <main className="flex-1 p-4 md:p-6 lg:p-8 animate-fade-in-up">
+          {children}
         </main>
       </div>
     </div>

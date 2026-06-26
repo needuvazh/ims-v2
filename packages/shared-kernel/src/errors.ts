@@ -12,7 +12,17 @@ export type DomainErrorCode =
   | 'branch_scope_violation'
   | 'counselor_scope_violation'
   | 'session_revoked'
-  | 'invalid_reset_token';
+  | 'invalid_reset_token'
+  | 'institute_already_exists'
+  | 'branch_code_already_exists'
+  | 'department_code_already_exists'
+  | 'classroom_name_already_exists'
+  | 'branch_cannot_be_deleted'
+  | 'referenced_organization_cannot_be_deleted'
+  | 'inactive_branch_cannot_be_used'
+  | 'inactive_department_cannot_be_used'
+  | 'inactive_classroom_cannot_be_used'
+  | 'invalid_effective_date_range';
 
 export class DomainError extends Error {
   constructor(

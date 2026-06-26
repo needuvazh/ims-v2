@@ -11,8 +11,17 @@ export class PrismaAuthSessionRepository implements AuthSessionRepository {
     ipAddress: string | null;
     expiresAt: Date;
   }): Promise<void> {
-    await this.prisma.userSession.create({
-      data: {
+    await this.prisma.userSession.upsert({
+      where: { tokenHash: session.tokenHash },
+      update: {
+        userId: session.userId,
+        userAgent: session.userAgent,
+        ipAddress: session.ipAddress,
+        status: 'Active',
+        expiresAt: session.expiresAt,
+        lastAccessAt: new Date(),
+      },
+      create: {
         userId: session.userId,
         tokenHash: session.tokenHash,
         userAgent: session.userAgent,
@@ -36,7 +45,7 @@ export class PrismaAuthSessionRepository implements AuthSessionRepository {
   }
 
   async revokeSessionByHash(tokenHash: string): Promise<void> {
-    await this.prisma.userSession.update({
+    await this.prisma.userSession.updateMany({
       where: { tokenHash },
       data: {
         status: 'Revoked',

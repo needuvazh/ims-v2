@@ -1,24 +1,46 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '../utils/cn';
+import { Select } from './select';
 
 export interface PaginationProps {
   page: number;
   totalPages: number;
   totalCount?: number;
-  buildHref?: (page: number) => string;
+  limit?: number;
+  buildHref?: (page: number, newLimit?: number) => string;
   className?: string;
+  pageSizeOptions?: number[];
 }
 
-/** Server-compatible pagination using Next.js Link for URL-based navigation. */
+/** Client pagination using Next.js Link for URL-based navigation and Select for page size. */
 export function Pagination({
   page,
   totalPages,
   totalCount,
+  limit = 10,
   buildHref,
   className,
+  pageSizeOptions = [10, 25, 50, 100],
 }: PaginationProps) {
-  if (totalPages <= 1) return null;
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newLimit = parseInt(e.target.value, 10);
+    if (buildHref) {
+      router.push(buildHref(1, newLimit));
+    } else {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('limit', newLimit.toString());
+      params.set('page', '1');
+      router.push(`${pathname}?${params.toString()}`);
+    }
+  };
 
   const getPageNumbers = () => {
     const pages: (number | 'ellipsis')[] = [];
@@ -55,7 +77,7 @@ export function Pagination({
       </span>
     );
     return buildHref && !isActive ? (
-      <Link key={p} href={buildHref(p)} aria-label={`Page ${p}`}>
+      <Link key={p} href={buildHref(p, limit)} aria-label={`Page ${p}`}>
         {content}
       </Link>
     ) : (
@@ -67,17 +89,32 @@ export function Pagination({
     <nav
       role="navigation"
       aria-label="Pagination"
-      className={cn('flex items-center justify-between gap-4', className)}
+      className={cn('flex flex-col sm:flex-row items-center justify-between gap-4 mt-6', className)}
     >
-      {totalCount !== undefined && (
-        <p className="text-xs text-[color:var(--ims-muted)]">
-          Showing page {page} of {totalPages} · {totalCount} results
-        </p>
-      )}
+      <div className="flex items-center gap-4">
+        {totalCount !== undefined && (
+          <p className="text-xs text-[color:var(--ims-muted)] whitespace-nowrap">
+            Showing page {page} of {totalPages} · {totalCount} results
+          </p>
+        )}
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-[color:var(--ims-muted)] whitespace-nowrap">Rows per page:</span>
+          <Select
+            className="h-8 w-20 pl-2 pr-8 text-xs py-1"
+            value={limit.toString()}
+            onChange={handleLimitChange}
+            options={pageSizeOptions.map((opt) => ({
+              value: opt.toString(),
+              label: opt.toString(),
+            }))}
+          />
+        </div>
+      </div>
+      
       <div className="flex items-center gap-1">
         {/* Previous */}
         {buildHref && page > 1 ? (
-          <Link href={buildHref(page - 1)} aria-label="Previous page">
+          <Link href={buildHref(page - 1, limit)} aria-label="Previous page">
             <span className={cn(baseClass, 'text-[color:var(--ims-ink)] hover:bg-[color:var(--ims-accent-soft)]')}>
               <ChevronLeft className="h-4 w-4" />
             </span>
@@ -100,7 +137,7 @@ export function Pagination({
 
         {/* Next */}
         {buildHref && page < totalPages ? (
-          <Link href={buildHref(page + 1)} aria-label="Next page">
+          <Link href={buildHref(page + 1, limit)} aria-label="Next page">
             <span className={cn(baseClass, 'text-[color:var(--ims-ink)] hover:bg-[color:var(--ims-accent-soft)]')}>
               <ChevronRight className="h-4 w-4" />
             </span>
