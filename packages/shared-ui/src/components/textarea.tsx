@@ -41,7 +41,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           aria-invalid={hasError}
           aria-describedby={hasError ? errorId : helperText ? helperId : undefined}
           className={cn(
-            'min-h-[100px] w-full rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] px-4 py-3 text-sm text-[color:var(--ims-ink)] shadow-sm outline-none transition-all placeholder:text-[color:var(--ims-muted)] focus:border-[color:var(--ims-brass)] focus:ring-2 focus:ring-[color:var(--ims-brass-soft)] disabled:cursor-not-allowed disabled:opacity-50',
+            'min-h-[100px] w-full rounded-md border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] px-4 py-3 text-sm text-[color:var(--ims-ink)] shadow-sm outline-none transition-all placeholder:text-[color:var(--ims-muted)] focus:border-[color:var(--ims-brass)] focus:ring-2 focus:ring-[color:var(--ims-brass-soft)] disabled:cursor-not-allowed disabled:opacity-50',
             !resizable && 'resize-none',
             hasError && 'border-[color:var(--ims-error)] focus:border-[color:var(--ims-error)] focus:ring-[color:var(--ims-error)]/20',
             className,

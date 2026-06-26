@@ -79,7 +79,7 @@ export default async function DepartmentsPage(props: {
             ]}
           />
         }
-        action={
+        actions={
           data.branches.length > 0 ? (
             <Link href="/organization/departments/create">
               <Button>

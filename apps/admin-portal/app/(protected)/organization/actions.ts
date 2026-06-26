@@ -32,6 +32,7 @@ export async function createInstituteAction(_prev: ActionResult, formData: FormD
         instituteCode: String(formData.get('instituteCode') ?? ''),
         instituteName: String(formData.get('instituteName') ?? ''),
         registrationNumber: formData.get('registrationNumber') as string | null,
+        taxNumber: formData.get('taxNumber') as string | null,
         primaryEmail: formData.get('primaryEmail') as string | null,
         primaryPhone: formData.get('primaryPhone') as string | null,
         website: formData.get('website') as string | null,
@@ -66,10 +67,14 @@ export async function updateInstituteAction(
       const { organizationService } = await import('../../lib/runtime');
       await organizationService.updateInstitute(instituteId, {
         instituteName: String(formData.get('instituteName') ?? ''),
+        registrationNumber: formData.get('registrationNumber') as string | null,
+        taxNumber: formData.get('taxNumber') as string | null,
         primaryEmail: formData.get('primaryEmail') as string | null,
         primaryPhone: formData.get('primaryPhone') as string | null,
+        website: formData.get('website') as string | null,
         address: formData.get('address') as string | null,
         country: formData.get('country') as string | null,
+        status: (formData.get('status') as RecordStatus) || undefined,
       }, { actorId });
       logger.info('organization.institute.update.succeeded', { status: 'success', entityId: instituteId });
       revalidatePath('/organization');

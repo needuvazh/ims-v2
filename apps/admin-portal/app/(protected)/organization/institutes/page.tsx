@@ -65,7 +65,7 @@ export default async function InstitutesPage(props: {
             ]}
           />
         }
-        action={
+        actions={
           <Link href="/organization/institutes/create">
             <Button>
               <Plus className="h-4 w-4 mr-2" /> Add Institute

@@ -14,6 +14,7 @@ describe('AuthService Security and Lockout Tests', () => {
   let mockSessionRepo: AuthSessionRepository;
   let mockResetTokenRepo: AuthResetTokenRepository;
   let mockAuditRepo: InMemoryAuditLogRepository;
+  let notificationCalls: Array<{ toEmail: string; resetUrl: string }>;
 
   const passwordHash = bcrypt.hashSync('Password@123', 12);
   const now = new Date();
@@ -28,13 +29,14 @@ describe('AuthService Security and Lockout Tests', () => {
     mockAuditRepo = new InMemoryAuditLogRepository();
     sessionsDb = new Map();
     resetTokensDb = new Map();
+    notificationCalls = [];
 
     testUser = {
       id: 'dcd16b08-8e68-45be-bbfe-81d3ee6b69fa' as Uuid,
       fullName: 'Test User',
       email: 'test@example.com',
       phone: null,
-      userType: 'Staff',
+      userType: 'Admin',
       status: 'Active',
       passwordHash,
       roles: ['ADMIN'],
@@ -127,7 +129,15 @@ describe('AuthService Security and Lockout Tests', () => {
       },
     };
 
-    authService = new AuthService(mockUserRepo, mockSessionRepo, mockResetTokenRepo, mockAuditRepo);
+    authService = new AuthService(
+      mockUserRepo,
+      mockSessionRepo,
+      mockResetTokenRepo,
+      mockAuditRepo,
+      {
+        sendPasswordResetLink: async (params) => { notificationCalls.push(params); },
+      },
+    );
   });
 
   describe('User Status Verification', () => {
@@ -241,7 +251,7 @@ describe('AuthService Security and Lockout Tests', () => {
   });
 
   describe('Password Recovery (Forgot & Reset Password)', () => {
-    it('generates reset token and records audit log for active user request', async () => {
+    it('generates reset token, records audit log, and delivers notification for active user request', async () => {
       await authService.requestPasswordReset({ email: 'test@example.com' });
 
       expect(resetTokensDb.size).toBe(1);
@@ -249,6 +259,11 @@ describe('AuthService Security and Lockout Tests', () => {
       expect(entry.userId).toBe(testUser.id);
       expect(entry.usedAt).toBeNull();
       expect(entry.expiresAt.getTime()).toBeGreaterThan(Date.now());
+
+      // Notification port must have been called with the email
+      expect(notificationCalls).toHaveLength(1);
+      expect(notificationCalls[0].toEmail).toBe('test@example.com');
+      expect(notificationCalls[0].resetUrl).toContain('/reset-password?token=');
 
       const logs = mockAuditRepo.list();
       expect(logs.some(l => l.action === 'identity.password_reset_requested')).toBe(true);

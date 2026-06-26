@@ -11,6 +11,7 @@ import { PrismaAuthSessionRepository } from '@ims/database';
 import { PrismaAuthResetTokenRepository } from '@ims/database';
 import { OrganizationService } from '@ims/organization';
 import { AuthService, UserService, RoleService } from '@ims/identity-access';
+import { ConsolePasswordResetPort } from './notification-port';
 
 // ─── Repositories ──────────────────────────────────────────────────────────
 const auditRepository = new PrismaAuditRepository(prisma);
@@ -22,7 +23,15 @@ const resetTokenRepository = new PrismaAuthResetTokenRepository(prisma);
 
 // ─── Application Services ─────────────────────────────────────────────────
 export const userService = new UserService(userRepository, roleRepository, auditRepository);
-export const authService = new AuthService(userRepository, sessionRepository, resetTokenRepository, auditRepository);
+export const authService = new AuthService(
+  userRepository,
+  sessionRepository,
+  resetTokenRepository,
+  auditRepository,
+  // Phase 1 stub: logs reset link safely (token hidden in production).
+  // Replace with EmailPasswordResetPort in Phase 2.
+  new ConsolePasswordResetPort(),
+);
 export const roleService = new RoleService(roleRepository, auditRepository);
 
 export const organizationService = new OrganizationService(

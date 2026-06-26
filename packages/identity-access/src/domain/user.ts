@@ -4,12 +4,31 @@ import type { Uuid } from '@ims/shared-kernel';
 /** Mirrors the DB UserStatus enum. */
 export type UserStatus = 'Draft' | 'Active' | 'Inactive' | 'Locked';
 
+/**
+ * Validated user type discriminant.
+ * Values must match the DB `userType` column and seed data.
+ * Extend this enum when new staff roles are introduced.
+ */
+export const userTypeSchema = z.enum([
+  'Admin',
+  'BranchManager',
+  'Counselor',
+  'Trainer',
+  'Accountant',
+  'Student',
+  'AcademicCoordinator',
+  'Management',
+  'Owner',
+]);
+export type UserType = z.infer<typeof userTypeSchema>;
+
 export type UserProfile = {
   id: Uuid;
   fullName: string;
   email: string;
   phone: string | null;
-  userType: string;
+  /** Validated discriminant — use userTypeSchema for parsing untrusted input. */
+  userType: UserType;
   status: UserStatus;
   effectiveStartDate?: Date;
   effectiveEndDate?: Date | null;
@@ -39,7 +58,7 @@ export const createUserCommandSchema = z.object({
   fullName: z.string().trim().min(2).max(200),
   email: z.string().trim().email().toLowerCase(),
   phone: z.string().trim().nullable().optional(),
-  userType: z.string().min(1).max(50),
+  userType: userTypeSchema,
   password: passwordSchema,
   roleIds: z.array(z.string().uuid()).default([]),
   effectiveStartDate: z.coerce.date().optional(),
@@ -49,7 +68,7 @@ export const createUserCommandSchema = z.object({
 export const updateUserCommandSchema = z.object({
   fullName: z.string().trim().min(2).max(200).optional(),
   phone: z.string().trim().nullable().optional(),
-  userType: z.string().min(1).max(50).optional(),
+  userType: userTypeSchema.optional(),
   status: z.enum(['Draft', 'Active', 'Inactive', 'Locked']).optional(),
   effectiveStartDate: z.coerce.date().optional(),
   effectiveEndDate: z.coerce.date().nullable().optional(),

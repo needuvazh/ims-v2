@@ -10,7 +10,7 @@ import {
   Textarea,
 } from '@ims/shared-ui';
 import type { RoleRecord } from '@ims/identity-access';
-import { createRoleAction, type ActionResult } from '../actions';
+import { createRoleAction, updateRoleAction, type ActionResult } from '../actions';
 
 const initialState: ActionResult = { success: false };
 
@@ -23,8 +23,9 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
   const router = useRouter();
   const [state, formAction, isPending] = useActionState(
     async (prev: ActionResult, formData: FormData) => {
-      // In a real app, you would have an updateRoleAction for edit mode
-      const result = await createRoleAction(prev, formData);
+      const result = mode === 'edit' && initialData?.id
+        ? await updateRoleAction(initialData.id, prev, formData)
+        : await createRoleAction(prev, formData);
       if (result.success) {
         router.push('/identity/roles');
       }

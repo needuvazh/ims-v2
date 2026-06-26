@@ -2,11 +2,10 @@
 
 import { revalidatePath } from 'next/cache';
 import { createUuid, type Uuid, DomainError } from '@ims/shared-kernel';
-import type { RoleStatus, UserStatus } from '@ims/identity-access';
+import type { RoleStatus, UserStatus, UserType } from '@ims/identity-access';
 import { createStructuredLogger, getCurrentRequestContext, withServerActionObservability } from '../../lib/observability';
 import { assertPermission, getSession } from '../../lib/auth-guard';
 
-const ZERO_UUID = '00000000-0000-0000-0000-000000000000';
 
 async function getActorId(): Promise<Uuid> {
   const session = await getSession();
@@ -41,7 +40,7 @@ export async function createUserAction(_prev: ActionResult, formData: FormData):
         fullName: String(formData.get('fullName') ?? ''),
         email: String(formData.get('email') ?? ''),
         phone: formData.get('phone') as string | null,
-        userType: String(formData.get('userType') ?? 'Staff'),
+        userType: String(formData.get('userType') ?? 'Admin') as UserType,
         password: String(formData.get('password') ?? ''),
         roleIds: [],
       }, { actorId });
@@ -59,7 +58,7 @@ export async function createUserAction(_prev: ActionResult, formData: FormData):
   }, { action: 'identity.createUser', route: '/identity' });
 }
 
-export async function updateUserStatusAction(userId: string, status: string): Promise<ActionResult> {
+export async function updateUserStatusAction(userId: string, status: string, formData?: FormData): Promise<ActionResult> {
   return withServerActionObservability(async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
@@ -137,6 +136,7 @@ export async function toggleUserRoleAction(userId: string, roleId: string, assig
 
 export async function getUserRolesAction(userId: string): Promise<ActionResult<{ id: string; roleCode: string; roleName: string }[]>> {
   try {
+    await assertPermission('identity.read');
     const { userService } = await import('../../lib/runtime');
     const roles = await userService.listRolesForUser(userId);
     return { success: true, data: roles };
@@ -175,7 +175,33 @@ export async function createRoleAction(_prev: ActionResult, formData: FormData):
   }, { action: 'identity.createRole', route: '/identity' });
 }
 
-export async function updateRoleStatusAction(roleId: string, status: string): Promise<ActionResult> {
+export async function updateRoleAction(roleId: string, _prev: ActionResult, formData: FormData): Promise<ActionResult> {
+  return withServerActionObservability(async () => {
+    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+
+    try {
+      await assertPermission('identity.role.manage');
+      const actorId = await getActorId();
+      const { roleService } = await import('../../lib/runtime');
+      await roleService.updateRole(roleId, {
+        roleName: String(formData.get('roleName') ?? ''),
+        description: formData.get('description') as string | null,
+      }, { actorId });
+      logger.info('identity.role.update.succeeded', { status: 'success', entityId: roleId });
+      revalidatePath('/identity');
+      return { success: true };
+    } catch (err) {
+      if (err instanceof DomainError) {
+        logger.warn('identity.role.update.failed', { status: 'failed', message: err.message, error: err });
+        return { success: false, error: err.message };
+      }
+      logger.error('identity.role.update.failed', { status: 'failed', message: 'Failed to update role.', error: err as Error });
+      return { success: false, error: 'Failed to update role.' };
+    }
+  }, { action: 'identity.updateRole', route: '/identity' });
+}
+
+export async function updateRoleStatusAction(roleId: string, status: string, formData?: FormData): Promise<ActionResult> {
   return withServerActionObservability(async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 

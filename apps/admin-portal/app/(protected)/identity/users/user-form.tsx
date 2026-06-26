@@ -9,14 +9,14 @@ import {
   Input,
   Select,
 } from '@ims/shared-ui';
-import type { UserRecord } from '@ims/identity-access';
+import type { UserProfile } from '@ims/identity-access';
 import { createUserAction, type ActionResult } from '../actions';
 
 const initialState: ActionResult = { success: false };
 
 export interface UserFormProps {
   mode: 'create' | 'edit' | 'view';
-  initialData?: UserRecord;
+  initialData?: UserProfile;
 }
 
 export function UserForm({ mode, initialData }: UserFormProps) {
@@ -83,10 +83,14 @@ export function UserForm({ mode, initialData }: UserFormProps) {
           placeholder="Select type"
           defaultValue={initialData?.userType}
           options={[
-            { value: 'SuperAdmin', label: 'Super Admin' },
-            { value: 'InstituteAdmin', label: 'Institute Admin' },
+            { value: 'Admin', label: 'System Administrator' },
+            { value: 'BranchManager', label: 'Branch Manager' },
+            { value: 'Counselor', label: 'Counselor' },
             { value: 'Trainer', label: 'Trainer' },
-            { value: 'Staff', label: 'Staff' },
+            { value: 'Accountant', label: 'Accountant' },
+            { value: 'AcademicCoordinator', label: 'Academic Coordinator' },
+            { value: 'Management', label: 'Management' },
+            { value: 'Owner', label: 'Owner' },
           ]}
           required
           disabled={isView}

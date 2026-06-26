@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import { cookies } from 'next/headers';
 import { decodeSession, sessionCookieName, hasPermission, isAuthorizedForBranch } from '@ims/shared-auth';
 import type { Session } from '@ims/shared-auth';
@@ -7,8 +8,11 @@ import nodeCrypto from 'crypto';
 /**
  * Retrieve the current active session.
  * Throws a DomainError('unauthorized') if no session exists or is expired/invalid/revoked.
+ *
+ * Wrapped with React cache() — repeated calls within the same server request
+ * (e.g. assertPermission + assertBranchScope) share a single DB round-trip.
  */
-export async function getSession(): Promise<Session> {
+export const getSession: () => Promise<Session> = cache(async () => {
   const cookieStore = await cookies();
   const token = cookieStore.get(sessionCookieName)?.value;
   const session = await decodeSession(token);
@@ -58,7 +62,7 @@ export async function getSession(): Promise<Session> {
   }
 
   return session;
-}
+});
 
 /**
  * Assert that the current user has the specified permission.

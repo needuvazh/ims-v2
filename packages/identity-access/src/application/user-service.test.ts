@@ -38,7 +38,7 @@ describe('UserService Lifecycle Invariant and Audit Tests', () => {
     fullName: 'Existing User',
     email: 'existing@example.com',
     phone: null,
-    userType: 'Staff',
+    userType: 'Admin',
     status: 'Active',
   };
 
@@ -130,7 +130,7 @@ describe('UserService Lifecycle Invariant and Audit Tests', () => {
           fullName: 'New User',
           email: 'new@example.com',
           phone: null,
-          userType: 'Staff',
+          userType: 'Admin',
           password: 'Password123!',
           roleIds: [activeRole.id],
         },
@@ -149,7 +149,7 @@ describe('UserService Lifecycle Invariant and Audit Tests', () => {
             fullName: 'New User',
             email: 'new@example.com',
             phone: null,
-            userType: 'Staff',
+            userType: 'Admin',
             password: 'Password123!',
             roleIds: [inactiveRole.id],
           },

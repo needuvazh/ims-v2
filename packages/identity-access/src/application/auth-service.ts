@@ -12,6 +12,7 @@ import {
   type ResetPasswordCommand,
 } from '../domain/user';
 import type { AuditLogRepository } from '@ims/audit';
+import type { PasswordResetNotificationPort } from '../domain/notification-port';
 
 export interface AuthUserRepository {
   findByEmailWithCredentials(email: string): Promise<UserWithCredentials | null>;
@@ -66,15 +67,17 @@ export class AuthService {
     private readonly sessionRepository: AuthSessionRepository,
     private readonly resetTokenRepository: AuthResetTokenRepository,
     private readonly auditRepository: AuditLogRepository,
+    /** Phase 1: inject ConsolePasswordResetPort. Phase 2: inject SMTP/SaaS adapter. */
+    private readonly notificationPort?: PasswordResetNotificationPort,
   ) {}
 
   async requestPasswordReset(command: RequestResetCommand): Promise<void> {
     const validated = requestResetCommandSchema.parse(command);
     const user = await this.userRepository.findByEmailWithCredentials(validated.email);
 
-    // Secure design against enumeration - return generic response and don't create token for inactive or missing accounts
+    // Secure design against user enumeration:
+    // Return silently for missing or inactive accounts — never reveal whether an email exists.
     if (!user || user.status === 'Inactive' || user.status === 'Draft') {
-      console.log(`[Password Reset Info] Requested for ${validated.email} but user is not active or does not exist.`);
       return;
     }
 
@@ -99,13 +102,14 @@ export class AuthService {
       details: { email: user.email },
     });
 
-    // Output reset link to console/stdout logs (Phase 1 context)
-    console.log(`\n======================================================`);
-    console.log(`[PASSWORD RESET LINK GENERATED]`);
-    console.log(`User ID: ${user.id}`);
-    console.log(`Email:   ${user.email}`);
-    console.log(`Link:    http://localhost:3000/reset-password?token=${rawToken}`);
-    console.log(`======================================================\n`);
+    // Deliver the reset link via the injected notification port.
+    // The raw token is a secret — only the port implementation may handle it.
+    // Never log rawToken here. Never hardcode a base URL here.
+    const baseUrl = process.env.RESET_PASSWORD_BASE_URL ?? 'http://localhost:3000';
+    await this.notificationPort?.sendPasswordResetLink({
+      toEmail: user.email,
+      resetUrl: `${baseUrl}/reset-password?token=${rawToken}`,
+    });
   }
 
   async resetPassword(command: ResetPasswordCommand): Promise<void> {
@@ -226,21 +230,7 @@ export class AuthService {
       throw invalidError;
     }
 
-    // Success resets failed attempts
-    await this.userRepository.resetFailedAttempts(user.id);
-    await this.userRepository.recordLastLogin(user.id);
-
-    await this.auditRepository.append({
-      id: crypto.randomUUID(),
-      actorId: user.id,
-      branchId: null,
-      action: 'identity.login_succeeded',
-      entityType: 'User',
-      entityId: user.id,
-      occurredAt: new Date(),
-      details: { email: user.email },
-    });
-
+    // 5a. Build the session payload and encode it (pure in-memory, no DB writes yet)
     // Default activeBranchId if user has exactly one branch scope
     let activeBranchId: string | null = null;
     const branchScopes = user.dataScopes.filter((s) => s.scopeType === 'Branch' && s.branchId);
@@ -260,7 +250,8 @@ export class AuthService {
 
     const sessionToken = await encodeSession(session);
 
-    // Persist active session in database
+    // 5b. Persist the session in the DB — this is the point of no return.
+    //     If this throws, no user state has been mutated and the caller can safely retry.
     const tokenHash = nodeCrypto.createHash('sha256').update(sessionToken).digest('hex');
     await this.sessionRepository.createSession({
       userId: user.id,
@@ -268,6 +259,22 @@ export class AuthService {
       userAgent: metadata?.userAgent ?? null,
       ipAddress: metadata?.ipAddress ?? null,
       expiresAt: new Date(session.expiresAt),
+    });
+
+    // 5c. Session committed — now update user state and write audit (best-effort after commit).
+    //     Failures here are tolerable: the user has a valid session and can continue working.
+    await this.userRepository.resetFailedAttempts(user.id);
+    await this.userRepository.recordLastLogin(user.id);
+
+    await this.auditRepository.append({
+      id: crypto.randomUUID(),
+      actorId: user.id,
+      branchId: null,
+      action: 'identity.login_succeeded',
+      entityType: 'User',
+      entityId: user.id,
+      occurredAt: new Date(),
+      details: { email: user.email },
     });
 
     return { sessionToken, session };

@@ -34,6 +34,7 @@ export const createInstituteCommandSchema = z.object({
 
 export const updateInstituteCommandSchema = createInstituteCommandSchema
   .omit({ instituteCode: true })
+  .extend({ status: statusSchema.optional() })
   .partial();
 
 export type CreateInstituteCommand = z.infer<typeof createInstituteCommandSchema>;

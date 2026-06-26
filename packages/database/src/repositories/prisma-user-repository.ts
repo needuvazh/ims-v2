@@ -72,7 +72,8 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
       fullName: row.fullName,
       email: row.email,
       phone: row.phone,
-      userType: row.userType,
+      // Cast: DB stores a raw string; Zod schema at API boundary ensures only valid UserType values are written.
+      userType: row.userType as UserProfile['userType'],
       status: row.status as UserProfile['status'],
       effectiveStartDate: row.effectiveStartDate,
       effectiveEndDate: row.effectiveEndDate,
@@ -129,7 +130,7 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
       fullName: row.fullName,
       email: row.email,
       phone: row.phone,
-      userType: row.userType,
+      userType: row.userType as UserProfile['userType'],
       status: row.status as UserProfile['status'],
       passwordHash: row.passwordHash,
       roles: [...new Set(roles)],
@@ -147,10 +148,10 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
   }
 
   async findById(userId: string): Promise<UserProfile | null> {
-    const row = (await this.prisma.user.findFirst({ where: { id: userId, isDeleted: false } })) as
-      | UserProfileRow
-      | null;
-    return row ? this.toProfile(row) : null;
+    // Use findUnique for PK lookups — semantically correct and uses the PK index directly.
+    const row = (await this.prisma.user.findUnique({ where: { id: userId } })) as UserProfileRow | null;
+    // Exclude soft-deleted records after retrieval (findUnique does not support composite where + non-unique filter)
+    return row && !row.isDeleted ? this.toProfile(row) : null;
   }
 
   async findByEmail(email: string): Promise<UserProfile | null> {
@@ -181,7 +182,15 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
   ): Promise<UserProfile> {
     const row = (await this.prisma.user.update({
       where: { id: userId },
-      data: { ...updates, updatedAt: new Date() },
+      data: {
+        ...(updates.fullName !== undefined && { fullName: updates.fullName }),
+        ...(updates.phone !== undefined && { phone: updates.phone }),
+        ...(updates.userType !== undefined && { userType: updates.userType }),
+        ...(updates.status !== undefined && { status: updates.status }),
+        ...(updates.effectiveStartDate !== undefined && { effectiveStartDate: updates.effectiveStartDate }),
+        ...(updates.effectiveEndDate !== undefined && { effectiveEndDate: updates.effectiveEndDate }),
+        updatedAt: new Date(),
+      },
     })) as UserProfileRow;
     return this.toProfile(row);
   }

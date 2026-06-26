@@ -8,3 +8,4 @@ export * from './application/navigation-service';
 export * from './domain/user';
 export * from './domain/role';
 export * from './domain/access';
+export * from './domain/notification-port';

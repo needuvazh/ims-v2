@@ -127,14 +127,25 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
   }
 
   async findInstituteById(id: string): Promise<Institute | null> {
-    const row = await this.prisma.institute.findFirst({ where: { id, isDeleted: false } });
-    return row ? toInstitute(row) : null;
+    const row = await this.prisma.institute.findUnique({ where: { id } });
+    return row && !row.isDeleted ? toInstitute(row) : null;
   }
 
   async updateInstitute(id: string, updates: Partial<Institute>): Promise<Institute> {
     const row = await this.prisma.institute.update({
       where: { id },
-      data: { ...updates, updatedAt: new Date() },
+      data: {
+        ...(updates.instituteName !== undefined && { instituteName: updates.instituteName }),
+        ...(updates.registrationNumber !== undefined && { registrationNumber: updates.registrationNumber }),
+        ...(updates.taxNumber !== undefined && { taxNumber: updates.taxNumber }),
+        ...(updates.primaryEmail !== undefined && { primaryEmail: updates.primaryEmail }),
+        ...(updates.primaryPhone !== undefined && { primaryPhone: updates.primaryPhone }),
+        ...(updates.website !== undefined && { website: updates.website }),
+        ...(updates.address !== undefined && { address: updates.address }),
+        ...(updates.country !== undefined && { country: updates.country }),
+        ...(updates.status !== undefined && { status: updates.status }),
+        updatedAt: new Date(),
+      },
     });
     return toInstitute(row);
   }
@@ -185,8 +196,8 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
   }
 
   async findBranchById(id: string): Promise<Branch | null> {
-    const row = await this.prisma.branch.findFirst({ where: { id, isDeleted: false } });
-    return row ? toBranch(row) : null;
+    const row = await this.prisma.branch.findUnique({ where: { id } });
+    return row && !row.isDeleted ? toBranch(row) : null;
   }
 
   async findBranchByCode(branchCode: string): Promise<Branch | null> {
@@ -198,7 +209,19 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
     const row = await this.prisma.$transaction(async (tx) => {
       const branch = await tx.branch.update({
         where: { id },
-        data: { ...updates, updatedAt: new Date() },
+        data: {
+          ...(updates.branchName !== undefined && { branchName: updates.branchName }),
+          ...(updates.address !== undefined && { address: updates.address }),
+          ...(updates.city !== undefined && { city: updates.city }),
+          ...(updates.country !== undefined && { country: updates.country }),
+          ...(updates.phone !== undefined && { phone: updates.phone }),
+          ...(updates.email !== undefined && { email: updates.email }),
+          ...(updates.branchManagerId !== undefined && { branchManagerId: updates.branchManagerId }),
+          ...(updates.status !== undefined && { status: updates.status }),
+          ...(updates.effectiveStartDate !== undefined && { effectiveStartDate: updates.effectiveStartDate }),
+          ...(updates.effectiveEndDate !== undefined && { effectiveEndDate: updates.effectiveEndDate }),
+          updatedAt: new Date(),
+        },
       });
 
       if (updates.status === 'Inactive' || updates.status === 'Archived') {
@@ -260,8 +283,8 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
   }
 
   async findDepartmentById(id: string): Promise<Department | null> {
-    const row = await this.prisma.department.findFirst({ where: { id, isDeleted: false } });
-    return row ? toDepartment(row) : null;
+    const row = await this.prisma.department.findUnique({ where: { id } });
+    return row && !row.isDeleted ? toDepartment(row) : null;
   }
 
   async findDepartmentByCode(branchId: string, departmentCode: string): Promise<Department | null> {
@@ -274,7 +297,15 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
   async updateDepartment(id: string, updates: Partial<Department>): Promise<Department> {
     const row = await this.prisma.department.update({
       where: { id },
-      data: { ...updates, updatedAt: new Date() },
+      data: {
+        ...(updates.departmentName !== undefined && { departmentName: updates.departmentName }),
+        ...(updates.departmentHeadId !== undefined && { departmentHeadId: updates.departmentHeadId }),
+        ...(updates.description !== undefined && { description: updates.description }),
+        ...(updates.status !== undefined && { status: updates.status }),
+        ...(updates.effectiveStartDate !== undefined && { effectiveStartDate: updates.effectiveStartDate }),
+        ...(updates.effectiveEndDate !== undefined && { effectiveEndDate: updates.effectiveEndDate }),
+        updatedAt: new Date(),
+      },
     });
     return toDepartment(row);
   }
@@ -306,8 +337,8 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
   }
 
   async findClassroomById(id: string): Promise<Classroom | null> {
-    const row = await this.prisma.classroom.findFirst({ where: { id, isDeleted: false } });
-    return row ? toClassroom(row) : null;
+    const row = await this.prisma.classroom.findUnique({ where: { id } });
+    return row && !row.isDeleted ? toClassroom(row) : null;
   }
 
   async findClassroomByName(branchId: string, classroomName: string): Promise<Classroom | null> {
@@ -320,7 +351,15 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
   async updateClassroom(id: string, updates: Partial<Classroom>): Promise<Classroom> {
     const row = await this.prisma.classroom.update({
       where: { id },
-      data: { ...updates, updatedAt: new Date() },
+      data: {
+        ...(updates.classroomName !== undefined && { classroomName: updates.classroomName }),
+        ...(updates.capacity !== undefined && { capacity: updates.capacity }),
+        ...(updates.location !== undefined && { location: updates.location }),
+        ...(updates.status !== undefined && { status: updates.status }),
+        ...(updates.effectiveStartDate !== undefined && { effectiveStartDate: updates.effectiveStartDate }),
+        ...(updates.effectiveEndDate !== undefined && { effectiveEndDate: updates.effectiveEndDate }),
+        updatedAt: new Date(),
+      },
     });
     return toClassroom(row);
   }

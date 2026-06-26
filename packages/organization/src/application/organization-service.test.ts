@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { InMemoryAuditLogRepository } from '@ims/audit';
 import { createUuid, DomainError } from '@ims/shared-kernel';
-import { InMemoryOrganizationRepository, OrganizationService } from './organization-service';
+import { OrganizationService } from './organization-service';
+import { InMemoryOrganizationRepository } from '../__tests__/in-memory-organization-repository';
 
 describe('organization service', () => {
   const actorId = createUuid('33333333-3333-3333-3333-333333333333');
