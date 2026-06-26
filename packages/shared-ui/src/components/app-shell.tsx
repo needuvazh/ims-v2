@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect, Suspense, type ReactNode } from 'react';
+import { useState, Suspense, type ReactNode } from 'react';
 import { Menu, X, ChevronDown, ChevronRight, PanelsTopLeft } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '../utils/cn';
@@ -64,7 +64,7 @@ export interface AppShellProps {
 function BrandLogo({ appName, isCollapsed }: { appName: string; isCollapsed?: boolean }) {
   return (
     <div className={cn("flex items-center gap-3 transition-all duration-300", isCollapsed ? "justify-center" : "px-2")}>
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white shadow-md shadow-violet-500/30">
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#c96a22] to-[#8a4a1d] text-white shadow-md shadow-[#c96a22]/25">
         <svg
           viewBox="0 0 24 24"
           fill="none"
@@ -129,30 +129,16 @@ function SidebarNavList({
     categories[cat].push(item);
   });
 
-  useEffect(() => {
-    setExpandedItems((prev) => {
-      const next = { ...prev };
-
-      items.forEach((item) => {
-        if (item.items?.length && next[item.href] === undefined) {
-          next[item.href] = true;
-        }
-      });
-
-      return next;
-    });
-  }, [pathname, items]);
-
   return (
     <div className="space-y-6">
       {Object.entries(categories).map(([categoryName, catItems]) => (
         <div key={categoryName} className="space-y-1.5">
           {!isCollapsed ? (
-            <p className="px-4 text-[10px] font-bold uppercase tracking-wider text-slate-400/80">
+            <p className="px-4 text-[10px] font-bold uppercase tracking-wider text-[#b08b68]/80">
               {categoryName}
             </p>
           ) : (
-            <div className="mx-4 my-2 border-t border-slate-100" />
+            <div className="mx-4 my-2 border-t border-[#f0e3d2]" />
           )}
 
           <ul className="space-y-1">
@@ -178,8 +164,8 @@ function SidebarNavList({
                         className={cn(
                           'group relative flex w-full items-center justify-between overflow-hidden rounded-2xl px-4 py-2.5 text-sm font-medium transition-all duration-300 ease-out',
                           isActive
-                            ? 'border border-violet-100/80 bg-gradient-to-r from-violet-50 via-white to-fuchsia-50 text-violet-800 font-semibold shadow-[0_8px_24px_rgba(124,58,237,0.12)]'
-                            : 'border border-transparent text-slate-600 hover:border-slate-100 hover:bg-white/80 hover:text-violet-700 hover:shadow-sm',
+                            ? 'border border-[#efd8bf]/80 bg-gradient-to-r from-[#fff7ef] via-white to-[#f8e9d9] text-[#9a5a26] font-semibold shadow-[0_8px_24px_rgba(201,106,34,0.10)]'
+                            : 'border border-transparent text-slate-600 hover:border-[#f0e3d2] hover:bg-white/80 hover:text-[#b75c16] hover:shadow-sm',
                           isCollapsed && 'justify-center px-0'
                         )}
                       >
@@ -196,8 +182,8 @@ function SidebarNavList({
                               className={cn(
                                 'h-5 w-5 shrink-0 transition-all duration-300 ease-out',
                                 isActive
-                                  ? 'text-violet-600'
-                                  : 'text-slate-400 group-hover:text-violet-600 group-hover:scale-110'
+                                  ? 'text-[#c96a22]'
+                                  : 'text-slate-400 group-hover:text-[#c96a22] group-hover:scale-110'
                               )}
                               aria-hidden="true"
                             >
@@ -210,7 +196,7 @@ function SidebarNavList({
                             <ChevronDown
                               className={cn(
                                 'h-4 w-4 text-slate-400 transition-transform duration-300 ease-out',
-                                isExpanded && 'rotate-180 text-violet-500'
+                                isExpanded && 'rotate-180 text-[#c96a22]'
                               )}
                             />
                           )}
@@ -244,7 +230,7 @@ function SidebarNavList({
                                       'h-1.5 w-1.5 shrink-0 rounded-full transition-all duration-300',
                                       isSubActive
                                         ? 'bg-white shadow-[0_0_0_4px_rgba(255,255,255,0.16)]'
-                                        : 'bg-slate-300 group-hover:bg-violet-400'
+                                        : 'bg-slate-300 group-hover:bg-[#c96a22]'
                                     )}
                                     aria-hidden="true"
                                   />
@@ -264,8 +250,8 @@ function SidebarNavList({
                       className={cn(
                         'group relative flex items-center gap-3 rounded-2xl px-4 py-2.5 text-sm font-medium transition-all duration-300 ease-out motion-reduce:transition-none',
                         isActive
-                          ? 'border border-violet-100/80 bg-gradient-to-r from-violet-600 via-violet-600 to-fuchsia-600 text-white shadow-[0_10px_22px_rgba(124,58,237,0.22)]'
-                          : 'border border-transparent text-slate-600 hover:border-slate-100 hover:bg-white/80 hover:text-violet-700 hover:translate-x-1 hover:shadow-sm',
+                            ? 'border border-[#d8a06d]/80 bg-gradient-to-r from-[#c96a22] via-[#b75c16] to-[#8a4a1d] text-white shadow-[0_10px_22px_rgba(201,106,34,0.18)]'
+                            : 'border border-transparent text-slate-600 hover:border-[#f0e3d2] hover:bg-white/80 hover:text-[#b75c16] hover:translate-x-1 hover:shadow-sm',
                         isCollapsed && 'justify-center px-0 hover:translate-x-0'
                       )}
                       aria-current={isActive ? 'page' : undefined}
@@ -281,7 +267,7 @@ function SidebarNavList({
                         <span
                           className={cn(
                             'h-5 w-5 shrink-0 transition-all duration-300 ease-out',
-                            isActive ? 'text-white' : 'text-slate-400 group-hover:text-violet-600 group-hover:scale-110'
+                            isActive ? 'text-white' : 'text-slate-400 group-hover:text-[#c96a22] group-hover:scale-110'
                           )}
                           aria-hidden="true"
                         >
@@ -320,29 +306,29 @@ export function AppShell({
   const activeParentLabel = activeTrail.length > 1 ? activeTrail[0]?.label : undefined;
 
   return (
-    <div className={cn("min-h-screen bg-[#f8f7fb] text-[color:var(--ims-ink)] relative overflow-hidden", className)}>
+    <div className={cn("min-h-screen bg-[#fbf8f3] text-[color:var(--ims-ink)] relative overflow-hidden", className)}>
       {/* Background Effect Layer */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.15] mix-blend-overlay pointer-events-none z-0" />
-      <div className="absolute -top-[10%] -right-[5%] h-[600px] w-[600px] rounded-full bg-fuchsia-400/20 blur-[120px] pointer-events-none z-0" />
-      <div className="absolute bottom-[0%] -left-[10%] h-[700px] w-[700px] rounded-full bg-violet-400/20 blur-[120px] pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.12] mix-blend-overlay pointer-events-none z-0" />
+      <div className="absolute -top-[10%] -right-[5%] h-[600px] w-[600px] rounded-full bg-[#d8a06d]/20 blur-[120px] pointer-events-none z-0" />
+      <div className="absolute bottom-[0%] -left-[10%] h-[700px] w-[700px] rounded-full bg-[#ead1b2]/30 blur-[120px] pointer-events-none z-0" />
 
       {/* ─── DESKTOP SIDEBAR ─── */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-30 hidden h-screen border-r border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(248,247,251,0.88))] backdrop-blur-2xl shadow-[inset_-1px_0_0_rgba(255,255,255,0.7)] transition-all duration-300 lg:flex lg:flex-col",
+          "fixed inset-y-0 left-0 z-30 hidden h-screen border-r border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.94),rgba(251,248,243,0.9))] backdrop-blur-2xl shadow-[inset_-1px_0_0_rgba(255,255,255,0.7)] transition-all duration-300 lg:flex lg:flex-col",
           sidebarCollapsed ? "w-20" : "w-64"
         )}
       >
-        <div className="flex h-16 shrink-0 items-center border-b border-slate-100/80 px-5">
+          <div className="flex h-16 shrink-0 items-center border-b border-[#f0e3d2]/80 px-5">
           <BrandLogo appName={appName} isCollapsed={sidebarCollapsed} />
         </div>
 
         <div className="flex-1 overflow-y-auto px-3 py-4">
           <Suspense fallback={
             <div className="animate-pulse space-y-4 p-4">
-              <div className="h-10 bg-slate-100 rounded-lg" />
-              <div className="h-10 bg-slate-100 rounded-lg" />
-              <div className="h-10 bg-slate-100 rounded-lg" />
+              <div className="h-10 bg-[#f6efe6] rounded-lg" />
+              <div className="h-10 bg-[#f6efe6] rounded-lg" />
+              <div className="h-10 bg-[#f6efe6] rounded-lg" />
             </div>
           }>
             <SidebarNavList 
@@ -402,12 +388,12 @@ export function AppShell({
         )}
       >
         {/* Sticky Header Top Navbar */}
-        <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center justify-between border-b border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.84),rgba(255,255,255,0.68))] backdrop-blur-xl shadow-[0_1px_0_rgba(255,255,255,0.8),0_12px_30px_rgba(15,23,42,0.04)] px-4 md:px-6 lg:px-8">
+        <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center justify-between border-b border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.88),rgba(255,248,241,0.74))] backdrop-blur-xl shadow-[0_1px_0_rgba(255,255,255,0.8),0_12px_30px_rgba(15,23,42,0.04)] px-4 md:px-6 lg:px-8">
           <div className="flex items-center gap-4">
             {/* Collapse toggle (desktop) */}
             <button
               onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-              className="hidden lg:flex rounded-xl p-2 text-slate-400 transition-all duration-200 ease-out hover:bg-white hover:text-violet-700 hover:shadow-sm"
+              className="hidden lg:flex rounded-xl p-2 text-slate-400 transition-all duration-200 ease-out hover:bg-white hover:text-[#b75c16] hover:shadow-sm"
               aria-label="Toggle sidebar"
             >
               <Menu className="h-5 w-5" />
@@ -416,7 +402,7 @@ export function AppShell({
             {/* Mobile menu toggle */}
             <button
               onClick={() => setMobileSidebarOpen(true)}
-              className="lg:hidden rounded-xl p-2 text-slate-400 transition-all duration-200 ease-out hover:bg-white hover:text-violet-700 hover:shadow-sm"
+              className="lg:hidden rounded-xl p-2 text-slate-400 transition-all duration-200 ease-out hover:bg-white hover:text-[#b75c16] hover:shadow-sm"
               aria-label="Open sidebar"
             >
               <Menu className="h-5 w-5" />
@@ -424,7 +410,7 @@ export function AppShell({
           </div>
 
           <div className="hidden min-w-0 flex-1 items-center justify-center gap-2 px-6 xl:flex">
-            <div className="inline-flex items-center gap-2 rounded-full border border-violet-100 bg-violet-50/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-700">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#efd8bf] bg-[#fff6ee] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#b75c16]">
               <PanelsTopLeft className="h-3.5 w-3.5" />
               {activeParentLabel ?? 'Portal'}
             </div>
@@ -440,10 +426,10 @@ export function AppShell({
             <div className="relative">
               <button
                 onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-                className="flex items-center gap-3 rounded-2xl border border-transparent px-4 py-1.5 transition-all duration-200 ease-out hover:border-slate-100 hover:bg-white hover:shadow-sm focus:outline-none"
+                className="flex items-center gap-3 rounded-2xl border border-transparent px-4 py-1.5 transition-all duration-200 ease-out hover:border-[#f0e3d2] hover:bg-white hover:shadow-sm focus:outline-none"
               >
                 {userAvatar || (
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(135deg,#0f172a,#334155)] text-sm font-bold text-white shadow-sm shadow-slate-900/10">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(135deg,#c96a22,#8a4a1d)] text-sm font-bold text-white shadow-sm shadow-[#c96a22]/10">
                     {userName?.[0]?.toUpperCase() ?? "A"}
                   </div>
                 )}
@@ -461,10 +447,10 @@ export function AppShell({
                 {profileMenuOpen && (
                   <>
                   <div className="fixed inset-0 z-40" onClick={() => setProfileMenuOpen(false)} />
-                  <div className="absolute right-0 top-full mt-2 w-72 rounded-2xl border border-slate-100 bg-white p-4 shadow-[0_20px_40px_rgba(15,23,42,0.12)] z-50 animate-fade-in-up">
-                    <div className="mb-4 flex items-center gap-3 border-b border-slate-50 pb-4 xl:hidden">
+                  <div className="absolute right-0 top-full mt-2 w-72 rounded-2xl border border-[#f0e3d2] bg-white p-4 shadow-[0_20px_40px_rgba(15,23,42,0.12)] z-50 animate-fade-in-up">
+                    <div className="mb-4 flex items-center gap-3 border-b border-[#faf1e5] pb-4 xl:hidden">
                       {userAvatar || (
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(135deg,#0f172a,#334155)] text-sm font-bold text-white shadow-sm shadow-slate-900/10">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(135deg,#c96a22,#8a4a1d)] text-sm font-bold text-white shadow-sm shadow-[#c96a22]/10">
                           {userName?.[0]?.toUpperCase() ?? "A"}
                         </div>
                       )}

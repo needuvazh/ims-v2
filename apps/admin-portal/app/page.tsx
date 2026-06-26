@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import {
   ArrowRight,
   CalendarDays,
@@ -8,6 +9,7 @@ import {
   ShieldCheck,
   Users,
 } from 'lucide-react';
+import { CountUp } from '@ims/shared-ui';
 
 import {
   PublicShell,
@@ -41,6 +43,13 @@ const homeFeatures = [
   },
 ];
 
+const homeCounters = [
+  { value: '25k+', label: 'Students trained' },
+  { value: '150+', label: 'Success partners' },
+  { value: '80+', label: 'Global programs' },
+  { value: '20+', label: 'Years experience' },
+];
+
 export default function HomePage() {
   return (
     <PublicShell>
@@ -61,6 +70,26 @@ export default function HomePage() {
         secondaryHref="/about"
         secondaryLabel="About Us"
       />
+
+      <section className="mx-auto max-w-7xl px-4 -mt-6 sm:px-6 lg:px-8">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {homeCounters.map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.08 }}
+              className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-[0_16px_40px_rgba(15,23,42,0.05)]"
+            >
+              <p className="text-3xl font-black tracking-tight text-zinc-950">
+                <CountUp value={stat.value} />
+              </p>
+              <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.24em] text-zinc-500">{stat.label}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <SectionHeading
@@ -108,13 +137,21 @@ export default function HomePage() {
           description="Use the public site to surface open intakes, corporate briefings, and scheduled assessment clinics."
         />
         <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {eventCards.map((event) => (
-            <div key={event.title} className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-[0_16px_40px_rgba(15,23,42,0.05)]">
+          {eventCards.map((event, index) => (
+            <motion.div
+              key={event.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.08 }}
+              whileHover={{ y: -4 }}
+              className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-[0_16px_40px_rgba(15,23,42,0.05)]"
+            >
               <CalendarDays className="h-5 w-5 text-[#b75c16]" />
               <h3 className="mt-5 text-xl font-black text-zinc-950">{event.title}</h3>
               <p className="mt-3 text-sm leading-7 text-zinc-600">{event.detail}</p>
               <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.28em] text-zinc-500">{event.meta}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>

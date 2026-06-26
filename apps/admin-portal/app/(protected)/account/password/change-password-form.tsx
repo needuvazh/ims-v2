@@ -46,7 +46,7 @@ export function ChangePasswordForm() {
   }
 
   return (
-    <Card>
+    <Card className="w-full max-w-md">
       <CardHeader>
         <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-[color:var(--ims-accent-soft)] text-[color:var(--ims-brass)]">
           <KeyRound className="h-6 w-6" />

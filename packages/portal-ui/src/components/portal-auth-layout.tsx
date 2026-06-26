@@ -1,6 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 interface PortalAuthLayoutProps {
@@ -19,7 +20,7 @@ export function PortalAuthLayout({
   heroWidthClassName = 'w-[50%]',
 }: PortalAuthLayoutProps) {
   return (
-    <div className="flex min-h-screen w-full overflow-hidden bg-slate-50 font-sans lg:h-screen">
+    <div className="flex min-h-screen w-full overflow-hidden bg-[#fbf8f3] font-sans lg:h-screen">
       <motion.aside
         initial={{ x: '-100%' }}
         animate={{ x: 0 }}
@@ -29,7 +30,7 @@ export function PortalAuthLayout({
         {hero}
       </motion.aside>
 
-      <div className="relative z-0 flex flex-1 flex-col overflow-y-auto bg-white lg:h-screen">
+      <div className="relative z-0 flex flex-1 flex-col overflow-y-auto bg-white/80 lg:h-screen">
         {topBar ? (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -80,11 +81,14 @@ export function PortalAuthHeroPanel({
   return (
     <>
       <div className="absolute inset-0 bg-slate-900">
-        <img
-          src={backgroundImageSrc}
-          className={backgroundImageClassName}
-          alt={backgroundImageAlt}
-        />
+        <div className="absolute inset-0">
+          <Image
+            src={backgroundImageSrc}
+            alt={backgroundImageAlt}
+            fill
+            className={backgroundImageClassName}
+          />
+        </div>
         {overlay}
       </div>
 

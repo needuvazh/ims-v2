@@ -2,15 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import Link from 'next/link';
-import { Building2, ChevronDown, KeyRound, LogOut, RefreshCw, UserPen } from 'lucide-react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@ims/shared-ui';
+import { Building2, KeyRound, LogOut, RefreshCw, UserPen } from 'lucide-react';
 import { setActiveBranchAction } from '../lib/auth-actions';
 
 interface BranchOption {
@@ -49,12 +41,13 @@ export function UserControls({ userName, activeBranchId, branches, isGlobal }: U
 
   return (
     <div className="space-y-3.5">
-      {showSwitcher && (
-        <div className="space-y-1">
-          <label htmlFor="active-branch-select" className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-[color:var(--ims-muted)]">
-            <Building2 className="h-3 w-3" />
-            Active Context
-          </label>
+      <div className="space-y-2">
+        <label className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-[color:var(--ims-muted)]">
+          <Building2 className="h-3 w-3" />
+          Active Context
+        </label>
+
+        {showSwitcher && (
           <div className="relative group">
             <select
               id="active-branch-select"
@@ -78,44 +71,34 @@ export function UserControls({ userName, activeBranchId, branches, isGlobal }: U
               )}
             </div>
           </div>
-          {error && <p className="text-[10px] font-semibold text-rose-600 ml-1">{error}</p>}
-        </div>
-      )}
+        )}
 
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button className="flex w-full items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-left shadow-sm transition-all duration-300 hover:border-[color:var(--ims-brass-soft)] hover:bg-[color:var(--ims-surface)] active:scale-[0.99]">
-            <span className="min-w-0">
-              <span className="block text-[10px] font-bold uppercase tracking-widest text-[color:var(--ims-muted)]">Profile</span>
-              <span className="block truncate text-sm font-semibold text-[color:var(--ims-ink)]">{userName}</span>
-            </span>
-            <ChevronDown className="h-4 w-4 shrink-0 text-[color:var(--ims-muted)]" />
-          </button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-56">
-          <DropdownMenuLabel>{userName}</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem asChild>
-            <Link href="/account/profile" className="flex w-full items-center gap-2">
-              <UserPen className="h-4 w-4" />
-              My Profile
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/account/password" className="flex w-full items-center gap-2">
-              <KeyRound className="h-4 w-4" />
-              Change Password
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem asChild className="text-rose-600 focus:text-rose-600">
-            <Link href="/sign-out" className="flex w-full items-center gap-2">
-              <LogOut className="h-4 w-4" />
-              Sign Out
-            </Link>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+        {showSwitcher && error && <p className="text-[10px] font-semibold text-rose-600 ml-1">{error}</p>}
+
+        <div className="space-y-2 rounded-2xl border border-slate-200 bg-slate-50 p-2 shadow-sm">
+          <Link
+            href="/account/profile"
+            className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-[color:var(--ims-ink)] transition-colors hover:bg-white hover:text-[color:var(--ims-brass)]"
+          >
+            <UserPen className="h-4 w-4" />
+            My Profile
+          </Link>
+          <Link
+            href="/account/password"
+            className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-[color:var(--ims-ink)] transition-colors hover:bg-white hover:text-[color:var(--ims-brass)]"
+          >
+            <KeyRound className="h-4 w-4" />
+            Change Password
+          </Link>
+          <Link
+            href="/sign-out"
+            className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-rose-600 transition-colors hover:bg-rose-50"
+          >
+            <LogOut className="h-4 w-4" />
+            Sign Out
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
