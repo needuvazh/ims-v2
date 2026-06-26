@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { BookOpen, ArrowRight, ClipboardCheck, Video, Users, CheckCircle, ChevronRight, Sparkles } from 'lucide-react';
 
@@ -19,9 +20,7 @@ export default function TrainerPortalLanding() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-lg border-b border-slate-200/50 py-4">
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="bg-gradient-to-br from-cyan-400 to-blue-600 p-2.5 rounded-xl text-white shadow-lg shadow-cyan-500/30 transform group-hover:-rotate-12 transition-transform">
-              <BookOpen className="h-5 w-5" />
-            </div>
+            <Image src="/alsaud/logo.png" alt="Al-Saud Training Institute" width={156} height={52} className="h-10 w-auto" priority />
             <span className="font-black text-lg tracking-tight">Trainer<span className="text-cyan-600">Portal</span></span>
           </Link>
           <Link href="/trainer/sign-in" className="px-6 py-2.5 rounded-xl bg-cyan-600 text-white text-sm font-bold hover:bg-cyan-500 transition-colors shadow-md hover:shadow-cyan-500/30">
@@ -64,7 +63,7 @@ export default function TrainerPortalLanding() {
 
           <motion.div className="flex-1 w-full max-w-md relative" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}>
             <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white aspect-square bg-slate-100">
-              <img src="https://images.unsplash.com/photo-1544717302-de2939b7ef71?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover" alt="Trainer" />
+               <Image src="https://images.unsplash.com/photo-1544717302-de2939b7ef71?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover" alt="Trainer" width={800} height={800} />
             </div>
             
             {/* Floating Elements */}

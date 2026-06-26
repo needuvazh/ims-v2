@@ -1,7 +1,16 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { Building2, LogOut, RefreshCw } from 'lucide-react';
+import Link from 'next/link';
+import { Building2, ChevronDown, KeyRound, LogOut, RefreshCw, UserPen } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@ims/shared-ui';
 import { setActiveBranchAction } from '../lib/auth-actions';
 
 interface BranchOption {
@@ -10,12 +19,13 @@ interface BranchOption {
 }
 
 interface UserControlsProps {
+  userName: string;
   activeBranchId: string | null;
   branches: BranchOption[];
   isGlobal: boolean;
 }
 
-export function UserControls({ activeBranchId, branches, isGlobal }: UserControlsProps) {
+export function UserControls({ userName, activeBranchId, branches, isGlobal }: UserControlsProps) {
   const [isPending, startTransition] = useTransition();
   const [selectedBranch, setSelectedBranch] = useState(activeBranchId ?? 'All');
   const [error, setError] = useState<string | null>(null);
@@ -32,10 +42,6 @@ export function UserControls({ activeBranchId, branches, isGlobal }: UserControl
         setSelectedBranch(activeBranchId ?? 'All');
       }
     });
-  };
-
-  const handleLogout = () => {
-    window.location.href = '/sign-out';
   };
 
   // Only show the branch switcher if they have global access OR multiple branches to choose from
@@ -76,13 +82,40 @@ export function UserControls({ activeBranchId, branches, isGlobal }: UserControl
         </div>
       )}
 
-      <button
-        onClick={handleLogout}
-        className="flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 hover:bg-rose-50/50 hover:border-rose-200 hover:text-rose-600 px-4 py-2.5 text-xs font-bold text-slate-700 shadow-sm transition-all duration-300 group active:scale-[0.98]"
-      >
-        <LogOut className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:-translate-x-0.5" />
-        Sign Out Securely
-      </button>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button className="flex w-full items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-left shadow-sm transition-all duration-300 hover:border-[color:var(--ims-brass-soft)] hover:bg-[color:var(--ims-surface)] active:scale-[0.99]">
+            <span className="min-w-0">
+              <span className="block text-[10px] font-bold uppercase tracking-widest text-[color:var(--ims-muted)]">Profile</span>
+              <span className="block truncate text-sm font-semibold text-[color:var(--ims-ink)]">{userName}</span>
+            </span>
+            <ChevronDown className="h-4 w-4 shrink-0 text-[color:var(--ims-muted)]" />
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-56">
+          <DropdownMenuLabel>{userName}</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem asChild>
+            <Link href="/account/profile" className="flex w-full items-center gap-2">
+              <UserPen className="h-4 w-4" />
+              My Profile
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/account/password" className="flex w-full items-center gap-2">
+              <KeyRound className="h-4 w-4" />
+              Change Password
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem asChild className="text-rose-600 focus:text-rose-600">
+            <Link href="/sign-out" className="flex w-full items-center gap-2">
+              <LogOut className="h-4 w-4" />
+              Sign Out
+            </Link>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 }

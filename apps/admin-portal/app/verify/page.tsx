@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Award, ArrowLeft, CheckCircle, Search, ShieldCheck, FileText, Sparkles } from 'lucide-react';
 
@@ -28,9 +29,7 @@ export default function PublicVerificationPage() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-lg border-b border-slate-200/50 py-4">
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="bg-gradient-to-br from-amber-400 to-orange-500 p-2.5 rounded-xl text-white shadow-lg shadow-amber-500/30 transform group-hover:rotate-12 transition-transform">
-              <ShieldCheck className="h-5 w-5" />
-            </div>
+            <Image src="/alsaud/logo.png" alt="Al-Saud Training Institute" width={156} height={52} className="h-10 w-auto" priority />
             <span className="font-black text-lg tracking-tight">Certificate<span className="text-amber-500">Verify</span></span>
           </Link>
           <Link href="/" className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-amber-600 transition-colors">
@@ -74,7 +73,7 @@ export default function PublicVerificationPage() {
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-amber-100 to-transparent rounded-bl-full pointer-events-none" />
 
-            <form onSubmit={handleVerify} className="relative z-10">
+            <form onSubmit={handleVerify} noValidate className="relative z-10">
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="relative flex-1">
                   <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">

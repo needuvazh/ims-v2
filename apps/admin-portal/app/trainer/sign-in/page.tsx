@@ -2,34 +2,34 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { BookOpen, ArrowLeft, Mail, Lock, Eye, EyeOff, Sparkles, ChevronRight, ClipboardCheck } from 'lucide-react';
-import {
-  createRequiredInputValidationHandlers,
-  validateRequiredInput,
-} from '@ims/shared-ui';
+import { buildRequiredFieldMessage } from '@ims/shared-ui';
 import { PortalAuthHeroPanel, PortalAuthLayout } from '@ims/portal-ui';
 
 export default function TrainerSignInPage() {
   const [showPass, setShowPass] = useState(false);
   const [isPending, setIsPending] = useState(false);
-  const emailValidation = createRequiredInputValidationHandlers('Email Address');
-  const passwordValidation = createRequiredInputValidationHandlers('Password');
+  const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({});
 
   const handleSubmit = (event: React.FormEvent) => {
     const form = event.currentTarget as HTMLFormElement;
     const emailInput = form.elements.namedItem('email') as HTMLInputElement | null;
     const passwordInput = form.elements.namedItem('password') as HTMLInputElement | null;
 
-    const isEmailValid = validateRequiredInput(emailInput, 'Email Address');
-    const isPasswordValid = validateRequiredInput(passwordInput, 'Password');
+    const nextErrors = {
+      email: emailInput?.value.trim() ? undefined : buildRequiredFieldMessage('Email Address'),
+      password: passwordInput?.value.trim() ? undefined : buildRequiredFieldMessage('Password'),
+    };
 
-    if (!isEmailValid || !isPasswordValid) {
+    if (nextErrors.email || nextErrors.password) {
       event.preventDefault();
-      form.reportValidity();
+      setFieldErrors(nextErrors);
       return;
     }
 
+    setFieldErrors({});
     event.preventDefault();
     setIsPending(true);
     setTimeout(() => setIsPending(false), 1500);
@@ -52,9 +52,7 @@ export default function TrainerSignInPage() {
           }
           header={
             <Link href="/trainer" className="inline-flex items-center gap-3 group">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-cyan-600 shadow-xl transition-transform group-hover:rotate-12">
-                <BookOpen className="h-6 w-6" />
-              </div>
+              <Image src="/alsaud/logo.png" alt="Al-Saud Training Institute" width={156} height={52} className="h-11 w-auto brightness-0 invert" priority />
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-200">Al-Saud Training</p>
                 <p className="text-xl font-black tracking-tight text-white">Institute</p>
@@ -83,7 +81,7 @@ export default function TrainerSignInPage() {
             <div className="flex items-center gap-4">
               <div className="flex -space-x-3">
                 {[1, 2, 3].map((index) => (
-                  <img
+                  <Image
                     key={index}
                     src={`https://i.pravatar.cc/100?img=${index + 20}`}
                     className="h-10 w-10 rounded-full border-2 border-cyan-500 object-cover"
@@ -137,11 +135,17 @@ export default function TrainerSignInPage() {
             <input
               type="email"
               placeholder="trainer@example.com"
-              required
-              {...emailValidation}
+              aria-invalid={Boolean(fieldErrors.email)}
+              aria-describedby={fieldErrors.email ? 'trainer-email-error' : undefined}
               className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-4 text-sm text-slate-900 outline-none transition-all focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/10"
+              onInput={() => setFieldErrors((prev) => ({ ...prev, email: undefined }))}
             />
           </div>
+          {fieldErrors.email ? (
+            <p id="trainer-email-error" role="alert" className="ml-1 text-xs font-medium text-rose-600">
+              {fieldErrors.email}
+            </p>
+          ) : null}
         </div>
 
         <div className="space-y-1.5">
@@ -156,9 +160,10 @@ export default function TrainerSignInPage() {
             <input
               type={showPass ? 'text' : 'password'}
               placeholder="••••••••••"
-              required
-              {...passwordValidation}
+              aria-invalid={Boolean(fieldErrors.password)}
+              aria-describedby={fieldErrors.password ? 'trainer-password-error' : undefined}
               className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-12 text-sm text-slate-900 outline-none transition-all focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/10"
+              onInput={() => setFieldErrors((prev) => ({ ...prev, password: undefined }))}
             />
             <button
               type="button"
@@ -168,6 +173,11 @@ export default function TrainerSignInPage() {
               {showPass ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </button>
           </div>
+          {fieldErrors.password ? (
+            <p id="trainer-password-error" role="alert" className="ml-1 text-xs font-medium text-rose-600">
+              {fieldErrors.password}
+            </p>
+          ) : null}
         </div>
 
         <motion.button

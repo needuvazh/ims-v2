@@ -5,6 +5,7 @@ export type DomainErrorCode =
   | 'unauthorized'
   | 'forbidden'
   | 'precondition_failed'
+  | 'invalid_current_password'
   | 'inactive_user_cannot_login'
   | 'locked_user_cannot_login'
   | 'role_assigned_to_active_users'

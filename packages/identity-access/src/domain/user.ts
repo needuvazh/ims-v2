@@ -92,6 +92,11 @@ export const changePasswordCommandSchema = z.object({
   newPassword: passwordSchema,
 });
 
+export const changeOwnPasswordCommandSchema = z.object({
+  currentPassword: z.string().min(1, 'Current password is required'),
+  newPassword: passwordSchema,
+});
+
 export const signInCommandSchema = z.object({
   email: z.string().trim().email().toLowerCase(),
   password: z.string().min(1),
@@ -109,6 +114,7 @@ export const resetPasswordCommandSchema = z.object({
 export type CreateUserCommand = z.infer<typeof createUserCommandSchema>;
 export type UpdateUserCommand = z.infer<typeof updateUserCommandSchema>;
 export type ChangePasswordCommand = z.infer<typeof changePasswordCommandSchema>;
+export type ChangeOwnPasswordCommand = z.infer<typeof changeOwnPasswordCommandSchema>;
 export type SignInCommand = z.infer<typeof signInCommandSchema>;
 export type RequestResetCommand = z.infer<typeof requestResetCommandSchema>;
 export type ResetPasswordCommand = z.infer<typeof resetPasswordCommandSchema>;

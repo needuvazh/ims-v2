@@ -5,6 +5,7 @@ import { createUuid, type Uuid, DomainError } from '@ims/shared-kernel';
 import type { RoleStatus, UserStatus, UserType } from '@ims/identity-access';
 import { createStructuredLogger, getCurrentRequestContext, withServerActionObservability } from '../../lib/observability';
 import { assertPermission, getSession } from '../../lib/auth-guard';
+import { buildIdentityActionFailure, extractFormValues } from './form-errors';
 
 
 async function getActorId(): Promise<Uuid> {
@@ -24,6 +25,8 @@ export type ActionResult<T = void> = {
   success: boolean;
   data?: T;
   error?: string;
+  fieldErrors?: Record<string, string>;
+  values?: Record<string, string>;
 };
 
 // ── Users ──────────────────────────────────────────────────────────────────
@@ -31,6 +34,7 @@ export type ActionResult<T = void> = {
 export async function createUserAction(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
   return withServerActionObservability(async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+    const values = extractFormValues(formData);
 
     try {
       await assertPermission('identity.write');
@@ -59,18 +63,27 @@ export async function createUserAction(_prev: ActionResult, formData: FormData):
       revalidatePath('/identity');
       return { success: true };
     } catch (err) {
-      if (err instanceof DomainError) {
-        logger.warn('identity.user.create.failed', { status: 'failed', message: err.message, error: err });
-        return { success: false, error: err.message };
-      }
-      logger.error('identity.user.create.failed', { status: 'failed', message: 'Failed to create user.', error: err as Error });
-      return { success: false, error: 'Failed to create user.' };
+      logger.warn('identity.user.create.failed', {
+        status: 'failed',
+        message: err instanceof Error ? err.message : 'unknown',
+        error: err instanceof Error ? err : undefined,
+      });
+
+      return {
+        success: false,
+        ...buildIdentityActionFailure(err, 'Failed to create user.', values, {
+          domain: { conflict: 'email' },
+          prisma: { email: 'email' },
+          prismaMessages: { email: 'Email already exists. Please use a different email address.' },
+        }),
+      };
     }
   }, { action: 'identity.createUser', route: '/identity' });
 }
 export async function updateUserAction(userId: string, _prev: ActionResult, formData: FormData): Promise<ActionResult> {
   return withServerActionObservability(async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+    const values = extractFormValues(formData);
 
     try {
       await assertPermission('identity.write');
@@ -96,12 +109,12 @@ export async function updateUserAction(userId: string, _prev: ActionResult, form
       revalidatePath('/identity');
       return { success: true };
     } catch (err) {
-      if (err instanceof DomainError) {
-        logger.warn('identity.user.update.failed', { status: 'failed', message: err.message, error: err });
-        return { success: false, error: err.message };
-      }
-      logger.error('identity.user.update.failed', { status: 'failed', message: 'Failed to update user.', error: err as Error });
-      return { success: false, error: 'Failed to update user.' };
+      logger.warn('identity.user.update.failed', {
+        status: 'failed',
+        message: err instanceof Error ? err.message : 'unknown',
+        error: err instanceof Error ? err : undefined,
+      });
+      return { success: false, ...buildIdentityActionFailure(err, 'Failed to update user.', values) };
     }
   }, { action: 'identity.updateUser', route: '/identity' });
 }
@@ -198,6 +211,7 @@ export async function getUserRolesAction(userId: string): Promise<ActionResult<{
 export async function createRoleAction(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
   return withServerActionObservability(async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+    const values = extractFormValues(formData);
 
     try {
       await assertPermission('identity.role.manage');
@@ -221,12 +235,19 @@ export async function createRoleAction(_prev: ActionResult, formData: FormData):
       revalidatePath('/identity');
       return { success: true };
     } catch (err) {
-      if (err instanceof DomainError) {
-        logger.warn('identity.role.create.failed', { status: 'failed', message: err.message, error: err });
-        return { success: false, error: err.message };
-      }
-      logger.error('identity.role.create.failed', { status: 'failed', message: 'Failed to create role.', error: err as Error });
-      return { success: false, error: 'Failed to create role.' };
+      logger.warn('identity.role.create.failed', {
+        status: 'failed',
+        message: err instanceof Error ? err.message : 'unknown',
+        error: err instanceof Error ? err : undefined,
+      });
+      return {
+        success: false,
+        ...buildIdentityActionFailure(err, 'Failed to create role.', values, {
+          domain: { conflict: 'roleCode' },
+          prisma: { roleCode: 'roleCode' },
+          prismaMessages: { roleCode: 'Role code already exists. Please use a different role code.' },
+        }),
+      };
     }
   }, { action: 'identity.createRole', route: '/identity' });
 }
@@ -234,6 +255,7 @@ export async function createRoleAction(_prev: ActionResult, formData: FormData):
 export async function updateRoleAction(roleId: string, _prev: ActionResult, formData: FormData): Promise<ActionResult> {
   return withServerActionObservability(async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+    const values = extractFormValues(formData);
 
     try {
       await assertPermission('identity.role.manage');
@@ -255,12 +277,12 @@ export async function updateRoleAction(roleId: string, _prev: ActionResult, form
       revalidatePath('/identity');
       return { success: true };
     } catch (err) {
-      if (err instanceof DomainError) {
-        logger.warn('identity.role.update.failed', { status: 'failed', message: err.message, error: err });
-        return { success: false, error: err.message };
-      }
-      logger.error('identity.role.update.failed', { status: 'failed', message: 'Failed to update role.', error: err as Error });
-      return { success: false, error: 'Failed to update role.' };
+      logger.warn('identity.role.update.failed', {
+        status: 'failed',
+        message: err instanceof Error ? err.message : 'unknown',
+        error: err instanceof Error ? err : undefined,
+      });
+      return { success: false, ...buildIdentityActionFailure(err, 'Failed to update role.', values) };
     }
   }, { action: 'identity.updateRole', route: '/identity' });
 }

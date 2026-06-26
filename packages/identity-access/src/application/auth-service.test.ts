@@ -53,6 +53,10 @@ describe('AuthService Security and Lockout Tests', () => {
         if (email === testUser.email) return { ...testUser };
         return null;
       },
+      findByIdWithCredentials: async (userId) => {
+        if (userId === testUser.id) return { ...testUser };
+        return null;
+      },
       recordLastLogin: async () => {},
       incrementFailedAttempts: async (userId, lockoutMinutes = 15) => {
         if (userId === testUser.id) {
@@ -68,6 +72,11 @@ describe('AuthService Security and Lockout Tests', () => {
           testUser.failedLoginAttempts = 0;
           testUser.lockoutUntil = null;
           testUser.status = 'Active';
+        }
+      },
+      updatePassword: async (userId, newHash) => {
+        if (userId === testUser.id) {
+          testUser.passwordHash = newHash;
         }
       },
       updatePasswordAndUnlock: async (userId, newHash) => {
@@ -374,6 +383,51 @@ describe('AuthService Security and Lockout Tests', () => {
       await expect(
         authService.resetPassword({ token: 'dummy-token', password: 'weak' })
       ).rejects.toThrow();
+    });
+  });
+
+  describe('Logged-in Password Change', () => {
+    it('updates the password, revokes existing sessions, and issues a new session', async () => {
+      const signInResult = await authService.signIn({
+        email: 'test@example.com',
+        password: 'Password@123',
+      });
+
+      const oldHash = nodeCrypto.createHash('sha256').update(signInResult.sessionToken).digest('hex');
+      expect(sessionsDb.get(oldHash)?.status).toBe('Active');
+
+      const changeResult = await authService.changePassword(
+        {
+          currentPassword: 'Password@123',
+          newPassword: 'NewStrongPassword@2026',
+        },
+        signInResult.session,
+      );
+
+      const newHash = nodeCrypto.createHash('sha256').update(changeResult.sessionToken).digest('hex');
+      expect(bcrypt.compareSync('NewStrongPassword@2026', testUser.passwordHash)).toBe(true);
+      expect(sessionsDb.get(oldHash)?.status).toBe('Revoked');
+      expect(sessionsDb.get(newHash)?.status).toBe('Active');
+
+      const logs = mockAuditRepo.list();
+      expect(logs.some((log) => log.action === 'identity.password_changed')).toBe(true);
+    });
+
+    it('rejects password change when the current password is wrong', async () => {
+      const signInResult = await authService.signIn({
+        email: 'test@example.com',
+        password: 'Password@123',
+      });
+
+      await expect(
+        authService.changePassword(
+          {
+            currentPassword: 'wrong-current-password',
+            newPassword: 'NewStrongPassword@2026',
+          },
+          signInResult.session,
+        )
+      ).rejects.toThrowError('Current password is incorrect.');
     });
   });
 });

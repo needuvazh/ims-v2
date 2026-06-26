@@ -169,6 +169,65 @@ export class PrismaUserRepository implements UserRepository, AuthUserRepository 
     };
   }
 
+  async findByIdWithCredentials(userId: string): Promise<UserWithCredentials | null> {
+    const now = new Date();
+    const row = (await this.prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        roles: {
+          where: {
+            role: {
+              status: 'Active',
+              effectiveStartDate: { lte: now },
+              OR: [{ effectiveEndDate: null }, { effectiveEndDate: { gte: now } }],
+            },
+          },
+          include: {
+            role: {
+              include: {
+                permissions: {
+                  where: { permission: { status: 'Active' } },
+                  include: { permission: true },
+                },
+              },
+            },
+          },
+        },
+        dataScopes: true,
+      },
+    })) as UserWithCredentialsRow | null;
+
+    if (!row || row.isDeleted) return null;
+
+    const roles = row.roles.map((userRole) => userRole.role.roleCode);
+    const permissions = row.roles.flatMap((userRole) =>
+      userRole.role.permissions.map((permissionRow) => permissionRow.permission.permissionCode),
+    );
+
+    return {
+      id: row.id as Uuid,
+      fullName: row.fullName,
+      email: row.email,
+      phone: row.phone,
+      userType: row.userType as UserProfile['userType'],
+      status: row.status as UserProfile['status'],
+      lastLoginAt: row.lastLoginAt,
+      passwordHash: row.passwordHash,
+      roles: [...new Set(roles)],
+      permissions: [...new Set(permissions)],
+      dataScopes: row.dataScopes.map((scope) => ({
+        scopeType: scope.scopeType,
+        branchId: scope.branchId,
+        departmentId: scope.departmentId,
+        assignedOnly: scope.assignedOnly,
+      })),
+      effectiveStartDate: row.effectiveStartDate,
+      effectiveEndDate: row.effectiveEndDate,
+      failedLoginAttempts: row.failedLoginAttempts,
+      lockoutUntil: row.lockoutUntil,
+    };
+  }
+
   async recordLastLogin(userId: string): Promise<void> {
     await this.prisma.user.update({ where: { id: userId }, data: { lastLoginAt: new Date() } });
   }

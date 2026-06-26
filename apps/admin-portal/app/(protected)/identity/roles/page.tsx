@@ -167,7 +167,7 @@ export default async function IdentityRolesPage(props: {
                         <form action={async () => {
                           'use server';
                           await updateRoleStatusAction(role.id, role.status === 'Active' ? 'Inactive' : 'Active');
-                        }}>
+                        }} noValidate>
                           {role.status === 'Active' ? (
                             <SimpleTooltip content="Deactivate Role" side="top">
                               <Button type="submit" variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-error)] hover:bg-[color:var(--ims-error)]/10">

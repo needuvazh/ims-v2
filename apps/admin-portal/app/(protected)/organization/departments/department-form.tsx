@@ -125,7 +125,7 @@ export function DepartmentForm({ mode, initialData, branches, users }: Departmen
           {mode === 'create' ? 'Add New Department' : mode === 'edit' ? 'Edit Department' : 'Department Details'}
         </CardTitle>
       </CardHeader>
-      <form action={formAction}>
+      <form action={formAction} noValidate>
         <CardContent className="space-y-6">
           {state.error && !state.fieldErrors && <Alert variant="error" description={state.error} />}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

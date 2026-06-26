@@ -7,18 +7,22 @@ import {
   signInCommandSchema,
   requestResetCommandSchema,
   resetPasswordCommandSchema,
+  changeOwnPasswordCommandSchema,
   type SignInCommand,
   type RequestResetCommand,
   type ResetPasswordCommand,
+  type ChangeOwnPasswordCommand,
 } from '../domain/user';
 import type { AuditLogRepository } from '@ims/audit';
 import type { PasswordResetNotificationPort } from '../domain/notification-port';
 
 export interface AuthUserRepository {
   findByEmailWithCredentials(email: string): Promise<UserWithCredentials | null>;
+  findByIdWithCredentials(userId: string): Promise<UserWithCredentials | null>;
   recordLastLogin(userId: string): Promise<void>;
   incrementFailedAttempts(userId: string, lockoutMinutes?: number): Promise<void>;
   resetFailedAttempts(userId: string): Promise<void>;
+  updatePassword(userId: string, passwordHash: string): Promise<void>;
   updatePasswordAndUnlock(userId: string, passwordHash: string): Promise<void>;
 }
 
@@ -137,6 +141,54 @@ export class AuthService {
       occurredAt: new Date(),
       details: {},
     });
+  }
+
+  async changePassword(
+    command: ChangeOwnPasswordCommand,
+    session: Session,
+  ): Promise<SignInResult> {
+    const validated = changeOwnPasswordCommandSchema.parse(command);
+    const user = await this.userRepository.findByIdWithCredentials(session.userId);
+
+    if (!user) {
+      throw new DomainError('not_found', 'User not found.');
+    }
+
+    const passwordMatch = await bcrypt.compare(validated.currentPassword, user.passwordHash);
+    if (!passwordMatch) {
+      throw new DomainError('unauthorized', 'Current password is incorrect.');
+    }
+
+    const passwordHash = await AuthService.hashPassword(validated.newPassword);
+    await this.userRepository.updatePassword(user.id, passwordHash);
+    await this.sessionRepository.revokeAllSessionsForUser(user.id);
+
+    const nextSession: Session = {
+      ...session,
+      expiresAt: Date.now() + 8 * 60 * 60 * 1000,
+    };
+    const sessionToken = await encodeSession(nextSession);
+    const tokenHash = nodeCrypto.createHash('sha256').update(sessionToken).digest('hex');
+    await this.sessionRepository.createSession({
+      userId: user.id,
+      tokenHash,
+      userAgent: null,
+      ipAddress: null,
+      expiresAt: new Date(nextSession.expiresAt),
+    });
+
+    await this.auditRepository.append({
+      id: crypto.randomUUID(),
+      actorId: user.id,
+      branchId: null,
+      action: 'identity.password_changed',
+      entityType: 'User',
+      entityId: user.id,
+      occurredAt: new Date(),
+      details: {},
+    });
+
+    return { sessionToken, session: nextSession };
   }
 
   async signIn(

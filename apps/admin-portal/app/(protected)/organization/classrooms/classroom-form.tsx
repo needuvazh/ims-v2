@@ -121,7 +121,7 @@ export function ClassroomForm({ mode, initialData, branches }: ClassroomFormProp
           {mode === 'create' ? 'Add New Classroom' : mode === 'edit' ? 'Edit Classroom' : 'Classroom Details'}
         </CardTitle>
       </CardHeader>
-      <form action={formAction}>
+      <form action={formAction} noValidate>
         <CardContent className="space-y-6">
           {state.error && !state.fieldErrors && <Alert variant="error" description={state.error} />}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

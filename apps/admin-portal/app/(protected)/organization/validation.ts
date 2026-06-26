@@ -24,7 +24,7 @@ export function getFieldValidationMessage(
   }
 
   if (control.validity.patternMismatch) {
-    return `${label} is required.`;
+    return `${label} cannot be empty.`;
   }
 
   if ('type' in control && control.validity.rangeUnderflow) {

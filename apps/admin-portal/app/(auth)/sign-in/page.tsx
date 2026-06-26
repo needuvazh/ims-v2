@@ -1,6 +1,7 @@
 'use client';
 
 import { useActionState, useState } from 'react';
+import Image from 'next/image';
 import {
   Eye, EyeOff, ArrowLeft, Lock, Mail, Users, Award, TrendingUp, CheckCircle2, ChevronRight, Sparkles
 } from 'lucide-react';
@@ -46,8 +47,8 @@ export default function SignInPage() {
     <PortalAuthLayout
       heroWidthClassName="w-[55%]"
       hero={
-        <PortalAuthHeroPanel
-          backgroundImageSrc="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1400&auto=format&fit=crop"
+          <PortalAuthHeroPanel
+            backgroundImageSrc="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1400&auto=format&fit=crop"
           backgroundImageClassName="absolute inset-0 h-full w-full object-cover mix-blend-luminosity opacity-40"
           overlay={
             <div className="absolute inset-0 bg-gradient-to-br from-violet-900/80 via-fuchsia-900/60 to-cyan-900/80" />
@@ -68,9 +69,7 @@ export default function SignInPage() {
           }
           header={
             <Link href="/" className="inline-flex items-center gap-3 group">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 shadow-[0_0_30px_rgba(168,85,247,0.5)] transition-transform group-hover:rotate-12">
-                <Sparkles className="h-6 w-6 text-white" />
-              </div>
+              <Image src="/alsaud/logo.png" alt="Al-Saud Training Institute" width={156} height={52} className="h-11 w-auto brightness-0 invert" priority />
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-widest text-violet-300">Al-Saud Training</p>
                 <p className="text-xl font-black tracking-tight text-white">Institute</p>

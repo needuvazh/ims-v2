@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { GraduationCap, ArrowRight, BookOpen, Calendar, Award, Sparkles, BarChart, ChevronRight } from 'lucide-react';
+import { ArrowRight, BookOpen, Calendar, Award, Sparkles, BarChart, ChevronRight } from 'lucide-react';
 
 const FEATURES = [
   { title: "My Courses", desc: "Access your enrolled courses, materials, and assignments.", icon: BookOpen, color: "#8B5CF6", link: "#" },
@@ -19,9 +20,7 @@ export default function StudentPortalLanding() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 py-4">
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="bg-gradient-to-br from-pink-500 to-rose-500 p-2 rounded-xl text-white shadow-lg shadow-pink-500/30 transform group-hover:rotate-12 transition-transform">
-              <GraduationCap className="h-5 w-5" />
-            </div>
+            <Image src="/alsaud/logo.png" alt="Al-Saud Training Institute" width={156} height={52} className="h-10 w-auto" priority />
             <span className="font-black text-lg tracking-tight">Student<span className="text-pink-500">Portal</span></span>
           </Link>
           <Link href="/student/sign-in" className="px-5 py-2 rounded-full bg-slate-900 text-white text-sm font-bold hover:bg-pink-500 transition-colors shadow-md hover:shadow-pink-500/30">

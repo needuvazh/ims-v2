@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { UserPlus, Save } from 'lucide-react';
 import {
@@ -28,6 +28,7 @@ function toDateInputValue(value?: Date | null) {
 
 export function UserForm({ mode, initialData, branches }: UserFormProps) {
   const router = useRouter();
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [state, formAction, isPending] = useActionState(
     async (prev: ActionResult, formData: FormData) => {
       const result = mode === 'edit' && initialData
@@ -41,6 +42,18 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
     initialState,
   );
 
+  useEffect(() => {
+    if (state.fieldErrors) {
+      setFieldErrors(state.fieldErrors);
+    }
+  }, [state.fieldErrors]);
+
+  useEffect(() => {
+    if (state.success) {
+      setFieldErrors({});
+    }
+  }, [state.success]);
+
   const isView = mode === 'view';
   const selectedBranchIds = new Set((initialData?.dataScopes ?? [])
     .filter((scope) => scope.scopeType === 'Branch' && scope.branchId)
@@ -48,8 +61,8 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
   const assignedOnly = initialData?.dataScopes?.some((scope) => scope.scopeType === 'Branch' && scope.assignedOnly) ?? false;
 
   return (
-    <form action={formAction} className="space-y-6 bg-[color:var(--ims-surface)] p-6 rounded-2xl border border-[color:var(--ims-border)]">
-      {state.error && <Alert variant="error" description={state.error} />}
+    <form action={formAction} noValidate className="space-y-6 bg-[color:var(--ims-surface)] p-6 rounded-2xl border border-[color:var(--ims-border)]">
+      {state.error && !state.fieldErrors && <Alert variant="error" description={state.error} />}
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Input 
@@ -60,6 +73,7 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           defaultValue={initialData?.fullName}
           disabled={isView}
           data-testid="user-name-input" 
+          errorText={fieldErrors.fullName}
         />
         <Input 
           name="email" 
@@ -70,6 +84,7 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           defaultValue={initialData?.email}
           disabled={isView || mode === 'edit'}
           data-testid="user-email-input" 
+          errorText={fieldErrors.email}
         />
         <Input 
           name="phone" 
@@ -77,6 +92,7 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           placeholder="+966 xx xxxx xxxx" 
           defaultValue={initialData?.phone ?? ''}
           disabled={isView}
+          errorText={fieldErrors.phone}
         />
         <Select
           name="status"
@@ -92,6 +108,7 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           required
           disabled={isView}
           data-testid="user-status-select"
+          errorText={fieldErrors.status}
         />
         {mode === 'create' && (
           <Input 
@@ -102,6 +119,7 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
             required 
             disabled={isView}
             data-testid="user-password-input" 
+            errorText={fieldErrors.password}
           />
         )}
         <Select
@@ -122,6 +140,7 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           required
           disabled={isView}
           data-testid="user-type-select"
+          errorText={fieldErrors.userType}
         />
         <Input
           name="effectiveStartDate"
@@ -129,6 +148,7 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           label="Effective Start Date"
           defaultValue={toDateInputValue(initialData?.effectiveStartDate)}
           disabled={isView}
+          errorText={fieldErrors.effectiveStartDate}
         />
         <Input
           name="effectiveEndDate"
@@ -136,6 +156,7 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           label="Effective End Date"
           defaultValue={toDateInputValue(initialData?.effectiveEndDate ?? null)}
           disabled={isView}
+          errorText={fieldErrors.effectiveEndDate}
         />
       </div>
 

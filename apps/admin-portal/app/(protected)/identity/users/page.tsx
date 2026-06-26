@@ -235,7 +235,7 @@ export default async function IdentityUsersPage(props: {
                         <form action={async () => {
                           'use server';
                           await updateUserStatusAction(user.id, user.status === 'Active' ? 'Inactive' : 'Active');
-                        }}>
+                        }} noValidate>
                           {user.status === 'Active' ? (
                             <SimpleTooltip content="Deactivate User" side="top">
                               <Button type="submit" variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-error)] hover:bg-[color:var(--ims-error)]/10">

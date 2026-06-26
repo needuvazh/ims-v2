@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ShieldPlus, Save } from 'lucide-react';
 import {
@@ -27,6 +27,7 @@ function toDateInputValue(value?: Date | null) {
 
 export function RoleForm({ mode, initialData }: RoleFormProps) {
   const router = useRouter();
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [state, formAction, isPending] = useActionState(
     async (prev: ActionResult, formData: FormData) => {
       const result = mode === 'edit' && initialData?.id
@@ -40,11 +41,23 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
     initialState,
   );
 
+  useEffect(() => {
+    if (state.fieldErrors) {
+      setFieldErrors(state.fieldErrors);
+    }
+  }, [state.fieldErrors]);
+
+  useEffect(() => {
+    if (state.success) {
+      setFieldErrors({});
+    }
+  }, [state.success]);
+
   const isView = mode === 'view';
 
   return (
-    <form action={formAction} className="space-y-6 bg-[color:var(--ims-surface)] p-6 rounded-2xl border border-[color:var(--ims-border)]">
-      {state.error && <Alert variant="error" description={state.error} />}
+    <form action={formAction} noValidate className="space-y-6 bg-[color:var(--ims-surface)] p-6 rounded-2xl border border-[color:var(--ims-border)]">
+      {state.error && !state.fieldErrors && <Alert variant="error" description={state.error} />}
       
       <div className="space-y-4">
         <Input 
@@ -55,6 +68,7 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
           defaultValue={initialData?.roleCode}
           disabled={isView || mode === 'edit'} // Usually code is immutable
           data-testid="role-code-input" 
+          errorText={fieldErrors.roleCode}
         />
         <Input 
           name="roleName" 
@@ -64,6 +78,7 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
           defaultValue={initialData?.roleName}
           disabled={isView}
           data-testid="role-name-input" 
+          errorText={fieldErrors.roleName}
         />
         <Textarea 
           name="description" 
@@ -71,6 +86,7 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
           placeholder="Full administrative access." 
           defaultValue={initialData?.description ?? ''}
           disabled={isView}
+          errorText={fieldErrors.description}
         />
         <Select
           name="status"
@@ -86,6 +102,7 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
           required
           disabled={isView}
           data-testid="role-status-select"
+          errorText={fieldErrors.status}
         />
         <Input
           name="effectiveStartDate"
@@ -93,6 +110,7 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
           label="Effective Start Date"
           defaultValue={toDateInputValue(initialData?.effectiveStartDate)}
           disabled={isView}
+          errorText={fieldErrors.effectiveStartDate}
         />
         <Input
           name="effectiveEndDate"
@@ -100,6 +118,7 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
           label="Effective End Date"
           defaultValue={toDateInputValue(initialData?.effectiveEndDate ?? null)}
           disabled={isView}
+          errorText={fieldErrors.effectiveEndDate}
         />
       </div>
 

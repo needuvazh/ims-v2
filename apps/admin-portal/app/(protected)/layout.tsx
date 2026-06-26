@@ -72,6 +72,7 @@ export default async function ProtectedLayout({ children }: { children: ReactNod
       aside={
         <div className="space-y-4">
           <UserControls
+            userName={shellUser.userName}
             activeBranchId={activeBranchId}
             branches={branches}
             isGlobal={isGlobal}

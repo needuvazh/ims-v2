@@ -180,8 +180,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/layout.tsx": {
-    "mtime": 1782153296.658355,
-    "ast_hash": "529821679e2cff5fe1c9437ee95f1552",
+    "mtime": 1782464625.547611,
+    "ast_hash": "080b49d03f5e5cd39e39ec118d5a6f39",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/loading.tsx": {
@@ -210,8 +210,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/user-controls.tsx": {
-    "mtime": 1782098750.39448,
-    "ast_hash": "7cf0fabdf6f875309f7c10a87a9c03d3",
+    "mtime": 1782464890.5244179,
+    "ast_hash": "bc6c5730a8e80e4f192efb7687373ec4",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/health/route.ts": {
@@ -330,8 +330,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/next-env.d.ts": {
-    "mtime": 1782448738.3802862,
-    "ast_hash": "2a74d3909800ca5467fa83b0ab4a4890",
+    "mtime": 1782463717.700141,
+    "ast_hash": "d0f8375ae1199dc7acd3977fc33b78b8",
     "semantic_hash": ""
   },
   "apps/admin-portal/next.config.ts": {
@@ -450,8 +450,8 @@
     "semantic_hash": ""
   },
   "packages/database/src/repositories/prisma-user-repository.ts": {
-    "mtime": 1782450150.8204,
-    "ast_hash": "13930d2dfcd6674e58d0b66ff0d935fd",
+    "mtime": 1782464650.8829038,
+    "ast_hash": "b4b254d7a8bf2c01f9e21902672abf9e",
     "semantic_hash": ""
   },
   "packages/database/tsconfig.json": {
@@ -470,8 +470,8 @@
     "semantic_hash": ""
   },
   "packages/identity-access/src/application/auth-service.ts": {
-    "mtime": 1782441306.0521297,
-    "ast_hash": "de4a28b048fbec6775907f0c929fcb07",
+    "mtime": 1782464754.6324768,
+    "ast_hash": "247fa2e23246ecd5cfe8be74a08e901f",
     "semantic_hash": ""
   },
   "packages/identity-access/src/application/navigation-service.test.ts": {
@@ -515,8 +515,8 @@
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/user.ts": {
-    "mtime": 1782450146.9781706,
-    "ast_hash": "97c797cca5fcf93eeb9cd9fc5f9f6682",
+    "mtime": 1782464609.3910441,
+    "ast_hash": "7b373b271ddf5637bf841592017622f6",
     "semantic_hash": ""
   },
   "packages/identity-access/src/index.ts": {
@@ -700,8 +700,8 @@
     "semantic_hash": ""
   },
   "packages/shared-ui/src/components/app-shell.tsx": {
-    "mtime": 1782434398.8560216,
-    "ast_hash": "576b6c9716cb15fac045369b35e180d5",
+    "mtime": 1782464735.4054003,
+    "ast_hash": "698f93f5c72fd48a7c0c7673a07bca57",
     "semantic_hash": ""
   },
   "packages/shared-ui/src/components/avatar.tsx": {
@@ -3305,8 +3305,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/organization/branches/branch-form.tsx": {
-    "mtime": 1782450498.4868226,
-    "ast_hash": "c487d5dda7e58ad85dcc1b94ed9b8fe8",
+    "mtime": 1782450527.7656057,
+    "ast_hash": "7565be8a569a15de57d8a63bb0bff6cd",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/organization/branches/create/page.tsx": {
@@ -3345,8 +3345,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/organization/departments/department-form.tsx": {
-    "mtime": 1782450498.4871318,
-    "ast_hash": "5f2bf5db50681926aa9d81909057e9f3",
+    "mtime": 1782450536.1370227,
+    "ast_hash": "95f66ccb4e7413506eed5ba5654daa87",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/organization/hierarchy/hierarchy-node.tsx": {
@@ -3505,13 +3505,18 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/organization/classrooms/classroom-form.tsx": {
-    "mtime": 1782450498.4902637,
-    "ast_hash": "459a32c0cf5dfec47fc7130e0fa50156",
+    "mtime": 1782450540.2789984,
+    "ast_hash": "d2e686313b19cd5f412f5e4723e22b30",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/organization/organization-form-errors.test.ts": {
     "mtime": 1782450392.0350177,
     "ast_hash": "0ab8b8221fea3871011d88713b451eec",
+    "semantic_hash": ""
+  },
+  "packages/shared-ui/src/components/app-shell.test.ts": {
+    "mtime": 1782464840.808588,
+    "ast_hash": "cc1f9098c335c347871be3532d90f2ae",
     "semantic_hash": ""
   }
 }
