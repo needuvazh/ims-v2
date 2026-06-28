@@ -1,7 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -262,44 +262,62 @@ export function getCourse(slug: string) {
   return courseCatalog.find((course) => course.slug === slug) ?? courseCatalog[0];
 }
 
-function BrandMark() {
-  return <Image src="/alsaud/logo.png" alt="Al-Saud Training Institute" width={156} height={52} className="h-11 w-auto" priority />;
+function BrandMark({ invert = false }: { invert?: boolean }) {
+  return (
+    <Image 
+      src="/alsaud/logo.png" 
+      alt="Al-Saud Training Institute" 
+      width={156} 
+      height={52} 
+      className={`h-11 w-auto ${invert ? 'brightness-0 invert' : ''}`} 
+      priority 
+    />
+  );
 }
 
 export function PublicShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-[#fbf8f3] text-zinc-900">
-      <div className="border-b border-black/5 bg-white/80 text-[11px] font-semibold uppercase tracking-[0.28em] text-zinc-500 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            <a href={contactInfo.phoneHref} className="inline-flex items-center gap-2 transition-colors hover:text-[#c96a22]">
+    <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-[#EA580C] selection:text-white">
+      {/* Top Bar */}
+      <div className="bg-[#090E17] border-b border-white/5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <a href={contactInfo.phoneHref} className="inline-flex items-center gap-2 transition-colors hover:text-[#F59E0B]">
               <Phone className="h-3.5 w-3.5" />
               {contactInfo.phone}
             </a>
-            <a href={contactInfo.emailHref} className="inline-flex items-center gap-2 transition-colors hover:text-[#c96a22]">
+            <a href={contactInfo.emailHref} className="inline-flex items-center gap-2 transition-colors hover:text-[#F59E0B]">
               <Mail className="h-3.5 w-3.5" />
               {contactInfo.email}
             </a>
           </div>
-          <div className="flex items-center gap-3">
-            <Link href="/login" className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-700 transition-colors hover:border-[#c96a22] hover:text-[#c96a22]">
+          <div className="flex items-center gap-4">
+            <span className="hidden sm:inline text-[9px] tracking-[0.25em] text-slate-500">العربية</span>
+            <Link href="/login" className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-[9px] font-bold tracking-[0.2em] text-white transition-all hover:bg-white/10 hover:border-white/30">
               IMS Login
             </Link>
-            <span className="hidden sm:inline text-[10px] tracking-[0.24em] text-zinc-400">Arabic</span>
           </div>
         </div>
       </div>
 
-      <header className="sticky top-0 z-50 border-b border-black/5 bg-white/90 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+      {/* Main Header */}
+      <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-[#0F172A]/90 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/20 py-4' : 'bg-[#0F172A] py-6 border-b border-white/5'}`}>
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
           <Link href="/" className="flex items-center gap-3">
-            <BrandMark />
+            <BrandMark invert />
           </Link>
 
-          <nav className="hidden items-center gap-7 lg:flex">
+          <nav className="hidden items-center gap-8 lg:flex">
             {mainNavigation.map((item) => {
               const active = item.href !== '/' && pathname.startsWith(item.href);
               const homeActive = item.href === '/' && pathname === '/';
@@ -308,7 +326,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`text-sm font-semibold transition-colors hover:text-[#c96a22] ${active || homeActive ? 'text-[#c96a22]' : 'text-zinc-600'}`}
+                  className={`text-[13px] font-bold uppercase tracking-[0.1em] transition-colors hover:text-[#F59E0B] ${active || homeActive ? 'text-[#F59E0B]' : 'text-slate-300'}`}
                 >
                   {item.label}
                 </Link>
@@ -317,15 +335,15 @@ export function PublicShell({ children }: { children: ReactNode }) {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <Link href="/contact-us" className="inline-flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-3 text-xs font-bold uppercase tracking-[0.22em] text-white transition-transform hover:-translate-y-0.5">
+            <Link href="/contact-us" className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#EA580C] to-[#F97316] px-6 py-2.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white shadow-lg shadow-[#EA580C]/20 transition-transform hover:-translate-y-0.5">
               Book Now
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
 
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-zinc-200 bg-white text-zinc-700 lg:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-white lg:hidden"
             aria-label="Toggle navigation"
             onClick={() => setMobileOpen((value) => !value)}
           >
@@ -333,26 +351,27 @@ export function PublicShell({ children }: { children: ReactNode }) {
           </button>
         </div>
 
+        {/* Mobile Navigation */}
         <AnimatePresence>
           {mobileOpen ? (
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="border-t border-black/5 bg-white px-4 py-4 lg:hidden"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="overflow-hidden border-t border-white/10 bg-[#0F172A] lg:hidden"
             >
-              <div className="mx-auto flex max-w-7xl flex-col gap-2">
+              <div className="mx-auto flex flex-col px-4 py-6">
                 {mainNavigation.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
-                    className="rounded-2xl px-4 py-3 text-sm font-semibold text-zinc-700 transition-colors hover:bg-zinc-50 hover:text-[#c96a22]"
+                    className="border-b border-white/5 py-4 text-sm font-bold uppercase tracking-[0.1em] text-slate-300 transition-colors hover:text-[#F59E0B]"
                   >
                     {item.label}
                   </Link>
                 ))}
-                <Link href="/contact-us" onClick={() => setMobileOpen(false)} className="mt-2 inline-flex items-center justify-center gap-2 rounded-2xl bg-zinc-900 px-4 py-3 text-sm font-bold text-white">
+                <Link href="/contact-us" onClick={() => setMobileOpen(false)} className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#EA580C] to-[#F97316] py-4 text-sm font-bold uppercase tracking-[0.15em] text-white shadow-lg shadow-[#EA580C]/20">
                   Book Now
                   <ArrowRight className="h-4 w-4" />
                 </Link>
@@ -364,23 +383,23 @@ export function PublicShell({ children }: { children: ReactNode }) {
 
       <main>{children}</main>
 
-      <footer className="mt-20 border-t border-black/5 bg-zinc-950 text-zinc-300">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.2fr_1fr_1fr] lg:px-8">
-          <div className="space-y-6">
-            <BrandMark />
-            <p className="max-w-md text-sm leading-7 text-zinc-400">{contactInfo.tagline}</p>
-            <div className="space-y-3 text-sm text-zinc-400">
-              <p className="flex items-start gap-3"><MapPin className="mt-0.5 h-4 w-4 text-[#d18a43]" /> {contactInfo.address}</p>
-              <p className="flex items-center gap-3"><Phone className="h-4 w-4 text-[#d18a43]" /> {contactInfo.phone}</p>
-              <p className="flex items-center gap-3"><Mail className="h-4 w-4 text-[#d18a43]" /> {contactInfo.email}</p>
+      <footer className="bg-[#090E17] text-slate-300 pt-20 pb-10 border-t border-white/5">
+        <div className="mx-auto grid max-w-7xl gap-16 px-4 sm:px-6 lg:grid-cols-[1.5fr_1fr_1fr] lg:px-8">
+          <div className="space-y-8">
+            <BrandMark invert />
+            <p className="max-w-md text-sm leading-relaxed text-slate-400">{contactInfo.tagline}</p>
+            <div className="space-y-4 text-sm text-slate-400">
+              <p className="flex items-start gap-4"><MapPin className="mt-1 h-4 w-4 shrink-0 text-[#F59E0B]" /> {contactInfo.address}</p>
+              <p className="flex items-center gap-4"><Phone className="h-4 w-4 shrink-0 text-[#F59E0B]" /> {contactInfo.phone}</p>
+              <p className="flex items-center gap-4"><Mail className="h-4 w-4 shrink-0 text-[#F59E0B]" /> {contactInfo.email}</p>
             </div>
           </div>
 
           <div>
-            <h3 className="text-xs font-bold uppercase tracking-[0.32em] text-white">Quick Links</h3>
-            <div className="mt-6 flex flex-col gap-3 text-sm">
+            <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-white">Quick Links</h3>
+            <div className="mt-8 flex flex-col gap-4 text-sm font-medium">
               {quickLinks.map((item) => (
-                <Link key={item.href} href={item.href} className="transition-colors hover:text-white">
+                <Link key={item.href} href={item.href} className="text-slate-400 transition-colors hover:text-[#F59E0B]">
                   {item.label}
                 </Link>
               ))}
@@ -388,10 +407,10 @@ export function PublicShell({ children }: { children: ReactNode }) {
           </div>
 
           <div>
-            <h3 className="text-xs font-bold uppercase tracking-[0.32em] text-white">Our Courses</h3>
-            <div className="mt-6 flex flex-col gap-3 text-sm">
-              {courseCatalog.map((course) => (
-                <Link key={course.slug} href={`/${course.slug}`} className="transition-colors hover:text-white">
+            <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-white">Our Courses</h3>
+            <div className="mt-8 flex flex-col gap-4 text-sm font-medium">
+              {courseCatalog.slice(0, 5).map((course) => (
+                <Link key={course.slug} href={`/${course.slug}`} className="text-slate-400 transition-colors hover:text-[#F59E0B]">
                   {course.title}
                 </Link>
               ))}
@@ -399,13 +418,12 @@ export function PublicShell({ children }: { children: ReactNode }) {
           </div>
         </div>
 
-        <div className="border-t border-white/5 py-6">
-          <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 text-[11px] font-semibold uppercase tracking-[0.24em] text-zinc-500 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-            <p>© 2026 Al-Saud Training Institute. All rights reserved.</p>
-            <div className="flex flex-wrap gap-5">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-20 pt-8 border-t border-white/10">
+          <div className="flex flex-col gap-4 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+            <p>© {new Date().getFullYear()} Al-Saud Training Institute. All rights reserved.</p>
+            <div className="flex flex-wrap gap-6">
               <Link href="/privacy" className="transition-colors hover:text-white">Privacy Policy</Link>
               <Link href="/terms" className="transition-colors hover:text-white">Terms of Use</Link>
-              <Link href="/sitemap" className="transition-colors hover:text-white">Sitemap</Link>
             </div>
           </div>
         </div>
@@ -414,12 +432,11 @@ export function PublicShell({ children }: { children: ReactNode }) {
   );
 }
 
-export function SplitHero({
+export function HeroSection({
   eyebrow,
   title,
   description,
   image,
-  imageAlt,
   primaryHref,
   primaryLabel,
   secondaryHref,
@@ -430,7 +447,6 @@ export function SplitHero({
   title: ReactNode;
   description: string;
   image: string;
-  imageAlt: string;
   primaryHref: string;
   primaryLabel: string;
   secondaryHref: string;
@@ -438,64 +454,100 @@ export function SplitHero({
   stats?: StatCard[];
 }) {
   return (
-    <section className="relative overflow-hidden border-b border-black/5 bg-[linear-gradient(180deg,#fffaf3_0%,#fbf8f3_100%)]">
-      <div className="absolute inset-y-0 right-0 hidden w-1/2 bg-[radial-gradient(circle_at_top_right,rgba(201,106,34,0.10),transparent_56%)] lg:block" />
-      <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 py-16 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:py-24">
-        <div className="space-y-8">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#d9b08a] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.32em] text-[#b75c16]">
-            <Sparkles className="h-3.5 w-3.5" />
-            {eyebrow}
-          </div>
-          <div className="max-w-3xl space-y-6">
-            <h1 className="text-5xl font-black leading-[0.95] tracking-tight text-zinc-950 sm:text-6xl lg:text-7xl">{title}</h1>
-            <p className="max-w-2xl text-lg leading-8 text-zinc-600">{description}</p>
-          </div>
-          <div className="flex flex-col gap-4 sm:flex-row">
-            <Link href={primaryHref} className="inline-flex items-center justify-center gap-2 rounded-full bg-zinc-900 px-7 py-4 text-sm font-bold uppercase tracking-[0.22em] text-white transition-transform hover:-translate-y-0.5">
-              {primaryLabel}
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link href={secondaryHref} className="inline-flex items-center justify-center gap-2 rounded-full border border-zinc-200 bg-white px-7 py-4 text-sm font-bold uppercase tracking-[0.22em] text-zinc-700 transition-colors hover:border-[#d18a43] hover:text-[#b75c16]">
-              {secondaryLabel}
-            </Link>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <section className="relative flex items-center justify-center overflow-hidden bg-[#0F172A] pb-32 pt-20 lg:pb-48 lg:pt-32">
+      <div className="absolute inset-0">
+        <Image src={image} alt="Hero background" fill className="object-cover opacity-30 mix-blend-overlay" priority />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0F172A] via-[#0F172A]/70 to-[#0F172A]" />
+        {/* Subtle orange glow */}
+        <div className="absolute top-1/4 right-1/4 h-[600px] w-[600px] rounded-full bg-[#EA580C]/20 blur-[120px] mix-blend-screen" />
+      </div>
+
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center px-4 text-center sm:px-6 lg:px-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#F59E0B] backdrop-blur-md"
+        >
+          <Sparkles className="h-3.5 w-3.5" />
+          {eyebrow}
+        </motion.div>
+
+        <motion.h1 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-8 max-w-5xl font-display text-5xl font-bold leading-[1.1] tracking-tight text-white sm:text-6xl lg:text-7xl"
+        >
+          {title}
+        </motion.h1>
+
+        <motion.p 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-8 max-w-2xl text-lg leading-relaxed text-slate-300"
+        >
+          {description}
+        </motion.p>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-12 flex flex-col gap-4 sm:flex-row"
+        >
+          <Link href={primaryHref} className="inline-flex items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#EA580C] to-[#F97316] px-8 py-4 text-[13px] font-bold uppercase tracking-[0.15em] text-white shadow-xl shadow-[#EA580C]/20 transition-transform hover:-translate-y-1">
+            {primaryLabel}
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+          <Link href={secondaryHref} className="inline-flex items-center justify-center gap-3 rounded-full border border-white/20 bg-white/5 px-8 py-4 text-[13px] font-bold uppercase tracking-[0.15em] text-white backdrop-blur-md transition-all hover:bg-white/10 hover:border-white/30">
+            {secondaryLabel}
+          </Link>
+        </motion.div>
+      </div>
+
+      {/* Floating Stats Bar */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 hidden translate-y-1/2 lg:block">
+        <div className="mx-auto max-w-6xl px-8">
+          <motion.div 
+             initial={{ opacity: 0, y: 40 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+             className="grid grid-cols-4 gap-px overflow-hidden rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-2xl shadow-black/50 backdrop-blur-xl"
+          >
             {heroStats.map((item) => {
               const Icon = item.icon;
               return (
-                <div key={item.label} className="rounded-[1.75rem] border border-black/5 bg-white p-5 shadow-[0_16px_40px_rgba(15,23,42,0.05)]">
-                  <div className="mb-3 inline-flex rounded-2xl bg-[#fff2e4] p-3 text-[#b75c16]"><Icon className="h-5 w-5" /></div>
-                  <p className="text-3xl font-black tracking-tight text-zinc-950">{item.value}</p>
-                  <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.24em] text-zinc-500">{item.label}</p>
+                <div key={item.label} className="group relative flex flex-col items-center justify-center overflow-hidden rounded-[1.5rem] bg-[#0F172A]/90 px-6 py-10">
+                  <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <Icon className="mb-4 h-8 w-8 text-[#F59E0B]" />
+                  <p className="font-display text-4xl font-bold text-white">{item.value}</p>
+                  <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400">{item.label}</p>
                 </div>
               );
             })}
-          </div>
-        </div>
-
-        <div className="relative">
-          <div className="rounded-[2.5rem] border border-black/5 bg-white p-4 shadow-[0_30px_80px_rgba(15,23,42,0.10)]">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem]">
-              <Image src={image} alt={imageAlt} fill className="object-cover" priority />
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/35 via-transparent to-transparent" />
-            </div>
-          </div>
-          <div className="absolute -bottom-6 left-4 rounded-[1.75rem] border border-black/5 bg-white px-5 py-4 shadow-lg">
-            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-zinc-500">Central office</p>
-            <p className="mt-1 text-sm font-semibold text-zinc-900">Azaiba North, Muscat</p>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
   );
 }
 
-export function SectionHeading({ eyebrow, title, description }: { eyebrow: string; title: string; description?: string }) {
+// SplitHero is maintained for backward compatibility in other pages if needed,
+// but mapped directly to HeroSection for simplicity.
+export const SplitHero = HeroSection;
+
+export function SectionHeading({ eyebrow, title, description, align = 'left', light = false }: { eyebrow: string; title: string; description?: string; align?: 'left' | 'center', light?: boolean }) {
   return (
-    <div className="max-w-3xl space-y-4">
-      <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#b75c16]">{eyebrow}</p>
-      <h2 className="text-3xl font-black tracking-tight text-zinc-950 sm:text-4xl">{title}</h2>
-      {description ? <p className="text-base leading-7 text-zinc-600">{description}</p> : null}
+    <div className={`max-w-3xl space-y-5 ${align === 'center' ? 'mx-auto text-center' : ''}`}>
+      <div className={`inline-flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.2em] ${light ? 'text-[#F59E0B]' : 'text-[#EA580C]'}`}>
+        <span className={`h-px w-8 ${light ? 'bg-[#F59E0B]/50' : 'bg-[#EA580C]/50'}`} />
+        {eyebrow}
+        {align === 'center' && <span className={`h-px w-8 ${light ? 'bg-[#F59E0B]/50' : 'bg-[#EA580C]/50'}`} />}
+      </div>
+      <h2 className={`font-display text-4xl font-bold tracking-tight sm:text-5xl ${light ? 'text-white' : 'text-slate-900'}`}>{title}</h2>
+      {description && <p className={`text-lg leading-relaxed ${light ? 'text-slate-300' : 'text-slate-600'}`}>{description}</p>}
     </div>
   );
 }
@@ -507,10 +559,10 @@ export function StatStrip() {
         {stats.map((item) => {
           const Icon = item.icon;
           return (
-            <div key={item.label} className="rounded-[1.75rem] border border-black/5 bg-white p-5 shadow-[0_16px_30px_rgba(15,23,42,0.04)]">
-              <div className="inline-flex rounded-2xl bg-[#fff2e4] p-3 text-[#b75c16]"><Icon className="h-5 w-5" /></div>
-              <p className="mt-4 text-3xl font-black text-zinc-950">{item.value}</p>
-              <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.24em] text-zinc-500">{item.label}</p>
+            <div key={item.label} className="group rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm transition-all hover:border-[#EA580C]/30 hover:shadow-xl hover:shadow-[#EA580C]/5">
+              <div className="inline-flex rounded-2xl bg-gradient-to-br from-[#FFF3ED] to-[#FFE4D6] p-4 text-[#EA580C] ring-1 ring-[#EA580C]/10"><Icon className="h-6 w-6" /></div>
+              <p className="mt-5 font-display text-4xl font-bold text-slate-900">{item.value}</p>
+              <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500">{item.label}</p>
             </div>
           );
         })}
@@ -521,37 +573,39 @@ export function StatStrip() {
 
 export function CourseGrid({ courses }: { courses: CourseCard[] }) {
   return (
-    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+    <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
       {courses.map((course) => (
         <motion.article
           key={course.slug}
-          whileHover={{ y: -6 }}
-          className="group overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-[0_18px_40px_rgba(15,23,42,0.06)]"
+          whileHover={{ y: -8 }}
+          className="group flex flex-col overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm transition-all hover:border-slate-300 hover:shadow-2xl hover:shadow-slate-900/5"
         >
           <div className="relative aspect-[4/3] overflow-hidden">
-            <Image src={course.image} alt={course.imageAlt} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
-          </div>
-          <div className="space-y-4 p-6">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#b75c16]">{course.duration}</p>
-                <h3 className="mt-2 text-xl font-black tracking-tight text-zinc-950">{course.title}</h3>
-              </div>
-              <span className="rounded-full bg-[#fff2e4] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.24em] text-[#b75c16]">{course.price}</span>
+            <Image src={course.image} alt={course.imageAlt} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <div className="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+              <Link href={`/${course.slug}`} className="flex w-full items-center justify-center gap-2 rounded-xl bg-white/20 px-4 py-3 text-xs font-bold uppercase tracking-[0.2em] text-white backdrop-blur-md hover:bg-white/30">
+                View Details <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
             </div>
-            <p className="text-sm leading-7 text-zinc-600">{course.summary}</p>
-            <ul className="space-y-2 text-sm text-zinc-700">
-              {course.points.map((point) => (
-                <li key={point} className="flex gap-3">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#c96a22]" />
-                  <span>{point}</span>
-                </li>
-              ))}
-            </ul>
-            <Link href={`/${course.slug}`} className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.22em] text-[#b75c16] transition-colors hover:text-zinc-950">
-              Read more
-              <ChevronRight className="h-4 w-4" />
-            </Link>
+          </div>
+          <div className="flex flex-1 flex-col p-8">
+            <div className="flex items-center justify-between gap-4">
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#EA580C]">{course.duration}</p>
+              <span className="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-slate-600">{course.price}</span>
+            </div>
+            <h3 className="mt-4 font-display text-2xl font-bold tracking-tight text-slate-900">{course.title}</h3>
+            <p className="mt-3 text-sm leading-relaxed text-slate-600 line-clamp-2">{course.summary}</p>
+            <div className="mt-auto pt-6">
+               <ul className="space-y-2 text-sm text-slate-600">
+                {course.points.slice(0, 2).map((point) => (
+                  <li key={point} className="flex gap-3">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#F59E0B]" />
+                    <span className="line-clamp-1">{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </motion.article>
       ))}
@@ -561,22 +615,20 @@ export function CourseGrid({ courses }: { courses: CourseCard[] }) {
 
 export function ContactBlock() {
   return (
-    <div className="grid gap-5 md:grid-cols-3">
-      <div className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-[0_16px_40px_rgba(15,23,42,0.05)]">
-        <Phone className="h-5 w-5 text-[#b75c16]" />
-        <p className="mt-4 text-xs font-bold uppercase tracking-[0.28em] text-zinc-500">Phone</p>
-        <a href={contactInfo.phoneHref} className="mt-2 block text-lg font-black text-zinc-950">{contactInfo.phone}</a>
-      </div>
-      <div className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-[0_16px_40px_rgba(15,23,42,0.05)]">
-        <Mail className="h-5 w-5 text-[#b75c16]" />
-        <p className="mt-4 text-xs font-bold uppercase tracking-[0.28em] text-zinc-500">Email</p>
-        <a href={contactInfo.emailHref} className="mt-2 block text-lg font-black text-zinc-950">{contactInfo.email}</a>
-      </div>
-      <div className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-[0_16px_40px_rgba(15,23,42,0.05)]">
-        <MapPin className="h-5 w-5 text-[#b75c16]" />
-        <p className="mt-4 text-xs font-bold uppercase tracking-[0.28em] text-zinc-500">Address</p>
-        <p className="mt-2 text-lg font-black text-zinc-950">Muscat, Azaiba North</p>
-      </div>
+    <div className="grid gap-6 md:grid-cols-3">
+      {[
+        { icon: Phone, title: 'Phone', value: contactInfo.phone, href: contactInfo.phoneHref },
+        { icon: Mail, title: 'Email', value: contactInfo.email, href: contactInfo.emailHref },
+        { icon: MapPin, title: 'Address', value: 'Muscat, Azaiba North', href: '#' },
+      ].map((item) => (
+        <a key={item.title} href={item.href} className="group flex flex-col items-center rounded-[2rem] border border-slate-200 bg-white p-8 text-center transition-all hover:border-[#EA580C]/30 hover:shadow-xl hover:shadow-[#EA580C]/5">
+          <div className="rounded-full bg-slate-50 p-4 text-[#EA580C] ring-1 ring-slate-100 transition-all group-hover:bg-[#FFF3ED] group-hover:ring-[#EA580C]/20">
+            <item.icon className="h-6 w-6" />
+          </div>
+          <p className="mt-6 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">{item.title}</p>
+          <p className="mt-2 font-display text-2xl font-bold text-slate-900">{item.value}</p>
+        </a>
+      ))}
     </div>
   );
 }
@@ -587,15 +639,26 @@ export function SectionCardGrid({
   items: Array<{ title: string; description: string; icon: LucideIcon }>;
 }) {
   return (
-    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-      {items.map((item) => {
+    <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+      {items.map((item, idx) => {
         const Icon = item.icon;
         return (
-          <div key={item.title} className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-[0_16px_40px_rgba(15,23,42,0.05)]">
-            <div className="inline-flex rounded-2xl bg-[#fff2e4] p-3 text-[#b75c16]"><Icon className="h-5 w-5" /></div>
-            <h3 className="mt-5 text-xl font-black text-zinc-950">{item.title}</h3>
-            <p className="mt-3 text-sm leading-7 text-zinc-600">{item.description}</p>
-          </div>
+          <motion.div 
+            key={item.title} 
+            whileHover={{ y: -8 }}
+            className="group relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm transition-all hover:border-[#EA580C]/30 hover:shadow-xl hover:shadow-[#EA580C]/5"
+          >
+            <div className="absolute right-0 top-0 -mr-4 -mt-4 pointer-events-none text-[120px] font-black text-slate-50 opacity-50 transition-transform duration-500 group-hover:scale-110">
+              0{idx + 1}
+            </div>
+            <div className="relative z-10">
+              <div className="mb-6 inline-flex rounded-2xl bg-gradient-to-br from-[#FFF3ED] to-[#FFE4D6] p-4 text-[#EA580C] ring-1 ring-[#EA580C]/10">
+                <Icon className="h-6 w-6" />
+              </div>
+              <h3 className="font-display text-2xl font-bold text-slate-900">{item.title}</h3>
+              <p className="mt-4 leading-relaxed text-slate-600">{item.description}</p>
+            </div>
+          </motion.div>
         );
       })}
     </div>
@@ -604,10 +667,10 @@ export function SectionCardGrid({
 
 export function BulletList({ items }: { items: string[] }) {
   return (
-    <ul className="space-y-3 text-sm leading-7 text-zinc-700">
+    <ul className="space-y-3 text-sm leading-relaxed text-slate-700">
       {items.map((item) => (
         <li key={item} className="flex gap-3">
-          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#c96a22]" />
+          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#F59E0B]" />
           <span>{item}</span>
         </li>
       ))}
@@ -617,10 +680,10 @@ export function BulletList({ items }: { items: string[] }) {
 
 export function DetailPanel({ title, subtitle, bullets }: { title: string; subtitle?: string; bullets: string[] }) {
   return (
-    <div className="rounded-[2rem] border border-black/5 bg-white p-7 shadow-[0_16px_40px_rgba(15,23,42,0.05)]">
-      <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#b75c16]">{subtitle ?? 'Course details'}</p>
-      <h3 className="mt-3 text-2xl font-black tracking-tight text-zinc-950">{title}</h3>
-      <div className="mt-5">
+    <div className="rounded-[2.5rem] border border-slate-200 bg-white p-8 shadow-xl shadow-slate-900/5 sm:p-10">
+      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#EA580C]">{subtitle ?? 'Course details'}</p>
+      <h3 className="mt-4 font-display text-3xl font-bold tracking-tight text-slate-900">{title}</h3>
+      <div className="mt-6">
         <BulletList items={bullets} />
       </div>
     </div>
@@ -629,14 +692,19 @@ export function DetailPanel({ title, subtitle, bullets }: { title: string; subti
 
 export function SimpleCTA({ title, description, href, label }: { title: string; description: string; href: string; label: string }) {
   return (
-    <div className="rounded-[2.5rem] bg-zinc-950 px-8 py-10 text-white shadow-[0_20px_50px_rgba(15,23,42,0.2)]">
-      <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#e4b07d]">Contact desk</p>
-      <h3 className="mt-4 text-3xl font-black tracking-tight sm:text-4xl">{title}</h3>
-      <p className="mt-4 max-w-2xl text-sm leading-7 text-zinc-300">{description}</p>
-      <Link href={href} className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-bold uppercase tracking-[0.22em] text-zinc-950 transition-transform hover:-translate-y-0.5">
-        {label}
-        <ArrowRight className="h-4 w-4" />
-      </Link>
+    <div className="relative overflow-hidden rounded-[3rem] bg-[#0F172A] px-8 py-20 text-center shadow-2xl md:px-16 lg:py-28">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,88,12,0.15),transparent_60%)]" />
+      <div className="absolute top-0 right-0 h-[300px] w-[300px] translate-x-1/3 -translate-y-1/3 rounded-full bg-gradient-to-br from-[#EA580C]/20 to-[#F97316]/20 blur-[80px]" />
+      
+      <div className="relative z-10 mx-auto max-w-3xl">
+        <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#F59E0B]">Take the next step</p>
+        <h3 className="mt-6 font-display text-4xl font-bold text-white sm:text-5xl lg:text-6xl">{title}</h3>
+        <p className="mt-6 text-lg leading-relaxed text-slate-300">{description}</p>
+        <Link href={href} className="mt-10 inline-flex items-center justify-center gap-3 rounded-full bg-white px-8 py-4 text-[13px] font-bold uppercase tracking-[0.15em] text-[#0F172A] transition-all hover:-translate-y-1 hover:bg-slate-50 hover:shadow-xl hover:shadow-white/10">
+          {label}
+          <ArrowRight className="h-4 w-4" />
+        </Link>
+      </div>
     </div>
   );
 }
@@ -646,12 +714,11 @@ export function CourseDetailPage({ slug }: { slug: string }) {
 
   return (
     <PublicShell>
-      <SplitHero
+      <HeroSection
         eyebrow="Course detail"
         title={course.title}
         description={course.summary}
         image={course.image}
-        imageAlt={course.imageAlt}
         primaryHref="/contact-us"
         primaryLabel="Book Now"
         secondaryHref="/courses"
@@ -664,34 +731,37 @@ export function CourseDetailPage({ slug }: { slug: string }) {
         ]}
       />
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+      <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:pt-48">
+        <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr]">
           <DetailPanel title="What this course covers" bullets={course.points} />
-          <div className="space-y-6">
-            <div className="rounded-[2rem] border border-black/5 bg-white p-7 shadow-[0_16px_40px_rgba(15,23,42,0.05)]">
-              <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#b75c16]">Course summary</p>
-              <p className="mt-4 text-sm leading-7 text-zinc-600">
+          <div className="space-y-8">
+            <div className="rounded-[2.5rem] border border-slate-200 bg-white p-8 shadow-xl shadow-slate-900/5">
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#EA580C]">Course summary</p>
+              <p className="mt-4 leading-relaxed text-slate-600">
                 {course.summary} Please enquire about pricing, dates, and group delivery options. The institute tailors delivery based on attendee count and location.
               </p>
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-2xl bg-[#fff7ef] p-4">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-zinc-500">Duration</p>
-                  <p className="mt-2 text-lg font-black text-zinc-950">{course.duration}</p>
+              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                <div className="rounded-2xl bg-slate-50 p-5 ring-1 ring-slate-100">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Duration</p>
+                  <p className="mt-2 font-display text-xl font-bold text-slate-900">{course.duration}</p>
                 </div>
-                <div className="rounded-2xl bg-[#fff7ef] p-4">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-zinc-500">Price</p>
-                  <p className="mt-2 text-lg font-black text-zinc-950">{course.price}</p>
+                <div className="rounded-2xl bg-slate-50 p-5 ring-1 ring-slate-100">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Price</p>
+                  <p className="mt-2 font-display text-xl font-bold text-slate-900">{course.price}</p>
                 </div>
               </div>
             </div>
-            <SimpleCTA
-              title="Ready to enroll a batch?"
-              description="Call or message the admissions desk to confirm dates, attendee count, and delivery requirements."
-              href="/contact-us"
-              label="Contact admissions"
-            />
           </div>
         </div>
+      </section>
+      
+      <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
+         <SimpleCTA
+            title="Ready to enroll a batch?"
+            description="Call or message the admissions desk to confirm dates, attendee count, and delivery requirements."
+            href="/contact-us"
+            label="Contact admissions"
+          />
       </section>
     </PublicShell>
   );
@@ -700,12 +770,12 @@ export function CourseDetailPage({ slug }: { slug: string }) {
 export function LegalPageShell({ title, description, children }: { title: string; description: string; children: ReactNode }) {
   return (
     <PublicShell>
-      <section className="mx-auto max-w-4xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="rounded-[2.5rem] border border-black/5 bg-white p-8 shadow-[0_18px_40px_rgba(15,23,42,0.05)] sm:p-12">
-          <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#b75c16]">Legal</p>
-          <h1 className="mt-4 text-4xl font-black tracking-tight text-zinc-950">{title}</h1>
-          <p className="mt-4 text-sm leading-7 text-zinc-600">{description}</p>
-          <div className="prose prose-zinc mt-10 max-w-none prose-headings:font-black prose-p:leading-7 prose-li:leading-7">{children}</div>
+      <section className="mx-auto max-w-4xl px-4 py-24 sm:px-6 lg:px-8">
+        <div className="rounded-[3rem] border border-slate-200 bg-white p-8 shadow-2xl shadow-slate-900/5 sm:p-16">
+          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#EA580C]">Legal Information</p>
+          <h1 className="mt-4 font-display text-5xl font-bold tracking-tight text-slate-900">{title}</h1>
+          <p className="mt-6 text-lg leading-relaxed text-slate-600">{description}</p>
+          <div className="prose prose-slate mt-12 max-w-none prose-headings:font-display prose-headings:font-bold prose-p:leading-relaxed prose-li:leading-relaxed">{children}</div>
         </div>
       </section>
     </PublicShell>
