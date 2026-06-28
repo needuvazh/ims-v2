@@ -25,7 +25,7 @@
 
 Audit & Compliance records significant business and system events, preserves immutable history, and supports investigations and compliance reviews.
 
-The context owns audit logs and approval logs. It consumes events from other domains, but it does not make the original business decision.
+The context owns audit logs, approval logs, and compliance issue tracking. It consumes events from other domains, but it does not make the original business decision.
 
 ---
 
@@ -41,6 +41,7 @@ The context owns audit logs and approval logs. It consumes events from other dom
 * Export for investigation
 * Retention configuration
 * Compliance summary views
+* Compliance issue lifecycle for document expiry and sensitive operational risks
 
 ## 2.2 Out of Scope for Phase 1
 
@@ -56,6 +57,7 @@ The Audit context owns:
 
 * AuditLog
 * ApprovalLog
+* ComplianceIssue
 
 Supporting configuration may include retention and export policy settings.
 
@@ -70,6 +72,7 @@ Supporting configuration may include retention and export policy settings.
 * Every finance, certificate, completion, attendance, and RBAC change must be auditable.
 * Failed and denied access attempts must be captured.
 * Audit exports must be permission-controlled and themselves logged.
+* Document expiry, document verification, finance sync failures, certificate revocation, attendance correction, and RBAC changes must be visible in compliance and audit views.
 
 ---
 
@@ -268,4 +271,3 @@ Branch Activity Summary
 Module Activity Summary
 Export History
 ```
-

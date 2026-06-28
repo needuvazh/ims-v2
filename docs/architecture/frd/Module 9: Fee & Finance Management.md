@@ -32,6 +32,8 @@ The context owns fee plans, installment plans, enrollment fee accounts, payments
 
 Phase 1 covers operational finance only and does not include full general ledger accounting or payment gateway automation.
 
+Tally ERP synchronization is an integration requirement for financial auditability. Finance shall publish outbox events for payments, receipts, refunds, and corporate invoices so the Tally adapter can sync without direct dual writes.
+
 ---
 
 # 2. Scope

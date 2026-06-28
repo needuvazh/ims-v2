@@ -1,6 +1,6 @@
 # IMS Project Status
 
-Last updated: 2026-06-26
+Last updated: 2026-06-28
 
 ## Current Completion
 
@@ -23,6 +23,7 @@ Current implementation state:
 - Domain/application packages exist for shared kernel, shared auth, shared UI, portal UI, audit, identity access, organization, database, and observability.
 - Prisma schema covers identity (including database-backed sessions, password reset tokens, and active dating), organization, audit log, and outbox foundation tables.
 - Student portal, trainer portal, and public certificate verification routes exist as shells only. Their real workflows are pending.
+- Documentation has been review-aligned for Corporate B2B credit control, bilingual EN/AR data policy, document expiry compliance, offline biometric sync, Tally ERP outbox sync, and architecture validation traceability.
 
 ## Completion by Area
 
@@ -40,9 +41,9 @@ Current implementation state:
 | Scheduling & Attendance    | Not started        |                  0% | Trainer attendance page shell only                                                                                                                       | Sessions, timetable conflicts, attendance marking, locking, correction, percentage calculation, audit                                                                                                         |
 | Fee & Finance              | Not started        |                  0% | Student fees page shell only                                                                                                                             | Fee plans, installment plans, manual payments, receipts, dues, discounts, refunds, approval hierarchy, audit                                                                                                  |
 | Trainer Management         | Not started        |                  0% | Trainer portal shell only                                                                                                                                | Trainer profile, availability, assignments, documents, payment visibility                                                                                                                                     |
-| Corporate Training         | Not started        |                  0% | None                                                                                                                                                     | Corporate accounts, contacts, contracts, programs, participants, imports, corporate billing                                                                                                                   |
+| Corporate Training         | Not started        |                  0% | Review-aligned documentation for CorporateAccount credit exposure, contracts, programs, participants, and billing coordination.                            | Corporate accounts, contacts, contracts, programs, participants, imports, credit validation implementation, corporate billing                                                                                 |
 | Completion & Certificate   | Not started        |                  0% | Student certificate and public verify route shells only                                                                                                  | Completion approvals, eligibility validation, certificate templates, generation, issuance, verification logs                                                                                                  |
-| Document Management        | Not started        |                  0% | None                                                                                                                                                     | Document types, uploads, versions, verification, expiry, signed access, access audit                                                                                                                          |
+| Document Management        | Not started        |                  0% | Review-aligned documentation for document expiry, verification, compliance issue creation, and signed access expectations.                                | Document types, uploads, versions, verification implementation, expiry worker, signed access, access audit                                                                                                    |
 | Communication              | Not started        |                  0% | None                                                                                                                                                     | Templates, notifications, delivery logs, event-driven enqueueing                                                                                                                                              |
 | Reports & Dashboard        | Not started        |                  0% | Basic admin dashboard shell                                                                                                                              | Report definitions, widgets, read models, snapshots, exports, branch/role-scoped dashboards                                                                                                                   |
 
@@ -100,7 +101,10 @@ Critical pending items blocking meaningful percentage growth:
    Document type configuration, upload metadata, verification, versioning, expiry, signed access, and access audit are not implemented.
 
 10. **Reporting and communication**
-    Dashboards, report definitions, metric snapshots, exports, communication templates, notifications, and delivery logs are not implemented.
+     Dashboards, report definitions, metric snapshots, exports, communication templates, notifications, and delivery logs are not implemented.
+
+11. **Review-aligned integration foundations**
+     Biometric offline gateway sync and Tally ERP outbox/reconciliation designs are documented, but no gateway client, sync tables, workers, or API adapters are implemented yet.
 
 ## Next Action Items to Increase Completion
 
@@ -115,6 +119,7 @@ The fastest responsible way to increase the completion percentage is to finish f
 | 3        | `implement-course-batch-foundation`      |                            21% -> 24-27% | Adds courses, pricing, completion rules, batches, waiting list, and trainer assignment references needed by enrollment.                  |
 | 4        | `implement-manual-finance-workflow`      |                            27% -> 32-36% | Adds one of the highest-value IMS workflows: fee account, manual payment, receipt, due calculation, discount/refund controls, and audit. |
 | 5        | `implement-attendance-completion-certificate-chain` |                            36% -> 43-49% | Connects attendance to completion approval, eligibility, certificate generation, and public verification.                                |
+| 6        | `design-integration-foundations`       |                            49% -> 51-54% | Adds biometric sync intake, Tally sync attempts, and integration observability after core Finance/Attendance records exist.              |
 
 ## Recommended Immediate OpenSpec Work
 
@@ -165,6 +170,7 @@ Recommended checks before marking future implementation changes complete:
 - UI shells and preview components do not count as completed business workflows.
 - Student and trainer portals are future workflow surfaces, not completed modules.
 - Corporate Training, Communication, Reporting, and advanced integrations can remain behind core Enrollment-centered workflows unless the user reprioritizes them.
+- Corporate B2B credit rules, compliance expiry rules, offline biometric sync, and Tally sync are now documented architecture requirements even where implementation is phased.
 - Observability infrastructure is treated as platform/NFR work and is tracked separately from FRD completion.
 
 ## Open Questions
@@ -174,3 +180,6 @@ Recommended checks before marking future implementation changes complete:
 - What exact Oman receipt, tax invoice, certificate, and student ID templates should be implemented?
 - Which object storage provider should be used for documents and generated certificates?
 - What audit retention and privacy policy should be enforced for production?
+- Should corporate credit limit failures be a hard block or an approval workflow?
+- Should Tally sync be near-real-time or daily batch reconciliation?
+- Will ASTI provide local biometric gateway hardware/software, or should the project include that deliverable?

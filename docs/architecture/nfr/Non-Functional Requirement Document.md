@@ -846,3 +846,56 @@ Regional Data Residency Controls
 ```
 
 These requirements are excluded from Phase 1 but the architecture should remain ready for them.
+
+---
+
+# 21. Review Alignment NFR Addendum
+
+## NFR-REL-004 Offline Biometric Reliability
+
+Biometric attendance capture shall tolerate campus internet outages by buffering events locally before cloud sync.
+
+Targets:
+
+| Requirement | Target |
+| --- | --- |
+| Local buffering duration | Minimum 7 days of attendance events per branch gateway |
+| Cloud sync idempotency | Required using terminal or gateway event ID |
+| Duplicate prevention | No duplicate AttendanceRecord creation for repeated event pushes |
+| Sync visibility | Gateway sync status and last error must be observable by administrators |
+
+## NFR-REL-005 External Finance Sync Reliability
+
+Tally ERP and future payment gateway integrations shall use outbox-backed delivery, retry, and reconciliation logs.
+
+Targets:
+
+| Requirement | Target |
+| --- | --- |
+| Finance transaction integrity | Payment/receipt/refund state persists independently of Tally availability |
+| Retry strategy | Exponential backoff with dead-letter or manual intervention state |
+| Reconciliation evidence | Sync attempts, external references, and failures retained for audit |
+| Dual-write protection | Direct writes to Finance and Tally in the same request are prohibited |
+
+## NFR-LNG-006 Localized Data Storage
+
+Business fields requiring bilingual display shall use a consistent localized text structure with English and Arabic values. Arabic RTL rendering is required for Arabic UI, certificates, public verification, and notification templates.
+
+Where Arabic fields require search or uniqueness, the implementation shall use indexed translation tables or database-supported generated/search columns instead of relying only on opaque JSON.
+
+## NFR-CMP-005 Document Expiry Compliance
+
+Critical documents shall support expiry alerts and compliance issue tracking.
+
+Targets:
+
+| Requirement | Target |
+| --- | --- |
+| Reminder intervals | Configurable, default 90/60/30/7 days before expiry |
+| Critical expiry action | Compliance issue creation; account hold only through owning context policy |
+| Auditability | Verification, rejection, expiry, and hold actions must be audit logged |
+| Dashboard visibility | Branch-scoped compliance dashboard for expiring and expired documents |
+
+## NFR-SEC-009 Branch Scope Enforcement
+
+Branch scoping shall be enforced server-side in application services or route policy guards. UI menu hiding and client-side filters are not authorization controls.

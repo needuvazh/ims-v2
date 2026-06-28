@@ -160,7 +160,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/dashboard/page.tsx": {
-    "mtime": 1782658607.8755674,
+    "mtime": 1782659486.834194,
     "ast_hash": "846842d4be16e5673b108a5fbc715a64",
     "semantic_hash": ""
   },
@@ -260,7 +260,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/student/(protected)/dashboard/page.tsx": {
-    "mtime": 1782658538.8988302,
+    "mtime": 1782659486.834797,
     "ast_hash": "8eae85a5812c24a56a2fb575f30cc85e",
     "semantic_hash": ""
   },
@@ -290,7 +290,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/trainer/(protected)/dashboard/page.tsx": {
-    "mtime": 1782658538.8991265,
+    "mtime": 1782659486.8352044,
     "ast_hash": "a6a80fd73433b8ba5872b2583941bd8f",
     "semantic_hash": ""
   },
@@ -700,8 +700,8 @@
     "semantic_hash": ""
   },
   "packages/shared-ui/src/components/app-shell.tsx": {
-    "mtime": 1782658970.3298204,
-    "ast_hash": "a95df790ea486bfbca201b86262b8722",
+    "mtime": 1782660295.4987683,
+    "ast_hash": "d34b639cc2bec3540e1f54294d5063ce",
     "semantic_hash": ""
   },
   "packages/shared-ui/src/components/avatar.tsx": {
@@ -775,8 +775,8 @@
     "semantic_hash": ""
   },
   "packages/shared-ui/src/components/navigation.tsx": {
-    "mtime": 1781881476.2268596,
-    "ast_hash": "33b88880d7aa4ab5b7ef839131f17c53",
+    "mtime": 1782660167.563881,
+    "ast_hash": "4d26e2edc86f6af05aebf5f97bcd4fb6",
     "semantic_hash": ""
   },
   "packages/shared-ui/src/components/page-header.tsx": {
@@ -2765,8 +2765,8 @@
     "semantic_hash": ""
   },
   "docs/architecture/api-specification/API Specification Document.md": {
-    "mtime": 1781870034.6747324,
-    "ast_hash": "dd1fdb2e30614b3575d48b4db586bc38",
+    "mtime": 1782664740.4339132,
+    "ast_hash": "a91adcb5ff8e31bff5d3ac064684744a",
     "semantic_hash": ""
   },
   "docs/architecture/api-specification/Module 10: Trainer Or Faculty Management APIs.md": {
@@ -2810,8 +2810,8 @@
     "semantic_hash": ""
   },
   "docs/architecture/api-specification/Module 2: Organization Management APIs.md": {
-    "mtime": 1781871056.9637418,
-    "ast_hash": "09503250598fcd389b5fb635da950345",
+    "mtime": 1782664556.0677884,
+    "ast_hash": "926422d0d861df5b00f95790b9fc36e6",
     "semantic_hash": ""
   },
   "docs/architecture/api-specification/Module 3: CRM OR Lead, Inquiry & Campaign APIs.md": {
@@ -2850,18 +2850,18 @@
     "semantic_hash": ""
   },
   "docs/architecture/ard/Architecture Requirement Document.md": {
-    "mtime": 1781919962.8333075,
-    "ast_hash": "e4f4dcd4b464ab05fb9dc818dd825a37",
+    "mtime": 1782664556.0606089,
+    "ast_hash": "7ca88f2b7f96a06abea1f4591969207d",
     "semantic_hash": ""
   },
   "docs/architecture/brd/BRD.md": {
-    "mtime": 1781858947.1028733,
-    "ast_hash": "abd3a4b7a4a5f22e1e85205caca23418",
+    "mtime": 1782664409.7240174,
+    "ast_hash": "2515809ffcc8283db5d36e91b71856ee",
     "semantic_hash": ""
   },
   "docs/architecture/database/Database Design Document.md": {
-    "mtime": 1781876668.1079175,
-    "ast_hash": "556377d538d34c0511c7b43599344934",
+    "mtime": 1782664556.0664647,
+    "ast_hash": "df907a8997f4e59b966091b81e880bf2",
     "semantic_hash": ""
   },
   "docs/architecture/database/prisma.md": {
@@ -2875,8 +2875,8 @@
     "semantic_hash": ""
   },
   "docs/architecture/docs.md": {
-    "mtime": 1781861709.0718317,
-    "ast_hash": "77762eab2489c1c8d87a65a8348dc723",
+    "mtime": 1782664592.9843931,
+    "ast_hash": "8931ca995da332097d8f6bc99c211ba0",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 10: Faculty Or Trainer Management.md": {
@@ -2885,8 +2885,8 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 11: Corporate Training Management.md": {
-    "mtime": 1781876203.3192127,
-    "ast_hash": "c16f76fb269cef2f38b71fc9a6105db8",
+    "mtime": 1782664635.266065,
+    "ast_hash": "3e59e89631714093030123750763d3b0",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 12: Exam, Result & Completion Management.md": {
@@ -2900,8 +2900,8 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 14: Document Management.md": {
-    "mtime": 1781876580.5772204,
-    "ast_hash": "966ce295a9d6842f38ab665825d40928",
+    "mtime": 1782664635.2664783,
+    "ast_hash": "b5f7a699a93e8ce06763f859abef97b6",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 15: Communication Management.md": {
@@ -2920,8 +2920,8 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 18: Audit, Compliance & Activity Tracking.md": {
-    "mtime": 1781876580.5802605,
-    "ast_hash": "5462fc29240af68b43bdd07d6db9dc0c",
+    "mtime": 1782664740.4333248,
+    "ast_hash": "ad617443889741fa66bb8f3b4cb13b1a",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 19: Lead, Inquiry & CRM Management.md": {
@@ -2965,13 +2965,13 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 8: Attendance Management.md": {
-    "mtime": 1781875311.731968,
-    "ast_hash": "050cddd1a5214dfd3bead42f02b04206",
+    "mtime": 1782664635.2649927,
+    "ast_hash": "b8a2fe566da6ab74f687883e6fc56391",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 9: Fee & Finance Management.md": {
-    "mtime": 1781875377.2986882,
-    "ast_hash": "bd6170f41d40974136698395115e2921",
+    "mtime": 1782664635.265762,
+    "ast_hash": "58e95fa8bba31bc3497d816712ac9b26",
     "semantic_hash": ""
   },
   "docs/architecture/frd/frd-overview.md": {
@@ -2980,8 +2980,8 @@
     "semantic_hash": ""
   },
   "docs/architecture/nfr/Non-Functional Requirement Document.md": {
-    "mtime": 1781869513.2737215,
-    "ast_hash": "178239414a712c2f8f7978b605a3dac3",
+    "mtime": 1782664556.0659008,
+    "ast_hash": "c366355ea8ba103bff0d96c76c2f6de0",
     "semantic_hash": ""
   },
   "docs/architecture/stories/Development Implementation Plan.md": {
@@ -2995,13 +2995,13 @@
     "semantic_hash": ""
   },
   "docs/project-requirements-document.md": {
-    "mtime": 1782147494.3768601,
-    "ast_hash": "08ac7505d1f2cb83475f09f5e111586b",
+    "mtime": 1782664556.0671198,
+    "ast_hash": "5130c625f42f1c2df13b9ba60f6dedf5",
     "semantic_hash": ""
   },
   "docs/project-status.md": {
-    "mtime": 1782433922.3984582,
-    "ast_hash": "e20bf1710fc519c0b405e80d99286216",
+    "mtime": 1782664556.0673635,
+    "ast_hash": "894b993e4c992ad85cdb5da21831f0fb",
     "semantic_hash": ""
   },
   "docs/useful_prompts.md": {
@@ -3490,8 +3490,8 @@
     "semantic_hash": ""
   },
   "docs/# ASTI Institute Management System (IMS).md": {
-    "mtime": 1782448865.5936186,
-    "ast_hash": "eeeffa6c812ff79690f2c563418ff876",
+    "mtime": 1782664592.9886556,
+    "ast_hash": "9f9762ad679f906b7c10960642008e26",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/organization/organization-form-errors.ts": {
@@ -3515,8 +3515,8 @@
     "semantic_hash": ""
   },
   "packages/shared-ui/src/components/app-shell.test.ts": {
-    "mtime": 1782464840.808588,
-    "ast_hash": "cc1f9098c335c347871be3532d90f2ae",
+    "mtime": 1782660147.4437385,
+    "ast_hash": "9bef789cd930051c61b3278b15bbfbd4",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/account/password/actions.ts": {
@@ -3762,6 +3762,31 @@
   "apps/admin-portal/public/alsaud/partners/provider-logo.png": {
     "mtime": 1782494709.284,
     "ast_hash": "0a77e5ad27c69d96a2d8f9c43c51f17f",
+    "semantic_hash": ""
+  },
+  "docs/architecture/api-specification/Module 11: Corporate Training APIs.md": {
+    "mtime": 1782664740.4343674,
+    "ast_hash": "aac60bc0c734ae6a84eb16ce474553ca",
+    "semantic_hash": ""
+  },
+  "docs/architecture/architecture-v2.md": {
+    "mtime": 1782664409.7267559,
+    "ast_hash": "bca2c016c9683464d7fe3b5a6eb59ebb",
+    "semantic_hash": ""
+  },
+  "docs/architecture/architecture-validation-report.md": {
+    "mtime": 1782664409.7290537,
+    "ast_hash": "8fb9983435b4acc1fab2150bea73d912",
+    "semantic_hash": ""
+  },
+  "docs/architecture/ddd/ddd-context-map-v2.md": {
+    "mtime": 1782664409.7277062,
+    "ast_hash": "dfbe01111b124671e33a59fb48ee003a",
+    "semantic_hash": ""
+  },
+  "docs/architecture/ddd/domain-model-v2.md": {
+    "mtime": 1782664409.7285318,
+    "ast_hash": "0b95611cfc50b3834978803281e89641",
     "semantic_hash": ""
   }
 }

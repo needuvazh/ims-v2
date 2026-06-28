@@ -34,6 +34,8 @@ Document Management stores, verifies, organizes, and audits documents used acros
 
 The context owns the document metadata, verification state, version history, and access log. The owning business context remains responsible for deciding whether a document is required and whether it satisfies a business rule.
 
+Document Management also owns expiry metadata for compliance-sensitive files such as Civil ID, visa, passport, staff contract, trainer credential, and certificate-supporting documents. It raises expiry and verification events; account holds or business status changes must be performed by the owning context.
+
 ---
 
 # 2. Scope
@@ -48,6 +50,7 @@ The context owns the document metadata, verification state, version history, and
 * Replacement and re-upload
 * Access logging and audit support
 * Role-based document visibility
+* Critical document expiry alerts at configured intervals
 
 ## 2.2 Out of Scope for Phase 1
 

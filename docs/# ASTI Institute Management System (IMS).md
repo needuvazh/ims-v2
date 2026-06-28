@@ -140,6 +140,16 @@ To guarantee that each phase is delivered in a production-ready, stable state:
 ✔ Identity & Access       ☐ CRM Lead Conversion       ☐ Communication Logs         ☐ Walk-In Fast Track        ☐ Online Payments
 ✔ Organization Core       ☐ Course & Batch Pricing    ☐ Corporate Contracts        ☐ HRMS Employee Master      ☐ Biometric RFID Sync
 ☐ Student Admissions      ☐ Attendance Marking        ☐ Trainer Payments Log       ☐ Employee Self Service     ☐ Tally ERP Integration
+
+## Architecture Review Alignment
+
+The documentation set now treats the following review items as architectural requirements, even where implementation remains phased:
+
+* Corporate B2B credit limits, committed exposure, and consolidated billing are owned by Corporate Training and Finance, not generic student records.
+* Bilingual English/Arabic support requires a consistent localized data model for course metadata, certificates, notifications, and public verification text.
+* Oman compliance readiness requires document expiry tracking, proactive alerts, and auditable verification/hold workflows.
+* Biometric/RFID attendance requires an offline local gateway, durable buffering, and idempotent cloud sync.
+* Tally ERP synchronization requires Finance outbox events, retry handling, and reconciliation logs instead of direct dual writes.
 ☐ Enrollment Aggregate    ☐ Manual VAT Receipts       ☐ Advanced Reporting         ☐ GCC Payroll Engine        ☐ AI Smart Scheduling
 ☐ Scheduling Engine       ☐ Exam Completion Rules                                                              ☐ AI Lead Scoring
 ☐ Certificate QR Lookup   ☐ Document Intake Checks

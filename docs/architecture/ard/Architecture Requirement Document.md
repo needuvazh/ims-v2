@@ -1394,3 +1394,67 @@ Append-only Audit Logs
 ```
 
 This architecture gives the fastest path to a production-ready single-client IMS while preserving clean DDD boundaries and allowing future growth into SaaS, CMS, AI, mobile apps, and service extraction when needed.
+
+---
+
+# 39. Review Alignment Requirements
+
+This section incorporates the ASTI architecture evaluation findings and supersedes any earlier wording that treated biometric sync or Tally ERP sync as simple future endpoints.
+
+## 39.1 Corporate B2B Credit Architecture
+
+Corporate Training shall be modeled as a dedicated bounded context with `CorporateAccount`, `CorporateContactPerson`, `CorporateContract`, `CorporateProgram`, and `CorporateParticipant` ownership.
+
+Corporate Training shall not directly mutate Enrollment or Finance tables. It must call Enrollment application services for participant learning lifecycle changes and Finance application services for invoices, receipts, credit exposure, and billing status.
+
+The corporate credit invariant is:
+
+```text
+creditLimit - (unpaidBalance + committedUninvoicedValue) >= estimatedEnrollmentCost
+```
+
+When this invariant fails, the application service shall return a stable `CreditLimitExceeded` domain error or initiate an explicit approval workflow if ASTI approves override behavior.
+
+## 39.2 Bilingual Data Architecture
+
+The application shall support English LTR and Arabic RTL. Localized business text shall use a consistent `LocalizedText` representation for display-oriented fields:
+
+```json
+{
+  "en": "Advanced Mechanical Diagnostics",
+  "ar": "التشخيص الميكانيكي المتقدم"
+}
+```
+
+Use PostgreSQL JSON/Prisma Json for simple display fields. Use translation tables when Arabic text requires indexing, uniqueness, full-text search, or analytics grouping.
+
+## 39.3 Compliance and Expiry Architecture
+
+Document Management shall own document metadata, verification status, expiry dates, and signed-access metadata. Audit & Compliance shall own compliance issues, compliance dashboard projections, and investigation workflows.
+
+A background worker shall evaluate critical document expiries and publish reminder or expiry events. Applying a student, trainer, staff, or user compliance hold must happen through the owning context's application service.
+
+## 39.4 Offline Biometric Sync Architecture
+
+Biometric terminals shall be integrated through an anti-corruption adapter. The preferred architecture is:
+
+```text
+Biometric Terminal -> Local Gateway -> SQLite Buffer -> Idempotent Cloud API -> Attendance Application Service
+```
+
+The cloud API shall enforce idempotency by terminal/gateway event ID and shall never allow raw device payloads to become Attendance domain models without validation.
+
+## 39.5 Tally ERP Sync Architecture
+
+Tally ERP integration shall consume Finance outbox events. Finance transactions must persist first in PostgreSQL with outbox records in the same transaction. A worker shall map outbox events to Tally payloads, retry delivery, and record reconciliation status.
+
+Direct dual writes from the payment/receipt transaction to Tally are prohibited.
+
+## 39.6 Documentation Traceability
+
+Review-aligned documents are:
+
+1. `docs/architecture/architecture-v2.md`
+2. `docs/architecture/ddd/ddd-context-map-v2.md`
+3. `docs/architecture/ddd/domain-model-v2.md`
+4. `docs/architecture/architecture-validation-report.md`

@@ -34,6 +34,8 @@ Branch Scope
 Data Scope
 ```
 
+Branch-scoped Organization APIs must resolve the user's allowed branch scope server-side. Client-side branch filters and hidden menus are not authorization controls.
+
 ---
 
 # 3. Institute APIs

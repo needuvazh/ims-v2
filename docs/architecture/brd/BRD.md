@@ -189,9 +189,12 @@ Support future AI-driven decision making.
 
 * Mobile Apps
 * AI Features
-* QR Attendance
-* Biometric Attendance
-* Tally Integration
+* QR Attendance beyond the approved biometric/RFID integration design
+
+### In Scope for Architecture, Phased for Delivery
+
+* Biometric/RFID attendance synchronization is in architectural scope because attendance reliability affects operational records, absence alerts, and completion eligibility. Delivery may be phased, but the design must include offline buffering, idempotent sync, and auditability.
+* Tally ERP synchronization is in architectural scope because financial reconciliation affects receipts, refunds, corporate invoices, and audit readiness. Delivery may be phased, but finance events must be captured through an outbox-ready integration design.
 
 ---
 
@@ -681,8 +684,8 @@ The project will be considered successful if:
 * Payment Gateway
 * WhatsApp Integration
 * SMS Integration
-* Biometric Integration
-* Tally Integration
+* Biometric Integration implementation over the approved offline gateway design
+* Tally Integration implementation over the approved outbox and reconciliation design
 
 ## Phase 4
 
@@ -692,3 +695,34 @@ The project will be considered successful if:
 * AI Business Forecasting
 
 ---
+
+# 11. Review Alignment Addendum
+
+This addendum incorporates the architecture evaluation findings for the ASTI IMS documentation set.
+
+## B2B Corporate Training Requirements
+
+Corporate training is not a generic student enrollment extension. The business requires a dedicated Corporate Training bounded context for corporate accounts, contacts, contracts, programs, participants, negotiated pricing, credit limits, and consolidated billing.
+
+The system shall enforce the following invariant before confirming a corporate cohort or participant group:
+
+```text
+availableCredit = creditLimit - (unpaidBalance + committedUninvoicedValue)
+estimatedEnrollmentCost <= availableCredit
+```
+
+If the invariant fails, the system shall block confirmation or route the request to an explicit approval workflow once ASTI confirms the preferred policy.
+
+## Compliance and Document Expiry Requirements
+
+The system shall track expiry dates for critical documents such as Civil ID, visa, passport, staff contract, trainer credential, student identity document, and certificate-related documents where applicable.
+
+The system shall support proactive reminders at configurable intervals such as 90, 60, and 30 days before expiry. Critical expired documents may place the relevant student, trainer, or staff account into compliance hold when configured by policy.
+
+## Bilingual Data Requirements
+
+Bilingual English and Arabic support applies to UI labels, notification templates, certificate templates, course/catalog metadata, and public verification text. Domain records that need localized names or descriptions shall use a structured localization strategy such as JSON fields with `en` and `ar` keys or translation tables where search/indexing requires it.
+
+## Offline Attendance and Tally Reliability
+
+Biometric attendance integrations shall use a local campus gateway with durable buffering and idempotent event IDs. Financial integrations such as Tally ERP shall use transactional outbox records and retry/reconciliation logs. Direct dual writes from business transactions to external systems are prohibited.

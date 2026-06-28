@@ -627,6 +627,7 @@ GET    /api/v1/corporate/programs
 POST   /api/v1/corporate/programs
 GET    /api/v1/corporate/programs/{programId}
 PATCH  /api/v1/corporate/programs/{programId}
+POST   /api/v1/corporate/programs/{programId}/validate-credit
 
 GET    /api/v1/corporate/participants
 POST   /api/v1/corporate/participants
@@ -692,6 +693,7 @@ POST   /api/v1/documents/{documentId}/verify
 POST   /api/v1/documents/{documentId}/approve
 POST   /api/v1/documents/{documentId}/reject
 POST   /api/v1/documents/{documentId}/replace
+GET    /api/v1/documents/expiring
 ```
 
 ---

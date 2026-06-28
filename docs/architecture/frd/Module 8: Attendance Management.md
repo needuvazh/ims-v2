@@ -53,10 +53,12 @@ Attendance is generated from schedule sessions and contributes to completion and
 
 ## 2.2 Out of Scope for Phase 1
 
-* Biometric capture
-* RFID / QR device integration
+* Direct biometric capture inside the Attendance domain
+* RFID / QR device integration implementation
 * Mobile self check-in
 * Automated facial recognition
+
+Biometric/RFID sync remains an architecture requirement. Device capture must be implemented through an integration adapter that submits validated, idempotent attendance commands to this module.
 
 ---
 

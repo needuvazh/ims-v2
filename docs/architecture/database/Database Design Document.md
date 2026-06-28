@@ -1819,3 +1819,81 @@ These must remain historically traceable.
 | Configuration | numbering_formats, lookup_values, currencies, tax_rules      |
 
 ---
+
+# 27. Review Alignment Database Addendum
+
+## 27.1 Localized Text Storage
+
+Display-oriented bilingual fields may use PostgreSQL `jsonb` through Prisma `Json` with this shape:
+
+```json
+{
+  "en": "Advanced Mechanical Diagnostics",
+  "ar": "التشخيص الميكانيكي المتقدم"
+}
+```
+
+Use translation tables instead when localized values require full-text search, uniqueness, sorting, or reporting dimensions.
+
+Candidate localized fields include:
+
+| Domain | Fields |
+| --- | --- |
+| Course | title, shortDescription, longDescription |
+| CertificateTemplate | templateName, bodyText, signatoryTitle |
+| CommunicationTemplate | subject, body |
+| Organization | public branch display name where required |
+
+## 27.2 Corporate Credit Tables
+
+Corporate Training shall own corporate account and contract tables. Finance may maintain read models or snapshots for unpaid balance and committed uninvoiced exposure.
+
+Required persistence concepts:
+
+| Table/concept | Owner | Notes |
+| --- | --- | --- |
+| corporate_accounts | Corporate Training | Legal identity, status, credit limit, branch scope |
+| corporate_contracts | Corporate Training | Effective-dated contract terms and pricing references |
+| corporate_programs | Corporate Training | Training program/cohort commitment |
+| corporate_participants | Corporate Training | Sponsored employees; optional Student link |
+| corporate_credit_exposure_snapshots | Finance or Reporting | Read-side unpaid/committed exposure for fast validation |
+
+## 27.3 Document Expiry and Compliance Tables
+
+Document Management shall store `expiry_date`, `verification_status`, `verified_by`, `verified_at`, and rejection reason where applicable. Audit & Compliance shall own compliance issues and approval logs.
+
+Required persistence concepts:
+
+| Table/concept | Owner | Notes |
+| --- | --- | --- |
+| document_types | Document Management | Includes owner type, expiry required flag, criticality |
+| documents | Document Management | Includes owner type, owner ID, expiry date, verification status |
+| document_verifications | Document Management | Verification history and reviewer evidence |
+| compliance_issues | Audit & Compliance | Branch-scoped issue state and resolution |
+
+## 27.4 Biometric Sync Tables
+
+Biometric integration data shall be separated from Attendance records.
+
+Required persistence concepts:
+
+| Table/concept | Owner | Notes |
+| --- | --- | --- |
+| biometric_gateways | Integration | Branch gateway registration and health |
+| biometric_terminals | Integration | Terminal identity and branch assignment |
+| biometric_sync_events | Integration | Idempotent raw event intake keyed by terminal/gateway event ID |
+| attendance_records | Attendance | Domain attendance record after validation and mapping |
+
+## 27.5 Tally Sync Tables
+
+Finance writes transactional outbox events. The Tally adapter stores delivery and reconciliation state separately.
+
+Required persistence concepts:
+
+| Table/concept | Owner | Notes |
+| --- | --- | --- |
+| outbox_events | Platform/Database | Transactional events from Finance and other contexts |
+| tally_sync_attempts | Integration | Retry count, status, errors, external voucher/reference |
+| integration_logs | Integration | Provider payload metadata and operational diagnostics |
+
+Direct foreign-key coupling from Finance business tables to Tally provider tables should be avoided. Store external references in sync attempt records.

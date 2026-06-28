@@ -78,6 +78,19 @@ Learner execution still uses the shared Enrollment lifecycle. This module does n
 * Corporate delivery uses the shared Enrollment and Attendance flows.
 * Corporate billing follows contract-driven rules.
 * Corporate reporting must preserve contract, program, and participant lineage.
+* Corporate credit exposure must be validated before confirming a corporate program, cohort, or sponsored participant enrollment.
+* Credit exposure includes unpaid invoiced balance plus active committed uninvoiced value.
+
+## 3.1 Credit Limit Invariant
+
+Corporate Training shall coordinate with Finance to evaluate:
+
+```text
+availableCredit = creditLimit - (unpaidBalance + committedUninvoicedValue)
+estimatedEnrollmentCost <= availableCredit
+```
+
+If the invariant fails, the system shall return `CreditLimitExceeded` or route the request to an approved override workflow when ASTI confirms that policy.
 
 ---
 

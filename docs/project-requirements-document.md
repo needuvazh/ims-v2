@@ -15,7 +15,7 @@
 * **Status:** Draft / Active
 * **Primary Target Market:** Oman Training & Coaching Institutes
 * **Secondary Target Market:** GCC Countries & India (GCC Compliance ready)
-* **Scope:** Single-client training institute platform, designed to be modular-monolith first with dynamic RBAC, strict branch-scoping, and transactional outbox event architecture.
+* **Scope:** Single-client training institute platform, designed to be modular-monolith first with dynamic RBAC, strict branch-scoping, bilingual English/Arabic support, compliance-ready document expiry tracking, and transactional outbox event architecture.
 
 This document compiles, aligns, and references the following sub-documents:
 * **Business Requirement Document:** [BRD.md](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/docs/architecture/brd/BRD.md)
@@ -23,6 +23,9 @@ This document compiles, aligns, and references the following sub-documents:
 * **Database Design:** [Database Design Document.md](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/docs/architecture/database/Database%20Design%20Document.md)
 * **Technology Stack Recommendation:** [ims-technology-stack-recommendation.md](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/docs/ims-technology-stack-recommendation.md)
 * **Project Status Tracker:** [project-status.md](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/docs/project-status.md)
+* **Architecture v2 Review Alignment:** [architecture-v2.md](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/docs/architecture/architecture-v2.md)
+* **DDD Context Map v3:** [ddd-context-map.md](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/docs/architecture/ddd/ddd-context-map.md)
+* **Domain Model v2:** [domain-model-v2.md](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/docs/architecture/ddd/domain-model-v2.md)
 
 ---
 
@@ -57,6 +60,10 @@ graph TD
     Attend -->|Evaluates Completion| Exam[Exam & Completion Management]
     Exam -->|Eligible for| Cert[Certificate Management]
     Adm -->|Stores Records| Doc[Document Management]
+    Corp[Corporate Training] -->|Sponsors Participants| Adm
+    Fin -->|Outbox Events| Tally[Tally Integration]
+    Bio[Biometric Integration] -->|Idempotent Events| Attend
+    Doc -->|Expiry Events| Compliance[Audit & Compliance]
 ```
 
 ### 3.1 Domain Ownership Rules
@@ -65,6 +72,8 @@ graph TD
   * **Admission:** Becoming a registered student of the institute (represented by student profiles, verification documents, and global status).
   * **Enrollment:** The act of joining a specific Course, Batch, Corporate Program, or Walk-In session.
 * **Walk-In Flow:** Walk-in is not a separate entity structure; it is a rapid, same-day orchestration flow over standard Enrollment, Finance (immediate payment), and Exam/Completion (immediate certificate check).
+* **Corporate B2B:** Corporate participants use the shared Enrollment lifecycle. Corporate Training owns account/contract/program rules and must enforce credit exposure before enrollment confirmation.
+* **Biometric and Tally:** Biometric devices and Tally ERP are integration contexts only. They must communicate through validated application services and outbox-backed adapters, not direct workflow table mutations.
 
 ---
 
@@ -149,23 +158,24 @@ gantt
 ### Phase 1: Core Operations (Current Focus)
 * Fully functional Admin Portal, Student Shell, Trainer Shell.
 * Dynamic RBAC, Branch Scopes, Organization Hierarchy (Branch, Department, Classroom).
-* Lead CRM pipeline & Counselor assignments.
-* Enrollment aggregate root lifecycle, Student Profiles, Documents intake.
-* Courses pricing rules, Batches schedules, trainer allocations.
-* Attendance rosters, exams, completion recommendation approvals, certificate issuance, and public QR lookup page.
+* Configuration & Master Data setup.
+* Static Website with Dynamic Course Data, Lead CRM pipeline & Counselor assignments.
+* Enrollment aggregate root lifecycle, Walk-In Fast Track, Student Profiles, Documents intake.
+* Course Catalog, Batches schedules, trainer allocations.
+* Attendance rosters (manual), exams, completion recommendation approvals, certificate issuance, and public QR lookup page.
 * Manual finance: installment calendars, discounts, full/partial refunds, and OMR tax invoice generator.
 * Append-only Audit logs & Outbox dispatcher framework.
 
-### Phase 2: Engagement & Analytics
+### Phase 2: Engagement, Corporate & Analytics
 * Communication logs: automatic SMS, WhatsApp reminders, email template triggers.
+* Corporate Training Management & Corporate Sales & Quotation.
+* Advanced Finance & Receivables, Online Payment Gateway.
 * Reports and dashboards builder, custom dashboard widgets, CSV/XLSX sheet exports.
-* Custom RBAC policy management interface in the UI.
 
-### Phase 3: Financial & Third-Party Integrations
-* Biometric/RFID scanner integration for attendance automation.
-* Online Payment Gateway (stripe, checkout, local GCC merchant payment pages).
-* Tally/ERP ledger sync pipeline.
-* WhatsApp Business API campaigns.
+### Phase 3: Operations Expansion & Integrations
+* HRMS, Employee Self Service (ESS), and Payroll Management.
+* Biometric/RFID scanner integration for attendance automation using a local offline gateway, idempotent sync, and Attendance application-service validation.
+* Tally/ERP ledger sync pipeline using Finance outbox events, retry, and reconciliation logs.
 
 ### Phase 4: AI Capabilities
 * Automated counselor leads assistant and predictive conversion scoring.
@@ -178,16 +188,16 @@ gantt
 
 For live completion details, refer to the status sheet: [project-status.md](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/docs/project-status.md)
 
-* **Overall Project Completion:** **~10%** (calculated based on completed business rules of the 226 items in the FRD).
+* **Overall Project Completion:** **~14%** (calculated based on completed business rules of the 226 items in the FRD; see `docs/project-status.md` for the canonical current value).
 * **Completed Foundation Work:**
   * Multi-package monorepo setup, Prisma adapter, Next.js root layout, custom CSS.
   * Shared Observability package (structured logging, context correlation, tracking headers).
   * Identity context: password resets, failed lockouts, active dating user/roles, session revocations, permissions seeding.
-  * Organization context: basic branch and department CRUD services, audit tracks.
+  * Organization context: institute, branch, department, classroom lifecycle, hierarchy UI, effective dating, branch scoping, soft deletes, and audit tracks.
 * **Upcoming High-Priority Change Sequences:**
-  1. `complete-organization-foundation` (Classroom management, hierarchy layout, branch policies).
-  2. `build-enrollment-aggregate-foundation` (Central aggregate root setup).
-  3. `implement-lead-admission-handoff` (CRM to Admissions pipeline).
+  1. `build-enrollment-aggregate-foundation` (Central aggregate root setup).
+  2. `implement-lead-admission-handoff` (CRM to Admissions pipeline).
+  3. `implement-course-batch-foundation` (Courses, pricing, completion rules, batches, waiting list, and trainer assignment references).
   4. `implement-course-batch-foundation` (Academics configuration).
   5. `implement-manual-finance-workflow` (Fee tracking & receipts).
   6. `implement-attendance-completion-certificate-chain` (Academics-to-Credentials cycle).
