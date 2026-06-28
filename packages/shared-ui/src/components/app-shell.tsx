@@ -1,54 +1,87 @@
 'use client';
 
-import Link from 'next/link';
+import * as DialogPrimitive from '@radix-ui/react-dialog';
 import Image from 'next/image';
-import { useState, Suspense, type ReactNode } from 'react';
-import { Menu, X, ChevronDown, ChevronRight, PanelsTopLeft } from 'lucide-react';
+import Link from 'next/link';
+import { useMemo, useState, type ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
+import { ChevronDown, Menu, PanelLeftClose, PanelLeftOpen, X } from 'lucide-react';
 import { cn } from '../utils/cn';
+import { SimpleTooltip } from './tooltip';
 
 export interface NavItem {
   href: string;
   label: string;
   icon?: ReactNode;
+  badge?: string | number;
   current?: boolean;
   items?: NavItem[];
   category?: string;
 }
 
-export function normalizePath(href: string) {
-  return href.split('?')[0];
+export interface NavSection {
+  label: string;
+  items: NavItem[];
 }
 
-export function isPathActive(pathname: string, href: string) {
-  const itemPath = normalizePath(href);
-  return pathname === itemPath || pathname.startsWith(`${itemPath}/`);
+export function normalizePath(path: string) {
+  return path.split(/[?#]/)[0].replace(/\/$/, '') || '/';
 }
 
-export function getInitialExpandedItems(items: NavItem[]) {
-  return items.reduce<Record<string, boolean>>((acc, item) => {
-    if (item.items?.length) {
-      acc[item.href] = true;
-    }
-    return acc;
-  }, {});
+export function isPathActive(pathname: string, href: string, exact = false) {
+  const current = normalizePath(pathname);
+  const target = normalizePath(href);
+
+  if (exact) return current === target;
+  return current === target || current.startsWith(`${target}/`);
+}
+
+function hasActiveDescendant(item: NavItem, pathname: string): boolean {
+  if (isPathActive(pathname, item.href, Boolean(item.current))) return true;
+  return item.items?.some((child) => hasActiveDescendant(child, pathname)) ?? false;
 }
 
 export function getNavigationTrail(items: NavItem[], pathname: string): NavItem[] {
   for (const item of items) {
     if (item.items?.length) {
       const childTrail = getNavigationTrail(item.items, pathname);
-      if (childTrail.length > 0) {
-        return [item, ...childTrail];
-      }
+      if (childTrail.length > 0) return [item, ...childTrail];
     }
 
-    if (isPathActive(pathname, item.href)) {
+    if (isPathActive(pathname, item.href, Boolean(item.current))) {
       return [item];
     }
   }
 
   return [];
+}
+
+export function groupNavigationSections(items: NavItem[]): NavSection[] {
+  const sections = new Map<string, NavItem[]>();
+  const order: string[] = [];
+
+  for (const item of items) {
+    const label = item.category?.trim() || 'Navigation';
+    if (!sections.has(label)) {
+      sections.set(label, []);
+      order.push(label);
+    }
+    sections.get(label)!.push(item);
+  }
+
+  return order.map((label) => ({ label, items: sections.get(label) ?? [] }));
+}
+
+export function getInitialExpandedItems(items: NavItem[], pathname?: string) {
+  return items.reduce<Record<string, boolean>>((acc, item) => {
+    if (!item.items?.length) return acc;
+
+    if (!pathname || hasActiveDescendant(item, pathname)) {
+      acc[item.href] = true;
+    }
+
+    return acc;
+  }, {});
 }
 
 export interface AppShellProps {
@@ -62,216 +95,378 @@ export interface AppShellProps {
   className?: string;
 }
 
-function BrandLogo({ appName, isCollapsed }: { appName: string; isCollapsed?: boolean }) {
+function BrandLogo({ appName, collapsed }: { appName: string; collapsed?: boolean }) {
   return (
-    <div className={cn("flex items-center transition-all duration-300", isCollapsed ? "justify-center w-full" : "px-2")}>
-      <div className={cn("flex h-11 shrink-0 items-center overflow-hidden", isCollapsed ? "justify-center w-11" : "justify-start w-auto")}>
-        <Image 
-          src="/alsaud/logo.png" 
-          alt={appName} 
-          width={156} 
-          height={52} 
-          className={cn("h-full object-left transition-all duration-300", isCollapsed ? "object-cover w-11" : "w-auto object-contain")}
+    <div className={cn('flex items-center gap-3', collapsed && 'justify-center')}>
+      <div
+        className={cn(
+          'relative shrink-0 overflow-hidden rounded-2xl border border-[color:var(--ims-border)] bg-white',
+          collapsed ? 'h-11 w-11' : 'h-11 w-40',
+        )}
+      >
+        <Image
+          src="/alsaud/logo.png"
+          alt={appName}
+          fill
           priority
+          sizes={collapsed ? '44px' : '160px'}
+          className={cn('object-contain p-2', collapsed ? 'object-center' : 'object-left')}
         />
+      </div>
+      {!collapsed ? (
+        <div className="min-w-0">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[color:var(--ims-muted)]">Admin</p>
+          <p className="truncate text-sm font-semibold text-[color:var(--ims-ink)]">{appName}</p>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+export function SidebarCollapseButton({
+  collapsed,
+  onToggle,
+}: {
+  collapsed: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] text-[color:var(--ims-muted)] transition-all duration-200 hover:bg-[color:var(--ims-accent-soft)] hover:text-[color:var(--ims-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2"
+      aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+    >
+      {collapsed ? <PanelLeftOpen className="h-4 w-4" /> : <PanelLeftClose className="h-4 w-4" />}
+    </button>
+  );
+}
+
+export function SidebarItem({
+  item,
+  pathname,
+  collapsed = false,
+  active,
+  expanded,
+  depth = 0,
+  onToggle,
+  onExpandRequest,
+  onNavigate,
+}: {
+  item: NavItem;
+  pathname: string;
+  collapsed?: boolean;
+  active?: boolean;
+  expanded?: boolean;
+  depth?: number;
+  onToggle?: () => void;
+  onExpandRequest?: () => void;
+  onNavigate?: () => void;
+}) {
+  const hasChildren = Boolean(item.items?.length);
+  const isActive = active ?? isPathActive(pathname, item.href, Boolean(item.current));
+  const labelId = `sidebar-item-${normalizePath(item.href).replace(/\//g, '-')}`;
+
+  const base = cn(
+    'group relative flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-200 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2',
+    depth > 0 && 'rounded-xl px-3 py-2 text-sm',
+    isActive
+      ? depth > 0
+        ? 'bg-[color:var(--ims-ink)] text-[color:var(--ims-paper)] shadow-[0_8px_18px_rgba(20,33,61,0.16)] ring-1 ring-[color:var(--ims-brass)]/20'
+        : 'bg-[color:var(--ims-ink)] text-[color:var(--ims-paper)] shadow-[0_10px_24px_rgba(20,33,61,0.18)] ring-1 ring-[color:var(--ims-brass)]/20'
+      : 'text-[color:var(--ims-muted)] hover:bg-[color:var(--ims-accent-soft)] hover:text-[color:var(--ims-ink)]',
+    collapsed && 'justify-center px-2',
+    depth > 0 && 'ml-1',
+  );
+
+  const content = hasChildren ? (
+    <button
+      type="button"
+      onClick={() => {
+        if (collapsed) {
+          onExpandRequest?.();
+          return;
+        }
+
+        onToggle?.();
+      }}
+      className={base}
+      aria-expanded={expanded}
+      aria-controls={labelId}
+    >
+      <span
+        aria-hidden="true"
+        className={cn(
+          'absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full transition-opacity',
+          isActive ? 'bg-[color:var(--ims-brass)] opacity-100' : 'bg-transparent opacity-0 group-hover:opacity-40',
+        )}
+      />
+      {item.icon ? (
+        <span aria-hidden="true" className={cn('shrink-0', isActive ? 'text-inherit' : 'text-[color:var(--ims-muted)]')}>
+          {item.icon}
+        </span>
+      ) : null}
+      {!collapsed ? <span className="min-w-0 truncate">{item.label}</span> : null}
+      {!collapsed ? (
+        <ChevronDown className={cn('ml-auto h-4 w-4 shrink-0 transition-transform', expanded && 'rotate-180')} aria-hidden="true" />
+      ) : null}
+    </button>
+  ) : (
+    <Link
+      href={item.href}
+      onClick={onNavigate}
+      className={base}
+      aria-current={isActive ? 'page' : undefined}
+      title={collapsed ? item.label : undefined}
+    >
+      <span
+        aria-hidden="true"
+        className={cn(
+          'absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full transition-opacity',
+          isActive ? 'bg-[color:var(--ims-brass)] opacity-100' : 'bg-transparent opacity-0 group-hover:opacity-40',
+        )}
+      />
+      {item.icon ? (
+        <span aria-hidden="true" className={cn('shrink-0', isActive ? 'text-inherit' : 'text-[color:var(--ims-muted)]')}>
+          {item.icon}
+        </span>
+      ) : null}
+      {!collapsed ? <span className="min-w-0 truncate">{item.label}</span> : null}
+      {!collapsed && item.badge !== undefined ? (
+        <span
+          className={cn(
+            'ml-auto inline-flex min-w-6 items-center justify-center rounded-full px-2 py-0.5 text-[10px] font-semibold',
+            isActive ? 'bg-white/15 text-white' : 'bg-[color:var(--ims-accent-soft)] text-[color:var(--ims-ink)]',
+          )}
+        >
+          {item.badge}
+        </span>
+      ) : null}
+    </Link>
+  );
+
+  if (!collapsed) return content;
+
+  return <SimpleTooltip content={item.label}>{content}</SimpleTooltip>;
+}
+
+export function SidebarGroup({
+  section,
+  pathname,
+  collapsed,
+  openMap,
+  setOpenMap,
+  onNavigate,
+  onExpandRequest,
+}: {
+  section: NavSection;
+  pathname: string;
+  collapsed: boolean;
+  openMap: Record<string, boolean>;
+  setOpenMap: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
+  onNavigate?: () => void;
+  onExpandRequest?: () => void;
+}) {
+  return (
+    <section className="space-y-2">
+      {!collapsed ? (
+        <p className="px-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-[color:var(--ims-muted)]">{section.label}</p>
+      ) : (
+        <div className="mx-3 border-t border-[color:var(--ims-border)]" aria-hidden="true" />
+      )}
+
+      <ul className="space-y-1">
+        {section.items.map((item) => {
+          const hasChildren = Boolean(item.items?.length);
+          const expanded = Boolean(openMap[item.href]);
+          const active = hasChildren ? hasActiveDescendant(item, pathname) : isPathActive(pathname, item.href, Boolean(item.current));
+
+          return (
+            <li key={item.href} className="space-y-1">
+              <SidebarItem
+                item={item}
+                pathname={pathname}
+                collapsed={collapsed}
+                active={active}
+                expanded={expanded}
+                onToggle={hasChildren ? () => setOpenMap((prev) => ({ ...prev, [item.href]: !prev[item.href] })) : undefined}
+                onExpandRequest={onExpandRequest}
+                onNavigate={onNavigate}
+              />
+
+              {hasChildren && !collapsed && expanded ? (
+                <ul id={`sidebar-item-${normalizePath(item.href).replace(/\//g, '-')}`} className="space-y-1 border-l border-[color:var(--ims-border)] pl-3 pt-1.5">
+                  {item.items!.map((child) => (
+                    <li key={child.href}>
+                      <SidebarItem item={child} pathname={pathname} depth={1} onNavigate={onNavigate} />
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}
+
+export function SidebarUserProfile({
+  userName,
+  branchName,
+  userAvatar,
+}: {
+  userName?: string;
+  branchName?: string;
+  userAvatar?: ReactNode;
+}) {
+  return (
+    <div className="flex items-center gap-3 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-background)] p-3">
+      {userAvatar || (
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(135deg,var(--ims-ink),var(--ims-brass))] text-sm font-bold text-white">
+          {userName?.[0]?.toUpperCase() ?? 'A'}
+        </div>
+      )}
+      <div className="min-w-0">
+        <p className="truncate text-sm font-semibold text-[color:var(--ims-ink)]">{userName ?? 'Administrator'}</p>
+        <p className="truncate text-xs text-[color:var(--ims-muted)]">{branchName ?? 'HQ Branch'}</p>
       </div>
     </div>
   );
 }
 
-function SidebarNavList({
-  items,
-  isCollapsed,
-  onClose,
-  onExpand,
+export function SidebarFooter({
+  branchName,
+  userName,
+  userAvatar,
+  children,
 }: {
-  items: NavItem[];
-  isCollapsed?: boolean;
-  onClose?: () => void;
-  onExpand?: () => void;
+  branchName?: string;
+  userName?: string;
+  userAvatar?: ReactNode;
+  children?: ReactNode;
+}) {
+  return (
+    <div className="border-t border-[color:var(--ims-border)] p-4">
+      <div className="space-y-3 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-background)] p-3">
+        <SidebarUserProfile userName={userName} branchName={branchName} userAvatar={userAvatar} />
+        {children ? <div className="space-y-3">{children}</div> : null}
+      </div>
+    </div>
+  );
+}
+
+export function AdminSidebar({
+  appName,
+  branchName,
+  userName,
+  userAvatar,
+  sections,
+  collapsed,
+  onCollapsedChange,
+  onNavigate,
+}: {
+  appName: string;
+  branchName?: string;
+  userName?: string;
+  userAvatar?: ReactNode;
+  sections: NavSection[];
+  collapsed: boolean;
+  onCollapsedChange: (collapsed: boolean) => void;
+  onNavigate?: () => void;
 }) {
   const pathname = usePathname();
-  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(() =>
-    getInitialExpandedItems(items)
+  const [openMap, setOpenMap] = useState<Record<string, boolean>>(() =>
+    getInitialExpandedItems(sections.flatMap((section) => section.items), pathname),
   );
 
-  const isItemActive = (href: string) => {
-    return isPathActive(pathname, href);
-  };
+  return (
+    <aside
+      className={cn(
+        'fixed inset-y-0 left-0 z-30 hidden h-screen flex-col border-r border-[color:var(--ims-border)] bg-[color:var(--ims-surface)]/96 shadow-[0_12px_40px_rgba(20,33,61,0.06)] backdrop-blur-xl transition-[width] duration-300 lg:flex',
+        collapsed ? 'w-20' : 'w-72',
+      )}
+    >
+      <div className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-[color:var(--ims-border)] px-4">
+        <div className={cn('min-w-0', collapsed && 'mx-auto')}>
+          <BrandLogo appName={appName} collapsed={collapsed} />
+        </div>
+        <SidebarCollapseButton collapsed={collapsed} onToggle={() => onCollapsedChange(!collapsed)} />
+      </div>
 
-  const isParentActive = (item: NavItem) => {
-    if (isItemActive(item.href)) {
-      return true;
-    }
-    if (item.items) {
-      return item.items.some((subItem) => isItemActive(subItem.href));
-    }
-    return false;
-  };
+      <nav aria-label="Primary navigation" className="flex-1 overflow-y-auto px-3 py-4">
+        <div className="space-y-6">
+          {sections.map((section) => (
+            <SidebarGroup
+              key={section.label}
+              section={section}
+              pathname={pathname}
+              collapsed={collapsed}
+              openMap={openMap}
+              setOpenMap={setOpenMap}
+              onNavigate={onNavigate}
+              onExpandRequest={() => onCollapsedChange(false)}
+            />
+          ))}
+        </div>
+      </nav>
 
-  // Group items by category
-  const categories: Record<string, NavItem[]> = {};
-  items.forEach((item) => {
-    const cat = item.category || 'System';
-    if (!categories[cat]) categories[cat] = [];
-    categories[cat].push(item);
-  });
+      {!collapsed ? <SidebarFooter branchName={branchName} userName={userName} userAvatar={userAvatar} /> : null}
+    </aside>
+  );
+}
+
+export function MobileSidebar({
+  appName,
+  sections,
+  open,
+  onOpenChange,
+  onNavigate,
+}: {
+  appName: string;
+  sections: NavSection[];
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onNavigate?: () => void;
+}) {
+  const pathname = usePathname();
+  const [openMap, setOpenMap] = useState<Record<string, boolean>>(() =>
+    getInitialExpandedItems(sections.flatMap((section) => section.items), pathname),
+  );
 
   return (
-    <div className="space-y-6">
-      {Object.entries(categories).map(([categoryName, catItems]) => (
-        <div key={categoryName} className="space-y-1.5">
-          {!isCollapsed ? (
-            <p className="px-4 text-[10px] font-bold uppercase tracking-wider text-neutral-500">
-              {categoryName}
-            </p>
-          ) : (
-            <div className="mx-4 my-2 border-t border-border-light" />
-          )}
+    <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
+      <DialogPrimitive.Portal>
+        <DialogPrimitive.Overlay className="fixed inset-0 z-40 bg-[color:var(--ims-ink)]/40 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 lg:hidden" />
+        <DialogPrimitive.Content aria-label="Primary navigation" className="fixed inset-y-0 left-0 z-50 flex h-full w-[18rem] flex-col border-r border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] shadow-[0_24px_80px_rgba(20,33,61,0.18)] outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-left-4 data-[state=open]:slide-in-from-left-4 lg:hidden">
+          <div className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-[color:var(--ims-border)] px-4">
+            <BrandLogo appName={appName} />
+            <DialogPrimitive.Close
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl text-[color:var(--ims-muted)] transition-all hover:bg-[color:var(--ims-accent-soft)] hover:text-[color:var(--ims-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2"
+              aria-label="Close sidebar"
+            >
+              <X className="h-4 w-4" />
+            </DialogPrimitive.Close>
+          </div>
 
-          <ul className="space-y-1">
-            {catItems.map((item) => {
-              const hasSubmenu = item.items && item.items.length > 0;
-              const isExpanded = !!expandedItems[item.href];
-              const isActive = isParentActive(item);
-
-              return (
-                <li key={item.href} className="space-y-1">
-                  {hasSubmenu ? (
-                    <div>
-                      <button
-                        onClick={() => {
-                          if (isCollapsed && onExpand) {
-                            onExpand();
-                          }
-                          setExpandedItems((prev) => ({
-                            ...prev,
-                            [item.href]: !prev[item.href],
-                          }));
-                        }}
-                        className={cn(
-                          'group relative flex w-full items-center justify-between overflow-hidden rounded-2xl px-4 py-2.5 text-sm font-medium transition-all duration-300 ease-out',
-                          isActive
-                            ? 'border border-border-brand bg-gradient-to-r from-brand-50 via-white to-surface-200 text-primary-700 font-semibold shadow-[0_8px_24px_rgba(11,69,101,0.10)]'
-                            : 'border border-transparent text-neutral-600 hover:border-border-light hover:bg-white/80 hover:text-primary-700 hover:shadow-sm',
-                          isCollapsed && 'justify-center px-0'
-                        )}
-                      >
-                        <span
-                          className={cn(
-                            'absolute inset-y-2 left-0 w-1 rounded-r-full bg-gradient-to-b from-primary-600 to-accent-500 transition-all duration-300 ease-out',
-                            isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-40'
-                          )}
-                          aria-hidden="true"
-                        />
-                        <div className="flex items-center gap-3">
-                          {item.icon && (
-                            <span
-                              className={cn(
-                                'h-5 w-5 shrink-0 transition-all duration-300 ease-out',
-                                isActive
-                                  ? 'text-primary-700'
-                                  : 'text-neutral-400 group-hover:text-primary-700 group-hover:scale-110'
-                              )}
-                              aria-hidden="true"
-                            >
-                              {item.icon}
-                            </span>
-                          )}
-                          {!isCollapsed && <span>{item.label}</span>}
-                        </div>
-                          {!isCollapsed && (
-                            <ChevronDown
-                              className={cn(
-                                'h-4 w-4 text-neutral-400 transition-transform duration-300 ease-out',
-                                isExpanded && 'rotate-180 text-primary-700'
-                              )}
-                            />
-                          )}
-                      </button>
-
-                      {!isCollapsed && (
-                        <div
-                          className={cn(
-                            'grid overflow-hidden pl-6 transition-all duration-300 ease-out motion-reduce:transition-none',
-                            isExpanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-                          )}
-                        >
-                          <ul className="min-h-0 space-y-1 border-l border-border-light pl-3 pt-2">
-                          {item.items!.map((subItem) => {
-                            const isSubActive = isItemActive(subItem.href);
-                            return (
-                              <li key={subItem.href}>
-                                <Link
-                                  href={subItem.href}
-                                  onClick={onClose}
-                                  className={cn(
-                                    'group flex items-center gap-3 rounded-xl px-3 py-1.5 text-xs font-semibold transition-all duration-300 ease-out motion-reduce:transition-none',
-                                    isSubActive
-                                      ? 'bg-gradient-to-r from-primary-700 to-accent-600 text-white shadow-[0_8px_18px_rgba(11,69,101,0.18)]'
-                                      : 'text-neutral-500 hover:bg-white/80 hover:text-primary-700 hover:translate-x-1',
-                                  )}
-                                  aria-current={isSubActive ? 'page' : undefined}
-                                >
-                                  <span
-                                    className={cn(
-                                      'h-1.5 w-1.5 shrink-0 rounded-full transition-all duration-300',
-                                      isSubActive
-                                        ? 'bg-white shadow-[0_0_0_4px_rgba(255,255,255,0.16)]'
-                                        : 'bg-neutral-300 group-hover:bg-accent-600'
-                                    )}
-                                    aria-hidden="true"
-                                  />
-                                  {subItem.label}
-                                </Link>
-                              </li>
-                            );
-                          })}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <Link
-                      href={item.href}
-                      onClick={onClose}
-                      className={cn(
-                        'group relative flex items-center gap-3 rounded-2xl px-4 py-2.5 text-sm font-medium transition-all duration-300 ease-out motion-reduce:transition-none',
-                        isActive
-                            ? 'border border-border-brand bg-gradient-to-r from-primary-700 via-brand-600 to-accent-600 text-white shadow-[0_10px_22px_rgba(11,69,101,0.18)]'
-                            : 'border border-transparent text-neutral-600 hover:border-border-light hover:bg-white/80 hover:text-primary-700 hover:translate-x-1 hover:shadow-sm',
-                        isCollapsed && 'justify-center px-0 hover:translate-x-0'
-                      )}
-                      aria-current={isActive ? 'page' : undefined}
-                    >
-                      <span
-                        className={cn(
-                          'absolute inset-y-2 left-0 w-1 rounded-r-full bg-white transition-all duration-300 ease-out',
-                          isActive ? 'opacity-100' : 'opacity-0'
-                        )}
-                        aria-hidden="true"
-                      />
-                      {item.icon && (
-                        <span
-                          className={cn(
-                            'h-5 w-5 shrink-0 transition-all duration-300 ease-out',
-                            isActive ? 'text-white' : 'text-neutral-400 group-hover:text-primary-700 group-hover:scale-110'
-                          )}
-                          aria-hidden="true"
-                        >
-                          {item.icon}
-                        </span>
-                      )}
-                      {!isCollapsed && <span>{item.label}</span>}
-                    </Link>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      ))}
-    </div>
+          <nav aria-label="Primary navigation" className="flex-1 overflow-y-auto px-3 py-4">
+            <div className="space-y-6">
+              {sections.map((section) => (
+                <SidebarGroup
+                  key={section.label}
+                  section={section}
+                  pathname={pathname}
+                  collapsed={false}
+                  openMap={openMap}
+                  setOpenMap={setOpenMap}
+                  onNavigate={onNavigate}
+                />
+              ))}
+            </div>
+          </nav>
+        </DialogPrimitive.Content>
+      </DialogPrimitive.Portal>
+    </DialogPrimitive.Root>
   );
 }
 
@@ -285,172 +480,109 @@ export function AppShell({
   children,
   className,
 }: AppShellProps) {
+  const pathname = usePathname();
+  const sections = useMemo(() => groupNavigationSections(items), [items]);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
-  const pathname = usePathname();
   const activeTrail = getNavigationTrail(items, pathname);
   const activeLabel = activeTrail.at(-1)?.label;
   const activeParentLabel = activeTrail.length > 1 ? activeTrail[0]?.label : undefined;
 
   return (
-    <div className={cn("min-h-screen bg-surface-200 text-[color:var(--ims-ink)] relative overflow-hidden", className)}>
-      {/* Background Effect Layer */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.12] mix-blend-overlay pointer-events-none z-0" />
-      <div className="absolute -top-[10%] -right-[5%] h-[600px] w-[600px] rounded-full bg-brand-200/25 blur-[120px] pointer-events-none z-0" />
-      <div className="absolute bottom-[0%] -left-[10%] h-[700px] w-[700px] rounded-full bg-accent-100/30 blur-[120px] pointer-events-none z-0" />
+    <div className={cn('min-h-screen bg-[color:var(--ims-background)] text-[color:var(--ims-ink)]', className)}>
+      <AdminSidebar
+        key={`desktop-${pathname}`}
+        appName={appName}
+        branchName={branchName}
+        userName={userName}
+        userAvatar={userAvatar}
+        sections={sections}
+        collapsed={sidebarCollapsed}
+        onCollapsedChange={setSidebarCollapsed}
+      />
 
-      {/* ─── DESKTOP SIDEBAR ─── */}
-      <aside
-        className={cn(
-          "fixed inset-y-0 left-0 z-30 hidden h-screen border-r border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.94),rgba(246,249,251,0.9))] backdrop-blur-2xl shadow-[inset_-1px_0_0_rgba(255,255,255,0.7)] transition-all duration-300 lg:flex lg:flex-col",
-          sidebarCollapsed ? "w-20" : "w-64"
-        )}
-      >
-          <div className="flex h-16 shrink-0 items-center border-b border-border-light px-5">
-          <BrandLogo appName={appName} isCollapsed={sidebarCollapsed} />
-        </div>
+      <MobileSidebar
+        key={`mobile-${pathname}`}
+        appName={appName}
+        sections={sections}
+        open={mobileSidebarOpen}
+        onOpenChange={setMobileSidebarOpen}
+        onNavigate={() => setMobileSidebarOpen(false)}
+      />
 
-        <div className="flex-1 overflow-y-auto px-3 py-4">
-          <Suspense fallback={
-            <div className="animate-pulse space-y-4 p-4">
-              <div className="h-10 bg-muted-100 rounded-lg" />
-              <div className="h-10 bg-muted-100 rounded-lg" />
-              <div className="h-10 bg-muted-100 rounded-lg" />
-            </div>
-          }>
-            <SidebarNavList 
-              items={items} 
-              isCollapsed={sidebarCollapsed} 
-              onExpand={() => setSidebarCollapsed(false)}
-            />
-          </Suspense>
-        </div>
-
-        {!sidebarCollapsed && branchName && (
-          <div className="border-t border-border-light p-4">
-            <div className="rounded-2xl border border-border-light bg-white/80 p-3 shadow-[0_8px_20px_rgba(16,42,58,0.05)]">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">Branch</p>
-              <p className="mt-1 text-xs font-semibold text-neutral-700 truncate">{branchName}</p>
-            </div>
-          </div>
-        )}
-      </aside>
-
-      {/* ─── MOBILE DRAWER SIDEBAR ─── */}
-      {mobileSidebarOpen && (
-        <div className="fixed inset-0 z-40 lg:hidden">
-          <div
-            className="absolute inset-0 bg-primary-950/40 backdrop-blur-sm transition-opacity"
-            onClick={() => setMobileSidebarOpen(false)}
-          />
-          <aside className="absolute inset-y-0 left-0 z-50 flex h-full w-64 flex-col bg-white border-r border-border-light shadow-2xl animate-fade-in-left">
-            <div className="flex h-16 shrink-0 items-center justify-between border-b border-white/50 px-5 bg-white/50 backdrop-blur-md">
-              <BrandLogo appName={appName} />
-              <button
-                onClick={() => setMobileSidebarOpen(false)}
-                className="rounded-md p-1.5 text-neutral-400 hover:bg-muted-50 hover:text-neutral-700"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-            <div className="flex-1 overflow-y-auto px-3 py-4">
-              <Suspense fallback={
-                <div className="animate-pulse space-y-4 p-4">
-                  <div className="h-10 bg-muted-100 rounded-lg" />
-                  <div className="h-10 bg-muted-100 rounded-lg" />
-                </div>
-              }>
-                <SidebarNavList items={items} onClose={() => setMobileSidebarOpen(false)} />
-              </Suspense>
-            </div>
-          </aside>
-        </div>
-      )}
-
-      {/* ─── MAIN CONTENT WRAPPER ─── */}
-      <div
-        className={cn(
-          "flex flex-col min-h-screen transition-all duration-300 relative z-10",
-          sidebarCollapsed ? "lg:pl-20" : "lg:pl-64"
-        )}
-      >
-        {/* Sticky Header Top Navbar */}
-        <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center justify-between border-b border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.88),rgba(246,249,251,0.74))] backdrop-blur-xl shadow-[0_1px_0_rgba(255,255,255,0.8),0_12px_30px_rgba(16,42,58,0.04)] px-4 md:px-6 lg:px-8">
-          <div className="flex items-center gap-4">
-            {/* Collapse toggle (desktop) */}
+      <div className={cn('flex min-h-screen flex-col transition-[padding] duration-300 lg:pl-72', sidebarCollapsed && 'lg:pl-20')}>
+        <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center justify-between border-b border-[color:var(--ims-border)] bg-[color:var(--ims-surface)]/85 px-4 backdrop-blur-xl md:px-6 lg:px-8">
+          <div className="flex min-w-0 items-center gap-4">
             <button
-              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-              className="hidden lg:flex rounded-xl p-2 text-neutral-400 transition-all duration-200 ease-out hover:bg-white hover:text-primary-700 hover:shadow-sm"
-              aria-label="Toggle sidebar"
-            >
-              <Menu className="h-5 w-5" />
-            </button>
-
-            {/* Mobile menu toggle */}
-            <button
+              type="button"
               onClick={() => setMobileSidebarOpen(true)}
-              className="lg:hidden rounded-xl p-2 text-neutral-400 transition-all duration-200 ease-out hover:bg-white hover:text-primary-700 hover:shadow-sm"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl text-[color:var(--ims-muted)] transition-all hover:bg-[color:var(--ims-accent-soft)] hover:text-[color:var(--ims-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2 lg:hidden"
               aria-label="Open sidebar"
             >
               <Menu className="h-5 w-5" />
             </button>
+
+            <div className="min-w-0">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[color:var(--ims-muted)]">
+                {activeParentLabel ?? branchName ?? 'Workspace'}
+              </p>
+              <p className="truncate text-sm font-semibold text-[color:var(--ims-ink)]">
+                {activeLabel ?? appName}
+              </p>
+            </div>
           </div>
 
           <div className="hidden min-w-0 flex-1 items-center justify-center gap-2 px-6 xl:flex" />
 
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <button
-                onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-                className="flex items-center gap-3 rounded-2xl border border-transparent px-4 py-1.5 transition-all duration-200 ease-out hover:border-border-light hover:bg-white hover:shadow-sm focus:outline-none"
-              >
-                {userAvatar || (
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary-700 to-accent-600 text-sm font-bold text-white shadow-sm shadow-primary-700/10">
-                    {userName?.[0]?.toUpperCase() ?? "A"}
-                  </div>
-                )}
-                <div className="hidden xl:flex flex-col text-left">
-                  <span className="text-xs font-bold text-neutral-800 leading-tight">
-                    {userName ?? "Administrator"}
-                  </span>
-                  <span className="text-[10px] font-semibold text-neutral-400 truncate max-w-[120px]">
-                    {branchName ?? "HQ Branch"}
-                  </span>
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+              className="flex items-center gap-3 rounded-2xl border border-transparent px-3 py-1.5 transition-all duration-200 hover:border-[color:var(--ims-border)] hover:bg-[color:var(--ims-surface)] hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2"
+            >
+              {userAvatar || (
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(135deg,var(--ims-ink),var(--ims-brass))] text-sm font-bold text-white shadow-sm">
+                  {userName?.[0]?.toUpperCase() ?? 'A'}
                 </div>
-                  <ChevronDown className={cn("h-4 w-4 text-neutral-400 transition-transform", profileMenuOpen && "rotate-180")} />
-                </button>
-                
-                {profileMenuOpen && (
-                  <>
-                  <div className="fixed inset-0 z-40" onClick={() => setProfileMenuOpen(false)} />
-                  <div className="absolute right-0 top-full mt-2 w-72 rounded-2xl border border-border-light bg-white p-4 shadow-[0_20px_40px_rgba(16,42,58,0.12)] z-50 animate-fade-in-up">
-                    <div className="mb-4 flex items-center gap-3 border-b border-surface-300 pb-4 xl:hidden">
-                      {userAvatar || (
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary-700 to-accent-600 text-sm font-bold text-white shadow-sm shadow-primary-700/10">
-                          {userName?.[0]?.toUpperCase() ?? "A"}
-                        </div>
-                      )}
-                      <div className="flex flex-col text-left">
-                        <span className="text-sm font-bold text-neutral-800 leading-tight">
-                          {userName ?? "Administrator"}
-                        </span>
-                        <span className="text-xs font-semibold text-neutral-400">
-                          {branchName ?? "HQ Branch"}
-                        </span>
-                      </div>
-                    </div>
-                    {aside && <div>{aside}</div>}
-                  </div>
-                </>
               )}
-            </div>
+              <div className="hidden flex-col text-left xl:flex">
+                <span className="text-xs font-semibold text-[color:var(--ims-ink)]">{userName ?? 'Administrator'}</span>
+                <span className="max-w-[120px] truncate text-[10px] font-medium text-[color:var(--ims-muted)]">
+                  {branchName ?? 'HQ Branch'}
+                </span>
+              </div>
+              <ChevronDown className={cn('h-4 w-4 text-[color:var(--ims-muted)] transition-transform', profileMenuOpen && 'rotate-180')} />
+            </button>
+
+            {profileMenuOpen ? (
+              <>
+                <button
+                  type="button"
+                  className="fixed inset-0 z-40"
+                  aria-label="Close profile menu"
+                  onClick={() => setProfileMenuOpen(false)}
+                />
+                <div className="absolute right-0 top-full z-50 mt-2 w-72 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-4 shadow-[0_20px_40px_rgba(20,33,61,0.12)]">
+                  <div className="mb-4 flex items-center gap-3 border-b border-[color:var(--ims-border)] pb-4 xl:hidden">
+                    {userAvatar || (
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(135deg,var(--ims-ink),var(--ims-brass))] text-sm font-bold text-white shadow-sm">
+                        {userName?.[0]?.toUpperCase() ?? 'A'}
+                      </div>
+                    )}
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-semibold text-[color:var(--ims-ink)]">{userName ?? 'Administrator'}</p>
+                      <p className="truncate text-xs text-[color:var(--ims-muted)]">{branchName ?? 'HQ Branch'}</p>
+                    </div>
+                  </div>
+                  {aside ? <div>{aside}</div> : null}
+                </div>
+              </>
+            ) : null}
           </div>
         </header>
 
-        <main className="flex-1 p-4 md:p-6 lg:p-8 animate-fade-in-up">
-          {children}
-        </main>
+        <main className="flex-1 p-4 md:p-6 lg:p-8">{children}</main>
       </div>
     </div>
   );

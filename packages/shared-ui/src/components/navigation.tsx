@@ -11,16 +11,16 @@ type NavigationItem = {
 /** @deprecated Use AppShell which includes its own sidebar navigation. */
 export function SidebarNav({ items }: { items: NavigationItem[] }) {
   return (
-    <nav className="space-y-1">
+    <nav aria-label="Sidebar navigation" className="space-y-1">
       {items.map((item) => (
         <Link
           key={item.href}
           href={item.href}
           className={cn(
-            'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+            'block rounded-2xl px-3 py-2.5 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2',
             item.current
-              ? 'bg-[color:var(--ims-ink)] text-[color:var(--ims-paper)]'
-              : 'text-[color:var(--ims-ink)] hover:bg-[color:var(--ims-accent-soft)]',
+              ? 'bg-[color:var(--ims-ink)] text-[color:var(--ims-paper)] shadow-[0_10px_24px_rgba(20,33,61,0.18)]'
+              : 'text-[color:var(--ims-muted)] hover:bg-[color:var(--ims-accent-soft)] hover:text-[color:var(--ims-ink)]',
           )}
           aria-current={item.current ? 'page' : undefined}
         >

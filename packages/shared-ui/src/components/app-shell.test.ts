@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  groupNavigationSections,
   getInitialExpandedItems,
   getNavigationTrail,
   isPathActive,
@@ -16,17 +17,33 @@ describe('sidebar navigation helpers', () => {
     expect(isPathActive('/identity/users', '/organization')).toBe(false);
   });
 
-  it('opens every menu group by default', () => {
+  it('groups items by category and preserves order', () => {
+    const items: NavItem[] = [
+      { href: '/dashboard', label: 'Dashboard', category: 'Overview' },
+      { href: '/organization', label: 'Organization', category: 'Management' },
+      { href: '/identity', label: 'Identity', category: 'Management' },
+    ];
+
+    expect(groupNavigationSections(items)).toEqual([
+      { label: 'Overview', items: [items[0]] },
+      { label: 'Management', items: [items[1], items[2]] },
+    ]);
+  });
+
+  it('opens only the active branch by default', () => {
     const items: NavItem[] = [
       { href: '/dashboard', label: 'Dashboard' },
       {
         href: '/organization',
         label: 'Organization',
-        items: [{ href: '/organization/branches', label: 'Branches' }],
+        items: [
+          { href: '/organization/branches', label: 'Branches' },
+          { href: '/organization/departments', label: 'Departments' },
+        ],
       },
     ];
 
-    expect(getInitialExpandedItems(items)).toEqual({ '/organization': true });
+    expect(getInitialExpandedItems(items, '/organization/branches')).toEqual({ '/organization': true });
   });
 
   it('builds the active navigation trail for nested routes', () => {
