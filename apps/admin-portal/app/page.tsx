@@ -80,12 +80,12 @@ export default function HomePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.08 }}
-              className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-[0_16px_40px_rgba(15,23,42,0.05)]"
+              className="rounded-[2rem] border border-border-light bg-white p-6 shadow-card"
             >
-              <p className="text-3xl font-black tracking-tight text-zinc-950">
+              <p className="text-3xl font-black tracking-tight text-neutral-950">
                 <CountUp value={stat.value} />
               </p>
-              <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.24em] text-zinc-500">{stat.label}</p>
+              <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.24em] text-neutral-500">{stat.label}</p>
             </motion.div>
           ))}
         </div>
@@ -109,7 +109,7 @@ export default function HomePage() {
             title="Latest training programs"
             description="Core programs cover forklift operation, crane work, elevated platforms, and customized professional courses."
           />
-          <Link href="/courses" className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.22em] text-[#b75c16] transition-colors hover:text-zinc-950">
+          <Link href="/courses" className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.22em] text-accent-700 transition-colors hover:text-primary-700">
             View full directory
             <ArrowRight className="h-4 w-4" />
           </Link>
@@ -145,12 +145,12 @@ export default function HomePage() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.08 }}
               whileHover={{ y: -4 }}
-              className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-[0_16px_40px_rgba(15,23,42,0.05)]"
+              className="rounded-[2rem] border border-border-light bg-white p-6 shadow-card"
             >
-              <CalendarDays className="h-5 w-5 text-[#b75c16]" />
-              <h3 className="mt-5 text-xl font-black text-zinc-950">{event.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-zinc-600">{event.detail}</p>
-              <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.28em] text-zinc-500">{event.meta}</p>
+              <CalendarDays className="h-5 w-5 text-accent-700" />
+              <h3 className="mt-5 text-xl font-black text-neutral-950">{event.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-neutral-600">{event.detail}</p>
+              <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.28em] text-neutral-500">{event.meta}</p>
             </motion.div>
           ))}
         </div>

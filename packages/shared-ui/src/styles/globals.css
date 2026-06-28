@@ -12,21 +12,21 @@
 ───────────────────────────────────────────── */
 :root {
   /* Backgrounds */
-  --ims-paper: #f8f7fb;
+  --ims-paper: #f6f9fb;
   --ims-surface: #ffffff;
 
   /* Typography */
-  --ims-ink: #0f172a;
-  --ims-muted: rgba(15, 23, 42, 0.62);
+  --ims-ink: #102a3a;
+  --ims-muted: rgba(16, 42, 58, 0.66);
 
   /* Brand */
-  --ims-brass: #8b5cf6;
-  --ims-brass-soft: rgba(139, 92, 246, 0.18);
-  --ims-accent-soft: rgba(139, 92, 246, 0.09);
+  --ims-brass: #0b4565;
+  --ims-brass-soft: rgba(11, 69, 101, 0.16);
+  --ims-accent-soft: rgba(249, 115, 22, 0.10);
 
   /* Borders & Rings */
-  --ims-border: rgba(15, 23, 42, 0.12);
-  --ims-ring: rgba(139, 92, 246, 0.55);
+  --ims-border: rgba(11, 69, 101, 0.14);
+  --ims-ring: rgba(47, 120, 157, 0.55);
 
   /* Radius */
   --ims-radius-sm: 0.25rem;   /* 4px  */
@@ -48,27 +48,27 @@
   --ims-error-bg:        #fef2f2;
   --ims-error-border:    rgba(153, 27, 27, 0.25);
 
-  --ims-info:            #1e3a5f;
-  --ims-info-bg:         #eff6ff;
-  --ims-info-border:     rgba(30, 58, 95, 0.22);
+  --ims-info:            #0b4565;
+  --ims-info-bg:         #eef7fb;
+  --ims-info-border:     rgba(11, 69, 101, 0.22);
 }
 
 /* ─────────────────────────────────────────────
    Dark Mode Tokens  (add class="dark" on <html>)
 ───────────────────────────────────────────── */
 .dark {
-  --ims-paper:           #0f172a;
-  --ims-surface:         #1e293b;
+  --ims-paper:           #031a27;
+  --ims-surface:         #071824;
 
   --ims-ink:             #f8fafc;
   --ims-muted:           rgba(248, 250, 252, 0.55);
 
-  --ims-brass:           #a78bfa;
-  --ims-brass-soft:      rgba(167, 139, 250, 0.20);
-  --ims-accent-soft:     rgba(167, 139, 250, 0.10);
+  --ims-brass:           #86bcd5;
+  --ims-brass-soft:      rgba(134, 188, 213, 0.20);
+  --ims-accent-soft:     rgba(249, 115, 22, 0.12);
 
   --ims-border:          rgba(248, 250, 252, 0.12);
-  --ims-ring:            rgba(167, 139, 250, 0.55);
+  --ims-ring:            rgba(134, 188, 213, 0.55);
 
   --ims-success:         #4ade80;
   --ims-success-bg:      rgba(74, 222, 128, 0.08);
@@ -82,9 +82,9 @@
   --ims-error-bg:        rgba(248, 113, 113, 0.08);
   --ims-error-border:    rgba(248, 113, 113, 0.22);
 
-  --ims-info:            #7dd3fc;
-  --ims-info-bg:         rgba(125, 211, 252, 0.08);
-  --ims-info-border:     rgba(125, 211, 252, 0.20);
+  --ims-info:            #86bcd5;
+  --ims-info-bg:         rgba(134, 188, 213, 0.08);
+  --ims-info-border:     rgba(134, 188, 213, 0.20);
 }
 
 /* ─────────────────────────────────────────────
@@ -103,7 +103,7 @@ body {
 }
 
 .text-gradient-orange {
-  background: linear-gradient(135deg, #8b5cf6 0%, #d946ef 50%, #06b6d4 100%);
+  background: linear-gradient(135deg, #0b4565 0%, #2f789d 48%, #f97316 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -121,13 +121,13 @@ a {
 }
 
 ::selection {
-  background: rgba(139, 92, 246, 0.28);
+  background: rgba(249, 115, 22, 0.28);
 }
 
 /* ─────────────────────────────────────────────
    Focus-Visible Ring
 ───────────────────────────────────────────── */
 :focus-visible {
-  outline: 2px solid #8b5cf6;
+  outline: 2px solid #2f789d;
   outline-offset: 2px;
 }

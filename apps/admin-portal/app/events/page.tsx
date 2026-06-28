@@ -29,11 +29,11 @@ export default function EventsPage() {
         <SectionHeading eyebrow="Calendar" title="A light-weight public schedule" description="The reference site includes an events navigation item, so this page keeps a clear on-brand placeholder calendar." />
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {eventCards.map((event) => (
-            <div key={event.title} className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-[0_16px_40px_rgba(15,23,42,0.05)]">
-              <CalendarDays className="h-5 w-5 text-[#b75c16]" />
-              <h3 className="mt-5 text-xl font-black text-zinc-950">{event.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-zinc-600">{event.detail}</p>
-              <div className="mt-5 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.24em] text-zinc-500">
+            <div key={event.title} className="rounded-[2rem] border border-border-light bg-white p-6 shadow-card">
+              <CalendarDays className="h-5 w-5 text-accent-700" />
+              <h3 className="mt-5 text-xl font-black text-neutral-950">{event.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-neutral-600">{event.detail}</p>
+              <div className="mt-5 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.24em] text-neutral-500">
                 <Clock className="h-4 w-4" />
                 {event.meta}
               </div>

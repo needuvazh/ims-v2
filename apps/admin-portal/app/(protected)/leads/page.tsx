@@ -33,7 +33,7 @@ export default async function LeadsPage() {
                       'use server';
                       await convertLeadAction(lead.id);
                     }} noValidate>
-                      <button type="submit" className="text-blue-600 hover:underline">
+                      <button type="submit" className="text-primary-700 hover:underline">
                         Convert to Student
                       </button>
                     </form>

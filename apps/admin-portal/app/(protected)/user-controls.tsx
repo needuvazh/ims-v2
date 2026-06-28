@@ -54,7 +54,7 @@ export function UserControls({ userName, activeBranchId, branches, isGlobal }: U
               value={selectedBranch}
               disabled={isPending}
               onChange={(e) => handleBranchChange(e.target.value)}
-              className="w-full cursor-pointer appearance-none rounded-2xl border-2 border-slate-200 bg-white/80 py-2.5 pl-4 pr-10 text-xs font-bold text-[color:var(--ims-ink)] outline-none shadow-sm hover:border-[color:var(--ims-brass-soft)] focus:border-[color:var(--ims-brass)] transition-all disabled:opacity-50"
+              className="w-full cursor-pointer appearance-none rounded-2xl border-2 border-border-light bg-white/80 py-2.5 pl-4 pr-10 text-xs font-bold text-[color:var(--ims-ink)] outline-none shadow-sm hover:border-brand-200 focus:border-[color:var(--ims-brass)] transition-all disabled:opacity-50"
             >
               {isGlobal && <option value="All">All Branches (Global)</option>}
               {branches.map((b) => (
@@ -75,7 +75,7 @@ export function UserControls({ userName, activeBranchId, branches, isGlobal }: U
 
         {showSwitcher && error && <p className="text-[10px] font-semibold text-rose-600 ml-1">{error}</p>}
 
-        <div className="space-y-2 rounded-2xl border border-slate-200 bg-slate-50 p-2 shadow-sm">
+        <div className="space-y-2 rounded-2xl border border-border-light bg-muted-50 p-2 shadow-sm">
           <Link
             href="/account/profile"
             className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-[color:var(--ims-ink)] transition-colors hover:bg-white hover:text-[color:var(--ims-brass)]"

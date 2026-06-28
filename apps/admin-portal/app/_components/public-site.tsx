@@ -287,22 +287,22 @@ export function PublicShell({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-[#EA580C] selection:text-white">
+    <div className="min-h-screen bg-surface-50 text-neutral-900 font-sans selection:bg-accent-500 selection:text-white">
       {/* Top Bar */}
-      <div className="bg-[#090E17] border-b border-white/5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
+      <div className="bg-primary-950 border-b border-white/5 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-300">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-            <a href={contactInfo.phoneHref} className="inline-flex items-center gap-2 transition-colors hover:text-[#F59E0B]">
+            <a href={contactInfo.phoneHref} className="inline-flex items-center gap-2 transition-colors hover:text-accent-400">
               <Phone className="h-3.5 w-3.5" />
               {contactInfo.phone}
             </a>
-            <a href={contactInfo.emailHref} className="inline-flex items-center gap-2 transition-colors hover:text-[#F59E0B]">
+            <a href={contactInfo.emailHref} className="inline-flex items-center gap-2 transition-colors hover:text-accent-400">
               <Mail className="h-3.5 w-3.5" />
               {contactInfo.email}
             </a>
           </div>
           <div className="flex items-center gap-4">
-            <span className="hidden sm:inline text-[9px] tracking-[0.25em] text-slate-500">العربية</span>
+            <span className="hidden sm:inline text-[9px] tracking-[0.25em] text-neutral-500">العربية</span>
             <Link href="/login" className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-[9px] font-bold tracking-[0.2em] text-white transition-all hover:bg-white/10 hover:border-white/30">
               IMS Login
             </Link>
@@ -311,7 +311,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
       </div>
 
       {/* Main Header */}
-      <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-[#0F172A]/90 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/20 py-4' : 'bg-[#0F172A] py-6 border-b border-white/5'}`}>
+      <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-primary-900/90 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-primary-950/20 py-4' : 'bg-primary-900 py-6 border-b border-white/5'}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
           <Link href="/" className="flex items-center gap-3">
             <BrandMark invert />
@@ -326,7 +326,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`text-[13px] font-bold uppercase tracking-[0.1em] transition-colors hover:text-[#F59E0B] ${active || homeActive ? 'text-[#F59E0B]' : 'text-slate-300'}`}
+                  className={`text-[13px] font-bold uppercase tracking-[0.1em] transition-colors hover:text-accent-400 ${active || homeActive ? 'text-accent-400' : 'text-neutral-300'}`}
                 >
                   {item.label}
                 </Link>
@@ -335,7 +335,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <Link href="/contact-us" className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#EA580C] to-[#F97316] px-6 py-2.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white shadow-lg shadow-[#EA580C]/20 transition-transform hover:-translate-y-0.5">
+            <Link href="/contact-us" className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-accent-600 to-accent-500 px-6 py-2.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white shadow-lg shadow-accent-600/20 transition-transform hover:-translate-y-0.5">
               Book Now
               <ArrowRight className="h-3.5 w-3.5" />
             </Link>
@@ -358,7 +358,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="overflow-hidden border-t border-white/10 bg-[#0F172A] lg:hidden"
+              className="overflow-hidden border-t border-white/10 bg-primary-900 lg:hidden"
             >
               <div className="mx-auto flex flex-col px-4 py-6">
                 {mainNavigation.map((item) => (
@@ -366,12 +366,12 @@ export function PublicShell({ children }: { children: ReactNode }) {
                     key={item.href}
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
-                    className="border-b border-white/5 py-4 text-sm font-bold uppercase tracking-[0.1em] text-slate-300 transition-colors hover:text-[#F59E0B]"
+                    className="border-b border-white/5 py-4 text-sm font-bold uppercase tracking-[0.1em] text-neutral-300 transition-colors hover:text-accent-400"
                   >
                     {item.label}
                   </Link>
                 ))}
-                <Link href="/contact-us" onClick={() => setMobileOpen(false)} className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#EA580C] to-[#F97316] py-4 text-sm font-bold uppercase tracking-[0.15em] text-white shadow-lg shadow-[#EA580C]/20">
+                <Link href="/contact-us" onClick={() => setMobileOpen(false)} className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-accent-600 to-accent-500 py-4 text-sm font-bold uppercase tracking-[0.15em] text-white shadow-lg shadow-accent-600/20">
                   Book Now
                   <ArrowRight className="h-4 w-4" />
                 </Link>
@@ -383,15 +383,15 @@ export function PublicShell({ children }: { children: ReactNode }) {
 
       <main>{children}</main>
 
-      <footer className="bg-[#090E17] text-slate-300 pt-20 pb-10 border-t border-white/5">
+      <footer className="bg-primary-950 text-neutral-300 pt-20 pb-10 border-t border-white/5">
         <div className="mx-auto grid max-w-7xl gap-16 px-4 sm:px-6 lg:grid-cols-[1.5fr_1fr_1fr] lg:px-8">
           <div className="space-y-8">
             <BrandMark invert />
-            <p className="max-w-md text-sm leading-relaxed text-slate-400">{contactInfo.tagline}</p>
-            <div className="space-y-4 text-sm text-slate-400">
-              <p className="flex items-start gap-4"><MapPin className="mt-1 h-4 w-4 shrink-0 text-[#F59E0B]" /> {contactInfo.address}</p>
-              <p className="flex items-center gap-4"><Phone className="h-4 w-4 shrink-0 text-[#F59E0B]" /> {contactInfo.phone}</p>
-              <p className="flex items-center gap-4"><Mail className="h-4 w-4 shrink-0 text-[#F59E0B]" /> {contactInfo.email}</p>
+            <p className="max-w-md text-sm leading-relaxed text-neutral-400">{contactInfo.tagline}</p>
+            <div className="space-y-4 text-sm text-neutral-400">
+              <p className="flex items-start gap-4"><MapPin className="mt-1 h-4 w-4 shrink-0 text-accent-400" /> {contactInfo.address}</p>
+              <p className="flex items-center gap-4"><Phone className="h-4 w-4 shrink-0 text-accent-400" /> {contactInfo.phone}</p>
+              <p className="flex items-center gap-4"><Mail className="h-4 w-4 shrink-0 text-accent-400" /> {contactInfo.email}</p>
             </div>
           </div>
 
@@ -399,7 +399,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
             <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-white">Quick Links</h3>
             <div className="mt-8 flex flex-col gap-4 text-sm font-medium">
               {quickLinks.map((item) => (
-                <Link key={item.href} href={item.href} className="text-slate-400 transition-colors hover:text-[#F59E0B]">
+                <Link key={item.href} href={item.href} className="text-neutral-400 transition-colors hover:text-accent-400">
                   {item.label}
                 </Link>
               ))}
@@ -410,7 +410,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
             <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-white">Our Courses</h3>
             <div className="mt-8 flex flex-col gap-4 text-sm font-medium">
               {courseCatalog.slice(0, 5).map((course) => (
-                <Link key={course.slug} href={`/${course.slug}`} className="text-slate-400 transition-colors hover:text-[#F59E0B]">
+                <Link key={course.slug} href={`/${course.slug}`} className="text-neutral-400 transition-colors hover:text-accent-400">
                   {course.title}
                 </Link>
               ))}
@@ -419,7 +419,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
         </div>
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-20 pt-8 border-t border-white/10">
-          <div className="flex flex-col gap-4 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-4 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 sm:flex-row sm:items-center sm:justify-between">
             <p>© {new Date().getFullYear()} Al-Saud Training Institute. All rights reserved.</p>
             <div className="flex flex-wrap gap-6">
               <Link href="/privacy" className="transition-colors hover:text-white">Privacy Policy</Link>
@@ -437,6 +437,7 @@ export function HeroSection({
   title,
   description,
   image,
+  imageAlt,
   primaryHref,
   primaryLabel,
   secondaryHref,
@@ -447,6 +448,7 @@ export function HeroSection({
   title: ReactNode;
   description: string;
   image: string;
+  imageAlt?: string;
   primaryHref: string;
   primaryLabel: string;
   secondaryHref: string;
@@ -454,12 +456,12 @@ export function HeroSection({
   stats?: StatCard[];
 }) {
   return (
-    <section className="relative flex items-center justify-center overflow-hidden bg-[#0F172A] pb-32 pt-20 lg:pb-48 lg:pt-32">
+    <section className="relative flex items-center justify-center overflow-hidden bg-primary-900 pb-32 pt-20 lg:pb-48 lg:pt-32">
       <div className="absolute inset-0">
-        <Image src={image} alt="Hero background" fill className="object-cover opacity-30 mix-blend-overlay" priority />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0F172A] via-[#0F172A]/70 to-[#0F172A]" />
+        <Image src={image} alt={imageAlt ?? 'Hero background'} fill className="object-cover opacity-30 mix-blend-overlay" priority />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary-900 via-primary-900/70 to-primary-900" />
         {/* Subtle orange glow */}
-        <div className="absolute top-1/4 right-1/4 h-[600px] w-[600px] rounded-full bg-[#EA580C]/20 blur-[120px] mix-blend-screen" />
+        <div className="absolute top-1/4 right-1/4 h-[600px] w-[600px] rounded-full bg-accent-600/20 blur-[120px] mix-blend-screen" />
       </div>
 
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center px-4 text-center sm:px-6 lg:px-8">
@@ -467,7 +469,7 @@ export function HeroSection({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#F59E0B] backdrop-blur-md"
+          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-accent-400 backdrop-blur-md"
         >
           <Sparkles className="h-3.5 w-3.5" />
           {eyebrow}
@@ -486,7 +488,7 @@ export function HeroSection({
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-8 max-w-2xl text-lg leading-relaxed text-slate-300"
+          className="mt-8 max-w-2xl text-lg leading-relaxed text-neutral-300"
         >
           {description}
         </motion.p>
@@ -497,7 +499,7 @@ export function HeroSection({
           transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className="mt-12 flex flex-col gap-4 sm:flex-row"
         >
-          <Link href={primaryHref} className="inline-flex items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#EA580C] to-[#F97316] px-8 py-4 text-[13px] font-bold uppercase tracking-[0.15em] text-white shadow-xl shadow-[#EA580C]/20 transition-transform hover:-translate-y-1">
+          <Link href={primaryHref} className="inline-flex items-center justify-center gap-3 rounded-full bg-gradient-to-r from-accent-600 to-accent-500 px-8 py-4 text-[13px] font-bold uppercase tracking-[0.15em] text-white shadow-xl shadow-accent-600/20 transition-transform hover:-translate-y-1">
             {primaryLabel}
             <ArrowRight className="h-4 w-4" />
           </Link>
@@ -519,11 +521,11 @@ export function HeroSection({
             {heroStats.map((item) => {
               const Icon = item.icon;
               return (
-                <div key={item.label} className="group relative flex flex-col items-center justify-center overflow-hidden rounded-[1.5rem] bg-[#0F172A]/90 px-6 py-10">
+                <div key={item.label} className="group relative flex flex-col items-center justify-center overflow-hidden rounded-[1.5rem] bg-primary-900/90 px-6 py-10">
                   <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                  <Icon className="mb-4 h-8 w-8 text-[#F59E0B]" />
+                  <Icon className="mb-4 h-8 w-8 text-accent-400" />
                   <p className="font-display text-4xl font-bold text-white">{item.value}</p>
-                  <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400">{item.label}</p>
+                  <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-400">{item.label}</p>
                 </div>
               );
             })}
@@ -541,13 +543,13 @@ export const SplitHero = HeroSection;
 export function SectionHeading({ eyebrow, title, description, align = 'left', light = false }: { eyebrow: string; title: string; description?: string; align?: 'left' | 'center', light?: boolean }) {
   return (
     <div className={`max-w-3xl space-y-5 ${align === 'center' ? 'mx-auto text-center' : ''}`}>
-      <div className={`inline-flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.2em] ${light ? 'text-[#F59E0B]' : 'text-[#EA580C]'}`}>
-        <span className={`h-px w-8 ${light ? 'bg-[#F59E0B]/50' : 'bg-[#EA580C]/50'}`} />
+      <div className={`inline-flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.2em] ${light ? 'text-accent-400' : 'text-accent-600'}`}>
+        <span className={`h-px w-8 ${light ? 'bg-accent-400/50' : 'bg-accent-600/50'}`} />
         {eyebrow}
-        {align === 'center' && <span className={`h-px w-8 ${light ? 'bg-[#F59E0B]/50' : 'bg-[#EA580C]/50'}`} />}
+        {align === 'center' && <span className={`h-px w-8 ${light ? 'bg-accent-400/50' : 'bg-accent-600/50'}`} />}
       </div>
-      <h2 className={`font-display text-4xl font-bold tracking-tight sm:text-5xl ${light ? 'text-white' : 'text-slate-900'}`}>{title}</h2>
-      {description && <p className={`text-lg leading-relaxed ${light ? 'text-slate-300' : 'text-slate-600'}`}>{description}</p>}
+      <h2 className={`font-display text-4xl font-bold tracking-tight sm:text-5xl ${light ? 'text-white' : 'text-neutral-900'}`}>{title}</h2>
+      {description && <p className={`text-lg leading-relaxed ${light ? 'text-neutral-300' : 'text-neutral-600'}`}>{description}</p>}
     </div>
   );
 }
@@ -559,10 +561,10 @@ export function StatStrip() {
         {stats.map((item) => {
           const Icon = item.icon;
           return (
-            <div key={item.label} className="group rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm transition-all hover:border-[#EA580C]/30 hover:shadow-xl hover:shadow-[#EA580C]/5">
-              <div className="inline-flex rounded-2xl bg-gradient-to-br from-[#FFF3ED] to-[#FFE4D6] p-4 text-[#EA580C] ring-1 ring-[#EA580C]/10"><Icon className="h-6 w-6" /></div>
-              <p className="mt-5 font-display text-4xl font-bold text-slate-900">{item.value}</p>
-              <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500">{item.label}</p>
+            <div key={item.label} className="group rounded-[2rem] border border-border-light bg-white p-6 shadow-sm transition-all hover:border-border-accent hover:shadow-xl hover:shadow-accent-600/5">
+              <div className="inline-flex rounded-2xl bg-gradient-to-br from-accent-50 to-accent-100 p-4 text-accent-600 ring-1 ring-accent-600/10"><Icon className="h-6 w-6" /></div>
+              <p className="mt-5 font-display text-4xl font-bold text-neutral-900">{item.value}</p>
+              <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-500">{item.label}</p>
             </div>
           );
         })}
@@ -578,11 +580,11 @@ export function CourseGrid({ courses }: { courses: CourseCard[] }) {
         <motion.article
           key={course.slug}
           whileHover={{ y: -8 }}
-          className="group flex flex-col overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm transition-all hover:border-slate-300 hover:shadow-2xl hover:shadow-slate-900/5"
+          className="group flex flex-col overflow-hidden rounded-[2rem] border border-border-light bg-white shadow-sm transition-all hover:border-border-strong hover:shadow-2xl hover:shadow-primary-950/5"
         >
           <div className="relative aspect-[4/3] overflow-hidden">
             <Image src={course.image} alt={course.imageAlt} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <div className="absolute inset-0 bg-gradient-to-t from-primary-950/70 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             <div className="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
               <Link href={`/${course.slug}`} className="flex w-full items-center justify-center gap-2 rounded-xl bg-white/20 px-4 py-3 text-xs font-bold uppercase tracking-[0.2em] text-white backdrop-blur-md hover:bg-white/30">
                 View Details <ArrowRight className="h-3.5 w-3.5" />
@@ -591,16 +593,16 @@ export function CourseGrid({ courses }: { courses: CourseCard[] }) {
           </div>
           <div className="flex flex-1 flex-col p-8">
             <div className="flex items-center justify-between gap-4">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#EA580C]">{course.duration}</p>
-              <span className="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-slate-600">{course.price}</span>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent-600">{course.duration}</p>
+              <span className="rounded-full bg-muted-100 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-neutral-600">{course.price}</span>
             </div>
-            <h3 className="mt-4 font-display text-2xl font-bold tracking-tight text-slate-900">{course.title}</h3>
-            <p className="mt-3 text-sm leading-relaxed text-slate-600 line-clamp-2">{course.summary}</p>
+            <h3 className="mt-4 font-display text-2xl font-bold tracking-tight text-neutral-900">{course.title}</h3>
+            <p className="mt-3 text-sm leading-relaxed text-neutral-600 line-clamp-2">{course.summary}</p>
             <div className="mt-auto pt-6">
-               <ul className="space-y-2 text-sm text-slate-600">
+               <ul className="space-y-2 text-sm text-neutral-600">
                 {course.points.slice(0, 2).map((point) => (
                   <li key={point} className="flex gap-3">
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#F59E0B]" />
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent-400" />
                     <span className="line-clamp-1">{point}</span>
                   </li>
                 ))}
@@ -621,12 +623,12 @@ export function ContactBlock() {
         { icon: Mail, title: 'Email', value: contactInfo.email, href: contactInfo.emailHref },
         { icon: MapPin, title: 'Address', value: 'Muscat, Azaiba North', href: '#' },
       ].map((item) => (
-        <a key={item.title} href={item.href} className="group flex flex-col items-center rounded-[2rem] border border-slate-200 bg-white p-8 text-center transition-all hover:border-[#EA580C]/30 hover:shadow-xl hover:shadow-[#EA580C]/5">
-          <div className="rounded-full bg-slate-50 p-4 text-[#EA580C] ring-1 ring-slate-100 transition-all group-hover:bg-[#FFF3ED] group-hover:ring-[#EA580C]/20">
+        <a key={item.title} href={item.href} className="group flex flex-col items-center rounded-[2rem] border border-border-light bg-white p-8 text-center transition-all hover:border-border-accent hover:shadow-xl hover:shadow-accent-600/5">
+          <div className="rounded-full bg-brand-50 p-4 text-accent-600 ring-1 ring-border-light transition-all group-hover:bg-accent-50 group-hover:ring-accent-600/20">
             <item.icon className="h-6 w-6" />
           </div>
-          <p className="mt-6 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">{item.title}</p>
-          <p className="mt-2 font-display text-2xl font-bold text-slate-900">{item.value}</p>
+          <p className="mt-6 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">{item.title}</p>
+          <p className="mt-2 font-display text-2xl font-bold text-neutral-900">{item.value}</p>
         </a>
       ))}
     </div>
@@ -646,17 +648,17 @@ export function SectionCardGrid({
           <motion.div 
             key={item.title} 
             whileHover={{ y: -8 }}
-            className="group relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm transition-all hover:border-[#EA580C]/30 hover:shadow-xl hover:shadow-[#EA580C]/5"
+            className="group relative overflow-hidden rounded-[2rem] border border-border-light bg-white p-8 shadow-sm transition-all hover:border-border-accent hover:shadow-xl hover:shadow-accent-600/5"
           >
-            <div className="absolute right-0 top-0 -mr-4 -mt-4 pointer-events-none text-[120px] font-black text-slate-50 opacity-50 transition-transform duration-500 group-hover:scale-110">
+            <div className="absolute right-0 top-0 -mr-4 -mt-4 pointer-events-none text-[120px] font-black text-surface-200 opacity-50 transition-transform duration-500 group-hover:scale-110">
               0{idx + 1}
             </div>
             <div className="relative z-10">
-              <div className="mb-6 inline-flex rounded-2xl bg-gradient-to-br from-[#FFF3ED] to-[#FFE4D6] p-4 text-[#EA580C] ring-1 ring-[#EA580C]/10">
+              <div className="mb-6 inline-flex rounded-2xl bg-gradient-to-br from-accent-50 to-accent-100 p-4 text-accent-600 ring-1 ring-accent-600/10">
                 <Icon className="h-6 w-6" />
               </div>
-              <h3 className="font-display text-2xl font-bold text-slate-900">{item.title}</h3>
-              <p className="mt-4 leading-relaxed text-slate-600">{item.description}</p>
+              <h3 className="font-display text-2xl font-bold text-neutral-900">{item.title}</h3>
+              <p className="mt-4 leading-relaxed text-neutral-600">{item.description}</p>
             </div>
           </motion.div>
         );
@@ -667,10 +669,10 @@ export function SectionCardGrid({
 
 export function BulletList({ items }: { items: string[] }) {
   return (
-    <ul className="space-y-3 text-sm leading-relaxed text-slate-700">
+    <ul className="space-y-3 text-sm leading-relaxed text-neutral-700">
       {items.map((item) => (
         <li key={item} className="flex gap-3">
-          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#F59E0B]" />
+          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent-400" />
           <span>{item}</span>
         </li>
       ))}
@@ -680,9 +682,9 @@ export function BulletList({ items }: { items: string[] }) {
 
 export function DetailPanel({ title, subtitle, bullets }: { title: string; subtitle?: string; bullets: string[] }) {
   return (
-    <div className="rounded-[2.5rem] border border-slate-200 bg-white p-8 shadow-xl shadow-slate-900/5 sm:p-10">
-      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#EA580C]">{subtitle ?? 'Course details'}</p>
-      <h3 className="mt-4 font-display text-3xl font-bold tracking-tight text-slate-900">{title}</h3>
+    <div className="rounded-[2.5rem] border border-border-light bg-white p-8 shadow-xl shadow-primary-950/5 sm:p-10">
+      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent-600">{subtitle ?? 'Course details'}</p>
+      <h3 className="mt-4 font-display text-3xl font-bold tracking-tight text-neutral-900">{title}</h3>
       <div className="mt-6">
         <BulletList items={bullets} />
       </div>
@@ -692,15 +694,15 @@ export function DetailPanel({ title, subtitle, bullets }: { title: string; subti
 
 export function SimpleCTA({ title, description, href, label }: { title: string; description: string; href: string; label: string }) {
   return (
-    <div className="relative overflow-hidden rounded-[3rem] bg-[#0F172A] px-8 py-20 text-center shadow-2xl md:px-16 lg:py-28">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,88,12,0.15),transparent_60%)]" />
-      <div className="absolute top-0 right-0 h-[300px] w-[300px] translate-x-1/3 -translate-y-1/3 rounded-full bg-gradient-to-br from-[#EA580C]/20 to-[#F97316]/20 blur-[80px]" />
+    <div className="relative overflow-hidden rounded-[3rem] bg-primary-900 px-8 py-20 text-center shadow-2xl md:px-16 lg:py-28">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.15),transparent_60%)]" />
+      <div className="absolute top-0 right-0 h-[300px] w-[300px] translate-x-1/3 -translate-y-1/3 rounded-full bg-gradient-to-br from-accent-600/20 to-accent-500/20 blur-[80px]" />
       
       <div className="relative z-10 mx-auto max-w-3xl">
-        <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#F59E0B]">Take the next step</p>
+        <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-accent-400">Take the next step</p>
         <h3 className="mt-6 font-display text-4xl font-bold text-white sm:text-5xl lg:text-6xl">{title}</h3>
-        <p className="mt-6 text-lg leading-relaxed text-slate-300">{description}</p>
-        <Link href={href} className="mt-10 inline-flex items-center justify-center gap-3 rounded-full bg-white px-8 py-4 text-[13px] font-bold uppercase tracking-[0.15em] text-[#0F172A] transition-all hover:-translate-y-1 hover:bg-slate-50 hover:shadow-xl hover:shadow-white/10">
+        <p className="mt-6 text-lg leading-relaxed text-neutral-300">{description}</p>
+        <Link href={href} className="mt-10 inline-flex items-center justify-center gap-3 rounded-full bg-white px-8 py-4 text-[13px] font-bold uppercase tracking-[0.15em] text-primary-900 transition-all hover:-translate-y-1 hover:bg-surface-200 hover:shadow-xl hover:shadow-white/10">
           {label}
           <ArrowRight className="h-4 w-4" />
         </Link>
@@ -735,19 +737,19 @@ export function CourseDetailPage({ slug }: { slug: string }) {
         <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr]">
           <DetailPanel title="What this course covers" bullets={course.points} />
           <div className="space-y-8">
-            <div className="rounded-[2.5rem] border border-slate-200 bg-white p-8 shadow-xl shadow-slate-900/5">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#EA580C]">Course summary</p>
-              <p className="mt-4 leading-relaxed text-slate-600">
+            <div className="rounded-[2.5rem] border border-border-light bg-white p-8 shadow-xl shadow-primary-950/5">
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent-600">Course summary</p>
+              <p className="mt-4 leading-relaxed text-neutral-600">
                 {course.summary} Please enquire about pricing, dates, and group delivery options. The institute tailors delivery based on attendee count and location.
               </p>
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-2xl bg-slate-50 p-5 ring-1 ring-slate-100">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Duration</p>
-                  <p className="mt-2 font-display text-xl font-bold text-slate-900">{course.duration}</p>
+                <div className="rounded-2xl bg-muted-50 p-5 ring-1 ring-border-light">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">Duration</p>
+                  <p className="mt-2 font-display text-xl font-bold text-neutral-900">{course.duration}</p>
                 </div>
-                <div className="rounded-2xl bg-slate-50 p-5 ring-1 ring-slate-100">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Price</p>
-                  <p className="mt-2 font-display text-xl font-bold text-slate-900">{course.price}</p>
+                <div className="rounded-2xl bg-muted-50 p-5 ring-1 ring-border-light">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">Price</p>
+                  <p className="mt-2 font-display text-xl font-bold text-neutral-900">{course.price}</p>
                 </div>
               </div>
             </div>
@@ -771,10 +773,10 @@ export function LegalPageShell({ title, description, children }: { title: string
   return (
     <PublicShell>
       <section className="mx-auto max-w-4xl px-4 py-24 sm:px-6 lg:px-8">
-        <div className="rounded-[3rem] border border-slate-200 bg-white p-8 shadow-2xl shadow-slate-900/5 sm:p-16">
-          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#EA580C]">Legal Information</p>
-          <h1 className="mt-4 font-display text-5xl font-bold tracking-tight text-slate-900">{title}</h1>
-          <p className="mt-6 text-lg leading-relaxed text-slate-600">{description}</p>
+        <div className="rounded-[3rem] border border-border-light bg-white p-8 shadow-2xl shadow-primary-950/5 sm:p-16">
+          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-accent-600">Legal Information</p>
+          <h1 className="mt-4 font-display text-5xl font-bold tracking-tight text-neutral-900">{title}</h1>
+          <p className="mt-6 text-lg leading-relaxed text-neutral-600">{description}</p>
           <div className="prose prose-slate mt-12 max-w-none prose-headings:font-display prose-headings:font-bold prose-p:leading-relaxed prose-li:leading-relaxed">{children}</div>
         </div>
       </section>

@@ -29,11 +29,11 @@ export default function CareersPage() {
         <SectionHeading eyebrow="Open roles" title="A clean recruitment landing section" description="The reference site includes careers in the footer navigation, so this route keeps a branded hiring entry point." />
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {careerCards.map((role) => (
-            <div key={role.title} className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-[0_16px_40px_rgba(15,23,42,0.05)]">
-              <BriefcaseBusiness className="h-5 w-5 text-[#b75c16]" />
-              <h3 className="mt-5 text-xl font-black text-zinc-950">{role.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-zinc-600">{role.description}</p>
-              <div className="mt-6 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.24em] text-zinc-500">
+            <div key={role.title} className="rounded-[2rem] border border-border-light bg-white p-6 shadow-card">
+              <BriefcaseBusiness className="h-5 w-5 text-accent-700" />
+              <h3 className="mt-5 text-xl font-black text-neutral-950">{role.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-neutral-600">{role.description}</p>
+              <div className="mt-6 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.24em] text-neutral-500">
                 <CheckCircle2 className="h-4 w-4" />
                 Enquiries welcome
               </div>

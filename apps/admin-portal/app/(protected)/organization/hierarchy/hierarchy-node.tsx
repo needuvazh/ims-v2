@@ -15,9 +15,9 @@ export function HierarchyNode({ node, depth = 0 }: { node: OrganizationHierarchy
       case 'Branch':
         return <MapPin className="h-4 w-4 text-emerald-600" />;
       case 'Department':
-        return <Layers className="h-4 w-4 text-blue-600" />;
+        return <Layers className="h-4 w-4 text-brand-600" />;
       case 'Classroom':
-        return <Home className="h-4 w-4 text-purple-600" />;
+        return <Home className="h-4 w-4 text-accent-700" />;
     }
   };
 

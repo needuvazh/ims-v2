@@ -29,11 +29,11 @@ export default function BrochuresPage() {
         <SectionHeading eyebrow="Resources" title="Three simple brochure tiles" description="The live site does not publish brochure files, so this page keeps the section as a branded contact gateway." />
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {brochureCards.map((item) => (
-            <div key={item.title} className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-[0_16px_40px_rgba(15,23,42,0.05)]">
-              <FileText className="h-5 w-5 text-[#b75c16]" />
-              <h3 className="mt-5 text-xl font-black text-zinc-950">{item.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-zinc-600">{item.description}</p>
-              <button type="button" className="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-[#b75c16]">
+            <div key={item.title} className="rounded-[2rem] border border-border-light bg-white p-6 shadow-card">
+              <FileText className="h-5 w-5 text-accent-700" />
+              <h3 className="mt-5 text-xl font-black text-neutral-950">{item.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-neutral-600">{item.description}</p>
+              <button type="button" className="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-accent-700 transition-colors hover:text-primary-700">
                 {item.action}
                 <Sparkles className="h-4 w-4" />
               </button>

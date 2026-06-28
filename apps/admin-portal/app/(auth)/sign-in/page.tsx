@@ -51,19 +51,19 @@ export default function SignInPage() {
               backgroundImageSrc="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1400&auto=format&fit=crop"
               backgroundImageClassName="absolute inset-0 h-full w-full object-cover mix-blend-luminosity opacity-30"
               overlay={
-              <div className="absolute inset-0 bg-gradient-to-br from-[#2b1a12]/75 via-[#8a4a1d]/58 to-[#c96a22]/52" />
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-950/85 via-primary-800/68 to-accent-600/46" />
               }
               decoration={
             <>
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 50, repeat: Infinity, ease: 'linear' }}
-                className="absolute -top-[20%] -left-[10%] h-[800px] w-[800px] rounded-full bg-[#d8a06d]/18 blur-[100px]"
+                className="absolute -top-[20%] -left-[10%] h-[800px] w-[800px] rounded-full bg-brand-300/18 blur-[100px]"
               />
               <motion.div
                 animate={{ rotate: -360 }}
                 transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
-                className="absolute top-[40%] -right-[20%] h-[600px] w-[600px] rounded-full bg-[#ead1b2]/14 blur-[100px]"
+                className="absolute top-[40%] -right-[20%] h-[600px] w-[600px] rounded-full bg-accent-200/14 blur-[100px]"
               />
             </>
           }
@@ -71,25 +71,25 @@ export default function SignInPage() {
             <Link href="/" className="inline-flex items-center gap-3 group">
               <Image src="/alsaud/logo.png" alt="Al-Saud Training Institute" width={156} height={52} className="h-11 w-auto" priority />
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-[#f4d5b7]">Al-Saud Training</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-accent-200">Al-Saud Training</p>
                 <p className="text-xl font-black tracking-tight text-white">Institute</p>
               </div>
             </Link>
           }
           body={
             <>
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#efd8bf]/30 bg-white/10 px-4 py-1.5 backdrop-blur-sm">
-                <span className="h-2 w-2 rounded-full bg-[#f4d5b7] animate-pulse" />
-                <span className="text-xs font-bold uppercase tracking-widest text-[#f8e8d7]">Admin Portal</span>
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent-200/30 bg-white/10 px-4 py-1.5 backdrop-blur-sm">
+                <span className="h-2 w-2 rounded-full bg-accent-200 animate-pulse" />
+                <span className="text-xs font-bold uppercase tracking-widest text-accent-50">Admin Portal</span>
               </div>
 
               <h1 className="mb-6 text-5xl font-black leading-[1.1] xl:text-7xl">
                 Manage. <br />
-                <span className="bg-gradient-to-r from-[#ffe8cf] via-[#f4d5b7] to-[#ffffff] bg-clip-text text-transparent">Empower.</span><br />
+                <span className="bg-gradient-to-r from-brand-100 via-accent-200 to-white bg-clip-text text-transparent">Empower.</span><br />
                 Succeed.
               </h1>
 
-              <p className="mb-8 max-w-md text-lg text-[#f8e8d7]/85">
+              <p className="mb-8 max-w-md text-lg text-accent-50/85">
                 The central hub for managing Al-Saud Training Institute — staff, programs, enrollment, and operations.
               </p>
 
@@ -102,7 +102,7 @@ export default function SignInPage() {
                     transition={{ delay: 0.9 + index * 0.1 }}
                       className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 backdrop-blur-md"
                     >
-                    <CheckCircle2 className="h-4 w-4 text-[#f4d5b7]" />
+                    <CheckCircle2 className="h-4 w-4 text-accent-200" />
                     <span className="text-xs font-bold text-white/90">{item}</span>
                   </motion.div>
                 ))}
@@ -116,7 +116,7 @@ export default function SignInPage() {
                   const Icon = stat.icon;
                   return (
                     <div key={stat.label} className="flex flex-col items-center gap-2 px-4 text-center first:pl-0 last:pr-0">
-                      <div className="rounded-xl bg-white/10 p-2 text-[#f4d5b7]">
+                      <div className="rounded-xl bg-white/10 p-2 text-accent-200">
                         <Icon className="h-5 w-5" />
                       </div>
                       <p className="text-2xl font-black">
@@ -133,15 +133,15 @@ export default function SignInPage() {
       }
       topBar={
         <>
-          <Link href="/" className="group flex items-center gap-2 text-xs font-bold text-slate-500 transition-colors hover:text-[#b75c16]">
-            <div className="rounded-full bg-slate-100 p-2 transition-colors group-hover:bg-[#fff1e3]">
+          <Link href="/" className="group flex items-center gap-2 text-xs font-bold text-neutral-500 transition-colors hover:text-accent-700">
+            <div className="rounded-full bg-muted-100 p-2 transition-colors group-hover:bg-accent-50">
               <ArrowLeft className="h-4 w-4" />
             </div>
             Back to Home
           </Link>
 
           <div className="flex items-center gap-2 lg:hidden">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#c96a22] to-[#8a4a1d]">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary-700 to-accent-600">
               <Sparkles className="h-4 w-4 text-white" />
             </div>
           </div>
@@ -153,9 +153,9 @@ export default function SignInPage() {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: 'spring', delay: 0.6 }}
-          className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-[#efd8bf] bg-[#fff6ee] shadow-inner"
+          className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-border-accent bg-accent-50 shadow-inner"
         >
-          <Lock className="h-8 w-8 text-[#b75c16]" />
+          <Lock className="h-8 w-8 text-accent-700" />
         </motion.div>
         <h1 className="mb-3 text-3xl font-black text-slate-900">Welcome Back!</h1>
         <p className="text-sm text-slate-500">Sign in to manage the admin portal securely.</p>
@@ -174,7 +174,7 @@ export default function SignInPage() {
           <label htmlFor="si-email" className="ml-1 text-xs font-bold text-slate-700">Email Address</label>
           <div className="relative group">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-              <Mail className="h-5 w-5 text-slate-400 transition-colors group-focus-within:text-[#c96a22]" />
+              <Mail className="h-5 w-5 text-neutral-400 transition-colors group-focus-within:text-accent-600" />
             </div>
             <input
               id="si-email"
@@ -183,7 +183,7 @@ export default function SignInPage() {
               placeholder="admin@ims.com"
               aria-invalid={Boolean(fieldErrors.email)}
               aria-describedby={fieldErrors.email ? 'si-email-error' : undefined}
-              className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-4 text-sm text-slate-900 outline-none transition-all focus:border-[#c96a22] focus:bg-white focus:ring-4 focus:ring-[#c96a22]/10"
+              className="w-full rounded-2xl border-2 border-border-light bg-muted-50/50 py-3.5 pl-11 pr-4 text-sm text-neutral-900 outline-none transition-all focus:border-accent-600 focus:bg-white focus:ring-4 focus:ring-accent-600/10"
               data-testid="sign-in-email"
             />
           </div>
@@ -197,11 +197,11 @@ export default function SignInPage() {
         <div className="space-y-1.5">
           <div className="ml-1 flex items-center justify-between">
             <label htmlFor="si-password" className="text-xs font-bold text-slate-700">Password</label>
-            <Link href="/forgot-password" className="text-xs font-bold text-[#b75c16] transition-colors hover:text-[#8a4a1d]">Forgot?</Link>
+            <Link href="/forgot-password" className="text-xs font-bold text-accent-700 transition-colors hover:text-primary-700">Forgot?</Link>
           </div>
           <div className="relative group">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-              <Lock className="h-5 w-5 text-slate-400 transition-colors group-focus-within:text-[#c96a22]" />
+              <Lock className="h-5 w-5 text-neutral-400 transition-colors group-focus-within:text-accent-600" />
             </div>
             <input
               id="si-password"
@@ -210,13 +210,13 @@ export default function SignInPage() {
               placeholder="••••••••••"
               aria-invalid={Boolean(fieldErrors.password)}
               aria-describedby={fieldErrors.password ? 'si-password-error' : undefined}
-              className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-12 text-sm text-slate-900 outline-none transition-all focus:border-[#c96a22] focus:bg-white focus:ring-4 focus:ring-[#c96a22]/10"
+              className="w-full rounded-2xl border-2 border-border-light bg-muted-50/50 py-3.5 pl-11 pr-12 text-sm text-neutral-900 outline-none transition-all focus:border-accent-600 focus:bg-white focus:ring-4 focus:ring-accent-600/10"
               data-testid="sign-in-password"
             />
             <button
               type="button"
               onClick={() => setShowPass(!showPass)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-xl p-2 text-slate-400 transition-colors hover:bg-[#fff3e7] hover:text-[#b75c16]"
+              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-xl p-2 text-neutral-400 transition-colors hover:bg-accent-50 hover:text-accent-700"
             >
               {showPass ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </button>
@@ -229,9 +229,9 @@ export default function SignInPage() {
         </div>
 
         <label className="group ml-1 flex w-fit cursor-pointer items-center gap-3 text-sm text-slate-600">
-          <div className="relative flex h-5 w-5 items-center justify-center rounded border-2 border-slate-300 transition-colors group-hover:border-violet-500">
+          <div className="relative flex h-5 w-5 items-center justify-center rounded border-2 border-neutral-300 transition-colors group-hover:border-accent-600">
             <input type="checkbox" name="remember" className="peer absolute h-full w-full cursor-pointer opacity-0" />
-            <CheckCircle2 className="h-4 w-4 text-[#c96a22] opacity-0 transition-opacity peer-checked:opacity-100" />
+            <CheckCircle2 className="h-4 w-4 text-accent-600 opacity-0 transition-opacity peer-checked:opacity-100" />
           </div>
           <span className="font-medium transition-colors group-hover:text-slate-900">Keep me signed in</span>
         </label>
@@ -241,7 +241,7 @@ export default function SignInPage() {
           whileTap={{ scale: 0.98 }}
           type="submit"
           disabled={isPending}
-          className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#c96a22] to-[#8a4a1d] py-4 text-sm font-bold text-white shadow-lg shadow-[#c96a22]/25 transition-all disabled:cursor-not-allowed disabled:opacity-70"
+          className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-primary-700 to-accent-600 py-4 text-sm font-bold text-white shadow-lg shadow-primary-700/25 transition-all disabled:cursor-not-allowed disabled:opacity-70"
           data-testid="sign-in-submit"
         >
           {isPending ? (

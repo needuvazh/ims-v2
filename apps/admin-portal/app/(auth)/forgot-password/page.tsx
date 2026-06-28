@@ -49,47 +49,47 @@ export default function ForgotPasswordPage() {
           backgroundImageSrc="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1400&auto=format&fit=crop"
           backgroundImageClassName="absolute inset-0 h-full w-full object-cover mix-blend-luminosity opacity-40"
           overlay={
-            <div className="absolute inset-0 bg-gradient-to-br from-violet-900/80 via-fuchsia-900/60 to-cyan-900/80" />
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-950/85 via-primary-800/70 to-accent-600/50" />
           }
           decoration={
             <>
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 50, repeat: Infinity, ease: 'linear' }}
-                className="absolute -top-[20%] -left-[10%] h-[800px] w-[800px] rounded-full bg-fuchsia-600/30 blur-[100px]"
+                className="absolute -top-[20%] -left-[10%] h-[800px] w-[800px] rounded-full bg-brand-300/30 blur-[100px]"
               />
               <motion.div
                 animate={{ rotate: -360 }}
                 transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
-                className="absolute top-[40%] -right-[20%] h-[600px] w-[600px] rounded-full bg-cyan-500/30 blur-[100px]"
+                className="absolute top-[40%] -right-[20%] h-[600px] w-[600px] rounded-full bg-accent-300/24 blur-[100px]"
               />
             </>
           }
           header={
             <Link href="/" className="inline-flex items-center gap-3 group">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 shadow-[0_0_30px_rgba(168,85,247,0.5)] transition-transform group-hover:rotate-12">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-700 to-accent-600 shadow-[0_0_30px_rgba(11,69,101,0.35)] transition-transform group-hover:rotate-12">
                 <Sparkles className="h-6 w-6 text-white" />
               </div>
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-violet-300">Al-Saud Training</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-accent-200">Al-Saud Training</p>
                 <p className="text-xl font-black tracking-tight text-white">Institute</p>
               </div>
             </Link>
           }
           body={
             <>
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-violet-400/30 bg-violet-500/20 px-4 py-1.5 backdrop-blur-sm">
-                <span className="h-2 w-2 rounded-full bg-violet-400 animate-pulse" />
-                <span className="text-xs font-bold uppercase tracking-widest text-violet-200">Admin Portal</span>
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent-200/30 bg-white/10 px-4 py-1.5 backdrop-blur-sm">
+                <span className="h-2 w-2 rounded-full bg-accent-200 animate-pulse" />
+                <span className="text-xs font-bold uppercase tracking-widest text-accent-50">Admin Portal</span>
               </div>
 
               <h1 className="mb-6 text-5xl font-black leading-[1.1] xl:text-7xl">
                 Reset. <br />
-                <span className="bg-gradient-to-r from-violet-300 via-fuchsia-300 to-cyan-300 bg-clip-text text-transparent">Recover.</span><br />
+                <span className="bg-gradient-to-r from-brand-100 via-accent-200 to-white bg-clip-text text-transparent">Recover.</span><br />
                 Return.
               </h1>
 
-              <p className="mb-8 max-w-md text-lg text-violet-100/80">
+              <p className="mb-8 max-w-md text-lg text-accent-50/80">
                 The self-service credentials recovery portal. Securely request a reset token to regain administrative access.
               </p>
 
@@ -102,7 +102,7 @@ export default function ForgotPasswordPage() {
                     transition={{ delay: 0.9 + index * 0.1 }}
                     className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-md"
                   >
-                    <CheckCircle2 className="h-4 w-4 text-cyan-400" />
+                    <CheckCircle2 className="h-4 w-4 text-brand-300" />
                     <span className="text-xs font-bold text-white/90">{item}</span>
                   </motion.div>
                 ))}
@@ -116,7 +116,7 @@ export default function ForgotPasswordPage() {
                   const Icon = stat.icon;
                   return (
                     <div key={stat.label} className="flex flex-col items-center gap-2 px-4 text-center first:pl-0 last:pr-0">
-                      <div className="rounded-xl bg-white/10 p-2 text-fuchsia-300">
+                      <div className="rounded-xl bg-white/10 p-2 text-accent-200">
                         <Icon className="h-5 w-5" />
                       </div>
                       <p className="text-2xl font-black">
@@ -133,15 +133,15 @@ export default function ForgotPasswordPage() {
       }
       topBar={
         <>
-          <Link href="/sign-in" className="group flex items-center gap-2 text-xs font-bold text-slate-500 transition-colors hover:text-violet-600">
-            <div className="rounded-full bg-slate-100 p-2 transition-colors group-hover:bg-violet-100">
+          <Link href="/sign-in" className="group flex items-center gap-2 text-xs font-bold text-neutral-500 transition-colors hover:text-accent-700">
+            <div className="rounded-full bg-muted-100 p-2 transition-colors group-hover:bg-accent-50">
               <ArrowLeft className="h-4 w-4" />
             </div>
             Back to Sign In
           </Link>
 
           <div className="flex items-center gap-2 lg:hidden">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary-700 to-accent-600">
               <Sparkles className="h-4 w-4 text-white" />
             </div>
           </div>
@@ -153,9 +153,9 @@ export default function ForgotPasswordPage() {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: 'spring', delay: 0.6 }}
-          className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-violet-200 bg-violet-100 shadow-inner"
+          className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-border-accent bg-accent-50 shadow-inner"
         >
-          <KeyRound className="h-8 w-8 text-violet-600" />
+          <KeyRound className="h-8 w-8 text-accent-700" />
         </motion.div>
         <h1 className="mb-3 text-3xl font-black text-slate-900">Forgot Password?</h1>
         <p className="text-sm text-slate-500">Enter your email and we&apos;ll generate a secure reset link.</p>
@@ -205,7 +205,7 @@ export default function ForgotPasswordPage() {
               <label htmlFor="fp-email" className="ml-1 text-xs font-bold text-slate-700">Email Address</label>
               <div className="relative group">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-                  <Mail className="h-5 w-5 text-slate-400 transition-colors group-focus-within:text-violet-500" />
+                  <Mail className="h-5 w-5 text-neutral-400 transition-colors group-focus-within:text-accent-600" />
                 </div>
                 <input
                   id="fp-email"
@@ -214,7 +214,7 @@ export default function ForgotPasswordPage() {
                   placeholder="admin@ims.com"
                   aria-invalid={Boolean(fieldErrors.email)}
                   aria-describedby={fieldErrors.email ? 'fp-email-error' : undefined}
-                  className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-4 text-sm text-slate-900 outline-none transition-all focus:border-violet-500 focus:bg-white focus:ring-4 focus:ring-violet-500/10"
+                  className="w-full rounded-2xl border-2 border-border-light bg-muted-50/50 py-3.5 pl-11 pr-4 text-sm text-neutral-900 outline-none transition-all focus:border-accent-600 focus:bg-white focus:ring-4 focus:ring-accent-600/10"
                   data-testid="forgot-password-email"
                 />
               </div>
@@ -230,7 +230,7 @@ export default function ForgotPasswordPage() {
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={isPending}
-              className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 py-4 text-sm font-bold text-white shadow-lg shadow-violet-500/30 transition-all disabled:cursor-not-allowed disabled:opacity-70"
+              className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-primary-700 to-accent-600 py-4 text-sm font-bold text-white shadow-lg shadow-primary-700/25 transition-all disabled:cursor-not-allowed disabled:opacity-70"
               data-testid="forgot-password-submit"
             >
               {isPending ? (

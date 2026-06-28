@@ -40,18 +40,18 @@ export default function FacilitiesPage() {
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
-          <div className="rounded-[2rem] border border-black/5 bg-white p-7 shadow-[0_16px_40px_rgba(15,23,42,0.05)]">
-            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#b75c16]">What learners see</p>
-            <ul className="mt-5 space-y-3 text-sm leading-7 text-zinc-700">
+          <div className="rounded-[2rem] border border-border-light bg-white p-7 shadow-card">
+            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-accent-700">What learners see</p>
+            <ul className="mt-5 space-y-3 text-sm leading-7 text-neutral-700">
               {facilityNotes.map((note) => (
-                <li key={note} className="flex gap-3"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#c96a22]" />{note}</li>
+                <li key={note} className="flex gap-3"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent-600" />{note}</li>
               ))}
             </ul>
           </div>
-          <div className="rounded-[2rem] border border-black/5 bg-zinc-950 p-7 text-white shadow-[0_16px_40px_rgba(15,23,42,0.06)]">
-            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#e4b07d]">Facility note</p>
+          <div className="rounded-[2rem] border border-white/10 bg-primary-950 p-7 text-white shadow-soft">
+            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-accent-300">Facility note</p>
             <h3 className="mt-4 text-2xl font-black">Designed for classroom and practical delivery</h3>
-            <p className="mt-4 text-sm leading-7 text-zinc-300">This page is intentionally simple and aligned with the public navigation used in the reference build.</p>
+            <p className="mt-4 text-sm leading-7 text-neutral-300">This page is intentionally simple and aligned with the public navigation used in the reference build.</p>
           </div>
         </div>
       </section>

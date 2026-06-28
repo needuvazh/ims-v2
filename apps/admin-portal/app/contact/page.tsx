@@ -37,9 +37,9 @@ export default function ContactPage() {
           <div className="rounded-[2.5rem] border border-black/5 bg-white p-8 shadow-[0_18px_40px_rgba(15,23,42,0.05)]">
             <SectionHeading eyebrow="Visit us" title="Azaiba North, Al Anwar Street" description="Muscat, Oman. The office line and email are surfaced prominently in the site header and footer." />
             <div className="mt-8 space-y-4 text-sm text-zinc-600">
-              <p className="flex items-center gap-3"><Phone className="h-4 w-4 text-[#b75c16]" /> {contactInfo.phone}</p>
-              <p className="flex items-center gap-3"><Mail className="h-4 w-4 text-[#b75c16]" /> {contactInfo.email}</p>
-              <p className="flex items-start gap-3"><MapPin className="mt-0.5 h-4 w-4 text-[#b75c16]" /> {contactInfo.address}</p>
+              <p className="flex items-center gap-3"><Phone className="h-4 w-4 text-accent-700" /> {contactInfo.phone}</p>
+              <p className="flex items-center gap-3"><Mail className="h-4 w-4 text-accent-700" /> {contactInfo.email}</p>
+              <p className="flex items-start gap-3"><MapPin className="mt-0.5 h-4 w-4 text-accent-700" /> {contactInfo.address}</p>
             </div>
           </div>
 

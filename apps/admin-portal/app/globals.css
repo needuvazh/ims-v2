@@ -84,8 +84,8 @@ html {
 }
 
 @keyframes glowBeat {
-  0%, 100% { box-shadow: 0 0 0 0   rgba(234,88,12,0);    }
-  50%       { box-shadow: 0 0 0 10px rgba(234,88,12,0.18); }
+  0%, 100% { box-shadow: 0 0 0 0   rgba(249,115,22,0);    }
+  50%       { box-shadow: 0 0 0 10px rgba(249,115,22,0.18); }
 }
 
 @keyframes revealLine {
@@ -131,7 +131,7 @@ html {
 
 /* ─── Gradient text ─── */
 .text-gradient-orange {
-  background: linear-gradient(135deg, #EA580C 0%, #F97316 50%, #C2410C 100%);
+  background: linear-gradient(135deg, #0b4565 0%, #2f789d 45%, #f97316 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -140,7 +140,7 @@ html {
 }
 
 .text-gradient-light {
-  background: linear-gradient(135deg, #ffffff 0%, #fed7aa 60%, #ffffff 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #b4d9e8 58%, #fff4ed 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -154,7 +154,7 @@ html {
 }
 .hover-lift:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 50px rgba(15,23,42,0.15);
+  box-shadow: 0 20px 50px rgba(11,69,101,0.15);
 }
 
 /* ─── Glass effect ─── */
@@ -165,7 +165,7 @@ html {
 }
 
 .glass-dark {
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(3, 26, 39, 0.85);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
 }
@@ -180,7 +180,7 @@ html {
   content: '';
   position: absolute;
   inset: -2px;
-  background: linear-gradient(135deg, #EA580C, #F97316, #EA580C);
+  background: linear-gradient(135deg, #0b4565, #f97316, #2f789d);
   background-size: 200% 200%;
   border-radius: inherit;
   z-index: -1;
@@ -194,7 +194,7 @@ html {
 
 /* ─── Dot grid pattern ─── */
 .dot-grid {
-  background-image: radial-gradient(circle, rgba(15,23,42,0.12) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(11,69,101,0.12) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
@@ -205,7 +205,7 @@ html {
 
 /* ─── Shimmer loading skeleton ─── */
 .shimmer {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, #eef3f5 25%, #d9e3e8 50%, #eef3f5 75%);
   background-size: 200% 100%;
   animation: shimmerOrange 1.5s infinite;
 }

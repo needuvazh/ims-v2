@@ -19,7 +19,7 @@ export default function TrainerDashboardPage() {
       location: 'Room 201 (Central Campus)',
       enrolled: 18,
       status: 'Ready',
-      color: 'border-l-4 border-l-cyan-500',
+      color: 'border-l-4 border-l-primary-600',
     },
     {
       batchCode: 'SF-203-B',
@@ -28,7 +28,7 @@ export default function TrainerDashboardPage() {
       location: 'Lab 3A (Central Campus)',
       enrolled: 12,
       status: 'Ready',
-      color: 'border-l-4 border-l-violet-500',
+      color: 'border-l-4 border-l-accent-600',
     },
   ];
 
@@ -41,19 +41,19 @@ export default function TrainerDashboardPage() {
   return (
     <div className="space-y-8">
       {/* Welcome Banner */}
-      <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-r from-cyan-950 via-slate-900 to-violet-950 p-6 md:p-8 text-white shadow-xl">
+      <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-r from-primary-950 via-primary-900 to-brand-800 p-6 md:p-8 text-white shadow-xl">
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none" />
-        <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-cyan-500/20 blur-3xl pointer-events-none" />
-        <div className="absolute -left-16 -bottom-16 h-48 w-48 rounded-full bg-violet-500/20 blur-3xl pointer-events-none" />
+        <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-accent-500/20 blur-3xl pointer-events-none" />
+        <div className="absolute -left-16 -bottom-16 h-48 w-48 rounded-full bg-brand-400/25 blur-3xl pointer-events-none" />
         
         <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div className="space-y-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-cyan-500/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-cyan-300 backdrop-blur-sm">
-              <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-500/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent-200 backdrop-blur-sm">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent-300 animate-pulse" />
               Instructor Workspace
             </span>
             <h1 className="text-3xl md:text-4xl font-black tracking-tight">
-              Welcome back, <span className="bg-gradient-to-r from-cyan-300 via-sky-300 to-violet-300 bg-clip-text text-transparent">Eng. Salem Al-Harthy</span>
+              Welcome back, <span className="bg-gradient-to-r from-brand-100 via-accent-200 to-white bg-clip-text text-transparent">Eng. Salem Al-Harthy</span>
             </h1>
             <p className="text-sm text-slate-300 font-medium">
               You have 2 upcoming teaching sessions scheduled for today. Review the attendance grids below.
@@ -61,12 +61,12 @@ export default function TrainerDashboardPage() {
           </div>
           
           <div className="flex items-center gap-3 self-start md:self-auto rounded-2xl bg-white/5 border border-white/10 p-3.5 backdrop-blur-md">
-            <div className="h-10 w-10 rounded-xl bg-cyan-500/20 flex items-center justify-center text-cyan-300 font-bold">
+            <div className="h-10 w-10 rounded-xl bg-accent-500/20 flex items-center justify-center text-accent-200 font-bold">
               85%
             </div>
             <div>
               <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Trainer Utilization</p>
-              <p className="text-xs font-black text-cyan-300">HIGH ENGAGEMENT</p>
+              <p className="text-xs font-black text-accent-200">HIGH ENGAGEMENT</p>
             </div>
           </div>
         </div>
@@ -84,7 +84,7 @@ export default function TrainerDashboardPage() {
               <p className="text-3xl font-black text-[color:var(--ims-ink)]">{stat.value}</p>
               <p className="text-[10px] text-[color:var(--ims-muted)] font-medium">{stat.description}</p>
             </div>
-            <div className="h-10 w-10 rounded-xl bg-cyan-500/10 text-cyan-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <div className="h-10 w-10 rounded-xl bg-brand-500/10 text-primary-600 flex items-center justify-center group-hover:scale-110 transition-transform">
               {stat.icon}
             </div>
           </div>
@@ -97,7 +97,7 @@ export default function TrainerDashboardPage() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <h2 className="text-sm font-black uppercase tracking-[0.24em] text-[color:var(--ims-muted)] flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-cyan-500" />
+                <Calendar className="h-4 w-4 text-primary-600" />
                 {"Today's"} Teaching Schedule
               </h2>
               <Badge variant="success">2 Classes Scheduled</Badge>
@@ -112,14 +112,14 @@ export default function TrainerDashboardPage() {
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div className="space-y-1.5">
                       <div className="flex items-center gap-2">
-                        <span className="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-cyan-50 text-cyan-600 border border-cyan-100 uppercase tracking-widest">
+                        <span className="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-brand-50 text-primary-700 border border-brand-100 uppercase tracking-widest">
                           {cls.batchCode}
                         </span>
                         <span className="text-xs text-[color:var(--ims-muted)] font-bold">
                           {cls.enrolled} Enrolled Students
                         </span>
                       </div>
-                      <h3 className="text-xl font-bold text-[color:var(--ims-ink)] group-hover:text-cyan-600 transition-colors">
+                      <h3 className="text-xl font-bold text-[color:var(--ims-ink)] group-hover:text-primary-700 transition-colors">
                         {cls.courseName}
                       </h3>
                       <p className="text-xs text-[color:var(--ims-muted)] font-semibold flex items-center gap-1.5">
@@ -129,7 +129,7 @@ export default function TrainerDashboardPage() {
                     </div>
 
                     <Link href="/trainer/attendance" className="shrink-0 self-start sm:self-auto">
-                      <Button className="py-2.5 px-5 rounded-2xl bg-gradient-to-r from-cyan-600 to-indigo-600 text-white font-bold text-xs shadow-md shadow-cyan-500/10 hover:shadow-cyan-500/20 hover:-translate-y-0.5 transition-all flex items-center gap-1.5">
+                      <Button className="py-2.5 px-5 rounded-2xl bg-gradient-to-r from-primary-700 to-accent-600 text-white font-bold text-xs shadow-md shadow-primary-700/10 hover:shadow-primary-700/20 hover:-translate-y-0.5 transition-all flex items-center gap-1.5">
                         Mark Attendance <ArrowRight className="h-3.5 w-3.5" />
                       </Button>
                     </Link>
@@ -164,7 +164,7 @@ export default function TrainerDashboardPage() {
                     <span>Capacity: {batch.students}/{batch.maxStudents}</span>
                     
                     {batch.status === 'Review Pending' ? (
-                      <Link href="/trainer/schedule" className="text-cyan-600 hover:underline flex items-center gap-0.5">
+                      <Link href="/trainer/schedule" className="text-primary-700 hover:underline flex items-center gap-0.5">
                         Verify <ChevronRight className="h-3 w-3" />
                       </Link>
                     ) : (
