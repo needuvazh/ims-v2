@@ -42,29 +42,29 @@ export default async function IdentityUsersPage(props: {
   let filteredUsers = data.users;
   
   if (q) {
-    filteredUsers = filteredUsers.filter(u => 
+    filteredUsers = filteredUsers.filter((u: any) => 
       u.fullName.toLowerCase().includes(q) || 
       u.email.toLowerCase().includes(q)
     );
   }
   
   if (statusFilter) {
-    filteredUsers = filteredUsers.filter(u => u.status === statusFilter);
+    filteredUsers = filteredUsers.filter((u: any) => u.status === statusFilter);
   }
   
   if (typeFilter) {
-    filteredUsers = filteredUsers.filter(u => u.userType === typeFilter);
+    filteredUsers = filteredUsers.filter((u: any) => u.userType === typeFilter);
   }
 
   if (branchFilter) {
-    filteredUsers = filteredUsers.filter((user) =>
-      (user.dataScopes ?? []).some((scope) => scope.scopeType === 'Branch' && scope.branchId === branchFilter)
+    filteredUsers = filteredUsers.filter((user: any) =>
+      (user.dataScopes ?? []).some((scope: any) => scope.scopeType === 'Branch' && scope.branchId === branchFilter)
     );
   }
 
   if (roleFilter) {
-    filteredUsers = filteredUsers.filter((user) =>
-      (user.roleSummaries ?? []).some((role) => role.id === roleFilter)
+    filteredUsers = filteredUsers.filter((user: any) =>
+      (user.roleSummaries ?? []).some((role: any) => role.id === roleFilter)
     );
   }
   
@@ -160,7 +160,7 @@ export default async function IdentityUsersPage(props: {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {paginatedUsers.map((user) => (
+                {paginatedUsers.map((user: any) => (
                   <TableRow key={user.id} data-testid={`user-row-${user.id}`}>
                     <TableCell className="font-mono text-xs text-[color:var(--ims-muted)]">{user.id}</TableCell>
                     <TableCell>

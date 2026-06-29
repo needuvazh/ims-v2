@@ -1,14 +1,15 @@
 import { z } from 'zod';
 import type { Uuid } from '@ims/shared-kernel';
 
-/** Mirrors the DB UserStatus enum. */
-export type UserStatus = 'Draft' | 'Active' | 'Inactive' | 'Locked';
+export const userStatusSchema = z.enum([
+  'PendingActivation',
+  'Active',
+  'Locked',
+  'Suspended',
+  'Archived',
+]);
+export type UserStatus = z.infer<typeof userStatusSchema>;
 
-/**
- * Validated user type discriminant.
- * Values must match the DB `userType` column and seed data.
- * Extend this enum when new staff roles are introduced.
- */
 export const userTypeSchema = z.enum([
   'Admin',
   'BranchManager',
@@ -22,105 +23,101 @@ export const userTypeSchema = z.enum([
 ]);
 export type UserType = z.infer<typeof userTypeSchema>;
 
-export type UserProfile = {
+export interface Person {
   id: Uuid;
-  fullName: string;
+  firstName: string;
+  lastName: string;
+  mobile: string;
+  nationalId?: string | null;
+  nationality?: string | null;
+  dateOfBirth?: Date | null;
+  gender?: string | null;
+}
+
+export interface User {
+  id: Uuid;
+  personId: Uuid;
+  username: string;
   email: string;
-  phone: string | null;
-  /** Validated discriminant — use userTypeSchema for parsing untrusted input. */
   userType: UserType;
   status: UserStatus;
-  lastLoginAt?: Date | null;
-  roleCount?: number;
-  roleSummaries?: Array<{
-    id: Uuid;
-    roleCode: string;
-    roleName: string;
-  }>;
-  dataScopes?: UserDataScopeDto[];
-  effectiveStartDate?: Date;
-  effectiveEndDate?: Date | null;
-};
+  defaultBranchId: Uuid | null;
+  preferredLanguage: string;
+  failedLoginCount: number;
+  lockedUntil: Date | null;
+  passwordChangedAt: Date | null;
+  version: number;
+  effectiveStartDate: Date;
+  effectiveEndDate: Date | null;
+  isDeleted: boolean;
+  updatedAt?: Date | null;
+  updatedBy?: Uuid | null;
+}
 
-import type { UserDataScopeDto } from '@ims/shared-auth';
-
-/** Credentials + loaded roles/permissions — NEVER leave the server. */
-export type UserWithCredentials = UserProfile & {
-  passwordHash: string;
-  roles: string[];        // role codes
-  permissions: string[];  // permission codes
-  dataScopes: UserDataScopeDto[];
-  failedLoginAttempts?: number;
-  lockoutUntil?: Date | null;
-};
-
-// Password Complexity: min 8 chars, 1 uppercase, 1 lowercase, 1 digit, 1 special char
+// Password Complexity is governed by PasswordPolicy, but we can have a basic Zod schema as validation guard.
 export const passwordSchema = z.string()
-  .min(8, 'Password must be at least 8 characters long')
-  .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
-  .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
-  .regex(/[0-9]/, 'Password must contain at least one number')
-  .regex(/[^A-Za-z0-9]/, 'Password must contain at least one special character');
+  .min(12, 'Password must be at least 12 characters long');
 
 export const createUserCommandSchema = z.object({
-  fullName: z.string().trim().min(2).max(200),
-  email: z.string().trim().email().toLowerCase(),
+  firstName: z.string().trim().min(2).max(100).optional(),
+  lastName: z.string().trim().min(2).max(100).optional(),
+  mobile: z.string().trim().regex(/^\+?[0-9\-\s]{8,20}$/, 'Invalid mobile phone format').optional(),
+  nationalId: z.string().trim().nullable().optional(),
+  nationality: z.string().trim().nullable().optional(),
+  dateOfBirth: z.coerce.date().nullable().optional(),
+  gender: z.string().trim().nullable().optional(),
+  
+  // Legacy fields
+  fullName: z.string().trim().optional(),
   phone: z.string().trim().nullable().optional(),
+
+  email: z.string().trim().email().toLowerCase(),
   userType: userTypeSchema,
-  password: passwordSchema,
-  status: z.enum(['Draft', 'Active', 'Inactive', 'Locked']).optional(),
-  roleIds: z.array(z.string().uuid()).default([]),
-  branchIds: z.array(z.string().uuid()).default([]),
-  assignedOnly: z.boolean().optional().default(false),
-  effectiveStartDate: z.coerce.date().optional(),
+  password: passwordSchema.optional(), // If not provided, a random temporary password can be generated
+  roleIds: z.array(z.string().uuid()).min(1, 'At least one role is required'),
+  branchIds: z.array(z.string().uuid()).min(1, 'At least one branch access is required'),
+  defaultBranchId: z.string().uuid().nullable().optional(),
+  preferredLanguage: z.string().default('en').optional(),
+  
+  // Extra legacy fields
+  status: z.string().optional(),
+  assignedOnly: z.boolean().optional(),
+  effectiveStartDate: z.coerce.date().nullable().optional(),
   effectiveEndDate: z.coerce.date().nullable().optional(),
 });
 
 export const updateUserCommandSchema = z.object({
-  fullName: z.string().trim().min(2).max(200).optional(),
+  firstName: z.string().trim().min(2).max(100).optional(),
+  lastName: z.string().trim().min(2).max(100).optional(),
+  mobile: z.string().trim().regex(/^\+?[0-9\-\s]{8,20}$/).optional(),
+  nationalId: z.string().trim().nullable().optional(),
+  nationality: z.string().trim().nullable().optional(),
+  dateOfBirth: z.coerce.date().nullable().optional(),
+  gender: z.string().trim().nullable().optional(),
+  
+  // Legacy fields
+  fullName: z.string().trim().optional(),
   phone: z.string().trim().nullable().optional(),
+
   userType: userTypeSchema.optional(),
-  status: z.enum(['Draft', 'Active', 'Inactive', 'Locked']).optional(),
+  defaultBranchId: z.string().uuid().nullable().optional(),
+  preferredLanguage: z.string().optional(),
+
+  // Legacy fields
+  effectiveStartDate: z.coerce.date().nullable().optional(),
+  effectiveEndDate: z.coerce.date().nullable().optional(),
+  status: z.string().optional(),
   branchIds: z.array(z.string().uuid()).optional(),
   assignedOnly: z.boolean().optional(),
-  effectiveStartDate: z.coerce.date().optional(),
-  effectiveEndDate: z.coerce.date().nullable().optional(),
-});
-
-export const changePasswordCommandSchema = z.object({
-  userId: z.string().uuid(),
-  newPassword: passwordSchema,
-});
-
-export const changeOwnPasswordCommandSchema = z.object({
-  currentPassword: z.string().min(1, 'Current password is required'),
-  newPassword: passwordSchema,
-});
-
-export const signInCommandSchema = z.object({
-  email: z.string().trim().email().toLowerCase(),
-  password: z.string().min(1),
-});
-
-export const requestResetCommandSchema = z.object({
-  email: z.string().trim().email().toLowerCase(),
-});
-
-export const resetPasswordCommandSchema = z.object({
-  token: z.string().min(1),
-  password: passwordSchema,
 });
 
 export type CreateUserCommand = z.infer<typeof createUserCommandSchema>;
 export type UpdateUserCommand = z.infer<typeof updateUserCommandSchema>;
-export type ChangePasswordCommand = z.infer<typeof changePasswordCommandSchema>;
-export type ChangeOwnPasswordCommand = z.infer<typeof changeOwnPasswordCommandSchema>;
-export type SignInCommand = z.infer<typeof signInCommandSchema>;
-export type RequestResetCommand = z.infer<typeof requestResetCommandSchema>;
-export type ResetPasswordCommand = z.infer<typeof resetPasswordCommandSchema>;
 
 export type UserListFilters = {
   status?: UserStatus;
   userType?: string;
+  branchId?: string;
+  roleId?: string;
   search?: string;
 };

@@ -618,4 +618,3 @@ This part defines:
 * UI test scenarios
 * API test scenarios
 * Acceptance exit criteria
-

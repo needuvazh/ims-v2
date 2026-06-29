@@ -3,22 +3,22 @@ import type { BranchId, Uuid } from '@ims/shared-kernel';
 
 export const sessionCookieName = 'ims_session';
 
-export const userDataScopeSchema = z.object({
-  scopeType: z.string(),
-  branchId: z.string().uuid().nullable().optional(),
-  departmentId: z.string().uuid().nullable().optional(),
-  assignedOnly: z.boolean().default(false),
-});
-
-export type UserDataScopeDto = z.infer<typeof userDataScopeSchema>;
-
 export const sessionSchema = z.object({
   userId: z.string().uuid(),
   displayName: z.string().min(1),
   roles: z.array(z.string().min(1)).default([]),
   permissions: z.array(z.string().min(1)).default([]),
-  dataScopes: z.array(userDataScopeSchema).default([]),
-  activeBranchId: z.string().uuid().nullable().optional(),
+  dataScopes: z.array(z.object({
+    scopeType: z.string(),
+    branchId: z.string().uuid().nullable(),
+    departmentId: z.string().uuid().nullable(),
+    assignedOnly: z.boolean(),
+  })).default([]),
+  activeBranchId: z.string().uuid().nullable(),
+  accessTokenJti: z.string(),
+  hashedRefreshToken: z.string(),
+  lastActivityAt: z.number(),
+  status: z.enum(['Active', 'Revoked', 'Expired']),
   expiresAt: z.number(),
 });
 
@@ -125,15 +125,12 @@ export function createDemoSession(userId: string): Session {
     displayName: 'IMS Admin',
     roles: ['Admin'],
     permissions: ['dashboard.view', 'organization.manage', 'identity.read', 'identity.write'],
-    dataScopes: [
-      {
-        scopeType: 'All',
-        branchId: null,
-        departmentId: null,
-        assignedOnly: false,
-      },
-    ],
+    dataScopes: [{ scopeType: 'All', branchId: null, departmentId: null, assignedOnly: false }],
     activeBranchId: null,
+    accessTokenJti: 'demo-jti',
+    hashedRefreshToken: 'demo-hash',
+    lastActivityAt: Date.now(),
+    status: 'Active',
     expiresAt: Date.now() + 24 * 60 * 60 * 1000,
   };
 }

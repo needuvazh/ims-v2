@@ -130,7 +130,7 @@ The following capabilities are included in the IAM module:
 * Account lockout
 * Session creation
 * Logout
-* Remember Me (Future)
+* Remember Me
 
 ---
 

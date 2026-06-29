@@ -1,168 +1,379 @@
-import { DomainError } from '@ims/shared-kernel';
+import crypto from 'crypto';
 import type { Uuid } from '@ims/shared-kernel';
 import {
   createRoleCommandSchema,
   updateRoleCommandSchema,
-  type RoleRecord,
-  type PermissionRecord,
+  type Role,
   type CreateRoleCommand,
   type UpdateRoleCommand,
 } from '../domain/role';
-import type { AuditLogRepository } from '@ims/audit';
+import { createIamError } from '../errors/iam-errors';
+import type { IRoleRepository, IAuditLogRepository, IPermissionRepository } from '../domain/repositories';
 
-export interface RoleRepository {
-  findById(roleId: string): Promise<RoleRecord | null>;
-  findByCode(roleCode: string): Promise<RoleRecord | null>;
-  create(role: RoleRecord): Promise<RoleRecord>;
-  update(
-    roleId: string,
-    updates: Partial<Pick<RoleRecord, 'roleName' | 'description' | 'status' | 'effectiveStartDate' | 'effectiveEndDate'>>,
-  ): Promise<RoleRecord>;
-  list(): Promise<RoleRecord[]>;
-  assignPermission(roleId: string, permissionId: string, actorId: string): Promise<void>;
-  removePermission(roleId: string, permissionId: string): Promise<void>;
-  listPermissions(): Promise<PermissionRecord[]>;
-  seedPermissions(permissions: Omit<PermissionRecord, 'id'>[]): Promise<void>;
+export interface RoleCommandContext {
+  actorId: string;
+  actorPermissions?: string[];
+  activeBranchId?: string | null;
 }
 
-export type RoleCommandContext = { actorId: Uuid };
-
-/**
- * RoleService — manages roles and permission assignments.
- */
 export class RoleService {
   constructor(
-    private readonly roleRepository: RoleRepository,
-    private readonly auditRepository: AuditLogRepository,
+    private readonly roleRepository: IRoleRepository,
+    private readonly permissionRepository: IPermissionRepository,
+    private readonly auditLogRepository: IAuditLogRepository
   ) {}
 
-  async listRoles(): Promise<RoleRecord[]> {
-    return this.roleRepository.list();
+  private checkPermission(context: RoleCommandContext, permission: string): void {
+    if (context.actorPermissions && !context.actorPermissions.includes(permission)) {
+      throw createIamError('IAM-AUTHZ-001');
+    }
   }
 
-  async listPermissions(): Promise<PermissionRecord[]> {
-    return this.roleRepository.listPermissions();
+  async listRoles(
+    pageOrContext?: number | RoleCommandContext,
+    pageSize?: number,
+    context?: RoleCommandContext
+  ): Promise<any> {
+    if (pageOrContext && typeof pageOrContext === 'object') {
+      const ctx = pageOrContext;
+      this.checkPermission(ctx, 'iam.role.read');
+      const res = await this.roleRepository.search(1, 1000);
+      const items = [];
+      for (const r of res.items) {
+        const perms = await this.roleRepository.listPermissionsForRole(r.id);
+        items.push({
+          ...r,
+          permissions: perms,
+        });
+      }
+      return items;
+    } else if (typeof pageOrContext === 'number') {
+      const page = pageOrContext;
+      const limit = pageSize || 10;
+      const ctx = context!;
+      this.checkPermission(ctx, 'iam.role.read');
+      const res = await this.roleRepository.search(page, limit);
+      const items = [];
+      for (const r of res.items) {
+        const perms = await this.roleRepository.listPermissionsForRole(r.id);
+        items.push({
+          ...r,
+          permissions: perms,
+        });
+      }
+      return { items, total: res.total };
+    } else {
+      const res = await this.roleRepository.search(1, 1000);
+      const items = [];
+      for (const r of res.items) {
+        const perms = await this.roleRepository.listPermissionsForRole(r.id);
+        items.push({
+          ...r,
+          permissions: perms,
+        });
+      }
+      return items;
+    }
   }
 
-  async getRole(roleId: string): Promise<RoleRecord> {
-    const role = await this.roleRepository.findById(roleId);
-    if (!role) throw new DomainError('not_found', `Role ${roleId} not found.`);
-    return role;
-  }
-
-  async createRole(command: CreateRoleCommand, context: RoleCommandContext): Promise<RoleRecord> {
+  async createRole(command: CreateRoleCommand, context: RoleCommandContext): Promise<Role> {
+    this.checkPermission(context, 'iam.role.create');
     const validated = createRoleCommandSchema.parse(command);
+    const now = new Date();
 
     const existing = await this.roleRepository.findByCode(validated.roleCode);
-    if (existing) throw new DomainError('conflict', `Role code ${validated.roleCode} already exists.`);
-
-    const allPermissions = await this.roleRepository.listPermissions();
-    for (const permId of validated.permissionIds) {
-      const permission = allPermissions.find(p => p.id === permId);
-      if (!permission) throw new DomainError('not_found', `Permission ${permId} not found.`);
-      if (permission.status !== 'Active') {
-        throw new DomainError('precondition_failed', `Cannot assign permission: Permission ${permission.permissionCode} is not active.`);
-      }
+    if (existing) {
+      throw createIamError('IAM-VAL-003'); // role code already exists
     }
 
-    const role: RoleRecord = {
+    const role: Role = {
       id: crypto.randomUUID() as Uuid,
       roleCode: validated.roleCode,
       roleName: validated.roleName,
-      description: validated.description ?? null,
-      status: validated.status ?? 'Active',
-      effectiveStartDate: validated.effectiveStartDate,
-      effectiveEndDate: validated.effectiveEndDate,
-      permissions: [],
+      description: validated.description || null,
+      status: (validated.status as any) || 'Active',
+      isSystemRole: false,
+      version: 1,
+      effectiveStartDate: validated.effectiveStartDate || now,
+      effectiveEndDate: validated.effectiveEndDate || null,
+      createdAt: now,
+      createdBy: context.actorId as Uuid,
+      updatedAt: null,
+      updatedBy: null,
     };
 
     const saved = await this.roleRepository.create(role);
 
-    for (const permId of validated.permissionIds) {
-      await this.roleRepository.assignPermission(saved.id, permId, context.actorId);
+    // Assign legacy permissions if passed
+    if (validated.permissionIds) {
+      for (const permId of validated.permissionIds) {
+        await this.roleRepository.assignPermissionToRole(saved.id, permId as Uuid, context.actorId as Uuid);
+      }
     }
 
-    await this.auditRepository.append({
-      id: crypto.randomUUID(),
-      actorId: context.actorId,
-      branchId: null,
-      action: 'identity.role_created',
+    await this.auditLogRepository.append({
+      id: crypto.randomUUID() as Uuid,
+      module: 'iam',
+      performedBy: context.actorId as Uuid,
+      performedAt: now,
       entityType: 'Role',
       entityId: saved.id,
-      occurredAt: new Date(),
-      details: { roleCode: saved.roleCode },
+      action: 'iam.role.created',
+      oldValue: null,
+      newValue: { roleCode: saved.roleCode, roleName: saved.roleName },
+      ipAddress: null,
+      userAgent: null,
+      branchId: context.activeBranchId as Uuid | null,
+      correlationId: null,
+      reason: null,
     });
 
     return saved;
   }
 
-  async updateRole(roleId: string, command: UpdateRoleCommand, context: RoleCommandContext): Promise<RoleRecord> {
+  async updateRole(roleId: string, command: UpdateRoleCommand, context: RoleCommandContext): Promise<Role> {
+    this.checkPermission(context, 'iam.role.update');
     const validated = updateRoleCommandSchema.parse(command);
-    const existing = await this.roleRepository.findById(roleId);
-    if (!existing) throw new DomainError('not_found', `Role ${roleId} not found.`);
+    const now = new Date();
 
-    const updated = await this.roleRepository.update(roleId, validated);
+    const existing = await this.roleRepository.findById(roleId as Uuid);
+    if (!existing) throw createIamError('IAM-SYS-001');
 
-    let auditAction = 'identity.role_updated';
-    if (validated.status === 'Inactive' && existing.status !== 'Inactive') {
-      auditAction = 'identity.role_deactivated';
+    const oldRole = { ...existing };
+
+    if (validated.roleName !== undefined) existing.roleName = validated.roleName;
+    if (validated.description !== undefined) existing.description = validated.description;
+    if (validated.effectiveStartDate !== undefined) existing.effectiveStartDate = validated.effectiveStartDate;
+    if (validated.effectiveEndDate !== undefined) existing.effectiveEndDate = validated.effectiveEndDate;
+    if (validated.status !== undefined && validated.status !== null) existing.status = validated.status as any;
+
+    existing.updatedAt = now;
+    existing.updatedBy = context.actorId as Uuid;
+
+    const updated = await this.roleRepository.update(existing);
+
+    // Sync legacy permissions if passed
+    if (validated.permissionIds) {
+      const existingPermissions = await this.roleRepository.listPermissionsForRole(existing.id);
+      
+      // Revoke old permissions not in new list
+      for (const oldPerm of existingPermissions) {
+        if (!validated.permissionIds.includes(oldPerm.id)) {
+          await this.roleRepository.removePermissionFromRole(existing.id, oldPerm.id);
+        }
+      }
+
+      // Add new permissions
+      for (const newPermId of validated.permissionIds) {
+        const match = existingPermissions.find((p) => p.id === newPermId);
+        if (!match) {
+          await this.roleRepository.assignPermissionToRole(existing.id, newPermId as Uuid, context.actorId as Uuid);
+        }
+      }
     }
 
-    await this.auditRepository.append({
-      id: crypto.randomUUID(),
-      actorId: context.actorId,
-      branchId: null,
-      action: auditAction,
+    await this.auditLogRepository.append({
+      id: crypto.randomUUID() as Uuid,
+      module: 'iam',
+      performedBy: context.actorId as Uuid,
+      performedAt: now,
       entityType: 'Role',
-      entityId: roleId,
-      occurredAt: new Date(),
-      details: validated,
+      entityId: roleId as Uuid,
+      action: 'iam.role.updated',
+      oldValue: oldRole,
+      newValue: updated,
+      ipAddress: null,
+      userAgent: null,
+      branchId: context.activeBranchId as Uuid | null,
+      correlationId: null,
+      reason: null,
     });
 
     return updated;
   }
 
-  async assignPermission(roleId: string, permissionId: string, context: RoleCommandContext): Promise<void> {
-    const role = await this.roleRepository.findById(roleId);
-    if (!role) throw new DomainError('not_found', `Role ${roleId} not found.`);
+  async archiveRole(roleId: string, context: RoleCommandContext): Promise<void> {
+    this.checkPermission(context, 'iam.role.archive');
+    const role = await this.roleRepository.findById(roleId as Uuid);
+    if (!role) throw createIamError('IAM-SYS-001');
 
-    const allPermissions = await this.roleRepository.listPermissions();
-    const permission = allPermissions.find(p => p.id === permissionId);
-    if (!permission) throw new DomainError('not_found', `Permission ${permissionId} not found.`);
-
-    if (permission.status !== 'Active') {
-      throw new DomainError('precondition_failed', `Cannot assign permission: Permission ${permission.permissionCode} is not active.`);
+    if (role.isSystemRole) {
+      throw createIamError('IAM-VAL-010');
     }
 
-    await this.roleRepository.assignPermission(roleId, permissionId, context.actorId);
+    if (role.status !== 'Archived') {
+      const oldStatus = role.status;
+      role.status = 'Archived';
+      await this.roleRepository.update(role);
 
-    await this.auditRepository.append({
-      id: crypto.randomUUID(),
-      actorId: context.actorId,
-      branchId: null,
-      action: 'identity.permission_assigned',
-      entityType: 'Role',
-      entityId: roleId,
-      occurredAt: new Date(),
-      details: { permissionId },
+      await this.auditLogRepository.append({
+        id: crypto.randomUUID() as Uuid,
+        module: 'iam',
+        performedBy: context.actorId as Uuid,
+        performedAt: new Date(),
+        entityType: 'Role',
+        entityId: roleId as Uuid,
+        action: 'iam.role.archived',
+        oldValue: { status: oldStatus },
+        newValue: { status: 'Archived' },
+        ipAddress: null,
+        userAgent: null,
+        branchId: context.activeBranchId as Uuid | null,
+        correlationId: null,
+        reason: null,
+      });
+    }
+  }
+
+  async assignPermissionToRole(
+    roleId: string,
+    permissionId: string,
+    context: RoleCommandContext
+  ): Promise<void> {
+    this.checkPermission(context, 'iam.role.permission.assign');
+    const role = await this.roleRepository.findById(roleId as Uuid);
+    if (!role || role.status !== 'Active') {
+      throw createIamError('IAM-SYS-001');
+    }
+
+    const permission = await this.permissionRepository.findById(permissionId as Uuid);
+    if (!permission || permission.status !== 'Active') {
+      throw createIamError('IAM-SYS-001');
+    }
+
+    await this.roleRepository.assignPermissionToRole(roleId as Uuid, permissionId as Uuid, context.actorId as Uuid);
+
+    await this.auditLogRepository.append({
+      id: crypto.randomUUID() as Uuid,
+      module: 'iam',
+      performedBy: context.actorId as Uuid,
+      performedAt: new Date(),
+      entityType: 'RolePermission',
+      entityId: `${roleId}_${permissionId}`,
+      action: 'iam.role.permission-assigned',
+      oldValue: null,
+      newValue: { roleId, permissionId },
+      ipAddress: null,
+      userAgent: null,
+      branchId: context.activeBranchId as Uuid | null,
+      correlationId: null,
+      reason: null,
     });
+  }
+
+  async removePermissionFromRole(
+    roleId: string,
+    permissionId: string,
+    context: RoleCommandContext
+  ): Promise<void> {
+    this.checkPermission(context, 'iam.role.permission.assign');
+    const role = await this.roleRepository.findById(roleId as Uuid);
+    if (!role) throw createIamError('IAM-SYS-001');
+
+    await this.roleRepository.removePermissionFromRole(roleId as Uuid, permissionId as Uuid);
+
+    await this.auditLogRepository.append({
+      id: crypto.randomUUID() as Uuid,
+      module: 'iam',
+      performedBy: context.actorId as Uuid,
+      performedAt: new Date(),
+      entityType: 'RolePermission',
+      entityId: `${roleId}_${permissionId}`,
+      action: 'iam.role.permission-removed',
+      oldValue: { roleId, permissionId },
+      newValue: null,
+      ipAddress: null,
+      userAgent: null,
+      branchId: context.activeBranchId as Uuid | null,
+      correlationId: null,
+      reason: null,
+    });
+  }
+
+  async assignRoleToUser(
+    userId: string,
+    roleId: string,
+    reason: string | null = null,
+    context: RoleCommandContext
+  ): Promise<void> {
+    this.checkPermission(context, 'iam.user.assign-role');
+    const role = await this.roleRepository.findById(roleId as Uuid);
+    if (!role || role.status !== 'Active') {
+      throw createIamError('IAM-SYS-001');
+    }
+
+    await this.roleRepository.assignRoleToUser(userId as Uuid, roleId as Uuid, context.actorId as Uuid);
+
+    await this.auditLogRepository.append({
+      id: crypto.randomUUID() as Uuid,
+      module: 'iam',
+      performedBy: context.actorId as Uuid,
+      performedAt: new Date(),
+      entityType: 'UserRole',
+      entityId: `${userId}_${roleId}`,
+      action: 'iam.user.role-assigned',
+      oldValue: null,
+      newValue: { userId, roleId, reason },
+      ipAddress: null,
+      userAgent: null,
+      branchId: context.activeBranchId as Uuid | null,
+      correlationId: null,
+      reason,
+    });
+  }
+
+  async removeRoleFromUser(
+    userId: string,
+    roleId: string,
+    reason: string | null = null,
+    context: RoleCommandContext
+  ): Promise<void> {
+    this.checkPermission(context, 'iam.user.assign-role');
+    const role = await this.roleRepository.findById(roleId as Uuid);
+    if (!role) throw createIamError('IAM-SYS-001');
+
+    await this.roleRepository.revokeRoleFromUser(userId as Uuid, roleId as Uuid, context.actorId as Uuid, reason);
+
+    await this.auditLogRepository.append({
+      id: crypto.randomUUID() as Uuid,
+      module: 'iam',
+      performedBy: context.actorId as Uuid,
+      performedAt: new Date(),
+      entityType: 'UserRole',
+      entityId: `${userId}_${roleId}`,
+      action: 'iam.user.role-revoked',
+      oldValue: { userId, roleId, status: 'Active' },
+      newValue: { userId, roleId, status: 'Revoked', reason },
+      ipAddress: null,
+      userAgent: null,
+      branchId: context.activeBranchId as Uuid | null,
+      correlationId: null,
+      reason,
+    });
+  }
+
+  async getRolePermissions(roleId: string, context: RoleCommandContext): Promise<any[]> {
+    this.checkPermission(context, 'iam.role.read');
+    return this.roleRepository.listPermissionsForRole(roleId as Uuid);
+  }
+
+  async listRolesForUser(userId: string, context?: RoleCommandContext): Promise<any[]> {
+    if (context) {
+      this.checkPermission(context, 'iam.user.read');
+    }
+    return this.roleRepository.listRolesForUser(userId as Uuid);
+  }
+
+  async assignPermission(roleId: string, permissionId: string, context: RoleCommandContext): Promise<void> {
+    return this.assignPermissionToRole(roleId, permissionId, context);
   }
 
   async removePermission(roleId: string, permissionId: string, context: RoleCommandContext): Promise<void> {
-    const role = await this.roleRepository.findById(roleId);
-    if (!role) throw new DomainError('not_found', `Role ${roleId} not found.`);
-
-    await this.roleRepository.removePermission(roleId, permissionId);
-
-    await this.auditRepository.append({
-      id: crypto.randomUUID(),
-      actorId: context.actorId,
-      branchId: null,
-      action: 'identity.permission_removed',
-      entityType: 'Role',
-      entityId: roleId,
-      occurredAt: new Date(),
-      details: { permissionId },
-    });
+    return this.removePermissionFromRole(roleId, permissionId, context);
   }
+
+  async listPermissions(): Promise<any[]> {
+    return this.permissionRepository.search();
+  }
+
 }

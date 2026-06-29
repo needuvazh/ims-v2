@@ -11,10 +11,35 @@ const systemPermissions = [
   { moduleCode: 'organization', featureCode: 'classroom',   actionCode: 'manage', permissionCode: 'organization.classroom.manage',  permissionType: 'Action' as const, description: 'Manage classrooms.' },
   
   // Identity & Access (RBAC)
-  { moduleCode: 'identity',     featureCode: 'user',        actionCode: 'read',   permissionCode: 'identity.read',                  permissionType: 'Action' as const, description: 'View users and roles.' },
-  { moduleCode: 'identity',     featureCode: 'user',        actionCode: 'write',  permissionCode: 'identity.write',                 permissionType: 'Action' as const, description: 'Create and update users.' },
-  { moduleCode: 'identity',     featureCode: 'role',        actionCode: 'manage', permissionCode: 'identity.role.manage',           permissionType: 'Action' as const, description: 'Manage roles and permissions.' },
-  
+  { moduleCode: 'iam', featureCode: 'user', actionCode: 'read', permissionCode: 'iam.user.read', permissionType: 'Action' as const, description: 'View users.' },
+  { moduleCode: 'iam', featureCode: 'user', actionCode: 'create', permissionCode: 'iam.user.create', permissionType: 'Action' as const, description: 'Create users.' },
+  { moduleCode: 'iam', featureCode: 'user', actionCode: 'update', permissionCode: 'iam.user.update', permissionType: 'Action' as const, description: 'Update users.' },
+  { moduleCode: 'iam', featureCode: 'user', actionCode: 'archive', permissionCode: 'iam.user.archive', permissionType: 'Action' as const, description: 'Archive users.' },
+  { moduleCode: 'iam', featureCode: 'user', actionCode: 'activate', permissionCode: 'iam.user.activate', permissionType: 'Action' as const, description: 'Activate users.' },
+  { moduleCode: 'iam', featureCode: 'user', actionCode: 'suspend', permissionCode: 'iam.user.suspend', permissionType: 'Action' as const, description: 'Suspend users.' },
+  { moduleCode: 'iam', featureCode: 'user', actionCode: 'unlock', permissionCode: 'iam.user.unlock', permissionType: 'Action' as const, description: 'Unlock users.' },
+  { moduleCode: 'iam', featureCode: 'user', actionCode: 'reset-password', permissionCode: 'iam.user.reset-password', permissionType: 'Action' as const, description: 'Reset user passwords.' },
+  { moduleCode: 'iam', featureCode: 'user', actionCode: 'export', permissionCode: 'iam.user.export', permissionType: 'Action' as const, description: 'Export users.' },
+  { moduleCode: 'iam', featureCode: 'user', actionCode: 'import', permissionCode: 'iam.user.import', permissionType: 'Action' as const, description: 'Import users.' },
+  { moduleCode: 'iam', featureCode: 'user', actionCode: 'assign-role', permissionCode: 'iam.user.assign-role', permissionType: 'Action' as const, description: 'Assign roles to users.' },
+  { moduleCode: 'iam', featureCode: 'user', actionCode: 'assign-branch', permissionCode: 'iam.user.assign-branch', permissionType: 'Action' as const, description: 'Assign branches to users.' },
+  { moduleCode: 'iam', featureCode: 'user', actionCode: 'view-login-history', permissionCode: 'iam.user.view-login-history', permissionType: 'Action' as const, description: 'View user login history.' },
+  { moduleCode: 'iam', featureCode: 'user', actionCode: 'view-sessions', permissionCode: 'iam.user.view-sessions', permissionType: 'Action' as const, description: 'View user sessions.' },
+  { moduleCode: 'iam', featureCode: 'role', actionCode: 'read', permissionCode: 'iam.role.read', permissionType: 'Action' as const, description: 'View roles.' },
+  { moduleCode: 'iam', featureCode: 'role', actionCode: 'create', permissionCode: 'iam.role.create', permissionType: 'Action' as const, description: 'Create roles.' },
+  { moduleCode: 'iam', featureCode: 'role', actionCode: 'update', permissionCode: 'iam.role.update', permissionType: 'Action' as const, description: 'Update roles.' },
+  { moduleCode: 'iam', featureCode: 'role', actionCode: 'archive', permissionCode: 'iam.role.archive', permissionType: 'Action' as const, description: 'Archive roles.' },
+  { moduleCode: 'iam', featureCode: 'role', actionCode: 'assign', permissionCode: 'iam.role.assign', permissionType: 'Action' as const, description: 'Assign roles.' },
+  { moduleCode: 'iam', featureCode: 'permission', actionCode: 'read', permissionCode: 'iam.permission.read', permissionType: 'Action' as const, description: 'View permissions.' },
+  { moduleCode: 'iam', featureCode: 'permission', actionCode: 'create', permissionCode: 'iam.permission.create', permissionType: 'Action' as const, description: 'Create permissions.' },
+  { moduleCode: 'iam', featureCode: 'permission', actionCode: 'update', permissionCode: 'iam.permission.update', permissionType: 'Action' as const, description: 'Update permissions.' },
+  { moduleCode: 'iam', featureCode: 'permission', actionCode: 'archive', permissionCode: 'iam.permission.archive', permissionType: 'Action' as const, description: 'Archive permissions.' },
+  { moduleCode: 'iam', featureCode: 'permission', actionCode: 'assign', permissionCode: 'iam.permission.assign', permissionType: 'Action' as const, description: 'Assign permissions to roles.' },
+  { moduleCode: 'iam', featureCode: 'session', actionCode: 'read', permissionCode: 'iam.session.read', permissionType: 'Action' as const, description: 'Read sessions.' },
+  { moduleCode: 'iam', featureCode: 'session', actionCode: 'terminate', permissionCode: 'iam.session.terminate', permissionType: 'Action' as const, description: 'Terminate sessions.' },
+  { moduleCode: 'iam', featureCode: 'security-policy', actionCode: 'read', permissionCode: 'iam.security-policy.read', permissionType: 'Action' as const, description: 'Read security policy.' },
+  { moduleCode: 'iam', featureCode: 'security-policy', actionCode: 'update', permissionCode: 'iam.security-policy.update', permissionType: 'Action' as const, description: 'Update security policy.' },
+  { moduleCode: 'iam', featureCode: 'audit', actionCode: 'read', permissionCode: 'iam.audit.read', permissionType: 'Action' as const, description: 'View audit logs.' },
   // CRM / Leads Management
   { moduleCode: 'crm',          featureCode: 'leads',       actionCode: 'read',   permissionCode: 'lead.read',                      permissionType: 'Action' as const, description: 'View leads.' },
   { moduleCode: 'crm',          featureCode: 'leads',       actionCode: 'write',  permissionCode: 'lead.write',                     permissionType: 'Action' as const, description: 'Create and update leads.' },
@@ -44,7 +69,7 @@ const systemPermissions = [
   
   // Dashboard & Audit
   { moduleCode: 'dashboard',    featureCode: 'summary',     actionCode: 'view',   permissionCode: 'dashboard.view',                 permissionType: 'Action' as const, description: 'View dashboard metrics.' },
-  { moduleCode: 'audit',        featureCode: 'logs',        actionCode: 'read',   permissionCode: 'audit.view',                     permissionType: 'Action' as const, description: 'View security audit logs.' },
+  { moduleCode: 'report',       featureCode: 'reports',     actionCode: 'read',   permissionCode: 'reports.read',                   permissionType: 'Action' as const, description: 'View reports.' },
 ];
 
 async function seed() {
@@ -55,10 +80,14 @@ async function seed() {
   await prisma.passwordResetToken.deleteMany({});
   await prisma.loginHistory.deleteMany({});
   await prisma.userSession.deleteMany({});
-  await prisma.userDataScope.deleteMany({});
+  await prisma.userBranchAccess.deleteMany({});
+  await prisma.userActivationToken.deleteMany({});
+  await prisma.passwordHistory.deleteMany({});
+  await prisma.securityPolicy.deleteMany({});
   await prisma.userRole.deleteMany({});
   await prisma.rolePermission.deleteMany({});
   await prisma.user.deleteMany({});
+  await prisma.person.deleteMany({});
   await prisma.role.deleteMany({});
   await prisma.permission.deleteMany({});
   await prisma.classroom.deleteMany({});
@@ -124,11 +153,11 @@ async function seed() {
   // Branch Manager gets branch-scoped management permissions
   const managerPermCodes = [
     'organization.branch.manage', 'organization.department.manage', 'organization.classroom.manage',
-    'identity.read', 'lead.read', 'lead.write', 'lead.convert',
+    'iam.user.read', 'iam.role.read', 'lead.read', 'lead.write', 'lead.convert',
     'student.read', 'student.write', 'enrollment.create',
     'payment.create', 'refund.request', 'course.manage', 'schedule.manage',
     'attendance.record', 'result.record', 'certificate.generate',
-    'certificate.verify', 'dashboard.view', 'audit.view'
+    'certificate.verify', 'dashboard.view', 'iam.audit.read'
   ];
   const managerPerms = permRecords.filter(p => managerPermCodes.includes(p.permissionCode));
   for (const perm of managerPerms) {
@@ -140,7 +169,7 @@ async function seed() {
 
   // Counselor permissions
   const counselorPermCodes = [
-    'identity.read', 'lead.read', 'lead.write', 'lead.convert',
+    'iam.user.read', 'lead.read', 'lead.write', 'lead.convert',
     'student.read', 'dashboard.view'
   ];
   const counselorPerms = permRecords.filter(p => counselorPermCodes.includes(p.permissionCode));
@@ -317,14 +346,41 @@ async function seed() {
   });
   console.log(`  ✓ Classroom created: Room 101 (Muscat)`);
 
-  // 6. Seed Users, Roles, and Data Scopes
+  // 6. Seed Users, Roles, and Branch Access
   const passwordHash = await bcrypt.hash('Password@123', 12);
 
+  await prisma.securityPolicy.create({
+    data: {
+      id: crypto.randomUUID(),
+      maxFailedAttempts: 5,
+      lockoutDurationMinutes: 30,
+      passwordMinLength: 8,
+      passwordRequireUppercase: true,
+      passwordRequireLowercase: true,
+      passwordRequireNumbers: true,
+      passwordRequireSpecial: true,
+      passwordHistoryCount: 5,
+      passwordExpiryDays: 90,
+      resetTokenExpiryMinutes: 15,
+      accessTokenExpiryMinutes: 15,
+      refreshTokenExpiryDays: 7,
+      rememberMeRefreshTokenDays: 30,
+      sessionInactivityMinutes: 30,
+      maxConcurrentSessions: 3,
+    }
+  });
+  console.log('  ✓ Security Policy created');
+
+
   // User A: Super Admin (Global Scope)
+  const superAdminPerson = await prisma.person.create({
+    data: { id: crypto.randomUUID(), firstName: 'System', lastName: 'Administrator', mobile: '+966-500000001' }
+  });
   const superAdminUser = await prisma.user.create({
     data: {
       id: crypto.randomUUID(),
-      fullName: 'System Administrator',
+      personId: superAdminPerson.id,
+      username: 'admin@ims.com',
       email: 'admin@ims.com',
       userType: 'Admin',
       status: 'Active',
@@ -332,23 +388,18 @@ async function seed() {
       effectiveStartDate: new Date(),
     },
   });
-  await prisma.userRole.create({
-    data: { userId: superAdminUser.id, roleId: roleMap['SUPER_ADMIN'].id }
-  });
-  await prisma.userDataScope.create({
-    data: {
-      id: crypto.randomUUID(),
-      userId: superAdminUser.id,
-      scopeType: 'All',
-    }
-  });
-  console.log(`  ✓ User created: admin@ims.com (SUPER_ADMIN, Scope: All)`);
+  await prisma.userRole.create({ data: { userId: superAdminUser.id, roleId: roleMap['SUPER_ADMIN'].id } });
+  console.log(`  ✓ User created: admin@ims.com (SUPER_ADMIN)`);
 
-  // User B: Riyadh Branch Manager (Branch AST-RIYADH, full branch access)
+  // User B: Riyadh Branch Manager
+  const riyadhManagerPerson = await prisma.person.create({
+    data: { id: crypto.randomUUID(), firstName: 'Riyadh', lastName: 'Branch Manager', mobile: '+966-500000002' }
+  });
   const riyadhManagerUser = await prisma.user.create({
     data: {
       id: crypto.randomUUID(),
-      fullName: 'Riyadh Branch Manager',
+      personId: riyadhManagerPerson.id,
+      username: 'manager.riyadh@ims.com',
       email: 'manager.riyadh@ims.com',
       userType: 'BranchManager',
       status: 'Active',
@@ -356,25 +407,21 @@ async function seed() {
       effectiveStartDate: new Date(),
     },
   });
-  await prisma.userRole.create({
-    data: { userId: riyadhManagerUser.id, roleId: roleMap['BRANCH_MANAGER'].id }
+  await prisma.userRole.create({ data: { userId: riyadhManagerUser.id, roleId: roleMap['BRANCH_MANAGER'].id } });
+  await prisma.userBranchAccess.create({
+    data: { id: crypto.randomUUID(), userId: riyadhManagerUser.id, branchId: riyadhBranch.id, isDefault: true, status: 'Active' }
   });
-  await prisma.userDataScope.create({
-    data: {
-      id: crypto.randomUUID(),
-      userId: riyadhManagerUser.id,
-      scopeType: 'Branch',
-      branchId: riyadhBranch.id,
-      assignedOnly: false,
-    }
-  });
-  console.log(`  ✓ User created: manager.riyadh@ims.com (BRANCH_MANAGER, Scope: Branch AST-RIYADH)`);
+  console.log(`  ✓ User created: manager.riyadh@ims.com (BRANCH_MANAGER, Branch AST-RIYADH)`);
 
-  // User C: Riyadh Counselor (Branch AST-RIYADH, assigned only access)
+  // User C: Riyadh Counselor
+  const riyadhCounselorPerson = await prisma.person.create({
+    data: { id: crypto.randomUUID(), firstName: 'Riyadh', lastName: 'Counselor', mobile: '+966-500000003' }
+  });
   const riyadhCounselorUser = await prisma.user.create({
     data: {
       id: crypto.randomUUID(),
-      fullName: 'Riyadh Counselor User',
+      personId: riyadhCounselorPerson.id,
+      username: 'counselor.riyadh@ims.com',
       email: 'counselor.riyadh@ims.com',
       userType: 'Counselor',
       status: 'Active',
@@ -382,25 +429,21 @@ async function seed() {
       effectiveStartDate: new Date(),
     },
   });
-  await prisma.userRole.create({
-    data: { userId: riyadhCounselorUser.id, roleId: roleMap['COUNSELOR'].id }
+  await prisma.userRole.create({ data: { userId: riyadhCounselorUser.id, roleId: roleMap['COUNSELOR'].id } });
+  await prisma.userBranchAccess.create({
+    data: { id: crypto.randomUUID(), userId: riyadhCounselorUser.id, branchId: riyadhBranch.id, isDefault: true, status: 'Active' }
   });
-  await prisma.userDataScope.create({
-    data: {
-      id: crypto.randomUUID(),
-      userId: riyadhCounselorUser.id,
-      scopeType: 'Branch',
-      branchId: riyadhBranch.id,
-      assignedOnly: true,
-    }
-  });
-  console.log(`  ✓ User created: counselor.riyadh@ims.com (COUNSELOR, Scope: Branch AST-RIYADH, Assigned Only)`);
+  console.log(`  ✓ User created: counselor.riyadh@ims.com (COUNSELOR, Branch AST-RIYADH)`);
 
-  // User D: Riyadh Trainer (Branch AST-RIYADH, assigned only access)
+  // User D: Riyadh Trainer
+  const riyadhTrainerPerson = await prisma.person.create({
+    data: { id: crypto.randomUUID(), firstName: 'Riyadh', lastName: 'Core Trainer', mobile: '+966-500000004' }
+  });
   const riyadhTrainerUser = await prisma.user.create({
     data: {
       id: crypto.randomUUID(),
-      fullName: 'Riyadh Core Trainer',
+      personId: riyadhTrainerPerson.id,
+      username: 'trainer.riyadh@ims.com',
       email: 'trainer.riyadh@ims.com',
       userType: 'Trainer',
       status: 'Active',
@@ -408,25 +451,21 @@ async function seed() {
       effectiveStartDate: new Date(),
     },
   });
-  await prisma.userRole.create({
-    data: { userId: riyadhTrainerUser.id, roleId: roleMap['TRAINER'].id }
+  await prisma.userRole.create({ data: { userId: riyadhTrainerUser.id, roleId: roleMap['TRAINER'].id } });
+  await prisma.userBranchAccess.create({
+    data: { id: crypto.randomUUID(), userId: riyadhTrainerUser.id, branchId: riyadhBranch.id, isDefault: true, status: 'Active' }
   });
-  await prisma.userDataScope.create({
-    data: {
-      id: crypto.randomUUID(),
-      userId: riyadhTrainerUser.id,
-      scopeType: 'Branch',
-      branchId: riyadhBranch.id,
-      assignedOnly: true,
-    }
-  });
-  console.log(`  ✓ User created: trainer.riyadh@ims.com (TRAINER, Scope: Branch AST-RIYADH, Assigned Only)`);
+  console.log(`  ✓ User created: trainer.riyadh@ims.com (TRAINER, Branch AST-RIYADH)`);
 
-  // User E: Riyadh Accountant (Branch AST-RIYADH, full branch finance access)
+  // User E: Riyadh Accountant
+  const riyadhAccountantPerson = await prisma.person.create({
+    data: { id: crypto.randomUUID(), firstName: 'Riyadh', lastName: 'Accountant User', mobile: '+966-500000005' }
+  });
   const riyadhAccountantUser = await prisma.user.create({
     data: {
       id: crypto.randomUUID(),
-      fullName: 'Riyadh Accountant User',
+      personId: riyadhAccountantPerson.id,
+      username: 'accountant.riyadh@ims.com',
       email: 'accountant.riyadh@ims.com',
       userType: 'Accountant',
       status: 'Active',
@@ -434,25 +473,21 @@ async function seed() {
       effectiveStartDate: new Date(),
     },
   });
-  await prisma.userRole.create({
-    data: { userId: riyadhAccountantUser.id, roleId: roleMap['ACCOUNTANT'].id }
+  await prisma.userRole.create({ data: { userId: riyadhAccountantUser.id, roleId: roleMap['ACCOUNTANT'].id } });
+  await prisma.userBranchAccess.create({
+    data: { id: crypto.randomUUID(), userId: riyadhAccountantUser.id, branchId: riyadhBranch.id, isDefault: true, status: 'Active' }
   });
-  await prisma.userDataScope.create({
-    data: {
-      id: crypto.randomUUID(),
-      userId: riyadhAccountantUser.id,
-      scopeType: 'Branch',
-      branchId: riyadhBranch.id,
-      assignedOnly: false,
-    }
-  });
-  console.log(`  ✓ User created: accountant.riyadh@ims.com (ACCOUNTANT, Scope: Branch AST-RIYADH)`);
+  console.log(`  ✓ User created: accountant.riyadh@ims.com (ACCOUNTANT, Branch AST-RIYADH)`);
 
-  // User F: Muscat Branch Manager (Branch AST-MUSCAT, full branch access)
+  // User F: Muscat Branch Manager
+  const muscatManagerPerson = await prisma.person.create({
+    data: { id: crypto.randomUUID(), firstName: 'Muscat', lastName: 'Branch Manager', mobile: '+966-500000006' }
+  });
   const muscatManagerUser = await prisma.user.create({
     data: {
       id: crypto.randomUUID(),
-      fullName: 'Muscat Branch Manager',
+      personId: muscatManagerPerson.id,
+      username: 'manager.muscat@ims.com',
       email: 'manager.muscat@ims.com',
       userType: 'BranchManager',
       status: 'Active',
@@ -460,21 +495,14 @@ async function seed() {
       effectiveStartDate: new Date(),
     },
   });
-  await prisma.userRole.create({
-    data: { userId: muscatManagerUser.id, roleId: roleMap['BRANCH_MANAGER'].id }
+  await prisma.userRole.create({ data: { userId: muscatManagerUser.id, roleId: roleMap['BRANCH_MANAGER'].id } });
+  await prisma.userBranchAccess.create({
+    data: { id: crypto.randomUUID(), userId: muscatManagerUser.id, branchId: muscatBranch.id, isDefault: true, status: 'Active' }
   });
-  await prisma.userDataScope.create({
-    data: {
-      id: crypto.randomUUID(),
-      userId: muscatManagerUser.id,
-      scopeType: 'Branch',
-      branchId: muscatBranch.id,
-      assignedOnly: false,
-    }
-  });
-  console.log(`  ✓ User created: manager.muscat@ims.com (BRANCH_MANAGER, Scope: Branch AST-MUSCAT)`);
+  console.log(`  ✓ User created: manager.muscat@ims.com (BRANCH_MANAGER, Branch AST-MUSCAT)`);
 
   console.log('\n🌱 Seed script complete! Database seeded successfully.');
+
 }
 
 seed()

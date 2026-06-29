@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 export default async function ViewRolePage(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const data = await loadIdentityData();
-  const role = data.roles.find(r => r.id === params.id);
+  const role = data.roles.find((r: any) => r.id === params.id);
 
   if (!role) {
     return <div>Role not found</div>;

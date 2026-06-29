@@ -1,106 +1,127 @@
 import type { PrismaClient } from '@prisma/client';
-import type { RoleRepository } from '@ims/identity-access';
-import type { RoleRecord, PermissionRecord } from '@ims/identity-access';
+import type { IRoleRepository, Role, RoleStatus } from '@ims/identity-access';
 import type { Uuid } from '@ims/shared-kernel';
 
-type PermissionRow = {
-  id: string;
-  moduleCode: string;
-  featureCode: string;
-  actionCode: string;
-  permissionCode: string;
-  permissionType: PermissionRecord['permissionType'];
-  description: string | null;
-  status: string;
-};
-
-type RoleRow = {
-  id: string;
-  roleCode: string;
-  roleName: string;
-  description: string | null;
-  status: string;
-  effectiveStartDate: Date;
-  effectiveEndDate: Date | null;
-  permissions: Array<{
-    permission: PermissionRow;
-  }>;
-};
-
-export class PrismaRoleRepository implements RoleRepository {
+export class PrismaRoleRepository implements IRoleRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  private toPermission(row: PermissionRow): PermissionRecord {
-    return { ...row, id: row.id as Uuid };
-  }
-
-  private async toRole(row: RoleRow): Promise<RoleRecord> {
+  private mapRole(row: any): Role {
     return {
       id: row.id as Uuid,
       roleCode: row.roleCode,
       roleName: row.roleName,
       description: row.description,
-      status: row.status as RoleRecord['status'],
+      status: row.status as RoleStatus,
+      isSystemRole: row.isSystemRole,
+      version: row.version,
       effectiveStartDate: row.effectiveStartDate,
       effectiveEndDate: row.effectiveEndDate,
-      permissions: row.permissions.map((rp) => this.toPermission(rp.permission)),
+      createdAt: row.createdAt,
+      createdBy: row.createdBy,
+      updatedAt: row.updatedAt,
+      updatedBy: row.updatedBy,
     };
   }
 
-  async findById(roleId: string): Promise<RoleRecord | null> {
-    const row = (await this.prisma.role.findFirst({
-      where: { id: roleId, isDeleted: false },
-      include: { permissions: { include: { permission: true } } },
-    })) as RoleRow | null;
-    return row ? this.toRole(row) : null;
+  async findById(id: Uuid): Promise<Role | null> {
+    const row = await this.prisma.role.findFirst({
+      where: { id, isDeleted: false },
+    });
+    return row ? this.mapRole(row) : null;
   }
 
-  async findByCode(roleCode: string): Promise<RoleRecord | null> {
-    const row = (await this.prisma.role.findFirst({
-      where: { roleCode, isDeleted: false },
-      include: { permissions: { include: { permission: true } } },
-    })) as RoleRow | null;
-    return row ? this.toRole(row) : null;
+  async findByCode(code: string): Promise<Role | null> {
+    const row = await this.prisma.role.findFirst({
+      where: { roleCode: code, isDeleted: false },
+    });
+    return row ? this.mapRole(row) : null;
   }
 
-  async create(role: RoleRecord): Promise<RoleRecord> {
-    const row = (await this.prisma.role.create({
+  async create(role: Role): Promise<Role> {
+    const row = await this.prisma.role.create({
       data: {
         id: role.id,
         roleCode: role.roleCode,
         roleName: role.roleName,
         description: role.description,
         status: role.status,
-        effectiveStartDate: role.effectiveStartDate ?? undefined,
-        effectiveEndDate: role.effectiveEndDate ?? null,
+        isSystemRole: role.isSystemRole,
+        version: role.version,
+        effectiveStartDate: role.effectiveStartDate,
+        effectiveEndDate: role.effectiveEndDate,
+        createdBy: role.createdBy,
       },
-      include: { permissions: { include: { permission: true } } },
-    })) as RoleRow;
-    return this.toRole(row);
-  }
-
-  async update(
-    roleId: string,
-    updates: Partial<Pick<RoleRecord, 'roleName' | 'description' | 'status' | 'effectiveStartDate' | 'effectiveEndDate'>>,
-  ): Promise<RoleRecord> {
-    const row = (await this.prisma.role.update({
-      where: { id: roleId },
-      data: { ...updates, updatedAt: new Date() },
-      include: { permissions: { include: { permission: true } } },
-    })) as RoleRow;
-    return this.toRole(row);
-  }
-
-  async list(): Promise<RoleRecord[]> {
-    const rows = await this.prisma.role.findMany({
-      where: { isDeleted: false },
-      include: { permissions: { include: { permission: true } } },
-      orderBy: { roleName: 'asc' },
     });
-    return Promise.all(rows.map((r: RoleRow) => this.toRole(r)));
+    return this.mapRole(row);
   }
 
-  async assignPermission(roleId: string, permissionId: string, actorId: string): Promise<void> {
+  async update(role: Role): Promise<Role> {
+    const row = await this.prisma.role.update({
+      where: { id: role.id },
+      data: {
+        roleName: role.roleName,
+        description: role.description,
+        status: role.status,
+        isSystemRole: role.isSystemRole,
+        version: { increment: 1 },
+        effectiveStartDate: role.effectiveStartDate,
+        effectiveEndDate: role.effectiveEndDate,
+        updatedBy: role.updatedBy,
+      },
+    });
+    return this.mapRole(row);
+  }
+
+  async search(
+    page: number,
+    pageSize: number
+  ): Promise<{ items: Role[]; total: number }> {
+    const [rows, total] = await Promise.all([
+      this.prisma.role.findMany({
+        where: { isDeleted: false },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        orderBy: { roleName: 'asc' },
+      }),
+      this.prisma.role.count({ where: { isDeleted: false } }),
+    ]);
+
+    return {
+      items: rows.map((r) => this.mapRole(r)),
+      total,
+    };
+  }
+
+  async assignRoleToUser(userId: Uuid, roleId: Uuid, actorId: Uuid): Promise<void> {
+    await this.prisma.userRole.upsert({
+      where: { userId_roleId: { userId, roleId } },
+      create: { userId, roleId, status: 'Active', createdBy: actorId },
+      update: { status: 'Active', revokedAt: null, revokedBy: null, reason: null, updatedBy: actorId },
+    });
+  }
+
+  async revokeRoleFromUser(userId: Uuid, roleId: Uuid, actorId: Uuid, reason: string | null): Promise<void> {
+    await this.prisma.userRole.update({
+      where: { userId_roleId: { userId, roleId } },
+      data: { status: 'Revoked', revokedAt: new Date(), revokedBy: actorId, reason },
+    });
+  }
+
+  async listRolesForUser(userId: Uuid): Promise<{ role: Role; status: string; revokedAt: Date | null; revokedBy: string | null; reason: string | null }[]> {
+    const rows = await this.prisma.userRole.findMany({
+      where: { userId },
+      include: { role: true },
+    });
+    return rows.map((row) => ({
+      role: this.mapRole(row.role),
+      status: row.status,
+      revokedAt: row.revokedAt,
+      revokedBy: row.revokedBy,
+      reason: row.reason,
+    }));
+  }
+
+  async assignPermissionToRole(roleId: Uuid, permissionId: Uuid, actorId: Uuid): Promise<void> {
     await this.prisma.rolePermission.upsert({
       where: { roleId_permissionId: { roleId, permissionId } },
       create: { roleId, permissionId, createdBy: actorId },
@@ -108,31 +129,31 @@ export class PrismaRoleRepository implements RoleRepository {
     });
   }
 
-  async removePermission(roleId: string, permissionId: string): Promise<void> {
-    await this.prisma.rolePermission.deleteMany({ where: { roleId, permissionId } });
+  async removePermissionFromRole(roleId: Uuid, permissionId: Uuid): Promise<void> {
+    await this.prisma.rolePermission.deleteMany({
+      where: { roleId, permissionId },
+    });
   }
 
-  async listPermissions(): Promise<PermissionRecord[]> {
-    const rows = await this.prisma.permission.findMany({ where: { status: 'Active' }, orderBy: { permissionCode: 'asc' } });
-    return rows.map(this.toPermission);
-  }
-
-  async seedPermissions(permissions: Omit<PermissionRecord, 'id'>[]): Promise<void> {
-    for (const perm of permissions) {
-      await this.prisma.permission.upsert({
-        where: { permissionCode: perm.permissionCode },
-        create: {
-          id: crypto.randomUUID(),
-          moduleCode: perm.moduleCode,
-          featureCode: perm.featureCode,
-          actionCode: perm.actionCode,
-          permissionCode: perm.permissionCode,
-          permissionType: perm.permissionType,
-          description: perm.description ?? null,
-          status: 'Active',
-        },
-        update: { description: perm.description ?? null, permissionType: perm.permissionType },
-      });
-    }
+  async listPermissionsForRole(roleId: Uuid): Promise<any[]> {
+    const rows = await this.prisma.rolePermission.findMany({
+      where: { roleId },
+      include: { permission: true },
+    });
+    return rows.map((r) => ({
+      id: r.permission.id,
+      permissionCode: r.permission.permissionCode,
+      permissionName: r.permission.permissionCode, // Map permissionCode to permissionName
+      permissionType: r.permission.permissionType,
+      description: r.permission.description,
+      status: r.permission.status,
+      createdAt: new Date(),
+      createdBy: null,
+      updatedAt: null,
+      updatedBy: null,
+      deletedAt: null,
+      deletedBy: null,
+      isDeleted: false,
+    }));
   }
 }

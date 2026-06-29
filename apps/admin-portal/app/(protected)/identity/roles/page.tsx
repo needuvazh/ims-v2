@@ -36,14 +36,14 @@ export default async function IdentityRolesPage(props: {
   let filteredRoles = data.roles;
   
   if (q) {
-    filteredRoles = filteredRoles.filter(r => 
+    filteredRoles = filteredRoles.filter((r: any) => 
       r.roleName.toLowerCase().includes(q) || 
       r.roleCode.toLowerCase().includes(q)
     );
   }
   
   if (statusFilter) {
-    filteredRoles = filteredRoles.filter(r => r.status === statusFilter);
+    filteredRoles = filteredRoles.filter((r: any) => r.status === statusFilter);
   }
   
   const totalCount = filteredRoles.length;
@@ -121,7 +121,7 @@ export default async function IdentityRolesPage(props: {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {paginatedRoles.map((role) => (
+                {paginatedRoles.map((role: any) => (
                   <TableRow key={role.id} data-testid={`role-row-${role.id}`}>
                     <TableCell className="font-mono text-xs text-[color:var(--ims-muted)]">{role.roleCode}</TableCell>
                     <TableCell>
