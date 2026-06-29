@@ -49,6 +49,28 @@ export class PrismaNotificationRepository implements INotificationRepository {
     return this.mapNotification(row);
   }
 
+  async markSent(id: Uuid, providerResponse?: unknown): Promise<NotificationDto> {
+    const row = await this.prisma.notification.update({
+      where: { id },
+      data: {
+        status: 'Sent',
+        providerResponse: providerResponse ?? undefined,
+      },
+    });
+    return this.mapNotification(row);
+  }
+
+  async markFailed(id: Uuid, providerResponse?: unknown): Promise<NotificationDto> {
+    const row = await this.prisma.notification.update({
+      where: { id },
+      data: {
+        status: 'Failed',
+        providerResponse: providerResponse ?? undefined,
+      },
+    });
+    return this.mapNotification(row);
+  }
+
   async findById(id: Uuid): Promise<NotificationDto | null> {
     const row = await this.prisma.notification.findUnique({
       where: { id },
@@ -61,6 +83,14 @@ export class PrismaNotificationRepository implements INotificationRepository {
       where: { status: 'Pending' },
       take: limit,
       orderBy: { createdAt: 'asc' },
+    });
+    return rows.map((r) => this.mapNotification(r));
+  }
+
+  async list(limit = 100): Promise<NotificationDto[]> {
+    const rows = await this.prisma.notification.findMany({
+      take: limit,
+      orderBy: { createdAt: 'desc' },
     });
     return rows.map((r) => this.mapNotification(r));
   }

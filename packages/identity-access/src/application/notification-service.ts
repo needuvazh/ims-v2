@@ -13,27 +13,7 @@ export class NotificationService {
 
     for (const notif of pending) {
       try {
-        if (notif.type === 'user.created' || notif.type === 'user.activation_resent') {
-          await this.notificationPort.sendActivationEmail(notif.recipientEmail, {
-            firstName: notif.recipientEmail.split('@')[0], // fallback display name
-            activationLink: notif.metadata?.activationLink || '',
-            expiresAt: new Date(Date.now() + 60 * 60 * 1000), // 1 hour default
-          });
-        } else if (notif.type === 'user.password_reset_admin' || notif.type === 'user.password_reset_requested') {
-          await this.notificationPort.sendPasswordResetEmail(notif.recipientEmail, {
-            firstName: notif.recipientEmail.split('@')[0],
-            resetLink: notif.metadata?.resetLink || '',
-            expiresAt: new Date(Date.now() + 15 * 60 * 1000), // 15 mins default
-          });
-        } else {
-          // General generic message log / sending activation email for other types
-          await this.notificationPort.sendActivationEmail(notif.recipientEmail, {
-            firstName: 'User',
-            activationLink: notif.body,
-            expiresAt: new Date(),
-          });
-        }
-
+        await this.dispatchNotification(notif);
         notif.status = 'Sent';
         notif.providerResponse = { success: true, dispatchedAt: new Date().toISOString() };
       } catch (err: any) {
@@ -46,5 +26,44 @@ export class NotificationService {
     }
 
     return processedCount;
+  }
+
+  async sendNotification(notification: NotificationDto): Promise<NotificationDto> {
+    const created = await this.notificationRepository.create(notification);
+    try {
+      await this.dispatchNotification(created);
+      created.status = 'Sent';
+      created.providerResponse = { success: true, dispatchedAt: new Date().toISOString() };
+    } catch (err: any) {
+      created.status = 'Failed';
+      created.providerResponse = { success: false, error: err.message || String(err) };
+    }
+
+    return this.notificationRepository.update(created);
+  }
+
+  private async dispatchNotification(notif: NotificationDto): Promise<void> {
+    if (notif.type === 'user.created' || notif.type === 'user.activation_resent') {
+      await this.notificationPort.sendActivationEmail(notif.recipientEmail, {
+        firstName: notif.recipientEmail.split('@')[0],
+        activationLink: notif.metadata?.activationLink || notif.body,
+        expiresAt: new Date(Date.now() + 60 * 60 * 1000),
+      });
+      return;
+    }
+
+    if (notif.type === 'user.password_reset_admin' || notif.type === 'user.password_reset_requested') {
+      await this.notificationPort.sendPasswordResetEmail(notif.recipientEmail, {
+        firstName: notif.recipientEmail.split('@')[0],
+        expiresAt: new Date(Date.now() + 15 * 60 * 1000),
+      });
+      return;
+    }
+
+    await this.notificationPort.sendActivationEmail(notif.recipientEmail, {
+      firstName: 'User',
+      activationLink: notif.body,
+      expiresAt: new Date(),
+    });
   }
 }

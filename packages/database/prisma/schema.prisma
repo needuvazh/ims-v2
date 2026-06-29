@@ -291,6 +291,7 @@ model UserSession {
   id             String   @id @default(uuid()) @db.Uuid
   userId         String   @db.Uuid
   tokenHash      String   @unique @db.Text
+  previousTokenHash String? @db.Text
   userAgent      String?  @db.Text
   ipAddress      String?  @db.VarChar(45)
   status         String   @db.VarChar(50) // "Active", "Expired", "Revoked"
@@ -305,6 +306,7 @@ model UserSession {
   @@index([userId])
   @@index([status])
   @@index([userId, status])
+  @@index([previousTokenHash])
   @@map("user_sessions")
 }
 

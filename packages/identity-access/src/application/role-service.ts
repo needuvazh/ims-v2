@@ -6,9 +6,10 @@ import {
   type Role,
   type CreateRoleCommand,
   type UpdateRoleCommand,
+  assertRoleArchivable,
 } from '../domain/role';
 import { createIamError } from '../errors/iam-errors';
-import type { IRoleRepository, IAuditLogRepository, IPermissionRepository } from '../domain/repositories';
+import type { IRoleRepository, IAuditLogRepository, IPermissionRepository, IUserRepository, INotificationRepository } from '../domain/repositories';
 
 export interface RoleCommandContext {
   actorId: string;
@@ -20,7 +21,9 @@ export class RoleService {
   constructor(
     private readonly roleRepository: IRoleRepository,
     private readonly permissionRepository: IPermissionRepository,
-    private readonly auditLogRepository: IAuditLogRepository
+    private readonly auditLogRepository: IAuditLogRepository,
+    private readonly userRepository?: IUserRepository,
+    private readonly notificationRepository?: INotificationRepository
   ) {}
 
   private checkPermission(context: RoleCommandContext, permission: string): void {
@@ -197,7 +200,9 @@ export class RoleService {
     const role = await this.roleRepository.findById(roleId as Uuid);
     if (!role) throw createIamError('IAM-SYS-001');
 
-    if (role.isSystemRole) {
+    try {
+      assertRoleArchivable(role);
+    } catch {
       throw createIamError('IAM-VAL-010');
     }
 
@@ -303,6 +308,27 @@ export class RoleService {
     }
 
     await this.roleRepository.assignRoleToUser(userId as Uuid, roleId as Uuid, context.actorId as Uuid);
+
+    if (this.userRepository && this.notificationRepository) {
+      const recipient = await this.userRepository.findById(userId as Uuid);
+      if (!recipient) {
+        throw createIamError('IAM-SYS-001');
+      }
+
+      await this.notificationRepository.create({
+        id: crypto.randomUUID() as Uuid,
+        type: 'user.role_assigned',
+        recipientUserId: recipient.id,
+        recipientEmail: recipient.email,
+        subject: `Role assigned: ${role.roleName}`,
+        body: `A new role, ${role.roleName}, has been assigned to your account.`,
+        status: 'Pending',
+        metadata: { roleId: role.id, roleCode: role.roleCode },
+        providerResponse: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+    }
 
     await this.auditLogRepository.append({
       id: crypto.randomUUID() as Uuid,

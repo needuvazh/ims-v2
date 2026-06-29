@@ -77,6 +77,21 @@ The system SHALL model users with a linked `Person`, unique `username`, unique `
 - **WHEN** user creation is attempted with duplicate email, duplicate mobile, no role, or no branch
 - **THEN** the system SHALL reject the command with `IAM-VAL-001`, `IAM-VAL-002`, `IAM-VAL-008`, or `IAM-VAL-007` respectively
 
+### Requirement: IAM API Boundary Validation
+The system SHALL validate IAM request payloads with shared Zod schemas so route handlers and application services use the same password, pagination, branch, and policy rules.
+
+#### Scenario: Shared validation rejects weak passwords
+- **WHEN** a login, password reset, or password change request submits a password that fails the shared IAM password policy
+- **THEN** the system SHALL reject the request with `IAM-VAL-005`
+
+#### Scenario: Shared validation rejects password reuse
+- **WHEN** a password reset or password change request reuses one of the last 10 password hashes
+- **THEN** the system SHALL reject the request with `IAM-VAL-009`
+
+#### Scenario: Shared validation preserves stable field messages
+- **WHEN** an IAM API request fails boundary validation
+- **THEN** the system SHALL return stable IAM validation messages rather than default framework messages
+
 ### Requirement: IAM Role and Permission Administration
 The system SHALL manage roles and permissions dynamically without hardcoded role checks.
 

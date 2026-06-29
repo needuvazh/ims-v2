@@ -80,6 +80,19 @@ export class RefreshTokenService {
   }
 }
 
+let developmentKeyPair: { publicKey: string; privateKey: string } | null = null;
+
+/**
+ * Shared dev/test RSA key pair fallback used when env-based JWT keys are absent.
+ */
+export function getDevelopmentKeyPair(): { publicKey: string; privateKey: string } {
+  if (!developmentKeyPair) {
+    developmentKeyPair = generateRSAKeyPair();
+  }
+
+  return developmentKeyPair;
+}
+
 /**
  * Generate a transient RSA 2048 key pair (for dev/testing fallbacks).
  */

@@ -127,6 +127,14 @@ export class BranchAccessService {
         nextDefault.updatedAt = now;
         nextDefault.updatedBy = context.actorId;
         await this.userBranchAccessRepository.update(nextDefault);
+
+        const user = await this.userRepository.findById(userId);
+        if (user) {
+          user.defaultBranchId = nextDefault.branchId;
+          user.updatedAt = now;
+          user.updatedBy = context.actorId;
+          await this.userRepository.update(user);
+        }
       }
     }
 
@@ -169,6 +177,14 @@ export class BranchAccessService {
     targetAccess.isDefault = true;
     targetAccess.updatedAt = now;
     targetAccess.updatedBy = context.actorId;
+
+    const user = await this.userRepository.findById(userId);
+    if (user) {
+      user.defaultBranchId = branchId;
+      user.updatedAt = now;
+      user.updatedBy = context.actorId;
+      await this.userRepository.update(user);
+    }
 
     await this.userBranchAccessRepository.update(targetAccess);
 

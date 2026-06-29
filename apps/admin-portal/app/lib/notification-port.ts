@@ -4,13 +4,16 @@
  * In development:  Prints the reset link to stdout so developers can use it.
  * In production:  Logs a warning only — email provider not yet configured.
  *
- * IMPORTANT: The reset URL contains a raw token — this stub only logs the
+ * IMPORTANT: The reset URL contains a raw token - this stub only logs the
  * full URL when NODE_ENV !== 'production'. In production the token is never
  * written to any log sink until a real email provider is injected (Phase 2).
  *
  * Replace this with an SMTP / SendGrid / Postmark adapter in Phase 2.
  */
-import type { PasswordResetNotificationPort } from '@ims/identity-access';
+
+export interface PasswordResetNotificationPort {
+  sendPasswordResetLink(input: { toEmail: string; resetUrl: string }): Promise<void>;
+}
 
 export class ConsolePasswordResetPort implements PasswordResetNotificationPort {
   async sendPasswordResetLink({

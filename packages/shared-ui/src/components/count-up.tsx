@@ -11,16 +11,11 @@ export function CountUp({ value, duration = 1800 }: CountUpProps) {
   const [display, setDisplay] = useState('0');
   const ref = useRef<HTMLSpanElement>(null);
   const started = useRef(false);
+  const match = value.match(/^([\d.]+)(.*)$/);
 
   useEffect(() => {
     const element = ref.current;
-    if (!element) {
-      return;
-    }
-
-    const match = value.match(/^([\d.]+)(.*)$/);
-    if (!match) {
-      setDisplay(value);
+    if (!element || !match) {
       return;
     }
 
@@ -56,7 +51,11 @@ export function CountUp({ value, duration = 1800 }: CountUpProps) {
 
     observer.observe(element);
     return () => observer.disconnect();
-  }, [duration, value]);
+  }, [duration, match, value]);
+
+  if (!match) {
+    return <span ref={ref}>{value}</span>;
+  }
 
   return <span ref={ref}>{display}</span>;
 }

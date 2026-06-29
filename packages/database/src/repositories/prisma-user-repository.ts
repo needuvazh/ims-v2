@@ -5,6 +5,20 @@ import type { Uuid } from '@ims/shared-kernel';
 export class PrismaUserRepository implements IUserRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
+  private async ensureEmailAvailable(email: string, excludeUserId?: Uuid): Promise<void> {
+    const existingUser = await this.prisma.user.findFirst({
+      where: {
+        email,
+        ...(excludeUserId ? { id: { not: excludeUserId } } : {}),
+      },
+      select: { id: true },
+    });
+
+    if (existingUser) {
+      throw new Error('Email already exists.');
+    }
+  }
+
   private mapUser(row: any): User {
     return {
       id: row.id as Uuid,
@@ -35,6 +49,11 @@ export class PrismaUserRepository implements IUserRepository {
       nationality: row.nationality,
       dateOfBirth: row.dateOfBirth,
       gender: row.gender,
+      createdBy: row.createdBy,
+      updatedBy: row.updatedBy,
+      deletedAt: row.deletedAt,
+      deletedBy: row.deletedBy,
+      isDeleted: row.isDeleted,
     };
   }
 
@@ -74,17 +93,24 @@ export class PrismaUserRepository implements IUserRepository {
   }
 
   async create(user: User, person: Person): Promise<User> {
+    await this.ensureEmailAvailable(user.email);
+
     return this.prisma.$transaction(async (tx) => {
       await tx.person.create({
         data: {
-          id: person.id,
-          firstName: person.firstName,
-          lastName: person.lastName,
-          mobile: person.mobile,
-          nationalId: person.nationalId,
-          nationality: person.nationality,
-          dateOfBirth: person.dateOfBirth,
+            id: person.id,
+            firstName: person.firstName,
+            lastName: person.lastName,
+            mobile: person.mobile,
+            nationalId: person.nationalId,
+            nationality: person.nationality,
+            dateOfBirth: person.dateOfBirth,
           gender: person.gender,
+          createdBy: person.createdBy,
+          updatedBy: person.updatedBy,
+          deletedAt: person.deletedAt,
+          deletedBy: person.deletedBy,
+          isDeleted: person.isDeleted ?? false,
         },
       });
 
@@ -113,6 +139,8 @@ export class PrismaUserRepository implements IUserRepository {
   }
 
   async update(user: User, person?: Person): Promise<User> {
+    await this.ensureEmailAvailable(user.email, user.id);
+
     return this.prisma.$transaction(async (tx) => {
       if (person) {
         await tx.person.update({
@@ -125,6 +153,10 @@ export class PrismaUserRepository implements IUserRepository {
             nationality: person.nationality,
             dateOfBirth: person.dateOfBirth,
             gender: person.gender,
+            updatedBy: person.updatedBy,
+            deletedAt: person.deletedAt,
+            deletedBy: person.deletedBy,
+            isDeleted: person.isDeleted ?? false,
           },
         });
       }
@@ -149,6 +181,18 @@ export class PrismaUserRepository implements IUserRepository {
       });
 
       return this.mapUser(row);
+    });
+  }
+
+  async archive(userId: Uuid, actorId?: Uuid): Promise<void> {
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        status: 'Archived',
+        isDeleted: true,
+        deletedAt: new Date(),
+        deletedBy: actorId ?? null,
+      },
     });
   }
 

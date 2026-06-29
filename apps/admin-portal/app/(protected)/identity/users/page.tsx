@@ -133,7 +133,7 @@ export default async function IdentityUsersPage(props: {
             {
               key: 'roleId',
               label: 'Role',
-              options: data.roles.map((role) => ({ value: role.id, label: role.roleName })),
+              options: data.roles.map((role: { id: string; roleName: string }) => ({ value: role.id, label: role.roleName })),
             }
           ]}
         />
@@ -175,12 +175,12 @@ export default async function IdentityUsersPage(props: {
                     </TableCell>
                     <TableCell>
                       <div className="flex flex-wrap gap-1.5">
-                        {(user.dataScopes ?? []).some((scope) => scope.scopeType === 'All') ? (
+                        {(user.dataScopes ?? []).some((scope: { scopeType: string }) => scope.scopeType === 'All') ? (
                           <Badge variant="default">All Branches</Badge>
                         ) : (
                           (user.dataScopes ?? [])
-                            .filter((scope) => scope.scopeType === 'Branch' && scope.branchId)
-                            .map((scope, index) => (
+                            .filter((scope: { scopeType: string; branchId?: string | null }) => scope.scopeType === 'Branch' && scope.branchId)
+                            .map((scope: { branchId?: string | null }, index: number) => (
                               <Badge key={`${user.id}-${scope.branchId}-${index}`} variant="muted">
                                 {scope.branchId ? branchById.get(scope.branchId as string) ?? scope.branchId : 'Branch'}
                               </Badge>

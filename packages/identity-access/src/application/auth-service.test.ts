@@ -1,433 +1,425 @@
-import { describe, expect, it, beforeEach } from 'vitest';
-import bcrypt from 'bcryptjs';
-import nodeCrypto from 'crypto';
-import { DomainError } from '@ims/shared-kernel';
-import type { Uuid } from '@ims/shared-kernel';
+import { beforeEach, describe, expect, it } from 'vitest';
+import crypto from 'crypto';
 import { decodeSession } from '@ims/shared-auth';
-import { AuthService, type AuthUserRepository, type AuthSessionRepository, type AuthResetTokenRepository } from './auth-service';
 import { InMemoryAuditLogRepository } from '@ims/audit';
-import type { UserWithCredentials } from '../domain/user';
+import { DEFAULT_SECURITY_POLICY, type SecurityPolicy } from '../domain/security-policy';
+import { PasswordPolicy } from '../domain/password-policy';
+import { AuthService } from './auth-service';
+import type {
+  IUserRepository,
+  ISessionRepository,
+  IPasswordHistoryRepository,
+  ISecurityPolicyRepository,
+  IAuditLogRepository,
+  ILoginHistoryRepository,
+  IUserActivationTokenRepository,
+  IRoleRepository,
+  IUserBranchAccessRepository,
+  UserSessionDto,
+  LoginHistoryDto,
+  UserActivationTokenDto,
+} from '../domain/repositories';
+import type { User, Person } from '../domain/user';
+import type { Role } from '../domain/role';
+import type { Permission } from '../domain/permission';
+import type { UserBranchAccess } from '../domain/user-branch-access';
 
-describe('AuthService Security and Lockout Tests', () => {
+const passwordPolicy = new PasswordPolicy();
+
+function clone<T>(value: T): T {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function createUser(overrides: Partial<User> = {}): User {
+  return {
+    id: crypto.randomUUID(),
+    personId: crypto.randomUUID(),
+    username: 'test.user',
+    email: 'test@example.com',
+    userType: 'Admin',
+    status: 'Active',
+    defaultBranchId: '11111111-1111-1111-1111-111111111111',
+    preferredLanguage: 'en',
+    failedLoginCount: 0,
+    lockedUntil: null,
+    passwordChangedAt: new Date('2026-06-01T00:00:00.000Z'),
+    version: 1,
+    effectiveStartDate: new Date('2025-01-01T00:00:00.000Z'),
+    effectiveEndDate: null,
+    isDeleted: false,
+    ...overrides,
+  };
+}
+
+function createPerson(overrides: Partial<Person> = {}): Person {
+  return {
+    id: crypto.randomUUID(),
+    firstName: 'Test',
+    lastName: 'User',
+    mobile: '+96890000000',
+    nationalId: null,
+    nationality: null,
+    dateOfBirth: null,
+    gender: null,
+    ...overrides,
+  };
+}
+
+function createSession(overrides: Partial<UserSessionDto> = {}): UserSessionDto {
+  return {
+    id: crypto.randomUUID(),
+    userId: '11111111-1111-1111-1111-111111111111',
+    accessTokenJti: crypto.randomUUID(),
+    hashedRefreshToken: 'hash',
+    previousHashedRefreshToken: null,
+    activeBranchId: '11111111-1111-1111-1111-111111111111',
+    userAgent: 'test-agent',
+    ipAddress: '127.0.0.1',
+    status: 'Active',
+    expiresAt: new Date(Date.now() + 60 * 60 * 1000),
+    lastActivityAt: new Date(),
+    createdAt: new Date(),
+    ...overrides,
+  };
+}
+
+describe('AuthService', () => {
   let authService: AuthService;
-  let mockUserRepo: AuthUserRepository;
-  let mockSessionRepo: AuthSessionRepository;
-  let mockResetTokenRepo: AuthResetTokenRepository;
-  let mockAuditRepo: InMemoryAuditLogRepository;
-  let notificationCalls: Array<{ toEmail: string; resetUrl: string }>;
+  let userRepo: IUserRepository;
+  let sessionRepo: ISessionRepository;
+  let passwordHistoryRepo: IPasswordHistoryRepository;
+  let securityPolicyRepo: ISecurityPolicyRepository;
+  let auditRepo: IAuditLogRepository;
+  let loginHistoryRepo: ILoginHistoryRepository;
+  let activationTokenRepo: IUserActivationTokenRepository;
+  let roleRepo: IRoleRepository;
+  let branchRepo: IUserBranchAccessRepository;
+  let outboxRepo: { publish: (event: { eventType: string }) => Promise<void> };
+  let notificationPort: {
+    sendActivationEmail: (recipientEmail: string, activationData: { firstName: string; activationLink: string; expiresAt: Date }) => Promise<void>;
+    sendPasswordResetEmail: (recipientEmail: string, resetData: { firstName: string; expiresAt: Date }) => Promise<void>;
+    sendAccountLockedNotification: (adminEmails: string[], userData: { displayName: string; failedAttempts: number; lockedUntil: Date }) => Promise<void>;
+    sendRoleAssignedNotification: (recipientEmail: string, roleData: { roleName: string }) => Promise<void>;
+    sendBranchAssignedNotification: (recipientEmail: string, branchData: { branchName: string }) => Promise<void>;
+  };
 
-  const passwordHash = bcrypt.hashSync('Password@123', 12);
-  const now = new Date();
+  let currentUser: User;
+  let currentPerson: Person;
+  let currentPasswordHash: string;
+  const sessions = new Map<string, UserSessionDto>();
+  const resetTokens = new Map<string, UserActivationTokenDto & { usedAt: Date | null }>();
+  const loginHistory: LoginHistoryDto[] = [];
+  const branchAccessRows: UserBranchAccess[] = [];
+  const outboxEvents: string[] = [];
 
-  // Mock data representing standard scenarios
-  let testUser: UserWithCredentials;
-  let sessionsDb: Map<string, any>;
-  let resetTokensDb: Map<string, any>;
+  beforeEach(async () => {
+    process.env.SESSION_SECRET = 'auth-service-test-secret-auth-service-test-secret';
 
-  beforeEach(() => {
-    process.env.SESSION_SECRET = 'test_secret_key_for_hmac_signature_checks_must_be_long_enough';
-    mockAuditRepo = new InMemoryAuditLogRepository();
-    sessionsDb = new Map();
-    resetTokensDb = new Map();
-    notificationCalls = [];
+    currentUser = createUser();
+    currentPerson = createPerson({ id: currentUser.personId, firstName: 'Test', lastName: 'User' });
+    currentPasswordHash = await passwordPolicy.hash('Password@123');
 
-    testUser = {
-      id: 'dcd16b08-8e68-45be-bbfe-81d3ee6b69fa' as Uuid,
-      fullName: 'Test User',
-      email: 'test@example.com',
-      phone: null,
-      userType: 'Admin',
+    sessions.clear();
+    resetTokens.clear();
+    loginHistory.length = 0;
+    branchAccessRows.length = 0;
+    outboxEvents.length = 0;
+
+    branchAccessRows.push({
+      id: crypto.randomUUID(),
+      userId: currentUser.id,
+      branchId: currentUser.defaultBranchId!,
+      isDefault: true,
+      includeChildBranches: false,
+      consolidatedVisibility: false,
       status: 'Active',
-      passwordHash,
-      roles: ['ADMIN'],
-      permissions: ['identity.read', 'identity.write'],
-      dataScopes: [],
-      effectiveStartDate: new Date(now.getTime() - 24 * 60 * 60 * 1000), // yesterday
-      effectiveEndDate: null,
-      failedLoginAttempts: 0,
-      lockoutUntil: null,
-    };
+      revokedAt: null,
+      revokedBy: null,
+      reason: null,
+      createdAt: new Date(),
+      createdBy: currentUser.id,
+      updatedAt: null,
+      updatedBy: null,
+    });
 
-    mockUserRepo = {
-      findByEmailWithCredentials: async (email) => {
-        if (email === testUser.email) return { ...testUser };
-        return null;
+    userRepo = {
+      findById: async (id) => (id === currentUser.id ? currentUser : null),
+      findByEmail: async (email) => (email === currentUser.email ? currentUser : null),
+      findByUsername: async () => currentUser,
+      findPersonById: async (id) => (id === currentPerson.id ? currentPerson : null),
+      findPersonByMobile: async (mobile) => (mobile === currentPerson.mobile ? currentPerson : null),
+      create: async (user) => {
+        currentUser = clone(user);
+        return currentUser;
       },
-      findByIdWithCredentials: async (userId) => {
-        if (userId === testUser.id) return { ...testUser };
-        return null;
+      update: async (user, person) => {
+        currentUser = clone(user);
+        if (person) currentPerson = clone(person);
+        return currentUser;
       },
-      recordLastLogin: async () => {},
-      incrementFailedAttempts: async (userId, lockoutMinutes = 15) => {
-        if (userId === testUser.id) {
-          testUser.failedLoginAttempts = (testUser.failedLoginAttempts ?? 0) + 1;
-          if (testUser.failedLoginAttempts >= 5) {
-            testUser.status = 'Locked';
-            testUser.lockoutUntil = new Date(Date.now() + lockoutMinutes * 60 * 1000);
-          }
-        }
+      search: async () => ({ items: [currentUser], total: 1 }),
+      getPasswordHash: async () => currentPasswordHash,
+      updatePassword: async (_userId, passwordHash) => {
+        currentPasswordHash = passwordHash;
       },
-      resetFailedAttempts: async (userId) => {
-        if (userId === testUser.id) {
-          testUser.failedLoginAttempts = 0;
-          testUser.lockoutUntil = null;
-          testUser.status = 'Active';
-        }
+      createResetToken: async ({ id, userId, tokenHash, expiresAt }) => {
+        resetTokens.set(tokenHash, { id, userId, tokenHash, expiresAt, status: 'Pending', createdAt: new Date(), usedAt: null });
       },
-      updatePassword: async (userId, newHash) => {
-        if (userId === testUser.id) {
-          testUser.passwordHash = newHash;
-        }
+      findResetTokenByHash: async (tokenHash) => {
+        const token = resetTokens.get(tokenHash);
+        return token ? { userId: token.userId, expiresAt: token.expiresAt, usedAt: token.usedAt } : null;
       },
-      updatePasswordAndUnlock: async (userId, newHash) => {
-        if (userId === testUser.id) {
-          testUser.passwordHash = newHash;
-          testUser.failedLoginAttempts = 0;
-          testUser.lockoutUntil = null;
-          testUser.status = 'Active';
-        }
+      markResetTokenAsUsed: async (tokenHash) => {
+        const token = resetTokens.get(tokenHash);
+        if (token) token.usedAt = new Date();
       },
     };
 
-    mockSessionRepo = {
-      createSession: async (session) => {
-        sessionsDb.set(session.tokenHash, {
-          userId: session.userId,
-          tokenHash: session.tokenHash,
-          userAgent: session.userAgent,
-          ipAddress: session.ipAddress,
-          status: 'Active',
-          expiresAt: session.expiresAt,
-        });
+    sessionRepo = {
+      create: async (session) => {
+        sessions.set(session.accessTokenJti, clone(session));
+        return clone(session);
       },
-      getSessionByHash: async (tokenHash) => {
-        return sessionsDb.get(tokenHash) ?? null;
+      findById: async (id) => sessions.get(id) ?? null,
+      findByAccessTokenJti: async (jti) => sessions.get(jti) ?? null,
+      findByHashedRefreshToken: async (hash) => Array.from(sessions.values()).find((session) => session.hashedRefreshToken === hash || session.previousHashedRefreshToken === hash) ?? null,
+      update: async (session) => {
+        sessions.set(session.accessTokenJti, clone(session));
+        return clone(session);
       },
-      revokeSessionByHash: async (tokenHash) => {
-        const session = sessionsDb.get(tokenHash);
+      revoke: async (id) => {
+        const session = sessions.get(id as string);
         if (session) {
           session.status = 'Revoked';
         }
       },
-      revokeAllSessionsForUser: async (userId) => {
-        for (const [hash, session] of sessionsDb.entries()) {
+      revokeAllForUser: async (userId) => {
+        for (const session of sessions.values()) {
           if (session.userId === userId) {
             session.status = 'Revoked';
           }
         }
       },
+      listActiveForUser: async (userId) => Array.from(sessions.values()).filter((session) => session.userId === userId && session.status === 'Active'),
     };
 
-    mockResetTokenRepo = {
-      createToken: async (data) => {
-        resetTokensDb.set(data.tokenHash, {
-          userId: data.userId,
-          tokenHash: data.tokenHash,
-          expiresAt: data.expiresAt,
-          usedAt: null,
-        });
+    outboxRepo = {
+      publish: async (event) => {
+        outboxEvents.push(event.eventType);
       },
-      findActiveTokenByHash: async (tokenHash) => {
-        return resetTokensDb.get(tokenHash) ?? null;
+    };
+
+    passwordHistoryRepo = {
+      append: async () => undefined,
+      findRecentN: async () => [{ id: crypto.randomUUID(), userId: currentUser.id, passwordHash: currentPasswordHash, createdAt: new Date() }],
+    };
+
+    securityPolicyRepo = {
+      get: async () => ({ ...DEFAULT_SECURITY_POLICY, id: currentUser.id, maxConcurrentSessions: 3, passwordExpiryDays: 90 }),
+      update: async (policy: SecurityPolicy) => policy,
+    };
+
+    auditRepo = new InMemoryAuditLogRepository();
+
+    loginHistoryRepo = {
+      append: async (record) => {
+        loginHistory.push(record);
       },
-      markTokenAsUsed: async (tokenHash) => {
-        const entry = resetTokensDb.get(tokenHash);
-        if (entry) {
-          entry.usedAt = new Date();
+      findByUser: async () => ({ items: loginHistory.filter((record) => record.userId === currentUser.id), total: loginHistory.length }),
+      list: async () => ({ items: [...loginHistory], total: loginHistory.length }),
+    };
+
+    activationTokenRepo = {
+      create: async (token) => {
+        resetTokens.set(token.tokenHash, { ...token, usedAt: token.usedAt ?? null });
+        return token;
+      },
+      findByHash: async (hash) => {
+        const token = resetTokens.get(hash);
+        return token ? { id: token.id, userId: token.userId, tokenHash: token.tokenHash, expiresAt: token.expiresAt, status: token.status, createdAt: token.createdAt, usedAt: token.usedAt } : null;
+      },
+      update: async (token) => {
+        resetTokens.set(token.tokenHash, { ...token, usedAt: token.usedAt ?? null });
+        return token;
+      },
+      invalidatePendingForUser: async (userId) => {
+        for (const token of resetTokens.values()) {
+          if (token.userId === userId && token.status === 'Pending') {
+            token.status = 'Expired';
+          }
         }
       },
     };
 
-    authService = new AuthService(
-      mockUserRepo,
-      mockSessionRepo,
-      mockResetTokenRepo,
-      mockAuditRepo,
-      {
-        sendPasswordResetLink: async (params) => { notificationCalls.push(params); },
+    roleRepo = {
+      findById: async (id) => {
+        if (id === 'role-active') return { id, roleCode: 'ROLE_ACTIVE', roleName: 'Role Active', description: null, status: 'Active', isSystemRole: false, version: 1, effectiveStartDate: new Date(), effectiveEndDate: null, createdAt: new Date(), createdBy: null, updatedAt: null, updatedBy: null };
+        if (id === 'role-system') return { id, roleCode: 'ROLE_SYSTEM', roleName: 'Role System', description: null, status: 'Active', isSystemRole: true, version: 1, effectiveStartDate: new Date(), effectiveEndDate: null, createdAt: new Date(), createdBy: null, updatedAt: null, updatedBy: null };
+        return null;
       },
+      findByCode: async () => null,
+      create: async (role) => role,
+      update: async (role) => role,
+      search: async () => ({ items: [], total: 0 }),
+      assignRoleToUser: async () => undefined,
+      revokeRoleFromUser: async () => undefined,
+      listRolesForUser: async () => [{ role: { id: 'role-active', roleCode: 'ROLE_ACTIVE', roleName: 'Role Active', description: null, status: 'Active', isSystemRole: false, version: 1, effectiveStartDate: new Date(), effectiveEndDate: null, createdAt: new Date(), createdBy: null, updatedAt: null, updatedBy: null }, status: 'Active', revokedAt: null, revokedBy: null, reason: null }],
+      assignPermissionToRole: async () => undefined,
+      removePermissionFromRole: async () => undefined,
+      listPermissionsForRole: async () => [{ id: crypto.randomUUID(), permissionCode: 'iam.user.read', permissionName: 'Read users', permissionType: 'Action', description: null, status: 'Active', createdAt: new Date(), createdBy: null, updatedAt: null, updatedBy: null, deletedAt: null, deletedBy: null, isDeleted: false }],
+    };
+
+    branchRepo = {
+      findByUser: async () => branchAccessRows,
+      findById: async () => branchAccessRows[0] ?? null,
+      assign: async (access) => {
+        branchAccessRows.push(access);
+        return access;
+      },
+      update: async (access) => access,
+    };
+
+    notificationPort = {
+      sendActivationEmail: async () => undefined,
+      sendPasswordResetEmail: async () => undefined,
+      sendAccountLockedNotification: async () => undefined,
+      sendRoleAssignedNotification: async () => undefined,
+      sendBranchAssignedNotification: async () => undefined,
+    };
+
+    authService = new AuthService(
+      userRepo,
+      sessionRepo,
+      passwordHistoryRepo,
+      securityPolicyRepo,
+      auditRepo,
+      loginHistoryRepo,
+      notificationPort,
+      roleRepo,
+      branchRepo,
+      outboxRepo as any,
     );
   });
 
-  describe('User Status Verification', () => {
-    it('successfully signs in active user with correct password', async () => {
-      const result = await authService.signIn({
-        email: 'test@example.com',
-        password: 'Password@123',
-      });
+  it('signs in an active user and records login history and audit', async () => {
+    const result = await authService.signIn({ email: currentUser.email, password: 'Password@123' });
+    const decoded = await decodeSession(result.sessionToken);
 
-      expect(result.sessionToken).toBeDefined();
-      expect(result.session.userId).toBe(testUser.id);
-      
-      const logs = mockAuditRepo.list();
-      expect(logs.some(l => l.action === 'identity.login_succeeded')).toBe(true);
-
-      const hash = nodeCrypto.createHash('sha256').update(result.sessionToken).digest('hex');
-      const persisted = sessionsDb.get(hash);
-      expect(persisted).toBeDefined();
-      expect(persisted.status).toBe('Active');
-    });
-
-    it('blocks deactivated user from logging in', async () => {
-      testUser.status = 'Inactive';
-      await expect(
-        authService.signIn({ email: 'test@example.com', password: 'Password@123' })
-      ).rejects.toThrowError(DomainError);
-    });
+    expect(result.session.userId).toBe(currentUser.id);
+    expect(result.sessionToken).toContain('.');
+    expect(decoded?.roles).toContain('ROLE_ACTIVE');
+    expect(loginHistory).toHaveLength(1);
+    expect(loginHistory[0].status).toBe('Success');
+    expect(auditRepo.list().some((entry) => entry.action === 'iam.user.login-succeeded')).toBe(true);
   });
 
-  describe('Brute-force Account Lockout', () => {
-    it('increments failure counts on wrong password and locks user at 5 failures', async () => {
-      // 4 failures
-      for (let i = 0; i < 4; i++) {
-        await expect(
-          authService.signIn({ email: 'test@example.com', password: 'wrong' })
-        ).rejects.toThrowError('Invalid email or password.');
-        expect(testUser.failedLoginAttempts).toBe(i + 1);
-        expect(testUser.status).toBe('Active');
-      }
+  it('locks the account after repeated invalid passwords', async () => {
+    for (let i = 0; i < 5; i++) {
+      await expect(authService.signIn({ email: currentUser.email, password: 'WrongPassword123!' })).rejects.toMatchObject({ errorCode: i < 4 ? 'IAM-AUTH-001' : 'IAM-AUTH-002' });
+    }
 
-      // 5th failure triggers lock
-      await expect(
-        authService.signIn({ email: 'test@example.com', password: 'wrong' })
-      ).rejects.toThrowError('Invalid email or password.');
-
-      expect(testUser.failedLoginAttempts).toBe(5);
-      expect(testUser.status).toBe('Locked');
-      expect(testUser.lockoutUntil!.getTime()).toBeGreaterThan(Date.now());
-
-      // Subsequent login attempt fails immediately due to lockout status
-      await expect(
-        authService.signIn({ email: 'test@example.com', password: 'Password@123' })
-      ).rejects.toThrowError('Your account is locked.');
-    });
-
-    it('resets failure counts to 0 on successful login', async () => {
-      testUser.failedLoginAttempts = 3;
-      
-      await authService.signIn({ email: 'test@example.com', password: 'Password@123' });
-      
-      expect(testUser.failedLoginAttempts).toBe(0);
-      expect(testUser.status).toBe('Active');
-    });
-
-    it('allows retry after lockout duration expires', async () => {
-      testUser.status = 'Locked';
-      testUser.lockoutUntil = new Date(Date.now() - 1000); // 1 second ago
-
-      await expect(
-        authService.signIn({ email: 'test@example.com', password: 'Password@123' })
-      ).resolves.toBeDefined();
-
-      expect(testUser.status).toBe('Active');
-      expect(testUser.failedLoginAttempts).toBe(0);
-    });
+    expect(currentUser.status).toBe('Locked');
+    expect(currentUser.lockedUntil).not.toBeNull();
+    expect(auditRepo.list().some((entry) => entry.action === 'iam.user.locked')).toBe(true);
   });
 
-  describe('Effective Dating Range Enforcements', () => {
-    it('blocks login if user effective date is in the future', async () => {
-      testUser.effectiveStartDate = new Date(Date.now() + 24 * 60 * 60 * 1000); // tomorrow
-      
-      await expect(
-        authService.signIn({ email: 'test@example.com', password: 'Password@123' })
-      ).rejects.toThrowError('Your account is not currently within its active date range.');
-    });
-
-    it('blocks login if user effective date is expired', async () => {
-      testUser.effectiveEndDate = new Date(Date.now() - 24 * 60 * 60 * 1000); // yesterday
-      
-      await expect(
-        authService.signIn({ email: 'test@example.com', password: 'Password@123' })
-      ).rejects.toThrowError('Your account is not currently within its active date range.');
-    });
+  it('rejects suspended users', async () => {
+    currentUser.status = 'Suspended';
+    await expect(authService.signIn({ email: currentUser.email, password: 'Password@123' })).rejects.toMatchObject({ errorCode: 'IAM-AUTH-003' });
   });
 
-  describe('Session Invalidation', () => {
-    it('revoking session marks it Revoked in repository', async () => {
-      const result = await authService.signIn({
-        email: 'test@example.com',
-        password: 'Password@123',
-      });
+  it('rejects archived users and SQL injection style emails', async () => {
+    currentUser.status = 'Archived';
+    await expect(authService.signIn({ email: currentUser.email, password: 'Password@123' })).rejects.toMatchObject({ errorCode: 'IAM-AUTH-001' });
 
-      const hash = nodeCrypto.createHash('sha256').update(result.sessionToken).digest('hex');
-      const activeSession = sessionsDb.get(hash);
-      expect(activeSession.status).toBe('Active');
-
-      await mockSessionRepo.revokeSessionByHash(hash);
-      const revokedSession = sessionsDb.get(hash);
-      expect(revokedSession.status).toBe('Revoked');
-    });
+    await expect(authService.signIn({ email: "test@example.com' OR 1=1 --", password: 'Password@123' })).rejects.toMatchObject({ errorCode: 'IAM-AUTH-001' });
   });
 
-  describe('Password Recovery (Forgot & Reset Password)', () => {
-    it('generates reset token, records audit log, and delivers notification for active user request', async () => {
-      await authService.requestPasswordReset({ email: 'test@example.com' });
-
-      expect(resetTokensDb.size).toBe(1);
-      const entry = Array.from(resetTokensDb.values())[0];
-      expect(entry.userId).toBe(testUser.id);
-      expect(entry.usedAt).toBeNull();
-      expect(entry.expiresAt.getTime()).toBeGreaterThan(Date.now());
-
-      // Notification port must have been called with the email
-      expect(notificationCalls).toHaveLength(1);
-      expect(notificationCalls[0].toEmail).toBe('test@example.com');
-      expect(notificationCalls[0].resetUrl).toContain('/reset-password?token=');
-
-      const logs = mockAuditRepo.list();
-      expect(logs.some(l => l.action === 'identity.password_reset_requested')).toBe(true);
-    });
-
-    it('returns without error or token creation if email does not exist', async () => {
-      await authService.requestPasswordReset({ email: 'nonexistent@example.com' });
-      expect(resetTokensDb.size).toBe(0);
-    });
-
-    it('returns without error or token creation if user status is inactive', async () => {
-      testUser.status = 'Inactive';
-      await authService.requestPasswordReset({ email: 'test@example.com' });
-      expect(resetTokensDb.size).toBe(0);
-    });
-
-    it('successfully resets password, clears attempts, unlocks account, and invalidates active sessions with a valid token', async () => {
-      // 1. Generate token
-      await authService.requestPasswordReset({ email: 'test@example.com' });
-      const rawTokenHash = Array.from(resetTokensDb.keys())[0];
-      const rawTokenEntry = resetTokensDb.get(rawTokenHash);
-
-      // Reconstruct token verification logic in test
-      const rawToken = 'dummy-token';
-      const tokenHash = nodeCrypto.createHash('sha256').update(rawToken).digest('hex');
-      resetTokensDb.set(tokenHash, rawTokenEntry);
-
-      mockResetTokenRepo.findActiveTokenByHash = async (hash) => {
-        if (hash === tokenHash) return rawTokenEntry;
-        return null;
-      };
-
-      // 2. Set user as locked to verify automatic unlock
-      testUser.status = 'Locked';
-      testUser.failedLoginAttempts = 4;
-      testUser.lockoutUntil = new Date();
-
-      // Create a dummy session to verify total invalidation
-      await mockSessionRepo.createSession({
-        userId: testUser.id,
-        tokenHash: 'dummy_session_hash',
-        userAgent: null,
-        ipAddress: null,
-        expiresAt: new Date(Date.now() + 10000),
-      });
-
-      expect(sessionsDb.get('dummy_session_hash').status).toBe('Active');
-
-      // 3. Reset password
-      await authService.resetPassword({
-        token: rawToken,
-        password: 'NewStrongPassword@2026',
-      });
-
-      // 4. Verify password was updated (can hash verify with bcrypt)
-      const matches = bcrypt.compareSync('NewStrongPassword@2026', testUser.passwordHash);
-      expect(matches).toBe(true);
-      expect(testUser.status).toBe('Active');
-      expect(testUser.failedLoginAttempts).toBe(0);
-      expect(testUser.lockoutUntil).toBeNull();
-      expect(rawTokenEntry.usedAt).toBeDefined();
-      expect(rawTokenEntry.usedAt).not.toBeNull();
-      expect(sessionsDb.get('dummy_session_hash').status).toBe('Revoked');
-
-      const logs = mockAuditRepo.list();
-      expect(logs.some(l => l.action === 'identity.password_reset_completed')).toBe(true);
-    });
-
-    it('fails resetting password if token is expired', async () => {
-      await authService.requestPasswordReset({ email: 'test@example.com' });
-      const rawTokenHash = Array.from(resetTokensDb.keys())[0];
-      const rawTokenEntry = resetTokensDb.get(rawTokenHash);
-      rawTokenEntry.expiresAt = new Date(Date.now() - 1000); // expired
-
-      mockResetTokenRepo.findActiveTokenByHash = async (hash) => {
-        return rawTokenEntry;
-      };
-
-      await expect(
-        authService.resetPassword({ token: 'dummy-token', password: 'NewStrongPassword@2026' })
-      ).rejects.toThrowError('Invalid or expired password reset token.');
-    });
-
-    it('fails resetting password if token was already used', async () => {
-      await authService.requestPasswordReset({ email: 'test@example.com' });
-      const rawTokenHash = Array.from(resetTokensDb.keys())[0];
-      const rawTokenEntry = resetTokensDb.get(rawTokenHash);
-      rawTokenEntry.usedAt = new Date(); // already used
-
-      mockResetTokenRepo.findActiveTokenByHash = async (hash) => {
-        return rawTokenEntry;
-      };
-
-      await expect(
-        authService.resetPassword({ token: 'dummy-token', password: 'NewStrongPassword@2026' })
-      ).rejects.toThrowError('Invalid or expired password reset token.');
-    });
-
-    it('fails resetting password if password does not meet complexity rules', async () => {
-      await authService.requestPasswordReset({ email: 'test@example.com' });
-      const rawTokenHash = Array.from(resetTokensDb.keys())[0];
-      const rawTokenEntry = resetTokensDb.get(rawTokenHash);
-
-      mockResetTokenRepo.findActiveTokenByHash = async (hash) => {
-        return rawTokenEntry;
-      };
-
-      await expect(
-        authService.resetPassword({ token: 'dummy-token', password: 'weak' })
-      ).rejects.toThrow();
-    });
+  it('rejects expired passwords', async () => {
+    currentUser.passwordChangedAt = new Date(Date.now() - 100 * 24 * 60 * 60 * 1000);
+    await expect(authService.signIn({ email: currentUser.email, password: 'Password@123' })).rejects.toMatchObject({ errorCode: 'IAM-AUTH-004' });
   });
 
-  describe('Logged-in Password Change', () => {
-    it('updates the password, revokes existing sessions, and issues a new session', async () => {
-      const signInResult = await authService.signIn({
-        email: 'test@example.com',
-        password: 'Password@123',
-      });
+  it('expires the oldest active session when the concurrent limit is reached', async () => {
+    sessions.set('s1', createSession({ accessTokenJti: 's1', userId: currentUser.id, lastActivityAt: new Date('2026-01-01T00:00:00.000Z') }));
+    sessions.set('s2', createSession({ accessTokenJti: 's2', userId: currentUser.id, lastActivityAt: new Date('2026-01-02T00:00:00.000Z') }));
+    sessions.set('s3', createSession({ accessTokenJti: 's3', userId: currentUser.id, lastActivityAt: new Date('2026-01-03T00:00:00.000Z') }));
 
-      const oldHash = nodeCrypto.createHash('sha256').update(signInResult.sessionToken).digest('hex');
-      expect(sessionsDb.get(oldHash)?.status).toBe('Active');
+    await authService.signIn({ email: currentUser.email, password: 'Password@123' });
 
-      const changeResult = await authService.changePassword(
-        {
-          currentPassword: 'Password@123',
-          newPassword: 'NewStrongPassword@2026',
-        },
-        signInResult.session,
-      );
+    expect(sessions.get('s1')?.status).toBe('Expired');
+    expect(auditRepo.list().some((entry) => entry.action === 'iam.session.expired-by-policy')).toBe(true);
+  });
 
-      const newHash = nodeCrypto.createHash('sha256').update(changeResult.sessionToken).digest('hex');
-      expect(bcrypt.compareSync('NewStrongPassword@2026', testUser.passwordHash)).toBe(true);
-      expect(sessionsDb.get(oldHash)?.status).toBe('Revoked');
-      expect(sessionsDb.get(newHash)?.status).toBe('Active');
+  it('logs out by revoking the session', async () => {
+    const signIn = await authService.signIn({ email: currentUser.email, password: 'Password@123' });
 
-      const logs = mockAuditRepo.list();
-      expect(logs.some((log) => log.action === 'identity.password_changed')).toBe(true);
-    });
+    await authService.logout(signIn.session.accessTokenJti);
 
-    it('rejects password change when the current password is wrong', async () => {
-      const signInResult = await authService.signIn({
-        email: 'test@example.com',
-        password: 'Password@123',
-      });
+    expect(sessions.get(signIn.session.accessTokenJti)?.status).toBe('Revoked');
+    expect(auditRepo.list().some((entry) => entry.action === 'iam.user.logout')).toBe(true);
+  });
 
-      await expect(
-        authService.changePassword(
-          {
-            currentPassword: 'wrong-current-password',
-            newPassword: 'NewStrongPassword@2026',
-          },
-          signInResult.session,
-        )
-      ).rejects.toThrowError('Current password is incorrect.');
-    });
+  it('creates a password reset token and notification intent', async () => {
+    await authService.forgotPassword(currentUser.email);
+
+    expect(resetTokens.size).toBe(1);
+    expect(outboxEvents).toContain('PasswordResetRequested');
+    expect(auditRepo.list().some((entry) => entry.action === 'iam.user.password-reset-requested')).toBe(true);
+  });
+
+  it('rejects refresh token reuse after rotation', async () => {
+    const login = await authService.login(currentUser.email, 'Password@123');
+    const firstRefresh = login.session.hashedRefreshToken;
+
+    const rotated = await authService.refresh(login.refreshToken);
+    expect(rotated.accessToken).toBeTruthy();
+
+    const reusedSession = sessions.get(login.session.accessTokenJti);
+    expect(reusedSession?.previousHashedRefreshToken).toBe(firstRefresh);
+
+    await expect(authService.refresh(login.refreshToken)).rejects.toMatchObject({ errorCode: 'IAM-AUTH-006' });
+    expect(sessions.get(login.session.accessTokenJti)?.status).toBe('Revoked');
+  });
+
+  it('resets the password with a valid token and revokes active sessions', async () => {
+    const hash = crypto.createHash('sha256').update('reset-token').digest('hex');
+    resetTokens.set(hash, { id: crypto.randomUUID(), userId: currentUser.id, tokenHash: hash, expiresAt: new Date(Date.now() + 15 * 60 * 1000), status: 'Pending', createdAt: new Date(), usedAt: null });
+    sessions.set('s1', createSession({ accessTokenJti: 's1', userId: currentUser.id }));
+
+    await authService.resetPassword('reset-token', 'NewPassword@123!');
+
+    expect(await passwordPolicy.verify(currentPasswordHash, 'NewPassword@123!')).toBe(true);
+    expect(resetTokens.get(hash)?.usedAt).not.toBeNull();
+    expect(Array.from(sessions.values()).every((session) => session.status === 'Revoked')).toBe(true);
+    expect(auditRepo.list().some((entry) => entry.action === 'iam.user.password-reset-completed')).toBe(true);
+  });
+
+  it('rejects weak or reused reset passwords', async () => {
+    const hash = crypto.createHash('sha256').update('reset-token-2').digest('hex');
+    resetTokens.set(hash, { id: crypto.randomUUID(), userId: currentUser.id, tokenHash: hash, expiresAt: new Date(Date.now() + 15 * 60 * 1000), status: 'Pending', createdAt: new Date(), usedAt: null });
+
+    await expect(authService.resetPassword('reset-token-2', 'short')).rejects.toMatchObject({ errorCode: 'IAM-VAL-005' });
+    await expect(authService.resetPassword('reset-token-2', 'Password@123')).rejects.toMatchObject({ errorCode: 'IAM-VAL-009' });
+  });
+
+  it('rejects expired reset tokens and invalid refresh tokens', async () => {
+    const expiredHash = crypto.createHash('sha256').update('expired-reset').digest('hex');
+    resetTokens.set(expiredHash, { id: crypto.randomUUID(), userId: currentUser.id, tokenHash: expiredHash, expiresAt: new Date(Date.now() - 60_000), status: 'Pending', createdAt: new Date(), usedAt: null });
+
+    await expect(authService.resetPassword('expired-reset', 'NewPassword@123!')).rejects.toMatchObject({ errorCode: 'IAM-AUTH-006' });
+    await expect(authService.refresh('not-a-real-refresh-token')).rejects.toMatchObject({ errorCode: 'IAM-AUTH-006' });
+  });
+
+  it('changes the password for an authenticated user', async () => {
+    const signIn = await authService.signIn({ email: currentUser.email, password: 'Password@123' });
+    await authService.changePassword({ currentPassword: 'Password@123', newPassword: 'NewPassword@123!' }, signIn.session as any);
+
+    expect(auditRepo.list().some((entry) => entry.action === 'iam.user.password-changed')).toBe(true);
+  });
+
+  it('rejects password change with wrong current password', async () => {
+    const signIn = await authService.signIn({ email: currentUser.email, password: 'Password@123' });
+    await expect(authService.changePassword({ currentPassword: 'WrongPassword!', newPassword: 'NewPassword@123!' }, signIn.session as any)).rejects.toMatchObject({ errorCode: 'IAM-AUTH-001' });
   });
 });

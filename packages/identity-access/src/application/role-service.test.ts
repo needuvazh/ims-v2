@@ -1,170 +1,255 @@
-import { describe, expect, it, beforeEach } from 'vitest';
-import { DomainError } from '@ims/shared-kernel';
-import type { Uuid } from '@ims/shared-kernel';
-import { RoleService, type RoleRepository } from './role-service';
+import { beforeEach, describe, expect, it } from 'vitest';
+import crypto from 'crypto';
 import { InMemoryAuditLogRepository } from '@ims/audit';
-import type { RoleRecord, PermissionRecord } from '../domain/role';
+import { RoleService } from './role-service';
+import type { IRoleRepository, IPermissionRepository, IAuditLogRepository, IUserRepository, INotificationRepository } from '../domain/repositories';
+import type { Role } from '../domain/role';
+import type { Permission } from '../domain/permission';
+import type { User } from '../domain/user';
 
-describe('RoleService Lifecycle Invariant and Audit Tests', () => {
+function createRole(overrides: Partial<Role> = {}): Role {
+  return {
+    id: crypto.randomUUID(),
+    roleCode: 'ROLE_ACTIVE',
+    roleName: 'Role Active',
+    description: null,
+    status: 'Active',
+    isSystemRole: false,
+    version: 1,
+    effectiveStartDate: new Date('2025-01-01T00:00:00.000Z'),
+    effectiveEndDate: null,
+    createdAt: new Date(),
+    createdBy: null,
+    updatedAt: null,
+    updatedBy: null,
+    ...overrides,
+  };
+}
+
+function createPermission(overrides: Partial<Permission> = {}): Permission {
+  return {
+    id: crypto.randomUUID(),
+    permissionCode: 'iam.user.read',
+    permissionName: 'Read users',
+    permissionType: 'Action',
+    description: null,
+    status: 'Active',
+    createdAt: new Date(),
+    createdBy: null,
+    updatedAt: null,
+    updatedBy: null,
+    deletedAt: null,
+    deletedBy: null,
+    isDeleted: false,
+    ...overrides,
+  };
+}
+
+describe('RoleService', () => {
   let roleService: RoleService;
-  let mockRoleRepo: RoleRepository;
-  let mockAuditRepo: InMemoryAuditLogRepository;
+  let roleRepo: IRoleRepository;
+  let permissionRepo: IPermissionRepository;
+  let auditRepo: IAuditLogRepository;
+  let userRepo: IUserRepository;
+  let notificationRepo: INotificationRepository;
 
-  const userActorId = crypto.randomUUID() as Uuid;
-
-  const existingRole: RoleRecord = {
-    id: '7d5ef9b1-ecce-4889-b1d8-3cd9a04a572a' as Uuid,
-    roleCode: 'ROLE_TEST',
-    roleName: 'Test Role',
-    description: null,
-    status: 'Active',
-    permissions: [],
-  };
-
-  const activePermission: PermissionRecord = {
-    id: '9488a0e8-0b5c-4d37-88ba-38a531e21b8f' as Uuid,
-    permissionCode: 'perm.active',
-    moduleCode: 'test',
-    featureCode: 'test',
-    actionCode: 'test',
-    permissionType: 'Action',
-    description: null,
-    status: 'Active',
-  };
-
-  const inactivePermission: PermissionRecord = {
-    id: '2df1f24d-6161-46ab-8422-4809bb68cfdf' as Uuid,
-    permissionCode: 'perm.inactive',
-    moduleCode: 'test',
-    featureCode: 'test',
-    actionCode: 'test',
-    permissionType: 'Action',
-    description: null,
-    status: 'Inactive',
-  };
+  const roleStore = new Map<string, Role>();
+  const permissionStore = new Map<string, Permission>();
+  const rolePermissions = new Map<string, Permission[]>();
+  const userRoles = new Map<string, Array<{ role: Role; status: string; revokedAt: Date | null; revokedBy: string | null; reason: string | null }>>();
+  const notifications: Array<{ type: string; recipientEmail: string; subject: string }> = [];
+  const userStore = new Map<string, User>();
 
   beforeEach(() => {
-    mockAuditRepo = new InMemoryAuditLogRepository();
+    roleStore.clear();
+    permissionStore.clear();
+    rolePermissions.clear();
+    userRoles.clear();
+    notifications.length = 0;
+    userStore.clear();
 
-    const roles = new Map<string, RoleRecord>();
-    roles.set(existingRole.id, { ...existingRole });
+    const activeRole = createRole();
+    const systemRole = createRole({ id: 'role-system', roleCode: 'ROLE_SYSTEM', roleName: 'System Role', isSystemRole: true });
+    const activePermission = createPermission({ permissionCode: 'iam.user.read', permissionName: 'Read users' });
+    const inactivePermission = createPermission({ id: 'perm-inactive', permissionCode: 'iam.user.update', permissionName: 'Update users', status: 'Archived' });
 
-    const permissions = new Map<string, PermissionRecord>();
-    permissions.set(activePermission.id, activePermission);
-    permissions.set(inactivePermission.id, inactivePermission);
+    roleStore.set(activeRole.id, activeRole);
+    roleStore.set(systemRole.id, systemRole);
+    permissionStore.set(activePermission.id, activePermission);
+    permissionStore.set(inactivePermission.id, inactivePermission);
+    rolePermissions.set(activeRole.id, [activePermission]);
+    userRoles.set('user-1', [{ role: activeRole, status: 'Active', revokedAt: null, revokedBy: null, reason: null }]);
 
-    mockRoleRepo = {
-      findById: async (id) => roles.get(id) ?? null,
-      findByCode: async (code) => Array.from(roles.values()).find(r => r.roleCode === code) ?? null,
+    userStore.set('actor-1', {
+      id: 'actor-1' as never,
+      personId: crypto.randomUUID() as never,
+      username: 'actor@example.com',
+      email: 'actor@example.com',
+      userType: 'Admin',
+      status: 'Active',
+      defaultBranchId: null,
+      preferredLanguage: 'en',
+      failedLoginCount: 0,
+      lockedUntil: null,
+      passwordChangedAt: null,
+      version: 1,
+      effectiveStartDate: new Date('2025-01-01T00:00:00.000Z'),
+      effectiveEndDate: null,
+      isDeleted: false,
+    });
+    userStore.set('user-1', {
+      id: 'user-1' as never,
+      personId: crypto.randomUUID() as never,
+      username: 'user@example.com',
+      email: 'user@example.com',
+      userType: 'Admin',
+      status: 'Active',
+      defaultBranchId: null,
+      preferredLanguage: 'en',
+      failedLoginCount: 0,
+      lockedUntil: null,
+      passwordChangedAt: null,
+      version: 1,
+      effectiveStartDate: new Date('2025-01-01T00:00:00.000Z'),
+      effectiveEndDate: null,
+      isDeleted: false,
+    });
+
+    roleRepo = {
+      findById: async (id) => roleStore.get(id) ?? null,
+      findByCode: async (code) => Array.from(roleStore.values()).find((role) => role.roleCode === code) ?? null,
       create: async (role) => {
-        roles.set(role.id, role);
+        roleStore.set(role.id, role);
         return role;
       },
-      update: async (id, updates) => {
-        const r = roles.get(id);
-        if (!r) throw new Error('Not found');
-        const updated = { ...r, ...updates };
-        roles.set(id, updated);
-        return updated;
+      update: async (role) => {
+        roleStore.set(role.id, role);
+        return role;
       },
-      list: async () => Array.from(roles.values()),
-      assignPermission: async () => {},
-      removePermission: async () => {},
-      listPermissions: async () => Array.from(permissions.values()),
-      seedPermissions: async () => {},
+      search: async (page, pageSize) => ({ items: Array.from(roleStore.values()).slice(0, pageSize), total: roleStore.size }),
+      assignRoleToUser: async (userId, roleId) => {
+        const role = roleStore.get(roleId);
+        if (!role) return;
+        const list = userRoles.get(userId) ?? [];
+        list.push({ role, status: 'Active', revokedAt: null, revokedBy: null, reason: null });
+        userRoles.set(userId, list);
+      },
+      revokeRoleFromUser: async (userId, roleId, actorId, reason) => {
+        const list = userRoles.get(userId) ?? [];
+        const target = list.find((entry) => entry.role.id === roleId);
+        if (target) {
+          target.status = 'Revoked';
+          target.revokedAt = new Date();
+          target.revokedBy = actorId.toString();
+          target.reason = reason;
+        }
+      },
+      listRolesForUser: async (userId) => userRoles.get(userId) ?? [],
+      assignPermissionToRole: async (roleId, permissionId) => {
+        const permission = permissionStore.get(permissionId);
+        if (!permission) return;
+        const list = rolePermissions.get(roleId) ?? [];
+        list.push(permission);
+        rolePermissions.set(roleId, list);
+      },
+      removePermissionFromRole: async (roleId, permissionId) => {
+        const list = rolePermissions.get(roleId) ?? [];
+        rolePermissions.set(roleId, list.filter((permission) => permission.id !== permissionId));
+      },
+      listPermissionsForRole: async (roleId) => rolePermissions.get(roleId) ?? [],
     };
 
-    roleService = new RoleService(mockRoleRepo, mockAuditRepo);
+    permissionRepo = {
+      findById: async (id) => permissionStore.get(id) ?? null,
+      findByCode: async (code) => Array.from(permissionStore.values()).find((permission) => permission.permissionCode === code) ?? null,
+      create: async (permission) => {
+        permissionStore.set(permission.id, permission);
+        return permission;
+      },
+      update: async (permission) => {
+        permissionStore.set(permission.id, permission);
+        return permission;
+      },
+      search: async () => Array.from(permissionStore.values()),
+    };
+
+    userRepo = {
+      findById: async (id) => userStore.get(String(id)) ?? null,
+      findByEmail: async () => null,
+      findByUsername: async () => null,
+      findPersonById: async () => null,
+      findPersonByMobile: async () => null,
+      create: async (user) => user,
+      update: async (user) => user,
+      search: async () => ({ items: [], total: 0 }),
+      getPasswordHash: async () => null,
+      updatePassword: async () => undefined,
+      createResetToken: async () => undefined,
+      findResetTokenByHash: async () => null,
+      markResetTokenAsUsed: async () => undefined,
+    };
+
+    notificationRepo = {
+      create: async (notification) => {
+        notifications.push({ type: notification.type, recipientEmail: notification.recipientEmail, subject: notification.subject });
+        return notification;
+      },
+      update: async (notification) => notification,
+      findById: async () => null,
+      listPending: async () => [],
+    };
+
+    auditRepo = new InMemoryAuditLogRepository();
+    roleService = new RoleService(roleRepo, permissionRepo, auditRepo, userRepo, notificationRepo);
   });
 
-  describe('assignPermission validation checks', () => {
-    it('successfully assigns an active permission to a role', async () => {
-      await expect(
-        roleService.assignPermission(existingRole.id, activePermission.id, { actorId: userActorId })
-      ).resolves.not.toThrow();
+  it('creates, updates, and archives roles', async () => {
+    const created = await roleService.createRole({ roleCode: 'ROLE_NEW', roleName: 'New Role', description: null }, { actorId: 'actor-1' as never, actorPermissions: ['iam.role.create'], activeBranchId: null });
+    expect(created.roleCode).toBe('ROLE_NEW');
 
-      const auditLogs = mockAuditRepo.list();
-      expect(auditLogs).toHaveLength(1);
-      expect(auditLogs[0].action).toBe('identity.permission_assigned');
-    });
+    const updated = await roleService.updateRole(created.id, { roleName: 'Updated Role' }, { actorId: 'actor-1' as never, actorPermissions: ['iam.role.update'], activeBranchId: null });
+    expect(updated.roleName).toBe('Updated Role');
 
-    it('fails to assign a deactivated permission and throws precondition_failed', async () => {
-      await expect(
-        roleService.assignPermission(existingRole.id, inactivePermission.id, { actorId: userActorId })
-      ).rejects.toThrowError(
-        new DomainError('precondition_failed', `Cannot assign permission: Permission ${inactivePermission.permissionCode} is not active.`)
-      );
-
-      expect(mockAuditRepo.list()).toHaveLength(0);
-    });
-
-    it('fails if the permission does not exist', async () => {
-      const nonExistentPermId = '00000000-0000-0000-0000-000000000999';
-      await expect(
-        roleService.assignPermission(existingRole.id, nonExistentPermId, { actorId: userActorId })
-      ).rejects.toThrowError(
-        new DomainError('not_found', `Permission ${nonExistentPermId} not found.`)
-      );
-    });
+    await expect(roleService.archiveRole('role-system', { actorId: 'actor-1' as never, actorPermissions: ['iam.role.archive'], activeBranchId: null })).rejects.toMatchObject({ errorCode: 'IAM-VAL-010' });
+    await roleService.archiveRole(created.id, { actorId: 'actor-1' as never, actorPermissions: ['iam.role.archive'], activeBranchId: null });
+    expect(roleStore.get(created.id)?.status).toBe('Archived');
   });
 
-  describe('createRole permission validation checks', () => {
-    it('successfully creates role with active permissions', async () => {
-      const newRole = await roleService.createRole(
-        {
-          roleCode: 'ROLE_NEW',
-          roleName: 'New Role',
-          description: null,
-          permissionIds: [activePermission.id],
-        },
-        { actorId: userActorId }
-      );
+  it('assigns and removes permissions on roles', async () => {
+    const roleId = Array.from(roleStore.values())[0].id;
+    const permissionId = Array.from(permissionStore.values())[0].id;
 
-      expect(newRole.roleCode).toBe('ROLE_NEW');
-      const auditLogs = mockAuditRepo.list();
-      expect(auditLogs.some(log => log.action === 'identity.role_created')).toBe(true);
-    });
+    await roleService.assignPermissionToRole(roleId, permissionId, { actorId: 'actor-1' as never, actorPermissions: ['iam.role.permission.assign'], activeBranchId: null });
+    expect((rolePermissions.get(roleId) ?? []).some((permission) => permission.id === permissionId)).toBe(true);
 
-    it('fails to create role if any permission is deactivated', async () => {
-      await expect(
-        roleService.createRole(
-          {
-            roleCode: 'ROLE_NEW',
-            roleName: 'New Role',
-            description: null,
-            permissionIds: [inactivePermission.id],
-          },
-          { actorId: userActorId }
-        )
-      ).rejects.toThrowError(
-        new DomainError('precondition_failed', `Cannot assign permission: Permission ${inactivePermission.permissionCode} is not active.`)
-      );
-    });
+    await roleService.removePermissionFromRole(roleId, permissionId, { actorId: 'actor-1' as never, actorPermissions: ['iam.role.permission.assign'], activeBranchId: null });
+    expect((rolePermissions.get(roleId) ?? []).some((permission) => permission.id === permissionId)).toBe(false);
   });
 
-  describe('updateRole granular status audit logging', () => {
-    it('logs identity.role_deactivated when status transitions to Inactive', async () => {
-      await roleService.updateRole(
-        existingRole.id,
-        { status: 'Inactive' },
-        { actorId: userActorId }
-      );
+  it('assigns a role to a user and creates a notification', async () => {
+    const roleId = Array.from(roleStore.values())[0].id;
 
-      const auditLogs = mockAuditRepo.list();
-      const lastLog = auditLogs[auditLogs.length - 1];
-      expect(lastLog.action).toBe('identity.role_deactivated');
-    });
+    await roleService.assignRoleToUser('user-1', roleId, 'reason', { actorId: 'actor-1' as never, actorPermissions: ['iam.user.assign-role'], activeBranchId: null });
 
-    it('logs standard identity.role_updated when status remains unchanged', async () => {
-      await roleService.updateRole(
-        existingRole.id,
-        { roleName: 'New Role Name' },
-        { actorId: userActorId }
-      );
+    expect(userRoles.get('user-1')?.some((entry) => entry.role.id === roleId && entry.status === 'Active')).toBe(true);
+    expect(notifications).toHaveLength(1);
+    expect(notifications[0]?.type).toBe('user.role_assigned');
+  });
 
-      const auditLogs = mockAuditRepo.list();
-      const lastLog = auditLogs[auditLogs.length - 1];
-      expect(lastLog.action).toBe('identity.role_updated');
-    });
+  it('assigns and revokes roles for users', async () => {
+    const roleId = Array.from(roleStore.values())[0].id;
+
+    await roleService.assignRoleToUser('user-1', roleId, 'reason', { actorId: 'actor-1' as never, actorPermissions: ['iam.user.assign-role'], activeBranchId: null });
+    expect(userRoles.get('user-1')?.some((entry) => entry.role.id === roleId && entry.status === 'Active')).toBe(true);
+
+    await roleService.removeRoleFromUser('user-1', roleId, 'reason', { actorId: 'actor-1' as never, actorPermissions: ['iam.user.assign-role'], activeBranchId: null });
+    expect(userRoles.get('user-1')?.find((entry) => entry.role.id === roleId)?.status).toBe('Revoked');
+  });
+
+  it('returns assigned permissions and user roles', async () => {
+    const roleId = Array.from(roleStore.values())[0].id;
+    expect(await roleService.getRolePermissions(roleId, { actorId: 'actor-1' as never, actorPermissions: ['iam.role.read'], activeBranchId: null })).toHaveLength(1);
+    expect(await roleService.listRolesForUser('user-1', { actorId: 'actor-1' as never, actorPermissions: ['iam.user.read'], activeBranchId: null })).toHaveLength(1);
+    expect(await roleService.listPermissions()).toHaveLength(permissionStore.size);
   });
 });

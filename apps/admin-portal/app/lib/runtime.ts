@@ -14,9 +14,11 @@ import {
   PrismaAuditLogRepository,
   PrismaNotificationRepository,
   PrismaOutboxEventRepository,
+  PrismaExportJobRepository,
   PrismaLoginHistoryRepository,
   PrismaUserActivationTokenRepository,
 } from '@ims/database';
+import { createUuid } from '@ims/shared-kernel';
 import { OrganizationService } from '@ims/organization';
 import {
   AuthService,
@@ -27,9 +29,11 @@ import {
   SessionService,
   SecurityPolicyService,
   AuditQueryService,
+  LoginHistoryQueryService,
   EffectivePermissionsService,
   BranchScopeResolver,
   AuthorizationGuard,
+  NoOpPermissionCache,
   DummyNotificationProvider,
 } from '@ims/identity-access';
 
@@ -44,6 +48,7 @@ const passwordHistoryRepository = new PrismaPasswordHistoryRepository(prisma);
 const securityPolicyRepository = new PrismaSecurityPolicyRepository(prisma);
 const notificationRepository = new PrismaNotificationRepository(prisma);
 const outboxEventRepository = new PrismaOutboxEventRepository(prisma);
+export const exportJobRepository = new PrismaExportJobRepository(prisma);
 const loginHistoryRepository = new PrismaLoginHistoryRepository(prisma);
 const userActivationTokenRepository = new PrismaUserActivationTokenRepository(prisma);
 
@@ -72,13 +77,16 @@ export const authService = new AuthService(
   loginHistoryRepository,
   notificationPort,
   roleRepository,
-  userBranchAccessRepository
+  userBranchAccessRepository,
+  outboxEventRepository
 );
 
 export const roleService = new RoleService(
   roleRepository,
   permissionRepository,
-  auditRepository
+  auditRepository,
+  userRepository,
+  notificationRepository
 );
 
 export const permissionService = new PermissionService(
@@ -107,6 +115,10 @@ export const auditQueryService = new AuditQueryService(
   auditRepository
 );
 
+export const loginHistoryQueryService = new LoginHistoryQueryService(
+  loginHistoryRepository
+);
+
 export const effectivePermissionsService = new EffectivePermissionsService(
   userRepository,
   roleRepository
@@ -120,7 +132,8 @@ export const authorizationGuard = new AuthorizationGuard(
   userRepository,
   sessionRepository,
   effectivePermissionsService,
-  branchScopeResolver
+  branchScopeResolver,
+  new NoOpPermissionCache()
 );
 
 // We can instantiate organizationService using the same auditRepository pattern
@@ -136,7 +149,7 @@ export const organizationService = new OrganizationService(
   {
     isActiveUser: async (userId: string) => {
       try {
-        const user = await userRepository.findById(userId);
+        const user = await userRepository.findById(createUuid(userId));
         return user ? user.status === 'Active' : false;
       } catch {
         return false;

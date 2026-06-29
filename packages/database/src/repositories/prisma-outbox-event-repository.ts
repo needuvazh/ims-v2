@@ -54,4 +54,27 @@ export class PrismaOutboxEventRepository implements IOutboxEventRepository {
     });
     return this.mapEvent(row);
   }
+
+  async markProcessed(id: Uuid): Promise<OutboxEventDto> {
+    const row = await this.prisma.outboxEvent.update({
+      where: { id },
+      data: {
+        status: 'Processed',
+        processedAt: new Date(),
+      },
+    });
+    return this.mapEvent(row);
+  }
+
+  async markFailed(id: Uuid, lastError?: string | null): Promise<OutboxEventDto> {
+    const row = await this.prisma.outboxEvent.update({
+      where: { id },
+      data: {
+        status: 'Failed',
+        lastError: lastError ?? null,
+        attempts: { increment: 1 },
+      },
+    });
+    return this.mapEvent(row);
+  }
 }

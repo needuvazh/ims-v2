@@ -8,6 +8,7 @@ export * from './domain/password-policy';
 export * from './domain/repositories';
 export * from './domain/notification-port';
 export * from './domain/access';
+export * from './validation';
 
 // Errors
 export * from './errors/iam-errors';
@@ -21,7 +22,9 @@ export * from './application/branch-access-service';
 export * from './application/session-service';
 export * from './application/security-policy-service';
 export * from './application/audit-query-service';
+export * from './application/login-history-query-service';
 export * from './application/authorization-guard';
+export * from './application/permission-cache';
 export * from './application/navigation-service';
 
 // Infrastructure

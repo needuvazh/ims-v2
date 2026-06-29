@@ -26,6 +26,19 @@ import type {
   UserActivationTokenDto,
 } from '../domain/repositories';
 
+function escapeHtml(value: string): string {
+  return value.replace(/[&<>"]|'/g, (char) => {
+    switch (char) {
+      case '&': return '&amp;';
+      case '<': return '&lt;';
+      case '>': return '&gt;';
+      case '"': return '&quot;';
+      case "'": return '&#39;';
+      default: return char;
+    }
+  });
+}
+
 export interface UserCommandContext {
   actorId: string;
   actorPermissions?: string[];
@@ -55,6 +68,16 @@ export class UserService {
     this.checkPermission(context, 'iam.user.create');
     const validated = createUserCommandSchema.parse(command);
     const now = new Date();
+    const roleIds = validated.roleIds ?? [];
+    const branchIds = validated.branchIds ?? [];
+
+    if (roleIds.length === 0) {
+      throw createIamError('IAM-VAL-008');
+    }
+
+    if (branchIds.length === 0) {
+      throw createIamError('IAM-VAL-007');
+    }
 
     // Email uniqueness check
     const existingUser = await this.userRepository.findByEmail(validated.email);
@@ -71,6 +94,9 @@ export class UserService {
       firstName = parts[0] || '';
       lastName = parts.slice(1).join(' ') || '';
     }
+
+    firstName = escapeHtml(firstName);
+    lastName = escapeHtml(lastName);
     if (validated.phone) {
       mobile = validated.phone;
     }
@@ -85,7 +111,7 @@ export class UserService {
 
     // Default branch verification
     const defaultBranchId = validated.defaultBranchId || null;
-    if (defaultBranchId && !validated.branchIds.includes(defaultBranchId)) {
+    if (defaultBranchId && !branchIds.includes(defaultBranchId)) {
       throw createIamError('IAM-VAL-007');
     }
 
@@ -101,6 +127,11 @@ export class UserService {
       nationality: validated.nationality || null,
       dateOfBirth: validated.dateOfBirth || null,
       gender: validated.gender || null,
+      createdBy: context.actorId as Uuid,
+      updatedBy: context.actorId as Uuid,
+      deletedAt: null,
+      deletedBy: null,
+      isDeleted: false,
     };
 
     const user: User = {
@@ -109,7 +140,7 @@ export class UserService {
       username: validated.email, // default username to email
       email: validated.email,
       userType: validated.userType,
-      status: (validated.status as any) || 'PendingActivation',
+      status: 'PendingActivation',
       defaultBranchId: defaultBranchId as Uuid | null,
       preferredLanguage: validated.preferredLanguage || 'en',
       failedLoginCount: 0,
@@ -125,31 +156,16 @@ export class UserService {
     const savedUser = await this.userRepository.create(user, person);
 
     // Assign roles & branch access
-    // At least one role is required by schema validation
-    for (const roleId of validated.roleIds) {
+    for (const roleId of roleIds) {
       const role = await this.roleRepository.findById(roleId as Uuid);
       if (!role || role.status !== 'Active') {
         throw createIamError('IAM-VAL-008');
       }
-      // Set roles association via database or through user role assignments
-      // Here we will use prisma via raw tx or standard logic. Since we map it,
-      // let's do it using direct db model operations.
-      // Wait, we can implement role/branch mappings inside user branch access repo or user repo!
-      // In prisma-user-repository we didn't add role mappings since they are UserRole mapping tables.
-      // Let's make sure we write UserRole and UserBranchAccess records.
-      // We can do it inside this service using user branch access repository.
-      // Wait, we have IUserBranchAccessRepository. What about UserRole?
-      // Since roles are managed via UserRole entity, we can put standard role assignment methods in IRoleRepository or IUserRepository.
-      // Let's add role association support to IRoleRepository or IUserRepository.
-      // Wait! IRoleRepository in repos.ts:
-      // We can add `assignRoleToUser(userId: Uuid, roleId: Uuid): Promise<void>`
-      // and `removeRoleFromUser(userId: Uuid, roleId: Uuid): Promise<void>`.
-      // Let's add them to `IRoleRepository` in repositories.ts.
-      await (this.roleRepository as any).assignRoleToUser(savedUser.id, roleId as Uuid, context.actorId as Uuid);
+      await this.roleRepository.assignRoleToUser(savedUser.id, roleId as Uuid, context.actorId as Uuid);
     }
 
     // Branch assignments
-    for (const branchId of validated.branchIds) {
+    for (const branchId of branchIds) {
       await this.userBranchAccessRepository.assign({
         id: crypto.randomUUID() as Uuid,
         userId: savedUser.id,
@@ -256,12 +272,13 @@ export class UserService {
     if (validated.nationality !== undefined) person.nationality = validated.nationality;
     if (validated.dateOfBirth !== undefined) person.dateOfBirth = validated.dateOfBirth;
     if (validated.gender !== undefined) person.gender = validated.gender;
+    person.updatedBy = context.actorId as Uuid;
 
     // Map legacy fields
     if (validated.fullName !== undefined) {
       const parts = validated.fullName.trim().split(/\s+/);
-      person.firstName = parts[0] || '';
-      person.lastName = parts.slice(1).join(' ') || '';
+      person.firstName = escapeHtml(parts[0] || '');
+      person.lastName = escapeHtml(parts.slice(1).join(' ') || '');
     }
     if (validated.phone !== undefined) {
       person.mobile = validated.phone || '';
@@ -405,7 +422,7 @@ export class UserService {
       performedAt: now,
       entityType: 'User',
       entityId: user.id,
-      action: 'iam.user.activated-via-token',
+      action: 'iam.user.activated',
       oldValue: { status: 'PendingActivation' },
       newValue: { status: 'Active' },
       ipAddress: null,

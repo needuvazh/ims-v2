@@ -72,6 +72,15 @@ export class PrismaPermissionRepository implements IPermissionRepository {
     return this.mapPermission(row);
   }
 
+  async archive(permissionId: Uuid, actorId?: Uuid): Promise<void> {
+    await this.prisma.permission.update({
+      where: { id: permissionId },
+      data: {
+        status: 'Archived',
+      },
+    });
+  }
+
   async search(type?: string, status?: string): Promise<Permission[]> {
     const where: any = {};
     if (type) {

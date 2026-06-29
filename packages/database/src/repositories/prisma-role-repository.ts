@@ -72,6 +72,18 @@ export class PrismaRoleRepository implements IRoleRepository {
     return this.mapRole(row);
   }
 
+  async archive(roleId: Uuid, actorId?: Uuid): Promise<void> {
+    await this.prisma.role.update({
+      where: { id: roleId },
+      data: {
+        status: 'Archived',
+        deletedAt: new Date(),
+        deletedBy: actorId ?? null,
+        isDeleted: true,
+      },
+    });
+  }
+
   async search(
     page: number,
     pageSize: number

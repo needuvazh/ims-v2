@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { SearchInput } from './search-input';
 import { Select, type SelectOption } from './select';
@@ -25,22 +25,7 @@ export function DataTableFilter({ searchPlaceholder = 'Search...', filters = [] 
   const currentQ = searchParams.get('q') || '';
   const [searchValue, setSearchValue] = useState(currentQ);
 
-  // Sync search input from URL on load/back navigation
-  useEffect(() => {
-    setSearchValue(searchParams.get('q') || '');
-  }, [searchParams]);
-
-  // Debounced update to URL
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      if (searchValue !== (searchParams.get('q') || '')) {
-        updateParams({ q: searchValue || null, page: '1' });
-      }
-    }, 300);
-    return () => clearTimeout(handler);
-  }, [searchValue, searchParams]);
-
-  const updateParams = (updates: Record<string, string | null>) => {
+  const updateParams = useCallback((updates: Record<string, string | null>) => {
     const params = new URLSearchParams(searchParams.toString());
     Object.entries(updates).forEach(([key, value]) => {
       if (value === null || value === '') {
@@ -50,7 +35,17 @@ export function DataTableFilter({ searchPlaceholder = 'Search...', filters = [] 
       }
     });
     router.push(`${pathname}?${params.toString()}`);
-  };
+  }, [pathname, router, searchParams]);
+
+  // Debounced update to URL
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      if (searchValue !== (searchParams.get('q') || '')) {
+        updateParams({ q: searchValue || null, page: '1' });
+      }
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [searchValue, searchParams, updateParams]);
 
   return (
     <FilterBar className="mb-6 border-b border-[color:var(--ims-border)] pb-4">

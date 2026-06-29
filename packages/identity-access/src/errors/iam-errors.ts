@@ -78,7 +78,7 @@ export const IAM_ERRORS = {
   // Authentication Errors
   'IAM-AUTH-001': {
     statusCode: 401,
-    messageEn: 'Invalid credentials',
+    messageEn: 'Invalid credentials.',
     messageAr: 'بيانات الاعتماد غير صالحة',
   },
   'IAM-AUTH-002': {
@@ -93,8 +93,8 @@ export const IAM_ERRORS = {
   },
   'IAM-AUTH-004': {
     statusCode: 401,
-    messageEn: 'Password expired',
-    messageAr: 'انتهت صلاحية كلمة المرور',
+    messageEn: 'Password expired. Please change your password.',
+    messageAr: 'انتهت صلاحية كلمة المرور. يرجى تغيير كلمة المرور الخاصة بك.',
   },
   'IAM-AUTH-005': {
     statusCode: 401,
@@ -113,8 +113,8 @@ export const IAM_ERRORS = {
   },
   'IAM-AUTH-008': {
     statusCode: 401,
-    messageEn: 'Maximum concurrent sessions reached',
-    messageAr: 'تم الوصول إلى الحد الأقصى للجلسات المتزامنة',
+    messageEn: 'Maximum concurrent sessions reached.',
+    messageAr: 'تم الوصول إلى الحد الأقصى للجلسات المتزامنة.',
   },
 
   // Authorization Errors

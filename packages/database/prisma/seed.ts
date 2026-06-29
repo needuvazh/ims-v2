@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcryptjs';
+import argon2 from 'argon2';
 
 const prisma = new PrismaClient();
 
@@ -68,8 +68,24 @@ const systemPermissions = [
   { moduleCode: 'certificate',  featureCode: 'public',      actionCode: 'verify', permissionCode: 'certificate.verify',             permissionType: 'Action' as const, description: 'Verify certificates publicly.' },
   
   // Dashboard & Audit
-  { moduleCode: 'dashboard',    featureCode: 'summary',     actionCode: 'view',   permissionCode: 'dashboard.view',                 permissionType: 'Action' as const, description: 'View dashboard metrics.' },
-  { moduleCode: 'report',       featureCode: 'reports',     actionCode: 'read',   permissionCode: 'reports.read',                   permissionType: 'Action' as const, description: 'View reports.' },
+  { moduleCode: 'dashboard',    featureCode: 'security',    actionCode: 'view',   permissionCode: 'dashboard.security',            permissionType: 'Action' as const, description: 'View security dashboard.' },
+  { moduleCode: 'dashboard',    featureCode: 'admin',       actionCode: 'view',   permissionCode: 'dashboard.admin',               permissionType: 'Action' as const, description: 'View administration dashboard.' },
+  { moduleCode: 'dashboard',    featureCode: 'ceo',         actionCode: 'view',   permissionCode: 'dashboard.ceo',                 permissionType: 'Action' as const, description: 'View executive dashboard.' },
+  { moduleCode: 'dashboard',    featureCode: 'compliance',  actionCode: 'view',   permissionCode: 'dashboard.compliance',          permissionType: 'Action' as const, description: 'View compliance dashboard.' },
+  { moduleCode: 'dashboard',    featureCode: 'branch',      actionCode: 'view',   permissionCode: 'dashboard.branch',              permissionType: 'Action' as const, description: 'View branch dashboard.' },
+  { moduleCode: 'dashboard',    featureCode: 'finance',     actionCode: 'view',   permissionCode: 'dashboard.finance',             permissionType: 'Action' as const, description: 'View finance dashboard.' },
+  { moduleCode: 'dashboard',    featureCode: 'training',    actionCode: 'view',   permissionCode: 'dashboard.training',            permissionType: 'Action' as const, description: 'View training dashboard.' },
+  { moduleCode: 'dashboard',    featureCode: 'crm',         actionCode: 'view',   permissionCode: 'dashboard.crm',                 permissionType: 'Action' as const, description: 'View CRM dashboard.' },
+  { moduleCode: 'report',       featureCode: 'iam',         actionCode: 'user',   permissionCode: 'report.iam.user',               permissionType: 'Report' as const, description: 'View user directory report.' },
+  { moduleCode: 'report',       featureCode: 'iam',         actionCode: 'user-access', permissionCode: 'report.iam.user-access',     permissionType: 'Report' as const, description: 'View user access report.' },
+  { moduleCode: 'report',       featureCode: 'iam',         actionCode: 'login-history', permissionCode: 'report.iam.login-history', permissionType: 'Report' as const, description: 'View login history report.' },
+  { moduleCode: 'report',       featureCode: 'iam',         actionCode: 'security', permissionCode: 'report.iam.security',          permissionType: 'Report' as const, description: 'View security report.' },
+  { moduleCode: 'report',       featureCode: 'iam',         actionCode: 'role',    permissionCode: 'report.iam.role',               permissionType: 'Report' as const, description: 'View role report.' },
+  { moduleCode: 'report',       featureCode: 'iam',         actionCode: 'permission', permissionCode: 'report.iam.permission',      permissionType: 'Report' as const, description: 'View permission report.' },
+  { moduleCode: 'report',       featureCode: 'iam',         actionCode: 'branch',  permissionCode: 'report.iam.branch',             permissionType: 'Report' as const, description: 'View branch access report.' },
+  { moduleCode: 'report',       featureCode: 'iam',         actionCode: 'privileged', permissionCode: 'report.iam.privileged',      permissionType: 'Report' as const, description: 'View privileged users report.' },
+  { moduleCode: 'report',       featureCode: 'iam',         actionCode: 'session', permissionCode: 'report.iam.session',           permissionType: 'Report' as const, description: 'View session report.' },
+  { moduleCode: 'report',       featureCode: 'iam',         actionCode: 'audit-trail', permissionCode: 'report.iam.audit-trail',      permissionType: 'Report' as const, description: 'View audit trail report.' },
 ];
 
 async function seed() {
@@ -153,11 +169,13 @@ async function seed() {
   // Branch Manager gets branch-scoped management permissions
   const managerPermCodes = [
     'organization.branch.manage', 'organization.department.manage', 'organization.classroom.manage',
-    'iam.user.read', 'iam.role.read', 'lead.read', 'lead.write', 'lead.convert',
+    'iam.user.read', 'iam.role.read', 'iam.session.read', 'iam.security-policy.read', 'iam.audit.read',
+    'report.iam.user', 'report.iam.login-history', 'report.iam.security',
+    'lead.read', 'lead.write', 'lead.convert',
     'student.read', 'student.write', 'enrollment.create',
     'payment.create', 'refund.request', 'course.manage', 'schedule.manage',
     'attendance.record', 'result.record', 'certificate.generate',
-    'certificate.verify', 'dashboard.view', 'iam.audit.read'
+    'certificate.verify', 'dashboard.branch', 'dashboard.security'
   ];
   const managerPerms = permRecords.filter(p => managerPermCodes.includes(p.permissionCode));
   for (const perm of managerPerms) {
@@ -170,7 +188,7 @@ async function seed() {
   // Counselor permissions
   const counselorPermCodes = [
     'iam.user.read', 'lead.read', 'lead.write', 'lead.convert',
-    'student.read', 'dashboard.view'
+    'student.read', 'dashboard.crm', 'report.iam.user'
   ];
   const counselorPerms = permRecords.filter(p => counselorPermCodes.includes(p.permissionCode));
   for (const perm of counselorPerms) {
@@ -183,7 +201,7 @@ async function seed() {
   // Trainer permissions
   const trainerPermCodes = [
     'student.read', 'schedule.manage', 'attendance.record',
-    'result.record', 'dashboard.view'
+    'result.record', 'dashboard.training'
   ];
   const trainerPerms = permRecords.filter(p => trainerPermCodes.includes(p.permissionCode));
   for (const perm of trainerPerms) {
@@ -196,7 +214,7 @@ async function seed() {
   // Accountant permissions
   const accountantPermCodes = [
     'student.read', 'payment.create', 'refund.request',
-    'dashboard.view'
+    'dashboard.finance'
   ];
   const accountantPerms = permRecords.filter(p => accountantPermCodes.includes(p.permissionCode));
   for (const perm of accountantPerms) {
@@ -207,7 +225,7 @@ async function seed() {
   console.log(`  ✓ Assigned permissions to ACCOUNTANT`);
 
   // Student permissions (mostly read-only dashboard)
-  const studentPerms = permRecords.filter(p => ['dashboard.view', 'certificate.verify'].includes(p.permissionCode));
+  const studentPerms = permRecords.filter(p => ['certificate.verify'].includes(p.permissionCode));
   for (const perm of studentPerms) {
     await prisma.rolePermission.create({
       data: { roleId: roleMap['STUDENT'].id, permissionId: perm.id },
@@ -347,7 +365,7 @@ async function seed() {
   console.log(`  ✓ Classroom created: Room 101 (Muscat)`);
 
   // 6. Seed Users, Roles, and Branch Access
-  const passwordHash = await bcrypt.hash('Password@123', 12);
+  const passwordHash = await argon2.hash('Password@123');
 
   await prisma.securityPolicy.create({
     data: {
@@ -390,6 +408,24 @@ async function seed() {
   });
   await prisma.userRole.create({ data: { userId: superAdminUser.id, roleId: roleMap['SUPER_ADMIN'].id } });
   console.log(`  ✓ User created: admin@ims.com (SUPER_ADMIN)`);
+
+  const smokePerson = await prisma.person.create({
+    data: { id: crypto.randomUUID(), firstName: 'Smoke', lastName: 'Admin', mobile: '+966-500000007' }
+  });
+  const smokeUser = await prisma.user.create({
+    data: {
+      id: crypto.randomUUID(),
+      personId: smokePerson.id,
+      username: 'smoke.iam@ims.com',
+      email: 'smoke.iam@ims.com',
+      userType: 'Admin',
+      status: 'Active',
+      passwordHash,
+      effectiveStartDate: new Date(),
+    },
+  });
+  await prisma.userRole.create({ data: { userId: smokeUser.id, roleId: roleMap['SUPER_ADMIN'].id } });
+  console.log(`  ✓ User created: smoke.iam@ims.com (SUPER_ADMIN smoke account)`);
 
   // User B: Riyadh Branch Manager
   const riyadhManagerPerson = await prisma.person.create({

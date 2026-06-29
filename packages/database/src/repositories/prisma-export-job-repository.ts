@@ -48,6 +48,23 @@ export class PrismaExportJobRepository implements IExportJobRepository {
     return this.mapJob(row);
   }
 
+  async updateStatus(
+    id: Uuid,
+    status: ExportJobDto['status'],
+    fileUrl?: string | null,
+    errorMessage?: string | null
+  ): Promise<ExportJobDto> {
+    const row = await this.prisma.exportJob.update({
+      where: { id },
+      data: {
+        status,
+        fileUrl: fileUrl ?? undefined,
+        errorMessage: errorMessage ?? undefined,
+      },
+    });
+    return this.mapJob(row);
+  }
+
   async findById(id: Uuid): Promise<ExportJobDto | null> {
     const row = await this.prisma.exportJob.findUnique({
       where: { id },

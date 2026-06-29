@@ -1,5 +1,18 @@
 import type { PrismaClient } from '@prisma/client';
-import type { AuthResetTokenRepository } from '@ims/identity-access';
+
+export interface AuthResetTokenRepository {
+  createToken(data: {
+    userId: string;
+    tokenHash: string;
+    expiresAt: Date;
+  }): Promise<void>;
+  findActiveTokenByHash(tokenHash: string): Promise<{
+    userId: string;
+    expiresAt: Date;
+    usedAt: Date | null;
+  } | null>;
+  markTokenAsUsed(tokenHash: string): Promise<void>;
+}
 
 export class PrismaAuthResetTokenRepository implements AuthResetTokenRepository {
   constructor(private readonly prisma: PrismaClient) {}

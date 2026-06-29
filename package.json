@@ -8,6 +8,7 @@
     "lint": "turbo lint",
     "test": "turbo test",
     "test:integration": "vitest run --passWithNoTests tests/integration/**/*.spec.ts",
+    "smoke:iam": "pnpm --dir apps/worker exec tsx ../admin-portal/smoke/iam.smoke.ts",
     "test:e2e": "playwright test",
     "pr:verify": "bash ./scripts/pr-verify.sh",
     "typecheck": "turbo typecheck",

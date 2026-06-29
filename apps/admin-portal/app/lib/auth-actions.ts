@@ -27,7 +27,7 @@ export async function setActiveBranchAction(branchId: string): Promise<{ success
 
 
     // Update active branch in session
-    session.activeBranchId = branchId === 'All' ? null : branchId;
+      session.activeBranchId = branchId === 'All' ? null : (branchId as import('@ims/shared-kernel').Uuid);
 
     // Refresh/Extend session expiration time (sliding session expiry)
     session.expiresAt = Date.now() + 8 * 60 * 60 * 1000;

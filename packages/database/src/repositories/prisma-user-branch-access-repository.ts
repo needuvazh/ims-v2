@@ -97,4 +97,50 @@ export class PrismaUserBranchAccessRepository implements IUserBranchAccessReposi
       return this.mapAccess(row);
     });
   }
+
+  async remove(userId: Uuid, branchId: Uuid, actorId?: Uuid, reason: string | null = null): Promise<void> {
+    await this.prisma.$transaction(async (tx) => {
+      const row = await tx.userBranchAccess.findUnique({
+        where: { userId_branchId: { userId, branchId } },
+      });
+
+      if (!row) return;
+
+      await tx.userBranchAccess.update({
+        where: { id: row.id },
+        data: {
+          status: 'Revoked',
+          revokedAt: new Date(),
+          revokedBy: actorId ?? null,
+          reason,
+          updatedBy: actorId ?? null,
+        },
+      });
+    });
+  }
+
+  async setDefault(userId: Uuid, branchId: Uuid, actorId?: Uuid): Promise<void> {
+    await this.prisma.$transaction(async (tx) => {
+      await tx.userBranchAccess.updateMany({
+        where: { userId },
+        data: { isDefault: false },
+      });
+
+      await tx.userBranchAccess.update({
+        where: { userId_branchId: { userId, branchId } },
+        data: {
+          isDefault: true,
+          updatedBy: actorId ?? null,
+        },
+      });
+
+      await tx.user.update({
+        where: { id: userId },
+        data: {
+          defaultBranchId: branchId,
+          updatedBy: actorId ?? null,
+        },
+      });
+    });
+  }
 }

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import type { Uuid } from '@ims/shared-kernel';
+import { createIamError } from '../errors/iam-errors';
 
 export const roleStatusSchema = z.enum(['Active', 'Archived']);
 export type RoleStatus = z.infer<typeof roleStatusSchema>;
@@ -18,6 +19,16 @@ export interface Role {
   createdBy: string | null;
   updatedAt: Date | null;
   updatedBy: string | null;
+}
+
+export function canArchiveRole(role: Pick<Role, 'isSystemRole'>): boolean {
+  return !role.isSystemRole;
+}
+
+export function assertRoleArchivable(role: Pick<Role, 'isSystemRole'>): void {
+  if (!canArchiveRole(role)) {
+    throw createIamError('IAM-VAL-010');
+  }
 }
 
 export const createRoleCommandSchema = z.object({

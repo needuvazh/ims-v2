@@ -36,6 +36,17 @@ The system SHALL support the standard IAM request headers and localized response
 - **WHEN** an IAM API receives `Accept-Language: en` or `Accept-Language: ar`
 - **THEN** the route handler SHALL preserve correlation headers, honor branch headers, and return localized validation/error messaging where available
 
+### Requirement: Shared IAM Route Middleware
+The system SHALL apply shared authentication, permission, branch-scope, rate-limit, correlation, and error mapping middleware consistently across the IAM API surface.
+
+#### Scenario: Public auth endpoints are rate limited
+- **WHEN** a caller repeatedly submits login, refresh, or forgot-password requests from the same IP/device fingerprint
+- **THEN** the API SHALL return HTTP 429 before the account lockout policy is applied to unrelated users
+
+#### Scenario: Authenticated route validates session context
+- **WHEN** a protected IAM route is called
+- **THEN** the route SHALL verify the RS256 access token, look up the active session, and inject user and branch context before invoking the application service
+
 ### Requirement: OpenAPI Publication
 The system SHALL publish the IAM `/api/v1` contract as OpenAPI 3.1 so implementation, review, and tests share the same source of truth.
 
@@ -66,7 +77,7 @@ The endpoint inventory SHALL cover at minimum the following routes:
 | GET | `/api/v1/users` | `iam.user.read` | Branch-scoped pagination/filtering |
 | POST | `/api/v1/users` | `iam.user.create` | Creates `Person` + `User` |
 | GET | `/api/v1/users/:id` | `iam.user.read` | Branch-scoped detail view |
-| PUT | `/api/v1/users/:id` | `iam.user.update` | Branch-scoped update |
+| PUT | `/api/v1/users/:id` | `iam.user.update` | Branch-scoped update with shared validation |
 | POST | `/api/v1/users/:id/activate` | `iam.user.activate` | Admin activation |
 | POST | `/api/v1/users/:id/suspend` | `iam.user.suspend` | Suspends user and sessions |
 | POST | `/api/v1/users/:id/archive` | `iam.user.archive` | Logical archive |
@@ -110,3 +121,10 @@ The endpoint inventory SHALL cover at minimum the following routes:
 | GET | `/health/ready` | Public | Readiness |
 | GET | `/health/startup` | Public | Startup |
 | GET | `/health/metrics` | Internal | Metric scraping |
+
+### Requirement: API Contract Consistency Notes
+The system SHALL keep the endpoint inventory aligned with implementation details such as shared validation schemas and standardized RFC7807 error mapping.
+
+#### Scenario: User update route uses the shared schema
+- **WHEN** `PUT /api/v1/users/:id` is implemented or reviewed
+- **THEN** it SHALL use the shared IAM update-user validation contract and preserve the branch-scoped permission rule

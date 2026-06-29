@@ -22,6 +22,31 @@ export interface SecurityPolicy {
   updatedAt: Date | null;
 }
 
+export const DEFAULT_SECURITY_POLICY: SecurityPolicy = {
+  id: '00000000-0000-0000-0000-000000000000' as Uuid,
+  maxFailedAttempts: 5,
+  lockoutDurationMinutes: 30,
+  passwordMinLength: 12,
+  passwordRequireUppercase: true,
+  passwordRequireLowercase: true,
+  passwordRequireNumbers: true,
+  passwordRequireSpecial: true,
+  passwordHistoryCount: 10,
+  passwordExpiryDays: 90,
+  resetTokenExpiryMinutes: 15,
+  accessTokenExpiryMinutes: 15,
+  refreshTokenExpiryDays: 7,
+  rememberMeRefreshTokenDays: 30,
+  sessionInactivityMinutes: 30,
+  maxConcurrentSessions: 3,
+  createdAt: new Date(0),
+  updatedAt: null,
+};
+
+export function createDefaultSecurityPolicy(): SecurityPolicy {
+  return { ...DEFAULT_SECURITY_POLICY };
+}
+
 export const updateSecurityPolicyCommandSchema = z.object({
   maxFailedAttempts: z.number().int().positive(),
   lockoutDurationMinutes: z.number().int().positive(),

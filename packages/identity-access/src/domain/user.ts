@@ -32,6 +32,11 @@ export interface Person {
   nationality?: string | null;
   dateOfBirth?: Date | null;
   gender?: string | null;
+  createdBy?: Uuid | null;
+  updatedBy?: Uuid | null;
+  deletedAt?: Date | null;
+  deletedBy?: Uuid | null;
+  isDeleted?: boolean;
 }
 
 export interface User {
@@ -74,8 +79,8 @@ export const createUserCommandSchema = z.object({
   email: z.string().trim().email().toLowerCase(),
   userType: userTypeSchema,
   password: passwordSchema.optional(), // If not provided, a random temporary password can be generated
-  roleIds: z.array(z.string().uuid()).min(1, 'At least one role is required'),
-  branchIds: z.array(z.string().uuid()).min(1, 'At least one branch access is required'),
+  roleIds: z.array(z.string().uuid()).optional(),
+  branchIds: z.array(z.string().uuid()).optional(),
   defaultBranchId: z.string().uuid().nullable().optional(),
   preferredLanguage: z.string().default('en').optional(),
   
@@ -121,3 +126,21 @@ export type UserListFilters = {
   roleId?: string;
   search?: string;
 };
+
+const allowedUserStatusTransitions: Readonly<Record<UserStatus, readonly UserStatus[]>> = {
+  PendingActivation: ['Active', 'Archived'],
+  Active: ['Locked', 'Suspended', 'Archived'],
+  Locked: ['Active', 'Suspended', 'Archived'],
+  Suspended: ['Active', 'Archived'],
+  Archived: [],
+};
+
+export function canTransitionUserStatus(from: UserStatus, to: UserStatus): boolean {
+  return allowedUserStatusTransitions[from].includes(to);
+}
+
+export function assertUserStatusTransition(from: UserStatus, to: UserStatus): void {
+  if (!canTransitionUserStatus(from, to)) {
+    throw new Error(`Invalid user status transition from ${from} to ${to}.`);
+  }
+}

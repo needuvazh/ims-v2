@@ -22,6 +22,7 @@ export type RequestContext = {
 };
 
 export type RequestContextInput = Partial<RequestContext>;
+export type CorrelationContext = RequestContext;
 
 export const requestHeaderNames = {
   requestId: 'x-request-id',
@@ -135,6 +136,10 @@ export function createRequestContext(source?: HeaderBag, overrides: RequestConte
     method: overrides.method ?? null,
     status: overrides.status ?? null,
   };
+}
+
+export function createCorrelationContext(source?: HeaderBag, overrides: RequestContextInput = {}): CorrelationContext {
+  return createRequestContext(source, overrides);
 }
 
 export function applyRequestContextHeaders(target: Headers, context: Pick<RequestContext, 'requestId' | 'traceId'>): void {

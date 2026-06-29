@@ -6,6 +6,8 @@ import type {
   ISessionRepository,
 } from '../domain/repositories';
 import { createIamError } from '../errors/iam-errors';
+import type { IPermissionCachePort } from './permission-cache';
+import { NoOpPermissionCache } from './permission-cache';
 
 export class EffectivePermissionsService {
   constructor(
@@ -75,7 +77,8 @@ export class AuthorizationGuard {
     private readonly userRepository: IUserRepository,
     private readonly sessionRepository: ISessionRepository,
     private readonly effectivePermissionsService: EffectivePermissionsService,
-    private readonly branchScopeResolver: BranchScopeResolver
+    private readonly branchScopeResolver: BranchScopeResolver,
+    private readonly permissionCache: IPermissionCachePort = new NoOpPermissionCache()
   ) {}
 
   /**
@@ -92,8 +95,14 @@ export class AuthorizationGuard {
       throw createIamError('IAM-AUTH-003'); // suspended or inactive accounts fail auth
     }
 
+    const activeSessions = await this.sessionRepository.listActiveForUser(userId);
+    if (activeSessions.length === 0) {
+      throw createIamError('IAM-AUTH-002');
+    }
+
     // 1. Verify permissions
-    const permissions = await this.effectivePermissionsService.getEffectivePermissions(userId);
+    const cachedPermissions = await this.permissionCache.getEffectivePermissions(userId);
+    const permissions = cachedPermissions ?? await this.effectivePermissionsService.getEffectivePermissions(userId);
     if (!permissions.includes(permissionCode)) {
       throw createIamError('IAM-AUTHZ-001');
     }

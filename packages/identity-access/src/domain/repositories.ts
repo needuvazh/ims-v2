@@ -13,6 +13,7 @@ export interface IUserRepository {
   findPersonByMobile(mobile: string): Promise<Person | null>;
   create(user: User, person: Person): Promise<User>;
   update(user: User, person?: Person): Promise<User>;
+  archive(userId: Uuid, actorId?: Uuid): Promise<void>;
   search(filters: UserListFilters, page: number, pageSize: number): Promise<{ items: User[]; total: number }>;
   getPasswordHash(userId: Uuid): Promise<string | null>;
   updatePassword(userId: Uuid, passwordHash: string): Promise<void>;
@@ -26,6 +27,7 @@ export interface IRoleRepository {
   findByCode(code: string): Promise<Role | null>;
   create(role: Role): Promise<Role>;
   update(role: Role): Promise<Role>;
+  archive(roleId: Uuid, actorId?: Uuid): Promise<void>;
   search(page: number, pageSize: number): Promise<{ items: Role[]; total: number }>;
   
   assignRoleToUser(userId: Uuid, roleId: Uuid, actorId: Uuid): Promise<void>;
@@ -42,6 +44,7 @@ export interface IPermissionRepository {
   findByCode(code: string): Promise<Permission | null>;
   create(permission: Permission): Promise<Permission>;
   update(permission: Permission): Promise<Permission>;
+  archive(permissionId: Uuid, actorId?: Uuid): Promise<void>;
   search(type?: string, status?: string): Promise<Permission[]>;
 }
 
@@ -50,6 +53,8 @@ export interface IUserBranchAccessRepository {
   findById(id: Uuid): Promise<UserBranchAccess | null>;
   assign(access: UserBranchAccess): Promise<UserBranchAccess>;
   update(access: UserBranchAccess): Promise<UserBranchAccess>;
+  remove(userId: Uuid, branchId: Uuid, actorId?: Uuid, reason?: string | null): Promise<void>;
+  setDefault(userId: Uuid, branchId: Uuid, actorId?: Uuid): Promise<void>;
 }
 
 export interface UserSessionDto {
@@ -57,6 +62,7 @@ export interface UserSessionDto {
   userId: Uuid;
   accessTokenJti: string;
   hashedRefreshToken: string;
+  previousHashedRefreshToken: string | null;
   activeBranchId: Uuid | null;
   userAgent: string | null;
   ipAddress: string | null;
@@ -68,12 +74,25 @@ export interface UserSessionDto {
 
 export interface ISessionRepository {
   create(session: UserSessionDto): Promise<UserSessionDto>;
+  createSession?(session: {
+    userId: Uuid;
+    tokenHash: string;
+    userAgent: string | null;
+    ipAddress: string | null;
+    expiresAt: Date;
+    activeBranchId?: Uuid | null;
+  }): Promise<UserSessionDto>;
   findById(id: Uuid): Promise<UserSessionDto | null>;
   findByAccessTokenJti(jti: string): Promise<UserSessionDto | null>;
+  findByAccessTokenId?(id: string): Promise<UserSessionDto | null>;
   findByHashedRefreshToken(hash: string): Promise<UserSessionDto | null>;
+  getSessionByHash?(hash: string): Promise<UserSessionDto | null>;
   update(session: UserSessionDto): Promise<UserSessionDto>;
   revoke(id: Uuid): Promise<void>;
+  revokeAll?(userId: Uuid): Promise<void>;
   revokeAllForUser(userId: Uuid): Promise<void>;
+  revokeSessionByHash?(hash: string): Promise<void>;
+  listActive?(userId: Uuid): Promise<UserSessionDto[]>;
   listActiveForUser(userId: Uuid): Promise<UserSessionDto[]>;
 }
 
@@ -162,6 +181,9 @@ export interface INotificationRepository {
   update(notification: NotificationDto): Promise<NotificationDto>;
   findById(id: Uuid): Promise<NotificationDto | null>;
   listPending(limit: number): Promise<NotificationDto[]>;
+  markSent(id: Uuid, providerResponse?: unknown): Promise<NotificationDto>;
+  markFailed(id: Uuid, providerResponse?: unknown): Promise<NotificationDto>;
+  list(limit?: number): Promise<NotificationDto[]>;
 }
 
 export interface OutboxEventDto {
@@ -178,6 +200,8 @@ export interface IOutboxEventRepository {
   publish(event: OutboxEventDto): Promise<OutboxEventDto>;
   claimPending(limit: number): Promise<OutboxEventDto[]>;
   update(event: OutboxEventDto): Promise<OutboxEventDto>;
+  markProcessed(id: Uuid): Promise<OutboxEventDto>;
+  markFailed(id: Uuid, lastError?: string | null): Promise<OutboxEventDto>;
 }
 
 export interface ExportJobDto {
@@ -199,6 +223,7 @@ export interface IExportJobRepository {
   update(job: ExportJobDto): Promise<ExportJobDto>;
   findById(id: Uuid): Promise<ExportJobDto | null>;
   listByUser(userId: Uuid): Promise<ExportJobDto[]>;
+  updateStatus(id: Uuid, status: ExportJobDto['status'], fileUrl?: string | null, errorMessage?: string | null): Promise<ExportJobDto>;
 }
 
 export interface LoginHistoryDto {

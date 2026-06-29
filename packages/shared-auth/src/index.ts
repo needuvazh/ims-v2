@@ -1,4 +1,10 @@
 export * from './session';
 export * from './permissions';
 export * from './scopes';
-export * from './jwt';
+export {
+  JwtService,
+  RefreshTokenService,
+  getDevelopmentKeyPair,
+  generateRSAKeyPair,
+} from './jwt';
+export type { TokenPayload } from './jwt';

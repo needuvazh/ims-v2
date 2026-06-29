@@ -1,7 +1,7 @@
 import { UAParser } from 'ua-parser-js';
 import crypto from 'crypto';
 import { InMemoryMetrics } from '@ims/observability';
-import { JwtService, RefreshTokenService, generateRSAKeyPair, encodeSession, type Session, type TokenPayload } from '@ims/shared-auth';
+import { JwtService, RefreshTokenService, encodeSession, getDevelopmentKeyPair, type Session, type TokenPayload } from '@ims/shared-auth';
 import type { Uuid } from '@ims/shared-kernel';
 import { createIamError, IamError } from '../errors/iam-errors';
 import { PasswordPolicy } from '../domain/password-policy';
@@ -15,23 +15,19 @@ import type {
   IUserActivationTokenRepository,
   IRoleRepository,
   IUserBranchAccessRepository,
+  IOutboxEventRepository,
   UserSessionDto,
   LoginHistoryDto,
 } from '../domain/repositories';
 import type { INotificationPort } from '../domain/notification-port';
 
-// Dynamic development/test fallback key pair so tests run without env configuration.
-let devKeyPair: { publicKey: string; privateKey: string } | null = null;
 function getKeys(): { publicKey: string; privateKey: string } {
   const privateKey = process.env.JWT_PRIVATE_KEY;
   const publicKey = process.env.JWT_PUBLIC_KEY;
   if (privateKey && publicKey) {
     return { privateKey, publicKey };
   }
-  if (!devKeyPair) {
-    devKeyPair = generateRSAKeyPair();
-  }
-  return devKeyPair;
+  return getDevelopmentKeyPair();
 }
 
 export type SignInResult = {
@@ -51,7 +47,8 @@ export class AuthService {
     private readonly loginHistoryRepository: ILoginHistoryRepository,
     private readonly notificationPort: INotificationPort,
     private readonly roleRepository?: IRoleRepository,
-    private readonly userBranchAccessRepository?: IUserBranchAccessRepository
+    private readonly userBranchAccessRepository?: IUserBranchAccessRepository,
+    private readonly outboxEventRepository?: IOutboxEventRepository
   ) {}
 
   async signIn(
@@ -362,6 +359,7 @@ export class AuthService {
       userId: user.id,
       accessTokenJti,
       hashedRefreshToken,
+      previousHashedRefreshToken: null,
       activeBranchId: user.defaultBranchId,
       userAgent,
       ipAddress,
@@ -436,6 +434,31 @@ export class AuthService {
       throw createIamError('IAM-AUTH-006');
     }
 
+    if (session.previousHashedRefreshToken === hashedToken) {
+      session.status = 'Revoked';
+      await this.sessionRepository.update(session);
+      await this.sessionRepository.revokeAllForUser(session.userId);
+
+      await this.auditLogRepository.append({
+        id: crypto.randomUUID() as Uuid,
+        module: 'iam',
+        performedBy: session.userId,
+        performedAt: now,
+        entityType: 'UserSession',
+        entityId: session.id,
+        action: 'iam.session.refresh-token-reused',
+        oldValue: { status: 'Active' },
+        newValue: { status: 'Revoked' },
+        ipAddress,
+        userAgent,
+        branchId: session.activeBranchId,
+        correlationId: null,
+        reason: 'refresh_token_reuse_detected',
+      });
+
+      throw createIamError('IAM-AUTH-006');
+    }
+
     const user = await this.userRepository.findById(session.userId);
     if (!user || user.status !== 'Active') {
       throw createIamError('IAM-AUTH-001');
@@ -443,6 +466,7 @@ export class AuthService {
 
     // Refresh token rotation (issue new refresh token, invalidate old one)
     const { raw: newRefreshToken, hash: hashedNewRefreshToken } = RefreshTokenService.generate();
+    session.previousHashedRefreshToken = session.hashedRefreshToken;
     session.hashedRefreshToken = hashedNewRefreshToken;
     session.lastActivityAt = now;
     await this.sessionRepository.update(session);
@@ -533,6 +557,18 @@ export class AuthService {
       expiresAt,
     });
 
+    if (this.outboxEventRepository) {
+      await this.outboxEventRepository.publish({
+        id: crypto.randomUUID() as Uuid,
+        eventType: 'PasswordResetRequested',
+        payload: { userId: user.id, email: user.email },
+        status: 'Pending',
+        createdAt: new Date(),
+        processedAt: null,
+        retryCount: 0,
+      });
+    }
+
     await this.auditLogRepository.append({
       id: crypto.randomUUID() as Uuid,
       module: 'iam',
@@ -550,13 +586,9 @@ export class AuthService {
       reason: null,
     });
 
-    const baseUrl = process.env.RESET_PASSWORD_BASE_URL || 'http://localhost:3000';
-    const resetLink = `${baseUrl}/reset-password?token=${rawToken}`;
-
-    // Send reset email (redacted version of token/link is logged inside the provider)
+    // Send reset email without exposing the reset link to the adapter boundary.
     await this.notificationPort.sendPasswordResetEmail(user.email, {
       firstName: user.username, // Using username as name placeholder
-      resetLink,
       expiresAt,
     });
   }

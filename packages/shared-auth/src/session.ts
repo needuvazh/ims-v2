@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { BranchId, Uuid } from '@ims/shared-kernel';
+import type { Uuid } from '@ims/shared-kernel';
 
 export const sessionCookieName = 'ims_session';
 
@@ -22,7 +22,16 @@ export const sessionSchema = z.object({
   expiresAt: z.number(),
 });
 
-export type Session = z.infer<typeof sessionSchema>;
+export type Session = Omit<z.infer<typeof sessionSchema>, 'userId' | 'activeBranchId' | 'dataScopes'> & {
+  userId: Uuid;
+  activeBranchId: Uuid | null;
+  dataScopes: Array<{
+    scopeType: string;
+    branchId: Uuid | null;
+    departmentId: Uuid | null;
+    assignedOnly: boolean;
+  }>;
+};
 
 // ─── Low-level base64url helpers ─────────────────────────────────────────────
 
@@ -100,7 +109,7 @@ export async function decodeSession(value: string | undefined | null): Promise<S
     const signature = value.slice(dotIdx + 1);
     if (!(await hmacVerify(payload, signature, getSessionSecret()))) return null;
     const raw = JSON.parse(base64UrlDecode(payload));
-    const session = sessionSchema.parse(raw);
+    const session = sessionSchema.parse(raw) as Session;
     if (Date.now() > session.expiresAt) {
       return null;
     }
@@ -110,8 +119,8 @@ export async function decodeSession(value: string | undefined | null): Promise<S
   }
 }
 
-export function resolveActiveBranchId(session: Session): BranchId | null {
-  return (session.activeBranchId ?? null) as BranchId | null;
+export function resolveActiveBranchId(session: Session): Uuid | null {
+  return session.activeBranchId ?? null;
 }
 
 export function resolveUserId(session: Session): Uuid {
@@ -121,10 +130,20 @@ export function resolveUserId(session: Session): Uuid {
 /** @deprecated Use the real authService.signIn() instead. Test helper only. */
 export function createDemoSession(userId: string): Session {
   return {
-    userId,
+    userId: userId as Uuid,
     displayName: 'IMS Admin',
     roles: ['Admin'],
-    permissions: ['dashboard.view', 'organization.manage', 'identity.read', 'identity.write'],
+    permissions: [
+      'dashboard.view',
+      'dashboard.ceo',
+      'organization.manage',
+      'identity.read',
+      'identity.write',
+      'iam.user.read',
+      'iam.user.create',
+      'iam.role.read',
+      'iam.security-policy.read',
+    ],
     dataScopes: [{ scopeType: 'All', branchId: null, departmentId: null, assignedOnly: false }],
     activeBranchId: null,
     accessTokenJti: 'demo-jti',

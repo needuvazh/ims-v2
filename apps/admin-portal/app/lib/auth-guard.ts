@@ -1,9 +1,20 @@
 import { cache } from 'react';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { decodeSession, sessionCookieName, hasPermission, isAuthorizedForBranch } from '@ims/shared-auth';
 import type { Session } from '@ims/shared-auth';
 import { DomainError } from '@ims/shared-kernel';
 import nodeCrypto from 'crypto';
+
+function getCookieValue(headerValue: string | null | undefined, name: string): string | null {
+  if (!headerValue) return null;
+
+  const match = headerValue
+    .split(';')
+    .map((part) => part.trim())
+    .find((part) => part.startsWith(`${name}=`));
+
+  return match ? decodeURIComponent(match.slice(name.length + 1)) : null;
+}
 
 /**
  * Retrieve the current active session.
@@ -14,7 +25,8 @@ import nodeCrypto from 'crypto';
  */
 export const getSession: () => Promise<Session> = cache(async () => {
   const cookieStore = await cookies();
-  const token = cookieStore.get(sessionCookieName)?.value;
+  const headerStore = await headers();
+  const token = cookieStore.get(sessionCookieName)?.value ?? getCookieValue(headerStore.get('cookie'), sessionCookieName);
   const session = await decodeSession(token);
   if (!session || !token) {
     throw new DomainError('unauthorized', 'Authentication required. Please sign in.');

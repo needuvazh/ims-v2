@@ -12,7 +12,7 @@ To: ${recipientEmail}
 Subject: Welcome to ASTI IMS
 Dear ${activationData.firstName},
 Please activate your account by clicking the link below:
-${activationData.activationLink}
+ [REDACTED]
 This link will expire at: ${activationData.expiresAt.toISOString()}
 =========================================
 `);
@@ -20,7 +20,7 @@ This link will expire at: ${activationData.expiresAt.toISOString()}
 
   async sendPasswordResetEmail(
     recipientEmail: string,
-    resetData: { firstName: string; resetLink: string; expiresAt: Date }
+    resetData: { firstName: string; expiresAt: Date }
   ): Promise<void> {
     console.log(`
 =========================================
@@ -29,7 +29,7 @@ To: ${recipientEmail}
 Subject: Password Reset Request
 Dear ${resetData.firstName},
 A password reset has been requested for your account. Reset here:
-${resetData.resetLink}
+ [REDACTED]
 This link will expire at: ${resetData.expiresAt.toISOString()}
 =========================================
 `);
