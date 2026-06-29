@@ -5,6 +5,7 @@ export class DummyNotificationProvider implements INotificationPort {
     recipientEmail: string,
     activationData: { firstName: string; activationLink: string; expiresAt: Date }
   ): Promise<void> {
+    const redactedLink = activationData.activationLink.replace(/token=[^&]+/g, 'token=[REDACTED]');
     console.log(`
 =========================================
 [EMAIL NOTIFICATION: ACTIVATION]
@@ -12,7 +13,7 @@ To: ${recipientEmail}
 Subject: Welcome to ASTI IMS
 Dear ${activationData.firstName},
 Please activate your account by clicking the link below:
- ${activationData.activationLink}
+ ${redactedLink}
 This link will expire at: ${activationData.expiresAt.toISOString()}
 =========================================
 `);
@@ -22,6 +23,7 @@ This link will expire at: ${activationData.expiresAt.toISOString()}
     recipientEmail: string,
     resetData: { firstName: string; resetLink: string; expiresAt: Date }
   ): Promise<void> {
+    const redactedLink = resetData.resetLink ? resetData.resetLink.replace(/token=[^&]+/g, 'token=[REDACTED]') : '';
     console.log(`
 =========================================
 [EMAIL NOTIFICATION: PASSWORD RESET]
@@ -29,7 +31,7 @@ To: ${recipientEmail}
 Subject: Password Reset Request
 Dear ${resetData.firstName},
 A password reset has been requested for your account. Reset here:
- ${resetData.resetLink}
+ ${redactedLink}
 This link will expire at: ${resetData.expiresAt.toISOString()}
 =========================================
 `);

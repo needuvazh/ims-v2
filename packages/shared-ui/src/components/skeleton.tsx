@@ -18,7 +18,7 @@ export function CardSkeleton({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'rounded-[28px] border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-6',
+        'rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-6',
         className,
       )}
     >
@@ -32,7 +32,7 @@ export function CardSkeleton({ className }: { className?: string }) {
 
 export function TableSkeleton({ rows = 5, columns = 4 }: { rows?: number; columns?: number }) {
   return (
-    <div className="overflow-hidden rounded-[24px] border border-[color:var(--ims-border)]">
+    <div className="overflow-hidden rounded-2xl border border-[color:var(--ims-border)]">
       <div className="bg-[color:var(--ims-accent-soft)] p-3">
         <div className="flex gap-4">
           {Array.from({ length: columns }).map((_, i) => (

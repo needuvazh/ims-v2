@@ -71,6 +71,7 @@ export default async function DashboardPage() {
           description="Active corporate training entities"
           trend={{ value: 0, label: 'No change' }}
           icon={<Building2 className="h-5 w-5" />}
+          tone="indigo"
           data-testid="stat-institutes"
         />
         <StatCard
@@ -79,6 +80,7 @@ export default async function DashboardPage() {
           description="Operational regional facilities"
           trend={{ value: 25, label: 'growth' }}
           icon={<BookOpen className="h-5 w-5" />}
+          tone="emerald"
           data-testid="stat-branches"
         />
         <StatCard
@@ -87,6 +89,7 @@ export default async function DashboardPage() {
           description="Pending enrollment module load"
           trend={{ value: 12, label: 'this month' }}
           icon={<Users className="h-5 w-5" />}
+          tone="amber"
           data-testid="stat-students"
         />
         <StatCard
@@ -95,6 +98,7 @@ export default async function DashboardPage() {
           description="Pending certificate module activation"
           trend={{ value: 8, label: 'this week' }}
           icon={<GraduationCap className="h-5 w-5" />}
+          tone="violet"
           data-testid="stat-certificates"
         />
       </div>

@@ -18,6 +18,7 @@ describe('DummyNotificationProvider', () => {
 
     await provider.sendPasswordResetEmail('user@example.com', {
       firstName: 'User',
+      resetLink: 'https://example.com/reset?token=secret-token',
       expiresAt: new Date('2026-01-01T00:00:00.000Z'),
     });
 

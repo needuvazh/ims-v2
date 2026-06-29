@@ -29,6 +29,7 @@ export type NavigationItem = {
 
 export const adminNavigation: NavigationItem[] = [
   { href: '/dashboard', label: 'Dashboard', permission: 'dashboard.view', category: 'Overview' },
+  { href: '/leads', label: 'Leads', permission: 'dashboard.view', category: 'CRM' },
   {
     href: '/organization',
     label: 'Organization',
@@ -51,6 +52,11 @@ export const adminNavigation: NavigationItem[] = [
       { href: '/iam/users', label: 'Users' },
       { href: '/iam/roles', label: 'Roles' },
       { href: '/iam/permissions', label: 'Permissions' },
+      { href: '/iam/sessions', label: 'Active Sessions' },
+      { href: '/iam/login-history', label: 'Login History' },
+      { href: '/iam/security-policy', label: 'Security Policy' },
+      { href: '/iam/audit', label: 'Audit Trail' },
+      { href: '/iam/reports', label: 'IAM Reports' },
     ],
   },
 ];

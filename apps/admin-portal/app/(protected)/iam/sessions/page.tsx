@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
-import { revalidatePath } from 'next/cache';
 import { Clock3, ExternalLink } from 'lucide-react';
 import { Breadcrumbs, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Input, PageHeader, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Badge } from '@ims/shared-ui';
 import { getSession } from '../../../lib/auth-guard';
+import { terminateSessionAction, terminateAllSessionsAction } from './actions';
 
 export const metadata = { title: 'Sessions | IMS Admin' };
 export const dynamic = 'force-dynamic';
@@ -15,30 +15,6 @@ export default async function IamSessionsPage({ searchParams }: { searchParams: 
   const targetUserId = resolved.userId?.trim() ?? '';
   const session = await getSession();
   const { sessionService } = await import('../../../lib/runtime');
-
-  async function terminateSessionAction(formData: FormData) {
-    'use server';
-    const sessionId = String(formData.get('sessionId') ?? '');
-    if (!sessionId) return;
-    await sessionService.terminateSession(sessionId as never, {
-      actorId: session.userId as never,
-      actorPermissions: session.permissions,
-      activeBranchId: session.activeBranchId as never,
-    });
-    revalidatePath('/iam/sessions');
-  }
-
-  async function terminateAllSessionsAction(formData: FormData) {
-    'use server';
-    const userId = String(formData.get('userId') ?? targetUserId);
-    if (!userId) return;
-    await sessionService.terminateAllUserSessions(userId as never, {
-      actorId: session.userId as never,
-      actorPermissions: session.permissions,
-      activeBranchId: session.activeBranchId as never,
-    });
-    revalidatePath('/iam/sessions');
-  }
 
   let sessions: Array<{ id: string; userId: string; activeBranchId: string | null; status: string; expiresAt: Date; lastActivityAt: Date; userAgent: string | null; ipAddress: string | null }> = [];
   if (targetUserId) {

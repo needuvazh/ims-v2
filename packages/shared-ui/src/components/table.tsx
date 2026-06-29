@@ -5,10 +5,10 @@ import { cn } from '../utils/cn';
 
 export function Table({ className, ...props }: HTMLAttributes<HTMLTableElement>) {
   return (
-    <div className="overflow-hidden border border-[color:var(--ims-border)]">
+    <div className="overflow-hidden rounded-2xl border border-[color:var(--ims-border)] bg-white/70 shadow-sm backdrop-blur-md transition-all duration-300">
       <div className="overflow-x-auto">
         <table
-          className={cn('w-full border-collapse bg-[color:var(--ims-surface)] text-sm', className)}
+          className={cn('w-full border-collapse bg-white/40 text-sm', className)}
           {...props}
         />
       </div>
@@ -29,7 +29,7 @@ export function TableHeader({ className, ...props }: HTMLAttributes<HTMLTableSec
   return (
     <thead
       className={cn(
-        'bg-[color:var(--ims-accent-soft)] text-xs uppercase tracking-[0.18em] text-[color:var(--ims-muted)]',
+        'bg-slate-50/50 text-xs font-semibold uppercase tracking-wider text-slate-500 border-b border-[color:var(--ims-border)]',
         className,
       )}
       {...props}
@@ -49,7 +49,7 @@ export function TableBody({ className, ...props }: HTMLAttributes<HTMLTableSecti
 export function TableRow({ className, ...props }: HTMLAttributes<HTMLTableRowElement>) {
   return (
     <tr
-      className={cn('transition-colors hover:bg-[color:var(--ims-accent-soft)]', className)}
+      className={cn('transition-all hover:bg-indigo-50/30 hover:scale-[1.002] duration-200', className)}
       {...props}
     />
   );

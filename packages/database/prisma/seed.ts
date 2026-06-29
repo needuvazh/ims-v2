@@ -68,6 +68,7 @@ const systemPermissions = [
   { moduleCode: 'certificate',  featureCode: 'public',      actionCode: 'verify', permissionCode: 'certificate.verify',             permissionType: 'Action' as const, description: 'Verify certificates publicly.' },
   
   // Dashboard & Audit
+  { moduleCode: 'dashboard',    featureCode: 'summary',     actionCode: 'view',   permissionCode: 'dashboard.view',                 permissionType: 'Action' as const, description: 'View dashboard metrics.' },
   { moduleCode: 'dashboard',    featureCode: 'security',    actionCode: 'view',   permissionCode: 'dashboard.security',            permissionType: 'Action' as const, description: 'View security dashboard.' },
   { moduleCode: 'dashboard',    featureCode: 'admin',       actionCode: 'view',   permissionCode: 'dashboard.admin',               permissionType: 'Action' as const, description: 'View administration dashboard.' },
   { moduleCode: 'dashboard',    featureCode: 'ceo',         actionCode: 'view',   permissionCode: 'dashboard.ceo',                 permissionType: 'Action' as const, description: 'View executive dashboard.' },
@@ -175,7 +176,7 @@ async function seed() {
     'student.read', 'student.write', 'enrollment.create',
     'payment.create', 'refund.request', 'course.manage', 'schedule.manage',
     'attendance.record', 'result.record', 'certificate.generate',
-    'certificate.verify', 'dashboard.branch', 'dashboard.security'
+    'certificate.verify', 'dashboard.branch', 'dashboard.security', 'dashboard.view'
   ];
   const managerPerms = permRecords.filter(p => managerPermCodes.includes(p.permissionCode));
   for (const perm of managerPerms) {
@@ -188,7 +189,7 @@ async function seed() {
   // Counselor permissions
   const counselorPermCodes = [
     'iam.user.read', 'lead.read', 'lead.write', 'lead.convert',
-    'student.read', 'dashboard.crm', 'report.iam.user'
+    'student.read', 'dashboard.crm', 'report.iam.user', 'dashboard.view'
   ];
   const counselorPerms = permRecords.filter(p => counselorPermCodes.includes(p.permissionCode));
   for (const perm of counselorPerms) {
@@ -214,7 +215,7 @@ async function seed() {
   // Accountant permissions
   const accountantPermCodes = [
     'student.read', 'payment.create', 'refund.request',
-    'dashboard.finance'
+    'dashboard.finance', 'dashboard.view'
   ];
   const accountantPerms = permRecords.filter(p => accountantPermCodes.includes(p.permissionCode));
   for (const perm of accountantPerms) {

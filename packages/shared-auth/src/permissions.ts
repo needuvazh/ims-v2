@@ -53,6 +53,7 @@ export const permissions = {
     },
   },
   dashboard: {
+    view: 'dashboard.view',
     security: 'dashboard.security',
     admin: 'dashboard.admin',
     ceo: 'dashboard.ceo',
