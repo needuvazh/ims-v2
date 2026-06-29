@@ -1,18 +1,26 @@
-/**
- * Domain port for password reset notifications.
- * AuthService depends on this interface — concrete adapters live in infrastructure.
- *
- * Phase 1: ConsolePasswordResetPort (dev-safe stub in apps/admin-portal/app/lib/)
- * Phase 2: EmailPasswordResetPort (SMTP / SaaS email provider)
- */
-export interface PasswordResetNotificationPort {
-  /**
-   * Deliver the password reset link to the user.
-   * Implementations must NEVER log the rawResetUrl in structured logs.
-   * The raw token is embedded in resetUrl — treat it as a secret.
-   */
-  sendPasswordResetLink(params: {
-    toEmail: string;
-    resetUrl: string;
-  }): Promise<void>;
+export interface INotificationPort {
+  sendActivationEmail(
+    recipientEmail: string,
+    activationData: { firstName: string; activationLink: string; expiresAt: Date }
+  ): Promise<void>;
+
+  sendPasswordResetEmail(
+    recipientEmail: string,
+    resetData: { firstName: string; resetLink: string; expiresAt: Date }
+  ): Promise<void>;
+
+  sendAccountLockedNotification(
+    adminEmails: string[],
+    userData: { displayName: string; failedAttempts: number; lockedUntil: Date }
+  ): Promise<void>;
+
+  sendRoleAssignedNotification(
+    recipientEmail: string,
+    roleData: { roleName: string }
+  ): Promise<void>;
+
+  sendBranchAssignedNotification(
+    recipientEmail: string,
+    branchData: { branchName: string }
+  ): Promise<void>;
 }

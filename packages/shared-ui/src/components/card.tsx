@@ -1,3 +1,4 @@
+import React from 'react';
 import type { HTMLAttributes } from 'react';
 import { cn } from '../utils/cn';
 
@@ -7,7 +8,7 @@ export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <section
       className={cn(
-        'rounded-[28px] border border-[color:var(--ims-border)] bg-white/80 backdrop-blur-xl shadow-[0_8px_32px_rgba(20,33,61,0.04)] hover:-translate-y-2 hover:shadow-[0_16px_48px_rgba(20,33,61,0.12)] transition-all duration-500 ease-out group',
+        'rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] shadow-[0_12px_35px_rgba(16,36,58,0.06)] backdrop-blur-xl transition-all duration-300 ease-out group hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(16,36,58,0.10)]',
         className,
       )}
       {...props}
@@ -18,7 +19,7 @@ export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
 export function CardHeader({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn('flex flex-col gap-1.5 border-b border-[color:var(--ims-border)] p-6', className)}
+      className={cn('flex flex-col gap-1.5 border-b border-[color:var(--ims-border)] p-5 sm:p-6', className)}
       {...props}
     />
   );
@@ -46,14 +47,14 @@ export function CardDescription({ className, ...props }: HTMLAttributes<HTMLPara
 }
 
 export function CardContent({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('p-6', className)} {...props} />;
+  return <div className={cn('p-5 sm:p-6', className)} {...props} />;
 }
 
 export function CardFooter({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(
-        'flex items-center border-t border-[color:var(--ims-border)] p-6',
+        'flex items-center border-t border-[color:var(--ims-border)] p-5 sm:p-6',
         className,
       )}
       {...props}

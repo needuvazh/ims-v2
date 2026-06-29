@@ -19,8 +19,8 @@ export function SidebarNav({ items }: { items: NavigationItem[] }) {
           className={cn(
             'block rounded-2xl px-3 py-2.5 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2',
             item.current
-              ? 'bg-[color:var(--ims-ink)] text-[color:var(--ims-paper)] shadow-[0_10px_24px_rgba(20,33,61,0.18)]'
-              : 'text-[color:var(--ims-muted)] hover:bg-[color:var(--ims-accent-soft)] hover:text-[color:var(--ims-ink)]',
+              ? 'bg-[linear-gradient(135deg,var(--ims-ink),#16314c)] text-[color:var(--ims-surface)] shadow-[0_10px_24px_rgba(16,36,58,0.16)]'
+              : 'text-[color:var(--ims-muted)] hover:bg-[color:var(--ims-accent-soft)] hover:text-[color:var(--ims-brass)]',
           )}
           aria-current={item.current ? 'page' : undefined}
         >
@@ -65,7 +65,7 @@ export function PageHeader({
 
 export function StatusRail({ children }: PropsWithChildren) {
   return (
-    <div className="rounded-full border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] px-4 py-2 text-xs font-medium uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+    <div className="rounded-full border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] px-4 py-2 text-xs font-medium uppercase tracking-[0.18em] text-[color:var(--ims-muted)] shadow-sm">
       {children}
     </div>
   );

@@ -63,14 +63,14 @@ describe('observability request context', () => {
       traceId: 'trace-1',
     });
 
-    logger.info('observability.test', {
+    const details = {
       route: '/api/health',
       status: 'success',
       message: 'ok',
-      // Deliberately cast to verify the logger ignores unknown payloads.
-      // @ts-expect-error - test the runtime sanitizer
       secret: 'should-not-appear',
-    });
+    } as unknown as Parameters<typeof logger.info>[1];
+
+    logger.info('observability.test', details);
 
     expect(spy).toHaveBeenCalledTimes(1);
     const payload = JSON.parse(String(spy.mock.calls[0]?.[0]));
@@ -78,5 +78,29 @@ describe('observability request context', () => {
     expect(payload.traceId).toBe('trace-1');
     expect(payload.route).toBe('/api/health');
     expect(payload.secret).toBeUndefined();
+  });
+
+  it('drops sensitive fields from structured log payloads', () => {
+    const spy = vi.spyOn(console, 'info').mockImplementation(() => {});
+    const logger = createStructuredLogger({ requestId: 'req-2' });
+
+    const redactionDetails = {
+      route: '/api/redacted',
+      status: 'success',
+      password: 'p@ssword',
+      token: 'token-value',
+      resetLink: 'https://example.com/reset?token=secret',
+      jwt: 'eyJhbGciOi...',
+      apiKey: 'secret-api-key',
+      privateKey: '-----BEGIN PRIVATE KEY-----',
+    } as unknown as Parameters<typeof logger.info>[1];
+
+    logger.info('observability.redaction', redactionDetails);
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    const payload = JSON.parse(String(spy.mock.calls[0]?.[0]));
+    expect(JSON.stringify(payload)).not.toContain('p@ssword');
+    expect(JSON.stringify(payload)).not.toContain('secret');
+    expect(payload.route).toBe('/api/redacted');
   });
 });

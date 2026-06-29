@@ -5,8 +5,13 @@ export const permissionCodeSchema = z.string().min(3);
 export type PermissionCode = z.infer<typeof permissionCodeSchema>;
 
 export const knownPermissions = [
-  'identity.read',
-  'identity.write',
+  'iam.user.read',
+  'iam.user.create',
+  'iam.user.update',
+  'iam.user.activate',
+  'iam.role.read',
+  'iam.role.create',
+  'iam.role.update',
   'organization.manage',
   'dashboard.view',
   'certificate.verify',
@@ -24,6 +29,7 @@ export type NavigationItem = {
 
 export const adminNavigation: NavigationItem[] = [
   { href: '/dashboard', label: 'Dashboard', permission: 'dashboard.view', category: 'Overview' },
+  { href: '/leads', label: 'Leads', permission: 'dashboard.view', category: 'CRM' },
   {
     href: '/organization',
     label: 'Organization',
@@ -38,14 +44,19 @@ export const adminNavigation: NavigationItem[] = [
     ],
   },
   {
-    href: '/identity',
+    href: '/iam',
     label: 'Identity & Access',
-    permission: 'identity.read',
+    permission: 'iam.user.read',
     category: 'Management',
     items: [
-      { href: '/identity/users', label: 'Users' },
-      { href: '/identity/roles', label: 'Roles' },
-      { href: '/identity/permissions', label: 'Permissions' },
+      { href: '/iam/users', label: 'Users' },
+      { href: '/iam/roles', label: 'Roles' },
+      { href: '/iam/permissions', label: 'Permissions' },
+      { href: '/iam/sessions', label: 'Active Sessions' },
+      { href: '/iam/login-history', label: 'Login History' },
+      { href: '/iam/security-policy', label: 'Security Policy' },
+      { href: '/iam/audit', label: 'Audit Trail' },
+      { href: '/iam/reports', label: 'IAM Reports' },
     ],
   },
 ];

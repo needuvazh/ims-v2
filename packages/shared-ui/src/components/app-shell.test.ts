@@ -14,14 +14,14 @@ describe('sidebar navigation helpers', () => {
   });
 
   it('does not mark unrelated routes active', () => {
-    expect(isPathActive('/identity/users', '/organization')).toBe(false);
+    expect(isPathActive('/iam/users', '/organization')).toBe(false);
   });
 
   it('groups items by category and preserves order', () => {
     const items: NavItem[] = [
       { href: '/dashboard', label: 'Dashboard', category: 'Overview' },
       { href: '/organization', label: 'Organization', category: 'Management' },
-      { href: '/identity', label: 'Identity', category: 'Management' },
+      { href: '/iam', label: 'IAM', category: 'Management' },
     ];
 
     expect(groupNavigationSections(items)).toEqual([

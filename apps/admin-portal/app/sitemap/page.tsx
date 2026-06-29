@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
-import { LegalPageShell, courseCatalog, mainNavigation } from '../_components/public-site';
+import { LegalPageShell } from '../_components/public-site';
+import { courseCatalog, mainNavigation } from '../_components/public-site-data';
 
 export default function SitemapPage() {
   return (

@@ -1,25 +1,26 @@
 'use client';
 
+import React from 'react';
 import { type ButtonHTMLAttributes, forwardRef } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { Loader2 } from 'lucide-react';
 import { cn } from '../utils/cn';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--ims-paper)] disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]',
+  'inline-flex items-center justify-center gap-2 rounded-2xl font-semibold tracking-tight transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--ims-background)] disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]',
   {
     variants: {
       variant: {
         primary:
-          'bg-[color:var(--ims-ink)] text-[color:var(--ims-paper)] shadow-[0_4px_14px_rgba(20,33,61,0.25)] hover:bg-[color:var(--ims-brass)] hover:shadow-[0_4px_14px_rgba(196,125,70,0.35)]',
+          'bg-[color:var(--ims-ink)] text-[color:var(--ims-surface)] shadow-[0_14px_30px_rgba(16,36,58,0.18)] hover:bg-[color:var(--ims-brass)] hover:shadow-[0_16px_34px_rgba(227,101,38,0.18)]',
         secondary:
-          'border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] text-[color:var(--ims-ink)] hover:border-[color:var(--ims-ink)] hover:bg-[color:var(--ims-accent-soft)]',
+          'border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] text-[color:var(--ims-ink)] shadow-sm hover:border-[color:var(--ims-brass)] hover:bg-[color:var(--ims-accent-soft)]',
         destructive:
           'bg-[color:var(--ims-error)] text-white shadow-sm hover:bg-red-700',
         outline:
-          'border border-[color:var(--ims-brass)] bg-transparent text-[color:var(--ims-brass)] hover:bg-[color:var(--ims-accent-soft)]',
+          'border border-[color:var(--ims-brass)] bg-transparent text-[color:var(--ims-brass)] hover:bg-[color:var(--ims-brass-soft)]',
         ghost:
-          'bg-transparent text-[color:var(--ims-ink)] hover:bg-[color:var(--ims-accent-soft)]',
+          'bg-transparent text-[color:var(--ims-ink)] hover:bg-[color:var(--ims-accent-soft)] hover:text-[color:var(--ims-brass)]',
         link:
           'underline-offset-4 text-[color:var(--ims-brass)] hover:underline rounded-none',
       },

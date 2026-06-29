@@ -1,63 +1,58 @@
 import { z } from 'zod';
 import type { Uuid } from '@ims/shared-kernel';
+import { createIamError } from '../errors/iam-errors';
 
-export type RoleStatus = 'Draft' | 'Active' | 'Inactive' | 'Archived';
+export const roleStatusSchema = z.enum(['Active', 'Archived']);
+export type RoleStatus = z.infer<typeof roleStatusSchema>;
 
-export type RoleRecord = {
+export interface Role {
   id: Uuid;
   roleCode: string;
   roleName: string;
   description: string | null;
   status: RoleStatus;
-  effectiveStartDate?: Date;
-  effectiveEndDate?: Date | null;
-  permissions: PermissionRecord[];
-};
+  isSystemRole: boolean;
+  version: number;
+  effectiveStartDate: Date;
+  effectiveEndDate: Date | null;
+  createdAt: Date;
+  createdBy: string | null;
+  updatedAt: Date | null;
+  updatedBy: string | null;
+}
 
-export type PermissionRecord = {
-  id: Uuid;
-  moduleCode: string;
-  featureCode: string;
-  actionCode: string;
-  permissionCode: string;
-  permissionType: 'Module' | 'Menu' | 'Action' | 'Report' | 'DataScope';
-  description: string | null;
-  status: string;
-};
+export function canArchiveRole(role: Pick<Role, 'isSystemRole'>): boolean {
+  return !role.isSystemRole;
+}
+
+export function assertRoleArchivable(role: Pick<Role, 'isSystemRole'>): void {
+  if (!canArchiveRole(role)) {
+    throw createIamError('IAM-VAL-010');
+  }
+}
 
 export const createRoleCommandSchema = z.object({
   roleCode: z.string().trim().min(2).max(100).toUpperCase(),
   roleName: z.string().trim().min(2).max(150),
   description: z.string().trim().nullable().optional(),
-  status: z.enum(['Draft', 'Active', 'Inactive', 'Archived']).optional(),
-  permissionIds: z.array(z.string().uuid()).default([]),
   effectiveStartDate: z.coerce.date().optional(),
   effectiveEndDate: z.coerce.date().nullable().optional(),
+  
+  // Legacy fields
+  status: z.string().optional(),
+  permissionIds: z.array(z.string().uuid()).optional(),
 });
 
 export const updateRoleCommandSchema = z.object({
   roleName: z.string().trim().min(2).max(150).optional(),
   description: z.string().trim().nullable().optional(),
-  status: z.enum(['Draft', 'Active', 'Inactive', 'Archived']).optional(),
   effectiveStartDate: z.coerce.date().optional(),
   effectiveEndDate: z.coerce.date().nullable().optional(),
+
+  // Legacy fields
+  status: z.string().optional(),
+  permissionIds: z.array(z.string().uuid()).optional(),
 });
 
 export type CreateRoleCommand = z.infer<typeof createRoleCommandSchema>;
 export type UpdateRoleCommand = z.infer<typeof updateRoleCommandSchema>;
-
-/** Seed permission definitions by module. */
-export const systemPermissions = [
-  // Organization
-  { moduleCode: 'organization', featureCode: 'institute',  actionCode: 'manage',  permissionCode: 'organization.manage',         permissionType: 'Action', description: 'Manage institutes and branches.' },
-  { moduleCode: 'organization', featureCode: 'branch',     actionCode: 'manage',  permissionCode: 'organization.branch.manage',  permissionType: 'Action', description: 'Create and update branches.' },
-  { moduleCode: 'organization', featureCode: 'department', actionCode: 'manage',  permissionCode: 'organization.department.manage', permissionType: 'Action', description: 'Manage departments.' },
-  // Identity & Access
-  { moduleCode: 'identity', featureCode: 'user',       actionCode: 'read',   permissionCode: 'identity.read',        permissionType: 'Action', description: 'View users and roles.' },
-  { moduleCode: 'identity', featureCode: 'user',       actionCode: 'write',  permissionCode: 'identity.write',       permissionType: 'Action', description: 'Create and update users.' },
-  { moduleCode: 'identity', featureCode: 'role',       actionCode: 'manage', permissionCode: 'identity.role.manage', permissionType: 'Action', description: 'Manage roles and permissions.' },
-  // Dashboard
-  { moduleCode: 'dashboard', featureCode: 'summary', actionCode: 'view', permissionCode: 'dashboard.view', permissionType: 'Menu', description: 'View dashboard summary.' },
-  // Certificates
-  { moduleCode: 'certificate', featureCode: 'public', actionCode: 'verify', permissionCode: 'certificate.verify', permissionType: 'Action', description: 'Verify public certificates.' },
-] as const;

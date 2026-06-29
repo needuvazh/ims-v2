@@ -33,10 +33,11 @@ export class LeadConversionOrchestrator {
           action: 'LeadConverted',
           entityType: 'Lead',
           entityId: lead.id,
-          actorId: actorId || null,
+          performedBy: actorId || null,
           branchId: lead.branchId,
-          occurredAt: new Date(),
-          details: {
+          performedAt: new Date(),
+          module: 'AdmissionsEnrollment',
+          newValue: {
             studentId: admissionResult.studentId,
             admissionId: admissionResult.admissionId,
           }

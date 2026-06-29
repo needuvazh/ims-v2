@@ -8,26 +8,26 @@ export const dynamic = 'force-dynamic';
 export default async function ManageRolePermissionsPage(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const data = await loadIdentityData();
-  const role = data.roles.find((r) => r.id === params.id);
+  const role = data.roles.find((r: any) => r.id === params.id);
 
   if (!role) {
     return <div>Role not found</div>;
   }
 
-  const assignedPermissionIds = role.permissions.map(p => p.id);
+  const assignedPermissionIds = role.permissions.map((p: any) => p.id);
 
   return (
     <div className="space-y-8">
       <PageHeader
         title="Manage Role Permissions"
         description={`Assign or remove permissions for ${role.roleName}.`}
-        backUrl="/identity/roles"
+        backUrl="/iam/roles"
         breadcrumbs={
           <Breadcrumbs
             items={[
               { label: 'Dashboard', href: '/dashboard' },
-              { label: 'Identity', href: '/identity' },
-              { label: 'Roles', href: '/identity/roles' },
+              { label: 'IAM', href: '/iam' },
+              { label: 'Roles', href: '/iam/roles' },
               { label: 'Manage Permissions' },
             ]}
           />

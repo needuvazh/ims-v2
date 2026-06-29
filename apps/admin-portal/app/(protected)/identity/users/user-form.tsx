@@ -10,8 +10,19 @@ import {
   Input,
   Select,
 } from '@ims/shared-ui';
-import type { UserProfile } from '@ims/identity-access';
 import { createUserAction, updateUserAction, type ActionResult } from '../actions';
+
+type UserProfile = {
+  id: string;
+  fullName?: string;
+  email?: string;
+  phone?: string | null;
+  status?: string;
+  userType?: string;
+  effectiveStartDate?: Date | null;
+  effectiveEndDate?: Date | null;
+  dataScopes?: Array<{ scopeType: string; branchId?: string | null; assignedOnly?: boolean }>;
+};
 
 const initialState: ActionResult = { success: false };
 
@@ -35,7 +46,7 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
         ? await updateUserAction(initialData.id, prev, formData)
         : await createUserAction(prev, formData);
       if (result.success) {
-        router.push('/identity/users');
+        router.push('/iam/users');
       }
       return result;
     },
@@ -56,9 +67,9 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
 
   const isView = mode === 'view';
   const selectedBranchIds = new Set((initialData?.dataScopes ?? [])
-    .filter((scope) => scope.scopeType === 'Branch' && scope.branchId)
-    .map((scope) => scope.branchId as string));
-  const assignedOnly = initialData?.dataScopes?.some((scope) => scope.scopeType === 'Branch' && scope.assignedOnly) ?? false;
+    .filter((scope: { scopeType: string; branchId?: string | null }) => scope.scopeType === 'Branch' && scope.branchId)
+    .map((scope: { branchId?: string | null }) => scope.branchId as string));
+  const assignedOnly = initialData?.dataScopes?.some((scope: { scopeType: string; assignedOnly?: boolean }) => scope.scopeType === 'Branch' && scope.assignedOnly) ?? false;
 
   return (
     <form action={formAction} noValidate className="space-y-6 bg-[color:var(--ims-surface)] p-6 rounded-2xl border border-[color:var(--ims-border)]">
@@ -98,12 +109,13 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           name="status"
           label="Status"
           placeholder="Select status"
-          defaultValue={initialData?.status ?? 'Active'}
+          defaultValue={initialData?.status ?? 'PendingActivation'}
           options={[
-            { value: 'Draft', label: 'Draft' },
+            { value: 'PendingActivation', label: 'Pending Activation' },
             { value: 'Active', label: 'Active' },
-            { value: 'Inactive', label: 'Inactive' },
             { value: 'Locked', label: 'Locked' },
+            { value: 'Suspended', label: 'Suspended' },
+            { value: 'Archived', label: 'Archived' },
           ]}
           required
           disabled={isView}
@@ -170,7 +182,7 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
 
         {isView ? (
           <div className="flex flex-wrap gap-2">
-            {(initialData?.dataScopes ?? []).some((scope) => scope.scopeType === 'All') ? (
+            {(initialData?.dataScopes ?? []).some((scope: { scopeType: string }) => scope.scopeType === 'All') ? (
               <span className="rounded-full border border-[color:var(--ims-border)] px-3 py-1 text-xs font-medium text-[color:var(--ims-ink)]">
                 All Branches
               </span>
@@ -217,7 +229,7 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
 
       {!isView && (
         <div className="flex justify-end gap-3 pt-4">
-          <Button type="button" variant="secondary" onClick={() => router.push('/identity/users')}>
+          <Button type="button" variant="secondary" onClick={() => router.push('/iam/users')}>
             Cancel
           </Button>
           <Button type="submit" loading={isPending} data-testid="user-submit-btn">

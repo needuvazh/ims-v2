@@ -1,9 +1,27 @@
 import { cache } from 'react';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { decodeSession, sessionCookieName, hasPermission, isAuthorizedForBranch } from '@ims/shared-auth';
+import { JwtService, getDevelopmentKeyPair } from '@ims/shared-auth/jwt';
 import type { Session } from '@ims/shared-auth';
 import { DomainError } from '@ims/shared-kernel';
-import nodeCrypto from 'crypto';
+
+function getCookieValue(headerValue: string | null | undefined, name: string): string | null {
+  if (!headerValue) return null;
+
+  const match = headerValue
+    .split(';')
+    .map((part) => part.trim())
+    .find((part) => part.startsWith(`${name}=`));
+
+  return match ? decodeURIComponent(match.slice(name.length + 1)) : null;
+}
+
+function getPublicKey(): string {
+  const publicKey = process.env.JWT_PUBLIC_KEY;
+  if (publicKey) return publicKey;
+
+  return getDevelopmentKeyPair().publicKey;
+}
 
 /**
  * Retrieve the current active session.
@@ -14,26 +32,30 @@ import nodeCrypto from 'crypto';
  */
 export const getSession: () => Promise<Session> = cache(async () => {
   const cookieStore = await cookies();
-  const token = cookieStore.get(sessionCookieName)?.value;
-  const session = await decodeSession(token);
-  if (!session || !token) {
+  const headerStore = await headers();
+  const accessToken =
+    cookieStore.get('ims_access_token')?.value ??
+    getCookieValue(headerStore.get('cookie'), 'ims_access_token') ??
+    (headerStore.get('authorization')?.toLowerCase().startsWith('bearer ') ? headerStore.get('authorization')!.slice(7).trim() : null);
+
+  if (!accessToken) {
     throw new DomainError('unauthorized', 'Authentication required. Please sign in.');
   }
+
+  const tokenPayload = await JwtService.verifyAccessToken(accessToken, getPublicKey());
 
   // Enforce database check to prevent bypass of deactivated, locked, or revoked sessions
   try {
     const { userService, sessionRepository } = await import('./runtime');
 
-    // 1. Verify session status in database
-    const tokenHash = nodeCrypto.createHash('sha256').update(token).digest('hex');
-    const dbSession = await sessionRepository.getSessionByHash(tokenHash);
+    const dbSession = await sessionRepository.findByAccessTokenJti(tokenPayload.jti ?? '');
 
     if (!dbSession || dbSession.status !== 'Active' || new Date() > dbSession.expiresAt) {
       throw new DomainError('unauthorized', 'Session has been revoked or expired.');
     }
 
     // 2. Verify user status
-    const user = await userService.getUser(session.userId);
+    const user = await userService.getUser(dbSession.userId);
     
     if (user.status === 'Inactive') {
       throw new DomainError('inactive_user_cannot_login', 'Your account is not active. Contact your administrator.');
@@ -61,7 +83,30 @@ export const getSession: () => Promise<Session> = cache(async () => {
     throw new DomainError('unauthorized', 'Session is invalid or user was deleted.');
   }
 
-  return session;
+  const session = await decodeSession(cookieStore.get(sessionCookieName)?.value ?? getCookieValue(headerStore.get('cookie'), sessionCookieName));
+  if (session) {
+    return session;
+  }
+
+  const { sessionRepository } = await import('./runtime');
+  const dbSession = await sessionRepository.findByAccessTokenJti(tokenPayload.jti ?? '');
+  if (!dbSession) {
+    throw new DomainError('unauthorized', 'Authentication required. Please sign in.');
+  }
+
+  return {
+    userId: tokenPayload.userId as Session['userId'],
+    displayName: tokenPayload.email,
+    roles: tokenPayload.roles ?? [],
+    permissions: tokenPayload.permissions ?? [],
+    dataScopes: [],
+    activeBranchId: dbSession.activeBranchId,
+    accessTokenJti: tokenPayload.jti ?? '',
+    hashedRefreshToken: dbSession.hashedRefreshToken,
+    lastActivityAt: dbSession.lastActivityAt.getTime(),
+    status: dbSession.status,
+    expiresAt: dbSession.expiresAt.getTime(),
+  } satisfies Session;
 });
 
 /**

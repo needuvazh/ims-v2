@@ -8,13 +8,19 @@ export class PrismaAuditRepository implements AuditLogRepository {
     await this.prisma.auditLog.create({
       data: {
         id: entry.id,
-        actorId: entry.actorId ?? null,
+        performedBy: entry.actorId ?? null,
+        performedAt: entry.occurredAt,
         branchId: entry.branchId ?? null,
         action: entry.action,
         entityType: entry.entityType,
         entityId: entry.entityId,
-        occurredAt: entry.occurredAt,
-        details: (entry.details as any) ?? {},
+        oldValue: undefined,
+        newValue: (entry.details as any) ?? undefined,
+        ipAddress: null,
+        userAgent: null,
+        correlationId: null,
+        reason: null,
+        module: null,
       },
     });
   }

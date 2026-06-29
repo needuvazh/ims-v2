@@ -11,6 +11,15 @@ export type LogDetails = {
   durationMs?: number | null;
   entityId?: string | null;
   entityType?: string | null;
+  auditId?: string | null;
+  exportJobId?: string | null;
+  dashboardType?: string | null;
+  reportType?: string | null;
+  permissionId?: string | null;
+  roleId?: string | null;
+  sessionId?: string | null;
+  page?: number | string | null;
+  pageSize?: number | string | null;
   message?: string | null;
   method?: string | null;
   reason?: string | null;
@@ -30,6 +39,8 @@ export type StructuredLogger = {
   warn(event: string, details?: LogDetails): void;
   error(event: string, details?: LogDetails): void;
 };
+
+export type ILogger = StructuredLogger;
 
 const allowedDetailKeys: ReadonlySet<keyof Omit<LogDetails, 'error'>> = new Set([
   'action',
@@ -133,6 +144,26 @@ export function createStructuredLogger(baseContext: Partial<RequestContext> = {}
       writeLog('error', event, baseContext, details);
     },
   };
+}
+
+export class ConsoleStructuredLogger implements ILogger {
+  constructor(private readonly baseContext: Partial<RequestContext> = {}) {}
+
+  debug(event: string, details?: LogDetails): void {
+    writeLog('debug', event, this.baseContext, details);
+  }
+
+  info(event: string, details?: LogDetails): void {
+    writeLog('info', event, this.baseContext, details);
+  }
+
+  warn(event: string, details?: LogDetails): void {
+    writeLog('warn', event, this.baseContext, details);
+  }
+
+  error(event: string, details?: LogDetails): void {
+    writeLog('error', event, this.baseContext, details);
+  }
 }
 
 export function createStructuredLoggerFromHeaders(source: HeaderBag, overrides: RequestContextInput = {}): StructuredLogger {

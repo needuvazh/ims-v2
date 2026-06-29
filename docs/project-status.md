@@ -13,7 +13,7 @@ Basis:
 - This estimate counts implemented business behavior, not scaffolding, UI placeholders, or documentation.
 - The recent organization foundation work completes the classroom lifecycle, effective dating, user presence verification, cascading status transitions, soft deletes, and active resolved branch-scoped authorization/UI filtering, achieving 100% completion for Module 2.
 - The recent RBAC and branch authorization work completes the core access control layer.
-- The recent IAM database schema refactoring and self-service password reset implementations complete the core security, account management, and session-tracking lifecycle.
+- The recent IAM database schema refactoring, self-service password reset implementations, and IAM Module 01 backend/API foundation (auth, users, roles, permissions, branch scope, exports, validation, and shared middleware) complete the core security, account management, and session-tracking lifecycle.
 
 Current implementation state:
 

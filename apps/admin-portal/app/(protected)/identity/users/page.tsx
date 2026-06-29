@@ -20,7 +20,7 @@ import {
 import { loadIdentityData } from '../shared-data';
 import { updateUserStatusAction } from '../actions';
 
-export const metadata = { title: 'Users - Identity | IMS Admin' };
+export const metadata = { title: 'IAM Users | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
 export default async function IdentityUsersPage(props: {
@@ -42,29 +42,29 @@ export default async function IdentityUsersPage(props: {
   let filteredUsers = data.users;
   
   if (q) {
-    filteredUsers = filteredUsers.filter(u => 
+    filteredUsers = filteredUsers.filter((u: any) => 
       u.fullName.toLowerCase().includes(q) || 
       u.email.toLowerCase().includes(q)
     );
   }
   
   if (statusFilter) {
-    filteredUsers = filteredUsers.filter(u => u.status === statusFilter);
+    filteredUsers = filteredUsers.filter((u: any) => u.status === statusFilter);
   }
   
   if (typeFilter) {
-    filteredUsers = filteredUsers.filter(u => u.userType === typeFilter);
+    filteredUsers = filteredUsers.filter((u: any) => u.userType === typeFilter);
   }
 
   if (branchFilter) {
-    filteredUsers = filteredUsers.filter((user) =>
-      (user.dataScopes ?? []).some((scope) => scope.scopeType === 'Branch' && scope.branchId === branchFilter)
+    filteredUsers = filteredUsers.filter((user: any) =>
+      (user.dataScopes ?? []).some((scope: any) => scope.scopeType === 'Branch' && scope.branchId === branchFilter)
     );
   }
 
   if (roleFilter) {
-    filteredUsers = filteredUsers.filter((user) =>
-      (user.roleSummaries ?? []).some((role) => role.id === roleFilter)
+    filteredUsers = filteredUsers.filter((user: any) =>
+      (user.roleSummaries ?? []).some((role: any) => role.id === roleFilter)
     );
   }
   
@@ -77,10 +77,10 @@ export default async function IdentityUsersPage(props: {
     <div className="space-y-8">
       <PageHeader
         eyebrow="Access Control"
-        title="Identity & Access"
-        description="Manage users in the system."
+        title="IAM Users"
+        description="Manage users in the IAM console."
         actions={
-          <Link href="/identity/users/create">
+          <Link href="/iam/users/create">
             <Button size="sm">
               <UserPlus className="h-4 w-4 mr-2" /> Add User
             </Button>
@@ -90,7 +90,7 @@ export default async function IdentityUsersPage(props: {
           <Breadcrumbs
             items={[
               { label: 'Dashboard', href: '/dashboard' },
-              { label: 'Identity', href: '/identity' },
+              { label: 'IAM', href: '/iam' },
               { label: 'Users' },
             ]}
           />
@@ -110,9 +110,11 @@ export default async function IdentityUsersPage(props: {
               key: 'status',
               label: 'Status',
               options: [
+                { value: 'PendingActivation', label: 'Pending Activation' },
                 { value: 'Active', label: 'Active' },
-                { value: 'Inactive', label: 'Inactive' },
                 { value: 'Locked', label: 'Locked' },
+                { value: 'Suspended', label: 'Suspended' },
+                { value: 'Archived', label: 'Archived' },
               ]
             },
             {
@@ -133,7 +135,7 @@ export default async function IdentityUsersPage(props: {
             {
               key: 'roleId',
               label: 'Role',
-              options: data.roles.map((role) => ({ value: role.id, label: role.roleName })),
+              options: data.roles.map((role: { id: string; roleName: string }) => ({ value: role.id, label: role.roleName })),
             }
           ]}
         />
@@ -160,7 +162,7 @@ export default async function IdentityUsersPage(props: {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {paginatedUsers.map((user) => (
+                {paginatedUsers.map((user: any) => (
                   <TableRow key={user.id} data-testid={`user-row-${user.id}`}>
                     <TableCell className="font-mono text-xs text-[color:var(--ims-muted)]">{user.id}</TableCell>
                     <TableCell>
@@ -175,12 +177,12 @@ export default async function IdentityUsersPage(props: {
                     </TableCell>
                     <TableCell>
                       <div className="flex flex-wrap gap-1.5">
-                        {(user.dataScopes ?? []).some((scope) => scope.scopeType === 'All') ? (
+                        {(user.dataScopes ?? []).some((scope: { scopeType: string }) => scope.scopeType === 'All') ? (
                           <Badge variant="default">All Branches</Badge>
                         ) : (
                           (user.dataScopes ?? [])
-                            .filter((scope) => scope.scopeType === 'Branch' && scope.branchId)
-                            .map((scope, index) => (
+                            .filter((scope: { scopeType: string; branchId?: string | null }) => scope.scopeType === 'Branch' && scope.branchId)
+                            .map((scope: { branchId?: string | null }, index: number) => (
                               <Badge key={`${user.id}-${scope.branchId}-${index}`} variant="muted">
                                 {scope.branchId ? branchById.get(scope.branchId as string) ?? scope.branchId : 'Branch'}
                               </Badge>
@@ -198,6 +200,7 @@ export default async function IdentityUsersPage(props: {
                       <Badge variant={
                         user.status === 'Active' ? 'success'
                         : user.status === 'Locked' ? 'error'
+                        : user.status === 'PendingActivation' ? 'warning'
                         : 'muted'
                         }>
                         {user.status}
@@ -209,7 +212,7 @@ export default async function IdentityUsersPage(props: {
                     <TableCell className="text-right">
                       <div className="flex items-center justify-end gap-2">
                         <SimpleTooltip content="Manage Roles" side="top">
-                          <Link href={`/identity/users/${user.id}/roles`}>
+                           <Link href={`/iam/users/${user.id}/roles`}>
                             <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
                               <ShieldAlert className="h-4 w-4" />
                             </Button>
@@ -217,7 +220,7 @@ export default async function IdentityUsersPage(props: {
                         </SimpleTooltip>
                         
                         <SimpleTooltip content="View Details" side="top">
-                          <Link href={`/identity/users/${user.id}`}>
+                          <Link href={`/iam/users/${user.id}`}>
                             <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
                               <Eye className="h-4 w-4" />
                             </Button>
@@ -225,19 +228,19 @@ export default async function IdentityUsersPage(props: {
                         </SimpleTooltip>
 
                         <SimpleTooltip content="Edit User" side="top">
-                          <Link href={`/identity/users/${user.id}/edit`}>
+                          <Link href={`/iam/users/${user.id}/edit`}>
                             <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
                               <Pencil className="h-4 w-4" />
                             </Button>
                           </Link>
                         </SimpleTooltip>
 
-                        <form action={async () => {
+                          <form action={async () => {
                           'use server';
-                          await updateUserStatusAction(user.id, user.status === 'Active' ? 'Inactive' : 'Active');
+                          await updateUserStatusAction(user.id, user.status === 'Active' ? 'Suspended' : 'Active');
                         }} noValidate>
                           {user.status === 'Active' ? (
-                            <SimpleTooltip content="Deactivate User" side="top">
+                            <SimpleTooltip content="Suspend User" side="top">
                               <Button type="submit" variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-error)] hover:bg-[color:var(--ims-error)]/10">
                                 <Ban className="h-4 w-4" />
                               </Button>

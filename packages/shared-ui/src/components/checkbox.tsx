@@ -27,7 +27,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             aria-invalid={hasError}
             aria-describedby={hasError ? errorId : undefined}
             className={cn(
-              'mt-0.5 h-4 w-4 cursor-pointer rounded border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] text-[color:var(--ims-brass)] accent-[color:var(--ims-brass)] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+              'mt-0.5 h-4 w-4 cursor-pointer rounded-md border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] text-[color:var(--ims-brass)] accent-[color:var(--ims-brass)] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
               hasError && 'border-[color:var(--ims-error)]',
               className,
             )}

@@ -1,0 +1,770 @@
+openapi: 3.1.0
+info:
+  title: IMS IAM API
+  version: 1.0.0
+  description: OpenAPI 3.1 contract for the IMS Identity & Access Management `/api/v1` surface.
+servers:
+  - url: /api/v1
+security:
+  - bearerAuth: []
+tags:
+  - name: auth
+  - name: users
+  - name: roles
+  - name: permissions
+  - name: security
+  - name: audit
+  - name: reports
+  - name: dashboards
+  - name: health
+paths:
+  /auth/login:
+    post:
+      tags: [auth]
+      summary: Login
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponseEnvelope'
+        '400': { $ref: '#/components/responses/Problem400' }
+        '401': { $ref: '#/components/responses/Problem401' }
+  /auth/activate-account:
+    post:
+      tags: [auth]
+      summary: Activate account via token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenOnlyRequest'
+      responses:
+        '200':
+          description: Activation success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessEnvelope'
+        '400': { $ref: '#/components/responses/Problem400' }
+        '401': { $ref: '#/components/responses/Problem401' }
+  /auth/refresh:
+    post:
+      tags: [auth]
+      summary: Refresh session tokens
+      security: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshRequest'
+      responses:
+        '200':
+          description: Token rotation success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshResponseEnvelope'
+        '401': { $ref: '#/components/responses/Problem401' }
+        '429': { $ref: '#/components/responses/Problem429' }
+  /auth/logout:
+    post:
+      tags: [auth]
+      summary: Logout
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogoutRequest'
+      responses:
+        '204': { description: Logout success }
+        '401': { $ref: '#/components/responses/Problem401' }
+  /auth/forgot-password:
+    post:
+      tags: [auth]
+      summary: Request password reset
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailRequest'
+      responses:
+        '200':
+          description: Generic success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestedEnvelope'
+        '400': { $ref: '#/components/responses/Problem400' }
+        '429': { $ref: '#/components/responses/Problem429' }
+  /auth/reset-password:
+    post:
+      tags: [auth]
+      summary: Reset password with token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordRequest'
+      responses:
+        '204': { description: Password reset success }
+        '400': { $ref: '#/components/responses/Problem400' }
+        '401': { $ref: '#/components/responses/Problem401' }
+  /auth/change-password:
+    post:
+      tags: [auth]
+      summary: Change password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+      responses:
+        '204': { description: Password changed }
+        '400': { $ref: '#/components/responses/Problem400' }
+        '401': { $ref: '#/components/responses/Problem401' }
+  /users:
+    get:
+      tags: [users]
+      summary: Search users
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/search'
+        - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/branchId'
+        - $ref: '#/components/parameters/roleId'
+      responses:
+        '200':
+          description: Paginated user list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedUsersEnvelope'
+        '401': { $ref: '#/components/responses/Problem401' }
+        '403': { $ref: '#/components/responses/Problem403' }
+    post:
+      tags: [users]
+      summary: Create user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEnvelope'
+        '400': { $ref: '#/components/responses/Problem400' }
+        '401': { $ref: '#/components/responses/Problem401' }
+        '403': { $ref: '#/components/responses/Problem403' }
+  /users/{id}:
+    get:
+      tags: [users]
+      summary: Get user by id
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: User detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEnvelope'
+        '401': { $ref: '#/components/responses/Problem401' }
+        '403': { $ref: '#/components/responses/Problem403' }
+    put:
+      tags: [users]
+      summary: Update user
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+      responses:
+        '200':
+          description: User updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEnvelope'
+        '400': { $ref: '#/components/responses/Problem400' }
+        '401': { $ref: '#/components/responses/Problem401' }
+        '403': { $ref: '#/components/responses/Problem403' }
+  /roles:
+    get:
+      tags: [roles]
+      summary: List roles
+      responses:
+        '200':
+          description: Role list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRolesEnvelope'
+    post:
+      tags: [roles]
+      summary: Create role
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRoleRequest'
+      responses:
+        '201':
+          description: Role created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleEnvelope'
+  /roles/{id}:
+    get:
+      tags: [roles]
+      summary: Get role by id
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Role detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleEnvelope'
+    put:
+      tags: [roles]
+      summary: Update role
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRoleRequest'
+      responses:
+        '200':
+          description: Role updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleEnvelope'
+  /permissions:
+    get:
+      tags: [permissions]
+      summary: List permissions
+      responses:
+        '200':
+          description: Permission list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPermissionsEnvelope'
+    post:
+      tags: [permissions]
+      summary: Create permission
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePermissionRequest'
+      responses:
+        '201':
+          description: Permission created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionEnvelope'
+  /permissions/{id}:
+    get:
+      tags: [permissions]
+      summary: Get permission by id
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Permission detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionEnvelope'
+    put:
+      tags: [permissions]
+      summary: Update permission
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePermissionRequest'
+      responses:
+        '200':
+          description: Permission updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionEnvelope'
+  /security/policy:
+    get:
+      tags: [security]
+      summary: Get security policy
+      responses:
+        '200':
+          description: Security policy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecurityPolicyEnvelope'
+    put:
+      tags: [security]
+      summary: Update security policy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSecurityPolicyRequest'
+      responses:
+        '200':
+          description: Security policy updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecurityPolicyEnvelope'
+  /security/login-history:
+    get:
+      tags: [security]
+      summary: List login history
+      responses:
+        '200':
+          description: Login history rows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLoginHistoryEnvelope'
+  /audit:
+    get:
+      tags: [audit]
+      summary: List audit logs
+      responses:
+        '200':
+          description: Audit logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAuditEnvelope'
+  /audit/export:
+    post:
+      tags: [audit]
+      summary: Create audit export job
+      responses:
+        '202':
+          description: Export job created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportJobEnvelope'
+  /reports/iam/{reportType}:
+    get:
+      tags: [reports]
+      summary: Get IAM report
+      parameters:
+        - $ref: '#/components/parameters/reportType'
+      responses:
+        '200':
+          description: Report payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportEnvelope'
+  /reports/iam/{reportType}/export:
+    post:
+      tags: [reports]
+      summary: Create report export job
+      parameters:
+        - $ref: '#/components/parameters/reportType'
+      responses:
+        '202':
+          description: Export job created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportJobEnvelope'
+  /reports/iam/export-jobs/{jobId}:
+    get:
+      tags: [reports]
+      summary: Get export job status
+      parameters:
+        - $ref: '#/components/parameters/jobId'
+      responses:
+        '200':
+          description: Export job
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportJobEnvelope'
+  /reports/iam/export-jobs/{jobId}/download:
+    get:
+      tags: [reports]
+      summary: Download export file
+      parameters:
+        - $ref: '#/components/parameters/jobId'
+      responses:
+        '200':
+          description: File download
+  /dashboards/iam/{dashboardType}:
+    get:
+      tags: [dashboards]
+      summary: Get IAM dashboard
+      parameters:
+        - $ref: '#/components/parameters/dashboardType'
+      responses:
+        '200':
+          description: Dashboard KPIs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardEnvelope'
+  /health/live:
+    get:
+      tags: [health]
+      security: []
+      responses:
+        '200': { description: Live }
+  /health/ready:
+    get:
+      tags: [health]
+      security: []
+      responses:
+        '200': { description: Ready }
+        '503': { $ref: '#/components/responses/Problem503' }
+  /health/startup:
+    get:
+      tags: [health]
+      security: []
+      responses:
+        '200': { description: Startup complete }
+  /health/metrics:
+    get:
+      tags: [health]
+      security: []
+      responses:
+        '200': { description: Metrics snapshot }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    jobId:
+      name: jobId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    reportType:
+      name: reportType
+      in: path
+      required: true
+      schema: { type: string }
+    dashboardType:
+      name: dashboardType
+      in: path
+      required: true
+      schema: { type: string }
+    page:
+      name: page
+      in: query
+      schema: { type: integer, minimum: 1, default: 1 }
+    pageSize:
+      name: pageSize
+      in: query
+      schema: { type: integer, minimum: 1, maximum: 100, default: 20 }
+    search:
+      name: search
+      in: query
+      schema: { type: string }
+    status:
+      name: status
+      in: query
+      schema: { type: string }
+    branchId:
+      name: branchId
+      in: query
+      schema: { type: string, format: uuid }
+    roleId:
+      name: roleId
+      in: query
+      schema: { type: string, format: uuid }
+  responses:
+    Problem400:
+      description: Validation error
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ProblemDetails' }
+    Problem401:
+      description: Authentication error
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ProblemDetails' }
+    Problem403:
+      description: Authorization error
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ProblemDetails' }
+    Problem429:
+      description: Rate limited
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ProblemDetails' }
+    Problem503:
+      description: Service unavailable
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ProblemDetails' }
+  schemas:
+    ProblemDetails:
+      type: object
+      required: [type, title, status, detail, errorCode]
+      properties:
+        type: { type: string }
+        title: { type: string }
+        status: { type: integer }
+        detail: { type: string }
+        errorCode: { type: string }
+        correlationId: { type: string, nullable: true }
+    SuccessEnvelope:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: object
+          additionalProperties: true
+    RequestedEnvelope:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: object
+          properties:
+            requested: { type: boolean }
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email: { type: string, format: email }
+        password: { type: string }
+        rememberMe: { type: boolean }
+    RefreshRequest:
+      type: object
+      properties:
+        refreshToken: { type: string }
+    LogoutRequest:
+      type: object
+      properties:
+        sessionId: { type: string }
+    EmailRequest:
+      type: object
+      required: [email]
+      properties:
+        email: { type: string, format: email }
+    TokenOnlyRequest:
+      type: object
+      required: [token]
+      properties:
+        token: { type: string }
+    ResetPasswordRequest:
+      type: object
+      required: [token, newPassword, confirmPassword]
+      properties:
+        token: { type: string }
+        newPassword: { type: string }
+        confirmPassword: { type: string }
+    ChangePasswordRequest:
+      type: object
+      required: [currentPassword, newPassword, confirmPassword]
+      properties:
+        currentPassword: { type: string }
+        newPassword: { type: string }
+        confirmPassword: { type: string }
+    CreateUserRequest:
+      type: object
+      additionalProperties: true
+    UpdateUserRequest:
+      type: object
+      additionalProperties: true
+    CreateRoleRequest:
+      type: object
+      additionalProperties: true
+    UpdateRoleRequest:
+      type: object
+      additionalProperties: true
+    CreatePermissionRequest:
+      type: object
+      additionalProperties: true
+    UpdatePermissionRequest:
+      type: object
+      additionalProperties: true
+    UpdateSecurityPolicyRequest:
+      type: object
+      additionalProperties: true
+    LoginResponseEnvelope:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: object
+          required: [user, session]
+          properties:
+            user: { type: object, additionalProperties: true }
+            session: { type: object, additionalProperties: true }
+    RefreshResponseEnvelope:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: object
+          required: [session]
+          properties:
+            session: { type: object, additionalProperties: true }
+    UserEnvelope:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: object
+          properties:
+            user: { type: object, additionalProperties: true }
+    PaginatedUsersEnvelope:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items: { type: object, additionalProperties: true }
+            total: { type: integer }
+    RoleEnvelope:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: object
+          properties:
+            role: { type: object, additionalProperties: true }
+    PaginatedRolesEnvelope:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items: { type: object, additionalProperties: true }
+            total: { type: integer }
+    PermissionEnvelope:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: object
+          properties:
+            permission: { type: object, additionalProperties: true }
+    PaginatedPermissionsEnvelope:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items: { type: object, additionalProperties: true }
+            total: { type: integer }
+    SecurityPolicyEnvelope:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: object
+          properties:
+            securityPolicy: { type: object, additionalProperties: true }
+    PaginatedLoginHistoryEnvelope:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items: { type: object, additionalProperties: true }
+            total: { type: integer }
+    PaginatedAuditEnvelope:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items: { type: object, additionalProperties: true }
+            total: { type: integer }
+    ExportJobEnvelope:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: object
+          properties:
+            job: { type: object, additionalProperties: true }
+    ReportEnvelope:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: object
+          additionalProperties: true
+    DashboardEnvelope:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: object
+          additionalProperties: true

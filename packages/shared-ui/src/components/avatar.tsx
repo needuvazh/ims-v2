@@ -38,7 +38,7 @@ export function Avatar({ src, alt, fallback, size, className, ...props }: Avatar
     <span
       className={cn(
         avatarVariants({ size }),
-        'border border-[color:var(--ims-border)] bg-[color:var(--ims-accent-soft)] text-[color:var(--ims-ink)]',
+        'border border-[color:var(--ims-border)] bg-[color:var(--ims-brass-soft)] text-[color:var(--ims-ink)]',
         className,
       )}
       aria-label={alt}

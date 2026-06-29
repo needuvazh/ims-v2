@@ -9,7 +9,7 @@ export default async function EditUserPage(props: { params: Promise<{ id: string
   const params = await props.params;
   // Mock loading user data. In a real app, you would fetch by id.
   const data = await loadIdentityData();
-  const user = data.users.find(u => u.id === params.id);
+  const user = data.users.find((u: any) => u.id === params.id);
 
   if (!user) {
     return <div>User not found</div>;
@@ -20,13 +20,13 @@ export default async function EditUserPage(props: { params: Promise<{ id: string
       <PageHeader
         title="Edit User"
         description={`Update details for ${user.fullName}.`}
-        backUrl="/identity/users"
+        backUrl="/iam/users"
         breadcrumbs={
           <Breadcrumbs
             items={[
               { label: 'Dashboard', href: '/dashboard' },
-              { label: 'Identity', href: '/identity' },
-              { label: 'Users', href: '/identity/users' },
+              { label: 'IAM', href: '/iam' },
+              { label: 'Users', href: '/iam/users' },
               { label: 'Edit User' },
             ]}
           />

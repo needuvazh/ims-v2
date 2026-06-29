@@ -1,7 +1,7 @@
 import { assertPermission } from '../../lib/auth-guard';
 
 export async function loadIdentityData() {
-  await assertPermission('identity.read');
+  await assertPermission('iam.user.read');
   const { userService, roleService, organizationService } = await import('../../lib/runtime');
   const [users, roles, permissions] = await Promise.all([
     userService.listUsers(),

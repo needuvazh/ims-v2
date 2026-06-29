@@ -25,7 +25,7 @@ export default async function DashboardPage() {
     { title: 'Register Institute', desc: 'Add new corporate entity', href: '/organization', icon: Building2, color: 'from-primary-700 to-brand-500' },
     { title: 'Manage Branches', desc: 'Configure regional campuses', href: '/organization', icon: BookOpen, color: 'from-accent-600 to-primary-700' },
     { title: 'Configure Departments', desc: 'Organize training divisions', href: '/organization', icon: GraduationCap, color: 'from-brand-500 to-primary-700' },
-    { title: 'IAM Access Policies', desc: 'Configure role permissions', href: '/identity', icon: Users, color: 'from-amber-500 to-orange-500' },
+    { title: 'IAM Access Policies', desc: 'Configure role permissions', href: '/iam', icon: Users, color: 'from-amber-500 to-orange-500' },
   ];
 
   return (
@@ -71,6 +71,7 @@ export default async function DashboardPage() {
           description="Active corporate training entities"
           trend={{ value: 0, label: 'No change' }}
           icon={<Building2 className="h-5 w-5" />}
+          tone="indigo"
           data-testid="stat-institutes"
         />
         <StatCard
@@ -79,6 +80,7 @@ export default async function DashboardPage() {
           description="Operational regional facilities"
           trend={{ value: 25, label: 'growth' }}
           icon={<BookOpen className="h-5 w-5" />}
+          tone="emerald"
           data-testid="stat-branches"
         />
         <StatCard
@@ -87,6 +89,7 @@ export default async function DashboardPage() {
           description="Pending enrollment module load"
           trend={{ value: 12, label: 'this month' }}
           icon={<Users className="h-5 w-5" />}
+          tone="amber"
           data-testid="stat-students"
         />
         <StatCard
@@ -95,6 +98,7 @@ export default async function DashboardPage() {
           description="Pending certificate module activation"
           trend={{ value: 8, label: 'this week' }}
           icon={<GraduationCap className="h-5 w-5" />}
+          tone="violet"
           data-testid="stat-certificates"
         />
       </div>

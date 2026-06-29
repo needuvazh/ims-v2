@@ -78,10 +78,9 @@ The system SHALL classify permissions to enable modular access configurations.
 - **WHEN** permissions are defined or queried
 - **THEN** they SHALL contain a `permissionType` matching one of `Module`, `Menu`, `Action`, `Report`, or `DataScope`
 
-### Requirement: Soft-delete Email Uniqueness
-The system SHALL allow reuse of email addresses belonging to soft-deleted accounts.
+### Requirement: Global Email Uniqueness
+The system SHALL enforce global email uniqueness for user accounts, including archived and soft-deleted accounts.
 
-#### Scenario: Uniqueness is enforced only on active records
-- **WHEN** a user is soft-deleted (`isDeleted = true`)
-- **THEN** another user profile SHALL be registerable with that same email address without causing a unique index constraint failure
-
+#### Scenario: Email uniqueness is always enforced
+- **WHEN** a user exists with an email address, regardless of active, archived, or soft-deleted state
+- **THEN** another user profile SHALL NOT be registerable with that same email address

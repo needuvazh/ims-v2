@@ -1,474 +1,303 @@
 import type { PrismaClient } from '@prisma/client';
-import type { AuthUserRepository, UserRepository } from '@ims/identity-access';
-import type { UserProfile, UserWithCredentials, UserListFilters } from '@ims/identity-access';
+import type { IUserRepository, User, Person, UserListFilters, UserType, UserStatus } from '@ims/identity-access';
 import type { Uuid } from '@ims/shared-kernel';
 
-type PermissionCodeRow = {
-  permission: {
-    permissionCode: string;
-  };
-};
-
-type UserRoleWithPermissionsRow = {
-  role: {
-    roleCode: string;
-    permissions: PermissionCodeRow[];
-  };
-};
-
-type UserRoleSummaryRow = {
-  role: {
-    id: string;
-    roleCode: string;
-    roleName: string;
-  };
-};
-
-type UserDataScopeRow = {
-  scopeType: string;
-  branchId: string | null;
-  departmentId: string | null;
-  assignedOnly: boolean;
-};
-
-type UserProfileRow = {
-  id: string;
-  fullName: string;
-  email: string;
-  phone: string | null;
-  userType: string;
-  status: string;
-  lastLoginAt: Date | null;
-  isDeleted: boolean;
-  effectiveStartDate: Date;
-  effectiveEndDate: Date | null;
-  roles?: UserRoleSummaryRow[];
-  dataScopes?: UserDataScopeRow[];
-};
-
-type UserRoleListRow = {
-  role: {
-    id: string;
-    roleCode: string;
-    roleName: string;
-  };
-};
-
-type UserWithCredentialsRow = {
-  id: string;
-  fullName: string;
-  email: string;
-  phone: string | null;
-  userType: string;
-  status: string;
-  lastLoginAt: Date | null;
-  passwordHash: string;
-  isDeleted: boolean;
-  effectiveStartDate: Date;
-  effectiveEndDate: Date | null;
-  failedLoginAttempts: number;
-  lockoutUntil: Date | null;
-  roles: UserRoleWithPermissionsRow[];
-  dataScopes: UserDataScopeRow[];
-};
-
-export class PrismaUserRepository implements UserRepository, AuthUserRepository {
+export class PrismaUserRepository implements IUserRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  private toProfile(
-    row: Pick<
-      UserProfileRow,
-      'id' | 'fullName' | 'email' | 'phone' | 'userType' | 'status' | 'lastLoginAt' | 'effectiveStartDate' | 'effectiveEndDate'
-    > & {
-      roles?: UserRoleSummaryRow[];
-      dataScopes?: UserDataScopeRow[];
-    },
-  ): UserProfile {
-    return {
-      id: row.id as Uuid,
-      fullName: row.fullName,
-      email: row.email,
-      phone: row.phone,
-      // Cast: DB stores a raw string; Zod schema at API boundary ensures only valid UserType values are written.
-      userType: row.userType as UserProfile['userType'],
-      status: row.status as UserProfile['status'],
-      lastLoginAt: row.lastLoginAt,
-      roleCount: row.roles?.length,
-      roleSummaries: row.roles?.map((item) => ({
-        id: item.role.id as Uuid,
-        roleCode: item.role.roleCode,
-        roleName: item.role.roleName,
-      })),
-      dataScopes: row.dataScopes?.map((scope) => ({
-        scopeType: scope.scopeType,
-        branchId: scope.branchId,
-        departmentId: scope.departmentId,
-        assignedOnly: scope.assignedOnly,
-      })),
-      effectiveStartDate: row.effectiveStartDate,
-      effectiveEndDate: row.effectiveEndDate,
-    };
-  }
-
-  async findByEmailWithCredentials(email: string): Promise<UserWithCredentials | null> {
-    const now = new Date();
-    const row = (await this.prisma.user.findUnique({
-      where: { email },
-      include: {
-        roles: {
-          where: {
-            role: {
-              status: 'Active',
-              effectiveStartDate: { lte: now },
-              OR: [{ effectiveEndDate: null }, { effectiveEndDate: { gte: now } }],
-            },
-          },
-          include: {
-            role: {
-              include: {
-                permissions: {
-                  where: { permission: { status: 'Active' } },
-                  include: { permission: true },
-                },
-              },
-            },
-          },
-        },
-        dataScopes: true,
-      },
-    })) as UserWithCredentialsRow | null;
-
-    if (!row || row.isDeleted) return null;
-
-    const roles = row.roles.map((userRole) => userRole.role.roleCode);
-    const permissions = row.roles.flatMap((userRole) =>
-      userRole.role.permissions.map((permissionRow) => permissionRow.permission.permissionCode),
-    );
-
-    return {
-      id: row.id as Uuid,
-      fullName: row.fullName,
-      email: row.email,
-      phone: row.phone,
-      userType: row.userType as UserProfile['userType'],
-      status: row.status as UserProfile['status'],
-      lastLoginAt: row.lastLoginAt,
-      passwordHash: row.passwordHash,
-      roles: [...new Set(roles)],
-      permissions: [...new Set(permissions)],
-      dataScopes: row.dataScopes.map((scope) => ({
-        scopeType: scope.scopeType,
-        branchId: scope.branchId,
-        departmentId: scope.departmentId,
-        assignedOnly: scope.assignedOnly,
-      })),
-      effectiveStartDate: row.effectiveStartDate,
-      effectiveEndDate: row.effectiveEndDate,
-      failedLoginAttempts: row.failedLoginAttempts,
-      lockoutUntil: row.lockoutUntil,
-    };
-  }
-
-  async findByIdWithCredentials(userId: string): Promise<UserWithCredentials | null> {
-    const now = new Date();
-    const row = (await this.prisma.user.findUnique({
-      where: { id: userId },
-      include: {
-        roles: {
-          where: {
-            role: {
-              status: 'Active',
-              effectiveStartDate: { lte: now },
-              OR: [{ effectiveEndDate: null }, { effectiveEndDate: { gte: now } }],
-            },
-          },
-          include: {
-            role: {
-              include: {
-                permissions: {
-                  where: { permission: { status: 'Active' } },
-                  include: { permission: true },
-                },
-              },
-            },
-          },
-        },
-        dataScopes: true,
-      },
-    })) as UserWithCredentialsRow | null;
-
-    if (!row || row.isDeleted) return null;
-
-    const roles = row.roles.map((userRole) => userRole.role.roleCode);
-    const permissions = row.roles.flatMap((userRole) =>
-      userRole.role.permissions.map((permissionRow) => permissionRow.permission.permissionCode),
-    );
-
-    return {
-      id: row.id as Uuid,
-      fullName: row.fullName,
-      email: row.email,
-      phone: row.phone,
-      userType: row.userType as UserProfile['userType'],
-      status: row.status as UserProfile['status'],
-      lastLoginAt: row.lastLoginAt,
-      passwordHash: row.passwordHash,
-      roles: [...new Set(roles)],
-      permissions: [...new Set(permissions)],
-      dataScopes: row.dataScopes.map((scope) => ({
-        scopeType: scope.scopeType,
-        branchId: scope.branchId,
-        departmentId: scope.departmentId,
-        assignedOnly: scope.assignedOnly,
-      })),
-      effectiveStartDate: row.effectiveStartDate,
-      effectiveEndDate: row.effectiveEndDate,
-      failedLoginAttempts: row.failedLoginAttempts,
-      lockoutUntil: row.lockoutUntil,
-    };
-  }
-
-  async recordLastLogin(userId: string): Promise<void> {
-    await this.prisma.user.update({ where: { id: userId }, data: { lastLoginAt: new Date() } });
-  }
-
-  async findById(userId: string): Promise<UserProfile | null> {
-    const row = (await this.prisma.user.findUnique({
-      where: { id: userId },
-      include: {
-        roles: {
-          include: {
-            role: {
-              select: {
-                id: true,
-                roleCode: true,
-                roleName: true,
-              },
-            },
-          },
-        },
-        dataScopes: true,
-      },
-    })) as UserProfileRow | null;
-
-    return row && !row.isDeleted ? this.toProfile(row) : null;
-  }
-
-  async findByEmail(email: string): Promise<UserProfile | null> {
-    const row = (await this.prisma.user.findUnique({
-      where: { email },
-      include: {
-        roles: {
-          include: {
-            role: {
-              select: {
-                id: true,
-                roleCode: true,
-                roleName: true,
-              },
-            },
-          },
-        },
-        dataScopes: true,
-      },
-    })) as UserProfileRow | null;
-
-    return row && !row.isDeleted ? this.toProfile(row) : null;
-  }
-
-  async create(profile: UserProfile, passwordHash: string): Promise<UserProfile> {
-    const row = (await this.prisma.user.create({
-      data: {
-        id: profile.id,
-        fullName: profile.fullName,
-        email: profile.email,
-        phone: profile.phone,
-        userType: profile.userType,
-        status: profile.status,
-        passwordHash,
-        effectiveStartDate: profile.effectiveStartDate ?? undefined,
-        effectiveEndDate: profile.effectiveEndDate ?? null,
-      },
-      include: {
-        roles: {
-          include: {
-            role: {
-              select: {
-                id: true,
-                roleCode: true,
-                roleName: true,
-              },
-            },
-          },
-        },
-        dataScopes: true,
-      },
-    })) as UserProfileRow;
-
-    return this.toProfile(row);
-  }
-
-  async update(
-    userId: string,
-    updates: Partial<Pick<UserProfile, 'fullName' | 'phone' | 'userType' | 'status' | 'effectiveStartDate' | 'effectiveEndDate'>>,
-  ): Promise<UserProfile> {
-    const row = (await this.prisma.user.update({
-      where: { id: userId },
-      data: {
-        ...(updates.fullName !== undefined && { fullName: updates.fullName }),
-        ...(updates.phone !== undefined && { phone: updates.phone }),
-        ...(updates.userType !== undefined && { userType: updates.userType }),
-        ...(updates.status !== undefined && { status: updates.status }),
-        ...(updates.effectiveStartDate !== undefined && { effectiveStartDate: updates.effectiveStartDate }),
-        ...(updates.effectiveEndDate !== undefined && { effectiveEndDate: updates.effectiveEndDate }),
-        updatedAt: new Date(),
-      },
-      include: {
-        roles: {
-          include: {
-            role: {
-              select: {
-                id: true,
-                roleCode: true,
-                roleName: true,
-              },
-            },
-          },
-        },
-        dataScopes: true,
-      },
-    })) as UserProfileRow;
-
-    return this.toProfile(row);
-  }
-
-  async updatePassword(userId: string, passwordHash: string): Promise<void> {
-    await this.prisma.user.update({ where: { id: userId }, data: { passwordHash, updatedAt: new Date() } });
-  }
-
-  async list(filters?: UserListFilters): Promise<UserProfile[]> {
-    const rows = (await this.prisma.user.findMany({
+  private async ensureEmailAvailable(email: string, excludeUserId?: Uuid): Promise<void> {
+    const existingUser = await this.prisma.user.findFirst({
       where: {
-        isDeleted: false,
-        ...(filters?.status ? { status: filters.status } : {}),
-        ...(filters?.userType ? { userType: filters.userType } : {}),
-        ...(filters?.search
-          ? {
-              OR: [
-                { fullName: { contains: filters.search, mode: 'insensitive' } },
-                { email: { contains: filters.search, mode: 'insensitive' } },
-              ],
-            }
-          : {}),
+        email,
+        ...(excludeUserId ? { id: { not: excludeUserId } } : {}),
       },
-      include: {
-        roles: {
-          include: {
-            role: {
-              select: {
-                id: true,
-                roleCode: true,
-                roleName: true,
-              },
-            },
+      select: { id: true },
+    });
+
+    if (existingUser) {
+      throw new Error('Email already exists.');
+    }
+  }
+
+  private mapUser(row: any): User {
+    return {
+      id: row.id as Uuid,
+      personId: row.personId as Uuid,
+      username: row.username,
+      email: row.email,
+      userType: row.userType as UserType,
+      status: row.status as UserStatus,
+      defaultBranchId: row.defaultBranchId as Uuid | null,
+      preferredLanguage: row.preferredLanguage,
+      failedLoginCount: row.failedLoginCount,
+      lockedUntil: row.lockedUntil,
+      passwordChangedAt: row.passwordChangedAt,
+      version: row.version,
+      effectiveStartDate: row.effectiveStartDate,
+      effectiveEndDate: row.effectiveEndDate,
+      isDeleted: row.isDeleted,
+    };
+  }
+
+  private mapPerson(row: any): Person {
+    return {
+      id: row.id as Uuid,
+      firstName: row.firstName,
+      lastName: row.lastName,
+      mobile: row.mobile,
+      nationalId: row.nationalId,
+      nationality: row.nationality,
+      dateOfBirth: row.dateOfBirth,
+      gender: row.gender,
+      createdBy: row.createdBy,
+      updatedBy: row.updatedBy,
+      deletedAt: row.deletedAt,
+      deletedBy: row.deletedBy,
+      isDeleted: row.isDeleted,
+    };
+  }
+
+  async findById(id: Uuid): Promise<User | null> {
+    const row = await this.prisma.user.findFirst({
+      where: { id, isDeleted: false },
+    });
+    return row ? this.mapUser(row) : null;
+  }
+
+  async findByEmail(email: string): Promise<User | null> {
+    const row = await this.prisma.user.findFirst({
+      where: { email, isDeleted: false },
+    });
+    return row ? this.mapUser(row) : null;
+  }
+
+  async findByUsername(username: string): Promise<User | null> {
+    const row = await this.prisma.user.findFirst({
+      where: { username, isDeleted: false },
+    });
+    return row ? this.mapUser(row) : null;
+  }
+
+  async findPersonById(id: Uuid): Promise<Person | null> {
+    const row = await this.prisma.person.findFirst({
+      where: { id, isDeleted: false },
+    });
+    return row ? this.mapPerson(row) : null;
+  }
+
+  async findPersonByMobile(mobile: string): Promise<Person | null> {
+    const row = await this.prisma.person.findFirst({
+      where: { mobile, isDeleted: false },
+    });
+    return row ? this.mapPerson(row) : null;
+  }
+
+  async create(user: User, person: Person): Promise<User> {
+    await this.ensureEmailAvailable(user.email);
+
+    return this.prisma.$transaction(async (tx) => {
+      await tx.person.create({
+        data: {
+            id: person.id,
+            firstName: person.firstName,
+            lastName: person.lastName,
+            mobile: person.mobile,
+            nationalId: person.nationalId,
+            nationality: person.nationality,
+            dateOfBirth: person.dateOfBirth,
+          gender: person.gender,
+          createdBy: person.createdBy,
+          updatedBy: person.updatedBy,
+          deletedAt: person.deletedAt,
+          deletedBy: person.deletedBy,
+          isDeleted: person.isDeleted ?? false,
+        },
+      });
+
+      const row = await tx.user.create({
+        data: {
+          id: user.id,
+          personId: user.personId,
+          username: user.username,
+          email: user.email,
+          userType: user.userType,
+          status: user.status,
+          defaultBranchId: user.defaultBranchId,
+          preferredLanguage: user.preferredLanguage,
+          failedLoginCount: user.failedLoginCount,
+          lockedUntil: user.lockedUntil,
+          passwordChangedAt: user.passwordChangedAt,
+          version: user.version,
+          effectiveStartDate: user.effectiveStartDate,
+          effectiveEndDate: user.effectiveEndDate,
+          passwordHash: '', // Set by application layer later
+        },
+      });
+
+      return this.mapUser(row);
+    });
+  }
+
+  async update(user: User, person?: Person): Promise<User> {
+    await this.ensureEmailAvailable(user.email, user.id);
+
+    return this.prisma.$transaction(async (tx) => {
+      if (person) {
+        await tx.person.update({
+          where: { id: person.id },
+          data: {
+            firstName: person.firstName,
+            lastName: person.lastName,
+            mobile: person.mobile,
+            nationalId: person.nationalId,
+            nationality: person.nationality,
+            dateOfBirth: person.dateOfBirth,
+            gender: person.gender,
+            updatedBy: person.updatedBy,
+            deletedAt: person.deletedAt,
+            deletedBy: person.deletedBy,
+            isDeleted: person.isDeleted ?? false,
+          },
+        });
+      }
+
+      const row = await tx.user.update({
+        where: { id: user.id },
+        data: {
+          username: user.username,
+          email: user.email,
+          userType: user.userType,
+          status: user.status,
+          defaultBranchId: user.defaultBranchId,
+          preferredLanguage: user.preferredLanguage,
+          failedLoginCount: user.failedLoginCount,
+          lockedUntil: user.lockedUntil,
+          passwordChangedAt: user.passwordChangedAt,
+          version: { increment: 1 },
+          effectiveStartDate: user.effectiveStartDate,
+          effectiveEndDate: user.effectiveEndDate,
+          isDeleted: user.isDeleted,
+        },
+      });
+
+      return this.mapUser(row);
+    });
+  }
+
+  async archive(userId: Uuid, actorId?: Uuid): Promise<void> {
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        status: 'Archived',
+        isDeleted: true,
+        deletedAt: new Date(),
+        deletedBy: actorId ?? null,
+      },
+    });
+  }
+
+  async search(
+    filters: UserListFilters,
+    page: number,
+    pageSize: number
+  ): Promise<{ items: User[]; total: number }> {
+    const where: any = { isDeleted: false };
+    
+    if (filters.status) {
+      where.status = filters.status;
+    }
+    if (filters.userType) {
+      where.userType = filters.userType;
+    }
+    if (filters.branchId) {
+      where.branchAccess = {
+        some: {
+          branchId: filters.branchId,
+          status: 'Active',
+        },
+      };
+    }
+    if (filters.roleId) {
+      where.roles = {
+        some: {
+          roleId: filters.roleId,
+          status: 'Active',
+        },
+      };
+    }
+    if (filters.search) {
+      where.OR = [
+        { email: { contains: filters.search, mode: 'insensitive' } },
+        { username: { contains: filters.search, mode: 'insensitive' } },
+        {
+          person: {
+            OR: [
+              { firstName: { contains: filters.search, mode: 'insensitive' } },
+              { lastName: { contains: filters.search, mode: 'insensitive' } },
+              { mobile: { contains: filters.search, mode: 'insensitive' } },
+            ],
           },
         },
-        dataScopes: true,
-      },
-      orderBy: { fullName: 'asc' },
-    })) as UserProfileRow[];
+      ];
+    }
 
-    return rows.map((row) => this.toProfile(row));
-  }
-
-  async assignRole(userId: string, roleId: string, actorId: string): Promise<void> {
-    await this.prisma.userRole.upsert({
-      where: { userId_roleId: { userId, roleId } },
-      create: { userId, roleId, createdBy: actorId },
-      update: {},
-    });
-  }
-
-  async removeRole(userId: string, roleId: string): Promise<void> {
-    await this.prisma.userRole.deleteMany({ where: { userId, roleId } });
-  }
-
-  async listRolesForUser(userId: string) {
-    const rows = (await this.prisma.userRole.findMany({
-      where: { userId },
-      include: { role: { select: { id: true, roleCode: true, roleName: true } } },
-    })) as UserRoleListRow[];
-
-    return rows.map((row) => ({
-      id: row.role.id,
-      roleCode: row.role.roleCode,
-      roleName: row.role.roleName,
-    }));
-  }
-
-  async replaceDataScopes(
-    userId: string,
-    scopes: Array<{
-      scopeType: string;
-      branchId: string | null;
-      departmentId: string | null;
-      assignedOnly: boolean;
-    }>,
-    actorId: string,
-  ): Promise<void> {
-    await this.prisma.$transaction([
-      this.prisma.userDataScope.deleteMany({ where: { userId } }),
-      this.prisma.userDataScope.createMany({
-        data: scopes.map((scope) => ({
-          userId,
-          scopeType: scope.scopeType,
-          branchId: scope.branchId,
-          departmentId: scope.departmentId,
-          assignedOnly: scope.assignedOnly,
-          createdBy: actorId,
-        })),
+    const [rows, total] = await Promise.all([
+      this.prisma.user.findMany({
+        where,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        orderBy: { createdAt: 'desc' },
       }),
+      this.prisma.user.count({ where }),
     ]);
+
+    return {
+      items: rows.map((r) => this.mapUser(r)),
+      total,
+    };
   }
 
-  async incrementFailedAttempts(userId: string, lockoutMinutes = 15): Promise<void> {
-    const user = await this.prisma.user.findUnique({ where: { id: userId } });
-    if (!user) return;
+  async getPasswordHash(userId: Uuid): Promise<string | null> {
+    const row = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { passwordHash: true },
+    });
+    return row ? row.passwordHash : null;
+  }
 
-    const attempts = user.failedLoginAttempts + 1;
-    const lockoutUntil = attempts >= 5 ? new Date(Date.now() + lockoutMinutes * 60 * 1000) : null;
-    const status = attempts >= 5 ? 'Locked' : user.status;
-
+  async updatePassword(userId: Uuid, passwordHash: string): Promise<void> {
     await this.prisma.user.update({
       where: { id: userId },
+      data: { passwordHash, passwordChangedAt: new Date() },
+    });
+  }
+
+  async createResetToken(data: { id: Uuid; userId: Uuid; tokenHash: string; expiresAt: Date }): Promise<void> {
+    await this.prisma.passwordResetToken.create({
       data: {
-        failedLoginAttempts: attempts,
-        lockoutUntil,
-        status,
+        id: data.id,
+        userId: data.userId,
+        tokenHash: data.tokenHash,
+        expiresAt: data.expiresAt,
       },
     });
   }
 
-  async resetFailedAttempts(userId: string): Promise<void> {
-    await this.prisma.user.update({
-      where: { id: userId },
-      data: {
-        failedLoginAttempts: 0,
-        lockoutUntil: null,
-      },
+  async findResetTokenByHash(tokenHash: string): Promise<{ userId: Uuid; expiresAt: Date; usedAt: Date | null } | null> {
+    const row = await this.prisma.passwordResetToken.findUnique({
+      where: { tokenHash },
     });
+    return row ? {
+      userId: row.userId as Uuid,
+      expiresAt: row.expiresAt,
+      usedAt: row.usedAt,
+    } : null;
   }
 
-  async updatePasswordAndUnlock(userId: string, passwordHash: string): Promise<void> {
-    await this.prisma.user.update({
-      where: { id: userId },
-      data: {
-        passwordHash,
-        failedLoginAttempts: 0,
-        lockoutUntil: null,
-        status: 'Active',
-        updatedAt: new Date(),
-      },
+  async markResetTokenAsUsed(tokenHash: string): Promise<void> {
+    await this.prisma.passwordResetToken.update({
+      where: { tokenHash },
+      data: { usedAt: new Date() },
     });
   }
 }

@@ -68,7 +68,7 @@ export function Pagination({
         className={cn(
           baseClass,
           isActive
-            ? 'bg-[color:var(--ims-ink)] text-[color:var(--ims-paper)]'
+            ? 'bg-[color:var(--ims-ink)] text-[color:var(--ims-surface)] shadow-[0_10px_24px_rgba(16,36,58,0.14)]'
             : 'text-[color:var(--ims-ink)] hover:bg-[color:var(--ims-accent-soft)]',
         )}
         aria-current={isActive ? 'page' : undefined}

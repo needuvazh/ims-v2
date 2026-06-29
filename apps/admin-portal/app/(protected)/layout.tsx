@@ -5,7 +5,89 @@ import { decodeSession, sessionCookieName, isGlobalScope } from '@ims/shared-aut
 import { AppShell } from '@ims/shared-ui';
 import { resolvePortalNavigation, resolvePortalShellUser } from '@ims/identity-access';
 import { UserControls } from './user-controls';
-import { LayoutDashboard, Building2, ShieldCheck } from 'lucide-react';
+import {
+  LayoutDashboard,
+  Building2,
+  Building,
+  MapPin,
+  Layers,
+  GraduationCap,
+  FolderTree,
+  Users,
+  UserCheck,
+  Key,
+  ShieldCheck,
+  TrendingUp,
+  Activity,
+  History,
+  Lock,
+  FileSliders,
+  FileSpreadsheet,
+} from 'lucide-react';
+
+function mapNavigationIcons(item: any): any {
+  let icon: ReactNode | undefined;
+
+  switch (item.href) {
+    case '/dashboard':
+      icon = <LayoutDashboard className="h-4.5 w-4.5" />;
+      break;
+    case '/leads':
+      icon = <TrendingUp className="h-4.5 w-4.5" />;
+      break;
+    case '/organization':
+      icon = <Building2 className="h-4.5 w-4.5" />;
+      break;
+    case '/organization/institutes':
+      icon = <Building className="h-4.5 w-4.5" />;
+      break;
+    case '/organization/branches':
+      icon = <MapPin className="h-4.5 w-4.5" />;
+      break;
+    case '/organization/departments':
+      icon = <Layers className="h-4.5 w-4.5" />;
+      break;
+    case '/organization/classrooms':
+      icon = <GraduationCap className="h-4.5 w-4.5" />;
+      break;
+    case '/organization/hierarchy':
+      icon = <FolderTree className="h-4.5 w-4.5" />;
+      break;
+    case '/iam':
+      icon = <ShieldCheck className="h-4.5 w-4.5" />;
+      break;
+    case '/iam/users':
+      icon = <Users className="h-4.5 w-4.5" />;
+      break;
+    case '/iam/roles':
+      icon = <UserCheck className="h-4.5 w-4.5" />;
+      break;
+    case '/iam/permissions':
+      icon = <Key className="h-4.5 w-4.5" />;
+      break;
+    case '/iam/sessions':
+      icon = <Activity className="h-4.5 w-4.5" />;
+      break;
+    case '/iam/login-history':
+      icon = <History className="h-4.5 w-4.5" />;
+      break;
+    case '/iam/security-policy':
+      icon = <Lock className="h-4.5 w-4.5" />;
+      break;
+    case '/iam/audit':
+      icon = <FileSliders className="h-4.5 w-4.5" />;
+      break;
+    case '/iam/reports':
+      icon = <FileSpreadsheet className="h-4.5 w-4.5" />;
+      break;
+  }
+
+  return {
+    ...item,
+    icon: icon || item.icon,
+    items: item.items ? item.items.map(mapNavigationIcons) : undefined,
+  };
+}
 
 export default async function ProtectedLayout({ children }: { children: ReactNode }) {
   const cookieStore = await cookies();
@@ -15,18 +97,7 @@ export default async function ProtectedLayout({ children }: { children: ReactNod
 
   const shellUser = resolvePortalShellUser(session);
   const rawNav = resolvePortalNavigation('admin', session);
-  const nav = rawNav.map((item) => {
-    if (item.href === '/dashboard') {
-      return { ...item, icon: <LayoutDashboard className="h-4.5 w-4.5" /> };
-    }
-    if (item.href === '/organization') {
-      return { ...item, icon: <Building2 className="h-4.5 w-4.5" /> };
-    }
-    if (item.href === '/identity') {
-      return { ...item, icon: <ShieldCheck className="h-4.5 w-4.5" /> };
-    }
-    return item;
-  });
+  const nav = rawNav.map(mapNavigationIcons);
 
   const isGlobal = isGlobalScope(session);
   let branches: Array<{ id: string; name: string }> = [];
