@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, BarChart3, FileText, ShieldCheck, Users, Clock3, LayoutDashboard, Download } from 'lucide-react';
+import { ArrowRight, BarChart3, FileText, ShieldCheck, Users, Clock3, LayoutDashboard, Download, Home, FileSpreadsheet } from 'lucide-react';
 import { Breadcrumbs, Card, CardContent, CardDescription, CardHeader, CardTitle, PageHeader } from '@ims/shared-ui';
 
 export const metadata = { title: 'Reports | IMS Admin' };
@@ -19,10 +19,16 @@ export default function IamReportsPage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        eyebrow="Compliance"
         title="IAM Reports"
-        description="Open the IAM report surfaces and export endpoints."
-        breadcrumbs={<Breadcrumbs items={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'IAM', href: '/iam' }, { label: 'Reports' }]} />}
+        breadcrumbs={
+          <Breadcrumbs
+            items={[
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Reports', icon: <FileSpreadsheet className="h-3.5 w-3.5 text-slate-500" /> },
+            ]}
+          />
+        }
       />
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

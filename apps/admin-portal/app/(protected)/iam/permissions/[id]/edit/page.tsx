@@ -1,6 +1,7 @@
 import { Breadcrumbs, PageHeader } from '@ims/shared-ui';
 import { PermissionForm } from '../../_components/permission-form';
 import { assertPermission } from '@/lib/auth-guard';
+import { Home, ShieldCheck, Key, Pencil } from 'lucide-react';
 
 export const metadata = { title: 'Edit Permission - IAM | IMS Admin' };
 
@@ -21,16 +22,15 @@ export default async function IamEditPermissionPage(props: { params: Promise<{ i
     <div className="space-y-8">
       <PageHeader
         title="Edit Permission"
-        description={`Modify configuration for ${permission.permissionCode}.`}
         backUrl={`/iam/permissions/${params.id}`}
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard' },
-              { label: 'IAM Console', href: '/iam' },
-              { label: 'Permissions', href: '/iam/permissions' },
-              { label: permission.permissionCode, href: `/iam/permissions/${params.id}` },
-              { label: 'Edit' },
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Permissions', href: '/iam/permissions', icon: <Key className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: permission.permissionCode, href: `/iam/permissions/${params.id}`, icon: <Key className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Edit', icon: <Pencil className="h-3.5 w-3.5 text-slate-500" /> },
             ]}
           />
         }

@@ -1,6 +1,7 @@
 import { Breadcrumbs, PageHeader } from '@ims/shared-ui';
 import { RoleForm } from '../role-form';
 import { loadIdentityData } from '../../shared-data';
+import { Home, ShieldCheck, Shield as ShieldIcon, Eye } from 'lucide-react';
 
 export const metadata = { title: 'View Role - Identity | IMS Admin' };
 export const dynamic = 'force-dynamic';
@@ -18,15 +19,14 @@ export default async function ViewRolePage(props: { params: Promise<{ id: string
     <div className="space-y-8">
       <PageHeader
         title="View Role"
-        description={`Viewing details for ${role.roleName}.`}
         backUrl="/iam/roles"
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard' },
-              { label: 'IAM', href: '/iam' },
-              { label: 'Roles', href: '/iam/roles' },
-              { label: 'View Role' },
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Roles', href: '/iam/roles', icon: <ShieldIcon className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'View Role', icon: <Eye className="h-3.5 w-3.5 text-slate-500" /> },
             ]}
           />
         }

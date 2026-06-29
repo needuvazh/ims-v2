@@ -1,6 +1,6 @@
 import React from 'react';
 import { Breadcrumbs, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, PageHeader, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Badge } from '@ims/shared-ui';
-import { Pencil, ShieldCheck } from 'lucide-react';
+import { Pencil, ShieldCheck, Home, Lock } from 'lucide-react';
 import Link from 'next/link';
 import { getSession } from '../../../lib/auth-guard';
 
@@ -26,10 +26,16 @@ export default async function IamSecurityPolicyPage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        eyebrow="Access Control"
         title="Security Policy"
-        description="Review the active IAM policy values that control sign-in, resets, and sessions."
-        breadcrumbs={<Breadcrumbs items={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'IAM', href: '/iam' }, { label: 'Security Policy' }]} />}
+        breadcrumbs={
+          <Breadcrumbs
+            items={[
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Security Policy', icon: <Lock className="h-3.5 w-3.5 text-slate-500" /> },
+            ]}
+          />
+        }
         actions={
           <Link href="/iam/security-policy/edit">
             <Button>

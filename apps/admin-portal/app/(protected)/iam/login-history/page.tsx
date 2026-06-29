@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Breadcrumbs, Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Input, PageHeader, Select, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@ims/shared-ui';
-import { Clock3 } from 'lucide-react';
+import { Clock3, Home, ShieldCheck, History } from 'lucide-react';
 import { getSession } from '../../../lib/auth-guard';
 
 export const metadata = { title: 'Login History | IMS Admin' };
@@ -41,10 +41,16 @@ export default async function IamLoginHistoryPage({ searchParams }: { searchPara
   return (
     <div className="space-y-8">
       <PageHeader
-        eyebrow="Security"
         title="Login History"
-        description="Browse authentication attempts and lockout-related activity."
-        breadcrumbs={<Breadcrumbs items={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'IAM', href: '/iam' }, { label: 'Login History' }]} />}
+        breadcrumbs={
+          <Breadcrumbs
+            items={[
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Login History', icon: <History className="h-3.5 w-3.5 text-slate-500" /> },
+            ]}
+          />
+        }
       />
 
       <Card>

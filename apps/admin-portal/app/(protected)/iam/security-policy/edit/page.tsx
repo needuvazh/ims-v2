@@ -2,6 +2,7 @@ import React from 'react';
 import { Breadcrumbs, PageHeader } from '@ims/shared-ui';
 import { getSession } from '../../../../lib/auth-guard';
 import { SecurityPolicyForm } from '../security-policy-form';
+import { Home, ShieldCheck, Lock, Pencil } from 'lucide-react';
 
 export const metadata = { title: 'Edit Security Policy | IMS Admin' };
 export const dynamic = 'force-dynamic';
@@ -14,11 +15,18 @@ export default async function EditSecurityPolicyPage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        eyebrow="Access Control"
         title="Edit Security Policy"
-        description="Update the active IAM configuration."
         backUrl="/iam/security-policy"
-        breadcrumbs={<Breadcrumbs items={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'IAM', href: '/iam' }, { label: 'Security Policy', href: '/iam/security-policy' }, { label: 'Edit' }]} />}
+        breadcrumbs={
+          <Breadcrumbs
+            items={[
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Security Policy', href: '/iam/security-policy', icon: <Lock className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Edit', icon: <Pencil className="h-3.5 w-3.5 text-slate-500" /> },
+            ]}
+          />
+        }
       />
 
       <SecurityPolicyForm policy={policy} />

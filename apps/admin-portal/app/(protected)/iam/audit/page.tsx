@@ -1,5 +1,5 @@
 import { Breadcrumbs, Card, CardContent, CardDescription, CardHeader, CardTitle, PageHeader, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@ims/shared-ui';
-import { ShieldAlert as AuditIcon } from 'lucide-react';
+import { ShieldAlert as AuditIcon, Home, ShieldCheck, FileSliders } from 'lucide-react';
 import { getSession } from '../../../lib/auth-guard';
 
 export const metadata = { title: 'Audit | IMS Admin' };
@@ -13,10 +13,16 @@ export default async function IamAuditPage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        eyebrow="Compliance"
         title="Audit Trail"
-        description="Inspect immutable IAM audit events within the current branch scope."
-        breadcrumbs={<Breadcrumbs items={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'IAM', href: '/iam' }, { label: 'Audit' }]} />}
+        breadcrumbs={
+          <Breadcrumbs
+            items={[
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Audit', icon: <FileSliders className="h-3.5 w-3.5 text-slate-500" /> },
+            ]}
+          />
+        }
       />
 
       <Card>

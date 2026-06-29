@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Eye, Pencil, Ban, CheckCircle, ShieldPlus, Shield as ShieldIcon } from 'lucide-react';
+import { Eye, Pencil, Ban, CheckCircle, ShieldPlus, Shield as ShieldIcon, Home, ShieldCheck } from 'lucide-react';
 import { 
   Breadcrumbs, 
   PageHeader, 
@@ -63,9 +63,7 @@ export default async function IdentityRolesPage(props: {
   return (
     <div className="space-y-8">
       <PageHeader
-        eyebrow="Access Control"
         title="IAM Roles"
-        description="Manage system roles and permissions."
         actions={
           <Link href="/iam/roles/create">
             <Button size="sm">
@@ -76,9 +74,9 @@ export default async function IdentityRolesPage(props: {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard' },
-              { label: 'IAM', href: '/iam' },
-              { label: 'Roles' },
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Roles', icon: <ShieldIcon className="h-3.5 w-3.5 text-slate-500" /> },
             ]}
           />
         }

@@ -1,6 +1,7 @@
 import { Breadcrumbs, PageHeader } from '@ims/shared-ui';
 import { PermissionForm } from '../_components/permission-form';
 import { assertPermission } from '@/lib/auth-guard';
+import { Home, ShieldCheck, Key, Plus } from 'lucide-react';
 
 export const metadata = { title: 'Create Permission - IAM | IMS Admin' };
 
@@ -11,15 +12,14 @@ export default async function IamCreatePermissionPage() {
     <div className="space-y-8">
       <PageHeader
         title="Create Permission"
-        description="Define a new system permission."
         backUrl="/iam/permissions"
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard' },
-              { label: 'IAM Console', href: '/iam' },
-              { label: 'Permissions', href: '/iam/permissions' },
-              { label: 'Create Permission' },
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Permissions', href: '/iam/permissions', icon: <Key className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Create Permission', icon: <Plus className="h-3.5 w-3.5 text-slate-500" /> },
             ]}
           />
         }

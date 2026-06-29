@@ -14,7 +14,7 @@ import {
   DataTableFilter,
   Button
 } from '@ims/shared-ui';
-import { KeyRound, Plus } from 'lucide-react';
+import { KeyRound, Plus, Home, ShieldCheck, Key } from 'lucide-react';
 import { assertPermission } from '@/lib/auth-guard';
 
 export const metadata = { title: 'Permissions - IAM | IMS Admin' };
@@ -71,13 +71,12 @@ export default async function IamPermissionsPage(props: {
     <div className="space-y-8">
       <PageHeader
         title="Permissions"
-        description="Manage the permission catalog for the system."
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard' },
-              { label: 'IAM Console', href: '/iam' },
-              { label: 'Permissions' },
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Permissions', icon: <Key className="h-3.5 w-3.5 text-slate-500" /> },
             ]}
           />
         }

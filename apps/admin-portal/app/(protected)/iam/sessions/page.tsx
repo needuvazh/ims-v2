@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Clock3, ExternalLink } from 'lucide-react';
+import { Clock3, ExternalLink, Home, ShieldCheck, Activity } from 'lucide-react';
 import { Breadcrumbs, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Input, PageHeader, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Badge } from '@ims/shared-ui';
 import { getSession } from '../../../lib/auth-guard';
 import { terminateSessionAction, terminateAllSessionsAction } from './actions';
@@ -24,10 +24,16 @@ export default async function IamSessionsPage({ searchParams }: { searchParams: 
   return (
     <div className="space-y-8">
       <PageHeader
-        eyebrow="Access Control"
         title="Sessions"
-        description="Review active login sessions. Termination controls remain permission-gated and branch-aware."
-        breadcrumbs={<Breadcrumbs items={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'IAM', href: '/iam' }, { label: 'Sessions' }]} />}
+        breadcrumbs={
+          <Breadcrumbs
+            items={[
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Sessions', icon: <Activity className="h-3.5 w-3.5 text-slate-500" /> },
+            ]}
+          />
+        }
       />
 
       <Card>

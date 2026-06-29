@@ -12,7 +12,7 @@ import {
   Pagination,
   DataTableFilter
 } from '@ims/shared-ui';
-import { KeyRound } from 'lucide-react';
+import { KeyRound, Home, ShieldCheck, Key } from 'lucide-react';
 import { loadIdentityData } from '../shared-data';
 
 export const metadata = { title: 'IAM Permissions | IMS Admin' };
@@ -58,15 +58,13 @@ export default async function IdentityPermissionsPage(props: {
   return (
     <div className="space-y-8">
       <PageHeader
-        eyebrow="Access Control"
         title="IAM Permissions"
-        description="View the approved IAM permission catalog."
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard' },
-              { label: 'IAM', href: '/iam' },
-              { label: 'Permissions' },
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Permissions', icon: <Key className="h-3.5 w-3.5 text-slate-500" /> },
             ]}
           />
         }

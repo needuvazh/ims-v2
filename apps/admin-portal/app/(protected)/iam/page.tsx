@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, Clock3, FileClock, KeyRound, LayoutDashboard, ShieldAlert, ShieldCheck, ShieldPlus, Users } from 'lucide-react';
+import { ArrowRight, Clock3, FileClock, KeyRound, LayoutDashboard, ShieldAlert, ShieldCheck, ShieldPlus, Users, Home } from 'lucide-react';
 import { Breadcrumbs, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, PageHeader } from '@ims/shared-ui';
 
 export const metadata = { title: 'IAM | IMS Admin' };
@@ -22,10 +22,15 @@ export default function IamHomePage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        eyebrow="Access Control"
         title="IAM Console"
-        description="Branch-aware operational controls for users, roles, sessions, policy, audit, reports, and dashboards."
-        breadcrumbs={<Breadcrumbs items={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'IAM' }]} />}
+        breadcrumbs={
+          <Breadcrumbs
+            items={[
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'IAM', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-500" /> },
+            ]}
+          />
+        }
         actions={
           <Link href="/iam/users">
             <Button size="sm">Open Users <ArrowRight className="ml-2 h-4 w-4" /></Button>

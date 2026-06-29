@@ -182,8 +182,8 @@ function BrandLogo({ appName, collapsed }: { appName: string; collapsed?: boolea
     <div className={cn('flex items-center gap-3', collapsed && 'justify-center')}>
       <div
         className={cn(
-          'relative shrink-0 overflow-hidden rounded-xl border border-slate-100 bg-white shadow-lg flex items-center justify-center p-1.5',
-          collapsed ? 'h-11 w-11' : 'h-11 w-40',
+          'relative shrink-0 overflow-hidden rounded-xl border border-slate-100 bg-white shadow-lg flex items-center justify-center',
+          collapsed ? 'h-11 w-11 p-1.5' : 'h-14 w-40 p-1',
         )}
       >
         <Image
@@ -192,15 +192,9 @@ function BrandLogo({ appName, collapsed }: { appName: string; collapsed?: boolea
           fill
           priority
           sizes={collapsed ? '44px' : '160px'}
-          className={cn('object-contain p-2', collapsed ? 'object-center' : 'object-left')}
+          className="object-contain"
         />
       </div>
-      {!collapsed ? (
-        <div className="min-w-0">
-          <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[color:var(--ims-sidebar-muted)]">Admin</p>
-          <p className="truncate text-sm font-black text-[color:var(--ims-sidebar-ink)]">{appName}</p>
-        </div>
-      ) : null}
     </div>
   );
 }
@@ -614,34 +608,7 @@ export function AppShell({
               <Menu className="h-5 w-5" />
             </button>
 
-            {/* Desktop breadcrumbs */}
-            <nav className="hidden lg:flex items-center gap-2 text-xs font-semibold text-[color:var(--ims-muted)]">
-              <Link href="/dashboard" className="flex items-center gap-1.5 hover:text-[color:var(--ims-brass)] transition-colors text-slate-400 hover:text-[color:var(--ims-brass)]">
-                <Home className="h-4 w-4" />
-              </Link>
-              {activeTrail.length > 0 ? (
-                activeTrail.map((item, index) => {
-                  const isLast = index === activeTrail.length - 1;
-                  return (
-                    <div key={item.href} className="flex items-center gap-2">
-                      <ChevronRight className="h-3.5 w-3.5 text-slate-300 shrink-0" />
-                      {isLast ? (
-                        <span className="text-[color:var(--ims-ink)] font-bold text-sm tracking-tight">{item.label}</span>
-                      ) : (
-                        <Link href={item.href} className="hover:text-[color:var(--ims-brass)] transition-colors">
-                          {item.label}
-                        </Link>
-                      )}
-                    </div>
-                  );
-                })
-              ) : (
-                <>
-                  <ChevronRight className="h-3.5 w-3.5 text-slate-300 shrink-0" />
-                  <span className="text-[color:var(--ims-ink)] font-bold text-sm tracking-tight">Dashboard</span>
-                </>
-              )}
-            </nav>
+            {/* Desktop breadcrumbs removed in favor of page headers */}
 
             {/* Mobile/Tablet title */}
             <div className="lg:hidden min-w-0">

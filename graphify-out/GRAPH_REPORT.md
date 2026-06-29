@@ -1,7 +1,7 @@
 # Graph Report - ims-v2  (2026-06-29)
 
 ## Corpus Check
-- 809 files · ~653,247 words
+- 809 files · ~653,599 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `6ec355ad`
+- Built from commit: `99330574`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -548,6 +548,7 @@
 - [[_COMMUNITY_Community 531|Community 531]]
 - [[_COMMUNITY_Community 532|Community 532]]
 - [[_COMMUNITY_Community 533|Community 533]]
+- [[_COMMUNITY_Community 534|Community 534]]
 - [[_COMMUNITY_Community 535|Community 535]]
 - [[_COMMUNITY_Community 536|Community 536]]
 - [[_COMMUNITY_Community 537|Community 537]]
@@ -555,6 +556,7 @@
 - [[_COMMUNITY_Community 539|Community 539]]
 - [[_COMMUNITY_Community 540|Community 540]]
 - [[_COMMUNITY_Community 541|Community 541]]
+- [[_COMMUNITY_Community 542|Community 542]]
 - [[_COMMUNITY_Community 543|Community 543]]
 - [[_COMMUNITY_Community 544|Community 544]]
 - [[_COMMUNITY_Community 545|Community 545]]
@@ -625,7 +627,9 @@
 - [[_COMMUNITY_Community 611|Community 611]]
 - [[_COMMUNITY_Community 612|Community 612]]
 - [[_COMMUNITY_Community 613|Community 613]]
+- [[_COMMUNITY_Community 614|Community 614]]
 - [[_COMMUNITY_Community 615|Community 615]]
+- [[_COMMUNITY_Community 616|Community 616]]
 - [[_COMMUNITY_Community 617|Community 617]]
 - [[_COMMUNITY_Community 618|Community 618]]
 - [[_COMMUNITY_Community 619|Community 619]]
@@ -658,7 +662,6 @@
 - [[_COMMUNITY_Community 646|Community 646]]
 - [[_COMMUNITY_Community 647|Community 647]]
 - [[_COMMUNITY_Community 651|Community 651]]
-- [[_COMMUNITY_Community 652|Community 652]]
 - [[_COMMUNITY_Community 653|Community 653]]
 - [[_COMMUNITY_Community 656|Community 656]]
 - [[_COMMUNITY_Community 657|Community 657]]
@@ -702,10 +705,8 @@
 - [[_COMMUNITY_Community 709|Community 709]]
 - [[_COMMUNITY_Community 710|Community 710]]
 - [[_COMMUNITY_Community 711|Community 711]]
-- [[_COMMUNITY_Community 712|Community 712]]
 - [[_COMMUNITY_Community 713|Community 713]]
 - [[_COMMUNITY_Community 714|Community 714]]
-- [[_COMMUNITY_Community 716|Community 716]]
 - [[_COMMUNITY_Community 719|Community 719]]
 - [[_COMMUNITY_Community 720|Community 720]]
 - [[_COMMUNITY_Community 721|Community 721]]
@@ -719,7 +720,6 @@
 - [[_COMMUNITY_Community 730|Community 730]]
 - [[_COMMUNITY_Community 731|Community 731]]
 - [[_COMMUNITY_Community 732|Community 732]]
-- [[_COMMUNITY_Community 734|Community 734]]
 - [[_COMMUNITY_Community 738|Community 738]]
 - [[_COMMUNITY_Community 739|Community 739]]
 - [[_COMMUNITY_Community 740|Community 740]]
@@ -910,8 +910,8 @@ Cohesion: 0.06
 Nodes (30): 10. Reporting Views, 1. Business Purpose, 2.1 In Scope, 2.2 Out of Scope for Phase 1, 2. Scope, 3. Owned Concepts, 4. Business Principles, 5.1 Authentication Methods (+22 more)
 
 ### Community 20 - "Community 20"
-Cohesion: 0.10
-Nodes (23): metadata, metadata, DropdownMenuLabel(), IamUserForm(), IamUserFormProps, initialState, toDateInputValue(), UserProfile (+15 more)
+Cohesion: 0.07
+Nodes (33): metadata, metadata, metadata, metadata, initialState, PermissionForm(), PermissionFormProps, PermissionLifecycleDropdown() (+25 more)
 
 ### Community 21 - "Community 21"
 Cohesion: 0.07
@@ -1019,7 +1019,7 @@ Nodes (48): 10. Business Rules, 11. Screen Specifications, 12. Validation Rules,
 
 ### Community 47 - "Community 47"
 Cohesion: 0.33
-Nodes (6): Actions, Columns, CRS-UI-005 Batch List Screen, Filters, Permissions, Purpose
+Nodes (6): Actions, ADM-UI-001 Admission List Screen, Columns, Filters, Permissions, Purpose
 
 ### Community 48 - "Community 48"
 Cohesion: 0.08
@@ -1274,8 +1274,8 @@ Cohesion: 0.10
 Nodes (19): Codebase Analysis, Graceful Exit Handling, Guardrails, Phase 10: Archive, Phase 11: Recap & Next Steps, Phase 1: Welcome, Phase 2: Task Selection, Phase 3: Explore Demo (+11 more)
 
 ### Community 111 - "Community 111"
-Cohesion: 0.40
-Nodes (3): ExportJobDto, IExportJobRepository, PrismaExportJobRepository
+Cohesion: 0.10
+Nodes (23): metadata, metadata, DropdownMenuLabel(), IamUserForm(), IamUserFormProps, initialState, toDateInputValue(), UserProfile (+15 more)
 
 ### Community 112 - "Community 112"
 Cohesion: 0.10
@@ -1326,8 +1326,8 @@ Cohesion: 0.11
 Nodes (19): Anti-Patterns, Component Testing (Experimental), CRA vs Vite Differences, Detecting Memory Leaks, E2E Config (Vite), Error Boundaries, Form Libraries (React Hook Form, Formik), Framework Tips (+11 more)
 
 ### Community 124 - "Community 124"
-Cohesion: 0.07
-Nodes (33): metadata, metadata, metadata, metadata, initialState, PermissionForm(), PermissionFormProps, PermissionLifecycleDropdown() (+25 more)
+Cohesion: 0.40
+Nodes (3): ExportJobDto, IExportJobRepository, PrismaExportJobRepository
 
 ### Community 125 - "Community 125"
 Cohesion: 0.11
@@ -1347,7 +1347,7 @@ Nodes (3): ClassroomFormProps, Classroom, toClassroom()
 
 ### Community 129 - "Community 129"
 Cohesion: 0.33
-Nodes (6): Actions, ADM-UI-001 Admission List Screen, Columns, Filters, Permissions, Purpose
+Nodes (6): Actions, Columns, CRS-UI-005 Batch List Screen, Filters, Permissions, Purpose
 
 ### Community 130 - "Community 130"
 Cohesion: 0.08
@@ -1594,8 +1594,8 @@ Cohesion: 0.13
 Nodes (14): Anti-Patterns, Authenticated GraphQL Fixture, Authorization Errors, Basic Query with Variables, "Cannot query field X on type Y", GraphQL Helper Function, GraphQL returns 200 but data is null, GraphQL Testing (+6 more)
 
 ### Community 192 - "Community 192"
-Cohesion: 0.50
-Nodes (4): Actions, CERT-UI-002 Certificate Template List, Columns, Permissions
+Cohesion: 0.25
+Nodes (8): 6. Screens, Additional Fields, Business Rules, CERT-UI-001 Certificate Dashboard, CERT-UI-010 Corporate Certificate Settings, Filters, Purpose, Widgets
 
 ### Community 193 - "Community 193"
 Cohesion: 0.23
@@ -1603,7 +1603,7 @@ Nodes (8): assertBranchScope(), getPublicKey(), metadata, getAuthorizedBranchIds
 
 ### Community 194 - "Community 194"
 Cohesion: 0.13
-Nodes (15): 9.2 Employee Self Service Context, 9.3 Payroll Management Context, 9.4 Tally Integration Context, 9.5 Biometric Attendance Integration Context, 9. Future Phase Contexts, Business Purpose, Business Purpose, Business Purpose (+7 more)
+Nodes (15): 9.2 Employee Self Service Context, 9.3 Payroll Management Context, 9.5 Biometric Attendance Integration Context, 9.6 AI Intelligence Context, 9. Future Phase Contexts, AI-Ready Data to Capture from Day 1, Business Purpose, Business Purpose (+7 more)
 
 ### Community 195 - "Community 195"
 Cohesion: 0.13
@@ -1687,7 +1687,7 @@ Nodes (12): 10. Lifecycle Invariants Validations, 11. Fine-grained Authorization
 
 ### Community 215 - "Community 215"
 Cohesion: 0.50
-Nodes (4): 10.6 Invoice Aggregate, Aggregate Root, Child Entities / Value Objects, Key Invariants
+Nodes (4): 10.4 Course Aggregate, Aggregate Root, Child Entities / Value Objects, Key Invariants
 
 ### Community 216 - "Community 216"
 Cohesion: 0.15
@@ -1779,7 +1779,7 @@ Nodes (12): 10. Reporting and Operational Views, 11. FRD Improvement Notes, 1. B
 
 ### Community 238 - "Community 238"
 Cohesion: 0.18
-Nodes (11): 6. Screens, Actions, Actions, Business Rules, Business Rules, CMP-UI-004 Exam List, CMP-UI-007 Publish Results, CMP-UI-008 Walk-In Completion Screen (+3 more)
+Nodes (11): 6. Screens, Actions, Business Rules, Business Rules, CMP-UI-004 Exam List, CMP-UI-005 Exam Screen, CMP-UI-008 Walk-In Completion Screen, Columns (+3 more)
 
 ### Community 239 - "Community 239"
 Cohesion: 0.15
@@ -1878,8 +1878,8 @@ Cohesion: 0.20
 Nodes (10): 2. Business Use Cases, Failure Flow, Main Flow, Main Flow, Preconditions, Primary Actor, Trigger, UC-IAM-002 Login (+2 more)
 
 ### Community 263 - "Community 263"
-Cohesion: 0.67
-Nodes (3): Business Rules, COR-UI-002 Corporate Customer Screen, Fields
+Cohesion: 0.50
+Nodes (4): 10.6 Invoice Aggregate, Aggregate Root, Child Entities / Value Objects, Key Invariants
 
 ### Community 264 - "Community 264"
 Cohesion: 0.22
@@ -1987,7 +1987,7 @@ Nodes (10): 1. Introduce `UserSession` and `LoginHistory` Models, 2. Add Effecti
 
 ### Community 290 - "Community 290"
 Cohesion: 0.50
-Nodes (4): 9.6 AI Intelligence Context, AI-Ready Data to Capture from Day 1, Business Purpose, Future AI Capabilities
+Nodes (4): 9.4 Tally Integration Context, Business Purpose, Future Responsibilities, Important Rules
 
 ### Community 291 - "Community 291"
 Cohesion: 0.18
@@ -2402,8 +2402,8 @@ Cohesion: 0.50
 Nodes (4): Business Rules, Document Status, Supported Documents, TRN-UI-004 Trainer Documents
 
 ### Community 403 - "Community 403"
-Cohesion: 0.25
-Nodes (8): 6. Screens, Additional Fields, Business Rules, CERT-UI-001 Certificate Dashboard, CERT-UI-010 Corporate Certificate Settings, Filters, Purpose, Widgets
+Cohesion: 0.50
+Nodes (4): Access, Business Rules, CERT-UI-008 Public Verification, Display
 
 ### Community 404 - "Community 404"
 Cohesion: 0.25
@@ -2905,6 +2905,10 @@ Nodes (4): 20. Database Mapping, Aggregate Root, Key Fields: classrooms, Suggest
 Cohesion: 0.50
 Nodes (4): 22. Acceptance Criteria, Scenario: Create Classroom, Scenario: Prevent Capacity Violation, Scenario: Prevent Scheduling in Maintenance Classroom
 
+### Community 534 - "Community 534"
+Cohesion: 0.50
+Nodes (4): Actions, CERT-UI-002 Certificate Template List, Columns, Permissions
+
 ### Community 535 - "Community 535"
 Cohesion: 0.50
 Nodes (4): 22. Acceptance Criteria, Scenario: Activate Department, Scenario: Create Department, Scenario: Prevent Archiving
@@ -2932,6 +2936,10 @@ Nodes (4): 10.1 Log Format, 10.2 Required Log Events, 10.3 Log Redaction, 10. Lo
 ### Community 541 - "Community 541"
 Cohesion: 0.50
 Nodes (4): 13.1 Liveness Check, 13.2 Readiness Check, 13.3 Startup Check, 13. Health Checks
+
+### Community 542 - "Community 542"
+Cohesion: 0.67
+Nodes (3): Business Rules, COR-UI-002 Corporate Customer Screen, Fields
 
 ### Community 543 - "Community 543"
 Cohesion: 0.50
@@ -3205,9 +3213,17 @@ Nodes (5): Business Rules, Decisions, Fields, FIN-UI-009 Refund Approval, Workfl
 Cohesion: 0.43
 Nodes (3): IPasswordHistoryRepository, PasswordHistoryDto, PrismaPasswordHistoryRepository
 
-### Community 619 - "Community 619"
+### Community 614 - "Community 614"
 Cohesion: 0.67
 Nodes (3): Business Rules, COR-UI-011 Completion Dashboard, Metrics
+
+### Community 616 - "Community 616"
+Cohesion: 0.67
+Nodes (3): Actions, Business Rules, CMP-UI-007 Publish Results
+
+### Community 619 - "Community 619"
+Cohesion: 0.67
+Nodes (3): dependsOn, outputs, build
 
 ### Community 620 - "Community 620"
 Cohesion: 0.67
@@ -3313,10 +3329,6 @@ Nodes (8): assertOk(), AuditItem, BranchItem, JsonResponse, main(), mergeCookieH
 Cohesion: 0.40
 Nodes (3): addressSchema, ProfileFormData, profileSchema
 
-### Community 652 - "Community 652"
-Cohesion: 0.67
-Nodes (3): dependsOn, outputs, build
-
 ### Community 653 - "Community 653"
 Cohesion: 0.40
 Nodes (5): Abstract, References, Source Files, Table of Contents, Zod
@@ -3421,10 +3433,6 @@ Nodes (4): Business Rules, CMP-UI-009 Corporate Completion Dashboard, Filters, M
 Cohesion: 0.50
 Nodes (4): CMP-UI-001 Completion Dashboard, Filters, Purpose, Widgets
 
-### Community 712 - "Community 712"
-Cohesion: 0.50
-Nodes (4): Access, Business Rules, CERT-UI-008 Public Verification, Display
-
 ### Community 713 - "Community 713"
 Cohesion: 0.50
 Nodes (4): Actions, Business Rules, CERT-UI-006 Certificate Issue Screen, Certificate Information
@@ -3432,10 +3440,6 @@ Nodes (4): Actions, Business Rules, CERT-UI-006 Certificate Issue Screen, Certif
 ### Community 714 - "Community 714"
 Cohesion: 0.40
 Nodes (3): GET(), POST(), querySchema
-
-### Community 716 - "Community 716"
-Cohesion: 0.67
-Nodes (3): Business Rules, CMP-UI-005 Exam Screen, Fields
 
 ### Community 719 - "Community 719"
 Cohesion: 0.50
@@ -3488,10 +3492,6 @@ Nodes (3): For git commit hook, For native CLAUDE.md integration, graphify refer
 ### Community 732 - "Community 732"
 Cohesion: 0.50
 Nodes (3): For --cluster-only, For --update (incremental re-extraction), graphify reference: incremental update and cluster-only
-
-### Community 734 - "Community 734"
-Cohesion: 0.50
-Nodes (4): 10.4 Course Aggregate, Aggregate Root, Child Entities / Value Objects, Key Invariants
 
 ### Community 738 - "Community 738"
 Cohesion: 0.50
@@ -3567,7 +3567,7 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Uuid` connect `Community 38` to `Community 516`, `Community 390`, `Community 393`, `Community 146`, `Community 20`, `Community 26`, `Community 39`, `Community 170`, `Community 180`, `Community 57`, `Community 701`, `Community 320`, `Community 199`, `Community 73`, `Community 77`, `Community 82`, `Community 91`, `Community 347`, `Community 221`, `Community 222`, `Community 121`, `Community 613`, `Community 111`, `Community 754`, `Community 757`, `Community 120`, `Community 761`, `Community 124`?**
   _High betweenness centrality (0.010) - this node is a cross-community bridge._
-- **Why does `DomainError` connect `Community 415` to `Community 0`, `Community 388`, `Community 390`, `Community 647`, `Community 139`, `Community 20`, `Community 544`, `Community 39`, `Community 170`, `Community 563`, `Community 693`, `Community 694`, `Community 57`, `Community 701`, `Community 320`, `Community 193`, `Community 328`, `Community 73`, `Community 714`, `Community 77`, `Community 336`, `Community 82`, `Community 342`, `Community 471`, `Community 91`, `Community 347`, `Community 476`, `Community 479`, `Community 481`, `Community 121`, `Community 615`, `Community 104`, `Community 617`, `Community 618`, `Community 232`, `Community 757`, `Community 761`, `Community 377`, `Community 124`, `Community 381`?**
+- **Why does `DomainError` connect `Community 415` to `Community 0`, `Community 388`, `Community 390`, `Community 647`, `Community 139`, `Community 20`, `Community 544`, `Community 39`, `Community 170`, `Community 563`, `Community 693`, `Community 694`, `Community 57`, `Community 701`, `Community 320`, `Community 193`, `Community 328`, `Community 73`, `Community 714`, `Community 77`, `Community 336`, `Community 82`, `Community 342`, `Community 471`, `Community 91`, `Community 347`, `Community 476`, `Community 479`, `Community 481`, `Community 121`, `Community 615`, `Community 104`, `Community 617`, `Community 618`, `Community 232`, `Community 111`, `Community 757`, `Community 761`, `Community 377`, `Community 381`?**
   _High betweenness centrality (0.009) - this node is a cross-community bridge._
 - **Why does `Accessibility Testing` connect `Community 35` to `Community 3`?**
   _High betweenness centrality (0.005) - this node is a cross-community bridge._

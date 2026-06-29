@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Eye, Pencil, Ban, CheckCircle, UserPlus, ShieldAlert, Users as UsersIcon } from 'lucide-react';
+import { Eye, Pencil, Ban, CheckCircle, UserPlus, ShieldAlert, Users as UsersIcon, Home, ShieldCheck } from 'lucide-react';
 import { 
   Breadcrumbs, 
   PageHeader, 
@@ -76,9 +76,7 @@ export default async function IdentityUsersPage(props: {
   return (
     <div className="space-y-8">
       <PageHeader
-        eyebrow="Access Control"
         title="IAM Users"
-        description="Manage users in the IAM console."
         actions={
           <Link href="/iam/users/create">
             <Button size="sm">
@@ -89,9 +87,9 @@ export default async function IdentityUsersPage(props: {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard' },
-              { label: 'IAM', href: '/iam' },
-              { label: 'Users' },
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Users', icon: <UsersIcon className="h-3.5 w-3.5 text-slate-500" /> },
             ]}
           />
         }

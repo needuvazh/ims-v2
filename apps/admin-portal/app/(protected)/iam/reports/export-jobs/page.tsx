@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Breadcrumbs, Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Input, PageHeader, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@ims/shared-ui';
-import { Download, FileClock } from 'lucide-react';
+import { Download, FileClock, Home, ShieldCheck, FileSpreadsheet } from 'lucide-react';
 import { getSession } from '../../../../lib/auth-guard';
 
 export const metadata = { title: 'Export Jobs | IMS Admin' };
@@ -21,10 +21,17 @@ export default async function IamExportJobsPage({ searchParams }: { searchParams
   return (
     <div className="space-y-8">
       <PageHeader
-        eyebrow="Reports"
         title="Export Jobs"
-        description="Review export status and open completed files."
-        breadcrumbs={<Breadcrumbs items={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'IAM', href: '/iam' }, { label: 'Reports', href: '/iam/reports' }, { label: 'Export Jobs' }]} />}
+        breadcrumbs={
+          <Breadcrumbs
+            items={[
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Reports', href: '/iam/reports', icon: <FileSpreadsheet className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Export Jobs', icon: <FileClock className="h-3.5 w-3.5 text-slate-500" /> },
+            ]}
+          />
+        }
       />
 
       <Card>

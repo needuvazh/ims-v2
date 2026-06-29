@@ -3,6 +3,7 @@ import { PermissionForm } from '../_components/permission-form';
 import { assertPermission } from '@/lib/auth-guard';
 import { PermissionLifecycleDropdown } from './_components/permission-lifecycle-dropdown';
 import Link from 'next/link';
+import { Home, ShieldCheck, Key, Eye } from 'lucide-react';
 
 export const metadata = { title: 'Permission Details - IAM | IMS Admin' };
 
@@ -23,15 +24,14 @@ export default async function IamViewPermissionPage(props: { params: Promise<{ i
     <div className="space-y-8">
       <PageHeader
         title={permission.permissionCode}
-        description={`View details for ${permission.permissionCode}.`}
         backUrl="/iam/permissions"
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard' },
-              { label: 'IAM Console', href: '/iam' },
-              { label: 'Permissions', href: '/iam/permissions' },
-              { label: permission.permissionCode },
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Permissions', href: '/iam/permissions', icon: <Key className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: permission.permissionCode, icon: <Eye className="h-3.5 w-3.5 text-slate-500" /> },
             ]}
           />
         }
