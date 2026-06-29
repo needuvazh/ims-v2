@@ -20,13 +20,13 @@ export default async function EditUserPage(props: { params: Promise<{ id: string
       <PageHeader
         title="Edit User"
         description={`Update details for ${user.fullName}.`}
-        backUrl="/identity/users"
+        backUrl="/iam/users"
         breadcrumbs={
           <Breadcrumbs
             items={[
               { label: 'Dashboard', href: '/dashboard' },
-              { label: 'Identity', href: '/identity' },
-              { label: 'Users', href: '/identity/users' },
+              { label: 'IAM', href: '/iam' },
+              { label: 'Users', href: '/iam/users' },
               { label: 'Edit User' },
             ]}
           />

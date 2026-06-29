@@ -6,7 +6,7 @@ export interface INotificationPort {
 
   sendPasswordResetEmail(
     recipientEmail: string,
-    resetData: { firstName: string; expiresAt: Date }
+    resetData: { firstName: string; resetLink: string; expiresAt: Date }
   ): Promise<void>;
 
   sendAccountLockedNotification(

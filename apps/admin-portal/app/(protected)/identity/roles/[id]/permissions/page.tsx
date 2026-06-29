@@ -21,13 +21,13 @@ export default async function ManageRolePermissionsPage(props: { params: Promise
       <PageHeader
         title="Manage Role Permissions"
         description={`Assign or remove permissions for ${role.roleName}.`}
-        backUrl="/identity/roles"
+        backUrl="/iam/roles"
         breadcrumbs={
           <Breadcrumbs
             items={[
               { label: 'Dashboard', href: '/dashboard' },
-              { label: 'Identity', href: '/identity' },
-              { label: 'Roles', href: '/identity/roles' },
+              { label: 'IAM', href: '/iam' },
+              { label: 'Roles', href: '/iam/roles' },
               { label: 'Manage Permissions' },
             ]}
           />

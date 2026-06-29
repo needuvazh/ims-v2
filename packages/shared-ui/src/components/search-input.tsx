@@ -27,7 +27,7 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
           type="search"
           value={value}
           onChange={onChange}
-          className="h-10 w-full rounded-md border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] pl-9 pr-9 text-sm text-[color:var(--ims-ink)] shadow-sm outline-none transition-all placeholder:text-[color:var(--ims-muted)] focus:border-[color:var(--ims-brass)] focus:ring-2 focus:ring-[color:var(--ims-brass-soft)] disabled:cursor-not-allowed disabled:opacity-50"
+          className="h-10 w-full rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] pl-9 pr-9 text-sm text-[color:var(--ims-ink)] shadow-[0_8px_24px_rgba(16,36,58,0.04)] outline-none transition-all placeholder:text-[color:var(--ims-muted)] focus:border-[color:var(--ims-brass)] focus:ring-2 focus:ring-[color:var(--ims-brass-soft)] disabled:cursor-not-allowed disabled:opacity-50"
           {...props}
         />
         {hasValue && onClear && (

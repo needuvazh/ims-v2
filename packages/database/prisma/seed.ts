@@ -427,6 +427,18 @@ async function seed() {
   await prisma.userRole.create({ data: { userId: smokeUser.id, roleId: roleMap['SUPER_ADMIN'].id } });
   console.log(`  ✓ User created: smoke.iam@ims.com (SUPER_ADMIN smoke account)`);
 
+  await prisma.user.update({
+    where: { id: smokeUser.id },
+    data: { defaultBranchId: riyadhBranch.id },
+  });
+  await prisma.userBranchAccess.create({
+    data: { id: crypto.randomUUID(), userId: smokeUser.id, branchId: riyadhBranch.id, isDefault: true, status: 'Active' },
+  });
+  await prisma.userBranchAccess.create({
+    data: { id: crypto.randomUUID(), userId: smokeUser.id, branchId: muscatBranch.id, isDefault: false, status: 'Active' },
+  });
+  console.log(`  ✓ Smoke user branch access created for AST-RIYADH and AST-MUSCAT`);
+
   // User B: Riyadh Branch Manager
   const riyadhManagerPerson = await prisma.person.create({
     data: { id: crypto.randomUUID(), firstName: 'Riyadh', lastName: 'Branch Manager', mobile: '+966-500000002' }

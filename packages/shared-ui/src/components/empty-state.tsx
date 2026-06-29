@@ -17,7 +17,7 @@ export function EmptyState({ icon, title, description, action, className, ...pro
       {...props}
     >
       {icon && (
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[color:var(--ims-accent-soft)] text-[color:var(--ims-brass)]">
+        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[color:var(--ims-brass-soft)] text-[color:var(--ims-brass)]">
           {icon}
         </div>
       )}

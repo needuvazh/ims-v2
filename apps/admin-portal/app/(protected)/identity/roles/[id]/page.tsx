@@ -19,13 +19,13 @@ export default async function ViewRolePage(props: { params: Promise<{ id: string
       <PageHeader
         title="View Role"
         description={`Viewing details for ${role.roleName}.`}
-        backUrl="/identity/roles"
+        backUrl="/iam/roles"
         breadcrumbs={
           <Breadcrumbs
             items={[
               { label: 'Dashboard', href: '/dashboard' },
-              { label: 'Identity', href: '/identity' },
-              { label: 'Roles', href: '/identity/roles' },
+              { label: 'IAM', href: '/iam' },
+              { label: 'Roles', href: '/iam/roles' },
               { label: 'View Role' },
             ]}
           />

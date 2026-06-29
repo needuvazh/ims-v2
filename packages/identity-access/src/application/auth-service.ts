@@ -1,7 +1,8 @@
 import { UAParser } from 'ua-parser-js';
 import crypto from 'crypto';
 import { InMemoryMetrics } from '@ims/observability';
-import { JwtService, RefreshTokenService, encodeSession, getDevelopmentKeyPair, type Session, type TokenPayload } from '@ims/shared-auth';
+import { encodeSession, type Session } from '@ims/shared-auth';
+import { JwtService, RefreshTokenService, getDevelopmentKeyPair, type TokenPayload } from '@ims/shared-auth/jwt';
 import type { Uuid } from '@ims/shared-kernel';
 import { createIamError, IamError } from '../errors/iam-errors';
 import { PasswordPolicy } from '../domain/password-policy';
@@ -52,63 +53,12 @@ export class AuthService {
   ) {}
 
   async signIn(
-    command: { email: string; password: string },
+    command: { email: string; password: string; rememberMe?: boolean },
     metadata?: { userAgent?: string | null; ipAddress?: string | null }
   ): Promise<{ sessionToken: string; session: Session }> {
-    const res = await this.login(command.email, command.password, false, metadata?.ipAddress || null, metadata?.userAgent || null);
-
-    let roles: string[] = [];
-    let permissions: string[] = [];
-    if (this.roleRepository) {
-      const userRoles = await this.roleRepository.listRolesForUser(res.user.id);
-      const activeRoles = userRoles.filter((ur: any) => ur.status === 'Active' && ur.role.status === 'Active');
-      roles = activeRoles.map((ur: any) => ur.role.roleCode);
-
-      const allPermissions = new Set<string>();
-      for (const ur of activeRoles) {
-        const perms = await this.roleRepository.listPermissionsForRole(ur.role.id);
-        for (const p of perms) {
-          if (p.status === 'Active') {
-            allPermissions.add(p.permissionCode);
-          }
-        }
-      }
-      permissions = Array.from(allPermissions);
-    }
-
-    let dataScopes: any[] = [];
-    if (this.userBranchAccessRepository) {
-      const branches = await this.userBranchAccessRepository.findByUser(res.user.id);
-      dataScopes = branches
-        .filter((b: any) => b.status === 'Active')
-        .map((b: any) => ({
-          scopeType: 'Branch',
-          branchId: b.branchId,
-          departmentId: null,
-          assignedOnly: b.consolidatedVisibility || false,
-        }));
-    }
-
-    if (dataScopes.length === 0) {
-      dataScopes = [{ scopeType: 'All', branchId: null, departmentId: null, assignedOnly: false }];
-    }
-
-    const legacySession: Session = {
-      userId: res.user.id,
-      displayName: res.user.username,
-      roles,
-      permissions,
-      dataScopes,
-      activeBranchId: res.user.defaultBranchId,
-      accessTokenJti: res.session.accessTokenJti,
-      hashedRefreshToken: res.session.hashedRefreshToken,
-      lastActivityAt: res.session.lastActivityAt.getTime(),
-      status: 'Active',
-      expiresAt: res.session.expiresAt.getTime(),
-    };
-
-    const sessionToken = await encodeSession(legacySession);
-    return { sessionToken, session: legacySession };
+    const res = await this.login(command.email, command.password, command.rememberMe ?? false, metadata?.ipAddress || null, metadata?.userAgent || null);
+    const sessionToken = await encodeSession(res.session);
+    return { sessionToken, session: res.session };
   }
 
   async requestPasswordReset(command: { email: string }): Promise<void> {
@@ -332,21 +282,8 @@ export class AuthService {
       }
     }
 
-    // Issue tokens
     const { raw: refreshToken, hash: hashedRefreshToken } = RefreshTokenService.generate();
     const accessTokenJti = crypto.randomUUID();
-
-    const keys = getKeys();
-    const payload: TokenPayload = {
-      userId: user.id,
-      email: user.email,
-      roles: [], // Will populate in application service or guard
-      permissions: [], // Will populate in application service or guard
-      activeBranchId: user.defaultBranchId,
-      jti: accessTokenJti,
-    };
-
-    const accessToken = await JwtService.signAccessToken(payload, keys.privateKey);
 
     // Create session
     const refreshExpiryDays = rememberMe
@@ -354,7 +291,69 @@ export class AuthService {
       : policy.refreshTokenExpiryDays;
     const sessionExpiresAt = new Date(now.getTime() + refreshExpiryDays * 24 * 60 * 60 * 1000);
 
-    const session: UserSessionDto = {
+    let roles: string[] = [];
+    let permissions: string[] = [];
+    if (this.roleRepository) {
+      const userRoles = await this.roleRepository.listRolesForUser(user.id);
+      const activeRoles = userRoles.filter((ur: any) => ur.status === 'Active' && ur.role.status === 'Active');
+      roles = activeRoles.map((ur: any) => ur.role.roleCode);
+
+      const allPermissions = new Set<string>();
+      for (const ur of activeRoles) {
+        const perms = await this.roleRepository.listPermissionsForRole(ur.role.id);
+        for (const p of perms) {
+          if (p.status === 'Active') {
+            allPermissions.add(p.permissionCode);
+          }
+        }
+      }
+      permissions = Array.from(allPermissions);
+    }
+
+    let dataScopes: Session['dataScopes'] = [];
+    if (this.userBranchAccessRepository) {
+      const branches = await this.userBranchAccessRepository.findByUser(user.id);
+      dataScopes = branches
+        .filter((b: any) => b.status === 'Active')
+        .map((b: any) => ({
+          scopeType: 'Branch',
+          branchId: b.branchId,
+          departmentId: null,
+          assignedOnly: b.consolidatedVisibility || false,
+        }));
+    }
+
+    if (dataScopes.length === 0) {
+      dataScopes = [{ scopeType: 'All', branchId: null, departmentId: null, assignedOnly: false }];
+    }
+
+    const keys = getKeys();
+    const payload: TokenPayload = {
+      userId: user.id,
+      email: user.email,
+      roles,
+      permissions,
+      activeBranchId: user.defaultBranchId,
+      jti: accessTokenJti,
+    };
+
+    const accessToken = await JwtService.signAccessToken(payload, keys.privateKey);
+
+    const session: Session = {
+      userId: user.id,
+      displayName: user.username,
+      roles,
+      permissions,
+      dataScopes,
+      activeBranchId: user.defaultBranchId,
+      accessTokenJti,
+      hashedRefreshToken,
+      lastActivityAt: now.getTime(),
+      status: 'Active',
+      expiresAt: sessionExpiresAt.getTime(),
+    };
+
+    const sessionRecord: UserSessionDto = {
       id: accessTokenJti as Uuid,
       userId: user.id,
       accessTokenJti,
@@ -369,7 +368,7 @@ export class AuthService {
       createdAt: now,
     };
 
-    await this.sessionRepository.create(session);
+    await this.sessionRepository.create(sessionRecord);
 
     // Reset failed login attempts on successful login
     user.failedLoginCount = 0;
@@ -561,7 +560,7 @@ export class AuthService {
       await this.outboxEventRepository.publish({
         id: crypto.randomUUID() as Uuid,
         eventType: 'PasswordResetRequested',
-        payload: { userId: user.id, email: user.email },
+        payload: { userId: user.id, email: user.email, resetToken: rawToken },
         status: 'Pending',
         createdAt: new Date(),
         processedAt: null,
@@ -589,6 +588,7 @@ export class AuthService {
     // Send reset email without exposing the reset link to the adapter boundary.
     await this.notificationPort.sendPasswordResetEmail(user.email, {
       firstName: user.username, // Using username as name placeholder
+      resetLink: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password?token=${rawToken}`,
       expiresAt,
     });
   }

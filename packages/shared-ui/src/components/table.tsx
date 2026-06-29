@@ -49,7 +49,7 @@ export function TableBody({ className, ...props }: HTMLAttributes<HTMLTableSecti
 export function TableRow({ className, ...props }: HTMLAttributes<HTMLTableRowElement>) {
   return (
     <tr
-      className={cn('transition-colors hover:bg-[color:var(--ims-accent-soft)]/40', className)}
+      className={cn('transition-colors hover:bg-[color:var(--ims-accent-soft)]', className)}
       {...props}
     />
   );

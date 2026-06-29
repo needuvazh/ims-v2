@@ -15,7 +15,7 @@ import {
 import { KeyRound } from 'lucide-react';
 import { loadIdentityData } from '../shared-data';
 
-export const metadata = { title: 'Permissions - Identity | IMS Admin' };
+export const metadata = { title: 'IAM Permissions | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
 export default async function IdentityPermissionsPage(props: {
@@ -59,13 +59,13 @@ export default async function IdentityPermissionsPage(props: {
     <div className="space-y-8">
       <PageHeader
         eyebrow="Access Control"
-        title="Permissions"
-        description="View system permissions."
+        title="IAM Permissions"
+        description="View the approved IAM permission catalog."
         breadcrumbs={
           <Breadcrumbs
             items={[
               { label: 'Dashboard', href: '/dashboard' },
-              { label: 'Identity', href: '/identity' },
+              { label: 'IAM', href: '/iam' },
               { label: 'Permissions' },
             ]}
           />

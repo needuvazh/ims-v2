@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { decodeSession, sessionCookieName } from '@ims/shared-auth';
 import { applyRequestContextHeaders, createRequestContext } from '@ims/observability';
 
-const protectedRoutes = ['/dashboard', '/organization', '/identity', '/ui-preview'];
+const protectedRoutes = ['/dashboard', '/organization', '/iam', '/ui-preview'];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -41,7 +41,7 @@ export const config = {
   matcher: [
     '/dashboard/:path*',
     '/organization/:path*',
-    '/identity/:path*',
+    '/iam/:path*',
     '/ui-preview/:path*',
     '/sign-in',
   ],

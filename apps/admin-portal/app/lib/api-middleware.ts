@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { decodeSession, sessionCookieName, JwtService, getDevelopmentKeyPair, type Session, type TokenPayload } from '@ims/shared-auth';
+import { decodeSession, sessionCookieName, type Session } from '@ims/shared-auth';
+import { JwtService, getDevelopmentKeyPair, type TokenPayload } from '@ims/shared-auth/jwt';
 import { createRequestContext, type RequestContext } from '@ims/observability';
 import { DomainError } from '@ims/shared-kernel';
 import type { Uuid } from '@ims/shared-kernel';

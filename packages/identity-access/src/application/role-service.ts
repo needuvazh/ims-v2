@@ -383,6 +383,11 @@ export class RoleService {
     return this.roleRepository.listPermissionsForRole(roleId as Uuid);
   }
 
+  async listUsersForRole(roleId: string, context: RoleCommandContext): Promise<{ userId: string; username: string; status: string; fullName: string | null }[]> {
+    this.checkPermission(context, 'iam.role.read');
+    return this.roleRepository.listUsersForRole(roleId as Uuid);
+  }
+
   async listRolesForUser(userId: string, context?: RoleCommandContext): Promise<any[]> {
     if (context) {
       this.checkPermission(context, 'iam.user.read');

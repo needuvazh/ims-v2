@@ -12,8 +12,8 @@ import type { IPermissionRepository, IAuditLogRepository } from '../domain/repos
 
 export interface PermissionCommandContext {
   actorId: Uuid;
-  actorPermissions: string[];
-  activeBranchId: Uuid | null;
+  actorPermissions?: string[];
+  activeBranchId?: Uuid | null;
 }
 
 export class PermissionService {
@@ -23,7 +23,7 @@ export class PermissionService {
   ) {}
 
   private checkPermission(context: PermissionCommandContext, permission: string): void {
-    if (!context.actorPermissions.includes(permission)) {
+    if (!context.actorPermissions || !context.actorPermissions.includes(permission)) {
       throw createIamError('IAM-AUTHZ-001');
     }
   }
@@ -86,7 +86,7 @@ export class PermissionService {
       newValue: saved,
       ipAddress: null,
       userAgent: null,
-      branchId: context.activeBranchId,
+      branchId: context.activeBranchId ?? null,
       correlationId: null,
       reason: null,
     });
@@ -128,7 +128,7 @@ export class PermissionService {
       newValue: updated,
       ipAddress: null,
       userAgent: null,
-      branchId: context.activeBranchId,
+      branchId: context.activeBranchId ?? null,
       correlationId: null,
       reason: null,
     });
@@ -158,7 +158,7 @@ export class PermissionService {
         newValue: { status: 'Archived' },
         ipAddress: null,
         userAgent: null,
-        branchId: context.activeBranchId,
+        branchId: context.activeBranchId ?? null,
         correlationId: null,
         reason: null,
       });

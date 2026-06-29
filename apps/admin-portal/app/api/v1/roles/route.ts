@@ -27,7 +27,7 @@ export async function GET(request: Request) {
       const { roleService } = await import('../../../../lib/runtime');
       const result = await roleService.listRoles(parsed.data.page, parsed.data.pageSize, {
         actorId: session.userId,
-        actorPermissions: ['iam.role.read'],
+        actorPermissions: session.permissions,
         activeBranchId: session.activeBranchId,
       });
 
@@ -59,7 +59,7 @@ export async function POST(request: Request) {
 
     try {
       const { roleService } = await import('../../../../lib/runtime');
-      const role = await roleService.createRole(parsed.data, { actorId: session.userId, actorPermissions: ['iam.role.create'], activeBranchId: session.activeBranchId });
+      const role = await roleService.createRole(parsed.data, { actorId: session.userId, actorPermissions: session.permissions, activeBranchId: session.activeBranchId });
       const response = NextResponse.json({ data: { role } }, { status: 201 });
       applyObservabilityResponseHeaders(response.headers, request.headers, { route: '/api/v1/roles', method: request.method, status: 'success' });
       logger.info('api.roles.create.succeeded', { status: 'success', roleId: role.id });

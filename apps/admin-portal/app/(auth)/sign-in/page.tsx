@@ -230,7 +230,7 @@ export default function SignInPage() {
 
         <label className="group ml-1 flex w-fit cursor-pointer items-center gap-3 text-sm text-slate-600">
           <div className="relative flex h-5 w-5 items-center justify-center rounded border-2 border-neutral-300 transition-colors group-hover:border-accent-600">
-            <input type="checkbox" name="remember" className="peer absolute h-full w-full cursor-pointer opacity-0" />
+            <input type="checkbox" name="rememberMe" className="peer absolute h-full w-full cursor-pointer opacity-0" />
             <CheckCircle2 className="h-4 w-4 text-accent-600 opacity-0 transition-opacity peer-checked:opacity-100" />
           </div>
           <span className="font-medium transition-colors group-hover:text-slate-900">Keep me signed in</span>
@@ -289,6 +289,11 @@ export default function SignInPage() {
           <option value="manager.muscat@ims.com">Muscat Branch Manager (manager.muscat@ims.com)</option>
           <option value="counselor.riyadh@ims.com">Riyadh Counselor (counselor.riyadh@ims.com)</option>
         </select>
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-xs font-semibold text-slate-500">
+          <Link href="/activate-account" className="transition-colors hover:text-accent-700">Activate account</Link>
+          <Link href="/mandatory-password-change" className="transition-colors hover:text-accent-700">Mandatory password change</Link>
+          <Link href="/forgot-password" className="transition-colors hover:text-accent-700">Forgot password</Link>
+        </div>
       </div>
     </PortalAuthLayout>
   );

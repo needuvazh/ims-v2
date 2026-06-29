@@ -55,6 +55,7 @@ export class NotificationService {
     if (notif.type === 'user.password_reset_admin' || notif.type === 'user.password_reset_requested') {
       await this.notificationPort.sendPasswordResetEmail(notif.recipientEmail, {
         firstName: notif.recipientEmail.split('@')[0],
+        resetLink: notif.metadata?.resetLink || `${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password?token=${notif.metadata?.resetToken || ''}`,
         expiresAt: new Date(Date.now() + 15 * 60 * 1000),
       });
       return;

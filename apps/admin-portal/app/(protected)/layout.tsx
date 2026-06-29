@@ -22,7 +22,7 @@ export default async function ProtectedLayout({ children }: { children: ReactNod
     if (item.href === '/organization') {
       return { ...item, icon: <Building2 className="h-4.5 w-4.5" /> };
     }
-    if (item.href === '/identity') {
+    if (item.href === '/iam') {
       return { ...item, icon: <ShieldCheck className="h-4.5 w-4.5" /> };
     }
     return item;

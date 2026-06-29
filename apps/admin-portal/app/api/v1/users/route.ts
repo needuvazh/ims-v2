@@ -103,7 +103,7 @@ export async function GET(request: Request) {
         parsed.data.pageSize,
         {
           actorId: session.userId,
-          actorPermissions: ['iam.user.read'],
+          actorPermissions: session.permissions,
           activeBranchId: session.activeBranchId,
         },
       );
@@ -173,7 +173,7 @@ export async function POST(request: Request) {
       const { userService } = await import('../../../lib/runtime');
       const user = await userService.createUser(parsed.data, {
         actorId: session.userId,
-        actorPermissions: ['iam.user.create'],
+        actorPermissions: session.permissions,
         activeBranchId: session.activeBranchId,
       });
 

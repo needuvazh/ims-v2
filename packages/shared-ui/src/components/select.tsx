@@ -102,8 +102,8 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
                 aria-invalid={hasError}
                 aria-describedby={hasError ? errorId : helperText ? helperId : undefined}
                 className={cn(
-                  'flex h-11 w-full items-center justify-between rounded-md border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] px-4 text-sm text-[color:var(--ims-ink)] shadow-sm outline-none transition-all focus:border-[color:var(--ims-brass)] focus:ring-2 focus:ring-[color:var(--ims-brass-soft)] disabled:cursor-not-allowed disabled:opacity-50 text-left',
-                  hasError && 'border-[color:var(--ims-error)] focus:ring-[color:var(--ims-error)]/20',
+                  'flex h-11 w-full items-center justify-between rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] px-4 text-sm text-[color:var(--ims-ink)] shadow-[0_8px_24px_rgba(16,36,58,0.04)] outline-none transition-all focus:border-[color:var(--ims-brass)] focus:ring-2 focus:ring-[color:var(--ims-brass-soft)] disabled:cursor-not-allowed disabled:opacity-50 text-left',
+                  hasError && 'border-[color:var(--ims-error)] focus:ring-[rgba(185,28,28,0.2)]',
                   !selectedOption && 'text-[color:var(--ims-muted)]',
                   className,
                 )}
@@ -122,7 +122,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
               <Popover.Content
                 align="start"
                 sideOffset={4}
-                className="z-50 w-[var(--radix-popover-trigger-width)] rounded-xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-1 shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
+                className="z-50 w-[var(--radix-popover-trigger-width)] rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-1 shadow-[0_18px_40px_rgba(16,36,58,0.12)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
                 style={{ width: 'var(--radix-popover-trigger-width)' }}
               >
                 <div className="flex items-center border-b border-[color:var(--ims-border)] px-3 pb-2 pt-2 mb-1">

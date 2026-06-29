@@ -100,7 +100,7 @@ function BrandLogo({ appName, collapsed }: { appName: string; collapsed?: boolea
     <div className={cn('flex items-center gap-3', collapsed && 'justify-center')}>
       <div
         className={cn(
-          'relative shrink-0 overflow-hidden rounded-2xl border border-[color:var(--ims-border)] bg-white',
+          'relative shrink-0 overflow-hidden rounded-[20px] border border-[color:var(--ims-sidebar-border)] bg-[linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))]',
           collapsed ? 'h-11 w-11' : 'h-11 w-40',
         )}
       >
@@ -115,8 +115,8 @@ function BrandLogo({ appName, collapsed }: { appName: string; collapsed?: boolea
       </div>
       {!collapsed ? (
         <div className="min-w-0">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[color:var(--ims-muted)]">Admin</p>
-          <p className="truncate text-sm font-semibold text-[color:var(--ims-ink)]">{appName}</p>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[color:var(--ims-sidebar-muted)]">Admin</p>
+          <p className="truncate text-sm font-semibold text-[color:var(--ims-sidebar-ink)]">{appName}</p>
         </div>
       ) : null}
     </div>
@@ -134,7 +134,7 @@ export function SidebarCollapseButton({
     <button
       type="button"
       onClick={onToggle}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] text-[color:var(--ims-muted)] transition-all duration-200 hover:bg-[color:var(--ims-accent-soft)] hover:text-[color:var(--ims-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[color:var(--ims-sidebar-border)] bg-white/5 text-[color:var(--ims-sidebar-muted)] transition-all duration-200 hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--ims-sidebar)]"
       aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
     >
       {collapsed ? <PanelLeftOpen className="h-4 w-4" /> : <PanelLeftClose className="h-4 w-4" />}
@@ -168,13 +168,13 @@ export function SidebarItem({
   const labelId = `sidebar-item-${normalizePath(item.href).replace(/\//g, '-')}`;
 
   const base = cn(
-    'group relative flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-200 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2',
+    'group relative flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-200 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--ims-sidebar)]',
     depth > 0 && 'rounded-xl px-3 py-2 text-sm',
     isActive
       ? depth > 0
-        ? 'bg-[color:var(--ims-ink)] text-[color:var(--ims-paper)] shadow-[0_8px_18px_rgba(20,33,61,0.16)] ring-1 ring-[color:var(--ims-brass)]/20'
-        : 'bg-[color:var(--ims-ink)] text-[color:var(--ims-paper)] shadow-[0_10px_24px_rgba(20,33,61,0.18)] ring-1 ring-[color:var(--ims-brass)]/20'
-      : 'text-[color:var(--ims-muted)] hover:bg-[color:var(--ims-accent-soft)] hover:text-[color:var(--ims-ink)]',
+        ? 'bg-[linear-gradient(135deg,rgba(255,157,108,0.16),rgba(255,255,255,0.08))] text-white shadow-[0_8px_18px_rgba(0,0,0,0.18)] ring-1 ring-white/10'
+        : 'bg-[linear-gradient(135deg,rgba(255,157,108,0.18),rgba(255,255,255,0.08))] text-white shadow-[0_10px_24px_rgba(0,0,0,0.18)] ring-1 ring-white/10'
+      : 'text-[color:var(--ims-sidebar-muted)] hover:bg-white/[0.08] hover:text-white',
     collapsed && 'justify-center px-2',
     depth > 0 && 'ml-1',
   );
@@ -194,13 +194,13 @@ export function SidebarItem({
       aria-expanded={expanded}
       aria-controls={labelId}
     >
-      <span
-        aria-hidden="true"
-        className={cn(
-          'absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full transition-opacity',
-          isActive ? 'bg-[color:var(--ims-brass)] opacity-100' : 'bg-transparent opacity-0 group-hover:opacity-40',
-        )}
-      />
+        <span
+          aria-hidden="true"
+          className={cn(
+            'absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full transition-opacity',
+            isActive ? 'bg-[color:var(--ims-brass)] opacity-100' : 'bg-transparent opacity-0 group-hover:opacity-50',
+          )}
+        />
       {item.icon ? (
         <span aria-hidden="true" className={cn('shrink-0', isActive ? 'text-inherit' : 'text-[color:var(--ims-muted)]')}>
           {item.icon}
@@ -219,13 +219,13 @@ export function SidebarItem({
       aria-current={isActive ? 'page' : undefined}
       title={collapsed ? item.label : undefined}
     >
-      <span
-        aria-hidden="true"
-        className={cn(
-          'absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full transition-opacity',
-          isActive ? 'bg-[color:var(--ims-brass)] opacity-100' : 'bg-transparent opacity-0 group-hover:opacity-40',
-        )}
-      />
+        <span
+          aria-hidden="true"
+          className={cn(
+            'absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full transition-opacity',
+            isActive ? 'bg-[color:var(--ims-brass)] opacity-100' : 'bg-transparent opacity-0 group-hover:opacity-50',
+          )}
+        />
       {item.icon ? (
         <span aria-hidden="true" className={cn('shrink-0', isActive ? 'text-inherit' : 'text-[color:var(--ims-muted)]')}>
           {item.icon}
@@ -270,10 +270,10 @@ export function SidebarGroup({
   return (
     <section className="space-y-2">
       {!collapsed ? (
-        <p className="px-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-[color:var(--ims-muted)]">{section.label}</p>
-      ) : (
-        <div className="mx-3 border-t border-[color:var(--ims-border)]" aria-hidden="true" />
-      )}
+          <p className="px-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-[color:var(--ims-sidebar-muted)]">{section.label}</p>
+        ) : (
+          <div className="mx-3 border-t border-[color:var(--ims-sidebar-border)]" aria-hidden="true" />
+        )}
 
       <ul className="space-y-1">
         {section.items.map((item) => {
@@ -295,7 +295,7 @@ export function SidebarGroup({
               />
 
               {hasChildren && !collapsed && expanded ? (
-                <ul id={`sidebar-item-${normalizePath(item.href).replace(/\//g, '-')}`} className="space-y-1 border-l border-[color:var(--ims-border)] pl-3 pt-1.5">
+                <ul id={`sidebar-item-${normalizePath(item.href).replace(/\//g, '-')}`} className="space-y-1 border-l border-[color:var(--ims-sidebar-border)] pl-3 pt-1.5">
                   {item.items!.map((child) => (
                     <li key={child.href}>
                       <SidebarItem item={child} pathname={pathname} depth={1} onNavigate={onNavigate} />
@@ -321,15 +321,15 @@ export function SidebarUserProfile({
   userAvatar?: ReactNode;
 }) {
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-background)] p-3">
+    <div className="flex items-center gap-3 rounded-2xl border border-[color:var(--ims-sidebar-border)] bg-white/5 p-3">
       {userAvatar || (
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(135deg,var(--ims-ink),var(--ims-brass))] text-sm font-bold text-white">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(135deg,var(--ims-brass),#ffb48b)] text-sm font-bold text-white shadow-sm">
           {userName?.[0]?.toUpperCase() ?? 'A'}
         </div>
       )}
       <div className="min-w-0">
-        <p className="truncate text-sm font-semibold text-[color:var(--ims-ink)]">{userName ?? 'Administrator'}</p>
-        <p className="truncate text-xs text-[color:var(--ims-muted)]">{branchName ?? 'HQ Branch'}</p>
+        <p className="truncate text-sm font-semibold text-[color:var(--ims-sidebar-ink)]">{userName ?? 'Administrator'}</p>
+        <p className="truncate text-xs text-[color:var(--ims-sidebar-muted)]">{branchName ?? 'HQ Branch'}</p>
       </div>
     </div>
   );
@@ -347,8 +347,8 @@ export function SidebarFooter({
   children?: ReactNode;
 }) {
   return (
-    <div className="border-t border-[color:var(--ims-border)] p-4">
-      <div className="space-y-3 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-background)] p-3">
+    <div className="border-t border-[color:var(--ims-sidebar-border)] p-4">
+      <div className="space-y-3 rounded-2xl border border-[color:var(--ims-sidebar-border)] bg-white/5 p-3">
         <SidebarUserProfile userName={userName} branchName={branchName} userAvatar={userAvatar} />
         {children ? <div className="space-y-3">{children}</div> : null}
       </div>
@@ -383,11 +383,11 @@ export function AdminSidebar({
   return (
     <aside
       className={cn(
-        'fixed inset-y-0 left-0 z-30 hidden h-screen flex-col border-r border-[color:var(--ims-border)] bg-[color:var(--ims-surface)]/96 shadow-[0_12px_40px_rgba(20,33,61,0.06)] backdrop-blur-xl transition-[width] duration-300 lg:flex',
+        'fixed inset-y-0 left-0 z-30 hidden h-screen flex-col border-r border-[color:var(--ims-sidebar-border)] bg-[linear-gradient(180deg,#10243a_0%,#0b1f2f_100%)] shadow-[0_20px_55px_rgba(7,24,36,0.30)] backdrop-blur-xl transition-[width] duration-300 lg:flex',
         collapsed ? 'w-20' : 'w-72',
       )}
     >
-      <div className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-[color:var(--ims-border)] px-4">
+      <div className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-[color:var(--ims-sidebar-border)] px-4">
         <div className={cn('min-w-0', collapsed && 'mx-auto')}>
           <BrandLogo appName={appName} collapsed={collapsed} />
         </div>
@@ -437,12 +437,12 @@ export function MobileSidebar({
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
       <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay className="fixed inset-0 z-40 bg-[color:var(--ims-ink)]/40 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 lg:hidden" />
-        <DialogPrimitive.Content aria-label="Primary navigation" className="fixed inset-y-0 left-0 z-50 flex h-full w-[18rem] flex-col border-r border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] shadow-[0_24px_80px_rgba(20,33,61,0.18)] outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-left-4 data-[state=open]:slide-in-from-left-4 lg:hidden">
-          <div className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-[color:var(--ims-border)] px-4">
+        <DialogPrimitive.Overlay className="fixed inset-0 z-40 bg-[rgba(7,24,36,0.55)] backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 lg:hidden" />
+        <DialogPrimitive.Content aria-label="Primary navigation" className="fixed inset-y-0 left-0 z-50 flex h-full w-[18rem] flex-col border-r border-[color:var(--ims-sidebar-border)] bg-[linear-gradient(180deg,#10243a_0%,#0b1f2f_100%)] shadow-[0_24px_80px_rgba(7,24,36,0.32)] outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-left-4 data-[state=open]:slide-in-from-left-4 lg:hidden">
+          <div className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-[color:var(--ims-sidebar-border)] px-4">
             <BrandLogo appName={appName} />
             <DialogPrimitive.Close
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl text-[color:var(--ims-muted)] transition-all hover:bg-[color:var(--ims-accent-soft)] hover:text-[color:var(--ims-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl text-[color:var(--ims-sidebar-muted)] transition-all hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--ims-sidebar)]"
               aria-label="Close sidebar"
             >
               <X className="h-4 w-4" />
@@ -490,7 +490,7 @@ export function AppShell({
   const activeParentLabel = activeTrail.length > 1 ? activeTrail[0]?.label : undefined;
 
   return (
-    <div className={cn('min-h-screen bg-[color:var(--ims-background)] text-[color:var(--ims-ink)]', className)}>
+    <div className={cn('min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(227,101,38,0.08),transparent_24%),linear-gradient(180deg,var(--ims-background)_0%,#f8f4ee_100%)] text-[color:var(--ims-ink)]', className)}>
       <AdminSidebar
         key={`desktop-${pathname}`}
         appName={appName}
@@ -512,12 +512,12 @@ export function AppShell({
       />
 
       <div className={cn('flex min-h-screen flex-col transition-[padding] duration-300 lg:pl-72', sidebarCollapsed && 'lg:pl-20')}>
-        <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center justify-between border-b border-[color:var(--ims-border)] bg-[color:var(--ims-surface)]/85 px-4 backdrop-blur-xl md:px-6 lg:px-8">
+        <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center justify-between border-b border-[color:var(--ims-border)] bg-[color:var(--ims-surface-strong)] px-4 shadow-[0_8px_30px_rgba(16,36,58,0.06)] backdrop-blur-xl md:px-6 lg:px-8">
           <div className="flex min-w-0 items-center gap-4">
             <button
               type="button"
               onClick={() => setMobileSidebarOpen(true)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl text-[color:var(--ims-muted)] transition-all hover:bg-[color:var(--ims-accent-soft)] hover:text-[color:var(--ims-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2 lg:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl text-[color:var(--ims-muted)] transition-all hover:bg-[color:var(--ims-accent-soft)] hover:text-[color:var(--ims-brass)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--ims-background)] lg:hidden"
               aria-label="Open sidebar"
             >
               <Menu className="h-5 w-5" />
@@ -539,10 +539,10 @@ export function AppShell({
             <button
               type="button"
               onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-              className="flex items-center gap-3 rounded-2xl border border-transparent px-3 py-1.5 transition-all duration-200 hover:border-[color:var(--ims-border)] hover:bg-[color:var(--ims-surface)] hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2"
+              className="flex items-center gap-3 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] px-3 py-1.5 shadow-sm transition-all duration-200 hover:border-[color:var(--ims-brass)] hover:shadow-[0_10px_24px_rgba(16,36,58,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--ims-background)]"
             >
               {userAvatar || (
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(135deg,var(--ims-ink),var(--ims-brass))] text-sm font-bold text-white shadow-sm">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(135deg,var(--ims-ink),#16314c)] text-sm font-bold text-white shadow-sm">
                   {userName?.[0]?.toUpperCase() ?? 'A'}
                 </div>
               )}
@@ -563,10 +563,10 @@ export function AppShell({
                   aria-label="Close profile menu"
                   onClick={() => setProfileMenuOpen(false)}
                 />
-                <div className="absolute right-0 top-full z-50 mt-2 w-72 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-4 shadow-[0_20px_40px_rgba(20,33,61,0.12)]">
+                <div className="absolute right-0 top-full z-50 mt-2 w-72 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-4 shadow-[0_20px_40px_rgba(16,36,58,0.12)]">
                   <div className="mb-4 flex items-center gap-3 border-b border-[color:var(--ims-border)] pb-4 xl:hidden">
                     {userAvatar || (
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(135deg,var(--ims-ink),var(--ims-brass))] text-sm font-bold text-white shadow-sm">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(135deg,var(--ims-ink),#16314c)] text-sm font-bold text-white shadow-sm">
                         {userName?.[0]?.toUpperCase() ?? 'A'}
                       </div>
                     )}

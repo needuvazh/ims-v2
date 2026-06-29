@@ -1,3 +1,4 @@
+import React from 'react';
 import type { HTMLAttributes, ReactNode } from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
@@ -41,12 +42,12 @@ export function PageHeader({
         )}
         <div className="flex items-center gap-4 animate-fade-in-up">
           {backUrl && (
-            <Link href={backUrl} aria-label="Go back">
-              <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full border border-[color:var(--ims-border)]">
+          <Link href={backUrl} aria-label="Go back">
+              <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)]">
                 <ArrowLeft className="h-4 w-4" />
               </Button>
-            </Link>
-          )}
+          </Link>
+        )}
           <h1 className="font-[family-name:var(--font-display,serif)] text-3xl tracking-tight text-[color:var(--ims-ink)] sm:text-4xl">
             {title}
           </h1>

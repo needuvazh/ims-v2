@@ -80,17 +80,20 @@ export class RefreshTokenService {
   }
 }
 
-let developmentKeyPair: { publicKey: string; privateKey: string } | null = null;
+declare global {
+  // eslint-disable-next-line no-var
+  var __imsJwtDevelopmentKeyPair: { publicKey: string; privateKey: string } | undefined;
+}
 
 /**
  * Shared dev/test RSA key pair fallback used when env-based JWT keys are absent.
  */
 export function getDevelopmentKeyPair(): { publicKey: string; privateKey: string } {
-  if (!developmentKeyPair) {
-    developmentKeyPair = generateRSAKeyPair();
+  if (!globalThis.__imsJwtDevelopmentKeyPair) {
+    globalThis.__imsJwtDevelopmentKeyPair = generateRSAKeyPair();
   }
 
-  return developmentKeyPair;
+  return globalThis.__imsJwtDevelopmentKeyPair;
 }
 
 /**

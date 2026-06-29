@@ -19,7 +19,7 @@ import {
 import { loadIdentityData } from '../shared-data';
 import { updateRoleStatusAction } from '../actions';
 
-export const metadata = { title: 'Roles - Identity | IMS Admin' };
+export const metadata = { title: 'IAM Roles | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
 export default async function IdentityRolesPage(props: {
@@ -64,10 +64,10 @@ export default async function IdentityRolesPage(props: {
     <div className="space-y-8">
       <PageHeader
         eyebrow="Access Control"
-        title="Roles & Permissions"
-        description="Manage system roles."
+        title="IAM Roles"
+        description="Manage system roles and permissions."
         actions={
-          <Link href="/identity/roles/create">
+          <Link href="/iam/roles/create">
             <Button size="sm">
               <ShieldPlus className="h-4 w-4 mr-2" /> Add Role
             </Button>
@@ -77,7 +77,7 @@ export default async function IdentityRolesPage(props: {
           <Breadcrumbs
             items={[
               { label: 'Dashboard', href: '/dashboard' },
-              { label: 'Identity', href: '/identity' },
+              { label: 'IAM', href: '/iam' },
               { label: 'Roles' },
             ]}
           />
@@ -92,9 +92,7 @@ export default async function IdentityRolesPage(props: {
               key: 'status',
               label: 'Status',
               options: [
-                { value: 'Draft', label: 'Draft' },
                 { value: 'Active', label: 'Active' },
-                { value: 'Inactive', label: 'Inactive' },
                 { value: 'Archived', label: 'Archived' },
               ]
             }
@@ -141,7 +139,7 @@ export default async function IdentityRolesPage(props: {
                     <TableCell className="text-right">
                       <div className="flex items-center justify-end gap-2">
                         <SimpleTooltip content="Manage Permissions" side="top">
-                          <Link href={`/identity/roles/${role.id}/permissions`}>
+                           <Link href={`/iam/roles/${role.id}/permissions`}>
                             <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
                               <ShieldIcon className="h-4 w-4" />
                             </Button>
@@ -149,7 +147,7 @@ export default async function IdentityRolesPage(props: {
                         </SimpleTooltip>
 
                         <SimpleTooltip content="View Details" side="top">
-                          <Link href={`/identity/roles/${role.id}`}>
+                          <Link href={`/iam/roles/${role.id}`}>
                             <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
                               <Eye className="h-4 w-4" />
                             </Button>
@@ -157,7 +155,7 @@ export default async function IdentityRolesPage(props: {
                         </SimpleTooltip>
 
                         <SimpleTooltip content="Edit Role" side="top">
-                          <Link href={`/identity/roles/${role.id}/edit`}>
+                          <Link href={`/iam/roles/${role.id}/edit`}>
                             <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
                               <Pencil className="h-4 w-4" />
                             </Button>
@@ -166,10 +164,10 @@ export default async function IdentityRolesPage(props: {
 
                         <form action={async () => {
                           'use server';
-                          await updateRoleStatusAction(role.id, role.status === 'Active' ? 'Inactive' : 'Active');
+                          await updateRoleStatusAction(role.id, role.status === 'Active' ? 'Archived' : 'Active');
                         }} noValidate>
                           {role.status === 'Active' ? (
-                            <SimpleTooltip content="Deactivate Role" side="top">
+                            <SimpleTooltip content="Archive Role" side="top">
                               <Button type="submit" variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-error)] hover:bg-[color:var(--ims-error)]/10">
                                 <Ban className="h-4 w-4" />
                               </Button>

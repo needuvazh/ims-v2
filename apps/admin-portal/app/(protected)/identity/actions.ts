@@ -14,11 +14,11 @@ async function getActorId(): Promise<Uuid> {
 }
 
 function isUserStatus(status: string): status is UserStatus {
-  return status === 'Draft' || status === 'Active' || status === 'Inactive' || status === 'Locked';
+  return status === 'PendingActivation' || status === 'Active' || status === 'Locked' || status === 'Suspended' || status === 'Archived';
 }
 
 function isRoleStatus(status: string): status is RoleStatus {
-  return status === 'Draft' || status === 'Active' || status === 'Inactive' || status === 'Archived';
+  return status === 'Active' || status === 'Archived';
 }
 
 export type ActionResult<T = void> = {
@@ -37,18 +37,18 @@ export async function createUserAction(_prev: ActionResult, formData: FormData):
     const values = extractFormValues(formData);
 
     try {
-      await assertPermission('identity.write');
+      await assertPermission('iam.user.create');
       const actorId = await getActorId();
       const { userService } = await import('../../lib/runtime');
       const branchIds = formData.getAll('branchIds').map((value) => String(value)).filter((value) => value.trim() !== '');
-      const userStatusRaw = String(formData.get('status') ?? 'Active');
+      const userStatusRaw = String(formData.get('status') ?? 'PendingActivation');
       await userService.createUser({
         fullName: String(formData.get('fullName') ?? ''),
         email: String(formData.get('email') ?? ''),
         phone: formData.get('phone') as string | null,
         userType: String(formData.get('userType') ?? 'Admin') as UserType,
         password: String(formData.get('password') ?? ''),
-        status: isUserStatus(userStatusRaw) ? userStatusRaw : 'Active',
+        status: isUserStatus(userStatusRaw) ? userStatusRaw : 'PendingActivation',
         roleIds: [],
         branchIds,
         assignedOnly: formData.get('assignedOnly') === 'on',
@@ -60,7 +60,7 @@ export async function createUserAction(_prev: ActionResult, formData: FormData):
           : null,
       }, { actorId });
       logger.info('identity.user.create.succeeded', { status: 'success' });
-      revalidatePath('/identity');
+      revalidatePath('/iam');
       return { success: true };
     } catch (err) {
       logger.warn('identity.user.create.failed', {
@@ -78,7 +78,7 @@ export async function createUserAction(_prev: ActionResult, formData: FormData):
         }),
       };
     }
-  }, { action: 'identity.createUser', route: '/identity' });
+  }, { action: 'iam.createUser', route: '/iam' });
 }
 export async function updateUserAction(userId: string, _prev: ActionResult, formData: FormData): Promise<ActionResult> {
   return withServerActionObservability(async () => {
@@ -86,7 +86,7 @@ export async function updateUserAction(userId: string, _prev: ActionResult, form
     const values = extractFormValues(formData);
 
     try {
-      await assertPermission('identity.write');
+      await assertPermission('iam.user.update');
       const actorId = await getActorId();
       const { userService } = await import('../../lib/runtime');
       const branchIds = formData.getAll('branchIds').map((value) => String(value)).filter((value) => value.trim() !== '');
@@ -106,7 +106,7 @@ export async function updateUserAction(userId: string, _prev: ActionResult, form
           : null,
       }, { actorId });
       logger.info('identity.user.update.succeeded', { status: 'success', entityId: userId });
-      revalidatePath('/identity');
+      revalidatePath('/iam');
       return { success: true };
     } catch (err) {
       logger.warn('identity.user.update.failed', {
@@ -116,15 +116,15 @@ export async function updateUserAction(userId: string, _prev: ActionResult, form
       });
       return { success: false, ...buildIdentityActionFailure(err, 'Failed to update user.', values) };
     }
-  }, { action: 'identity.updateUser', route: '/identity' });
+  }, { action: 'iam.updateUser', route: '/iam' });
 }
 
-export async function updateUserStatusAction(userId: string, status: string, formData?: FormData): Promise<ActionResult> {
+export async function updateUserStatusAction(userId: string, status: string): Promise<ActionResult> {
   return withServerActionObservability(async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
     try {
-      await assertPermission('identity.write');
+      await assertPermission('iam.user.update');
       const actorId = await getActorId();
       const { userService } = await import('../../lib/runtime');
       if (!isUserStatus(status)) {
@@ -132,7 +132,7 @@ export async function updateUserStatusAction(userId: string, status: string, for
       }
       await userService.updateUser(userId, { status }, { actorId });
       logger.info('identity.user.status.updated', { status: 'success', entityId: userId });
-      revalidatePath('/identity');
+      revalidatePath('/iam');
       return { success: true };
     } catch (err) {
       if (err instanceof DomainError) {
@@ -142,7 +142,7 @@ export async function updateUserStatusAction(userId: string, status: string, for
       logger.error('identity.user.status.update.failed', { status: 'failed', message: 'Failed to update user.', error: err as Error });
       return { success: false, error: 'Failed to update user.' };
     }
-  }, { action: 'identity.updateUserStatus', route: '/identity' });
+  }, { action: 'iam.updateUserStatus', route: '/iam' });
 }
 
 export async function assignRoleToUserAction(userId: string, roleId: string): Promise<ActionResult> {
@@ -150,12 +150,12 @@ export async function assignRoleToUserAction(userId: string, roleId: string): Pr
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
     try {
-      await assertPermission('identity.write');
+      await assertPermission('iam.user.assign-role');
       const actorId = await getActorId();
       const { userService } = await import('../../lib/runtime');
       await userService.assignRole(userId, roleId, { actorId });
       logger.info('identity.user.role.assigned', { status: 'success', entityId: userId, code: roleId });
-      revalidatePath('/identity');
+      revalidatePath('/iam');
       return { success: true };
     } catch (err) {
       if (err instanceof DomainError) {
@@ -165,7 +165,7 @@ export async function assignRoleToUserAction(userId: string, roleId: string): Pr
       logger.error('identity.user.role.assign.failed', { status: 'failed', message: 'Failed to assign role.', error: err as Error });
       return { success: false, error: 'Failed to assign role.' };
     }
-  }, { action: 'identity.assignRoleToUser', route: '/identity' });
+  }, { action: 'iam.assignRoleToUser', route: '/iam' });
 }
 
 export async function toggleUserRoleAction(userId: string, roleId: string, assign: boolean): Promise<ActionResult> {
@@ -173,7 +173,7 @@ export async function toggleUserRoleAction(userId: string, roleId: string, assig
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
     try {
-      await assertPermission('identity.write');
+      await assertPermission('iam.user.assign-role');
       const actorId = await getActorId();
       const { userService } = await import('../../lib/runtime');
       if (assign) {
@@ -182,7 +182,7 @@ export async function toggleUserRoleAction(userId: string, roleId: string, assig
         await userService.removeRole(userId, roleId, { actorId });
       }
       logger.info('identity.user.role.toggled', { status: 'success', entityId: userId, code: roleId });
-      revalidatePath('/identity');
+      revalidatePath('/iam');
       return { success: true };
     } catch (err) {
       if (err instanceof DomainError) {
@@ -192,12 +192,12 @@ export async function toggleUserRoleAction(userId: string, roleId: string, assig
       logger.error('identity.user.role.toggle.failed', { status: 'failed', message: 'Failed to toggle role.', error: err as Error });
       return { success: false, error: 'Failed to toggle role.' };
     }
-  }, { action: 'identity.toggleUserRole', route: '/identity' });
+  }, { action: 'iam.toggleUserRole', route: '/iam' });
 }
 
 export async function getUserRolesAction(userId: string): Promise<ActionResult<{ id: string; roleCode: string; roleName: string }[]>> {
   try {
-    await assertPermission('identity.read');
+    await assertPermission('iam.user.read');
     const { userService } = await import('../../lib/runtime');
     const roles = await userService.listRolesForUser(userId);
     return { success: true, data: roles };
@@ -214,7 +214,7 @@ export async function createRoleAction(_prev: ActionResult, formData: FormData):
     const values = extractFormValues(formData);
 
     try {
-      await assertPermission('identity.role.manage');
+      await assertPermission('iam.role.create');
       const actorId = await getActorId();
       const { roleService } = await import('../../lib/runtime');
       const roleStatusRaw = String(formData.get('status') ?? 'Active');
@@ -232,7 +232,7 @@ export async function createRoleAction(_prev: ActionResult, formData: FormData):
           : null,
       }, { actorId });
       logger.info('identity.role.create.succeeded', { status: 'success' });
-      revalidatePath('/identity');
+      revalidatePath('/iam');
       return { success: true };
     } catch (err) {
       logger.warn('identity.role.create.failed', {
@@ -249,7 +249,7 @@ export async function createRoleAction(_prev: ActionResult, formData: FormData):
         }),
       };
     }
-  }, { action: 'identity.createRole', route: '/identity' });
+  }, { action: 'iam.createRole', route: '/iam' });
 }
 
 export async function updateRoleAction(roleId: string, _prev: ActionResult, formData: FormData): Promise<ActionResult> {
@@ -258,7 +258,7 @@ export async function updateRoleAction(roleId: string, _prev: ActionResult, form
     const values = extractFormValues(formData);
 
     try {
-      await assertPermission('identity.role.manage');
+      await assertPermission('iam.role.update');
       const actorId = await getActorId();
       const { roleService } = await import('../../lib/runtime');
       const roleStatusRaw = String(formData.get('status') ?? 'Active');
@@ -274,7 +274,7 @@ export async function updateRoleAction(roleId: string, _prev: ActionResult, form
           : null,
       }, { actorId });
       logger.info('identity.role.update.succeeded', { status: 'success', entityId: roleId });
-      revalidatePath('/identity');
+      revalidatePath('/iam');
       return { success: true };
     } catch (err) {
       logger.warn('identity.role.update.failed', {
@@ -284,15 +284,15 @@ export async function updateRoleAction(roleId: string, _prev: ActionResult, form
       });
       return { success: false, ...buildIdentityActionFailure(err, 'Failed to update role.', values) };
     }
-  }, { action: 'identity.updateRole', route: '/identity' });
+  }, { action: 'iam.updateRole', route: '/iam' });
 }
 
-export async function updateRoleStatusAction(roleId: string, status: string, formData?: FormData): Promise<ActionResult> {
+export async function updateRoleStatusAction(roleId: string, status: string): Promise<ActionResult> {
   return withServerActionObservability(async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
     try {
-      await assertPermission('identity.role.manage');
+      await assertPermission('iam.role.update');
       const actorId = await getActorId();
       const { roleService } = await import('../../lib/runtime');
       if (!isRoleStatus(status)) {
@@ -300,7 +300,7 @@ export async function updateRoleStatusAction(roleId: string, status: string, for
       }
       await roleService.updateRole(roleId, { status }, { actorId });
       logger.info('identity.role.status.updated', { status: 'success', entityId: roleId });
-      revalidatePath('/identity');
+      revalidatePath('/iam');
       return { success: true };
     } catch (err) {
       if (err instanceof DomainError) {
@@ -310,7 +310,7 @@ export async function updateRoleStatusAction(roleId: string, status: string, for
       logger.error('identity.role.status.update.failed', { status: 'failed', message: 'Failed to update role.', error: err as Error });
       return { success: false, error: 'Failed to update role.' };
     }
-  }, { action: 'identity.updateRoleStatus', route: '/identity' });
+  }, { action: 'iam.updateRoleStatus', route: '/iam' });
 }
 
 export async function toggleRolePermissionAction(roleId: string, permissionId: string, assign: boolean): Promise<ActionResult> {
@@ -318,7 +318,7 @@ export async function toggleRolePermissionAction(roleId: string, permissionId: s
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
     try {
-      await assertPermission('identity.role.manage');
+      await assertPermission('iam.role.permission.assign');
       const actorId = await getActorId();
       const { roleService } = await import('../../lib/runtime');
       if (assign) {
@@ -327,7 +327,7 @@ export async function toggleRolePermissionAction(roleId: string, permissionId: s
         await roleService.removePermission(roleId, permissionId, { actorId });
       }
       logger.info('identity.role.permission.toggled', { status: 'success', entityId: roleId, code: permissionId });
-      revalidatePath('/identity');
+      revalidatePath('/iam');
       return { success: true };
     } catch (err) {
       if (err instanceof DomainError) {
@@ -337,5 +337,5 @@ export async function toggleRolePermissionAction(roleId: string, permissionId: s
       logger.error('identity.role.permission.toggle.failed', { status: 'failed', message: 'Failed to toggle permission.', error: err as Error });
       return { success: false, error: 'Failed to toggle permission.' };
     }
-  }, { action: 'identity.toggleRolePermission', route: '/identity' });
+  }, { action: 'iam.toggleRolePermission', route: '/iam' });
 }

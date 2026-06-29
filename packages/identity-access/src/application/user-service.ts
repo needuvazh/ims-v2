@@ -675,10 +675,13 @@ export class UserService {
     const user = await this.userRepository.findById(userId as Uuid);
     if (!user) throw createIamError('IAM-SYS-001');
     const person = await this.userRepository.findPersonById(user.personId);
+    const branches = await this.userBranchAccessRepository.findByUser(userId as Uuid);
     return {
       ...user,
+      ...person,
       fullName: person ? `${person.firstName} ${person.lastName}`.trim() : user.username,
       phone: person ? person.mobile : null,
+      branchIds: branches.filter(b => b.status === 'Active').map(b => b.branchId),
     };
   }
 

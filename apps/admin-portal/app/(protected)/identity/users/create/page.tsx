@@ -12,13 +12,13 @@ export default async function CreateUserPage() {
       <PageHeader
         title="Create User"
         description="Add a new user to the system."
-        backUrl="/identity/users"
+        backUrl="/iam/users"
         breadcrumbs={
           <Breadcrumbs
             items={[
               { label: 'Dashboard', href: '/dashboard' },
-              { label: 'Identity', href: '/identity' },
-              { label: 'Users', href: '/identity/users' },
+              { label: 'IAM', href: '/iam' },
+              { label: 'Users', href: '/iam/users' },
               { label: 'Create' },
             ]}
           />

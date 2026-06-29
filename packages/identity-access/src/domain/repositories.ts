@@ -33,6 +33,7 @@ export interface IRoleRepository {
   assignRoleToUser(userId: Uuid, roleId: Uuid, actorId: Uuid): Promise<void>;
   revokeRoleFromUser(userId: Uuid, roleId: Uuid, actorId: Uuid, reason: string | null): Promise<void>;
   listRolesForUser(userId: Uuid): Promise<{ role: Role; status: string; revokedAt: Date | null; revokedBy: string | null; reason: string | null }[]>;
+  listUsersForRole(roleId: Uuid): Promise<{ userId: Uuid; username: string; status: string; fullName: string | null }[]>;
   
   assignPermissionToRole(roleId: Uuid, permissionId: Uuid, actorId: Uuid): Promise<void>;
   removePermissionFromRole(roleId: Uuid, permissionId: Uuid): Promise<void>;

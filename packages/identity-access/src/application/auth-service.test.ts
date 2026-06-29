@@ -97,7 +97,7 @@ describe('AuthService', () => {
   let outboxRepo: { publish: (event: { eventType: string }) => Promise<void> };
   let notificationPort: {
     sendActivationEmail: (recipientEmail: string, activationData: { firstName: string; activationLink: string; expiresAt: Date }) => Promise<void>;
-    sendPasswordResetEmail: (recipientEmail: string, resetData: { firstName: string; expiresAt: Date }) => Promise<void>;
+    sendPasswordResetEmail: (recipientEmail: string, resetData: { firstName: string; resetLink: string; expiresAt: Date }) => Promise<void>;
     sendAccountLockedNotification: (adminEmails: string[], userData: { displayName: string; failedAttempts: number; lockedUntil: Date }) => Promise<void>;
     sendRoleAssignedNotification: (recipientEmail: string, roleData: { roleName: string }) => Promise<void>;
     sendBranchAssignedNotification: (recipientEmail: string, branchData: { branchName: string }) => Promise<void>;

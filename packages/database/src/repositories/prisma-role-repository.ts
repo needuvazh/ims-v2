@@ -133,6 +133,29 @@ export class PrismaRoleRepository implements IRoleRepository {
     }));
   }
 
+  async listUsersForRole(roleId: Uuid): Promise<{ userId: Uuid; username: string; status: string; fullName: string | null }[]> {
+    const rows = await this.prisma.userRole.findMany({
+      where: { roleId, status: 'Active' },
+      include: {
+        user: {
+          include: {
+            person: true
+          }
+        }
+      }
+    });
+    
+    return rows.map((r) => {
+      const p = r.user.person;
+      return {
+        userId: r.userId as Uuid,
+        username: r.user.username,
+        status: r.user.status,
+        fullName: p ? `${p.firstName} ${p.lastName}`.trim() : null
+      };
+    });
+  }
+
   async assignPermissionToRole(roleId: Uuid, permissionId: Uuid, actorId: Uuid): Promise<void> {
     await this.prisma.rolePermission.upsert({
       where: { roleId_permissionId: { roleId, permissionId } },

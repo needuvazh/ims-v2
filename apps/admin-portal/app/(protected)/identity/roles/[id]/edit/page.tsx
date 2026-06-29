@@ -19,13 +19,13 @@ export default async function EditRolePage(props: { params: Promise<{ id: string
       <PageHeader
         title="Edit Role"
         description={`Update details for ${role.roleName}.`}
-        backUrl="/identity/roles"
+        backUrl="/iam/roles"
         breadcrumbs={
           <Breadcrumbs
             items={[
               { label: 'Dashboard', href: '/dashboard' },
-              { label: 'Identity', href: '/identity' },
-              { label: 'Roles', href: '/identity/roles' },
+              { label: 'IAM', href: '/iam' },
+              { label: 'Roles', href: '/iam/roles' },
               { label: 'Edit Role' },
             ]}
           />

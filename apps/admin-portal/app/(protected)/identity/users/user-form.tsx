@@ -46,7 +46,7 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
         ? await updateUserAction(initialData.id, prev, formData)
         : await createUserAction(prev, formData);
       if (result.success) {
-        router.push('/identity/users');
+        router.push('/iam/users');
       }
       return result;
     },
@@ -109,12 +109,13 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           name="status"
           label="Status"
           placeholder="Select status"
-          defaultValue={initialData?.status ?? 'Active'}
+          defaultValue={initialData?.status ?? 'PendingActivation'}
           options={[
-            { value: 'Draft', label: 'Draft' },
+            { value: 'PendingActivation', label: 'Pending Activation' },
             { value: 'Active', label: 'Active' },
-            { value: 'Inactive', label: 'Inactive' },
             { value: 'Locked', label: 'Locked' },
+            { value: 'Suspended', label: 'Suspended' },
+            { value: 'Archived', label: 'Archived' },
           ]}
           required
           disabled={isView}
@@ -228,7 +229,7 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
 
       {!isView && (
         <div className="flex justify-end gap-3 pt-4">
-          <Button type="button" variant="secondary" onClick={() => router.push('/identity/users')}>
+          <Button type="button" variant="secondary" onClick={() => router.push('/iam/users')}>
             Cancel
           </Button>
           <Button type="submit" loading={isPending} data-testid="user-submit-btn">

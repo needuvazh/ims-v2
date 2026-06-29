@@ -34,7 +34,7 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
         ? await updateRoleAction(initialData.id, prev, formData)
         : await createRoleAction(prev, formData);
       if (result.success) {
-        router.push('/identity/roles');
+        router.push('/iam/roles');
       }
       return result;
     },
@@ -94,9 +94,7 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
           placeholder="Select status"
           defaultValue={initialData?.status ?? 'Active'}
           options={[
-            { value: 'Draft', label: 'Draft' },
             { value: 'Active', label: 'Active' },
-            { value: 'Inactive', label: 'Inactive' },
             { value: 'Archived', label: 'Archived' },
           ]}
           required
@@ -124,7 +122,7 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
 
       {!isView && (
         <div className="flex justify-end gap-3 pt-4">
-          <Button type="button" variant="secondary" onClick={() => router.push('/identity/roles')}>
+          <Button type="button" variant="secondary" onClick={() => router.push('/iam/roles')}>
             Cancel
           </Button>
           <Button type="submit" loading={isPending} data-testid="role-submit-btn">

@@ -7,6 +7,7 @@ describe('navigation service', () => {
     const session = createDemoSession('44444444-4444-4444-4444-444444444444');
 
     expect(resolvePortalNavigation('admin', session).map((item) => item.href)).toContain('/organization');
+    expect(resolvePortalNavigation('admin', session).map((item) => item.href)).toContain('/iam');
     expect(resolvePortalShellUser(session).userName).toBe('IMS Admin');
   });
 });
