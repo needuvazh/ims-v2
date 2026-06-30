@@ -1,28 +1,27 @@
 ## Why
 
-Module 2.1 defines the Institute as the root of Organization Management: the legal identity, localization, fiscal defaults, contact details, and lifecycle that every downstream organization feature depends on. The FRD clarifies these requirements separately from branches, departments, and classrooms, so the institute flow needs to be captured and tracked as its own change.
+Module 02 – Organization Management establishes the core operational hierarchy for ASTI. Setting up the root legal identity (Institute) along with physical branches, operational departments, and classrooms creates the absolute foundation for security scope, enrollment bounds, data isolation, billing contexts, and course scheduling. Implementing these modules together ensures a cohesive domain boundary and complete operational setup.
 
 ## What Changes
 
-- Align the Institute aggregate with the FRD lifecycle: `Draft` -> `Configured` -> `Active` -> `Suspended` -> `Archived`.
-- Expose institute create, update, view, activate, suspend, and archive flows through the existing organization module boundaries.
-- Enforce FRD validation rules for institute code, legal name, country, timezone, currency, language, registration data, and contact data.
-- Record immutable audit history for every institute lifecycle transition and profile update.
-- Apply server-side authorization and branch-safe read behavior for institute actions and views.
-- Keep branch, department, and classroom work scoped to their own FRD parts; do not fold those lifecycles into this change.
+- **Institute (2.1):** Profile management, legal/registration information, localization configuration (timezone, currency, language), active dating boundaries (effective start/end dates), and audit logs.
+- **Branch (2.2):** Branch registration, structured local addresses (lat/long, map URL), multi-contact directories (types with primary flag), branch settings/policies, active manager assignment (verified active user with branch-scope checks), parent-child branch hierarchy (no loops), and status management using a dedicated `BranchStatus` lifecycle.
+- **Department (2.3):** Branch-scoped department registration, unique code per branch, department head assignment (verified active user with branch-scope validation), active dating bounds, and status lifecycle.
+- **Classroom (2.4):** Branch-scoped classroom registration, seating capacity controls (positive integer, constraint checks on update), text location descriptors, and status lifecycle.
+- **REST APIs & Route Handlers:** Delivery endpoints under `/api/organization` for all submodules to support integration-heavy actions (website leads, public listings, certificate validation) alongside Next.js Server Actions for Admin Portal forms.
+- **UI Screens:** Core screens under the Admin Portal (`/organization`) including lists, details, creation/edit forms, hierarchy tree visualizer, and dashboard widgets for all organization entities.
 
 ## Capabilities
 
 ### New Capabilities
-- `organization`: institute registration, profile management, lifecycle transitions, validation, permissions, and audit behavior.
+- `organization`: Complete organization management including Institute profile, Branch hierarchy, Department structures, Classroom management, dynamic active state checking, REST API route handlers, and audit logging.
 
 ### Modified Capabilities
 - None.
 
 ## Impact
 
-- Affects `packages/organization` domain and application logic.
-- Affects `apps/admin-portal/app/(protected)/organization` delivery handlers and screens.
-- May require audit and persistence updates if any institute fields or status rules are missing in the current implementation.
-- Affects authorization checks for institute read/write actions.
-- Requires targeted tests for validation, status transitions, audit logging, and permission gating.
+- **Packages:** `packages/organization` domain types, validation schemas, application service, and repository implementations.
+- **UI & Delivery:** `apps/admin-portal/app/(protected)/organization` pages, layout, form components, server actions, REST route handlers under `/api/organization`, client validations, and dashboard views.
+- **Database:** Prisma schema and postgres tables: `institutes`, `branches`, `branch_contacts`, `branch_addresses`, `branch_settings`, `branch_policies`, `departments`, `classrooms`, and `audit_logs`.
+- **Security:** Enforcement of role-based permissions (granular permissions: `branch.read`, `branch.create`, `department.create`, etc.) and branch-scoped data isolation guards.

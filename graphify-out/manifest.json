@@ -3675,23 +3675,23 @@
     "semantic_hash": ""
   },
   "openspec/changes/implement-organization-management/design.md": {
-    "mtime": 1782756201.9244885,
-    "ast_hash": "0f1817e7461541b1eaf5e123d72dde82",
+    "mtime": 1782830778.2551892,
+    "ast_hash": "69f8c58c00e1db85aca5947c1d37df5e",
     "semantic_hash": ""
   },
   "openspec/changes/implement-organization-management/proposal.md": {
-    "mtime": 1782756201.9251308,
-    "ast_hash": "37c282096ce1eef27017a04e8b806023",
+    "mtime": 1782830767.1820302,
+    "ast_hash": "9c2fa7373b713883e2b54f776f8c8b3a",
     "semantic_hash": ""
   },
   "openspec/changes/implement-organization-management/specs/organization/spec.md": {
-    "mtime": 1782756201.925835,
-    "ast_hash": "6ec2ef270e64435603fd0d8d85419917",
+    "mtime": 1782830772.1679099,
+    "ast_hash": "516a85bac57ff4e29f873d4b4c29cda0",
     "semantic_hash": ""
   },
   "openspec/changes/implement-organization-management/tasks.md": {
-    "mtime": 1782756201.9264796,
-    "ast_hash": "4bbbbf29f7be28637e9a8d8b9f3b6120",
+    "mtime": 1782830782.690326,
+    "ast_hash": "a7ca8512f3e9661248ef7505947dccac",
     "semantic_hash": ""
   },
   "packages/database/prisma/migrations/20260629035505_iam_module_01_schema/README.md": {

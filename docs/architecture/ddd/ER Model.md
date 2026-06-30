@@ -405,6 +405,8 @@ logoUrl
 defaultCurrency
 defaultLanguage
 timezone
+effectiveStartDate
+effectiveEndDate
 ```
 
 Relationship:
@@ -424,10 +426,10 @@ parentBranchId
 code
 name
 nameLocalized
-address
-phone
-email
 isHeadOffice
+branchManagerId
+effectiveStartDate
+effectiveEndDate
 status
 ```
 
@@ -451,6 +453,9 @@ code
 name
 nameLocalized
 description
+departmentHeadId
+effectiveStartDate
+effectiveEndDate
 status
 ```
 
@@ -471,6 +476,8 @@ code
 name
 capacity
 location
+effectiveStartDate
+effectiveEndDate
 status
 ```
 

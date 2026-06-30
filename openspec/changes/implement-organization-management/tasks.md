@@ -1,22 +1,40 @@
-## 1. Institute Domain and Validation
+## 1. Domain & Validation Alignments
 
-- [ ] 1.1 Align the institute aggregate, status model, and Zod schemas with FRD Module 2.1.
-- [ ] 1.2 Enforce mandatory institute fields, unique institute code, and validation for contact and localization data.
-- [ ] 1.3 Preserve archive-only retirement behavior and block physical deletion of institute records.
+- [ ] 1.1 Verify and align domain models, Zod validation schemas, and TypeScript interfaces for `Institute`, `Branch`, `BranchContact`, `BranchAddress`, `BranchSettings`, `BranchPolicy`, `Department`, and `Classroom` in `packages/organization/src/domain/organization.ts`. Include the dedicated `BranchStatus` enum.
+- [ ] 1.2 Implement manager validation: verify that assigned branch managers and department heads exist as active users in IAM and are explicitly assigned/scoped to the target branch.
+- [ ] 1.3 Implement validation rules for classroom capacity (>0), effective date ranges (start <= end), and classroom name uniqueness strictly scoped by `branchId`.
+- [ ] 1.4 Implement validation check when decreasing classroom capacity: verify if the new capacity falls below the active enrollment size of batches scheduled in that classroom, and trigger a warning/validation error.
+- [ ] 1.5 Add loop checking to parent-child branch hierarchy updates to prevent circular references.
+- [ ] 1.6 Decouple the `Course` model from local branch-scoped `Department` records, linking courses to a global category catalog to allow sharing across branches.
 
-## 2. Application and Delivery
+## 2. Application Logic & Cascades
 
-- [ ] 2.1 Implement or align institute create, update, activate, suspend, archive, and read flows in the organization service layer.
-- [ ] 2.2 Add or update server-side authorization checks for institute actions and read-only branch-manager visibility.
-- [ ] 2.3 Wire the admin portal institute pages and actions to the approved organization service contracts.
+- [ ] 2.1 Implement helper query APIs `isBranchActive`, `isClassroomActive`, and `isDepartmentActive` within `OrganizationService`. The classroom and department active states must dynamically verify that the parent branch is active.
+- [ ] 2.2 Implement status deactivation validation in the service layer: before suspending, closing, or archiving a branch, verify active dependencies (e.g. block branch closure if there are ongoing active batches or scheduled sessions at that branch).
+- [ ] 2.3 Ensure branch manager and department head assignment validation matches the `UserPresenceVerifier` contract.
+- [ ] 2.4 Verify that child entities do not have status fields written to recursively when a branch is suspended; instead, enforce dynamic runtime status evaluation.
 
-## 3. Audit and Persistence
+## 3. Database & Audit Logs
 
-- [ ] 3.1 Record immutable audit entries for institute creation, updates, activation, suspension, and archive events.
-- [ ] 3.2 Update persistence mappings or migrations only if required by missing institute fields or status handling.
+- [ ] 3.1 Verify postgres schema models in `schema.prisma`:
+  - `Institute` with legal localization (legal name English/Arabic, trade name, short name), localization defaults (currency, timezone, language), and effective date range fields.
+  - `Branch` using the dedicated `BranchStatus` enum.
+  - Separate relations for `BranchContact` (type, phone, email, isPrimary), `BranchAddress` (street, city, governorate, postal code, lat/long, Map URL), `BranchSettings` (operational default configurations), and `BranchPolicy` (admission, refund, late fee).
+  - `Department` and `Classroom` using the global `RecordStatus` enum.
+- [ ] 3.2 Ensure all organizational tables include a `deletedAt (DateTime?)` column and implement soft-delete filtering in all repository query methods.
+- [ ] 3.3 Implement repository query methods for creating, retrieving, updating, and listing for all organizational entities.
+- [ ] 3.4 Ensure the `AuditLogRepository` logs structured records (performedBy, old value, new value, reason) for all updates, status transitions, and assignments.
 
-## 4. Tests and Verification
+## 4. UI Pages, Route Handlers & Server Actions
 
-- [ ] 4.1 Add unit tests for institute validation, uniqueness, and lifecycle transitions.
-- [ ] 4.2 Add service/API tests for authorization, audit logging, and error mapping.
-- [ ] 4.3 Run targeted verification: typecheck, lint, and the organization/admin-portal test suites.
+- [ ] 4.1 Verify Next.js page routing structure under `/organization` for `institutes`, `branches`, `departments`, and `classrooms`.
+- [ ] 4.2 Wire form components (`BranchForm`, `DepartmentForm`, `ClassroomForm`, `InstituteForm`) to Server Actions for Admin Portal UI.
+- [ ] 4.3 Implement granular permission guards (`branch.create`, `branch.update`, `department.create`, `classroom.create`, etc.) and branch data isolation on all actions and queries.
+- [ ] 4.4 Build Next.js REST Route Handlers (`/api/organization/departments`, `/api/organization/classrooms`, etc.) to support external integrations and public lookups.
+- [ ] 4.5 Build the visual hierarchy tree viewer component rendering all organization relations in a unified dashboard.
+
+## 5. Verification & Testing
+
+- [ ] 5.1 Run all tests in `packages/organization` to verify domain validations, active check boundaries, and dynamic status evaluations.
+- [ ] 5.2 Add target tests for edge cases such as circular hierarchy detection, timezone midnight boundaries, capacity reduction warning checks, and branch-scope manager assignment validation.
+- [ ] 5.3 Verify that the entire workspace builds and runs successfully via `turbo test` and `turbo build`.

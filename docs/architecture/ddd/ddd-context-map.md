@@ -449,8 +449,7 @@ Defines ASTI’s operational structure.
 Institute
    └── Branch
           └── Department
-                 └── Course
-                        └── Batch
+                 └── Classroom
 ```
 
 ---
