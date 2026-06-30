@@ -23,7 +23,8 @@
     "@ims/organization": "workspace:*",
     "@ims/shared-kernel": "workspace:*",
     "@prisma/client": "^6.19.3",
-    "argon2": "^0.44.0"
+    "argon2": "^0.44.0",
+    "prisma": "^6.0.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^3.0.0",

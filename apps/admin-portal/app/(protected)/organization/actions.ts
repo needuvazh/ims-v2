@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { createUuid, type Uuid, DomainError } from '@ims/shared-kernel';
-import type { OrganizationHierarchyNode, RecordStatus } from '@ims/organization';
+import type { OrganizationHierarchyNode, RecordStatus, BranchStatus } from '@ims/organization';
 import { isGlobalScope, getAuthorizedBranchIds } from '@ims/shared-auth';
 import { createStructuredLogger, getCurrentRequestContext, withServerActionObservability } from '../../lib/observability';
 import { assertPermission, assertAnyPermission, assertBranchScope, getSession } from '../../lib/auth-guard';
@@ -15,6 +15,12 @@ async function getActorId(): Promise<Uuid> {
 
 function isDomainError(err: unknown): err is DomainError {
   return err instanceof DomainError || (err instanceof Error && err.name === 'DomainError');
+}
+
+function emptyToNull(value: unknown): string | null {
+  if (typeof value !== 'string') return null;
+  const trimmed = value.trim();
+  return trimmed === '' ? null : trimmed;
 }
 
 export type ActionResult<T = void> = {
@@ -36,16 +42,28 @@ export async function createInstituteAction(_prev: ActionResult, formData: FormD
       await assertPermission('organization.manage');
       const actorId = await getActorId();
       const { organizationService } = await import('../../lib/runtime');
+      const startStr = formData.get('effectiveStartDate') as string | null;
+      const endStr = formData.get('effectiveEndDate') as string | null;
+
       await organizationService.createInstitute({
         instituteCode: String(formData.get('instituteCode') ?? ''),
         instituteName: String(formData.get('instituteName') ?? ''),
-        registrationNumber: formData.get('registrationNumber') as string | null,
-        taxNumber: formData.get('taxNumber') as string | null,
-        primaryEmail: formData.get('primaryEmail') as string | null,
-        primaryPhone: formData.get('primaryPhone') as string | null,
-        website: formData.get('website') as string | null,
-        address: formData.get('address') as string | null,
-        country: formData.get('country') as string | null,
+        registrationNumber: emptyToNull(formData.get('registrationNumber')),
+        taxNumber: emptyToNull(formData.get('taxNumber')),
+        primaryEmail: emptyToNull(formData.get('primaryEmail')),
+        primaryPhone: emptyToNull(formData.get('primaryPhone')),
+        website: emptyToNull(formData.get('website')),
+        address: emptyToNull(formData.get('address')),
+        country: emptyToNull(formData.get('country')),
+        legalNameEnglish: emptyToNull(formData.get('legalNameEnglish')),
+        legalNameArabic: emptyToNull(formData.get('legalNameArabic')),
+        tradeName: emptyToNull(formData.get('tradeName')),
+        shortName: emptyToNull(formData.get('shortName')),
+        effectiveStartDate: startStr && startStr.trim() !== '' ? new Date(startStr) : null,
+        effectiveEndDate: endStr && endStr.trim() !== '' ? new Date(endStr) : null,
+        currency: emptyToNull(formData.get('currency')),
+        timezone: emptyToNull(formData.get('timezone')),
+        language: emptyToNull(formData.get('language')),
       }, { actorId });
       logger.info('organization.institute.create.succeeded', { status: 'success' });
       revalidatePath('/organization');
@@ -81,16 +99,28 @@ export async function updateInstituteAction(
       await assertPermission('organization.manage');
       const actorId = await getActorId();
       const { organizationService } = await import('../../lib/runtime');
+      const startStr = formData.get('effectiveStartDate') as string | null;
+      const endStr = formData.get('effectiveEndDate') as string | null;
+
       await organizationService.updateInstitute(instituteId, {
         instituteName: String(formData.get('instituteName') ?? ''),
-        registrationNumber: formData.get('registrationNumber') as string | null,
-        taxNumber: formData.get('taxNumber') as string | null,
-        primaryEmail: formData.get('primaryEmail') as string | null,
-        primaryPhone: formData.get('primaryPhone') as string | null,
-        website: formData.get('website') as string | null,
-        address: formData.get('address') as string | null,
-        country: formData.get('country') as string | null,
+        registrationNumber: emptyToNull(formData.get('registrationNumber')),
+        taxNumber: emptyToNull(formData.get('taxNumber')),
+        primaryEmail: emptyToNull(formData.get('primaryEmail')),
+        primaryPhone: emptyToNull(formData.get('primaryPhone')),
+        website: emptyToNull(formData.get('website')),
+        address: emptyToNull(formData.get('address')),
+        country: emptyToNull(formData.get('country')),
         status: (formData.get('status') as RecordStatus) || undefined,
+        legalNameEnglish: emptyToNull(formData.get('legalNameEnglish')),
+        legalNameArabic: emptyToNull(formData.get('legalNameArabic')),
+        tradeName: emptyToNull(formData.get('tradeName')),
+        shortName: emptyToNull(formData.get('shortName')),
+        effectiveStartDate: startStr && startStr.trim() !== '' ? new Date(startStr) : null,
+        effectiveEndDate: endStr && endStr.trim() !== '' ? new Date(endStr) : null,
+        currency: emptyToNull(formData.get('currency')),
+        timezone: emptyToNull(formData.get('timezone')),
+        language: emptyToNull(formData.get('language')),
       }, { actorId });
       logger.info('organization.institute.update.succeeded', { status: 'success', entityId: instituteId });
       revalidatePath('/organization');
@@ -133,11 +163,11 @@ export async function createBranchAction(_prev: ActionResult, formData: FormData
         instituteId: String(formData.get('instituteId') ?? ''),
         branchCode: String(formData.get('branchCode') ?? ''),
         branchName: String(formData.get('branchName') ?? ''),
-        city: formData.get('city') as string | null,
-        country: formData.get('country') as string | null,
-        email: formData.get('email') as string | null,
-        phone: formData.get('phone') as string | null,
-        branchManagerId: managerId && managerId.trim() !== '' ? managerId : null,
+        city: emptyToNull(formData.get('city')),
+        country: emptyToNull(formData.get('country')),
+        email: emptyToNull(formData.get('email')),
+        phone: emptyToNull(formData.get('phone')),
+        branchManagerId: emptyToNull(formData.get('branchManagerId')),
         effectiveStartDate: startStr && startStr.trim() !== '' ? new Date(startStr) : null,
         effectiveEndDate: endStr && endStr.trim() !== '' ? new Date(endStr) : null,
       }, { actorId });
@@ -179,19 +209,18 @@ export async function updateBranchAction(
       const actorId = await getActorId();
       const { organizationService } = await import('../../lib/runtime');
 
-      const managerId = formData.get('branchManagerId') as string | null;
       const startStr = formData.get('effectiveStartDate') as string | null;
       const endStr = formData.get('effectiveEndDate') as string | null;
       const status = formData.get('status') as string | null;
 
       await organizationService.updateBranch(branchId, {
         branchName: String(formData.get('branchName') ?? ''),
-        city: formData.get('city') as string | null,
-        country: formData.get('country') as string | null,
-        email: formData.get('email') as string | null,
-        phone: formData.get('phone') as string | null,
-        branchManagerId: managerId && managerId.trim() !== '' ? managerId : null,
-        status: status ? (status as RecordStatus) : undefined,
+        city: emptyToNull(formData.get('city')),
+        country: emptyToNull(formData.get('country')),
+        email: emptyToNull(formData.get('email')),
+        phone: emptyToNull(formData.get('phone')),
+        branchManagerId: emptyToNull(formData.get('branchManagerId')),
+        status: status ? (status as BranchStatus) : undefined,
         effectiveStartDate: startStr && startStr.trim() !== '' ? new Date(startStr) : null,
         effectiveEndDate: endStr && endStr.trim() !== '' ? new Date(endStr) : null,
       }, { actorId });
@@ -233,8 +262,8 @@ export async function createDepartmentAction(_prev: ActionResult, formData: Form
         branchId,
         departmentCode: String(formData.get('departmentCode') ?? ''),
         departmentName: String(formData.get('departmentName') ?? ''),
-        description: formData.get('description') as string | null,
-        departmentHeadId: headId && headId.trim() !== '' ? headId : null,
+        description: emptyToNull(formData.get('description')),
+        departmentHeadId: emptyToNull(formData.get('departmentHeadId')),
         effectiveStartDate: startStr && startStr.trim() !== '' ? new Date(startStr) : null,
         effectiveEndDate: endStr && endStr.trim() !== '' ? new Date(endStr) : null,
       }, { actorId });
@@ -277,15 +306,14 @@ export async function updateDepartmentAction(
       await assertBranchScope(dept.branchId);
 
       const actorId = await getActorId();
-      const headId = formData.get('departmentHeadId') as string | null;
       const startStr = formData.get('effectiveStartDate') as string | null;
       const endStr = formData.get('effectiveEndDate') as string | null;
       const status = formData.get('status') as string | null;
 
       await organizationService.updateDepartment(departmentId, {
         departmentName: String(formData.get('departmentName') ?? ''),
-        description: formData.get('description') as string | null,
-        departmentHeadId: headId && headId.trim() !== '' ? headId : null,
+        description: emptyToNull(formData.get('description')),
+        departmentHeadId: emptyToNull(formData.get('departmentHeadId')),
         status: status ? (status as RecordStatus) : undefined,
         effectiveStartDate: startStr && startStr.trim() !== '' ? new Date(startStr) : null,
         effectiveEndDate: endStr && endStr.trim() !== '' ? new Date(endStr) : null,
@@ -329,7 +357,7 @@ export async function createClassroomAction(_prev: ActionResult, formData: FormD
         branchId,
         classroomName: String(formData.get('classroomName') ?? ''),
         capacity,
-        location: formData.get('location') as string | null,
+        location: emptyToNull(formData.get('location')),
         effectiveStartDate: startStr && startStr.trim() !== '' ? new Date(startStr) : null,
         effectiveEndDate: endStr && endStr.trim() !== '' ? new Date(endStr) : null,
       }, { actorId });
@@ -379,7 +407,7 @@ export async function updateClassroomAction(
       await organizationService.updateClassroom(classroomId, {
         classroomName: String(formData.get('classroomName') ?? ''),
         capacity,
-        location: formData.get('location') as string | null,
+        location: emptyToNull(formData.get('location')),
         status: status ? (status as RecordStatus) : undefined,
         effectiveStartDate: startStr && startStr.trim() !== '' ? new Date(startStr) : null,
         effectiveEndDate: endStr && endStr.trim() !== '' ? new Date(endStr) : null,

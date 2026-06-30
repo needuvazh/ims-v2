@@ -51,9 +51,9 @@ The system SHALL prohibit deleting structural units and manage their availabilit
 - **WHEN** a deletion is requested for a branch, department, or classroom
 - **THEN** the system SHALL reject the operation and throw a `BranchCannotBeDeleted` or `ReferencedOrganizationCannotBeDeleted` DomainError
 
-#### Scenario: Deactivating a branch cascades status update to child entities
-- **WHEN** a branch's status is changed to `Inactive` or `Archived`
-- **THEN** the system SHALL update all child departments and classrooms of that branch to the same status in the database inside the same transaction
+#### Scenario: Deactivating a branch disables child entities dynamically
+- **WHEN** a branch's status is changed to `Inactive`, `Suspended`, or `Archived`
+- **THEN** the system SHALL NOT recursively write updates to child tables in the database, but SHALL evaluate their active status dynamically at runtime (i.e. checking if their parent branch is active).
 
 ### Requirement: Security Scoping and Active Resolution
 The system SHALL restrict read lists and enforce status constraints at the runtime boundaries.

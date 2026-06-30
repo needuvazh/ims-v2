@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Home, Edit2, Eye, Plus } from 'lucide-react';
+import { Home, Edit2, Eye, Plus, Building2, GraduationCap } from 'lucide-react';
 import { 
   Breadcrumbs, 
   PageHeader, 
@@ -73,9 +73,9 @@ export default async function ClassroomsPage(props: {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard' },
-              { label: 'Organization', href: '/organization' },
-              { label: 'Classrooms' },
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Organization', href: '/organization', icon: <Building2 className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Classrooms', icon: <GraduationCap className="h-3.5 w-3.5 text-slate-500" /> },
             ]}
           />
         }

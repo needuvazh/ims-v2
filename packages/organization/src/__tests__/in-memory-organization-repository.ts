@@ -44,16 +44,12 @@ export class InMemoryOrganizationRepository implements OrganizationRepository {
   async updateBranch(id: string, updates: Partial<Branch>) {
     this.branches = this.branches.map((b) => b.id === id ? { ...b, ...updates } : b);
     const updated = this.branches.find((b) => b.id === id)!;
-    if (updates.status === 'Inactive' || updates.status === 'Archived') {
-      // cascade status to children
-      this.departments = this.departments.map((d) => d.branchId === id ? { ...d, status: updates.status! } : d);
-      this.classrooms = this.classrooms.map((c) => c.branchId === id ? { ...c, status: updates.status! } : c);
-    }
     return updated;
   }
-  async listBranches(filters?: ListFilters & { instituteId?: string }): Promise<PaginatedResult<Branch>> {
+  async listBranches(filters?: Omit<ListFilters, 'status'> & { status?: Branch['status']; instituteId?: string }): Promise<PaginatedResult<Branch>> {
     let items = this.branches;
     if (filters?.instituteId) items = items.filter((b) => b.instituteId === filters.instituteId);
+    if (filters?.status) items = items.filter((b) => b.status === filters.status);
     const page = filters?.page ?? 1;
     const pageSize = filters?.pageSize ?? 20;
     const paged = items.slice((page - 1) * pageSize, page * pageSize);
@@ -70,7 +66,13 @@ export class InMemoryOrganizationRepository implements OrganizationRepository {
     this.departments = this.departments.map((d) => d.id === id ? { ...d, ...updates } : d);
     return this.departments.find((d) => d.id === id)!;
   }
-  async listDepartments(branchId: string) { return this.departments.filter((d) => d.branchId === branchId); }
+  async listDepartments(branchId: string, filters?: { status?: Department['status'] }) {
+    let items = this.departments.filter((d) => d.branchId === branchId);
+    if (filters?.status) {
+      items = items.filter((d) => d.status === filters.status);
+    }
+    return items;
+  }
 
   // Classroom
   async createClassroom(input: Classroom) { this.classrooms = [...this.classrooms, input]; return input; }

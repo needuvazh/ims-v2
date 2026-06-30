@@ -1,4 +1,4 @@
-import { Building2 } from 'lucide-react';
+import { Building2, Home, FolderTree } from 'lucide-react';
 import { Breadcrumbs, PageHeader, EmptyState } from '@ims/shared-ui';
 import { loadOrganizationData } from '@/app/(protected)/organization/shared-data';
 import { HierarchyNode } from '@/app/(protected)/organization/hierarchy/hierarchy-node';
@@ -18,9 +18,9 @@ export default async function HierarchyPage() {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard' },
-              { label: 'Organization', href: '/organization' },
-              { label: 'Hierarchy View' },
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Organization', href: '/organization', icon: <Building2 className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Hierarchy View', icon: <FolderTree className="h-3.5 w-3.5 text-slate-500" /> },
             ]}
           />
         }
@@ -31,15 +31,19 @@ export default async function HierarchyPage() {
           <Building2 className="h-5 w-5 text-[color:var(--ims-brass)]" /> Institute Hierarchy Tree
         </h3>
 
-        {!data.hierarchy ? (
+        {!data.hierarchies || data.hierarchies.length === 0 ? (
           <EmptyState
             icon={<Building2 className="h-6 w-6" />}
             title="No hierarchy data"
             description="Verify that an institute is defined and active."
           />
         ) : (
-          <div className="pl-2 border-l border-dashed border-[color:var(--ims-border)] space-y-4">
-            <HierarchyNode node={data.hierarchy} />
+          <div className="space-y-8">
+            {data.hierarchies.map((hierarchy) => (
+              <div key={hierarchy.id} className="pl-2 border-l border-dashed border-[color:var(--ims-border)] space-y-4">
+                <HierarchyNode node={hierarchy} />
+              </div>
+            ))}
           </div>
         )}
       </div>

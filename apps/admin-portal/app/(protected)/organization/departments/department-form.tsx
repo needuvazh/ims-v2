@@ -138,7 +138,7 @@ export function DepartmentForm({ mode, initialData, branches, users }: Departmen
         <CardContent className="space-y-6">
           {state.error && <Alert variant="error" description={state.error} />}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {mode === 'create' && (
+            {mode === 'create' ? (
               <>
                 <Select
                   name="branchId"
@@ -163,6 +163,21 @@ export function DepartmentForm({ mode, initialData, branches, users }: Departmen
                   onInvalidCapture={handleInvalid('departmentCode', 'Department Code')}
                   errorText={fieldErrors.departmentCode}
                 />
+              </>
+            ) : (
+              <>
+                <div className="space-y-2">
+                  <label className="text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider">Branch</label>
+                  <div className="text-sm font-medium p-2 bg-[color:var(--ims-surface-hover)] border border-[color:var(--ims-border)] rounded-md opacity-80">
+                    {branches.find((b) => b.id === values.branchId)?.branchName || values.branchId}
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider">Department Code</label>
+                  <div className="text-sm font-mono font-medium p-2 bg-[color:var(--ims-surface-hover)] border border-[color:var(--ims-border)] rounded-md opacity-80">
+                    {values.departmentCode}
+                  </div>
+                </div>
               </>
             )}
 
@@ -220,7 +235,7 @@ export function DepartmentForm({ mode, initialData, branches, users }: Departmen
               errorText={fieldErrors.effectiveEndDate}
             />
 
-            {isEdit && (
+            {mode !== 'create' && (
               <Select
                 name="status"
                 label="Status"

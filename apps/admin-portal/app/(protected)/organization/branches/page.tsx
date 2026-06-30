@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Building2, Edit2, Eye, Plus } from 'lucide-react';
+import { Building2, Edit2, Eye, Plus, Home, MapPin } from 'lucide-react';
 import { 
   Breadcrumbs, 
   PageHeader, 
@@ -67,9 +67,9 @@ export default async function BranchesPage(props: {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard' },
-              { label: 'Organization', href: '/organization' },
-              { label: 'Branches' },
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Organization', href: '/organization', icon: <Building2 className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Branches', icon: <MapPin className="h-3.5 w-3.5 text-slate-500" /> },
             ]}
           />
         }
@@ -92,9 +92,12 @@ export default async function BranchesPage(props: {
               key: 'status',
               label: 'Status',
               options: [
-                { value: 'Active', label: 'Active' },
-                { value: 'Inactive', label: 'Inactive' },
                 { value: 'Draft', label: 'Draft' },
+                { value: 'Configured', label: 'Configured' },
+                { value: 'Active', label: 'Active' },
+                { value: 'UnderMaintenance', label: 'Under Maintenance' },
+                { value: 'Suspended', label: 'Suspended' },
+                { value: 'Closed', label: 'Closed' },
                 { value: 'Archived', label: 'Archived' },
               ]
             }

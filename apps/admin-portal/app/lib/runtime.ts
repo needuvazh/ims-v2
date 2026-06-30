@@ -157,5 +157,33 @@ export const organizationService = new OrganizationService(
         return false;
       }
     },
+    hasBranchAccess: async (userId: string, branchId: string) => {
+      try {
+        const accessList = await userBranchAccessRepository.findByUser(createUuid(userId));
+        return accessList.some((a) => a.branchId === branchId && a.status === 'Active');
+      } catch {
+        return false;
+      }
+    },
+  },
+  {
+    getActiveEnrollmentSize: async (classroomId: string) => {
+      // Placeholder: Batch/Scheduling module not implemented yet.
+      return 0;
+    },
+  },
+  {
+    hasActiveDependencies: async (branchId: string) => {
+      try {
+        const [leadsCount, admissionsCount, inquiriesCount] = await Promise.all([
+          prisma.lead.count({ where: { branchId, isDeleted: false } }),
+          prisma.admission.count({ where: { branchId, isDeleted: false } }),
+          prisma.inquiry.count({ where: { branchId, isDeleted: false } }),
+        ]);
+        return (leadsCount + admissionsCount + inquiriesCount) > 0;
+      } catch {
+        return false;
+      }
+    },
   }
 );

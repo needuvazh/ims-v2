@@ -3,10 +3,12 @@ import { z } from 'zod';
 export const LeadStageEnum = z.enum([
   'New',
   'Contacted',
-  'Interested',
+  'FollowUp',
   'Qualified',
+  'Negotiation',
+  'Won',
   'Converted',
-  'Dropped',
+  'Lost',
 ]);
 
 export const LeadSourceEnum = z.enum([
@@ -15,6 +17,12 @@ export const LeadSourceEnum = z.enum([
   'Campaign',
   'Referral',
   'Other',
+  'Phone',
+  'WhatsApp',
+  'Facebook',
+  'Instagram',
+  'GoogleAds',
+  'CorporateReferral',
 ]);
 
 export const LeadSchema = z.object({
@@ -23,10 +31,11 @@ export const LeadSchema = z.object({
   firstName: z.string().min(1),
   lastName: z.string().min(1),
   email: z.string().email().nullable().optional(),
-  phone: z.string().nullable().optional(),
+  phone: z.string().min(1),
   stage: LeadStageEnum,
   source: LeadSourceEnum,
   counselorId: z.string().uuid().nullable().optional(),
+  interestedCourseId: z.string().uuid(),
   notes: z.string().nullable().optional(),
   createdAt: z.date(),
 });
@@ -40,7 +49,8 @@ export const CreateLeadSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
   lastName: z.string().min(1, 'Last name is required'),
   email: z.string().email('Invalid email').optional().or(z.literal('')),
-  phone: z.string().optional().or(z.literal('')),
+  phone: z.string().min(1, 'Phone is required'),
+  interestedCourseId: z.string().uuid('Interested course ID is required'),
   source: LeadSourceEnum.default('Other'),
   counselorId: z.string().uuid().optional(),
   notes: z.string().optional(),

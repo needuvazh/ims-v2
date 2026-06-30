@@ -257,9 +257,12 @@ export function BranchForm({ mode, initialData, institutes, users }: BranchFormP
                 name="status"
                 label="Status"
                 options={[
-                  { value: 'Active', label: 'Active' },
-                  { value: 'Inactive', label: 'Inactive' },
                   { value: 'Draft', label: 'Draft' },
+                  { value: 'Configured', label: 'Configured' },
+                  { value: 'Active', label: 'Active' },
+                  { value: 'UnderMaintenance', label: 'Under Maintenance' },
+                  { value: 'Suspended', label: 'Suspended' },
+                  { value: 'Closed', label: 'Closed' },
                   { value: 'Archived', label: 'Archived' },
                 ]}
                 value={values.status}

@@ -12,6 +12,10 @@ describe('organization service', () => {
     isActiveUser: async (userId: string) => {
       if (userId === '00000000-0000-0000-0000-000000000000') return false;
       return true;
+    },
+    hasBranchAccess: async (userId: string, branchId: string) => {
+      if (userId === '55555555-5555-5555-5555-555555555555') return false; // simulated user with no access
+      return true;
     }
   };
 
@@ -156,7 +160,7 @@ describe('organization service', () => {
     expect(dupRoomErr.code).toBe('classroom_name_already_exists');
 
     // Deactivate branch
-    await service.updateBranch(b1.id, { status: 'Inactive' }, context);
+    await service.updateBranch(b1.id, { status: 'Suspended' }, context);
 
     // 4. Cannot create classroom under inactive branch scope
     const inactiveBranchErr = await service.createClassroom(
@@ -200,14 +204,18 @@ describe('organization service', () => {
     expect(room.status).toBe('Active');
 
     // Deactivate branch
-    await service.updateBranch(branch.id, { status: 'Inactive' }, context);
+    await service.updateBranch(branch.id, { status: 'Suspended' }, context);
 
-    // Fetch child items from repository to verify cascade
+    // Fetch child items from repository to verify status field is NOT written recursively
     const updatedDept = await repository.findDepartmentById(dept.id);
     const updatedRoom = await repository.findClassroomById(room.id);
 
-    expect(updatedDept?.status).toBe('Inactive');
-    expect(updatedRoom?.status).toBe('Inactive');
+    expect(updatedDept?.status).toBe('Active');
+    expect(updatedRoom?.status).toBe('Active');
+
+    // Enforce dynamic runtime status evaluation
+    expect(await service.isDepartmentActive(dept.id)).toBe(false);
+    expect(await service.isClassroomActive(room.id)).toBe(false);
 
     // Verify detailed branch_deactivated audit log is appended
     const deactLogs = audit.list().filter(l => l.action === 'organization.branch_deactivated');
@@ -344,6 +352,140 @@ describe('organization service', () => {
     );
     const isActiveB2 = await service.isBranchActive(b2.id);
     expect(isActiveB2).toBe(false);
+  });
+
+  it('detects circular hierarchy loops and blocks them', async () => {
+    const repository = new InMemoryOrganizationRepository();
+    const audit = new InMemoryAuditLogRepository();
+    const service = new OrganizationService(repository, audit, mockUserVerifier);
+
+    const inst = await service.createInstitute(
+      { instituteCode: 'IMS', instituteName: 'IMS HQ' },
+      context
+    );
+
+    const a = await service.createBranch({ instituteId: inst.id, branchCode: 'BR-A', branchName: 'Branch A' }, context);
+    const b = await service.createBranch({ instituteId: inst.id, branchCode: 'BR-B', branchName: 'Branch B', parentBranchId: a.id }, context);
+    const c = await service.createBranch({ instituteId: inst.id, branchCode: 'BR-C', branchName: 'Branch C', parentBranchId: b.id }, context);
+
+    // 1. Setting A's parent to A should fail
+    await expect(
+      service.updateBranch(a.id, { parentBranchId: a.id }, context)
+    ).rejects.toThrow();
+
+    // 2. Setting A's parent to C should fail (C -> B -> A -> C loop)
+    await expect(
+      service.updateBranch(a.id, { parentBranchId: c.id }, context)
+    ).rejects.toThrow();
+  });
+
+  it('verifies branch manager assignment fails on cross-branch violation on update', async () => {
+    const repository = new InMemoryOrganizationRepository();
+    const audit = new InMemoryAuditLogRepository();
+    const service = new OrganizationService(repository, audit, mockUserVerifier);
+
+    const inst = await service.createInstitute(
+      { instituteCode: 'IMS', instituteName: 'IMS HQ' },
+      context
+    );
+
+    const branch = await service.createBranch(
+      {
+        instituteId: inst.id,
+        branchCode: 'B-GOOD-SCOPE',
+        branchName: 'Good Scope Branch',
+      },
+      context
+    );
+
+    // 55555555-5555-5555-5555-555555555555 is mock-configured to NOT have branch access
+    const noAccessUserId = '55555555-5555-5555-5555-555555555555';
+
+    await expect(
+      service.updateBranch(
+        branch.id,
+        { branchManagerId: noAccessUserId },
+        context
+      )
+    ).rejects.toThrowError(/does not have access to branch/);
+  });
+
+  it('verifies classroom capacity reduction checks active enrollment size', async () => {
+    const repository = new InMemoryOrganizationRepository();
+    const audit = new InMemoryAuditLogRepository();
+    
+    const mockClassroomUsageVerifier = {
+      getActiveEnrollmentSize: async (classroomId: string) => {
+        return 25; // 25 active enrollments
+      }
+    };
+
+    const service = new OrganizationService(
+      repository,
+      audit,
+      mockUserVerifier,
+      mockClassroomUsageVerifier
+    );
+
+    const inst = await service.createInstitute(
+      { instituteCode: 'IMS', instituteName: 'IMS HQ' },
+      context
+    );
+
+    const b = await service.createBranch({ instituteId: inst.id, branchCode: 'BR-B', branchName: 'Branch' }, context);
+    const room = await service.createClassroom({ branchId: b.id, classroomName: 'Room A', capacity: 30 }, context);
+
+    // Decreasing capacity to 20 should fail since active enrollment is 25
+    await expect(
+      service.updateClassroom(room.id, { capacity: 20 }, context)
+    ).rejects.toThrowError(/is below active enrollment size/);
+
+    // Decreasing capacity to 27 should succeed since 27 >= 25
+    const updated = await service.updateClassroom(room.id, { capacity: 27 }, context);
+    expect(updated.capacity).toBe(27);
+  });
+
+  it('verifies listDepartments filters by status correctly', async () => {
+    const repository = new InMemoryOrganizationRepository();
+    const audit = new InMemoryAuditLogRepository();
+    const service = new OrganizationService(repository, audit, mockUserVerifier);
+
+    const inst = await service.createInstitute(
+      { instituteCode: 'IMS', instituteName: 'IMS HQ' },
+      context
+    );
+
+    const branch = await service.createBranch(
+      { instituteId: inst.id, branchCode: 'BR-B', branchName: 'Branch' },
+      context
+    );
+
+    // Create active department
+    const d1 = await service.createDepartment(
+      { branchId: branch.id, departmentCode: 'D1', departmentName: 'Dept 1' },
+      context
+    );
+
+    // Create inactive department (initially created as active, then update status)
+    const d2 = await service.createDepartment(
+      { branchId: branch.id, departmentCode: 'D2', departmentName: 'Dept 2' },
+      context
+    );
+    await service.updateDepartment(d2.id, { status: 'Inactive' }, context);
+
+    // Query active departments
+    const activeDepts = await service.listDepartments(branch.id, { status: 'Active' });
+    expect(activeDepts).toHaveLength(1);
+    expect(activeDepts[0].id).toBe(d1.id);
+
+    // Query inactive departments
+    const inactiveDepts = await service.listDepartments(branch.id, { status: 'Inactive' });
+    expect(inactiveDepts).toHaveLength(1);
+    expect(inactiveDepts[0].id).toBe(d2.id);
+
+    // Query all departments (passing no filter)
+    const allDepts = await service.listDepartments(branch.id);
+    expect(allDepts).toHaveLength(2);
   });
 });
 

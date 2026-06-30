@@ -9,6 +9,7 @@ import type {
   ListFilters,
   PaginatedResult,
   OrganizationHierarchyNode,
+  RecordStatus,
 } from '@ims/organization';
 import type { BranchId, Uuid } from '@ims/shared-kernel';
 
@@ -24,6 +25,15 @@ type InstituteRow = {
   address: string | null;
   country: string | null;
   status: string;
+  legalNameEnglish: string | null;
+  legalNameArabic: string | null;
+  tradeName: string | null;
+  shortName: string | null;
+  effectiveStartDate: Date | null;
+  effectiveEndDate: Date | null;
+  currency: string | null;
+  timezone: string | null;
+  language: string | null;
 };
 
 type BranchRow = {
@@ -74,13 +84,63 @@ function toInstitute(row: InstituteRow): Institute {
   };
 }
 
-function toBranch(row: BranchRow): Branch {
+type BranchRowWithRelations = BranchRow & {
+  contacts?: any[];
+  addresses?: any[];
+  settings?: any | null;
+  policies?: any[];
+};
+
+function toBranch(row: BranchRowWithRelations): Branch {
   return {
-    ...row,
     id: row.id as BranchId,
     instituteId: row.instituteId as Uuid,
     parentBranchId: row.parentBranchId,
+    branchCode: row.branchCode,
+    branchName: row.branchName,
+    address: row.address,
+    city: row.city,
+    country: row.country,
+    phone: row.phone,
+    email: row.email,
+    branchManagerId: row.branchManagerId,
     status: row.status as Branch['status'],
+    effectiveStartDate: row.effectiveStartDate,
+    effectiveEndDate: row.effectiveEndDate,
+    contacts: row.contacts?.map((c) => ({
+      id: c.id as Uuid,
+      branchId: c.branchId as BranchId,
+      contactType: c.contactType,
+      contactValue: c.contactValue,
+      isPrimary: c.isPrimary,
+    })),
+    addresses: row.addresses?.map((a) => ({
+      id: a.id as Uuid,
+      branchId: a.branchId as BranchId,
+      building: a.building,
+      street: a.street,
+      city: a.city,
+      governorate: a.governorate,
+      country: a.country,
+      postalCode: a.postalCode,
+      latitude: a.latitude,
+      longitude: a.longitude,
+      mapUrl: a.mapUrl,
+    })),
+    settings: row.settings ? {
+      id: row.settings.id as Uuid,
+      branchId: row.settings.branchId as BranchId,
+      currency: row.settings.currency,
+      timezone: row.settings.timezone,
+      weekStartDay: row.settings.weekStartDay,
+      workingCalendar: row.settings.workingCalendar,
+    } : undefined,
+    policies: row.policies?.map((p) => ({
+      id: p.id as Uuid,
+      branchId: p.branchId as BranchId,
+      policyType: p.policyType,
+      policyContent: p.policyContent,
+    })),
   };
 }
 
@@ -123,6 +183,15 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
         address: input.address,
         country: input.country,
         status: input.status,
+        legalNameEnglish: input.legalNameEnglish,
+        legalNameArabic: input.legalNameArabic,
+        tradeName: input.tradeName,
+        shortName: input.shortName,
+        effectiveStartDate: input.effectiveStartDate,
+        effectiveEndDate: input.effectiveEndDate,
+        currency: input.currency,
+        timezone: input.timezone,
+        language: input.language,
       },
     });
     return toInstitute(row);
@@ -151,6 +220,15 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
         ...(updates.address !== undefined && { address: updates.address }),
         ...(updates.country !== undefined && { country: updates.country }),
         ...(updates.status !== undefined && { status: updates.status }),
+        ...(updates.legalNameEnglish !== undefined && { legalNameEnglish: updates.legalNameEnglish }),
+        ...(updates.legalNameArabic !== undefined && { legalNameArabic: updates.legalNameArabic }),
+        ...(updates.tradeName !== undefined && { tradeName: updates.tradeName }),
+        ...(updates.shortName !== undefined && { shortName: updates.shortName }),
+        ...(updates.effectiveStartDate !== undefined && { effectiveStartDate: updates.effectiveStartDate }),
+        ...(updates.effectiveEndDate !== undefined && { effectiveEndDate: updates.effectiveEndDate }),
+        ...(updates.currency !== undefined && { currency: updates.currency }),
+        ...(updates.timezone !== undefined && { timezone: updates.timezone }),
+        ...(updates.language !== undefined && { language: updates.language }),
         updatedAt: new Date(),
       },
     });
@@ -186,6 +264,7 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
       data: {
         id: input.id,
         instituteId: input.instituteId,
+        parentBranchId: input.parentBranchId,
         branchCode: input.branchCode,
         branchName: input.branchName,
         address: input.address,
@@ -197,23 +276,151 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
         status: input.status,
         effectiveStartDate: input.effectiveStartDate,
         effectiveEndDate: input.effectiveEndDate,
+        contacts: input.contacts && input.contacts.length > 0 ? {
+          create: input.contacts.map((c) => ({
+            id: c.id,
+            contactType: c.contactType,
+            contactValue: c.contactValue,
+            isPrimary: c.isPrimary,
+          })),
+        } : undefined,
+        addresses: input.addresses && input.addresses.length > 0 ? {
+          create: input.addresses.map((a) => ({
+            id: a.id,
+            building: a.building,
+            street: a.street,
+            city: a.city,
+            governorate: a.governorate,
+            country: a.country,
+            postalCode: a.postalCode,
+            latitude: a.latitude,
+            longitude: a.longitude,
+            mapUrl: a.mapUrl,
+          })),
+        } : undefined,
+        settings: input.settings ? {
+          create: {
+            id: input.settings.id,
+            currency: input.settings.currency,
+            timezone: input.settings.timezone,
+            weekStartDay: input.settings.weekStartDay,
+            workingCalendar: input.settings.workingCalendar,
+          },
+        } : undefined,
+        policies: input.policies && input.policies.length > 0 ? {
+          create: input.policies.map((p) => ({
+            id: p.id,
+            policyType: p.policyType,
+            policyContent: p.policyContent,
+          })),
+        } : undefined,
       },
     });
     return toBranch(row);
   }
 
   async findBranchById(id: string): Promise<Branch | null> {
-    const row = await this.prisma.branch.findUnique({ where: { id } });
+    const row = await this.prisma.branch.findUnique({
+      where: { id },
+      include: {
+        contacts: { where: { isDeleted: false } },
+        addresses: { where: { isDeleted: false } },
+        settings: { where: { isDeleted: false } },
+        policies: { where: { isDeleted: false } },
+      },
+    });
     return row && !row.isDeleted ? toBranch(row) : null;
   }
 
   async findBranchByCode(branchCode: string): Promise<Branch | null> {
-    const row = await this.prisma.branch.findFirst({ where: { branchCode, isDeleted: false } });
+    const row = await this.prisma.branch.findFirst({
+      where: { branchCode, isDeleted: false },
+      include: {
+        contacts: { where: { isDeleted: false } },
+        addresses: { where: { isDeleted: false } },
+        settings: { where: { isDeleted: false } },
+        policies: { where: { isDeleted: false } },
+      },
+    });
     return row ? toBranch(row) : null;
   }
 
   async updateBranch(id: string, updates: Partial<Branch>): Promise<Branch> {
     const row = await this.prisma.$transaction(async (tx) => {
+      if (updates.contacts !== undefined) {
+        await tx.branchContact.deleteMany({ where: { branchId: id } });
+        if (updates.contacts && updates.contacts.length > 0) {
+          await tx.branchContact.createMany({
+            data: updates.contacts.map((c) => ({
+              id: c.id,
+              branchId: id,
+              contactType: c.contactType,
+              contactValue: c.contactValue,
+              isPrimary: c.isPrimary,
+            })),
+          });
+        }
+      }
+
+      if (updates.addresses !== undefined) {
+        await tx.branchAddress.deleteMany({ where: { branchId: id } });
+        if (updates.addresses && updates.addresses.length > 0) {
+          await tx.branchAddress.createMany({
+            data: updates.addresses.map((a) => ({
+              id: a.id,
+              branchId: id,
+              building: a.building,
+              street: a.street,
+              city: a.city,
+              governorate: a.governorate,
+              country: a.country,
+              postalCode: a.postalCode,
+              latitude: a.latitude,
+              longitude: a.longitude,
+              mapUrl: a.mapUrl,
+            })),
+          });
+        }
+      }
+
+      if (updates.policies !== undefined) {
+        await tx.branchPolicy.deleteMany({ where: { branchId: id } });
+        if (updates.policies && updates.policies.length > 0) {
+          await tx.branchPolicy.createMany({
+            data: updates.policies.map((p) => ({
+              id: p.id,
+              branchId: id,
+              policyType: p.policyType,
+              policyContent: p.policyContent,
+            })),
+          });
+        }
+      }
+
+      if (updates.settings !== undefined) {
+        if (updates.settings) {
+          await tx.branchSettings.upsert({
+            where: { branchId: id },
+            create: {
+              id: updates.settings.id,
+              branchId: id,
+              currency: updates.settings.currency,
+              timezone: updates.settings.timezone,
+              weekStartDay: updates.settings.weekStartDay,
+              workingCalendar: updates.settings.workingCalendar,
+            },
+            update: {
+              currency: updates.settings.currency,
+              timezone: updates.settings.timezone,
+              weekStartDay: updates.settings.weekStartDay,
+              workingCalendar: updates.settings.workingCalendar,
+            },
+          });
+        } else {
+          await tx.branchSettings.deleteMany({ where: { branchId: id } });
+        }
+      }
+
       const branch = await tx.branch.update({
         where: { id },
         data: {
@@ -224,30 +431,26 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
           ...(updates.phone !== undefined && { phone: updates.phone }),
           ...(updates.email !== undefined && { email: updates.email }),
           ...(updates.branchManagerId !== undefined && { branchManagerId: updates.branchManagerId }),
+          ...(updates.parentBranchId !== undefined && { parentBranchId: updates.parentBranchId }),
           ...(updates.status !== undefined && { status: updates.status }),
           ...(updates.effectiveStartDate !== undefined && { effectiveStartDate: updates.effectiveStartDate }),
           ...(updates.effectiveEndDate !== undefined && { effectiveEndDate: updates.effectiveEndDate }),
           updatedAt: new Date(),
         },
+        include: {
+          contacts: { where: { isDeleted: false } },
+          addresses: { where: { isDeleted: false } },
+          settings: { where: { isDeleted: false } },
+          policies: { where: { isDeleted: false } },
+        },
       });
-
-      if (updates.status === 'Inactive' || updates.status === 'Archived') {
-        await tx.department.updateMany({
-          where: { branchId: id, isDeleted: false },
-          data: { status: updates.status, updatedAt: new Date() },
-        });
-        await tx.classroom.updateMany({
-          where: { branchId: id, isDeleted: false },
-          data: { status: updates.status, updatedAt: new Date() },
-        });
-      }
 
       return branch;
     });
     return toBranch(row);
   }
 
-  async listBranches(filters?: ListFilters & { instituteId?: string }): Promise<PaginatedResult<Branch>> {
+  async listBranches(filters?: Omit<ListFilters, 'status'> & { status?: Branch['status']; instituteId?: string }): Promise<PaginatedResult<Branch>> {
     const page = filters?.page ?? 1;
     const pageSize = filters?.pageSize ?? PAGE_SIZE;
     const where = {
@@ -317,9 +520,13 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
     return toDepartment(row);
   }
 
-  async listDepartments(branchId: string): Promise<Department[]> {
+  async listDepartments(branchId: string, filters?: { status?: RecordStatus }): Promise<Department[]> {
     const rows = await this.prisma.department.findMany({
-      where: { branchId, isDeleted: false },
+      where: {
+        branchId,
+        isDeleted: false,
+        ...(filters?.status ? { status: filters.status } : {}),
+      },
       orderBy: { departmentName: 'asc' },
     });
     return rows.map(toDepartment);

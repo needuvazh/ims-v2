@@ -38,18 +38,18 @@ export async function loadOrganizationData() {
   );
   const departments = deptsList.flat();
 
-  const rawHierarchy = institutes.length > 0
-    ? await organizationService.getOrganizationHierarchy(institutes[0].id)
-    : null;
+  const rawHierarchies = await Promise.all(
+    institutes.map(inst => organizationService.getOrganizationHierarchy(inst.id))
+  );
 
-  const hierarchy = rawHierarchy && !globalScope
-    ? {
-        ...rawHierarchy,
-        children: (rawHierarchy.children || []).filter((branch) =>
+  const hierarchies = !globalScope
+    ? rawHierarchies.map(raw => ({
+        ...raw,
+        children: (raw.children || []).filter((branch) =>
           authorizedBranchIds.includes(branch.id)
         ),
-      }
-    : rawHierarchy;
+      }))
+    : rawHierarchies;
 
   const userOptions = usersList.map((u: { id: string; fullName: string; email: string }) => ({
     id: u.id,
@@ -63,6 +63,6 @@ export async function loadOrganizationData() {
     departments,
     classrooms: filteredClassrooms,
     users: userOptions,
-    hierarchy,
+    hierarchies,
   };
 }

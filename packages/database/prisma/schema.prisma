@@ -14,6 +14,16 @@ enum RecordStatus {
   Archived
 }
 
+enum BranchStatus {
+  Draft
+  Configured
+  Active
+  UnderMaintenance
+  Suspended
+  Closed
+  Archived
+}
+
 enum UserStatus {
   PendingActivation
   Active
@@ -40,6 +50,7 @@ model Person {
   gender      String?   @db.VarChar(20)
 
   user User?
+  leads Lead[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -94,6 +105,7 @@ model User {
 
   leads     Lead[]         @relation("CounselorLeads")
   followUps LeadFollowUp[] @relation("CounselorFollowUps")
+  inquiries Inquiry[]      @relation("CounselorInquiries")
 
   @@index([status])
   @@map("users")
@@ -359,6 +371,16 @@ model Institute {
   country            String?      @db.VarChar(100)
   status             RecordStatus @default(Active)
 
+  legalNameEnglish   String?      @db.VarChar(255)
+  legalNameArabic    String?      @db.VarChar(255)
+  tradeName          String?      @db.VarChar(255)
+  shortName          String?      @db.VarChar(100)
+  effectiveStartDate DateTime?    @db.Date
+  effectiveEndDate   DateTime?    @db.Date
+  currency           String?      @db.VarChar(10)
+  timezone           String?      @db.VarChar(50)
+  language           String?      @db.VarChar(10)
+
   branches Branch[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
@@ -383,7 +405,7 @@ model Branch {
   phone              String?      @db.VarChar(30)
   email              String?      @db.VarChar(255)
   branchManagerId    String?      @db.Uuid
-  status             RecordStatus @default(Active)
+  status             BranchStatus @default(Active)
   effectiveStartDate DateTime?    @db.Date
   effectiveEndDate   DateTime?    @db.Date
 
@@ -396,6 +418,11 @@ model Branch {
   departments   Department[]
   classrooms    Classroom[]
 
+  contacts      BranchContact[]
+  addresses     BranchAddress[]
+  settings      BranchSettings?
+  policies      BranchPolicy[]
+
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
   updatedAt DateTime? @db.Timestamptz(6)
@@ -406,6 +433,7 @@ model Branch {
 
   leads              Lead[]
   admissions         Admission[]
+  inquiries          Inquiry[]
   userBranchAccesses UserBranchAccess[]
 
   @@unique([branchCode])
@@ -413,6 +441,88 @@ model Branch {
   @@index([city])
   @@index([instituteId])
   @@map("branches")
+}
+
+model BranchContact {
+  id          String   @id @default(uuid()) @db.Uuid
+  branchId    String   @db.Uuid
+  contactType String   @db.VarChar(50)
+  contactValue String  @db.VarChar(255)
+  isPrimary   Boolean  @default(false)
+  branch      Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now()) @db.Timestamptz(6)
+  createdBy   String?  @db.Uuid
+  updatedAt   DateTime? @db.Timestamptz(6)
+  updatedBy   String?  @db.Uuid
+  deletedAt   DateTime? @db.Timestamptz(6)
+  deletedBy   String?  @db.Uuid
+  isDeleted   Boolean  @default(false)
+
+  @@map("branch_contacts")
+}
+
+model BranchAddress {
+  id           String   @id @default(uuid()) @db.Uuid
+  branchId     String   @db.Uuid
+  building     String?  @db.VarChar(100)
+  street       String?  @db.VarChar(255)
+  city         String?  @db.VarChar(100)
+  governorate  String?  @db.VarChar(100)
+  country      String?  @db.VarChar(100)
+  postalCode   String?  @db.VarChar(30)
+  latitude     Float?
+  longitude    Float?
+  mapUrl       String?  @db.Text
+  branch       Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime @default(now()) @db.Timestamptz(6)
+  createdBy    String?  @db.Uuid
+  updatedAt    DateTime? @db.Timestamptz(6)
+  updatedBy    String?  @db.Uuid
+  deletedAt    DateTime? @db.Timestamptz(6)
+  deletedBy    String?  @db.Uuid
+  isDeleted    Boolean  @default(false)
+
+  @@map("branch_addresses")
+}
+
+model BranchSettings {
+  id              String   @id @default(uuid()) @db.Uuid
+  branchId        String   @unique @db.Uuid
+  currency        String?  @db.VarChar(10)
+  timezone        String?  @db.VarChar(50)
+  weekStartDay    String?  @db.VarChar(20)
+  workingCalendar String?  @db.VarChar(100)
+  branch          Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+  createdAt       DateTime @default(now()) @db.Timestamptz(6)
+  createdBy       String?  @db.Uuid
+  updatedAt       DateTime? @db.Timestamptz(6)
+  updatedBy       String?  @db.Uuid
+  deletedAt       DateTime? @db.Timestamptz(6)
+  deletedBy       String?  @db.Uuid
+  isDeleted       Boolean  @default(false)
+
+  @@map("branch_settings")
+}
+
+model BranchPolicy {
+  id            String   @id @default(uuid()) @db.Uuid
+  branchId      String   @db.Uuid
+  policyType    String   @db.VarChar(50)
+  policyContent String?  @db.Text
+  branch        Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+  createdAt     DateTime @default(now()) @db.Timestamptz(6)
+  createdBy     String?  @db.Uuid
+  updatedAt     DateTime? @db.Timestamptz(6)
+  updatedBy     String?  @db.Uuid
+  deletedAt     DateTime? @db.Timestamptz(6)
+  deletedBy     String?  @db.Uuid
+  isDeleted     Boolean  @default(false)
+
+  @@map("branch_policies")
 }
 
 model Department {
@@ -509,10 +619,12 @@ model OutboxEvent {
 enum LeadStage {
   New
   Contacted
-  Interested
+  FollowUp
   Qualified
+  Negotiation
+  Won
   Converted
-  Dropped
+  Lost
 }
 
 enum LeadSource {
@@ -521,31 +633,128 @@ enum LeadSource {
   Campaign
   Referral
   Other
+  Phone
+  WhatsApp
+  Facebook
+  Instagram
+  GoogleAds
+  CorporateReferral
+}
+
+model Campaign {
+  id                 String    @id @default(uuid()) @db.Uuid
+  campaignName       String    @unique @db.VarChar(150)
+  campaignType       String    @db.VarChar(50)
+  utmSource          String    @db.VarChar(100)
+  utmMedium          String    @db.VarChar(100)
+  utmCampaign        String    @db.VarChar(100)
+  budget             Decimal   @db.Decimal(12, 3)
+  effectiveStartDate DateTime  @db.Date
+  effectiveEndDate   DateTime? @db.Date
+  status             String    @default("Active") @db.VarChar(50)
+  
+  leads              Lead[]
+
+  createdAt          DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy          String?   @db.Uuid
+  updatedAt          DateTime? @db.Timestamptz(6)
+  updatedBy          String?   @db.Uuid
+  deletedAt          DateTime? @db.Timestamptz(6)
+  isDeleted          Boolean   @default(false)
+
+  @@unique([utmSource, utmMedium, utmCampaign])
+  @@map("campaigns")
+}
+
+model Course {
+  id         String    @id @default(uuid()) @db.Uuid
+  courseCode String    @unique @db.VarChar(50)
+  name       String    @db.VarChar(150)
+  status     String    @default("Active") @db.VarChar(50)
+  
+  leads      Lead[]
+  inquiries  Inquiry[]
+
+  createdAt  DateTime  @default(now()) @db.Timestamptz(6)
+
+  @@map("courses")
+}
+
+model Inquiry {
+  id                 String    @id @default(uuid()) @db.Uuid
+  inquiryNumber      String    @unique @db.VarChar(50)
+  branchId           String    @db.Uuid
+  firstName          String    @db.VarChar(100)
+  lastName           String    @db.VarChar(100)
+  mobile             String    @db.VarChar(30)
+  email              String?   @db.VarChar(255)
+  source             LeadSource @default(Other)
+  interestedCourseId String?   @db.Uuid
+  counselorId        String?   @db.Uuid
+  priority           String    @default("Medium") @db.VarChar(20)
+  notes              String?   @db.Text
+  status             String    @default("Captured") @db.VarChar(50)
+  isDuplicate        Boolean   @default(false)
+  duplicateRefId     String?   @db.VarChar(150)
+  utmSource          String?   @db.VarChar(100)
+  utmMedium          String?   @db.VarChar(100)
+  utmCampaign        String?   @db.VarChar(100)
+
+  branch             Branch    @relation(fields: [branchId], references: [id])
+  counselor          User?     @relation("CounselorInquiries", fields: [counselorId], references: [id])
+  interestedCourse   Course?   @relation(fields: [interestedCourseId], references: [id])
+  leads              Lead[]
+
+  createdAt          DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy          String?   @db.Uuid
+  updatedAt          DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy          String?   @db.Uuid
+  deletedAt          DateTime? @db.Timestamptz(6)
+  deletedBy          String?   @db.Uuid
+  isDeleted          Boolean   @default(false)
+
+  @@index([branchId])
+  @@index([counselorId])
+  @@index([status])
+  @@map("inquiries")
 }
 
 model Lead {
-  id          String     @id @default(uuid()) @db.Uuid
-  branchId    String     @db.Uuid
-  firstName   String     @db.VarChar(100)
-  lastName    String     @db.VarChar(100)
-  email       String?    @db.VarChar(255)
-  phone       String?    @db.VarChar(30)
-  stage       LeadStage  @default(New)
-  source      LeadSource @default(Other)
-  counselorId String?    @db.Uuid
-  notes       String?    @db.Text
+  id                 String         @id @default(uuid()) @db.Uuid
+  leadNumber         String         @unique @db.VarChar(50)
+  personId           String         @db.Uuid
+  branchId           String         @db.Uuid
+  firstName          String         @db.VarChar(100)
+  lastName           String         @db.VarChar(100)
+  email              String?        @db.VarChar(255)
+  phone              String         @db.VarChar(30)
+  stage              LeadStage      @default(New)
+  source             LeadSource     @default(Other)
+  counselorId        String?        @db.Uuid
+  interestedCourseId String         @db.Uuid
+  campaignId         String?        @db.Uuid
+  priority           String         @default("Medium") @db.VarChar(20)
+  notes              String?        @db.Text
+  lostReasonCode     String?        @db.VarChar(50)
+  lostReasonNotes    String?        @db.Text
+  inquiryId          String?        @db.Uuid
+  version            Int            @default(1)
 
-  branch    Branch         @relation(fields: [branchId], references: [id])
-  counselor User?          @relation("CounselorLeads", fields: [counselorId], references: [id])
-  followUps LeadFollowUp[]
+  person             Person         @relation(fields: [personId], references: [id])
+  branch             Branch         @relation(fields: [branchId], references: [id])
+  counselor          User?          @relation("CounselorLeads", fields: [counselorId], references: [id])
+  campaign           Campaign?      @relation(fields: [campaignId], references: [id])
+  inquiry            Inquiry?       @relation(fields: [inquiryId], references: [id])
+  interestedCourse   Course         @relation(fields: [interestedCourseId], references: [id])
+  followUps          LeadFollowUp[]
 
-  createdAt DateTime  @default(now()) @db.Timestamptz(6)
-  createdBy String?   @db.Uuid
-  updatedAt DateTime? @db.Timestamptz(6)
-  updatedBy String?   @db.Uuid
-  deletedAt DateTime? @db.Timestamptz(6)
-  deletedBy String?   @db.Uuid
-  isDeleted Boolean   @default(false)
+  createdAt          DateTime       @default(now()) @db.Timestamptz(6)
+  createdBy          String?        @db.Uuid
+  updatedAt          DateTime?      @updatedAt @db.Timestamptz(6)
+  updatedBy          String?        @db.Uuid
+  deletedAt          DateTime?      @db.Timestamptz(6)
+  deletedBy          String?        @db.Uuid
+  isDeleted          Boolean        @default(false)
 
   @@index([branchId])
   @@index([counselorId])
@@ -554,17 +763,22 @@ model Lead {
 }
 
 model LeadFollowUp {
-  id          String   @id @default(uuid()) @db.Uuid
-  leadId      String   @db.Uuid
-  counselorId String   @db.Uuid
-  notes       String   @db.Text
-  date        DateTime @db.Timestamptz(6)
+  id           String    @id @default(uuid()) @db.Uuid
+  leadId       String    @db.Uuid
+  counselorId  String    @db.Uuid
+  followUpDate DateTime  @db.Timestamptz(6)
+  followUpType String    @db.VarChar(50)
+  notes        String?   @db.Text
+  outcome      String?   @db.VarChar(50)
+  status       String    @default("Scheduled") @db.VarChar(50)
 
-  lead      Lead @relation(fields: [leadId], references: [id])
-  counselor User @relation("CounselorFollowUps", fields: [counselorId], references: [id])
+  lead         Lead      @relation(fields: [leadId], references: [id])
+  counselor    User      @relation("CounselorFollowUps", fields: [counselorId], references: [id])
 
-  createdAt DateTime @default(now()) @db.Timestamptz(6)
-  createdBy String?  @db.Uuid
+  createdAt    DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy    String?   @db.Uuid
+  updatedAt    DateTime? @db.Timestamptz(6)
+  updatedBy    String?   @db.Uuid
 
   @@index([leadId])
   @@map("lead_follow_ups")

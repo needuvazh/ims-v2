@@ -1,6 +1,7 @@
 import { Breadcrumbs, PageHeader } from '@ims/shared-ui';
 import { ClassroomForm } from '@/app/(protected)/organization/classrooms/classroom-form';
 import { loadOrganizationData } from '@/app/(protected)/organization/shared-data';
+import { Home, Building2, GraduationCap, Plus } from 'lucide-react';
 
 export const metadata = { title: 'Add Classroom | IMS Admin' };
 export const dynamic = 'force-dynamic';
@@ -17,10 +18,10 @@ export default async function CreateClassroomPage() {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard' },
-              { label: 'Organization', href: '/organization' },
-              { label: 'Classrooms', href: '/organization/classrooms' },
-              { label: 'Add Classroom' },
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Organization', href: '/organization', icon: <Building2 className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Classrooms', href: '/organization/classrooms', icon: <GraduationCap className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Add Classroom', icon: <Plus className="h-3.5 w-3.5 text-slate-500" /> },
             ]}
           />
         }
