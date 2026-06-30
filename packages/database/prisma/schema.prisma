@@ -387,6 +387,10 @@ model Branch {
   effectiveStartDate DateTime?    @db.Date
   effectiveEndDate   DateTime?    @db.Date
 
+  parentBranchId     String?      @db.Uuid
+  parentBranch       Branch?      @relation("BranchHierarchy", fields: [parentBranchId], references: [id])
+  childBranches      Branch[]     @relation("BranchHierarchy")
+
   institute     Institute    @relation(fields: [instituteId], references: [id])
   branchManager User?        @relation("BranchManager", fields: [branchManagerId], references: [id])
   departments   Department[]

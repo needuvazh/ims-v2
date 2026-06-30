@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/lib/runtime.ts": {
-    "mtime": 1782819705.3268945,
-    "ast_hash": "adfc99be26a19535ec90f6fca6b36981",
+    "mtime": 1782828036.5431287,
+    "ast_hash": "5d5bf66bc103634fe5454ac0145fed37",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/page.tsx": {
@@ -320,8 +320,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/next-env.d.ts": {
-    "mtime": 1782819892.2682755,
-    "ast_hash": "2a74d3909800ca5467fa83b0ab4a4890",
+    "mtime": 1782829045.776302,
+    "ast_hash": "d0f8375ae1199dc7acd3977fc33b78b8",
     "semantic_hash": ""
   },
   "apps/admin-portal/next.config.ts": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "packages/database/src/repositories/prisma-organization-repository.ts": {
-    "mtime": 1782679687.7678776,
-    "ast_hash": "9b49dcc7d861382af5f051051397788f",
+    "mtime": 1782827648.5440044,
+    "ast_hash": "88714de1df66d2b10f525485892e7e59",
     "semantic_hash": ""
   },
   "packages/database/src/repositories/prisma-reset-token-repository.ts": {
@@ -440,8 +440,8 @@
     "semantic_hash": ""
   },
   "packages/database/src/repositories/prisma-user-repository.ts": {
-    "mtime": 1782805721.9462154,
-    "ast_hash": "379dc8ba4f58c41fb91859e972e49c7d",
+    "mtime": 1782827962.652337,
+    "ast_hash": "512a20d50df42b3ffb9da2136bae1fa9",
     "semantic_hash": ""
   },
   "packages/database/tsconfig.json": {
@@ -485,13 +485,13 @@
     "semantic_hash": ""
   },
   "packages/identity-access/src/application/user-service.test.ts": {
-    "mtime": 1782805009.0395944,
-    "ast_hash": "435924596fa9c19439b98c22e55a8027",
+    "mtime": 1782828213.4825425,
+    "ast_hash": "7ccccdf36b56d3e5ef54d8012cb86b34",
     "semantic_hash": ""
   },
   "packages/identity-access/src/application/user-service.ts": {
-    "mtime": 1782806756.3704731,
-    "ast_hash": "0b93841d40340bb0abd3b37beeea9502",
+    "mtime": 1782828318.0307627,
+    "ast_hash": "57e53dc24b61a7407b80ec7fa046ca62",
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/access.ts": {
@@ -505,8 +505,8 @@
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/user.ts": {
-    "mtime": 1782799494.6118188,
-    "ast_hash": "06d7555fc825b638e4f61efcf83149b3",
+    "mtime": 1782827958.319705,
+    "ast_hash": "de2c452d1e895a4b12a70552b61726fd",
     "semantic_hash": ""
   },
   "packages/identity-access/src/index.ts": {
@@ -570,13 +570,13 @@
     "semantic_hash": ""
   },
   "packages/organization/src/application/organization-service.ts": {
-    "mtime": 1782679687.797454,
-    "ast_hash": "6f4585419e450f09ff976c62584add13",
+    "mtime": 1782827902.0379634,
+    "ast_hash": "6ee84a6bd9f3b8586302640ed2cda33b",
     "semantic_hash": ""
   },
   "packages/organization/src/domain/organization.ts": {
-    "mtime": 1782679687.7982283,
-    "ast_hash": "9b502b52848a8edcf8c7391c8c0641ef",
+    "mtime": 1782827622.3615577,
+    "ast_hash": "ec8dd9c3979ce63d3d7c5c6aa515c7ec",
     "semantic_hash": ""
   },
   "packages/organization/src/index.ts": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "vitest.config.ts": {
-    "mtime": 1782756201.9932551,
-    "ast_hash": "1dc952d764b12014287f6f00705a83a0",
+    "mtime": 1782827832.0684452,
+    "ast_hash": "faba8057bb9f34aa8f6bc1a04ef4cb81",
     "semantic_hash": ""
   },
   ".agent/skills/openspec-apply-change/SKILL.md": {
@@ -2370,8 +2370,8 @@
     "semantic_hash": ""
   },
   "docs/project-status.md": {
-    "mtime": 1782756201.8583636,
-    "ast_hash": "af60f470c861eecd1c0ad1e7d2d7d8a4",
+    "mtime": 1782829428.3879375,
+    "ast_hash": "fd20f2af7f1adee92c450eff0c65aa32",
     "semantic_hash": ""
   },
   "docs/useful_prompts.md": {
@@ -2515,8 +2515,8 @@
     "semantic_hash": ""
   },
   "openspec/specs/identity-access/spec.md": {
-    "mtime": 1782756201.9272475,
-    "ast_hash": "67329e4c8b5036a0b8f1288346dad032",
+    "mtime": 1782829492.724434,
+    "ast_hash": "0090f237e7d598f52d3838d75b52cb1d",
     "semantic_hash": ""
   },
   "openspec/specs/observability/spec.md": {
@@ -2605,18 +2605,18 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/identity/shared-data.ts": {
-    "mtime": 1782756201.801661,
-    "ast_hash": "f77e9729739d80bf8819f65a2585babc",
+    "mtime": 1782828528.3649242,
+    "ast_hash": "b04de267659c791b6a7b2a2cd17facc0",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/identity/users/[id]/edit/page.tsx": {
-    "mtime": 1782756793.8698032,
-    "ast_hash": "ad6f777c53007c25e2805713ec423883",
+    "mtime": 1782828106.7056715,
+    "ast_hash": "84bb7f4e0cc3e4cf7f1b3e42e66b6f95",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/identity/users/[id]/page.tsx": {
-    "mtime": 1782799494.5510323,
-    "ast_hash": "0024c42464adc6bcd5b4a0ab8ab07bac",
+    "mtime": 1782828101.231655,
+    "ast_hash": "29f074f5feda0152fc378d18ccc38f21",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/identity/users/[id]/roles/manage-roles-form.tsx": {
@@ -2825,8 +2825,8 @@
     "semantic_hash": ""
   },
   "packages/database/scratch-db.ts": {
-    "mtime": 1782807771.6743267,
-    "ast_hash": "ba8cde0d8d3d0a84899f586ad6696a1a",
+    "mtime": 1782827597.1526597,
+    "ast_hash": "132062c0db66d6f60bbf9fa36faa1fe4",
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/notification-port.ts": {
@@ -3485,8 +3485,8 @@
     "semantic_hash": ""
   },
   "packages/database/src/repositories/prisma-user-branch-access-repository.ts": {
-    "mtime": 1782756201.9408674,
-    "ast_hash": "fb4b9c5da4d5fccfcf43e7c4a31c1329",
+    "mtime": 1782827686.8057096,
+    "ast_hash": "85d78954d0ec1881b701ebf459de19ec",
     "semantic_hash": ""
   },
   "packages/identity-access/src/application/audit-query-service.test.ts": {
@@ -3505,8 +3505,8 @@
     "semantic_hash": ""
   },
   "packages/identity-access/src/application/authorization-guard.ts": {
-    "mtime": 1782756201.9446447,
-    "ast_hash": "e9bc976b0da2b8eca58790677631113e",
+    "mtime": 1782827701.5795221,
+    "ast_hash": "4f0cc4d4979c0d3053e8218e0fa95cfc",
     "semantic_hash": ""
   },
   "packages/identity-access/src/application/branch-access-service.test.ts": {
@@ -3520,8 +3520,8 @@
     "semantic_hash": ""
   },
   "packages/identity-access/src/application/login-history-query-service.ts": {
-    "mtime": 1782756201.9458284,
-    "ast_hash": "86ce41fc02e916d48cbccffd799237ef",
+    "mtime": 1782828034.575882,
+    "ast_hash": "b7461717b3f37e09089f63447644c167",
     "semantic_hash": ""
   },
   "packages/identity-access/src/application/notification-service.ts": {
@@ -3550,13 +3550,13 @@
     "semantic_hash": ""
   },
   "packages/identity-access/src/application/session-service.test.ts": {
-    "mtime": 1782756201.9509888,
-    "ast_hash": "e3b14f909d6026028d79a864b993e5ea",
+    "mtime": 1782828019.6078324,
+    "ast_hash": "5a9b0d0c09645bc90fff5706b0aaa54a",
     "semantic_hash": ""
   },
   "packages/identity-access/src/application/session-service.ts": {
-    "mtime": 1782756201.9514,
-    "ast_hash": "741ce5d6a33bfb1b835e37609b9b351b",
+    "mtime": 1782828004.1924133,
+    "ast_hash": "b9add7fd9fbae006a6c2e2ca3be4cebd",
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/iam-domain.test.ts": {
@@ -3570,8 +3570,8 @@
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/repositories.ts": {
-    "mtime": 1782805716.7985206,
-    "ast_hash": "fa2f2e3d482251509974421a5e4d511c",
+    "mtime": 1782827664.1147075,
+    "ast_hash": "9086ad6260f523df55e0621d8e4d9350",
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/security-policy.ts": {
@@ -3645,73 +3645,18 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 02 \u2013 Organization Management/Module 02 \u2013 Organization Management.md": {
-    "mtime": 1782756201.84779,
-    "ast_hash": "acbe00444da12dcf4cd00dc30ce42173",
+    "mtime": 1782822429.380585,
+    "ast_hash": "5f605226634f3420ca8a031704e82861",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 02 \u2013 Organization Management/Part 2.1 Organization (Institute) Management.md": {
-    "mtime": 1782756201.8480968,
-    "ast_hash": "a1076a1c328c10ec4b73710cc6860245",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 02 \u2013 Organization Management/Part 2.10 Holiday Calendar Management.md": {
-    "mtime": 1782756201.8484304,
-    "ast_hash": "1cef7a4aac283c1977caddec69b8eb8b",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 02 \u2013 Organization Management/Part 2.11 Cost Center Management.md": {
-    "mtime": 1782756201.8491933,
-    "ast_hash": "e9b961ab510f847854738eb1911fd265",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 02 \u2013 Organization Management/Part 2.12 Organization Branding.md": {
-    "mtime": 1782756201.849534,
-    "ast_hash": "f081595299def3ce3127a1faed985846",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 02 \u2013 Organization Management/Part 2.13 Organization Settings.md": {
-    "mtime": 1782756201.8498032,
-    "ast_hash": "c318c14014885ec1ff088dd51248846e",
+    "mtime": 1782822397.9805956,
+    "ast_hash": "ee3a501fceb501d514495e76c0a0aa36",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 02 \u2013 Organization Management/Part 2.2 Branch Management.md": {
     "mtime": 1782756201.850232,
     "ast_hash": "9dac0e4a6ecc036ddfeb2430eddeed89",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 02 \u2013 Organization Management/Part 2.3 Campus Management.md": {
-    "mtime": 1782756201.8508263,
-    "ast_hash": "075bdf3c5d38899306e2bf398d1622d1",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 02 \u2013 Organization Management/Part 2.4 Building Management.md": {
-    "mtime": 1782756201.851067,
-    "ast_hash": "3ba17f45355815d56f983242a1f218be",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 02 \u2013 Organization Management/Part 2.5 Floor Management.md": {
-    "mtime": 1782756201.8513298,
-    "ast_hash": "1d5863f011615f5c8236933589bdd5c0",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 02 \u2013 Organization Management/Part 2.6 Classroom Management.md": {
-    "mtime": 1782756201.852158,
-    "ast_hash": "2b1482df1999d75c2326c0315f823b02",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 02 \u2013 Organization Management/Part 2.7 Department Management.md": {
-    "mtime": 1782756201.8524594,
-    "ast_hash": "80b9356a3d2f9fe5aff48a0616c30683",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 02 \u2013 Organization Management/Part 2.8 Academic Division Management.md": {
-    "mtime": 1782756201.8530064,
-    "ast_hash": "a7c14de25095f406f8bd1c7562076620",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 02 \u2013 Organization Management/Part 2.9 Working Hours Management.md": {
-    "mtime": 1782756201.8532426,
-    "ast_hash": "7da1c20682c24c325098d55212ab37f7",
     "semantic_hash": ""
   },
   "docs/operations/iam-api.openapi.yaml": {
@@ -3722,56 +3667,6 @@
   "docs/operations/jwt-key-setup.md": {
     "mtime": 1782756201.857372,
     "ast_hash": "36b7669c67aa49c60c368be261c6a41e",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-iam-module-01/.openspec.yaml": {
-    "mtime": 1782756201.9113338,
-    "ast_hash": "aa6db2eaf8f605159d974c0bba1bf50a",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-iam-module-01/design.md": {
-    "mtime": 1782756201.9119203,
-    "ast_hash": "66912c56a821ce290aab93ace7dc47df",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-iam-module-01/proposal.md": {
-    "mtime": 1782756201.9125333,
-    "ast_hash": "6bbc15057de86b7568c968186fdc6121",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-iam-module-01/specs/iam-api-contracts/spec.md": {
-    "mtime": 1782756201.9140577,
-    "ast_hash": "0f625f5f56f1a968860915f7a6b14e05",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-iam-module-01/specs/iam-audit-notifications/spec.md": {
-    "mtime": 1782756201.9148185,
-    "ast_hash": "1a671af720b7e304e7ecb8921628f9a6",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-iam-module-01/specs/iam-branch-access/spec.md": {
-    "mtime": 1782756201.915318,
-    "ast_hash": "a7e68b236ced113d9f9f6f0960ac925d",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-iam-module-01/specs/iam-operations-observability/spec.md": {
-    "mtime": 1782756201.9157312,
-    "ast_hash": "b557381fef0792e2de2738a6dc7a6c32",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-iam-module-01/specs/iam-reporting-exports/spec.md": {
-    "mtime": 1782756201.916223,
-    "ast_hash": "f2d253551e539db7752e78380900485b",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-iam-module-01/specs/identity-access/spec.md": {
-    "mtime": 1782756201.9168706,
-    "ast_hash": "d6f51d7af1d472287fd1ec79bac9eb82",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-iam-module-01/tasks.md": {
-    "mtime": 1782756201.9176197,
-    "ast_hash": "869abc05442b4288a6690e9ee678b200",
     "semantic_hash": ""
   },
   "openspec/changes/implement-organization-management/.openspec.yaml": {
@@ -3969,31 +3864,6 @@
     "ast_hash": "dc63b205034e9e98095398d8f18a1ebd",
     "semantic_hash": ""
   },
-  "openspec/changes/implement-iam-ui-phase-01/.openspec.yaml": {
-    "mtime": 1782756201.9190388,
-    "ast_hash": "603c5ea41732be2351f30ab0ce563b10",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-iam-ui-phase-01/design.md": {
-    "mtime": 1782756201.9200017,
-    "ast_hash": "c624ab0efad2c0126e2560997bfe9ec2",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-iam-ui-phase-01/proposal.md": {
-    "mtime": 1782756201.9205003,
-    "ast_hash": "2f00ece2a0388cd02a467b12ac919e61",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-iam-ui-phase-01/specs/iam-admin-portal-ui/spec.md": {
-    "mtime": 1782756201.9212508,
-    "ast_hash": "51fdf04330251642da0a7623e6fed9a9",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-iam-ui-phase-01/tasks.md": {
-    "mtime": 1782756201.922783,
-    "ast_hash": "b6c8f61e0ad495f221770be0184e811e",
-    "semantic_hash": ""
-  },
   "apps/admin-portal/app/(auth)/activate-account/schema.test.ts": {
     "mtime": 1782756201.7659895,
     "ast_hash": "40cb61c39092c5ee0f95d445ef287392",
@@ -4100,8 +3970,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/users/[id]/_components/user-lifecycle-dropdown.tsx": {
-    "mtime": 1782806370.461868,
-    "ast_hash": "c26b9a67583b4d9d8cc130b471a54115",
+    "mtime": 1782828508.476463,
+    "ast_hash": "bf8798c39dbc8ceb8279337f45550985",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/users/_components/user-form.tsx": {
@@ -4180,8 +4050,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(auth)/sign-in/actions.test.ts": {
-    "mtime": 1782806662.1542175,
-    "ast_hash": "a7074abb745d7c37c013f677e59ee351",
+    "mtime": 1782827960.4660118,
+    "ast_hash": "9ecca70514c3788ff7a5145d4009d349",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/roles/schema.test.ts": {
@@ -4260,8 +4130,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/reports/[reportType]/page.tsx": {
-    "mtime": 1782820961.255523,
-    "ast_hash": "f28a343e41bc79403d7db815c57038e2",
+    "mtime": 1782828547.5171764,
+    "ast_hash": "1cdf6eeed067da5396e19a947248d508",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/reports/_components/ExportButton.tsx": {
@@ -4272,6 +4142,171 @@
   "docs/architecture/frd/FRD_Generation_Guide.md": {
     "mtime": 1782821399.5230565,
     "ast_hash": "56556b7a2da84bf8115b26dfad4327c4",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 02 \u2013 Organization Management/Part 2.3 Department Management.md": {
+    "mtime": 1782822413.3781805,
+    "ast_hash": "d220b53f4a4078e25035b32c61e894ec",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 02 \u2013 Organization Management/Part 2.4 Classroom Management.md": {
+    "mtime": 1782822421.7511466,
+    "ast_hash": "0de7c9015132c5a5b304667bba3a10e8",
+    "semantic_hash": ""
+  },
+  "openspec/specs/iam-api-contracts/spec.md": {
+    "mtime": 1782823695.890608,
+    "ast_hash": "117272408ed6ded010479b07da5bc04b",
+    "semantic_hash": ""
+  },
+  "openspec/specs/iam-audit-notifications/spec.md": {
+    "mtime": 1782823697.9222443,
+    "ast_hash": "d9bae6071ad76af4dc362812aeb7ef19",
+    "semantic_hash": ""
+  },
+  "openspec/specs/iam-branch-access/spec.md": {
+    "mtime": 1782823699.8848488,
+    "ast_hash": "6832d43dc86fc79d29a8b5ba3416c159",
+    "semantic_hash": ""
+  },
+  "openspec/specs/iam-operations-observability/spec.md": {
+    "mtime": 1782823702.7483506,
+    "ast_hash": "001df3c9f921e7179eb7037eafb431c0",
+    "semantic_hash": ""
+  },
+  "openspec/specs/iam-reporting-exports/spec.md": {
+    "mtime": 1782823705.6873696,
+    "ast_hash": "783cc71bd460db93db6bc3679aa547e0",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/iam/audit/page.test.tsx": {
+    "mtime": 1782827860.482754,
+    "ast_hash": "3ef1f04c9aa482b3a4ae06b51787d319",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/iam/login-history/page.test.tsx": {
+    "mtime": 1782827846.9414632,
+    "ast_hash": "2a198f3af80171459d14cf61ecb88918",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/iam/security-policy/page.test.tsx": {
+    "mtime": 1782827842.4287446,
+    "ast_hash": "0911f6bf2d7a09b68839f655eba09854",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/iam/sessions/page.test.tsx": {
+    "mtime": 1782827790.1493084,
+    "ast_hash": "c81eff949b626f251b113416c35f74a1",
+    "semantic_hash": ""
+  },
+  "packages/database/prisma/migrations/20260630135128_add_branch_hierarchy/migration.sql": {
+    "mtime": 1782827507.4318984,
+    "ast_hash": "53f3e0e8353e6d72425a922755e81f50",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-06-30-implement-iam-module-01/.openspec.yaml": {
+    "mtime": 1782756201.9113338,
+    "ast_hash": "aa6db2eaf8f605159d974c0bba1bf50a",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-06-30-implement-iam-module-01/design.md": {
+    "mtime": 1782756201.9119203,
+    "ast_hash": "66912c56a821ce290aab93ace7dc47df",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-06-30-implement-iam-module-01/proposal.md": {
+    "mtime": 1782756201.9125333,
+    "ast_hash": "6bbc15057de86b7568c968186fdc6121",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-06-30-implement-iam-module-01/specs/iam-api-contracts/spec.md": {
+    "mtime": 1782756201.9140577,
+    "ast_hash": "0f625f5f56f1a968860915f7a6b14e05",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-06-30-implement-iam-module-01/specs/iam-audit-notifications/spec.md": {
+    "mtime": 1782756201.9148185,
+    "ast_hash": "1a671af720b7e304e7ecb8921628f9a6",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-06-30-implement-iam-module-01/specs/iam-branch-access/spec.md": {
+    "mtime": 1782756201.915318,
+    "ast_hash": "a7e68b236ced113d9f9f6f0960ac925d",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-06-30-implement-iam-module-01/specs/iam-operations-observability/spec.md": {
+    "mtime": 1782756201.9157312,
+    "ast_hash": "b557381fef0792e2de2738a6dc7a6c32",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-06-30-implement-iam-module-01/specs/iam-reporting-exports/spec.md": {
+    "mtime": 1782756201.916223,
+    "ast_hash": "f2d253551e539db7752e78380900485b",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-06-30-implement-iam-module-01/specs/identity-access/spec.md": {
+    "mtime": 1782756201.9168706,
+    "ast_hash": "d6f51d7af1d472287fd1ec79bac9eb82",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-06-30-implement-iam-module-01/tasks.md": {
+    "mtime": 1782756201.9176197,
+    "ast_hash": "869abc05442b4288a6690e9ee678b200",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-06-30-implement-iam-ui-phase-01/.openspec.yaml": {
+    "mtime": 1782756201.9190388,
+    "ast_hash": "603c5ea41732be2351f30ab0ce563b10",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-06-30-implement-iam-ui-phase-01/design.md": {
+    "mtime": 1782756201.9200017,
+    "ast_hash": "c624ab0efad2c0126e2560997bfe9ec2",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-06-30-implement-iam-ui-phase-01/proposal.md": {
+    "mtime": 1782756201.9205003,
+    "ast_hash": "2f00ece2a0388cd02a467b12ac919e61",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-06-30-implement-iam-ui-phase-01/specs/iam-admin-portal-ui/spec.md": {
+    "mtime": 1782756201.9212508,
+    "ast_hash": "51fdf04330251642da0a7623e6fed9a9",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-06-30-implement-iam-ui-phase-01/tasks.md": {
+    "mtime": 1782828005.28793,
+    "ast_hash": "eeda99d6691f43263a101e2fad4a637d",
+    "semantic_hash": ""
+  },
+  "openspec/specs/iam-admin-portal-ui/spec.md": {
+    "mtime": 1782829421.8570685,
+    "ast_hash": "23cf9e2e2f1031a53108a333aaaeffef",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-06-30-iam-branch-scoping-fixes/.openspec.yaml": {
+    "mtime": 1782823187.8697026,
+    "ast_hash": "3a2e665cfb0f43d1733f16a967480b31",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-06-30-iam-branch-scoping-fixes/design.md": {
+    "mtime": 1782823576.8828375,
+    "ast_hash": "ca4cf6d1df56a3a810937a8ca5cd42b2",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-06-30-iam-branch-scoping-fixes/proposal.md": {
+    "mtime": 1782823569.222102,
+    "ast_hash": "4383a7833aa82c6838d3459a53cd7914",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-06-30-iam-branch-scoping-fixes/specs/identity-access-delta.md": {
+    "mtime": 1782823580.7276328,
+    "ast_hash": "79f9b26a40d0d6b4ebd512418c92882d",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-06-30-iam-branch-scoping-fixes/tasks.md": {
+    "mtime": 1782828624.685054,
+    "ast_hash": "b370b6f8ab795713367a06da816588e4",
     "semantic_hash": ""
   }
 }

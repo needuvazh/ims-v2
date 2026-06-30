@@ -45,6 +45,7 @@ export type UpdateInstituteCommand = z.infer<typeof updateInstituteCommandSchema
 export type Branch = {
   id: BranchId;
   instituteId: Uuid;
+  parentBranchId: string | null;
   branchCode: string;
   branchName: string;
   address: string | null;
@@ -60,6 +61,7 @@ export type Branch = {
 
 const branchBaseSchema = z.object({
   instituteId: z.string().uuid(),
+  parentBranchId: z.string().uuid().nullable().optional(),
   branchCode: z.string().trim().min(2).max(50),
   branchName: z.string().trim().min(2).max(200),
   address: z.string().trim().nullable().optional(),

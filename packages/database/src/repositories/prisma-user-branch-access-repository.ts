@@ -143,4 +143,34 @@ export class PrismaUserBranchAccessRepository implements IUserBranchAccessReposi
       });
     });
   }
+
+  async resolveChildBranchIds(branchId: Uuid): Promise<Uuid[]> {
+    const allBranches = await this.prisma.branch.findMany({
+      where: { status: 'Active', isDeleted: false },
+      select: { id: true, parentBranchId: true }
+    });
+
+    const childrenMap = new Map<string, string[]>();
+    for (const b of allBranches) {
+      if (b.parentBranchId) {
+        const list = childrenMap.get(b.parentBranchId) || [];
+        list.push(b.id);
+        childrenMap.set(b.parentBranchId, list);
+      }
+    }
+
+    const result: Uuid[] = [];
+    const queue: string[] = [branchId];
+    while (queue.length > 0) {
+      const current = queue.shift()!;
+      const children = childrenMap.get(current) || [];
+      for (const childId of children) {
+        if (!result.includes(childId as Uuid)) {
+          result.push(childId as Uuid);
+          queue.push(childId);
+        }
+      }
+    }
+    return result;
+  }
 }

@@ -1,705 +1,177 @@
-Based on the ASTI proposal, DDD review, and enterprise architecture, **Module 02 – Organization Management** should become the **foundation bounded context** for every other module. Every aggregate in the system (Student, Employee, Batch, Invoice, Attendance, etc.) should belong to an Organization hierarchy to support multi-branch operations, branch-level security, and future scalability. The project documentation explicitly identifies Organization Management as a core bounded context responsible for branches, departments, and classrooms, with branch-based data isolation enforced throughout the platform. 
-
----
-
 # Module 02 – Organization Management
 
 **Version:** 3.0
 
-**Bounded Context:** Organization
+**Bounded Context:** Organization Management
 
 **Priority:** Critical (Foundation Module)
 
 **Dependencies**
-
 * Module 01 – Identity & Access Management
-* Notification Module
-* Audit Module
+* Audit & Compliance Module
 
 **Dependent Modules**
-
-* CRM
-* Admissions
-* Student Management
-* Course Management
-* Batch Management
-* Attendance
-* HR
-* Finance
-* Reports
-* Website
-* Document Management
+* Lead, Enquiry & CRM Management
+* Admission & Enrollment Management
+* Course Catalog Management
+* Training Delivery Management
+* Scheduling, Calendar & Holiday Management
+* Attendance Management
+* Fee, Billing & Receivables Management
+* Faculty / Trainer Management
+* Reporting & Executive Dashboards
 
 ---
 
 # 1. Purpose
 
-Organization Management provides the master organizational hierarchy for ASTI.
+Organization Management provides the foundational operational hierarchy for ASTI. It defines the organizational units within which all training operations, security scopes, billing transactions, and identity associations operate. 
 
-It defines:
-
-* Company
-* Branches
-* Campuses
-* Buildings
-* Floors
-* Classrooms
-* Departments
-* Academic Divisions
-* Cost Centers
-* Working Hours
-* Holiday Calendars
-
-Every business transaction belongs to an organization.
-
-Without Organization Management, no other module can function.
+The module scopes operations to a strict hierarchy:
+```text
+Institute (Organization)
+   └── Branch
+          ├── Department
+          └── Classroom
+```
+Every student, trainer, batch, enrollment, and invoice in the system belongs directly or indirectly to a **Branch** context, which allows ASTI to enforce branch-based data isolation.
 
 ---
 
 # 2. Objectives
 
-The module shall enable ASTI administrators to:
-
-* Configure institute structure
-* Support multiple branches
-* Manage classrooms
-* Manage departments
-* Configure operating hours
-* Configure academic divisions
-* Configure holiday calendars
-* Configure timezone
-* Configure language defaults
-* Configure branch branding
-* Configure branch contacts
-
-The project information also identifies organization details such as institute legal name, branches, departments, working hours, and public holiday calendars as required master data collected during implementation. 
+The module shall enable administrators to:
+* Set up the core Institute registration profile.
+* Create and manage multiple physical training Branches.
+* Configure branch contacts, addresses, and managers.
+* Register branch-scoped Departments (business and training divisions).
+* Register branch-scoped Classrooms with seating capacities.
+* Enforce start and end dates (active dating bounds) for branches, departments, and classrooms.
+* Support soft deletes and cascading status transitions (e.g., closing a branch restricts student admissions).
 
 ---
 
 # 3. Scope
 
-Included
+### Included
+* **Institute Management:** Profile, registration numbers, tax numbers, and contact details.
+* **Branch Management:** Branch names, contact emails/phones, local addresses, manager assignments, status transitions, and active dating bounds.
+* **Department Management:** Division codes, names, descriptions, and department head assignments.
+* **Classroom Management:** Classroom codes/names, seating capacities, and text location descriptions.
 
-* Institute
-* Branches
-* Campuses
-* Buildings
-* Rooms
-* Departments
-* Academic Divisions
-* Branch Contacts
-* Working Hours
-* Holidays
-* Branch Settings
-* Branch Branding
-
-Excluded
-
-* Users
-* Students
-* Courses
-* Finance
+### Excluded
+* Campus, Building, and Floor entities (modeled as simple text location strings on Classrooms).
+* Custom branding configurations and cost centers (unnecessary for Phase 1).
+* Shared multi-branch departments (departments belong strictly to one branch).
 
 ---
 
 # 4. Actors
 
-| Actor                      | Description              |
-| -------------------------- | ------------------------ |
-| Super Administrator        | Complete access          |
-| Organization Administrator | Institute administration |
-| Branch Manager             | Branch management        |
-| Receptionist               | Read-only branch info    |
-| HR                         | Department management    |
-| Finance                    | Cost center reference    |
-| Scheduler                  | Classroom allocation     |
-| API                        | Read organization        |
+| Actor | Description |
+| ----- | ----------- |
+| Super Administrator | Full configuration and complete platform operations control |
+| Institute Administrator | Manage global settings, register new branches |
+| Branch Manager | Manage departments, classrooms, and staff within their assigned branch |
+| Receptionist / Counselor | View branch contacts and classroom list for query handling |
 
 ---
 
 # 5. Domain Model
 
-```
-Organization
-│
-├── Branch
-│     │
-│     ├── Campus
-│     │      │
-│     │      ├── Building
-│     │      │      │
-│     │      │      ├── Floor
-│     │      │      │      │
-│     │      │      │      └── Classroom
-│     │      │
-│     │      └── Facilities
-│     │
-│     ├── Department
-│     │
-│     ├── Academic Division
-│     │
-│     ├── Working Hours
-│     │
-│     ├── Holiday Calendar
-│     │
-│     └── Branch Contacts
+```text
+Institute (Organization)
+   └── Branch
+          ├── Department (Branch-scoped)
+          └── Classroom (Branch-scoped)
 ```
 
 ---
 
-# 6. Aggregate Roots
+# 6. Aggregate Roots & Owned Entities
 
-## Organization
+### Institute
+* Represents the top-level corporate entity.
+* Has one-to-many relationship with `Branch`.
 
-Owns
+### Branch
+* Scopes all business transactions (students, trainers, courses, batches).
+* Owns local departments, classrooms, and branch managers.
 
-* Branches
-* Policies
-* Branding
+### Department
+* Represents a functional academic or operational division within a branch.
+* Linked to a department head user account.
 
----
-
-## Branch
-
-Owns
-
-* Departments
-* Classrooms
-* Calendar
-* Contacts
-
----
-
-## Classroom
-
-Owns
-
-* Capacity
-* Equipment
-* Availability
-
----
-
-## Department
-
-Owns
-
-* Staff
-* Courses
+### Classroom
+* Defines a physical room or teaching space.
+* Controls maximum student capacity for batches scheduled inside the room.
 
 ---
 
 # 7. Functional Requirements
 
----
-
-## ORG-001 Create Organization
-
-**Description**
-
-System shall allow Super Administrator to create an organization.
-
-Fields
-
-* Legal Name
-* Trade Name
-* Arabic Name
-* Registration Number
-* VAT Number
-* Country
-* Currency
-* Timezone
-* Default Language
-* RTL Enabled
-
-Priority
-
-Critical
-
-Acceptance
-
-Organization successfully created.
-
----
-
-## ORG-002 Edit Organization
-
-Administrator may update
-
-* Logo
-* Address
-* Contact
-* Email
-* Website
-* Branding
-
----
-
-## ORG-003 Configure Branch
-
-Each organization can contain multiple branches.
-
-Fields
-
-* Branch Code
-* Branch Name
-* Arabic Name
-* Phone
-* Email
-* Manager
-* Status
-
----
-
-## ORG-004 Branch Status
-
-Supported statuses
-
-```
-Draft
-
-Active
-
-Inactive
-
-Under Maintenance
-
-Closed
-
-Archived
-```
-
----
-
-## ORG-005 Branch Address
-
-Store
-
-* Country
-* State
-* Governorate
-* City
-* Postal Code
-* Latitude
-* Longitude
-* Google Map URL
-
----
-
-## ORG-006 Departments
-
-Allow creation of
-
-* Training
-* Finance
-* HR
-* Sales
-* Administration
-* Marketing
-
-Custom departments supported.
-
----
-
-## ORG-007 Academic Divisions
-
-Examples
-
-```
-IT
-
-Mechanical
-
-Electrical
-
-Safety
-
-Management
-
-Language
-
-Corporate Training
-```
-
----
-
-## ORG-008 Working Hours
-
-Configure
-
-Sunday
-
-Monday
-
-Tuesday
-
-Wednesday
-
-Thursday
-
-Friday
-
-Saturday
-
-Each day
-
-Open
-
-Close
-
-Break
-
-Overtime
-
----
-
-## ORG-009 Holiday Calendar
-
-Support
-
-National holidays
-
-Branch holidays
-
-Emergency closure
-
-Weather closure
-
-Ramadan schedule
-
-Eid holidays
-
----
-
-## ORG-010 Buildings
-
-Create buildings.
-
-Attributes
-
-* Code
-* Name
-* Floors
-
----
-
-## ORG-011 Floors
-
-Each building contains multiple floors.
-
----
-
-## ORG-012 Classrooms
-
-Fields
-
-* Room Number
-* Capacity
-* Type
-* Projector
-* Whiteboard
-* Smart TV
-* Lab
-* Computer Count
-
----
-
-## ORG-013 Classroom Availability
-
-Track
-
-Available
-
-Occupied
-
-Maintenance
-
-Reserved
-
----
-
-## ORG-014 Facilities
-
-Examples
-
-* Library
-* Lab
-* Cafeteria
-* Parking
-* Prayer Hall
-
----
-
-## ORG-015 Cost Centers
-
-Configure cost centers for Finance integration.
-
----
-
-## ORG-016 Organization Branding
-
-Store
-
-* Logo
-* Favicon
-* Theme
-* Primary Color
-* Secondary Color
-* Email Template
-* Certificate Theme
-
----
-
-## ORG-017 Branch Branding
-
-Each branch may override
-
-* Logo
-* Contact
-* Banner
-* Email Footer
-
----
-
-## ORG-018 Organization Contacts
-
-Support
-
-* Primary Contact
-* Emergency Contact
-* Finance Contact
-* HR Contact
-
----
-
-## ORG-019 Branch Settings
-
-Settings include
-
-* Default Currency
-* Timezone
-* Date Format
-* Number Format
-* Fiscal Year
-* Attendance Policy
-* Default Language
-
----
-
-## ORG-020 Archive Branch
-
-Cannot archive when
-
-* Active batches exist
-* Active students exist
-* Employees assigned
-* Pending invoices exist
+### Institute Management
+* **ORG-001 Create Institute:** Set up the root legal identity, tax registration, and primary country settings.
+* **ORG-002 Update Institute:** Edit registration, address, and global contact parameters.
+
+### Branch Management
+* **ORG-003 Create Branch:** Add a physical branch location with a unique code under the institute.
+* **ORG-004 Branch Status Transitions:** Transition branches across statuses (`Draft`, `Active`, `Inactive`, `Archived`).
+* **ORG-005 Branch Manager Assignment:** Assign a registered user as the manager of a branch.
+* **ORG-006 Branch Active Dating:** Restrict branch operations to specified effective start and end dates.
+
+### Department Management
+* **ORG-007 Create Department:** Create a department with a unique code within a branch context.
+* **ORG-008 Assign Department Head:** Assign an employee user to manage the department.
+* **ORG-009 Department Active Dating:** Set effective dates for the department.
+
+### Classroom Management
+* **ORG-010 Create Classroom:** Register a physical room with unique name and capacity under a branch.
+* **ORG-011 Classroom Capacity Control:** Set capacity limits to prevent batch scheduling overload.
 
 ---
 
 # 8. Business Rules
 
-| ID     | Rule                                              |
-| ------ | ------------------------------------------------- |
-| BR-001 | Organization code must be unique                  |
-| BR-002 | Branch code unique within organization            |
-| BR-003 | Classroom number unique within building           |
-| BR-004 | Capacity must be greater than zero                |
-| BR-005 | Closed branches cannot accept admissions          |
-| BR-006 | Inactive branches cannot schedule classes         |
-| BR-007 | Branch cannot be deleted if referenced            |
-| BR-008 | Default branch cannot be archived                 |
-| BR-009 | Every branch must have at least one administrator |
-| BR-010 | Every classroom belongs to exactly one branch     |
+* **BR-ORG-001:** Every branch must belong to the registered institute.
+* **BR-ORG-002:** Branch codes must be globally unique.
+* **BR-ORG-003:** Department codes must be unique within their parent branch.
+* **BR-ORG-004:** Classroom names must be unique within their parent branch.
+* **BR-ORG-005:** Seating capacity must be a positive integer greater than zero.
+* **BR-ORG-006:** Inactive or archived branches, departments, or classrooms cannot be selected for scheduling or new enrollments.
+* **BR-ORG-007:** No hard deletions. Deactivated records are logically soft-deleted (`isDeleted = true`) to maintain historical references.
 
 ---
 
-# 9. Workflow
+# 9. State Machines
 
+### Branch / Department / Classroom Status Lifecycle
 ```text
-Create Organization
-        │
-        ▼
-Create Branch
-        │
-        ▼
-Configure Departments
-        │
-        ▼
-Create Buildings
-        │
-        ▼
-Create Classrooms
-        │
-        ▼
-Assign Working Hours
-        │
-        ▼
-Configure Holidays
-        │
-        ▼
-Organization Ready
+Draft (Initial config)
+   │
+   ▼
+Active (Operational) ◄───► Inactive (Temporarily suspended)
+   │
+   ▼
+Archived (Logically soft-deleted, read-only)
 ```
 
 ---
 
-# 10. State Machine
+# 10. Specifications Inventory
 
-## Branch
-
-```text
-Draft
-   │
-   ▼
-Active
-   │
-   ├──► Maintenance
-   │
-   ├──► Inactive
-   │
-   ▼
-Closed
-   │
-   ▼
-Archived
-```
+This module is detailed across the following four parts:
+1. **[Part 2.1 – Institute Management](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/docs/architecture/frd/Module%2002%20%E2%80%93%20Organization%20Management/Part%202.1%20Organization%20(Institute)%20Management.md)**
+2. **[Part 2.2 – Branch Management](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/docs/architecture/frd/Module%2002%20%E2%80%93%20Organization%20Management/Part%202.2%20Branch%20Management.md)**
+3. **[Part 2.3 – Department Management](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/docs/architecture/frd/Module%2002%20%E2%80%93%20Organization%20Management/Part%202.3%20Department%20Management.md)**
+4. **[Part 2.4 – Classroom Management](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/docs/architecture/frd/Module%2002%20%E2%80%93%20Organization%20Management/Part%202.4%20Classroom%20Management.md)**
 
 ---
 
-# 11. Screens
+# 11. Database Model Matrix
 
-* Organization Dashboard
-* Organization Profile
-* Branch List
-* Branch Details
-* Department Management
-* Academic Divisions
-* Building Management
-* Floor Management
-* Classroom Management
-* Working Hours
-* Holiday Calendar
-* Organization Branding
-* Branch Branding
-* Cost Centers
-* Organization Settings
-
----
-
-# 12. Permissions Matrix
-
-| Permission         | Super Admin | Org Admin | Branch Manager | HR |
-| ------------------ | ----------- | --------- | -------------- | -- |
-| View Organization  | ✓           | ✓         | ✓              | ✓  |
-| Edit Organization  | ✓           | ✓         | ✗              | ✗  |
-| Create Branch      | ✓           | ✓         | ✗              | ✗  |
-| Edit Branch        | ✓           | ✓         | ✓ (Own Branch) | ✗  |
-| Archive Branch     | ✓           | ✗         | ✗              | ✗  |
-| Manage Departments | ✓           | ✓         | ✓              | ✓  |
-| Manage Classrooms  | ✓           | ✓         | ✓              | ✗  |
-| Manage Holidays    | ✓           | ✓         | ✓              | ✗  |
-
----
-
-# 13. Reports
-
-* Branch Summary
-* Organization Hierarchy
-* Department Directory
-* Classroom Utilization
-* Classroom Capacity Report
-* Branch Contact Directory
-* Holiday Calendar
-* Working Hours Report
-
----
-
-# 14. Dashboard Widgets
-
-* Total Branches
-* Active Branches
-* Departments
-* Buildings
-* Classrooms
-* Available Classrooms
-* Classroom Occupancy
-* Holiday Count
-* Upcoming Holidays
-
----
-
-# 15. Integrations
-
-* Identity & RBAC
-* Course Management
-* Batch Scheduling
-* Attendance
-* HRMS
-* Finance
-* Website CMS
-* Reporting Engine
-
----
-
-# 16. Domain Events
-
-* `OrganizationCreated`
-* `OrganizationUpdated`
-* `BranchCreated`
-* `BranchActivated`
-* `BranchDeactivated`
-* `BranchArchived`
-* `DepartmentCreated`
-* `DepartmentUpdated`
-* `BuildingCreated`
-* `ClassroomCreated`
-* `ClassroomUpdated`
-* `HolidayCalendarUpdated`
-* `WorkingHoursUpdated`
-
----
-
-# 17. Database Design (High-Level)
-
-### Aggregates
-
-* Organization
-* Branch
-* Department
-* AcademicDivision
-* Building
-* Floor
-* Classroom
-* WorkingHours
-* HolidayCalendar
-
-### Suggested Tables
-
-* `organizations`
-* `organization_settings`
-* `organization_branding`
-* `branches`
-* `branch_contacts`
-* `branch_settings`
-* `departments`
-* `academic_divisions`
-* `buildings`
-* `floors`
-* `classrooms`
-* `working_hours`
-* `holiday_calendars`
-* `holiday_calendar_dates`
-
----
-
-## Enterprise Design Recommendations (v3 Enhancements)
-
-To make this module enterprise-grade and future-proof, I recommend adding the following capabilities beyond the initial proposal:
-
-* **Multi-branch logical isolation** using `branch_id` on all operational entities with automatic query scoping, ensuring users only access data for authorized branches. 
-* **Bilingual organization metadata**, storing English and Arabic values (organization names, branch names, department names, classroom names) using localized JSON structures rather than separate language-specific columns. 
-* **Immutable audit logging** for organization and branch configuration changes, capturing the user, timestamp, previous value, new value, IP address, and branch context to support compliance and operational traceability. 
-* **Soft-delete and archival policies** to preserve historical references from admissions, finance, and HR instead of permanently deleting organization records.
-* **Branch-specific configuration overrides**, allowing each branch to define branding, working hours, holidays, contact details, and operational policies while inheriting organization defaults where applicable.
-
-This module establishes the organizational backbone for the entire ASTI IMS platform and should be completed before implementing Student, Finance, Scheduling, Attendance, or HR bounded contexts.
+The PostgreSQL database (managed via Prisma) maps this context to the following tables:
+* `institutes` - Top-level organization record.
+* `branches` - Branch records, foreign key to `institutes`.
+* `departments` - Department records, foreign key to `branches`.
+* `classrooms` - Room records, foreign key to `branches`.

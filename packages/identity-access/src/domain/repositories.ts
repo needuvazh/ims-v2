@@ -56,6 +56,7 @@ export interface IUserBranchAccessRepository {
   update(access: UserBranchAccess): Promise<UserBranchAccess>;
   remove(userId: Uuid, branchId: Uuid, actorId?: Uuid, reason?: string | null): Promise<void>;
   setDefault(userId: Uuid, branchId: Uuid, actorId?: Uuid): Promise<void>;
+  resolveChildBranchIds(branchId: Uuid): Promise<Uuid[]>;
 }
 
 export interface UserSessionDto {

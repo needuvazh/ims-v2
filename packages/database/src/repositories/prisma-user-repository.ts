@@ -209,7 +209,14 @@ export class PrismaUserRepository implements IUserRepository {
     if (filters.userType) {
       where.userType = filters.userType;
     }
-    if (filters.branchId) {
+    if (filters.branchIds && filters.branchIds.length > 0) {
+      where.branchAccess = {
+        some: {
+          branchId: { in: filters.branchIds },
+          status: 'Active',
+        },
+      };
+    } else if (filters.branchId) {
       where.branchAccess = {
         some: {
           branchId: filters.branchId,

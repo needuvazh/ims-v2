@@ -1,16 +1,16 @@
 # Graph Report - ims-v2  (2026-06-30)
 
 ## Corpus Check
-- 820 files · ~742,349 words
+- 826 files · ~734,715 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 8886 nodes · 11375 edges · 862 communities (772 shown, 90 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 87 edges (avg confidence: 0.8)
+- 8511 nodes · 11039 edges · 811 communities (729 shown, 82 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 89 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7ade548d`
+- Built from commit: `800c9e73`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -518,15 +518,12 @@
 - [[_COMMUNITY_Community 501|Community 501]]
 - [[_COMMUNITY_Community 502|Community 502]]
 - [[_COMMUNITY_Community 503|Community 503]]
-- [[_COMMUNITY_Community 504|Community 504]]
 - [[_COMMUNITY_Community 505|Community 505]]
-- [[_COMMUNITY_Community 506|Community 506]]
 - [[_COMMUNITY_Community 507|Community 507]]
 - [[_COMMUNITY_Community 508|Community 508]]
 - [[_COMMUNITY_Community 509|Community 509]]
 - [[_COMMUNITY_Community 510|Community 510]]
 - [[_COMMUNITY_Community 511|Community 511]]
-- [[_COMMUNITY_Community 512|Community 512]]
 - [[_COMMUNITY_Community 513|Community 513]]
 - [[_COMMUNITY_Community 514|Community 514]]
 - [[_COMMUNITY_Community 515|Community 515]]
@@ -546,17 +543,10 @@
 - [[_COMMUNITY_Community 529|Community 529]]
 - [[_COMMUNITY_Community 530|Community 530]]
 - [[_COMMUNITY_Community 531|Community 531]]
-- [[_COMMUNITY_Community 532|Community 532]]
-- [[_COMMUNITY_Community 533|Community 533]]
-- [[_COMMUNITY_Community 534|Community 534]]
-- [[_COMMUNITY_Community 535|Community 535]]
-- [[_COMMUNITY_Community 536|Community 536]]
-- [[_COMMUNITY_Community 537|Community 537]]
 - [[_COMMUNITY_Community 538|Community 538]]
 - [[_COMMUNITY_Community 539|Community 539]]
 - [[_COMMUNITY_Community 540|Community 540]]
 - [[_COMMUNITY_Community 541|Community 541]]
-- [[_COMMUNITY_Community 542|Community 542]]
 - [[_COMMUNITY_Community 543|Community 543]]
 - [[_COMMUNITY_Community 544|Community 544]]
 - [[_COMMUNITY_Community 545|Community 545]]
@@ -571,27 +561,12 @@
 - [[_COMMUNITY_Community 554|Community 554]]
 - [[_COMMUNITY_Community 555|Community 555]]
 - [[_COMMUNITY_Community 556|Community 556]]
-- [[_COMMUNITY_Community 557|Community 557]]
 - [[_COMMUNITY_Community 558|Community 558]]
 - [[_COMMUNITY_Community 559|Community 559]]
-- [[_COMMUNITY_Community 561|Community 561]]
 - [[_COMMUNITY_Community 562|Community 562]]
 - [[_COMMUNITY_Community 563|Community 563]]
 - [[_COMMUNITY_Community 564|Community 564]]
 - [[_COMMUNITY_Community 565|Community 565]]
-- [[_COMMUNITY_Community 566|Community 566]]
-- [[_COMMUNITY_Community 567|Community 567]]
-- [[_COMMUNITY_Community 568|Community 568]]
-- [[_COMMUNITY_Community 569|Community 569]]
-- [[_COMMUNITY_Community 570|Community 570]]
-- [[_COMMUNITY_Community 571|Community 571]]
-- [[_COMMUNITY_Community 572|Community 572]]
-- [[_COMMUNITY_Community 573|Community 573]]
-- [[_COMMUNITY_Community 574|Community 574]]
-- [[_COMMUNITY_Community 575|Community 575]]
-- [[_COMMUNITY_Community 576|Community 576]]
-- [[_COMMUNITY_Community 577|Community 577]]
-- [[_COMMUNITY_Community 578|Community 578]]
 - [[_COMMUNITY_Community 579|Community 579]]
 - [[_COMMUNITY_Community 580|Community 580]]
 - [[_COMMUNITY_Community 581|Community 581]]
@@ -605,8 +580,6 @@
 - [[_COMMUNITY_Community 589|Community 589]]
 - [[_COMMUNITY_Community 590|Community 590]]
 - [[_COMMUNITY_Community 591|Community 591]]
-- [[_COMMUNITY_Community 592|Community 592]]
-- [[_COMMUNITY_Community 593|Community 593]]
 - [[_COMMUNITY_Community 594|Community 594]]
 - [[_COMMUNITY_Community 595|Community 595]]
 - [[_COMMUNITY_Community 596|Community 596]]
@@ -627,28 +600,17 @@
 - [[_COMMUNITY_Community 611|Community 611]]
 - [[_COMMUNITY_Community 612|Community 612]]
 - [[_COMMUNITY_Community 613|Community 613]]
-- [[_COMMUNITY_Community 614|Community 614]]
 - [[_COMMUNITY_Community 615|Community 615]]
 - [[_COMMUNITY_Community 616|Community 616]]
 - [[_COMMUNITY_Community 617|Community 617]]
 - [[_COMMUNITY_Community 618|Community 618]]
-- [[_COMMUNITY_Community 619|Community 619]]
 - [[_COMMUNITY_Community 620|Community 620]]
-- [[_COMMUNITY_Community 621|Community 621]]
-- [[_COMMUNITY_Community 622|Community 622]]
 - [[_COMMUNITY_Community 623|Community 623]]
-- [[_COMMUNITY_Community 624|Community 624]]
 - [[_COMMUNITY_Community 625|Community 625]]
 - [[_COMMUNITY_Community 626|Community 626]]
 - [[_COMMUNITY_Community 627|Community 627]]
 - [[_COMMUNITY_Community 628|Community 628]]
 - [[_COMMUNITY_Community 629|Community 629]]
-- [[_COMMUNITY_Community 630|Community 630]]
-- [[_COMMUNITY_Community 631|Community 631]]
-- [[_COMMUNITY_Community 632|Community 632]]
-- [[_COMMUNITY_Community 634|Community 634]]
-- [[_COMMUNITY_Community 635|Community 635]]
-- [[_COMMUNITY_Community 636|Community 636]]
 - [[_COMMUNITY_Community 644|Community 644]]
 - [[_COMMUNITY_Community 645|Community 645]]
 - [[_COMMUNITY_Community 646|Community 646]]
@@ -657,44 +619,32 @@
 - [[_COMMUNITY_Community 655|Community 655]]
 - [[_COMMUNITY_Community 656|Community 656]]
 - [[_COMMUNITY_Community 657|Community 657]]
-- [[_COMMUNITY_Community 659|Community 659]]
 - [[_COMMUNITY_Community 664|Community 664]]
-- [[_COMMUNITY_Community 665|Community 665]]
 - [[_COMMUNITY_Community 668|Community 668]]
 - [[_COMMUNITY_Community 671|Community 671]]
 - [[_COMMUNITY_Community 672|Community 672]]
-- [[_COMMUNITY_Community 673|Community 673]]
 - [[_COMMUNITY_Community 674|Community 674]]
 - [[_COMMUNITY_Community 675|Community 675]]
 - [[_COMMUNITY_Community 676|Community 676]]
 - [[_COMMUNITY_Community 677|Community 677]]
 - [[_COMMUNITY_Community 678|Community 678]]
 - [[_COMMUNITY_Community 680|Community 680]]
-- [[_COMMUNITY_Community 681|Community 681]]
-- [[_COMMUNITY_Community 682|Community 682]]
 - [[_COMMUNITY_Community 683|Community 683]]
 - [[_COMMUNITY_Community 687|Community 687]]
 - [[_COMMUNITY_Community 688|Community 688]]
 - [[_COMMUNITY_Community 689|Community 689]]
-- [[_COMMUNITY_Community 693|Community 693]]
 - [[_COMMUNITY_Community 694|Community 694]]
-- [[_COMMUNITY_Community 695|Community 695]]
 - [[_COMMUNITY_Community 696|Community 696]]
 - [[_COMMUNITY_Community 697|Community 697]]
 - [[_COMMUNITY_Community 699|Community 699]]
-- [[_COMMUNITY_Community 700|Community 700]]
-- [[_COMMUNITY_Community 702|Community 702]]
-- [[_COMMUNITY_Community 704|Community 704]]
 - [[_COMMUNITY_Community 705|Community 705]]
 - [[_COMMUNITY_Community 706|Community 706]]
 - [[_COMMUNITY_Community 707|Community 707]]
-- [[_COMMUNITY_Community 708|Community 708]]
 - [[_COMMUNITY_Community 709|Community 709]]
 - [[_COMMUNITY_Community 710|Community 710]]
 - [[_COMMUNITY_Community 711|Community 711]]
 - [[_COMMUNITY_Community 716|Community 716]]
 - [[_COMMUNITY_Community 717|Community 717]]
-- [[_COMMUNITY_Community 719|Community 719]]
 - [[_COMMUNITY_Community 720|Community 720]]
 - [[_COMMUNITY_Community 721|Community 721]]
 - [[_COMMUNITY_Community 722|Community 722]]
@@ -718,7 +668,6 @@
 - [[_COMMUNITY_Community 746|Community 746]]
 - [[_COMMUNITY_Community 747|Community 747]]
 - [[_COMMUNITY_Community 748|Community 748]]
-- [[_COMMUNITY_Community 752|Community 752]]
 - [[_COMMUNITY_Community 758|Community 758]]
 - [[_COMMUNITY_Community 759|Community 759]]
 - [[_COMMUNITY_Community 766|Community 766]]
@@ -770,13 +719,13 @@
 - [[_COMMUNITY_Community 980|Community 980]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `Uuid` - 132 edges
+1. `Uuid` - 133 edges
 2. `withRouteObservability()` - 111 edges
 3. `cn()` - 83 edges
 4. `DomainError` - 75 edges
 5. `assertPermission()` - 73 edges
-6. `PageHeader()` - 59 edges
-7. `createIamError()` - 57 edges
+6. `createIamError()` - 60 edges
+7. `PageHeader()` - 59 edges
 8. `Breadcrumbs()` - 55 edges
 9. `applyObservabilityResponseHeaders()` - 51 edges
 10. `IamError` - 51 edges
@@ -788,10 +737,10 @@
   apps/admin-portal/app/lib/auth-guard.ts → packages/shared-auth/src/jwt.ts
 - `DashboardPage()` --calls--> `decodeSession()`  [INFERRED]
   apps/admin-portal/app/(protected)/dashboard/page.tsx → packages/shared-auth/src/session.ts
-- `RoleFormProps` --references--> `Role`  [EXTRACTED]
-  apps/admin-portal/app/(protected)/identity/roles/role-form.tsx → packages/identity-access/src/domain/role.ts
 - `ProtectedLayout()` --calls--> `isGlobalScope()`  [INFERRED]
   apps/admin-portal/app/(protected)/layout.tsx → packages/shared-auth/src/scopes.ts
+- `ProtectedLayout()` --calls--> `decodeSession()`  [INFERRED]
+  apps/admin-portal/app/(protected)/layout.tsx → packages/shared-auth/src/session.ts
 
 ## Import Cycles
 - 1-file cycle: `apps/admin-portal/app/(protected)/iam/permissions/page.tsx -> apps/admin-portal/app/(protected)/iam/permissions/page.tsx`
@@ -813,23 +762,23 @@
 - 1-file cycle: `apps/admin-portal/lib/runtime.ts -> apps/admin-portal/lib/runtime.ts`
 - 1-file cycle: `apps/worker/src/index.ts -> apps/worker/src/index.ts`
 
-## Communities (862 total, 90 thin omitted)
+## Communities (811 total, 82 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.06
-Nodes (24): GET(), PUT(), GET(), PUT(), GET(), POST(), GET(), PUT() (+16 more)
+Cohesion: 0.03
+Nodes (68): activateAccountSchema, POST(), POST(), GET(), POST(), POST(), GET(), PUT() (+60 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.17
-Nodes (15): onRequestError(), register(), createStructuredLogger(), AsyncWork, createCurrentRequestContext(), getCurrentRequestContext(), getCurrentRequestLogger(), logRequestError() (+7 more)
+Cohesion: 0.09
+Nodes (29): onRequestError(), register(), allowedDetailKeys, ConsoleStructuredLogger, createStructuredLogger(), createStructuredLoggerFromHeaders(), ILogger, LogDetails (+21 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.04
-Nodes (61): AnimateInProps, AuditDetailsButtonProps, Avatar(), AvatarProps, avatarVariants, BreadcrumbItem, BreadcrumbsProps, ButtonProps (+53 more)
+Cohesion: 0.03
+Nodes (83): AlertProps, alertVariants, iconMap, AnimateInProps, AuditDetailsButton(), AuditDetailsButtonProps, Avatar(), AvatarProps (+75 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.17
-Nodes (9): Portal, adminNavigation, KnownPermission, knownPermissions, NavigationItem, PermissionCode, permissionCodeSchema, studentNavigation (+1 more)
+Cohesion: 0.14
+Nodes (12): Portal, resolvePortalNavigation(), resolvePortalShellUser(), adminNavigation, KnownPermission, knownPermissions, NavigationItem, PermissionCode (+4 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 0.05
@@ -848,8 +797,8 @@ Cohesion: 0.05
 Nodes (36): Accessibility (WCAG), Advanced Usage, Blog Posts & Articles, Community Resources, Core Documentation, Core Documentation, Documentation, Documentation (+28 more)
 
 ### Community 9 - "Community 9"
-Cohesion: 0.15
-Nodes (10): RoleCommandContext, RoleService, assertRoleArchivable(), canArchiveRole(), CreateRoleCommand, createRoleCommandSchema, RoleStatus, roleStatusSchema (+2 more)
+Cohesion: 0.08
+Nodes (28): permissionTypeSchema, assertRoleArchivable(), canArchiveRole(), CreateRoleCommand, createRoleCommandSchema, RoleStatus, roleStatusSchema, UpdateRoleCommand (+20 more)
 
 ### Community 10 - "Community 10"
 Cohesion: 0.06
@@ -892,8 +841,8 @@ Cohesion: 0.06
 Nodes (30): 10. Reporting Views, 1. Business Purpose, 2.1 In Scope, 2.2 Out of Scope for Phase 1, 2. Scope, 3. Owned Concepts, 4. Business Principles, 5.1 Authentication Methods (+22 more)
 
 ### Community 20 - "Community 20"
-Cohesion: 0.09
-Nodes (26): metadata, BranchFormValues, buildBranchValues(), formatDateForInput(), buildClassroomValues(), ClassroomFormValues, formatDateForInput(), Alert() (+18 more)
+Cohesion: 0.05
+Nodes (42): 10. Validation — Zod Schemas, 11. Error Codes and Messages, 12. Tests (BDD Scenarios from Part 9), 12A. Domain Unit Tests, 12B. Application Service Tests, 12C. API Integration Tests, 12D. Negative Tests, 12E. Security Tests (+34 more)
 
 ### Community 21 - "Community 21"
 Cohesion: 0.07
@@ -916,8 +865,8 @@ Cohesion: 0.07
 Nodes (29): Accept-Language Header, Anti-Patterns to Avoid, Checking for Missing Translations, Critical Element Screenshots, Date, Time & Number Formats, Detecting Text Overflow, Font Loading for i18n, Internationalization (i18n) Testing (+21 more)
 
 ### Community 26 - "Community 26"
-Cohesion: 0.08
-Nodes (27): metadata, metadata, DropdownMenuContent(), DropdownMenuItem(), DropdownMenuLabel(), DropdownMenuSeparator(), IamUserForm(), IamUserFormProps (+19 more)
+Cohesion: 0.06
+Nodes (49): metadata, metadata, metadata, metadata, SearchParams, mockListAuditLogs, BranchFormValues, buildBranchValues() (+41 more)
 
 ### Community 27 - "Community 27"
 Cohesion: 0.07
@@ -965,11 +914,11 @@ Nodes (24): AdmissionService, LeadConversionOrchestrator, LeadService, CreateStu
 
 ### Community 38 - "Community 38"
 Cohesion: 0.08
-Nodes (11): BranchScopeResolver, BranchAccessCommandContext, NoOpPermissionCache, SessionCommandContext, SessionService, Role, UserBranchAccess, UserBranchAccessStatus (+3 more)
+Nodes (16): AuditQueryCommandContext, BranchAccessCommandContext, BranchAccessService, LoginHistoryQueryContext, SecurityPolicyCommandContext, SessionCommandContext, ExportJobDto, IExportJobRepository (+8 more)
 
 ### Community 39 - "Community 39"
-Cohesion: 0.10
-Nodes (15): allowedUserStatusTransitions, assertUserStatusTransition(), canTransitionUserStatus(), CreateUserCommand, createUserCommandSchema, Person, UpdateUserCommand, updateUserCommandSchema (+7 more)
+Cohesion: 0.17
+Nodes (5): Person, User, UserStatus, UserType, PrismaUserRepository
 
 ### Community 40 - "Community 40"
 Cohesion: 0.08
@@ -996,8 +945,8 @@ Cohesion: 0.08
 Nodes (24): 10. Database and Persistence Rules, 11. Event and Messaging Rules, 12. Security Rules, 13. Observability Rules, 14. Testing Rules, 15. CI/CD Rules, 16. Documentation Rules, 17. Agent Workflow (+16 more)
 
 ### Community 46 - "Community 46"
-Cohesion: 0.04
-Nodes (48): 10. Business Rules, 11. Screen Specifications, 12. Validation Rules, 13. Permissions, 14. Audit Requirements, 15. Domain Events, 16. Database Mapping, 17. API Summary (+40 more)
+Cohesion: 0.12
+Nodes (15): 10. Business Rules, 12. Validation Rules, 13. Permissions, 14. Audit Requirements, 15. Domain Events, 17. API Summary, 18. Reports, 1. Purpose (+7 more)
 
 ### Community 47 - "Community 47"
 Cohesion: 0.19
@@ -1008,12 +957,12 @@ Cohesion: 0.08
 Nodes (24): dependencies, argon2, @ims/audit, @ims/identity-access, @ims/organization, @ims/shared-kernel, @prisma/client, devDependencies (+16 more)
 
 ### Community 49 - "Community 49"
-Cohesion: 0.04
-Nodes (47): 10. Business Rules, 11. Inheritance Model, 12. Workflow, 13. Screen Specifications, 14. Validation Rules, 15. Permissions Matrix, 16. Notifications, 17. Audit Requirements (+39 more)
+Cohesion: 0.07
+Nodes (28): 10. Business Rules, 11. Workflow, 12. Screen Specifications, 13. Validation Rules, 14. Permissions Matrix, 15. Audit Requirements, 16. Database Mapping, 17. API Summary (+20 more)
 
 ### Community 50 - "Community 50"
-Cohesion: 0.08
-Nodes (24): Requirements, Requirement: Account Lockout Invariant, Requirement: Database-backed User Sessions, Requirement: Dynamic layout branch resolution, Requirement: Dynamic Permission Classification, Requirement: Global Email Uniqueness, Requirement: Password Reset Completion, Requirement: Self-Service Password Reset Request (+16 more)
+Cohesion: 0.17
+Nodes (11): Requirements, Requirement: Account Lockout Invariant, Requirement: Dynamic layout branch resolution, Requirement: Dynamic Permission Classification, Requirement: Global Email Uniqueness, Requirement: Session scopes integration, Scenario: Email uniqueness is always enforced, Scenario: Layout reads active branch (+3 more)
 
 ### Community 51 - "Community 51"
 Cohesion: 0.08
@@ -1032,16 +981,16 @@ Cohesion: 0.08
 Nodes (24): Advanced Network Interception, Anti-Patterns to Avoid, Conditional Mocking, GraphQL Mock Fixture, GraphQL Mocking, HAR Recording & Playback, HAR with Fallback, Mock Based on Request Body (+16 more)
 
 ### Community 55 - "Community 55"
-Cohesion: 0.04
-Nodes (47): 10. Business Rules, 11. Workflow, 12. Screen Specifications, 13. Validation Rules, 14. Permissions Matrix, 15. Notifications, 16. Audit Requirements, 17. Reports (+39 more)
+Cohesion: 0.07
+Nodes (27): 10. Business Rules, 11. Workflow, 12. Screen Specifications, 13. Validation Rules, 14. Permissions Matrix, 15. Database Mapping, 16. API Summary, 1. Purpose (+19 more)
 
 ### Community 56 - "Community 56"
-Cohesion: 0.04
-Nodes (46): 10. State Machine, 11. Screens, 12. Permissions Matrix, 13. Reports, 14. Dashboard Widgets, 15. Integrations, 16. Domain Events, 17. Database Design (High-Level) (+38 more)
+Cohesion: 0.08
+Nodes (23): 10. Specifications Inventory, 11. Database Model Matrix, 1. Purpose, 2. Objectives, 3. Scope, 4. Actors, 5. Domain Model, 6. Aggregate Roots & Owned Entities (+15 more)
 
 ### Community 57 - "Community 57"
-Cohesion: 0.11
-Nodes (24): OrganizationAuditAction, OrgCommandContext, branchBaseSchema, classroomBaseSchema, CreateBranchCommand, createBranchCommandSchema, CreateClassroomCommand, createClassroomCommandSchema (+16 more)
+Cohesion: 0.10
+Nodes (26): OrganizationAuditAction, OrganizationRepository, OrgCommandContext, branchBaseSchema, classroomBaseSchema, CreateBranchCommand, createBranchCommandSchema, CreateClassroomCommand (+18 more)
 
 ### Community 58 - "Community 58"
 Cohesion: 0.08
@@ -1100,16 +1049,16 @@ Cohesion: 0.09
 Nodes (22): Build Optimization, CI/CD for Monorepos, Code Sharing Patterns, Configuration, Dependency Management, Deploy Affected Only, ESLint Configuration, GitHub Actions (+14 more)
 
 ### Community 72 - "Community 72"
-Cohesion: 0.04
-Nodes (46): 10. Business Rules, 11. Workflow, 12. Screen Specifications, 13. Validation Rules, 14. Permissions Matrix, 15. Notifications, 16. Audit Requirements, 17. Reports (+38 more)
+Cohesion: 0.24
+Nodes (3): LoginHistoryQueryService, LoginHistoryDto, PrismaLoginHistoryRepository
 
 ### Community 73 - "Community 73"
-Cohesion: 0.22
-Nodes (5): LoginHistoryQueryContext, LoginHistoryQueryService, ILoginHistoryRepository, LoginHistoryDto, PrismaLoginHistoryRepository
+Cohesion: 0.13
+Nodes (15): 9. Functional Requirements, Acceptance Criteria, Activate Organization, Archive Organization, Business Rules, Create Organization, Input Fields, ORG-ORG-001 (+7 more)
 
 ### Community 74 - "Community 74"
-Cohesion: 0.05
-Nodes (42): 10. Validation — Zod Schemas, 11. Error Codes and Messages, 12. Tests (BDD Scenarios from Part 9), 12A. Domain Unit Tests, 12B. Application Service Tests, 12C. API Integration Tests, 12D. Negative Tests, 12E. Security Tests (+34 more)
+Cohesion: 0.26
+Nodes (3): AuditQueryService, AuditLogDto, PrismaAuditLogRepository
 
 ### Community 75 - "Community 75"
 Cohesion: 0.11
@@ -1120,8 +1069,8 @@ Cohesion: 0.09
 Nodes (23): Anti-Patterns to Avoid, API Mocking Patterns, API Tests, Basic Visual Test, Best Practices, Component Tests, Configuration, Directory Structure (+15 more)
 
 ### Community 77 - "Community 77"
-Cohesion: 0.12
-Nodes (9): DomainErrorCode, BranchId, BranchScope, Brand, CourseId, DateRange, EffectiveDateRange, EnrollmentId (+1 more)
+Cohesion: 0.11
+Nodes (9): DomainErrorCode, BranchScope, Brand, CourseId, DateRange, EffectiveDateRange, EnrollmentId, Money (+1 more)
 
 ### Community 78 - "Community 78"
 Cohesion: 0.09
@@ -1138,10 +1087,6 @@ Nodes (22): Animations cause random diff failures, Anti-Patterns, CI Configurati
 ### Community 81 - "Community 81"
 Cohesion: 0.09
 Nodes (21): 10. Refine Branch Scoping Checks for granular levels, 11. Enforce Role & Permission Lifecycle Invariant Validations, 12. Map Account Status Transitions to Granular Audit Actions, 13. Enforce Session Expiration in Stateless Cookie Payload, 14. Enforce Password Complexity Verification via Zod validation, 15. Map specific business domain error codes, 16. Verify User Database Status in server-side Action guards, 1. Extend the session payload schema to include dataScopes (+13 more)
-
-### Community 82 - "Community 82"
-Cohesion: 0.08
-Nodes (12): GET(), querySchema, GET(), querySchema, GET(), IamError, loginMock, rateLimitMock (+4 more)
 
 ### Community 83 - "Community 83"
 Cohesion: 0.05
@@ -1176,8 +1121,8 @@ Cohesion: 0.10
 Nodes (21): Anti-Patterns to Avoid, Basic Popup, Close All Tabs Except One, Different Users in Different Windows, Google OAuth Popup, Handle Blocked Popups, Intercept New Tab, Link Opens in New Tab (+13 more)
 
 ### Community 91 - "Community 91"
-Cohesion: 0.08
-Nodes (23): PermissionCommandContext, PermissionService, CreatePermissionCommand, createPermissionCommandSchema, Permission, PermissionStatus, permissionStatusSchema, PermissionType (+15 more)
+Cohesion: 0.15
+Nodes (11): PermissionCommandContext, PermissionService, CreatePermissionCommand, createPermissionCommandSchema, Permission, PermissionStatus, permissionStatusSchema, PermissionType (+3 more)
 
 ### Community 92 - "Community 92"
 Cohesion: 0.10
@@ -1228,8 +1173,8 @@ Cohesion: 0.10
 Nodes (19): Codebase Analysis, Graceful Exit Handling, Guardrails, Phase 10: Archive, Phase 11: Recap & Next Steps, Phase 1: Welcome, Phase 2: Task Selection, Phase 3: Explore Demo (+11 more)
 
 ### Community 104 - "Community 104"
-Cohesion: 0.09
-Nodes (11): exportSchema, POST(), POST(), changePasswordSchema, POST(), GET(), applyObservabilityResponseHeaders(), createObservabilityResponseHeaders() (+3 more)
+Cohesion: 0.10
+Nodes (22): IamUserFormProps, initialState, toDateInputValue(), UserProfile, buildIdentityActionFailure(), ErrorFieldMaps, extractFormValues(), getFieldErrorFromDomainError() (+14 more)
 
 ### Community 105 - "Community 105"
 Cohesion: 0.05
@@ -1245,7 +1190,7 @@ Nodes (19): Codebase Analysis, Graceful Exit Handling, Guardrails, Phase 10: Arc
 
 ### Community 108 - "Community 108"
 Cohesion: 0.05
-Nodes (38): MODIFIED Requirements, Requirement: IAM API Boundary Validation, Requirement: IAM Role and Permission Administration, Requirement: IAM User Lifecycle Model, Requirement: RS256 Token Security, Requirement: Self-Service Account Activation, Scenario: Activation rejected for invalid or expired token, Scenario: Completion fails due to weak or reused password (+30 more)
+Nodes (38): MODIFIED Requirements, ADDED Requirements, Requirement: Account Lockout Invariant, Requirement: Database-backed User Sessions, Requirement: Dynamic Permission Classification, Requirement: Global Email Uniqueness, Requirement: IAM API Boundary Validation, Requirement: IAM Role and Permission Administration (+30 more)
 
 ### Community 109 - "Community 109"
 Cohesion: 0.10
@@ -1292,12 +1237,12 @@ Cohesion: 0.11
 Nodes (19): Anti-Patterns to Avoid, Chat & Messaging, Collaborative Document, Concurrent Actions, Cursor Presence, Multi-User & Collaboration Testing, Multi-User Fixture, Multiple Browser Contexts (+11 more)
 
 ### Community 120 - "Community 120"
-Cohesion: 0.16
-Nodes (17): DashboardPage(), setActiveBranchAction(), assertBranchScope(), getPublicKey(), getAuthorizedBranchIds(), isAuthorizedForBranch(), isGlobalScope(), ScopingOptions (+9 more)
+Cohesion: 0.29
+Nodes (6): Context, Decisions, Goals / Non-Goals, Migration Plan, Open Questions, Risks / Trade-offs
 
 ### Community 121 - "Community 121"
-Cohesion: 0.05
-Nodes (53): metadata, metadata, metadata, metadata, Badge(), BadgeProps, badgeVariants, Card() (+45 more)
+Cohesion: 0.33
+Nodes (3): SecurityPolicyService, SecurityPolicy, PrismaSecurityPolicyRepository
 
 ### Community 122 - "Community 122"
 Cohesion: 0.11
@@ -1308,8 +1253,8 @@ Cohesion: 0.11
 Nodes (19): Anti-Patterns, Component Testing (Experimental), CRA vs Vite Differences, Detecting Memory Leaks, E2E Config (Vite), Error Boundaries, Form Libraries (React Hook Form, Formik), Framework Tips (+11 more)
 
 ### Community 124 - "Community 124"
-Cohesion: 0.05
-Nodes (71): metadata, metadata, metadata, metadata, metadata, metadata, metadata, metadata (+63 more)
+Cohesion: 0.06
+Nodes (37): metadata, metadata, metadata, metadata, metadata, metadata, metadata, metadata (+29 more)
 
 ### Community 125 - "Community 125"
 Cohesion: 0.11
@@ -1324,12 +1269,12 @@ Cohesion: 0.11
 Nodes (18): Authentication State Reuse, Clear sessionStorage, Common Patterns, Delete Database, Delete Single Item, Get Single Value, IndexedDB, List All sessionStorage Items (+10 more)
 
 ### Community 128 - "Community 128"
-Cohesion: 0.17
-Nodes (10): ExportButton(), ExportButtonProps, buildPaginationHref(), getPaginationPageNumbers(), Pagination(), PaginationProps, Select, SelectProps (+2 more)
+Cohesion: 0.09
+Nodes (21): iam-admin-portal-ui Specification, Purpose, Requirements, Requirement: Accessible and resilient UI states, Requirement: Audit, reports, and dashboards, Requirement: IAM portal shell and navigation, Requirement: Role and permission screens, Requirement: Session and security policy screens (+13 more)
 
 ### Community 129 - "Community 129"
-Cohesion: 0.09
-Nodes (24): metadata, metadata, metadata, initialState, PermissionForm(), PermissionFormProps, PermissionLifecycleDropdown(), PermissionLifecycleDropdownProps (+16 more)
+Cohesion: 0.15
+Nodes (14): metadata, metadata, metadata, initialState, PermissionForm(), PermissionFormProps, PermissionLifecycleDropdown(), PermissionLifecycleDropdownProps (+6 more)
 
 ### Community 130 - "Community 130"
 Cohesion: 0.09
@@ -1399,24 +1344,20 @@ Nodes (21): ADDED Requirements, Requirement: API Contract Consistency Notes, Req
 Cohesion: 0.10
 Nodes (19): 10. Accessibility Standards, 1.1 Navigation Hierarchy, 1. Module Navigation, 2. Screen Inventory, 3. Screen Specification, 7. Empty States, 8. Loading States, 9. Error Handling (+11 more)
 
-### Community 148 - "Community 148"
-Cohesion: 0.15
-Nodes (14): allowedDetailKeys, ConsoleStructuredLogger, createStructuredLoggerFromHeaders(), ILogger, LogDetails, LogLevel, mergeContext(), selectSink() (+6 more)
-
 ### Community 149 - "Community 149"
-Cohesion: 0.10
-Nodes (19): 10. Business Rules, 11. Holiday Resolution Priority, 12. Workflow, 14. Validation Rules, 15. Permissions Matrix, 16. Notifications, 17. Audit Requirements, 18. Reports (+11 more)
+Cohesion: 0.29
+Nodes (6): 1. Database & Domain Schema Setup, 2. Hierarchical Scope Resolving (Application & Persistence Layers), 3. Application Layer Scoping Hardening (UserService), 4. Application Layer (Session & LoginHistory Services), 5. Frontend & Controller Adapters (admin-portal), 6. Verification & Testing
 
 ### Community 150 - "Community 150"
-Cohesion: 0.10
-Nodes (19): 10. Business Rules, 11. Configuration Resolution Priority, 12. Workflow, 14. Validation Rules, 15. Permissions Matrix, 16. Notifications, 17. Audit Requirements, 18. Reports (+11 more)
+Cohesion: 0.33
+Nodes (6): Actions, ADM-UI-001 Admission List Screen, Columns, Filters, Permissions, Purpose
 
 ### Community 151 - "Community 151"
-Cohesion: 0.10
-Nodes (19): 10. Business Rules, 11. Workflow, 13. Validation Rules, 14. Permissions Matrix, 15. Notifications, 16. Audit Requirements, 17. Reports, 18. Dashboard Widgets (+11 more)
+Cohesion: 0.33
+Nodes (6): 11. Screen Specifications, Actions, Columns, Organization Details, Organization List, Purpose
 
 ### Community 152 - "Community 152"
-Cohesion: 0.12
+Cohesion: 0.11
 Nodes (17): Basic Structure, Best Practices, Component Objects, Composition Patterns, Directory Structure, Do, Don't, Factory Functions (+9 more)
 
 ### Community 153 - "Community 153"
@@ -1436,20 +1377,12 @@ Cohesion: 0.12
 Nodes (16): 1. Start Tracing Before the Problem, 2. Clean Up Old Traces, Analyzing Performance, Basic Usage, Best Practices, Capturing Evidence, Debugging Failed Actions, Limitations (+8 more)
 
 ### Community 157 - "Community 157"
-Cohesion: 0.10
-Nodes (19): 10. Business Rules, 11. Resolution Priority, 12. Workflow, 14. Validation Rules, 15. Permissions Matrix, 16. Notifications, 17. Audit Requirements, 18. Reports (+11 more)
-
-### Community 158 - "Community 158"
-Cohesion: 0.20
-Nodes (4): AuditQueryCommandContext, AuditQueryService, AuditLogDto, PrismaAuditLogRepository
-
-### Community 159 - "Community 159"
-Cohesion: 0.11
-Nodes (18): 10. Business Rules, 11. Workflow, 13. Validation Rules, 14. Permissions Matrix, 15. Notifications, 16. Audit Requirements, 17. Reports, 18. Dashboard Widgets (+10 more)
+Cohesion: 0.29
+Nodes (6): Capabilities, Impact, Modified Capabilities, New Capabilities, What Changes, Why
 
 ### Community 160 - "Community 160"
-Cohesion: 0.11
-Nodes (19): 9. Functional Requirements, Activate Campus, Archive Campus, Campus Search, Close Campus, Configure Campus Contacts, Configure Campus Facilities, Configure Campus Profile (+11 more)
+Cohesion: 0.33
+Nodes (6): Actions, Columns, CRS-UI-005 Batch List Screen, Filters, Permissions, Purpose
 
 ### Community 161 - "Community 161"
 Cohesion: 0.18
@@ -1459,13 +1392,9 @@ Nodes (6): CourseCard, courseCatalog, mainNavigation, SiteLink, LegalPageShell()
 Cohesion: 0.11
 Nodes (19): "401 Unauthorized" when using `request` fixture, Anti-Patterns, API Data Seeding, API Testing, Chained API Calls, CRUD Operations, Decision Guide, Dedicated API Project Configuration (+11 more)
 
-### Community 163 - "Community 163"
-Cohesion: 0.11
-Nodes (18): 10. Business Rules, 11. Workflow, 13. Validation Rules, 14. Permissions Matrix, 15. Notifications, 16. Audit Requirements, 17. Reports, 18. Dashboard Widgets (+10 more)
-
 ### Community 164 - "Community 164"
-Cohesion: 0.11
-Nodes (18): 10. Business Rules, 11. Workflow, 13. Validation Rules, 14. Permissions Matrix, 15. Notifications, 16. Audit Requirements, 17. Reports, 18. Dashboard Widgets (+10 more)
+Cohesion: 0.29
+Nodes (9): buildOrganizationActionFailure(), ErrorFieldMaps, extractFormValues(), getFieldErrorFromDomainError(), getFieldErrorFromPrismaError(), getFieldErrorFromZodError(), getFirstFieldName(), getPrismaTargetFields() (+1 more)
 
 ### Community 165 - "Community 165"
 Cohesion: 0.12
@@ -1487,21 +1416,25 @@ Nodes (15): compilerOptions, allowJs, baseUrl, esModuleInterop, forceConsistentC
 Cohesion: 0.15
 Nodes (13): cache, cache, persistent, dependsOn, tasks, clean, dev, lint (+5 more)
 
+### Community 170 - "Community 170"
+Cohesion: 0.08
+Nodes (12): assertPermissionMock, listAuditLogsMock, assertPermissionMock, getUserByIdMock, loginSchema, POST(), listRolesMock, withPermissionMock (+4 more)
+
 ### Community 171 - "Community 171"
 Cohesion: 0.12
 Nodes (16): 1. Schema Definition (CRITICAL), 2. Parsing & Validation (CRITICAL), 3. Type Inference (HIGH), 4. Error Handling (HIGH), 5. Object Schemas (MEDIUM-HIGH), 6. Schema Composition (MEDIUM), 7. Refinements & Transforms (MEDIUM), 8. Performance & Bundle (LOW-MEDIUM) (+8 more)
 
 ### Community 172 - "Community 172"
-Cohesion: 0.11
-Nodes (18): 10. Business Rules, 11. Workflow, 13. Validation Rules, 14. Permissions Matrix, 15. Notifications, 16. Audit Requirements, 17. Reports, 18. Dashboard Widgets (+10 more)
+Cohesion: 0.09
+Nodes (48): metadata, metadata, metadata, metadata, metadata, metadata, metadata, metadata (+40 more)
 
 ### Community 173 - "Community 173"
 Cohesion: 0.12
 Nodes (15): 10. OWASP Security Requirements, 11. Frontend Security, 12. Audit and Compliance, 14. Security Testing Requirements, 15. Compliance Checklist, 16. Key Architecture Decisions, 1. Purpose, 2. Security Architecture Overview (+7 more)
 
 ### Community 174 - "Community 174"
-Cohesion: 0.27
-Nodes (3): ClassroomFormProps, Branch, toBranch()
+Cohesion: 0.40
+Nodes (4): mockFindByEmail, mockFindByUsername, mockListSecurityLoginHistory, mockListUserLoginHistory
 
 ### Community 175 - "Community 175"
 Cohesion: 0.16
@@ -1517,18 +1450,18 @@ Nodes (17): 10. Business Rules, 11. Workflow, 13. Validation Rules, 14. Permissi
 
 ### Community 178 - "Community 178"
 Cohesion: 0.12
-Nodes (17): 10.2 Enrollment Aggregate, 10.5 Batch Aggregate, 10.6 Invoice Aggregate, 10.7 Certificate Aggregate, 10. Aggregate Design, Aggregate Root, Aggregate Root, Aggregate Root (+9 more)
+Nodes (17): 10.1 Lead Aggregate, 10.2 Enrollment Aggregate, 10.5 Batch Aggregate, 10.7 Certificate Aggregate, 10. Aggregate Design, Aggregate Root, Aggregate Root, Aggregate Root (+9 more)
 
 ### Community 179 - "Community 179"
-Cohesion: 0.12
-Nodes (17): 9. Functional Requirements, Activate Floor, Archive Floor, Business Rules, Create Floor, Deactivate Floor, Display Classrooms by Floor, Fields (+9 more)
+Cohesion: 0.50
+Nodes (4): Example, Formula, Metrics, TRN-UI-009 Utilization Report
 
 ### Community 180 - "Community 180"
 Cohesion: 0.13
 Nodes (5): NotificationService, INotificationPort, NotificationDto, DummyNotificationProvider, PrismaNotificationRepository
 
 ### Community 181 - "Community 181"
-Cohesion: 0.13
+Cohesion: 0.14
 Nodes (14): Anti-Patterns, Combined Project Structure, Custom Fixtures, Helper Functions, Helpers with side effects, Locator-only page objects, Monolithic fixtures, Organizing Reusable Test Code (+6 more)
 
 ### Community 182 - "Community 182"
@@ -1568,7 +1501,7 @@ Cohesion: 0.13
 Nodes (14): Canvas Coordinate-Based Dragging, Cross-Frame Dragging, Custom Drag Preview, Drag and Drop Testing, File Drop Zone, Incremental Mouse Movement for Custom Libraries, Kanban Board (Cross-Column Movement), Keyboard-Based Reordering (+6 more)
 
 ### Community 191 - "Community 191"
-Cohesion: 0.13
+Cohesion: 0.14
 Nodes (14): Anti-Patterns, Authenticated GraphQL Fixture, Authorization Errors, Basic Query with Variables, "Cannot query field X on type Y", GraphQL Helper Function, GraphQL returns 200 but data is null, GraphQL Testing (+6 more)
 
 ### Community 192 - "Community 192"
@@ -1576,16 +1509,16 @@ Cohesion: 0.25
 Nodes (8): 6. Screens, Additional Fields, Business Rules, CERT-UI-001 Certificate Dashboard, CERT-UI-010 Corporate Certificate Settings, Filters, Purpose, Widgets
 
 ### Community 193 - "Community 193"
-Cohesion: 0.21
-Nodes (6): Classroom, BranchRow, ClassroomRow, DepartmentRow, InstituteRow, toClassroom()
+Cohesion: 0.07
+Nodes (31): metadata, IamAuditPage(), IamDashboardsPage(), passwordSchema, EditSecurityPolicyPage(), IamExportJobsPage(), getActorId(), assertAnyPermission() (+23 more)
 
 ### Community 194 - "Community 194"
 Cohesion: 0.11
 Nodes (19): 9.2 Employee Self Service Context, 9.3 Payroll Management Context, 9.4 Tally Integration Context, 9.5 Biometric Attendance Integration Context, 9.6 AI Intelligence Context, 9. Future Phase Contexts, AI-Ready Data to Capture from Day 1, Business Purpose (+11 more)
 
 ### Community 195 - "Community 195"
-Cohesion: 0.17
-Nodes (12): 9. Functional Requirements, Business Rules, Fields, ORG-HOL-002 — Add Holiday Date, ORG-HOL-003 — Import Oman Public Holidays, ORG-HOL-004 — Branch Holiday Override, ORG-HOL-005 — Emergency Closure, ORG-HOL-006 — Special Working Holiday (+4 more)
+Cohesion: 0.08
+Nodes (23): Purpose, Requirements, Specification: IAM API Contracts, Requirement: API Contract Consistency Notes, Requirement: API Pagination Filtering Sorting, Requirement: IAM Endpoint Inventory and Contract Matrix, Requirement: IAM Error Mapping, Requirement: IAM REST API Contract (+15 more)
 
 ### Community 196 - "Community 196"
 Cohesion: 0.13
@@ -1600,8 +1533,8 @@ Cohesion: 0.18
 Nodes (11): 13.10 Data Retention, 13.1 Performance Requirements, 13.2 Scalability Requirements, 13.3 Availability Requirements, 13.4 Reliability Requirements, 13.5 Maintainability Requirements, 13.6 Observability Requirements, 13.7 Localization Requirements (+3 more)
 
 ### Community 199 - "Community 199"
-Cohesion: 0.09
-Nodes (7): AuthService, BranchAccessService, escapeHtml(), UserService, createIamError(), POST(), UserRegistrationData
+Cohesion: 0.12
+Nodes (7): RoleService, escapeHtml(), UserService, UserListFilters, createIamError(), POST(), UserRegistrationData
 
 ### Community 200 - "Community 200"
 Cohesion: 0.14
@@ -1665,7 +1598,7 @@ Nodes (12): 10. Lifecycle Invariants Validations, 11. Fine-grained Authorization
 
 ### Community 215 - "Community 215"
 Cohesion: 0.06
-Nodes (38): metadata, metadata, metadata, metadata, metadata, metadata, metadata, metadata (+30 more)
+Nodes (41): metadata, metadata, metadata, RecordStatus, ViewRolePage(), UserActionsDropdownProps, ActionResult, assignRoleToUserAction() (+33 more)
 
 ### Community 216 - "Community 216"
 Cohesion: 0.15
@@ -1681,27 +1614,27 @@ Nodes (14): 12.10 Finance to Tally - Future, 12.11 Scheduling to Attendance, 12.
 
 ### Community 219 - "Community 219"
 Cohesion: 0.14
-Nodes (14): 9. Functional Requirements, ORG-CONFIG-001 — Create Configuration Profile, ORG-CONFIG-002 — Configure Global Defaults, ORG-CONFIG-003 — Configure Branch Overrides, ORG-CONFIG-004 — Configure Numbering Series, ORG-CONFIG-005 — Configure Feature Flags, ORG-CONFIG-006 — Configure Approval Policies, ORG-CONFIG-007 — Configure Academic Defaults (+6 more)
+Nodes (13): Purpose, Requirements, Specification: IAM Operations & Observability, Requirement: IAM Deployment Smoke Tests, Requirement: IAM Health Checks, Requirement: IAM Metrics, Requirement: IAM Structured Logs and Trace Context, Scenario: Correlation context propagated (+5 more)
 
 ### Community 220 - "Community 220"
 Cohesion: 0.14
 Nodes (3): IMetrics, InMemoryMetrics, MetricValue
 
 ### Community 221 - "Community 221"
-Cohesion: 0.09
-Nodes (26): metadata, metadata, metadata, ManagePermissionsForm(), Button, initialState, RoleForm(), RoleFormProps (+18 more)
+Cohesion: 0.10
+Nodes (25): metadata, metadata, metadata, ManagePermissionsForm(), initialState, RoleForm(), RoleFormProps, toDateInputValue() (+17 more)
 
 ### Community 222 - "Community 222"
-Cohesion: 0.21
-Nodes (14): AuthenticatedRequestContext, buildRateLimitKey(), errorHandler(), getClientIp(), getCookieValue(), getDeviceFingerprint(), RateLimitBucket, rateLimitBuckets (+6 more)
+Cohesion: 0.43
+Nodes (3): IPasswordHistoryRepository, PasswordHistoryDto, PrismaPasswordHistoryRepository
 
 ### Community 223 - "Community 223"
-Cohesion: 0.15
-Nodes (13): 9. Functional Requirements, Business Rules, Fields, ORG-CLS-001 — Create Classroom, ORG-CLS-002 — Update Classroom, ORG-CLS-003 — Activate Classroom, ORG-CLS-004 — Mark Classroom Under Maintenance, ORG-CLS-005 — Temporarily Block Classroom (+5 more)
+Cohesion: 0.33
+Nodes (5): Capabilities, Impact, Modified Capabilities, What Changes, Why
 
 ### Community 224 - "Community 224"
-Cohesion: 0.15
-Nodes (13): 9. Functional Requirements, Business Rules, Fields, ORG-WH-001 — Create Working Hours Profile, ORG-WH-002 — Configure Day-wise Working Hours, ORG-WH-003 — Configure Break Times, ORG-WH-004 — Branch Working Hours Override, ORG-WH-005 — Configure Seasonal Working Hours (+5 more)
+Cohesion: 0.33
+Nodes (6): Requirement: Branch Scoping on Directory Operations, Scenario: Accessing user details directly is branch-scoped, Scenario: Branch scoping check fails on profile actions, Scenario: Listing users is branch-scoped, Scenario: Restricting target branch assignments on create/update, Scenario: Session termination is branch-scoped
 
 ### Community 225 - "Community 225"
 Cohesion: 0.13
@@ -1728,8 +1661,8 @@ Cohesion: 0.15
 Nodes (13): API Layer (60% of tests), API Tests, Choosing Test Types: E2E, Component, or API, Common Mistakes, Component Layer (30% of tests), Component Tests, Decision Matrix, E2E Layer (10% of tests) (+5 more)
 
 ### Community 231 - "Community 231"
-Cohesion: 0.17
-Nodes (12): 9. Functional Requirements, Business Rules, Fields, ORG-DEPT-001 — Create Department, ORG-DEPT-002 — Assign Branches, ORG-DEPT-003 — Assign Academic Coordinator, ORG-DEPT-004 — Configure Department Profile, ORG-DEPT-005 — Activate Department (+4 more)
+Cohesion: 0.50
+Nodes (4): 19. Acceptance Criteria (BDD), Recommendation for v3.1, Scenario: Activate Organization, Scenario: Create Organization
 
 ### Community 232 - "Community 232"
 Cohesion: 0.21
@@ -1757,7 +1690,7 @@ Nodes (12): 10. Reporting and Operational Views, 11. FRD Improvement Notes, 1. B
 
 ### Community 238 - "Community 238"
 Cohesion: 0.18
-Nodes (11): 6. Screens, Actions, Business Rules, Business Rules, CMP-UI-004 Exam List, CMP-UI-008 Walk-In Completion Screen, CMP-UI-010 Progress Dashboard, Columns (+3 more)
+Nodes (11): 6. Screens, Actions, Business Rules, Business Rules, CMP-UI-004 Exam List, CMP-UI-005 Exam Screen, CMP-UI-008 Walk-In Completion Screen, Columns (+3 more)
 
 ### Community 239 - "Community 239"
 Cohesion: 0.15
@@ -1800,8 +1733,8 @@ Cohesion: 0.15
 Nodes (12): 10. Reporting and Operational Views, 11. FRD Improvement Notes, 1. Business Purpose, 2.1 In Scope, 2.2 Out of Scope for Phase 1, 2. Scope, 3. Business Principles, 4. Owned Concepts (+4 more)
 
 ### Community 249 - "Community 249"
-Cohesion: 0.18
-Nodes (11): 9. Functional Requirements, ORG-BLDG-002 — Update Building Profile, ORG-BLDG-003 — Configure Building Location, ORG-BLDG-004 — Configure Building Contact, ORG-BLDG-005 — Activate Building, ORG-BLDG-006 — Set Building Under Maintenance, ORG-BLDG-007 — Temporarily Close Building, ORG-BLDG-008 — Close Building Permanently (+3 more)
+Cohesion: 0.33
+Nodes (6): Requirement: RS256 Token Security, Scenario: Login rejected for expired password, Scenario: Login rejected for invalid or suspended account, Scenario: Login rejected when concurrent session limit reached, Scenario: Login succeeds, Scenario: Login with Remember Me selected
 
 ### Community 250 - "Community 250"
 Cohesion: 0.12
@@ -1852,8 +1785,8 @@ Cohesion: 0.22
 Nodes (9): 1.2 Business Objectives, BO-001, BO-002, BO-003, BO-004, BO-005, BO-006, BO-007 (+1 more)
 
 ### Community 262 - "Community 262"
-Cohesion: 0.22
-Nodes (8): 5. Sequence Diagrams, 6. Cross-Module Interaction, ASTI IMS Solution Design Specification (SDS), Deliverables of Part 2, Module 01 – Identity & Access Management (IAM), SD-IAM-001 User Login, SD-IAM-002 Create User, SD-IAM-003 Password Reset
+Cohesion: 0.20
+Nodes (9): 6. Cross-Module Interaction, ASTI IMS Solution Design Specification (SDS), Business Workflows, Deliverables of Part 2, Module 01 – Identity & Access Management (IAM), Part 2, State Machines, Use Cases (+1 more)
 
 ### Community 263 - "Community 263"
 Cohesion: 0.22
@@ -1996,52 +1929,48 @@ Cohesion: 0.29
 Nodes (7): 5.1 User, 5.2 Role, 5.3 Permission, 5.4 UserRole, 5.5 RolePermission, 5.6 UserBranchAccess, 5. Identity & Access Model
 
 ### Community 298 - "Community 298"
-Cohesion: 0.29
-Nodes (6): Context, Decisions, Goals / Non-Goals, Migration Plan, Open Questions, Risks / Trade-offs
+Cohesion: 0.40
+Nodes (4): Context, Decisions, Goals / Non-Goals, Risks / Trade-offs
 
 ### Community 299 - "Community 299"
-Cohesion: 0.29
-Nodes (6): Capabilities, Impact, Modified Capabilities, New Capabilities, What Changes, Why
+Cohesion: 0.50
+Nodes (4): 10.6 Invoice Aggregate, Aggregate Root, Child Entities / Value Objects, Key Invariants
 
 ### Community 300 - "Community 300"
 Cohesion: 0.29
 Nodes (6): Capabilities, Impact, Modified Capabilities, New Capabilities, What Changes, Why
 
 ### Community 301 - "Community 301"
-Cohesion: 0.29
-Nodes (7): 21. Database Mapping, Aggregate Root, Key Fields: `configuration_items`, Key Fields: `configuration_profiles`, Key Fields: `feature_flags`, Key Fields: `numbering_series`, Suggested Tables
+Cohesion: 0.25
+Nodes (7): 1. Portal Foundation, 2. Users Screen Family, 3. Roles and Permissions Screens, 4. Sessions and Security Screens, 5. Audit, Reports, and Dashboards, 6. Tests, Accessibility, and Verification, 7. Public Auth Screens
 
 ### Community 302 - "Community 302"
 Cohesion: 0.29
-Nodes (7): 12. Screen Specifications, Actions, Building Capacity View, Building Details, Building List, Columns, Filters
+Nodes (6): Capabilities, Impact, Modified Capabilities, New Capabilities, What Changes, Why
 
 ### Community 303 - "Community 303"
-Cohesion: 0.29
-Nodes (7): 12. Screen Specifications, Actions, Building Layout View, Columns, Filters, Floor Details, Floor List
+Cohesion: 0.33
+Nodes (5): Context, Decisions, Goals / Non-Goals, Migration Plan, Risks / Trade-offs
 
 ### Community 304 - "Community 304"
 Cohesion: 0.22
 Nodes (5): values, SectionCardGrid(), StatStrip(), strengths, ieltsSteps
 
 ### Community 306 - "Community 306"
-Cohesion: 0.29
-Nodes (7): 12. Screen Specifications, Actions, Classroom Availability View, Classroom Details, Classroom List, Columns, Filters
+Cohesion: 0.67
+Nodes (3): Business Rules, CMP-UI-010 Progress Dashboard, Student View
 
 ### Community 307 - "Community 307"
 Cohesion: 0.18
 Nodes (10): Check for context, Ending Discovery, Guardrails, Handling Different Entry Points, OpenSpec Awareness, The Stance, What You Don't Have To Do, What You Might Do (+2 more)
-
-### Community 308 - "Community 308"
-Cohesion: 0.29
-Nodes (7): 12. Screen Specifications, Actions, Columns, Department Dashboard, Department Details, Department List, Filters
 
 ### Community 309 - "Community 309"
 Cohesion: 0.29
 Nodes (7): 6. Notification Catalogue, Account Locked, Branch Assignment, Notification Channels, Password Reset, Role Assigned, User Created
 
 ### Community 310 - "Community 310"
-Cohesion: 0.15
-Nodes (13): 6. Screens, Actions, Actions, Actions, ADM-UI-001 Admission List Screen, ADM-UI-003 Admission Details Screen, ADM-UI-007 Enrollment Details Screen, Columns (+5 more)
+Cohesion: 0.18
+Nodes (11): 6. Screens, Actions, Actions, ADM-UI-003 Admission Details Screen, ADM-UI-007 Enrollment Details Screen, ADM-UI-009 Walk-In Enrollment Screen, Business Rules, Fields (+3 more)
 
 ### Community 311 - "Community 311"
 Cohesion: 0.18
@@ -2072,8 +2001,8 @@ Cohesion: 0.18
 Nodes (10): 1. Schema Configuration, 2. Config Configuration, 3. Environment Variable, Common Issues, Connection String Format, Driver Adapter, "Login failed for user", Prerequisites (+2 more)
 
 ### Community 318 - "Community 318"
-Cohesion: 0.23
-Nodes (7): getKeys(), getPublicKey(), generateRSAKeyPair(), getDevelopmentKeyPair(), JwtService, RefreshTokenService, TokenPayload
+Cohesion: 0.12
+Nodes (21): getKeys(), AuthenticatedRequestContext, buildRateLimitKey(), errorHandler(), getClientIp(), getCookieValue(), getDeviceFingerprint(), getPublicKey() (+13 more)
 
 ### Community 319 - "Community 319"
 Cohesion: 0.20
@@ -2082,6 +2011,10 @@ Nodes (9): 1. Introduce the `PasswordResetToken` Model, 2. Implement the Reset R
 ### Community 320 - "Community 320"
 Cohesion: 0.29
 Nodes (7): 5. Authentication Reports, Columns, Filters, RPT-IAM-010 Login History Report, RPT-IAM-011 Failed Login Report, RPT-IAM-012 Locked Account Report, RPT-IAM-013 Password Reset Report
+
+### Community 321 - "Community 321"
+Cohesion: 0.15
+Nodes (12): Purpose, Requirements, Specification: IAM Reporting & Exports, Requirement: IAM Dashboards, Requirement: IAM Report Exports, Requirement: IAM Reports, Scenario: Audit trail report, Scenario: Authorized report export (+4 more)
 
 ### Community 322 - "Community 322"
 Cohesion: 0.33
@@ -2100,12 +2033,12 @@ Cohesion: 0.33
 Nodes (6): 10. QA Test Catalogue, Accessibility Tests, Functional Tests, Integration Tests, Performance Tests, Security Tests
 
 ### Community 326 - "Community 326"
-Cohesion: 0.23
-Nodes (7): resolvePortalNavigation(), resolvePortalShellUser(), ProtectedLayout(), UserControls(), hasPermission(), hasRole(), createDemoSession()
+Cohesion: 0.11
+Nodes (22): DashboardPage(), setActiveBranchAction(), assertBranchScope(), getPublicKey(), metadata, hasPermission(), hasRole(), permissions (+14 more)
 
 ### Community 327 - "Community 327"
-Cohesion: 0.40
-Nodes (3): GET(), POST(), querySchema
+Cohesion: 0.50
+Nodes (4): Future Metrics, Metrics, Purpose, TRN-UI-008 Trainer Dashboard
 
 ### Community 328 - "Community 328"
 Cohesion: 0.20
@@ -2120,8 +2053,8 @@ Cohesion: 0.20
 Nodes (9): 2. Bounded Context Analysis, 6. Context-Level Tech Stack Matrix, 7. Decision Criteria, 9. Risks and Trade-offs, Decision Matrix And Scoring, Executive Recommendation, Final Answer To The Suggested Stack, Matrix Interpretation (+1 more)
 
 ### Community 331 - "Community 331"
-Cohesion: 0.33
-Nodes (6): Actions, Columns, CRS-UI-005 Batch List Screen, Filters, Permissions, Purpose
+Cohesion: 0.67
+Nodes (3): 16. Database Mapping, Aggregate Root, Entities
 
 ### Community 332 - "Community 332"
 Cohesion: 0.20
@@ -2140,8 +2073,8 @@ Cohesion: 0.20
 Nodes (9): 1. Schema Configuration, 2. Config Configuration, 3. Environment Variable, CockroachDB Setup, Common Issues, Driver Adapter, ID Generation, Prerequisites (+1 more)
 
 ### Community 336 - "Community 336"
-Cohesion: 0.50
-Nodes (4): Business Rules, CERT-UI-007 QR Verification, Purpose, QR Content
+Cohesion: 0.67
+Nodes (3): 3. Scope, Excluded, Included
 
 ### Community 337 - "Community 337"
 Cohesion: 0.20
@@ -2185,7 +2118,7 @@ Nodes (6): 8.14 Fee, Billing & Receivables Management Context, Business Purpose,
 
 ### Community 347 - "Community 347"
 Cohesion: 0.08
-Nodes (27): SignInResult, passwordPolicy, AuthorizationGuard, EffectivePermissionsService, IPermissionCachePort, SecurityPolicyCommandContext, UserCommandContext, IAuditLogRepository (+19 more)
+Nodes (26): SignInResult, passwordPolicy, RoleCommandContext, UserCommandContext, IAuditLogRepository, ILoginHistoryRepository, INotificationRepository, IOutboxEventRepository (+18 more)
 
 ### Community 348 - "Community 348"
 Cohesion: 0.33
@@ -2296,16 +2229,16 @@ Cohesion: 0.22
 Nodes (8): graphify reference: extra exports and benchmark, Step 6b - Wiki (only if --wiki flag), Step 7 - Neo4j export (only if --neo4j or --neo4j-push flag), Step 7a - FalkorDB export (only if --falkordb or --falkordb-push flag), Step 7b - SVG export (only if --svg flag), Step 7c - GraphML export (only if --graphml flag), Step 7d - MCP server (only if --mcp flag), Step 8 - Token reduction benchmark (only if total_words > 5000)
 
 ### Community 375 - "Community 375"
-Cohesion: 0.33
-Nodes (6): 21. Database Mapping, Aggregate Root, Key Fields: `holiday_calendars`, Key Fields: `holiday_dates`, Key Fields: `holiday_overrides`, Suggested Tables
+Cohesion: 0.67
+Nodes (3): 6. Aggregate, Aggregate Root, Child Entities
 
 ### Community 376 - "Community 376"
 Cohesion: 0.22
-Nodes (8): ADDED Requirements, Requirement: Password Reset Completion, Requirement: Self-Service Password Reset Request, Scenario: Active user requests password reset, Scenario: Completion fails due to invalid or expired token, Scenario: Completion fails due to weak password, Scenario: Completion with valid token and compliant password, Scenario: Inactive or non-existent user requests password reset
+Nodes (8): Scenario: Completion fails due to weak password, ADDED Requirements, Requirement: Password Reset Completion, Requirement: Self-Service Password Reset Request, Scenario: Active user requests password reset, Scenario: Completion fails due to invalid or expired token, Scenario: Completion with valid token and compliant password, Scenario: Inactive or non-existent user requests password reset
 
 ### Community 377 - "Community 377"
-Cohesion: 0.40
-Nodes (3): GET(), POST(), querySchema
+Cohesion: 0.50
+Nodes (4): Actions, CERT-UI-002 Certificate Template List, Columns, Permissions
 
 ### Community 378 - "Community 378"
 Cohesion: 0.22
@@ -2348,28 +2281,28 @@ Cohesion: 0.25
 Nodes (7): 1. Domain Model and Zod Updates, 2. Repository & Service Layer, 3. Database Layer, 4. Next.js Server Actions & Security, 5. UI Integration, 6. Verification and Testing, 7. SSE Review and Gap Resolutions
 
 ### Community 388 - "Community 388"
-Cohesion: 0.21
-Nodes (3): DepartmentFormProps, Department, toDepartment()
+Cohesion: 0.05
+Nodes (21): OrganizationService, BranchFormProps, ClassroomFormProps, DepartmentFormProps, Branch, Classroom, Department, Institute (+13 more)
 
 ### Community 389 - "Community 389"
 Cohesion: 0.18
 Nodes (10): compilerOptions, baseUrl, lib, paths, plugins, types, exclude, extends (+2 more)
 
 ### Community 390 - "Community 390"
-Cohesion: 0.40
-Nodes (5): Business Workflows, Part 2, State Machines, Use Cases, User Stories
+Cohesion: 0.50
+Nodes (4): 5. Sequence Diagrams, SD-IAM-001 User Login, SD-IAM-002 Create User, SD-IAM-003 Password Reset
 
 ### Community 391 - "Community 391"
-Cohesion: 0.33
-Nodes (6): 20. Database Mapping, Aggregate Root, Key Fields: `department_branches`, Key Fields: `department_coordinators`, Key Fields: `departments`, Suggested Tables
+Cohesion: 0.17
+Nodes (11): Purpose, Requirements, Specification: IAM Audit & Notifications, Requirement: IAM Notification Persistence, Requirement: IAM Outbox Events, Requirement: Immutable IAM Audit Logs, Scenario: Activation notification queued, Scenario: Audit log update rejected (+3 more)
 
 ### Community 392 - "Community 392"
-Cohesion: 0.33
-Nodes (6): 21. Database Mapping, Aggregate Root, Key Fields: `break_time_rules`, Key Fields: `working_day_rules`, Key Fields: `working_hours_profiles`, Suggested Tables
+Cohesion: 0.50
+Nodes (4): Requirement: Database-backed User Sessions, Scenario: Refresh token rotation detects reuse, Scenario: Session is revoked on logout, Scenario: Session is stored on successful login
 
 ### Community 393 - "Community 393"
-Cohesion: 0.07
-Nodes (29): SecurityPolicyService, SecurityPolicy, auditQueryService, auditRepository, authorizationGuard, branchAccessService, branchScopeResolver, effectivePermissionsService (+21 more)
+Cohesion: 0.05
+Nodes (31): AuthorizationGuard, BranchScopeResolver, EffectivePermissionsService, IPermissionCachePort, NoOpPermissionCache, auditQueryService, auditRepository, authorizationGuard (+23 more)
 
 ### Community 394 - "Community 394"
 Cohesion: 0.40
@@ -2396,8 +2329,8 @@ Cohesion: 0.40
 Nodes (5): 8.12 Scheduling, Calendar & Holiday Management Context, Business Purpose, Core Entities, Important Rules, Key Responsibilities
 
 ### Community 402 - "Community 402"
-Cohesion: 0.15
-Nodes (7): ExportJobDto, IExportJobRepository, PrismaAuditRepository, PrismaExportJobRepository, AuditLogEntry, globalForPrisma, AuditMetadata
+Cohesion: 0.16
+Nodes (6): OutboxEventDto, PrismaAuditRepository, PrismaOutboxEventRepository, AuditLogEntry, globalForPrisma, AuditMetadata
 
 ### Community 403 - "Community 403"
 Cohesion: 0.40
@@ -2448,8 +2381,8 @@ Cohesion: 0.25
 Nodes (8): 1. Use Semantic Locators, 2. Explore Before Recording, 3. Add Assertions Manually, Best Practices, Building a Test File, Example Workflow, How It Works, Test Generation
 
 ### Community 415 - "Community 415"
-Cohesion: 0.40
-Nodes (4): createUserMock, resolveAllowedBranchesMock, searchUsersMock, withPermissionMock
+Cohesion: 0.50
+Nodes (4): Requirement: IAM API Boundary Validation, Scenario: Shared validation preserves stable field messages, Scenario: Shared validation rejects password reuse, Scenario: Shared validation rejects weak passwords
 
 ### Community 417 - "Community 417"
 Cohesion: 0.25
@@ -2484,8 +2417,8 @@ Cohesion: 0.40
 Nodes (5): 8.1 Identity & Access Management Context, Business Purpose, Core Entities, Important Rules, Key Responsibilities
 
 ### Community 425 - "Community 425"
-Cohesion: 0.12
-Nodes (9): exportSchema, POST(), dashboardPermissions, GET(), reportPermissions, GET(), querySchema, reportPermissions (+1 more)
+Cohesion: 0.40
+Nodes (3): exportSchema, POST(), reportPermissions
 
 ### Community 426 - "Community 426"
 Cohesion: 0.40
@@ -2548,8 +2481,8 @@ Cohesion: 0.40
 Nodes (4): 1. Institute Domain and Validation, 2. Application and Delivery, 3. Audit and Persistence, 4. Tests and Verification
 
 ### Community 441 - "Community 441"
-Cohesion: 0.40
-Nodes (5): 13. Screen Specifications, Calendar View, Holiday Calendar Details, Holiday Calendar List, Holiday Date Editor
+Cohesion: 0.50
+Nodes (4): Requirement: Password Reset Completion, Scenario: Completion fails due to invalid or expired token, Scenario: Completion fails due to weak or reused password, Scenario: Completion with valid token and compliant password
 
 ### Community 442 - "Community 442"
 Cohesion: 0.40
@@ -2579,13 +2512,21 @@ Nodes (5): Feature IAM-004: Login, Scenario IAM-004-01: Login successfully, Scen
 Cohesion: 0.40
 Nodes (5): Feature IAM-006: Password Management, Scenario IAM-006-01: Forgot password request, Scenario IAM-006-02: Reset password successfully, Scenario IAM-006-03: Reject weak password, Scenario IAM-006-04: Reject reused password
 
+### Community 449 - "Community 449"
+Cohesion: 0.67
+Nodes (3): Actions, Business Rules, CMP-UI-007 Publish Results
+
+### Community 450 - "Community 450"
+Cohesion: 0.67
+Nodes (3): Requirement: Hierarchical Branch Scoping, Scenario: Child branch access does not resolve ancestors, Scenario: Parent branch access resolves children
+
 ### Community 451 - "Community 451"
-Cohesion: 0.43
-Nodes (3): IPasswordHistoryRepository, PasswordHistoryDto, PrismaPasswordHistoryRepository
+Cohesion: 0.67
+Nodes (3): Requirement: IAM Role and Permission Administration, Scenario: Permission assigned to role, Scenario: System role archive is blocked
 
 ### Community 452 - "Community 452"
-Cohesion: 0.50
-Nodes (4): Future Metrics, Metrics, Purpose, TRN-UI-008 Trainer Dashboard
+Cohesion: 0.67
+Nodes (3): Requirement: IAM User Lifecycle Model, Scenario: User creation validation fails, Scenario: User is created successfully
 
 ### Community 453 - "Community 453"
 Cohesion: 0.50
@@ -2635,6 +2576,10 @@ Nodes (4): 3. Business Validation Rules, Branch Switching, Login, User Creation
 Cohesion: 0.29
 Nodes (7): 6. Screens, Actions, Business Rules, Fields, Purpose, STD-UI-003 Student Details Screen, STD-UI-006 Identity Field Configuration
 
+### Community 465 - "Community 465"
+Cohesion: 0.67
+Nodes (3): Requirement: Self-Service Account Activation, Scenario: Activation rejected for invalid or expired token, Scenario: User activates account via token link
+
 ### Community 466 - "Community 466"
 Cohesion: 0.50
 Nodes (4): 4. Cross-Field Validation, Default Branch, Password, Role Assignment
@@ -2655,6 +2600,10 @@ Nodes (4): LoginFormData, loginSchema, SignupFormData, signupSchema
 Cohesion: 0.29
 Nodes (4): profileFormSchema, ProfileFormValues, settingsFormSchema, SettingsFormValues
 
+### Community 471 - "Community 471"
+Cohesion: 0.67
+Nodes (3): Requirement: Self-Service Password Reset Request, Scenario: Active user requests password reset, Scenario: Inactive or non-existent user requests password reset
+
 ### Community 473 - "Community 473"
 Cohesion: 0.33
 Nodes (5): 1. Shared Package, 2. Next.js App Bootstrap, 3. Request Boundary Integration, 4. Route Handler and Server Action Logging, 5. Verification
@@ -2669,7 +2618,7 @@ Nodes (3): Description, Migration: iam_module_01_schema, Mitigation/Rollback Not
 
 ### Community 476 - "Community 476"
 Cohesion: 0.67
-Nodes (3): Business Rules, COR-UI-002 Corporate Customer Screen, Fields
+Nodes (3): Requirement: Server-side action guards, Scenario: Branch scoping check fails, Scenario: Unauthorized action fails
 
 ### Community 477 - "Community 477"
 Cohesion: 0.50
@@ -2679,10 +2628,6 @@ Nodes (4): Feature IAM-007: Role Management, Scenario IAM-007-01: Create role su
 Cohesion: 0.50
 Nodes (4): Access, Business Rules, CERT-UI-008 Public Verification, Display
 
-### Community 479 - "Community 479"
-Cohesion: 0.13
-Nodes (3): OrganizationRepository, OrganizationHierarchyNode, InMemoryOrganizationRepository
-
 ### Community 480 - "Community 480"
 Cohesion: 0.11
 Nodes (19): Basic Workflow, Browser launch fails: "Missing dependencies", CLI Commands, Common Mistakes, Container-Based Execution, Environment Secrets, GitHub Actions for Playwright, No PR annotations (+11 more)
@@ -2690,10 +2635,6 @@ Nodes (19): Basic Workflow, Browser launch fails: "Missing dependencies", CLI Co
 ### Community 481 - "Community 481"
 Cohesion: 0.18
 Nodes (11): activateAccountAction(), ActivateAccountState, ActivateAccountForm(), initialState, STATS, TRUST, SearchParams, ActivateAccountFieldErrors (+3 more)
-
-### Community 482 - "Community 482"
-Cohesion: 0.50
-Nodes (4): 10.1 Lead Aggregate, Aggregate Root, Child Entities / Value Objects, Key Invariants
 
 ### Community 483 - "Community 483"
 Cohesion: 0.50
@@ -2736,20 +2677,20 @@ Cohesion: 0.33
 Nodes (5): compilerOptions, composite, rootDir, extends, include
 
 ### Community 494 - "Community 494"
-Cohesion: 0.50
-Nodes (4): 23. Acceptance Criteria, Scenario: Block Schedule on Holiday, Scenario: Create Holiday Calendar, Scenario: Emergency Closure
+Cohesion: 0.17
+Nodes (11): Purpose, Requirements, Specification: IAM Branch Access, Requirement: Active Branch Switching, Requirement: Branch Scoped Access Enforcement, Requirement: Explicit User Branch Access, Scenario: Authorized branch switch, Scenario: Branch assigned to user (+3 more)
 
 ### Community 495 - "Community 495"
 Cohesion: 0.33
 Nodes (5): For /graphify explain, For /graphify path, graphify reference: query, path, explain, Step 0 — Constrained query expansion (REQUIRED before traversal), Step 1 — Traversal
 
 ### Community 496 - "Community 496"
-Cohesion: 0.50
-Nodes (4): 13. Screen Specifications, Configuration Dashboard, Configuration Details, Configuration Profile List
+Cohesion: 0.18
+Nodes (10): ADDED Requirements, Requirement: Branch Scoping on Directory Operations, Requirement: Hierarchical Branch Scoping, Scenario: Accessing user details directly is branch-scoped, Scenario: Branch scoping on lifecycle actions, Scenario: Child branch access does not resolve ancestors, Scenario: Listing users is branch-scoped, Scenario: Parent branch access resolves children (+2 more)
 
 ### Community 497 - "Community 497"
-Cohesion: 0.50
-Nodes (4): 23. Acceptance Criteria, Scenario: Disable Feature, Scenario: Generate Enrollment Number, Scenario: Resolve Branch Override
+Cohesion: 0.67
+Nodes (3): dependsOn, outputs, build
 
 ### Community 498 - "Community 498"
 Cohesion: 0.50
@@ -2771,17 +2712,13 @@ Nodes (6): Actions, Columns, Filters, Permissions, Purpose, TRN-UI-001 Trainer L
 Cohesion: 0.33
 Nodes (6): Actions, Columns, COR-UI-001 Corporate Customer List, Filters, Permissions, Purpose
 
-### Community 503 - "Community 503"
-Cohesion: 0.50
-Nodes (4): 22. Acceptance Criteria (BDD), Recommendation, Scenario: Activate Campus, Scenario: Create Campus
-
-### Community 504 - "Community 504"
-Cohesion: 0.50
-Nodes (4): 20. Database Mapping, Aggregate Root, Key Fields: buildings, Suggested Tables
-
 ### Community 505 - "Community 505"
 Cohesion: 0.50
 Nodes (4): Feature IAM-009: Dashboard and Report Access, Scenario IAM-009-01: Allow dashboard access with permission, Scenario IAM-009-02: Deny dashboard access without permission, Scenario IAM-009-03: Report respects branch scope
+
+### Community 507 - "Community 507"
+Cohesion: 0.50
+Nodes (4): Business Rules, Example, Fields, SCH-UI-007 Trainer Availability Screen
 
 ### Community 508 - "Community 508"
 Cohesion: 0.67
@@ -2798,10 +2735,6 @@ Nodes (6): Actions, Columns, Filters, LEAD-UI-001 Inquiry List Screen, Permissio
 ### Community 511 - "Community 511"
 Cohesion: 0.33
 Nodes (6): Actions, Columns, Filters, LEAD-UI-002 Lead List Screen, Permissions, Purpose
-
-### Community 512 - "Community 512"
-Cohesion: 0.50
-Nodes (4): 22. Acceptance Criteria, Scenario: Activate Building, Scenario: Create Building, Scenario: Prevent Scheduling During Maintenance
 
 ### Community 513 - "Community 513"
 Cohesion: 0.33
@@ -2845,11 +2778,11 @@ Nodes (6): compilerOptions, composite, rootDir, exclude, extends, include
 
 ### Community 523 - "Community 523"
 Cohesion: 0.50
-Nodes (4): Acceptance Criteria, Business Rules, Fields, ORG-BLDG-001 — Create Building
+Nodes (4): 10.4 Course Aggregate, Aggregate Root, Child Entities / Value Objects, Key Invariants
 
 ### Community 524 - "Community 524"
 Cohesion: 0.50
-Nodes (4): 20. Database Mapping, Aggregate Root, Key Fields, Suggested Tables
+Nodes (4): Business Rules, CERT-UI-007 QR Verification, Purpose, QR Content
 
 ### Community 525 - "Community 525"
 Cohesion: 0.33
@@ -2879,30 +2812,6 @@ Nodes (5): compilerOptions, composite, rootDir, extends, include
 Cohesion: 0.33
 Nodes (5): compilerOptions, composite, rootDir, extends, include
 
-### Community 532 - "Community 532"
-Cohesion: 0.50
-Nodes (4): 20. Database Mapping, Aggregate Root, Key Fields: classrooms, Suggested Tables
-
-### Community 533 - "Community 533"
-Cohesion: 0.50
-Nodes (4): 22. Acceptance Criteria, Scenario: Create Classroom, Scenario: Prevent Capacity Violation, Scenario: Prevent Scheduling in Maintenance Classroom
-
-### Community 534 - "Community 534"
-Cohesion: 0.50
-Nodes (4): ADM-UI-009 Walk-In Enrollment Screen, Business Rules, Fields, Purpose
-
-### Community 535 - "Community 535"
-Cohesion: 0.50
-Nodes (4): 22. Acceptance Criteria, Scenario: Activate Department, Scenario: Create Department, Scenario: Prevent Archiving
-
-### Community 536 - "Community 536"
-Cohesion: 0.50
-Nodes (4): 13. Screen Specifications, Weekly Schedule Editor, Working Hours Details, Working Hours List
-
-### Community 537 - "Community 537"
-Cohesion: 0.50
-Nodes (4): 23. Acceptance Criteria, Scenario: Apply Ramadan Working Hours, Scenario: Block Session Outside Working Hours, Scenario: Resolve Branch Working Hours
-
 ### Community 538 - "Community 538"
 Cohesion: 0.67
 Nodes (3): 15.1 IAM Operations Dashboard, 15.2 Security Monitoring Dashboard, 15. Monitoring Dashboards
@@ -2924,8 +2833,8 @@ Cohesion: 0.67
 Nodes (3): 3.1 Environments, 3.2 Environment Rules, 3. Environment Strategy
 
 ### Community 544 - "Community 544"
-Cohesion: 0.09
-Nodes (28): passwordSchema, withServerActionObservability(), createBranchAction(), createClassroomAction(), createDepartmentAction(), createInstituteAction(), getOrganizationHierarchyAction(), updateBranchAction() (+20 more)
+Cohesion: 0.50
+Nodes (4): Business Rules, CERT-UI-005 Certificate Approval, Decisions, Fields
 
 ### Community 545 - "Community 545"
 Cohesion: 0.67
@@ -2971,21 +2880,13 @@ Nodes (3): Description, Migration: user_roles_lifecycle_fields, Mitigation/Rollb
 Cohesion: 0.50
 Nodes (3): Description, Migration: user_sessions_previous_token_hash, Mitigation/Rollback Notes
 
-### Community 557 - "Community 557"
-Cohesion: 0.67
-Nodes (3): 3. Scope, Excluded, Included
-
 ### Community 558 - "Community 558"
 Cohesion: 0.67
-Nodes (3): 6. Aggregate Design, Aggregate Root, Child Entities
+Nodes (3): Business Rules, COR-UI-002 Corporate Customer Screen, Fields
 
 ### Community 559 - "Community 559"
 Cohesion: 0.67
-Nodes (3): 3. Scope, Excluded, Included
-
-### Community 561 - "Community 561"
-Cohesion: 0.67
-Nodes (3): 6. Aggregate Design, Aggregate Root, Child Entities
+Nodes (3): Business Rules, COR-UI-011 Completion Dashboard, Metrics
 
 ### Community 562 - "Community 562"
 Cohesion: 0.67
@@ -2996,58 +2897,6 @@ Cohesion: 0.67
 Nodes (3): 3. Scope, Excluded, Included
 
 ### Community 565 - "Community 565"
-Cohesion: 0.67
-Nodes (3): 6. Aggregate Design, Aggregate Root, Child Entities
-
-### Community 566 - "Community 566"
-Cohesion: 0.67
-Nodes (3): 12. Screen Specifications, Campus Details, Campus List
-
-### Community 567 - "Community 567"
-Cohesion: 0.67
-Nodes (3): 20. Database Mapping, Aggregate Root, Child Entities
-
-### Community 568 - "Community 568"
-Cohesion: 0.67
-Nodes (3): 3. Scope, Excluded, Included
-
-### Community 569 - "Community 569"
-Cohesion: 0.67
-Nodes (3): 6. Aggregate Design, Aggregate Root, Child Entities
-
-### Community 570 - "Community 570"
-Cohesion: 0.67
-Nodes (3): 3. Scope, Excluded, Included
-
-### Community 571 - "Community 571"
-Cohesion: 0.67
-Nodes (3): 6. Aggregate Design, Aggregate Root, Child Entities
-
-### Community 572 - "Community 572"
-Cohesion: 0.67
-Nodes (3): 22. Acceptance Criteria, Scenario: Create Floor, Scenario: Prevent Duplicate Floor Number
-
-### Community 573 - "Community 573"
-Cohesion: 0.67
-Nodes (3): 3. Scope, Excluded, Included
-
-### Community 574 - "Community 574"
-Cohesion: 0.67
-Nodes (3): 6. Aggregate Design, Aggregate Root, Child Entities
-
-### Community 575 - "Community 575"
-Cohesion: 0.67
-Nodes (3): 3. Scope, Excluded, Included
-
-### Community 576 - "Community 576"
-Cohesion: 0.67
-Nodes (3): 6. Aggregate Design, Aggregate Root, Child Entities
-
-### Community 577 - "Community 577"
-Cohesion: 0.67
-Nodes (3): 3. Scope, Excluded, Included
-
-### Community 578 - "Community 578"
 Cohesion: 0.67
 Nodes (3): 6. Aggregate Design, Aggregate Root, Child Entities
 
@@ -3102,14 +2951,6 @@ Nodes (5): Actions, Business Rules, CERT-UI-004 Generate Certificate, Filters, P
 ### Community 591 - "Community 591"
 Cohesion: 0.40
 Nodes (5): Business Rules, CERT-UI-003 Certificate Template Screen, Fields, Supported Languages, Template Placeholders
-
-### Community 592 - "Community 592"
-Cohesion: 0.67
-Nodes (3): 3. Scope, Excluded, Included
-
-### Community 593 - "Community 593"
-Cohesion: 0.67
-Nodes (3): 6. Aggregate Design, Aggregate Root, Child Entities
 
 ### Community 594 - "Community 594"
 Cohesion: 0.67
@@ -3191,10 +3032,6 @@ Nodes (3): Feature IAM-005: Logout and Session Management, Scenario IAM-005-01: 
 Cohesion: 0.67
 Nodes (3): Feature IAM-010: Audit Logging, Scenario IAM-010-01: Record security-sensitive action, Scenario IAM-010-02: Audit log cannot be modified
 
-### Community 614 - "Community 614"
-Cohesion: 0.40
-Nodes (3): GET(), POST(), schema
-
 ### Community 616 - "Community 616"
 Cohesion: 0.40
 Nodes (5): 8.11 Training Delivery Management Context, Business Purpose, Core Entities, Important Rules, Key Responsibilities
@@ -3203,17 +3040,9 @@ Nodes (5): 8.11 Training Delivery Management Context, Business Purpose, Core Ent
 Cohesion: 0.50
 Nodes (4): Business Rules, Document Status, Supported Documents, TRN-UI-004 Trainer Documents
 
-### Community 621 - "Community 621"
-Cohesion: 0.50
-Nodes (4): 10.4 Course Aggregate, Aggregate Root, Child Entities / Value Objects, Key Invariants
-
 ### Community 623 - "Community 623"
 Cohesion: 0.67
 Nodes (3): Additional Fields, Business Rules, COR-UI-007 Corporate Batch Reference
-
-### Community 624 - "Community 624"
-Cohesion: 0.67
-Nodes (3): Actions, Business Rules, CMP-UI-007 Publish Results
 
 ### Community 625 - "Community 625"
 Cohesion: 0.67
@@ -3234,22 +3063,6 @@ Nodes (5): Displaying Errors, Error Handling, Error Object Structure, Form-Level
 ### Community 629 - "Community 629"
 Cohesion: 0.40
 Nodes (4): IMS v2, Local Database, Scripts, Stack
-
-### Community 631 - "Community 631"
-Cohesion: 0.07
-Nodes (12): POST(), POST(), POST(), assertPermissionMock, listAuditLogsMock, assertPermissionMock, getUserByIdMock, POST() (+4 more)
-
-### Community 632 - "Community 632"
-Cohesion: 0.50
-Nodes (4): Business Rules, Example, Fields, SCH-UI-007 Trainer Availability Screen
-
-### Community 634 - "Community 634"
-Cohesion: 0.67
-Nodes (3): Business Rules, CMP-UI-005 Exam Screen, Fields
-
-### Community 635 - "Community 635"
-Cohesion: 0.67
-Nodes (3): Business Rules, Fields, ORG-HOL-001 — Create Holiday Calendar
 
 ### Community 646 - "Community 646"
 Cohesion: 0.31
@@ -3279,17 +3092,9 @@ Nodes (10): compilerOptions, esModuleInterop, forceConsistentCasingInFileNames, 
 Cohesion: 0.33
 Nodes (5): compilerOptions, composite, rootDir, extends, include
 
-### Community 673 - "Community 673"
-Cohesion: 0.25
-Nodes (7): 1. Portal Foundation, 2. Users Screen Family, 3. Roles and Permissions Screens, 4. Sessions and Security Screens, 5. Audit, Reports, and Dashboards, 6. Tests, Accessibility, and Verification, 7. Public Auth Screens
-
 ### Community 680 - "Community 680"
 Cohesion: 0.50
 Nodes (4): Actions, Business Rules, CERT-UI-011 Revoke Certificate, Fields
-
-### Community 682 - "Community 682"
-Cohesion: 0.23
-Nodes (5): BranchFormProps, Institute, InstituteFormProps, PrismaOrganizationRepository, toInstitute()
 
 ### Community 687 - "Community 687"
 Cohesion: 0.50
@@ -3303,17 +3108,9 @@ Nodes (3): For git commit hook, For native CLAUDE.md integration, graphify refer
 Cohesion: 0.50
 Nodes (3): For --cluster-only, For --update (incremental re-extraction), graphify reference: incremental update and cluster-only
 
-### Community 693 - "Community 693"
-Cohesion: 0.50
-Nodes (4): Actions, CERT-UI-002 Certificate Template List, Columns, Permissions
-
 ### Community 694 - "Community 694"
-Cohesion: 0.12
-Nodes (13): GET(), GET(), GET(), querySchema, metadata, metadata, DELETE(), IamEditUserPage() (+5 more)
-
-### Community 695 - "Community 695"
-Cohesion: 0.29
-Nodes (6): Capabilities, Impact, Modified Capabilities, New Capabilities, What Changes, Why
+Cohesion: 0.06
+Nodes (27): GET(), POST(), POST(), GET(), metadata, metadata, metadata, metadata (+19 more)
 
 ### Community 696 - "Community 696"
 Cohesion: 0.50
@@ -3326,18 +3123,6 @@ Nodes (4): 8. Alternatives Considered, Alternative 1: Full Microservices From Da
 ### Community 699 - "Community 699"
 Cohesion: 0.33
 Nodes (5): compilerOptions, composite, rootDir, extends, include
-
-### Community 700 - "Community 700"
-Cohesion: 0.50
-Nodes (4): Example, Formula, Metrics, TRN-UI-009 Utilization Report
-
-### Community 702 - "Community 702"
-Cohesion: 0.67
-Nodes (3): Business Rules, COR-UI-011 Completion Dashboard, Metrics
-
-### Community 704 - "Community 704"
-Cohesion: 0.33
-Nodes (5): Context, Decisions, Goals / Non-Goals, Migration Plan, Risks / Trade-offs
 
 ### Community 705 - "Community 705"
 Cohesion: 0.50
@@ -3370,10 +3155,6 @@ Nodes (3): Business Rules, Fields, LEAD-UI-007 Lead Stage Management
 ### Community 717 - "Community 717"
 Cohesion: 0.40
 Nodes (5): 8.3 Configuration / Master Data Context, Business Purpose, Core Entities, Important Rules, Key Responsibilities
-
-### Community 719 - "Community 719"
-Cohesion: 0.50
-Nodes (4): Business Rules, CERT-UI-005 Certificate Approval, Decisions, Fields
 
 ### Community 720 - "Community 720"
 Cohesion: 0.50
@@ -3459,33 +3240,29 @@ Nodes (3): is_server_ready(), main(), Wait for server to be ready by polling the
 Cohesion: 0.50
 Nodes (4): Business Rules, Purpose, TRN-UI-010 Trainer Portal View, Views
 
-### Community 752 - "Community 752"
-Cohesion: 0.67
-Nodes (3): dependsOn, outputs, build
-
 ### Community 770 - "Community 770"
 Cohesion: 0.67
 Nodes (3): shadcn/ui Integration, Using Field Component (Recommended), Using Form Component (Legacy)
 
 ## Knowledge Gaps
-- **5585 isolated node(s):** `check-versions.sh script`, `addressSchema`, `profileSchema`, `ProfileFormData`, `usernameSchema` (+5580 more)
+- **5243 isolated node(s):** `check-versions.sh script`, `addressSchema`, `profileSchema`, `ProfileFormData`, `usernameSchema` (+5238 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **90 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **82 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Uuid` connect `Community 38` to `Community 0`, `Community 129`, `Community 9`, `Community 393`, `Community 402`, `Community 146`, `Community 26`, `Community 158`, `Community 544`, `Community 39`, `Community 425`, `Community 180`, `Community 57`, `Community 321`, `Community 450`, `Community 451`, `Community 193`, `Community 199`, `Community 73`, `Community 77`, `Community 465`, `Community 82`, `Community 215`, `Community 91`, `Community 347`, `Community 221`, `Community 222`, `Community 104`, `Community 120`?**
-  _High betweenness centrality (0.009) - this node is a cross-community bridge._
-- **Why does `DomainError` connect `Community 631` to `Community 0`, `Community 129`, `Community 9`, `Community 139`, `Community 415`, `Community 544`, `Community 425`, `Community 170`, `Community 694`, `Community 57`, `Community 449`, `Community 193`, `Community 708`, `Community 327`, `Community 328`, `Community 77`, `Community 465`, `Community 82`, `Community 215`, `Community 91`, `Community 347`, `Community 222`, `Community 479`, `Community 481`, `Community 121`, `Community 614`, `Community 104`, `Community 232`, `Community 619`, `Community 622`, `Community 630`, `Community 120`, `Community 377`, `Community 506`, `Community 507`?**
-  _High betweenness centrality (0.008) - this node is a cross-community bridge._
-- **Why does `assertPermission()` connect `Community 694` to `Community 0`, `Community 129`, `Community 2`, `Community 128`, `Community 26`, `Community 544`, `Community 425`, `Community 708`, `Community 326`, `Community 327`, `Community 82`, `Community 215`, `Community 221`, `Community 614`, `Community 104`, `Community 377`, `Community 619`, `Community 630`, `Community 631`, `Community 120`, `Community 121`, `Community 124`?**
+- **Why does `Uuid` connect `Community 38` to `Community 0`, `Community 129`, `Community 388`, `Community 393`, `Community 9`, `Community 402`, `Community 146`, `Community 148`, `Community 158`, `Community 159`, `Community 39`, `Community 425`, `Community 180`, `Community 694`, `Community 57`, `Community 318`, `Community 326`, `Community 72`, `Community 74`, `Community 77`, `Community 215`, `Community 91`, `Community 347`, `Community 221`, `Community 222`, `Community 104`, `Community 121`?**
+  _High betweenness centrality (0.011) - this node is a cross-community bridge._
+- **Why does `DomainError` connect `Community 0` to `Community 481`, `Community 193`, `Community 163`, `Community 164`, `Community 388`, `Community 326`, `Community 232`, `Community 425`, `Community 170`, `Community 104`, `Community 139`, `Community 328`, `Community 77`, `Community 694`, `Community 215`, `Community 57`, `Community 347`, `Community 318`?**
+  _High betweenness centrality (0.007) - this node is a cross-community bridge._
+- **Why does `Performance & Parallelization` connect `Community 10` to `Community 3`?**
   _High betweenness centrality (0.006) - this node is a cross-community bridge._
 - **Are the 28 inferred relationships involving `withRouteObservability()` (e.g. with `POST()` and `GET()`) actually correct?**
   _`withRouteObservability()` has 28 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 11 inferred relationships involving `assertPermission()` (e.g. with `IamCreatePermissionPage()` and `IamCreateRolePage()`) actually correct?**
   _`assertPermission()` has 11 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `check-versions.sh script`, `addressSchema`, `profileSchema` to the rest of the system?**
-  _5586 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _5244 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.06280193236714976 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.027293064876957495 - nodes in this community are weakly interconnected._

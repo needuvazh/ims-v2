@@ -1,32 +1,18 @@
-I think we can make this much more enterprise-grade than a typical FRD.
+# Module 02 – Organization Management
 
-Rather than writing a simple "Organization Management" document, let's create it at the same level as SAP, Oracle Fusion, Salesforce, or Microsoft Dynamics documentation.
-
-Each submodule should become its own Functional Requirement Specification (FRS).
-
-For Organization Management, I recommend this structure:
+For Organization Management, the module is structured into the following specifications:
 
 ```
 Module 02 – Organization Management
 │
 ├── Part 2.1 Organization (Institute) Management
 ├── Part 2.2 Branch Management
-├── Part 2.3 Campus Management
-├── Part 2.4 Building Management
-├── Part 2.5 Floor Management
-├── Part 2.6 Classroom Management
-├── Part 2.7 Department Management
-├── Part 2.8 Academic Division Management
-├── Part 2.9 Working Hours Management
-├── Part 2.10 Holiday Calendar Management
-├── Part 2.11 Cost Center Management
-├── Part 2.12 Organization Branding
-└── Part 2.13 Organization Settings
+├── Part 2.3 Department Management
+└── Part 2.4 Classroom Management
 ```
 
-We'll start with **Part 2.1**.
-
 ---
+
 
 # Module 02.1 — Organization (Institute) Management
 

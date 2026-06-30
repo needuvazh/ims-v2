@@ -201,6 +201,7 @@ describe('UserService', () => {
         if (index >= 0) list[index] = access;
         return access;
       },
+      resolveChildBranchIds: async () => [],
     };
 
     activationTokenRepo = {
@@ -373,7 +374,7 @@ describe('UserService', () => {
 
   it('updates user profile and branch assignments', async () => {
     const userId = Array.from(users.keys())[0];
-    await userService.updateUser(userId, { fullName: 'Updated User', branchIds: ['22222222-2222-2222-2222-222222222222'] }, { actorId: 'actor-1', actorPermissions: ['iam.user.update'], activeBranchId: '11111111-1111-1111-1111-111111111111' });
+    await userService.updateUser(userId, { fullName: 'Updated User', branchIds: ['22222222-2222-2222-2222-222222222222'] }, { actorId: 'actor-1', actorPermissions: ['iam.user.update'], activeBranchId: null });
 
     expect(people.get(users.get(userId)!.personId)?.firstName).toBe('Updated');
     expect(branchAccess.get(userId)?.some((access) => access.branchId === '22222222-2222-2222-2222-222222222222' && access.status === 'Active')).toBe(true);
@@ -479,9 +480,60 @@ describe('UserService', () => {
     
     expect(firstUser).toHaveProperty('roleSummaries');
     expect(firstUser).toHaveProperty('dataScopes');
-    // Since the default created user is Admin, dataScopes should fallback to [{ scopeType: 'All' }]
-    expect(firstUser.dataScopes).toEqual([{ scopeType: 'All' }]);
+    // Since the default created user is Admin and has branch assignments, expect Branch scope
+    expect(firstUser.dataScopes).toEqual([{ scopeType: 'Branch', branchId: '11111111-1111-1111-1111-111111111111' }]);
     expect(firstUser.roleSummaries.length).toBeGreaterThan(0);
     expect(firstUser.roleSummaries[0]).toHaveProperty('roleName');
+  });
+
+  it('enforces branch scope when updating or executing lifecycle actions', async () => {
+    const userId = Array.from(users.keys())[0];
+    
+    // Set the actor branch assignments to another branch
+    branchAccess.set('actor-1', [createBranchAccess('actor-1', '22222222-2222-2222-2222-222222222222', { isDefault: true })]);
+
+    const context = {
+      actorId: 'actor-1',
+      actorPermissions: ['iam.user.update', 'iam.user.activate', 'iam.user.suspend', 'iam.user.archive', 'iam.user.unlock', 'iam.user.reset-password'],
+      activeBranchId: '22222222-2222-2222-2222-222222222222',
+    };
+
+    // updateUser throws authorization error if target user is outside the branch scope
+    await expect(userService.updateUser(userId, { firstName: 'NewName' }, context)).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
+
+    // suspendUser throws authorization error
+    await expect(userService.suspendUser(userId, context)).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
+
+    // archiveUser throws authorization error
+    await expect(userService.archiveUser(userId, context)).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
+
+    // unlockUser throws authorization error
+    await expect(userService.unlockUser(userId, context)).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
+
+    // adminResetPassword throws authorization error
+    await expect(userService.adminResetPassword(userId, context)).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
+  });
+
+  it('enforces target branch assignments on create and update', async () => {
+    // Set actor-1 active assignments to branch 11111111-1111-1111-1111-111111111111
+    branchAccess.set('actor-1', [createBranchAccess('actor-1', '11111111-1111-1111-1111-111111111111', { isDefault: true })]);
+
+    const context = {
+      actorId: 'actor-1',
+      actorPermissions: ['iam.user.create', 'iam.user.update'],
+      activeBranchId: '11111111-1111-1111-1111-111111111111',
+    };
+
+    // Creating a user with branch 22222222-2222-2222-2222-222222222222 (which actor doesn't manage) fails
+    const createCommand = {
+      email: 'newuser@example.com',
+      userType: 'Counselor',
+      roleIds: [crypto.randomUUID()],
+      branchIds: ['22222222-2222-2222-2222-222222222222'],
+      firstName: 'New',
+      lastName: 'User',
+      mobile: '9876543210',
+    };
+    await expect(userService.createUser(createCommand, context)).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
   });
 });

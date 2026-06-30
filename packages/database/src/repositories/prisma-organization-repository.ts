@@ -29,6 +29,7 @@ type InstituteRow = {
 type BranchRow = {
   id: string;
   instituteId: string;
+  parentBranchId: string | null;
   branchCode: string;
   branchName: string;
   address: string | null;
@@ -78,6 +79,7 @@ function toBranch(row: BranchRow): Branch {
     ...row,
     id: row.id as BranchId,
     instituteId: row.instituteId as Uuid,
+    parentBranchId: row.parentBranchId,
     status: row.status as Branch['status'],
   };
 }

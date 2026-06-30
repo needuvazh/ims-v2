@@ -64,6 +64,56 @@ export class UserService {
     }
   }
 
+  private async getActorAllowedBranchIds(actorId: string, activeBranchId?: string | null): Promise<string[] | 'All'> {
+    if (activeBranchId) {
+      const children = await this.userBranchAccessRepository.resolveChildBranchIds(activeBranchId as Uuid);
+      return [activeBranchId, ...children];
+    }
+
+    const assignments = await this.userBranchAccessRepository.findByUser(actorId as Uuid);
+    const activeAssignments = assignments.filter((a) => a.status === 'Active');
+    
+    if (activeAssignments.length === 0) {
+      return 'All';
+    }
+
+    const allowed = new Set<string>();
+    for (const a of activeAssignments) {
+      allowed.add(a.branchId);
+      if (a.includeChildBranches) {
+        const children = await this.userBranchAccessRepository.resolveChildBranchIds(a.branchId);
+        for (const cid of children) {
+          allowed.add(cid);
+        }
+      }
+    }
+    return Array.from(allowed);
+  }
+
+  private async assertTargetUserInBranchScope(targetUserId: string, context?: UserCommandContext): Promise<void> {
+    if (!context) return; // Background processes or system scripts bypass checks
+    
+    const actorAllowed = await this.getActorAllowedBranchIds(context.actorId, context.activeBranchId);
+    if (actorAllowed === 'All') {
+      return; // Actor is globally scoped, has access to all branches
+    }
+
+    // Fetch target user's active branch assignments
+    const targetBranches = await this.userBranchAccessRepository.findByUser(targetUserId as Uuid);
+    const activeTargetBranches = targetBranches.filter((b) => b.status === 'Active');
+
+    // A branch-scoped operator cannot manage a global user (who has no branch assignments)
+    if (activeTargetBranches.length === 0) {
+      throw createIamError('IAM-AUTHZ-002');
+    }
+
+    // Check if there is an overlap
+    const hasOverlap = activeTargetBranches.some((tb) => actorAllowed.includes(tb.branchId));
+    if (!hasOverlap) {
+      throw createIamError('IAM-AUTHZ-002');
+    }
+  }
+
   async checkEmailExists(email: string): Promise<boolean> {
     const existing = await this.userRepository.findByEmail(email.trim().toLowerCase(), true);
     return !!existing;
@@ -80,6 +130,14 @@ export class UserService {
     const now = new Date();
     const roleIds = validated.roleIds ?? [];
     const branchIds = validated.branchIds ?? [];
+
+    const actorAllowed = await this.getActorAllowedBranchIds(context.actorId, context.activeBranchId);
+    if (actorAllowed !== 'All') {
+      const invalidBranches = branchIds.filter((bid) => !actorAllowed.includes(bid));
+      if (invalidBranches.length > 0) {
+        throw createIamError('IAM-AUTHZ-002');
+      }
+    }
 
     if (roleIds.length === 0) {
       throw createIamError('IAM-VAL-008');
@@ -260,6 +318,7 @@ export class UserService {
 
   async updateUser(userId: string, command: UpdateUserCommand, context: UserCommandContext): Promise<User> {
     this.checkPermission(context, 'iam.user.update');
+    await this.assertTargetUserInBranchScope(userId, context);
     const validated = updateUserCommandSchema.parse(command);
     const now = new Date();
 
@@ -294,8 +353,15 @@ export class UserService {
       person.mobile = validated.phone || '';
     }
 
+    const actorAllowed = await this.getActorAllowedBranchIds(context.actorId, context.activeBranchId);
+
     if (validated.userType !== undefined) user.userType = validated.userType;
-    if (validated.defaultBranchId !== undefined) user.defaultBranchId = validated.defaultBranchId as Uuid | null;
+    if (validated.defaultBranchId !== undefined) {
+      if (validated.defaultBranchId !== null && actorAllowed !== 'All' && !actorAllowed.includes(validated.defaultBranchId)) {
+        throw createIamError('IAM-AUTHZ-002');
+      }
+      user.defaultBranchId = validated.defaultBranchId as Uuid | null;
+    }
     if (validated.preferredLanguage !== undefined) user.preferredLanguage = validated.preferredLanguage;
     if (validated.effectiveStartDate !== undefined && validated.effectiveStartDate !== null) user.effectiveStartDate = validated.effectiveStartDate;
     if (validated.effectiveEndDate !== undefined) user.effectiveEndDate = validated.effectiveEndDate;
@@ -306,9 +372,25 @@ export class UserService {
     if (validated.branchIds !== undefined) {
       const existingAccess = await this.userBranchAccessRepository.findByUser(user.id);
       
+      let finalBranchIds: string[];
+      if (actorAllowed === 'All') {
+        finalBranchIds = validated.branchIds;
+      } else {
+        const unmanagedBranches = existingAccess
+          .filter((a) => a.status === 'Active' && !actorAllowed.includes(a.branchId))
+          .map((a) => a.branchId);
+
+        const invalidAdditions = validated.branchIds.filter((bid) => !actorAllowed.includes(bid));
+        if (invalidAdditions.length > 0) {
+          throw createIamError('IAM-AUTHZ-002');
+        }
+
+        finalBranchIds = [...new Set([...unmanagedBranches, ...validated.branchIds])];
+      }
+
       // Revoke any access to branches not in the new list
       for (const access of existingAccess) {
-        if (access.status === 'Active' && !validated.branchIds.includes(access.branchId)) {
+        if (access.status === 'Active' && !finalBranchIds.includes(access.branchId)) {
           access.status = 'Revoked';
           access.revokedAt = now;
           access.revokedBy = context.actorId;
@@ -319,7 +401,7 @@ export class UserService {
       }
 
       // Add or reactivate branches in the new list
-      for (const branchId of validated.branchIds) {
+      for (const branchId of finalBranchIds) {
         const match = existingAccess.find((a) => a.branchId === branchId);
         if (match) {
           if (match.status !== 'Active') {
@@ -379,6 +461,7 @@ export class UserService {
 
   async activateUser(userId: string, context: UserCommandContext): Promise<void> {
     this.checkPermission(context, 'iam.user.activate');
+    await this.assertTargetUserInBranchScope(userId, context);
     const user = await this.userRepository.findById(userId as Uuid);
     if (!user) throw createIamError('IAM-SYS-001');
 
@@ -445,6 +528,7 @@ export class UserService {
 
   async resendActivationEmail(userId: string, context: UserCommandContext): Promise<string> {
     this.checkPermission(context, 'iam.user.activate');
+    await this.assertTargetUserInBranchScope(userId, context);
     const user = await this.userRepository.findById(userId as Uuid);
     if (!user || user.status !== 'PendingActivation') {
       throw createIamError('IAM-SYS-001');
@@ -508,6 +592,7 @@ export class UserService {
 
   async suspendUser(userId: string, context: UserCommandContext): Promise<void> {
     this.checkPermission(context, 'iam.user.suspend');
+    await this.assertTargetUserInBranchScope(userId, context);
     const user = await this.userRepository.findById(userId as Uuid);
     if (!user) throw createIamError('IAM-SYS-001');
 
@@ -540,6 +625,7 @@ export class UserService {
 
   async archiveUser(userId: string, context: UserCommandContext): Promise<void> {
     this.checkPermission(context, 'iam.user.archive');
+    await this.assertTargetUserInBranchScope(userId, context);
     const user = await this.userRepository.findById(userId as Uuid);
     if (!user) throw createIamError('IAM-SYS-001');
 
@@ -573,6 +659,7 @@ export class UserService {
 
   async unlockUser(userId: string, context: UserCommandContext): Promise<void> {
     this.checkPermission(context, 'iam.user.unlock');
+    await this.assertTargetUserInBranchScope(userId, context);
     const user = await this.userRepository.findById(userId as Uuid);
     if (!user) throw createIamError('IAM-SYS-001');
 
@@ -603,6 +690,7 @@ export class UserService {
 
   async adminResetPassword(userId: string, context: UserCommandContext): Promise<string> {
     this.checkPermission(context, 'iam.user.reset-password');
+    await this.assertTargetUserInBranchScope(userId, context);
     const user = await this.userRepository.findById(userId as Uuid);
     if (!user) throw createIamError('IAM-SYS-001');
 
@@ -665,10 +753,25 @@ export class UserService {
     context: UserCommandContext
   ): Promise<{ items: User[]; total: number }> {
     this.checkPermission(context, 'iam.user.read');
-    // Enforce branch scope: if context has a branch, force filtering by it
-    if (context.activeBranchId) {
-      filters.branchId = context.activeBranchId as Uuid;
+    
+    const actorAllowed = await this.getActorAllowedBranchIds(context.actorId);
+    if (actorAllowed !== 'All') {
+      if (context.activeBranchId) {
+        if (!actorAllowed.includes(context.activeBranchId)) {
+          return { items: [], total: 0 };
+        }
+        const descendants = await this.userBranchAccessRepository.resolveChildBranchIds(context.activeBranchId as Uuid);
+        filters.branchIds = [context.activeBranchId, ...descendants];
+      } else {
+        filters.branchIds = actorAllowed;
+      }
+    } else {
+      if (context.activeBranchId) {
+        const descendants = await this.userBranchAccessRepository.resolveChildBranchIds(context.activeBranchId as Uuid);
+        filters.branchIds = [context.activeBranchId, ...descendants];
+      }
     }
+
     return this.userRepository.search(filters, page, pageSize);
   }
 
@@ -679,13 +782,7 @@ export class UserService {
 
     // Enforce branch scope if necessary
     if (context.activeBranchId) {
-      const branches = await this.userBranchAccessRepository.findByUser(userId as Uuid);
-      const isAssigned = branches.some(
-        (b) => b.branchId === (context.activeBranchId as Uuid) && b.status === 'Active'
-      );
-      if (!isAssigned) {
-        throw createIamError('IAM-AUTHZ-002');
-      }
+      await this.assertTargetUserInBranchScope(userId, context);
     }
 
     return user;
@@ -698,19 +795,16 @@ export class UserService {
 
     // Enforce branch scope if necessary
     if (context.activeBranchId) {
-      const branches = await this.userBranchAccessRepository.findByUser(user.id);
-      const isAssigned = branches.some(
-        (b) => b.branchId === (context.activeBranchId as Uuid) && b.status === 'Active'
-      );
-      if (!isAssigned) {
-        throw createIamError('IAM-AUTHZ-002');
-      }
+      await this.assertTargetUserInBranchScope(user.id, context);
     }
 
     return user;
   }
 
-  async getUser(userId: string): Promise<any> {
+  async getUser(userId: string, context?: UserCommandContext): Promise<any> {
+    if (context) {
+      await this.getUserById(userId, context);
+    }
     const user = await this.userRepository.findById(userId as Uuid);
     if (!user) throw createIamError('IAM-SYS-001');
     const person = await this.userRepository.findPersonById(user.personId);
@@ -744,8 +838,29 @@ export class UserService {
     }));
   }
 
-  async listUsers(): Promise<any[]> {
-    const res = await this.userRepository.search({}, 1, 1000);
+  async listUsers(context?: UserCommandContext): Promise<any[]> {
+    const filters: UserListFilters = {};
+    if (context) {
+      const actorAllowed = await this.getActorAllowedBranchIds(context.actorId);
+      if (actorAllowed !== 'All') {
+        if (context.activeBranchId) {
+          if (!actorAllowed.includes(context.activeBranchId)) {
+            return [];
+          }
+          const descendants = await this.userBranchAccessRepository.resolveChildBranchIds(context.activeBranchId as Uuid);
+          filters.branchIds = [context.activeBranchId, ...descendants];
+        } else {
+          filters.branchIds = actorAllowed;
+        }
+      } else {
+        if (context.activeBranchId) {
+          const descendants = await this.userBranchAccessRepository.resolveChildBranchIds(context.activeBranchId as Uuid);
+          filters.branchIds = [context.activeBranchId, ...descendants];
+        }
+      }
+    }
+
+    const res = await this.userRepository.search(filters, 1, 1000);
     return Promise.all(
       res.items.map(async (u) => {
         const [person, roles, branches] = await Promise.all([
@@ -762,11 +877,8 @@ export class UserService {
 
         const activeBranches = branches.filter((b) => b.status === 'Active');
 
-        const isAllScope =
-          u.userType === 'Owner' ||
-          u.userType === 'Admin' ||
-          u.userType === 'Management' ||
-          activeBranches.length === 0;
+        // Dynamic, role-free check: user has global scope if they have no active branch assignments
+        const isAllScope = activeBranches.length === 0;
 
         const dataScopes = isAllScope
           ? [{ scopeType: 'All' }]

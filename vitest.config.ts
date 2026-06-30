@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitest/config';
+import path from 'path';
 
 export default defineConfig({
   test: {
@@ -21,4 +22,14 @@ export default defineConfig({
       '**/.{idea,git,cache,output,temp}/**',
     ],
   },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './apps/admin-portal'),
+    },
+  },
+  esbuild: {
+    jsx: 'automatic',
+  },
 });
+
+

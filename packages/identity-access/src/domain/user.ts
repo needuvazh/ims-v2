@@ -123,6 +123,7 @@ export type UserListFilters = {
   status?: UserStatus;
   userType?: string;
   branchId?: string;
+  branchIds?: string[];
   roleId?: string;
   search?: string;
 };

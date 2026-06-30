@@ -53,21 +53,57 @@ export class BranchScopeResolver {
       return [];
     }
 
-    // If no activeBranchId is specified, user has access to all active branch assignments
+    // If no activeBranchId is specified, user has access to all active branch assignments and their descendants
     if (!activeBranchId) {
-      return activeAssignments.map((a) => a.branchId);
+      const allowed: Uuid[] = [];
+      for (const a of activeAssignments) {
+        if (!allowed.includes(a.branchId)) {
+          allowed.push(a.branchId);
+        }
+        if (a.includeChildBranches) {
+          const childIds = await this.userBranchAccessRepository.resolveChildBranchIds(a.branchId);
+          for (const cid of childIds) {
+            if (!allowed.includes(cid)) {
+              allowed.push(cid);
+            }
+          }
+        }
+      }
+      return allowed;
     }
 
-    // Ensure the requested activeBranchId is actually in the user's active assignments
-    const match = activeAssignments.find((a) => a.branchId === activeBranchId);
+    // Check if the requested activeBranchId matches an active assignment directly
+    let match = activeAssignments.find((a) => a.branchId === activeBranchId);
+
+    // If no direct match, check if it's a child branch of an assignment with includeChildBranches: true
+    if (!match) {
+      for (const a of activeAssignments) {
+        if (a.includeChildBranches) {
+          const childIds = await this.userBranchAccessRepository.resolveChildBranchIds(a.branchId);
+          if (childIds.includes(activeBranchId)) {
+            match = a;
+            break;
+          }
+        }
+      }
+    }
+
     if (!match) {
       return [];
     }
 
-    const allowed = [match.branchId];
+    const allowed = [activeBranchId];
 
-    // Phase 2 / ABAC enhancement: if includeChildBranches is true, we would recursively resolve children.
-    // For Phase 1, just return the matched branchId.
+    // If the matched root assignment has child branch access enabled, resolve descendants for the active context
+    if (match.includeChildBranches) {
+      const childIds = await this.userBranchAccessRepository.resolveChildBranchIds(activeBranchId);
+      for (const cid of childIds) {
+        if (!allowed.includes(cid)) {
+          allowed.push(cid);
+        }
+      }
+    }
+
     return allowed;
   }
 }

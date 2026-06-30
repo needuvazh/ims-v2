@@ -102,4 +102,19 @@ describe('signInAction', () => {
     expect(result.values?.password).toBe('wrong-pass');
     expect(result.values?.rememberMe).toBe(false);
   });
+
+  it('maps IAM-AUTH-008 (concurrent session limit) error to its messageEn', async () => {
+    const formData = new FormData();
+    formData.append('email', 'omrpravin1@gmail.com');
+    formData.append('password', 'valid-pass');
+    formData.append('rememberMe', 'on');
+
+    loginMock.mockRejectedValue(new MockIamError('IAM-AUTH-008', 'Maximum concurrent sessions reached.'));
+
+    const result = await signInAction({}, formData);
+    expect(result.error).toBe('Maximum concurrent sessions reached.');
+    expect(result.values?.email).toBe('omrpravin1@gmail.com');
+    expect(result.values?.password).toBe('valid-pass');
+    expect(result.values?.rememberMe).toBe(true);
+  });
 });

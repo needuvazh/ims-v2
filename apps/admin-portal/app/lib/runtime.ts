@@ -103,7 +103,8 @@ export const branchAccessService = new BranchAccessService(
 
 export const sessionService = new SessionService(
   sessionRepository,
-  auditRepository
+  auditRepository,
+  userBranchAccessRepository
 );
 
 export const securityPolicyService = new SecurityPolicyService(
@@ -116,7 +117,8 @@ export const auditQueryService = new AuditQueryService(
 );
 
 export const loginHistoryQueryService = new LoginHistoryQueryService(
-  loginHistoryRepository
+  loginHistoryRepository,
+  userBranchAccessRepository
 );
 
 export const effectivePermissionsService = new EffectivePermissionsService(

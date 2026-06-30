@@ -62,7 +62,12 @@ describe('SessionService', () => {
       listActiveForUser: async (targetUserId) => Array.from(sessions.values()).filter((session) => session.userId === targetUserId && session.status === 'Active'),
     };
 
-    service = new SessionService(repo, auditRepo);
+    const branchAccessRepo: any = {
+      findByUser: async () => [],
+      resolveChildBranchIds: async () => [],
+    };
+
+    service = new SessionService(repo, auditRepo, branchAccessRepo);
   });
 
   it('lists active sessions with permission', async () => {

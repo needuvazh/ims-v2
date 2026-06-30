@@ -112,10 +112,17 @@ export default async function IamReportDetailsPage({
     permissionService,
     branchAccessService,
     organizationService,
+    branchScopeResolver,
   } = await import('../../../../lib/runtime');
 
   // Load branches for filter list
-  const branches = await organizationService.listBranches({ pageSize: 1000 });
+  const branchResult = await organizationService.listBranches({ pageSize: 1000 });
+  const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(session.userId as any, session.activeBranchId as any);
+  const branches = {
+    items: allowedBranchIds.length === 0
+      ? branchResult.items
+      : branchResult.items.filter((b) => allowedBranchIds.includes(b.id as any)),
+  };
 
   const context = {
     actorId: session.userId as any,

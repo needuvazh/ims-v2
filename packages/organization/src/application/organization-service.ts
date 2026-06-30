@@ -239,6 +239,7 @@ export class OrganizationService {
       phone: validated.phone ?? null,
       email: validated.email ?? null,
       branchManagerId: validated.branchManagerId ?? null,
+      parentBranchId: validated.parentBranchId ?? null,
       status: 'Active',
       effectiveStartDate: validated.effectiveStartDate ?? null,
       effectiveEndDate: validated.effectiveEndDate ?? null,
