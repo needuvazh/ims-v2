@@ -17,7 +17,11 @@ type ErrorFieldMaps = {
 export function extractFormValues(formData: FormData): Record<string, string> {
   const values: Record<string, string> = {};
   formData.forEach((value, key) => {
-    values[key] = value.toString();
+    if (values[key]) {
+      values[key] = `${values[key]},${value.toString()}`;
+    } else {
+      values[key] = value.toString();
+    }
   });
   return values;
 }

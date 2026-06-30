@@ -60,6 +60,12 @@ export async function changePasswordAction(
       logger.info('identity.password.change.succeeded', { status: 'success' });
       return { success: true };
     } catch (error) {
+      if (error instanceof Error && (error.name === 'IamError' || 'errorCode' in error)) {
+        const errorMsg = (error as any).messageEn || error.message;
+        logger.warn('identity.password.change.failed', { status: 'failed', message: errorMsg, error });
+        return { error: errorMsg };
+      }
+
       if (error instanceof DomainError) {
         logger.warn('identity.password.change.failed', { status: 'failed', message: error.message, error });
         return { error: error.message };

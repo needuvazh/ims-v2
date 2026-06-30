@@ -66,14 +66,32 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
   }, [state.success]);
 
   const isView = mode === 'view';
-  const selectedBranchIds = new Set((initialData?.dataScopes ?? [])
-    .filter((scope: { scopeType: string; branchId?: string | null }) => scope.scopeType === 'Branch' && scope.branchId)
-    .map((scope: { branchId?: string | null }) => scope.branchId as string));
-  const assignedOnly = initialData?.dataScopes?.some((scope: { scopeType: string; assignedOnly?: boolean }) => scope.scopeType === 'Branch' && scope.assignedOnly) ?? false;
+
+  // State for controlled selections
+  const [selectedBranchIds, setSelectedBranchIds] = useState<Set<string>>(() =>
+    new Set((initialData?.dataScopes ?? [])
+      .filter((scope: { scopeType: string; branchId?: string | null }) => scope.scopeType === 'Branch' && scope.branchId)
+      .map((scope: { branchId?: string | null }) => scope.branchId as string))
+  );
+  const [assignedOnly, setAssignedOnly] = useState<boolean>(() =>
+    initialData?.dataScopes?.some((scope: { scopeType: string; assignedOnly?: boolean }) => scope.scopeType === 'Branch' && scope.assignedOnly) ?? false
+  );
+
+  useEffect(() => {
+    if (state.values) {
+      if (state.values.branchIds !== undefined) {
+        const branchesArr = state.values.branchIds ? state.values.branchIds.split(',').filter(Boolean) : [];
+        setSelectedBranchIds(new Set(branchesArr));
+      }
+      if (state.values.assignedOnly !== undefined) {
+        setAssignedOnly(state.values.assignedOnly === 'on' || state.values.assignedOnly === 'true');
+      }
+    }
+  }, [state.values]);
 
   return (
     <form action={formAction} noValidate className="space-y-6 bg-[color:var(--ims-surface)] p-6 rounded-2xl border border-[color:var(--ims-border)]">
-      {state.error && !state.fieldErrors && <Alert variant="error" description={state.error} />}
+      {state.error && <Alert variant="error" description={state.error} />}
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Input 
@@ -81,7 +99,7 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           label="Full Name" 
           placeholder="Fatima Al-Saud" 
           required 
-          defaultValue={initialData?.fullName}
+          defaultValue={state.values?.fullName ?? initialData?.fullName}
           disabled={isView}
           data-testid="user-name-input" 
           errorText={fieldErrors.fullName}
@@ -92,7 +110,7 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           label="Email" 
           placeholder="fatima@institute.com" 
           required 
-          defaultValue={initialData?.email}
+          defaultValue={state.values?.email ?? initialData?.email}
           disabled={isView || mode === 'edit'}
           data-testid="user-email-input" 
           errorText={fieldErrors.email}
@@ -101,7 +119,7 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           name="phone" 
           label="Phone" 
           placeholder="+966 xx xxxx xxxx" 
-          defaultValue={initialData?.phone ?? ''}
+          defaultValue={state.values?.phone ?? initialData?.phone ?? ''}
           disabled={isView}
           errorText={fieldErrors.phone}
         />
@@ -109,7 +127,7 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           name="status"
           label="Status"
           placeholder="Select status"
-          defaultValue={initialData?.status ?? 'PendingActivation'}
+          defaultValue={state.values?.status ?? initialData?.status ?? 'PendingActivation'}
           options={[
             { value: 'PendingActivation', label: 'Pending Activation' },
             { value: 'Active', label: 'Active' },
@@ -138,7 +156,7 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           name="userType"
           label="User Type"
           placeholder="Select type"
-          defaultValue={initialData?.userType}
+          defaultValue={state.values?.userType ?? initialData?.userType}
           options={[
             { value: 'Admin', label: 'System Administrator' },
             { value: 'BranchManager', label: 'Branch Manager' },
@@ -158,7 +176,7 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           name="effectiveStartDate"
           type="date"
           label="Effective Start Date"
-          defaultValue={toDateInputValue(initialData?.effectiveStartDate)}
+          defaultValue={state.values?.effectiveStartDate ? toDateInputValue(new Date(state.values.effectiveStartDate)) : toDateInputValue(initialData?.effectiveStartDate)}
           disabled={isView}
           errorText={fieldErrors.effectiveStartDate}
         />
@@ -166,7 +184,7 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           name="effectiveEndDate"
           type="date"
           label="Effective End Date"
-          defaultValue={toDateInputValue(initialData?.effectiveEndDate ?? null)}
+          defaultValue={state.values?.effectiveEndDate ? toDateInputValue(new Date(state.values.effectiveEndDate)) : toDateInputValue(initialData?.effectiveEndDate ?? null)}
           disabled={isView}
           errorText={fieldErrors.effectiveEndDate}
         />
@@ -204,11 +222,17 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
         ) : (
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             {branches.map((branch) => (
-              <label key={branch.id} className="flex items-start gap-3 rounded-xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-3">
+              <label key={branch.id} className="flex items-start gap-3 rounded-xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-3 cursor-pointer">
                 <Checkbox
                   name="branchIds"
                   value={branch.id}
-                  defaultChecked={selectedBranchIds.has(branch.id)}
+                  checked={selectedBranchIds.has(branch.id)}
+                  onChange={(e) => {
+                    const newSet = new Set(selectedBranchIds);
+                    if (e.target.checked) newSet.add(branch.id);
+                    else newSet.delete(branch.id);
+                    setSelectedBranchIds(newSet);
+                  }}
                   className="mt-1"
                 />
                 <span className="text-sm font-medium text-[color:var(--ims-ink)]">{branch.branchName}</span>
@@ -223,7 +247,8 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           name="assignedOnly"
           label="Assigned only"
           description="Limit branch access to assigned records."
-          defaultChecked={assignedOnly}
+          checked={assignedOnly}
+          onChange={(e) => setAssignedOnly(e.target.checked)}
         />
       )}
 

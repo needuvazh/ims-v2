@@ -9,17 +9,32 @@ import { signInSchema } from './schema';
 
 export type SignInState = {
   error?: string;
+  values?: {
+    email?: string;
+    password?: string;
+    rememberMe?: boolean;
+  };
 };
 
 export async function signInAction(_prev: SignInState, formData: FormData): Promise<SignInState> {
-  const parsed = signInSchema.safeParse({
-    email: formData.get('email'),
-    password: formData.get('password'),
-  });
+  const emailInput = formData.get('email');
+  const passwordInput = formData.get('password');
   const rememberMe = formData.get('rememberMe') === 'on';
 
+  const parsed = signInSchema.safeParse({
+    email: emailInput,
+    password: passwordInput,
+  });
+
   if (!parsed.success) {
-    return { error: 'Please enter a valid email and password.' };
+    return {
+      error: 'Please enter a valid email and password.',
+      values: {
+        email: typeof emailInput === 'string' ? emailInput : undefined,
+        password: typeof passwordInput === 'string' ? passwordInput : undefined,
+        rememberMe,
+      },
+    };
   }
 
   return withServerActionObservability(async () => {
@@ -38,13 +53,25 @@ export async function signInAction(_prev: SignInState, formData: FormData): Prom
       sessionExpiresAt = result.session.expiresAt;
       logger.info('auth.signIn.succeeded', { status: 'success' });
     } catch (err) {
+      const returnValues = {
+        email: parsed.data.email,
+        password: parsed.data.password,
+        rememberMe,
+      };
+
+      if (err instanceof Error && (err.name === 'IamError' || 'errorCode' in err)) {
+        const errorMsg = (err as any).messageEn || err.message;
+        logger.warn('auth.signIn.failed', { status: 'failed', message: errorMsg, error: err });
+        return { error: errorMsg, values: returnValues };
+      }
+
       if (err instanceof DomainError) {
         logger.warn('auth.signIn.failed', { status: 'failed', message: err.message, error: err });
-        return { error: err.message };
+        return { error: err.message, values: returnValues };
       }
 
       logger.error('auth.signIn.failed', { status: 'failed', message: 'Unexpected sign-in failure.', error: err as Error });
-      return { error: 'Something went wrong. Please try again.' };
+      return { error: 'Something went wrong. Please try again.', values: returnValues };
     }
 
     const cookieStore = await cookies();

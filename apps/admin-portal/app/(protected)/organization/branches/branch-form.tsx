@@ -96,6 +96,15 @@ export function BranchForm({ mode, initialData, institutes, users }: BranchFormP
     }
   }, [state.success]);
 
+  useEffect(() => {
+    if (state.values) {
+      setValues((prev) => ({
+        ...prev,
+        ...state.values,
+      }));
+    }
+  }, [state.values]);
+
   const updateField = (field: keyof BranchFormValues) => (value: string) => {
     setValues((prev) => ({ ...prev, [field]: value }));
     clearErrorField(setFieldErrors, field);
@@ -133,7 +142,7 @@ export function BranchForm({ mode, initialData, institutes, users }: BranchFormP
       </CardHeader>
       <form action={formAction} noValidate>
         <CardContent className="space-y-6">
-          {state.error && !state.fieldErrors && <Alert variant="error" description={state.error} />}
+          {state.error && <Alert variant="error" description={state.error} />}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {mode === 'create' && (
               <>

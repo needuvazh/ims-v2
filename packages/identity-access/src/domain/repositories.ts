@@ -7,10 +7,10 @@ import type { Uuid } from '@ims/shared-kernel';
 
 export interface IUserRepository {
   findById(id: Uuid): Promise<User | null>;
-  findByEmail(email: string): Promise<User | null>;
+  findByEmail(email: string, includeDeleted?: boolean): Promise<User | null>;
   findByUsername(username: string): Promise<User | null>;
   findPersonById(id: Uuid): Promise<Person | null>;
-  findPersonByMobile(mobile: string): Promise<Person | null>;
+  findPersonByMobile(mobile: string, includeDeleted?: boolean): Promise<Person | null>;
   create(user: User, person: Person): Promise<User>;
   update(user: User, person?: Person): Promise<User>;
   archive(userId: Uuid, actorId?: Uuid): Promise<void>;

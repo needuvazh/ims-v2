@@ -180,6 +180,7 @@ export default function SignInPage() {
               id="si-email"
               name="email"
               type="email"
+              defaultValue={state.values?.email ?? ''}
               placeholder="admin@ims.com"
               aria-invalid={Boolean(fieldErrors.email)}
               aria-describedby={fieldErrors.email ? 'si-email-error' : undefined}
@@ -207,6 +208,7 @@ export default function SignInPage() {
               id="si-password"
               name="password"
               type={showPass ? 'text' : 'password'}
+              defaultValue={state.values?.password ?? ''}
               placeholder="••••••••••"
               aria-invalid={Boolean(fieldErrors.password)}
               aria-describedby={fieldErrors.password ? 'si-password-error' : undefined}
@@ -230,7 +232,7 @@ export default function SignInPage() {
 
         <label className="group ml-1 flex w-fit cursor-pointer items-center gap-3 text-sm text-slate-600">
           <div className="relative flex h-5 w-5 items-center justify-center rounded border-2 border-neutral-300 transition-colors group-hover:border-accent-600">
-            <input type="checkbox" name="rememberMe" className="peer absolute h-full w-full cursor-pointer opacity-0" />
+            <input type="checkbox" name="rememberMe" defaultChecked={state.values?.rememberMe} className="peer absolute h-full w-full cursor-pointer opacity-0" />
             <CheckCircle2 className="h-4 w-4 text-accent-600 opacity-0 transition-opacity peer-checked:opacity-100" />
           </div>
           <span className="font-medium transition-colors group-hover:text-slate-900">Keep me signed in</span>

@@ -48,8 +48,8 @@ export function DataTableFilter({ searchPlaceholder = 'Search...', filters = [] 
   }, [searchValue, searchParams, updateParams]);
 
   return (
-    <FilterBar className="mb-6 border-b border-[color:var(--ims-border)] pb-4">
-      <div className="w-full max-w-sm">
+    <FilterBar className="mb-6 border-b border-[color:var(--ims-border)] pb-4 flex flex-col md:flex-row items-end gap-4">
+      <div className="w-full md:max-w-sm">
         <SearchInput
           placeholder={searchPlaceholder}
           value={searchValue}
@@ -61,14 +61,16 @@ export function DataTableFilter({ searchPlaceholder = 'Search...', filters = [] 
         />
       </div>
 
-      <div className="flex flex-1 flex-wrap items-center gap-3 justify-end">
+      <div className="flex flex-col sm:flex-row flex-wrap gap-4 items-end w-full md:w-auto md:flex-1 md:justify-end">
         {filters.map((filter) => {
           const currentValue = searchParams.get(filter.key) || '';
           return (
-            <div key={filter.key} className="flex items-center gap-2">
-              <span className="text-xs font-medium text-[color:var(--ims-muted)] whitespace-nowrap">{filter.label}:</span>
+            <div key={filter.key} className="flex flex-col gap-1 w-full sm:w-auto">
+              <span className="text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider whitespace-nowrap">
+                {filter.label}
+              </span>
               <Select
-                className="w-40 h-10"
+                className="w-full sm:w-40 h-10"
                 value={currentValue}
                 onChange={(e) => updateParams({ [filter.key]: e.target.value, page: '1' })}
                 options={[

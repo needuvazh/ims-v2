@@ -51,7 +51,7 @@ export function PermissionForm({ mode, initialData }: PermissionFormProps) {
 
   return (
     <form action={formAction} noValidate className="space-y-6 bg-[color:var(--ims-surface)] p-6 rounded-2xl border border-[color:var(--ims-border)] shadow-sm">
-      {state.error && !state.fieldErrors && <Alert variant="error" description={state.error} />}
+      {state.error && <Alert variant="error" description={state.error} />}
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Input 
@@ -59,7 +59,7 @@ export function PermissionForm({ mode, initialData }: PermissionFormProps) {
           label="Permission Code" 
           placeholder="iam.user.create" 
           required 
-          defaultValue={initialData?.permissionCode}
+          defaultValue={state.values?.permissionCode ?? initialData?.permissionCode}
           disabled={isView || mode === 'edit'} // Code is immutable after creation
           data-testid="perm-code-input" 
           errorText={fieldErrors.permissionCode}
@@ -68,7 +68,7 @@ export function PermissionForm({ mode, initialData }: PermissionFormProps) {
           name="permissionType"
           label="Type"
           placeholder="Select type"
-          defaultValue={initialData?.permissionType ?? 'Action'}
+          defaultValue={state.values?.permissionType ?? initialData?.permissionType ?? 'Action'}
           options={[
             { value: 'Action', label: 'Action' },
             { value: 'Menu', label: 'Menu' },
@@ -84,7 +84,7 @@ export function PermissionForm({ mode, initialData }: PermissionFormProps) {
           name="moduleCode" 
           label="Module" 
           placeholder="iam" 
-          defaultValue={initialData?.moduleCode}
+          defaultValue={state.values?.moduleCode ?? initialData?.moduleCode}
           disabled={isView}
           errorText={fieldErrors.moduleCode}
         />
@@ -93,7 +93,7 @@ export function PermissionForm({ mode, initialData }: PermissionFormProps) {
           name="featureCode" 
           label="Feature" 
           placeholder="user" 
-          defaultValue={initialData?.featureCode}
+          defaultValue={state.values?.featureCode ?? initialData?.featureCode}
           disabled={isView}
           errorText={fieldErrors.featureCode}
         />
@@ -102,7 +102,7 @@ export function PermissionForm({ mode, initialData }: PermissionFormProps) {
           name="actionCode" 
           label="Action" 
           placeholder="create" 
-          defaultValue={initialData?.actionCode}
+          defaultValue={state.values?.actionCode ?? initialData?.actionCode}
           disabled={isView}
           errorText={fieldErrors.actionCode}
         />
@@ -111,7 +111,7 @@ export function PermissionForm({ mode, initialData }: PermissionFormProps) {
           name="status"
           label="Status"
           placeholder="Select status"
-          defaultValue={initialData?.status ?? 'Active'}
+          defaultValue={state.values?.status ?? initialData?.status ?? 'Active'}
           options={[
             { value: 'Active', label: 'Active' },
             { value: 'Archived', label: 'Archived' },
@@ -126,7 +126,7 @@ export function PermissionForm({ mode, initialData }: PermissionFormProps) {
         name="description" 
         label="Description" 
         placeholder="Allows creating new users." 
-        defaultValue={initialData?.description ?? ''}
+        defaultValue={state.values?.description ?? initialData?.description ?? ''}
         disabled={isView}
         errorText={fieldErrors.description}
       />

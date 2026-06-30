@@ -17,6 +17,22 @@ import {
 import { KeyRound, Plus, Home, ShieldCheck, Key } from 'lucide-react';
 import { assertPermission } from '@/lib/auth-guard';
 
+type PermissionRecord = {
+  id: string;
+  permissionCode: string;
+  description?: string | null;
+  moduleCode: string;
+  featureCode?: string | null;
+  actionCode?: string | null;
+  permissionType: string;
+  status: string;
+};
+
+function parsePageValue(value: string | undefined, fallback: number) {
+  const parsed = Number.parseInt(value ?? '', 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+}
+
 export const metadata = { title: 'Permissions - IAM | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
@@ -27,10 +43,10 @@ export default async function IamPermissionsPage(props: {
   const searchParams = await props.searchParams;
   
   const { permissionService } = await import('@/lib/runtime');
-  const permissions = await permissionService.searchPermissions();
+  const permissions = (await permissionService.searchPermissions()) as PermissionRecord[];
   
-  const page = parseInt(searchParams.page || '1', 10);
-  const limit = parseInt(searchParams.limit || '10', 10);
+  const page = parsePageValue(searchParams.page, 1);
+  const limit = parsePageValue(searchParams.limit, 10);
   const q = (searchParams.q || '').toLowerCase();
   const moduleFilter = searchParams.module || '';
   const typeFilter = searchParams.type || '';
@@ -63,8 +79,9 @@ export default async function IamPermissionsPage(props: {
   const uniqueStatuses = Array.from(new Set(permissions.map((p: any) => p.status))).filter(Boolean).sort();
   
   const totalCount = filteredPermissions.length;
-  const totalPages = Math.ceil(totalCount / limit);
-  const offset = (page - 1) * limit;
+  const totalPages = Math.max(1, Math.ceil(totalCount / limit));
+  const currentPage = Math.min(page, totalPages);
+  const offset = (currentPage - 1) * limit;
   const paginatedPermissions = filteredPermissions.slice(offset, offset + limit);
 
   return (
@@ -90,7 +107,7 @@ export default async function IamPermissionsPage(props: {
         }
       />
 
-      <div className="space-y-4 bg-[color:var(--ims-surface)] p-6 rounded-2xl border border-[color:var(--ims-border)]">
+      <div className="space-y-4 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-4 sm:p-6">
         <DataTableFilter 
           searchPlaceholder="Search by code, feature, or description..."
           filters={[
@@ -120,41 +137,84 @@ export default async function IamPermissionsPage(props: {
           />
         ) : (
           <>
-            <Table data-testid="permissions-table">
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Permission Code</TableHead>
-                  <TableHead>Module</TableHead>
-                  <TableHead>Feature</TableHead>
-                  <TableHead>Action</TableHead>
-                  <TableHead>Type</TableHead>
-                  <TableHead>Status</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {paginatedPermissions.map((perm: any) => (
-                  <TableRow key={perm.id} data-testid={`perm-row-${perm.id}`}>
-                    <TableCell>
-                      <Link href={`/iam/permissions/${perm.id}`} className="font-mono text-xs font-semibold text-[color:var(--ims-brand-600)] hover:underline">
+            <div className="grid gap-3 sm:hidden" data-testid="permissions-mobile-list">
+              {paginatedPermissions.map((perm) => (
+                <article
+                  key={perm.id}
+                  data-testid={`perm-card-${perm.id}`}
+                  className="rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <Link href={`/iam/permissions/${perm.id}`} className="block font-mono text-sm font-semibold text-[color:var(--ims-brand-600)] underline-offset-4 hover:underline">
                         {perm.permissionCode}
                       </Link>
-                      {perm.description && (
-                        <p className="text-xs text-[color:var(--ims-muted)] mt-1">{perm.description}</p>
-                      )}
-                    </TableCell>
-                    <TableCell>{perm.moduleCode}</TableCell>
-                    <TableCell>{perm.featureCode}</TableCell>
-                    <TableCell>{perm.actionCode}</TableCell>
-                    <TableCell>{perm.permissionType}</TableCell>
-                    <TableCell>
-                      <Badge variant={perm.status === 'Active' ? 'success' : 'muted'}>{perm.status}</Badge>
-                    </TableCell>
+                      <p className="mt-1 text-xs text-[color:var(--ims-muted)]">
+                        {perm.description || 'No description provided'}
+                      </p>
+                    </div>
+                    <Badge variant={perm.status === 'Active' ? 'success' : 'muted'}>{perm.status}</Badge>
+                  </div>
+
+                  <dl className="mt-4 grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
+                    <div>
+                      <dt className="text-[10px] font-semibold uppercase tracking-wider text-[color:var(--ims-muted)]">Module</dt>
+                      <dd className="mt-1 font-medium text-[color:var(--ims-ink)]">{perm.moduleCode}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-[10px] font-semibold uppercase tracking-wider text-[color:var(--ims-muted)]">Type</dt>
+                      <dd className="mt-1 font-medium text-[color:var(--ims-ink)]">{perm.permissionType}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-[10px] font-semibold uppercase tracking-wider text-[color:var(--ims-muted)]">Feature</dt>
+                      <dd className="mt-1 font-medium text-[color:var(--ims-ink)]">{perm.featureCode || '—'}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-[10px] font-semibold uppercase tracking-wider text-[color:var(--ims-muted)]">Action</dt>
+                      <dd className="mt-1 font-medium text-[color:var(--ims-ink)]">{perm.actionCode || '—'}</dd>
+                    </div>
+                  </dl>
+                </article>
+              ))}
+            </div>
+
+            <div className="hidden sm:block">
+              <Table data-testid="permissions-table">
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Permission Code</TableHead>
+                    <TableHead>Module</TableHead>
+                    <TableHead>Feature</TableHead>
+                    <TableHead>Action</TableHead>
+                    <TableHead>Type</TableHead>
+                    <TableHead>Status</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {paginatedPermissions.map((perm) => (
+                    <TableRow key={perm.id} data-testid={`perm-row-${perm.id}`}>
+                      <TableCell>
+                        <Link href={`/iam/permissions/${perm.id}`} className="font-mono text-xs font-semibold text-[color:var(--ims-brand-600)] hover:underline">
+                          {perm.permissionCode}
+                        </Link>
+                        {perm.description && (
+                          <p className="mt-1 text-xs text-[color:var(--ims-muted)]">{perm.description}</p>
+                        )}
+                      </TableCell>
+                      <TableCell>{perm.moduleCode}</TableCell>
+                      <TableCell>{perm.featureCode || '—'}</TableCell>
+                      <TableCell>{perm.actionCode || '—'}</TableCell>
+                      <TableCell>{perm.permissionType}</TableCell>
+                      <TableCell>
+                        <Badge variant={perm.status === 'Active' ? 'success' : 'muted'}>{perm.status}</Badge>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
             <Pagination
-              page={page}
+              page={currentPage}
               totalPages={totalPages}
               totalCount={totalCount}
               limit={limit}

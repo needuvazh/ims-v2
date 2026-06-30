@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Eye, Pencil, Ban, CheckCircle, ShieldPlus, Shield as ShieldIcon, Home, ShieldCheck } from 'lucide-react';
+import { Eye, ShieldPlus, Shield as ShieldIcon, Home, ShieldCheck } from 'lucide-react';
 import { 
   Breadcrumbs, 
   PageHeader, 
@@ -17,7 +17,6 @@ import {
   DataTableFilter
 } from '@ims/shared-ui';
 import { loadIdentityData } from '../shared-data';
-import { updateRoleStatusAction } from '../actions';
 
 export const metadata = { title: 'IAM Roles | IMS Admin' };
 export const dynamic = 'force-dynamic';
@@ -105,85 +104,117 @@ export default async function IdentityRolesPage(props: {
           />
         ) : (
           <>
-            <Table data-testid="roles-table">
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Code</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Validity</TableHead>
-                  <TableHead>Permissions</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {paginatedRoles.map((role: any) => (
-                  <TableRow key={role.id} data-testid={`role-row-${role.id}`}>
-                    <TableCell className="font-mono text-xs text-[color:var(--ims-muted)]">{role.roleCode}</TableCell>
-                    <TableCell>
-                      <div className="font-medium text-[color:var(--ims-ink)]">{role.roleName}</div>
-                      <div className="text-xs text-[color:var(--ims-muted)] line-clamp-1">{role.description ?? '—'}</div>
-                    </TableCell>
-                    <TableCell className="text-sm text-[color:var(--ims-muted)]">
-                      <div>{formatDate(role.effectiveStartDate)}</div>
-                      <div>{role.effectiveEndDate ? `to ${formatDate(role.effectiveEndDate)}` : 'Open ended'}</div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="default">{role.permissions.length}</Badge>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant={role.status === 'Active' ? 'success' : 'muted'}>{role.status}</Badge>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <SimpleTooltip content="Manage Permissions" side="top">
-                           <Link href={`/iam/roles/${role.id}/permissions`}>
-                            <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
-                              <ShieldIcon className="h-4 w-4" />
-                            </Button>
-                          </Link>
-                        </SimpleTooltip>
-
-                        <SimpleTooltip content="View Details" side="top">
-                          <Link href={`/iam/roles/${role.id}`}>
-                            <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
-                              <Eye className="h-4 w-4" />
-                            </Button>
-                          </Link>
-                        </SimpleTooltip>
-
-                        <SimpleTooltip content="Edit Role" side="top">
-                          <Link href={`/iam/roles/${role.id}/edit`}>
-                            <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
-                              <Pencil className="h-4 w-4" />
-                            </Button>
-                          </Link>
-                        </SimpleTooltip>
-
-                        <form action={async () => {
-                          'use server';
-                          await updateRoleStatusAction(role.id, role.status === 'Active' ? 'Archived' : 'Active');
-                        }} noValidate>
-                          {role.status === 'Active' ? (
-                            <SimpleTooltip content="Archive Role" side="top">
-                              <Button type="submit" variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-error)] hover:bg-[color:var(--ims-error)]/10">
-                                <Ban className="h-4 w-4" />
-                              </Button>
-                            </SimpleTooltip>
-                          ) : (
-                            <SimpleTooltip content="Activate Role" side="top">
-                              <Button type="submit" variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-success)] hover:bg-[color:var(--ims-success)]/10">
-                                <CheckCircle className="h-4 w-4" />
-                              </Button>
-                            </SimpleTooltip>
-                          )}
-                        </form>
-                      </div>
-                    </TableCell>
+            {/* Desktop View */}
+            <div className="hidden md:block">
+              <Table data-testid="roles-table">
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Code</TableHead>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Validity</TableHead>
+                    <TableHead>Permissions</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {paginatedRoles.map((role: any) => (
+                    <TableRow key={role.id} data-testid={`role-row-${role.id}`}>
+                      <TableCell className="font-mono text-xs text-[color:var(--ims-muted)]">{role.roleCode}</TableCell>
+                      <TableCell>
+                        <div className="font-medium text-[color:var(--ims-ink)]">{role.roleName}</div>
+                        <div className="text-xs text-[color:var(--ims-muted)] line-clamp-1">{role.description ?? '—'}</div>
+                      </TableCell>
+                      <TableCell className="text-sm text-[color:var(--ims-muted)]">
+                        <div>{formatDate(role.effectiveStartDate)}</div>
+                        <div>{role.effectiveEndDate ? `to ${formatDate(role.effectiveEndDate)}` : 'Open ended'}</div>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant="default">{role.permissions.length}</Badge>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant={role.status === 'Active' ? 'success' : 'muted'}>{role.status}</Badge>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <SimpleTooltip content="View Details" side="top">
+                            <Link href={`/iam/roles/${role.id}`}>
+                              <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                            </Link>
+                          </SimpleTooltip>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+
+            {/* Mobile View */}
+            <div className="grid grid-cols-1 gap-4 md:hidden">
+              {paginatedRoles.map((role: any) => (
+                <div
+                  key={role.id}
+                  className="rounded-2xl border border-[color:var(--ims-border)] bg-white/70 p-5 shadow-sm backdrop-blur-md transition-all duration-300 hover:scale-[1.01]"
+                  data-testid={`role-card-${role.id}`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="space-y-1">
+                      <span className="font-mono text-xs text-[color:var(--ims-muted)] block">
+                        {role.roleCode}
+                      </span>
+                      <h3 className="font-semibold text-lg text-[color:var(--ims-ink)] leading-tight">
+                        {role.roleName}
+                      </h3>
+                    </div>
+                    <Badge variant={role.status === 'Active' ? 'success' : 'muted'}>
+                      {role.status}
+                    </Badge>
+                  </div>
+
+                  {role.description && (
+                    <p className="mt-2.5 text-sm text-[color:var(--ims-muted)] line-clamp-2">
+                      {role.description}
+                    </p>
+                  )}
+
+                  <div className="mt-4 grid grid-cols-2 gap-4 border-t border-[color:var(--ims-border)]/50 pt-4 text-xs">
+                    <div>
+                      <span className="text-[color:var(--ims-muted)] block mb-1">Validity</span>
+                      <div className="text-[color:var(--ims-ink)] font-medium">
+                        {formatDate(role.effectiveStartDate)}
+                      </div>
+                      <div className="text-[color:var(--ims-muted)] mt-0.5">
+                        {role.effectiveEndDate ? `to ${formatDate(role.effectiveEndDate)}` : 'Open ended'}
+                      </div>
+                    </div>
+                    <div>
+                      <span className="text-[color:var(--ims-muted)] block mb-1">Permissions</span>
+                      <div className="flex items-center gap-1.5 mt-0.5">
+                        <ShieldIcon className="h-3.5 w-3.5 text-indigo-500" />
+                        <span className="font-semibold text-sm text-[color:var(--ims-ink)]">
+                          {role.permissions.length}
+                        </span>
+                        <span className="text-[color:var(--ims-muted)]">assigned</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-5 flex items-center justify-end gap-2 border-t border-[color:var(--ims-border)]/50 pt-3">
+                    <SimpleTooltip content="View Details" side="top">
+                      <Link href={`/iam/roles/${role.id}`}>
+                        <Button variant="ghost" size="icon" className="h-9 w-9 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
+                          <Eye className="h-4.5 w-4.5" />
+                        </Button>
+                      </Link>
+                    </SimpleTooltip>
+                  </div>
+                </div>
+              ))}
+            </div>
+
             <Pagination
               page={page}
               totalPages={totalPages}

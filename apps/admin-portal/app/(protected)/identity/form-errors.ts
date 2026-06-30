@@ -1,4 +1,5 @@
 import { Prisma } from '@prisma/client';
+import { ZodError } from 'zod';
 import { DomainError } from '@ims/shared-kernel';
 
 export type IdentityActionFailure = {
@@ -16,7 +17,11 @@ type ErrorFieldMaps = {
 export function extractFormValues(formData: FormData): Record<string, string> {
   const values: Record<string, string> = {};
   formData.forEach((value, key) => {
-    values[key] = value.toString();
+    if (values[key]) {
+      values[key] = `${values[key]},${value.toString()}`;
+    } else {
+      values[key] = value.toString();
+    }
   });
   return values;
 }
@@ -35,12 +40,17 @@ function getPrismaTargetFields(error: Prisma.PrismaClientKnownRequestError): str
   return [];
 }
 
-function getFieldErrorFromDomainError(error: DomainError, maps?: ErrorFieldMaps): Record<string, string> {
+function getFieldErrorFromDomainError(error: any, maps?: ErrorFieldMaps): Record<string, string> {
   if (!maps?.domain) {
     return {};
   }
 
-  const fieldName = maps.domain[error.code];
+  const code = error.code || error.errorCode;
+  if (!code) {
+    return {};
+  }
+
+  const fieldName = maps.domain[code];
   if (!fieldName) {
     return {};
   }
@@ -68,17 +78,35 @@ function getFieldErrorFromPrismaError(
   return {};
 }
 
+function getFirstFieldName(path: (string | number)[]): string | null {
+  if (!path.length) {
+    return null;
+  }
+  return String(path[0]);
+}
+
+function getFieldErrorFromZodError(error: ZodError): Record<string, string> {
+  const fieldErrors: Record<string, string> = {};
+  for (const issue of error.issues) {
+    const fieldName = getFirstFieldName(issue.path);
+    if (!fieldName || fieldErrors[fieldName]) {
+      continue;
+    }
+    fieldErrors[fieldName] = issue.message;
+  }
+  return fieldErrors;
+}
+
 export function buildIdentityActionFailure(
   error: unknown,
   fallbackError: string,
   values: Record<string, string>,
   maps?: ErrorFieldMaps,
 ): IdentityActionFailure {
-  if (error instanceof DomainError) {
-    const fieldErrors = getFieldErrorFromDomainError(error, maps);
+  if (error instanceof ZodError) {
     return {
-      error: error.message,
-      fieldErrors: Object.keys(fieldErrors).length > 0 ? fieldErrors : undefined,
+      error: fallbackError,
+      fieldErrors: getFieldErrorFromZodError(error),
       values,
     };
   }
@@ -94,8 +122,17 @@ export function buildIdentityActionFailure(
     }
   }
 
+  if (error instanceof DomainError || (error instanceof Error && ('errorCode' in error || 'code' in error))) {
+    const fieldErrors = getFieldErrorFromDomainError(error, maps);
+    return {
+      error: error.message,
+      fieldErrors: Object.keys(fieldErrors).length > 0 ? fieldErrors : undefined,
+      values,
+    };
+  }
+
   return {
-    error: fallbackError,
+    error: error instanceof Error ? error.message : fallbackError,
     values,
   };
 }

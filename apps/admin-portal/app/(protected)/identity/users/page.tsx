@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Eye, Pencil, Ban, CheckCircle, UserPlus, ShieldAlert, Users as UsersIcon, Home, ShieldCheck } from 'lucide-react';
+import { Eye, UserPlus, Users as UsersIcon, Home, ShieldCheck } from 'lucide-react';
 import { 
   Breadcrumbs, 
   PageHeader, 
@@ -18,7 +18,6 @@ import {
   DataTableFilter
 } from '@ims/shared-ui';
 import { loadIdentityData } from '../shared-data';
-import { updateUserStatusAction } from '../actions';
 
 export const metadata = { title: 'IAM Users | IMS Admin' };
 export const dynamic = 'force-dynamic';
@@ -69,8 +68,9 @@ export default async function IdentityUsersPage(props: {
   }
   
   const totalCount = filteredUsers.length;
-  const totalPages = Math.ceil(totalCount / limit);
-  const offset = (page - 1) * limit;
+  const totalPages = Math.max(1, Math.ceil(totalCount / limit));
+  const clampedPage = Math.min(Math.max(1, page), totalPages);
+  const offset = (clampedPage - 1) * limit;
   const paginatedUsers = filteredUsers.slice(offset, offset + limit);
 
   return (
@@ -146,34 +146,125 @@ export default async function IdentityUsersPage(props: {
           />
         ) : (
           <>
-            <Table data-testid="users-table">
-              <TableHeader>
-                <TableRow>
-                  <TableHead>ID</TableHead>
-                  <TableHead>User</TableHead>
-                  <TableHead>Branch</TableHead>
-                  <TableHead>Roles</TableHead>
-                  <TableHead>Type</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Last Login</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {paginatedUsers.map((user: any) => (
-                  <TableRow key={user.id} data-testid={`user-row-${user.id}`}>
-                    <TableCell className="font-mono text-xs text-[color:var(--ims-muted)]">{user.id}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-3">
+            {/* Desktop View */}
+            <div className="hidden md:block">
+              <Table data-testid="users-table">
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>ID</TableHead>
+                    <TableHead>User</TableHead>
+                    <TableHead>Branch</TableHead>
+                    <TableHead>Roles</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Last Login</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {paginatedUsers.map((user: any) => (
+                    <TableRow key={user.id} data-testid={`user-row-${user.id}`}>
+                      <TableCell className="font-mono text-xs text-[color:var(--ims-muted)] max-w-[80px] truncate" title={user.id}>{user.id}</TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-3">
+                          <Avatar fallback={user.fullName} size="sm" />
+                          <div>
+                            <p className="font-medium text-[color:var(--ims-ink)]">{user.fullName}</p>
+                            <p className="text-xs text-[color:var(--ims-muted)]">{user.email}</p>
+                            <p className="text-[10px] text-[color:var(--ims-muted)]">{user.phone ?? 'No phone'}</p>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex flex-wrap gap-1.5">
+                          {(user.dataScopes ?? []).some((scope: { scopeType: string }) => scope.scopeType === 'All') ? (
+                            <Badge variant="default">All Branches</Badge>
+                          ) : (
+                            (user.dataScopes ?? [])
+                              .filter((scope: { scopeType: string; branchId?: string | null }) => scope.scopeType === 'Branch' && scope.branchId)
+                              .map((scope: { branchId?: string | null }, index: number) => (
+                                <Badge key={`${user.id}-${scope.branchId}-${index}`} variant="muted">
+                                  {scope.branchId ? branchById.get(scope.branchId as string) ?? scope.branchId : 'Branch'}
+                                </Badge>
+                              ))
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex flex-wrap gap-1">
+                          {(user.roleSummaries ?? []).map((role: { id: string; roleName: string }) => (
+                            <Badge key={role.id} variant="default">
+                              {role.roleName}
+                            </Badge>
+                          ))}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant={
+                          user.status === 'Active' ? 'success'
+                          : user.status === 'Locked' ? 'error'
+                          : user.status === 'PendingActivation' ? 'warning'
+                          : 'muted'
+                          }>
+                          {user.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-[color:var(--ims-muted)]">
+                        {user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleString() : 'Never'}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <SimpleTooltip content="View Details" side="top">
+                            <Link href={`/iam/users/${user.id}`}>
+                              <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                            </Link>
+                          </SimpleTooltip>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+
+            {/* Mobile View */}
+            <div className="grid grid-cols-1 gap-4 md:hidden">
+              {paginatedUsers.map((user: any) => (
+                <div
+                  key={user.id}
+                  className="rounded-2xl border border-[color:var(--ims-border)] bg-white/70 p-5 shadow-sm backdrop-blur-md transition-all duration-300 hover:scale-[1.01]"
+                  data-testid={`user-card-${user.id}`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="space-y-1">
+                      <span className="font-mono text-xs text-[color:var(--ims-muted)] block max-w-[120px] truncate" title={user.id}>
+                        {user.id}
+                      </span>
+                      <div className="flex items-center gap-3 mt-1">
                         <Avatar fallback={user.fullName} size="sm" />
                         <div>
-                          <p className="font-medium text-[color:var(--ims-ink)]">{user.fullName}</p>
+                          <h3 className="font-semibold text-base text-[color:var(--ims-ink)] leading-tight">
+                            {user.fullName}
+                          </h3>
                           <p className="text-xs text-[color:var(--ims-muted)]">{user.email}</p>
                           <p className="text-[10px] text-[color:var(--ims-muted)]">{user.phone ?? 'No phone'}</p>
                         </div>
                       </div>
-                    </TableCell>
-                    <TableCell>
+                    </div>
+                    <Badge variant={
+                      user.status === 'Active' ? 'success'
+                      : user.status === 'Locked' ? 'error'
+                      : user.status === 'PendingActivation' ? 'warning'
+                      : 'muted'
+                    }>
+                      {user.status}
+                    </Badge>
+                  </div>
+
+                  <div className="mt-4 grid grid-cols-1 gap-3 border-t border-[color:var(--ims-border)]/50 pt-4 text-xs">
+                    <div>
+                      <span className="text-[color:var(--ims-muted)] block mb-1">Branch</span>
                       <div className="flex flex-wrap gap-1.5">
                         {(user.dataScopes ?? []).some((scope: { scopeType: string }) => scope.scopeType === 'All') ? (
                           <Badge variant="default">All Branches</Badge>
@@ -187,78 +278,36 @@ export default async function IdentityUsersPage(props: {
                             ))
                         )}
                       </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="default">{user.roleCount ?? user.roleSummaries?.length ?? 0}</Badge>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="info">{user.userType}</Badge>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant={
-                        user.status === 'Active' ? 'success'
-                        : user.status === 'Locked' ? 'error'
-                        : user.status === 'PendingActivation' ? 'warning'
-                        : 'muted'
-                        }>
-                        {user.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-[color:var(--ims-muted)]">
-                      {user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleString() : 'Never'}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <SimpleTooltip content="Manage Roles" side="top">
-                           <Link href={`/iam/users/${user.id}/roles`}>
-                            <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
-                              <ShieldAlert className="h-4 w-4" />
-                            </Button>
-                          </Link>
-                        </SimpleTooltip>
-                        
-                        <SimpleTooltip content="View Details" side="top">
-                          <Link href={`/iam/users/${user.id}`}>
-                            <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
-                              <Eye className="h-4 w-4" />
-                            </Button>
-                          </Link>
-                        </SimpleTooltip>
-
-                        <SimpleTooltip content="Edit User" side="top">
-                          <Link href={`/iam/users/${user.id}/edit`}>
-                            <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
-                              <Pencil className="h-4 w-4" />
-                            </Button>
-                          </Link>
-                        </SimpleTooltip>
-
-                          <form action={async () => {
-                          'use server';
-                          await updateUserStatusAction(user.id, user.status === 'Active' ? 'Suspended' : 'Active');
-                        }} noValidate>
-                          {user.status === 'Active' ? (
-                            <SimpleTooltip content="Suspend User" side="top">
-                              <Button type="submit" variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-error)] hover:bg-[color:var(--ims-error)]/10">
-                                <Ban className="h-4 w-4" />
-                              </Button>
-                            </SimpleTooltip>
-                          ) : (
-                            <SimpleTooltip content="Activate User" side="top">
-                              <Button type="submit" variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-success)] hover:bg-[color:var(--ims-success)]/10">
-                                <CheckCircle className="h-4 w-4" />
-                              </Button>
-                            </SimpleTooltip>
-                          )}
-                        </form>
+                    </div>
+                    <div>
+                      <span className="text-[color:var(--ims-muted)] block mb-1">Roles</span>
+                      <div className="flex flex-wrap gap-1">
+                        {(user.roleSummaries ?? []).map((role: { id: string; roleName: string }) => (
+                          <Badge key={role.id} variant="default">
+                            {role.roleName}
+                          </Badge>
+                        ))}
                       </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                    </div>
+                    <div className="text-[10px] text-[color:var(--ims-muted)] pt-1">
+                      <span>Last Login: {user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleString() : 'Never'}</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 flex items-center justify-end gap-2 border-t border-[color:var(--ims-border)]/50 pt-3">
+                    <SimpleTooltip content="View Details" side="top">
+                      <Link href={`/iam/users/${user.id}`}>
+                        <Button variant="ghost" size="icon" className="h-9 w-9 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
+                          <Eye className="h-4.5 w-4.5" />
+                        </Button>
+                      </Link>
+                    </SimpleTooltip>
+                  </div>
+                </div>
+              ))}
+            </div>
             <Pagination
-              page={page}
+              page={clampedPage}
               totalPages={totalPages}
               totalCount={totalCount}
               limit={limit}

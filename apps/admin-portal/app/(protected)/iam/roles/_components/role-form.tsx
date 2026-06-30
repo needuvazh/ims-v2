@@ -56,7 +56,7 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
 
   return (
     <form action={formAction} noValidate className="space-y-6 bg-[color:var(--ims-surface)] p-6 rounded-2xl border border-[color:var(--ims-border)] shadow-sm">
-      {state.error && !state.fieldErrors && <Alert variant="error" description={state.error} />}
+      {state.error && <Alert variant="error" description={state.error} />}
       
       <div className="space-y-4">
         <Input 
@@ -64,7 +64,7 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
           label="Role Code" 
           placeholder="SUPER_ADMIN" 
           required 
-          defaultValue={initialData?.roleCode}
+          defaultValue={state.values?.roleCode ?? initialData?.roleCode}
           disabled={isView || mode === 'edit'} // Code is immutable after creation
           data-testid="role-code-input" 
           errorText={fieldErrors.roleCode}
@@ -74,7 +74,7 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
           label="Role Name" 
           placeholder="Super Administrator" 
           required 
-          defaultValue={initialData?.roleName}
+          defaultValue={state.values?.roleName ?? initialData?.roleName}
           disabled={isView}
           data-testid="role-name-input" 
           errorText={fieldErrors.roleName}
@@ -83,7 +83,7 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
           name="description" 
           label="Description" 
           placeholder="Full administrative access." 
-          defaultValue={initialData?.description ?? ''}
+          defaultValue={state.values?.description ?? initialData?.description ?? ''}
           disabled={isView}
           errorText={fieldErrors.description}
         />
@@ -91,7 +91,7 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
           name="status"
           label="Status"
           placeholder="Select status"
-          defaultValue={initialData?.status ?? 'Active'}
+          defaultValue={state.values?.status ?? initialData?.status ?? 'Active'}
           options={[
             { value: 'Active', label: 'Active' },
             { value: 'Archived', label: 'Archived' },
@@ -105,7 +105,7 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
           name="effectiveStartDate"
           type="date"
           label="Effective Start Date"
-          defaultValue={toDateInputValue(initialData?.effectiveStartDate)}
+          defaultValue={state.values?.effectiveStartDate ? toDateInputValue(new Date(state.values.effectiveStartDate)) : toDateInputValue(initialData?.effectiveStartDate)}
           disabled={isView}
           errorText={fieldErrors.effectiveStartDate}
         />
@@ -113,7 +113,7 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
           name="effectiveEndDate"
           type="date"
           label="Effective End Date"
-          defaultValue={toDateInputValue(initialData?.effectiveEndDate ?? null)}
+          defaultValue={state.values?.effectiveEndDate ? toDateInputValue(new Date(state.values.effectiveEndDate)) : toDateInputValue(initialData?.effectiveEndDate ?? null)}
           disabled={isView}
           errorText={fieldErrors.effectiveEndDate}
         />

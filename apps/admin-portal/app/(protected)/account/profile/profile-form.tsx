@@ -48,7 +48,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
             name="fullName"
             label="Full name"
             required
-            defaultValue={user.fullName}
+            defaultValue={state.values?.fullName ?? user.fullName}
             autoComplete="name"
             helperText="This is the display name used across the portal."
           />
@@ -62,7 +62,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
           <Input
             name="phone"
             label="Phone"
-            defaultValue={user.phone ?? ''}
+            defaultValue={state.values?.phone ?? user.phone ?? ''}
             autoComplete="tel"
             helperText="Optional contact number."
           />

@@ -16,6 +16,7 @@ export type ActionResult = {
   success: boolean;
   error?: string;
   fieldErrors?: Record<string, string>;
+  values?: Record<string, string>;
 };
 
 export async function createRoleAction(_prev: ActionResult, formData: FormData): Promise<ActionResult> {

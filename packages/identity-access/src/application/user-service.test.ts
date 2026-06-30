@@ -343,6 +343,13 @@ describe('UserService', () => {
     }, { actorId: 'actor-1', actorPermissions: ['iam.user.create'], activeBranchId: '11111111-1111-1111-1111-111111111111' })).rejects.toMatchObject({ errorCode: 'IAM-VAL-001' });
   });
 
+  it('correctly reports if an email or mobile number exists', async () => {
+    expect(await userService.checkEmailExists('current@example.com')).toBe(true);
+    expect(await userService.checkEmailExists('nonexistent@example.com')).toBe(false);
+    expect(await userService.checkMobileExists('+96890000000')).toBe(true);
+    expect(await userService.checkMobileExists('+96800000000')).toBe(false);
+  });
+
   it('escapes user name fields before storing them', async () => {
     const roleId = Array.from(roles.keys())[0];
 
@@ -376,6 +383,18 @@ describe('UserService', () => {
   it('enforces branch scope when reading a user', async () => {
     const userId = Array.from(users.keys())[0];
     await expect(userService.getUserById(userId, { actorId: 'actor-1', actorPermissions: ['iam.user.read'], activeBranchId: '22222222-2222-2222-2222-222222222222' })).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
+  });
+
+  it('reads a user by email and enforces branch scope', async () => {
+    const userId = Array.from(users.keys())[0];
+    const userEmail = users.get(userId)!.email;
+
+    // Normal lookup
+    const found = await userService.getUserByEmail(userEmail, { actorId: 'actor-1', actorPermissions: ['iam.user.read'], activeBranchId: null });
+    expect(found.id).toBe(userId);
+
+    // Branch scoping
+    await expect(userService.getUserByEmail(userEmail, { actorId: 'actor-1', actorPermissions: ['iam.user.read'], activeBranchId: '22222222-2222-2222-2222-222222222222' })).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
   });
 
   it('suspends, archives, and unlocks with session revocation', async () => {
@@ -451,5 +470,18 @@ describe('UserService', () => {
     expect(activationTokens.get(tokenHash)?.status).toBe('Used');
 
     await expect(userService.activateAccountViaToken('expired-activation')).rejects.toMatchObject({ errorCode: 'IAM-AUTH-006' });
+  });
+
+  it('lists users and maps roleSummaries and dataScopes correctly', async () => {
+    const list = await userService.listUsers();
+    expect(list.length).toBeGreaterThan(0);
+    const firstUser = list[0];
+    
+    expect(firstUser).toHaveProperty('roleSummaries');
+    expect(firstUser).toHaveProperty('dataScopes');
+    // Since the default created user is Admin, dataScopes should fallback to [{ scopeType: 'All' }]
+    expect(firstUser.dataScopes).toEqual([{ scopeType: 'All' }]);
+    expect(firstUser.roleSummaries.length).toBeGreaterThan(0);
+    expect(firstUser.roleSummaries[0]).toHaveProperty('roleName');
   });
 });

@@ -28,6 +28,11 @@ export async function requestPasswordResetAction(
       success: true,
     };
   } catch (error: unknown) {
+    if (error instanceof Error && (error.name === 'IamError' || 'errorCode' in error)) {
+      return {
+        error: (error as any).messageEn || error.message,
+      };
+    }
     if (error instanceof DomainError) {
       return {
         error: error.message,

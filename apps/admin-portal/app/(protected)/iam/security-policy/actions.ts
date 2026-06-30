@@ -9,18 +9,20 @@ import { securityPolicyFormSchema } from './schema';
 export type SecurityPolicyState = {
   success?: boolean;
   error?: string;
+  values?: Record<string, any>;
 };
 
 export async function updateSecurityPolicyAction(_prev: SecurityPolicyState, formData: FormData): Promise<SecurityPolicyState> {
   return withServerActionObservability(async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+    const values = Object.fromEntries(formData.entries());
 
     try {
       const session = await getSession();
-      const parsed = securityPolicyFormSchema.safeParse(Object.fromEntries(formData.entries()));
+      const parsed = securityPolicyFormSchema.safeParse(values);
 
       if (!parsed.success) {
-        return { error: 'Please fix the highlighted fields.' };
+        return { error: 'Please fix the highlighted fields.', values };
       }
 
       const { securityPolicyService } = await import('../../../lib/runtime');
@@ -36,11 +38,11 @@ export async function updateSecurityPolicyAction(_prev: SecurityPolicyState, for
     } catch (error) {
       if (error instanceof DomainError) {
         logger.warn('iam.securityPolicy.update.failed', { status: 'failed', message: error.message, error });
-        return { error: error.message };
+        return { error: error.message, values };
       }
 
       logger.error('iam.securityPolicy.update.failed', { status: 'failed', message: 'Failed to update security policy.', error: error as Error });
-      return { error: 'Failed to update security policy.' };
+      return { error: 'Failed to update security policy.', values };
     }
   }, { action: 'iam.updateSecurityPolicy', route: '/iam/security-policy/edit' });
 }

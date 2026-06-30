@@ -51,12 +51,12 @@ export default async function IamViewUserPage(props: { params: Promise<{ id: str
                 <DropdownMenuLabel>Activity & Logs</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link href={`/iam/sessions`} className="w-full flex items-center">
+                  <Link href={`/iam/sessions?userId=${userProfile.id}`} className="w-full flex items-center">
                     Active Sessions
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href={`/iam/login-history`} className="w-full flex items-center">
+                  <Link href={`/iam/login-history?userId=${userProfile.id}`} className="w-full flex items-center">
                     Login History
                   </Link>
                 </DropdownMenuItem>

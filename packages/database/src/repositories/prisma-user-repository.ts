@@ -64,9 +64,9 @@ export class PrismaUserRepository implements IUserRepository {
     return row ? this.mapUser(row) : null;
   }
 
-  async findByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: string, includeDeleted = false): Promise<User | null> {
     const row = await this.prisma.user.findFirst({
-      where: { email, isDeleted: false },
+      where: { email, ...(includeDeleted ? {} : { isDeleted: false }) },
     });
     return row ? this.mapUser(row) : null;
   }
@@ -85,9 +85,9 @@ export class PrismaUserRepository implements IUserRepository {
     return row ? this.mapPerson(row) : null;
   }
 
-  async findPersonByMobile(mobile: string): Promise<Person | null> {
+  async findPersonByMobile(mobile: string, includeDeleted = false): Promise<Person | null> {
     const row = await this.prisma.person.findFirst({
-      where: { mobile, isDeleted: false },
+      where: { mobile, ...(includeDeleted ? {} : { isDeleted: false }) },
     });
     return row ? this.mapPerson(row) : null;
   }

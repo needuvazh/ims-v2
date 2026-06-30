@@ -68,14 +68,18 @@ export async function createUserAction(_prev: ActionResult, formData: FormData):
     } catch (err) {
       logger.warn('iam.user.create.failed', {
         status: 'failed',
-        message: err instanceof Error ? err.message : 'unknown',
+        message: `Mobile/Email check or domain error: ${err instanceof Error ? err.message : 'unknown'}. Request data: ${JSON.stringify(values)}`,
         error: err instanceof Error ? err : undefined,
       });
 
       return {
         success: false,
         ...buildIdentityActionFailure(err, 'Failed to create user.', values, {
-          domain: { conflict: 'email' },
+          domain: {
+            'IAM-VAL-001': 'email',
+            'IAM-VAL-002': 'mobile',
+            conflict: 'email',
+          },
           prisma: { email: 'email' },
           prismaMessages: { email: 'Email already exists. Please use a different email address.' },
         }),
@@ -145,19 +149,26 @@ export async function updateUserAction(userId: string, _prev: ActionResult, form
     } catch (err) {
       logger.warn('iam.user.update.failed', {
         status: 'failed',
-        message: err instanceof Error ? err.message : 'unknown',
+        message: `User update failed: ${err instanceof Error ? err.message : 'unknown'}. Request data: ${JSON.stringify(values)}`,
         error: err instanceof Error ? err : undefined,
       });
 
       return {
         success: false,
-        ...buildIdentityActionFailure(err, 'Failed to update user.', values),
+        ...buildIdentityActionFailure(err, 'Failed to update user.', values, {
+          domain: {
+            'IAM-VAL-001': 'email',
+            'IAM-VAL-002': 'mobile',
+          },
+          prisma: { email: 'email' },
+          prismaMessages: { email: 'Email already exists. Please use a different email address.' },
+        }),
       };
     }
   }, { action: 'iam.updateUser', route: '/iam/users/[id]/edit' });
 }
 
-export async function userLifecycleAction(userId: string, action: 'activate' | 'suspend' | 'archive' | 'unlock' | 'adminResetPassword' | 'resendActivationEmail'): Promise<ActionResult> {
+export async function userLifecycleAction(userId: string, action: 'activate' | 'suspend' | 'archive' | 'unlock' | 'adminResetPassword' | 'resendActivationEmail'): Promise<ActionResult<{ activationLink?: string; resetLink?: string }>> {
   return withServerActionObservability(async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
@@ -165,6 +176,8 @@ export async function userLifecycleAction(userId: string, action: 'activate' | '
       const actorId = await getActorId();
       const { userService } = await import('@/lib/runtime');
       
+      let activationLink: string | undefined = undefined;
+      let resetLink: string | undefined = undefined;
       switch (action) {
         case 'activate':
           await userService.activateUser(userId, { actorId });
@@ -179,20 +192,42 @@ export async function userLifecycleAction(userId: string, action: 'activate' | '
           await userService.unlockUser(userId, { actorId });
           break;
         case 'adminResetPassword':
-          await userService.adminResetPassword(userId, { actorId });
+          resetLink = await userService.adminResetPassword(userId, { actorId });
           break;
         case 'resendActivationEmail':
-          await userService.resendActivationEmail(userId, { actorId });
+          activationLink = await userService.resendActivationEmail(userId, { actorId });
           break;
       }
       
       logger.info(`iam.user.lifecycle.${action}.succeeded`, { status: 'success', entityId: userId });
       revalidatePath('/iam');
       revalidatePath(`/iam/users/${userId}`);
-      return { success: true };
+      return { success: true, data: { activationLink, resetLink } };
     } catch (err) {
       logger.error(`iam.user.lifecycle.${action}.failed`, { status: 'failed', message: `Failed to ${action} user.`, error: err as Error });
       return { success: false, error: err instanceof Error ? err.message : `Failed to ${action} user.` };
     }
   }, { action: 'iam.userLifecycleAction', route: '/iam/users/[id]' });
+}
+
+export async function checkEmailExistsAction(email: string): Promise<boolean> {
+  try {
+    const { userService } = await import('@/lib/runtime');
+    const existing = await userService.checkEmailExists(email);
+    return existing;
+  } catch (err) {
+    console.error('checkEmailExistsAction failed:', err);
+    return false;
+  }
+}
+
+export async function checkMobileExistsAction(mobile: string): Promise<boolean> {
+  try {
+    const { userService } = await import('@/lib/runtime');
+    const existing = await userService.checkMobileExists(mobile);
+    return existing;
+  } catch (err) {
+    console.error('checkMobileExistsAction failed:', err);
+    return false;
+  }
 }

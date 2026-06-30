@@ -16,6 +16,47 @@ export interface PaginationProps {
   pageSizeOptions?: number[];
 }
 
+export function getPaginationPageNumbers(page: number, totalPages: number) {
+  const pages: (number | 'ellipsis')[] = [];
+
+  if (totalPages <= 7) {
+    for (let i = 1; i <= totalPages; i += 1) pages.push(i);
+    return pages;
+  }
+
+  pages.push(1);
+
+  if (page > 3) pages.push('ellipsis');
+
+  for (let i = Math.max(2, page - 1); i <= Math.min(totalPages - 1, page + 1); i += 1) {
+    pages.push(i);
+  }
+
+  if (page < totalPages - 2) pages.push('ellipsis');
+
+  pages.push(totalPages);
+  return pages;
+}
+
+export function buildPaginationHref(
+  pathname: string,
+  searchParams: URLSearchParams,
+  page: number,
+  limit: number,
+  buildHref?: (page: number, newLimit?: number) => string,
+) {
+  if (buildHref) {
+    return buildHref(page, limit);
+  }
+
+  const params = new URLSearchParams(searchParams.toString());
+  params.set('page', page.toString());
+  params.set('limit', limit.toString());
+
+  const query = params.toString();
+  return query ? `${pathname}?${query}` : pathname;
+}
+
 /** Client pagination using Next.js Link for URL-based navigation and Select for page size. */
 export function Pagination({
   page,
@@ -32,30 +73,7 @@ export function Pagination({
 
   const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newLimit = parseInt(e.target.value, 10);
-    if (buildHref) {
-      router.push(buildHref(1, newLimit));
-    } else {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set('limit', newLimit.toString());
-      params.set('page', '1');
-      router.push(`${pathname}?${params.toString()}`);
-    }
-  };
-
-  const getPageNumbers = () => {
-    const pages: (number | 'ellipsis')[] = [];
-    if (totalPages <= 7) {
-      for (let i = 1; i <= totalPages; i++) pages.push(i);
-    } else {
-      pages.push(1);
-      if (page > 3) pages.push('ellipsis');
-      for (let i = Math.max(2, page - 1); i <= Math.min(totalPages - 1, page + 1); i++) {
-        pages.push(i);
-      }
-      if (page < totalPages - 2) pages.push('ellipsis');
-      pages.push(totalPages);
-    }
-    return pages;
+    router.push(buildPaginationHref(pathname, searchParams, 1, newLimit, buildHref));
   };
 
   const baseClass =
@@ -63,6 +81,7 @@ export function Pagination({
 
   const renderPage = (p: number) => {
     const isActive = p === page;
+    const href = buildPaginationHref(pathname, searchParams, p, limit, buildHref);
     const content = (
       <span
         className={cn(
@@ -76,8 +95,8 @@ export function Pagination({
         {p}
       </span>
     );
-    return buildHref && !isActive ? (
-      <Link key={p} href={buildHref(p, limit)} aria-label={`Page ${p}`}>
+    return !isActive ? (
+      <Link key={p} href={href} aria-label={`Page ${p}`}>
         {content}
       </Link>
     ) : (
@@ -91,9 +110,9 @@ export function Pagination({
       aria-label="Pagination"
       className={cn('flex flex-col sm:flex-row items-center justify-between gap-4 mt-6', className)}
     >
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
         {totalCount !== undefined && (
-          <p className="text-xs text-[color:var(--ims-muted)] whitespace-nowrap">
+          <p className="text-xs text-[color:var(--ims-muted)] sm:whitespace-nowrap">
             Showing page {page} of {totalPages} · {totalCount} results
           </p>
         )}
@@ -111,10 +130,10 @@ export function Pagination({
         </div>
       </div>
       
-      <div className="flex items-center gap-1">
+      <div className="flex flex-wrap items-center justify-center gap-1 sm:justify-end">
         {/* Previous */}
-        {buildHref && page > 1 ? (
-          <Link href={buildHref(page - 1, limit)} aria-label="Previous page">
+        {page > 1 ? (
+          <Link href={buildPaginationHref(pathname, searchParams, page - 1, limit, buildHref)} aria-label="Previous page">
             <span className={cn(baseClass, 'text-[color:var(--ims-ink)] hover:bg-[color:var(--ims-accent-soft)]')}>
               <ChevronLeft className="h-4 w-4" />
             </span>
@@ -125,7 +144,7 @@ export function Pagination({
           </span>
         )}
 
-        {getPageNumbers().map((item, idx) =>
+        {getPaginationPageNumbers(page, totalPages).map((item, idx) =>
           item === 'ellipsis' ? (
             <span key={`ellipsis-${idx}`} className={cn(baseClass, 'cursor-default text-[color:var(--ims-muted)]')}>
               …
@@ -136,8 +155,8 @@ export function Pagination({
         )}
 
         {/* Next */}
-        {buildHref && page < totalPages ? (
-          <Link href={buildHref(page + 1, limit)} aria-label="Next page">
+        {page < totalPages ? (
+          <Link href={buildPaginationHref(pathname, searchParams, page + 1, limit, buildHref)} aria-label="Next page">
             <span className={cn(baseClass, 'text-[color:var(--ims-ink)] hover:bg-[color:var(--ims-accent-soft)]')}>
               <ChevronRight className="h-4 w-4" />
             </span>

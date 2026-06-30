@@ -64,6 +64,16 @@ export class UserService {
     }
   }
 
+  async checkEmailExists(email: string): Promise<boolean> {
+    const existing = await this.userRepository.findByEmail(email.trim().toLowerCase(), true);
+    return !!existing;
+  }
+
+  async checkMobileExists(mobile: string): Promise<boolean> {
+    const existing = await this.userRepository.findPersonByMobile(mobile.trim(), true);
+    return !!existing;
+  }
+
   async createUser(command: CreateUserCommand, context: UserCommandContext): Promise<User> {
     this.checkPermission(context, 'iam.user.create');
     const validated = createUserCommandSchema.parse(command);
@@ -80,7 +90,7 @@ export class UserService {
     }
 
     // Email uniqueness check
-    const existingUser = await this.userRepository.findByEmail(validated.email);
+    const existingUser = await this.userRepository.findByEmail(validated.email, true);
     if (existingUser) {
       throw createIamError('IAM-VAL-001');
     }
@@ -103,7 +113,7 @@ export class UserService {
 
     // Mobile uniqueness check
     if (mobile) {
-      const existingPerson = await this.userRepository.findPersonByMobile(mobile);
+      const existingPerson = await this.userRepository.findPersonByMobile(mobile, true);
       if (existingPerson) {
         throw createIamError('IAM-VAL-002');
       }
@@ -433,7 +443,7 @@ export class UserService {
     });
   }
 
-  async resendActivationEmail(userId: string, context: UserCommandContext): Promise<void> {
+  async resendActivationEmail(userId: string, context: UserCommandContext): Promise<string> {
     this.checkPermission(context, 'iam.user.activate');
     const user = await this.userRepository.findById(userId as Uuid);
     if (!user || user.status !== 'PendingActivation') {
@@ -459,6 +469,9 @@ export class UserService {
 
     const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
     const activationLink = `${baseUrl}/activate-account?token=${rawToken}`;
+    
+    console.log(`[resendActivationEmail] Generated activation link for user ${user.email}: ${activationLink}`);
+
     await this.notificationRepository.create({
       id: crypto.randomUUID() as Uuid,
       type: 'user.activation_resent',
@@ -489,6 +502,8 @@ export class UserService {
       correlationId: null,
       reason: null,
     });
+
+    return activationLink;
   }
 
   async suspendUser(userId: string, context: UserCommandContext): Promise<void> {
@@ -586,7 +601,7 @@ export class UserService {
     }
   }
 
-  async adminResetPassword(userId: string, context: UserCommandContext): Promise<void> {
+  async adminResetPassword(userId: string, context: UserCommandContext): Promise<string> {
     this.checkPermission(context, 'iam.user.reset-password');
     const user = await this.userRepository.findById(userId as Uuid);
     if (!user) throw createIamError('IAM-SYS-001');
@@ -606,6 +621,9 @@ export class UserService {
 
     const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
     const resetLink = `${baseUrl}/reset-password?token=${rawToken}`;
+    
+    console.log(`[adminResetPassword] Generated reset link for user ${user.email}: ${resetLink}`);
+
     await this.notificationRepository.create({
       id: crypto.randomUUID() as Uuid,
       type: 'user.password_reset_admin',
@@ -636,6 +654,8 @@ export class UserService {
       correlationId: null,
       reason: null,
     });
+
+    return resetLink;
   }
 
   async searchUsers(
@@ -671,6 +691,25 @@ export class UserService {
     return user;
   }
 
+  async getUserByEmail(email: string, context: UserCommandContext): Promise<User> {
+    this.checkPermission(context, 'iam.user.read');
+    const user = await this.userRepository.findByEmail(email);
+    if (!user) throw createIamError('IAM-SYS-001');
+
+    // Enforce branch scope if necessary
+    if (context.activeBranchId) {
+      const branches = await this.userBranchAccessRepository.findByUser(user.id);
+      const isAssigned = branches.some(
+        (b) => b.branchId === (context.activeBranchId as Uuid) && b.status === 'Active'
+      );
+      if (!isAssigned) {
+        throw createIamError('IAM-AUTHZ-002');
+      }
+    }
+
+    return user;
+  }
+
   async getUser(userId: string): Promise<any> {
     const user = await this.userRepository.findById(userId as Uuid);
     if (!user) throw createIamError('IAM-SYS-001');
@@ -679,6 +718,7 @@ export class UserService {
     return {
       ...user,
       ...person,
+      id: user.id,
       fullName: person ? `${person.firstName} ${person.lastName}`.trim() : user.username,
       phone: person ? person.mobile : null,
       branchIds: branches.filter(b => b.status === 'Active').map(b => b.branchId),
@@ -706,15 +746,43 @@ export class UserService {
 
   async listUsers(): Promise<any[]> {
     const res = await this.userRepository.search({}, 1, 1000);
-    const mapped = [];
-    for (const u of res.items) {
-      const person = await this.userRepository.findPersonById(u.personId);
-      mapped.push({
-        ...u,
-        fullName: person ? `${person.firstName} ${person.lastName}`.trim() : u.username,
-        phone: person ? person.mobile : null,
-      });
-    }
-    return mapped;
+    return Promise.all(
+      res.items.map(async (u) => {
+        const [person, roles, branches] = await Promise.all([
+          this.userRepository.findPersonById(u.personId),
+          this.roleRepository.listRolesForUser(u.id),
+          this.userBranchAccessRepository.findByUser(u.id),
+        ]);
+
+        const roleSummaries = roles.map((ur) => ({
+          id: ur.role.id,
+          roleCode: ur.role.roleCode,
+          roleName: ur.role.roleName,
+        }));
+
+        const activeBranches = branches.filter((b) => b.status === 'Active');
+
+        const isAllScope =
+          u.userType === 'Owner' ||
+          u.userType === 'Admin' ||
+          u.userType === 'Management' ||
+          activeBranches.length === 0;
+
+        const dataScopes = isAllScope
+          ? [{ scopeType: 'All' }]
+          : activeBranches.map((b) => ({
+              scopeType: 'Branch',
+              branchId: b.branchId,
+            }));
+
+        return {
+          ...u,
+          fullName: person ? `${person.firstName} ${person.lastName}`.trim() : u.username,
+          phone: person ? person.mobile : null,
+          roleSummaries,
+          dataScopes,
+        };
+      })
+    );
   }
 }
