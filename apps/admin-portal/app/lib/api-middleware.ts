@@ -127,15 +127,23 @@ export async function withAuth(request: Request): Promise<AuthenticatedRequestCo
   };
 }
 
-export async function withPermission<T>(
+export async function withPermission(
   request: Request,
   permissionCode: string,
-  work: (context: AuthenticatedRequestContext) => Promise<T> | T,
-): Promise<T> {
-  const context = await withAuth(request);
-  const { authorizationGuard } = await import('./runtime');
-  await authorizationGuard.verifyPermission(context.session.userId, permissionCode, context.session.activeBranchId ?? null);
-  return work(context);
+  work: (context: AuthenticatedRequestContext) => Promise<Response> | Response,
+): Promise<Response> {
+  try {
+    const context = await withAuth(request);
+    const { authorizationGuard } = await import('./runtime');
+    await authorizationGuard.verifyPermission(context.session.userId, permissionCode, context.session.activeBranchId ?? null);
+    return await work(context);
+  } catch (error) {
+    return errorHandler(error, {
+      title: 'Access denied',
+      detail: 'You do not have permission to access this resource.',
+      errorCode: 'FORBIDDEN',
+    });
+  }
 }
 
 export async function withBranchScope<T>(

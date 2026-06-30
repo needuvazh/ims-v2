@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/layout.tsx": {
-    "mtime": 1782799494.5520377,
-    "ast_hash": "d172ceaeccd66254cddfb2d17caa6c06",
+    "mtime": 1782821511.030839,
+    "ast_hash": "d43956088c79ac4df5a02fde6c04fcdb",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/loading.tsx": {
@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/lib/runtime.ts": {
-    "mtime": 1782756201.8362925,
-    "ast_hash": "f7314554c0fdce38ac52b5219777cb30",
+    "mtime": 1782819705.3268945,
+    "ast_hash": "adfc99be26a19535ec90f6fca6b36981",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/page.tsx": {
@@ -320,8 +320,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/next-env.d.ts": {
-    "mtime": 1782800997.4536154,
-    "ast_hash": "d0f8375ae1199dc7acd3977fc33b78b8",
+    "mtime": 1782819892.2682755,
+    "ast_hash": "2a74d3909800ca5467fa83b0ab4a4890",
     "semantic_hash": ""
   },
   "apps/admin-portal/next.config.ts": {
@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "packages/database/prisma/seed.ts": {
-    "mtime": 1782756201.9333298,
-    "ast_hash": "6d0b36b9a7d5afe2d5e238f19e3b00bb",
+    "mtime": 1782807789.5451381,
+    "ast_hash": "9ed5c8d1ffa80df3adceb06ad184932a",
     "semantic_hash": ""
   },
   "packages/database/src/client.ts": {
@@ -465,8 +465,8 @@
     "semantic_hash": ""
   },
   "packages/identity-access/src/application/navigation-service.test.ts": {
-    "mtime": 1782756201.946411,
-    "ast_hash": "8e4f37d37040fdda7e3872e4f1f068d7",
+    "mtime": 1782807836.2977483,
+    "ast_hash": "6dc9689a076f7a26178c428e87b346a3",
     "semantic_hash": ""
   },
   "packages/identity-access/src/application/navigation-service.ts": {
@@ -495,8 +495,8 @@
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/access.ts": {
-    "mtime": 1782756201.9539688,
-    "ast_hash": "26fa533763448ce5f7467d637d03fa20",
+    "mtime": 1782821507.8908634,
+    "ast_hash": "0249a208368a54676872d7b1715bd8fd",
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/role.ts": {
@@ -530,8 +530,8 @@
     "semantic_hash": ""
   },
   "packages/observability/src/logger.ts": {
-    "mtime": 1782756201.9641328,
-    "ast_hash": "2a27aebec1048ca0c1eee97ba9a811ab",
+    "mtime": 1782819421.9253097,
+    "ast_hash": "e4ef30dbdeb6129fde34af7d14efd5dd",
     "semantic_hash": ""
   },
   "packages/observability/src/node.test.ts": {
@@ -2255,8 +2255,8 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1782679686.5280428,
-    "ast_hash": "34a00f2b97c5481effa4cce4315543a6",
+    "mtime": 1782821878.076581,
+    "ast_hash": "b1ef63a8ce9bee5500c61cdcec22547e",
     "semantic_hash": ""
   },
   "GEMINI.md": {
@@ -2329,11 +2329,6 @@
     "ast_hash": "52914d47ee6fc17295715d8514f0b021",
     "semantic_hash": ""
   },
-  "docs/architecture/frd/Module 2: Organization Management.md": {
-    "mtime": 1782679686.762703,
-    "ast_hash": "c2505a686af8880a399c8f0fb6ab647c",
-    "semantic_hash": ""
-  },
   "docs/architecture/frd/Module 3: Lead & Inquiry Management.md": {
     "mtime": 1782679686.7646616,
     "ast_hash": "a3a4636f6051199103be368dd7cd5c09",
@@ -2367,11 +2362,6 @@
   "docs/architecture/frd/Module 9: Fee & Finance Management.md": {
     "mtime": 1782679686.7736163,
     "ast_hash": "58e95fa8bba31bc3497d816712ac9b26",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/frd-overview.md": {
-    "mtime": 1782679686.776615,
-    "ast_hash": "d33277201e5500ce0f95228bec79b212",
     "semantic_hash": ""
   },
   "docs/ims-technology-stack-recommendation.md": {
@@ -2835,8 +2825,8 @@
     "semantic_hash": ""
   },
   "packages/database/scratch-db.ts": {
-    "mtime": 1782791059.1521506,
-    "ast_hash": "b4096d9ea8d549e8dcc91a698d134457",
+    "mtime": 1782807771.6743267,
+    "ast_hash": "ba8cde0d8d3d0a84899f586ad6696a1a",
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/notification-port.ts": {
@@ -3215,8 +3205,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/permissions/route.ts": {
-    "mtime": 1782756201.8169715,
-    "ast_hash": "e3fc1c970e75d6415e8bfc477a042658",
+    "mtime": 1782819872.1020577,
+    "ast_hash": "5b94c3e798b8188345036bed9771bdaf",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/reports/iam/[reportType]/export/route.ts": {
@@ -3230,8 +3220,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/reports/iam/export-jobs/[jobId]/download/route.ts": {
-    "mtime": 1782756201.8184392,
-    "ast_hash": "e8201a42d740d846567acf6cc2099b8c",
+    "mtime": 1782821280.6466405,
+    "ast_hash": "89119646d11adf9e6b14fa103609a254",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/reports/iam/export-jobs/[jobId]/route.ts": {
@@ -3265,8 +3255,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/roles/route.test.ts": {
-    "mtime": 1782756201.8206737,
-    "ast_hash": "a340bdf8b8fed2f31895512a9b7ce280",
+    "mtime": 1782807984.9555457,
+    "ast_hash": "69c3e9346ca43c0de1b785a8242389a3",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/roles/route.ts": {
@@ -3370,8 +3360,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/users/route.test.ts": {
-    "mtime": 1782756201.8290133,
-    "ast_hash": "0831ac49ff69318252d90682c2393ff7",
+    "mtime": 1782807996.779315,
+    "ast_hash": "789d3b580047f2d5a13cb4048804401b",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/users/route.ts": {
@@ -3400,8 +3390,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/lib/api-middleware.ts": {
-    "mtime": 1782756201.8340516,
-    "ast_hash": "0aefd6c48769da35a07bd039fe51aec7",
+    "mtime": 1782807982.1810577,
+    "ast_hash": "f9403331fb3fadb05e68cfe966042a14",
     "semantic_hash": ""
   },
   "apps/admin-portal/smoke/iam.smoke.ts": {
@@ -3435,8 +3425,8 @@
     "semantic_hash": ""
   },
   "modify_seed.py": {
-    "mtime": 1782756201.9092388,
-    "ast_hash": "b93fd18761f9b0f123129f38277bb1ea",
+    "mtime": 1782807795.283563,
+    "ast_hash": "30bd84c456ef186cf3c616e60cb42eb2",
     "semantic_hash": ""
   },
   "modify_seed2.py": {
@@ -3724,66 +3714,6 @@
     "ast_hash": "7da1c20682c24c325098d55212ab37f7",
     "semantic_hash": ""
   },
-  "docs/architecture/frd/Module 1: Identity & Access Management/Module 1: Identity & Access Management.md": {
-    "mtime": 1782679686.7439568,
-    "ast_hash": "762a7b87cee7e04787fd6d9779d0b582",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 1: Identity & Access Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
-    "mtime": 1782756201.8536174,
-    "ast_hash": "526b965e8f360b80ee5cc6dacce0a7e0",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 1: Identity & Access Management/Part 10 - Security Architecture and NFR.md": {
-    "mtime": 1782702430.259748,
-    "ast_hash": "cadd430a33fcd1ab0b0681692f825e37",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 1: Identity & Access Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
-    "mtime": 1782756201.8541667,
-    "ast_hash": "353bf4e22a940ce8260335732c6f3f43",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 1: Identity & Access Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
-    "mtime": 1782679686.7496276,
-    "ast_hash": "89ab8b619c7a462aed565c726503e4e4",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 1: Identity & Access Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
-    "mtime": 1782679686.7521093,
-    "ast_hash": "32a368175b41509704b269710e84caca",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 1: Identity & Access Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
-    "mtime": 1782679686.7539263,
-    "ast_hash": "76fd3f63425c11d2aaf25da633171a33",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 1: Identity & Access Management/Part 5 \u2013 API Contracts.md": {
-    "mtime": 1782679686.7561073,
-    "ast_hash": "d998b8f54b75202fdfd33113f4bd4954",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 1: Identity & Access Management/Part 6 \u2013 Permission Matrix.md": {
-    "mtime": 1782679686.757718,
-    "ast_hash": "29879e1e4e9b20707444bd155eaaf49e",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 1: Identity & Access Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
-    "mtime": 1782756201.8545418,
-    "ast_hash": "d20f83af5a89b514fb5ba1f6cf30ba1e",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 1: Identity & Access Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
-    "mtime": 1782679686.7592337,
-    "ast_hash": "5371ba3f57e15de1dafe711c9e88889f",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 1: Identity & Access Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
-    "mtime": 1782756201.8557072,
-    "ast_hash": "a0db9feefd82ab13a8b3051f4b68dfc7",
-    "semantic_hash": ""
-  },
   "docs/operations/iam-api.openapi.yaml": {
     "mtime": 1782756201.8566344,
     "ast_hash": "27ce6aa8d01f8bf449f7a6a7b65e593d",
@@ -3955,13 +3885,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/audit/page.tsx": {
-    "mtime": 1782757081.7349699,
-    "ast_hash": "9bd3292b855559d932c8795910344200",
+    "mtime": 1782820123.290383,
+    "ast_hash": "8bd63a862d34e16d7d4c44e1ada0d7bb",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/dashboards/page.tsx": {
-    "mtime": 1782800542.8160293,
-    "ast_hash": "16e6d71d513e5b036b99ab8d3d9b9ddf",
+    "mtime": 1782821266.218571,
+    "ast_hash": "01cb154c039700fa8a34f9b9e4cdd58a",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/page.tsx": {
@@ -3970,13 +3900,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/permissions/page.tsx": {
-    "mtime": 1782801605.4508958,
-    "ast_hash": "b9d79837ebbd932866277f5a4d9da70a",
+    "mtime": 1782819851.7494245,
+    "ast_hash": "edc08fe184b24fde67699ed7b4a4adcd",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/reports/page.tsx": {
-    "mtime": 1782800542.817312,
-    "ast_hash": "d0a87d99ba66481dbce12cf800d0d117",
+    "mtime": 1782820713.3171594,
+    "ast_hash": "27a787144362bf74e699b13f693f3978",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/roles/[id]/edit/page.tsx": {
@@ -3985,13 +3915,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/roles/[id]/page.tsx": {
-    "mtime": 1782756201.7825804,
-    "ast_hash": "a48acd699200eed03b40524b0f9f299a",
+    "mtime": 1782819430.2283516,
+    "ast_hash": "498bf89d0555189fdc8ec6e65f6a3597",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/roles/[id]/permissions/page.tsx": {
-    "mtime": 1782756201.7832854,
-    "ast_hash": "ec249c08f029b827fe7ef8a148137e9d",
+    "mtime": 1782819242.0044675,
+    "ast_hash": "29ec5a2a1b070c9ae24847db4070c699",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/roles/create/page.tsx": {
@@ -4075,8 +4005,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/login-history/page.tsx": {
-    "mtime": 1782757050.40532,
-    "ast_hash": "5bfeebcd6af81c53951bf767afe54fb7",
+    "mtime": 1782819708.0356336,
+    "ast_hash": "05e12f0175becd34a903830c4256216a",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/page.test.tsx": {
@@ -4105,13 +4035,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/permissions/actions.ts": {
-    "mtime": 1782801149.2909381,
-    "ast_hash": "bd90ecb1a2c9aef96c51dae32aec736a",
+    "mtime": 1782819865.8647754,
+    "ast_hash": "49de562fd67bc6f733945811a4b40516",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/permissions/create/page.tsx": {
-    "mtime": 1782757018.0154376,
-    "ast_hash": "0ec03915049f550d49c8dcab7f60900f",
+    "mtime": 1782819858.7410645,
+    "ast_hash": "b28f5c41304d5663d0b2fee1b9b0c717",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/reports/export-jobs/page.tsx": {
@@ -4130,13 +4060,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/roles/[id]/permissions/manage-permissions-form.tsx": {
-    "mtime": 1782756201.78302,
-    "ast_hash": "b3212aad0948267ec770cd927d27a548",
+    "mtime": 1782819309.897833,
+    "ast_hash": "e6d05e6ac0b8868c93fa8f6267eaaa75",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/roles/_components/role-form.tsx": {
-    "mtime": 1782801027.3885827,
-    "ast_hash": "8a0a17b2b23950048e00f71ca8ddd07d",
+    "mtime": 1782808772.6832314,
+    "ast_hash": "92138278830737b982f12a6e4582eeeb",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/roles/_components/role-users-list.tsx": {
@@ -4145,8 +4075,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/roles/actions.ts": {
-    "mtime": 1782801154.6545572,
-    "ast_hash": "1f278c1e60c804741d60a6a11237b873",
+    "mtime": 1782819292.1048553,
+    "ast_hash": "81e4d8c5476a3bec70e37c8378f547a4",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/security-policy/actions.ts": {
@@ -4252,6 +4182,96 @@
   "apps/admin-portal/app/(auth)/sign-in/actions.test.ts": {
     "mtime": 1782806662.1542175,
     "ast_hash": "a7074abb745d7c37c013f677e59ee351",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/iam/roles/schema.test.ts": {
+    "mtime": 1782808822.5885527,
+    "ast_hash": "a8dc2c5e9492c5b1d5dff0599f404589",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/iam/roles/schema.ts": {
+    "mtime": 1782808738.174382,
+    "ast_hash": "9cae292ae8374bf0217eb6acdac1acad",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/iam/audit/_components/audit-details-button.tsx": {
+    "mtime": 1782820115.8683195,
+    "ast_hash": "db7ee02f525750aaa98ea14864b0b85f",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01: Identity & Access Management/Module 1: Identity & Access Management.md": {
+    "mtime": 1782679686.7439568,
+    "ast_hash": "762a7b87cee7e04787fd6d9779d0b582",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01: Identity & Access Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
+    "mtime": 1782756201.8536174,
+    "ast_hash": "526b965e8f360b80ee5cc6dacce0a7e0",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01: Identity & Access Management/Part 10 - Security Architecture and NFR.md": {
+    "mtime": 1782702430.259748,
+    "ast_hash": "cadd430a33fcd1ab0b0681692f825e37",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01: Identity & Access Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
+    "mtime": 1782756201.8541667,
+    "ast_hash": "353bf4e22a940ce8260335732c6f3f43",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01: Identity & Access Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
+    "mtime": 1782679686.7496276,
+    "ast_hash": "89ab8b619c7a462aed565c726503e4e4",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01: Identity & Access Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
+    "mtime": 1782679686.7521093,
+    "ast_hash": "32a368175b41509704b269710e84caca",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01: Identity & Access Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
+    "mtime": 1782679686.7539263,
+    "ast_hash": "76fd3f63425c11d2aaf25da633171a33",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01: Identity & Access Management/Part 5 \u2013 API Contracts.md": {
+    "mtime": 1782679686.7561073,
+    "ast_hash": "d998b8f54b75202fdfd33113f4bd4954",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01: Identity & Access Management/Part 6 \u2013 Permission Matrix.md": {
+    "mtime": 1782679686.757718,
+    "ast_hash": "29879e1e4e9b20707444bd155eaaf49e",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01: Identity & Access Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
+    "mtime": 1782756201.8545418,
+    "ast_hash": "d20f83af5a89b514fb5ba1f6cf30ba1e",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01: Identity & Access Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
+    "mtime": 1782679686.7592337,
+    "ast_hash": "5371ba3f57e15de1dafe711c9e88889f",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01: Identity & Access Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
+    "mtime": 1782756201.8557072,
+    "ast_hash": "a0db9feefd82ab13a8b3051f4b68dfc7",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/iam/reports/[reportType]/page.tsx": {
+    "mtime": 1782820961.255523,
+    "ast_hash": "f28a343e41bc79403d7db815c57038e2",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/iam/reports/_components/ExportButton.tsx": {
+    "mtime": 1782820723.6412923,
+    "ast_hash": "1906572af12761ab196c77eb088bcd8b",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/FRD_Generation_Guide.md": {
+    "mtime": 1782821399.5230565,
+    "ast_hash": "56556b7a2da84bf8115b26dfad4327c4",
     "semantic_hash": ""
   }
 }

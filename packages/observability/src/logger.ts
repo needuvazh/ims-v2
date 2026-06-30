@@ -31,6 +31,7 @@ export type LogDetails = {
   traceId?: string | null;
   userId?: string | null;
   error?: Error | null;
+  assign?: boolean | null;
 };
 
 export type StructuredLogger = {
@@ -51,6 +52,15 @@ const allowedDetailKeys: ReadonlySet<keyof Omit<LogDetails, 'error'>> = new Set(
   'durationMs',
   'entityId',
   'entityType',
+  'auditId',
+  'exportJobId',
+  'dashboardType',
+  'reportType',
+  'permissionId',
+  'roleId',
+  'sessionId',
+  'page',
+  'pageSize',
   'message',
   'method',
   'reason',
@@ -61,6 +71,7 @@ const allowedDetailKeys: ReadonlySet<keyof Omit<LogDetails, 'error'>> = new Set(
   'status',
   'traceId',
   'userId',
+  'assign',
 ]);
 
 function serializeError(error: Error | null | undefined): Record<string, string> | null {

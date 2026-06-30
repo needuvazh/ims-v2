@@ -43,28 +43,15 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   return withRouteObservability(request.headers, async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
-    let payload: unknown;
-    try { payload = await request.json(); } catch {
-      return problemJson(400, 'Invalid request body', 'Request body must be valid JSON.', 'IAM-VAL-PERMISSION-INVALID_JSON');
-    }
-    const parsed = createPermissionCommandSchema.safeParse(payload);
-    if (!parsed.success) {
-      return problemJson(400, 'Invalid request body', 'Permission details are invalid.', 'IAM-VAL-PERMISSION-INVALID_BODY', parsed.error.issues.map((issue) => ({ field: issue.path.join('.') || 'body', message: issue.message })));
-    }
-
-    try {
-      const session = await assertPermission('iam.permission.create');
-      const { permissionService } = await import('../../../../lib/runtime');
-      const permission = await permissionService.createPermission(parsed.data, { actorId: session.userId, actorPermissions: session.permissions, activeBranchId: session.activeBranchId });
-      const response = NextResponse.json({ data: { permission } }, { status: 201 });
-      applyObservabilityResponseHeaders(response.headers, request.headers, { route: '/api/v1/permissions', method: request.method, status: 'success' });
-      logger.info('api.permissions.create.succeeded', { status: 'success', permissionId: permission.id });
-      return response;
-    } catch (error) {
-      if (error instanceof IamError) return problemJson(error.statusCode, 'Permission create failed', error.messageEn, error.errorCode);
-      if (error instanceof DomainError) return problemJson(400, 'Permission create failed', error.message, error.code.toUpperCase());
-      logger.error('api.permissions.create.failed', { status: 'failed', error: error as Error });
-      return problemJson(500, 'Permission create failed', 'Unable to create permission at this time.', 'IAM-PERMISSIONS-CREATE-FAILED');
-    }
+    logger.warn('api.permissions.create.disabled', {
+      status: 'failed',
+      message: 'Permission creation is disabled. Permissions must be inserted via the backend.',
+    });
+    return problemJson(
+      403,
+      'Permission creation disabled',
+      'Permission creation is disabled. Permissions must be inserted via the backend.',
+      'IAM-PERMISSIONS-CREATE-DISABLED'
+    );
   }, { route: '/api/v1/permissions' });
 }

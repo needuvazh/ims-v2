@@ -28,7 +28,7 @@ identity_perms = """  // Identity & Access (RBAC)
   { moduleCode: 'iam', featureCode: 'permission', actionCode: 'create', permissionCode: 'iam.permission.create', permissionType: 'Action' as const, description: 'Create permissions.' },
   { moduleCode: 'iam', featureCode: 'permission', actionCode: 'update', permissionCode: 'iam.permission.update', permissionType: 'Action' as const, description: 'Update permissions.' },
   { moduleCode: 'iam', featureCode: 'permission', actionCode: 'archive', permissionCode: 'iam.permission.archive', permissionType: 'Action' as const, description: 'Archive permissions.' },
-  { moduleCode: 'iam', featureCode: 'permission', actionCode: 'assign', permissionCode: 'iam.permission.assign', permissionType: 'Action' as const, description: 'Assign permissions to roles.' },
+  { moduleCode: 'iam', featureCode: 'role', actionCode: 'assign-permission', permissionCode: 'iam.role.permission.assign', permissionType: 'Action' as const, description: 'Assign permissions to roles.' },
   { moduleCode: 'iam', featureCode: 'session', actionCode: 'read', permissionCode: 'iam.session.read', permissionType: 'Action' as const, description: 'Read sessions.' },
   { moduleCode: 'iam', featureCode: 'session', actionCode: 'terminate', permissionCode: 'iam.session.terminate', permissionType: 'Action' as const, description: 'Terminate sessions.' },
   { moduleCode: 'iam', featureCode: 'security-policy', actionCode: 'read', permissionCode: 'iam.security-policy.read', permissionType: 'Action' as const, description: 'Read security policy.' },

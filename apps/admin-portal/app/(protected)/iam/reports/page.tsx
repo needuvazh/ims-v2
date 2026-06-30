@@ -6,12 +6,12 @@ import { Breadcrumbs, Card, CardContent, CardDescription, CardHeader, CardTitle,
 export const metadata = { title: 'Reports | IMS Admin' };
 
 const reports = [
-  { href: '/api/v1/reports/iam/user-directory', label: 'User Directory', desc: 'Browse branch-scoped user data.', icon: Users },
-  { href: '/api/v1/reports/iam/login-history', label: 'Login History', desc: 'Review successful and failed logins.', icon: Clock3 },
-  { href: '/api/v1/reports/iam/security-events', label: 'Security Events', desc: 'Audit-oriented IAM activity.', icon: ShieldCheck },
-  { href: '/api/v1/reports/iam/roles', label: 'Roles', desc: 'Report on role assignments.', icon: FileText },
-  { href: '/api/v1/reports/iam/sessions', label: 'Sessions', desc: 'Inspect active session usage.', icon: BarChart3 },
-  { href: '/api/v1/reports/iam/audit-trail', label: 'Audit Trail', desc: 'Immutable audit report view.', icon: LayoutDashboard },
+  { href: '/iam/reports/user-directory', label: 'User Directory', desc: 'Browse branch-scoped user data.', icon: Users },
+  { href: '/iam/reports/login-history', label: 'Login History', desc: 'Review successful and failed logins.', icon: Clock3 },
+  { href: '/iam/reports/security-events', label: 'Security Events', desc: 'Audit-oriented IAM activity.', icon: ShieldCheck },
+  { href: '/iam/reports/roles', label: 'Roles', desc: 'Report on role assignments.', icon: FileText },
+  { href: '/iam/reports/sessions', label: 'Sessions', desc: 'Inspect active session usage.', icon: BarChart3 },
+  { href: '/iam/reports/audit-trail', label: 'Audit Trail', desc: 'Immutable audit report view.', icon: LayoutDashboard },
   { href: '/iam/reports/export-jobs', label: 'Export Jobs', desc: 'Review job status and download links.', icon: Download },
 ];
 

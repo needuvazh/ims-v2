@@ -24,38 +24,16 @@ export async function createPermissionAction(_prev: ActionResult, formData: Form
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
     const values = extractFormValues(formData);
 
-    try {
-      await assertPermission('iam.permission.create');
-      const actorId = await getActorId();
-      const { permissionService } = await import('@/lib/runtime');
+    logger.warn('iam.permission.create.disabled', {
+      status: 'failed',
+      message: 'Permission creation is disabled. Permissions must be inserted via the backend.',
+    });
 
-      const parsed = createPermissionCommandSchema.parse({
-        permissionCode: values.permissionCode,
-        permissionType: values.permissionType,
-        moduleCode: values.moduleCode,
-        featureCode: values.featureCode,
-        actionCode: values.actionCode,
-        description: values.description,
-        status: values.status,
-      });
-
-      await permissionService.createPermission(parsed, { actorId });
-      
-      logger.info('iam.permission.create.succeeded', { status: 'success', permissionId: parsed.permissionCode });
-      revalidatePath('/iam/permissions');
-      return { success: true };
-    } catch (err) {
-      logger.warn('iam.permission.create.failed', {
-        status: 'failed',
-        message: err instanceof Error ? err.message : 'unknown',
-        error: err instanceof Error ? err : undefined,
-      });
-
-      return {
-        success: false,
-        ...buildIdentityActionFailure(err, 'Failed to create permission.', values),
-      };
-    }
+    return {
+      success: false,
+      error: 'Permission creation is disabled. Permissions must be inserted via the backend.',
+      values,
+    };
   }, { action: 'iam.createPermission', route: '/iam/permissions/create' });
 }
 

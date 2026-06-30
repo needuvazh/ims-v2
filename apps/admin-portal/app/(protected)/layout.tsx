@@ -56,6 +56,9 @@ function mapNavigationIcons(item: any): any {
     case '/iam':
       icon = <ShieldCheck className="h-4.5 w-4.5" />;
       break;
+    case '/iam/dashboards':
+      icon = <LayoutDashboard className="h-4.5 w-4.5" />;
+      break;
     case '/iam/users':
       icon = <Users className="h-4.5 w-4.5" />;
       break;

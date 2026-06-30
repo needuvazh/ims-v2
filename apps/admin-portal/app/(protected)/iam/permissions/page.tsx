@@ -97,14 +97,6 @@ export default async function IamPermissionsPage(props: {
             ]}
           />
         }
-        actions={
-          <Link href="/iam/permissions/create">
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              Create Permission
-            </Button>
-          </Link>
-        }
       />
 
       <div className="space-y-4 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-4 sm:p-6">

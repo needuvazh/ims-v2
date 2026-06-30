@@ -2,15 +2,15 @@
 
 ## 1. Role and Mission
 
-You are Codex working on the Institute Management System (IMS), a single-client training institute platform. Your mission is to implement production-quality features while preserving the Domain-Driven Design boundaries described in the IMS DDD Context Map v1.2, Entity Relationship Model v1.1, and Technology Stack Recommendation.
+You are Codex working on the Institute Management System (IMS), a single-client training institute platform. Your mission is to implement production-quality features while preserving the Domain-Driven Design boundaries described in the IMS DDD Context Map v3.0, Entity Relationship Model v3.0, and Technology Stack Recommendation.
 
 Build the system as a TypeScript modular monolith in a monorepo. Treat Next.js route handlers as thin delivery adapters. Put business behavior in domain-oriented packages with application services, aggregate methods, repository interfaces, validation rules, authorization checks, events, tests, and clear infrastructure adapters.
 
 ## 2. Project Context
 
-IMS supports coaching centers, skill training institutes, individual training, corporate training, walk-in completion programs, admissions, fee collection, attendance, course completion, and certificate issuance.
+IMS supports coaching centers, skill training institutes, individual training, corporate training, walk-in fast track programs, admissions, fee collection, attendance, course completion, and certificate issuance.
 
-The current scope is a single-client implementation. Tenant setup, SaaS subscription management, CMS or website builder capabilities, full payroll, online payment gateway automation, and AI intelligence are out of the initial phase unless explicitly requested.
+The current scope is a single-client implementation for Al Saud Training Institute (ASTI). Tenant setup, SaaS subscription management, CMS or website builder capabilities, full payroll, online payment gateway automation, and AI intelligence are out of the initial phase unless explicitly requested. The website is static content with dynamic course data; CMS editing is excluded.
 
 The central business concept is Enrollment. Enrollment connects Student, Course, Batch, Branch, Finance, Attendance, Completion, and Certificate. Regular, Corporate, and Walk-In learning journeys must share one Enrollment lifecycle instead of duplicating separate models.
 
@@ -18,20 +18,22 @@ The central business concept is Enrollment. Enrollment connects Student, Course,
 
 Core domains:
 
-- Lead & Inquiry Management
+- Lead, Enquiry & CRM Management
 - Admission & Enrollment Management
-- Course, Batch & Completion Rule Management
-- Fee & Finance Management
-- Certificate Management
+- Walk-In Fast Track Enrollment
+- Course, Batch & Training Delivery
 - Corporate Training Management
-- Walk-In Enrollment & Completion Flow
+- Corporate Sales & Quotation
+- Finance & Receivables
+- Certificate Management
+- Website & Digital Experience
 
 Supporting domains:
 
 - Organization Management
-- Faculty / Trainer Management
-- Scheduling & Timetable Management
+- Scheduling, Calendar & Holiday Management
 - Attendance Management
+- Faculty / Trainer Management
 - Exam, Result & Completion Management
 - Communication Management
 - Document Management
@@ -39,42 +41,114 @@ Supporting domains:
 Generic domains:
 
 - Identity & Access Management
-- Reporting & Analytics
+- Reporting & Executive Dashboards
 - Audit & Compliance
-- Notification Infrastructure
-- AI Intelligence, final phase only
+- Configuration / Master Data
+- Integration Management
 
 Bounded contexts:
 
-- Identity & Access Management owns User, Role, Permission, UserRole, RolePermission, AccessPolicy, and secure access behavior.
-- Organization Management owns Institute, Branch, Department, and Classroom.
-- Lead & Inquiry Management owns Lead, LeadSource, LeadStage, FollowUp, and Campaign.
-- Admission & Enrollment Management owns Student, Admission, Enrollment, StudentIdentity, and StudentIDCard.
-- Corporate Training Management owns CorporateAccount, CorporateContactPerson, CorporateContract, CorporateProgram, and CorporateParticipant.
-- Course & Batch Management owns Course, CoursePricing, CourseCompletionRule, Batch, BatchTrainer, and WaitingList.
-- Walk-In Enrollment & Completion Flow is an application flow over Enrollment, Finance, Completion, and Certificate. It does not own a separate learner lifecycle.
-- Scheduling & Timetable Management owns ScheduleSession and scheduling conflict rules.
-- Attendance Management owns AttendanceRecord and attendance calculations.
-- Fee & Finance Management owns FeePlan, InstallmentPlan, EnrollmentFeeAccount, Payment, Receipt, Discount, and Refund.
-- Faculty / Trainer Management owns Trainer, TrainerQualification, TrainerDocument, TrainerAvailability, TrainerAssignment, and TrainerPayment.
-- Exam, Result & Completion Management owns Exam, Result, CourseCompletion, and completion approval behavior.
-- Certificate Management owns CertificateTemplate, Certificate, and CertificateVerificationLog.
-- Communication Management owns CommunicationTemplate, CommunicationLog, and SystemNotification.
-- Document Management owns DocumentType, Document, and DocumentVerification.
-- Reporting & Analytics owns ReportDefinition, DashboardWidget, MetricSnapshot, read models, and dashboards.
-- Audit & Compliance owns AuditLog and ApprovalLog.
+- **Identity & Access Management** owns User, Role, Permission, Menu, UserRole, RolePermission, AccessPolicy, and BranchAccess.
+- **Organization Management** owns Institute, Branch, Department, and Classroom.
+- **Configuration / Master Data** owns ConfigurationItem, LookupType, LookupValue, NumberingSeries, BusinessCalendar, LocalizedText, BranchHierarchy, PricingRule, and DiscountRule.
+- **Website & Digital Experience** owns PublicCoursePage, WebsiteInquiry, OnlineRegistration, CorporateInquiry, WebsiteContent, SEOPageMetadata, and CampaignTrackingCode.
+- **Lead, Enquiry & CRM Management** owns Lead, Enquiry, LeadSource, LeadStage, FollowUp, CounselorAssignment, LeadScore, and Campaign.
+- **Admission & Enrollment Management** owns Admission, Student, Enrollment, StudentIdentity, StudentIDCard, and EnrollmentStatus.
+- **Walk-In Fast Track Enrollment** owns WalkInEnrollment, WalkInPayment, WalkInCompletion, and WalkInConfirmation.
+- **Corporate Training Management** owns CorporateAccount, CorporateContact, CorporateContract, CorporateDepartment, CorporateCoordinator, CorporateParticipant, CorporateTrainingProgram, and CorporateEnrollment.
+- **Corporate Sales & Quotation** owns CorporateSalesLead, Quotation, QuotationLineItem, SalesOrder, SalesPipeline, CommercialTerms, and CreditLimit.
+- **Course Catalog Management** owns Course, CourseCategory, CourseType, CoursePricing, CourseDiscount, CourseCompletionRule, CourseApproval, and CourseCatalogOption.
+- **Training Delivery Management** owns Batch, Session, BatchTrainer, BatchCapacity, WaitingList, and TrainingDeliveryStatus.
+- **Scheduling, Calendar & Holiday Management** owns Timetable, ScheduleSession, ClassroomBooking, Holiday, VenueBlock, and TrainerAvailability.
+- **Attendance Management** owns AttendanceSession, AttendanceRecord, AttendanceStatus, AttendanceCorrection, and AttendanceAlert.
+- **Fee, Billing & Receivables Management** owns FeePlan, Invoice, InvoiceLineItem, InstallmentPlan, Payment, Receipt, Discount, Refund, CreditNote, Receivable, AgingBucket, and CorporateCreditRule.
+- **Faculty / Trainer Management** owns Trainer, TrainerQualification, TrainerDocument, TrainerAvailability, TrainerAssignment, and TrainerPayment.
+- **Exam, Result & Completion Management** owns Exam, Assessment, Result, Grade, CompletionRuleEvaluation, CourseCompletion, and CompletionApproval.
+- **Certificate Management** owns Certificate, CertificateIssueLog, CertificateQRCode, CertificateVerification, and CertificateReissueRequest.
+- **Communication & Notification Management** owns CommunicationTemplate, TemplatePlaceholder, NotificationRequest, NotificationLog, CommunicationChannel, and MessageDeliveryStatus.
+- **Document Management** owns Document, DocumentType, DocumentOwner, DocumentVerification, DocumentStatus, and DocumentExpiry.
+- **Reporting & Executive Dashboards** owns ReportDefinition, DashboardWidget, KPI snapshots, and dashboards (Chairman, CEO, MD, Sales, Finance, Training).
+- **Audit & Compliance** owns AuditLog, ApprovalRequest, ApprovalStatus, ApprovalHistory, UserActionLog, and ComplianceEvent.
 
 Important domain events:
 
+- WebsiteInquirySubmitted
+- OnlineRegistrationSubmitted
+- CorporateInquirySubmitted
+- LeadCreated
+- LeadAssigned
+- FollowUpScheduled
+- ProposalIssued
+- LeadConverted
+- LeadLost
+- AdmissionCreated
+- StudentProfileCreated
 - EnrollmentCreated
+- EnrollmentApproved
 - EnrollmentConfirmed
-- ManualPaymentRecorded
-- CourseCompleted
-- CertificateEligibilityApproved
+- EnrollmentCancelled
+- EnrollmentCompleted
+- WalkInEnrollmentCreated
+- WalkInPaymentRecorded
+- WalkInTrainingCompleted
+- WalkInCertificateEligible
+- CorporateAccountCreated
+- CorporateContractCreated
+- CorporateParticipantNominated
+- CorporateParticipantConvertedToStudent
+- CorporateBulkEnrollmentCreated
+- CorporateInvoiceRequested
+- CorporateCreditLimitExceeded
+- CorporateSalesLeadCreated
+- QuotationCreated
+- QuotationApproved
+- QuotationRejected
+- SalesOrderCreated
+- CorporateDealClosed
+- CourseCreated
+- CourseApproved
+- CoursePublished
+- CoursePricingUpdated
+- CourseDiscountUpdated
+- BatchCreated
+- BatchPricingOverridden
+- BatchDiscountOverridden
+- BatchCapacityReached
+- StudentAddedToWaitingList
+- TrainerAssignedToBatch
+- SessionScheduled
+- AttendanceSessionCreated
+- AttendanceMarked
+- AttendanceUpdated
+- LowAttendanceDetected
+- InvoiceGenerated
+- PaymentRecorded
+- ReceiptGenerated
+- InstallmentDue
+- InvoiceOverdue
+- DiscountApplied
+- RefundRequested
+- RefundApproved
+- CreditNoteIssued
+- CorporateCreditValidationPassed
+- CorporateCreditValidationFailed
+- ExamScheduled
+- ResultRecorded
+- CompletionEvaluationRequested
+- CourseCompletionApproved
+- CertificateEligible
 - CertificateGenerated
-- CorporateParticipantRegistered
-- WalkInCompletionApproved
-- TrainerPaymentRecorded
+- CertificateReissued
+- CertificateVerified
+- NotificationRequested
+- MessageSent
+- MessageFailed
+- CommunicationLogged
+- UserActionPerformed
+- ApprovalRequested
+- ApprovalApproved
+- ApprovalRejected
+- CriticalDataChanged
 
 ## 4. Architecture Principles
 
@@ -115,41 +189,40 @@ Use the recommended stack unless the repository already contains an approved alt
 Prefer this structure unless the repository already has an equivalent pattern:
 
 ```text
-ims-monorepo/
+asti-ims/
   apps/
     admin-portal/
-      app/student/
-      app/trainer/
-      app/verify/
 
   packages/
-    shared-kernel/
-    shared-ui/
-    shared-auth/
     identity-access/
     organization/
+    configuration/
+    website-digital/
     crm-leads/
-    admissions-enrollment/
+    admission-enrollment/
+    walkin-fast-track/
     corporate-training/
-    courses-batches/
-    walkin-enrollment/
-    scheduling/
+    corporate-sales-quotation/
+    course-catalog/
+    training-delivery/
+    scheduling-calendar/
     attendance/
-    finance/
+    finance-receivables/
     trainer-management/
     exams-completion/
     certificates/
-    communication/
+    communication-notifications/
     documents/
-    reporting/
-    audit/
-    integrations/
-    database/
+    reporting-dashboards/
+    audit-compliance/
+    shared/
 
   infrastructure/
-    migrations/
-    scripts/
-    observability/
+    database/
+    auth/
+    storage/
+    jobs/
+    deployment/
 ```
 
 Each domain package should expose a small public API. Do not import another context's internal files. Use public application service contracts, events, or query interfaces.
@@ -175,7 +248,7 @@ Add comments only where they clarify non-obvious domain behavior, invariants, or
 
 ## 8. Domain Modeling Rules
 
-Enrollment is the central aggregate root for learning lifecycle behavior. Other contexts may reference Enrollment by ID, but they must not directly mutate Enrollment tables or bypass Enrollment application services.
+Use a shared Person / Party concept (`Party` can be `Person` or `Organization`) to reduce duplicate identity data across students, trainers, employees, corporate contacts, and coordinators.
 
 Admission and Enrollment are separate concepts:
 
@@ -183,20 +256,22 @@ Admission and Enrollment are separate concepts:
 - Enrollment means joining a Course, Batch, Corporate Program, or Walk-In session.
 - A Student may have multiple Enrollments over time.
 
-Corporate employees begin as Corporate Participants. Link them to Student only when login access, individual lifecycle tracking, certificate history, future enrollments, or individual payments are required.
+Enrollment is the central aggregate root for learning lifecycle behavior. Other contexts may reference Enrollment by ID, but they must not directly mutate Enrollment tables or bypass Enrollment application services.
 
-Walk-In is a specialized enrollment and completion flow. It must reuse Course rules, Enrollment lifecycle, Finance payment validation, Completion validation, and Certificate eligibility.
+- Enrollment must link to a course and a batch.
+- Regular, Corporate, Online, and Walk-In training journeys must share one Enrollment lifecycle instead of duplicating separate models.
+- Corporate employees begin as Corporate Participants. Link them to Student only when login access, individual lifecycle tracking, certificate history, future enrollments, or individual payments are required. A Corporate Participant becomes a student once enrolled.
+- Walk-In is a specialized enrollment strategy, not a separate student type. It must reuse Course rules, Enrollment lifecycle, Finance payment validation, Completion validation, and Certificate eligibility.
 
 Put invariants inside aggregate methods or domain services. Examples:
 
-- A Course can be offered only when the current date is inside its effective date range.
-- A Course must explicitly allow walk-in completion before a Walk-In Enrollment can be completed through the walk-in flow.
-- Same-day walk-in completion is allowed only through the Walk-In orchestration flow.
-- Certificate issuance requires certificate eligibility validation.
-- Certificate eligibility may depend on attendance, completion, exam pass, manual approval, walk-in completion, and payment completion.
-- Scheduling must prevent trainer double booking, classroom double booking, and batch overlap.
-- Completion approval follows Trainer Recommendation, Academic Coordinator Review, and Branch Manager Approval.
-- Refund approval follows Finance, Branch Manager, and Management.
+- **Course Rules**: A Course can be offered only when the current date is inside its effective date range. Published courses must have valid pricing and completion rules (owned by Course Catalog).
+- **Pricing Resolution**: Pricing and discounts follow a strict hierarchy: Batch level override -> Branch level override -> Global course catalog default pricing. Course Catalog owns the pricing rules; Finance applies resolved pricing during invoice generation.
+- **Corporate Credit**: Corporate credit limit validation applies during corporate enrollment. If the corporate credit limit is exceeded and the block flag is true, block the enrollment. If the block flag is false, allow the enrollment.
+- **Scheduling Conflicts**: Scheduling must prevent trainer double booking, classroom double booking, batch overlap, holiday conflicts, and venue blocked-date conflicts.
+- **Completion & Approval**: Course completion rules are evaluated in the Exam/Completion context. Completion approval follows a workflow: Trainer Recommendation -> Academic Coordinator Review -> Branch Manager Approval.
+- **Certificate Issuance**: Certificate context issues, verifies, reissues, and revokes certificates, but does not compute eligibility. QR code verification must be unique. Certificate re-issue requires management approval. A single hardcoded template is used for now.
+- **Refund Approval**: Refund approval follows Finance, Branch Manager, and Management approval.
 
 Use value objects for Money, DateRange, EffectiveDateRange, Percentage, BranchId, CourseId, EnrollmentId, CertificateNumber, and other concepts where validation matters.
 
@@ -482,25 +557,27 @@ A change is done only when:
 
 Assumptions from the uploaded documents:
 
-- The current project is single-client, not SaaS.
+- The current project is single-client for ASTI, not SaaS.
 - The implementation target is a TypeScript monorepo with Next.js portals.
 - PostgreSQL and Prisma are the preferred persistence stack.
-- Manual payments are Phase 1; online payment gateway automation is final phase.
-- Communication Management and Corporate Training are Phase 2 unless reprioritized.
+- Manual payments and manual attendance are Phase 1.
+- Online payment gateway automation, HRMS, ESS, Payroll, Tally Integration, and Biometric Integration are deferred/future phases.
 - AI Intelligence is final phase and should not drive early architecture.
-- Oman-standard tax invoice and receipt formats are required, but detailed legal formatting rules are not provided in the uploaded material.
+- Oman-standard tax invoice and receipt formats are required, but detailed legal formatting rules are generic for now.
+- Website is static content with dynamic course data; CMS editing is excluded.
 
 Open questions:
 
-- Which package manager and monorepo tool should be used: npm workspaces, pnpm, Turborepo, Nx, or another tool?
-- Which authentication provider or library should be used?
-- Which UI component primitives should be standardized?
-- Which deployment platform is selected for the first production release?
-- Which object storage provider should be used?
-- What exact audit retention, privacy, and compliance requirements apply?
-- What are the exact student identity fields for Oman and future supported countries?
-- What are the exact receipt, tax invoice, certificate, and student ID card templates?
-- What test framework and E2E framework should be standardized?
+- Biometric device details are unknown.
+- Certificate templates are hardcoded now; future configurability is required.
+- Invoice format is generic for now.
+- HRMS and Trainer Management should avoid duplicate person profiles (reusing Person / Party data).
+- Online payment gateway phase needs final confirmation.
+- Exact Oman tax invoice format needs validation.
+- Exact branch hierarchy model needs confirmation.
+- Exact corporate credit limit defaults need confirmation.
+- Exact dashboard permissions need to be defined.
+- Exact student ID and enrollment numbering formats need confirmation.
 
 ## graphify
 

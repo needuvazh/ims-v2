@@ -49,6 +49,7 @@ export const adminNavigation: NavigationItem[] = [
     permission: 'iam.user.read',
     category: 'Management',
     items: [
+      { href: '/iam/dashboards', label: 'Dashboards' },
       { href: '/iam/users', label: 'Users' },
       { href: '/iam/roles', label: 'Roles' },
       { href: '/iam/permissions', label: 'Permissions' },

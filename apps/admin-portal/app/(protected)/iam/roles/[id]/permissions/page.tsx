@@ -43,7 +43,7 @@ export default async function IamRolePermissionsPage(props: { params: Promise<{ 
           />
         }
       />
-      <div className="max-w-4xl">
+      <div className="w-full">
         <ManagePermissionsForm
           roleId={params.id}
           allPermissions={allPermissions.map((p: any) => ({

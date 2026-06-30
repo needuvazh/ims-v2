@@ -19,8 +19,30 @@ export default async function IamLoginHistoryPage({ searchParams }: { searchPara
   const status = resolved.status?.trim() ?? '';
   const userId = resolved.userId?.trim() ?? '';
 
-  const result = userId
-    ? await loginHistoryQueryService.listUserLoginHistory(userId as never, page, pageSize, {
+  let resolvedUserId: string | null = null;
+  let userNotFound = false;
+
+  if (userId) {
+    const isUuid = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(userId);
+    if (isUuid) {
+      resolvedUserId = userId;
+    } else if (session.permissions.includes('iam.user.read')) {
+      const { userRepository } = await import('../../../lib/runtime');
+      const user = await userRepository.findByEmail(userId.toLowerCase()) || await userRepository.findByUsername(userId);
+      if (user) {
+        resolvedUserId = user.id;
+      } else {
+        userNotFound = true;
+      }
+    } else {
+      userNotFound = true;
+    }
+  }
+
+  const result = userNotFound
+    ? { items: [], total: 0 }
+    : resolvedUserId
+    ? await loginHistoryQueryService.listUserLoginHistory(resolvedUserId as never, page, pageSize, {
         actorId: session.userId as never,
         actorPermissions: session.permissions,
         activeBranchId: session.activeBranchId as never,

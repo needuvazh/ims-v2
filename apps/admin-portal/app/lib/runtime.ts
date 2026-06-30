@@ -39,7 +39,7 @@ import {
 
 // ─── Repositories ──────────────────────────────────────────────────────────
 const auditRepository = new PrismaAuditLogRepository(prisma);
-const userRepository = new PrismaUserRepository(prisma);
+export const userRepository = new PrismaUserRepository(prisma);
 const roleRepository = new PrismaRoleRepository(prisma);
 const permissionRepository = new PrismaPermissionRepository(prisma);
 const userBranchAccessRepository = new PrismaUserBranchAccessRepository(prisma);
