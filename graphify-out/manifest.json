@@ -2370,13 +2370,8 @@
     "semantic_hash": ""
   },
   "docs/project-status.md": {
-    "mtime": 1782829428.3879375,
-    "ast_hash": "fd20f2af7f1adee92c450eff0c65aa32",
-    "semantic_hash": ""
-  },
-  "docs/useful_prompts.md": {
-    "mtime": 1782679686.8167238,
-    "ast_hash": "f42f0d9205cc1b7a9204de7668caf6b4",
+    "mtime": 1782840226.0743952,
+    "ast_hash": "88db68b0cda1842588004a44ccb4b725",
     "semantic_hash": ""
   },
   "memory/PRD.md": {
@@ -4382,6 +4377,86 @@
   "packages/database/prisma/migrations/20260630162117_update_organization_and_leads/migration.sql": {
     "mtime": 1782836490.61574,
     "ast_hash": "3cf5bab59000ca4f1c3d1bcbefbc305c",
+    "semantic_hash": ""
+  },
+  "prompts/Project Status Document (PSD) Prompt.md": {
+    "mtime": 1782838936.7761595,
+    "ast_hash": "00cc8538bfa696e7e0bd484164c89fde",
+    "semantic_hash": ""
+  },
+  "prompts/prompt for module generation.md": {
+    "mtime": 1782839008.5371425,
+    "ast_hash": "c8571133003cdb52ee2551dba11932e8",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Module 06: Course Catalog & Training Delivery (Batch) Management.md": {
+    "mtime": 1782841182.7599442,
+    "ast_hash": "7a2591bb4af928223b83b2b899104b5e",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
+    "mtime": 1782841041.8260727,
+    "ast_hash": "9da67a2b60d29404526350b2a73a45c7",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
+    "mtime": 1782841160.8032985,
+    "ast_hash": "3a6c777c4b5c6165310d0479dc2f50f6",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
+    "mtime": 1782841061.3152328,
+    "ast_hash": "4ffd75d140f3cd83099b5b8a4312df4b",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
+    "mtime": 1782841088.8006718,
+    "ast_hash": "c3408b59268e1f6d5fadc4cff10a35c1",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 5 \u2013 API Contracts.md": {
+    "mtime": 1782841102.549771,
+    "ast_hash": "05a6e07e48bd9b98f1d074d6463cea4a",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 6 \u2013 Permission Matrix.md": {
+    "mtime": 1782839726.1639166,
+    "ast_hash": "3abb0208349280c423fb30643a95f27e",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
+    "mtime": 1782841108.3709648,
+    "ast_hash": "679d70148a21e9c2d90dbbdd5cf82d62",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
+    "mtime": 1782839738.8007355,
+    "ast_hash": "7c7f8445f388ed47332be1418847485f",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
+    "mtime": 1782839745.553772,
+    "ast_hash": "cb112eb2f878f8957020207eed84eaf3",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 10 - Security Architecture and NFR.md": {
+    "mtime": 1782839770.5073752,
+    "ast_hash": "46336311b1eb9e020ad250cfd4373fec",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
+    "mtime": 1782839776.744252,
+    "ast_hash": "836f78c783c05a9dca0f4ac5d6239093",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Architectural Audit Report.md": {
+    "mtime": 1782840098.3229024,
+    "ast_hash": "b936491e842bf01b58751e98c5c2352d",
+    "semantic_hash": ""
+  },
+  "prompts/useful_prompts.md": {
+    "mtime": 1782839677.6211617,
+    "ast_hash": "722d3216e331db09623572159315f819",
     "semantic_hash": ""
   }
 }
