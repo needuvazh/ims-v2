@@ -22,6 +22,8 @@ export * from './components/table';
 export * from './components/skeleton';
 export * from './components/empty-state';
 export * from './components/stat-card';
+export * from './components/metric-card';
+export * from './components/chart-widget';
 export * from './components/avatar';
 export * from './components/page-header';
 export * from './components/breadcrumbs';

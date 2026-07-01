@@ -462,7 +462,7 @@ export class LeadService {
         },
         {
           id: createUuid(randomUUID()),
-          eventType: 'LeadConvertedToAdmission',
+          eventType: 'LeadConverted',
           aggregateType: 'Lead',
           aggregateId: leadId,
           payload: { leadId, leadNumber: lead.leadNumber, studentEmail: lead.email },

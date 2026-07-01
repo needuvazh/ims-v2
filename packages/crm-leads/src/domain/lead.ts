@@ -25,6 +25,13 @@ export const LeadSourceEnum = z.enum([
   'CorporateReferral',
 ]);
 
+export const FollowUpStatusEnum = z.enum([
+  'Scheduled',
+  'Completed',
+  'Cancelled',
+  'Overdue',
+]);
+
 export const LeadSchema = z.object({
   id: z.string().uuid(),
   leadNumber: z.string(),
@@ -52,6 +59,7 @@ export const LeadSchema = z.object({
 export type Lead = z.infer<typeof LeadSchema>;
 export type LeadStage = z.infer<typeof LeadStageEnum>;
 export type LeadSource = z.infer<typeof LeadSourceEnum>;
+export type FollowUpStatus = z.infer<typeof FollowUpStatusEnum>;
 
 export const preprocessPhone = (val: unknown) => {
   if (typeof val !== 'string') return val;

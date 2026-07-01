@@ -8,6 +8,7 @@ export * from './repositories/prisma-session-repository';
 export * from './repositories/prisma-password-history-repository';
 export * from './repositories/prisma-security-policy-repository';
 export * from './repositories/prisma-audit-log-repository';
+export * from './repositories/prisma-audit-repository';
 export * from './repositories/prisma-notification-repository';
 export * from './repositories/prisma-outbox-event-repository';
 export * from './repositories/prisma-export-job-repository';

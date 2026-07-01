@@ -16,12 +16,12 @@ architecture decision records, OpenSpec change proposals, and codebase milestone
 into a unified tracking index.
 
 * **Project Name:** ASTI Integrated Institute Management System (IMS)
-* **Current Version:** v3.3.1 (Core Foundation, CRM, & Admissions Handoff with Workflows)
+* **Current Version:** v3.4.0 (Core Foundation, CRM & Dashboards, Admissions Handoff)
 * **Last Updated:** 2026-07-01
 * **Document Owner:** ASTI Technical Program Manager & Enterprise Architect
 * **Current Phase:** Core Workflow Implementation & Testing
-* **Overall Progress (%):** **31%** (71 completed FRD requirements out of the total 226)
-* **Overall Health:** **Green** (Core foundation of IAM and Organization completed. CRM core flows, follow-up scheduling workflows, worker auto-assignments, and Admissions conversion handoffs implemented and verified. Dynamic settings and dashboard widgets are in progress)
+* **Overall Progress (%):** **35%** (79 completed FRD requirements out of the total 226)
+* **Overall Health:** **Green** (Core foundation of IAM and Organization completed. CRM core flows, follow-up scheduling workflows, worker auto-assignments, Admissions conversion handoffs, and CRM Dashboards & Reports implemented and verified.)
 
 ---
 
@@ -64,7 +64,7 @@ into a unified tracking index.
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **IAM** | Approved | Approved | Approved | Approved | Approved | Implemented | Completed | Completed | Complete |
 | **Organization** | Approved | Approved | Approved | Approved | Approved | Implemented | Completed | Completed | Complete |
-| **CRM** | Approved | Approved | Approved | Approved | Draft | In Progress | In Progress | Completed (Core) | In Progress |
+| **CRM** | Approved | Approved | Approved | Approved | Completed | Implemented | Completed | Completed | Complete (Core & Dashboards) |
 | **Admissions** | Approved | Draft | Approved | Approved | Draft | In Progress | In Progress (Stub) | Completed (BE) | In Progress |
 | **Student Management** | Approved | Not Started | Draft | Not Started | Draft (Shell) | Planned | Not Started | Not Started | Under Review |
 | **Course Management** | Approved | Not Started | Draft | Not Started | Not Started | Planned | Not Started | Not Started | Under Review |
@@ -340,7 +340,7 @@ Each module is rated on an overall implementation implementation readiness scale
 
 1. **Identity & Access Management:** **100%** (All systems ready, tested, and secure)
 2. **Organization Management:** **100%** (All hierarchy logic, tree views, and validations complete)
-3. **CRM & Enquiry:** **80%** (Core models, qualification APIs, counselor scoping, stage histories, detail dashboards, auto-assignment, outcome logging, and sweep cron are implemented; Campaign Management, configurable stages/sources, and lead funnel charts are pending)
+3. **CRM & Enquiry:** **95%** (Core models, qualification APIs, counselor scoping, stage histories, detail dashboards, auto-assignment, outcome logging, sweep cron, and CRM dashboard analytics are implemented; Campaign Management and configurable stages/sources admin panels are pending)
 4. **Admission & Enrollment:** **35%** (Admissions models and convert handoff transactional orchestrator complete; UI and Enrollment elements are pending)
 5. **Audit & Compliance:** **35%** (Audit repository is ready, database is active, but admin viewer is pending)
 6. **Course & Batch Management:** **8%** (Course tables exist; batch tables pending)
@@ -359,6 +359,7 @@ Each module is rated on an overall implementation implementation readiness scale
 | **2026-07-01** | v3.2.0 | Codex | Updated PSD to reflect CRM progress aligned with DDD / FRD definitions. Re-routed CRM status to In Progress (with 65% completion readiness) and updated test matrices. |
 | **2026-07-01** | v3.3.0 | Codex | Completed Change 3 (crm-workflows-followup-scheduling). Added inquiry auto-assignment, composite outcome + follow-up scheduling, and hourly sweeper. Updated unit test statistics and PSD matrices. |
 | **2026-07-01** | v3.3.1 | Codex | Applied code review suggestions to `crm-portal-ui-scoped-filtering`. Added counselor scoping check on lead conversion, mandatory version concurrency check, client-side re-synchronization on stage changes, and delegated stage/closure updates to LeadService. |
+| **2026-07-01** | v3.4.0 | Codex | Completed Change 4 (crm-dashboards-and-reports). Scaffolded reporting-dashboards package, implemented LeadAnalyticsReadService and CrmDashboardQueryService with RBAC and Audits, added MetricCard and ChartWidget to shared-ui, and created the protected CRM dashboard page with responsive charts. |
 
 ---
 

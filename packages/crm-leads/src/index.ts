@@ -6,3 +6,6 @@ export * from './infrastructure/followup-repository';
 export * from './application/lead-service';
 export * from './application/inquiry-service';
 export * from './application/followup-service';
+export * from './application/lead-analytics-read-service';
+
+export * from './application/followup-scheduler-service';

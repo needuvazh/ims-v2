@@ -97,6 +97,11 @@ const systemPermissions = [
   { moduleCode: 'report',       featureCode: 'iam',         actionCode: 'privileged', permissionCode: 'report.iam.privileged',      permissionType: 'Report' as const, description: 'View privileged users report.' },
   { moduleCode: 'report',       featureCode: 'iam',         actionCode: 'session', permissionCode: 'report.iam.session',           permissionType: 'Report' as const, description: 'View session report.' },
   { moduleCode: 'report',       featureCode: 'iam',         actionCode: 'audit-trail', permissionCode: 'report.iam.audit-trail',      permissionType: 'Report' as const, description: 'View audit trail report.' },
+  
+  // CRM Dashboards & Reports
+  { moduleCode: 'report',       featureCode: 'crm-dashboard', actionCode: 'view',    permissionCode: 'REPORTING_VIEW_CRM_DASHBOARD',     permissionType: 'Action' as const, description: 'View CRM dashboard.' },
+  { moduleCode: 'report',       featureCode: 'counselor-metrics', actionCode: 'view', permissionCode: 'REPORTING_VIEW_COUNSELOR_METRICS', permissionType: 'Action' as const, description: 'View counselor performance metrics.' },
+  { moduleCode: 'crm',          featureCode: 'leads',       actionCode: 'read.all_branch', permissionCode: 'LEAD_VIEW_ALL_IN_BRANCH', permissionType: 'Action' as const, description: 'View all leads in active branch.' },
 ];
 
 async function seed() {
@@ -194,7 +199,8 @@ async function seed() {
     'student.read', 'student.write', 'enrollment.create',
     'payment.create', 'refund.request', 'course.manage', 'schedule.manage',
     'attendance.record', 'result.record', 'certificate.generate',
-    'certificate.verify', 'dashboard.branch', 'dashboard.security', 'dashboard.view'
+    'certificate.verify', 'dashboard.branch', 'dashboard.security', 'dashboard.view',
+    'REPORTING_VIEW_CRM_DASHBOARD', 'REPORTING_VIEW_COUNSELOR_METRICS', 'LEAD_VIEW_ALL_IN_BRANCH'
   ];
   const managerPerms = permRecords.filter(p => managerPermCodes.includes(p.permissionCode));
   for (const perm of managerPerms) {
@@ -209,7 +215,8 @@ async function seed() {
     'iam.user.read',
     'lead.read', 'lead.write', 'lead.create', 'lead.update', 'lead.assign', 'lead.lost', 'lead.qualify', 'lead.convert',
     'followup.create', 'followup.update',
-    'student.read', 'dashboard.crm', 'report.iam.user', 'dashboard.view'
+    'student.read', 'dashboard.crm', 'report.iam.user', 'dashboard.view',
+    'REPORTING_VIEW_CRM_DASHBOARD'
   ];
   const counselorPerms = permRecords.filter(p => counselorPermCodes.includes(p.permissionCode));
   for (const perm of counselorPerms) {

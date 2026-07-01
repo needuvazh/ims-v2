@@ -196,6 +196,7 @@ import {
   InquiryApplicationService,
   LeadService,
   FollowUpApplicationService,
+  FollowUpSchedulerService,
 } from '@ims/crm-leads';
 
 const crmInquiryRepository = new InquiryRepository(prisma);
@@ -220,6 +221,11 @@ export const followUpService = new FollowUpApplicationService(
   crmLeadRepository
 );
 
+export const followUpSchedulerService = new FollowUpSchedulerService(
+  prisma,
+  crmFollowUpRepository
+);
+
 // ─── Admissions Repositories & Services ──────────────────────────────────
 import {
   AdmissionRepository,
@@ -235,4 +241,18 @@ export const leadConversionOrchestrator = new LeadConversionOrchestrator(
   leadService,
   admissionService
 );
+
+// ─── Reporting & CRM Dashboards ───────────────────────────────────────────
+import { LeadAnalyticsReadService } from '@ims/crm-leads';
+import { CrmDashboardQueryService } from '@ims/reporting-dashboards';
+import { PrismaAuditRepository } from '@ims/database';
+
+export const leadAnalyticsReadService = new LeadAnalyticsReadService(prisma);
+const prismaAuditRepository = new PrismaAuditRepository(prisma);
+
+export const crmDashboardQueryService = new CrmDashboardQueryService(
+  leadAnalyticsReadService,
+  prismaAuditRepository
+);
+
 

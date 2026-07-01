@@ -33,6 +33,9 @@ function mapNavigationIcons(item: any): any {
     case '/dashboard':
       icon = <LayoutDashboard className="h-4.5 w-4.5" />;
       break;
+    case '/dashboards/crm':
+      icon = <LayoutDashboard className="h-4.5 w-4.5" />;
+      break;
     case '/leads':
       icon = <TrendingUp className="h-4.5 w-4.5" />;
       break;

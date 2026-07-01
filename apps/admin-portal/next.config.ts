@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
     '@ims/database',
     '@ims/admissions-enrollment',
     '@ims/crm-leads',
+    '@ims/reporting-dashboards',
   ],
   images: {
     remotePatterns: [

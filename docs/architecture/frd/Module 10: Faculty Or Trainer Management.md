@@ -79,14 +79,14 @@ This module does not own scheduling or payroll. It provides trainer capabilities
 
 The Trainer context owns:
 
-* Trainer
+* TrainerProfile
 * TrainerQualification
-* TrainerDocument
 * TrainerAvailability
 * TrainerCourseAuthorization
 * TrainerAssignment
 * TrainerUtilizationSnapshot
 * TrainerPortalAccess
+
 
 Notes:
 
@@ -103,16 +103,15 @@ Notes:
 The system shall support:
 
 ```text
-Full-Time Trainer
-Part-Time Trainer
-Freelance Trainer
-Guest Trainer
-Corporate Trainer
+FullTime (Full-Time Trainer)
+PartTime (Part-Time Trainer)
+Freelance (Freelance Trainer)
 ```
 
 Rules:
 
-* Trainer type is a classification and not a payroll indicator.
+* Trainer type is a strict profile classification and not a payroll indicator.
+* Guest Trainer and Corporate Trainer are assignment-level roles tracked at the scheduling/batch allocation layer, not profile types.
 * A trainer may change type through authorized update.
 
 ## 5.2 Trainer Lifecycle
@@ -276,42 +275,39 @@ TRAINER_ASSIGN
 
 ### Sections
 
-#### Personal Information
+#### Personal & Contact Information (Read/Write via Shared Person Link)
 
+* **Shared Identity:** All personal and contact details belong to the central `Person` record. The screen acts as a wrapper editing the `Person` record via `personId`.
 ```text
-Trainer Code
-First Name
-Middle Name
-Last Name
-Gender
-Date Of Birth
-Nationality
-Photo
+Trainer Code (Read-Only)
+Person Link / Selector (Mandatory)
+First Name (Delegates to Person)
+Middle Name (Delegates to Person)
+Last Name (Delegates to Person)
+Gender (Delegates to Person)
+Date Of Birth (Delegates to Person)
+Nationality (Delegates to Person)
+Photo (Delegates to Person)
+Mobile Number (Delegates to Person)
+Alternate Number (Delegates to Person)
+Email (Delegates to Person)
+Address (Delegates to Person)
+Country (Delegates to Person)
+City (Delegates to Person)
 ```
 
-#### Contact Information
+#### Professional Information (Trainer-Specific Context)
 
 ```text
-Mobile Number
-Alternate Number
-Email
-Address
-Country
-City
-```
-
-#### Professional Information
-
-```text
-Trainer Type
+Trainer Type (Enum: FullTime, PartTime, Freelance)
 Primary Specialization
 Years Of Experience
 Joining Date
-Branch
-Status
+Branch (Branch Scoping Context)
+Status (Draft, Active, Suspended, Inactive)
 ```
 
-#### Certifications
+#### Certifications (References TrainerQualification)
 
 ```text
 Certification Name
@@ -324,14 +320,13 @@ Expiry Date
 
 * Trainer code must be auto-generated.
 * Trainer code must be unique.
-* Email must be unique if provided.
-* Trainer may belong to multiple branches.
+* No duplicate mappings: a `Person` can have at most one active `TrainerProfile`.
+* All operations (queries and mutations) are strictly scoped to the active branch context of the executing user.
 * Trainer profile changes must be audited.
 
 ### Validations
 
-* First Name is required.
-* Mobile Number is required.
+* Person Selector is required.
 * Trainer Type is required.
 * Primary Specialization is required.
 * At least one branch is required.
@@ -403,30 +398,30 @@ Expired
 
 ### Purpose
 
-Define trainer working availability.
+Define trainer working availability recurring weekly blocks.
 
 ### Fields
 
 ```text
-Available Days
-Available From Time
-Available To Time
-Unavailable Dates
-Status
+Day of Week (0 = Sunday, 6 = Saturday)
+Start Time (HH:MM format, 24-hour GST)
+End Time (HH:MM format, 24-hour GST)
+Branch Context (branchId - Scoped context)
+Status (Active, Inactive)
 ```
 
 ### Example
 
 ```text
-Monday-Friday
-09:00 AM to 05:00 PM
+Monday, 09:00 to 13:00, Muscat Branch
 ```
 
 ### Business Rules
 
-* Availability is used by Scheduling & Timetable Management.
-* Scheduling outside availability requires override permission.
-* Unavailable dates block assignments.
+* Availability is defined per Branch and Day of Week.
+* Availability is used as scheduling constraints by the Scheduling & Timetable Management module.
+* Temporary exceptions or unavailable dates are managed by the Timetable/Calendar module, not as part of the Trainer Availability profile.
+* Scheduling outside availability requires override permission `trainer:override-schedule`.
 
 ---
 
@@ -665,7 +660,6 @@ The module shall distinguish between validation and business-rule errors such as
 
 ```text
 TrainerCodeAlreadyExists
-TrainerEmailAlreadyExists
 TrainerInactive
 TrainerSuspended
 TrainerArchived
@@ -681,6 +675,8 @@ CorporateContractInactive
 InvalidAvailabilityRange
 InvalidAssignmentRange
 ```
+
+*Note: Email uniqueness constraints are managed by the shared `Person` or Identity & Access Management contexts, not within Trainer domain errors.*
 
 ---
 

@@ -38,6 +38,11 @@ export const permissions = {
       read: 'iam.audit.read',
     },
   },
+  crm: {
+    leads: {
+      viewAllInBranch: 'LEAD_VIEW_ALL_IN_BRANCH',
+    },
+  },
   report: {
     iam: {
       user: 'report.iam.user',
@@ -50,6 +55,10 @@ export const permissions = {
       privileged: 'report.iam.privileged',
       session: 'report.iam.session',
       auditTrail: 'report.iam.audit-trail',
+    },
+    crm: {
+      viewDashboard: 'REPORTING_VIEW_CRM_DASHBOARD',
+      viewCounselorMetrics: 'REPORTING_VIEW_COUNSELOR_METRICS',
     },
   },
   dashboard: {

@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/layout.tsx": {
-    "mtime": 1782875329.3989506,
-    "ast_hash": "1dcf82adfa648f9a428bf5cfad29d5b4",
+    "mtime": 1782898169.4736087,
+    "ast_hash": "5229c4f8c57a07d4dcad2d7958c1d975",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/loading.tsx": {
@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/lib/runtime.ts": {
-    "mtime": 1782842708.5395966,
-    "ast_hash": "2c9a5b7db4aa19c0f62ff95e7cb60e9f",
+    "mtime": 1782900268.078138,
+    "ast_hash": "2da69c14ade978f840b1d8c63b33db89",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/page.tsx": {
@@ -325,13 +325,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/next.config.ts": {
-    "mtime": 1782679686.6140468,
-    "ast_hash": "b51fb7267305e4dfe0ebda11058cc71b",
+    "mtime": 1782897880.737348,
+    "ast_hash": "19a9c9744ae982fcc5b2bd109a3231f5",
     "semantic_hash": ""
   },
   "apps/admin-portal/package.json": {
-    "mtime": 1782800866.5049262,
-    "ast_hash": "fc6453dd51a1ea0a7f79104af334964b",
+    "mtime": 1782897824.9090126,
+    "ast_hash": "83af910eacf84179d2871f080cd8fac0",
     "semantic_hash": ""
   },
   "apps/admin-portal/postcss.config.mjs": {
@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "packages/database/prisma/seed.ts": {
-    "mtime": 1782891809.6075206,
-    "ast_hash": "99cb01b643a5514a0ce53defa7c5e326",
+    "mtime": 1782897428.990885,
+    "ast_hash": "1c0bad8f2ae8dd439ef81e5fa8bde179",
     "semantic_hash": ""
   },
   "packages/database/src/client.ts": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "packages/database/src/index.ts": {
-    "mtime": 1782883895.4788656,
-    "ast_hash": "f7cc779cfff6b0bd0b505c157b2ebef9",
+    "mtime": 1782897664.607,
+    "ast_hash": "b069bc193cebb6b13b86f86246ba689f",
     "semantic_hash": ""
   },
   "packages/database/src/repositories/prisma-audit-repository.ts": {
@@ -495,8 +495,8 @@
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/access.ts": {
-    "mtime": 1782821507.8908634,
-    "ast_hash": "0249a208368a54676872d7b1715bd8fd",
+    "mtime": 1782898161.272954,
+    "ast_hash": "9e905ce2e34621c9a0238f9126e58922",
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/role.ts": {
@@ -625,8 +625,8 @@
     "semantic_hash": ""
   },
   "packages/shared-auth/src/permissions.ts": {
-    "mtime": 1782756201.969164,
-    "ast_hash": "dc408d82e8f99dac7005b60e048f0ae4",
+    "mtime": 1782897444.3730125,
+    "ast_hash": "94c2b40a528f3da138cf9c39b8b5ff98",
     "semantic_hash": ""
   },
   "packages/shared-auth/src/scopes.test.ts": {
@@ -675,8 +675,8 @@
     "semantic_hash": ""
   },
   "packages/shared-ui/package.json": {
-    "mtime": 1782679687.8110092,
-    "ast_hash": "6d6f7feee34b6ef029d2d098eb71628a",
+    "mtime": 1782897494.1429355,
+    "ast_hash": "b0cb8d67d8a5af17f16258c0ed41eca9",
     "semantic_hash": ""
   },
   "packages/shared-ui/src/components/alert.tsx": {
@@ -825,8 +825,8 @@
     "semantic_hash": ""
   },
   "packages/shared-ui/src/index.tsx": {
-    "mtime": 1782679687.8330224,
-    "ast_hash": "7c10ece988e80bc90496d8fe059ad9de",
+    "mtime": 1782897511.0867977,
+    "ast_hash": "0548b512c4d51813a48565a6149d548e",
     "semantic_hash": ""
   },
   "packages/shared-ui/src/utils/classnames.ts": {
@@ -2280,8 +2280,8 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 10: Faculty Or Trainer Management.md": {
-    "mtime": 1782679686.7232747,
-    "ast_hash": "170719d37ce148d709ed854680d55a4b",
+    "mtime": 1782900550.8820975,
+    "ast_hash": "e5f7525a40edd36bf0d828017715ac65",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 11: Corporate Training Management.md": {
@@ -2370,8 +2370,8 @@
     "semantic_hash": ""
   },
   "docs/project-status.md": {
-    "mtime": 1782892671.5835092,
-    "ast_hash": "0ba1796e71a2a87b2786d6e9f3ef9b38",
+    "mtime": 1782897937.5816877,
+    "ast_hash": "6445e1e049381581c2faae2648850dd1",
     "semantic_hash": ""
   },
   "memory/PRD.md": {
@@ -2795,18 +2795,18 @@
     "semantic_hash": ""
   },
   "packages/crm-leads/src/application/lead-service.ts": {
-    "mtime": 1782895380.8819218,
-    "ast_hash": "040f111677d8c0b5cc25a84998a18c28",
+    "mtime": 1782899272.9371123,
+    "ast_hash": "afbe35d425f2d837f8e337f981b3c0f5",
     "semantic_hash": ""
   },
   "packages/crm-leads/src/domain/lead.ts": {
-    "mtime": 1782893836.4778547,
-    "ast_hash": "8703cc7707fc0b44cf3083ed01fe70b2",
+    "mtime": 1782900260.087224,
+    "ast_hash": "ef610225e24077e0ae0ffbf751634916",
     "semantic_hash": ""
   },
   "packages/crm-leads/src/index.ts": {
-    "mtime": 1782842604.9425635,
-    "ast_hash": "84b59f801ec39a81fcac99d5dc8d0f18",
+    "mtime": 1782899370.8559613,
+    "ast_hash": "d0a14ecf8558fa5aef97fa8d90abb53a",
     "semantic_hash": ""
   },
   "packages/crm-leads/src/infrastructure/lead-repository.ts": {
@@ -4455,8 +4455,8 @@
     "semantic_hash": ""
   },
   "prompts/useful_prompts.md": {
-    "mtime": 1782882486.131492,
-    "ast_hash": "8fa8bd974e9846455facb5da1cd6d49b",
+    "mtime": 1782901051.5120058,
+    "ast_hash": "a5a1ea5e4ee484d74f7564cc14f49673",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/crm/inquiries/[id]/qualify/route.ts": {
@@ -4610,8 +4610,8 @@
     "semantic_hash": ""
   },
   "openspec/specs/crm-core-models-apis/spec.md": {
-    "mtime": 1782881972.263304,
-    "ast_hash": "7966768e71cfecc2dc4c762168886e76",
+    "mtime": 1782901334.9683673,
+    "ast_hash": "f7054421403bccc344268b6ae1a0bef7",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/inquiries/_components/inquiries-client-list.tsx": {
@@ -4709,36 +4709,6 @@
     "ast_hash": "87963067e2648ae166e2e01680686488",
     "semantic_hash": ""
   },
-  "openspec/changes/crm-workflows-followup-scheduling/.openspec.yaml": {
-    "mtime": 1782882630.5371258,
-    "ast_hash": "bf78f855d6a0425db6bc305ffd968e0f",
-    "semantic_hash": ""
-  },
-  "openspec/changes/crm-workflows-followup-scheduling/design.md": {
-    "mtime": 1782883539.6375268,
-    "ast_hash": "463dcfb74aca419ea133be41c5f8eca1",
-    "semantic_hash": ""
-  },
-  "openspec/changes/crm-workflows-followup-scheduling/proposal.md": {
-    "mtime": 1782882671.1358454,
-    "ast_hash": "90127c43511e1b4e9ba33b69dbb30607",
-    "semantic_hash": ""
-  },
-  "openspec/changes/crm-workflows-followup-scheduling/specs/crm-core-models-apis-delta.md": {
-    "mtime": 1782895159.632882,
-    "ast_hash": "dc30302d5db98c34b331e8c06c5da079",
-    "semantic_hash": ""
-  },
-  "openspec/changes/crm-workflows-followup-scheduling/specs/crm-followup-workflows/spec.md": {
-    "mtime": 1782895164.743451,
-    "ast_hash": "b7f6bd53a3db6d3320bf1fa2b76d16dc",
-    "semantic_hash": ""
-  },
-  "openspec/changes/crm-workflows-followup-scheduling/tasks.md": {
-    "mtime": 1782884524.350036,
-    "ast_hash": "72c233ce9057d5841c8128831891069c",
-    "semantic_hash": ""
-  },
   "packages/database/prisma/migrations/20260701052816_add_next_follow_up_date/migration.sql": {
     "mtime": 1782883696.6858022,
     "ast_hash": "ba747497c440a3f04aa72ab5705cb589",
@@ -4757,6 +4727,311 @@
   "packages/crm-leads/src/application/followup-workflows.test.ts": {
     "mtime": 1782894652.8846242,
     "ast_hash": "12c63f754071613a0ded27fa27b35138",
+    "semantic_hash": ""
+  },
+  "packages/reporting-dashboards/package.json": {
+    "mtime": 1782897582.4553742,
+    "ast_hash": "e236e333af14edc616eb00cb4a220c51",
+    "semantic_hash": ""
+  },
+  "packages/reporting-dashboards/src/index.ts": {
+    "mtime": 1782897600.6499224,
+    "ast_hash": "8d8890e470820f04ef0c5309fa676ff7",
+    "semantic_hash": ""
+  },
+  "packages/reporting-dashboards/tsconfig.json": {
+    "mtime": 1782897024.0361156,
+    "ast_hash": "498cb392b5b47c698707ae678582271a",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Admission_Enrollment_Prompts.md": {
+    "mtime": 1782897877.2791948,
+    "ast_hash": "70ec8ffce0949af6b4cdafa6fb1a839a",
+    "semantic_hash": ""
+  },
+  "packages/shared-ui/src/components/chart-widget.tsx": {
+    "mtime": 1782897506.5467682,
+    "ast_hash": "96ab2522a1c5e49cea23337d90105962",
+    "semantic_hash": ""
+  },
+  "packages/shared-ui/src/components/metric-card.tsx": {
+    "mtime": 1782897459.929742,
+    "ast_hash": "e45539e5285a04cd21b800904c583e79",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/dashboards/crm/crm-dashboard-charts.tsx": {
+    "mtime": 1782897835.5242772,
+    "ast_hash": "9446c246a002b960ef2b2f484bd908cb",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/dashboards/crm/page.tsx": {
+    "mtime": 1782897841.37985,
+    "ast_hash": "7774d4d79dc0cb33f7a71d6626139394",
+    "semantic_hash": ""
+  },
+  "packages/crm-leads/src/application/lead-analytics-read-service.test.ts": {
+    "mtime": 1782897607.3676488,
+    "ast_hash": "ea9a2f48ce5418e55a815537e43f4cb4",
+    "semantic_hash": ""
+  },
+  "packages/crm-leads/src/application/lead-analytics-read-service.ts": {
+    "mtime": 1782898468.6034603,
+    "ast_hash": "84ab9022280d07a62e78f84beb48f07f",
+    "semantic_hash": ""
+  },
+  "packages/reporting-dashboards/src/queries/crm-dashboard-query-service.test.ts": {
+    "mtime": 1782898483.6054516,
+    "ast_hash": "e7b96f3e74f1ca8c386966e934da1070",
+    "semantic_hash": ""
+  },
+  "packages/reporting-dashboards/src/queries/crm-dashboard-query-service.ts": {
+    "mtime": 1782897808.5393934,
+    "ast_hash": "483f32f83a4a77882abf29d8c5b89032",
+    "semantic_hash": ""
+  },
+  "tests/crm-dashboard.spec.ts": {
+    "mtime": 1782897727.7215075,
+    "ast_hash": "b26b93f8ec77cce13e4f25a3492dc77d",
+    "semantic_hash": ""
+  },
+  "tests/e2e/crm-dashboard.spec.ts": {
+    "mtime": 1782897763.618907,
+    "ast_hash": "b91858a1702105ab6e236e9419a73344",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Module 4: Admission & Enrollment Management.md": {
+    "mtime": 1782897668.1813838,
+    "ast_hash": "a610828e94b31590d062b228c9d57628",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
+    "mtime": 1782898514.6651797,
+    "ast_hash": "2983b8eeaea66a1961864bcec62379ce",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 10 - Security Architecture and NFR.md": {
+    "mtime": 1782897821.5760782,
+    "ast_hash": "e16824060bdd0111544b9184e56717fb",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
+    "mtime": 1782897826.6184664,
+    "ast_hash": "5aba677abe39f5500a13348886ac6d18",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
+    "mtime": 1782897726.1436298,
+    "ast_hash": "3a8bf033ebb770a2f6b4db27ab9eff18",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
+    "mtime": 1782897741.7215285,
+    "ast_hash": "cac5e7037e4cc5aae4b5adecee609525",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
+    "mtime": 1782898030.119922,
+    "ast_hash": "b3183136025869dcf6c777712a34ff60",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 5 \u2013 API Contracts.md": {
+    "mtime": 1782898876.6244237,
+    "ast_hash": "2976604c44fe24ee79bccaaa7d1643d5",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 6 \u2013 Permission Matrix.md": {
+    "mtime": 1782897774.8966413,
+    "ast_hash": "43cd737f654e37281d2c7f75e6b42338",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
+    "mtime": 1782898710.8676462,
+    "ast_hash": "c9c1b22197269580b53cea0e263b5403",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
+    "mtime": 1782897788.8364518,
+    "ast_hash": "74016e10029703c3eb864ba6800c19a2",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
+    "mtime": 1782897793.3111422,
+    "ast_hash": "ef189563e04e2a32bfadf58a2b3b8e25",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Faculty_Trainer_Prompts.md": {
+    "mtime": 1782899222.1414008,
+    "ast_hash": "96b32b577d775118c5fee60f669d3a21",
+    "semantic_hash": ""
+  },
+  "packages/crm-leads/src/application/followup-scheduler-service.test.ts": {
+    "mtime": 1782899358.8980174,
+    "ast_hash": "e2608dce028282d5183547500c3f1952",
+    "semantic_hash": ""
+  },
+  "packages/crm-leads/src/application/followup-scheduler-service.ts": {
+    "mtime": 1782899346.2643917,
+    "ast_hash": "6d6af0e3b174f3bfad78c5f8a0d07666",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Module 10: Faculty / Trainer Management.md": {
+    "mtime": 1782899345.9212344,
+    "ast_hash": "8d257092573907386e7bfeb4d57b61fc",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
+    "mtime": 1782900539.66886,
+    "ast_hash": "9334d3ad4c886475d84b764fe33d70e3",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 10 - Security Architecture and NFR.md": {
+    "mtime": 1782899461.1846514,
+    "ast_hash": "e153f3ae3ee6b424f2d082f62735f8cb",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
+    "mtime": 1782901279.977925,
+    "ast_hash": "c1a2a2c39bee668a9b4be38a44bf6139",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
+    "mtime": 1782899374.2711196,
+    "ast_hash": "303d2d529a779cbb6fed06f658cd2582",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
+    "mtime": 1782901047.8971105,
+    "ast_hash": "0c8c9b6a479042a7447657b0d08e3c19",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
+    "mtime": 1782900525.576972,
+    "ast_hash": "c89d4cb9ee8b1fcd75b5df6177bba636",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 5 \u2013 API Contracts.md": {
+    "mtime": 1782901193.1932218,
+    "ast_hash": "839e7b11205edeaf59d63e63906a44e8",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 6 \u2013 Permission Matrix.md": {
+    "mtime": 1782899416.4360619,
+    "ast_hash": "43953aca49258731701ba6b46a713cfd",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
+    "mtime": 1782901187.435753,
+    "ast_hash": "0b482ab66c5fa01c7283dd83d4fbcdc3",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
+    "mtime": 1782901271.1185453,
+    "ast_hash": "b5150c9db1648114bf6ef76d62a55e43",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
+    "mtime": 1782899437.3204143,
+    "ast_hash": "8b66566db99b14be713f9f16414c6f44",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/cron/followups/route.ts": {
+    "mtime": 1782900277.7843988,
+    "ast_hash": "3db761c6ec94dfb9489ce94007de46a4",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-crm-audit-remediation/.openspec.yaml": {
+    "mtime": 1782899063.351948,
+    "ast_hash": "bf78f855d6a0425db6bc305ffd968e0f",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-crm-audit-remediation/design.md": {
+    "mtime": 1782899151.4612837,
+    "ast_hash": "720592225e0c492f2eacf841037e1229",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-crm-audit-remediation/proposal.md": {
+    "mtime": 1782899124.6459417,
+    "ast_hash": "74ae3c98044149ac722367d6b373f858",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-crm-audit-remediation/specs/crm-audit-remediation/spec.md": {
+    "mtime": 1782900292.1812944,
+    "ast_hash": "58e1e7fc724db44e6f0258cebe063cd2",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-crm-audit-remediation/tasks.md": {
+    "mtime": 1782899400.7313414,
+    "ast_hash": "d33e80c8e9dfbe6238ed7bfda3a0314e",
+    "semantic_hash": ""
+  },
+  "openspec/specs/crm-audit-remediation/spec.md": {
+    "mtime": 1782901076.8280022,
+    "ast_hash": "5d0c74c33f78065800d88988c556790b",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-crm-dashboards-and-reports/.openspec.yaml": {
+    "mtime": 1782895671.1314597,
+    "ast_hash": "bf78f855d6a0425db6bc305ffd968e0f",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-crm-dashboards-and-reports/design.md": {
+    "mtime": 1782896218.116921,
+    "ast_hash": "a28c7e9550c2b827e43c9dcbeb7e1f2c",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-crm-dashboards-and-reports/proposal.md": {
+    "mtime": 1782896211.8928747,
+    "ast_hash": "1949a08a0b855b4f411410fc1c79d247",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-crm-dashboards-and-reports/specs/crm-dashboards/spec.md": {
+    "mtime": 1782896218.2585063,
+    "ast_hash": "4dbea234bbfeb122eb92343a377f0362",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-crm-dashboards-and-reports/tasks.md": {
+    "mtime": 1782897944.768763,
+    "ast_hash": "21373f26cb8a94aa3246ae975ae03d66",
+    "semantic_hash": ""
+  },
+  "openspec/specs/crm-dashboards/spec.md": {
+    "mtime": 1782901253.8842437,
+    "ast_hash": "9422996442c66bbbf8cd46fee41e6e83",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-crm-workflows-followup-scheduling/.openspec.yaml": {
+    "mtime": 1782882630.5371258,
+    "ast_hash": "bf78f855d6a0425db6bc305ffd968e0f",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-crm-workflows-followup-scheduling/design.md": {
+    "mtime": 1782883539.6375268,
+    "ast_hash": "463dcfb74aca419ea133be41c5f8eca1",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-crm-workflows-followup-scheduling/proposal.md": {
+    "mtime": 1782882671.1358454,
+    "ast_hash": "90127c43511e1b4e9ba33b69dbb30607",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-crm-workflows-followup-scheduling/specs/crm-core-models-apis-delta.md": {
+    "mtime": 1782895159.632882,
+    "ast_hash": "dc30302d5db98c34b331e8c06c5da079",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-crm-workflows-followup-scheduling/specs/crm-followup-workflows/spec.md": {
+    "mtime": 1782895164.743451,
+    "ast_hash": "b7f6bd53a3db6d3320bf1fa2b76d16dc",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-crm-workflows-followup-scheduling/tasks.md": {
+    "mtime": 1782884524.350036,
+    "ast_hash": "72c233ce9057d5841c8128831891069c",
+    "semantic_hash": ""
+  },
+  "openspec/specs/crm-followup-workflows/spec.md": {
+    "mtime": 1782901337.4978015,
+    "ast_hash": "17338e66f66e22f6960a28d708b51568",
     "semantic_hash": ""
   }
 }
