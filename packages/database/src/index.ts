@@ -13,3 +13,5 @@ export * from './repositories/prisma-outbox-event-repository';
 export * from './repositories/prisma-export-job-repository';
 export * from './repositories/prisma-login-history-repository';
 export * from './repositories/prisma-user-activation-token-repository';
+export const dummy = {}; // fallback if needed, but not needed
+export * from './query-services/iam-query-service';

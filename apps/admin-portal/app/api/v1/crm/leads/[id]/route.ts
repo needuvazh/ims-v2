@@ -186,7 +186,7 @@ export async function PATCH(request: Request, props: { params: Promise<{ id: str
       }
 
       // Update lead
-      await leadService.updateLead(leadId, parsed.data);
+      await leadService.updateLead(leadId, parsed.data, undefined, session.userId);
 
       const response = NextResponse.json(
         {
@@ -230,6 +230,12 @@ export async function DELETE(request: Request, props: { params: Promise<{ id: st
       );
       if (!allowedBranches.includes(lead.branchId as Uuid)) {
         throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
+      }
+
+      // Counselor scoping check
+      const hasGlobalRead = session.permissions.includes('crm.leads.read.all');
+      if (!hasGlobalRead && lead.counselorId !== session.userId) {
+        throw new Error('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION');
       }
 
       await leadService.deleteLead(leadId, session.userId);

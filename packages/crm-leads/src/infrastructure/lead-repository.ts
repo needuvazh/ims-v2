@@ -95,7 +95,7 @@ export class LeadRepository implements ILeadRepository {
 
   async updateLead(
     id: string,
-    data: Partial<CreateLeadInput> & { lostReasonCode?: string | null; lostReasonNotes?: string | null; version?: number },
+    data: Partial<CreateLeadInput> & { lostReasonCode?: string | null; lostReasonNotes?: string | null; version?: number; nextFollowUpDate?: Date | null },
     tx?: Prisma.TransactionClient
   ): Promise<void> {
     const client = tx || this.prisma;
@@ -103,17 +103,18 @@ export class LeadRepository implements ILeadRepository {
 
     const whereClause: Prisma.LeadWhereUniqueInput = { id };
     
-    const updatePayload: Prisma.LeadUncheckedUpdateInput = {
-      firstName: updateData.firstName,
-      lastName: updateData.lastName,
-      email: updateData.email || null,
-      phone: updateData.phone,
-      notes: updateData.notes || null,
-      lostReasonCode: updateData.lostReasonCode || null,
-      lostReasonNotes: updateData.lostReasonNotes || null,
-      branchId: updateData.branchId,
-      source: updateData.source,
-    };
+    const updatePayload: Prisma.LeadUncheckedUpdateInput = {};
+
+    if (updateData.firstName !== undefined) updatePayload.firstName = updateData.firstName;
+    if (updateData.lastName !== undefined) updatePayload.lastName = updateData.lastName;
+    if (updateData.email !== undefined) updatePayload.email = updateData.email || null;
+    if (updateData.phone !== undefined) updatePayload.phone = updateData.phone;
+    if (updateData.notes !== undefined) updatePayload.notes = updateData.notes || null;
+    if (updateData.lostReasonCode !== undefined) updatePayload.lostReasonCode = updateData.lostReasonCode || null;
+    if (updateData.lostReasonNotes !== undefined) updatePayload.lostReasonNotes = updateData.lostReasonNotes || null;
+    if (updateData.branchId !== undefined) updatePayload.branchId = updateData.branchId;
+    if (updateData.source !== undefined) updatePayload.source = updateData.source;
+    if (updateData.nextFollowUpDate !== undefined) updatePayload.nextFollowUpDate = updateData.nextFollowUpDate;
 
     // Sync Person details to prevent profile drift and unique constraint violations
     const currentLead = await client.lead.findUnique({
@@ -195,6 +196,7 @@ export class LeadRepository implements ILeadRepository {
         deletedAt: new Date(),
         deletedBy,
         status: 'Archived',
+        nextFollowUpDate: null,
       },
     });
 

@@ -18,14 +18,14 @@ This section details the security mitigations, encryption keys, and isolation te
 ### 1.1 Data Classification and Encryption
 To secure sensitive personal and curriculum records, the database layer must enforce the following encryption protocols:
 *   **Curriculum Intellectual Property (IP):** Exam question formats and completion rules are stored at rest with standard AES-256 database encryption.
-*   **Bilingual PII Protection:** Student names, contact numbers, and trainer civil IDs mapped to rosters are classified as **PII (Personally Identifiable Information)**. In transit, all API connections are restricted to TLS 1.3. At rest, database columns containing PII are encrypted using application-level AES-256-GCM.
+*   **Bilingual PII Protection:** The Batch context stores only logical references (`studentId`, `trainerId`). Any Personally Identifiable Information (PII) such as student names, contact numbers, and trainer civil IDs must not be duplicated in the Batch/Roster tables. PII is dynamically fetched from the Identity/Person context at runtime. In transit, all API connections are restricted to TLS 1.3.
 *   **Bilingual UI Escaping:** To protect the admin catalog and public course lookup screens from Cross-Site Scripting (XSS), the front-end components must escape and sanitize all localized Arabic and English description text inputs using DOMPurify before rendering.
 
 ---
 
 ### 1.2 Multi-Branch Data Isolation
-*   **Query Interceptor Isolation:** All Prisma client queries targeting `batches`, `batch_trainers`, `waiting_list`, and branch-level `course_pricings` tables must pass through a middleware wrapper.
-*   **Logic Rule:** The middleware dynamically appends a `WHERE branchId = user.activeBranchId` filter based on the active JWT claims, unless the user holds `consolidatedVisibility` or a `Super Admin` role context.
+*   **Application-Level Isolation:** Branch-scoping isolation must be enforced programmatically within the Application Services, not leaked into database ORM hooks.
+*   **Logic Rule:** The Application Service receives the `activeBranchId` from the authenticated context and explicitly passes it to the Repositories when fetching from `batches`, `batch_trainers`, `waiting_list`, and branch-level `course_pricings`.
 *   **Route Guards:** Direct URLs requesting batch IDs (e.g. `/batches/:id/roster`) must perform a backend authorization check. If the requested batch's branch context does not match the active session branch context, the endpoint returns a `403 Forbidden` response and logs a security alert.
 
 ---

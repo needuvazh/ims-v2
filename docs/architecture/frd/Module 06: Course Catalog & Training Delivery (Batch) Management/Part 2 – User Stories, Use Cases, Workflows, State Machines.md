@@ -174,7 +174,7 @@ The following user stories define the functional requirements from the perspecti
       And Student "Muna" is on the waiting list for "B-NEB-2026-001" at position 2
       When an active enrollment in batch "B-NEB-2026-001" is cancelled
       Then the system transitions Student "Salem"'s waitlist status to "Promoted"
-      And triggers the cross-context event "EnrollmentCreated" for "Salem"
+      And publishes the domain event "WaitlistStudentPromoted" for "Salem"
       And updates batch "currentEnrollmentCount" to 20
       And shifts Student "Muna"'s position to 1
       And records a "WAITLIST_ENTRY_PROMOTED" audit log event
@@ -293,14 +293,14 @@ The following user stories define the functional requirements from the perspecti
     1.  The system captures a seat release trigger on the batch.
     2.  The system executes a database lock on the batch's `WaitingList` entries.
     3.  The system identifies the student at `queuePosition = 1` with status `Waiting`.
-    4.  The system calls the Admission & Enrollment service to generate an enrollment record for the student.
-    5.  Upon successful enrollment creation, the system updates the student's waitlist status to `Promoted`.
+    4.  The system calls the Batch application service to promote the waitlist student.
+    5.  The system updates the student's waitlist status to `Promoted` and decrements all remaining waiting entries' `queuePosition` fields by 1.
     6.  The system increments the batch's `currentEnrollmentCount` by 1.
-    7.  The system decrements all remaining waiting entries' `queuePosition` fields by 1.
+    7.  The system publishes a `WaitlistStudentPromoted` domain event (containing `studentId`, `leadId`, and `batchId`) to the transactional outbox. Downstream, the Admission & Enrollment context subscribes to this event to create the student's enrollment record.
     8.  The system dispatches a notification via the Communication module to alert the student of their promotion.
     9.  The system records `WAITLIST_ENTRY_PROMOTED`.
 *   **Alternative Flows:**
-    *   *A1: Enrollment Creation Fails:* If the enrollment service returns a validation failure (e.g., student documents expired, or finance block), the system marks the candidate's waitlist status as `Held` or `Suspended`, skips them, and attempts to promote the student at `queuePosition = 2`.
+    *   *A1: Enrollment Creation Fails:* Downstream, if the enrollment service fails to create the enrollment (e.g., student documents expired, or finance block), it publishes an `EnrollmentCreationFailed` event. The Batch context subscribes to this event to revert the promotion: marking the candidate's waitlist status as `Held` or `Suspended`, decrementing the batch's `currentEnrollmentCount` by 1, and triggering a new promotion check.
 *   **Postconditions:** The seat is refilled, and the waitlist queue is shifted.
 
 ---
@@ -445,10 +445,10 @@ stateDiagram-v2
 | `None` | `Draft` | Create Batch API | `batch.delivery.create` | Unique batch code; dates fall within course effective dates. |
 | `Draft` | `OpenForEnrollment` | Open Enrollment API | `batch.delivery.transition` | Checks that at least one `Primary` Trainer is assigned. |
 | `OpenForEnrollment` | `InProgress` | Start Batch (Manual/Cron) | `batch.delivery.transition` | Checks that current date `>= startDate`. Block default registrations if capacity full. |
-| `InProgress` | `Completed` | Complete Batch API | `batch.delivery.transition` | Verifies all scheduled timetable sessions are in past. Calls completion engine. |
+| `InProgress` | `Completed` | Complete Batch API | `batch.delivery.transition` | Verifies all scheduled timetable sessions are in past. Publishes `BatchCompleted` domain event. |
 | `Draft` | `Cancelled` | Cancel Batch API | `batch.delivery.transition` | None. |
-| `OpenForEnrollment` | `Cancelled` | Cancel Batch API | `batch.delivery.transition` | Check for active enrollments. Triggers billing refund evaluations. |
-| `InProgress` | `Cancelled` | Cancel Batch API | `batch.delivery.transition` | Active enrollments cancelled. Triggers partial refund audit checks. |
+| `OpenForEnrollment` | `Cancelled` | Cancel Batch API | `batch.delivery.transition` | Publishes `BatchCancelled` domain event. Downstream, Admission context cancels enrollments and Finance triggers refund evaluations. |
+| `InProgress` | `Cancelled` | Cancel Batch API | `batch.delivery.transition` | Publishes `BatchCancelled` domain event. Downstream, Admission context cancels active enrollments and Finance triggers refund/billing adjustments. |
 
 ---
 

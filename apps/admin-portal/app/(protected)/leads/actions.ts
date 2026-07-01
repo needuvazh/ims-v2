@@ -13,7 +13,7 @@ const createLeadSchema = CreateLeadSchema.extend({
 
 const updateLeadSchema = createLeadSchema.extend({
   id: z.string().uuid(),
-  version: z.preprocess((val) => (val ? Number(val) : undefined), z.number().int().optional()),
+  version: z.preprocess((val) => (val ? Number(val) : undefined), z.number().int({ message: 'Version is required for concurrency control' })),
   lostReasonCode: z.string().optional().nullable().or(z.literal('')),
   lostReasonNotes: z.string().optional().nullable().or(z.literal('')),
 });
@@ -21,6 +21,20 @@ const updateLeadSchema = createLeadSchema.extend({
 async function getActorId(): Promise<string> {
   const session = await getSession();
   return session.userId;
+}
+
+async function assertCounselorLeadScope(leadId: string, session: any) {
+  const { leadService } = await import('../../lib/runtime');
+  const lead = await leadService.getLeadById(leadId);
+  if (!lead) {
+    throw new Error('ERR_CRM_LEAD_NOT_FOUND');
+  }
+
+  const hasGlobalRead = session.permissions.includes('crm.leads.read.all');
+  if (!hasGlobalRead && lead.counselorId !== session.userId) {
+    throw new Error('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION');
+  }
+  return lead;
 }
 
 export async function createLeadAction(data: any) {
@@ -85,10 +99,7 @@ export async function updateLeadAction(data: any) {
     const { branchScopeResolver, leadService } = await import('../../lib/runtime');
 
     // Fetch original lead to verify scoping
-    const lead = await leadService.getLeadById(parsed.id);
-    if (!lead) {
-      throw new Error('ERR_CRM_LEAD_NOT_FOUND');
-    }
+    const lead = await assertCounselorLeadScope(parsed.id, session);
 
     // Branch scoping on original branch
     const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
@@ -97,12 +108,6 @@ export async function updateLeadAction(data: any) {
     );
     if (allowedBranchIds.length > 0 && !allowedBranchIds.includes(lead.branchId as any)) {
       throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
-    }
-
-    // Counselor scoping on original lead assignment
-    const hasGlobalRead = session.permissions.includes('crm.leads.read.all');
-    if (!hasGlobalRead && lead.counselorId !== session.userId) {
-      throw new Error('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION');
     }
 
     // Branch scoping on target branch
@@ -125,7 +130,7 @@ export async function updateLeadAction(data: any) {
       bypassDuplicateBlock: parsed.bypassDuplicateBlock || false,
     };
 
-    await leadService.updateLead(parsed.id, updatePayload);
+    await leadService.updateLead(parsed.id, updatePayload, undefined, session.userId);
 
     revalidatePath('/leads');
     return { success: true, data: { id: parsed.id } };
@@ -138,7 +143,10 @@ export async function updateLeadAction(data: any) {
 export async function convertLeadAction(leadId: string, documentLinks: string[]) {
   try {
     // Enforce lead conversion permission
-    await assertPermission('lead.convert');
+    const session = await assertPermission('lead.convert');
+
+    // Enforce counselor scoping check
+    await assertCounselorLeadScope(leadId, session);
 
     const actorId = await getActorId();
     const { leadConversionOrchestrator } = await import('../../lib/runtime');
@@ -184,32 +192,16 @@ export async function updateLeadStageAction(
   leadId: string,
   stage: string,
   lostReasonCode?: string,
-  lostReasonNotes?: string
+  lostReasonNotes?: string,
+  version?: number
 ) {
   try {
     const session = await assertPermission('lead.update');
 
-    const { branchScopeResolver, leadService } = await import('../../lib/runtime');
+    // Counselor & Branch Scope Check
+    await assertCounselorLeadScope(leadId, session);
 
-    const lead = await leadService.getLeadById(leadId);
-    if (!lead) {
-      throw new Error('Lead not found');
-    }
-
-    // Branch Scope Check
-    const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
-      session.userId as any,
-      session.activeBranchId as any
-    );
-    if (allowedBranchIds.length > 0 && !allowedBranchIds.includes(lead.branchId as any)) {
-      throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
-    }
-
-    // Counselor Scope Check
-    const hasGlobalRead = session.permissions.includes('crm.leads.read.all');
-    if (!hasGlobalRead && lead.counselorId !== session.userId) {
-      throw new Error('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION');
-    }
+    const { leadService } = await import('../../lib/runtime');
 
     if (stage === 'Lost') {
       if (!lostReasonCode || lostReasonCode.trim() === '') {
@@ -218,49 +210,29 @@ export async function updateLeadStageAction(
       if (!lostReasonNotes || lostReasonNotes.trim().length < 15) {
         throw new Error('Lost reason notes must be at least 15 characters');
       }
-    }
 
-    await prisma.lead.update({
-      where: { id: leadId },
-      data: {
-        stage: stage as any,
-        lostReasonCode: stage === 'Lost' ? lostReasonCode : null,
-        lostReasonNotes: stage === 'Lost' ? lostReasonNotes : null,
-        version: { increment: 1 },
-      },
-    });
-
-    await prisma.leadStageHistory.create({
-      data: {
+      await leadService.closeLeadLost(
         leadId,
-        oldStage: lead.stage as any,
-        newStage: stage as any,
-        lostReasonCode: stage === 'Lost' ? lostReasonCode : null,
-        lostReasonNotes: stage === 'Lost' ? lostReasonNotes : null,
-        performedBy: session.userId,
-      },
-    });
-
-    await prisma.auditLog.create({
-      data: {
-        performedBy: session.userId,
-        action: 'UPDATE_STAGE',
-        entityType: 'Lead',
-        entityId: leadId,
-        oldValue: { stage: lead.stage },
-        newValue: {
-          stage,
-          lostReasonCode: stage === 'Lost' ? lostReasonCode : undefined,
-          lostReasonNotes: stage === 'Lost' ? lostReasonNotes : undefined,
+        {
+          lostReasonCode,
+          lostReasonNotes,
         },
-        module: 'CRM',
-        branchId: lead.branchId,
-      },
-    });
+        session.userId
+      );
+    } else {
+      await leadService.updateStage(
+        leadId,
+        {
+          newStage: stage as any,
+          version: version || 1,
+        },
+        session.userId
+      );
+    }
 
     revalidatePath(`/leads/${leadId}`);
     return { success: true };
   } catch (error: any) {
-    return { success: false, error: error.message };
+    return buildCrmActionFailure(error);
   }
 }

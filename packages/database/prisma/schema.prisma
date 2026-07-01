@@ -742,6 +742,7 @@ model Lead {
   lostReasonNotes    String?        @db.Text
   inquiryId          String?        @db.Uuid
   version            Int            @default(1)
+  nextFollowUpDate   DateTime?      @db.Timestamptz(6)
 
   person             Person         @relation(fields: [personId], references: [id])
   branch             Branch         @relation(fields: [branchId], references: [id])

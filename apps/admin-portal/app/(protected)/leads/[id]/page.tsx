@@ -10,7 +10,7 @@ export const metadata = { title: 'Lead Details - CRM | ASTI IMS' };
 
 export default async function LeadDetailsPage(props: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ auditPage?: string }>;
+  searchParams: Promise<{ auditPage?: string; followUpPage?: string }>;
 }) {
   const { id: leadId } = await props.params;
   const searchParams = await props.searchParams;
@@ -83,6 +83,33 @@ export default async function LeadDetailsPage(props: {
     lostReasonNotes: log.lostReasonNotes,
   }));
 
+  // Fetch paginated follow-ups (display last 10 records)
+  const followUpPage = searchParams.followUpPage ? parseInt(searchParams.followUpPage, 10) : 1;
+  const followUpLimit = 10;
+  const followUpSkip = (followUpPage - 1) * followUpLimit;
+
+  const [followUps, followUpsTotal] = await Promise.all([
+    prisma.leadFollowUp.findMany({
+      where: { leadId, isDeleted: false },
+      orderBy: { followUpDate: 'desc' },
+      skip: followUpSkip,
+      take: followUpLimit,
+    }),
+    prisma.leadFollowUp.count({
+      where: { leadId, isDeleted: false },
+    }),
+  ]);
+
+  const mappedFollowUps = followUps.map((f) => ({
+    id: f.id,
+    followUpDate: f.followUpDate.toISOString(),
+    followUpType: f.followUpType,
+    agenda: f.notes || '',
+    outcome: f.outcome,
+    notes: f.notes,
+    status: f.status,
+  }));
+
   // Fetch paginated audit history logs
   const auditPage = searchParams.auditPage ? parseInt(searchParams.auditPage, 10) : 1;
   const auditLimit = 5;
@@ -137,6 +164,9 @@ export default async function LeadDetailsPage(props: {
         sessionUserId={session.userId}
         notes={notes}
         stageHistory={mappedStageHistory}
+        followUps={mappedFollowUps}
+        followUpsTotal={followUpsTotal}
+        currentFollowUpPage={followUpPage}
         auditLogs={mappedAuditLogs}
         auditTotal={auditLogsTotal}
         currentAuditPage={auditPage}

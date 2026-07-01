@@ -134,6 +134,7 @@ test('LeadService.updateStage should enforce optimistic concurrent locks', async
     $transaction: vi.fn((callback) => callback(mockPrisma)),
     outboxEvent: { create: vi.fn() },
     auditLog: { create: vi.fn() },
+    leadStageHistory: { create: vi.fn() },
   } as any;
 
   const mockLeadRepo = {
@@ -187,6 +188,7 @@ test('LeadService.convertLead should enforce Won outcome preconditions', async (
     outboxEvent: {
       createMany: vi.fn().mockResolvedValue(null),
     },
+    leadStageHistory: { create: vi.fn() },
   } as any;
   const mockLeadRepo = {
     findById: vi.fn().mockImplementation((id) => {
@@ -201,9 +203,12 @@ test('LeadService.convertLead should enforce Won outcome preconditions', async (
       });
     }),
     updateStage: vi.fn().mockResolvedValue(null),
+    updateLead: vi.fn().mockResolvedValue(null),
   } as any;
 
-  const mockFollowUpRepo = {} as any;
+  const mockFollowUpRepo = {
+    cancelAllScheduled: vi.fn().mockResolvedValue(0),
+  } as any;
   const leadService = new LeadService(mockPrisma, mockLeadRepo, mockFollowUpRepo);
 
   // Fails if missing documentLinks
@@ -217,3 +222,129 @@ test('LeadService.convertLead should enforce Won outcome preconditions', async (
   expect(mockLeadRepo.updateStage).toHaveBeenCalledWith('lead-1', 'Won', 1, mockPrisma);
   expect(mockLeadRepo.updateStage).toHaveBeenCalledWith('lead-1', 'Converted', 2, mockPrisma);
 });
+
+test('LeadService.updateLead should merge partial updates and detect active duplicates', async () => {
+  const mockPrisma = {
+    $transaction: vi.fn((callback) => callback(mockPrisma)),
+    lead: {
+      findFirst: vi.fn().mockResolvedValue({ id: 'lead-duplicate' }),
+    },
+  } as any;
+
+  const mockLeadRepo = {
+    findById: vi.fn().mockResolvedValue({
+      id: 'lead-1',
+      phone: '+96890000000',
+      email: 'original@example.com',
+      branchId: 'branch-1',
+      interestedCourseId: 'course-1',
+      version: 1,
+    }),
+    updateLead: vi.fn().mockResolvedValue(null),
+  } as any;
+
+  const leadService = new LeadService(mockPrisma, mockLeadRepo, {} as any);
+
+  // When updating phone only (partial update), it should resolve branchId & interestedCourseId from original lead and trigger duplicate error
+  await expect(
+    leadService.updateLead('lead-1', { phone: '+96899999999' })
+  ).rejects.toThrow('ERR_CRM_DUPLICATE_LEAD_DETECTED');
+});
+
+test('LeadService.updateLead should perform successful update, audit the action, and write outbox event', async () => {
+  const mockPrisma = {
+    $transaction: vi.fn((callback) => callback(mockPrisma)),
+    lead: {
+      findFirst: vi.fn().mockResolvedValue(null), // no duplicates
+    },
+    auditLog: {
+      create: vi.fn().mockResolvedValue({}),
+    },
+    outboxEvent: {
+      create: vi.fn().mockResolvedValue({}),
+    },
+  } as any;
+
+  const mockLeadRepo = {
+    findById: vi.fn().mockResolvedValue({
+      id: 'lead-1',
+      phone: '+96890000000',
+      email: 'original@example.com',
+      branchId: 'branch-1',
+      interestedCourseId: 'course-1',
+      version: 1,
+      leadNumber: 'LD-111',
+    }),
+    updateLead: vi.fn().mockResolvedValue(null),
+  } as any;
+
+  const leadService = new LeadService(mockPrisma, mockLeadRepo, {} as any);
+
+  await leadService.updateLead('lead-1', {
+    phone: '+96899999999',
+    firstName: 'NewName',
+  }, undefined, 'actor-99');
+
+  expect(mockLeadRepo.updateLead).toHaveBeenCalledWith('lead-1', expect.objectContaining({ firstName: 'NewName' }), mockPrisma);
+  expect(mockPrisma.auditLog.create).toHaveBeenCalledWith(expect.objectContaining({
+    data: expect.objectContaining({
+      performedBy: 'actor-99',
+      entityType: 'Lead',
+      entityId: 'lead-1',
+      action: 'Update',
+    })
+  }));
+  expect(mockPrisma.outboxEvent.create).toHaveBeenCalledWith(expect.objectContaining({
+    data: expect.objectContaining({
+      eventType: 'LeadUpdated',
+      aggregateType: 'Lead',
+      aggregateId: 'lead-1',
+    })
+  }));
+});
+
+test('LeadService.deleteLead should soft-delete the lead, write to audit logs, and dispatch outbox event', async () => {
+  const mockPrisma = {
+    $transaction: vi.fn((callback) => callback(mockPrisma)),
+    auditLog: {
+      create: vi.fn().mockResolvedValue({}),
+    },
+    outboxEvent: {
+      create: vi.fn().mockResolvedValue({}),
+    },
+  } as any;
+
+  const mockLeadRepo = {
+    findById: vi.fn().mockResolvedValue({
+      id: 'lead-delete-123',
+      leadNumber: 'LD-2026-MCT-55555',
+      branchId: 'branch-1',
+    }),
+    deleteLead: vi.fn().mockResolvedValue(null),
+  } as any;
+
+  const leadService = new LeadService(mockPrisma, mockLeadRepo, {} as any);
+
+  await leadService.deleteLead('lead-delete-123', 'actor-1');
+
+  expect(mockLeadRepo.deleteLead).toHaveBeenCalledWith('lead-delete-123', 'actor-1', mockPrisma);
+  expect(mockPrisma.auditLog.create).toHaveBeenCalledWith(expect.objectContaining({
+    data: expect.objectContaining({
+      performedBy: 'actor-1',
+      entityType: 'Lead',
+      entityId: 'lead-delete-123',
+      action: 'Delete',
+      branchId: 'branch-1',
+    })
+  }));
+  expect(mockPrisma.outboxEvent.create).toHaveBeenCalledWith(expect.objectContaining({
+    data: expect.objectContaining({
+      eventType: 'LeadDeleted',
+      aggregateType: 'Lead',
+      aggregateId: 'lead-delete-123',
+      payload: { leadId: 'lead-delete-123', leadNumber: 'LD-2026-MCT-55555' },
+    })
+  }));
+});
+
+

@@ -113,10 +113,10 @@ The following screens compose the UI system for managing courses and batches acr
     *   **"Create Batch" Button:** Prompts modal or redirects to `CRS-SCR-005`.
     *   **Roster Toggle:** Switches view between cards (grid) and tabular tracking.
 *   **Filters & Search:**
-    *   Free text search on `batchCode`, `batchName`, and trainer name.
+    *   Free text search on `batchCode`, `batchNameEnglish`, `batchNameArabic`, and trainer name.
     *   Filter dropdowns: Branch context, Course Category, Trainer assigned, Status (Draft, Open, InProgress, Completed, Cancelled).
 *   **Card / Row Elements:**
-    *   Displays Batch Code, Name, Start Date, End Date, Capacity Bar (e.g., `18 / 25 seats` with colored bar representing full status), Primary Trainer, and Action buttons (Open Enrollment, Edit, View Roster, Complete Batch).
+    *   Displays Batch Code, Name (English & Arabic), Start Date, End Date, Capacity Bar (e.g., `18 / 25 seats` with colored bar representing full status), Primary Trainer, and Action buttons (Open Enrollment, Edit, View Roster, Complete Batch).
 
 ---
 
@@ -127,7 +127,8 @@ The following screens compose the UI system for managing courses and batches acr
     *   **"Save Draft" and "Open for Enrollment" Actions:** Save draft leaves batch in `Draft`. Open for Enrollment runs validation checks and changes status.
 *   **Step 1 Form Fields:**
     *   `Batch Code` (Text, uppercase alphanumeric, regex: `^[A-Z0-9-]{3,30}$`, unique)
-    *   `Batch Name` (Text, length 3-150, mandatory)
+    *   `Batch Name (English)` (Text, length 3-150, mandatory)
+    *   `Batch Name (Arabic)` (Text, length 3-150, regex: Arabic script characters only, mandatory)
     *   `Course ID` (Search Select, dropdown of active courses, mandatory)
     *   `Branch ID` (Select, defaults to user branch, mandatory)
     *   `Start Date` (Date, must be `>= current_date` and within course validity, mandatory)

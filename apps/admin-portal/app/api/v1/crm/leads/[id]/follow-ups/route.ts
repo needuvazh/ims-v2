@@ -39,11 +39,21 @@ function crmErrorResponse(error: Error) {
     code = 'ERR_CRM_BRANCH_SCOPE_VIOLATION';
     messageEn = 'You are not authorized to access lead data in this branch.';
     messageAr = 'غير مصرح لك بالوصول إلى بيانات المهتمين في هذا الفرع.';
+  } else if (msg.includes('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION')) {
+    status = 403;
+    code = 'ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION';
+    messageEn = 'You are not authorized to access leads assigned to other counselors.';
+    messageAr = 'غير مصرح لك بالوصول إلى المهتمين المسندين لموظفين آخرين.';
   } else if (msg.includes('ERR_CRM_PAST_FOLLOWUP_DATE')) {
     status = 422;
     code = 'ERR_CRM_PAST_FOLLOWUP_DATE';
     messageEn = 'Follow-up scheduled time must be set in the future (current time + 5 minutes).';
     messageAr = 'تاريخ المتابعة المجدولة يجب أن يكون في المستقبل (٥ دقائق كحد أدنى).';
+  } else if (msg.includes('ERR_CRM_INVALID_STAGE_TRANSITION')) {
+    status = 422;
+    code = 'ERR_CRM_INVALID_STAGE_TRANSITION';
+    messageEn = 'Cannot schedule follow-up on a lead in a terminal stage (Converted, Won, or Lost).';
+    messageAr = 'لا يمكن جدولة متابعة لمهتم في مرحلة نهائية (مكتمل، فائز، أو مفقود).';
   }
 
   return NextResponse.json(
@@ -104,7 +114,7 @@ export async function POST(request: Request, props: { params: Promise<{ id: stri
       // Counselor scoping check
       const hasGlobalRead = session.permissions.includes('crm.leads.read.all');
       if (!hasGlobalRead && lead.counselorId !== session.userId) {
-        throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
+        throw new Error('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION');
       }
 
       const result = await followUpService.scheduleFollowUp(leadId, parsed.data, session.userId);

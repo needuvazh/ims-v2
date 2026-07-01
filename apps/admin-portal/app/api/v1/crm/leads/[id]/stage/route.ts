@@ -39,6 +39,11 @@ function crmErrorResponse(error: Error) {
     code = 'ERR_CRM_BRANCH_SCOPE_VIOLATION';
     messageEn = 'You are not authorized to access lead data in this branch.';
     messageAr = 'غير مصرح لك بالوصول إلى بيانات المهتمين في هذا الفرع.';
+  } else if (msg.includes('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION')) {
+    status = 403;
+    code = 'ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION';
+    messageEn = 'You are not authorized to access leads assigned to other counselors.';
+    messageAr = 'غير مصرح لك بالوصول إلى المهتمين المسندين لموظفين آخرين.';
   } else if (msg.includes('ERR_CRM_INVALID_STAGE_TRANSITION')) {
     status = 422;
     code = 'ERR_CRM_INVALID_STAGE_TRANSITION';
@@ -109,7 +114,7 @@ export async function PATCH(request: Request, props: { params: Promise<{ id: str
       // Counselor update scope
       const hasGlobalRead = session.permissions.includes('crm.leads.read.all');
       if (!hasGlobalRead && lead.counselorId !== session.userId) {
-        throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
+        throw new Error('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION');
       }
 
       await leadService.updateStage(leadId, parsed.data, session.userId);

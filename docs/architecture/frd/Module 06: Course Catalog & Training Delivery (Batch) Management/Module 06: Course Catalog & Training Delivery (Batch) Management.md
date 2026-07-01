@@ -203,3 +203,33 @@ The module enforces authorization controls using the following modular permissio
     *   Timezone configuration default for all scheduling date-times must reside in UTC+4 (Gulf Standard Time).
     *   Currency default is OMR (Omani Rial), formatting financial decimals strictly to three decimal places (e.g., `OMR 120.000`).
 *   **Compliance:** Maintain data history in compliance with the Omani Ministry of Higher Education, Research and Innovation training regulations.
+
+---
+
+## 11. Architectural Audit & Alignment Status
+
+### 11.1 Audit Overview
+*   **Grade:** **PASS**
+*   **Audit Date:** July 1, 2026
+*   **Scope:** Evaluation of the functional requirements, use cases, database design, and API contracts against strict Domain-Driven Design (DDD) principles and modular monolith architecture constraints.
+
+### 11.2 Key Architectural Decoupling Resolutions
+1.  **Cross-Context Query Isolation:** Timetable double-booking validation checks (`FR-CRS-012`) query the Scheduling context strictly through an injected application query interface (`ISchedulingService`), preventing direct queries or joins against scheduling database tables.
+2.  **Logical Cross-Context Constraints:** Relational constraints linking `WaitingList` and `Batch` to external entities (`StudentProfile`, `TrainerProfile`, `Classroom`, `CorporateAccount`, `leads`) are specified as logical references (UUIDs) without physical database foreign keys (`ON DELETE RESTRICT` / `CASCADE`), avoiding hard context coupling.
+3.  **Aggregate Root Encapsulation:** Waitlist promotion and capacity allocations are managed inside the `Batch` Aggregate Root boundary via `allocateSeat()` and `promoteWaitlist()` methods under pessimistic lock transactions (`SELECT FOR UPDATE`).
+4.  **Asynchronous Event-Driven Workflows:** Cross-context side effects (such as batch cancellation, batch completion, or waitlist promotion) publish domain events (`BatchCancelled`, `BatchCompleted`, `WaitlistStudentPromoted`) to the transactional outbox instead of orchestrating synchronous cross-module updates.
+5.  **Immutability of Configuration Data:** Active course pricing and completion rules are specified as versioned and immutable. The CRUD matrix restricts updates to draft records (`Draft Only`), preventing historical record alteration.
+
+### 11.3 Codebase & Schema Realization Gaps
+While the FRD documentation is fully aligned with DDD rules, a physical schema discrepancy exists between the specifications and the current [schema.prisma](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/packages/database/prisma/schema.prisma) file, which only has a bare-bones `Course` model. 
+To achieve complete compliance, the following models must be implemented in the codebase:
+*   `CourseCategory` (`course_categories`)
+*   `CoursePricing` (`course_pricings`)
+*   `CourseDiscount` (`course_discounts`)
+*   `CourseCompletionRule` (`course_completion_rules`)
+*   `Batch` (`batches`)
+*   `BatchTrainer` (`batch_trainers`)
+*   `WaitingList` (`waiting_list`)
+*   `Session` (`sessions`)
+
+Additionally, indexes for branch-scoping, pricing resolution, and waitlist uniqueness must be created, and soft-delete cascades must be implemented programmatically in the Application Service layer.

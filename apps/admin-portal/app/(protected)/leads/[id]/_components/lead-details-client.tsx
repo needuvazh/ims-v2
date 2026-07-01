@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
 import {
@@ -30,6 +30,7 @@ import {
   EmptyState,
 } from '@ims/shared-ui';
 import { convertLeadAction, addLeadNoteAction, updateLeadStageAction } from '../../actions';
+import { LogFollowUpModal } from './log-followup-modal';
 import {
   Pencil,
   UserCheck,
@@ -77,6 +78,9 @@ interface LeadDetailsClientProps {
   sessionUserId: string;
   notes: LeadNoteDto[];
   stageHistory: LeadStageHistoryDto[];
+  followUps: any[];
+  followUpsTotal: number;
+  currentFollowUpPage: number;
   auditLogs: AuditLogDto[];
   auditTotal: number;
   currentAuditPage: number;
@@ -87,6 +91,9 @@ export function LeadDetailsClient({
   sessionUserId,
   notes,
   stageHistory,
+  followUps,
+  followUpsTotal,
+  currentFollowUpPage,
   auditLogs,
   auditTotal,
   currentAuditPage,
@@ -94,6 +101,10 @@ export function LeadDetailsClient({
   const router = useRouter();
   const searchParams = useSearchParams();
   const [lead, setLead] = useState(initialLead);
+
+  useEffect(() => {
+    setLead(initialLead);
+  }, [initialLead]);
   
   // Convert Dialog State
   const [showConvertDialog, setShowConvertDialog] = useState(false);
@@ -118,6 +129,15 @@ export function LeadDetailsClient({
   const [lostNotesValue, setLostNotesValue] = useState(lead.lostReasonNotes || '');
   const [isSavingStage, setIsSavingStage] = useState(false);
   const [stageError, setStageError] = useState<string | null>(null);
+
+  // Follow-Up States
+  const [showScheduleDialog, setShowScheduleDialog] = useState(false);
+  const [scheduleDate, setScheduleDate] = useState('');
+  const [scheduleType, setScheduleType] = useState<'Call' | 'WhatsApp' | 'Email' | 'Visit'>('Call');
+  const [scheduleAgenda, setScheduleAgenda] = useState('');
+  const [scheduleError, setScheduleError] = useState<string | null>(null);
+  const [isScheduling, setIsScheduling] = useState(false);
+  const [activeFollowUpId, setActiveFollowUpId] = useState<string | null>(null);
 
   const getStageBadgeVariant = (stage: string) => {
     switch (stage) {
@@ -221,12 +241,13 @@ export function LeadDetailsClient({
 
     try {
       setIsSavingStage(true);
-      const res = await updateLeadStageAction(
+      const res = (await updateLeadStageAction(
         lead.id,
         stageValue,
         stageValue === 'Lost' ? lostCodeValue : undefined,
-        stageValue === 'Lost' ? lostNotesValue.trim() : undefined
-      );
+        stageValue === 'Lost' ? lostNotesValue.trim() : undefined,
+        lead.version
+      )) as any;
 
       if (res.success) {
         toast.success('Lead stage updated successfully');
@@ -245,6 +266,49 @@ export function LeadDetailsClient({
       setStageError(err.message || 'An error occurred updating stage');
     } finally {
       setIsSavingStage(false);
+    }
+  };
+
+  const handleScheduleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setScheduleError(null);
+
+    const minFuture = Date.now() + 300000;
+    if (new Date(scheduleDate).getTime() <= minFuture) {
+      setScheduleError('Schedule date-time must be set in the future (minimum 5 minutes).');
+      return;
+    }
+    if (scheduleAgenda.trim().length < 5) {
+      setScheduleError('Agenda must specify communication details (min 5 chars).');
+      return;
+    }
+
+    try {
+      setIsScheduling(true);
+      const res = await fetch(`/api/v1/crm/leads/${lead.id}/follow-ups`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          followUpDate: new Date(scheduleDate).toISOString(),
+          followUpType: scheduleType,
+          agenda: scheduleAgenda.trim(),
+        }),
+      });
+
+      const result = await res.json();
+      if (!res.ok) {
+        throw new Error(result.messageEnglish || 'Failed to schedule follow-up');
+      }
+
+      toast.success('Follow-up scheduled successfully');
+      setShowScheduleDialog(false);
+      setScheduleDate('');
+      setScheduleAgenda('');
+      router.refresh();
+    } catch (err: any) {
+      setScheduleError(err.message || 'An unexpected error occurred.');
+    } finally {
+      setIsScheduling(false);
     }
   };
 
@@ -318,34 +382,140 @@ export function LeadDetailsClient({
 
       <div className="space-y-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Personal Information */}
-          <div className="lg:col-span-2 border border-[color:var(--ims-border)] p-6 rounded-2xl space-y-4 bg-white/80 shadow-sm">
-            <h3 className="text-sm font-semibold flex items-center gap-2 text-[color:var(--ims-ink)] border-b border-slate-100 pb-2 font-display">
-              <User className="h-4 w-4 text-[color:var(--ims-brass)]" />
-              Personal Information
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-              <div>
-                <span className="text-[color:var(--ims-muted)] block">First Name</span>
-                <span className="font-semibold text-[color:var(--ims-ink)]">{lead.firstName}</span>
+          <div className="lg:col-span-2 space-y-6">
+            {/* Personal Information */}
+            <div className="border border-[color:var(--ims-border)] p-6 rounded-2xl space-y-4 bg-white/80 shadow-sm">
+              <h3 className="text-sm font-semibold flex items-center gap-2 text-[color:var(--ims-ink)] border-b border-slate-100 pb-2 font-display">
+                <User className="h-4 w-4 text-[color:var(--ims-brass)]" />
+                Personal Information
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                <div>
+                  <span className="text-[color:var(--ims-muted)] block">First Name</span>
+                  <span className="font-semibold text-[color:var(--ims-ink)]">{lead.firstName}</span>
+                </div>
+                <div>
+                  <span className="text-[color:var(--ims-muted)] block">Last Name</span>
+                  <span className="font-semibold text-[color:var(--ims-ink)]">{lead.lastName}</span>
+                </div>
+                <div>
+                  <span className="text-[color:var(--ims-muted)] block">Phone Number</span>
+                  <span className="font-semibold text-[color:var(--ims-ink)]">{lead.phone}</span>
+                </div>
+                <div>
+                  <span className="text-[color:var(--ims-muted)] block">Email Address</span>
+                  <span className="font-semibold text-[color:var(--ims-ink)]">{lead.email || 'N/A'}</span>
+                </div>
+                <div>
+                  <span className="text-[color:var(--ims-muted)] block">Date of Birth</span>
+                  <span className="font-semibold text-[color:var(--ims-ink)]">
+                    {lead.dateOfBirth ? new Date(lead.dateOfBirth).toLocaleDateString() : 'N/A'}
+                  </span>
+                </div>
               </div>
-              <div>
-                <span className="text-[color:var(--ims-muted)] block">Last Name</span>
-                <span className="font-semibold text-[color:var(--ims-ink)]">{lead.lastName}</span>
+            </div>
+
+            {/* Follow-Up Engagements */}
+            <div className="border border-[color:var(--ims-border)] p-6 rounded-2xl space-y-4 bg-white/80 shadow-sm">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                <h3 className="text-sm font-semibold flex items-center gap-2 text-[color:var(--ims-ink)] font-display">
+                  <ClipboardList className="h-4 w-4 text-[color:var(--ims-brass)]" />
+                  Follow-Up Engagements
+                </h3>
+                {lead.stage !== 'Converted' && lead.stage !== 'Lost' && lead.stage !== 'Won' && (
+                  <Button
+                    size="sm"
+                    className="text-[10px] h-7 px-2"
+                    onClick={() => setShowScheduleDialog(true)}
+                  >
+                    Schedule Follow-Up
+                  </Button>
+                )}
               </div>
-              <div>
-                <span className="text-[color:var(--ims-muted)] block">Phone Number</span>
-                <span className="font-semibold text-[color:var(--ims-ink)]">{lead.phone}</span>
-              </div>
-              <div>
-                <span className="text-[color:var(--ims-muted)] block">Email Address</span>
-                <span className="font-semibold text-[color:var(--ims-ink)]">{lead.email || 'N/A'}</span>
-              </div>
-              <div>
-                <span className="text-[color:var(--ims-muted)] block">Date of Birth</span>
-                <span className="font-semibold text-[color:var(--ims-ink)]">
-                  {lead.dateOfBirth ? new Date(lead.dateOfBirth).toLocaleDateString() : 'N/A'}
-                </span>
+
+              <div className="space-y-4">
+                {followUps.length === 0 ? (
+                  <EmptyState
+                    icon={<ClipboardList className="h-6 w-6 text-[color:var(--ims-muted)]" />}
+                    title="No follow-up engagements"
+                    description="No scheduled or logged follow-ups exist for this prospect."
+                  />
+                ) : (
+                  <>
+                    <div className="overflow-x-auto rounded-xl border border-[color:var(--ims-border)]">
+                      <Table>
+                        <TableHeader className="bg-slate-50/50">
+                          <TableRow>
+                            <TableHead>Date & Time</TableHead>
+                            <TableHead>Type</TableHead>
+                            <TableHead>Agenda / Outcome Notes</TableHead>
+                            <TableHead>Status</TableHead>
+                            <TableHead className="text-right">Action</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {followUps.map((f: any) => (
+                            <TableRow key={f.id}>
+                              <TableCell className="whitespace-nowrap text-xs">
+                                {new Date(f.followUpDate).toLocaleString()}
+                              </TableCell>
+                              <TableCell className="text-xs">{f.followUpType}</TableCell>
+                              <TableCell className="text-xs max-w-xs break-words">
+                                <div className="font-semibold text-slate-700">{f.agenda}</div>
+                                {f.notes && (
+                                  <div className="text-[10px] text-slate-500 mt-1 bg-slate-50 p-1.5 rounded border border-slate-100 italic">
+                                    Outcome: {f.outcome} — {f.notes}
+                                  </div>
+                                )}
+                              </TableCell>
+                              <TableCell>
+                                <Badge
+                                  variant={
+                                    f.status === 'Completed'
+                                      ? 'success'
+                                      : f.status === 'Scheduled'
+                                        ? 'warning'
+                                        : f.status === 'Missed'
+                                          ? 'error'
+                                          : 'outline'
+                                  }
+                                  className="text-[10px] px-1.5 py-0.5"
+                                >
+                                  {f.status}
+                                </Badge>
+                              </TableCell>
+                              <TableCell className="text-right">
+                                {f.status === 'Scheduled' && (
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    className="text-[10px] h-6 px-2"
+                                    onClick={() => setActiveFollowUpId(f.id)}
+                                  >
+                                    Log Outcome
+                                  </Button>
+                                )}
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
+
+                    <Pagination
+                      page={currentFollowUpPage}
+                      totalPages={Math.ceil(followUpsTotal / 10)}
+                      totalCount={followUpsTotal}
+                      limit={10}
+                      buildHref={(p) => {
+                        const currentParams = new URLSearchParams(searchParams.toString());
+                        currentParams.set('followUpPage', p.toString());
+                        return `?${currentParams.toString()}`;
+                      }}
+                      pageSizeOptions={[10]}
+                    />
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -826,6 +996,85 @@ export function LeadDetailsClient({
           </form>
         </DialogContent>
       </Dialog>
+
+      {/* Schedule Follow-Up Dialog Modal */}
+      <Dialog open={showScheduleDialog} onOpenChange={(open) => !open && setShowScheduleDialog(false)}>
+        <DialogContent className="max-w-md bg-white border border-[color:var(--ims-border)] shadow-2xl rounded-2xl p-6">
+          <DialogHeader>
+            <DialogTitle className="text-lg font-bold text-[color:var(--ims-ink)]">Schedule Follow-Up</DialogTitle>
+            <DialogDescription className="text-xs text-[color:var(--ims-muted)]">
+              Specify the date, communication type, and agenda for the next prospect engagement.
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleScheduleSubmit} className="space-y-4 py-2">
+            {scheduleError && (
+              <div className="text-xs bg-red-50 text-[color:var(--ims-error)] p-3 rounded-xl border border-[color:var(--ims-error-border)]">
+                {scheduleError}
+              </div>
+            )}
+
+            <FormField>
+              <FormLabel required>Follow-Up Date & Time</FormLabel>
+              <FormControl>
+                <Input
+                  type="datetime-local"
+                  value={scheduleDate}
+                  onChange={(e) => setScheduleDate(e.target.value)}
+                  required
+                />
+              </FormControl>
+            </FormField>
+
+            <FormField>
+              <FormLabel required>Communication Channel</FormLabel>
+              <FormControl>
+                <Select
+                  value={scheduleType}
+                  onChange={(e) => setScheduleType(e.target.value as any)}
+                  options={[
+                    { value: 'Call', label: 'Call' },
+                    { value: 'WhatsApp', label: 'WhatsApp' },
+                    { value: 'Email', label: 'Email' },
+                    { value: 'Visit', label: 'In-person Visit' },
+                  ]}
+                />
+              </FormControl>
+            </FormField>
+
+            <FormField>
+              <FormLabel required>Agenda (Min 5 chars)</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="e.g. Discuss fee structures, follow up on civil ID upload request..."
+                  value={scheduleAgenda}
+                  onChange={(e) => setScheduleAgenda(e.target.value)}
+                  rows={3}
+                  required
+                />
+              </FormControl>
+            </FormField>
+
+            <DialogFooter className="mt-6 border-t border-[color:var(--ims-border)] pt-4">
+              <Button type="button" variant="ghost" onClick={() => setShowScheduleDialog(false)} disabled={isScheduling}>
+                Cancel
+              </Button>
+              <Button type="submit" disabled={isScheduling || !scheduleDate || !scheduleAgenda.trim()}>
+                {isScheduling ? 'Scheduling...' : 'Schedule Engagement'}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Log Follow-Up Modal */}
+      {activeFollowUpId && (
+        <LogFollowUpModal
+          followUpId={activeFollowUpId}
+          leadVersion={lead.version}
+          isOpen={!!activeFollowUpId}
+          onOpenChange={(open) => !open && setActiveFollowUpId(null)}
+        />
+      )}
     </div>
   );
 }

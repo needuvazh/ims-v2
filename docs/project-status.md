@@ -1,6 +1,6 @@
 # ASTI Integrated Institute Management System (IMS) - Project Status Document (PSD)
 
-**Version:** 3.2.0  
+**Version:** 3.3.1  
 **Last Updated:** 2026-07-01  
 **Document Owner:** ASTI Technical Program Manager & Enterprise Architect  
 **Project Scope:** Single-client implementation for Al Saud Training Institute (ASTI)
@@ -16,15 +16,12 @@ architecture decision records, OpenSpec change proposals, and codebase milestone
 into a unified tracking index.
 
 * **Project Name:** ASTI Integrated Institute Management System (IMS)
-* **Current Version:** v3.2.0 (Core Foundation, CRM, & Basic Admissions Integration)
+* **Current Version:** v3.3.1 (Core Foundation, CRM, & Admissions Handoff with Workflows)
 * **Last Updated:** 2026-07-01
 * **Document Owner:** ASTI Technical Program Manager & Enterprise Architect
 * **Current Phase:** Core Workflow Implementation & Testing
-* **Overall Progress (%):** **30%** (68 completed FRD requirements out of the total 226)
-* **Overall Health:** **Green** (Core foundation of IAM and Organization completed. Core 
-  CRM workflows (inquiries, leads, follow-ups) and Admissions conversion handoffs 
-  implemented and verified. Dynamic master settings, campaigns, and dashboard widgets 
-  are currently in progress)
+* **Overall Progress (%):** **31%** (71 completed FRD requirements out of the total 226)
+* **Overall Health:** **Green** (Core foundation of IAM and Organization completed. CRM core flows, follow-up scheduling workflows, worker auto-assignments, and Admissions conversion handoffs implemented and verified. Dynamic settings and dashboard widgets are in progress)
 
 ---
 
@@ -153,6 +150,7 @@ complete implementation and code-review sync.
 | `implement-organization-management`| Organization Portal & Tree View| Implemented | Organization, UI | Approved | Added visual hierarchy tree view, forms, and manager validation. |
 | `crm-core-models-apis` | CRM Core Database Models & APIs | Implemented | CRM, Admissions, Database | Approved | Set up Inquiry, Lead, LeadFollowUp schemas, PII masking, domain services, events, and transactional handoff. |
 | `crm-portal-ui-scoped-filtering` | CRM Portal UI & Scoped Filtering | Implemented | CRM, Portal UI | Approved | Interactive page views for `/leads` and `/inquiries`, Counselor-scoped filtering, form validations, timeline stepper, notes, duplicate bypass modal. |
+| `crm-workflows-followup-scheduling` | Workflows & Follow-up Scheduling | Implemented | CRM, Worker, Database, Portal UI | Approved | Dynamic follow-up scheduling, automatic counselor workload-based assignment, hourly sweeping job, and concurrency protection. |
 
 ### Details for Recently Completed Changes (2026-07-01)
 
@@ -170,6 +168,12 @@ complete implementation and code-review sync.
 * **Technical Impact:** Dynamic client-side forms mapped with React Hook Form and Zod schemas; counselor assignment bounds restricted server-side with custom `ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION` codes; duplicate checking checks bypass alerts; terminal stage blocks requiring identity document submissions; profile synchronization logic for Person emails and birthdates.
 * **Required Document Updates:** UI Specification, ER Model updated.
 * **Required Implementation Tasks:** Interactive leads grid, timeline stepper, audit paginate tables, stage histories, and upload file components.
+
+#### `crm-workflows-followup-scheduling`
+* **Business Reason:** Route incoming inquiries automatically to balance workload and enforce disciplined, timely follow-up schedules.
+* **Technical Impact:** Transactional outbox handlers for `WebsiteInquirySubmitted` events; lowest-workload auto-assignment using random tie-breakers; transactional composite APIs for outcome logging + next follow-up scheduling with optimistic concurrency check; hourly database sweeping cron for missed/overdue follow-ups.
+* **Required Document Updates:** FRD Module 03, SDS, Database Dictionary.
+* **Required Implementation Tasks:** Background worker consumer, scheduler dialog modal, hourly sweep function, outbox event generation.
 
 ---
 
@@ -216,6 +220,9 @@ database structures, and automated tests.
 | **CRM-005** (Masking) | Sec 3.5 | CRM Context | Part 19.4 | [spec.md](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/openspec/changes/archive/2026-07-01-crm-core-models-apis/specs/crm-core-models-apis/spec.md) | `POST /api/v1/crm/leads/[id]/reveal-pii` | `Lead`, `AuditLog` | `/leads/[id]` | [route.test.ts](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/apps/admin-portal/app/api/v1/crm/leads/[id]/route.test.ts) | **Completed** |
 | **CRM-006** (Scope) | Sec 3.6 | CRM Context | Part 19.5 | [spec.md](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/openspec/changes/archive/2026-07-01-crm-portal-ui-scoped-filtering/specs/crm-portal-ui-scoped-filtering/spec.md) | `GET /api/v1/crm/leads` | `Lead` | `/leads` | [lead-service-query.spec.ts](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/packages/crm-leads/tests/lead-service-query.spec.ts) | **Completed** |
 | **CRM-007** (Bypass) | Sec 3.7 | CRM Context | Part 19.7 | [spec.md](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/openspec/changes/archive/2026-07-01-crm-portal-ui-scoped-filtering/specs/crm-portal-ui-scoped-filtering/spec.md) | `POST /api/v1/crm/leads` | `Lead` | `/leads/create` | [lead-service.test.ts](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/packages/crm-leads/src/application/lead-service.test.ts) | **Completed** |
+| **CRM-008** (Auto) | Sec 3.8 | CRM / Worker | Part 19.8 | [spec.md](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/openspec/changes/crm-workflows-followup-scheduling/specs/crm-followup-workflows/spec.md) | N/A (Outbox Handler) | `Inquiry`, `Lead` | N/A | [followup-workflows.spec.ts](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/packages/crm-leads/tests/followup-workflows.spec.ts) | **Completed** |
+| **CRM-009** (Composite)| Sec 3.9 | CRM Context | Part 19.9 | [spec.md](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/openspec/changes/crm-workflows-followup-scheduling/specs/crm-followup-workflows/spec.md) | `POST /api/v1/crm/leads/follow-ups/[id]` | `LeadFollowUp`, `Lead` | `/leads/[id]` | [followup-workflows.spec.ts](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/packages/crm-leads/tests/followup-workflows.spec.ts) | **Completed** |
+| **CRM-010** (Overdue) | Sec 3.10| CRM / Worker | Part 19.10| [spec.md](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/openspec/changes/crm-workflows-followup-scheduling/specs/crm-followup-workflows/spec.md) | N/A (Hourly Cron) | `LeadFollowUp` | N/A | [followup-workflows.spec.ts](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/packages/crm-leads/tests/followup-workflows.spec.ts) | **Completed** |
 | **ADM-001** (Convert) | Sec 4.1 | Admissions | Part 4.1 | [spec.md](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/openspec/changes/archive/2026-07-01-crm-portal-ui-scoped-filtering/specs/crm-portal-ui-scoped-filtering/spec.md) | `POST /api/v1/crm/leads/[id]/convert` | `Student`, `Admission` | `/leads/[id]` | [lead-conversion-orchestrator.test.ts](file:///Users/praveenkumar/Documents/Project/Freelance/ims-v2/packages/admissions-enrollment/src/application/lead-conversion-orchestrator.test.ts) | **Completed** |
 
 > [!NOTE]
@@ -236,6 +243,9 @@ database structures, and automated tests.
   * 100% Organization backend & frontend (Google Maps link formats, manager presence checks, cascade archiving, hierarchy tree visualization).
   * Scoping fixes preventing cross-branch data exposure and removing role-based scoping checks.
   * Core CRM workflows implemented (Inquiries, Leads, Follow-ups, timeline note streams, stage changes history tables, PII masking, bypass duplication alert boxes, terminal stage conversion modals).
+  * Auto-assignment of website inquiries to counselors using lowest active workload with random tie-breakers.
+  * Composite outcome logging and scheduled next follow-ups with concurrency protection.
+  * Hourly background cron sweeping for overdue follow-up alerts.
   * 100% conversion orchestrator executing Admissions creation inside cross-context database transactions.
 * **In Progress:**
   * UI screens for Admissions files list and counselor dashboard.
@@ -330,7 +340,7 @@ Each module is rated on an overall implementation implementation readiness scale
 
 1. **Identity & Access Management:** **100%** (All systems ready, tested, and secure)
 2. **Organization Management:** **100%** (All hierarchy logic, tree views, and validations complete)
-3. **CRM & Enquiry:** **65%** (Core models, qualification APIs, counselor scoping, stage histories, and detail dashboards are implemented; Campaign Management, configurable stages/sources, and lead funnel charts are pending)
+3. **CRM & Enquiry:** **80%** (Core models, qualification APIs, counselor scoping, stage histories, detail dashboards, auto-assignment, outcome logging, and sweep cron are implemented; Campaign Management, configurable stages/sources, and lead funnel charts are pending)
 4. **Admission & Enrollment:** **35%** (Admissions models and convert handoff transactional orchestrator complete; UI and Enrollment elements are pending)
 5. **Audit & Compliance:** **35%** (Audit repository is ready, database is active, but admin viewer is pending)
 6. **Course & Batch Management:** **8%** (Course tables exist; batch tables pending)
@@ -347,6 +357,8 @@ Each module is rated on an overall implementation implementation readiness scale
 | **2026-06-30** | v3.0.0 | Codex | Complete IAM frontend, session administration console, and dynamic scoping hierarchy fixes. |
 | **2026-06-30** | v3.1.0 | Codex | Review and sync PSD with codebase. Updated tests, CRM/Admissions status, and Omani compliance details. |
 | **2026-07-01** | v3.2.0 | Codex | Updated PSD to reflect CRM progress aligned with DDD / FRD definitions. Re-routed CRM status to In Progress (with 65% completion readiness) and updated test matrices. |
+| **2026-07-01** | v3.3.0 | Codex | Completed Change 3 (crm-workflows-followup-scheduling). Added inquiry auto-assignment, composite outcome + follow-up scheduling, and hourly sweeper. Updated unit test statistics and PSD matrices. |
+| **2026-07-01** | v3.3.1 | Codex | Applied code review suggestions to `crm-portal-ui-scoped-filtering`. Added counselor scoping check on lead conversion, mandatory version concurrency check, client-side re-synchronization on stage changes, and delegated stage/closure updates to LeadService. |
 
 ---
 
@@ -358,10 +370,10 @@ Each module is rated on an overall implementation implementation readiness scale
 * **Pending Reviews:** 1
 * **Open Risks:** 3
 * **Open Questions:** 3
-* **Approved OpenSpec Changes:** 11
+* **Approved OpenSpec Changes:** 12
 * **Pending OpenSpec Changes:** 0
-* **Completed Development Tasks:** 92
-* **Completed Test Cases:** 130
+* **Completed Development Tasks:** 95
+* **Completed Test Cases:** 134
 
 ---
 
@@ -411,10 +423,10 @@ The following variables are required to build and run the monorepo:
 ## 22. Quality & Test Metrics
 
 * **Type-Checking Pipeline:** `pnpm typecheck` $\rightarrow$ **100% Passing**
-* **Linter Pipeline:** `pnpm lint` $\rightarrow$ **100% Passing** (with 56 style warnings)
+* **Linter Pipeline:** `pnpm lint` $\rightarrow$ **100% Passing** (with 58 style warnings)
 * **Formatter Check:** `pnpm format` $\rightarrow$ **Completed** (with Prettier configuration warnings)
 * **Test Runners:**
-  * Unit Tests (Vitest): **128 Tests** $\rightarrow$ **100% Passing**
+  * Unit Tests (Vitest): **134 Tests** $\rightarrow$ **100% Passing**
   * Integration Tests (Prisma/Vitest): **0 Tests**
   * E2E Tests (Playwright): **2 Tests** $\rightarrow$ **100% Passing**
 

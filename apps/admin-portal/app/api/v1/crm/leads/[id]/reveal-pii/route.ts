@@ -42,6 +42,11 @@ function crmErrorResponse(error: Error) {
     code = 'ERR_CRM_BRANCH_SCOPE_VIOLATION';
     messageEn = 'You are not authorized to access lead data in this branch.';
     messageAr = 'غير مصرح لك بالوصول إلى بيانات المهتمين في هذا الفرع.';
+  } else if (msg.includes('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION')) {
+    status = 403;
+    code = 'ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION';
+    messageEn = 'You are not authorized to access leads assigned to other counselors.';
+    messageAr = 'غير مصرح لك بالوصول إلى المهتمين المسندين لموظفين آخرين.';
   }
 
   return NextResponse.json(
@@ -102,7 +107,7 @@ export async function POST(request: Request, props: { params: Promise<{ id: stri
       // Counselor check
       const hasGlobalRead = session.permissions.includes('crm.leads.read.all');
       if (!hasGlobalRead && lead.counselorId !== session.userId) {
-        throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
+        throw new Error('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION');
       }
 
       // Resolve unmasked value

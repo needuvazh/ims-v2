@@ -22,7 +22,9 @@ The following table summarizes the REST endpoints provided by the Course Catalog
 | **GET** | `/api/v1/courses/:id` | Fetch specific Course details | `course.catalog.view` | Global/Branch check depending on course owner. |
 | **PUT** | `/api/v1/courses/:id` | Update Course attributes | `course.catalog.update` | Restricted to course owner branch. |
 | **POST** | `/api/v1/courses/:id/pricing` | Register a new versioned price | `course.catalog.create` | Restricted to target branch scope. |
+| **GET** | `/api/v1/courses/:id/pricing/resolve` | Resolve course price for billing | `course.catalog.view` | Restricted to target branch scope. |
 | **POST** | `/api/v1/courses/:id/completion-rules` | Register completion rules | `course.catalog.create` | Global/Branch owner scope checking. |
+| **GET** | `/api/v1/courses/:id/completion-rules/active` | Get active completion rules | `course.catalog.view` | Global/Branch owner scope checking. |
 | **POST** | `/api/v1/batches` | Instantiate a new batch | `batch.delivery.create` | Restricted to target branch scope. |
 | **GET** | `/api/v1/batches` | Search batches with filters | `batch.delivery.view` | Enforces active branch filters strictly. |
 | **PUT** | `/api/v1/batches/:id/status` | Transition a batch state | `batch.delivery.transition` | Active branch verification required. |
@@ -117,7 +119,7 @@ The following table summarizes the REST endpoints provided by the Course Catalog
 ---
 
 ### 2.1.3 POST `/api/v1/courses/:id/pricing`
-*   **Purpose:** Configures a pricing override version for a course.
+*   **Purpose:** Configures a pricing override version for a course. (Delegates execution to `CourseApplicationService.addPricingRule(...)` which orchestrates pricing state mutations inside the `Course` Aggregate Root boundary).
 *   **Authorization:** Bearer JWT required. Permission: `course.catalog.create` or `course.pricing.override`.
 *   **Branch-Scoping Behavior:** The `branchId` defined inside payload must match the active user's branch credentials.
 *   **Request Payload Schema (Zod):**
@@ -156,7 +158,7 @@ The following table summarizes the REST endpoints provided by the Course Catalog
 ---
 
 ### 2.1.4 POST `/api/v1/courses/:id/completion-rules`
-*   **Purpose:** Configures course graduation conditions.
+*   **Purpose:** Configures course graduation conditions. (Delegates execution to `CourseApplicationService.configureCompletionRules(...)` which orchestrates completion criteria modifications inside the `Course` Aggregate Root boundary).
 *   **Authorization:** Bearer JWT. Permission: `course.catalog.create`.
 *   **Branch-Scoping Behavior:** Matches parent course's branch permissions.
 *   **Request Payload Schema (Zod):**
@@ -265,7 +267,7 @@ The following table summarizes the REST endpoints provided by the Course Catalog
 ---
 
 ### 2.2.3 POST `/api/v1/batches/:id/trainers`
-*   **Purpose:** Maps a trainer to a batch and validates scheduling overlaps.
+*   **Purpose:** Maps a trainer to a batch and validates scheduling overlaps. (Delegates execution to `BatchApplicationService.assignTrainer(...)` which orchestrates assignments inside the `Batch` Aggregate Root boundary).
 *   **Authorization:** Bearer JWT. Permission: `batch.delivery.assign`.
 *   **Request Payload Schema (Zod):**
     ```typescript
@@ -298,7 +300,7 @@ The following table summarizes the REST endpoints provided by the Course Catalog
 ---
 
 ### 2.2.4 POST `/api/v1/batches/:id/waitlist`
-*   **Purpose:** Queues a student or lead on the batch waitlist.
+*   **Purpose:** Queues a student or lead on the batch waitlist. (Delegates execution to `BatchApplicationService.addWaitlistEntry(...)` which orchestrates queue additions inside the `Batch` Aggregate Root boundary).
 *   **Authorization:** Bearer JWT. Permission: `batch.waitlist.manage`.
 *   **Request Payload Schema (Zod):**
     ```typescript
@@ -393,17 +395,73 @@ The following table summarizes the REST endpoints provided by the Course Catalog
 *   **Authorization:** Bearer JWT. Permission: `course.catalog.view`.
 *   **Success Response DTO (200 OK):**
     ```json
-    {
-      "status": "success",
-      "data": [
-        {
-          "id": "7ca8012d-30e1-4227-8f9a-88ff5ae056f8",
-          "code": "HS",
-          "nameEnglish": "Health & Safety",
-          "nameArabic": "الصحة والسلامة",
-          "parentCategoryId": null,
-          "status": "Active"
         }
       ]
     }
     ```
+
+---
+
+## 2.4 New Query APIs for Cross-Context Access
+
+### 2.4.1 GET `/api/v1/courses/:id/pricing/resolve`
+*   **Purpose:** Dynamically resolves and fetches the active pricing structure for a course. Used by the external Billing Engine to prevent direct database queries of catalog tables.
+*   **Authorization:** Bearer JWT required. Permission: `course.catalog.view`.
+*   **Request Parameters:**
+    *   `id` (UUID, Course ID in route)
+    *   `branchId` (UUID, optional query parameter)
+    *   `customerType` (Enum: Individual, Corporate, WalkIn, optional query parameter)
+    *   `batchType` (Enum: Regular, FastTrack, Weekend, optional query parameter)
+*   **Success Response DTO (200 OK):**
+    ```json
+    {
+      "status": "success",
+      "data": {
+        "courseId": "5ccb702d-aa2a-49a9-a20f-39a58ea485b6",
+        "resolvedBranchId": "35428da6-c66d-4ea1-bb85-74c203bfd11f",
+        "customerType": "Individual",
+        "batchType": "Regular",
+        "basePrice": 135.000,
+        "taxPercentage": 5.000,
+        "currency": "OMR",
+        "totalPrice": 141.750,
+        "effectiveStartDate": "2026-07-01"
+      }
+    }
+    ```
+
+---
+
+### 2.4.2 GET `/api/v1/courses/:id/completion-rules/active`
+*   **Purpose:** Returns the currently active completion rules for a course. Used by the external Completion Evaluator.
+*   **Authorization:** Bearer JWT required. Permission: `course.catalog.view`.
+*   **Success Response DTO (200 OK):**
+    ```json
+    {
+      "status": "success",
+      "data": {
+        "courseId": "5ccb702d-aa2a-49a9-a20f-39a58ea485b6",
+        "minimumAttendancePercent": 80,
+        "examRequired": true,
+        "feeClearanceRequired": true,
+        "manualApprovalRequired": false,
+        "effectiveStartDate": "2026-07-01"
+      }
+    }
+    ```
+
+---
+
+## 2.5 Thin Controller NFR & Delivery Rules
+*   **Route Handler Role:** All Next.js route handlers (`/app/api/.../route.ts`) and Server Actions (`actions.ts`) serve strictly as delivery mechanism adapters.
+*   **Permitted Operations in Route Handlers:**
+    1.  Authenticate requests and check user session claims.
+    2.  Authorize the operation via role-based or branch-scoped security guards.
+    3.  Parse and validate input request payloads using Zod contracts.
+    4.  Call a single Application Service command or query method.
+    5.  Map return data/objects to DTO structures and construct appropriate HTTP response codes.
+*   **Prohibited Operations:**
+    *   Direct imports and execution of `prisma` database queries.
+    *   Managing database transactions (`prisma.$transaction`) inside controllers.
+    *   Evaluating business rules (e.g. overlap intersections, double-bookings, capacity limits, or pricing resolution).
+    *   Orchestrating state flows. All domain changes must occur within Application Services delegating to Aggregate Roots.

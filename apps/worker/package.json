@@ -10,8 +10,11 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
+    "@ims/crm-leads": "workspace:*",
+    "@ims/identity-access": "workspace:*",
     "@ims/database": "workspace:*",
-    "@ims/observability": "workspace:*"
+    "@ims/observability": "workspace:*",
+    "@ims/shared-kernel": "workspace:*"
   },
   "devDependencies": {
     "tsx": "^4.19.1",

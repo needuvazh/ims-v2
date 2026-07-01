@@ -39,6 +39,11 @@ function crmErrorResponse(error: Error) {
     code = 'ERR_CRM_BRANCH_SCOPE_VIOLATION';
     messageEn = 'You are not authorized to access lead data in this branch.';
     messageAr = 'غير مصرح لك بالوصول إلى بيانات المهتمين في هذا الفرع.';
+  } else if (msg.includes('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION')) {
+    status = 403;
+    code = 'ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION';
+    messageEn = 'You are not authorized to access leads assigned to other counselors.';
+    messageAr = 'غير مصرح لك بالوصول إلى المهتمين المسندين لموظفين آخرين.';
   } else if (msg.includes('ERR_CRM_PAST_FOLLOWUP_DATE')) {
     status = 422;
     code = 'ERR_CRM_PAST_FOLLOWUP_DATE';
@@ -49,6 +54,11 @@ function crmErrorResponse(error: Error) {
     code = 'ERR_CRM_LOST_REASON_REQUIRED'; // mapping custom text errors
     messageEn = 'Outcome notes must be at least 15 characters long.';
     messageAr = 'ملاحظات النتيجة يجب أن تكون ١٥ حرف كحد أدنى.';
+  } else if (msg.includes('ERR_CRM_CONCURRENCY_VIOLATION')) {
+    status = 409;
+    code = 'ERR_CRM_CONCURRENCY_VIOLATION';
+    messageEn = 'This lead has been updated by another user. Please refresh and try again.';
+    messageAr = 'تم تحديث بيانات هذا المهتم من قبل مستخدم آخر. يرجى التحديث والمحاولة مرة أخرى.';
   }
 
   return NextResponse.json(
@@ -115,7 +125,7 @@ export async function PATCH(request: Request, props: { params: Promise<{ id: str
       // Counselor check
       const hasGlobalRead = session.permissions.includes('crm.leads.read.all');
       if (!hasGlobalRead && lead.counselorId !== session.userId) {
-        throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
+        throw new Error('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION');
       }
 
       const result = await followUpService.recordOutcome(followUpId, parsed.data, session.userId);

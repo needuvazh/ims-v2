@@ -17,68 +17,129 @@ export class FollowUpApplicationService {
     actorId: string,
     tx?: Prisma.TransactionClient
   ) {
-    const client = tx || this.prisma;
+    const execute = async (client: Prisma.TransactionClient | PrismaClient) => {
+      // 1. Verify Lead exists
+      const lead = await this.leadRepository.findById(leadId, client);
+      if (!lead) {
+        throw new Error('ERR_CRM_LEAD_NOT_FOUND');
+      }
 
-    // 1. Verify Lead exists
-    const lead = await this.leadRepository.findById(leadId, client);
-    if (!lead) {
-      throw new Error('ERR_CRM_LEAD_NOT_FOUND');
-    }
+      // 2. Future date constraint (BR-LEAD-009)
+      const scheduleTime = new Date(input.followUpDate).getTime();
+      if (scheduleTime <= Date.now() + 300000) {
+        throw new Error('ERR_CRM_PAST_FOLLOWUP_DATE');
+      }
 
-    // 2. Future date constraint (BR-LEAD-009)
-    const scheduleTime = new Date(input.followUpDate).getTime();
-    if (scheduleTime <= Date.now() + 300000) {
-      throw new Error('ERR_CRM_PAST_FOLLOWUP_DATE');
-    }
+      // 3. Stage transition blocking & checks
+      if (lead.stage === 'Converted' || lead.stage === 'Won' || lead.stage === 'Lost') {
+        throw new Error('ERR_CRM_INVALID_STAGE_TRANSITION');
+      }
 
-    // 3. Create FollowUp (Scheduled)
-    const followUp = await this.followUpRepository.create(
-      {
-        ...input,
-        leadId,
-        counselorId: lead.counselorId || actorId, // defaults to actor if lead unassigned
-      },
-      client
-    );
+      let targetStage = lead.stage;
+      const oldStage = lead.stage;
+      if (lead.stage === 'New' || lead.stage === 'Contacted') {
+        targetStage = 'FollowUp';
+      }
 
-    // 4. Outbox Event
-    await client.outboxEvent.create({
-      data: {
-        id: createUuid(randomUUID()),
-        eventType: 'FollowUpScheduled',
-        aggregateType: 'Lead',
-        aggregateId: leadId,
-        payload: {
-          id: followUp.id,
+      // 4. Create FollowUp (Scheduled)
+      const followUp = await this.followUpRepository.create(
+        {
+          ...input,
           leadId,
-          followUpDate: followUp.followUpDate,
-          followUpType: followUp.followUpType,
-          leadNumber: lead.leadNumber,
+          counselorId: lead.counselorId || actorId, // defaults to actor if lead unassigned
         },
-        status: 'Pending',
-        availableAt: new Date(),
-      },
-    });
+        client
+      );
 
-    // 5. Audit Log
-    await client.auditLog.create({
-      data: {
-        id: createUuid(randomUUID()),
-        module: 'LeadCrm',
-        performedBy: actorId || null,
-        performedAt: new Date(),
-        entityType: 'LeadFollowUp',
-        entityId: followUp.id,
-        action: 'Schedule',
-        newValue: {
-          followUpDate: followUp.followUpDate,
-          followUpType: followUp.followUpType,
+      // 5. Update Lead Stage if needed
+      if (targetStage !== oldStage) {
+        await this.leadRepository.updateStage(leadId, targetStage, lead.version, client);
+        
+        // Insert LeadStageHistory
+        await client.leadStageHistory.create({
+          data: {
+            id: createUuid(randomUUID()),
+            leadId,
+            oldStage: oldStage as any,
+            newStage: targetStage as any,
+            performedBy: actorId,
+          },
+        });
+
+        // Emit LeadStageChanged event
+        await client.outboxEvent.create({
+          data: {
+            id: createUuid(randomUUID()),
+            eventType: 'LeadStageChanged',
+            aggregateType: 'Lead',
+            aggregateId: leadId,
+            payload: {
+              leadId,
+              oldStage,
+              newStage: targetStage,
+              leadNumber: lead.leadNumber,
+            },
+            status: 'Pending',
+            availableAt: new Date(),
+          },
+        });
+      }
+
+      // 6. Update nextFollowUpDate on the lead
+      await this.leadRepository.updateLead(
+        leadId,
+        {
+          nextFollowUpDate: new Date(input.followUpDate),
+          version: targetStage !== oldStage ? lead.version + 1 : lead.version,
         },
-        branchId: lead.branchId,
-      },
-    });
+        client
+      );
 
-    return followUp;
+      // 7. Outbox Event (FollowUpScheduled)
+      await client.outboxEvent.create({
+        data: {
+          id: createUuid(randomUUID()),
+          eventType: 'FollowUpScheduled',
+          aggregateType: 'Lead',
+          aggregateId: leadId,
+          payload: {
+            id: followUp.id,
+            leadId,
+            followUpDate: followUp.followUpDate,
+            followUpType: followUp.followUpType,
+            leadNumber: lead.leadNumber,
+          },
+          status: 'Pending',
+          availableAt: new Date(),
+        },
+      });
+
+      // 8. Audit Log
+      await client.auditLog.create({
+        data: {
+          id: createUuid(randomUUID()),
+          module: 'LeadCrm',
+          performedBy: actorId || null,
+          performedAt: new Date(),
+          entityType: 'LeadFollowUp',
+          entityId: followUp.id,
+          action: 'Schedule',
+          newValue: {
+            followUpDate: followUp.followUpDate,
+            followUpType: followUp.followUpType,
+          },
+          branchId: lead.branchId,
+        },
+      });
+
+      return followUp;
+    };
+
+    if (tx) {
+      return execute(tx);
+    } else {
+      return this.prisma.$transaction(execute);
+    }
   }
 
   async recordOutcome(
@@ -90,7 +151,7 @@ export class FollowUpApplicationService {
       // 1. Fetch current follow-up
       const followUp = await this.followUpRepository.findById(followUpId, tx);
       if (!followUp) {
-        throw new Error('ERR_CRM_LEAD_NOT_FOUND'); // mapping to general not found
+        throw new Error('ERR_CRM_LEAD_NOT_FOUND');
       }
 
       if (followUp.status === 'Completed') {
@@ -163,7 +224,34 @@ export class FollowUpApplicationService {
         });
       }
 
-      // 5. Audit Log
+      // 5. Recalculate nextFollowUpDate
+      const allFollowUps = await this.followUpRepository.findAllForLead(followUp.leadId, tx);
+      const scheduledFollowUps = allFollowUps.filter(
+        (f: any) => f.status === 'Scheduled' && f.id !== followUpId
+      );
+
+      if (nextFollowUp) {
+        scheduledFollowUps.push(nextFollowUp as any);
+      }
+
+      let recalculatedDate: Date | null = null;
+      if (scheduledFollowUps.length > 0) {
+        const dates = scheduledFollowUps.map((f: any) => new Date(f.followUpDate).getTime());
+        const minDate = Math.min(...dates);
+        recalculatedDate = new Date(minDate);
+      }
+
+      // 6. Update Lead with nextFollowUpDate and optimistic concurrency version
+      await this.leadRepository.updateLead(
+        followUp.leadId,
+        {
+          nextFollowUpDate: recalculatedDate,
+          version: input.version,
+        },
+        tx
+      );
+
+      // 7. Audit Log
       await tx.auditLog.create({
         data: {
           id: createUuid(randomUUID()),

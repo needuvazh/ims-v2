@@ -35,27 +35,18 @@ The following rules must be executed in the backend service layer before executi
 *   **Validation Logic:** Ensures that for a given pricing dimension (Course, Branch, Customer Type, Batch Type, Currency), there is never more than one active price.
 *   **Algorithm:**
     ```typescript
-    async function checkPricingOverlap(pricingInput: PricingInput): Promise<boolean> {
-      const overlaps = await prisma.coursePricing.findMany({
-        where: {
-          courseId: pricingInput.courseId,
-          branchId: pricingInput.branchId,
-          customerType: pricingInput.customerType,
-          batchType: pricingInput.batchType,
-          currency: pricingInput.currency,
-          status: "Active",
-          isDeleted: false,
-          OR: [
-            {
-              effectiveStartDate: { lte: pricingInput.effectiveEndDate },
-              effectiveEndDate: { gte: pricingInput.effectiveStartDate }
-            },
-            {
-              effectiveStartDate: { lte: pricingInput.effectiveEndDate },
-              effectiveEndDate: null
-            }
-          ]
-        }
+    async function checkPricingOverlap(
+      pricingInput: PricingInput,
+      pricingRepository: ICoursePricingRepository // Injected domain repository interface
+    ): Promise<boolean> {
+      const overlaps = await pricingRepository.findOverlappingPricing({
+        courseId: pricingInput.courseId,
+        branchId: pricingInput.branchId,
+        customerType: pricingInput.customerType,
+        batchType: pricingInput.batchType,
+        currency: pricingInput.currency,
+        startDate: pricingInput.effectiveStartDate,
+        endDate: pricingInput.effectiveEndDate
       });
       if (overlaps.length > 0) {
         throw new Error("ERR_CRS_MULTIPLE_ACTIVE_PRICING");
@@ -92,25 +83,22 @@ The following rules must be executed in the backend service layer before executi
       targetBatchId: string,
       assignedFrom: Date,
       assignedTo: Date,
-      schedulingService: ISchedulingService // Injected cross-context service interface
+      schedulingService: ISchedulingService, // Injected cross-context service interface
+      batchTrainerRepository: IBatchTrainerRepository // Injected domain repository interface
     ): Promise<boolean> {
       // 1. Get proposed batch sessions via Scheduling Context Service
       const newSessions = await schedulingService.getSessionsByBatch(targetBatchId);
       
       // 2. Get overlapping batches where trainer is assigned (Internal to Batch Context)
-      const activeAssignments = await prisma.batchTrainer.findMany({
-        where: {
-          trainerId: trainerId,
-          status: "Active",
-          isDeleted: false,
-          NOT: { batchId: targetBatchId },
-          OR: [
-            { assignedFrom: { lte: assignedTo }, assignedTo: { gte: assignedFrom } }
-          ]
-        }
-      });
+      const activeAssignments = await batchTrainerRepository.findActiveAssignmentsByTrainer(
+        trainerId,
+        assignedFrom,
+        assignedTo
+      );
       
-      const assignedBatchIds = activeAssignments.map(a => a.batchId);
+      const assignedBatchIds = activeAssignments
+        .filter(a => a.batchId !== targetBatchId)
+        .map(a => a.batchId);
       
       // 3. Query sessions of overlapping batches via Scheduling Context Service
       const existingSessions = await schedulingService.getSessionsForBatches(
@@ -167,6 +155,9 @@ The following structured application errors must be returned by Next.js API hand
 # 3. System Notification Events
 
 The following notifications are dispatched asynchronously via the Communication module when domain events are recorded in the Outbox.
+
+> [!IMPORTANT]
+> **Cross-Context Variable Resolution Rule:** The Course Catalog & Batch contexts must not perform direct database queries or joins to retrieve personal data (such as student names, lead names, email addresses, or phone numbers) when preparing event payloads. All personal variable identifiers (e.g. `{{leadFirstName}}`, `{{studentName}}`) must be resolved either via public profile query interfaces exposed by the IAM/CRM/Admission contexts or passed inside the triggering Domain Event payload from the source context.
 
 ---
 

@@ -27,7 +27,7 @@ test('LeadConversionOrchestrator should abort if student duplicate exists', asyn
     .rejects
     .toThrow('A student with this email or phone already exists');
 
-  expect(mockLeadService.convertLead).toHaveBeenCalledWith('lead-1', ['https://example.com/doc.pdf'], mockPrisma);
+  expect(mockLeadService.convertLead).toHaveBeenCalledWith('lead-1', ['https://example.com/doc.pdf'], mockPrisma, undefined);
   expect(mockAdmissionService.createStudentAdmission).toHaveBeenCalled();
   expect(mockPrisma.auditLog.create).not.toHaveBeenCalled();
 });

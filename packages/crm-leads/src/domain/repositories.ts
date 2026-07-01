@@ -52,7 +52,7 @@ export interface ILeadRepository {
 
   updateLead(
     id: string,
-    data: Partial<CreateLeadInput> & { lostReasonCode?: string | null; lostReasonNotes?: string | null; version?: number },
+    data: Partial<CreateLeadInput> & { lostReasonCode?: string | null; lostReasonNotes?: string | null; version?: number; nextFollowUpDate?: Date | null },
     tx?: Prisma.TransactionClient
   ): Promise<void>;
 

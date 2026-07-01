@@ -29,9 +29,9 @@ Represents the hierarchical categorization of training courses (e.g., Health & S
 | `status` | `RecordStatus` | `VARCHAR(50)` | NOT NULL | - | Enum: `Draft`, `Active`, `Inactive`, `Archived` |
 | **Audit Fields** | | | | | |
 | `createdAt` | `DateTime` | `TIMESTAMPTZ(6)`| NOT NULL | - | `DEFAULT now()` |
-| `createdBy` | `String` | `UUID` | NULL | FK | Reference to `users.id` |
+| `createdBy` | `String` | `UUID` | NULL | Logical Key | Logical reference to `users.id` (no database constraint) |
 | `updatedAt` | `DateTime` | `TIMESTAMPTZ(6)`| NULL | - | Automatically updated |
-| `updatedBy` | `String` | `UUID` | NULL | FK | Reference to `users.id` |
+| `updatedBy` | `String` | `UUID` | NULL | Logical Key | Logical reference to `users.id` (no database constraint) |
 | `deletedAt` | `DateTime` | `TIMESTAMPTZ(6)`| NULL | - | Timestamp of soft-delete |
 | `isDeleted` | `Boolean` | `BOOLEAN` | NOT NULL | - | `DEFAULT false` |
 | `version` | `Int` | `INTEGER` | NOT NULL | - | `DEFAULT 1` (Optimistic locking) |
@@ -49,8 +49,8 @@ Represents the course definitions catalog (extends the existing database model).
 | `nameArabic` | `String` | `VARCHAR(150)` | NOT NULL | - | Course title in Arabic |
 | `descriptionEnglish`| `String`| `TEXT` | NULL | - | Detailed description in English |
 | `descriptionArabic`| `String` | `TEXT` | NULL | - | Detailed description in Arabic |
-| `departmentId` | `String` | `UUID` | NOT NULL | FK | Reference to `departments.id` |
-| `categoryId` | `String` | `UUID` | NOT NULL | FK | Reference to `course_categories.id` |
+| `departmentId` | `String` | `UUID` | NOT NULL | Logical Key | Logical reference to `departments.id` (no database constraint) |
+| `categoryId` | `String` | `UUID` | NOT NULL | FK | Reference to `course_categories.id` (Same context) |
 | `courseClassification`| `String`| `VARCHAR(50)` | NOT NULL | - | Enum: `Individual`, `Corporate`, `WalkIn`, `Online` |
 | `durationType` | `String` | `VARCHAR(50)` | NOT NULL | - | Enum: `FixedDays`, `HoursBased`, `SessionsBased` |
 | `durationValue` | `Int` | `INTEGER` | NOT NULL | Check: `> 0` | Numerical duration length |
@@ -60,9 +60,9 @@ Represents the course definitions catalog (extends the existing database model).
 | `effectiveEndDate` | `DateTime` | `DATE` | NULL | - | pricing/rules validation end date |
 | **Audit Fields** | | | | | |
 | `createdAt` | `DateTime` | `TIMESTAMPTZ(6)`| NOT NULL | - | `DEFAULT now()` |
-| `createdBy` | `String` | `UUID` | NULL | FK | Reference to `users.id` |
+| `createdBy` | `String` | `UUID` | NULL | Logical Key | Logical reference to `users.id` (no database constraint) |
 | `updatedAt` | `DateTime` | `TIMESTAMPTZ(6)`| NULL | - | - |
-| `updatedBy` | `String` | `UUID` | NULL | FK | Reference to `users.id` |
+| `updatedBy` | `String` | `UUID` | NULL | Logical Key | Logical reference to `users.id` (no database constraint) |
 | `deletedAt` | `DateTime` | `TIMESTAMPTZ(6)`| NULL | - | - |
 | `isDeleted` | `Boolean` | `BOOLEAN` | NOT NULL | - | `DEFAULT false` |
 | `version` | `Int` | `INTEGER` | NOT NULL | - | `DEFAULT 1` |
@@ -76,8 +76,8 @@ Handles versioned, dimensioned price structures.
 | --- | --- | --- | --- | --- | --- |
 | `id` | `String` | `UUID` | NOT NULL | PK | Auto-generated UUID |
 | `courseId` | `String` | `UUID` | NOT NULL | FK | Reference to `courses.id` |
-| `branchId` | `String` | `UUID` | NULL | FK | Reference to `branches.id` (NULL = Global) |
-| `batchId` | `String` | `UUID` | NULL | FK | Reference to `batches.id` (NULL = Global/Branch) |
+| `branchId` | `String` | `UUID` | NULL | Logical Key | Logical reference to `branches.id` (no database constraint; NULL = Global) |
+| `batchId` | `String` | `UUID` | NULL | FK | Reference to `batches.id` (Same context; NULL = Global/Branch) |
 | `customerType` | `String` | `VARCHAR(50)` | NOT NULL | - | Enum: `Individual`, `Corporate`, `WalkIn` |
 | `batchType` | `String` | `VARCHAR(50)` | NOT NULL | - | Enum: `Regular`, `FastTrack`, `Weekend` |
 | `currency` | `String` | `VARCHAR(10)` | NOT NULL | Check: `OMR` | Currency type (restricted to OMR in Oman) |
@@ -88,9 +88,9 @@ Handles versioned, dimensioned price structures.
 | `status` | `String` | `VARCHAR(50)` | NOT NULL | - | Enum: `Draft`, `Active`, `Inactive` |
 | **Audit Fields** | | | | | |
 | `createdAt` | `DateTime` | `TIMESTAMPTZ(6)`| NOT NULL | - | `DEFAULT now()` |
-| `createdBy` | `String` | `UUID` | NULL | FK | Reference to `users.id` |
+| `createdBy` | `String` | `UUID` | NULL | Logical Key | Logical reference to `users.id` (no database constraint) |
 | `updatedAt` | `DateTime` | `TIMESTAMPTZ(6)`| NULL | - | - |
-| `updatedBy` | `String` | `UUID` | NULL | FK | Reference to `users.id` |
+| `updatedBy` | `String` | `UUID` | NULL | Logical Key | Logical reference to `users.id` (no database constraint) |
 | `deletedAt` | `DateTime` | `TIMESTAMPTZ(6)`| NULL | - | - |
 | `isDeleted` | `Boolean` | `BOOLEAN` | NOT NULL | - | `DEFAULT false` |
 | `version` | `Int` | `INTEGER` | NOT NULL | - | `DEFAULT 1` |
@@ -104,8 +104,8 @@ Defines the discounts applicable across courses and branches.
 | --- | --- | --- | --- | --- | --- |
 | `id` | `String` | `UUID` | NOT NULL | PK | Auto-generated UUID |
 | `courseId` | `String` | `UUID` | NOT NULL | FK | Reference to `courses.id` |
-| `branchId` | `String` | `UUID` | NULL | FK | Reference to `branches.id` (NULL = Global) |
-| `batchId` | `String` | `UUID` | NULL | FK | Reference to `batches.id` (NULL = Global/Branch) |
+| `branchId` | `String` | `UUID` | NULL | Logical Key | Logical reference to `branches.id` (no database constraint; NULL = Global) |
+| `batchId` | `String` | `UUID` | NULL | FK | Reference to `batches.id` (Same context; NULL = Global/Branch) |
 | `discountType` | `String` | `VARCHAR(50)` | NOT NULL | - | Enum: `Individual`, `Corporate`, `EarlyBird` |
 | `discountMode` | `String` | `VARCHAR(50)` | NOT NULL | - | Enum: `Percentage`, `FixedAmount` |
 | `discountValue` | `Decimal` | `NUMERIC(12,3)` | NOT NULL | Check: `> 0` | Percent value or flat OMR value |
@@ -115,9 +115,9 @@ Defines the discounts applicable across courses and branches.
 | `status` | `String` | `VARCHAR(50)` | NOT NULL | - | Enum: `Draft`, `Active`, `Inactive` |
 | **Audit Fields** | | | | | |
 | `createdAt` | `DateTime` | `TIMESTAMPTZ(6)`| NOT NULL | - | `DEFAULT now()` |
-| `createdBy` | `String` | `UUID` | NULL | FK | Reference to `users.id` |
+| `createdBy` | `String` | `UUID` | NULL | Logical Key | Logical reference to `users.id` (no database constraint) |
 | `updatedAt` | `DateTime` | `TIMESTAMPTZ(6)`| NULL | - | - |
-| `updatedBy` | `String` | `UUID` | NULL | FK | Reference to `users.id` |
+| `updatedBy` | `String` | `UUID` | NULL | Logical Key | Logical reference to `users.id` (no database constraint) |
 | `deletedAt` | `DateTime` | `TIMESTAMPTZ(6)`| NULL | - | - |
 | `isDeleted` | `Boolean` | `BOOLEAN` | NOT NULL | - | `DEFAULT false` |
 
@@ -139,9 +139,9 @@ Defines the metrics required for a student to graduate from a course.
 | `status` | `String` | `VARCHAR(50)` | NOT NULL | - | Enum: `Active`, `Inactive` |
 | **Audit Fields** | | | | | |
 | `createdAt` | `DateTime` | `TIMESTAMPTZ(6)`| NOT NULL | - | `DEFAULT now()` |
-| `createdBy` | `String` | `UUID` | NULL | FK | Reference to `users.id` |
+| `createdBy` | `String` | `UUID` | NULL | Logical Key | Logical reference to `users.id` (no database constraint) |
 | `updatedAt` | `DateTime` | `TIMESTAMPTZ(6)`| NULL | - | - |
-| `updatedBy` | `String` | `UUID` | NULL | FK | Reference to `users.id` |
+| `updatedBy` | `String` | `UUID` | NULL | Logical Key | Logical reference to `users.id` (no database constraint) |
 | `deletedAt` | `DateTime` | `TIMESTAMPTZ(6)`| NULL | - | - |
 | `isDeleted` | `Boolean` | `BOOLEAN` | NOT NULL | - | `DEFAULT false` |
 
@@ -154,7 +154,7 @@ Models physical batch instances.
 | --- | --- | --- | --- | --- | --- |
 | `id` | `String` | `UUID` | NOT NULL | PK | Auto-generated UUID |
 | `courseId` | `String` | `UUID` | NOT NULL | FK | Reference to `courses.id` |
-| `branchId` | `String` | `UUID` | NOT NULL | FK | Reference to `branches.id` |
+| `branchId` | `String` | `UUID` | NOT NULL | Logical Key | Logical reference to `branches.id` (no database constraint) |
 | `classroomId` | `String` | `UUID` | NULL | Logical Key | Ref to `classrooms.id` (Logical only, no database FK) |
 | `batchCode` | `String` | `VARCHAR(50)` | NOT NULL | Unique | Alphanumeric batch code |
 | `batchNameEnglish`| `String`| `VARCHAR(150)` | NOT NULL | - | Name/Label of the class in English |
@@ -170,9 +170,9 @@ Models physical batch instances.
 | `status` | `String` | `VARCHAR(50)` | NOT NULL | - | Enum: `Draft`, `OpenForEnrollment`, `InProgress`, `Completed`, `Cancelled` |
 | **Audit Fields** | | | | | |
 | `createdAt` | `DateTime` | `TIMESTAMPTZ(6)`| NOT NULL | - | `DEFAULT now()` |
-| `createdBy` | `String` | `UUID` | NULL | FK | Reference to `users.id` |
+| `createdBy` | `String` | `UUID` | NULL | Logical Key | Logical reference to `users.id` (no database constraint) |
 | `updatedAt` | `DateTime` | `TIMESTAMPTZ(6)`| NULL | - | - |
-| `updatedBy` | `String` | `UUID` | NULL | FK | Reference to `users.id` |
+| `updatedBy` | `String` | `UUID` | NULL | Logical Key | Logical reference to `users.id` (no database constraint) |
 | `deletedAt` | `DateTime` | `TIMESTAMPTZ(6)`| NULL | - | - |
 | `isDeleted` | `Boolean` | `BOOLEAN` | NOT NULL | - | `DEFAULT false` |
 | `version` | `Int` | `INTEGER` | NOT NULL | - | `DEFAULT 1` |
@@ -199,9 +199,9 @@ Maps trainers to batches with scheduling and role constraints.
 | `status` | `String` | `VARCHAR(50)` | NOT NULL | `DEFAULT 'Active'`| Enum: `Active`, `Inactive` |
 | **Audit Fields** | | | | | |
 | `createdAt` | `DateTime` | `TIMESTAMPTZ(6)`| NOT NULL | - | `DEFAULT now()` |
-| `createdBy` | `String` | `UUID` | NULL | FK | Reference to `users.id` |
+| `createdBy` | `String` | `UUID` | NULL | Logical Key | Logical reference to `users.id` (no database constraint) |
 | `updatedAt` | `DateTime` | `TIMESTAMPTZ(6)`| NULL | - | - |
-| `updatedBy` | `String` | `UUID` | NULL | FK | Reference to `users.id` |
+| `updatedBy` | `String` | `UUID` | NULL | Logical Key | Logical reference to `users.id` (no database constraint) |
 | `deletedAt` | `DateTime` | `TIMESTAMPTZ(6)`| NULL | - | - |
 | `isDeleted` | `Boolean` | `BOOLEAN` | NOT NULL | - | `DEFAULT false` |
 
@@ -225,9 +225,9 @@ Manages waitlisted students or leads when batches reach capacity limits.
 | `status` | `String` | `VARCHAR(50)` | NOT NULL | - | Enum: `Waiting`, `Promoted`, `Removed` |
 | **Audit Fields** | | | | | |
 | `createdAt` | `DateTime` | `TIMESTAMPTZ(6)`| NOT NULL | - | `DEFAULT now()` (maps to requestedAt) |
-| `createdBy` | `String` | `UUID` | NULL | FK | Reference to `users.id` |
+| `createdBy` | `String` | `UUID` | NULL | Logical Key | Logical reference to `users.id` (no database constraint) |
 | `updatedAt` | `DateTime` | `TIMESTAMPTZ(6)`| NULL | - | - |
-| `updatedBy` | `String` | `UUID` | NULL | FK | Reference to `users.id` |
+| `updatedBy` | `String` | `UUID` | NULL | Logical Key | Logical reference to `users.id` (no database constraint) |
 | `deletedAt` | `DateTime` | `TIMESTAMPTZ(6)`| NULL | - | - |
 | `isDeleted` | `Boolean` | `BOOLEAN` | NOT NULL | - | `DEFAULT false` |
 
@@ -259,9 +259,9 @@ Represents individual scheduled class sessions within a batch.
 | `status` | `String` | `VARCHAR(50)` | NOT NULL | - | Enum: `Scheduled`, `Completed`, `Cancelled`, `Rescheduled` |
 | **Audit Fields** | | | | | |
 | `createdAt` | `DateTime` | `TIMESTAMPTZ(6)`| NOT NULL | - | `DEFAULT now()` |
-| `createdBy` | `String` | `UUID` | NULL | FK | Reference to `users.id` |
+| `createdBy` | `String` | `UUID` | NULL | Logical Key | Logical reference to `users.id` (no database constraint) |
 | `updatedAt` | `DateTime` | `TIMESTAMPTZ(6)`| NULL | - | - |
-| `updatedBy` | `String` | `UUID` | NULL | FK | Reference to `users.id` |
+| `updatedBy` | `String` | `UUID` | NULL | Logical Key | Logical reference to `users.id` (no database constraint) |
 | `deletedAt` | `DateTime` | `TIMESTAMPTZ(6)`| NULL | - | - |
 | `isDeleted` | `Boolean` | `BOOLEAN` | NOT NULL | - | `DEFAULT false` |
 | `version` | `Int` | `INTEGER` | NOT NULL | - | `DEFAULT 1` |
@@ -362,5 +362,5 @@ The following matrix maps internal/external human and system actors against the 
 | **Student** | Batch | No | Yes | No | No | No | **Student Scope:** Can read schedule dates for batches they are enrolled in or querying. |
 | **Student** | WaitingList | No | Yes | No | No | Yes | **Student Scope:** Can read their own position status on a waitlist. |
 | **Student** | Session | No | Yes | No | No | No | **Student Scope:** Read-only view of class schedules they are enrolled in. |
-| **Billing Engine (System)**| CoursePricing / Discount | No | Yes | No | No | Yes | **System Context:** Resolves pricing hierarchy matching the student's branch and customer type. |
-| **Completion Evaluator**| CourseCompletionRule| No | Yes | No | No | Yes | **System Context:** Reads rules to run against student marks. |run against student marks. |
+| **Billing Engine (System)**| CoursePricing / Discount | No | No | No | No | Yes | System Context: Resolves pricing hierarchy matching the student's branch and customer type via public API/query services. |
+| **Completion Evaluator**| CourseCompletionRule| No | No | No | No | Yes | System Context: Reads rules via public API/query services. |

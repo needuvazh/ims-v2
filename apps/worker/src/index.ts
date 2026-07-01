@@ -1,5 +1,7 @@
-import { prisma } from '@ims/database';
+import { prisma, IamQueryService } from '@ims/database';
 import { createStructuredLogger } from '@ims/observability';
+import { createUuid } from '@ims/shared-kernel';
+import { randomUUID } from 'crypto';
 import { ExportService } from './export-service';
 
 const logger = createStructuredLogger({});
@@ -7,8 +9,203 @@ const POLL_INTERVAL_MS = parseInt(process.env.OUTBOX_POLL_INTERVAL_MS || '5000',
 const BATCH_SIZE = parseInt(process.env.OUTBOX_BATCH_SIZE || '50', 10);
 const MAX_ATTEMPTS = 5;
 const exportService = new ExportService();
+const iamQueryService = new IamQueryService(prisma);
 
 let isShuttingDown = false;
+let lastOverdueSweepTime = 0;
+const OVERDUE_SWEEP_INTERVAL_MS = 60 * 60 * 1000; // 1 hour
+
+async function handleWebsiteInquirySubmitted(payload: Record<string, unknown>) {
+  const inquiryId = payload.id as string | undefined;
+  const branchId = payload.branchId as string | undefined;
+  if (!inquiryId || !branchId) {
+    logger.warn('WebsiteInquirySubmitted payload missing id or branchId');
+    return;
+  }
+
+  // 1. Fetch active counselors in the branch via IamQueryService
+  const counselors = await iamQueryService.getActiveUsersByRoleAndBranch('Counselor', branchId);
+  if (counselors.length === 0) {
+    logger.warn(`No active counselors found for branch: ${branchId}. Auto-assignment skipped.`, { entityId: inquiryId, entityType: 'Inquiry' });
+    return;
+  }
+
+  // 2. Count active, non-terminal leads assigned to each counselor
+  const workloads = await Promise.all(
+    counselors.map(async (counselor) => {
+      const activeLeadsCount = await prisma.lead.count({
+        where: {
+          counselorId: counselor.id,
+          stage: {
+            notIn: ['Converted', 'Won', 'Lost'],
+          },
+          isDeleted: false,
+        },
+      });
+      return { counselorId: counselor.id, count: activeLeadsCount };
+    })
+  );
+
+  // 3. Find the lowest workload
+  const minCount = Math.min(...workloads.map((w) => w.count));
+  const candidateCounselors = workloads.filter((w) => w.count === minCount);
+
+  // 4. Random tie-breaker
+  const selected = candidateCounselors[Math.floor(Math.random() * candidateCounselors.length)];
+  const assignedCounselorId = selected.counselorId;
+
+  // 5. Persist counselorId on Inquiry and emit LeadAssigned event in transaction
+  await prisma.$transaction(async (tx) => {
+    const inquiry = await tx.inquiry.findUnique({
+      where: { id: inquiryId },
+      select: { inquiryNumber: true },
+    });
+    if (!inquiry) {
+      throw new Error(`Inquiry not found: ${inquiryId}`);
+    }
+
+    await tx.inquiry.update({
+      where: { id: inquiryId },
+      data: { counselorId: assignedCounselorId },
+    });
+
+    await tx.outboxEvent.create({
+      data: {
+        id: createUuid(randomUUID()),
+        eventType: 'LeadAssigned',
+        aggregateType: 'Inquiry',
+        aggregateId: inquiryId,
+        payload: {
+          inquiryId,
+          counselorId: assignedCounselorId,
+          inquiryNumber: inquiry.inquiryNumber,
+        },
+        status: 'Pending',
+        availableAt: new Date(),
+      },
+    });
+
+    // Write Audit Log
+    await tx.auditLog.create({
+      data: {
+        id: createUuid(randomUUID()),
+        module: 'LeadCrm',
+        performedBy: null, // System auto-assignment
+        performedAt: new Date(),
+        entityType: 'Inquiry',
+        entityId: inquiryId,
+        action: 'AutoAssign',
+        newValue: { counselorId: assignedCounselorId },
+        branchId,
+      },
+    });
+  });
+
+  logger.info(`Auto-assigned website inquiry ${inquiryId} to counselor ${assignedCounselorId}`);
+}
+
+async function sweepOverdueFollowUps() {
+  try {
+    logger.info('Starting overdue follow-ups sweep...');
+
+    // Sweep open follow-ups older than current_time - 60 minutes (excluding soft-deleted and terminal leads)
+    const sixtyMinutesAgo = new Date(Date.now() - 60 * 60 * 1000);
+    const overdueFollowUps = await prisma.leadFollowUp.findMany({
+      where: {
+        status: 'Scheduled',
+        followUpDate: { lte: sixtyMinutesAgo },
+        isDeleted: false,
+        lead: {
+          isDeleted: false,
+          stage: { notIn: ['Converted', 'Won', 'Lost'] },
+        },
+      },
+      include: {
+        lead: {
+          select: {
+            leadNumber: true,
+            branchId: true,
+          },
+        },
+      },
+    });
+
+    if (overdueFollowUps.length === 0) {
+      logger.info('No overdue follow-ups found.');
+      return;
+    }
+
+    logger.info(`Found ${overdueFollowUps.length} overdue follow-ups. Processing...`);
+
+    for (const followUp of overdueFollowUps) {
+      await prisma.$transaction(async (tx) => {
+        // Update status to 'Missed' in same transaction
+        await tx.leadFollowUp.update({
+          where: { id: followUp.id },
+          data: { status: 'Missed' },
+        });
+
+        // Recalculate parent lead nextFollowUpDate
+        const nextScheduled = await tx.leadFollowUp.findMany({
+          where: {
+            leadId: followUp.leadId,
+            status: 'Scheduled',
+            id: { not: followUp.id },
+            isDeleted: false,
+          },
+          orderBy: { followUpDate: 'asc' },
+          take: 1,
+        });
+
+        const newNextFollowUpDate = nextScheduled[0]?.followUpDate || null;
+
+        await tx.lead.update({
+          where: { id: followUp.leadId },
+          data: { nextFollowUpDate: newNextFollowUpDate },
+        });
+
+        // Write event to outbox
+        await tx.outboxEvent.create({
+          data: {
+            id: createUuid(randomUUID()),
+            eventType: 'FollowUpOverdue',
+            aggregateType: 'LeadFollowUp',
+            aggregateId: followUp.id,
+            payload: {
+              followUpId: followUp.id,
+              leadId: followUp.leadId,
+              counselorId: followUp.counselorId,
+              leadNumber: followUp.lead.leadNumber,
+              followUpDate: followUp.followUpDate,
+            },
+            status: 'Pending',
+            availableAt: new Date(),
+          },
+        });
+
+        // Write Audit Log
+        await tx.auditLog.create({
+          data: {
+            id: createUuid(randomUUID()),
+            module: 'LeadCrm',
+            performedBy: null, // System job
+            performedAt: new Date(),
+            entityType: 'LeadFollowUp',
+            entityId: followUp.id,
+            action: 'OverdueAlert',
+            newValue: { status: 'Missed' },
+            branchId: followUp.lead.branchId,
+          },
+        });
+      });
+      logger.info(`Marked follow-up ${followUp.id} as Missed and emitted FollowUpOverdue event.`);
+    }
+
+    logger.info('Finished overdue follow-ups sweep.');
+  } catch (err) {
+    logger.error('Error sweeping overdue follow-ups', { error: err as Error });
+  }
+}
 
 async function processOutboxEvents() {
   if (isShuttingDown) return;
@@ -36,9 +233,13 @@ async function processOutboxEvents() {
       try {
         logger.info('Processing outbox event', { entityId: event.id, entityType: event.eventType });
         
-        // TODO: In Phase 2, route event.payload to the actual domain handlers.
-        // For Phase 1, we just simulate processing to ensure the loop works.
-        await new Promise((resolve) => setTimeout(resolve, 50)); 
+        if (event.eventType === 'WebsiteInquirySubmitted') {
+          await handleWebsiteInquirySubmitted(event.payload as Record<string, unknown>);
+        } else {
+          // TODO: In Phase 2, route event.payload to the actual domain handlers.
+          // For Phase 1, we just simulate processing to ensure the loop works.
+          await new Promise((resolve) => setTimeout(resolve, 50)); 
+        }
         
         await prisma.outboxEvent.update({
           where: { id: event.id },
@@ -56,7 +257,6 @@ async function processOutboxEvents() {
         
         const newAttempts = event.attempts + 1;
         const newStatus = newAttempts >= MAX_ATTEMPTS ? 'Failed' : 'Pending';
-        // Exponential backoff could be added here by updating availableAt
         
         await prisma.outboxEvent.update({
           where: { id: event.id },
@@ -146,7 +346,13 @@ async function startWorker() {
   while (!isShuttingDown) {
     await processOutboxEvents();
     await processExportJobs();
-    // Wait for the next poll interval, or break early if shutting down
+    
+    const now = Date.now();
+    if (now - lastOverdueSweepTime >= OVERDUE_SWEEP_INTERVAL_MS) {
+      await sweepOverdueFollowUps();
+      lastOverdueSweepTime = now;
+    }
+
     for (let i = 0; i < POLL_INTERVAL_MS; i += 100) {
       if (isShuttingDown) break;
       await new Promise(resolve => setTimeout(resolve, 100));
@@ -157,7 +363,6 @@ async function startWorker() {
   await prisma.$disconnect();
 }
 
-// Graceful shutdown
 process.on('SIGINT', () => {
   logger.info('SIGINT received, shutting down gracefully...');
   isShuttingDown = true;

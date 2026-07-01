@@ -14,7 +14,7 @@ export class LeadConversionOrchestrator {
     return this.prisma.$transaction(async (tx) => {
       // 1. Mark the lead as converted. 
       // If it's already converted, this will throw an error and abort the tx.
-      const lead = await this.leadService.convertLead(leadId, documentLinks, tx);
+      const lead = await this.leadService.convertLead(leadId, documentLinks, tx, actorId);
 
       // 2. Create the Student and Admission record.
       // This will check for duplicates based on email/phone and throw an error if found.

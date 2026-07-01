@@ -170,7 +170,7 @@ export class InquiryApplicationService {
           phone: inquiry.mobile,
           interestedCourseId: input.interestedCourseId,
           source: inquiry.source as any,
-          counselorId: input.counselorId || null,
+          counselorId: input.counselorId || inquiry.counselorId || null,
           notes: input.qualificationNotes,
           personId: person.id,
           leadNumber,

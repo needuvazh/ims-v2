@@ -107,11 +107,10 @@ To restore files following database corruption:
         JOIN batches b ON bt.batch_id = b.id
         WHERE bt.trainer_id = 'TRAINER_UUID' AND bt.status = 'Active' AND bt.is_deleted = false;
         ```
-    2.  Check for date overlaps. If the date ranges overlap, identify the specific conflicting timetabled sessions in the Scheduling context:
-        ```sql
-        SELECT session_date, start_time, end_time, batch_id 
-        FROM timetable_sessions 
-        WHERE trainer_id = 'TRAINER_UUID' AND session_date BETWEEN 'START_DATE' AND 'END_DATE';
+    2.  Check for date overlaps. If the date ranges overlap, identify the specific conflicting timetabled sessions by querying the Scheduling context's internal API or Application Service, not by querying its database directly:
+        ```bash
+        curl -X GET -H "Authorization: Bearer $TOKEN" \
+          "https://api.asti-ims.com/api/v1/scheduling/trainers/TRAINER_UUID/sessions?startDate=START_DATE&endDate=END_DATE"
         ```
     3.  Coordinate with the branch manager of the conflicting batch. If the trainer was replaced but the database mapping was not updated, change the old assignment status to `Inactive` or update its `assignedTo` end date.
     4.  Retry the assignment.

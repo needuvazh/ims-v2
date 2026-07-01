@@ -181,6 +181,12 @@ export class LeadService {
       // Update lead
       await this.leadRepository.assignCounselor(leadId, counselorId, tx);
 
+      // Reassign all pending follow-ups to the new counselor
+      await tx.leadFollowUp.updateMany({
+        where: { leadId, status: 'Scheduled' },
+        data: { counselorId }
+      });
+
       // Appends an assignment log to FollowUp (Type: SystemAssignment, Outcome: Reassigned, Notes: "Lead reassigned")
       await tx.leadFollowUp.create({
         data: {
@@ -251,6 +257,17 @@ export class LeadService {
       // Update lead stage in repository (which enforces version-matching checks)
       await this.leadRepository.updateStage(leadId, targetStage, input.version, tx);
 
+      // Write LeadStageHistory
+      await tx.leadStageHistory.create({
+        data: {
+          id: createUuid(randomUUID()),
+          leadId,
+          oldStage: currentStage as any,
+          newStage: targetStage as any,
+          performedBy: actorId || '00000000-0000-0000-0000-000000000000',
+        },
+      });
+
       // Write Outbox Event
       await tx.outboxEvent.create({
         data: {
@@ -290,7 +307,7 @@ export class LeadService {
         throw new Error('ERR_CRM_LEAD_NOT_FOUND');
       }
 
-      if (lead.stage === 'Converted') {
+      if (lead.stage === 'Converted' || lead.stage === 'Won') {
         throw new Error('ERR_CRM_INVALID_STAGE_TRANSITION');
       }
 
@@ -299,12 +316,13 @@ export class LeadService {
         throw new Error('ERR_CRM_LOST_REASON_REQUIRED');
       }
 
-      // Update lead attributes
+      // Update lead attributes and nullify nextFollowUpDate
       await this.leadRepository.updateLead(
         leadId,
         {
           lostReasonCode: input.lostReasonCode,
           lostReasonNotes: input.lostReasonNotes,
+          nextFollowUpDate: null,
           version: lead.version, // optimistic lock
         },
         tx
@@ -312,6 +330,19 @@ export class LeadService {
 
       // Change Stage to Lost
       await this.leadRepository.updateStage(leadId, 'Lost', lead.version + 1, tx);
+
+      // Write LeadStageHistory
+      await tx.leadStageHistory.create({
+        data: {
+          id: createUuid(randomUUID()),
+          leadId,
+          oldStage: lead.stage as any,
+          newStage: 'Lost',
+          lostReasonCode: input.lostReasonCode,
+          lostReasonNotes: input.lostReasonNotes,
+          performedBy: actorId || '00000000-0000-0000-0000-000000000000',
+        },
+      });
 
       // Cancel all outstanding Scheduled follow-ups
       const cancelledCount = await this.followUpRepository.cancelAllScheduled(leadId, tx);
@@ -356,7 +387,7 @@ export class LeadService {
 
   // 5. Decoupled Admissions Handoff (Convert Lead)
   // This verifies Won preconditions inside CRM context boundary and transitions stage to Converted.
-  async convertLead(leadId: string, documentLinks: string[], tx: Prisma.TransactionClient) {
+  async convertLead(leadId: string, documentLinks: string[], tx: Prisma.TransactionClient, actorId?: string) {
     const lead = await this.leadRepository.findById(leadId, tx);
     if (!lead) {
       throw new Error('ERR_CRM_LEAD_NOT_FOUND');
@@ -381,8 +412,41 @@ export class LeadService {
     // 1. Transition Stage to Won
     await this.leadRepository.updateStage(leadId, 'Won', lead.version, tx);
 
+    await tx.leadStageHistory.create({
+      data: {
+        id: createUuid(randomUUID()),
+        leadId,
+        oldStage: lead.stage as any,
+        newStage: 'Won',
+        performedBy: actorId || '00000000-0000-0000-0000-000000000000',
+      },
+    });
+
     // 2. Perform conversion / handoff transition to Converted
     await this.leadRepository.updateStage(leadId, 'Converted', lead.version + 1, tx);
+
+    await tx.leadStageHistory.create({
+      data: {
+        id: createUuid(randomUUID()),
+        leadId,
+        oldStage: 'Won',
+        newStage: 'Converted',
+        performedBy: actorId || '00000000-0000-0000-0000-000000000000',
+      },
+    });
+
+    // 3. Nullify nextFollowUpDate
+    await this.leadRepository.updateLead(
+      leadId,
+      {
+        nextFollowUpDate: null,
+        version: lead.version + 2,
+      },
+      tx
+    );
+
+    // Cancel all outstanding Scheduled follow-ups
+    await this.followUpRepository.cancelAllScheduled(leadId, tx);
 
     // 3. Write Outbox Events
     await tx.outboxEvent.createMany({
@@ -423,44 +487,157 @@ export class LeadService {
     return this.leadRepository.findAll(filters, pagination, this.prisma);
   }
 
-  async updateLead(leadId: string, data: any, tx?: Prisma.TransactionClient) {
+  async updateLead(leadId: string, data: any, tx?: Prisma.TransactionClient, actorId?: string) {
     const client = tx || this.prisma;
-
-    // Check for duplicate leads before updating if branchId, phone, email, and interestedCourseId are modified
-    if (data.branchId && data.phone && data.interestedCourseId) {
-      const thirtyDaysAgo = new Date();
-      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-
-      const dupConditions: Prisma.LeadWhereInput[] = [
-        { phone: data.phone, interestedCourseId: data.interestedCourseId }
-      ];
-      if (data.email) {
-        dupConditions.push({ email: data.email, interestedCourseId: data.interestedCourseId });
+    const execute = async (client: Prisma.TransactionClient) => {
+      const originalLead = await this.leadRepository.findById(leadId, client);
+      if (!originalLead) {
+        throw new Error('ERR_CRM_LEAD_NOT_FOUND');
       }
 
-      const existingLead = await client.lead.findFirst({
-        where: {
-          id: { not: leadId },
-          branchId: data.branchId,
-          OR: dupConditions,
-          stage: { notIn: ['Converted', 'Lost'] },
-          isDeleted: false,
-          createdAt: { gte: thirtyDaysAgo },
+      // Resolve original lead state to perform robust duplicate check on partial updates
+      if (data.phone || data.email || data.branchId || data.interestedCourseId) {
+        const checkPhone = data.phone !== undefined ? data.phone : originalLead.phone;
+        const checkEmail = data.email !== undefined ? data.email : originalLead.email;
+        const checkBranch = data.branchId !== undefined ? data.branchId : originalLead.branchId;
+        const checkCourse = data.interestedCourseId !== undefined ? data.interestedCourseId : originalLead.interestedCourseId;
+
+        // Only check if fields actually changed to avoid false warnings on unchanged values
+        const phoneChanged = data.phone !== undefined && data.phone !== originalLead.phone;
+        const emailChanged = data.email !== undefined && data.email !== originalLead.email;
+        const branchChanged = data.branchId !== undefined && data.branchId !== originalLead.branchId;
+        const courseChanged = data.interestedCourseId !== undefined && data.interestedCourseId !== originalLead.interestedCourseId;
+
+        if (phoneChanged || emailChanged || branchChanged || courseChanged) {
+          const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+          
+          // Build duplicate check conditions
+          const dupConditions: Prisma.LeadWhereInput[] = [];
+          if (checkPhone) {
+            dupConditions.push({ phone: checkPhone, interestedCourseId: checkCourse });
+          }
+          if (checkEmail) {
+            dupConditions.push({ email: checkEmail, interestedCourseId: checkCourse });
+          }
+
+          if (dupConditions.length > 0) {
+            const existingLead = await client.lead.findFirst({
+              where: {
+                branchId: checkBranch,
+                id: { not: leadId },
+                OR: dupConditions,
+                stage: { notIn: ['Converted', 'Lost'] },
+                isDeleted: false,
+                createdAt: { gte: thirtyDaysAgo },
+              },
+              select: { id: true },
+            });
+
+            if (existingLead && !data.bypassDuplicateBlock) {
+              throw new Error('ERR_CRM_DUPLICATE_LEAD_DETECTED');
+            }
+          }
+        }
+      }
+
+      await this.leadRepository.updateLead(leadId, data, client);
+
+      // Audit Log
+      await client.auditLog.create({
+        data: {
+          id: createUuid(randomUUID()),
+          module: 'LeadCrm',
+          performedBy: actorId || null,
+          performedAt: new Date(),
+          entityType: 'Lead',
+          entityId: leadId,
+          action: 'Update',
+          oldValue: {
+            firstName: originalLead.firstName,
+            lastName: originalLead.lastName,
+            email: originalLead.email,
+            phone: originalLead.phone,
+            notes: originalLead.notes,
+            branchId: originalLead.branchId,
+            interestedCourseId: originalLead.interestedCourseId,
+          },
+          newValue: {
+            firstName: data.firstName !== undefined ? data.firstName : originalLead.firstName,
+            lastName: data.lastName !== undefined ? data.lastName : originalLead.lastName,
+            email: data.email !== undefined ? data.email : originalLead.email,
+            phone: data.phone !== undefined ? data.phone : originalLead.phone,
+            notes: data.notes !== undefined ? data.notes : originalLead.notes,
+            branchId: data.branchId !== undefined ? data.branchId : originalLead.branchId,
+            interestedCourseId: data.interestedCourseId !== undefined ? data.interestedCourseId : originalLead.interestedCourseId,
+          },
+          branchId: originalLead.branchId,
         },
-        select: { id: true },
       });
 
-      if (existingLead && !data.bypassDuplicateBlock) {
-        throw new Error('ERR_CRM_DUPLICATE_LEAD_DETECTED');
-      }
-    }
+      // Outbox Event
+      await client.outboxEvent.create({
+        data: {
+          id: createUuid(randomUUID()),
+          eventType: 'LeadUpdated',
+          aggregateType: 'Lead',
+          aggregateId: leadId,
+          payload: {
+            leadId,
+            leadNumber: originalLead.leadNumber,
+            firstName: data.firstName !== undefined ? data.firstName : originalLead.firstName,
+            lastName: data.lastName !== undefined ? data.lastName : originalLead.lastName,
+            phone: data.phone !== undefined ? data.phone : originalLead.phone,
+            email: data.email !== undefined ? data.email : originalLead.email,
+          },
+          status: 'Pending',
+          availableAt: new Date(),
+        },
+      });
+    };
 
-    return this.leadRepository.updateLead(leadId, data, client);
+    return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
 
   async deleteLead(leadId: string, actorId: string, tx?: Prisma.TransactionClient) {
     const client = tx || this.prisma;
-    return this.leadRepository.deleteLead(leadId, actorId, client);
+    const execute = async (client: Prisma.TransactionClient) => {
+      const lead = await this.leadRepository.findById(leadId, client);
+      if (!lead) {
+        throw new Error('ERR_CRM_LEAD_NOT_FOUND');
+      }
+
+      await this.leadRepository.deleteLead(leadId, actorId, client);
+
+      // Audit deletion
+      await client.auditLog.create({
+        data: {
+          id: createUuid(randomUUID()),
+          module: 'LeadCrm',
+          performedBy: actorId,
+          performedAt: new Date(),
+          entityType: 'Lead',
+          entityId: leadId,
+          action: 'Delete',
+          newValue: { isDeleted: true, status: 'Archived' },
+          branchId: lead.branchId,
+        },
+      });
+
+      // Write Outbox Event
+      await client.outboxEvent.create({
+        data: {
+          id: createUuid(randomUUID()),
+          eventType: 'LeadDeleted',
+          aggregateType: 'Lead',
+          aggregateId: leadId,
+          payload: { leadId, leadNumber: lead.leadNumber },
+          status: 'Pending',
+          availableAt: new Date(),
+        },
+      });
+    };
+
+    return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
 }
 

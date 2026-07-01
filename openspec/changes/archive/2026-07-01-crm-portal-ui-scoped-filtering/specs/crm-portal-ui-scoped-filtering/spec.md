@@ -63,13 +63,21 @@ To prevent profile drift and satisfy admissions validation checks, any creation 
 ### Requirement: Security Boundary Assertions (Branch & Counselor Isolation)
 The system SHALL assert active branch boundaries and counselor-level assignment boundaries.
 - Inquiry qualification MUST be blocked if the counselor's session branch context does not cover the inquiry's branch.
-- Accessing or modifying a lead assigned to another counselor (for non-global readers) MUST throw `ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION` instead of general branch scope errors.
-- The system SHALL enforce granular RBAC permissions (e.g. `lead.create`, `lead.update`, `lead.lost`, `lead.assign`, `lead.convert`) server-side.
+- Accessing, modifying, or deleting a lead assigned to another counselor (for non-global readers) MUST throw `ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION` instead of general branch scope errors.
+- The system SHALL enforce granular RBAC permissions (e.g. `lead.create`, `lead.update`, `lead.delete`, `lead.lost`, `lead.assign`, `lead.convert`) server-side.
 
 #### Scenario: Unauthorized inquiry qualification
 - **WHEN** a user from Branch "Central Campus" attempts to qualify an inquiry belonging to Branch "West Campus"
 - **THEN** the server rejects the request with a branch scope violation
 
-#### Scenario: Counselor accessing another counselor's lead
-- **WHEN** a counselor without `crm.leads.read.all` attempts to read or update a lead assigned to another counselor
+#### Scenario: Counselor accessing or deleting another counselor's lead
+- **WHEN** a counselor without `crm.leads.read.all` attempts to read, update, or delete a lead assigned to another counselor
 - **THEN** the server returns `ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION`
+
+### Requirement: Robust Duplicate Lead Verification on Updates
+To ensure reliable duplicate detection on partial updates (e.g. PATCH calls), the system MUST merge the update properties with the existing lead details from the database (for branch, phone, email, and course fields) before performing the 30-day active duplicate check.
+
+#### Scenario: Partial update causing duplicate collision
+- **WHEN** a counselor updates only the `phone` field of a lead, and the merged state (same branch and course) matches an active lead from the past 30 days
+- **THEN** the system triggers `ERR_CRM_DUPLICATE_LEAD_DETECTED` unless bypassed
+

@@ -39,6 +39,7 @@ The system MUST support base CRUD operations, stage progression, and counselor a
 #### Scenario: Assign Counselor
 - **WHEN** A manager assigns a counselor to a lead.
 - **THEN** The system MUST verify the counselor is active in that branch, update `counselorId` on the lead, and write a `LeadAssigned` event to the outbox.
+- **AND** Reassign all pending `Scheduled` follow-ups to the newly assigned counselor.
 
 #### Scenario: Optimistic Concurrency Control
 - **WHEN** A user updates a Lead stage.
@@ -49,6 +50,7 @@ The system MUST support base CRUD operations, stage progression, and counselor a
 #### Scenario: Lead stage transition to Lost
 - **WHEN** A user transitions a lead stage to "Lost".
 - **THEN** The request MUST fail validation if a valid `lostReasonCode` is not provided, or if `lostReasonNotes` contains less than 15 characters.
+- **AND** The system MUST prevent transitioning to "Lost" if the lead is currently in "Converted" or "Won" stages.
 - **AND** The system MUST persist the lost reason, cancel all outstanding `Scheduled` follow-ups for this lead, log the transition into the dedicated `LeadStageHistory` table, and write a `LeadLost` event to the outbox.
 
 #### Scenario: Lead stage transition to Won & Admissions Handoff
@@ -56,6 +58,7 @@ The system MUST support base CRUD operations, stage progression, and counselor a
 - **THEN** The system MUST validate Won preconditions: email and phone are valid, interested course is active, birthdate (`dateOfBirth` on `Person`) is not null, and at least one active document of type `CIVIL_ID_FRONT` or `PASSPORT_SCAN` is uploaded.
 - **AND** The system MUST call the Admissions context's `createAdmissionFromLead(leadId, tx)` synchronously inside the transaction to create a student profile and admission record.
 - **AND** Transition the lead stage to `Converted`.
+- **AND** Cancel all outstanding `Scheduled` follow-ups for this lead.
 - **AND** Write `LeadWon` and `LeadConvertedToAdmission` events to the outbox.
 
 #### Scenario: Stage history logging

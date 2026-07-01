@@ -156,6 +156,7 @@ export const LogFollowUpOutcomeSchema = z.object({
   outcome: z.enum(['Answered', 'Busy', 'SwitchedOff', 'NoResponse', 'NotInterested', 'Interested', 'VisitScheduled']),
   outcomeNotes: z.string().min(15, 'Outcome notes must contain conversation detail'),
   scheduleNext: z.boolean(),
+  version: z.number().int('Optimistic concurrency version required'),
   nextFollowUpDate: z.string().datetime().optional().nullable(),
   nextFollowUpType: z.enum(['Call', 'WhatsApp', 'Email', 'Visit']).optional().nullable(),
   nextFollowUpAgenda: z.string().max(250).optional().nullable(),
