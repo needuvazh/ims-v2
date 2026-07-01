@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/layout.tsx": {
-    "mtime": 1782898169.4736087,
-    "ast_hash": "5229c4f8c57a07d4dcad2d7958c1d975",
+    "mtime": 1782931060.4890103,
+    "ast_hash": "2de932c43e47cb5e2810d8f3ae3fbd54",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/loading.tsx": {
@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/lib/runtime.ts": {
-    "mtime": 1782900268.078138,
-    "ast_hash": "2da69c14ade978f840b1d8c63b33db89",
+    "mtime": 1782930009.2837832,
+    "ast_hash": "fd66df0e3392c7ce1a891a6798e6bab3",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/page.tsx": {
@@ -295,8 +295,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/trainer/(protected)/schedule/page.tsx": {
-    "mtime": 1782679686.6079047,
-    "ast_hash": "9485c6728855f6efbde7dd59575dafc7",
+    "mtime": 1782930168.352985,
+    "ast_hash": "e06dc724df077c2a2596fe2e9235c08a",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/trainer/page.tsx": {
@@ -320,7 +320,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/next-env.d.ts": {
-    "mtime": 1782892828.6926985,
+    "mtime": 1782930326.62981,
     "ast_hash": "d0f8375ae1199dc7acd3977fc33b78b8",
     "semantic_hash": ""
   },
@@ -330,8 +330,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/package.json": {
-    "mtime": 1782897824.9090126,
-    "ast_hash": "83af910eacf84179d2871f080cd8fac0",
+    "mtime": 1782930013.532643,
+    "ast_hash": "528f7a4673e75817859ce749a395d1e2",
     "semantic_hash": ""
   },
   "apps/admin-portal/postcss.config.mjs": {
@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "packages/database/prisma/seed.ts": {
-    "mtime": 1782897428.990885,
-    "ast_hash": "1c0bad8f2ae8dd439ef81e5fa8bde179",
+    "mtime": 1782931107.3104763,
+    "ast_hash": "fe3eea057143e60905450f887722ca00",
     "semantic_hash": ""
   },
   "packages/database/src/client.ts": {
@@ -495,8 +495,8 @@
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/access.ts": {
-    "mtime": 1782898161.272954,
-    "ast_hash": "9e905ce2e34621c9a0238f9126e58922",
+    "mtime": 1782931057.899556,
+    "ast_hash": "be26f3fab8f12e8c5e8bafeb21268db7",
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/role.ts": {
@@ -2279,99 +2279,14 @@
     "ast_hash": "89a8767f136a4b7813ac2c081539c833",
     "semantic_hash": ""
   },
-  "docs/architecture/frd/Module 10: Faculty Or Trainer Management.md": {
-    "mtime": 1782925707.519788,
-    "ast_hash": "f35b7e021d6d467fcc92df7431fdd991",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 11: Corporate Training Management.md": {
-    "mtime": 1782679686.7268069,
-    "ast_hash": "3e59e89631714093030123750763d3b0",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 12: Exam, Result & Completion Management.md": {
-    "mtime": 1782679686.7297165,
-    "ast_hash": "d3c2ab1de71d44babe01a60a1910419b",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 13: Certificate Management.md": {
-    "mtime": 1782679686.7317178,
-    "ast_hash": "da09c1dbc05cc6dfa1efa2f03742be28",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 14: Document Management.md": {
-    "mtime": 1782679686.7323728,
-    "ast_hash": "b5f7a699a93e8ce06763f859abef97b6",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 15: Communication Management.md": {
-    "mtime": 1782679686.7334056,
-    "ast_hash": "020d645046bf127680439b22f08f37cf",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 16: Reports & Dashboard Management.md": {
-    "mtime": 1782679686.7357447,
-    "ast_hash": "06b70ba329434a1799dac651ae5bfacc",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 17: Identity, Access Control & Security Management (RBAC).md": {
-    "mtime": 1782679686.7373428,
-    "ast_hash": "60e6cc5d97fcf6ff3c84ed81055ac185",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 18: Audit, Compliance & Activity Tracking.md": {
-    "mtime": 1782679686.7403402,
-    "ast_hash": "ad617443889741fa66bb8f3b4cb13b1a",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 19: Lead, Inquiry & CRM Management.md": {
-    "mtime": 1782679686.74295,
-    "ast_hash": "52914d47ee6fc17295715d8514f0b021",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 3: Lead & Inquiry Management.md": {
-    "mtime": 1782679686.7646616,
-    "ast_hash": "a3a4636f6051199103be368dd7cd5c09",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 4: Admission & Enrollment Management.md": {
-    "mtime": 1782923256.6220868,
-    "ast_hash": "d35e5d4af89e1c1e9d7871d8ea2007da",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 5: Student Management.md": {
-    "mtime": 1782679686.7679803,
-    "ast_hash": "43b5c4cd3c11ef2bbfdd5676bd98b56b",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 6: Course & Batch Management.md": {
-    "mtime": 1782926421.2768815,
-    "ast_hash": "7c4995c185f855319e207d10b8e5d4a6",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 7: Scheduling & Timetable Management.md": {
-    "mtime": 1782926792.8668609,
-    "ast_hash": "7d20c86d5bb6a43728739b15b528e9c4",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 8: Attendance Management.md": {
-    "mtime": 1782679686.771016,
-    "ast_hash": "b8a2fe566da6ab74f687883e6fc56391",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 9: Fee & Finance Management.md": {
-    "mtime": 1782679686.7736163,
-    "ast_hash": "58e95fa8bba31bc3497d816712ac9b26",
-    "semantic_hash": ""
-  },
   "docs/ims-technology-stack-recommendation.md": {
     "mtime": 1782679686.7989366,
     "ast_hash": "2db71e9916ffa0bab6c2e983d7fc879b",
     "semantic_hash": ""
   },
   "docs/project-status.md": {
-    "mtime": 1782897937.5816877,
-    "ast_hash": "6445e1e049381581c2faae2648850dd1",
+    "mtime": 1782927834.4898152,
+    "ast_hash": "292abaa18be4d2e181f6a36c0ebaf9f3",
     "semantic_hash": ""
   },
   "memory/PRD.md": {
@@ -2645,8 +2560,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/page.tsx": {
-    "mtime": 1782873039.9045515,
-    "ast_hash": "aa951ef9c012b4d219c3297ad65af001",
+    "mtime": 1782927511.3870633,
+    "ast_hash": "8195b07604720e6ee5d2fb71a877f9df",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/organization/branches/[id]/edit/page.tsx": {
@@ -2735,13 +2650,13 @@
     "semantic_hash": ""
   },
   "apps/worker/package.json": {
-    "mtime": 1782883912.9128363,
-    "ast_hash": "56c6f169a9aea479e1fcb729e33ff379",
+    "mtime": 1782930631.950474,
+    "ast_hash": "082a6c510cbe6c38b7590155c44bac42",
     "semantic_hash": ""
   },
   "apps/worker/src/index.ts": {
-    "mtime": 1782895076.9668694,
-    "ast_hash": "a206e1e0a4336dfb27dff8ab2f2246f9",
+    "mtime": 1782930646.0791194,
+    "ast_hash": "01cdf296c9d62350b6ea927e5832b7c3",
     "semantic_hash": ""
   },
   "apps/worker/tsconfig.json": {
@@ -2810,8 +2725,8 @@
     "semantic_hash": ""
   },
   "packages/crm-leads/src/infrastructure/lead-repository.ts": {
-    "mtime": 1782895070.7215767,
-    "ast_hash": "ecbf6ddaa92a2d378c9e2ffb6c59ff21",
+    "mtime": 1782927503.6543338,
+    "ast_hash": "d9be254858f92addf4616b06dc903586",
     "semantic_hash": ""
   },
   "packages/crm-leads/tsconfig.json": {
@@ -3630,8 +3545,8 @@
     "semantic_hash": ""
   },
   "docs/architecture/ddd/ER Model.md": {
-    "mtime": 1782926720.6100097,
-    "ast_hash": "e0cbbf7cc749b96a6babb0b0ae869e55",
+    "mtime": 1782928824.322021,
+    "ast_hash": "0e0728de11de5da8323885822c417eb0",
     "semantic_hash": ""
   },
   "docs/architecture/ddd/ddd-context-map.md": {
@@ -4395,8 +4310,8 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
-    "mtime": 1782926171.3337386,
-    "ast_hash": "58963ba0b9dd4f3a252b9b40791d85b3",
+    "mtime": 1782928857.7874432,
+    "ast_hash": "ac853c472ffd3a5d9688047a4ab7c567",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
@@ -4410,8 +4325,8 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
-    "mtime": 1782926184.846797,
-    "ast_hash": "797af01a9d46f15414b52eab04614ae5",
+    "mtime": 1782928864.6948497,
+    "ast_hash": "a5311a151ea8258fa2a152de942a0118",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 5 \u2013 API Contracts.md": {
@@ -4455,8 +4370,8 @@
     "semantic_hash": ""
   },
   "prompts/useful_prompts.md": {
-    "mtime": 1782925143.0294619,
-    "ast_hash": "aaa6f12d523a8a6abb4037fc4ac215fd",
+    "mtime": 1782930619.5449772,
+    "ast_hash": "fd1ed7db7f12fe9d57464d58808da621",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/crm/inquiries/[id]/qualify/route.ts": {
@@ -4550,8 +4465,8 @@
     "semantic_hash": ""
   },
   "packages/crm-leads/src/infrastructure/inquiry-repository.ts": {
-    "mtime": 1782876003.6259604,
-    "ast_hash": "e00d3a9b936a8e0318131a78dd8009c3",
+    "mtime": 1782927550.2480626,
+    "ast_hash": "439b43e6f69cff4ef4574236c003b5bc",
     "semantic_hash": ""
   },
   "packages/database/prisma/migrations/20260630180239_init_crm_models/migration.sql": {
@@ -4635,13 +4550,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/[id]/edit/page.tsx": {
-    "mtime": 1782873607.4671378,
-    "ast_hash": "04a1725bc847a2e378f76fc306059e48",
+    "mtime": 1782927525.121473,
+    "ast_hash": "e18854f4e98fb526fad18d4c2e8fdad7",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/create/page.tsx": {
-    "mtime": 1782873603.3295734,
-    "ast_hash": "21bfa2e2b4e076425442d61b2cd2f5ca",
+    "mtime": 1782927518.7295578,
+    "ast_hash": "60299b42da37b18c4dde9c0c294bc3f8",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/[id]/_components/lead-details-client.tsx": {
@@ -4650,8 +4565,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/[id]/page.tsx": {
-    "mtime": 1782893830.606601,
-    "ast_hash": "376ffb40954f8dd2b5b1ae153bf4fe87",
+    "mtime": 1782927530.3839872,
+    "ast_hash": "ee8d774147dbf5d4d238760fdbaba9a3",
     "semantic_hash": ""
   },
   "packages/database/prisma/migrations/20260701033404_add_lead_notes/migration.sql": {
@@ -4720,8 +4635,8 @@
     "semantic_hash": ""
   },
   "tests/e2e/auto-assignment.spec.ts": {
-    "mtime": 1782884173.7293842,
-    "ast_hash": "ad7af88c9354ec5d32c5a44d006859b6",
+    "mtime": 1782927482.4757197,
+    "ast_hash": "4fbfacd6b237d97f5027e8be36ec2415",
     "semantic_hash": ""
   },
   "packages/crm-leads/src/application/followup-workflows.test.ts": {
@@ -4860,8 +4775,8 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Faculty_Trainer_Prompts.md": {
-    "mtime": 1782924888.9136405,
-    "ast_hash": "1226456bac6421635176ec8c9dc20bf5",
+    "mtime": 1782927074.6971233,
+    "ast_hash": "145415583715cdf6d7138664a9831155",
     "semantic_hash": ""
   },
   "packages/crm-leads/src/application/followup-scheduler-service.test.ts": {
@@ -5044,31 +4959,6 @@
     "ast_hash": "bf78f855d6a0425db6bc305ffd968e0f",
     "semantic_hash": ""
   },
-  "openspec/changes/course-catalog-spec/.openspec.yaml": {
-    "mtime": 1782921622.060209,
-    "ast_hash": "bf78f855d6a0425db6bc305ffd968e0f",
-    "semantic_hash": ""
-  },
-  "openspec/changes/course-catalog-spec/design.md": {
-    "mtime": 1782926202.346993,
-    "ast_hash": "fd5f8323e71447b0f4b08225b2577a9a",
-    "semantic_hash": ""
-  },
-  "openspec/changes/course-catalog-spec/proposal.md": {
-    "mtime": 1782926198.5614703,
-    "ast_hash": "cd807032c7973698e0f61ac190536fc8",
-    "semantic_hash": ""
-  },
-  "openspec/changes/course-catalog-spec/specs/course-catalog/spec.md": {
-    "mtime": 1782926206.5828464,
-    "ast_hash": "16d59c295b17d62d82dca391330e163f",
-    "semantic_hash": ""
-  },
-  "openspec/changes/course-catalog-spec/tasks.md": {
-    "mtime": 1782926210.5826986,
-    "ast_hash": "08dcd0b517928f8a75af36a812df39a2",
-    "semantic_hash": ""
-  },
   "openspec/changes/course-pricing-discounts-spec/.openspec.yaml": {
     "mtime": 1782921637.292423,
     "ast_hash": "bf78f855d6a0425db6bc305ffd968e0f",
@@ -5080,23 +4970,23 @@
     "semantic_hash": ""
   },
   "openspec/changes/batch-delivery-spec/design.md": {
-    "mtime": 1782922218.8858972,
-    "ast_hash": "52be1c4f780295c0581e38ca025fa597",
+    "mtime": 1782929764.0009832,
+    "ast_hash": "c0d6d57df838bc8158372ba970466034",
     "semantic_hash": ""
   },
   "openspec/changes/batch-delivery-spec/proposal.md": {
-    "mtime": 1782921692.0531337,
-    "ast_hash": "a5e60bdf04631eca4924968c40f40463",
+    "mtime": 1782929757.90048,
+    "ast_hash": "a4b01df5ce7069e308d9461cf2e28499",
     "semantic_hash": ""
   },
   "openspec/changes/batch-delivery-spec/specs/batch-delivery/spec.md": {
-    "mtime": 1782922531.6829052,
-    "ast_hash": "9b271aa4afef304a7c25185aa0410c6e",
+    "mtime": 1782929770.5356019,
+    "ast_hash": "8b781d6d0e00a3ffcf1b7662b3d60b9f",
     "semantic_hash": ""
   },
   "openspec/changes/batch-delivery-spec/tasks.md": {
-    "mtime": 1782922222.6662462,
-    "ast_hash": "ab8259d61897d38c168332e40e860ce9",
+    "mtime": 1782930411.2354383,
+    "ast_hash": "8b57ac03b3462bfc71da6284ff489259",
     "semantic_hash": ""
   },
   "openspec/changes/batch-waitlist-spec/design.md": {
@@ -5157,6 +5047,291 @@
   "openspec/changes/trainer-assignment-spec/tasks.md": {
     "mtime": 1782921712.1336665,
     "ast_hash": "bb3b36a0dcd9c43371c84dc3ce070db1",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/courses/[id]/route.ts": {
+    "mtime": 1782928226.9383821,
+    "ast_hash": "5e3abeab2c23bc419d1cea6a3d23cb68",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/courses/[id]/status/route.ts": {
+    "mtime": 1782928231.8467584,
+    "ast_hash": "56dd464d6f859480ffcac7063fe08259",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/courses/categories/route.ts": {
+    "mtime": 1782927569.4390202,
+    "ast_hash": "3e2910cd5448704793d839274302d22f",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/courses/route.ts": {
+    "mtime": 1782927559.0218036,
+    "ast_hash": "cb3e437d687338486f2c37fc40ab9a65",
+    "semantic_hash": ""
+  },
+  "packages/course-catalog/package.json": {
+    "mtime": 1782927413.2300375,
+    "ast_hash": "3cf678e49655b557456e1128e6d235a8",
+    "semantic_hash": ""
+  },
+  "packages/course-catalog/src/application/category-service.ts": {
+    "mtime": 1782929023.4899313,
+    "ast_hash": "d60fec7ddb70bb931fcf04c109e43f05",
+    "semantic_hash": ""
+  },
+  "packages/course-catalog/src/application/course-service.ts": {
+    "mtime": 1782929018.3411295,
+    "ast_hash": "ed30ef22c4a25656c455ae2f5bbed8b7",
+    "semantic_hash": ""
+  },
+  "packages/course-catalog/src/domain/course.ts": {
+    "mtime": 1782927426.4488523,
+    "ast_hash": "b5d4f6fb571a65cc74cb5a5e6a6a48f5",
+    "semantic_hash": ""
+  },
+  "packages/course-catalog/src/domain/errors.ts": {
+    "mtime": 1782927419.247118,
+    "ast_hash": "1fb1b431324c837b9f09743cea63b61d",
+    "semantic_hash": ""
+  },
+  "packages/course-catalog/src/domain/repositories.ts": {
+    "mtime": 1782927430.0268302,
+    "ast_hash": "57d7fbbc835c2d44a5134cec00db1808",
+    "semantic_hash": ""
+  },
+  "packages/course-catalog/src/domain/validation-schemas.ts": {
+    "mtime": 1782927423.6733415,
+    "ast_hash": "ec06db969be1be6b3ea8ee3d4cbf78c1",
+    "semantic_hash": ""
+  },
+  "packages/course-catalog/src/index.ts": {
+    "mtime": 1782927457.188589,
+    "ast_hash": "7dc25313aed5caae1570e95d5507d3b6",
+    "semantic_hash": ""
+  },
+  "packages/course-catalog/src/infrastructure/category-repository.ts": {
+    "mtime": 1782927441.4973056,
+    "ast_hash": "27c10f1358f819d504b66a390af1aadf",
+    "semantic_hash": ""
+  },
+  "packages/course-catalog/src/infrastructure/course-repository.ts": {
+    "mtime": 1782927437.378228,
+    "ast_hash": "b89d4bad009e7781ebab282f9db19f51",
+    "semantic_hash": ""
+  },
+  "packages/course-catalog/tests/course-catalog.spec.ts": {
+    "mtime": 1782927700.2944376,
+    "ast_hash": "bff1b22806125da5086eb8f61786f703",
+    "semantic_hash": ""
+  },
+  "packages/course-catalog/tsconfig.json": {
+    "mtime": 1782927415.2232828,
+    "ast_hash": "498cb392b5b47c698707ae678582271a",
+    "semantic_hash": ""
+  },
+  "packages/database/prisma/migrations/20260701173637_init_course_catalog/migration.sql": {
+    "mtime": 1782927397.0731351,
+    "ast_hash": "63267963a2d3ed07596429ec01cd9470",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/courses-catalog/[id]/edit/_components/course-edit-client.tsx": {
+    "mtime": 1782928088.16867,
+    "ast_hash": "06c490b1d731f62f6097ecba81d384da",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/courses-catalog/[id]/edit/page.tsx": {
+    "mtime": 1782927928.6897664,
+    "ast_hash": "715ff97d55ca61ea9fe3541c979fe6ee",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/courses-catalog/_components/course-form.tsx": {
+    "mtime": 1782928492.4258184,
+    "ast_hash": "a3a2a1ec006ac7e6a218f95cd072a36e",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/courses-catalog/_components/courses-client-list.tsx": {
+    "mtime": 1782928243.9117446,
+    "ast_hash": "9ba06e0264368bd516d04ba141305d17",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/courses-catalog/actions.ts": {
+    "mtime": 1782927975.8466556,
+    "ast_hash": "79c1cb6cef9e14958c03de21c4e12c19",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/courses-catalog/new/page.tsx": {
+    "mtime": 1782927919.9533498,
+    "ast_hash": "6ac069c69a40229bd0d1d3da3616039d",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/courses-catalog/page.tsx": {
+    "mtime": 1782927615.1063979,
+    "ast_hash": "6b426ec88a95486302fc9930cd4ed893",
+    "semantic_hash": ""
+  },
+  "tests/course-catalog.spec.ts": {
+    "mtime": 1782928405.1026297,
+    "ast_hash": "80c04dc8676da2085566ce54c0aeff42",
+    "semantic_hash": ""
+  },
+  "tests/e2e/courses.spec.ts": {
+    "mtime": 1782927964.1776917,
+    "ast_hash": "67a80430b2a924727a4b292eaddabf2b",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-course-catalog-spec/.openspec.yaml": {
+    "mtime": 1782921622.060209,
+    "ast_hash": "bf78f855d6a0425db6bc305ffd968e0f",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-course-catalog-spec/design.md": {
+    "mtime": 1782928868.9060876,
+    "ast_hash": "dab045fdbec02550726e2b385b8facbd",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-course-catalog-spec/proposal.md": {
+    "mtime": 1782926198.5614703,
+    "ast_hash": "cd807032c7973698e0f61ac190536fc8",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-course-catalog-spec/specs/course-catalog/spec.md": {
+    "mtime": 1782926206.5828464,
+    "ast_hash": "16d59c295b17d62d82dca391330e163f",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-01-course-catalog-spec/tasks.md": {
+    "mtime": 1782928960.2006514,
+    "ast_hash": "027819e682527c103d9f0db040b3553c",
+    "semantic_hash": ""
+  },
+  "openspec/specs/course-catalog/spec.md": {
+    "mtime": 1782929193.0761518,
+    "ast_hash": "3d28fcffb05790b573404e7031f80f7f",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/batches/[id]/page.tsx": {
+    "mtime": 1782931818.929169,
+    "ast_hash": "56f0a15149351a5333f619951a9c9d52",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/batches/_components/batch-form.tsx": {
+    "mtime": 1782931268.1517837,
+    "ast_hash": "39ef18a6abea3403d1f388cd49fe7752",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/batches/actions.ts": {
+    "mtime": 1782931800.7435684,
+    "ast_hash": "0657e65fd7697cf61110cd70fa18c805",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/batches/new/page.tsx": {
+    "mtime": 1782930157.2967045,
+    "ast_hash": "41aae1c44800982a0262f84f0830047c",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/batches/page.tsx": {
+    "mtime": 1782930133.9751158,
+    "ast_hash": "fd1c3a168104d2025c4d52605b7f1ccd",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/batches/student-lookup/page.tsx": {
+    "mtime": 1782930218.9940653,
+    "ast_hash": "a095b4e0080a327427ca7bcc3cbf5cc1",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/batches/[id]/route.ts": {
+    "mtime": 1782930045.9467583,
+    "ast_hash": "9aa387b0cb0bdb367565b3289ad9688c",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/batches/[id]/status/route.ts": {
+    "mtime": 1782930078.9396615,
+    "ast_hash": "97e876b455e20566d451360500f6a220",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/batches/[id]/trainers/route.ts": {
+    "mtime": 1782930082.0687141,
+    "ast_hash": "e9f0ad47b764c2c82321bc20a7ef20c0",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/batches/[id]/waitlist/promote/route.ts": {
+    "mtime": 1782930102.1529214,
+    "ast_hash": "05bab1b10ab47befbc110322e54b834c",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/batches/[id]/waitlist/route.ts": {
+    "mtime": 1782930084.3799107,
+    "ast_hash": "6b3cf2d576527df3d402195d6f3d8ef1",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/batches/route.ts": {
+    "mtime": 1782930909.6064205,
+    "ast_hash": "19fba999d011ca893847102e0356b934",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/e2e/batches.spec.ts": {
+    "mtime": 1782930385.136318,
+    "ast_hash": "1dd9a393e0a4ffcd5b86573fd54b05a1",
+    "semantic_hash": ""
+  },
+  "packages/database/prisma/migrations/20260701181753_init_module_06/migration.sql": {
+    "mtime": 1782929873.9909818,
+    "ast_hash": "a467364442707cc1d676dace83a78d67",
+    "semantic_hash": ""
+  },
+  "packages/training-delivery/package.json": {
+    "mtime": 1782929907.4137988,
+    "ast_hash": "d361aba19cb85e6a4a326ccc58a37e93",
+    "semantic_hash": ""
+  },
+  "packages/training-delivery/src/application/batch-service.ts": {
+    "mtime": 1782930901.3580315,
+    "ast_hash": "b7a4f37c965aea7619f5056bb0a8f166",
+    "semantic_hash": ""
+  },
+  "packages/training-delivery/src/domain/batch.ts": {
+    "mtime": 1782929927.9427845,
+    "ast_hash": "09ac6891c100b54cfc8b05ba53dc9d56",
+    "semantic_hash": ""
+  },
+  "packages/training-delivery/src/domain/errors.ts": {
+    "mtime": 1782929917.6176744,
+    "ast_hash": "31dfdee6c7110b2dda2bed5e8aece366",
+    "semantic_hash": ""
+  },
+  "packages/training-delivery/src/domain/repositories.ts": {
+    "mtime": 1782929933.0304246,
+    "ast_hash": "75ac14013bede7b8fa276506be16093a",
+    "semantic_hash": ""
+  },
+  "packages/training-delivery/src/index.ts": {
+    "mtime": 1782929966.8731282,
+    "ast_hash": "b6d704a0b1ebdede56943d7a0c9e555e",
+    "semantic_hash": ""
+  },
+  "packages/training-delivery/src/infrastructure/batch-repository.ts": {
+    "mtime": 1782929940.3536747,
+    "ast_hash": "1bca150a8c587308886ce870426e63c9",
+    "semantic_hash": ""
+  },
+  "packages/training-delivery/tests/training-delivery.spec.ts": {
+    "mtime": 1782930373.8372078,
+    "ast_hash": "2c9f03b1fc568a7e0fcc482c2cc19409",
+    "semantic_hash": ""
+  },
+  "packages/training-delivery/tsconfig.json": {
+    "mtime": 1782929909.4696279,
+    "ast_hash": "498cb392b5b47c698707ae678582271a",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/batches/_components/transition-buttons.tsx": {
+    "mtime": 1782931438.6773367,
+    "ast_hash": "6a08f7d2c4f8ef084c98a50aa27caa7b",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/batches/_components/batch-details-tabs.tsx": {
+    "mtime": 1782931857.0233388,
+    "ast_hash": "e4669550e60c1670843ca909bad7a756",
     "semantic_hash": ""
   }
 }

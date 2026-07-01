@@ -62,7 +62,7 @@ export default async function LeadsPage(props: {
     ...l,
     branch: l.branch ? { id: l.branchId, name: l.branch.branchName } : null,
     counselor: l.counselor ? { id: l.counselorId, name: l.counselor.username } : null,
-    interestedCourse: l.interestedCourse ? { id: l.interestedCourseId, nameEnglish: l.interestedCourse.name } : null,
+    interestedCourse: l.interestedCourse ? { id: l.interestedCourseId, nameEnglish: l.interestedCourse.nameEnglish } : null,
   }));
 
   // Resolve master values lists (branches, courses, counselors) for the form inputs
@@ -75,10 +75,10 @@ export default async function LeadsPage(props: {
           .map((b) => ({ id: b.id, name: b.branchName }));
 
   const coursesResult = await prisma.course.findMany({
-    where: { status: 'Active' },
-    select: { id: true, name: true },
+    where: { status: 'Published', isDeleted: false },
+    select: { id: true, nameEnglish: true },
   });
-  const courses = coursesResult.map((c: any) => ({ id: c.id, name: c.name }));
+  const courses = coursesResult.map((c: any) => ({ id: c.id, name: c.nameEnglish }));
 
   const usersResult = (await userService.listUsers({
     actorId: session.userId,

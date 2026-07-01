@@ -50,7 +50,7 @@ export class LeadRepository implements ILeadRepository {
         person: true,
         branch: { select: { branchName: true, branchCode: true } },
         counselor: { select: { username: true } },
-        interestedCourse: { select: { name: true } },
+        interestedCourse: { select: { nameEnglish: true } },
         campaign: true,
         inquiry: true,
         followUps: {
@@ -255,7 +255,7 @@ export class LeadRepository implements ILeadRepository {
         person: true,
         branch: { select: { branchName: true, branchCode: true } },
         counselor: { select: { username: true } },
-        interestedCourse: { select: { name: true } },
+        interestedCourse: { select: { nameEnglish: true } },
       },
     });
 

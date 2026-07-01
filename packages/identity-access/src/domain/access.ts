@@ -15,6 +15,7 @@ export const knownPermissions = [
   'organization.manage',
   'dashboard.view',
   'certificate.verify',
+  'batch.delivery.view',
 ] as const;
 
 export type KnownPermission = (typeof knownPermissions)[number];
@@ -31,6 +32,8 @@ export const adminNavigation: NavigationItem[] = [
   { href: '/dashboard', label: 'Dashboard', permission: 'dashboard.view', category: 'Overview' },
   { href: '/dashboards/crm', label: 'CRM Dashboard', permission: 'REPORTING_VIEW_CRM_DASHBOARD', category: 'CRM' },
   { href: '/leads', label: 'Leads', permission: 'dashboard.view', category: 'CRM' },
+  { href: '/courses-catalog', label: 'Course Catalog', permission: 'course.catalog.view', category: 'CRM' },
+  { href: '/batches', label: 'Batches', permission: 'batch.delivery.view', category: 'CRM' },
   {
     href: '/organization',
     label: 'Organization',

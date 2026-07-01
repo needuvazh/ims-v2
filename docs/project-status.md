@@ -67,7 +67,7 @@ into a unified tracking index.
 | **CRM** | Approved | Approved | Approved | Approved | Completed | Implemented | Completed | Completed | Complete (Core & Dashboards) |
 | **Admissions** | Approved | Draft | Approved | Approved | Draft | In Progress | In Progress (Stub) | Completed (BE) | In Progress |
 | **Student Management** | Approved | Not Started | Draft | Not Started | Draft (Shell) | Planned | Not Started | Not Started | Under Review |
-| **Course Management** | Approved | Not Started | Draft | Not Started | Not Started | Planned | Not Started | Not Started | Under Review |
+| **Course Management** | Approved | Approved | Approved | Approved | Approved | Implemented | Completed | Completed | Complete (Course Catalog) |
 | **Batch Management** | Approved | Not Started | Draft | Not Started | Not Started | Planned | Not Started | Not Started | Under Review |
 | **Attendance** | Approved | Not Started | Not Started | Not Started | Draft (Shell) | Planned | Not Started | Not Started | Under Review |
 | **Finance** | Approved | Not Started | Not Started | Not Started | Draft (Shell) | Planned | Not Started | Not Started | Under Review |
@@ -186,7 +186,7 @@ complete implementation and code-review sync.
 | **CRM** | Completed | Completed | In Progress | Completed | Completed | Completed | Completed | **In Progress** |
 | **Admissions** | Completed | Completed | Not Started | Completed | Completed | Completed | Completed | **In Progress** |
 | **Student Mgmt** | Completed | Not Started | Not Started | Not Started | Not Started | Not Started | Completed | **Planned** |
-| **Course Mgmt** | Completed | Not Started | Not Started | Not Started | Not Started | Not Started | Completed | **Planned** |
+| **Course Mgmt** | Completed | Completed | Completed | Completed | Completed | Completed | Completed | **Completed** |
 | **Batch Mgmt** | Draft | Not Started | Not Started | Not Started | Not Started | Not Started | Completed | **Planned** |
 | **Attendance** | Not Started | Not Started | Not Started | Not Started | Not Started | Not Started | Completed | **Planned** |
 | **Finance** | Not Started | Not Started | Not Started | Not Started | Not Started | Not Started | Completed | **Planned** |
@@ -343,7 +343,7 @@ Each module is rated on an overall implementation implementation readiness scale
 3. **CRM & Enquiry:** **95%** (Core models, qualification APIs, counselor scoping, stage histories, detail dashboards, auto-assignment, outcome logging, sweep cron, and CRM dashboard analytics are implemented; Campaign Management and configurable stages/sources admin panels are pending)
 4. **Admission & Enrollment:** **35%** (Admissions models and convert handoff transactional orchestrator complete; UI and Enrollment elements are pending)
 5. **Audit & Compliance:** **35%** (Audit repository is ready, database is active, but admin viewer is pending)
-6. **Course & Batch Management:** **8%** (Course tables exist; batch tables pending)
+6. **Course & Batch Management:** **50%** (Course Catalog fully implemented and tested; Batch scheduling and trainer assignments pending)
 7. **All Other Modules:** **5%** (Database tables exist; implementation pending)
 
 ---
@@ -360,6 +360,7 @@ Each module is rated on an overall implementation implementation readiness scale
 | **2026-07-01** | v3.3.0 | Codex | Completed Change 3 (crm-workflows-followup-scheduling). Added inquiry auto-assignment, composite outcome + follow-up scheduling, and hourly sweeper. Updated unit test statistics and PSD matrices. |
 | **2026-07-01** | v3.3.1 | Codex | Applied code review suggestions to `crm-portal-ui-scoped-filtering`. Added counselor scoping check on lead conversion, mandatory version concurrency check, client-side re-synchronization on stage changes, and delegated stage/closure updates to LeadService. |
 | **2026-07-01** | v3.4.0 | Codex | Completed Change 4 (crm-dashboards-and-reports). Scaffolded reporting-dashboards package, implemented LeadAnalyticsReadService and CrmDashboardQueryService with RBAC and Audits, added MetricCard and ChartWidget to shared-ui, and created the protected CRM dashboard page with responsive charts. |
+| **2026-07-01** | v3.5.0 | Codex | Completed Course Catalog change (course-catalog-spec). Scaffolded course-catalog package, designed domain errors, bilingual validation rules, cyclic parent checks, active batch checks. Exposed courses and categories API handlers, added navigation menu mapping, and implemented Course Catalog List dashboard and bilingual Course Form with state machine transitions. |
 
 ---
 

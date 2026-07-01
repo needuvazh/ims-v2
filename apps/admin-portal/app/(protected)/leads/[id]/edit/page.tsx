@@ -45,11 +45,11 @@ export default async function EditLeadPage(props: { params: Promise<{ id: string
           .map((b: any) => ({ id: b.id, name: b.branchName }));
 
   const coursesResult = await prisma.course.findMany({
-    where: { status: 'Active' },
-    select: { id: true, name: true },
+    where: { status: 'Published', isDeleted: false },
+    select: { id: true, nameEnglish: true },
   });
   const courses = coursesResult.length > 0
-    ? coursesResult.map((c: any) => ({ id: c.id, name: c.name }))
+    ? coursesResult.map((c: any) => ({ id: c.id, name: c.nameEnglish }))
     : [
         { id: 'CS-FSWD', name: 'Full Stack Web Development (Fallback)' },
         { id: 'CS-MDEV', name: 'Mobile App Development (Fallback)' },

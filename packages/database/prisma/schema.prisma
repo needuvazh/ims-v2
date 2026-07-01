@@ -669,18 +669,276 @@ model Campaign {
   @@map("campaigns")
 }
 
+model CourseCategory {
+  id               String           @id @default(uuid()) @db.Uuid
+  code             String           @unique @db.VarChar(100)
+  nameEnglish      String           @db.VarChar(150)
+  nameArabic       String           @db.VarChar(150)
+  description      String?          @db.Text
+  parentCategoryId String?          @db.Uuid
+  parentCategory   CourseCategory?  @relation("CategoryHierarchy", fields: [parentCategoryId], references: [id])
+  childCategories  CourseCategory[] @relation("CategoryHierarchy")
+  courses          Course[]
+
+  status           RecordStatus     @default(Active)
+  version          Int              @default(1)
+
+  createdAt        DateTime         @default(now()) @db.Timestamptz(6)
+  createdBy        String?          @db.Uuid
+  updatedAt        DateTime?        @updatedAt @db.Timestamptz(6)
+  updatedBy        String?          @db.Uuid
+  deletedAt        DateTime?        @db.Timestamptz(6)
+  deletedBy        String?          @db.Uuid
+  isDeleted        Boolean          @default(false)
+
+  @@map("course_categories")
+}
+
+model CoursePricing {
+  id                 String       @id @default(uuid()) @db.Uuid
+  courseId           String       @db.Uuid
+  course             Course       @relation(fields: [courseId], references: [id])
+  branchId           String?      @db.Uuid // logical reference; NULL = Global Default
+  batchId            String?      @db.Uuid // FK reference; NULL = Global/Branch override
+  batch              Batch?       @relation(fields: [batchId], references: [id])
+  customerType       String       @db.VarChar(50) // Individual, Corporate, WalkIn
+  batchType          String       @db.VarChar(50) // Regular, FastTrack, Weekend
+  currency           String       @default("OMR") @db.VarChar(10) // Restricted to OMR
+  basePrice          Decimal      @db.Decimal(12, 3)
+  taxPercentage      Decimal      @default(5.000) @db.Decimal(5, 3) // Oman Standard VAT
+  effectiveStartDate DateTime     @db.Date
+  effectiveEndDate   DateTime?    @db.Date
+  status             RecordStatus @default(Active)
+  version            Int          @default(1)
+
+  createdAt          DateTime     @default(now()) @db.Timestamptz(6)
+  createdBy          String?      @db.Uuid
+  updatedAt          DateTime?    @updatedAt @db.Timestamptz(6)
+  updatedBy          String?      @db.Uuid
+  deletedAt          DateTime?    @db.Timestamptz(6)
+  deletedBy          String?      @db.Uuid
+  isDeleted          Boolean      @default(false)
+
+  @@index([courseId])
+  @@index([branchId])
+  @@index([batchId])
+  @@map("course_pricings")
+}
+
+model CourseDiscount {
+  id                 String       @id @default(uuid()) @db.Uuid
+  courseId           String       @db.Uuid
+  course             Course       @relation(fields: [courseId], references: [id])
+  branchId           String?      @db.Uuid // logical reference; NULL = Global
+  batchId            String?      @db.Uuid // FK reference; NULL = Global/Branch
+  batch              Batch?       @relation(fields: [batchId], references: [id])
+  discountType       String       @db.VarChar(50) // Individual, Corporate, EarlyBird
+  discountMode       String       @db.VarChar(50) // Percentage, FixedAmount
+  discountValue      Decimal      @db.Decimal(12, 3)
+  requiresApproval   Boolean      @default(false)
+  effectiveStartDate DateTime     @db.Date
+  effectiveEndDate   DateTime?    @db.Date
+  status             RecordStatus @default(Active)
+
+  createdAt          DateTime     @default(now()) @db.Timestamptz(6)
+  createdBy          String?      @db.Uuid
+  updatedAt          DateTime?    @updatedAt @db.Timestamptz(6)
+  updatedBy          String?      @db.Uuid
+  deletedAt          DateTime?    @db.Timestamptz(6)
+  deletedBy          String?      @db.Uuid
+  isDeleted          Boolean      @default(false)
+
+  @@index([courseId])
+  @@index([branchId])
+  @@index([batchId])
+  @@map("course_discounts")
+}
+
+model CourseCompletionRule {
+  id                       String       @id @default(uuid()) @db.Uuid
+  courseId                 String       @db.Uuid
+  course                   Course       @relation(fields: [courseId], references: [id])
+  minimumAttendancePercent Int          @db.Integer
+  examRequired             Boolean      @default(false)
+  feeClearanceRequired     Boolean      @default(true)
+  manualApprovalRequired   Boolean      @default(false)
+  effectiveStartDate       DateTime     @db.Date
+  effectiveEndDate         DateTime?    @db.Date
+  status                   RecordStatus @default(Active)
+
+  createdAt                DateTime     @default(now()) @db.Timestamptz(6)
+  createdBy                String?      @db.Uuid
+  updatedAt                DateTime?    @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  @@index([courseId])
+  @@map("course_completion_rules")
+}
+
 model Course {
-  id         String    @id @default(uuid()) @db.Uuid
-  courseCode String    @unique @db.VarChar(50)
-  name       String    @db.VarChar(150)
-  status     String    @default("Active") @db.VarChar(50)
+  id                    String                 @id @default(uuid()) @db.Uuid
+  courseCode            String                 @unique @db.VarChar(50)
+  nameEnglish           String                 @db.VarChar(150)
+  nameArabic            String                 @db.VarChar(150)
+  descriptionEnglish    String?                @db.Text
+  descriptionArabic     String?                @db.Text
+  departmentId          String                 @db.Uuid
+  categoryId            String?                @db.Uuid
+  courseClassification  String                 @db.VarChar(50)
+  durationType          String                 @db.VarChar(50)
+  durationValue         Int
+  allowWalkInCompletion Boolean                @default(false)
+  status                String                 @default("Draft") @db.VarChar(50) // Draft, InReview, Approved, Published, Archived
   
-  leads      Lead[]
-  inquiries  Inquiry[]
+  effectiveStartDate    DateTime               @db.Date
+  effectiveEndDate      DateTime?              @db.Date
 
-  createdAt  DateTime  @default(now()) @db.Timestamptz(6)
+  version               Int                    @default(1)
 
+  category              CourseCategory?        @relation(fields: [categoryId], references: [id])
+  pricings              CoursePricing[]
+  completionRules       CourseCompletionRule[]
+  discounts             CourseDiscount[]
+  batches               Batch[]
+
+  leads                 Lead[]
+  inquiries             Inquiry[]
+
+  createdAt             DateTime               @default(now()) @db.Timestamptz(6)
+  createdBy             String?                @db.Uuid
+  updatedAt             DateTime?              @updatedAt @db.Timestamptz(6)
+  updatedBy             String?                @db.Uuid
+  deletedAt             DateTime?              @db.Timestamptz(6)
+  deletedBy             String?                @db.Uuid
+  isDeleted             Boolean                @default(false)
+
+  @@index([categoryId])
+  @@index([departmentId])
   @@map("courses")
+}
+
+model Batch {
+  id                     String           @id @default(uuid()) @db.Uuid
+  courseId               String           @db.Uuid
+  course                 Course           @relation(fields: [courseId], references: [id])
+  branchId               String           @db.Uuid // logical reference
+  classroomId            String?          @db.Uuid // logical reference
+  batchCode              String           @unique @db.VarChar(50)
+  batchNameEnglish       String           @db.VarChar(150)
+  batchNameArabic        String           @db.VarChar(150)
+  startDate              DateTime         @db.Date
+  endDate                DateTime         @db.Date
+  capacity               Int              @db.Integer
+  currentEnrollmentCount Int              @default(0) @db.Integer
+  waitingListEnabled     Boolean          @default(true)
+  allowOverbooking       Boolean          @default(false)
+  isWalkIn               Boolean          @default(false)
+  corporateAccountId     String?          @db.Uuid // logical reference
+  status                 String           @db.VarChar(50) // Draft, OpenForEnrollment, InProgress, Completed, Cancelled
+  version                Int              @default(1)
+
+  trainers               BatchTrainer[]
+  sessions               Session[]
+  waitlist               WaitingList[]
+  pricings               CoursePricing[]
+  discounts              CourseDiscount[]
+
+  createdAt              DateTime         @default(now()) @db.Timestamptz(6)
+  createdBy              String?          @db.Uuid
+  updatedAt              DateTime?        @updatedAt @db.Timestamptz(6)
+  updatedBy              String?          @db.Uuid
+  deletedAt              DateTime?        @db.Timestamptz(6)
+  deletedBy              String?          @db.Uuid
+  isDeleted              Boolean          @default(false)
+
+  @@index([courseId])
+  @@index([branchId])
+  @@index([classroomId])
+  @@index([corporateAccountId])
+  @@map("batches")
+}
+
+model BatchTrainer {
+  id             String    @id @default(uuid()) @db.Uuid
+  batchId        String    @db.Uuid
+  batch          Batch     @relation(fields: [batchId], references: [id])
+  trainerId      String    @db.Uuid // logical reference
+  role           String    @db.VarChar(50) // Primary, Assistant, Observer
+  assignedFrom   DateTime  @db.Date
+  assignedTo     DateTime  @db.Date
+  status         String    @default("Active") @db.VarChar(50)
+
+  createdAt      DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy      String?   @db.Uuid
+  updatedAt      DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy      String?   @db.Uuid
+  deletedAt      DateTime? @db.Timestamptz(6)
+  deletedBy      String?   @db.Uuid
+  isDeleted      Boolean   @default(false)
+
+  @@index([batchId])
+  @@index([trainerId])
+  @@map("batch_trainers")
+}
+
+model WaitingList {
+  id            String    @id @default(uuid()) @db.Uuid
+  courseId      String    @db.Uuid
+  batchId       String    @db.Uuid
+  batch         Batch     @relation(fields: [batchId], references: [id])
+  studentId     String?   @db.Uuid // logical reference
+  leadId        String?   @db.Uuid // logical reference
+  queuePosition Int       @db.Integer
+  status        String    @db.VarChar(50) // Waiting, Promoted, Removed
+
+  createdAt     DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy     String?   @db.Uuid
+  updatedAt     DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy     String?   @db.Uuid
+  deletedAt     DateTime? @db.Timestamptz(6)
+  deletedBy     String?   @db.Uuid
+  isDeleted     Boolean   @default(false)
+
+  @@index([courseId])
+  @@index([batchId])
+  @@index([studentId])
+  @@index([leadId])
+  @@unique([studentId, batchId, status]) // Standard constraint to prevent duplicate active waitlist entries
+  @@unique([leadId, batchId, status]) // Standard constraint to prevent duplicate active waitlist entries
+  @@map("waiting_lists")
+}
+
+model Session {
+  id            String    @id @default(uuid()) @db.Uuid
+  batchId       String    @db.Uuid
+  batch         Batch     @relation(fields: [batchId], references: [id])
+  sessionNumber Int       @db.Integer
+  titleEnglish  String    @db.VarChar(150)
+  titleArabic   String    @db.VarChar(150)
+  sessionDate   DateTime  @db.Date
+  startTime     String    @db.VarChar(10) // HH:MM
+  endTime       String    @db.VarChar(10) // HH:MM
+  trainerId     String?   @db.Uuid // logical reference
+  classroomId   String?   @db.Uuid // logical reference
+  status        String    @db.VarChar(50) // Scheduled, Completed, Cancelled, Rescheduled
+  version       Int       @default(1)
+
+  createdAt     DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy     String?   @db.Uuid
+  updatedAt     DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy     String?   @db.Uuid
+  deletedAt     DateTime? @db.Timestamptz(6)
+  deletedBy     String?   @db.Uuid
+  isDeleted     Boolean   @default(false)
+
+  @@index([batchId])
+  @@index([trainerId])
+  @@index([classroomId])
+  @@index([sessionDate])
+  @@map("sessions")
 }
 
 model Inquiry {

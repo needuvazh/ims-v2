@@ -51,8 +51,8 @@ Represents the course definitions catalog (extends the existing database model).
 | `descriptionArabic`| `String` | `TEXT` | NULL | - | Detailed description in Arabic |
 | `departmentId` | `String` | `UUID` | NOT NULL | Logical Key | Logical reference to `departments.id` (no database constraint) |
 | `categoryId` | `String` | `UUID` | NOT NULL | FK | Reference to `course_categories.id` (Same context) |
-| `courseClassification`| `String`| `VARCHAR(50)` | NOT NULL | - | Enum: `Individual`, `Corporate`, `WalkIn`, `Online` |
-| `durationType` | `String` | `VARCHAR(50)` | NOT NULL | - | Enum: `FixedDays`, `HoursBased`, `SessionsBased` |
+| `courseClassification`| `String`| `VARCHAR(50)` | NOT NULL | - | Enum: `Regular`, `Corporate` |
+| `durationType` | `String` | `VARCHAR(50)` | NOT NULL | - | Enum: `Hours`, `Days`, `Weeks`, `Months` |
 | `durationValue` | `Int` | `INTEGER` | NOT NULL | Check: `> 0` | Numerical duration length |
 | `allowWalkInCompletion`|`Boolean`| `BOOLEAN` | NOT NULL | - | `DEFAULT false` (Bypasses timetable checks) |
 | `status` | `String` | `VARCHAR(50)` | NOT NULL | - | Enum: `Draft`, `InReview`, `Approved`, `Published`, `Archived` |

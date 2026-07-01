@@ -245,8 +245,14 @@ test.describe('Auto-Assignment Workflow Integration', () => {
         data: {
           id: randomUUID(),
           courseCode: 'TESTCRS',
-          name: 'Test Course',
-          status: 'Active',
+          nameEnglish: 'Test Course',
+          nameArabic: 'دورة تجريبية',
+          courseClassification: 'Regular',
+          durationType: 'Weeks',
+          durationValue: 12,
+          departmentId: randomUUID(),
+          effectiveStartDate: new Date(),
+          status: 'Published',
         },
       });
     }

@@ -14,7 +14,8 @@
     "@ims/identity-access": "workspace:*",
     "@ims/database": "workspace:*",
     "@ims/observability": "workspace:*",
-    "@ims/shared-kernel": "workspace:*"
+    "@ims/shared-kernel": "workspace:*",
+    "@ims/training-delivery": "workspace:*"
   },
   "devDependencies": {
     "tsx": "^4.19.1",

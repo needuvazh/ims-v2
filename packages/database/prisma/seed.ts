@@ -67,6 +67,12 @@ const systemPermissions = [
   
   // Course & Scheduling
   { moduleCode: 'courses',      featureCode: 'syllabus',    actionCode: 'manage', permissionCode: 'course.manage',                  permissionType: 'Action' as const, description: 'Manage courses, syllabus and pricing.' },
+  { moduleCode: 'courses',      featureCode: 'catalog',    actionCode: 'view',    permissionCode: 'course.catalog.view',             permissionType: 'Action' as const, description: 'View course catalog.' },
+  { moduleCode: 'courses',      featureCode: 'catalog',    actionCode: 'create',  permissionCode: 'course.catalog.create',           permissionType: 'Action' as const, description: 'Create course catalog entries.' },
+  { moduleCode: 'courses',      featureCode: 'catalog',    actionCode: 'update',  permissionCode: 'course.catalog.update',           permissionType: 'Action' as const, description: 'Update course catalog entries.' },
+  { moduleCode: 'courses',      featureCode: 'catalog',    actionCode: 'publish', permissionCode: 'course.catalog.publish',          permissionType: 'Action' as const, description: 'Publish courses in catalog.' },
+  { moduleCode: 'courses',      featureCode: 'catalog',    actionCode: 'archive', permissionCode: 'course.catalog.archive',          permissionType: 'Action' as const, description: 'Archive courses in catalog.' },
+  { moduleCode: 'courses',      featureCode: 'batches',    actionCode: 'view',    permissionCode: 'batch.delivery.view',             permissionType: 'Action' as const, description: 'View and manage course delivery batches.' },
   { moduleCode: 'scheduling',   featureCode: 'sessions',    actionCode: 'manage', permissionCode: 'schedule.manage',                permissionType: 'Action' as const, description: 'Create and update schedules.' },
   
   // Attendance & Completion
@@ -116,6 +122,14 @@ async function seed() {
   await prisma.leadNote.deleteMany({});
   await prisma.lead.deleteMany({});
   await prisma.inquiry.deleteMany({});
+  await prisma.session.deleteMany({});
+  await prisma.batchTrainer.deleteMany({});
+  await prisma.waitingList.deleteMany({});
+  await prisma.batch.deleteMany({});
+  await prisma.coursePricing.deleteMany({});
+  await prisma.courseCompletionRule.deleteMany({});
+  await prisma.course.deleteMany({});
+  await prisma.courseCategory.deleteMany({});
   await prisma.passwordResetToken.deleteMany({});
   await prisma.loginHistory.deleteMany({});
   await prisma.userSession.deleteMany({});
@@ -198,6 +212,8 @@ async function seed() {
     'followup.create', 'followup.update',
     'student.read', 'student.write', 'enrollment.create',
     'payment.create', 'refund.request', 'course.manage', 'schedule.manage',
+    'course.catalog.view', 'course.catalog.create', 'course.catalog.update', 'course.catalog.publish', 'course.catalog.archive',
+    'batch.delivery.view',
     'attendance.record', 'result.record', 'certificate.generate',
     'certificate.verify', 'dashboard.branch', 'dashboard.security', 'dashboard.view',
     'REPORTING_VIEW_CRM_DASHBOARD', 'REPORTING_VIEW_COUNSELOR_METRICS', 'LEAD_VIEW_ALL_IN_BRANCH'
@@ -215,6 +231,8 @@ async function seed() {
     'iam.user.read',
     'lead.read', 'lead.write', 'lead.create', 'lead.update', 'lead.assign', 'lead.lost', 'lead.qualify', 'lead.convert',
     'followup.create', 'followup.update',
+    'course.catalog.view',
+    'batch.delivery.view',
     'student.read', 'dashboard.crm', 'report.iam.user', 'dashboard.view',
     'REPORTING_VIEW_CRM_DASHBOARD'
   ];
@@ -229,7 +247,7 @@ async function seed() {
   // Trainer permissions
   const trainerPermCodes = [
     'student.read', 'schedule.manage', 'attendance.record',
-    'result.record', 'dashboard.training'
+    'result.record', 'dashboard.training', 'batch.delivery.view'
   ];
   const trainerPerms = permRecords.filter(p => trainerPermCodes.includes(p.permissionCode));
   for (const perm of trainerPerms) {
@@ -578,13 +596,31 @@ async function seed() {
   console.log(`  ✓ User created: manager.muscat@ims.com (BRANCH_MANAGER, Branch AST-MUSCAT)`);
 
   // 6. Create default active Courses
+  const defaultCategoryCode = 'CAT-TECH';
+  let techCategory = await prisma.courseCategory.findUnique({
+    where: { code: defaultCategoryCode },
+  });
+  if (!techCategory) {
+    techCategory = await prisma.courseCategory.create({
+      data: {
+        id: crypto.randomUUID(),
+        code: defaultCategoryCode,
+        nameEnglish: 'Technology & Engineering',
+        nameArabic: 'التكنولوجيا والهندسة',
+        description: 'Tech courses, software engineering, cyber security, data science',
+        status: 'Active',
+      },
+    });
+    console.log(`  ✓ Course Category seeded: ${techCategory.nameEnglish}`);
+  }
+
   const defaultCourses = [
-    { code: 'CS-FSWD', name: 'Full Stack Web Development' },
-    { code: 'CS-MDEV', name: 'Mobile App Development (iOS/Android)' },
-    { code: 'CS-CSEC', name: 'Advanced Cyber Security & Ethical Hacking' },
-    { code: 'CS-DSAI', name: 'Data Science and Artificial Intelligence' },
-    { code: 'CS-CLAW', name: 'Cloud Solutions Architecture (AWS/Azure)' },
-    { code: 'CS-UIUX', name: 'UI/UX Design & Product Strategy' },
+    { code: 'CS-FSWD', nameEnglish: 'Full Stack Web Development', nameArabic: 'تطوير تطبيقات الويب بالكامل' },
+    { code: 'CS-MDEV', nameEnglish: 'Mobile App Development (iOS/Android)', nameArabic: 'تطوير تطبيقات الهاتف المحمول' },
+    { code: 'CS-CSEC', nameEnglish: 'Advanced Cyber Security & Ethical Hacking', nameArabic: 'الأمن السيبراني المتقدم والاختراق الأخلاقي' },
+    { code: 'CS-DSAI', nameEnglish: 'Data Science and Artificial Intelligence', nameArabic: 'علم البيانات والذكاء الاصطناعي' },
+    { code: 'CS-CLAW', nameEnglish: 'Cloud Solutions Architecture (AWS/Azure)', nameArabic: 'هندسة حلول السحابة' },
+    { code: 'CS-UIUX', nameEnglish: 'UI/UX Design & Product Strategy', nameArabic: 'تصميم واجهة وتجربة المستخدم' },
   ];
 
   for (const c of defaultCourses) {
@@ -592,15 +628,48 @@ async function seed() {
       where: { courseCode: c.code },
     });
     if (!existing) {
-      await prisma.course.create({
+      const newCourse = await prisma.course.create({
         data: {
           id: crypto.randomUUID(),
           courseCode: c.code,
-          name: c.name,
+          nameEnglish: c.nameEnglish,
+          nameArabic: c.nameArabic,
+          descriptionEnglish: `${c.nameEnglish} course template.`,
+          descriptionArabic: `دورة ${c.nameEnglish}.`,
+          departmentId: riyadhItDept.id,
+          categoryId: techCategory.id,
+          courseClassification: 'Regular',
+          durationType: 'Weeks',
+          durationValue: 12,
+          allowWalkInCompletion: false,
+          status: 'Published',
+          effectiveStartDate: new Date(),
+        },
+      });
+
+      // Seed default pricing and completion rules to satisfy constraints
+      await prisma.coursePricing.create({
+        data: {
+          id: crypto.randomUUID(),
+          courseId: newCourse.id,
+          customerType: 'Individual',
+          batchType: 'Regular',
+          basePrice: 500.000,
+          effectiveStartDate: new Date(),
           status: 'Active',
         },
       });
-      console.log(`  ✓ Course seeded: ${c.name}`);
+      await prisma.courseCompletionRule.create({
+        data: {
+          id: crypto.randomUUID(),
+          courseId: newCourse.id,
+          minimumAttendancePercent: 80,
+          effectiveStartDate: new Date(),
+          status: 'Active',
+        },
+      });
+
+      console.log(`  ✓ Course seeded: ${c.nameEnglish}`);
     }
   }
 

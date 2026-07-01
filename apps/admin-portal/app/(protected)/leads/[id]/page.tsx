@@ -154,7 +154,7 @@ export default async function LeadDetailsPage(props: {
     ...lead,
     branch: lead.branch ? { id: lead.branchId, name: lead.branch.branchName } : null,
     counselor: lead.counselor ? { id: lead.counselorId, name: lead.counselor.username } : null,
-    interestedCourse: lead.interestedCourse ? { id: lead.interestedCourseId, nameEnglish: lead.interestedCourse.name } : null,
+    interestedCourse: lead.interestedCourse ? { id: lead.interestedCourseId, nameEnglish: lead.interestedCourse.nameEnglish } : null,
   };
 
   return (

@@ -3,6 +3,7 @@ import { createStructuredLogger } from '@ims/observability';
 import { createUuid } from '@ims/shared-kernel';
 import { randomUUID } from 'crypto';
 import { ExportService } from './export-service';
+import { BatchRepository, BatchService } from '@ims/training-delivery';
 
 const logger = createStructuredLogger({});
 const POLL_INTERVAL_MS = parseInt(process.env.OUTBOX_POLL_INTERVAL_MS || '5000', 10);
@@ -10,6 +11,8 @@ const BATCH_SIZE = parseInt(process.env.OUTBOX_BATCH_SIZE || '50', 10);
 const MAX_ATTEMPTS = 5;
 const exportService = new ExportService();
 const iamQueryService = new IamQueryService(prisma);
+const batchRepository = new BatchRepository(prisma);
+const batchService = new BatchService(prisma, batchRepository);
 
 let isShuttingDown = false;
 let lastOverdueSweepTime = 0;
@@ -235,6 +238,10 @@ async function processOutboxEvents() {
         
         if (event.eventType === 'WebsiteInquirySubmitted') {
           await handleWebsiteInquirySubmitted(event.payload as Record<string, unknown>);
+        } else if (event.eventType === 'EnrollmentCancelled') {
+          const payload = event.payload as { batchId: string; releasedSeats?: number };
+          logger.info(`Handling EnrollmentCancelled for batch ${payload.batchId}`);
+          await batchService.releaseSeatAndPromote(payload.batchId, payload.releasedSeats || 1);
         } else {
           // TODO: In Phase 2, route event.payload to the actual domain handlers.
           // For Phase 1, we just simulate processing to ensure the loop works.

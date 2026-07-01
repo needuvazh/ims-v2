@@ -60,7 +60,7 @@ export class InquiryRepository implements IInquiryRepository {
       include: {
         branch: { select: { branchName: true, branchCode: true } },
         counselor: { select: { username: true } },
-        interestedCourse: { select: { name: true } },
+        interestedCourse: { select: { nameEnglish: true } },
       },
     });
   }
@@ -139,7 +139,7 @@ export class InquiryRepository implements IInquiryRepository {
       include: {
         branch: { select: { branchName: true, branchCode: true } },
         counselor: { select: { username: true } },
-        interestedCourse: { select: { name: true } },
+        interestedCourse: { select: { nameEnglish: true } },
       },
     });
 

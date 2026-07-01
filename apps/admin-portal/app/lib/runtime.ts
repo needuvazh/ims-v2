@@ -242,6 +242,20 @@ export const leadConversionOrchestrator = new LeadConversionOrchestrator(
   admissionService
 );
 
+// ─── Course Catalog Repositories & Services ────────────────────────────────
+import {
+  CourseRepository,
+  CourseCategoryRepository,
+  CourseService,
+  CategoryService
+} from '@ims/course-catalog';
+
+const courseRepository = new CourseRepository(prisma);
+const categoryRepository = new CourseCategoryRepository(prisma);
+
+export const courseService = new CourseService(prisma, courseRepository);
+export const categoryService = new CategoryService(prisma, categoryRepository);
+
 // ─── Reporting & CRM Dashboards ───────────────────────────────────────────
 import { LeadAnalyticsReadService } from '@ims/crm-leads';
 import { CrmDashboardQueryService } from '@ims/reporting-dashboards';
@@ -254,5 +268,11 @@ export const crmDashboardQueryService = new CrmDashboardQueryService(
   leadAnalyticsReadService,
   prismaAuditRepository
 );
+
+// ─── Training Delivery Repositories & Services ────────────────────────────
+import { BatchRepository, BatchService } from '@ims/training-delivery';
+const batchRepository = new BatchRepository(prisma);
+export const batchService = new BatchService(prisma, batchRepository);
+
 
 

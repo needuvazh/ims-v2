@@ -202,6 +202,8 @@ You are a Principal Solutions Architect and Senior staff DDD Reviewer. I have ge
 
 Please review all the generated parts against the ASTI Bounded Context Map (docs/architecture/ddd/ddd-context-map.md) and ER Model (docs/architecture/ddd/ER Model.md) to evaluate alignment and flag any gaps, design errors, or scope creep.
 
+For any gaps identified, please write out the exact Gaps list and suggest the precise markdown replacements to make the FRD 100% compliant.
+
 Specifically check and report on the following checklist:
 1. **Shared Person/Party Model Compliance:**
    - Does the FRD ensure that `TrainerProfile` links to the central `Person` table via `personId` rather than duplicating name, email, or phone directly on the trainer record?
