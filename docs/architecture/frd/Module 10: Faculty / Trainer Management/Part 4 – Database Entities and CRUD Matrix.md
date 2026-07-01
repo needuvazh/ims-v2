@@ -22,10 +22,21 @@ enum TrainerStatus {
   Archived
 }
 
+enum RecordStatus {
+  Active
+  Inactive
+}
+
+enum TrainerCompensationRateStatus {
+  Draft
+  Approved
+  Cancelled
+}
+
 model TrainerProfile {
   id                   String        @id @default(uuid()) @db.Uuid
-  personId             String        @unique @db.Uuid
-  branchId             String        @db.Uuid // Home/Primary Branch Scoping Link
+  personId             String        @db.Uuid // Logical reference to Person in Identity / Access Bounded Context
+  branchId             String        @db.Uuid // Logical reference to home Branch scoping context in Organization Bounded Context
   trainerCode          String        @unique @db.VarChar(50)
   trainerType          TrainerType   @default(Freelance)
   specialization       String        @db.Text
@@ -36,14 +47,11 @@ model TrainerProfile {
   effectiveStartDate   DateTime      @default(now()) @db.Date
   effectiveEndDate     DateTime?     @db.Date
   
-  // Relations
-  person               Person        @relation(fields: [personId], references: [id], onDelete: Restrict)
-  branch               Branch        @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  // Relations (Local Context Only)
   qualifications       TrainerQualification[]
   availabilities       TrainerAvailability[]
   courseAuthorizations TrainerCourseAuthorization[]
-  batchAssignments     BatchTrainer[]
-  payments             TrainerPayment[]
+  compensationRates    TrainerCompensationRate[]
 
   // Audit columns
   createdAt            DateTime      @default(now()) @db.Timestamptz(6)
@@ -55,8 +63,8 @@ model TrainerProfile {
   isDeleted            Boolean       @default(false)
 
   @@index([status])
-  @@index([personId])
   @@index([branchId])
+  @@unique([personId, deletedAt])
   @@map("trainer_profiles")
 }
 ```
@@ -73,7 +81,7 @@ model TrainerQualification {
   qualificationName String         @db.VarChar(150)
   institution       String         @db.VarChar(150)
   yearCompleted     Int            @db.Integer
-  documentId        String?        @db.Uuid // Nullable FK to Document Management context
+  documentId        String?        @db.Uuid // Logical reference to Document model in Document Bounded Context
 
   // Relations
   trainer           TrainerProfile @relation(fields: [trainerId], references: [id], onDelete: Restrict)
@@ -88,6 +96,7 @@ model TrainerQualification {
   isDeleted         Boolean        @default(false)
 
   @@index([trainerId])
+  @@index([documentId])
   @@map("trainer_qualifications")
 }
 ```
@@ -104,7 +113,7 @@ model TrainerAvailability {
   dayOfWeek          Int            @db.Integer // 0 = Sunday, 6 = Saturday
   startTime          String         @db.VarChar(5) // Format: "HH:MM" (24h)
   endTime            String         @db.VarChar(5) // Format: "HH:MM" (24h)
-  branchId           String         @db.Uuid
+  branchId           String         @db.Uuid // Logical reference to Branch in Organization Bounded Context
   status             RecordStatus   @default(Active)
   
   // Active dating
@@ -113,7 +122,6 @@ model TrainerAvailability {
 
   // Relations
   trainer            TrainerProfile @relation(fields: [trainerId], references: [id], onDelete: Restrict)
-  branch             Branch         @relation(fields: [branchId], references: [id], onDelete: Restrict)
 
   // Audit columns
   createdAt          DateTime       @default(now()) @db.Timestamptz(6)
@@ -127,6 +135,7 @@ model TrainerAvailability {
   @@index([trainerId])
   @@index([branchId])
   @@index([dayOfWeek])
+  @@index([trainerId, dayOfWeek]) // Optimized lookup for availability collision detection
   @@map("trainer_availabilities")
 }
 ```
@@ -140,7 +149,7 @@ model TrainerAvailability {
 model TrainerCourseAuthorization {
   id                 String         @id @default(uuid()) @db.Uuid
   trainerId          String         @db.Uuid
-  courseId           String         @db.Uuid // FK to Course model in Course Catalog
+  courseId           String         @db.Uuid // Logical reference to Course model in Course Catalog Bounded Context
   status             RecordStatus   @default(Active)
 
   // Active dating
@@ -161,49 +170,14 @@ model TrainerCourseAuthorization {
 
   @@index([trainerId])
   @@index([courseId])
+  @@index([trainerId, courseId]) // Optimized lookup for course authorization checks
   @@map("trainer_course_authorizations")
 }
 ```
 
 ---
 
-### 1.5 Model `BatchTrainer`
-* **Purpose:** Resolution table mapping primary and assistant trainer assignments to batches.
-* **Prisma Schema Definition:**
-```prisma
-model BatchTrainer {
-  id                 String         @id @default(uuid()) @db.Uuid
-  batchId            String         @db.Uuid // FK to Batch model in Course Catalog
-  trainerId          String         @db.Uuid
-  isPrimary          Boolean        @default(true)
-  
-  // Active dating
-  effectiveStartDate DateTime       @default(now()) @db.Date
-  effectiveEndDate   DateTime?      @db.Date
-
-  // Relations
-  trainer            TrainerProfile @relation(fields: [trainerId], references: [id], onDelete: Restrict)
-  // batch           Batch          @relation(fields: [batchId], references: [id], onDelete: Restrict)
-
-  // Audit columns
-  createdAt          DateTime       @default(now()) @db.Timestamptz(6)
-  createdBy          String?        @db.Uuid
-  updatedAt          DateTime?      @db.Timestamptz(6)
-  updatedBy          String?        @db.Uuid
-  deletedAt          DateTime?      @db.Timestamptz(6)
-  deletedBy          String?        @db.Uuid
-  isDeleted          Boolean        @default(false)
-
-  @@unique([batchId, trainerId])
-  @@index([trainerId])
-  @@index([batchId])
-  @@map("batch_trainers")
-}
-```
-
----
-
-### 1.6 Model `TrainerPayment`
+### 1.5 Model `TrainerCompensationRate`
 * **Purpose:** Configures compensation rates on a per-batch/session assignment basis.
 * **Prisma Schema Definition:**
 ```prisma
@@ -214,23 +188,19 @@ enum PaymentBasis {
   Fixed
 }
 
-enum TrainerPaymentStatus {
-  Draft
-  Pending
-  Approved
-  Disbursed
-  Cancelled
-}
+model TrainerCompensationRate {
+  id            String                        @id @default(uuid()) @db.Uuid
+  trainerId     String                        @db.Uuid
+  batchId       String                        @db.Uuid // Logical reference to Batch model in Course Catalog
+  sessionId     String?                       @db.Uuid // Logical reference to Session model in Scheduling
+  paymentBasis  PaymentBasis                  @default(PerHour)
+  amount        Decimal                       @db.Decimal(12, 3) // Oman OMR decimal format (3 decimals)
+  status        TrainerCompensationRateStatus @default(Draft)
+  remarks       String?                       @db.Text
 
-model TrainerPayment {
-  id            String               @id @default(uuid()) @db.Uuid
-  trainerId     String               @db.Uuid
-  batchId       String               @db.Uuid // FK to Batch model
-  sessionId     String?              @db.Uuid // Nullable FK to Session model in Scheduling
-  paymentBasis  PaymentBasis         @default(PerHour)
-  amount        Decimal              @db.Decimal(12, 3) // Oman OMR decimal format (3 decimals)
-  status        TrainerPaymentStatus @default(Draft)
-  remarks       String?              @db.Text
+  // Active dating
+  effectiveStartDate DateTime      @default(now()) @db.Date
+  effectiveEndDate   DateTime?     @db.Date
 
   // Relations
   trainer       TrainerProfile @relation(fields: [trainerId], references: [id], onDelete: Restrict)
@@ -240,53 +210,53 @@ model TrainerPayment {
   createdBy     String?        @db.Uuid
   updatedAt     DateTime?      @db.Timestamptz(6)
   updatedBy     String?        @db.Uuid
+  approvedAt    DateTime?      @db.Timestamptz(6) // Payout audit status date
+  approvedBy    String?        @db.Uuid
   deletedAt     DateTime?      @db.Timestamptz(6)
   deletedBy     String?        @db.Uuid
   isDeleted     Boolean        @default(false)
 
   @@index([trainerId])
   @@index([batchId])
+  @@index([sessionId])
   @@index([status])
-  @@map("trainer_payments")
+  @@map("trainer_compensation_rates")
 }
 ```
 
 ---
-
 ## 2. Entity Relationships (ERD Mapping)
 
 ```mermaid
 erDiagram
-    PERSON ||--o| TRAINER_PROFILE : "1:0..1 Links identity record"
+    PERSON ||--o| TRAINER_PROFILE : "Logical reference via personId"
     TRAINER_PROFILE ||--o{ TRAINER_QUALIFICATION : "1:N Owns qualifications"
     TRAINER_PROFILE ||--o{ TRAINER_AVAILABILITY : "1:N Maps scheduling limits"
     TRAINER_PROFILE ||--o{ TRAINER_COURSE_AUTHORIZATION : "1:N Maps authorized courses"
-    TRAINER_PROFILE ||--o{ BATCH_TRAINER : "1:N Assigns instructors"
-    TRAINER_PROFILE ||--o{ TRAINER_PAYMENT : "1:N Defines compensation rate"
+    TRAINER_PROFILE ||--o{ TRAINER_COMPENSATION_RATE : "1:N Defines compensation rate"
     
-    BRANCH ||--o| TRAINER_PROFILE : "1:0..1 Scopes home branch"
-    BRANCH ||--o{ TRAINER_AVAILABILITY : "1:N Limits to location context"
-    BATCH ||--o{ BATCH_TRAINER : "1:N Links to courses"
-    BATCH ||--o{ TRAINER_PAYMENT : "1:N Groups pay parameters"
-    DOCUMENT ||--o| TRAINER_QUALIFICATION : "1:1 References certificate file"
+    BRANCH ||--o| TRAINER_PROFILE : "Logical reference via branchId"
+    BRANCH ||--o{ TRAINER_AVAILABILITY : "Logical reference via branchId"
+    BATCH ||--o{ TRAINER_COMPENSATION_RATE : "Logical reference via batchId"
+    DOCUMENT ||--o| TRAINER_QUALIFICATION : "Logical reference via documentId"
 ```
 
-### Relationship Constraints Summary:
-1. **`Person` to `TrainerProfile` (1:1):** 
-   * **Foreign Key:** `TrainerProfile.personId` references `Person.id`.
-   * **Behavior:** `onDelete: Restrict`. To delete a `Person`, any active/linked `TrainerProfile` must first be archived or unlinked.
-2. **`Branch` to `TrainerProfile` (1:1):**
-   * **Foreign Key:** `TrainerProfile.branchId` references `Branch.id`.
-   * **Behavior:** `onDelete: Restrict`. A branch cannot be deleted if active trainer profiles are scoped to it.
-3. **`TrainerProfile` to `TrainerAvailability` (1:N):**
-   * **Foreign Key:** `TrainerAvailability.trainerId` references `TrainerProfile.id`.
-   * **Behavior:** `onDelete: Restrict`. A trainer profile cannot be hard-deleted or unlinked if availability records exist; the application layer handles cascading soft-deletion logically.
-4. **`TrainerProfile` to `TrainerCourseAuthorization` (1:N):**
-   * **Foreign Key:** `TrainerCourseAuthorization.trainerId` references `TrainerProfile.id`.
-   * **Behavior:** `onDelete: Restrict`. Cleaned up via logical soft-deletion.
-5. **`Branch` to `TrainerAvailability` (1:N):**
-   * **Foreign Key:** `TrainerAvailability.branchId` references `Branch.id`.
-   * **Behavior:** `onDelete: Restrict`. Active branches containing mapped slots cannot be deleted until those blocks are soft-deleted or migrated.
+### Relationship Constraints Summary (Logical Boundaries):
+1. **`Person` to `TrainerProfile` (Logical Link):** 
+   * **Foreign Key:** `TrainerProfile.personId` is a logical UUID reference to `Person.id` owned by the Identity & Access context.
+   * **Behavior:** Handled in the application service layer. To delete or archive a `Person`, the identity context publishes an event which is subscribed to by the Trainer context to handle corresponding profile archiving. No physical database cascade constraints exist.
+2. **`Branch` to `TrainerProfile` (Logical Link):**
+   * **Foreign Key:** `TrainerProfile.branchId` is a logical UUID reference to `Branch.id` in the Organization context.
+   * **Behavior:** Verification of branch existence is handled logically during trainer profile creation.
+3. **`TrainerProfile` to `TrainerAvailability` (Local Context 1:N):**
+   * **Foreign Key:** `TrainerAvailability.trainerId` references `TrainerProfile.id` with a physical database relation (`onDelete: Restrict`). Since both belong to the same Bounded Context (TRN), physical constraints are permitted.
+4. **`TrainerProfile` to `TrainerCourseAuthorization` (Local Context 1:N):**
+   * **Foreign Key:** `TrainerCourseAuthorization.trainerId` references `TrainerProfile.id` physically. Cleaned up via logical soft-deletion.
+5. **`Branch` to `TrainerAvailability` (Logical Link):**
+   * **Foreign Key:** `TrainerAvailability.branchId` is a logical reference to `Branch.id` in the Organization context. No physical constraint exists.
+6. **`TrainerProfile` to `TrainerCompensationRate` (Local Context 1:N):**
+   * **Foreign Key:** `TrainerCompensationRate.trainerId` references `TrainerProfile.id` physically. Cleaned up via logical soft-deletion.
+
 
 ---
 
@@ -300,13 +270,12 @@ This matrix outlines user access controls scoped to active branches. Branch isol
 | **TrainerQualification** | **CRUD**<br>No Scoping Limits. | **CRU**<br>Only if Trainer is assigned to Admin's active branch. | **R**<br>Only reads qualifications of local branch trainers. | **CR**<br>Allows uploading certs to their own profile. | **R**<br>Reads document attachments. |
 | **TrainerAvailability** | **CRUD**<br>No Scoping Limits. | **CRUD**<br>Restricted to Admin's active branch settings. | **R**<br>Queries slots of local branch trainers. | **R**<br>Reads their own schedules. | **R**<br>Provides data to Scheduling engine. |
 | **TrainerCourseAuthorization** | **CRUD**<br>No Scoping Limits. | **CRUD**<br>Restricted to Admin's active branch settings. | **CR**<br>Allows coordinating authorized courses for active branch. | **R**<br>Reads their own authorizations. | **R**<br>Provides data to Scheduling engine. |
-| **BatchTrainer** | **CRUD**<br>No Scoping Limits. | **CRUD**<br>Restricted to batches running at active branch. | **CRUD**<br>Restricted to batches running at active branch. | **R**<br>Reads their own batch assignments. | **R**<br>Verifies classroom bookings. |
-| **TrainerPayment** | **CRUD**<br>No Scoping Limits. | **CRU**<br>Restricted to rates running at active branch. | **No Access**<br>Hidden entirely. | **No Access**<br>Hidden entirely. | **R**<br>Calculates downstream invoice logs. |
+| **TrainerCompensationRate** | **CRUD**<br>No Scoping Limits (Rates are temporal/immutable once approved). | **CRU**<br>Restricted to rates running at active branch (Rates are temporal/immutable once approved). | **No Access**<br>Hidden entirely. | **No Access**<br>Hidden entirely. | **R**<br>Calculates downstream invoice logs. |
 
 ### CRUD Terminology Reference:
 * **C (Create):** Write new records.
 * **R (Read):** Query and display records.
-* **U (Update):** Modify existing records.
+* **U (Update):** Modify existing records. Approved rates in `TrainerCompensationRate` and active authorizations in `TrainerCourseAuthorization` are immutable or temporal configuration data. In-place overwrites of financial/dating fields are strictly blocked; updates must be executed by setting `effectiveEndDate` and `status` to Cancelled/Inactive on the active record and creating a new record (versioning). No other fields (like `amount`, `paymentBasis`, `trainerId`, or `batchId`) are mutable on approved records.
 * **D (Delete):** Trigger soft deletion (`isDeleted = true`).
 * **Audit (Scope Rule):** All mutation attempts execute security filters mapping `session.activeBranchId` against the table's `branchId` column server-side. If a validation failure occurs, the database transaction is rolled back with error `ERR_TRN_BRANCH_ACCESS_DENIED`.
 
@@ -317,4 +286,4 @@ The Faculty / Trainer Management module does not own general compliance or ident
 * `ownerType` = `'Trainer'`
 * `ownerId` = `TrainerProfile.id`
 
-These documents are integrated into the compliance engine via cross-context queries. Every document query and mutation checks verification status (`Approved` in Document Management) and validity (`expiryDate > current_date`) to enforce business rules.
+These documents are integrated into the compliance engine via cross-context queries. Every document query and mutation checks verification status (`Approved` in Document Management) and validity (`expiryDate > current_date`) to enforce business rules. Logical reference checks are enforced in the Application/Domain layer.

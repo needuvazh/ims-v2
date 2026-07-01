@@ -10,41 +10,27 @@ The Admission and Enrollment module executes validation logic prior to database 
 ### 1.1 Age Verification Rule
 *   **Rule:** A learner must be at least 12 years old on the date of admission registration.
 *   **Validation Logic:**
+    The student's age is calculated based on their date of birth:
     $$\text{Age} = \text{admissionDate} - \text{dateOfBirth} \ge 12\text{ years}$$
-*   **Zod Schema Implementation Snippet:**
-    ```typescript
-    const dobSchema = z.string().datetime().refine((dob) => {
-      const birthDate = new Date(dob);
-      const today = new Date();
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const monthDiff = today.getMonth() - birthDate.getMonth();
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-      return age >= 12;
-    }, {
-      message: "Student must be at least 12 years of age."
-    });
-    ```
+    This rule is checked programmatically inside the student registration aggregate validation layer during profile creation.
 
 ### 1.2 Overlapping Enrollment Rule
 *   **Rule:** A student cannot be enrolled in two active batches that overlap in their scheduled session timings.
 *   **Validation Logic:**
-    When checking a proposed `batchId` for an active student:
-    1. Retrieve all active enrollments for `studentId`.
-    2. Map the weekly schedule sessions of the target batch (days, start-time, end-time).
-    3. Assert that:
+    When checking a proposed `batchId` for an active student, conflict checking is delegated to the Scheduling context:
+    1. The Enrollment application service calls the public `SchedulingQueryService` (or equivalent timetable validation API) passing the proposed `batchId` and the `studentId`.
+    2. The Scheduling context retrieves existing schedules and validates that:
        $$\forall \text{ session } S_1 \in \text{Proposed Batch}, \forall \text{ session } S_2 \in \text{Existing Batches}, \text{Interval}(S_1) \cap \text{Interval}(S_2) = \emptyset$$
-    4. If intersection is not empty, block enrollment with `ERR_ENR_OVERLAPPING_SCHEDULE`.
+    3. If an overlap timing intersection is detected, the Scheduling query returns a validation failure, and the Enrollment context blocks the action with `ERR_ENR_OVERLAPPING_SCHEDULE`.
 
 ### 1.3 Batch Capacity Validation Rule
 *   **Rule:** Cannot confirm student enrollment if the batch seat count is exhausted.
 *   **Validation Logic:**
     During the transition to `Approved` or `Confirmed` status:
-    ```sql
-    SELECT max_capacity, seats_filled FROM batches WHERE id = :batchId FOR UPDATE;
-    ```
-    If `seats_filled >= max_capacity`, throw `ERR_ENR_BATCH_FULL`.
+    1. The Application Service queries the Training Delivery Bounded Context's public service interface (e.g. `BatchQueryService`) to fetch active batch occupancy metrics.
+    2. Alternatively, a logical seat reservation request is dispatched via the Application Service.
+    3. The validation asserts that the batch is active and that the capacity is not fully allocated.
+    4. If capacity is exhausted, the application layer throws the `ERR_ENR_BATCH_FULL` domain error.
 
 ---
 

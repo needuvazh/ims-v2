@@ -6,7 +6,7 @@
 Before writing a new `TrainerAvailability` slot to the database, the system must execute an overlap query. Given a set of proposed slots, the validation logic must enforce:
 
 $$\forall \text{ slots } A, B \text{ associated with } T \text{ on Day } D:$$
-$$\text{If } (\text{Branch}_A = \text{Branch}_B) \text{ and } (\text{DateRange}_A \cap \text{DateRange}_B \neq \emptyset):$$
+$$\text{If } (\text{DateRange}_A \cap \text{DateRange}_B \neq \emptyset):$$
 $$\text{Then } (\text{StartTime}_A \ge \text{EndTime}_B) \lor (\text{EndTime}_A \le \text{StartTime}_B)$$
 
 #### Implementation Reference (SQL/Prisma Query logic):
@@ -15,7 +15,6 @@ const countOverlaps = await prisma.trainerAvailability.count({
   where: {
     trainerId: payload.trainerId,
     dayOfWeek: payload.dayOfWeek,
-    branchId: payload.branchId,
     isDeleted: false,
     status: "Active",
     // Check Date Range overlap
@@ -58,7 +57,7 @@ The system uses specific error schemas to capture exceptions in this module.
 | `ERR_TRN_AVAILABILITY_OVERLAP` | `422` | "The requested availability window overlaps with an existing time block." | Check the calendar grid to find open slots. |
 | `ERR_TRN_COURSE_NOT_AUTHORIZED` | `400` | "Trainer is not authorized to deliver this course catalog item." | Map course authorization details on the course matrix. |
 | `ERR_TRN_QUALIFICATION_EXPIRED` | `400` | "The mandatory qualification document has expired or is unverified." | Review qualification document approvals in Document Management. |
-| `ERR_TRN_INVALID_PAYMENT_AMOUNT`| `422` | "Compensation value must be positive and format with exactly 3 decimals." | Re-enter rate using standard Omani Rial decimal format. |
+| `ERR_TRN_INVALID_COMPENSATION_RATE`| `422` | "Compensation value must be positive and format with exactly 3 decimals." | Re-enter rate using standard Omani Rial decimal format. |
 | `ERR_TRN_BRANCH_ACCESS_DENIED` | `403` | "You do not have permission to view or edit trainer records in this branch."| Check your active session branch context. |
 | `ERR_TRN_TRAINER_NOT_ASSIGNED_TO_BATCH` | `400` | "The trainer must be assigned to the batch before payment rates are defined."| Assign trainer to batch using Batch Allocation. |
 | `ERR_TRN_PROFILE_SUSPENDED` | `400` | "Cannot schedule assignments. The trainer profile is suspended." | Resolve the compliance block to reactivate profile. |

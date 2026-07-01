@@ -34,35 +34,28 @@ All APIs are scoped under the administrative portal prefixes and require JSON pa
 *   **Purpose:** Create a new student profile and admission.
 *   **Authentication:** Bearer token; requires `ADMISSION_CREATE` permission.
 *   **Branch Scoping:** Enforces that the request's `branchId` is within the user's active branch access list.
-*   **Request Payload Schema (Zod structure):**
-    ```typescript
-    const createAdmissionSchema = z.object({
-      personId: z.string().uuid().optional(),
-      branchId: z.string().uuid(),
-      admissionDate: z.string().datetime(),
-      leadId: z.string().uuid().optional(),
-      // Inlined person fields if personId is omitted (new person creation)
-      personDetails: z.object({
-        firstName: z.string().min(1).max(100),
-        lastName: z.string().min(1).max(100),
-        mobile: z.string().regex(/^\+968[79][0-9]{7}$/, "Invalid Omani phone"),
-        email: z.string().email().optional(),
-        nationalId: z.string().min(8).max(15).optional(),
-        nationality: z.string().min(2).max(50).optional(),
-        dateOfBirth: z.string().datetime().optional(),
-        gender: z.enum(["Male", "Female"]).optional(),
-      }).optional()
-    }).refine(data => data.personId || data.personDetails, {
-      message: "Either personId or personDetails must be provided",
-    });
-    ```
+*   **Request Payload Properties:**
+    *   `personId` (UUID, Optional): ID of the existing Person to link.
+    *   `branchId` (UUID, Required): ID of the branch managing the admission.
+    *   `admissionDate` (DateTime, Required): Intake registration date.
+    *   `leadId` (UUID, Optional): Original lead identifier in CRM.
+    *   `personDetails` (Object, Optional): Required if `personId` is not provided. Contains:
+        *   `firstName` (String, Required, max 100 characters).
+        *   `lastName` (String, Required, max 100 characters).
+        *   `mobile` (String, Required): Must match Omani mobile phone format (starts with `+968` followed by 7 or 9 and 7 digits).
+        *   `email` (String, Optional): Must be a valid email format.
+        *   `nationalId` (String, Optional): Civil ID or Passport number (8 to 15 characters).
+        *   `nationality` (String, Optional): 2 to 50 characters.
+        *   `dateOfBirth` (DateTime, Optional).
+        *   `gender` (Enum: "Male", "Female", Optional).
+    *   *Constraint:* Either `personId` or `personDetails` must be provided in the request payload.
 *   **Success Response DTO (`201 Created`):**
     ```json
     {
       "status": "success",
       "data": {
         "admissionId": "b18b4e72-d5cb-42b7-a3f2-c2e718b52401",
-        "studentId": "d38d9f1c-ea99-4c8d-bf33-9118c7d9a5b3",
+        "studentProfileId": "d38d9f1c-ea99-4c8d-bf33-9118c7d9a5b3",
         "studentNumber": "STU-2026-00452",
         "admissionStatus": "Draft",
         "createdAt": "2026-07-01T14:53:00Z"
@@ -80,12 +73,8 @@ All APIs are scoped under the administrative portal prefixes and require JSON pa
 *   **Purpose:** Reviewer signs off and approves an admission application.
 *   **Authentication:** Bearer token; requires `ADMISSION_APPROVE` permission.
 *   **Branch Scoping:** Validates user holds branch approval permission for the branch of the target admission ID.
-*   **Request Payload Schema:**
-    ```typescript
-    const approveAdmissionSchema = z.object({
-      remarks: z.string().max(500).optional()
-    });
-    ```
+*   **Request Payload Properties:**
+    *   `remarks` (String, Optional, max 500 characters).
 *   **Success Response DTO (`200 OK`):**
     ```json
     {
@@ -94,7 +83,7 @@ All APIs are scoped under the administrative portal prefixes and require JSON pa
       "data": {
         "admissionId": "b18b4e72-d5cb-42b7-a3f2-c2e718b52401",
         "status": "Approved",
-        "idCardUrl": "https://storage.asti.om/id-cards/STU-2026-00452.pdf",
+        "idCardStatus": "Generating",
         "approvedAt": "2026-07-01T14:54:12Z"
       }
     }
@@ -103,26 +92,21 @@ All APIs are scoped under the administrative portal prefixes and require JSON pa
     *   `400 Bad Request` – `ERR_ADM_INVALID_STATE` (Admission is already approved/cancelled).
     *   `404 Not Found` – `ERR_ADM_NOT_FOUND` (Target admission record does not exist).
 
----
-
 ### 2.3 `POST /api/enrollments`
 *   **Purpose:** Create a course enrollment draft.
 *   **Authentication:** Bearer token; requires `ENROLLMENT_CREATE` permission.
-*   **Branch Scoping:** Restricted to the context `branchId` provided in the payload.
+*   **Branch Scoping:** Restricted to the context `branchId` provided in the payload. Enforced at the application service level.
 *   **Request Payload Schema:**
-    ```typescript
-    const createEnrollmentSchema = z.object({
-      studentId: z.string().uuid(),
-      admissionId: z.string().uuid(),
-      courseId: z.string().uuid(),
-      batchId: z.string().uuid(),
-      branchId: z.string().uuid(),
-      enrollmentType: z.enum(["Regular", "Corporate", "WalkIn", "Online"]),
-      corporateParticipantId: z.string().uuid().optional(),
-      discountCode: z.string().optional(),
-      manualDiscount: z.number().min(0).optional()
-    });
-    ```
+*   **Request Payload Properties:**
+    *   `studentProfileId` (UUID, Required): ID of the student.
+    *   `admissionId` (UUID, Required): Reference to the approved admission.
+    *   `courseId` (UUID, Required): Reference to the course.
+    *   `batchId` (UUID, Required): Reference to the batch.
+    *   `branchId` (UUID, Required): Reference to the branch.
+    *   `enrollmentType` (Enum: "Regular", "Corporate", "WalkIn", "Online", Required).
+    *   `corporateParticipantId` (UUID, Optional): Mandatory if `enrollmentType` is `Corporate`.
+    *   `discountCode` (String, Optional).
+    *   `manualDiscount` (Number, Optional): Amount of manual discount to apply.
 *   **Success Response DTO (`201 Created`):**
     ```json
     {
@@ -146,15 +130,11 @@ All APIs are scoped under the administrative portal prefixes and require JSON pa
 ---
 
 ### 2.4 `POST /api/enrollments/{id}/approve`
-*   **Purpose:** Move enrollment to Approved state, reserving seat and initiating invoice actions.
+*   **Purpose:** Move enrollment to Approved state, verifying batch capacity and corporate credit limits via cross-context service calls.
 *   **Authentication:** Bearer token; requires `ENROLLMENT_APPROVE` permission.
 *   **Branch Scoping:** Enforced local branch matches user authority.
-*   **Request Payload Schema:**
-    ```typescript
-    const approveEnrollmentSchema = z.object({
-      overrideCapacity: z.boolean().default(false)
-    });
-    ```
+*   **Request Payload Properties:**
+    *   `overrideCapacity` (Boolean, Optional, default `false`): Set to `true` to override capacity validation (requires administrative permissions).
 *   **Success Response DTO (`200 OK`):**
     ```json
     {
@@ -177,15 +157,11 @@ All APIs are scoped under the administrative portal prefixes and require JSON pa
 ---
 
 ### 2.5 `POST /api/enrollments/{id}/confirm`
-*   **Purpose:** Confirm enrollment (triggered manually by finance overrides or system callbacks on payments).
+*   **Purpose:** Confirm enrollment (triggered manually by authorized actors to bypass automated events; automatically handled in the background by outbox listeners subscribing to payment receipts).
 *   **Authentication:** Bearer token; requires `ENROLLMENT_CONFIRM` permission.
 *   **Branch Scoping:** Branch checked at the enrollment root.
-*   **Request Payload Schema:**
-    ```typescript
-    const confirmEnrollmentSchema = z.object({
-      receiptNumber: z.string().min(1)
-    });
-    ```
+*   **Request Payload Properties:**
+    *   *No request payload is required.* Confirmation verifies payment clearance status by querying the Finance context's public application service interface (e.g., `FinanceAccountService.getLedgerBalance`).
 *   **Success Response DTO (`200 OK`):**
     ```json
     {
@@ -198,30 +174,24 @@ All APIs are scoped under the administrative portal prefixes and require JSON pa
     }
     ```
 *   **Error Response Catalog:**
-    *   `422 Unprocessable Entity` – `ERR_ENR_PAYMENT_INCOMPLETE` (Ledger balance is greater than zero).
+    *   `422 Unprocessable Entity` – `ERR_ENR_PAYMENT_INCOMPLETE` (Finance ledger reports outstanding balance).
 
 ---
 
 ### 2.6 `POST /api/enrollments/{id}/drop`
-*   **Purpose:** Drop student from active status.
+*   **Purpose:** Drop student from active status. Emits an event that Finance listens to for refund calculations.
 *   **Authentication:** Bearer token; requires `ENROLLMENT_DROP` permission.
 *   **Branch Scoping:** Scoped to enrollment branch.
-*   **Request Payload Schema:**
-    ```typescript
-    const dropEnrollmentSchema = z.object({
-      withdrawalDate: z.string().datetime(),
-      reasonCode: z.string().min(1),
-      requestRefund: z.boolean().default(false)
-    });
-    ```
+*   **Request Payload Properties:**
+    *   `withdrawalDate` (DateTime, Required): Date of student withdrawal.
+    *   `reasonCode` (String, Required): Standard reason code for the withdrawal.
 *   **Success Response DTO (`200 OK`):**
     ```json
     {
       "status": "success",
       "data": {
         "enrollmentId": "ec12b4e9-112c-4993-8ba9-03c09b8d234a",
-        "enrollmentStatus": "Dropped",
-        "refundRequestCreated": true
+        "enrollmentStatus": "Dropped"
       }
     }
     ```
@@ -232,12 +202,8 @@ All APIs are scoped under the administrative portal prefixes and require JSON pa
 *   **Purpose:** Cancel a pre-active enrollment, voiding associated draft invoices.
 *   **Authentication:** Bearer token; requires `ENROLLMENT_CANCEL` permission.
 *   **Branch Scoping:** Scoped to the branch of the target enrollment.
-*   **Request Payload Schema:**
-    ```typescript
-    const cancelEnrollmentSchema = z.object({
-      reasonCode: z.string().min(1)
-    });
-    ```
+*   **Request Payload Properties:**
+    *   `reasonCode` (String, Required): Standard reason code for the cancellation.
 *   **Success Response DTO (`200 OK`):**
     ```json
     {
@@ -272,7 +238,7 @@ All read queries are strictly filtered by the user's active branch access contex
           {
             "id": "b18b4e72-d5cb-42b7-a3f2-c2e718b52401",
             "admissionNumber": "ADM-2026-00452",
-            "studentId": "d38d9f1c-ea99-4c8d-bf33-9118c7d9a5b3",
+            "studentProfileId": "d38d9f1c-ea99-4c8d-bf33-9118c7d9a5b3",
             "studentName": "Ahmed Al-Omani",
             "branchId": "mc-muscat-8879",
             "status": "Approved",
@@ -318,12 +284,8 @@ All read queries are strictly filtered by the user's active branch access contex
 ### 3.3 `DELETE /api/admissions/{id}`
 *   **Purpose:** Soft-delete a draft or pending admission.
 *   **Authentication:** Bearer token; requires `admission.cancel` permission.
-*   **Request Query/Body:**
-    ```typescript
-    const deleteAdmissionSchema = z.object({
-      reasonCode: z.string().min(1)
-    });
-    ```
+*   **Request Body Properties:**
+    *   `reasonCode` (String, Required): Standard reason code explaining the deletion/cancellation.
 *   **Success Response DTO (`200 OK`):**
     ```json
     {
@@ -445,7 +407,7 @@ All read queries are strictly filtered by the user's active branch access contex
       "data": {
         "id": "ec12b4e9-112c-4993-8ba9-03c09b8d234a",
         "enrollmentNumber": "ENR-2026-10291",
-        "studentId": "d38d9f1c-ea99-4c8d-bf33-9118c7d9a5b3",
+        "studentProfileId": "d38d9f1c-ea99-4c8d-bf33-9118c7d9a5b3",
         "courseId": "crs-111",
         "batchId": "bat-222",
         "branchId": "mc-muscat-8879",

@@ -32,7 +32,7 @@ You are a Principal Solutions Architect and Senior Staff Engineer specializing i
   - `TrainerQualification` (Fields: `id`, `trainerId` [FK to TrainerProfile], `qualificationName`, `institution`, `yearCompleted`, `documentId` [FK to Document, Nullable], audit columns)
   - `TrainerAvailability` (Fields: `id`, `trainerId` [FK to TrainerProfile], `dayOfWeek` [Int/Enum], `startTime` [String/Time], `endTime` [String/Time], `branchId` [FK to Branch], `status`, `effectiveStartDate` [Date], `effectiveEndDate` [Date, Nullable], audit columns)
   - `BatchTrainer` (Fields: `id`, `batchId` [FK to Batch], `trainerId` [FK to TrainerProfile], `isPrimary` [Boolean], `effectiveStartDate` [Date], `effectiveEndDate` [Date, Nullable], audit columns - maps assignments of trainers to batches)
-  - `TrainerPayment` (Fields: `id`, `trainerId` [FK to TrainerProfile], `batchId` [UUID FK], `sessionId` [UUID FK, Nullable], `paymentBasis` [Enum: PerHour, PerSession, PerStudent, Fixed], `amount` [Decimal], `paymentStatus` [Enum: Pending, Disbursed, Cancelled], `remarks`)
+  - `TrainerCompensationRate` (Fields: `id`, `trainerId` [FK to TrainerProfile], `batchId` [UUID FK], `sessionId` [UUID FK, Nullable], `paymentBasis` [Enum: PerHour, PerSession, PerStudent, Fixed], `amount` [Decimal], `paymentStatus` [Enum: Pending, Disbursed, Cancelled], `remarks`)
 
 We will generate this FRD systematically, one part at a time. Please confirm you understand these rules, active dating specifications, and target models.
 ```
@@ -127,7 +127,7 @@ Requirements:
    - `TrainerQualification` (Fields: `id`, `trainerId`, `qualificationName`, `institution`, `yearCompleted`, `documentId`, audit columns)
    - `TrainerAvailability` (Fields: `id`, `trainerId`, `dayOfWeek`, `startTime`, `endTime`, `branchId`, `status`, `effectiveStartDate`, `effectiveEndDate`, audit columns)
    - `BatchTrainer` (Fields: `id`, `batchId`, `trainerId`, `isPrimary`, `effectiveStartDate`, `effectiveEndDate`, audit columns)
-   - `TrainerPayment` (Fields: `id`, `trainerId`, `batchId`, `sessionId`, `paymentBasis`, `amount`, `paymentStatus`, `remarks`, audit columns)
+   - `TrainerCompensationRate` (Fields: `id`, `trainerId`, `batchId`, `sessionId`, `paymentBasis`, `amount`, `paymentStatus`, `remarks`, audit columns)
    Provide exact PostgreSQL & Prisma equivalent data types, nullability, keys, unique constraints, and indexes.
 2. **Relationships:** Detail 1:1, 1:N, and N:M relationships with cascading/restrict rules. Ensure TrainerProfile links to `Person` (1:1), TrainerAvailability scopes to `Branch` (M:1), and BatchTrainer bridges `Batch` (M:1) and `TrainerProfile` (M:1).
 3. **CRUD Matrix:** Provide a Markdown table mapping Human/System Actors against entities, specifying allowed actions (Create, Read, Update, Delete, Audit) and the required branch-scoping logic.

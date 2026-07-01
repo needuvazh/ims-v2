@@ -10,7 +10,7 @@ Trainers' personal details (such as passport numbers, civil ID values, date of b
 * **Field-Level Encryption:** If required by compliance rules, civil ID and passport numbers are encrypted at rest using AES-256-GCM. Decryption keys are stored securely in environment variables and are only visible to authorized HR profiles.
 
 ### 1.2 Audit Trails for Payment and Status Mutations
-* **Immutable Logs:** Any write or edit to the `TrainerPayment` table (e.g. rate changes) and the status of `TrainerProfile` transitions must write an entry to the `AuditLog` table.
+* **Immutable Logs:** Any write or edit to the `TrainerCompensationRate` table (e.g. rate changes) and status transitions of `TrainerProfile` must publish domain events to the transactional outbox for the Audit & Compliance context to record asynchronously.
 * **Payload Capture:** The system records the complete old and new states in JSON format.
 * **Correlational ID:** All operations include a correlation ID linked to the HTTP request tracing context, enabling audit investigators to map API requests directly to database operations.
 
@@ -54,4 +54,4 @@ Trainers' personal details (such as passport numbers, civil ID values, date of b
 
 ### 2.5 Regulatory Compliance
 * **Ministry Certification Audit:** Trainer profiles must maintain files confirming Ministry of Higher Education & Scientific Research teaching authorizations (where required in Oman).
-* **Tax Audit Compliance:** Financial entries logged in `TrainerPayment` must store numbers formatted to **3 decimal places** to prevent rounding differences under Omani tax law.
+* **Tax Audit Compliance:** Financial entries logged in `TrainerCompensationRate` must store numbers formatted to **3 decimal places** to prevent rounding differences under Omani tax law.

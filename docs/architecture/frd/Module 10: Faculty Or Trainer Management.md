@@ -83,13 +83,11 @@ The Trainer context owns:
 * TrainerQualification
 * TrainerAvailability
 * TrainerCourseAuthorization
-* TrainerAssignment
-* TrainerUtilizationSnapshot
-* TrainerPortalAccess
-
+* TrainerCompensationRate (compensation definitions)
 
 Notes:
 
+* Trainer assignments to batches and sessions (e.g., `BatchTrainer`) are owned by **Training Delivery Management**. The Trainer context only records profile data and compensation terms (`TrainerCompensationRate`), and exposes availability constraint checks read-only.
 * Schedule sessions are owned by Scheduling & Timetable Management.
 * Trainers are referenced by scheduling, attendance, and completion contexts.
 * Payroll is intentionally excluded from this context.
@@ -277,7 +275,7 @@ TRAINER_ASSIGN
 
 #### Personal & Contact Information (Read/Write via Shared Person Link)
 
-* **Shared Identity:** All personal and contact details belong to the central `Person` record. The screen acts as a wrapper editing the `Person` record via `personId`.
+* **Shared Identity:** All personal and contact details belong to the central `Person` record. The screen acts as a wrapper editing the `Person` record via `personId`. Mutations to the `Person` record must delegate to the Identity / Person Bounded Context Application Service rather than updating the `Person` table directly.
 ```text
 Trainer Code (Read-Only)
 Person Link / Selector (Mandatory)
@@ -429,7 +427,10 @@ Monday, 09:00 to 13:00, Muscat Branch
 
 ### Purpose
 
-Assign trainers to courses, batches, or corporate delivery work.
+Assign trainers to courses, batches, or corporate delivery work. 
+
+> [!NOTE]
+> **Data Ownership Boundary:** The actual persistence of trainer-to-batch assignments is owned by the **Training Delivery Management Bounded Context** (via `BatchTrainer`). This screen interacts with the Training Delivery context to perform writes.
 
 ### Fields
 
@@ -458,7 +459,7 @@ Corporate Trainer
 ### Business Rules
 
 * Multiple trainers per batch are allowed.
-* Trainer overlap validation is required.
+* Trainer overlap validation is required (calculated via Trainer Bounded Context availability queries).
 * Trainer availability validation is required.
 * Trainer must be authorized for the course where configured.
 * Corporate assignments are tracked separately as assignment records, not as a separate trainer type.
@@ -603,11 +604,11 @@ The system shall support trainer-course authorization mapping.
 
 ## FR-TRN-008 Assign Trainers
 
-The system shall support trainer assignments to courses, batches, and corporate delivery work.
+The system shall support trainer assignments to courses, batches, and corporate delivery work (actual assignment tables are owned and written to by the Training Delivery Bounded Context).
 
 ## FR-TRN-009 Monitor Expiry
 
-The system shall monitor document and certification expiry.
+The system shall process document expiration events from the Document Bounded Context to suspend trainer profiles and block schedule assignments when visa, civil ID, or licenses expire.
 
 ## FR-TRN-010 View Utilization
 
@@ -619,13 +620,13 @@ The system shall provide read-only trainer portal access.
 
 ## FR-TRN-012 Audit Trainer Changes
 
-The system shall maintain trainer audit history.
+The system shall publish domain events for profile changes, which are consumed by the Audit & Compliance context to maintain trainer audit history.
 
 ---
 
 # 8. Audit Events
 
-The following audit events shall be supported:
+The following domain events shall be emitted (published) by the Faculty / Trainer Bounded Context:
 
 ```text
 TrainerCreated
@@ -635,21 +636,29 @@ TrainerDeactivated
 TrainerSuspended
 TrainerQualificationAdded
 TrainerQualificationUpdated
-TrainerDocumentUploaded
-TrainerDocumentVerified
-TrainerDocumentRejected
 TrainerAvailabilityUpdated
 TrainerCourseAuthorized
 TrainerCourseAuthorizationExpired
-TrainerAssigned
-TrainerRemoved
-TrainerPortalAccessCreated
+TrainerCompensationRateConfigured
 TrainerStatusChanged
+```
+
+The Faculty / Trainer Bounded Context subscribes to (consumes) the following external events:
+
+```text
+DocumentUploaded (from Document Management Context)
+DocumentVerified (from Document Management Context)
+DocumentRejected (from Document Management Context)
+DocumentExpiring (from Document Management Context)
+DocumentExpired (from Document Management Context)
+TrainerAssigned (from Training Delivery Context)
+TrainerRemoved (from Training Delivery Context)
+UserCreated (from Identity & Access Management Context)
 ```
 
 Rules:
 
-* Trainer profile, authorization, document, and availability changes must be audited.
+* Trainer profile, authorization, and availability changes must be audited.
 * Audit records must capture actor, timestamp, and reason where applicable.
 
 ---

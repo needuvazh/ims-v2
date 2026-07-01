@@ -28,7 +28,7 @@ Admissions document uploads (Passports, Civil IDs, academic certificate files) a
 
 ### 1.3 Row-Level Security (RLS) & Tenant Scoping
 *   **Scoping:** Every database query affecting admissions, students, and enrollments must apply a predicate filter `WHERE branch_id = :userBranchId` unless executed by a Super Admin.
-*   **Prisma Middleware Guard:** To prevent developers from forgetting this filter, a Prisma client extension enforces row-level security on select queries for the `Admission` and `Enrollment` models.
+*   **Data Access Layer Tenant Guard:** To prevent authorization bypasses, the database service layer (or ORM-specific query middleware) must programmatically enforce row-level scoping on all query retrievals for the `Admission` and `Enrollment` models.
 
 ---
 

@@ -20,7 +20,7 @@
         | effectiveStartDate | 2026-07-01  |
       Then the system should generate a unique TrainerCode matching format "TRN-2026-[0-9]{4}"
       And the TrainerProfile status should be set to "Draft"
-      And an audit entry "TrainerCreated" should be recorded in the AuditLog
+      And a "TrainerCreated" domain event should be published to the transactional outbox
   ```
 
 ---
@@ -60,18 +60,18 @@
 
 ---
 
-### US-TRN-004: Document Expiry Alert Generation
-* **User Story:** As a Branch Manager, I want to receive automated warnings when a trainer's mandatory teaching license or visa is within 30 days of expiry, so that we can renew it before scheduling violations occur.
+### US-TRN-004: Document Expiry Compliance Updates
+* **User Story:** As a Branch Manager, I want the system to automatically capture document expiration updates from the Document Bounded Context and notify me of upcoming teaching license or visa expirations, so that we can prevent scheduling violations.
 * **Priority:** Must Have (MoSCoW)
 * **BDD Scenario:**
   ```gherkin
-  Feature: Automated Expiry Warnings
-    Scenario: Trigger alert for document expiring in 15 days
-      Given the Expiry Alert Worker is scheduled to run daily
-      And Trainer "TRN-2026-0045" has a Visa document expiring on "2026-07-16" (15 days from local time 2026-07-01)
-      When the Expiry Alert Worker execution runs
-      Then a notification with level "Critical" should be written to the Notification table for Branch Manager
-      And the system should send an email to the trainer warning them of visa expiration
+  Feature: Document Expiry Compliance Updates
+    Scenario: Receive and process document expiring event
+      Given the Document Bounded Context Daily Worker publishes a "DocumentExpiring" event
+      And the event is for Trainer "TRN-2026-0045" with a Visa expiring in 15 days
+      When the Trainer Bounded Context event handler processes the event
+      Then the system should record the compliance warning on the trainer's profile
+      And publish a "TrainerDocumentExpiring" domain event to the outbox for the Communication Bounded Context to alert the Branch Manager and email the trainer
   ```
 
 ---
@@ -89,7 +89,7 @@
         | paymentBasis | PerHour |
         | amount       | 25.000  |
         | remarks      | Certified AWS Course Rate |
-      Then the system should save the payment terms to the TrainerPayment table
+      Then the system should save the compensation terms to the TrainerCompensationRate table
       And the currency format must hold 3 decimal places as "OMR 25.000"
   ```
 
@@ -123,7 +123,7 @@
       And the system blocks standard scheduler assignment
       When the Super Admin forces the trainer assignment to Batch "BATCH-X"
       Then the system should permit the assignment
-      And save the override audit details to the AuditLog with the reason "Emergency Coverage"
+      And publish a "TrainerSchedulingOverridden" domain event to the transactional outbox with the reason "Emergency Coverage"
   ```
 
 ---
@@ -150,7 +150,7 @@
 
 ### Use Case 1: Register Trainer Profile
 * **Primary Actor:** Branch Admin
-* **Preconditions:** Executing user holds the `trainer:create` permission. The active branch context must be initialized.
+* **Preconditions:** Executing user holds the `trainer:create` permission. The active branch context must be initialized. The Person record must already exist in the central registry.
 * **Main Success Scenario:**
   1. The Admin opens the "Register Trainer" form.
   2. The Admin searches for an existing `Person` record using the mobile number or email.
@@ -158,10 +158,10 @@
   4. The Admin selects the `Trainer Type` (FullTime, PartTime, Freelance), inputs specializations, and sets the effective start date.
   5. The Admin submits the form.
   6. The system checks for existing links to prevent duplicates, generates a unique `TrainerCode` (e.g. `TRN-2026-0051`), and creates the `TrainerProfile` in `Draft` state.
-  7. The system registers a profile creation event in the `AuditLog` table.
-* **Alternative Flows:**
+  7. The system publishes a `TrainerCreated` domain event to the transactional outbox to trigger asynchronous audit logging.
   * *Alternative A: Person record not found*
-    1. At Step 3, if the Person record is not found, the Admin inputs first name, last name, mobile (unique), and email (unique) to register the `Person` and `TrainerProfile` concurrently.
+    1. At Step 3, if the Person record is not found, the system displays a warning message.
+    2. The system prompts the Admin to register the Person first in the central Identity/Person Registry before creating the trainer profile.
   * *Alternative B: Duplicate trainer mapping*
     1. At Step 6, if the selected `personId` is already linked to an active `TrainerProfile`, the system aborts the write, displays `ERR_TRN_PERSON_ALREADY_LINKED`, and returns the Admin to the edit screen.
 * **Postconditions:** A new `TrainerProfile` record is saved, linked to a valid `Person` ID, in `Draft` state.
@@ -177,7 +177,7 @@
   3. The Admin clicks "Save Slot".
   4. The system validates the date boundaries and checks for overlapping blocks for the same day and branch.
   5. Finding no overlaps, the system saves the record in the `TrainerAvailability` table and sets the status to `Active`.
-  6. The system logs the change event in the `AuditLog` table.
+  6. The system publishes a `TrainerAvailabilityUpdated` domain event to the transactional outbox.
 * **Alternative Flows:**
   * *Alternative A: Time Slot Collision*
     1. At Step 4, if the system finds a pre-existing availability slot for the same trainer at the same branch that overlaps the new time bounds, the system rejects the transaction.
@@ -204,7 +204,7 @@
 
 ---
 
-### Use Case 4: Record Delivery Payment Terms
+### Use Case 4: Record Delivery Compensation Terms
 * **Primary Actor:** Accountant
 * **Preconditions:** Accountant holds `trainer:write` permission. Trainer is assigned to the target batch.
 * **Main Success Scenario:**
@@ -212,11 +212,11 @@
   2. The Accountant selects the assigned trainer.
   3. The Accountant chooses the payment basis (e.g. `PerHour`) and enters the amount (e.g., `20.000` OMR).
   4. The system checks that the rate formats to exactly three decimal places.
-  5. The system writes the terms to the `TrainerPayment` table.
+  5. The system writes the terms to the `TrainerCompensationRate` table.
 * **Alternative Flows:**
   * *Alternative A: Trainer not assigned to batch*
     1. At Step 3, if the selected trainer is not registered as an instructor for this batch, the system blocks options and displays `ERR_TRN_TRAINER_NOT_ASSIGNED_TO_BATCH`.
-* **Postconditions:** Payment parameters are saved, establishing rate boundaries for future class completion pay logs.
+* **Postconditions:** Compensation parameters are saved, establishing rate boundaries for future class completion pay logs.
 
 ---
 

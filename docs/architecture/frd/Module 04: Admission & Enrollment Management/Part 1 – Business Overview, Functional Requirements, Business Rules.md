@@ -18,8 +18,8 @@ The Admission & Enrollment Management module acts as the core intake engine of t
 
 ## 2. Detailed Functional Requirements
 
-### FR-ADM-001: Create Student with Person Link
-*   **Description & Actors:** Creates a system `Student` profile for a customer. The Registrar or Counselor performs this action. The student is linked directly to a master `Person` record.
+### FR-ADM-001: Create Student Profile with Person Link
+*   **Description & Actors:** Creates a system `StudentProfile` for a customer. The Registrar or Counselor performs this action. The student profile is linked directly to a master `Person` record.
 *   **Preconditions:** 
     *   The user must have the `ADMISSION_CREATE` permission.
     *   The target `Person` record must already exist (or be created in the same transaction) and not be soft-deleted.
@@ -28,13 +28,13 @@ The Admission & Enrollment Management module acts as the core intake engine of t
     *   `branchId` (UUID)
 *   **Processing Steps:**
     1.  Validate that the user's session has write access to the targeted `branchId`.
-    2.  Check if a `Student` record already exists linking to the given `personId`. If yes, throw a `DuplicateStudentDetected` exception.
+    2.  Check if a `StudentProfile` record already exists linking to the given `personId`. If yes, throw a `DuplicateStudentDetected` exception.
     3.  Generate a unique, non-repeating `studentNumber` using the configured numbering series pattern (e.g., `STU-YYYY-XXXXX`).
-    4.  Create the `Student` database record with status `Active` and soft-delete flags initialized (`isDeleted = false`, `deletedAt = null`).
+    4.  Create the `StudentProfile` database record with status `Active` and soft-delete flags initialized (`isDeleted = false`, `deletedAt = null`).
     5.  Publish `StudentProfileCreated` via the transaction outbox table.
 *   **Outputs & Postconditions:**
-    *   A new `Student` record is persisted in the database.
-    *   Return the generated `studentNumber` and `studentId` to the client.
+    *   A new `StudentProfile` record is persisted in the database.
+    *   Return the generated `studentNumber` and `studentProfileId` to the client.
 *   **Priority:** Must Have (MoSCoW).
 
 ---
@@ -42,44 +42,45 @@ The Admission & Enrollment Management module acts as the core intake engine of t
 ### FR-ADM-002: Create Admission
 *   **Description & Actors:** Registers an official admission application for a student to study at ASTI. Handled by the Counselor or Registrar.
 *   **Preconditions:**
-    *   The `Student` record must exist and be active.
-    *   The `Branch` specified by `branchId` must be active.
+    *   The `StudentProfile` record must exist and be active.
+    *   The `Branch` (logical reference) must be active.
 *   **Inputs:**
-    *   `studentId` (UUID)
+    *   `studentProfileId` (UUID)
     *   `branchId` (UUID)
     *   `admissionDate` (Date)
     *   `leadId` (UUID, Nullable)
 *   **Processing Steps:**
-    1.  Verify the student and branch are active in the database.
-    2.  Generate a unique `admissionNumber` using the configuration numbering series (e.g. `ADM-YYYY-XXXXX`).
-    3.  Create the `Admission` record in the `Draft` state with the generated `admissionNumber`.
-    4.  If `leadId` is provided, verify it is in a qualified stage and write an audit log entry documenting lead conversion.
-    5.  Save default metadata: `createdAt`, `createdBy` set to active user, `isDeleted = false`.
-    6.  Write a record to the `AuditLog` table capturing the creation of the admission application in `Draft` state under the active branch.
-    7.  Publish `AdmissionCreated` to the outbox.
+    1.  Verify the student profile is active in the database.
+    2.  Validate branch status by calling a read-only query service in the Organization Management context.
+    3.  Generate a unique `admissionNumber` using the configuration numbering series (e.g. `ADM-YYYY-XXXXX`).
+    4.  Create the `Admission` record in the `Draft` state with the generated `admissionNumber`.
+    5.  If `leadId` is provided, verify it is in a qualified stage and write an audit log entry documenting lead conversion.
+    6.  Save default metadata: `createdAt`, `createdBy` set to active user, `isDeleted = false`.
+    7.  Write a record to the `AuditLog` table capturing the creation of the admission application in `Draft` state under the active branch.
+    8.  Publish `AdmissionCreated` to the outbox.
 *   **Outputs & Postconditions:**
-    *   Persists a new `Admission` record linked to the student and branch, containing a unique `admissionNumber`.
+    *   Persists a new `Admission` record linked to the student profile and branch, containing a unique `admissionNumber`.
 *   **Priority:** Must Have (MoSCoW).
 
 ---
 
-### FR-ADM-003: Soft-Delete Student or Admission
+### FR-ADM-003: Soft-Delete Student Profile or Admission
 *   **Description & Actors:** Performs a logical soft delete on a Student profile or Admission record to withdraw them from active registries while retaining auditing history. Handled by the Super Admin or Branch Manager.
 *   **Preconditions:**
     *   The user must have the `ADMISSION_DELETE` or `STUDENT_DELETE` permission.
     *   The record to be deleted must not be already soft-deleted.
 *   **Inputs:**
     *   `targetId` (UUID)
-    *   `entityType` (Enum: Student, Admission)
+    *   `entityType` (Enum: StudentProfile, Admission)
     *   `reasonCode` (String)
 *   **Processing Steps:**
     1.  Validate that the user's session has write access to the targeted record's `branchId` (or global access for Super Admin).
     2.  Check for active dependencies:
-        *   If `entityType = Student`, verify that the student does not have any active or confirmed `Enrollment` records. If they do, block deletion and throw `ERR_STUDENT_HAS_ACTIVE_ENROLLMENTS`.
+        *   If `entityType = StudentProfile`, verify that the student profile does not have any active or confirmed `Enrollment` records. If they do, block deletion and throw `ERR_STUDENT_HAS_ACTIVE_ENROLLMENTS`.
         *   If `entityType = Admission`, verify no active `Enrollment` is linked to this admission. If there is, block deletion.
     3.  Perform the soft delete: update the target record setting `isDeleted = true`, `deletedAt = now()`, and `deletedBy = activeUserId`.
     4.  Write a record to the `AuditLog` table capturing the soft deletion event, the entity type, the record ID, and the `reasonCode` under the target branch.
-    5.  Publish `StudentDeleted` or `AdmissionDeleted` to the outbox.
+    5.  Publish `StudentProfileDeleted` or `AdmissionDeleted` to the outbox.
 *   **Outputs & Postconditions:**
     *   The record is marked as deleted (`isDeleted = true`) in the database.
 *   **Priority:** Must Have (MoSCoW).
@@ -89,10 +90,10 @@ The Admission & Enrollment Management module acts as the core intake engine of t
 ### FR-ENR-001: Create Enrollment Draft
 *   **Description & Actors:** Initiates a course enrollment request for an admitted student. Initiated by the Registrar, Counselor, or via online API for online registrations.
 *   **Preconditions:**
-    *   An approved `Admission` record must exist for the student.
-    *   The target `Course` and `Batch` must be active and scoped to the target branch.
+    *   An approved `Admission` record must exist for the student profile.
+    *   The target `Course` and `Batch` must be active (verified via Course Catalog & Training Delivery query services).
 *   **Inputs:**
-    *   `studentId` (UUID)
+    *   `studentProfileId` (UUID)
     *   `admissionId` (UUID)
     *   `courseId` (UUID)
     *   `batchId` (UUID)
@@ -101,7 +102,7 @@ The Admission & Enrollment Management module acts as the core intake engine of t
     *   `corporateParticipantId` (UUID, Nullable)
 *   **Processing Steps:**
     1.  Verify the `Admission` status is `Approved` (except for Walk-In flows which bypass this).
-    2.  Validate that the `Course` and `Batch` exist, are active, and are associated with `branchId`.
+    2.  Validate course and batch status by querying the Course Catalog and Training Delivery modules respectively.
     3.  Assert that `enrollmentType = Corporate` requires a non-null `corporateParticipantId`.
     4.  Generate a unique `enrollmentNumber`.
     5.  Initialize `enrollmentStatus = Draft`.
@@ -123,9 +124,7 @@ The Admission & Enrollment Management module acts as the core intake engine of t
     *   `manualDiscountAmount` (Decimal, Optional)
 *   **Processing Steps:**
     1.  **Resolve Base Price:**
-        *   Look for pricing override on the `Batch` model for this course. If found, set `pricingSource = BatchLevel`.
-        *   If not found, look for course pricing override on the `Branch` model. If found, set `pricingSource = BranchLevel`.
-        *   If not found, fetch default price from `CoursePricing` in global catalog. Set `pricingSource = GlobalDefault`.
+        *   Query the Course Catalog module's pricing service. It resolves base pricing using the hierarchy: Batch Level Override $\rightarrow$ Branch Level Override $\rightarrow$ Global Default.
     2.  Set `resolvedPrice` equal to the resolved base price.
     3.  **Apply Discounts:**
         *   If `discountCode` is provided, validate it against the master configurations rules.
@@ -133,7 +132,7 @@ The Admission & Enrollment Management module acts as the core intake engine of t
         *   If `manualDiscountAmount` is specified, verify the current user has permission to grant manual discounts above the branch threshold limit.
     4.  **Compute Final Amount:**
         *   Calculate final amount: $$\text{finalAmount} = \max(0, \text{resolvedPrice} - \text{resolvedDiscount})$$
-    5.  Update the fields on the current enrollment transaction.
+    5.  Save resolved pricing details directly on the enrollment record as an immutable historical copy.
 *   **Outputs & Postconditions:**
     *   `pricingSource`, `resolvedPrice`, `resolvedDiscount`, and `finalAmount` fields are updated.
 *   **Priority:** Must Have (MoSCoW).
@@ -149,19 +148,18 @@ The Admission & Enrollment Management module acts as the core intake engine of t
     *   `enrollmentId` (UUID)
     *   `approvalRemarks` (String)
 *   **Processing Steps:**
-    1.  Lock the `Batch` row using serializable transaction level to ensure capacity consistency.
-    2.  Check the current registered student count in `Batch` against `Batch.maxCapacity`.
-    3.  If capacity is full:
-        *   If waitlisting is enabled for the batch, prompt user to route to the waitlist (`WaitingListEntry` created, enrollment status set to `Draft`).
+    1.  Invoke the capacity verification API in the `Training Delivery` context to check if the batch is full. Training Delivery manages atomic reservation locks internally.
+    2.  If capacity is full:
+        *   If waitlisting is enabled for the batch (queried from Training Delivery), prompt user to route to the waitlist (notifying Training Delivery to create a waitlist entry, while setting enrollment status to `Draft`).
         *   If waitlisting is disabled, throw `EnrollmentCapacityExceeded` error.
-    4.  If `enrollmentType = Corporate`, execute B2B credit validation rules:
-        *   If the parent corporate account's unpaid invoices exceed the credit limit:
+    3.  If `enrollmentType = Corporate`, execute B2B credit validation by calling the public verification service in the `Corporate Sales` context:
+        *   If credit validation fails:
             *   If `blockEnrollment = true`, abort the transaction and throw `ERR_ENR_CREDIT_EXCEEDED` error.
             *   If `blockEnrollment = false`, generate a warning log and proceed.
-    5.  Transition `enrollmentStatus` to `Approved`.
-    6.  Flag billing flag: if `finalAmount > 0`, set `paymentValidationRequired = true`; else `paymentValidationRequired = false`.
-    7.  Save changes and write a record to the `AuditLog` table capturing the transition from `Draft` or `Submitted` to `Approved` (including any corporate credit limit warnings).
-    8.  Publish `EnrollmentApproved` to the outbox.
+    4.  Transition `enrollmentStatus` to `Approved`.
+    5.  Flag billing flag: if `finalAmount > 0`, set `paymentValidationRequired = true`; else `paymentValidationRequired = false`.
+    6.  Save changes and write a record to the `AuditLog` table capturing the transition to `Approved`.
+    7.  Publish `EnrollmentApproved` to the outbox to notify the Finance context to generate an invoice.
 *   **Outputs & Postconditions:**
     *   Enrollment state is set to `Approved`.
     *   Transactional Outbox contains event dispatch for down-stream finance invoicing.
@@ -170,20 +168,18 @@ The Admission & Enrollment Management module acts as the core intake engine of t
 ---
 
 ### FR-ENR-004: Confirm Enrollment
-*   **Description & Actors:** Finalizes the enrollment once financial obligations are met. Handled automatically by the Outbox listener on payment receipts or manually overridden by the Finance Clerk.
+*   **Description & Actors:** Finalizes the enrollment once financial obligations are met. Handled reactively by subscribing to the payment events from the Finance context.
 *   **Preconditions:**
     *   Enrollment status must be `Approved`.
 *   **Inputs:**
     *   `enrollmentId` (UUID)
-    *   `receiptId` (UUID, Optional)
 *   **Processing Steps:**
-    1.  If `paymentValidationRequired = true`, check downstream Invoice status. Verify that the sum of cleared payments equals or exceeds `finalAmount` (or complies with the installment configuration rule).
-    2.  If payment validation passes or is skipped, set `confirmedAt = now()`.
-    3.  Transition `enrollmentStatus` to `Confirmed`.
-    4.  Update batch capacity register decrementing available seats:
-        $$\text{seatsAvailable} = \text{seatsAvailable} - 1$$
-    5.  Write a record to the `AuditLog` table capturing the transition to `Confirmed`.
-    6.  Publish `EnrollmentConfirmed` event.
+    1.  Upon receiving the `ReceiptGenerated` event from Finance, retrieve the cleared ledger balance for the enrollment's invoice.
+    2.  Verify that the sum of cleared payments equals or exceeds `finalAmount` (or complies with the installment configuration rule).
+    3.  If payment validation passes, set `confirmedAt = now()`.
+    4.  Transition `enrollmentStatus` to `Confirmed`.
+    5.  Publish `EnrollmentConfirmed` to the transactional outbox. The `Training Delivery` context subscribes to this event to atomically decrement its available batch capacity.
+    6.  Write a record to the `AuditLog` table capturing the transition to `Confirmed`.
 *   **Outputs & Postconditions:**
     *   Enrollment transitions to `Confirmed`. Student is legally committed to the class schedule.
 *   **Priority:** Must Have (MoSCoW).
@@ -202,13 +198,12 @@ The Admission & Enrollment Management module acts as the core intake engine of t
     1.  Validate that the target enrollment is not already `Completed`.
     2.  If `actionType = Cancel`:
         *   Transition status to `Cancelled`.
-        *   If the previous status was `Confirmed` or `Active`, increment the batch capacity:
-            $$\text{seatsAvailable} = \text{seatsAvailable} + 1$$
+        *   Publish `EnrollmentCancelled` via the transactional outbox. The `Training Delivery` context subscribes to this event to increment available batch capacity (+1 seat).
     3.  If `actionType = Drop`:
         *   Transition status to `Dropped`.
-        *   Increment the batch capacity.
-    4.  Audit change: write a record to the `AuditLog` table capturing the transition (`Active`/`Confirmed` to `Cancelled` or `Dropped`), user ID, timestamp, pre-state, post-state, and `reasonCode` under the target branch.
-    5.  Publish `EnrollmentCancelled` or `EnrollmentDropped` outbox event to notify Finance (for refund evaluations) and Scheduling.
+        *   Publish `EnrollmentDropped` via the transactional outbox. The `Training Delivery` context subscribes to this event to increment available batch capacity (+1 seat).
+    4.  Audit change: write a record to the `AuditLog` table capturing the transition, user ID, timestamp, pre-state, post-state, and `reasonCode` under the target branch.
+    5.  The Finance context will asynchronously subscribe to `EnrollmentDropped` or `EnrollmentCancelled` to evaluate credit refunds or invoice voiding rules, removing direct synchronous logic from this module.
 *   **Outputs & Postconditions:**
     *   The enrollment is marked as `Cancelled` or `Dropped`.
 *   **Priority:** Must Have (MoSCoW).
@@ -221,15 +216,15 @@ The system enforces the following declarative constraints. Any operational handl
 
 | Rule Code | Rule Title | Targeted Model / Fields | Business Logic / Invariant Constraint |
 | :--- | :--- | :--- | :--- |
-| **BR-ADM-001** | Person Link Constraint | `Student.personId` | A student profile cannot exist without pointing to a valid record in the `Person` table. Names, phones, and emails are resolved via this relation. |
+| **BR-ADM-001** | Person Link Constraint | `StudentProfile.personId` | A student profile cannot exist without pointing to a valid record in the `Person` table. Names, phones, and emails are resolved via this relation. |
 | **BR-ADM-002** | Branch Scoping | All Read/Write Operations | Every admission and enrollment record must have a valid `branchId`. Operations are restricted based on user branch permission contexts. |
-| **BR-ADM-003** | Soft Delete Protection | `deletedAt`, `isDeleted` | No entity (Student, Admission, Enrollment) is hard-deleted from the database. A delete call sets `isDeleted = true` and logs `deletedAt` and `deletedBy`. |
-| **BR-ENR-001** | Structure Integrity | `courseId`, `batchId` | An enrollment cannot be created or saved in the database without both a valid `courseId` and a scheduled `batchId`. |
-| **BR-ENR-002** | Pricing Resolution Hierarchy | `resolvedPrice`, `pricingSource` | Resolution must proceed in order: <br>1. Check `BatchPricingOverride` <br>2. Check `BranchCoursePricingOverride` <br>3. Read Global `CoursePricing`. |
-| **BR-ENR-003** | Batch Capacity Check | `Batch.maxCapacity` | An enrollment cannot transition from `Submitted` to `Approved` if the batch registered count reaches `maxCapacity` unless overridden by Super Admin. |
-| **BR-ENR-004** | B2B Corporate Credit Rule | `CorporateAccount` credit limit | If `enrollmentType = Corporate`, check if parent corporate account's unpaid invoices exceed the credit limit. <br>1. If yes and `blockEnrollment = true`, block approval (throw exception). <br>2. If yes and `blockEnrollment = false`, allow approval, write warning to `AuditLog`, and append warning in response. |
-| **BR-ENR-005** | Certificate Eligibility Guard | `certificateStatus` | Transition to `CertificateIssued` is prohibited unless: <br>1. `completionStatus = Passed` <br>2. `paymentValidationRequired = false` or outstanding invoice balance is zero. |
-| **BR-ENR-006** | Inactive Master Constraints | `Course.status`, `Batch.status` | Creation of admissions or enrollments against courses or batches with status `Inactive` is strictly blocked. |
+| **BR-ADM-003** | Soft Delete Protection | `deletedAt`, `isDeleted` | No entity (StudentProfile, Admission, Enrollment) is hard-deleted from the database. A delete call sets `isDeleted = true` and logs `deletedAt` and `deletedBy`. |
+| **BR-ENR-001** | Structure Integrity | `courseId`, `batchId` | An enrollment cannot be created or saved in the database without both a valid `courseId` and a scheduled `batchId` (logical UUIDs). |
+| **BR-ENR-002** | Pricing Resolution Hierarchy | `resolvedPrice`, `pricingSource` | Resolution must proceed in Course Catalog: <br>1. Check `BatchPricingOverride` <br>2. Check `BranchCoursePricingOverride` <br>3. Read Global `CoursePricing`. |
+| **BR-ENR-003** | Batch Capacity Check | `Batch.maxCapacity` | Checked via public api call to `Training Delivery`. Enrollment cannot transition to `Approved` if the batch reaches capacity unless overridden. |
+| **BR-ENR-004** | B2B Corporate Credit Rule | `CorporateAccount` credit limit | Checked via service call to `Corporate Sales`. Blocks approval if credits are exceeded and block flag is set, otherwise issues warnings. |
+| **BR-ENR-005** | Certificate Eligibility Guard | `certificateStatus` | Transition to `CertificateIssued` is prohibited unless: <br>1. `completionStatus = Passed` <br>2. `paymentValidationRequired = false` or outstanding invoice balance is zero (projections matched). |
+| **BR-ENR-006** | Inactive Master Constraints | `Course.status`, `Batch.status` | Checked via Catalog/Delivery queries. Creating admissions or enrollments against inactive records is blocked. |
 
 ---
 
@@ -244,19 +239,19 @@ stateDiagram-v2
     Draft --> Cancelled : Cancel before Review
     Submitted --> Approved : Manager Approval
     Submitted --> Cancelled : Cancel before Approval
-    Approved --> Confirmed : Invoice Paid (Receipt Generated)
+    Approved --> Confirmed : Invoice Paid (Receipt Generated Event)
     Approved --> Cancelled : Cancel unpaid
     Confirmed --> Active : Batch Start Date reached
     Confirmed --> Dropped : Withdraw before Start
-    Active --> Completed : Evaluation Passed
+    Active --> Completed : Evaluation Passed (Completion Event)
     Active --> Dropped : Withdraw/Absent
-    Completed --> CertificateIssued : Payment Cleared + QR Generated
+    Completed --> CertificateIssued : Payment Cleared + QR Generated (Certificate Event)
 ```
 
 ### Transition Guards:
 *   `Draft` $\rightarrow$ `Submitted`: Validates all required inputs are present.
-*   `Submitted` $\rightarrow$ `Approved`: Evaluates batch capacity and corporate credit limits.
-*   `Approved` $\rightarrow$ `Confirmed`: Validates receipt generation from the finance ledger package.
+*   `Submitted` $\rightarrow$ `Approved`: Evaluates batch capacity and corporate credit limits via cross-context service queries.
+*   `Approved` $\rightarrow$ `Confirmed`: Validates receipt generation from the finance ledger package (triggered asynchronously on `ReceiptGenerated` event).
 *   `Confirmed` $\rightarrow$ `Active`: Auto-triggered by scheduler runner when current server date matches batch start date.
 
 ---
@@ -271,10 +266,10 @@ flowchart TD
     ADM -->|Links to| master[Person Model]
     ADM -->|Triggers ID Card| IDG[ID Card Generator]
     
-    ENR[Module 04: Enrollments] -->|Queries Status & overrides| CC[Module 06: Course Catalog & Batches]
-    ENR -->|Decrements capacity| CC
-    ENR -->|Triggers Invoice Creation| FIN[Module 09: Finance & Receivables]
-    FIN -->|Clears payment status| ENR
+    ENR[Module 04: Enrollments] -->|Queries Status via Public API| CC[Module 06: Course Catalog & Batches]
+    ENR -->|Publishes Enrollment Event| CC
+    ENR -->|Publishes Event to generate Invoice| FIN[Module 09: Finance & Receivables]
+    FIN -->|Publishes Receipt Event| ENR
     
     ENR -->|Feeds student roster| ATT[Module 08: Attendance]
     ENR -->|Verifies passed status| EXM[Module 12: Exams & Completion]
@@ -283,7 +278,7 @@ flowchart TD
 
 ### Dependency Specifics:
 1.  **Lead & CRM (Module 03):** Provides `leadId` metadata to automatically pull contact names, national ID numbers, and course preferences during admissions.
-2.  **Course Catalog (Module 06):** Provides pricing rules and batch schedules. Receives capacity reservation updates from Module 04.
-3.  **Finance & Receivables (Module 09):** Receives billing commands upon enrollment approval to generate invoices. Feeds back paid receipts to confirm enrollments.
-4.  **Exams & Course Completion (Module 12):** Receives the active roster. Reports back the academic grade and completion validation state.
+2.  **Course Catalog (Module 06):** Provides pricing rules and batch schedules. Receives capacity reservation updates from Module 04 via asynchronous event subscription.
+3.  **Finance & Receivables (Module 09):** Receives billing commands upon enrollment approval to generate invoices. Feeds back paid receipts (via `ReceiptGenerated` event) to confirm enrollments.
+4.  **Exams & Course Completion (Module 12):** Receives the active roster logically. Reports back the academic grade and completion validation state.
 5.  **Certificate Management (Module 13):** Reads finalized enrollment details to print correct credentials on issued certificates.

@@ -32,8 +32,8 @@ All services must emit structured logs in JSON format to stdout. Standard proper
 
 ### 1.2 Tracing Boundaries
 Distributed tracing spans (OpenTelemetry) must be initialized for:
-1.  **`POST /api/admissions`**: Span encompasses validation checks, duplicate search queries, and database write transactions.
-2.  **`POST /api/enrollments/{id}/approve`**: Encompasses batch capacity fetch, serialization lock execution, outbox table record write, and confirmation checks.
+1.  **`POST /api/admissions`**: Span encompasses validation checks, duplicate search queries, and database write transactions inside the Application Service.
+2.  **`POST /api/enrollments/{id}/approve`**: Encompasses application-level capacity validation queries to the Training Delivery context, outbox table record write, and state transition processing inside the Application Service.
 
 ### 1.3 Metrics Instrumentation
 The module exposes Prometheus counters and gauges:
@@ -52,11 +52,11 @@ The server endpoint `/api/health/admissions` validates:
 3.  **Outbox Queue Check:** Alerts if records in the transactional outbox table remain unprocessed for $\ge 5\text{ minutes}$.
 
 ### 2.2 Backup and Recovery Procedures
-*   **Target Tables:** `persons`, `students`, `admissions`, `enrollments`.
+*   **Target Tables:** `persons`, `student_profiles`, `admissions`, `enrollments`.
 *   **Policy:** 
     *   Daily automated snapshots with transactional consistency (PostgreSQL WAL streaming).
     *   Retention period of 7 years in compliance with local academic record auditing rules.
-*   **Recovery Validation:** Restoring target tables to a staging database cluster must execute weekly, verifying integrity of `personId` foreign key mappings.
+*   **Recovery Validation:** Restoring target tables to a staging database cluster must execute weekly, verifying integrity of logical data mappings.
 
 ---
 

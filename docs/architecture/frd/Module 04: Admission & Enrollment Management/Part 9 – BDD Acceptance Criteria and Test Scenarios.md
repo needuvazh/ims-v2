@@ -18,11 +18,11 @@ This document outlines the Behavior-Driven Development (BDD) test specifications
   Scenario: Register a new student profile and link to an existing Person
     Given the user is logged in as "Registrar" with permission "admission.create"
     And a Person record exists in the system with mobile "+96899123456" and email "ahmed@example.om"
-    And no Student profile is linked to this Person
+    And no StudentProfile is linked to this Person
     When the Registrar submits a request to register a student for this Person ID at "Muscat" branch
-    Then the system should create a Student profile linked to this Person ID
+    Then the system should create a StudentProfile linked to this Person ID
     And generate a unique studentNumber starting with "STU-2026-"
-    And set the Student record status to "Active"
+    And set the StudentProfile status to "Active"
     And write a "StudentProfileCreated" event to the transactional outbox table
 
   Scenario Outline: Reject student registration due to age boundary checks
@@ -37,10 +37,10 @@ This document outlines the Behavior-Driven Development (BDD) test specifications
       | 2018-07-01T00:00:00Z | Student must be at least 12 years of age.   |
       | 2022-01-01T00:00:00Z | Student must be at least 12 years of age.   |
 
-  Scenario: Prevent duplicate Student profile linking
+  Scenario: Prevent duplicate StudentProfile linking
     Given a Person record exists with mobile "+96899334455"
-    And a Student profile already exists linked to this Person
-    When a Registrar attempts to create a new Student profile for this Person ID
+    And a StudentProfile already exists linked to this Person
+    When a Registrar attempts to create a new StudentProfile for this Person ID
     Then the system should block the write operation
     And throw a "ERR_ADM_DUPLICATE_ID" conflict exception
 
@@ -72,12 +72,11 @@ This document outlines the Behavior-Driven Development (BDD) test specifications
     And compute finalAmount equal to resolvedPrice
     And set paymentValidationRequired to true
 
-  Scenario: Approve enrollment and increment registered count to full capacity
+  Scenario: Approve enrollment draft and transition state
     Given an Enrollment exists in status "Draft" for batch "WD-B02"
     And the user is logged in as "Branch Manager" with permission "enrollment.approve"
     When the Branch Manager approves the enrollment
     Then the system should set enrollmentStatus to "Approved"
-    And the batch registered count should update to "15"
     And write an "EnrollmentApproved" event to the outbox table to trigger invoicing
 
   Scenario Outline: Block enrollment approval when batch capacity limits are breached
@@ -92,12 +91,13 @@ This document outlines the Behavior-Driven Development (BDD) test specifications
       | Enabled        | place student in waitlist and create queue record  | Waitlisted     |
       | Disabled       | reject enrollment approval with ERR_ENR_BATCH_FULL | Rejected       |
 
-  Scenario: Confirm enrollment upon invoice clearance
+  Scenario: Confirm enrollment and allocate seat upon invoice clearance
     Given an Enrollment exists in status "Approved" with paymentValidationRequired as true
     And the associated Invoice in Finance is fully paid
     When the system processes the payment cleared event
     Then the system should transition enrollmentStatus to "Confirmed"
     And set confirmedAt to the current timestamp
+    And the batch registered count should update to "15" (decrementing available capacity by 1)
     And dispatch the "EnrollmentConfirmed" notification event
 
   Scenario: Drop active enrollment and release seat
@@ -105,5 +105,5 @@ This document outlines the Behavior-Driven Development (BDD) test specifications
     And the user is logged in as "Branch Manager"
     When the Branch Manager drops the enrollment with reason "Withdrawal Request"
     Then the system should transition enrollmentStatus to "Dropped"
-    And update the batch seats available to "1"
+    And the batch seats available should update to "1" via reactive event subscription
     And publish "EnrollmentDropped" to adjust attendance sheets

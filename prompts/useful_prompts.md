@@ -15,12 +15,12 @@ Can you assume the role of senior staff engineer and perform a review on the cur
 Can you assume the role of senior staff engineer and perform a review on the current OpenSpec proposal for Change 3 for the Lead & CRM Workflows module: "Workflows & Follow-up Scheduling" (under openspec/changes/)? Evaluate if there are any gaps in the proposed design specs and verify if any of the existing business logic  will be broken by this change. Highlight design discrepancies and suggest clear technical remedies.  Use DDD and FRD document for references
 
 
-Can you assume the role of senior staff engineer and perform a review on the current OpenSpec proposal for crm-workflows-followup-scheduling (under openspec/changes/)? Evaluate if there are any gaps in the proposed design specs and verify if any of the existing business logic  will be broken by this change. Highlight design discrepancies and suggest clear technical remedies.  Use DDD and FRD document for references
+Can you assume the role of senior staff engineer and perform a review on the current OpenSpec proposal for course-catalog-spec (under openspec/changes/)? Evaluate if there are any gaps in the proposed design specs and verify if any of the existing business logic  will be broken by this change. Highlight design discrepancies and suggest clear technical remedies.  Use DDD and FRD document for references and source of truth
 
 
-/opsx-verify crm-dashboards-and-reports
+/opsx-verify course-catalog-spec
 
-Can you assume the role of senior staff engineer and perform a review on the code changes for openspec crm-audit-remediation, evaluate if there is any gaps in the code changes and suggested me how to fix it.
+Can you assume the role of senior staff engineer and perform a review on the code changes for openspec course-catalog-spec, evaluate if there is any gaps in the code changes and suggested me how to fix it.
 
 
 review on the current OpenSpec proposal for Core Data Models & Base APIs of the Lead & CRM Workflows module (under openspec/changes/)? Evaluate if there are any gaps in the proposed design specs and verify if any of the existing business logic  will be broken by this change. Highlight design discrepancies and suggest clear technical remedies.  Use DDD and FRD document for references
@@ -110,4 +110,4 @@ Present your findings in a structured **Architectural Audit Report** format. Use
 4. **Actionable Remediation Checklist:** A clear, bulleted list of fixes required to bring the FRD into compliance.
 
 Please execute the audit on the following FRD text:
-Module 06: Course Catalog & Training Delivery (Batch) Management
+Module 10: Faculty 

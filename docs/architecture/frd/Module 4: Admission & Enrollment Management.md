@@ -92,17 +92,15 @@ The Admission & Enrollment context owns:
 
 * Admission
 * Enrollment
-* Student
+* StudentProfile
 * StudentIdentity
 * StudentIDCard
-* EnrollmentFeeAccount
-* WaitingListEntry
 
 Notes:
 
-* Student is the registration and learner record used by enrollment and downstream read models.
-* Other contexts may project student data, but they must not own admission or enrollment lifecycle rules.
-* Fee account creation is a lifecycle trigger, not a separate ownership boundary.
+* StudentProfile is the registration and learner record used by enrollment and downstream read models.
+* Other contexts may project student profile data, but they must not own admission or enrollment lifecycle rules.
+* Cross-context concepts like WaitingList and Fee Accounts are owned by Training Delivery and Finance contexts respectively; this context interacts with them logically via services or events.
 
 ---
 
@@ -168,12 +166,6 @@ Dropped
 Draft
   ↓
 Cancelled
-```
-
-```text
-Completed
-  ↓
-Certificate Issued
 ```
 
 Rules:
@@ -628,17 +620,17 @@ The system shall allow authorized users to cancel admissions.
 
 The system shall allow direct admission without a lead reference.
 
-## FR-ADM-006 Register Student
+## FR-ADM-006 Register StudentProfile
 
-The system shall create or register the learner record required for enrollment.
+The system shall create or register the `StudentProfile` record required for enrollment.
 
 ## FR-ADM-007 Create Enrollment
 
-The system shall allow authorized users to create enrollments.
+The system shall allow authorized users to create enrollments logically.
 
 ## FR-ADM-008 Confirm Enrollment
 
-The system shall allow authorized users to confirm enrollments after validation.
+The system shall confirm enrollments reactively upon receiving the payment clearance event from the Finance context.
 
 ## FR-ADM-009 Activate Enrollment
 
@@ -650,31 +642,31 @@ The system shall allow authorized users to update draft and pending-fee enrollme
 
 ## FR-ADM-011 Drop Enrollment
 
-The system shall allow authorized users to drop enrollments.
+The system shall allow dropping active enrollments and publish outbox events to release batch capacity and trigger refund evaluations in Finance.
 
 ## FR-ADM-012 Cancel Enrollment
 
-The system shall allow authorized users to cancel enrollments.
+The system shall allow cancelling pre-active enrollments, publishing outbox events to release batch capacity and void invoices in Finance.
 
 ## FR-ADM-013 Batch Capacity Validation
 
-The system shall prevent enrollment beyond batch capacity.
+The system shall validate batch capacity via queries to the Training Delivery context, preventing enrollment beyond capacity unless over-capacity overrides are authorized.
 
 ## FR-ADM-014 Waiting List Management
 
-The system shall support waiting list entry, promotion, and removal.
+The system shall support waiting list requests by communicating logically with the Training Delivery context.
 
 ## FR-ADM-015 Fee Account Trigger
 
-The system shall create an enrollment fee account when a new enrollment is created.
+The system shall publish an `EnrollmentApproved` event to notify Finance to trigger invoicing and fee account setup.
 
 ## FR-ADM-016 Lead Conversion Handoff
 
-The system shall allow qualified leads to be handed off from Lead & Inquiry Management into Admission creation.
+The system shall allow qualified leads to be converted from CRM into Admissions by creating a student profile and draft admission application.
 
 ## FR-ADM-017 Walk-In Orchestration
 
-The system shall support walk-in enrollment and same-day completion orchestration.
+The system shall support walk-in enrollment and single-session confirmation orchestration by invoking local admission/enrollment states across separate transactions, triggering immediate cash invoicing/payments in Finance reactively via outbox events.
 
 ---
 

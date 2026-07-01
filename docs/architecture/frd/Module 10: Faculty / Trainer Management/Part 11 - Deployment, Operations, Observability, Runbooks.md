@@ -54,10 +54,10 @@ The standard backend health endpoint `/api/health` must check:
 ---
 
 ### 2.2 Backup & Recovery Scenarios
-* **Target Backups:** Materialized views and reports are excluded. Only the source transactional tables must be backed up:
-  `trainer_profiles`, `trainer_qualifications`, `trainer_availabilities`, `batch_trainers`, and `trainer_payments`.
+* **Target Backups:** Materialized views and reports are excluded. Only the source transactional tables owned by the Trainer context must be backed up:
+  `trainer_profiles`, `trainer_qualifications`, `trainer_availabilities`, and `trainer_compensation_rates`.
 * **Snapshot Interval:** Daily differential snapshots, weekly full backups.
-* **Recovery Verification:** Verify transactional referential integrity between `Person` and `TrainerProfile` during monthly recovery tests.
+* **Recovery Verification:** Verify transactional referential integrity between `Person` and `TrainerProfile` (logical checks) during monthly recovery tests.
 
 ---
 
@@ -69,20 +69,28 @@ The standard backend health endpoint `/api/health` must check:
   1. The trainer has expired mandatory identification documents (Civil ID or Visa), causing backend filters to flag them as inactive.
   2. A status sync failure occurred between the `Document` status and the `TrainerProfile` cache.
 * **Step-by-Step Resolution Guide:**
-  1. Execute a database query to check the compliance status of the trainer's documentation:
+  1. Verify the trainer's local profile status and person mapping in the Trainer Bounded Context database:
      ```sql
-     SELECT d.id, d.status, d."expiryDate" 
-     FROM trainer_profiles tp
-     JOIN persons p ON tp."personId" = p.id
-     JOIN documents d ON d."ownerId" = tp.id
-     WHERE tp."trainerCode" = 'TRN-2026-0045';
+     SELECT id, "personId", status, "isDeleted"
+     FROM trainer_profiles 
+     WHERE "trainerCode" = 'TRN-2026-0045';
      ```
-  2. If any mandatory document shows `Expired` or `PendingVerification`, the scheduler block is expected behavior. The trainer must upload a valid document, or a coordinator must review and approve it.
-  3. If all documents are active but the trainer is still blocked, check the status cache in the database. Run the status sync script:
+  2. Use the retrieved `personId` to check user status in the Identity Context (via administrative user search or direct query):
+     ```sql
+     SELECT id, status FROM users WHERE "personId" = 'retrieved-person-uuid';
+     ```
+  3. Query the Document Context using the `TrainerProfile` ID to review compliance document status (Civil ID/Visa verification status and expiration dates):
+     ```sql
+     SELECT id, status, "expiryDate", "documentType"
+     FROM documents 
+     WHERE "ownerId" = 'retrieved-trainer-uuid' AND "ownerType" = 'Trainer';
+     ```
+  4. If any mandatory document shows `Expired` or `PendingVerification`, the scheduler block is expected behavior. The trainer must upload a valid document, or a coordinator must review and approve it.
+  5. If all documents are active but the trainer is still blocked, run the status sync script using the administrative CLI command to reload the profile state:
      ```bash
      pnpm --filter @asti-ims/trainer-management run sync-status --code TRN-2026-0045
      ```
-  4. Verify the updated status in the Admin UI.
+  6. Verify the updated status in the Admin UI.
 
 ---
 
@@ -99,10 +107,8 @@ The standard backend health endpoint `/api/health` must check:
      WHERE "trainerId" = (SELECT id FROM trainer_profiles WHERE "trainerCode" = 'TRN-2026-0012')
        AND "dayOfWeek" = 1;
      ```
-  2. If duplicate active slots exist (due to race conditions), manually archive the incorrect record by updating its soft delete status:
-     ```sql
-     UPDATE trainer_availabilities 
-     SET "isDeleted" = true, "deletedAt" = NOW(), "deletedBy" = 'system-recovery'
-     WHERE id = 'duplicate-id-to-remove';
+  2. If duplicate active slots exist (due to race conditions), do NOT execute direct SQL writes. You must invoke the soft delete method through the Trainer Bounded Context Application Service (via CLI command or Admin API) to preserve the transactional outbox and emit the required `TrainerAvailabilityUpdated` audit event:
+     ```bash
+     pnpm --filter @asti-ims/trainer-management run delete-availability --id 'duplicate-id-to-remove' --user 'system-recovery'
      ```
-  3. Re-execute the check query to confirm that only one slot remains active for that time block.
+  3. Re-execute the check query in Step 1 to confirm that only one slot remains active for that time block.

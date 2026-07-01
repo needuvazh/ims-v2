@@ -22,9 +22,8 @@ This section defines the database structure for the Admission & Enrollment Bound
       dateOfBirth DateTime? @db.Date
       gender      String?   @db.VarChar(20)
 
-      student     Student?
-      user        User?
-      leads       Lead[]
+      // Note: Relations to User, Lead, and StudentProfile are referenced logically by ID 
+      // to preserve bounded context database boundaries.
 
       createdAt DateTime  @default(now()) @db.Timestamptz(6)
       createdBy String?   @db.Uuid
@@ -46,13 +45,13 @@ This section defines the database structure for the Admission & Enrollment Bound
 
 ---
 
-### 1.2 `Student` (Refactored Profile Model)
-*   **Description:** Represents the student profile linked directly to a verified `Person` record. Legacy names and contact fields are removed.
+### 1.2 `StudentProfile` (Refactored Profile Model)
+*   **Description:** Represents the student profile linked logically to a verified `Person` record. Legacy names and contact fields are removed.
 *   **Prisma Model Definition:**
     ```prisma
-    model Student {
+    model StudentProfile {
       id            String       @id @default(uuid()) @db.Uuid
-      personId      String       @unique @db.Uuid
+      personId      String       @unique @db.Uuid // Logical reference to Person
       studentNumber String       @unique @db.VarChar(50)
       status        RecordStatus @default(Active)
       
@@ -61,7 +60,6 @@ This section defines the database structure for the Admission & Enrollment Bound
       idCardNumber  String?      @unique @db.VarChar(50)
       joinedAt      DateTime     @default(now()) @db.Timestamptz(6)
 
-      person        Person       @relation(fields: [personId], references: [id], onDelete: Restrict)
       admissions    Admission[]
       enrollments   Enrollment[]
 
@@ -75,12 +73,12 @@ This section defines the database structure for the Admission & Enrollment Bound
 
       @@index([personId])
       @@index([studentNumber])
-      @@map("students")
+      @@map("student_profiles")
     }
     ```
 *   **PostgreSQL Column Specifications:**
     *   `id`: `UUID` Primary Key.
-    *   `personId`: `UUID` Foreign Key. Unique Constraint ensures 1:1 mapping between `Person` and `Student`.
+    *   `personId`: `UUID` Logical Foreign Key. Unique Constraint ensures 1:1 mapping between `Person` and `StudentProfile`.
     *   `studentNumber`: `VARCHAR(50)` Unique. Index applied.
     *   `status`: `RecordStatus` Enum (values: `Active`, `Suspended`, `Inactive`).
 
@@ -93,9 +91,9 @@ This section defines the database structure for the Admission & Enrollment Bound
     model Admission {
       id              String       @id @default(uuid()) @db.Uuid
       admissionNumber String       @unique @db.VarChar(50)
-      studentId       String       @db.Uuid
-      branchId        String       @db.Uuid
-      leadId          String?      @db.Uuid
+      studentProfileId String      @db.Uuid
+      branchId        String       @db.Uuid // Logical UUID reference (Organization context owns Branch)
+      leadId          String?      @db.Uuid // Logical UUID reference (CRM context owns Lead)
       admissionDate   DateTime     @default(now()) @db.Timestamptz(6)
       status          RecordStatus @default(Active)
       remarks         String?      @db.Text
@@ -105,9 +103,8 @@ This section defines the database structure for the Admission & Enrollment Bound
       approvedAt    DateTime?    @db.Timestamptz(6)
       approvedBy    String?      @db.Uuid
 
-      student     Student      @relation(fields: [studentId], references: [id], onDelete: Restrict)
-      branch      Branch       @relation(fields: [branchId], references: [id], onDelete: Restrict)
-      enrollments Enrollment[]
+      studentProfile StudentProfile @relation(fields: [studentProfileId], references: [id], onDelete: Restrict)
+      enrollments   Enrollment[]
 
       createdAt DateTime  @default(now()) @db.Timestamptz(6)
       createdBy String?   @db.Uuid
@@ -117,7 +114,7 @@ This section defines the database structure for the Admission & Enrollment Bound
       deletedBy String?   @db.Uuid
       isDeleted Boolean   @default(false)
 
-      @@index([studentId])
+      @@index([studentProfileId])
       @@index([branchId])
       @@index([leadId])
       @@index([admissionNumber])
@@ -126,9 +123,9 @@ This section defines the database structure for the Admission & Enrollment Bound
     ```
 *   **PostgreSQL Column Specifications:**
     *   `id`: `UUID` Primary Key.
-    *   `studentId`: `UUID` Foreign Key. Relates 1:N to `Student`.
-    *   `branchId`: `UUID` Foreign Key. Index applied for isolation filters.
-    *   `leadId`: `UUID` Nullable. References original CRM lead.
+    *   `studentProfileId`: `UUID` Foreign Key. Relates 1:N to `StudentProfile`.
+    *   `branchId`: `UUID` Logical Foreign Key. Indexed for query performance.
+    *   `leadId`: `UUID` Nullable. Logical reference to original CRM lead.
     *   `approvedBy`: `UUID` Nullable. References User ID of the Branch Manager who signed the approval.
 
 ---
@@ -140,12 +137,12 @@ This section defines the database structure for the Admission & Enrollment Bound
     model Enrollment {
       id                       String           @id @default(uuid()) @db.Uuid
       enrollmentNumber         String           @unique @db.VarChar(50)
-      studentId                String           @db.Uuid
-      corporateParticipantId   String?          @db.Uuid
+      studentProfileId         String           @db.Uuid
+      corporateParticipantId   String?          @db.Uuid // Logical UUID reference to CorporateParticipant
       admissionId              String           @db.Uuid
-      courseId                 String           @db.Uuid
-      batchId                  String           @db.Uuid
-      branchId                 String           @db.Uuid
+      courseId                 String           @db.Uuid // Logical UUID reference (Course Catalog owns Course)
+      batchId                  String           @db.Uuid // Logical UUID reference (Training Delivery owns Batch)
+      branchId                 String           @db.Uuid // Logical UUID reference (Organization owns Branch)
       enrollmentType           EnrollmentType   @default(Regular)
       enrollmentStatus         EnrollmentStatus @default(Draft)
       pricingSource            PricingSource    @default(GlobalDefault)
@@ -153,17 +150,16 @@ This section defines the database structure for the Admission & Enrollment Bound
       resolvedDiscount         Decimal          @db.Decimal(12, 3) @default(0.000)
       finalAmount              Decimal          @db.Decimal(12, 3)
       paymentValidationRequired Boolean          @default(true)
+      
+      // Read-only Cached Projections. Updated strictly via domain events.
       completionStatus         String           @default("Pending") @db.VarChar(50)
       certificateStatus        String           @default("NotEligible") @db.VarChar(50)
       
       confirmedAt              DateTime?        @db.Timestamptz(6)
       completedAt              DateTime?        @db.Timestamptz(6)
 
-      student     Student      @relation(fields: [studentId], references: [id], onDelete: Restrict)
+      studentProfile StudentProfile @relation(fields: [studentProfileId], references: [id], onDelete: Restrict)
       admission   Admission    @relation(fields: [admissionId], references: [id], onDelete: Restrict)
-      course      Course       @relation(fields: [courseId], references: [id], onDelete: Restrict)
-      batch       Batch        @relation(fields: [batchId], references: [id], onDelete: Restrict)
-      branch      Branch       @relation(fields: [branchId], references: [id], onDelete: Restrict)
       
       walkInEnrollment WalkInEnrollment?
 
@@ -175,7 +171,7 @@ This section defines the database structure for the Admission & Enrollment Bound
       deletedBy String?   @db.Uuid
       isDeleted Boolean   @default(false)
 
-      @@index([studentId])
+      @@index([studentProfileId])
       @@index([batchId])
       @@index([branchId])
       @@index([enrollmentNumber])
@@ -198,7 +194,6 @@ This section defines the database structure for the Admission & Enrollment Bound
       Completed
       Cancelled
       Dropped
-      CertificateIssued
     }
 
     enum PricingSource {
@@ -258,7 +253,7 @@ This section defines the database structure for the Admission & Enrollment Bound
     *   `enrollmentNumber`: `VARCHAR(50)` Unique.
     *   `resolvedPrice`, `resolvedDiscount`, `finalAmount`: `NUMERIC(12, 3)` (stores Omani Rial amounts with high precision, mapping OMR currency with three decimal fractions).
     *   `paymentValidationRequired`: `BOOLEAN` Not Null.
-    *   `completionStatus` / `certificateStatus`: `VARCHAR(50)` Not Null. Used by completion and certificate modules.
+    *   `completionStatus` / `certificateStatus`: `VARCHAR(50)` Not Null. Owned by other contexts and cached here as read-only.
 
 ---
 
@@ -266,28 +261,24 @@ This section defines the database structure for the Admission & Enrollment Bound
 
 ```mermaid
 erDiagram
-    PERSON ||--|| STUDENT : "1:1 (personId)"
-    STUDENT ||--o{ ADMISSION : "1:N (studentId)"
-    STUDENT ||--o{ ENROLLMENT : "1:N (studentId)"
+    PERSON ||..|| STUDENT_PROFILE : "logical 1:1 (personId)"
+    STUDENT_PROFILE ||--o{ ADMISSION : "1:N (studentProfileId)"
+    STUDENT_PROFILE ||--o{ ENROLLMENT : "1:N (studentProfileId)"
     ADMISSION ||--o{ ENROLLMENT : "1:N (admissionId)"
     
-    BRANCH ||--o{ ADMISSION : "1:N (branchId)"
-    BRANCH ||--o{ ENROLLMENT : "1:N (branchId)"
-    
-    COURSE ||--o{ ENROLLMENT : "1:N (courseId)"
-    BATCH ||--o{ ENROLLMENT : "1:N (batchId)"
+    %% Note: Cross-context relations are logical UUID references only and are not represented as database constraints
 ```
 
 ### Relationship Constraints Rules:
 1.  **`Person` to `Student` (1:1):**
     *   **Rule:** A physical `Person` record can map to exactly zero or one `Student` profile.
-    *   **OnDelete:** `RESTRICT`. If a user attempts to delete a `Person` who has an active `Student` profile, the action is blocked. Soft delete must be handled via the aggregate service.
+    *   **OnDelete:** **Logical Restriction (Enforced at Application Layer).** Since `Person` belongs to another context (Identity/CRM), no physical database constraint exists. Deletion checks must run programmatically in the Person application service to prevent deleting a Person if an active StudentProfile references their `personId`.
 2.  **`Student` to `Enrollment` (1:N):**
     *   **Rule:** One student may register for multiple enrollments over time.
     *   **OnDelete:** `RESTRICT`. An active student record cannot be deleted if referenced in enrollment history.
 3.  **`Enrollment` to `Course` and `Batch` (N:1):**
-    *   **Rule:** Every enrollment must point to a valid course catalog page and a scheduled batch.
-    *   **OnDelete:** `RESTRICT` on course/batch. A batch cannot be deleted from master data if it contains active or completed enrollment rows.
+    *   **Rule:** Every enrollment must point to a valid course catalog page and a scheduled batch (logical references).
+    *   **OnDelete:** **Logical Restriction.** Handled in the application layer. A batch cannot be deleted or archived from the Training Delivery catalog if there are active enrollments referencing its `batchId`.
 4.  **`Admission` to `Enrollment` (1:N):**
     *   **Rule:** Every enrollment must link back to the administrative Admission record under which the learner was accepted to study at ASTI.
 

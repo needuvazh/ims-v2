@@ -97,46 +97,39 @@ Tracks overall financial liability for delivery payouts.
 
 ---
 
-## 4. Analytical Read Models & Database Views
+## 4. Analytical Read Models & Context Isolation
 
-To avoid executing complex multi-table joins (involving `trainer_profiles`, `persons`, `trainer_availabilities`, `batch_trainers`, and schedule sessions) during dashboard loading, the system uses two materialized views, refreshed nightly.
+To maintain strict Bounded Context isolation and avoid executing physical cross-context SQL joins (joining `trainer_profiles` directly with `persons` in Identity, `sessions` in Scheduling, and `batch_trainers` in Training Delivery) at query time, the system uses a localized query read-model table updated asynchronously via Domain Events.
 
-### 4.1 View: `vw_trainer_utilization`
-* **Definition Logic:**
-```sql
-CREATE MATERIALIZED VIEW vw_trainer_utilization AS
-SELECT 
-    tp.id AS "trainerProfileId",
-    tp."trainerCode",
-    p."firstName",
-    p."lastName",
-    tp."trainerType",
-    ta."branchId",
-    COALESCE(SUM(ta_hours.available_hours), 0) AS "totalAvailableHours",
-    COALESCE(SUM(sched_hours.scheduled_hours), 0) AS "totalScheduledHours"
-FROM trainer_profiles tp
-JOIN persons p ON tp."personId" = p.id
-JOIN trainer_availabilities ta ON ta."trainerId" = tp.id AND ta."isDeleted" = false
--- Aggregate available hours from availability blocks
-LEFT JOIN LATERAL (
-    SELECT 
-        (EXTRACT(EPOCH FROM (CAST(ta."endTime" AS time) - CAST(ta."startTime" AS time))) / 3600.0) AS available_hours
-) ta_hours ON true
--- Aggregate scheduled hours from sessions
-LEFT JOIN LATERAL (
-    SELECT 
-        COALESCE(SUM(EXTRACT(EPOCH FROM (s."endTime" - s."startTime")) / 3600.0), 0) AS scheduled_hours
-    FROM batch_trainers bt
-    -- Assumes scheduling session model links to Batch
-    -- JOIN sessions s ON s."batchId" = bt."batchId" AND s."trainerId" = tp.id
-    -- WHERE bt."trainerId" = tp.id AND s."isDeleted" = false
-) sched_hours ON true
-WHERE tp."isDeleted" = false AND tp.status = 'Active'
-GROUP BY tp.id, tp."trainerCode", p."firstName", p."lastName", tp."trainerType", ta."branchId";
+### 4.1 Read Model: `TrainerUtilizationSnapshot`
+* **Purpose:** Stores pre-calculated, branch-scoped utilization stats to serve dashboard widgets and reports without coupling databases.
+* **Prisma Schema Definition:**
+```prisma
+model TrainerUtilizationSnapshot {
+  id                   String        @id @default(uuid()) @db.Uuid
+  trainerProfileId     String        @db.Uuid
+  trainerCode          String        @db.VarChar(50)
+  firstName            String        @db.VarChar(100)
+  lastName             String        @db.VarChar(100)
+  trainerType          TrainerType
+  branchId             String        @db.Uuid
+  totalAvailableHours  Decimal       @db.Decimal(10, 2)
+  totalScheduledHours  Decimal       @db.Decimal(10, 2)
+  utilizationRate      Decimal       @db.Decimal(5, 2) // (totalScheduledHours / totalAvailableHours) * 100
+  updatedAt            DateTime      @updatedAt @db.Timestamptz(6)
 
-CREATE UNIQUE INDEX idx_vw_trainer_util_id ON vw_trainer_utilization("trainerProfileId", "branchId");
+  @@unique([trainerProfileId, branchId])
+  @@index([branchId])
+  @@map("trainer_utilization_snapshots")
+}
 ```
+* **Event-Driven Reconciliation Logic:**
+  1. **Trainer Availability Changes:** When `TrainerAvailabilityUpdated` is received, query local availability records and re-calculate `totalAvailableHours`.
+  2. **Timetable / Schedule Changes:** The Trainer context subscribes to `SessionScheduled` and `SessionCancelled` events published by the **Scheduling & Timetable Bounded Context**. Upon reception, the event handlers recalculate `totalScheduledHours` and `utilizationRate` for the affected trainer and branch, updating the snapshot.
+  3. **Person Metadata Updates:** Subscribes to `PersonUpdated` events (from Identity Bounded Context) to keep names current.
 
-### 4.2 View: `vw_trainer_payment_summary`
-* **Definition Logic:** Aggregates billing rates and pending disbursements for financial ledgers.
-* **Unique Indexes:** Bound to `trainer_profile_id` and `batch_id` to enable fast query routing.
+---
+
+### 4.2 Read Model: `TrainerCompensationRateSummary`
+* **Purpose:** Pre-aggregates batch compensation metrics, serving financial reports.
+* **Update Strategy:** Updated asynchronously by subscribing to `TrainerCompensationRateConfigured` and session completion logs, rather than using direct database joins.

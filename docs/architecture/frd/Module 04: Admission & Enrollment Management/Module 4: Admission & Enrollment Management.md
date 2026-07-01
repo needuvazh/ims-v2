@@ -110,28 +110,28 @@ Module 04: Admission & Enrollment Management
 ## 7. Functional Requirements Checklist
 
 ### 7.1 Admission Management (ADM)
-*   **FR-ADM-001:** Search and link existing `Person` record during `Student` profile creation.
-*   **FR-ADM-002:** Create Student profile with auto-generated unique `studentNumber`.
-*   **FR-ADM-003:** Create Admission record scoped to a `branchId` and optional `leadId`.
+*   **FR-ADM-001:** Search and link existing `Person` record during `StudentProfile` creation.
+*   **FR-ADM-002:** Create `StudentProfile` with auto-generated unique `studentNumber`.
+*   **FR-ADM-003:** Create Admission record scoped to a `branchId` (logical reference) and optional `leadId`.
 *   **FR-ADM-004:** Upload and verify mandatory identity documents (Passport, Civil ID, Certificates).
 *   **FR-ADM-005:** Transition Admission to "Pending Approval" state.
 *   **FR-ADM-006:** Approve Admission, triggering automatic student ID card compilation.
 *   **FR-ADM-007:** Reject Admission with mandatory reason text input.
-*   **FR-ADM-008:** Soft-delete Student or Admission record, archiving metadata with `isDeleted = true`.
+*   **FR-ADM-008:** Soft-delete StudentProfile or Admission record, archiving metadata with `isDeleted = true`.
 *   **FR-ADM-009:** Download generated Student ID Card.
 
 ### 7.2 Enrollment Management (ENR)
-*   **FR-ENR-001:** Initialize Enrollment in `Draft` state linking to `studentId`, `courseId`, and `batchId`.
+*   **FR-ENR-001:** Initialize Enrollment in `Draft` state linking to `studentProfileId`, `courseId`, and `batchId` (logical UUIDs).
 *   **FR-ENR-002:** Resolve course pricing using the hierarchy: Batch Level Override $\rightarrow$ Branch Level Override $\rightarrow$ Global Catalog Default.
-*   **FR-ENR-003:** Validate batch capacity and route to `Waitlist` if the capacity limit is reached.
+*   **FR-ENR-003:** Validate batch capacity and route to `Waitlist` if the capacity limit is reached via Training Delivery context.
 *   **FR-ENR-004:** Execute B2B Corporate Credit Limit validation rules during Corporate enrollments.
 *   **FR-ENR-005:** Submit Enrollment for review, transitioning state to `Submitted`.
 *   **FR-ENR-006:** Approve Enrollment, transitioning state to `Approved` and dispatching an billing trigger.
-*   **FR-ENR-007:** Confirm Enrollment, transitioning status to `Confirmed` upon financial payment verification (receipt generated in Finance).
+*   **FR-ENR-007:** Confirm Enrollment, transitioning status to `Confirmed` reactively upon receiving the `ReceiptGenerated` event from Finance.
 *   **FR-ENR-008:** Activate Enrollment (`Active` status) on batch start date, making the student visible in the timetable and attendance register.
-*   **FR-ENR-009:** Cancel Enrollment (pre-active states) or Drop Enrollment (active state) with refund calculation flags.
+*   **FR-ENR-009:** Cancel Enrollment (pre-active states) or Drop Enrollment (active state), publishing outbox events to trigger capacity releases and asynchronous refund calculations in Finance.
 *   **FR-ENR-010:** Evaluate completion rules and payment clearance status to flag certificate eligibility.
-*   **FR-ENR-011:** Execute Walk-In fast-track bypass to auto-approve and confirm enrollment in a single database transaction.
+*   **FR-ENR-011:** Execute Walk-In fast-track bypass to auto-approve and confirm enrollment in a decoupled transactional workflow.
 
 ---
 

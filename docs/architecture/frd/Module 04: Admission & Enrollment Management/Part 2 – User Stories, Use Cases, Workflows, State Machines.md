@@ -5,28 +5,28 @@
 
 ## 1. User Stories and BDD Acceptance Criteria
 
-### US-04-001: Register Student & Link Person (Must Have)
+### US-04-001: Register StudentProfile & Link Person (Must Have)
 *   **User Story:**  
     As a **Registrar**,  
-    I want to register a new student profile by linking it to a validated master Person record,  
+    I want to register a new StudentProfile by linking it to a validated master Person record,  
     So that I can avoid duplicate contact details and maintain a single person registry across the institute.
 *   **Acceptance Criteria (Gherkin format):**
     ```gherkin
-    Scenario: Successfully register a student with a unique Person link
+    Scenario: Successfully register a StudentProfile with a unique Person link
       Given the Registrar is logged in and authorized with "ADMISSION_CREATE" permission
       And a Person record exists with mobile "+96899123456" and email "ahmed@example.om"
-      And no Student profile is currently linked to this Person record
+      And no StudentProfile is currently linked to this Person record
       When the Registrar submits a request to register a student for this Person ID
-      Then the system should create a Student profile with status "Active"
+      Then the system should create a StudentProfile with status "Active"
       And auto-generate a unique studentNumber matching the format "STU-\d{4}-\d{5}"
       And publish a "StudentProfileCreated" event to the outbox
-      And return the newly created student record
+      And return the newly created StudentProfile record
 
     Scenario: Prevent registration of a student duplicate
       Given the Registrar is logged in
       And a Person record exists with mobile "+96899123456"
-      And a Student profile already exists linked to this Person record
-      When the Registrar attempts to create a new Student profile for this Person ID
+      And a StudentProfile already exists linked to this Person record
+      When the Registrar attempts to create a new StudentProfile for this Person ID
       Then the system should reject the request with a "DuplicateStudentDetected" error
       And make no changes to the database
     ```
@@ -83,7 +83,7 @@
       And the batch has waitlist enabled
       When a Registrar attempts to approve an enrollment for student "STU-2026-00102" in batch "Python-101"
       Then the system should block the enrollment approval
-      And create a "WaitingListEntry" with status "Pending"
+      And notify the Training Delivery context to create a "WaitingListEntry" with status "Pending"
       And log the request order timestamp
       And publish a "StudentAddedToWaitingList" event
 
@@ -122,13 +122,20 @@
     So that same-day short-duration certificate course learners do not experience administrative delays.
 *   **Acceptance Criteria:**
     ```gherkin
-    Scenario: Walk-in enrollment auto-confirms in a single transaction
+    Scenario: Walk-in enrollment auto-confirms reactively
       Given the course "First Aid Certificate" explicitly allows walk-in completions
       When the Registrar submits a Walk-in Registration form for a new person
-      Then the system should create a Person record
-      And create an active Student profile
-      And create an Enrollment in status "Confirmed" in a single transaction
-      And trigger instant invoice and payment clearance records in Finance
+      Then the system should create a Person record and active Student profile in a single transaction
+      And create an Enrollment in status "Confirmed" in a secondary transaction
+      And publish an outbox event to generate and auto-clear the invoice in Finance
+      And publish an outbox event to notify Training Delivery context of batch occupancy
+
+    Scenario: Walk-in enrollment handles waitlist if batch is full
+      Given the course "First Aid Certificate" allows walk-ins
+      And the batch "FA-B03" has no available capacity
+      When the Registrar submits a Walk-in Registration form for a new person
+      Then the system should block immediate confirmation
+      And notify Training Delivery to log a waitlist request
     ```
 
 ---
@@ -142,10 +149,9 @@
     ```gherkin
     Scenario: Drop active enrollment and restore batch capacity
       Given student "STU-2026-00105" has an enrollment in status "Active" for batch "React-09"
-      And batch "React-09" has seatsAvailable equal to "2"
       When the Branch Manager processes a drop request with reason "Medical Leave"
       Then the system should transition enrollmentStatus to "Dropped"
-      And increment the batch seatsAvailable to "3"
+      And publish a "EnrollmentDropped" event which triggers the Training Delivery context to increment the batch seatsAvailable by 1
       And publish a "EnrollmentDropped" event to update attendance rosters
     ```
 
@@ -180,14 +186,14 @@
     2.  System calls the CRM service to retrieve contact details (Name, Civil ID, Mobile, Email, Course Interest).
     3.  System checks the master Person directory using Civil ID and mobile number to detect duplicates. No match is found.
     4.  System creates a new `Person` record in the database.
-    5.  System generates a `Student` profile, auto-generating a unique `studentNumber` (e.g. `STU-2026-00342`).
-    6.  System creates a new `Admission` record linked to the student and lead in the status `Draft`.
+    5.  System generates a `StudentProfile`, auto-generating a unique `studentNumber` (e.g. `STU-2026-00342`).
+    6.  System creates a new `Admission` record linked to the student profile and lead in the status `Draft`.
     7.  System triggers a `LeadConvertedToAdmission` event.
 *   **Alternative Flows:**
-    *   *A1: Person Already Exists:* In step 3, if the Person is found (matching Civil ID or Mobile), the system skips `Person` creation and links the new `Student` profile to the existing `Person` record.
-    *   *A2: Student Profile Already Links to Person:* In step 3, if a `Student` profile is already linked to the found Person, the system blocks the creation and redirects the counselor to the existing Student profile.
+    *   *A1: Person Already Exists:* In step 3, if the Person is found (matching Civil ID or Mobile), the system skips `Person` creation and links the new `StudentProfile` to the existing `Person` record.
+    *   *A2: Student Profile Already Links to Person:* In step 3, if a `StudentProfile` is already linked to the found Person, the system blocks the creation and redirects the counselor to the existing StudentProfile.
 *   **Postconditions:**
-    *   Student and Admission records are successfully written. Lead status in CRM updates to "Converted".
+    *   StudentProfile and Admission records are successfully written. Lead status in CRM updates to "Converted".
 
 ---
 
@@ -195,19 +201,19 @@
 *   **Primary Actor:** Registrar
 *   **Preconditions:**
     *   Target Course is designated as a "Walk-In / One-Day Seminar" in the Course Catalog.
-    *   Batch is open, active, and has available capacity.
+    *   Batch is open, active, and has available capacity (verified via query).
 *   **Main Success Scenario:**
     1.  Registrar opens the Walk-In Form and enters the learner's personal details, target course, and batch.
     2.  Registrar inputs the cash/card payment amount received.
-    3.  System creates the `Person` and `Student` records.
-    4.  System creates the `Enrollment` record, bypasses the "Draft" and "Submitted" states, and sets status to `Confirmed`.
-    5.  System registers a cash invoice and payment transaction receipt in Module 09 in the same transaction block.
-    6.  System decrements the Batch capacity.
-    7.  System dispatches the `WalkInEnrollmentCreated` event.
+    3.  System creates the `Person` and `StudentProfile` records (Transaction 1).
+    4.  System creates the `Enrollment` record, bypasses the "Draft" and "Submitted" states, sets status to `Confirmed`, and commits the record (Transaction 2).
+    5.  System writes a `WalkInEnrollmentCreated` event to the local transactional outbox.
+    6.  The Finance context asynchronously subscribes to this event, then creates the cash invoice and records the payment transaction receipt in its own database context.
+    7.  The Training Delivery context asynchronously subscribes to this event and atomically decrements the Batch capacity in its own database context.
 *   **Alternative Flows:**
     *   *A1: Batch Capacity Reached:* If batch is full, system checks for waitlist. If waitlist is available, student is placed in waitlist and cannot proceed as confirmed. If no waitlist, transaction aborts.
 *   **Postconditions:**
-    *   Learner is registered, invoice is cleared, and batch seat is allocated in one atomic operation.
+    *   Learner profile and enrollment are created, and outbox events are written to reconcile invoicing and capacity asynchronously.
 
 ---
 
@@ -220,9 +226,9 @@
     2.  Manager inputs a mandatory drop reason and date of withdrawal.
     3.  System checks the attendance record of the student.
     4.  System changes the enrollment status to `Dropped` and records the withdrawal date.
-    5.  System increments the batch availability count:
+    5.  System dispatches the `EnrollmentDropped` outbox event.
+    6.  The Training Delivery context subscribes to this event and increments the batch availability count:
         $$\text{seatsAvailable} = \text{seatsAvailable} + 1$$
-    6.  System dispatches `EnrollmentDropped` outbox event.
 *   **Alternative Flows:**
     *   *A1: Refund Processing:* If the withdrawal date is within the refund eligibility window, the system triggers a request to Module 09 (Finance) to calculate refund amounts and issue a credit note draft.
 *   **Postconditions:**
@@ -251,7 +257,7 @@ sequenceDiagram
     Registrar->>ADM: Verify Documents & Submit
     Registrar->>Manager: Request Admission Approval
     Manager->>ADM: Approve Admission (Admission Status -> Approved)
-    ADM->>IDG: Trigger Student ID Card Generation
+    ADM->>IDG: Trigger Student ID Card Generation (Asynchronous outbox)
     
     Registrar->>ENR: Create Enrollment Draft (Links Course & Batch)
     ENR->>ENR: Resolve Pricing (Batch Override -> Branch -> Default)
@@ -263,8 +269,8 @@ sequenceDiagram
     FIN-->>Registrar: Await Payment
     
     Registrar->>FIN: Record Payment Receipt
-    FIN->>ENR: Update Payment Status (Cleared)
-    ENR->>ENR: Confirm Enrollment (Status -> Confirmed, Decrement Batch Capacity)
+    FIN->>ENR: Update Payment Status (Publish ReceiptGenerated Event)
+    ENR->>ENR: Confirm Enrollment (Status -> Confirmed, Asynchronously notify Training Delivery context of capacity change)
 ```
 
 ---
@@ -291,8 +297,6 @@ stateDiagram-v2
     
     Active --> Completed : Evaluation Rules Met (Trainer)
     Active --> Dropped : Drop from training (Manager)
-    
-    Completed --> CertificateIssued : Dues Paid + Certificate Signed (Registrar)
 ```
 
 ### 4.2 Status Transition Rules Matrix
@@ -311,4 +315,3 @@ Transitions must be governed by the following permission constraints:
 | `Confirmed` | `Dropped` | Pre-course withdrawal | `ENROLLMENT_DROP` | Restores batch capacity (+1 seat). |
 | `Active` | `Completed` | Submit course evaluation | `COURSE_COMPLETE` | Verified by Module 12 (Exams & Completion). |
 | `Active` | `Dropped` | Active drop / Absenteeism | `ENROLLMENT_DROP` | Restores batch capacity (+1 seat). |
-| `Completed`| `CertificateIssued` | Print Certificate | `CERTIFICATE_ISSUE` | Outstanding invoice balance must be zero. |
