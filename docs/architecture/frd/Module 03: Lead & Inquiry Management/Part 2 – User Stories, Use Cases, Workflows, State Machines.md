@@ -380,3 +380,6 @@ stateDiagram-v2
 | **Won** | Converted | Yes | Automated step: Admission creation success. | *System Only* |
 | **Converted** | *Any Stage* | No | Blocked. Converted leads are read-only. | *None (Prohibited)* |
 | **Lost** | New | Yes | Re-engage lost lead (Academic Coord override). | `lead.config` |
+
+Every stage transition executed via the table above MUST write a record to the dedicated `LeadStageHistory` table, registering the old stage, new stage, performer UUID, timestamp, and optional lost reason values.
+

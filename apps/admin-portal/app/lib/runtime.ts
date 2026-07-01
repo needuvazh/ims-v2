@@ -187,3 +187,52 @@ export const organizationService = new OrganizationService(
     },
   }
 );
+
+// ─── CRM Repositories & Services ──────────────────────────────────────────
+import {
+  InquiryRepository,
+  LeadRepository,
+  FollowUpRepository,
+  InquiryApplicationService,
+  LeadService,
+  FollowUpApplicationService,
+} from '@ims/crm-leads';
+
+const crmInquiryRepository = new InquiryRepository(prisma);
+const crmLeadRepository = new LeadRepository(prisma);
+const crmFollowUpRepository = new FollowUpRepository(prisma);
+
+export const inquiryService = new InquiryApplicationService(
+  prisma,
+  crmInquiryRepository,
+  crmLeadRepository
+);
+
+export const leadService = new LeadService(
+  prisma,
+  crmLeadRepository,
+  crmFollowUpRepository
+);
+
+export const followUpService = new FollowUpApplicationService(
+  prisma,
+  crmFollowUpRepository,
+  crmLeadRepository
+);
+
+// ─── Admissions Repositories & Services ──────────────────────────────────
+import {
+  AdmissionRepository,
+  AdmissionService,
+  LeadConversionOrchestrator
+} from '@ims/admissions-enrollment';
+
+const admissionRepository = new AdmissionRepository(prisma);
+export const admissionService = new AdmissionService(admissionRepository);
+
+export const leadConversionOrchestrator = new LeadConversionOrchestrator(
+  prisma,
+  leadService,
+  admissionService
+);
+

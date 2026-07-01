@@ -562,6 +562,8 @@ Manages leads from multiple channels and converts them into admissions or enroll
 * CounselorAssignment
 * LeadScore
 * Campaign
+* LeadNote
+* LeadStageHistory
 
 ### Lead Lifecycle
 
@@ -579,7 +581,8 @@ Lost
 ### Important Rules
 
 * Every enquiry must have a source.
-* Lead interaction history must be preserved.
+* Lead interaction history must be preserved, logging stage changes directly to a dedicated history table.
+* Lead notes are logged chronologically and are immutable once created.
 * Converted leads should initiate admission or enrollment.
 * Lost leads must capture lost reason.
 * Follow-up reminders should be generated for counselors.
@@ -1434,6 +1437,8 @@ FollowUp
 CounselorAssignment
 LeadScore
 CampaignReference
+LeadNote
+LeadStageHistory
 ```
 
 ### Key Invariants
@@ -1442,6 +1447,8 @@ CampaignReference
 * Lead must have a current status.
 * Converted lead must link to admission or enrollment.
 * Lost lead must capture lost reason.
+* Lead stage transitions must be recorded chronologically inside LeadStageHistory.
+* Lead notes must be immutable once created.
 
 ---
 

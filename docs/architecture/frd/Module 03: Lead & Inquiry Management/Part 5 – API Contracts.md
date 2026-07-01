@@ -23,6 +23,8 @@ This document outlines the API contracts for the Lead & Inquiry Management conte
 | `/api/v1/crm/leads/{id}/convert` | `POST` | Mark lead as Won and execute handoff. | `lead.won` |
 | `/api/v1/crm/leads/{id}/lost` | `POST` | Mark lead as Lost (captures reason code). | `lead.lost` |
 | `/api/v1/crm/leads/{id}/reveal-pii`| `POST` | Audited request to reveal masked phone, email, or National ID. | `lead.reveal_pii` |
+| `/api/v1/crm/leads/{id}/notes` | `POST` | Add a new chronological timeline note. | `lead.update` |
+| `/api/v1/crm/leads/{id}/notes` | `GET` | Fetch list of notes (paginated). | `lead.read` |
 
 ---
 
@@ -484,3 +486,48 @@ export const RevealPiiSchema = z.object({
 * **Error Response Catalog**:
   * **HTTP 400 Bad Request** / `ERR_CRM_WON_PRECONDITIONS_MISSED`: Invalid field selection or short reason.
   * **HTTP 403 Forbidden** / `ERR_CRM_BRANCH_SCOPE_VIOLATION`: Target lead belongs to another unauthorized branch portfolio.
+
+---
+
+### 2.14 Add Lead Note (`POST /api/v1/crm/leads/{id}/notes`)
+* **Authentication**: Session Cookie.
+* **Request Payload Schema (Zod Definition)**:
+```typescript
+export const AddLeadNoteSchema = z.object({
+  content: z.string().min(1, "Note details cannot be blank").max(1000)
+});
+```
+* **Success Response DTO (HTTP 200 OK)**:
+```json
+{
+  "success": true,
+  "data": {
+    "id": "e987f654-3210-43ef-ba98-76cd5432ba98",
+    "leadId": "7c98b671-12ef-42f0-9b48-12cd34ef56ab",
+    "content": "Called the prospect. Interested in the training starting next week.",
+    "createdAt": "2026-06-30T16:45:00.000Z",
+    "createdBy": "12345678-1234-1234-1234-1234567890ab"
+  }
+}
+```
+
+---
+
+### 2.15 Fetch Lead Notes (`GET /api/v1/crm/leads/{id}/notes`)
+* **Authentication**: Session Cookie.
+* **Success Response DTO (HTTP 200 OK)**:
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "e987f654-3210-43ef-ba98-76cd5432ba98",
+      "leadId": "7c98b671-12ef-42f0-9b48-12cd34ef56ab",
+      "content": "Called the prospect. Interested in the training starting next week.",
+      "createdAt": "2026-06-30T16:45:00.000Z",
+      "createdBy": "12345678-1234-1234-1234-1234567890ab"
+    }
+  ],
+  "total": 1
+}
+```

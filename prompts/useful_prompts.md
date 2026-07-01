@@ -11,6 +11,21 @@ This document maintains reusable prompts for pairing with AI assistants during t
 Can you assume the role of senior staff engineer and perform a review on the current OpenSpec proposal (under openspec/changes/)? Evaluate if there are any gaps in the proposed design specs and verify if any of the existing business logic (especially RBAC, branch isolation, or effective dating) will be broken by this change. Highlight design discrepancies and suggest clear technical remedies.
 ```
 
+
+Can you assume the role of senior staff engineer and perform a review on the current OpenSpec proposal for Core Data Models & Base APIs of the Lead & CRM Workflows module (under openspec/changes/)? Evaluate if there are any gaps in the proposed design specs and verify if any of the existing business logic  will be broken by this change. Highlight design discrepancies and suggest clear technical remedies.  Use DDD and FRD document for references
+
+
+Can you assume the role of senior staff engineer and perform a review on the current OpenSpec proposal for crm-portal-ui-scoped-filtering (under openspec/changes/)? Evaluate if there are any gaps in the proposed design specs and verify if any of the existing business logic  will be broken by this change. Highlight design discrepancies and suggest clear technical remedies.  Use DDD and FRD document for references
+
+
+Can you assume the role of senior staff engineer and perform a review on the code changes for openspec crm-portal-ui-scoped-filtering, evaluate if there is any gaps in the code changes and suggested me how to fix it.
+
+
+review on the current OpenSpec proposal for Core Data Models & Base APIs of the Lead & CRM Workflows module (under openspec/changes/)? Evaluate if there are any gaps in the proposed design specs and verify if any of the existing business logic  will be broken by this change. Highlight design discrepancies and suggest clear technical remedies.  Use DDD and FRD document for references
+
+
+
+
 ### Reviewing Database Schemas & Migrations
 ```text
 Read the Module FRD document (docs/architecture/frd/) and assume the role of a senior database engineer. Review the current database schema in packages/database/prisma/schema.prisma and seed files under packages/database/prisma/seed.ts for any architectural gaps. Highlight issues with relationships, cascading status rules, soft-delete flags, and active-dating bounds, and provide the exact schema changes to resolve them.

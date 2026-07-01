@@ -768,6 +768,45 @@ utmCampaign
 status
 ```
 
+## 10.5 LeadNote
+
+```text
+id
+leadId
+content
+createdAt
+createdBy
+```
+
+Relationships:
+
+```text
+LeadNote M → 1 Lead
+LeadNote M → 0..1 User as Author
+```
+
+---
+
+## 10.6 LeadStageHistory
+
+```text
+id
+leadId
+oldStage
+newStage
+lostReasonCode
+lostReasonNotes
+performedBy
+performedAt
+```
+
+Relationships:
+
+```text
+LeadStageHistory M → 1 Lead
+LeadStageHistory M → 1 User as Performer
+```
+
 ---
 
 # 11. Admission & Enrollment Model

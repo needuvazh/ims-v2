@@ -330,15 +330,31 @@ The ASTI Integrated Institute Management System (IMS) relies on a robust **Lead 
 ---
 
 ### FR-LEAD-016: Lead Activity Timeline
-* **Description & Actors**: Compiles a vertical chronological history of all updates and communication points linked to a lead.
+* **Description & Actors**: Compiles a vertical chronological history of stage updates (retrieved from a dedicated `LeadStageHistory` log table) and follow-up activities. Shows the last 2 stage events by default with a collapse toggle.
 * **Preconditions**: User has `lead.read` permission.
 * **Inputs**:
   * `leadId` (UUID, mandatory)
 * **Processing Steps**:
-  1. Queries chronological records of stages updates, counselor assignments, and completed follow-up logs.
-  2. Formats and renders a consolidated vertical feed for the detail workspace view.
+  1. Queries chronological records of stage transitions from the `LeadStageHistory` table.
+  2. Formats and renders a collapsible vertical stepper representing the last 2 changes by default.
 * **Outputs & Postconditions**:
-  * Vertical audit logs timeline shown.
+  * Vertical stage history timeline shown.
+* **Priority (MoSCoW)**: **Must Have**
+
+---
+
+### FR-LEAD-017: Immutable Timeline Notes
+* **Description & Actors**: Allows counselors to post chronological text notes in the lead timeline context.
+* **Preconditions**: User has `lead.update` permission.
+* **Inputs**:
+  * `leadId` (UUID, mandatory)
+  * `content` (String, mandatory)
+* **Processing Steps**:
+  1. Inserts the note details in the dedicated `LeadNote` table, binding the author's user ID and timestamp.
+  2. Renders the notes in a paginated grid list (5 records per page, client-side pagination).
+  3. Once created, notes are immutable and cannot be updated, edited, or deleted.
+* **Outputs & Postconditions**:
+  * Timeline note recorded and appended.
 * **Priority (MoSCoW)**: **Must Have**
 
 ---

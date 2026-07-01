@@ -44,6 +44,7 @@ model Person {
   firstName   String    @db.VarChar(100)
   lastName    String    @db.VarChar(100)
   mobile      String    @unique @db.VarChar(30)
+  email       String?   @unique @db.VarChar(255)
   nationalId  String?   @db.VarChar(50)
   nationality String?   @db.VarChar(50)
   dateOfBirth DateTime? @db.Date
@@ -106,6 +107,8 @@ model User {
   leads     Lead[]         @relation("CounselorLeads")
   followUps LeadFollowUp[] @relation("CounselorFollowUps")
   inquiries Inquiry[]      @relation("CounselorInquiries")
+  leadNotes LeadNote[]     @relation("AuthorNotes")
+  stageChanges LeadStageHistory[] @relation("StageChanges")
 
   @@index([status])
   @@map("users")
@@ -747,6 +750,8 @@ model Lead {
   inquiry            Inquiry?       @relation(fields: [inquiryId], references: [id])
   interestedCourse   Course         @relation(fields: [interestedCourseId], references: [id])
   followUps          LeadFollowUp[]
+  notesRelation      LeadNote[]     @relation("LeadNotes")
+  stageHistory       LeadStageHistory[] @relation("StageHistory")
 
   createdAt          DateTime       @default(now()) @db.Timestamptz(6)
   createdBy          String?        @db.Uuid
@@ -755,10 +760,12 @@ model Lead {
   deletedAt          DateTime?      @db.Timestamptz(6)
   deletedBy          String?        @db.Uuid
   isDeleted          Boolean        @default(false)
+  status             RecordStatus   @default(Active)
 
   @@index([branchId])
   @@index([counselorId])
   @@index([stage])
+  @@index([personId])
   @@map("leads")
 }
 
@@ -779,8 +786,13 @@ model LeadFollowUp {
   createdBy    String?   @db.Uuid
   updatedAt    DateTime? @db.Timestamptz(6)
   updatedBy    String?   @db.Uuid
+  deletedAt    DateTime? @db.Timestamptz(6)
+  deletedBy    String?   @db.Uuid
+  isDeleted    Boolean   @default(false)
 
   @@index([leadId])
+  @@index([counselorId])
+  @@index([status])
   @@map("lead_follow_ups")
 }
 
@@ -830,4 +842,35 @@ model Admission {
   @@index([studentId])
   @@index([branchId])
   @@map("admissions")
+}
+
+model LeadNote {
+  id        String   @id @default(uuid()) @db.Uuid
+  leadId    String   @db.Uuid
+  content   String   @db.Text
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  createdBy String?  @db.Uuid
+
+  lead   Lead  @relation("LeadNotes", fields: [leadId], references: [id])
+  author User? @relation("AuthorNotes", fields: [createdBy], references: [id])
+
+  @@index([leadId])
+  @@map("lead_notes")
+}
+
+model LeadStageHistory {
+  id              String    @id @default(uuid()) @db.Uuid
+  leadId          String    @db.Uuid
+  oldStage        LeadStage
+  newStage        LeadStage
+  lostReasonCode  String?   @db.VarChar(50)
+  lostReasonNotes String?   @db.Text
+  performedBy     String    @db.Uuid
+  performedAt     DateTime  @default(now()) @db.Timestamptz(6)
+
+  lead            Lead      @relation("StageHistory", fields: [leadId], references: [id])
+  performer       User      @relation("StageChanges", fields: [performedBy], references: [id])
+
+  @@index([leadId])
+  @@map("lead_stage_history")
 }

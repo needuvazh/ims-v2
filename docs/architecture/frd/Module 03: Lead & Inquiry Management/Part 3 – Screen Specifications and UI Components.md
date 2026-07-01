@@ -121,17 +121,25 @@ All user interfaces within the Lead & Inquiry Management module are internal-fac
 
 ### LEAD-UI-005: Lead Detail Workspace
 * **Layout & Grid Structure**:
-  * Split screen layout:
-    * Left Panel (1/3 width): Fixed profile card containing name, contact details, assigned counselor, current stage, and action shortcuts (Log Call, Schedule Follow-up, Convert, Mark Lost).
-    * Right Panel (2/3 width): Tabbed container displaying detail sections.
-* **Tabs Inventory**:
-  1. **Profile details**: Extensible personal data (National ID, Date of birth, Address).
-  2. **Follow-up Logs**: Table of historical interactions and outcomes.
-  3. **Activity Timeline**: Chronological vertical feed of system events (Lead created, status changed, documents updated).
-  4. **Documents**: List of uploaded files (Civil ID copy, Passport scan) with status verification tags.
+  * Unified page container with:
+    * **Page Header**: Features title breadcrumbs and primary action slots ("Edit Details", "Convert to Student") directly in the header container. No "Back to List" navigation button is rendered.
+    * **Detail Overview Grid**:
+      * **Left Panel**: Contains the Profile Information details (personal metadata, DOB, counselor) and the inline **Pipeline Status** update card.
+      * **Right Panel**: Contains the **Lead Timeline & Notes** logging board, and the **Audit History Log** table.
+* **Component Specs**:
+  1. **Profile Details Card**: Displays email, phone, branch, date of birth, interested course, and counselor.
+  2. **Pipeline Status Card**: 
+     * Displays current stage badge.
+     * Features a "Change Stage" inline toggle form. Choosing "Lost" dynamically prompts for `lostReasonCode` and descriptive notes (validated to be at least 15 characters).
+     * Mounts a collapsible chronological **Stage History Timeline** stepper showing only the last 2 stage events by default, with a "Show all" toggle.
+  3. **Lead Timeline & Notes Card**:
+     * Input text area to append notes. Notes are immutable once submitted.
+     * Displays logged notes in a grid table with client-side pagination (5 notes per page).
+  4. **Audit History Log Card**:
+     * Displays general audit logs of changes (excluding note additions) in a table with server-side pagination (via `?auditPage=X` URL query parameter).
 * **Permission-based Controls Visibility**:
-  * "Assign Counselor" button visible only if user roles include `lead.assign` permission.
-  * "Convert to Admission" action button active only if lead stage is `Won` or `Qualified` and user has `lead.won` permission.
+  * "Edit Details" and "Change Stage" controls are visible only to users with `lead.update` permission.
+  * "Convert to Student" action button triggers a document link collection dialog and is active only for users with `lead.won` permission.
 
 ---
 

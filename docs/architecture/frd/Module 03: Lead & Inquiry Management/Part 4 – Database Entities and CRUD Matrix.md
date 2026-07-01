@@ -121,6 +121,33 @@ Stores details of marketing campaigns to support lead source attribution and ana
 | `deletedAt` | `DateTime` | `TIMESTAMPTZ` | NULL | - | - |
 | `isDeleted` | `Boolean` | `BOOLEAN` | NOT NULL | - | Default: `false` |
 
+### 1.5 `lead_notes` Table (Lead Note Entity)
+Stores timeline note logs posted by counselors or managers regarding a lead.
+
+| Field Name | Prisma Type | PostgreSQL Type | Nullability | Key Type | Constraints / Indexes |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `id` | `String` | `UUID` | NOT NULL | PK | `@default(uuid())` |
+| `leadId` | `String` | `UUID` | NOT NULL | FK | References `leads(id)`. Index |
+| `content` | `String` | `TEXT` | NOT NULL | - | Note details (Immutable) |
+| `createdAt` | `DateTime` | `TIMESTAMPTZ` | NOT NULL | - | `@default(now())` |
+| `createdBy` | `String` | `UUID` | NOT NULL | FK | References `users(id)` |
+
+---
+
+### 1.6 `lead_stage_history` Table (Stage History Entity)
+Logs all pipeline stage transitions for auditing and timeline presentation.
+
+| Field Name | Prisma Type | PostgreSQL Type | Nullability | Key Type | Constraints / Indexes |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `id` | `String` | `UUID` | NOT NULL | PK | `@default(uuid())` |
+| `leadId` | `String` | `UUID` | NOT NULL | FK | References `leads(id)`. Index |
+| `oldStage` | `String` | `VARCHAR(50)` | NOT NULL | - | Prior stage |
+| `newStage` | `String` | `VARCHAR(50)` | NOT NULL | - | Current transitioned stage |
+| `lostReasonCode` | `String`| `VARCHAR(100)`| NULL | - | Required if transitioning to Lost |
+| `lostReasonNotes`| `String`| `TEXT` | NULL | - | Required if transitioning to Lost |
+| `performedBy` | `String` | `UUID` | NOT NULL | FK | References `users(id)` |
+| `performedAt` | `DateTime` | `TIMESTAMPTZ` | NOT NULL | - | `@default(now())` |
+
 ---
 
 ## 2. Entity Relationships & Integrity Rules
@@ -138,6 +165,8 @@ erDiagram
     INQUIRY ||--o[1] LEAD : qualifies-to
     LEAD ||--o{ LEAD_FOLLOW_UP : records
     USER ||--o{ LEAD_FOLLOW_UP : executes
+    LEAD ||--o{ LEAD_NOTE : contains
+    LEAD ||--o{ LEAD_STAGE_HISTORY : logs
 ```
 
 ### 2.1 Referential Integrity Constraints

@@ -43,7 +43,17 @@ const systemPermissions = [
   // CRM / Leads Management
   { moduleCode: 'crm',          featureCode: 'leads',       actionCode: 'read',   permissionCode: 'lead.read',                      permissionType: 'Action' as const, description: 'View leads.' },
   { moduleCode: 'crm',          featureCode: 'leads',       actionCode: 'write',  permissionCode: 'lead.write',                     permissionType: 'Action' as const, description: 'Create and update leads.' },
+  { moduleCode: 'crm',          featureCode: 'leads',       actionCode: 'create', permissionCode: 'lead.create',                    permissionType: 'Action' as const, description: 'Create leads.' },
+  { moduleCode: 'crm',          featureCode: 'leads',       actionCode: 'update', permissionCode: 'lead.update',                    permissionType: 'Action' as const, description: 'Update leads.' },
+  { moduleCode: 'crm',          featureCode: 'leads',       actionCode: 'delete', permissionCode: 'lead.delete',                    permissionType: 'Action' as const, description: 'Delete leads.' },
+  { moduleCode: 'crm',          featureCode: 'leads',       actionCode: 'assign', permissionCode: 'lead.assign',                    permissionType: 'Action' as const, description: 'Assign leads.' },
+  { moduleCode: 'crm',          featureCode: 'leads',       actionCode: 'lost',   permissionCode: 'lead.lost',                      permissionType: 'Action' as const, description: 'Mark leads lost.' },
+  { moduleCode: 'crm',          featureCode: 'leads',       actionCode: 'reveal_pii', permissionCode: 'lead.reveal_pii',            permissionType: 'Action' as const, description: 'Reveal lead PII.' },
+  { moduleCode: 'crm',          featureCode: 'leads',       actionCode: 'qualify',permissionCode: 'lead.qualify',                   permissionType: 'Action' as const, description: 'Qualify inquiries.' },
   { moduleCode: 'crm',          featureCode: 'leads',       actionCode: 'convert',permissionCode: 'lead.convert',                   permissionType: 'Action' as const, description: 'Convert leads to admissions.' },
+  { moduleCode: 'crm',          featureCode: 'leads',       actionCode: 'read.all',permissionCode: 'crm.leads.read.all',            permissionType: 'Action' as const, description: 'View all leads bypassing counselor scoping.' },
+  { moduleCode: 'crm',          featureCode: 'followup',    actionCode: 'create', permissionCode: 'followup.create',                permissionType: 'Action' as const, description: 'Create lead follow-ups.' },
+  { moduleCode: 'crm',          featureCode: 'followup',    actionCode: 'update', permissionCode: 'followup.update',                permissionType: 'Action' as const, description: 'Update lead follow-ups.' },
   
   // Admissions & Enrollments
   { moduleCode: 'enrollment',   featureCode: 'student',     actionCode: 'read',   permissionCode: 'student.read',                   permissionType: 'Action' as const, description: 'View student details.' },
@@ -172,7 +182,8 @@ async function seed() {
     'organization.branch.manage', 'organization.department.manage', 'organization.classroom.manage',
     'iam.user.read', 'iam.role.read', 'iam.session.read', 'iam.security-policy.read', 'iam.audit.read',
     'report.iam.user', 'report.iam.login-history', 'report.iam.security',
-    'lead.read', 'lead.write', 'lead.convert',
+    'lead.read', 'lead.write', 'lead.create', 'lead.update', 'lead.delete', 'lead.assign', 'lead.lost', 'lead.reveal_pii', 'lead.qualify', 'lead.convert', 'crm.leads.read.all',
+    'followup.create', 'followup.update',
     'student.read', 'student.write', 'enrollment.create',
     'payment.create', 'refund.request', 'course.manage', 'schedule.manage',
     'attendance.record', 'result.record', 'certificate.generate',
@@ -188,7 +199,9 @@ async function seed() {
 
   // Counselor permissions
   const counselorPermCodes = [
-    'iam.user.read', 'lead.read', 'lead.write', 'lead.convert',
+    'iam.user.read',
+    'lead.read', 'lead.write', 'lead.create', 'lead.update', 'lead.assign', 'lead.lost', 'lead.qualify', 'lead.convert',
+    'followup.create', 'followup.update',
     'student.read', 'dashboard.crm', 'report.iam.user', 'dashboard.view'
   ];
   const counselorPerms = permRecords.filter(p => counselorPermCodes.includes(p.permissionCode));
@@ -549,6 +562,33 @@ async function seed() {
     data: { id: crypto.randomUUID(), userId: muscatManagerUser.id, branchId: muscatBranch.id, isDefault: true, status: 'Active' }
   });
   console.log(`  ✓ User created: manager.muscat@ims.com (BRANCH_MANAGER, Branch AST-MUSCAT)`);
+
+  // 6. Create default active Courses
+  const defaultCourses = [
+    { code: 'CS-FSWD', name: 'Full Stack Web Development' },
+    { code: 'CS-MDEV', name: 'Mobile App Development (iOS/Android)' },
+    { code: 'CS-CSEC', name: 'Advanced Cyber Security & Ethical Hacking' },
+    { code: 'CS-DSAI', name: 'Data Science and Artificial Intelligence' },
+    { code: 'CS-CLAW', name: 'Cloud Solutions Architecture (AWS/Azure)' },
+    { code: 'CS-UIUX', name: 'UI/UX Design & Product Strategy' },
+  ];
+
+  for (const c of defaultCourses) {
+    const existing = await prisma.course.findUnique({
+      where: { courseCode: c.code },
+    });
+    if (!existing) {
+      await prisma.course.create({
+        data: {
+          id: crypto.randomUUID(),
+          courseCode: c.code,
+          name: c.name,
+          status: 'Active',
+        },
+      });
+      console.log(`  ✓ Course seeded: ${c.name}`);
+    }
+  }
 
   console.log('\n🌱 Seed script complete! Database seeded successfully.');
 

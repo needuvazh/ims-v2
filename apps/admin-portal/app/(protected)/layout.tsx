@@ -5,6 +5,7 @@ import { decodeSession, sessionCookieName, isGlobalScope } from '@ims/shared-aut
 import { AppShell } from '@ims/shared-ui';
 import { resolvePortalNavigation, resolvePortalShellUser } from '@ims/identity-access';
 import { UserControls } from './user-controls';
+import { Toaster } from 'sonner';
 import {
   LayoutDashboard,
   Building2,
@@ -158,6 +159,7 @@ export default async function ProtectedLayout({ children }: { children: ReactNod
       }
     >
       {children}
+      <Toaster richColors position="top-right" />
     </AppShell>
   );
 }
