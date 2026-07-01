@@ -1645,11 +1645,14 @@ block enrollment.
 ```text
 id
 personId
+branchId
 trainerCode
 trainerType
 specialization
 qualificationSummary
 status
+effectiveStartDate
+effectiveEndDate
 ```
 
 Trainer types:
@@ -1685,11 +1688,13 @@ startTime
 endTime
 branchId
 status
+effectiveStartDate
+effectiveEndDate
 ```
 
 ---
 
-## 20.4 TrainerPayment
+## 20.4 TrainerCompensationRate
 
 ```text
 id
@@ -1698,8 +1703,23 @@ batchId
 sessionId
 paymentBasis
 amount
-paymentStatus
+status
 remarks
+effectiveStartDate
+effectiveEndDate
+```
+
+---
+
+## 20.5 TrainerCourseAuthorization
+
+```text
+id
+trainerId
+courseId
+status
+effectiveStartDate
+effectiveEndDate
 ```
 
 Payment basis:

@@ -43,7 +43,7 @@ The following table summarizes the REST endpoints provided by the Course Catalog
 ### 2.1.1 POST `/api/v1/courses`
 *   **Purpose:** Registers a new course profile in `Draft` status.
 *   **Authorization:** Bearer JWT required. Permission: `course.catalog.create`.
-*   **Branch-Scoping Behavior:** The course is assigned to the `branchId` passed in the payload. The user's JWT must include active access authorization to that branch.
+*   **Branch-Scoping Behavior:** None. Courses are global entities and visible across all branches.
 *   **Request Payload Schema (Zod):**
     ```typescript
     const CreateCourseSchema = z.object({
@@ -53,7 +53,6 @@ The following table summarizes the REST endpoints provided by the Course Catalog
       descriptionEnglish: z.string().optional(),
       descriptionArabic: z.string().optional(),
       departmentId: z.string().uuid(),
-      branchId: z.string().uuid(),
       courseClassification: z.enum(["Individual", "Corporate", "WalkIn", "Online"]),
       durationType: z.enum(["FixedDays", "HoursBased", "SessionsBased"]),
       durationValue: z.number().int().positive(),
@@ -89,7 +88,7 @@ The following table summarizes the REST endpoints provided by the Course Catalog
 ### 2.1.2 GET `/api/v1/courses`
 *   **Purpose:** Query active course profiles using dynamic filters.
 *   **Authorization:** Bearer JWT required. Permission: `course.catalog.view`.
-*   **Branch-Scoping Behavior:** If user lacks consolidated report permission, the query filters automatically by the user's active session `branchId`.
+*   **Branch-Scoping Behavior:** None. Course Catalog profiles are global and visible across all branches. No branch-level filter is applied.
 *   **Success Response DTO (200 OK):**
     ```json
     {

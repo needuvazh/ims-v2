@@ -82,13 +82,12 @@ The Scheduling context owns:
 
 * Schedule
 * ScheduleSession
-* TrainerAvailability
 * ConflictCheckResult
 * TimetableViewDefinition
 
 Notes:
 
-* Batch, Course, Branch, Classroom, and Trainer are referenced from other contexts.
+* Batch, Course, Branch, Classroom, Trainer, and TrainerAvailability are referenced from other contexts.
 * Scheduling owns delivery timing and conflict policy, not batch ownership or trainer master data.
 * Attendance is created or attached downstream, but it is not owned here.
 

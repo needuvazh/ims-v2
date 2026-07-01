@@ -853,7 +853,6 @@ Manages timetable, training calendar, classroom booking, holidays, and venue blo
 * ClassroomBooking
 * Holiday
 * VenueBlock
-* TrainerAvailability
 
 ### Important Rules
 
@@ -962,25 +961,22 @@ If corporate credit limit is exceeded AND block flag = false
 
 ### Business Purpose
 
-Manages trainer profiles, qualifications, availability, assignments, documents, and trainer payment tracking.
+Manages trainer profiles, qualifications, availability, and delivery compensation rate structures.
 
 ### Key Responsibilities
 
 * Trainer profile management
 * Qualification tracking
-* Document tracking
 * Availability management
-* Assignment to batches/sessions
-* Trainer payment tracking
+* Trainer compensation rate management
 
 ### Core Entities
 
-* Trainer
+* TrainerProfile
 * TrainerQualification
-* TrainerDocument
 * TrainerAvailability
-* TrainerAssignment
-* TrainerPayment
+* TrainerCourseAuthorization
+* TrainerCompensationRate
 
 ### Important Rules
 
@@ -1807,6 +1803,25 @@ BankTransferFileGenerated
 
 ---
 
+## 11.12 Faculty / Trainer Events
+
+```text
+TrainerCreated
+TrainerUpdated
+TrainerActivated
+TrainerDeactivated
+TrainerSuspended
+TrainerQualificationAdded
+TrainerQualificationUpdated
+TrainerAvailabilityUpdated
+TrainerCourseAuthorized
+TrainerCourseAuthorizationExpired
+TrainerCompensationRateConfigured
+TrainerStatusChanged
+```
+
+---
+
 # 12. Context Integration Rules
 
 ## 12.1 Website to CRM
@@ -2023,7 +2038,7 @@ Audit must capture important changes across domains.
 | Timetable, holiday, venue block                             | Scheduling & Calendar        |
 | Attendance record                                           | Attendance                   |
 | Invoice, payment, receipt, refund, receivable               | Finance & Receivables        |
-| Trainer profile, qualification, availability                | Trainer Management           |
+| Trainer profile, qualification, availability                | Faculty / Trainer Management |
 | Exam, result, completion evaluation                         | Exam & Completion            |
 | Certificate, QR verification                                | Certificate                  |
 | Message template, notification log                          | Communication                |

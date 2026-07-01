@@ -30,7 +30,6 @@ Trainers' personal details (such as passport numbers, civil ID values, date of b
 | :--- | :--- | :--- | :--- |
 | `GET /api/trainers` | Response Time | $\le 200\text{ ms}$ | With page size of 25 records and 3 active filters. |
 | Availability Query | Execution Time | $\le 150\text{ ms}$ | Triggered by Scheduling Engine for up to 10 trainers simultaneously. |
-| Materialized View Refresh | Job Duration | $\le 15\text{ seconds}$ | Executed during nightly maintenance window (01:00 GST). |
 
 ---
 

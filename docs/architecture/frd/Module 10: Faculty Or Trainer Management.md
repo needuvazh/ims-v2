@@ -608,7 +608,7 @@ The system shall support trainer assignments to courses, batches, and corporate 
 
 ## FR-TRN-009 Monitor Expiry
 
-The system shall process document expiration events from the Document Bounded Context to suspend trainer profiles and block schedule assignments when visa, civil ID, or licenses expire.
+The system shall process document expiration events from the Document Bounded Context to suspend trainer profiles. Downstream scheduling contexts subscribe to these profile status updates to prevent new schedule assignments.
 
 ## FR-TRN-010 View Utilization
 

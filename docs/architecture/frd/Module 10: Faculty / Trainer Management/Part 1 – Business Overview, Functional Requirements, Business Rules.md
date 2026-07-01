@@ -29,7 +29,7 @@ The **Faculty / Trainer Management (TRN)** module addresses several critical ope
 * **Processing Steps:**
   1. **Branch Scoping Check:** Ensure the executing user is authorized to perform mutations in the active branch context, and that the active branch matches `branchId`.
   2. **Duplicate Link Validation:** Query the `TrainerProfile` table to verify no active or soft-deleted trainer profile is already linked to the specified `personId`. If found, throw `ERR_TRN_PERSON_ALREADY_LINKED`.
-  3. **Auto-Generate Trainer Code:** Auto-generate a unique `TrainerCode` using the naming series: `TRN-YYYY-[Seq]` (where `YYYY` is the current year and `Seq` is a 4-digit sequential counter).
+  3. **Auto-Generate Trainer Code:** Delegate the generation of a unique `TrainerCode` matching format `TRN-YYYY-[Seq]` to the **Configuration & Master Data Bounded Context's Numbering Series Service** to ensure thread-safe atomic sequential increments.
   4. **Active Dating Check:** Ensure `effectiveStartDate` is less than or equal to `effectiveEndDate` (if provided).
   5. **Persistence:** Write to the `TrainerProfile` table, setting `branchId` to the provided home branch (as a logical UUID reference), `status` to `Draft`, `isDeleted` to `false`, and recording audit columns.
   6. **Audit Event Trigger:** Publish the `TrainerCreated` domain event to the transactional outbox. The Audit Bounded Context will asynchronously subscribe to this event to log the entry in the centralized audit log.
@@ -152,9 +152,9 @@ The **Faculty / Trainer Management (TRN)** module addresses several critical ope
      * **Warning Level (Expiry between 16 and 30 days):** Record compliance alert status on the trainer's dashboard read model, and emit `TrainerDocumentExpiring` to notify the branch manager.
      * **Critical Level (Expiry between 6 and 15 days):** Raise priority of compliance alerts.
      * **Immediate Block Level (Expiry <= 5 days or already expired):**
-       * Delegate to the Trainer Application Service, which loads the `TrainerProfile` Aggregate Root and invokes its domain command method (e.g. `trainerProfile.suspend(reason)`) to update the compliance status flag to `Blocked` or transition profile status to `Suspended`.
-       * The aggregate root method automatically publishes the `TrainerStatusChanged` domain event to the outbox.
-       * Trigger scheduling input blocks for this trainer (preventing new session allocations).
+        * Delegate to the Trainer Application Service, which loads the `TrainerProfile` Aggregate Root and invokes its domain command method (e.g. `trainerProfile.suspend(reason)`) to update the compliance status flag to `Blocked` or transition profile status to `Suspended`.
+        * The aggregate root method automatically publishes the `TrainerStatusChanged` domain event to the outbox.
+        * Downstream contexts (Scheduling & Timetable Bounded Context) subscribe asynchronously to `TrainerStatusChanged` (or query the Trainer Context API) to prevent any new session allocations.
   3. **Event Notification Handoff:** For warning and critical levels, emit the `TrainerDocumentExpiring` event to trigger branch administrator and trainer email notifications (handled by the Communication Bounded Context).
 * **Outputs & Postconditions:**
   * Trainer profile scheduling flags updated; compliance status transitioned; outbox event dispatched for downstream actions.

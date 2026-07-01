@@ -72,7 +72,7 @@ Course & Batch rules are consumed by enrollment, scheduling, attendance, complet
 * A course defines what is taught.
 * A batch defines how, when, and where a course is delivered.
 * A batch belongs to exactly one course and one branch.
-* A course belongs to exactly one branch and one department.
+* A course belongs to exactly one department and is defined globally.
 * Pricing may vary by branch, customer type, batch type, and currency.
 * Completion rules are defined at course level and inherited by batches.
 * Historical pricing and historical completion rules must remain preserved.

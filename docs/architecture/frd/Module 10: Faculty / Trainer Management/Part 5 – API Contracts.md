@@ -15,6 +15,8 @@ This document specifies the REST API endpoints and server actions exposed by the
 | `/api/trainers/{id}/authorizations` | `POST` | Maps course authorizations to the trainer profile. | `trainer:write` |
 | `/api/trainers/{id}/qualifications` | `POST` | Registers trainer qualifications and links to verified documents. | `trainer:write` |
 | `/api/trainers/{id}/compensation-rates` | `POST` | Registers batch-specific compensation parameters. | `trainer:payment-write` |
+| `/api/trainers/{id}/qualifications/{qualificationId}` | `DELETE` | Soft-deletes a trainer qualification via Aggregate Root. | `trainer:write` |
+| `/api/trainers/{id}/authorizations/{authorizationId}` | `DELETE` | Soft-deletes a course authorization via Aggregate Root. | `trainer:write` |
 
 ---
 

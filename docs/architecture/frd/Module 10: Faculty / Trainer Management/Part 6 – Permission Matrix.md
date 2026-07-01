@@ -53,6 +53,6 @@ This document maps ASTI system roles to fine-grained access control permissions 
 ---
 
 ## 3. Explanatory Notes & Access Constraints
-1. **Trainer Self-Write Constraint (1):** Trainers logged into the Trainer Self-Service Portal hold the `trainer:write` permission, but it is restricted by a database row-level security policy where `TrainerProfile.id == session.userId`. Furthermore, their write access is limited to adding new qualifications and documents in a `PendingVerification` state. They cannot alter their own `status`, `TrainerType`, or `effectiveEndDate`.
+1. **Trainer Self-Write Constraint (1):** Trainers logged into the Trainer Self-Service Portal hold the `trainer:write` permission, but it is restricted by a database row-level security policy where `session.personId == TrainerProfile.personId` (allowing them to only mutate their own profile resources). Furthermore, their write access is limited to adding new qualifications and documents in a `PendingVerification` state. They cannot alter their own `status`, `TrainerType`, or `effectiveEndDate`.
 2. **Branch Scoping Rule:** While Branch Admins and Academic Coordinators possess broad operational permissions (like `trainer:write` or `trainer:avail-manage`), all database actions execute filters restricting mutations to records matching `session.activeBranchId`.
 3. **Consolidated Bypassing:** Only the `Super Admin` holding `report:consolidated` can run queries across all branches to compile institutional KPIs.

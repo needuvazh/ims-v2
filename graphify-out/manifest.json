@@ -2255,8 +2255,8 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1782821878.076581,
-    "ast_hash": "b1ef63a8ce9bee5500c61cdcec22547e",
+    "mtime": 1782926835.9002013,
+    "ast_hash": "63b5ef2e7fddf6c9d3b5cfa35a24582e",
     "semantic_hash": ""
   },
   "GEMINI.md": {
@@ -2280,8 +2280,8 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 10: Faculty Or Trainer Management.md": {
-    "mtime": 1782924744.5381806,
-    "ast_hash": "35f0aae9ab41e8153d8a87f010b1ae7f",
+    "mtime": 1782925707.519788,
+    "ast_hash": "f35b7e021d6d467fcc92df7431fdd991",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 11: Corporate Training Management.md": {
@@ -2345,13 +2345,13 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 6: Course & Batch Management.md": {
-    "mtime": 1782679686.7694068,
-    "ast_hash": "32e9ae320294b115b97c1a84f17f9545",
+    "mtime": 1782926421.2768815,
+    "ast_hash": "7c4995c185f855319e207d10b8e5d4a6",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 7: Scheduling & Timetable Management.md": {
-    "mtime": 1782679686.7701197,
-    "ast_hash": "dc745f07e1fcda3a52a3f946dee3c5ca",
+    "mtime": 1782926792.8668609,
+    "ast_hash": "7d20c86d5bb6a43728739b15b528e9c4",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 8: Attendance Management.md": {
@@ -3630,13 +3630,13 @@
     "semantic_hash": ""
   },
   "docs/architecture/ddd/ER Model.md": {
-    "mtime": 1782878242.1735182,
-    "ast_hash": "a410b98264a77ceb9d0edd53c8a3f64d",
+    "mtime": 1782926720.6100097,
+    "ast_hash": "e0cbbf7cc749b96a6babb0b0ae869e55",
     "semantic_hash": ""
   },
   "docs/architecture/ddd/ddd-context-map.md": {
-    "mtime": 1782878263.59095,
-    "ast_hash": "ffc2ee1d4d9fe7c8cbcdbaa3b7ec5331",
+    "mtime": 1782926711.0594287,
+    "ast_hash": "d1aba7a89da81df5b4e9a9162c2e488c",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 02 \u2013 Organization Management/Module 02 \u2013 Organization Management.md": {
@@ -4395,8 +4395,8 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
-    "mtime": 1782883449.4338632,
-    "ast_hash": "b33b7bd7c9f78f53052114061ee6b650",
+    "mtime": 1782926171.3337386,
+    "ast_hash": "58963ba0b9dd4f3a252b9b40791d85b3",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
@@ -4410,13 +4410,13 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
-    "mtime": 1782883477.143117,
+    "mtime": 1782926184.846797,
     "ast_hash": "797af01a9d46f15414b52eab04614ae5",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 5 \u2013 API Contracts.md": {
-    "mtime": 1782883495.853522,
-    "ast_hash": "86ddcc18aeadf3ec08796eeba7d8ed0d",
+    "mtime": 1782926195.2744846,
+    "ast_hash": "9cc15460ebd20362969cde1d37a6879d",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 6 \u2013 Permission Matrix.md": {
@@ -4455,8 +4455,8 @@
     "semantic_hash": ""
   },
   "prompts/useful_prompts.md": {
-    "mtime": 1782921779.1415906,
-    "ast_hash": "f91f84e3320a7f493273b0e55ce65dd7",
+    "mtime": 1782925143.0294619,
+    "ast_hash": "aaa6f12d523a8a6abb4037fc4ac215fd",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/crm/inquiries/[id]/qualify/route.ts": {
@@ -4880,18 +4880,18 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
-    "mtime": 1782924772.2778215,
-    "ast_hash": "c48cdc875ad374300952429f7cfbd165",
+    "mtime": 1782926593.8632653,
+    "ast_hash": "6301af461d680d35a435f92dbfcdbfa3",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 10 - Security Architecture and NFR.md": {
-    "mtime": 1782924837.881356,
-    "ast_hash": "c46f5e7c5deb9ab23fa4e3ff743c9701",
+    "mtime": 1782926597.1847372,
+    "ast_hash": "f01e69894ed2405fb23347a281ff993d",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
-    "mtime": 1782924847.2481875,
-    "ast_hash": "887321ddf9f60f60bcd8f0bf1a1c4fdb",
+    "mtime": 1782925689.7281868,
+    "ast_hash": "43f173578eb098176201c67e250a413f",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
@@ -4905,23 +4905,23 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
-    "mtime": 1782924810.2150357,
-    "ast_hash": "0209f5519b3e1eb8b8cbef0c8a22e587",
+    "mtime": 1782925661.2436137,
+    "ast_hash": "3047184dd87a6ee6651403aba5f9e774",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 5 \u2013 API Contracts.md": {
-    "mtime": 1782924821.4075305,
-    "ast_hash": "cf34bef1842cf34ba3e775d546dabbb3",
+    "mtime": 1782925664.576574,
+    "ast_hash": "b19672193480725f26f6d9594f4600a0",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 6 \u2013 Permission Matrix.md": {
-    "mtime": 1782899416.4360619,
-    "ast_hash": "43953aca49258731701ba6b46a713cfd",
+    "mtime": 1782926584.5889277,
+    "ast_hash": "1d76aba1f951a6e9bf341487fd02420e",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
-    "mtime": 1782924829.9440737,
-    "ast_hash": "aae38aadaeb64041fdb9d5d83bc2321a",
+    "mtime": 1782926589.860215,
+    "ast_hash": "854829e3f869326147b8e4d5547292cf",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
@@ -5050,23 +5050,23 @@
     "semantic_hash": ""
   },
   "openspec/changes/course-catalog-spec/design.md": {
-    "mtime": 1782922185.140604,
-    "ast_hash": "6a8afe0370ea03ab52276ea94851fcc6",
+    "mtime": 1782926202.346993,
+    "ast_hash": "fd5f8323e71447b0f4b08225b2577a9a",
     "semantic_hash": ""
   },
   "openspec/changes/course-catalog-spec/proposal.md": {
-    "mtime": 1782921649.3533714,
-    "ast_hash": "680bd8deec910b7420f9ecb8b72eb549",
+    "mtime": 1782926198.5614703,
+    "ast_hash": "cd807032c7973698e0f61ac190536fc8",
     "semantic_hash": ""
   },
   "openspec/changes/course-catalog-spec/specs/course-catalog/spec.md": {
-    "mtime": 1782922523.335534,
-    "ast_hash": "a4522d97fb1d241ef09130e92ed4d381",
+    "mtime": 1782926206.5828464,
+    "ast_hash": "16d59c295b17d62d82dca391330e163f",
     "semantic_hash": ""
   },
   "openspec/changes/course-catalog-spec/tasks.md": {
-    "mtime": 1782922190.3771045,
-    "ast_hash": "2ceb3d1db478696e4962cc8fd901ca5e",
+    "mtime": 1782926210.5826986,
+    "ast_hash": "08dcd0b517928f8a75af36a812df39a2",
     "semantic_hash": ""
   },
   "openspec/changes/course-pricing-discounts-spec/.openspec.yaml": {

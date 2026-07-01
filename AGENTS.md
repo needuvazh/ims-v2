@@ -59,10 +59,10 @@ Bounded contexts:
 - **Corporate Sales & Quotation** owns CorporateSalesLead, Quotation, QuotationLineItem, SalesOrder, SalesPipeline, CommercialTerms, and CreditLimit.
 - **Course Catalog Management** owns Course, CourseCategory, CourseType, CoursePricing, CourseDiscount, CourseCompletionRule, CourseApproval, and CourseCatalogOption.
 - **Training Delivery Management** owns Batch, Session, BatchTrainer, BatchCapacity, WaitingList, and TrainingDeliveryStatus.
-- **Scheduling, Calendar & Holiday Management** owns Timetable, ScheduleSession, ClassroomBooking, Holiday, VenueBlock, and TrainerAvailability.
+- **Scheduling, Calendar & Holiday Management** owns Timetable, ScheduleSession, ClassroomBooking, Holiday, and VenueBlock.
 - **Attendance Management** owns AttendanceSession, AttendanceRecord, AttendanceStatus, AttendanceCorrection, and AttendanceAlert.
 - **Fee, Billing & Receivables Management** owns FeePlan, Invoice, InvoiceLineItem, InstallmentPlan, Payment, Receipt, Discount, Refund, CreditNote, Receivable, AgingBucket, and CorporateCreditRule.
-- **Faculty / Trainer Management** owns Trainer, TrainerQualification, TrainerDocument, TrainerAvailability, TrainerAssignment, and TrainerPayment.
+- **Faculty / Trainer Management** owns TrainerProfile, TrainerQualification, TrainerAvailability, TrainerCourseAuthorization, and TrainerCompensationRate.
 - **Exam, Result & Completion Management** owns Exam, Assessment, Result, Grade, CompletionRuleEvaluation, CourseCompletion, and CompletionApproval.
 - **Certificate Management** owns Certificate, CertificateIssueLog, CertificateQRCode, CertificateVerification, and CertificateReissueRequest.
 - **Communication & Notification Management** owns CommunicationTemplate, TemplatePlaceholder, NotificationRequest, NotificationLog, CommunicationChannel, and MessageDeliveryStatus.

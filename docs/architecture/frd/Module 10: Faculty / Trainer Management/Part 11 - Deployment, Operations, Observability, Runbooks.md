@@ -47,7 +47,7 @@ APM systems (e.g. OpenTelemetry) must trace the following code path boundaries:
 
 ### 2.1 System Healthcheck Rules
 The standard backend health endpoint `/api/health` must check:
-* **Database Connection Status:** Ping owned tables (`trainer_profiles`).
+* **Database Connection Status:** Verify database client connectivity using a generic query check (e.g. `SELECT 1`).
 * **Outbox Event Backlog:** Verify that outbox messages containing the `TRN` module prefix are processed in under 5 minutes.
 * **Worker Execution State:** Check that the document expiry cron runner has checked records within the last 24 hours.
 
@@ -75,15 +75,13 @@ The standard backend health endpoint `/api/health` must check:
      FROM trainer_profiles 
      WHERE "trainerCode" = 'TRN-2026-0045';
      ```
-  2. Use the retrieved `personId` to check user status in the Identity Context (via administrative user search or direct query):
-     ```sql
-     SELECT id, status FROM users WHERE "personId" = 'retrieved-person-uuid';
+  2. Query the user status via the Identity Bounded Context administrative CLI tool:
+     ```bash
+     pnpm --filter @asti-ims/identity-access run find-user --personId 'retrieved-person-uuid'
      ```
-  3. Query the Document Context using the `TrainerProfile` ID to review compliance document status (Civil ID/Visa verification status and expiration dates):
-     ```sql
-     SELECT id, status, "expiryDate", "documentType"
-     FROM documents 
-     WHERE "ownerId" = 'retrieved-trainer-uuid' AND "ownerType" = 'Trainer';
+  3. Query the compliance documents via the Document Bounded Context CLI utility:
+     ```bash
+     pnpm --filter @asti-ims/document-management run find-docs --ownerId 'retrieved-trainer-uuid' --ownerType 'Trainer'
      ```
   4. If any mandatory document shows `Expired` or `PendingVerification`, the scheduler block is expected behavior. The trainer must upload a valid document, or a coordinator must review and approve it.
   5. If all documents are active but the trainer is still blocked, run the status sync script using the administrative CLI command to reload the profile state:

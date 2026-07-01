@@ -60,7 +60,6 @@ Every learner journey—whether individual, walk-in, or corporate—is initiated
     *   `descriptionEnglish` (Text, optional)
     *   `descriptionArabic` (Text, optional, Arabic script)
     *   `departmentId` (UUID, reference to Department)
-    *   `branchId` (UUID, reference to Branch)
     *   `courseClassification` (Enum: Individual, Corporate, WalkIn, Online)
     *   `durationType` (Enum: FixedDays, HoursBased, SessionsBased)
     *   `durationValue` (Integer, > 0)
@@ -69,10 +68,10 @@ Every learner journey—whether individual, walk-in, or corporate—is initiated
 *   **Processing Steps:**
     1.  **Validation:** Check that all mandatory fields are populated.
     2.  **Unique Code Verification:** Query database to verify `courseCode` does not exist (case-insensitive check). If exists, abort and throw `ERR_CRS_DUPLICATE_CODE`.
-    3.  **Unique Name Verification:** Verify course name is unique within the assigned branch and department. If duplicate, throw `ERR_CRS_DUPLICATE_NAME`.
+    3.  **Unique Name Verification:** Verify course name is unique globally within the department scope. If duplicate, throw `ERR_CRS_DUPLICATE_NAME`.
     4.  **Bilingual Integrity Check:** Verify that Arabic fields (`nameArabic`, `descriptionArabic`) contain valid Arabic characters if populated.
     5.  **Effective Dates Check:** Verify `effectiveStartDate >= current_date` and `effectiveEndDate > effectiveStartDate` (if provided).
-    6.  **Persist:** Insert records into `Course` and link to `Branch` and `Department`. Set status to `Draft`.
+    6.  **Persist:** Insert records into `Course` and link to `Department`. Set status to `Draft`.
     7.  **Audit Trail:** Log "COURSE_CREATED" event in `AuditLog` containing input attributes as the new value.
 *   **Outputs & Postconditions:**
     *   New Course record initialized in `Draft` state.
@@ -387,7 +386,7 @@ Every learner journey—whether individual, walk-in, or corporate—is initiated
 | Rule ID | Context / Entity | Rule Description | State Transitions / Limits / Bounds |
 | --- | --- | --- | --- |
 | **BR-CRS-001** | Course Profile | Course Code must be unique. | Global uniqueness check (case-insensitive) on insert. |
-| **BR-CRS-002** | Course Profile | Course Name must be unique within branch and department scope. | Enforce uniqueness constraint: `BranchId` + `DepartmentId` + `Name`. |
+| **BR-CRS-002** | Course Profile | Course Name must be unique within department scope. | Enforce uniqueness: `DepartmentId` + `Name`. |
 | **BR-CRS-003** | Course Profile | Active Course must possess at least one active pricing and completion rule. | Checked during transition from `Draft` to `Active` status. |
 | **BR-CRS-004** | Course Profile | Inactive course cannot accept new batches or enrollments. | Block `Batch.create` and `Enrollment.create` if `Course.status = Inactive`. |
 | **BR-CRS-005** | Course Profile | Deactivation of course requires active batch closure. | Prevent course status transition to `Inactive` if batches are `Open` or `InProgress`. |

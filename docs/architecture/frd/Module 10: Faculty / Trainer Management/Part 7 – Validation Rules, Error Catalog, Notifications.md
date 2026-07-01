@@ -20,7 +20,12 @@ const countOverlaps = await prisma.trainerAvailability.count({
     // Check Date Range overlap
     AND: [
       { effectiveStartDate: { lte: payload.effectiveEndDate || new Date("9999-12-31") } },
-      { effectiveEndDate: { gte: payload.effectiveStartDate } }
+      {
+        OR: [
+          { effectiveEndDate: null },
+          { effectiveEndDate: { gte: payload.effectiveStartDate } }
+        ]
+      }
     ],
     // Check Time range overlap
     NOT: [
@@ -43,7 +48,7 @@ if (countOverlaps > 0) {
 ### 1.2 Qualification & Document Upload Rules
 * **Format Restriction:** Verification attachments uploaded to `TrainerQualification` must pass mimetype inspections matching `application/pdf`, `image/jpeg`, or `image/png`.
 * **Size Boundary:** Maximum file upload length is **5,242,880 bytes** (5MB).
-* **Completion Year Boundary:** `yearCompleted` must be $\le \text{current\_year}$ and $\ge \text{person.dateOfBirth} + 18$.
+* **Completion Year Boundary:** For academic degrees (e.g. M.Sc., B.Sc., Ph.D.), `yearCompleted` must be $\le \text{current\_year}$ and $\ge \text{person.dateOfBirth} + 18$. For professional certifications (e.g. CCNA, CEH, PMP), `yearCompleted` must be $\ge \text{person.dateOfBirth} + 14$. The trainer's date of birth must be retrieved from the Identity Bounded Context API/Application Service (e.g. via `IdentityQueryService.getPersonById(personId)`) to avoid cross-context SQL joins.
 
 ---
 
@@ -111,8 +116,9 @@ The Faculty / Trainer Management module emits specific events to the outbox data
 
 ---
 
-### 3.3 Event: `TrainerAssignedToBatch`
-* **Trigger:** Trainer added as an instructor inside a `BatchTrainer` relation.
+### 3.3 Consumed Event: `TrainerAssignedToBatch` (from Training Delivery Context)
+* **Trigger:** Subscribed event fired when Trainer is added as an instructor inside a `BatchTrainer` relation.
+* **Action:** Recalculate local utilization snapshots (`TrainerUtilizationSnapshot`) and trigger notification routines.
 * **Channels:** Email, WhatsApp.
 * **Recipient Rules:** Assigned trainer.
 * **Template Variables Payload:**
