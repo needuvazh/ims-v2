@@ -16,6 +16,8 @@
     "@ims/database": "workspace:*",
     "@ims/shared-kernel": "workspace:*",
     "@ims/crm-leads": "workspace:*",
-    "@ims/documents": "workspace:*"
+    "@ims/documents": "workspace:*",
+    "@ims/course-catalog": "workspace:*",
+    "@ims/training-delivery": "workspace:*"
   }
 }

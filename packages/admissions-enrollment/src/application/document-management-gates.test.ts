@@ -126,7 +126,7 @@ test('EnrollmentService confirmEnrollment should block if unverified and permit 
         id: 'enr-1',
         courseId: 'reg-course',
         branchId: 'branch-1',
-        enrollmentStatus: 'Draft',
+        enrollmentStatus: 'Approved',
         admission: {
           personId: 'person-1',
         },
@@ -141,6 +141,12 @@ test('EnrollmentService confirmEnrollment should block if unverified and permit 
     },
     userBranchAccess: {
       findFirst: vi.fn().mockResolvedValue({ id: 'access-1' }),
+    },
+    auditLog: {
+      create: vi.fn().mockResolvedValue(null),
+    },
+    outboxEvent: {
+      create: vi.fn().mockResolvedValue(null),
     },
     // Mock documents: Civil ID is uploaded but outcome is Pending (unverified)
     document: {

@@ -15,7 +15,8 @@
     "@ims/database": "workspace:*",
     "@ims/observability": "workspace:*",
     "@ims/shared-kernel": "workspace:*",
-    "@ims/training-delivery": "workspace:*"
+    "@ims/training-delivery": "workspace:*",
+    "@ims/admissions-enrollment": "workspace:*"
   },
   "devDependencies": {
     "tsx": "^4.19.1",

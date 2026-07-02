@@ -26,6 +26,7 @@ export interface ResolvedPricingResponse {
   totalPrice: number;
   effectiveStartDate: string;
   applicableDiscounts: ResolvedDiscount[];
+  pricingSource?: 'BatchLevel' | 'BranchLevel' | 'GlobalDefault';
 }
 
 export function parseDateOnly(dateInput: string | Date): Date {
@@ -316,6 +317,13 @@ export class CoursePricingService {
       });
     }
 
+    let pricingSource: 'BatchLevel' | 'BranchLevel' | 'GlobalDefault' = 'GlobalDefault';
+    if (matchingPricing.batchId) {
+      pricingSource = 'BatchLevel';
+    } else if (matchingPricing.branchId) {
+      pricingSource = 'BranchLevel';
+    }
+
     return {
       courseId: filters.courseId,
       resolvedBranchId,
@@ -330,6 +338,7 @@ export class CoursePricingService {
       totalPrice,
       effectiveStartDate: matchingPricing.effectiveStartDate.toISOString().split('T')[0],
       applicableDiscounts: Array.from(resolvedDiscountsMap.values()),
+      pricingSource,
     };
   }
 }

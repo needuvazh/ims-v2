@@ -4,6 +4,7 @@ import { createUuid } from '@ims/shared-kernel';
 import { randomUUID } from 'crypto';
 import { ExportService } from './export-service';
 import { BatchRepository, BatchService } from '@ims/training-delivery';
+import { EnrollmentService } from '@ims/admissions-enrollment';
 
 const logger = createStructuredLogger({});
 const POLL_INTERVAL_MS = parseInt(process.env.OUTBOX_POLL_INTERVAL_MS || '5000', 10);
@@ -13,6 +14,7 @@ const exportService = new ExportService();
 const iamQueryService = new IamQueryService(prisma);
 const batchRepository = new BatchRepository(prisma);
 const batchService = new BatchService(prisma, batchRepository);
+const enrollmentService = new EnrollmentService(prisma);
 
 let isShuttingDown = false;
 let lastOverdueSweepTime = 0;
@@ -105,6 +107,27 @@ async function handleWebsiteInquirySubmitted(payload: Record<string, unknown>) {
   });
 
   logger.info(`Auto-assigned website inquiry ${inquiryId} to counselor ${assignedCounselorId}`);
+}
+
+async function handleReceiptGenerated(payload: Record<string, unknown>) {
+  const enrollmentId = payload.enrollmentId as string | undefined;
+  if (!enrollmentId) {
+    logger.warn('ReceiptGenerated event payload missing enrollmentId');
+    return;
+  }
+  logger.info(`Processing ReceiptGenerated confirmation gate for enrollment ${enrollmentId}`);
+  // confirmEnrollment is already idempotent and checks document verification gates internally
+  await enrollmentService.confirmEnrollment(enrollmentId, 'System');
+}
+
+async function handleBatchStarted(payload: Record<string, unknown>) {
+  const batchId = payload.batchId as string | undefined;
+  if (!batchId) {
+    logger.warn('BatchStarted event payload missing batchId');
+    return;
+  }
+  logger.info(`Processing BatchStarted activation for batch ${batchId}`);
+  await enrollmentService.activateEnrollmentsByBatch(batchId);
 }
 
 async function sweepOverdueFollowUps() {
@@ -238,6 +261,10 @@ async function processOutboxEvents() {
         
         if (event.eventType === 'WebsiteInquirySubmitted') {
           await handleWebsiteInquirySubmitted(event.payload as Record<string, unknown>);
+        } else if (event.eventType === 'ReceiptGenerated') {
+          await handleReceiptGenerated(event.payload as Record<string, unknown>);
+        } else if (event.eventType === 'BatchStarted') {
+          await handleBatchStarted(event.payload as Record<string, unknown>);
         } else if (event.eventType === 'EnrollmentCancelled') {
           const payload = event.payload as { batchId: string; releasedSeats?: number };
           logger.info(`Handling EnrollmentCancelled for batch ${payload.batchId}`);

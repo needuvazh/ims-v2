@@ -158,6 +158,9 @@ importers:
 
   apps/worker:
     dependencies:
+      '@ims/admissions-enrollment':
+        specifier: workspace:*
+        version: link:../../packages/admissions-enrollment
       '@ims/crm-leads':
         specifier: workspace:*
         version: link:../../packages/crm-leads
@@ -186,6 +189,9 @@ importers:
 
   packages/admissions-enrollment:
     dependencies:
+      '@ims/course-catalog':
+        specifier: workspace:*
+        version: link:../course-catalog
       '@ims/crm-leads':
         specifier: workspace:*
         version: link:../crm-leads
@@ -198,6 +204,9 @@ importers:
       '@ims/shared-kernel':
         specifier: workspace:*
         version: link:../shared-kernel
+      '@ims/training-delivery':
+        specifier: workspace:*
+        version: link:../training-delivery
       zod:
         specifier: ^3.23.0
         version: 3.25.76

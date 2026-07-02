@@ -231,12 +231,14 @@ import {
   AdmissionRepository,
   AdmissionService,
   AdmissionQueryService,
-  LeadConversionOrchestrator
+  LeadConversionOrchestrator,
+  EnrollmentService
 } from '@ims/admissions-enrollment';
 
 const admissionRepository = new AdmissionRepository(prisma);
 export const admissionService = new AdmissionService(admissionRepository, prisma);
 export const admissionQueryService = new AdmissionQueryService(prisma);
+export const enrollmentService = new EnrollmentService(prisma);
 
 export const leadConversionOrchestrator = new LeadConversionOrchestrator(
   prisma,

@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/lib/runtime.ts": {
-    "mtime": 1782990578.1207333,
-    "ast_hash": "786273cf040c580cd92206d946da7230",
+    "mtime": 1783000512.6613636,
+    "ast_hash": "a385c43736950e51d4d743c14d88549d",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/page.tsx": {
@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "packages/database/prisma/seed.ts": {
-    "mtime": 1782996533.1176689,
-    "ast_hash": "042663fc58792e3f986b4b6b3ce0e4c6",
+    "mtime": 1783001781.416655,
+    "ast_hash": "aade2e9ff3164768114705cc8569ceac",
     "semantic_hash": ""
   },
   "packages/database/src/client.ts": {
@@ -2650,13 +2650,13 @@
     "semantic_hash": ""
   },
   "apps/worker/package.json": {
-    "mtime": 1782930631.950474,
-    "ast_hash": "082a6c510cbe6c38b7590155c44bac42",
+    "mtime": 1783001810.1133149,
+    "ast_hash": "4c465f9042c967b70a9047effe4b8988",
     "semantic_hash": ""
   },
   "apps/worker/src/index.ts": {
-    "mtime": 1782969260.562014,
-    "ast_hash": "30df92b92d45d601b3025b4c567bff5e",
+    "mtime": 1783001833.8432133,
+    "ast_hash": "8264254581e7bfe54ef2f825c3afe068",
     "semantic_hash": ""
   },
   "apps/worker/tsconfig.json": {
@@ -2665,8 +2665,8 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/package.json": {
-    "mtime": 1782988222.718835,
-    "ast_hash": "e850f1eeafc2694fe1a0b1849c197f1d",
+    "mtime": 1783000403.7683802,
+    "ast_hash": "fccd4c52cb30e57d82c8c2a4891fea66",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/admission-service.ts": {
@@ -4370,8 +4370,8 @@
     "semantic_hash": ""
   },
   "prompts/useful_prompts.md": {
-    "mtime": 1782998558.1543071,
-    "ast_hash": "c2f533d433f3f0b626d52861ad43b554",
+    "mtime": 1783001704.3866932,
+    "ast_hash": "86f305420bfdb07439d0c56377b427ae",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/crm/inquiries/[id]/qualify/route.ts": {
@@ -5420,8 +5420,8 @@
     "semantic_hash": ""
   },
   "openspec/changes/module-04-admission-enrollment/specs/enrollment-lifecycle/spec.md": {
-    "mtime": 1782999961.1597197,
-    "ast_hash": "6dd04dccb0aee8f4c0898dd3a6fc82d4",
+    "mtime": 1783001850.1215894,
+    "ast_hash": "d5ec5d75f76d76ff2fde84e8f4133011",
     "semantic_hash": ""
   },
   "openspec/changes/module-04-admission-enrollment/specs/lead-to-admission-handoff/spec.md": {
@@ -5500,8 +5500,8 @@
     "semantic_hash": ""
   },
   "packages/course-catalog/src/application/pricing-service.ts": {
-    "mtime": 1782981201.2632697,
-    "ast_hash": "38daa1ea8e03a7125a534500ad732d26",
+    "mtime": 1783000368.8898666,
+    "ast_hash": "555f088066ca604b364d7f7a8af2261d",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/infrastructure/completion-rule-repository.ts": {
@@ -5620,13 +5620,13 @@
     "semantic_hash": ""
   },
   "openspec/changes/enrollment-lifecycle/specs/enrollment-lifecycle/spec.md": {
-    "mtime": 1782999956.8495905,
-    "ast_hash": "6dd04dccb0aee8f4c0898dd3a6fc82d4",
+    "mtime": 1783001844.4984033,
+    "ast_hash": "d5ec5d75f76d76ff2fde84e8f4133011",
     "semantic_hash": ""
   },
   "openspec/changes/enrollment-lifecycle/tasks.md": {
-    "mtime": 1782999968.2182875,
-    "ast_hash": "938210f47ad519a27a3d505e53d1b711",
+    "mtime": 1783000581.816041,
+    "ast_hash": "4ebf8aa3feffc849342ca99d2168e13a",
     "semantic_hash": ""
   },
   "openspec/changes/student-profile-lookup/.openspec.yaml": {
@@ -5635,8 +5635,8 @@
     "semantic_hash": ""
   },
   "openspec/changes/student-profile-lookup/design.md": {
-    "mtime": 1782983579.4561155,
-    "ast_hash": "fe0e11be88bfa450dc09a6c466e343bb",
+    "mtime": 1783001325.9280775,
+    "ast_hash": "47c36e557753a4ffdfa5f2599b959084",
     "semantic_hash": ""
   },
   "openspec/changes/student-profile-lookup/proposal.md": {
@@ -5645,13 +5645,13 @@
     "semantic_hash": ""
   },
   "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md": {
-    "mtime": 1782983579.4634225,
-    "ast_hash": "2967af6191b57dfe26809e41b556a4be",
+    "mtime": 1783001320.5807817,
+    "ast_hash": "04e86de48b85183586ae1f6f57af7fc8",
     "semantic_hash": ""
   },
   "openspec/changes/student-profile-lookup/tasks.md": {
-    "mtime": 1782983579.4625273,
-    "ast_hash": "a142524732eb0bd661d39581a30e1bf9",
+    "mtime": 1783001329.9520617,
+    "ast_hash": "a77e4522e06d8790c527167c93e86768",
     "semantic_hash": ""
   },
   "openspec/changes/walkin-enrollment/.openspec.yaml": {
@@ -5685,13 +5685,13 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/document-management-gates.test.ts": {
-    "mtime": 1782989408.0702758,
-    "ast_hash": "d24e9b2f67fa182b7674ff18a5967d68",
+    "mtime": 1783000487.7975285,
+    "ast_hash": "8797f74242c6120fa1dcba263250be76",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/enrollment-service.ts": {
-    "mtime": 1782989330.447826,
-    "ast_hash": "5b2e660092ebe9a62dfb6b971d4ae2e6",
+    "mtime": 1783001855.4631104,
+    "ast_hash": "f61ed91aa2444254a75958aeb25d69a5",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/requirements-resolver.ts": {
@@ -5912,6 +5912,36 @@
   "openspec/specs/lead-to-admission-handoff/spec.md": {
     "mtime": 1783000163.8617656,
     "ast_hash": "619c035393e629e7e775c739e57a2eba",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/enrollments/[id]/approve/route.ts": {
+    "mtime": 1783000543.8588796,
+    "ast_hash": "daa86a211153d480c54644c68ac198ae",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/enrollments/[id]/cancel/route.ts": {
+    "mtime": 1783000549.4027967,
+    "ast_hash": "c643e6491ed2fb21b53bbf3350cb81c1",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/enrollments/[id]/drop/route.ts": {
+    "mtime": 1783000546.3859239,
+    "ast_hash": "1e18b02041ee34e59f1b38a63a2913d7",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/enrollments/[id]/submit/route.ts": {
+    "mtime": 1783001790.5475032,
+    "ast_hash": "f3191acf584712afeefb8fe9efd8da8e",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/enrollments/route.ts": {
+    "mtime": 1783000537.0200555,
+    "ast_hash": "dbc0bc465bc77ec6fdbb9b0f8afffb1b",
+    "semantic_hash": ""
+  },
+  "packages/admissions-enrollment/src/application/enrollment-lifecycle.test.ts": {
+    "mtime": 1783001560.7889256,
+    "ast_hash": "d88681a2147fa2d55761ebbe9f1fe9d3",
     "semantic_hash": ""
   }
 }

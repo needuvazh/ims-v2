@@ -1,5 +1,8 @@
-## ADDED Requirements
+# enrollment-lifecycle Specification
 
+## Purpose
+TBD - created by archiving change enrollment-lifecycle. Update Purpose after archive.
+## Requirements
 ### Requirement: Enrollment Creation & pricingResolution snapshotting
 The system SHALL support creating regular and corporate enrollments, resolving and snapshotting pricing to prevent pricing drift.
 
@@ -12,7 +15,7 @@ The system SHALL support creating regular and corporate enrollments, resolving a
   - `pricingSource` (BatchLevel, BranchLevel, or GlobalDefault)
   - `resolvedPrice` (Decimal)
   - `resolvedDiscount` (Decimal)
-  - `finalAmount` (resolvedPrice - resolvedDiscount, minimum 0)
+  - `finalAmount` (totalPrice - resolvedDiscount, minimum 0, where totalPrice is course pricing basePrice plus tax)
   - `paymentValidationRequired` (true if finalAmount > 0, else false)
   - `priceEvaluationTimestamp` (DateTime set to current timestamp)
 - **AND** initialize the status to "Draft".
@@ -141,3 +144,4 @@ The system SHALL show enrollment status, pricing snapshot fields, and enforce br
 - **WHEN** a user requests details for an enrollment belonging to another branch
 - **AND** the user does not possess global Super Admin rights
 - **THEN** the system SHALL block the request with "ERR_AUTH_BRANCH_DENIED" (403 Forbidden).
+
