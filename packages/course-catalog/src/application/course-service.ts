@@ -266,11 +266,30 @@ export class CourseService {
 
       // Validate pricing and completion rules configured if target is Published
       if (targetStatus === 'Published') {
+        const publishDate = course.effectiveStartDate;
         const activePricing = await activeClient.coursePricing.findFirst({
-          where: { courseId: id, status: 'Active', isDeleted: false },
+          where: {
+            courseId: id,
+            status: 'Active',
+            isDeleted: false,
+            effectiveStartDate: { lte: publishDate },
+            OR: [
+              { effectiveEndDate: null },
+              { effectiveEndDate: { gte: publishDate } },
+            ],
+          },
         });
         const activeRule = await activeClient.courseCompletionRule.findFirst({
-          where: { courseId: id, status: 'Active', isDeleted: false },
+          where: {
+            courseId: id,
+            status: 'Active',
+            isDeleted: false,
+            effectiveStartDate: { lte: publishDate },
+            OR: [
+              { effectiveEndDate: null },
+              { effectiveEndDate: { gte: publishDate } },
+            ],
+          },
         });
 
         if (!activePricing || !activeRule) {

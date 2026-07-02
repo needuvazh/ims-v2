@@ -28,6 +28,7 @@ export class BatchRepository implements IBatchRepository {
         version: 1,
         createdBy: data.createdBy || null,
         isDeleted: false,
+        batchType: data.batchType ?? 'Regular',
       },
     });
     return batch as any as Batch;

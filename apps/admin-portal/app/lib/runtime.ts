@@ -246,15 +246,27 @@ export const leadConversionOrchestrator = new LeadConversionOrchestrator(
 import {
   CourseRepository,
   CourseCategoryRepository,
+  CoursePricingRepository,
+  CourseDiscountRepository,
+  CourseCompletionRuleRepository,
   CourseService,
-  CategoryService
+  CategoryService,
+  CoursePricingService,
+  CourseDiscountService,
+  CourseCompletionRuleService,
 } from '@ims/course-catalog';
 
 const courseRepository = new CourseRepository(prisma);
 const categoryRepository = new CourseCategoryRepository(prisma);
+const coursePricingRepository = new CoursePricingRepository(prisma);
+const courseDiscountRepository = new CourseDiscountRepository(prisma);
+const courseCompletionRuleRepository = new CourseCompletionRuleRepository(prisma);
 
 export const courseService = new CourseService(prisma, courseRepository);
 export const categoryService = new CategoryService(prisma, categoryRepository);
+export const coursePricingService = new CoursePricingService(prisma, coursePricingRepository, courseDiscountRepository);
+export const courseDiscountService = new CourseDiscountService(prisma, courseDiscountRepository);
+export const courseCompletionRuleService = new CourseCompletionRuleService(prisma, courseCompletionRuleRepository);
 
 // ─── Reporting & CRM Dashboards ───────────────────────────────────────────
 import { LeadAnalyticsReadService } from '@ims/crm-leads';

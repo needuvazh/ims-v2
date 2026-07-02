@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { CourseForm } from '../../../_components/course-form';
+import { CourseConfigsPanel } from './course-configs-panel';
 import { updateCourseAction, transitionCourseStatusAction } from '../../../actions';
 import {
   Button,
@@ -25,6 +26,8 @@ interface CourseEditClientProps {
   course: any;
   categories: any[];
   departments: any[];
+  branches: any[];
+  batches: any[];
   sessionPermissions: string[];
 }
 
@@ -32,10 +35,13 @@ export function CourseEditClient({
   course,
   categories,
   departments,
+  branches,
+  batches,
   sessionPermissions,
 }: CourseEditClientProps) {
   const router = useRouter();
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [activeTab, setActiveTab] = useState<'details' | 'configs'>('details');
 
   const canPublish = sessionPermissions.includes('course.catalog.publish');
   const canArchive = sessionPermissions.includes('course.catalog.archive');
@@ -180,13 +186,47 @@ export function CourseEditClient({
         </Alert>
       )}
 
-      {/* Course Edit Form */}
-      {course.status !== 'Archived' && (
-        <CourseForm
-          initialData={course}
-          categories={categories}
-          departments={departments}
-          onSubmitAction={(data) => updateCourseAction(course.id, course.version, data)}
+      {/* Tabs Navigation Switcher */}
+      <div className="flex border-b border-slate-200 mt-6">
+        <button
+          onClick={() => setActiveTab('details')}
+          className={`px-4 py-2.5 text-sm font-semibold border-b-2 transition-all ${
+            activeTab === 'details'
+              ? 'border-[color:var(--ims-brand)] text-[color:var(--ims-brand)]'
+              : 'border-transparent text-slate-500 hover:text-slate-700'
+          }`}
+        >
+          Catalog Template Details
+        </button>
+        {course.status !== 'Archived' && (
+          <button
+            onClick={() => setActiveTab('configs')}
+            className={`px-4 py-2.5 text-sm font-semibold border-b-2 transition-all ${
+              activeTab === 'configs'
+                ? 'border-[color:var(--ims-brand)] text-[color:var(--ims-brand)]'
+                : 'border-transparent text-slate-500 hover:text-slate-700'
+            }`}
+          >
+            Pricing, Discounts & Rules
+          </button>
+        )}
+      </div>
+
+      {activeTab === 'details' ? (
+        /* Course Edit Form */
+        course.status !== 'Archived' && (
+          <CourseForm
+            initialData={course}
+            categories={categories}
+            departments={departments}
+            onSubmitAction={(data) => updateCourseAction(course.id, course.version, data)}
+          />
+        )
+      ) : (
+        <CourseConfigsPanel
+          courseId={course.id}
+          branches={branches}
+          batches={batches}
         />
       )}
     </div>

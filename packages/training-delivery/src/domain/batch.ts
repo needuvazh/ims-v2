@@ -19,6 +19,7 @@ export interface Batch {
   status: string;
   version: number;
   isDeleted: boolean;
+  batchType: string;
   createdAt: Date;
   createdBy?: string | null;
   updatedAt?: Date | null;

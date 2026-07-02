@@ -25,6 +25,16 @@ export default async function EditCoursePage(props: { params: Promise<{ id: stri
     where: { isDeleted: false },
     select: { id: true, departmentName: true },
   });
+  const branches = await prisma.branch.findMany({
+    where: { isDeleted: false, status: 'Active' },
+    select: { id: true, branchName: true, branchCode: true },
+    orderBy: { branchName: 'asc' },
+  });
+  const batches = await prisma.batch.findMany({
+    where: { courseId: id, isDeleted: false },
+    select: { id: true, batchCode: true, batchNameEnglish: true },
+    orderBy: { batchCode: 'asc' },
+  });
 
   return (
     <div className="space-y-8 p-6">
@@ -47,6 +57,8 @@ export default async function EditCoursePage(props: { params: Promise<{ id: stri
           course={course}
           categories={categories}
           departments={departments}
+          branches={branches}
+          batches={batches}
           sessionPermissions={session.permissions}
         />
       </div>

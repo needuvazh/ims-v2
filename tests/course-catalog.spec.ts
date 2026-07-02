@@ -93,6 +93,10 @@ describe('Course Catalog Database Integration', () => {
         id: createUuid(randomUUID()),
         courseId: course.id,
         status: 'Active',
+        customerType: 'Individual',
+        batchType: 'Regular',
+        basePrice: 100,
+        effectiveStartDate: new Date(),
       }
     });
 
@@ -101,6 +105,8 @@ describe('Course Catalog Database Integration', () => {
         id: createUuid(randomUUID()),
         courseId: course.id,
         status: 'Active',
+        minimumAttendancePercent: 80,
+        effectiveStartDate: new Date(),
       }
     });
 
