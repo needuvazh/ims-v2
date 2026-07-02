@@ -15,7 +15,7 @@ export class AdmissionRepository implements IAdmissionRepository {
     if (nationalId) OR.push({ nationalId });
 
     return client.person.findFirst({
-      where: { OR },
+      where: { OR, isDeleted: false },
     });
   }
 
@@ -23,7 +23,7 @@ export class AdmissionRepository implements IAdmissionRepository {
     const client = tx || this.prisma;
 
     return client.studentProfile.findFirst({
-      where: { personId },
+      where: { personId, isDeleted: false },
     });
   }
 
@@ -138,4 +138,3 @@ export class AdmissionRepository implements IAdmissionRepository {
     };
   }
 }
-

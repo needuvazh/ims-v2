@@ -401,6 +401,9 @@ export class LeadService {
     if (!lead.email) {
       throw new Error('ERR_CRM_WON_PRECONDITIONS_MISSED');
     }
+    if (!lead.phone) {
+      throw new Error('ERR_CRM_WON_PRECONDITIONS_MISSED');
+    }
     // Check birthdate on linked Person record
     if (!lead.person || !lead.person.dateOfBirth) {
       throw new Error('ERR_CRM_WON_PRECONDITIONS_MISSED');
@@ -658,5 +661,4 @@ export class LeadService {
     return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
 }
-
 

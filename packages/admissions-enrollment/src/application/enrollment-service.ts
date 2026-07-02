@@ -22,6 +22,9 @@ export class EnrollmentService {
   }
 
   async createEnrollment(data: any, tx?: Prisma.TransactionClient) {
+    if (data.enrollmentType === 'WalkIn') {
+      throw new Error('ERR_ENR_GENERIC_WALKIN_BLOCKED');
+    }
     const run = async (client: Prisma.TransactionClient) => {
       let studentProfileId = data.studentProfileId;
       let admissionId = data.admissionId;
@@ -702,5 +705,451 @@ export class EnrollmentService {
     if (missingTypes.length > 0) {
       throw new Error(`ERR_DOCUMENTS_VERIFICATION_GATE_FAILED: Missing or unverified documents: ${missingTypes.join(', ')}`);
     }
+  }
+
+  async createWalkInEnrollment(
+    data: {
+      firstName: string;
+      lastName: string;
+      email?: string;
+      phone: string;
+      nationalId?: string;
+      courseId: string;
+      batchId: string;
+      branchId: string;
+      actorId: string;
+      remarks?: string;
+    },
+    tx?: Prisma.TransactionClient
+  ) {
+    const run = async (client: Prisma.TransactionClient) => {
+      // 1. Verify Course designation
+      const course = await client.course.findUnique({
+        where: { id: data.courseId },
+      });
+      if (!course || course.isDeleted) {
+        throw new Error('ERR_COURSE_NOT_FOUND');
+      }
+      if (!course.allowWalkInCompletion) {
+        throw new Error('ERR_COURSE_NOT_WALKIN_ENABLED');
+      }
+
+      // 2. Resolve or Create Person & StudentProfile (Deduplication Check)
+      let person = await client.person.findFirst({
+        where: {
+          isDeleted: false,
+          OR: [
+            data.email ? { email: data.email } : undefined,
+            { mobile: data.phone },
+            data.nationalId ? { nationalId: data.nationalId } : undefined,
+          ].filter(Boolean) as Prisma.PersonWhereInput[],
+        },
+      });
+
+      if (!person) {
+        person = await client.person.create({
+          data: {
+            firstName: data.firstName,
+            lastName: data.lastName,
+            mobile: data.phone,
+            email: data.email || null,
+            nationalId: data.nationalId || null,
+          },
+        });
+      }
+
+      let studentProfile = await client.studentProfile.findFirst({
+        where: { personId: person.id, isDeleted: false },
+      });
+
+      let isNewProfile = false;
+      if (!studentProfile) {
+        isNewProfile = true;
+        const nextvalResult = await client.$queryRawUnsafe<{ nextval: string }[]>(
+          "SELECT nextval('student_number_seq')::text as nextval"
+        );
+        const seq = nextvalResult[0]?.nextval || Math.floor(Math.random() * 100000).toString();
+        const studentNumber = `STU-2026-${seq.padStart(5, '0')}`;
+
+        studentProfile = await client.studentProfile.create({
+          data: {
+            personId: person.id,
+            studentNumber,
+            status: 'Active',
+          },
+        });
+      }
+
+      // 3. Create Draft Admission
+      const hasActiveAdmission = await client.admission.count({
+        where: {
+          studentProfileId: studentProfile.id,
+          branchId: data.branchId,
+          isDeleted: false,
+          admissionStatus: {
+            in: ['Draft', 'Submitted', 'Approved'],
+          },
+        },
+      });
+      if (hasActiveAdmission > 0) {
+        throw new Error('ERR_ADM_ACTIVE_ADMISSION_EXISTS');
+      }
+
+      const admSeqResult = await client.$queryRawUnsafe<{ nextval: string }[]>(
+        "SELECT nextval('admission_number_seq')::text as nextval"
+      );
+      const admSeq = admSeqResult[0]?.nextval || Math.floor(Math.random() * 100000).toString();
+      const admissionNumber = `ADM-2026-${admSeq.padStart(5, '0')}`;
+
+      const admission = await client.admission.create({
+        data: {
+          admissionNumber,
+          personId: person.id,
+          studentProfileId: studentProfile.id,
+          branchId: data.branchId,
+          admissionStatus: 'Draft',
+          courseId: data.courseId,
+          admissionDate: new Date(),
+        },
+      });
+
+      // 4. Resolve Pricing
+      const pricing = await this.pricingService.resolveCoursePricing(
+        {
+          courseId: data.courseId,
+          customerType: 'Individual',
+          branchId: data.branchId,
+          batchId: data.batchId,
+          asOfDate: new Date(),
+        },
+        client
+      );
+
+      const resolvedPrice = new Prisma.Decimal(pricing.totalPrice);
+      const finalAmount = resolvedPrice;
+
+      // 5. Create Draft Enrollment
+      const enrollmentNumber = `ENR-${Date.now().toString().slice(-6)}`;
+      const enrollment = await client.enrollment.create({
+        data: {
+          enrollmentNumber,
+          studentProfileId: studentProfile.id,
+          admissionId: admission.id,
+          courseId: data.courseId,
+          batchId: data.batchId,
+          branchId: data.branchId,
+          enrollmentType: 'WalkIn',
+          enrollmentStatus: 'Draft',
+          pricingSource: pricing.pricingSource || 'GlobalDefault',
+          resolvedPrice,
+          resolvedDiscount: new Prisma.Decimal(0),
+          finalAmount,
+          paymentValidationRequired: true,
+        },
+      });
+
+      // 6. Create WalkInEnrollment record (paymentCollected = 0.0, confirmationIssued = false)
+      const walkInEnrollment = await client.walkInEnrollment.create({
+        data: {
+          enrollmentId: enrollment.id,
+          paymentCollected: new Prisma.Decimal(0.0),
+          counterUserId: data.actorId,
+          remarks: data.remarks || null,
+          createdBy: data.actorId,
+        },
+      });
+
+      // 7. Write standard events if student profile was newly created
+      if (isNewProfile) {
+        await client.outboxEvent.create({
+          data: {
+            eventType: 'StudentProfileCreated',
+            aggregateType: 'StudentProfile',
+            aggregateId: studentProfile.id,
+            payload: {
+              studentProfileId: studentProfile.id,
+              studentNumber: studentProfile.studentNumber,
+              personId: person.id,
+              status: 'Active',
+              joinedAt: new Date(),
+            },
+            availableAt: new Date(),
+          },
+        });
+      }
+
+      await client.outboxEvent.create({
+        data: {
+          eventType: 'AdmissionCreated',
+          aggregateType: 'Admission',
+          aggregateId: admission.id,
+          payload: {
+            admissionId: admission.id,
+            admissionNumber,
+            studentProfileId: studentProfile.id,
+            personId: person.id,
+            branchId: data.branchId,
+            courseId: data.courseId,
+          },
+          availableAt: new Date(),
+        },
+      });
+
+      // 8. Auto-submit and Auto-approve Enrollment
+      await this.submitEnrollment(enrollment.id, data.actorId, client);
+      await this.approveEnrollment(enrollment.id, data.actorId, client);
+
+      // Reload the enrollment to return its updated status
+      const updatedEnrollment = await client.enrollment.findUnique({
+        where: { id: enrollment.id },
+      });
+
+      return {
+        enrollment: updatedEnrollment || enrollment,
+        walkInEnrollment,
+      };
+    };
+
+    return tx
+      ? run(tx)
+      : this.prisma.$transaction(run, {
+          isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
+        });
+  }
+
+  async recordWalkInPayment(
+    enrollmentId: string,
+    paymentAmount: number,
+    actorId: string,
+    remarks?: string,
+    paymentMethod: string = 'Cash',
+    tx?: Prisma.TransactionClient
+  ) {
+      const run = async (client: Prisma.TransactionClient) => {
+      const enrollment = await client.enrollment.findUnique({
+        where: { id: enrollmentId },
+        include: {
+          walkInEnrollment: true,
+          walkInPayment: true,
+          admission: true,
+        },
+      });
+
+      if (!enrollment || enrollment.isDeleted || enrollment.enrollmentType !== 'WalkIn' || !enrollment.walkInEnrollment) {
+        throw new Error('ERR_ENROLLMENT_NOT_FOUND');
+      }
+
+      if (
+        enrollment.enrollmentStatus === 'Confirmed' ||
+        enrollment.enrollmentStatus === 'Active' ||
+        enrollment.enrollmentStatus === 'Completed' ||
+        enrollment.enrollmentStatus === 'CertificateIssued'
+      ) {
+        const payment = enrollment.walkInPayment || await this.ensureWalkInPayment(
+          client,
+          enrollment.walkInEnrollment.id,
+          enrollment.id,
+          paymentAmount,
+          paymentMethod,
+          actorId,
+          remarks
+        );
+        const confirmation = await this.ensureWalkInConfirmation(
+          client,
+          enrollment.walkInEnrollment.id,
+          actorId
+        );
+
+        return {
+          enrollment,
+          walkInEnrollment: enrollment.walkInEnrollment,
+          payment,
+          confirmation,
+        };
+      }
+
+      if (enrollment.enrollmentStatus === 'Submitted') {
+        // Enrolled but waitlisted
+        throw new Error('ERR_ENR_PAYMENT_BLOCKED_WAITLIST');
+      }
+
+      if (enrollment.enrollmentStatus !== 'Approved') {
+        throw new Error('ERR_ENR_INVALID_STATE');
+      }
+
+      const payment = await this.ensureWalkInPayment(
+        client,
+        enrollment.walkInEnrollment.id,
+        enrollment.id,
+        paymentAmount,
+        paymentMethod,
+        actorId,
+        remarks
+      );
+
+      // Update WalkInEnrollment summary
+      const walkInEnrollment = await client.walkInEnrollment.update({
+        where: { enrollmentId },
+        data: {
+          paymentCollected: new Prisma.Decimal(paymentAmount),
+          confirmationIssued: true,
+          remarks: remarks || null,
+          updatedBy: actorId,
+        },
+      });
+
+      // Mark the enrollment as paid before confirmation so the shared gate can complete
+      await client.enrollment.update({
+        where: { id: enrollmentId },
+        data: {
+          paymentValidationRequired: false,
+          updatedBy: actorId,
+        },
+      });
+
+      await this.confirmEnrollment(enrollmentId, actorId, client);
+
+      const confirmation = await this.ensureWalkInConfirmation(client, walkInEnrollment.id, actorId);
+
+      const updatedEnrollment = await client.enrollment.findUnique({
+        where: { id: enrollmentId },
+      });
+      if (!updatedEnrollment) {
+        throw new Error('ERR_ENROLLMENT_NOT_FOUND');
+      }
+
+      // Write to AuditLog table
+      await client.auditLog.create({
+        data: {
+          action: 'WalkInPaymentRecorded',
+          entityType: 'Enrollment',
+          entityId: enrollmentId,
+          performedBy: actorId,
+          branchId: enrollment.branchId,
+          performedAt: new Date(),
+          module: 'AdmissionsEnrollment',
+          oldValue: { paymentCollected: 0.0, status: 'Approved' },
+          newValue: { paymentCollected: paymentAmount, status: 'Confirmed' }
+        }
+      });
+
+      // Publish Outbox Events
+      await client.outboxEvent.create({
+        data: {
+          eventType: 'WalkInPaymentRecorded',
+          aggregateType: 'Enrollment',
+          aggregateId: enrollmentId,
+          payload: {
+            enrollmentId,
+            enrollmentNumber: enrollment.enrollmentNumber,
+            studentProfileId: enrollment.studentProfileId,
+            batchId: enrollment.batchId,
+            walkInPaymentId: payment.id,
+            paymentMethod,
+            paymentAmount,
+          },
+          availableAt: new Date(),
+        },
+      });
+
+      await client.outboxEvent.create({
+        data: {
+          eventType: 'WalkInEnrollmentCreated',
+          aggregateType: 'Enrollment',
+          aggregateId: enrollmentId,
+          payload: {
+            enrollmentId,
+            walkInEnrollmentId: walkInEnrollment.id,
+            studentProfileId: enrollment.studentProfileId,
+            personId: enrollment.admission.personId,
+            paymentCollected: paymentAmount,
+            confirmationNumber: confirmation.confirmationNumber,
+            branchId: enrollment.branchId,
+            courseId: enrollment.courseId,
+            batchId: enrollment.batchId,
+          },
+          availableAt: new Date(),
+        },
+      });
+
+      return {
+        enrollment: updatedEnrollment,
+        walkInEnrollment,
+        payment,
+        confirmation,
+      };
+    };
+
+    return tx
+      ? run(tx)
+      : this.prisma.$transaction(run, {
+          isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
+        });
+  }
+
+  private async ensureWalkInConfirmation(
+    client: Prisma.TransactionClient,
+    walkInEnrollmentId: string,
+    actorId: string
+  ) {
+    const existingConfirmation = await client.walkInConfirmation.findUnique({
+      where: { walkInEnrollmentId },
+    });
+
+    if (existingConfirmation) {
+      return existingConfirmation;
+    }
+
+    try {
+      await client.$executeRawUnsafe("CREATE SEQUENCE IF NOT EXISTS walkin_confirmation_seq START 10000;");
+    } catch (err) {
+      // Ignore sequence create errors
+    }
+
+    const seqResult = await client.$queryRawUnsafe<{ nextval: string }[]>(
+      "SELECT nextval('walkin_confirmation_seq')::text as nextval"
+    );
+    const seq = seqResult[0]?.nextval || Math.floor(Math.random() * 100000).toString();
+    const confirmationNumber = `WIC-2026-${seq.padStart(5, '0')}`;
+
+    return client.walkInConfirmation.create({
+      data: {
+        walkInEnrollmentId,
+        confirmationNumber,
+        issuedBy: actorId,
+        documentUrl: `https://storage.asti.edu.om/confirmations/${confirmationNumber}.pdf`,
+        createdBy: actorId,
+      },
+    });
+  }
+
+  private async ensureWalkInPayment(
+    client: Prisma.TransactionClient,
+    walkInEnrollmentId: string,
+    enrollmentId: string,
+    paymentAmount: number,
+    paymentMethod: string,
+    actorId: string,
+    remarks?: string
+  ) {
+    const existingPayment = await client.walkInPayment.findUnique({
+      where: { walkInEnrollmentId },
+    });
+
+    if (existingPayment) {
+      return existingPayment;
+    }
+
+    return client.walkInPayment.create({
+      data: {
+        walkInEnrollmentId,
+        enrollmentId,
+        amount: new Prisma.Decimal(paymentAmount),
+        paymentMethod,
+        receivedBy: actorId,
+        remarks: remarks || null,
+        createdBy: actorId,
+      },
+    });
   }
 }

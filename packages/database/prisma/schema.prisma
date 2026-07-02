@@ -1214,6 +1214,7 @@ model Enrollment {
   course           Course            @relation(fields: [courseId], references: [id])
   batch            Batch             @relation(fields: [batchId], references: [id])
   walkInEnrollment WalkInEnrollment?
+  walkInPayment    WalkInPayment?
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -1241,6 +1242,7 @@ model WalkInEnrollment {
   remarks            String?  @db.Text
 
   enrollment   Enrollment          @relation(fields: [enrollmentId], references: [id])
+  payment      WalkInPayment?
   confirmation WalkInConfirmation?
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
@@ -1253,6 +1255,33 @@ model WalkInEnrollment {
 
   @@index([enrollmentId])
   @@map("walk_in_enrollments")
+}
+
+model WalkInPayment {
+  id                 String   @id @default(uuid()) @db.Uuid
+  walkInEnrollmentId String   @unique @db.Uuid
+  enrollmentId       String   @unique @db.Uuid
+  amount             Decimal  @db.Decimal(12, 3)
+  paymentMethod      String   @db.VarChar(50)
+  referenceNumber    String?  @unique @db.VarChar(100)
+  receivedBy        String   @db.Uuid
+  receivedAt        DateTime @default(now()) @db.Timestamptz(6)
+  remarks           String?  @db.Text
+
+  walkInEnrollment WalkInEnrollment @relation(fields: [walkInEnrollmentId], references: [id])
+  enrollment       Enrollment       @relation(fields: [enrollmentId], references: [id])
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  @@index([walkInEnrollmentId])
+  @@index([enrollmentId])
+  @@map("walk_in_payments")
 }
 
 model WalkInConfirmation {

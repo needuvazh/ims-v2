@@ -222,6 +222,23 @@ test('LeadService.convertLead should enforce Won outcome preconditions', async (
     leadService.convertLead('lead-1', [], mockPrisma)
   ).rejects.toThrow('ERR_CRM_WON_PRECONDITIONS_MISSED');
 
+  // Fails if phone is missing
+  mockLeadRepo.findById.mockResolvedValueOnce({
+    id: 'lead-1',
+    personId: 'person-1',
+    email: 'salim@example.com',
+    phone: null,
+    version: 1,
+    branchId: 'branch-1',
+    stage: 'Qualified',
+    person: {
+      dateOfBirth: new Date('1995-05-15'),
+    },
+  });
+  await expect(
+    leadService.convertLead('lead-1', [{ fileName: 'civil.pdf', fileKey: 'uploads/civil.pdf', fileType: 'application/pdf', documentType: 'CIVIL_ID_FRONT' }], mockPrisma)
+  ).rejects.toThrow('ERR_CRM_WON_PRECONDITIONS_MISSED');
+
   // Succeeds if documents are present
   const result = await leadService.convertLead('lead-1', [{ fileName: 'civil.pdf', fileKey: 'uploads/civil.pdf', fileType: 'application/pdf', documentType: 'CIVIL_ID_FRONT' }], mockPrisma);
   expect(result.id).toBe('lead-1');
@@ -370,5 +387,4 @@ test('LeadService.deleteLead should soft-delete the lead, write to audit logs, a
     })
   }));
 });
-
 

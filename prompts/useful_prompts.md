@@ -17,9 +17,9 @@ Can you assume the role of senior staff engineer and perform a review on the cur
 
 Can you assume the role of senior staff engineer and perform a review on the current OpenSpec proposal for crm-core-models-apis-admission-handoff (under openspec/changes/)? Evaluate if there are any gaps in the proposed design specs and verify if any of the existing business logic  will be broken by this change. Highlight design discrepancies and suggest clear technical remedies.  Use DDD and module-04-admission-enrollment document for references and source of truth, don't check other FRD document and don't get confused, if you have any question and needs clarification plese feel free to ask me?
 
-Can you assume the role of senior staff engineer and perform a review on the code changes for openspec batch-waitlist-student-profile, evaluate if there is any gaps in the code changes and suggested me how to fix it.
+Can you assume the role of senior staff engineer and perform a review on the code changes for openspec walkin-enrollment, evaluate if there is any gaps in the code changes and suggested me how to fix it.
 
-/opsx-verify batch-waitlist-student-profile
+/opsx-verify walkin-enrollment
 
 
 

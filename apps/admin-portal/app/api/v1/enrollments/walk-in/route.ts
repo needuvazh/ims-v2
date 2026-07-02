@@ -1,21 +1,23 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { withPermission } from '../../../../lib/api-middleware';
+import { withPermission } from '../../../../../lib/api-middleware';
 import {
   applyObservabilityResponseHeaders,
   withRouteObservability,
   createStructuredLogger,
   getCurrentRequestContext,
-} from '../../../../lib/observability';
+} from '../../../../../lib/observability';
 import type { Uuid } from '@ims/shared-kernel';
 
-const CreateEnrollmentRequestSchema = z.object({
-  studentProfileId: z.string().uuid().nullable().optional(),
-  admissionId: z.string().uuid().nullable().optional(),
+const CreateWalkInRequestSchema = z.object({
+  firstName: z.string().min(1),
+  lastName: z.string().min(1),
+  email: z.string().email().nullable().optional(),
+  phone: z.string().min(1),
+  nationalId: z.string().nullable().optional(),
   courseId: z.string().uuid(),
   batchId: z.string().uuid(),
-  enrollmentType: z.enum(['Regular', 'Corporate', 'WalkIn', 'Online']),
-  corporateParticipantId: z.string().uuid().nullable().optional(),
+  remarks: z.string().nullable().optional(),
 });
 
 function errorResponse(error: Error) {
@@ -23,15 +25,24 @@ function errorResponse(error: Error) {
   let status = 500;
   let code = 'ERR_ENR_INTERNAL_ERROR';
 
-  if (msg.includes('ERR_ENR_MISSING_ADMISSION')) {
+  if (msg.includes('ERR_COURSE_NOT_FOUND')) {
+    status = 404;
+    code = 'ERR_COURSE_NOT_FOUND';
+  } else if (msg.includes('ERR_COURSE_NOT_WALKIN_ENABLED')) {
     status = 400;
-    code = 'ERR_ENR_MISSING_ADMISSION';
-  } else if (msg.includes('ERR_CRS_COURSE_NOT_FOUND')) {
+    code = 'ERR_COURSE_NOT_WALKIN_ENABLED';
+  } else if (msg.includes('ERR_BATCH_NOT_FOUND')) {
     status = 404;
-    code = 'ERR_CRS_COURSE_NOT_FOUND';
-  } else if (msg.includes('ERR_CRS_PRICING_NOT_FOUND')) {
-    status = 404;
-    code = 'ERR_CRS_PRICING_NOT_FOUND';
+    code = 'ERR_BATCH_NOT_FOUND';
+  } else if (msg.includes('ERR_ENR_BATCH_FULL')) {
+    status = 400;
+    code = 'ERR_ENR_BATCH_FULL';
+  } else if (msg.includes('ERR_ENR_DUPLICATE_ENROLLMENT')) {
+    status = 400;
+    code = 'ERR_ENR_DUPLICATE_ENROLLMENT';
+  } else if (msg.includes('ERR_AUTH_BRANCH_DENIED')) {
+    status = 403;
+    code = 'ERR_AUTH_BRANCH_DENIED';
   }
 
   return NextResponse.json(
@@ -46,21 +57,14 @@ export async function POST(request: Request) {
 
     try {
       const body = await request.json();
-      const parsed = CreateEnrollmentRequestSchema.parse(body);
-
-      if (parsed.enrollmentType === 'WalkIn') {
-        return NextResponse.json(
-          { success: false, errorCode: 'ERR_ENR_GENERIC_WALKIN_BLOCKED', messageEnglish: 'Walk-in enrollments must use the dedicated walk-in endpoint', statusCode: 400 },
-          { status: 400 }
-        );
-      }
+      const parsed = CreateWalkInRequestSchema.parse(body);
 
       const targetBranchId = session.activeBranchId;
       if (!targetBranchId) {
         throw new Error('ERR_AUTH_BRANCH_DENIED');
       }
 
-      const { branchScopeResolver, enrollmentService } = await import('../../../../lib/runtime');
+      const { branchScopeResolver, enrollmentService } = await import('../../../../../lib/runtime');
 
       // Verify branch permission scope
       const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
@@ -71,36 +75,39 @@ export async function POST(request: Request) {
         throw new Error('ERR_AUTH_BRANCH_DENIED');
       }
 
-      const result = await enrollmentService.createEnrollment({
-        studentProfileId: parsed.studentProfileId,
-        admissionId: parsed.admissionId,
+      const result = await enrollmentService.createWalkInEnrollment({
+        firstName: parsed.firstName,
+        lastName: parsed.lastName,
+        email: parsed.email || undefined,
+        phone: parsed.phone,
+        nationalId: parsed.nationalId || undefined,
         courseId: parsed.courseId,
         batchId: parsed.batchId,
-        enrollmentType: parsed.enrollmentType,
-        corporateParticipantId: parsed.corporateParticipantId,
         branchId: targetBranchId,
         actorId: session.userId,
+        remarks: parsed.remarks || undefined,
       });
 
       const response = NextResponse.json(
         {
           success: true,
-          enrollmentId: result.id,
-          enrollmentNumber: result.enrollmentNumber,
+          enrollmentId: result.enrollment.id,
+          enrollmentNumber: result.enrollment.enrollmentNumber,
+          enrollmentStatus: result.enrollment.enrollmentStatus,
         },
         { status: 201 }
       );
 
       applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/enrollments',
+        route: '/api/v1/enrollments/walk-in',
         method: request.method,
         status: 'success',
       });
 
       return response;
     } catch (error) {
-      logger.error('api.enrollments.create.failed', { status: 'failed', error: error as Error });
+      logger.error('api.enrollments.walkin.create.failed', { status: 'failed', error: error as Error });
       return errorResponse(error as Error);
     }
-  }), { route: '/api/v1/enrollments' });
+  }), { route: '/api/v1/enrollments/walk-in' });
 }

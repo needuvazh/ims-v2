@@ -552,3 +552,459 @@ test('EnrollmentService approveEnrollment should support worker resolution when 
     mockPrisma
   );
 });
+
+test('EnrollmentService createEnrollment should reject WalkIn type with ERR_ENR_GENERIC_WALKIN_BLOCKED', async () => {
+  const mockPrisma = {} as any;
+  const enrollmentService = new EnrollmentService(mockPrisma);
+  await expect(
+    enrollmentService.createEnrollment({
+      enrollmentType: 'WalkIn',
+    })
+  ).rejects.toThrow('ERR_ENR_GENERIC_WALKIN_BLOCKED');
+});
+
+test('EnrollmentService createWalkInEnrollment should successfully create person, profile, admission, enrollment and auto-approve', async () => {
+  let enrollmentStatus = 'Draft';
+  const mockPrisma = {
+    course: {
+      findUnique: vi.fn().mockResolvedValue({ id: 'crs-walk', allowWalkInCompletion: true }),
+    },
+    person: {
+      findFirst: vi.fn().mockResolvedValue(null), // New person
+      create: vi.fn().mockResolvedValue({ id: 'person-walk-1' }),
+    },
+    studentProfile: {
+      findFirst: vi.fn().mockResolvedValue(null), // New profile
+      create: vi.fn().mockResolvedValue({ id: 'stu-walk-1', studentNumber: 'STU-2026-99999' }),
+    },
+    admission: {
+      create: vi.fn().mockResolvedValue({ id: 'adm-walk-1', admissionNumber: 'ADM-2026-99999' }),
+      count: vi.fn().mockResolvedValue(0),
+    },
+    enrollment: {
+      create: vi.fn().mockImplementation(({ data }) => {
+        enrollmentStatus = data.enrollmentStatus;
+        return Promise.resolve({ id: 'enr-walk-1', ...data });
+      }),
+      update: vi.fn().mockImplementation(({ data }) => {
+        if (data.enrollmentStatus) {
+          enrollmentStatus = data.enrollmentStatus;
+        }
+        return Promise.resolve({ id: 'enr-walk-1', enrollmentStatus });
+      }),
+      findUnique: vi.fn().mockImplementation(() => Promise.resolve({
+        id: 'enr-walk-1',
+        enrollmentStatus,
+        studentProfileId: 'stu-walk-1',
+        batchId: 'batch-walk-1',
+        branchId: 'branch-1',
+        courseId: 'crs-walk',
+      })),
+      findFirst: vi.fn().mockResolvedValue(null),
+      count: vi.fn().mockResolvedValue(0), // Batch has empty seats
+    },
+    walkInEnrollment: {
+      create: vi.fn().mockResolvedValue({ id: 'wie-1' }),
+    },
+    waitingList: {
+      findFirst: vi.fn().mockResolvedValue(null),
+      count: vi.fn().mockResolvedValue(0),
+    },
+    batch: {
+      findUnique: vi.fn().mockResolvedValue({ id: 'batch-walk-1', capacity: 10, waitingListEnabled: true }),
+      update: vi.fn().mockResolvedValue(null),
+    },
+    outboxEvent: {
+      create: vi.fn().mockResolvedValue(null),
+    },
+    auditLog: {
+      create: vi.fn().mockResolvedValue(null),
+    },
+    $queryRawUnsafe: vi.fn().mockImplementation((sql) => {
+      if (sql.includes('student_number_seq')) return Promise.resolve([{ nextval: '99999' }]);
+      if (sql.includes('admission_number_seq')) return Promise.resolve([{ nextval: '99999' }]);
+      if (sql.includes('batches')) return Promise.resolve([{ id: 'batch-walk-1', capacity: 10, waitingListEnabled: true }]);
+      return Promise.resolve([]);
+    }),
+    $queryRaw: vi.fn().mockResolvedValue([]),
+    $transaction: vi.fn().mockImplementation((cb) => cb(mockPrisma)),
+  } as any;
+
+  const enrollmentService = new EnrollmentService(mockPrisma);
+  vi.spyOn((enrollmentService as any).pricingService, 'resolveCoursePricing').mockResolvedValue({
+    courseId: 'crs-walk',
+    resolvedBranchId: 'branch-1',
+    customerType: 'Individual',
+    basePrice: 100,
+    taxPercentage: 0,
+    isTaxExempt: true,
+    currency: 'OMR',
+    totalPrice: 100,
+    applicableDiscounts: [],
+    pricingSource: 'GlobalDefault',
+  });
+
+  const res = await enrollmentService.createWalkInEnrollment({
+    firstName: 'Ahmed',
+    lastName: 'Al Balushi',
+    phone: '+96899998888',
+    courseId: 'crs-walk',
+    batchId: 'batch-walk-1',
+    branchId: 'branch-1',
+    actorId: 'actor-1',
+  });
+
+  expect(res.enrollment.id).toBe('enr-walk-1');
+  expect(res.enrollment.enrollmentStatus).toBe('Approved');
+  expect(mockPrisma.person.create).toHaveBeenCalled();
+  expect(mockPrisma.studentProfile.create).toHaveBeenCalled();
+  expect(mockPrisma.admission.create).toHaveBeenCalled();
+  expect(mockPrisma.enrollment.create).toHaveBeenCalled();
+  expect(mockPrisma.walkInEnrollment.create).toHaveBeenCalledWith({
+    data: {
+      enrollmentId: 'enr-walk-1',
+      paymentCollected: new Prisma.Decimal(0.0),
+      counterUserId: 'actor-1',
+      remarks: null,
+      createdBy: 'actor-1',
+    },
+  });
+  expect(mockPrisma.outboxEvent.create).toHaveBeenCalledWith({
+    data: expect.objectContaining({ eventType: 'AdmissionCreated' }),
+  });
+});
+
+test('EnrollmentService createWalkInEnrollment should reject duplicate active admissions in the same branch', async () => {
+  const mockPrisma = {
+    course: {
+      findUnique: vi.fn().mockResolvedValue({ id: 'crs-walk', allowWalkInCompletion: true }),
+    },
+    person: {
+      findFirst: vi.fn().mockResolvedValue({ id: 'person-existing-1' }),
+    },
+    studentProfile: {
+      findFirst: vi.fn().mockResolvedValue({ id: 'stu-existing-1', studentNumber: 'STU-existing' }),
+    },
+    admission: {
+      count: vi.fn().mockResolvedValue(1),
+    },
+    enrollment: {
+      create: vi.fn(),
+    },
+    $queryRawUnsafe: vi.fn(),
+    $transaction: vi.fn().mockImplementation((cb) => cb(mockPrisma)),
+  } as any;
+
+  const enrollmentService = new EnrollmentService(mockPrisma);
+
+  await expect(
+    enrollmentService.createWalkInEnrollment({
+      firstName: 'Ahmed',
+      lastName: 'Al Balushi',
+      phone: '+96899998888',
+      courseId: 'crs-walk',
+      batchId: 'batch-walk-1',
+      branchId: 'branch-1',
+      actorId: 'actor-1',
+    })
+  ).rejects.toThrow('ERR_ADM_ACTIVE_ADMISSION_EXISTS');
+});
+
+test('EnrollmentService createWalkInEnrollment should reject walk-in for course without walk-in completion enabled', async () => {
+  const mockPrisma = {
+    course: {
+      findUnique: vi.fn().mockResolvedValue({ id: 'crs-normal', allowWalkInCompletion: false }), // Disabled!
+    },
+    $transaction: vi.fn().mockImplementation((cb) => cb(mockPrisma)),
+  } as any;
+
+  const enrollmentService = new EnrollmentService(mockPrisma);
+  await expect(
+    enrollmentService.createWalkInEnrollment({
+      firstName: 'Ahmed',
+      lastName: 'Al Balushi',
+      phone: '+96899998888',
+      courseId: 'crs-normal',
+      batchId: 'batch-1',
+      branchId: 'branch-1',
+      actorId: 'actor-1',
+    })
+  ).rejects.toThrow('ERR_COURSE_NOT_WALKIN_ENABLED');
+});
+
+test('EnrollmentService createWalkInEnrollment should route to waitlist when batch is full and waitlist is enabled', async () => {
+  let enrollmentStatus = 'Draft';
+  const mockPrisma = {
+    course: {
+      findUnique: vi.fn().mockResolvedValue({ id: 'crs-walk', allowWalkInCompletion: true }),
+    },
+    person: {
+      findFirst: vi.fn().mockResolvedValue({ id: 'person-existing-1' }),
+    },
+    studentProfile: {
+      findFirst: vi.fn().mockResolvedValue({ id: 'stu-existing-1', studentNumber: 'STU-existing' }),
+    },
+    admission: {
+      create: vi.fn().mockResolvedValue({ id: 'adm-walk-1', admissionNumber: 'ADM-2026-99999' }),
+      count: vi.fn().mockResolvedValue(0),
+    },
+    enrollment: {
+      create: vi.fn().mockImplementation(({ data }) => {
+        enrollmentStatus = data.enrollmentStatus;
+        return Promise.resolve({ id: 'enr-walk-1', ...data });
+      }),
+      update: vi.fn().mockImplementation(({ data }) => {
+        if (data.enrollmentStatus) {
+          enrollmentStatus = data.enrollmentStatus;
+        }
+        return Promise.resolve({ id: 'enr-walk-1', enrollmentStatus });
+      }),
+      findUnique: vi.fn().mockImplementation(() => Promise.resolve({
+        id: 'enr-walk-1',
+        enrollmentStatus,
+        studentProfileId: 'stu-existing-1',
+        batchId: 'batch-walk-1',
+        branchId: 'branch-1',
+        courseId: 'crs-walk',
+      })),
+      findFirst: vi.fn().mockResolvedValue(null),
+      count: vi.fn().mockResolvedValue(10), // Capacity reached!
+    },
+    walkInEnrollment: {
+      create: vi.fn().mockResolvedValue({ id: 'wie-1' }),
+    },
+    waitingList: {
+      findFirst: vi.fn().mockResolvedValue(null),
+      count: vi.fn().mockResolvedValue(0),
+    },
+    batch: {
+      findUnique: vi.fn().mockResolvedValue({ id: 'batch-walk-1', capacity: 10, waitingListEnabled: true }),
+      update: vi.fn().mockResolvedValue(null),
+    },
+    outboxEvent: {
+      create: vi.fn().mockResolvedValue(null),
+    },
+    auditLog: {
+      create: vi.fn().mockResolvedValue(null),
+    },
+    $queryRawUnsafe: vi.fn().mockImplementation((sql) => {
+      if (sql.includes('student_number_seq')) return Promise.resolve([{ nextval: '99999' }]);
+      if (sql.includes('admission_number_seq')) return Promise.resolve([{ nextval: '99999' }]);
+      if (sql.includes('batches')) return Promise.resolve([{ id: 'batch-walk-1', capacity: 10, waitingListEnabled: true }]);
+      return Promise.resolve([]);
+    }),
+    $transaction: vi.fn().mockImplementation((cb) => cb(mockPrisma)),
+  } as any;
+
+  const enrollmentService = new EnrollmentService(mockPrisma);
+  vi.spyOn((enrollmentService as any).pricingService, 'resolveCoursePricing').mockResolvedValue({
+    courseId: 'crs-walk',
+    resolvedBranchId: 'branch-1',
+    customerType: 'Individual',
+    basePrice: 100,
+    taxPercentage: 0,
+    isTaxExempt: true,
+    currency: 'OMR',
+    totalPrice: 100,
+    applicableDiscounts: [],
+    pricingSource: 'GlobalDefault',
+  });
+  vi.spyOn((enrollmentService as any).batchService, 'enqueueWaitlist').mockResolvedValue({ id: 'wl-1' });
+
+  const res = await enrollmentService.createWalkInEnrollment({
+    firstName: 'Ahmed',
+    lastName: 'Al Balushi',
+    phone: '+96899998888',
+    courseId: 'crs-walk',
+    batchId: 'batch-walk-1',
+    branchId: 'branch-1',
+    actorId: 'actor-1',
+  });
+
+  expect(res.enrollment.enrollmentStatus).toBe('Submitted'); // Left in Submitted status due to waitlisting!
+  expect((enrollmentService as any).batchService.enqueueWaitlist).toHaveBeenCalled();
+});
+
+test('EnrollmentService recordWalkInPayment should update payment, transition to Confirmed, and create WalkInConfirmation', async () => {
+  let currentStatus = 'Approved';
+  const mockPrisma = {
+    enrollment: {
+      findUnique: vi.fn().mockImplementation(() => Promise.resolve({
+        id: 'enr-approved-1',
+        enrollmentType: 'WalkIn',
+        enrollmentStatus: currentStatus,
+        enrollmentNumber: 'ENR-888',
+        studentProfileId: 'stu-1',
+        batchId: 'batch-1',
+        branchId: 'branch-1',
+        courseId: 'crs-1',
+        admission: { personId: 'person-1' },
+        walkInEnrollment: { id: 'wie-1' },
+      })),
+      update: vi.fn().mockImplementation(({ data }) => {
+        if (data.enrollmentStatus) {
+          currentStatus = data.enrollmentStatus;
+        }
+        return Promise.resolve({ id: 'enr-approved-1', enrollmentStatus: currentStatus });
+      }),
+    },
+    walkInEnrollment: {
+      update: vi.fn().mockResolvedValue({ id: 'wie-1' }),
+    },
+    walkInPayment: {
+      findUnique: vi.fn().mockResolvedValue(null),
+      create: vi.fn().mockResolvedValue({
+        id: 'wip-1',
+        amount: new Prisma.Decimal(120.0),
+        paymentMethod: 'Cash',
+      }),
+    },
+    walkInConfirmation: {
+      findUnique: vi.fn().mockResolvedValue(null),
+      create: vi.fn().mockResolvedValue({
+        id: 'wic-1',
+        confirmationNumber: 'WIC-2026-10001',
+        documentUrl: 'https://storage.asti.edu.om/confirmations/WIC-2026-10001.pdf',
+      }),
+    },
+    outboxEvent: {
+      create: vi.fn().mockResolvedValue(null),
+    },
+    auditLog: {
+      create: vi.fn().mockResolvedValue(null),
+    },
+    $executeRawUnsafe: vi.fn().mockResolvedValue(null),
+    $queryRawUnsafe: vi.fn().mockResolvedValue([{ nextval: '10001' }]),
+    $transaction: vi.fn().mockImplementation((cb) => cb(mockPrisma)),
+  } as any;
+
+  const enrollmentService = new EnrollmentService(mockPrisma);
+  vi.spyOn(enrollmentService, 'verifyEnrollmentDocumentsGate').mockResolvedValue(undefined as any);
+  const res = await enrollmentService.recordWalkInPayment('enr-approved-1', 120.0, 'actor-1', 'Cash at counter');
+
+  expect(res.enrollment.enrollmentStatus).toBe('Confirmed');
+  expect(enrollmentService.verifyEnrollmentDocumentsGate).toHaveBeenCalledWith('enr-approved-1', mockPrisma);
+  expect(mockPrisma.walkInEnrollment.update).toHaveBeenCalledWith({
+    where: { enrollmentId: 'enr-approved-1' },
+    data: {
+      paymentCollected: new Prisma.Decimal(120.0),
+      confirmationIssued: true,
+      remarks: 'Cash at counter',
+      updatedBy: 'actor-1',
+    },
+  });
+  expect(mockPrisma.walkInPayment.create).toHaveBeenCalledWith({
+    data: {
+      walkInEnrollmentId: 'wie-1',
+      enrollmentId: 'enr-approved-1',
+      amount: new Prisma.Decimal(120.0),
+      paymentMethod: 'Cash',
+      receivedBy: 'actor-1',
+      remarks: 'Cash at counter',
+      createdBy: 'actor-1',
+    },
+  });
+  expect(mockPrisma.enrollment.update).toHaveBeenNthCalledWith(1, {
+    where: { id: 'enr-approved-1' },
+    data: {
+      paymentValidationRequired: false,
+      updatedBy: 'actor-1',
+    },
+  });
+  expect(mockPrisma.enrollment.update).toHaveBeenNthCalledWith(2, {
+    where: { id: 'enr-approved-1' },
+    data: {
+      enrollmentStatus: 'Confirmed',
+      confirmedAt: expect.any(Date),
+    },
+  });
+  expect(mockPrisma.walkInConfirmation.create).toHaveBeenCalledWith({
+    data: {
+      walkInEnrollmentId: 'wie-1',
+      confirmationNumber: 'WIC-2026-10001',
+      issuedBy: 'actor-1',
+      documentUrl: 'https://storage.asti.edu.om/confirmations/WIC-2026-10001.pdf',
+      createdBy: 'actor-1',
+    },
+  });
+  expect(mockPrisma.outboxEvent.create).toHaveBeenCalledWith({
+    data: expect.objectContaining({ eventType: 'WalkInEnrollmentCreated' }),
+  });
+  expect(mockPrisma.outboxEvent.create).toHaveBeenCalledWith({
+    data: expect.objectContaining({ eventType: 'WalkInPaymentRecorded' }),
+  });
+});
+
+test('EnrollmentService recordWalkInPayment should be idempotent when enrollment is already confirmed', async () => {
+  const mockPrisma = {
+    enrollment: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'enr-approved-1',
+        enrollmentType: 'WalkIn',
+        enrollmentStatus: 'Confirmed',
+        enrollmentNumber: 'ENR-888',
+        studentProfileId: 'stu-1',
+        batchId: 'batch-1',
+        branchId: 'branch-1',
+        courseId: 'crs-1',
+        admission: { personId: 'person-1' },
+        walkInEnrollment: { id: 'wie-1' },
+      }),
+      update: vi.fn(),
+    },
+    walkInConfirmation: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'wic-1',
+        confirmationNumber: 'WIC-2026-10001',
+        documentUrl: 'https://storage.asti.edu.om/confirmations/WIC-2026-10001.pdf',
+      }),
+      create: vi.fn(),
+    },
+    walkInPayment: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'wip-1',
+        amount: new Prisma.Decimal(120.0),
+        paymentMethod: 'Cash',
+      }),
+      create: vi.fn(),
+    },
+    outboxEvent: {
+      create: vi.fn(),
+    },
+    auditLog: {
+      create: vi.fn(),
+    },
+    $executeRawUnsafe: vi.fn(),
+    $queryRawUnsafe: vi.fn(),
+    $transaction: vi.fn().mockImplementation((cb) => cb(mockPrisma)),
+  } as any;
+
+  const enrollmentService = new EnrollmentService(mockPrisma);
+  vi.spyOn(enrollmentService, 'verifyEnrollmentDocumentsGate').mockResolvedValue(undefined as any);
+
+  const res = await enrollmentService.recordWalkInPayment('enr-approved-1', 120.0, 'actor-1', 'Cash at counter');
+
+  expect(res.enrollment.enrollmentStatus).toBe('Confirmed');
+  expect(mockPrisma.enrollment.update).not.toHaveBeenCalled();
+  expect(mockPrisma.walkInPayment.create).not.toHaveBeenCalled();
+  expect(mockPrisma.walkInConfirmation.create).not.toHaveBeenCalled();
+});
+
+test('EnrollmentService recordWalkInPayment should block payment recording for waitlisted (Submitted) enrollment', async () => {
+  const mockPrisma = {
+    enrollment: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'enr-waitlisted-1',
+        enrollmentType: 'WalkIn',
+        enrollmentStatus: 'Submitted', // Waitlisted
+        walkInEnrollment: { id: 'wie-1' },
+      }),
+    },
+    $transaction: vi.fn().mockImplementation((cb) => cb(mockPrisma)),
+  } as any;
+
+  const enrollmentService = new EnrollmentService(mockPrisma);
+  await expect(
+    enrollmentService.recordWalkInPayment('enr-waitlisted-1', 120.0, 'actor-1')
+  ).rejects.toThrow('ERR_ENR_PAYMENT_BLOCKED_WAITLIST');
+});
