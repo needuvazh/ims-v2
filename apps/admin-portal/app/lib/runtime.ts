@@ -230,11 +230,13 @@ export const followUpSchedulerService = new FollowUpSchedulerService(
 import {
   AdmissionRepository,
   AdmissionService,
+  AdmissionQueryService,
   LeadConversionOrchestrator
 } from '@ims/admissions-enrollment';
 
 const admissionRepository = new AdmissionRepository(prisma);
-export const admissionService = new AdmissionService(admissionRepository);
+export const admissionService = new AdmissionService(admissionRepository, prisma);
+export const admissionQueryService = new AdmissionQueryService(prisma);
 
 export const leadConversionOrchestrator = new LeadConversionOrchestrator(
   prisma,
@@ -344,6 +346,8 @@ class PrismaSchedulingService implements ISchedulingService {
 const batchRepository = new BatchRepository(prisma);
 const schedulingService = new PrismaSchedulingService(prisma);
 export const batchService = new BatchService(prisma, batchRepository, schedulingService);
+
+export { prisma };
 
 
 

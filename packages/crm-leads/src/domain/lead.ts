@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { DocumentTypeEnum } from '@ims/documents';
 
 export const LeadStageEnum = z.enum([
   'New',
@@ -226,7 +227,15 @@ export const maskNationalId = (nationalId: string | null | undefined): string | 
 };
 
 export const ConvertLeadSchema = z.object({
-  documentLinks: z.array(z.string().url("Must be a valid document url")).min(1, "At least one identity document is required for conversion"),
+  documents: z.array(
+    z.object({
+      fileName: z.string().min(1, "File name is required"),
+      fileKey: z.string().min(1, "File key is required"),
+      fileType: z.string().min(1, "File type is required"),
+      documentType: DocumentTypeEnum,
+      expiryDate: z.preprocess((val) => (typeof val === 'string' && val ? new Date(val) : val), z.date().optional().nullable()),
+    })
+  ).min(1, "At least one identity document is required for conversion"),
 });
 
 export type ConvertLeadInput = z.infer<typeof ConvertLeadSchema>;

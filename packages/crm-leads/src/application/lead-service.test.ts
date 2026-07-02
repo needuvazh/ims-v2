@@ -189,14 +189,19 @@ test('LeadService.convertLead should enforce Won outcome preconditions', async (
       createMany: vi.fn().mockResolvedValue(null),
     },
     leadStageHistory: { create: vi.fn() },
+    document: { create: vi.fn().mockResolvedValue({ id: 'doc-1' }) },
+    documentOwner: { create: vi.fn().mockResolvedValue(null) },
+    documentVerification: { create: vi.fn().mockResolvedValue(null) },
   } as any;
   const mockLeadRepo = {
     findById: vi.fn().mockImplementation((id) => {
       return Promise.resolve({
         id,
+        personId: 'person-1',
         email: 'salim@example.com',
         phone: '+968 12345678',
         version: 1,
+        branchId: 'branch-1',
         person: {
           dateOfBirth: new Date('1995-05-15'), // valid birthdate
         },
@@ -211,16 +216,19 @@ test('LeadService.convertLead should enforce Won outcome preconditions', async (
   } as any;
   const leadService = new LeadService(mockPrisma, mockLeadRepo, mockFollowUpRepo);
 
-  // Fails if missing documentLinks
+  // Fails if missing documents
   await expect(
     leadService.convertLead('lead-1', [], mockPrisma)
   ).rejects.toThrow('ERR_CRM_WON_PRECONDITIONS_MISSED');
 
-  // Succeeds if documentLinks are present
-  const result = await leadService.convertLead('lead-1', ['https://example.com/civil.pdf'], mockPrisma);
+  // Succeeds if documents are present
+  const result = await leadService.convertLead('lead-1', [{ fileName: 'civil.pdf', fileKey: 'uploads/civil.pdf', fileType: 'application/pdf', documentType: 'CIVIL_ID_FRONT' }], mockPrisma);
   expect(result.id).toBe('lead-1');
   expect(mockLeadRepo.updateStage).toHaveBeenCalledWith('lead-1', 'Won', 1, mockPrisma);
   expect(mockLeadRepo.updateStage).toHaveBeenCalledWith('lead-1', 'Converted', 2, mockPrisma);
+  expect(mockPrisma.document.create).toHaveBeenCalled();
+  expect(mockPrisma.documentOwner.create).toHaveBeenCalled();
+  expect(mockPrisma.documentVerification.create).toHaveBeenCalled();
 });
 
 test('LeadService.updateLead should merge partial updates and detect active duplicates', async () => {

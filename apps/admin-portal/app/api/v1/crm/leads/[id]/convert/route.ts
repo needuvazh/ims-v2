@@ -60,6 +60,11 @@ function crmErrorResponse(error: Error) {
     code = 'ERR_CRM_DUPLICATE_STUDENT';
     messageEn = msg;
     messageAr = 'يوجد طالب بالفعل بهذا البريد الإلكتروني أو الهاتف.';
+  } else if (msg.includes('ERR_ADM_ACTIVE_ADMISSION_EXISTS')) {
+    status = 409;
+    code = 'ERR_ADM_ACTIVE_ADMISSION_EXISTS';
+    messageEn = 'An active admission already exists for this student in this branch.';
+    messageAr = 'يوجد طلب قبول نشط بالفعل لهذا الطالب في هذا الفرع.';
   }
 
   return NextResponse.json(
@@ -126,7 +131,7 @@ export async function POST(request: Request, props: { params: Promise<{ id: stri
       // Call conversion orchestrator
       const admissionResult = await leadConversionOrchestrator.convertLeadToAdmission(
         leadId,
-        parsed.data.documentLinks,
+        parsed.data.documents,
         session.userId
       );
 

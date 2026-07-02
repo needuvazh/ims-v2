@@ -15,6 +15,7 @@
     "zod": "^3.23.0",
     "@ims/database": "workspace:*",
     "@ims/shared-kernel": "workspace:*",
-    "@ims/crm-leads": "workspace:*"
+    "@ims/crm-leads": "workspace:*",
+    "@ims/documents": "workspace:*"
   }
 }

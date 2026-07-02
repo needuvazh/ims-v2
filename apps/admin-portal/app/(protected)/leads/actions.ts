@@ -140,7 +140,7 @@ export async function updateLeadAction(data: any) {
   }
 }
 
-export async function convertLeadAction(leadId: string, documentLinks: string[]) {
+export async function convertLeadAction(leadId: string, documents: any[]) {
   try {
     // Enforce lead conversion permission
     const session = await assertPermission('lead.convert');
@@ -151,7 +151,7 @@ export async function convertLeadAction(leadId: string, documentLinks: string[])
     const actorId = await getActorId();
     const { leadConversionOrchestrator } = await import('../../lib/runtime');
 
-    const result = await leadConversionOrchestrator.convertLeadToAdmission(leadId, documentLinks, actorId);
+    const result = await leadConversionOrchestrator.convertLeadToAdmission(leadId, documents, actorId);
     revalidatePath('/leads');
     return { success: true, data: result };
   } catch (error: any) {

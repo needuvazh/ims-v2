@@ -26,7 +26,7 @@ import {
 } from '@ims/shared-ui';
 import { ConvertLeadSchema } from '@ims/crm-leads';
 
-type ConvertFormData = z.infer<typeof ConvertLeadSchema>;
+type ConvertFormData = z.input<typeof ConvertLeadSchema>;
 
 interface ConvertLeadModalProps {
   leadId: string;
@@ -53,24 +53,41 @@ export function ConvertLeadModal({
   } = useForm<ConvertFormData>({
     resolver: zodResolver(ConvertLeadSchema),
     defaultValues: {
-      documentLinks: [''], // Start with one empty input
+      documents: [
+        {
+          fileName: '',
+          fileKey: '',
+          fileType: 'application/pdf',
+          documentType: 'CIVIL_ID_FRONT',
+        },
+      ],
     },
   });
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'documentLinks' as never,
+    name: 'documents',
   });
 
   const onSubmit = async (data: ConvertFormData) => {
     try {
       setIsSubmitting(true);
+      const payload = {
+        documents: data.documents.map((doc) => {
+          const fileName = doc.fileName || doc.fileKey.split('/').pop() || 'document.pdf';
+          return {
+            ...doc,
+            fileName,
+          };
+        }),
+      };
+
       const res = await fetch(`/api/v1/crm/leads/${leadId}/convert`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       });
 
       const result = await res.json();
@@ -112,53 +129,80 @@ export function ConvertLeadModal({
         ) : (
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 py-4">
             <div className="space-y-3">
-              <FormLabel>Identity Documents (Required)</FormLabel>
+              <FormLabel>Required Identity Documents</FormLabel>
               <p className="text-xs text-[color:var(--ims-muted)]">
-                Please provide URLs to the scanned Civil ID or Passport documents.
+                Provide the type and URL/path for the required handoff documents.
               </p>
               
-              {fields.map((field, index) => (
-                <FormField key={field.id}>
-                  <div className="flex gap-2 items-start">
-                    <div className="flex-1">
-                      <FormControl>
-                        <Input
-                          {...register(`documentLinks.${index}`)}
-                          placeholder="https://example.com/document.pdf"
-                          disabled={isSubmitting}
-                        />
-                      </FormControl>
-                      <FormError>{errors?.documentLinks?.[index]?.message}</FormError>
+              <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1">
+                {fields.map((field, index) => (
+                  <FormField key={field.id}>
+                    <div className="space-y-2 border p-3 rounded-lg bg-gray-50/50">
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs font-bold text-gray-500">Document #{index + 1}</span>
+                        {fields.length > 1 && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => remove(index)}
+                            disabled={isSubmitting}
+                            className="h-6 w-6 text-red-600 hover:text-red-700 hover:bg-red-50"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        )}
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-[10px] font-bold uppercase tracking-wider text-gray-500">Document Type</label>
+                          <select
+                            {...register(`documents.${index}.documentType`)}
+                            disabled={isSubmitting}
+                            className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-xs font-medium text-gray-700 shadow-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500 disabled:opacity-50"
+                          >
+                            <option value="CIVIL_ID_FRONT">Civil ID Front</option>
+                            <option value="CIVIL_ID_BACK">Civil ID Back</option>
+                            <option value="PASSPORT_SCAN">Passport Scan</option>
+                            <option value="ACADEMIC_TRANSCRIPT">Academic Transcript</option>
+                            <option value="SPONSORSHIP_LETTER">Sponsorship Letter</option>
+                            <option value="OTHER">Other</option>
+                          </select>
+                          <FormError>{errors?.documents?.[index]?.documentType?.message}</FormError>
+                        </div>
+
+                        <div>
+                          <label className="text-[10px] font-bold uppercase tracking-wider text-gray-500">File URL / Key</label>
+                          <FormControl>
+                            <Input
+                              {...register(`documents.${index}.fileKey`)}
+                              placeholder="https://example.com/civil.pdf"
+                              disabled={isSubmitting}
+                              className="mt-1 text-xs h-8"
+                            />
+                          </FormControl>
+                          <FormError>{errors?.documents?.[index]?.fileKey?.message}</FormError>
+                        </div>
+                      </div>
                     </div>
-                    {fields.length > 1 && (
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="icon"
-                        onClick={() => remove(index)}
-                        disabled={isSubmitting}
-                        className="shrink-0"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    )}
-                  </div>
-                </FormField>
-              ))}
+                  </FormField>
+                ))}
+              </div>
               
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
-                className="mt-2 text-xs"
-                onClick={() => append('')}
+                className="mt-2 text-xs border-dashed"
+                onClick={() => append({ fileName: '', fileKey: '', fileType: 'application/pdf', documentType: 'CIVIL_ID_FRONT' })}
                 disabled={isSubmitting}
               >
-                <Plus className="h-3 w-3 mr-1" /> Add Document Link
+                <Plus className="h-3.5 w-3.5 mr-1" /> Add Another Document
               </Button>
             </div>
 
-            <FormError>{errors.documentLinks?.message}</FormError>
+            <FormError>{errors.documents?.message}</FormError>
 
             <DialogFooter>
               <DialogClose asChild>

@@ -1,5 +1,6 @@
 import { PrismaClient, Prisma } from '@prisma/client';
 import { createUuid } from '@ims/shared-kernel';
+import { DocumentCaptureInput, DocumentsService } from '@ims/documents';
 import { randomUUID } from 'crypto';
 import { ILeadRepository, IFollowUpRepository } from '../domain/repositories';
 import { CreateLeadInput, TransitionLeadStageInput, CloseLeadLostInput, LeadStage } from '../domain/lead';
@@ -387,7 +388,7 @@ export class LeadService {
 
   // 5. Decoupled Admissions Handoff (Convert Lead)
   // This verifies Won preconditions inside CRM context boundary and transitions stage to Converted.
-  async convertLead(leadId: string, documentLinks: string[], tx: Prisma.TransactionClient, actorId?: string) {
+  async convertLead(leadId: string, documents: DocumentCaptureInput[], tx: Prisma.TransactionClient, actorId?: string) {
     const lead = await this.leadRepository.findById(leadId, tx);
     if (!lead) {
       throw new Error('ERR_CRM_LEAD_NOT_FOUND');
@@ -404,10 +405,27 @@ export class LeadService {
     if (!lead.person || !lead.person.dateOfBirth) {
       throw new Error('ERR_CRM_WON_PRECONDITIONS_MISSED');
     }
-    // Check identity document upload presence (must supply at least 1 url link)
-    if (!documentLinks || documentLinks.length === 0) {
+    // Check identity document upload presence (must supply at least 1)
+    if (!documents || documents.length === 0) {
       throw new Error('ERR_CRM_WON_PRECONDITIONS_MISSED');
     }
+    const hasIdentityDoc = documents.some(
+      (doc) => doc.documentType === 'CIVIL_ID_FRONT' || doc.documentType === 'PASSPORT_SCAN'
+    );
+    if (!hasIdentityDoc) {
+      throw new Error('ERR_CRM_WON_PRECONDITIONS_MISSED');
+    }
+
+    // Register documents in Documents context
+    const documentsService = new DocumentsService(this.prisma);
+    await documentsService.registerDocuments(
+      lead.personId,
+      'Person',
+      lead.branchId,
+      documents,
+      tx,
+      actorId
+    );
 
     // 1. Transition Stage to Won
     await this.leadRepository.updateStage(leadId, 'Won', lead.version, tx);

@@ -26,7 +26,65 @@ export class AdmissionRepository implements IAdmissionRepository {
     });
   }
 
-  async createStudentProfileAndAdmission(data: CreateStudentProfileAdmissionInput, studentNumber: string, tx?: Prisma.TransactionClient): Promise<{ personId: string; studentProfileId: string; admissionId: string; }> {
+  async getNextStudentNumber(tx?: Prisma.TransactionClient): Promise<string> {
+    const client = tx || this.prisma;
+    const result = await client.$queryRawUnsafe<{ nextval: string }[]>("SELECT nextval('student_number_seq')::text as nextval");
+    const seq = result[0]?.nextval || '10000';
+    return `STU-2026-${seq.padStart(5, '0')}`;
+  }
+
+  async getNextAdmissionNumber(tx?: Prisma.TransactionClient): Promise<string> {
+    const client = tx || this.prisma;
+    const result = await client.$queryRawUnsafe<{ nextval: string }[]>("SELECT nextval('admission_number_seq')::text as nextval");
+    const seq = result[0]?.nextval || '10000';
+    return `ADM-2026-${seq.padStart(5, '0')}`;
+  }
+
+  async hasActiveAdmission(studentProfileId: string, branchId: string, tx?: Prisma.TransactionClient): Promise<boolean> {
+    const client = tx || this.prisma;
+    const count = await client.admission.count({
+      where: {
+        studentProfileId,
+        branchId,
+        isDeleted: false,
+        admissionStatus: {
+          in: ['Draft', 'Submitted', 'Approved']
+        }
+      }
+    });
+    return count > 0;
+  }
+
+  async createAdmissionDraft(
+    studentProfileId: string,
+    branchId: string,
+    admissionNumber: string,
+    courseId?: string | null,
+    leadId?: string | null,
+    tx?: Prisma.TransactionClient
+  ): Promise<{ admissionId: string }> {
+    const client = tx || this.prisma;
+    const studentProfile = await client.studentProfile.findUnique({
+      where: { id: studentProfileId }
+    });
+    if (!studentProfile) {
+      throw new Error('ERR_STUDENT_PROFILE_NOT_FOUND');
+    }
+    const admission = await client.admission.create({
+      data: {
+        admissionNumber,
+        personId: studentProfile.personId,
+        studentProfileId,
+        branchId,
+        courseId: courseId || null,
+        leadId: leadId || null,
+        admissionStatus: 'Draft',
+      }
+    });
+    return { admissionId: admission.id };
+  }
+
+  async createStudentProfileAndAdmission(data: CreateStudentProfileAdmissionInput, studentNumber: string, tx?: Prisma.TransactionClient): Promise<{ personId: string; studentProfileId: string; admissionId: string; admissionNumber: string; }> {
     const client = tx || this.prisma;
 
     let person = await this.findPersonByEmailOrPhone(data.email || null, data.phone || null, tx);
@@ -42,15 +100,18 @@ export class AdmissionRepository implements IAdmissionRepository {
       });
     }
     
-    // Create student profile
-    const studentProfile = await client.studentProfile.create({
-      data: {
-        personId: person.id,
-        studentNumber,
-      },
-    });
+    // Create or reuse student profile
+    let studentProfile = await this.findStudentProfileByPersonId(person.id, tx);
+    if (!studentProfile) {
+      studentProfile = await client.studentProfile.create({
+        data: {
+          personId: person.id,
+          studentNumber,
+        },
+      });
+    }
 
-    const admissionNumber = `ADM-${Date.now().toString().slice(-6)}`;
+    const admissionNumber = await this.getNextAdmissionNumber(tx);
 
     // Create admission
     const admission = await client.admission.create({
@@ -60,6 +121,7 @@ export class AdmissionRepository implements IAdmissionRepository {
         studentProfileId: studentProfile.id,
         branchId: data.branchId,
         leadId: data.leadId || null,
+        courseId: data.courseId || null,
         admissionStatus: 'Draft',
       },
     });
@@ -68,6 +130,8 @@ export class AdmissionRepository implements IAdmissionRepository {
       personId: person.id,
       studentProfileId: studentProfile.id,
       admissionId: admission.id,
+      admissionNumber,
     };
   }
 }
+

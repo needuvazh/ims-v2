@@ -15,12 +15,12 @@ Can you assume the role of senior staff engineer and perform a review on the cur
 Can you assume the role of senior staff engineer and perform a review on the current OpenSpec proposal for Change 3 for the Lead & CRM Workflows module: "Workflows & Follow-up Scheduling" (under openspec/changes/)? Evaluate if there are any gaps in the proposed design specs and verify if any of the existing business logic  will be broken by this change. Highlight design discrepancies and suggest clear technical remedies.  Use DDD and FRD document for references
 
 
-Can you assume the role of senior staff engineer and perform a review on the current OpenSpec proposal for batch-waitlist-spec (under openspec/changes/)? Evaluate if there are any gaps in the proposed design specs and verify if any of the existing business logic  will be broken by this change. Highlight design discrepancies and suggest clear technical remedies.  Use DDD and Module 06: Course Catalog & Training Delivery (Batch) Management document for references and source of truth, don't check other FRD document and don't get confused, if you have any question and needs clarification plese feel free to ask me?
+Can you assume the role of senior staff engineer and perform a review on the current OpenSpec proposal for admission-intake (under openspec/changes/)? Evaluate if there are any gaps in the proposed design specs and verify if any of the existing business logic  will be broken by this change. Highlight design discrepancies and suggest clear technical remedies.  Use DDD and module-04-admission-enrollment document for references and source of truth, don't check other FRD document and don't get confused, if you have any question and needs clarification plese feel free to ask me?
 
 
-/opsx-verify batch-waitlist-spec
+/opsx-verify admission-intake
 
-Can you assume the role of senior staff engineer and perform a review on the code changes for openspec batch-waitlist-spec, evaluate if there is any gaps in the code changes and suggested me how to fix it.
+Can you assume the role of senior staff engineer and perform a review on the code changes for openspec admission-intake, evaluate if there is any gaps in the code changes and suggested me how to fix it.
 
 
 review on the current OpenSpec proposal for Core Data Models & Base APIs of the Lead & CRM Workflows module (under openspec/changes/)? Evaluate if there are any gaps in the proposed design specs and verify if any of the existing business logic  will be broken by this change. Highlight design discrepancies and suggest clear technical remedies.  Use DDD and FRD document for references
