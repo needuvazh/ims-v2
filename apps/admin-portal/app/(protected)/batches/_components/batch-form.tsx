@@ -27,28 +27,29 @@ interface BatchFormProps {
   branches: any[];
   classrooms: any[];
   onSubmitAction: (data: any) => Promise<any>;
+  initialData?: any;
 }
 
-export function BatchForm({ courses, branches, classrooms, onSubmitAction }: BatchFormProps) {
+export function BatchForm({ courses, branches, classrooms, onSubmitAction, initialData }: BatchFormProps) {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   // Form State
-  const [batchCode, setBatchCode] = useState('');
-  const [batchNameEnglish, setBatchNameEnglish] = useState('');
-  const [batchNameArabic, setBatchNameArabic] = useState('');
-  const [courseId, setCourseId] = useState('');
-  const [branchId, setBranchId] = useState('');
-  const [classroomId, setClassroomId] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [capacity, setCapacity] = useState('20');
-  const [waitingListEnabled, setWaitingListEnabled] = useState(true);
-  const [allowOverbooking, setAllowOverbooking] = useState(false);
-  const [isWalkIn, setIsWalkIn] = useState(false);
-  const [corporateAccountId, setCorporateAccountId] = useState('');
+  const [batchCode, setBatchCode] = useState(initialData?.batchCode || '');
+  const [batchNameEnglish, setBatchNameEnglish] = useState(initialData?.batchNameEnglish || '');
+  const [batchNameArabic, setBatchNameArabic] = useState(initialData?.batchNameArabic || '');
+  const [courseId, setCourseId] = useState(initialData?.courseId || '');
+  const [branchId, setBranchId] = useState(initialData?.branchId || '');
+  const [classroomId, setClassroomId] = useState(initialData?.classroomId || '');
+  const [startDate, setStartDate] = useState(initialData?.startDate ? new Date(initialData.startDate).toISOString().split('T')[0] : '');
+  const [endDate, setEndDate] = useState(initialData?.endDate ? new Date(initialData.endDate).toISOString().split('T')[0] : '');
+  const [capacity, setCapacity] = useState(initialData?.capacity?.toString() || '20');
+  const [waitingListEnabled, setWaitingListEnabled] = useState(initialData?.waitingListEnabled ?? true);
+  const [allowOverbooking, setAllowOverbooking] = useState(initialData?.allowOverbooking ?? false);
+  const [isWalkIn, setIsWalkIn] = useState(initialData?.isWalkIn ?? false);
+  const [corporateAccountId, setCorporateAccountId] = useState(initialData?.corporateAccountId || '');
 
   // Step 1 Validation
   const isStep1Valid =
@@ -99,11 +100,11 @@ export function BatchForm({ courses, branches, classrooms, onSubmitAction }: Bat
       });
 
       if (!res.success) {
-        setErrorMsg(res.error || 'Failed to create batch.');
-        toast.error(res.error || 'Failed to create batch.');
+        setErrorMsg(res.error || (initialData ? 'Failed to update batch.' : 'Failed to create batch.'));
+        toast.error(res.error || (initialData ? 'Failed to update batch.' : 'Failed to create batch.'));
       } else {
-        toast.success('Batch created successfully in Draft state!');
-        router.push('/batches');
+        toast.success(initialData ? 'Batch updated successfully!' : 'Batch created successfully in Draft state!');
+        router.push(initialData ? `/batches/${initialData.id}` : '/batches');
         router.refresh();
       }
     } catch (err: any) {

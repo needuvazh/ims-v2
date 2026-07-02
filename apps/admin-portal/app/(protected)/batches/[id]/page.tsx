@@ -13,7 +13,8 @@ import {
   TableCell,
   Button,
 } from '@ims/shared-ui';
-import { Home, Layers, Calendar, Users, ShieldAlert } from 'lucide-react';
+import { Home, Layers, Calendar, Users, ShieldAlert, Edit } from 'lucide-react';
+import Link from 'next/link';
 import { assignTrainerAction, transitionBatchStatusAction, addToWaitlistAction, manualPromoteAction } from '../actions';
 import { TransitionButtons } from '../_components/transition-buttons';
 import { BatchDetailsTabs } from '../_components/batch-details-tabs';
@@ -160,6 +161,15 @@ export default async function BatchDetailPage(props: {
               { label: batch.batchCode, icon: <Layers className="h-3.5 w-3.5" /> },
             ]}
           />
+        }
+        actions={
+          isCoordinator && (
+            <Link href={`/batches/${batch.id}/edit`}>
+              <Button variant="outline" className="flex items-center gap-2">
+                <Edit className="h-4 w-4" /> Edit Batch
+              </Button>
+            </Link>
+          )
         }
       />
 

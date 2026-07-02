@@ -5210,13 +5210,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/[id]/page.tsx": {
-    "mtime": 1782931818.929169,
-    "ast_hash": "56f0a15149351a5333f619951a9c9d52",
+    "mtime": 1782959363.793799,
+    "ast_hash": "485881dc74994f950e643ac43935edd1",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/_components/batch-form.tsx": {
-    "mtime": 1782931268.1517837,
-    "ast_hash": "39ef18a6abea3403d1f388cd49fe7752",
+    "mtime": 1782959342.7300236,
+    "ast_hash": "59c3e43a35f808ba7f1ca659bd9371a9",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/actions.ts": {
@@ -5332,6 +5332,11 @@
   "apps/admin-portal/app/(protected)/batches/_components/batch-details-tabs.tsx": {
     "mtime": 1782931857.0233388,
     "ast_hash": "e4669550e60c1670843ca909bad7a756",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/batches/[id]/edit/page.tsx": {
+    "mtime": 1782959349.3201227,
+    "ast_hash": "34351a0ddadade18b84e2851776099a1",
     "semantic_hash": ""
   }
 }
