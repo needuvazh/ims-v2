@@ -68,3 +68,15 @@ export class CourseNotPublished extends DomainError {
     super(message, 'ERR_CRS_COURSE_NOT_PUBLISHED');
   }
 }
+
+export class WaitlistDisabled extends DomainError {
+  constructor(message = 'Waiting list is not enabled for this batch.') {
+    super(message, 'ERR_CRS_WAITLIST_DISABLED');
+  }
+}
+
+export class BatchNotFull extends DomainError {
+  constructor(message = 'Cannot enqueue candidate because the batch has not reached capacity.') {
+    super(message, 'ERR_CRS_BATCH_NOT_FULL');
+  }
+}

@@ -69,33 +69,32 @@ export async function assignTrainerAction(batchId: string, data: any) {
 
 export async function addToWaitlistAction(batchId: string, data: any) {
   try {
-    await assertPermission('enrollment.create');
+    await assertPermission('batch.waitlist.manage');
     const session = await getSession();
 
-    const batch = await prisma.batch.findUnique({ where: { id: batchId } });
-    if (!batch) throw new Error('ERR_CRS_BATCH_NOT_FOUND');
-
-    const active = await prisma.waitingList.findMany({
-      where: { batchId, status: 'Waiting', isDeleted: false },
-      orderBy: { queuePosition: 'asc' },
-    });
-    const alreadyQueued = active.some(w => 
-      (data.studentId && w.studentId === data.studentId) || (data.leadId && w.leadId === data.leadId)
+    const { batchService } = await import('../../lib/runtime');
+    const result = await batchService.enqueueWaitlist(
+      batchId,
+      data.studentId || null,
+      data.leadId || null,
+      session.userId
     );
-    if (alreadyQueued) throw new Error('ERR_CRS_WAITLIST_DUPLICATE');
 
-    const result = await prisma.waitingList.create({
-      data: {
-        id: crypto.randomUUID(),
-        courseId: batch.courseId,
-        batchId,
-        studentId: data.studentId || null,
-        leadId: data.leadId || null,
-        queuePosition: active.length + 1,
-        status: 'Waiting',
-        createdBy: session.userId,
-      }
-    });
+    revalidatePath(`/batches/${batchId}`);
+    return { success: true as const, data: result };
+  } catch (error: any) {
+    console.error('SERVER ACTION ERROR (addToWaitlistAction):', error);
+    return buildBatchActionFailure(error);
+  }
+}
+
+export async function manualPromoteAction(batchId: string, waitlistId: string) {
+  try {
+    await assertPermission('batch.waitlist.manage');
+    const session = await getSession();
+
+    const { batchService } = await import('../../lib/runtime');
+    const result = await batchService.manualPromoteWaitlist(batchId, waitlistId, session.userId);
 
     revalidatePath(`/batches/${batchId}`);
     return { success: true as const, data: result };
@@ -104,50 +103,61 @@ export async function addToWaitlistAction(batchId: string, data: any) {
   }
 }
 
-export async function manualPromoteAction(batchId: string, candidateId: string) {
+export async function skipWaitlistAction(batchId: string, waitlistId: string, reason: string) {
   try {
-    await assertPermission('enrollment.create');
+    await assertPermission('batch.waitlist.manage');
     const session = await getSession();
 
-    return await prisma.$transaction(async (tx) => {
-      const batch = await tx.batch.findUnique({ where: { id: batchId } });
-      if (!batch) throw new Error('ERR_CRS_BATCH_NOT_FOUND');
+    const { batchService } = await import('../../lib/runtime');
+    const result = await batchService.skipWaitlistEntry(batchId, waitlistId, reason, session.userId);
 
-      const entry = await tx.waitingList.findUnique({ where: { id: candidateId } });
-      if (!entry || entry.batchId !== batchId || entry.status !== 'Waiting') {
-        throw new Error('ERR_CRS_WAITLIST_ENTRY_NOT_FOUND');
-      }
+    revalidatePath(`/batches/${batchId}`);
+    return { success: true as const, data: result };
+  } catch (error: any) {
+    return buildBatchActionFailure(error);
+  }
+}
 
-      if (batch.currentEnrollmentCount >= batch.capacity && !batch.allowOverbooking) {
-        throw new Error('ERR_CRS_BATCH_FULL');
-      }
+export async function reactivateWaitlistAction(batchId: string, waitlistId: string) {
+  try {
+    await assertPermission('batch.waitlist.manage');
+    const session = await getSession();
 
-      const promoted = await tx.waitingList.update({
-        where: { id: candidateId },
-        data: { status: 'Promoted' },
-      });
+    const { batchService } = await import('../../lib/runtime');
+    const result = await batchService.reactivateWaitlistEntry(batchId, waitlistId, session.userId);
 
-      const activeQueue = await tx.waitingList.findMany({
-        where: { batchId, status: 'Waiting', isDeleted: false },
-        orderBy: { queuePosition: 'asc' },
-      });
-      for (const nextEntry of activeQueue) {
-        if (nextEntry.queuePosition > entry.queuePosition) {
-          await tx.waitingList.update({
-            where: { id: nextEntry.id },
-            data: { queuePosition: nextEntry.queuePosition - 1 },
-          });
-        }
-      }
+    revalidatePath(`/batches/${batchId}`);
+    return { success: true as const, data: result };
+  } catch (error: any) {
+    return buildBatchActionFailure(error);
+  }
+}
 
-      await tx.batch.update({
-        where: { id: batchId },
-        data: { currentEnrollmentCount: { increment: 1 } },
-      });
+export async function removeWaitlistAction(batchId: string, waitlistId: string) {
+  try {
+    await assertPermission('batch.waitlist.manage');
+    const session = await getSession();
 
-      revalidatePath(`/batches/${batchId}`);
-      return { success: true as const, data: promoted };
-    });
+    const { batchService } = await import('../../lib/runtime');
+    await batchService.removeWaitlistEntry(batchId, waitlistId, session.userId);
+
+    revalidatePath(`/batches/${batchId}`);
+    return { success: true as const };
+  } catch (error: any) {
+    return buildBatchActionFailure(error);
+  }
+}
+
+export async function reorderWaitlistAction(batchId: string, waitlistIds: string[]) {
+  try {
+    await assertPermission('batch.waitlist.manage');
+    const session = await getSession();
+
+    const { batchService } = await import('../../lib/runtime');
+    await batchService.reorderWaitlist(batchId, waitlistIds, session.userId);
+
+    revalidatePath(`/batches/${batchId}`);
+    return { success: true as const };
   } catch (error: any) {
     return buildBatchActionFailure(error);
   }

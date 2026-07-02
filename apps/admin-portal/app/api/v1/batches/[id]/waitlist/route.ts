@@ -10,14 +10,16 @@ import {
 import { batchService } from '../../../../../../lib/runtime';
 import { batchErrorResponse } from '../../route';
 import { prisma } from '@ims/database';
-import { createUuid } from '@ims/shared-kernel';
-import { randomUUID } from 'crypto';
 
 const waitlistSchema = z.object({
   studentId: z.string().uuid().nullable().optional(),
   leadId: z.string().uuid().nullable().optional(),
-}).refine(data => data.studentId || data.leadId, {
-  message: "At least one of studentId or leadId must be provided.",
+}).refine(data => {
+  const hasStudent = !!data.studentId;
+  const hasLead = !!data.leadId;
+  return (hasStudent && !hasLead) || (!hasStudent && hasLead);
+}, {
+  message: "Exactly one of studentId or leadId must be provided.",
   path: ["studentId"]
 });
 
@@ -46,7 +48,7 @@ export async function POST(
 ) {
   const { id } = await params;
   return withRouteObservability(request.headers, async () =>
-    withPermission(request, 'enrollment.create', async ({ session }) => {
+    withPermission(request, 'batch.waitlist.manage', async ({ session }) => {
       const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
       let payload: unknown;
@@ -81,6 +83,23 @@ export async function POST(
           throw new Error('ERR_CRS_BATCH_NOT_FOUND');
         }
 
+        // Branch-scoping guard
+        const hasAccess = await prisma.userBranchAccess.findFirst({
+          where: { userId: session.userId, branchId: batch.branchId, status: 'Active' },
+        });
+        if (!hasAccess) {
+          const userRoles = await prisma.userRole.findMany({
+            where: { userId: session.userId },
+            include: { role: true },
+          });
+          const isSuperAdmin = userRoles.some(
+            (ur) => ur.role.roleCode === 'SUPER_ADMIN' || ur.role.roleCode === 'OWNER'
+          );
+          if (!isSuperAdmin) {
+            throw new Error('ERR_IAM_INSUFFICIENT_PERMISSIONS');
+          }
+        }
+
         const { studentId, leadId } = parsed.data;
 
         // Verify existence in database
@@ -93,45 +112,12 @@ export async function POST(
           if (!lead) throw new Error('ERR_CRS_LEAD_NOT_FOUND');
         }
 
-        // Lock & get active queue
-        const active = await batchService.batchRepository.findActiveWaitlist(id);
-        const alreadyQueued = active.some(w => 
-          (studentId && w.studentId === studentId) || (leadId && w.leadId === leadId)
+        const result = await batchService.enqueueWaitlist(
+          id,
+          studentId || null,
+          leadId || null,
+          session.userId
         );
-        if (alreadyQueued) {
-          return problemJson(
-            422,
-            'Already queued',
-            'This candidate is already in the waitlist for this batch.',
-            'ERR_CRS_WAITLIST_DUPLICATE'
-          );
-        }
-
-        const queuePosition = active.length + 1;
-        const result = await batchService.batchRepository.addWaitlistEntry({
-          id: createUuid(randomUUID()),
-          courseId: batch.courseId,
-          batchId: id,
-          studentId,
-          leadId,
-          queuePosition,
-          status: 'Waiting',
-          createdBy: session.userId,
-        });
-
-        // Audit Log
-        await prisma.auditLog.create({
-          data: {
-            id: createUuid(randomUUID()),
-            module: 'TrainingDelivery',
-            performedBy: session.userId,
-            performedAt: new Date(),
-            entityType: 'WaitingList',
-            entityId: result.id,
-            action: 'AddToWaitlist',
-            newValue: { ...result },
-          }
-        });
 
         const response = NextResponse.json(
           {

@@ -26,8 +26,14 @@ import {
   PlusCircle,
   Loader2,
   Bookmark,
+  ArrowUp,
+  ArrowDown,
+  CheckCircle,
+  CircleSlash,
+  Trash2,
+  PlayCircle,
 } from 'lucide-react';
-import { assignTrainerAction, addToWaitlistAction, manualPromoteAction, createSessionAction } from '../actions';
+import { assignTrainerAction, addToWaitlistAction, manualPromoteAction, createSessionAction, skipWaitlistAction, reactivateWaitlistAction, removeWaitlistAction, reorderWaitlistAction } from '../actions';
 
 interface BatchDetailsTabsProps {
   batchId: string;
@@ -233,14 +239,123 @@ export function BatchDetailsTabs({
   };
 
   // Handle FIFO Promotion
-  const handlePromote = (candidateId: string) => {
+  const handlePromote = (waitlistId: string) => {
     startTransition(async () => {
       try {
-        const res = await manualPromoteAction(batchId, candidateId);
+        const res = await manualPromoteAction(batchId, waitlistId);
         if (res && !res.success) {
           toast.error(res.error || 'Failed to promote waitlisted student.');
         } else {
           toast.success('Student successfully promoted to active enrollment!');
+          router.refresh();
+        }
+      } catch (err: any) {
+        toast.error(err.message || 'An unexpected error occurred.');
+      }
+    });
+  };
+
+  // Handle Skip Candidate
+  const handleSkip = (waitlistId: string) => {
+    const reason = prompt('Please enter the reason for skipping this candidate:');
+    if (!reason || !reason.trim()) {
+      toast.error('Skip reason is required.');
+      return;
+    }
+
+    startTransition(async () => {
+      try {
+        const res = await skipWaitlistAction(batchId, waitlistId, reason);
+        if (res && !res.success) {
+          toast.error(res.error || 'Failed to skip candidate.');
+        } else {
+          toast.success('Candidate successfully skipped (status set to Held).');
+          router.refresh();
+        }
+      } catch (err: any) {
+        toast.error(err.message || 'An unexpected error occurred.');
+      }
+    });
+  };
+
+  // Handle Reactivate Candidate
+  const handleReactivate = (waitlistId: string) => {
+    startTransition(async () => {
+      try {
+        const res = await reactivateWaitlistAction(batchId, waitlistId);
+        if (res && !res.success) {
+          toast.error(res.error || 'Failed to reactivate candidate.');
+        } else {
+          toast.success('Candidate successfully reactivated and appended to queue!');
+          router.refresh();
+        }
+      } catch (err: any) {
+        toast.error(err.message || 'An unexpected error occurred.');
+      }
+    });
+  };
+
+  // Handle Remove Candidate
+  const handleRemove = (waitlistId: string) => {
+    if (!confirm('Are you sure you want to remove this candidate from the waitlist?')) {
+      return;
+    }
+
+    startTransition(async () => {
+      try {
+        const res = await removeWaitlistAction(batchId, waitlistId);
+        if (res && !res.success) {
+          toast.error(res.error || 'Failed to remove candidate.');
+        } else {
+          toast.success('Candidate successfully removed from waitlist.');
+          router.refresh();
+        }
+      } catch (err: any) {
+        toast.error(err.message || 'An unexpected error occurred.');
+      }
+    });
+  };
+
+  // Handle Move Position Up
+  const handleMoveUp = (index: number) => {
+    if (index === 0) return;
+    const newQueue = [...waitlist];
+    const temp = newQueue[index];
+    newQueue[index] = newQueue[index - 1];
+    newQueue[index - 1] = temp;
+
+    const waitlistIds = newQueue.map((w) => w.id);
+    startTransition(async () => {
+      try {
+        const res = await reorderWaitlistAction(batchId, waitlistIds);
+        if (res && !res.success) {
+          toast.error(res.error || 'Failed to reorder queue.');
+        } else {
+          toast.success('Queue order updated successfully!');
+          router.refresh();
+        }
+      } catch (err: any) {
+        toast.error(err.message || 'An unexpected error occurred.');
+      }
+    });
+  };
+
+  // Handle Move Position Down
+  const handleMoveDown = (index: number) => {
+    if (index === waitlist.length - 1) return;
+    const newQueue = [...waitlist];
+    const temp = newQueue[index];
+    newQueue[index] = newQueue[index + 1];
+    newQueue[index + 1] = temp;
+
+    const waitlistIds = newQueue.map((w) => w.id);
+    startTransition(async () => {
+      try {
+        const res = await reorderWaitlistAction(batchId, waitlistIds);
+        if (res && !res.success) {
+          toast.error(res.error || 'Failed to reorder queue.');
+        } else {
+          toast.success('Queue order updated successfully!');
           router.refresh();
         }
       } catch (err: any) {
@@ -590,9 +705,14 @@ export function BatchDetailsTabs({
           {/* Waitlist list */}
           <div className="lg:col-span-2 space-y-6">
             <Card className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6">
-              <div className="flex items-center gap-2 border-b border-slate-100 pb-3 mb-4">
-                <ShieldAlert className="h-5 w-5 text-indigo-600" />
-                <h3 className="font-semibold text-slate-800">Waiting List Queue</h3>
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+                <div className="flex items-center gap-2">
+                  <ShieldAlert className="h-5 w-5 text-indigo-600" />
+                  <h3 className="font-semibold text-slate-800">Waiting List Queue</h3>
+                </div>
+                <Badge variant="outline" className="bg-indigo-50 text-indigo-700 border-indigo-200">
+                  Total Active: {waitlist.filter(w => w.status === 'Waiting').length}
+                </Badge>
               </div>
               {waitlist.length === 0 ? (
                 <div className="p-8 text-center text-sm text-[color:var(--ims-muted)]">
@@ -603,39 +723,143 @@ export function BatchDetailsTabs({
                   <TableHeader>
                     <TableRow>
                       <TableHead>Queue Pos</TableHead>
-                      <TableHead>Student ID</TableHead>
-                      <TableHead>Lead ID</TableHead>
+                      <TableHead>Candidate</TableHead>
+                      <TableHead>Type</TableHead>
                       <TableHead>Status</TableHead>
+                      <TableHead>Details / Reason</TableHead>
                       {isRegistrar && <TableHead className="text-right">Actions</TableHead>}
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {waitlist.map((w) => (
-                      <TableRow key={w.id}>
-                        <TableCell className="font-semibold text-slate-700">#{w.queuePosition}</TableCell>
-                        <TableCell className="font-mono text-xs">{w.studentId || '-'}</TableCell>
-                        <TableCell className="font-mono text-xs">{w.leadId || '-'}</TableCell>
-                        <TableCell>
-                          <Badge variant={w.status === 'Waiting' ? 'outline' : w.status === 'Promoted' ? 'success' : 'error'}>
-                            {w.status}
-                          </Badge>
-                        </TableCell>
-                        {isRegistrar && (
-                          <TableCell className="text-right">
+                    {waitlist.map((w, index) => {
+                      let displayName = '-';
+                      let typeLabel = '-';
+                      if (w.studentId) {
+                        const student = studentsList.find((s) => s.id === w.studentId);
+                        displayName = student ? `${student.firstName} ${student.lastName}` : 'Unknown Student';
+                        typeLabel = 'Student Profile';
+                      } else if (w.leadId) {
+                        const lead = leadsList.find((l) => l.id === w.leadId);
+                        displayName = lead ? `${lead.firstName} ${lead.lastName}` : 'Unknown Lead';
+                        typeLabel = `CRM Lead (${lead?.leadNumber ?? ''})`;
+                      }
+
+                      return (
+                        <TableRow key={w.id}>
+                          <TableCell className="font-semibold text-slate-700">
+                            {w.status === 'Waiting' ? `#${w.queuePosition}` : '-'}
+                          </TableCell>
+                          <TableCell className="font-medium text-slate-900">{displayName}</TableCell>
+                          <TableCell className="text-xs text-slate-500">{typeLabel}</TableCell>
+                          <TableCell>
                             {w.status === 'Waiting' && (
-                              <Button
-                                onClick={() => handlePromote(w.id)}
-                                disabled={isPending}
-                                size="sm"
-                                variant="outline"
-                              >
-                                Promote FIFO
-                              </Button>
+                              <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">Waiting</Badge>
+                            )}
+                            {w.status === 'Promoted' && (
+                              <Badge variant="success">Promoted</Badge>
+                            )}
+                            {w.status === 'Held' && (
+                              <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">Held</Badge>
+                            )}
+                            {w.status === 'Suspended' && (
+                              <Badge variant="error">Suspended</Badge>
+                            )}
+                            {w.status === 'Removed' && (
+                              <Badge variant="outline" className="bg-slate-100 text-slate-500 border-slate-200">Removed</Badge>
                             )}
                           </TableCell>
-                        )}
-                      </TableRow>
-                    ))}
+                          <TableCell className="text-xs text-slate-500 max-w-[150px] truncate" title={w.statusReason || ''}>
+                            {w.statusReason || '-'}
+                          </TableCell>
+                          {isRegistrar && (
+                            <TableCell className="text-right">
+                              <div className="flex items-center justify-end gap-1.5">
+                                {/* Reorder Actions */}
+                                {w.status === 'Waiting' && (
+                                  <>
+                                    <Button
+                                      onClick={() => handleMoveUp(index)}
+                                      disabled={index === 0 || isPending || waitlist[index - 1]?.status !== 'Waiting'}
+                                      size="sm"
+                                      variant="ghost"
+                                      className="p-1 h-7 w-7 text-slate-400 hover:text-slate-700"
+                                      title="Move Up"
+                                    >
+                                      <ArrowUp className="h-4 w-4" />
+                                    </Button>
+                                    <Button
+                                      onClick={() => handleMoveDown(index)}
+                                      disabled={index === waitlist.length - 1 || isPending || waitlist[index + 1]?.status !== 'Waiting'}
+                                      size="sm"
+                                      variant="ghost"
+                                      className="p-1 h-7 w-7 text-slate-400 hover:text-slate-700"
+                                      title="Move Down"
+                                    >
+                                      <ArrowDown className="h-4 w-4" />
+                                    </Button>
+                                  </>
+                                )}
+
+                                {/* Operation Actions */}
+                                {w.status === 'Waiting' && (
+                                  <>
+                                    <Button
+                                      onClick={() => handlePromote(w.id)}
+                                      disabled={isPending}
+                                      size="sm"
+                                      variant="outline"
+                                      className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 border-emerald-200 text-xs px-2.5 py-1 h-7"
+                                      title="Promote Manual"
+                                    >
+                                      <CheckCircle className="h-3.5 w-3.5 mr-1" />
+                                      Promote
+                                    </Button>
+                                    <Button
+                                      onClick={() => handleSkip(w.id)}
+                                      disabled={isPending}
+                                      size="sm"
+                                      variant="outline"
+                                      className="text-amber-600 hover:text-amber-700 hover:bg-amber-50 border-amber-200 text-xs px-2.5 py-1 h-7"
+                                      title="Skip Candidate"
+                                    >
+                                      <CircleSlash className="h-3.5 w-3.5 mr-1" />
+                                      Skip
+                                    </Button>
+                                  </>
+                                )}
+
+                                {(w.status === 'Held' || w.status === 'Suspended') && (
+                                  <Button
+                                    onClick={() => handleReactivate(w.id)}
+                                    disabled={isPending}
+                                    size="sm"
+                                    variant="outline"
+                                    className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 border-blue-200 text-xs px-2.5 py-1 h-7"
+                                    title="Reactivate"
+                                  >
+                                    <PlayCircle className="h-3.5 w-3.5 mr-1" />
+                                    Reactivate
+                                  </Button>
+                                )}
+
+                                {w.status !== 'Removed' && w.status !== 'Promoted' && (
+                                  <Button
+                                    onClick={() => handleRemove(w.id)}
+                                    disabled={isPending}
+                                    size="sm"
+                                    variant="ghost"
+                                    className="p-1 h-7 w-7 text-rose-500 hover:text-rose-700 hover:bg-rose-50"
+                                    title="Remove Candidate"
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                )}
+                              </div>
+                            </TableCell>
+                          )}
+                        </TableRow>
+                      );
+                    })}
                   </TableBody>
                 </Table>
               )}

@@ -1,18 +1,6 @@
 import { prisma } from '@ims/database';
 import { assertPermission } from '@/lib/auth-guard';
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableHead,
-  TableCell,
-  Badge,
-  LinkButton,
-  StatCard,
-  PageHeader,
-} from '@ims/shared-ui';
-import { Calendar, Users, Layers, AlertCircle } from 'lucide-react';
+import { BatchesClientList } from './_components/batches-client-list';
 
 export const metadata = { title: 'Batches - Admin Portal | ASTI IMS' };
 
@@ -21,6 +9,8 @@ export default async function BatchesPage(props: {
     courseId?: string;
     branchId?: string;
     status?: string;
+    q?: string;
+    page?: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
@@ -30,19 +20,81 @@ export default async function BatchesPage(props: {
 
   // Resolve filters based on branch access
   const isSuperAdmin = session.roles.includes('SUPER_ADMIN') || session.roles.includes('OWNER');
-  let finalBranchId = searchParams.branchId || undefined;
-  if (!isSuperAdmin && !searchParams.branchId) {
-    finalBranchId = session.activeBranchId || undefined;
+
+  // Fetch branches the user has access to
+  let branches;
+  if (isSuperAdmin) {
+    branches = await prisma.branch.findMany({
+      where: { isDeleted: false },
+      select: { id: true, branchName: true },
+    });
+  } else {
+    // Resolve based on user branch access mappings
+    const access = await prisma.userBranchAccess.findMany({
+      where: { userId: session.userId, status: 'Active' },
+      include: { branch: true },
+    });
+    branches = access.map((a) => ({
+      id: a.branch.id,
+      branchName: a.branch.branchName,
+    }));
   }
 
-  // Fetch batches
+  let finalBranchId = searchParams.branchId || undefined;
+  if (!isSuperAdmin) {
+    const allowedBranchIds = branches.map((b) => b.id);
+    if (finalBranchId && !allowedBranchIds.includes(finalBranchId)) {
+      finalBranchId = session.activeBranchId && allowedBranchIds.includes(session.activeBranchId)
+        ? session.activeBranchId
+        : allowedBranchIds[0] || 'none';
+    } else if (!finalBranchId) {
+      finalBranchId = session.activeBranchId && allowedBranchIds.includes(session.activeBranchId)
+        ? session.activeBranchId
+        : allowedBranchIds[0] || 'none';
+    }
+  } else if (!finalBranchId) {
+    finalBranchId = undefined;
+  }
+
+  // Fetch courses list for filters dropdown
+  const courses = await prisma.course.findMany({
+    where: { isDeleted: false },
+    select: { id: true, nameEnglish: true },
+  });
+
+  // Pagination parameters
+  const page = searchParams.page ? parseInt(searchParams.page, 10) : 1;
+  const limit = 10;
+  const skip = (page - 1) * limit;
+
+  // Build the Prisma query filters
+  const where: any = {
+    isDeleted: false,
+  };
+
+  if (finalBranchId) {
+    where.branchId = finalBranchId;
+  }
+  if (searchParams.courseId) {
+    where.courseId = searchParams.courseId;
+  }
+  if (searchParams.status) {
+    where.status = searchParams.status;
+  }
+
+  const q = searchParams.q || '';
+  if (q) {
+    where.OR = [
+      { batchCode: { contains: q, mode: 'insensitive' } },
+      { batchNameEnglish: { contains: q, mode: 'insensitive' } },
+      { batchNameArabic: { contains: q, mode: 'insensitive' } },
+    ];
+  }
+
+  // Fetch batches total and list
+  const total = await prisma.batch.count({ where });
   const batches = await prisma.batch.findMany({
-    where: {
-      isDeleted: false,
-      branchId: finalBranchId,
-      courseId: searchParams.courseId,
-      status: searchParams.status,
-    },
+    where,
     include: {
       course: {
         select: {
@@ -51,115 +103,41 @@ export default async function BatchesPage(props: {
       },
     },
     orderBy: { startDate: 'desc' },
+    skip,
+    take: limit,
   });
 
-  // Calculate KPIs
-  const totalCount = await prisma.batch.count({ where: { isDeleted: false, branchId: finalBranchId } });
-  const openCount = await prisma.batch.count({ where: { status: 'OpenForEnrollment', isDeleted: false, branchId: finalBranchId } });
-  const inProgressCount = await prisma.batch.count({ where: { status: 'InProgress', isDeleted: false, branchId: finalBranchId } });
-  const cancelledCount = await prisma.batch.count({ where: { status: 'Cancelled', isDeleted: false, branchId: finalBranchId } });
+  // Calculate KPIs (respecting active branch scoped filters)
+  const kpiWhere: any = { isDeleted: false };
+  if (finalBranchId) {
+    kpiWhere.branchId = finalBranchId;
+  }
 
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case 'Draft':
-        return <Badge variant="outline">Draft</Badge>;
-      case 'OpenForEnrollment':
-        return <Badge variant="success">Open</Badge>;
-      case 'InProgress':
-        return <Badge variant="info">In Progress</Badge>;
-      case 'Completed':
-        return <Badge variant="default">Completed</Badge>;
-      case 'Cancelled':
-        return <Badge variant="error">Cancelled</Badge>;
-      default:
-        return <Badge variant="outline">{status}</Badge>;
-    }
+  const totalCount = await prisma.batch.count({ where: kpiWhere });
+  const openCount = await prisma.batch.count({ where: { ...kpiWhere, status: 'OpenForEnrollment' } });
+  const inProgressCount = await prisma.batch.count({ where: { ...kpiWhere, status: 'InProgress' } });
+  const cancelledCount = await prisma.batch.count({ where: { ...kpiWhere, status: 'Cancelled' } });
+
+  const kpis = {
+    total: totalCount,
+    open: openCount,
+    inProgress: inProgressCount,
+    cancelled: cancelledCount,
   };
 
   const canCreate = session.permissions.includes('schedule.manage');
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex justify-between items-center">
-        <PageHeader
-          eyebrow="Training Delivery"
-          title="Batches"
-          description="Manage course scheduling, classroom allocations, and trainer assignments."
-        />
-        {canCreate && (
-          <LinkButton href="/batches/new" variant="primary">
-            New Batch
-          </LinkButton>
-        )}
-      </div>
-
-      {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <StatCard
-          title="Total Batches"
-          value={totalCount}
-          icon={<Layers className="h-6 w-6 text-[color:var(--ims-primary)]" />}
-        />
-        <StatCard
-          title="Open for Enrollment"
-          value={openCount}
-          icon={<Users className="h-6 w-6 text-green-500" />}
-        />
-        <StatCard
-          title="In Progress"
-          value={inProgressCount}
-          icon={<Calendar className="h-6 w-6 text-blue-500" />}
-        />
-        <StatCard
-          title="Cancelled / Suspended"
-          value={cancelledCount}
-          icon={<AlertCircle className="h-6 w-6 text-red-500" />}
-        />
-      </div>
-
-      {/* Batches Table */}
-      <div className="bg-[color:var(--ims-card)] border border-[color:var(--ims-border)] rounded-lg overflow-hidden">
-        {batches.length === 0 ? (
-          <div className="p-12 text-center text-sm text-[color:var(--ims-muted)]">
-            No training batches found matching search criteria.
-          </div>
-        ) : (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Batch Code</TableHead>
-                <TableHead>Batch Name (EN)</TableHead>
-                <TableHead>Course</TableHead>
-                <TableHead>Start Date</TableHead>
-                <TableHead>End Date</TableHead>
-                <TableHead>Capacity</TableHead>
-                <TableHead>Enrolled</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {batches.map((b) => (
-                <TableRow key={b.id}>
-                  <TableCell className="font-mono font-medium">{b.batchCode}</TableCell>
-                  <TableCell>{b.batchNameEnglish}</TableCell>
-                  <TableCell>{b.course.nameEnglish}</TableCell>
-                  <TableCell>{new Date(b.startDate).toLocaleDateString()}</TableCell>
-                  <TableCell>{new Date(b.endDate).toLocaleDateString()}</TableCell>
-                  <TableCell>{b.capacity}</TableCell>
-                  <TableCell>{b.currentEnrollmentCount}</TableCell>
-                  <TableCell>{getStatusBadge(b.status)}</TableCell>
-                  <TableCell className="text-right">
-                    <LinkButton href={`/batches/${b.id}`} variant="outline" size="sm">
-                      Manage
-                    </LinkButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        )}
-      </div>
+    <div className="p-6">
+      <BatchesClientList
+        batches={batches}
+        courses={courses}
+        branches={branches}
+        total={total}
+        kpis={kpis}
+        currentPage={page}
+        canCreate={canCreate}
+      />
     </div>
   );
 }

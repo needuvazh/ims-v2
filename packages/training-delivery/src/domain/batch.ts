@@ -1,4 +1,4 @@
-import { InvalidStateTransition, BatchFull } from './errors';
+import { InvalidStateTransition, BatchFull, WaitlistDisabled, BatchNotFull } from './errors';
 
 export interface Batch {
   id: string;
@@ -74,6 +74,8 @@ export interface WaitingList {
   leadId?: string | null;
   queuePosition: number;
   status: string;
+  statusReason?: string | null;
+  promotionCorrelationId?: string | null;
   isDeleted: boolean;
   createdAt: Date;
   createdBy?: string | null;
@@ -161,5 +163,105 @@ export class BatchAggregate {
     } else {
       throw new InvalidStateTransition(`Unknown status: ${targetStatus}`);
     }
+  }
+
+  // Enqueue validation
+  validateWaitlistEnqueue() {
+    const status = this.state.status;
+    if (status !== BATCH_STATUSES.OPEN && status !== BATCH_STATUSES.IN_PROGRESS) {
+      throw new InvalidStateTransition(`Cannot enqueue candidate when batch is in ${status} status.`);
+    }
+    if (!this.state.waitingListEnabled) {
+      throw new WaitlistDisabled();
+    }
+    if (this.state.currentEnrollmentCount < this.state.capacity) {
+      throw new BatchNotFull();
+    }
+  }
+
+  // Promote entry domain logic
+  promoteWaitlistEntry(
+    entry: WaitingList,
+    correlationId: string,
+    options?: { force?: boolean }
+  ): { updatedEntry: WaitingList; updatedCount: number } {
+    const status = this.state.status;
+    if (status !== BATCH_STATUSES.OPEN && status !== BATCH_STATUSES.IN_PROGRESS) {
+      throw new InvalidStateTransition(`Cannot promote candidate when batch is in ${status} status.`);
+    }
+
+    if (entry.status !== 'Waiting') {
+      throw new Error('ERR_CRS_INVALID_WAITLIST_STATUS');
+    }
+
+    const isFull = this.state.currentEnrollmentCount >= this.state.capacity;
+    if (isFull && !this.state.allowOverbooking && !options?.force) {
+      throw new Error('ERR_CRS_BATCH_FULL');
+    }
+
+    // Manual promote override increments capacity count if candidate wasn't auto-promoted in vacated space
+    const updatedCount = options?.force || isFull ? this.state.currentEnrollmentCount + 1 : this.state.currentEnrollmentCount;
+
+    const updatedEntry: WaitingList = {
+      ...entry,
+      status: 'Promoted',
+      promotionCorrelationId: correlationId,
+      statusReason: null,
+    };
+
+    return { updatedEntry, updatedCount };
+  }
+
+  // Revert promotion domain logic
+  revertPromotion(
+    entry: WaitingList,
+    correlationId?: string | null,
+    reason?: string | null
+  ): { updatedEntry: WaitingList; updatedCount: number } {
+    if (entry.status !== 'Promoted') {
+      throw new Error('ERR_CRS_INVALID_WAITLIST_STATUS');
+    }
+
+    if (correlationId && entry.promotionCorrelationId !== correlationId) {
+      throw new Error('ERR_CRS_CORRELATION_MISMATCH');
+    }
+
+    const updatedEntry: WaitingList = {
+      ...entry,
+      status: 'Held',
+      promotionCorrelationId: null,
+      statusReason: reason || 'Downstream Enrollment Failed',
+    };
+
+    const updatedCount = Math.max(0, this.state.currentEnrollmentCount - 1);
+
+    return { updatedEntry, updatedCount };
+  }
+
+  // Skip waitlist entry domain logic
+  skipWaitlistEntry(entry: WaitingList, reason: string): WaitingList {
+    if (entry.status !== 'Waiting') {
+      throw new Error('ERR_CRS_INVALID_WAITLIST_STATUS');
+    }
+
+    return {
+      ...entry,
+      status: 'Held',
+      statusReason: reason || 'Manual Skip',
+      queuePosition: 0,
+    };
+  }
+
+  // Reactivate waitlist entry domain logic
+  reactivateWaitlistEntry(entry: WaitingList): WaitingList {
+    if (entry.status !== 'Held' && entry.status !== 'Suspended') {
+      throw new Error('ERR_CRS_INVALID_WAITLIST_STATUS');
+    }
+
+    return {
+      ...entry,
+      status: 'Waiting',
+      statusReason: null,
+    };
   }
 }

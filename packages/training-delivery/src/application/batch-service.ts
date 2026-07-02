@@ -270,6 +270,64 @@ export class BatchService {
 
       const updated = await this.batchRepository.update(id, input, version, client);
 
+      // Capacity increase hook
+      if (input.capacity !== undefined && existing.waitingListEnabled) {
+        const oldCapacity = existing.capacity;
+        const newCapacity = Number(input.capacity);
+        if (newCapacity > oldCapacity) {
+          const addedSeats = newCapacity - oldCapacity;
+          const activeWaitlist = await this.batchRepository.findActiveWaitlist(id, client);
+          if (activeWaitlist.length > 0) {
+            const promoteCount = Math.min(addedSeats, activeWaitlist.length);
+            
+            // Promote candidates FIFO
+            for (let i = 0; i < promoteCount; i++) {
+              const candidate = activeWaitlist[i];
+              const promoCorrelationId = createUuid(randomUUID());
+              await this.batchRepository.updateWaitlistEntry(candidate.id, {
+                status: 'Promoted',
+                promotionCorrelationId: promoCorrelationId,
+                queuePosition: 0,
+              }, client);
+
+              // Emit event
+              await client.outboxEvent.create({
+                data: {
+                  id: createUuid(randomUUID()),
+                  eventType: 'WaitlistEntryPromoted',
+                  aggregateType: 'Batch',
+                  aggregateId: id,
+                  payload: {
+                    batchId: id,
+                    studentId: candidate.studentId,
+                    leadId: candidate.leadId,
+                    correlationId: promoCorrelationId,
+                  },
+                  status: 'Pending',
+                  availableAt: new Date(),
+                },
+              });
+            }
+
+            // Shift remaining candidate positions
+            for (let i = promoteCount; i < activeWaitlist.length; i++) {
+              const remaining = activeWaitlist[i];
+              await this.batchRepository.updateWaitlistEntry(remaining.id, {
+                queuePosition: remaining.queuePosition - promoteCount,
+              }, client);
+            }
+
+            // Update batch enrollment count with latest version
+            await this.batchRepository.update(
+              id,
+              { currentEnrollmentCount: updated.currentEnrollmentCount + promoteCount },
+              updated.version,
+              client
+            );
+          }
+        }
+      }
+
       // Audit Log
       await client.auditLog.create({
         data: {
@@ -761,7 +819,12 @@ export class BatchService {
         if (activeWaitlist.length > 0) {
           // Promote first candidate FIFO
           const candidate = activeWaitlist[0];
-          await this.batchRepository.updateWaitlistEntry(candidate.id, { status: 'Promoted' }, client);
+          const promoCorrelationId = createUuid(randomUUID());
+          await this.batchRepository.updateWaitlistEntry(candidate.id, {
+            status: 'Promoted',
+            promotionCorrelationId: promoCorrelationId,
+            queuePosition: 0,
+          }, client);
 
           // Shift subsequent candidate positions
           for (let i = 1; i < activeWaitlist.length; i++) {
@@ -773,13 +836,14 @@ export class BatchService {
           await client.outboxEvent.create({
             data: {
               id: createUuid(randomUUID()),
-              eventType: 'WaitlistStudentPromoted',
+              eventType: 'WaitlistEntryPromoted',
               aggregateType: 'Batch',
               aggregateId: batchId,
               payload: {
                 batchId,
                 studentId: candidate.studentId,
                 leadId: candidate.leadId,
+                correlationId: promoCorrelationId,
               },
               status: 'Pending',
               availableAt: new Date(),
@@ -796,5 +860,439 @@ export class BatchService {
     };
 
     return tx ? execute(tx) : this.prisma.$transaction(execute);
+  }
+
+  async enqueueWaitlist(
+    batchId: string,
+    studentId: string | null,
+    leadId: string | null,
+    actorId?: string,
+    tx?: Prisma.TransactionClient
+  ) {
+    const execute = async (client: Prisma.TransactionClient) => {
+      const batch = await this.acquireBatchLock(batchId, client);
+      
+      if (!studentId && !leadId) {
+        throw new Error('ERR_CRS_CANDIDATE_REQUIRED');
+      }
+      if (studentId && leadId) {
+        throw new Error('ERR_CRS_AMBIGUOUS_CANDIDATE');
+      }
+
+      // Validate status
+      const aggregate = new BatchAggregate(batch);
+      aggregate.validateWaitlistEnqueue();
+
+      // Check duplicates
+      const active = await this.batchRepository.findActiveWaitlist(batchId, client);
+      const isDuplicate = active.some(
+        (entry) =>
+          (studentId && entry.studentId === studentId) ||
+          (leadId && entry.leadId === leadId)
+      );
+      if (isDuplicate) {
+        throw new Error('ERR_CRS_DUPLICATE_WAITLIST');
+      }
+
+      const queuePosition = active.length + 1;
+      const wl = await this.batchRepository.addWaitlistEntry({
+        id: createUuid(randomUUID()),
+        courseId: batch.courseId,
+        batchId,
+        studentId,
+        leadId,
+        queuePosition,
+        status: 'Waiting',
+        createdBy: actorId,
+      }, client);
+
+      // Audit Log
+      await client.auditLog.create({
+        data: {
+          id: createUuid(randomUUID()),
+          module: 'TrainingDelivery',
+          performedBy: actorId || null,
+          performedAt: new Date(),
+          entityType: 'WaitingList',
+          entityId: wl.id,
+          action: 'ENQUEUE_WAITLIST',
+          newValue: { batchId, studentId, leadId, queuePosition },
+        },
+      });
+
+      return wl;
+    };
+
+    return tx ? execute(tx) : this.prisma.$transaction(execute);
+  }
+
+  async reorderWaitlist(
+    batchId: string,
+    waitlistIds: string[],
+    actorId?: string,
+    tx?: Prisma.TransactionClient
+  ) {
+    const execute = async (client: Prisma.TransactionClient) => {
+      const batch = await this.acquireBatchLock(batchId, client);
+      const active = await this.batchRepository.findActiveWaitlist(batchId, client);
+
+      // Ensure all waitlistIds are active and correct count without duplicates
+      const activeIds = active.map((x) => x.id);
+      const hasDuplicates = new Set(waitlistIds).size !== waitlistIds.length;
+      const isValid = !hasDuplicates && waitlistIds.length === activeIds.length && waitlistIds.every((id) => activeIds.includes(id));
+      if (!isValid) {
+        throw new Error('ERR_CRS_INVALID_REORDER_PAYLOAD');
+      }
+
+      // Update positions
+      for (let i = 0; i < waitlistIds.length; i++) {
+        const id = waitlistIds[i];
+        await this.batchRepository.updateWaitlistEntry(id, { queuePosition: i + 1 }, client);
+      }
+
+      // Audit Log
+      await client.auditLog.create({
+        data: {
+          id: createUuid(randomUUID()),
+          module: 'TrainingDelivery',
+          performedBy: actorId || null,
+          performedAt: new Date(),
+          entityType: 'WaitingList',
+          entityId: batchId,
+          action: 'REORDER_WAITLIST',
+          newValue: { batchId, newSequence: waitlistIds },
+        },
+      });
+    };
+
+    return tx ? execute(tx) : this.prisma.$transaction(execute);
+  }
+
+  async manualPromoteWaitlist(
+    batchId: string,
+    waitlistId: string,
+    actorId?: string,
+    tx?: Prisma.TransactionClient
+  ) {
+    const execute = async (client: Prisma.TransactionClient) => {
+      const batch = await this.acquireBatchLock(batchId, client);
+      const list = await this.batchRepository.findWaitlist(batchId, client);
+      const entry = list.find((x) => x.id === waitlistId);
+      if (!entry || entry.isDeleted) {
+        throw new Error('ERR_CRS_WAITLIST_ENTRY_NOT_FOUND');
+      }
+
+      const correlationId = createUuid(randomUUID());
+      const aggregate = new BatchAggregate(batch);
+      const { updatedEntry, updatedCount } = aggregate.promoteWaitlistEntry(entry, correlationId, { force: false });
+
+      // Update waitlist entry status
+      await this.batchRepository.updateWaitlistEntry(waitlistId, {
+        status: updatedEntry.status,
+        promotionCorrelationId: updatedEntry.promotionCorrelationId,
+        queuePosition: 0,
+      }, client);
+
+      // Update batch enrollment count
+      await this.batchRepository.update(batchId, { currentEnrollmentCount: updatedCount }, batch.version, client);
+
+      // Shift subsequent active entries
+      const active = await this.batchRepository.findActiveWaitlist(batchId, client);
+      const remaining = active.filter((x) => x.id !== waitlistId);
+      for (let i = 0; i < remaining.length; i++) {
+        await this.batchRepository.updateWaitlistEntry(remaining[i].id, { queuePosition: i + 1 }, client);
+      }
+
+      // Emit event
+      await client.outboxEvent.create({
+        data: {
+          id: createUuid(randomUUID()),
+          eventType: 'WaitlistEntryPromoted',
+          aggregateType: 'Batch',
+          aggregateId: batchId,
+          payload: {
+            batchId,
+            studentId: entry.studentId,
+            leadId: entry.leadId,
+            correlationId,
+          },
+          status: 'Pending',
+          availableAt: new Date(),
+        },
+      });
+
+      // Audit Log
+      await client.auditLog.create({
+        data: {
+          id: createUuid(randomUUID()),
+          module: 'TrainingDelivery',
+          performedBy: actorId || null,
+          performedAt: new Date(),
+          entityType: 'WaitingList',
+          entityId: waitlistId,
+          action: 'MANUAL_PROMOTE_WAITLIST',
+          newValue: { batchId, waitlistId, correlationId, updatedCount },
+        },
+      });
+
+      return updatedEntry;
+    };
+
+    return tx ? execute(tx) : this.prisma.$transaction(execute);
+  }
+
+  async skipWaitlistEntry(
+    batchId: string,
+    waitlistId: string,
+    reason: string,
+    actorId?: string,
+    tx?: Prisma.TransactionClient
+  ) {
+    const execute = async (client: Prisma.TransactionClient) => {
+      const batch = await this.acquireBatchLock(batchId, client);
+      const list = await this.batchRepository.findWaitlist(batchId, client);
+      const entry = list.find((x) => x.id === waitlistId);
+      if (!entry || entry.isDeleted) {
+        throw new Error('ERR_CRS_WAITLIST_ENTRY_NOT_FOUND');
+      }
+
+      const aggregate = new BatchAggregate(batch);
+      const updatedEntry = aggregate.skipWaitlistEntry(entry, reason);
+
+      await this.batchRepository.updateWaitlistEntry(waitlistId, {
+        status: updatedEntry.status,
+        statusReason: updatedEntry.statusReason,
+        queuePosition: 0,
+      }, client);
+
+      // Shift subsequent active entries
+      const active = await this.batchRepository.findActiveWaitlist(batchId, client);
+      const remaining = active.filter((x) => x.id !== waitlistId);
+      for (let i = 0; i < remaining.length; i++) {
+        await this.batchRepository.updateWaitlistEntry(remaining[i].id, { queuePosition: i + 1 }, client);
+      }
+
+      // Audit Log
+      await client.auditLog.create({
+        data: {
+          id: createUuid(randomUUID()),
+          module: 'TrainingDelivery',
+          performedBy: actorId || null,
+          performedAt: new Date(),
+          entityType: 'WaitingList',
+          entityId: waitlistId,
+          action: 'SKIP_WAITLIST_ENTRY',
+          newValue: { batchId, waitlistId, reason },
+        },
+      });
+
+      return updatedEntry;
+    };
+
+    return tx ? execute(tx) : this.prisma.$transaction(execute);
+  }
+
+  async reactivateWaitlistEntry(
+    batchId: string,
+    waitlistId: string,
+    actorId?: string,
+    tx?: Prisma.TransactionClient
+  ) {
+    const execute = async (client: Prisma.TransactionClient) => {
+      const batch = await this.acquireBatchLock(batchId, client);
+      const list = await this.batchRepository.findWaitlist(batchId, client);
+      const entry = list.find((x) => x.id === waitlistId);
+      if (!entry || entry.isDeleted) {
+        throw new Error('ERR_CRS_WAITLIST_ENTRY_NOT_FOUND');
+      }
+
+      const aggregate = new BatchAggregate(batch);
+      const updatedEntry = aggregate.reactivateWaitlistEntry(entry);
+
+      const active = await this.batchRepository.findActiveWaitlist(batchId, client);
+      const queuePosition = active.length + 1;
+
+      const updated = await this.batchRepository.updateWaitlistEntry(waitlistId, {
+        status: updatedEntry.status,
+        statusReason: null,
+        queuePosition,
+      }, client);
+
+      // Audit Log
+      await client.auditLog.create({
+        data: {
+          id: createUuid(randomUUID()),
+          module: 'TrainingDelivery',
+          performedBy: actorId || null,
+          performedAt: new Date(),
+          entityType: 'WaitingList',
+          entityId: waitlistId,
+          action: 'REACTIVATE_WAITLIST_ENTRY',
+          newValue: { batchId, waitlistId, queuePosition },
+        },
+      });
+
+      return updated;
+    };
+
+    return tx ? execute(tx) : this.prisma.$transaction(execute);
+  }
+
+  async removeWaitlistEntry(
+    batchId: string,
+    waitlistId: string,
+    actorId?: string,
+    tx?: Prisma.TransactionClient
+  ) {
+    const execute = async (client: Prisma.TransactionClient) => {
+      const batch = await this.acquireBatchLock(batchId, client);
+      const list = await this.batchRepository.findWaitlist(batchId, client);
+      const entry = list.find((x) => x.id === waitlistId);
+      if (!entry || entry.isDeleted) {
+        throw new Error('ERR_CRS_WAITLIST_ENTRY_NOT_FOUND');
+      }
+      if (entry.status === 'Removed' || entry.status === 'Promoted') {
+        throw new InvalidStateTransition('Cannot remove a waitlist entry that has already been removed or promoted.');
+      }
+
+      const isWaiting = entry.status === 'Waiting';
+
+      await this.batchRepository.updateWaitlistEntry(waitlistId, {
+        status: 'Removed',
+        queuePosition: 0,
+      }, client);
+
+      if (isWaiting) {
+        // Shift subsequent active entries
+        const active = await this.batchRepository.findActiveWaitlist(batchId, client);
+        const remaining = active.filter((x) => x.id !== waitlistId);
+        for (let i = 0; i < remaining.length; i++) {
+          await this.batchRepository.updateWaitlistEntry(remaining[i].id, { queuePosition: i + 1 }, client);
+        }
+      }
+
+      // Audit Log
+      await client.auditLog.create({
+        data: {
+          id: createUuid(randomUUID()),
+          module: 'TrainingDelivery',
+          performedBy: actorId || null,
+          performedAt: new Date(),
+          entityType: 'WaitingList',
+          entityId: waitlistId,
+          action: 'REMOVE_WAITLIST_ENTRY',
+          newValue: { batchId, waitlistId },
+        },
+      });
+    };
+
+    return tx ? execute(tx) : this.prisma.$transaction(execute);
+  }
+
+  async revertPromotion(
+    batchId: string,
+    studentId: string | null,
+    leadId: string | null,
+    correlationId?: string | null,
+    reason?: string | null,
+    actorId?: string,
+    tx?: Prisma.TransactionClient
+  ) {
+    const execute = async (client: Prisma.TransactionClient) => {
+      const batch = await this.acquireBatchLock(batchId, client);
+      const list = await this.batchRepository.findWaitlist(batchId, client);
+      const entry = list.find(
+        (x) =>
+          x.status === 'Promoted' &&
+          ((studentId && x.studentId === studentId) || (leadId && x.leadId === leadId))
+      );
+
+      if (!entry) {
+        throw new Error('ERR_CRS_WAITLIST_ENTRY_NOT_FOUND');
+      }
+
+      const aggregate = new BatchAggregate(batch);
+      const { updatedEntry, updatedCount } = aggregate.revertPromotion(entry, correlationId, reason);
+
+      await this.batchRepository.updateWaitlistEntry(entry.id, {
+        status: updatedEntry.status,
+        statusReason: updatedEntry.statusReason,
+        promotionCorrelationId: null,
+      }, client);
+
+      // Decrement enrollment count
+      const updatedBatch = await this.batchRepository.update(batchId, { currentEnrollmentCount: updatedCount }, batch.version, client);
+
+      // Audit Log
+      await client.auditLog.create({
+        data: {
+          id: createUuid(randomUUID()),
+          module: 'TrainingDelivery',
+          performedBy: actorId || null,
+          performedAt: new Date(),
+          entityType: 'WaitingList',
+          entityId: entry.id,
+          action: 'REVERT_WAITLIST_PROMOTION',
+          newValue: { batchId, waitlistId: entry.id, correlationId, reason },
+        },
+      });
+
+      // Promote next candidate FIFO if waitlist enabled
+      if (updatedBatch.waitingListEnabled) {
+        const activeWaitlist = await this.batchRepository.findActiveWaitlist(batchId, client);
+        if (activeWaitlist.length > 0) {
+          const nextCandidate = activeWaitlist[0];
+          const promoCorrelationId = createUuid(randomUUID());
+          await this.batchRepository.updateWaitlistEntry(nextCandidate.id, {
+            status: 'Promoted',
+            promotionCorrelationId: promoCorrelationId,
+            queuePosition: 0,
+          }, client);
+
+          // Shift subsequent positions
+          for (let i = 1; i < activeWaitlist.length; i++) {
+            const next = activeWaitlist[i];
+            await this.batchRepository.updateWaitlistEntry(next.id, { queuePosition: next.queuePosition - 1 }, client);
+          }
+
+          // Emit outbox event
+          await client.outboxEvent.create({
+            data: {
+              id: createUuid(randomUUID()),
+              eventType: 'WaitlistEntryPromoted',
+              aggregateType: 'Batch',
+              aggregateId: batchId,
+              payload: {
+                batchId,
+                studentId: nextCandidate.studentId,
+                leadId: nextCandidate.leadId,
+                correlationId: promoCorrelationId,
+              },
+              status: 'Pending',
+              availableAt: new Date(),
+            },
+          });
+        }
+      }
+    };
+
+    return tx ? execute(tx) : this.prisma.$transaction(execute);
+  }
+
+  private async acquireBatchLock(batchId: string, client: Prisma.TransactionClient): Promise<Batch> {
+    const batches = await client.$queryRawUnsafe<any[]>(
+      'SELECT * FROM "batches" WHERE "id" = $1::uuid AND "isDeleted" = false FOR UPDATE',
+      batchId
+    );
+    if (batches.length === 0) {
+      throw new Error('ERR_CRS_BATCH_NOT_FOUND');
+    }
+    const batchData = batches[0];
+    return {
+      ...batchData,
+      startDate: new Date(batchData.startDate),
+      endDate: new Date(batchData.endDate),
+      createdAt: new Date(batchData.createdAt),
+    };
   }
 }

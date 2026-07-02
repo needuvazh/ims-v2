@@ -929,29 +929,29 @@ model BatchTrainer {
 }
 
 model WaitingList {
-  id            String    @id @default(uuid()) @db.Uuid
-  courseId      String    @db.Uuid
-  batchId       String    @db.Uuid
-  batch         Batch     @relation(fields: [batchId], references: [id])
-  studentId     String?   @db.Uuid // logical reference
-  leadId        String?   @db.Uuid // logical reference
-  queuePosition Int       @db.Integer
-  status        String    @db.VarChar(50) // Waiting, Promoted, Removed
+  id                     String    @id @default(uuid()) @db.Uuid
+  courseId               String    @db.Uuid
+  batchId                String    @db.Uuid
+  batch                  Batch     @relation(fields: [batchId], references: [id])
+  studentId              String?   @db.Uuid // logical reference
+  leadId                 String?   @db.Uuid // logical reference
+  queuePosition          Int       @db.Integer
+  status                 String    @db.VarChar(50) // Waiting, Promoted, Removed, Held, Suspended
+  statusReason           String?
+  promotionCorrelationId String?
 
-  createdAt     DateTime  @default(now()) @db.Timestamptz(6)
-  createdBy     String?   @db.Uuid
-  updatedAt     DateTime? @updatedAt @db.Timestamptz(6)
-  updatedBy     String?   @db.Uuid
-  deletedAt     DateTime? @db.Timestamptz(6)
-  deletedBy     String?   @db.Uuid
-  isDeleted     Boolean   @default(false)
+  createdAt              DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy              String?   @db.Uuid
+  updatedAt              DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy              String?   @db.Uuid
+  deletedAt              DateTime? @db.Timestamptz(6)
+  deletedBy              String?   @db.Uuid
+  isDeleted              Boolean   @default(false)
 
   @@index([courseId])
   @@index([batchId])
   @@index([studentId])
   @@index([leadId])
-  @@unique([studentId, batchId, status]) // Standard constraint to prevent duplicate active waitlist entries
-  @@unique([leadId, batchId, status]) // Standard constraint to prevent duplicate active waitlist entries
   @@map("waiting_lists")
 }
 

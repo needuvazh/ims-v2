@@ -58,7 +58,11 @@ export default async function BatchDetailPage(props: {
 
   // Fetch Waitlist entries
   const waitlist = await prisma.waitingList.findMany({
-    where: { batchId: id, isDeleted: false },
+    where: {
+      batchId: id,
+      status: { in: ['Waiting', 'Held', 'Suspended'] },
+      isDeleted: false,
+    },
     orderBy: { queuePosition: 'asc' },
   });
 

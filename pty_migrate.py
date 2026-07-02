@@ -8,9 +8,8 @@ def run():
     
     pid, fd = pty.fork()
     if pid == 0:
-        # child process
         os.chdir("packages/database")
-        os.execvpe("npx", ["npx", "prisma", "migrate", "dev", "--name", "iam_module_01_schema", "--create-only"], env)
+        os.execvpe("npx", ["npx", "prisma", "migrate", "dev"], env)
     else:
         # parent process
         output = b""

@@ -10,11 +10,9 @@ import {
 import { batchService } from '../../../../../../lib/runtime';
 import { batchErrorResponse } from '../../../route';
 import { prisma } from '@ims/database';
-import { createUuid } from '@ims/shared-kernel';
-import { randomUUID } from 'crypto';
 
 const promoteSchema = z.object({
-  candidateId: z.string().uuid(),
+  waitlistId: z.string().uuid(),
 });
 
 function problemJson(
@@ -42,7 +40,7 @@ export async function POST(
 ) {
   const { id } = await params;
   return withRouteObservability(request.headers, async () =>
-    withPermission(request, 'enrollment.create', async ({ session }) => {
+    withPermission(request, 'batch.waitlist.manage', async ({ session }) => {
       const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
       let payload: unknown;
@@ -72,95 +70,32 @@ export async function POST(
       }
 
       try {
-        const { candidateId } = parsed.data;
+        const { waitlistId } = parsed.data;
 
-        // Perform the promotion inside a database transaction to lock records and ensure consistency
-        const result = await prisma.$transaction(async (tx) => {
-          // Lock batch row
-          const batches = await tx.$queryRawUnsafe<any[]>(
-            'SELECT * FROM "batches" WHERE "id" = $1::uuid AND "isDeleted" = false FOR UPDATE',
-            id
-          );
-          if (batches.length === 0) {
-            throw new Error('ERR_CRS_BATCH_NOT_FOUND');
-          }
-          const batch = batches[0];
+        // Fetch batch
+        const batch = await batchService.batchRepository.findById(id);
+        if (!batch) {
+          throw new Error('ERR_CRS_BATCH_NOT_FOUND');
+        }
 
-          // Fetch waitlist entry
-          const entry = await tx.waitingList.findUnique({
-            where: { id: candidateId },
-          });
-          if (!entry || entry.batchId !== id || entry.status !== 'Waiting') {
-            throw new Error('ERR_CRS_WAITLIST_ENTRY_NOT_FOUND');
-          }
-
-          // Enforce capacity limits
-          if (batch.currentEnrollmentCount >= batch.capacity && !batch.allowOverbooking) {
-            throw new Error('ERR_CRS_BATCH_FULL');
-          }
-
-          // Promote candidate
-          const promoted = await tx.waitingList.update({
-            where: { id: candidateId },
-            data: { status: 'Promoted' },
-          });
-
-          // Shift subsequent active entries in queue
-          const activeQueue = await tx.waitingList.findMany({
-            where: { batchId: id, status: 'Waiting', isDeleted: false },
-            orderBy: { queuePosition: 'asc' },
-          });
-          for (const nextEntry of activeQueue) {
-            if (nextEntry.queuePosition > entry.queuePosition) {
-              await tx.waitingList.update({
-                where: { id: nextEntry.id },
-                data: { queuePosition: nextEntry.queuePosition - 1 },
-              });
-            }
-          }
-
-          // Increment enrollment count
-          const updatedBatch = await tx.batch.update({
-            where: { id },
-            data: {
-              currentEnrollmentCount: { increment: 1 },
-              version: { increment: 1 },
-            },
-          });
-
-          // Write outbox event
-          await tx.outboxEvent.create({
-            data: {
-              id: createUuid(randomUUID()),
-              eventType: 'WaitlistStudentPromoted',
-              aggregateType: 'Batch',
-              aggregateId: id,
-              payload: {
-                batchId: id,
-                studentId: entry.studentId,
-                leadId: entry.leadId,
-              },
-              status: 'Pending',
-              availableAt: new Date(),
-            },
-          });
-
-          // Log Audit event
-          await tx.auditLog.create({
-            data: {
-              id: createUuid(randomUUID()),
-              module: 'TrainingDelivery',
-              performedBy: session.userId,
-              performedAt: new Date(),
-              entityType: 'WaitingList',
-              entityId: candidateId,
-              action: 'ManualPromote',
-              newValue: { ...promoted, batchEnrollmentCount: updatedBatch.currentEnrollmentCount },
-            },
-          });
-
-          return promoted;
+        // Branch-scoping guard
+        const hasAccess = await prisma.userBranchAccess.findFirst({
+          where: { userId: session.userId, branchId: batch.branchId, status: 'Active' },
         });
+        if (!hasAccess) {
+          const userRoles = await prisma.userRole.findMany({
+            where: { userId: session.userId },
+            include: { role: true },
+          });
+          const isSuperAdmin = userRoles.some(
+            (ur) => ur.role.roleCode === 'SUPER_ADMIN' || ur.role.roleCode === 'OWNER'
+          );
+          if (!isSuperAdmin) {
+            throw new Error('ERR_IAM_INSUFFICIENT_PERMISSIONS');
+          }
+        }
+
+        const result = await batchService.manualPromoteWaitlist(id, waitlistId, session.userId);
 
         const response = NextResponse.json(
           {
@@ -179,6 +114,14 @@ export async function POST(
         return response;
       } catch (error) {
         logger.error('api.batches.waitlist-promote.failed', { status: 'failed', error: error as Error });
+        if ((error as Error).message === 'ERR_CRS_BATCH_FULL') {
+          return problemJson(
+            409,
+            'Batch is full',
+            'Cannot promote candidate because the batch is full and overbooking is disabled.',
+            'ERR_CRS_BATCH_FULL'
+          );
+        }
         return batchErrorResponse(error as Error);
       }
     })

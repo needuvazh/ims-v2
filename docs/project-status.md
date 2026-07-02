@@ -1,6 +1,6 @@
 # ASTI Integrated Institute Management System (IMS) - Project Status Document (PSD)
 
-**Version:** 3.6.0  
+**Version:** 3.7.0  
 **Last Updated:** 2026-07-02  
 **Document Owner:** ASTI Technical Program Manager & Enterprise Architect  
 **Project Scope:** Single-client implementation for Al Saud Training Institute (ASTI)
@@ -16,12 +16,12 @@ architecture decision records, OpenSpec change proposals, and codebase milestone
 into a unified tracking index.
 
 * **Project Name:** ASTI Integrated Institute Management System (IMS)
-* **Current Version:** v3.6.0 (Core Foundation, Course & Batch Management, Trainer Assignment & Conflicts)
+* **Current Version:** v3.7.0 (Core Foundation, Course & Batch Management, Trainer Assignment & Waitlists)
 * **Last Updated:** 2026-07-02
 * **Document Owner:** ASTI Technical Program Manager & Enterprise Architect
 * **Current Phase:** Core Workflow Implementation & Testing
-* **Overall Progress (%):** **38%** (86 completed FRD requirements out of the total 226)
-* **Overall Health:** **Green** (Core foundation of IAM and Organization completed. CRM core flows, follow-up scheduling workflows, worker auto-assignments, Admissions conversion handoffs, CRM Dashboards, Course Catalog, Batch Management, and Trainer Assignment with Conflict Validator implemented and verified.)
+* **Overall Progress (%):** **40%** (90 completed FRD requirements out of the total 226)
+* **Overall Health:** **Green** (Core foundation of IAM and Organization completed. CRM core flows, follow-up scheduling workflows, worker auto-assignments, Admissions conversion handoffs, CRM Dashboards, Course Catalog, Batch Management, Trainer Assignment, and FIFO Batch Waitlists with concurrency protection implemented and verified.)
 
 ---
 
@@ -68,7 +68,7 @@ into a unified tracking index.
 | **Admissions** | Approved | Draft | Approved | Approved | Draft | In Progress | In Progress (Stub) | Completed (BE) | In Progress |
 | **Student Management** | Approved | Not Started | Draft | Not Started | Draft (Shell) | Planned | Not Started | Not Started | Under Review |
 | **Course Management** | Approved | Approved | Approved | Approved | Approved | Implemented | Completed | Completed | Complete (Course Catalog) |
-| **Batch Management** | Approved | Approved | Approved | Approved | Completed | Implemented | Completed | Completed | Complete (Trainer Assignment) |
+| **Batch Management** | Approved | Approved | Approved | Approved | Completed | Implemented | Completed | Completed | Complete (Waitlists & Trainer Assignment) |
 | **Attendance** | Approved | Not Started | Not Started | Not Started | Draft (Shell) | Planned | Not Started | Not Started | Under Review |
 | **Finance** | Approved | Not Started | Not Started | Not Started | Draft (Shell) | Planned | Not Started | Not Started | Under Review |
 | **Corporate Training** | Approved | Not Started | Not Started | Not Started | Not Started | Planned | Not Started | Not Started | Under Review |
@@ -152,8 +152,15 @@ complete implementation and code-review sync.
 | `crm-portal-ui-scoped-filtering` | CRM Portal UI & Scoped Filtering | Implemented | CRM, Portal UI | Approved | Interactive page views for `/leads` and `/inquiries`, Counselor-scoped filtering, form validations, timeline stepper, notes, duplicate bypass modal. |
 | `crm-workflows-followup-scheduling` | Workflows & Follow-up Scheduling | Implemented | CRM, Worker, Database, Portal UI | Approved | Dynamic follow-up scheduling, automatic counselor workload-based assignment, hourly sweeping job, and concurrency protection. |
 | `trainer-assignment` | Trainer Assignment & Conflict Validator | Implemented | Course Management, Portal UI, Database | Approved | Implemented trainer assignment APIs, server actions, schedule conflict validator UI steps & modals. |
+| `batch-waitlist-spec` | Course Batch Waitlist Management | Implemented | Batch Management, Database | Approved | Pessimistic locking, auto-promotions, failed enrollment reversion, reactivations, reordering UI. |
 
-### Details for Recently Completed Changes (2026-07-01)
+### Details for Recently Completed Changes (2026-07-02)
+
+#### `batch-waitlist-spec`
+* **Business Reason:** Enable fair, automated FIFO waitlisting for full batches, allowing seamless seat release promotions and transaction-safe manual overrides.
+* **Technical Impact:** Configured filtered unique PostgreSQL indexes to prevent double active queuing; implemented parent-level pessimistic row-locking (`FOR UPDATE`) in all waitlist write paths; wired up `EnrollmentCreationFailed` outbox listeners to revert failed enrollments and auto-promote next candidates; added reorder, skip reason, reactivate, and delete endpoints and server actions; resolved raw waitlist UUID labels in UI using database-driven name lookups.
+* **Required Document Updates:** FRD Module 06, API Specs, and Database Dictionary updated.
+* **Required Implementation Tasks:** Waitlist service methods, Next.js API endpoints, revalidate server actions, list reordering UI handles, Vitest integration tests, Playwright E2E tests.
 
 #### `crm-core-models-apis`
 * **Business Reason:** Establish a comprehensive, secure system entry point to ensure raw customer inquiries, 
@@ -430,9 +437,9 @@ The following variables are required to build and run the monorepo:
 * **Linter Pipeline:** `pnpm lint` $\rightarrow$ **100% Passing** (with 58 style warnings)
 * **Formatter Check:** `pnpm format` $\rightarrow$ **Completed** (with Prettier configuration warnings)
 * **Test Runners:**
-  * Unit Tests (Vitest): **138 Tests** $\rightarrow$ **100% Passing**
-  * Integration Tests (Prisma/Vitest): **0 Tests**
-  * E2E Tests (Playwright): **3 Tests** $\rightarrow$ **100% Passing**
+  * Unit Tests (Vitest): **146 Tests** $\rightarrow$ **100% Passing**
+  * Integration Tests (Prisma/Vitest): **4 Tests** $\rightarrow$ **100% Passing**
+  * E2E Tests (Playwright): **4 Tests** $\rightarrow$ **100% Passing**
 
 ---
 
@@ -440,7 +447,7 @@ The following variables are required to build and run the monorepo:
 
 ```json
 {
-  "currentModule": "Admissions / CRM",
+  "currentModule": "Admissions / Batch Waitlist",
   "currentPhase": "Workflow Integration",
   "latestApprovedDocuments": [
     "docs/architecture/ddd/ddd-context-map.md",
@@ -453,7 +460,6 @@ The following variables are required to build and run the monorepo:
   "activeOpenSpecProposals": [],
   "pendingImplementationTasks": [
     "Design and build the central Enrollment aggregate root package (build-enrollment-aggregate-foundation)",
-    "Implement Course and Batch management models, pricing overrides, and batch scheduling (implement-course-batch-management)",
     "Design and implement the core billing, invoicing, and fee installment workflows for Finance (implement-finance-receivables-foundation)"
   ],
   "knownConstraints": {
@@ -465,7 +471,7 @@ The following variables are required to build and run the monorepo:
   },
   "currentPriorities": [
     "1. Start the implementation plan for build-enrollment-aggregate-foundation",
-    "2. Start the design specification details for implement-course-batch-management"
+    "2. Start the design specification details for implement-finance-receivables-foundation"
   ]
 }
 ```

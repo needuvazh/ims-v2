@@ -242,6 +242,22 @@ async function processOutboxEvents() {
           const payload = event.payload as { batchId: string; releasedSeats?: number };
           logger.info(`Handling EnrollmentCancelled for batch ${payload.batchId}`);
           await batchService.releaseSeatAndPromote(payload.batchId, payload.releasedSeats || 1);
+        } else if (event.eventType === 'EnrollmentCreationFailed') {
+          const payload = event.payload as {
+            batchId: string;
+            studentId?: string | null;
+            leadId?: string | null;
+            correlationId?: string | null;
+            reason?: string | null;
+          };
+          logger.info(`Handling EnrollmentCreationFailed for batch ${payload.batchId}`);
+          await batchService.revertPromotion(
+            payload.batchId,
+            payload.studentId || null,
+            payload.leadId || null,
+            payload.correlationId || null,
+            payload.reason || null
+          );
         } else {
           // TODO: In Phase 2, route event.payload to the actual domain handlers.
           // For Phase 1, we just simulate processing to ensure the loop works.

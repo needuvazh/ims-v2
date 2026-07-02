@@ -37,7 +37,7 @@ export const CreateCourseSchema = z.object({
   durationValue: z.number().int().positive(),
   allowWalkInCompletion: z.boolean().default(false),
   effectiveStartDate: z.coerce.date(),
-  effectiveEndDate: z.coerce.date().optional().nullable(),
+  effectiveEndDate: z.preprocess((val) => (val === '' ? null : val), z.coerce.date().optional().nullable()),
 });
 
 export const UpdateCourseSchema = CreateCourseSchema.partial().omit({ courseCode: true });

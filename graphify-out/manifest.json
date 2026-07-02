@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "packages/database/prisma/seed.ts": {
-    "mtime": 1782965604.5666647,
-    "ast_hash": "265aed13a23b564d8a454a428d00b874",
+    "mtime": 1782970939.8323019,
+    "ast_hash": "c8f2b5da1e4926b85ca42b912872bf2f",
     "semantic_hash": ""
   },
   "packages/database/src/client.ts": {
@@ -2285,8 +2285,8 @@
     "semantic_hash": ""
   },
   "docs/project-status.md": {
-    "mtime": 1782961164.021062,
-    "ast_hash": "294055e345d3ebad7fe95a9434008ad2",
+    "mtime": 1782969796.7157545,
+    "ast_hash": "b587527e682f4443e096bfdf44ce4676",
     "semantic_hash": ""
   },
   "memory/PRD.md": {
@@ -2655,8 +2655,8 @@
     "semantic_hash": ""
   },
   "apps/worker/src/index.ts": {
-    "mtime": 1782930646.0791194,
-    "ast_hash": "01cdf296c9d62350b6ea927e5832b7c3",
+    "mtime": 1782969260.562014,
+    "ast_hash": "30df92b92d45d601b3025b4c567bff5e",
     "semantic_hash": ""
   },
   "apps/worker/tsconfig.json": {
@@ -3530,8 +3530,8 @@
     "semantic_hash": ""
   },
   "pty_migrate.py": {
-    "mtime": 1782756201.9909613,
-    "ast_hash": "188bdf802b2e5dec77653508126fbf06",
+    "mtime": 1782969155.8158937,
+    "ast_hash": "d74a88ae6d41f884f846878ce73b1ce5",
     "semantic_hash": ""
   },
   "run_migrate.js": {
@@ -4370,8 +4370,8 @@
     "semantic_hash": ""
   },
   "prompts/useful_prompts.md": {
-    "mtime": 1782930619.5449772,
-    "ast_hash": "fd1ed7db7f12fe9d57464d58808da621",
+    "mtime": 1782966828.6118438,
+    "ast_hash": "b967d47ef498a1f16109aeed632737d0",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/crm/inquiries/[id]/qualify/route.ts": {
@@ -4949,34 +4949,9 @@
     "ast_hash": "17338e66f66e22f6960a28d708b51568",
     "semantic_hash": ""
   },
-  "openspec/changes/batch-waitlist-spec/.openspec.yaml": {
-    "mtime": 1782921641.3448148,
-    "ast_hash": "bf78f855d6a0425db6bc305ffd968e0f",
-    "semantic_hash": ""
-  },
   "openspec/changes/course-pricing-discounts-spec/.openspec.yaml": {
     "mtime": 1782921637.292423,
     "ast_hash": "bf78f855d6a0425db6bc305ffd968e0f",
-    "semantic_hash": ""
-  },
-  "openspec/changes/batch-waitlist-spec/design.md": {
-    "mtime": 1782922244.3991873,
-    "ast_hash": "fecddfc63d32c78fab2c03bc5565a4c3",
-    "semantic_hash": ""
-  },
-  "openspec/changes/batch-waitlist-spec/proposal.md": {
-    "mtime": 1782921714.4298465,
-    "ast_hash": "6b7c94d44ed8316ee26d712e43248109",
-    "semantic_hash": ""
-  },
-  "openspec/changes/batch-waitlist-spec/specs/batch-waitlist/spec.md": {
-    "mtime": 1782922542.6906893,
-    "ast_hash": "aed69401dd0db03e8d57aa898b36d634",
-    "semantic_hash": ""
-  },
-  "openspec/changes/batch-waitlist-spec/tasks.md": {
-    "mtime": 1782921722.6232073,
-    "ast_hash": "966d1761fa2519a4f6dead7a3fa88f1a",
     "semantic_hash": ""
   },
   "openspec/changes/course-pricing-discounts-spec/design.md": {
@@ -5050,8 +5025,8 @@
     "semantic_hash": ""
   },
   "packages/course-catalog/src/domain/validation-schemas.ts": {
-    "mtime": 1782927423.6733415,
-    "ast_hash": "ec06db969be1be6b3ea8ee3d4cbf78c1",
+    "mtime": 1782972119.0793505,
+    "ast_hash": "e6c45a8cf34a0381078306de84af5314",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/index.ts": {
@@ -5125,8 +5100,8 @@
     "semantic_hash": ""
   },
   "tests/e2e/courses.spec.ts": {
-    "mtime": 1782927964.1776917,
-    "ast_hash": "67a80430b2a924727a4b292eaddabf2b",
+    "mtime": 1782972055.6630006,
+    "ast_hash": "1c5ff6cda0ebeebe9b1cc953f544ddfe",
     "semantic_hash": ""
   },
   "openspec/changes/archive/2026-07-01-course-catalog-spec/.openspec.yaml": {
@@ -5160,8 +5135,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/[id]/page.tsx": {
-    "mtime": 1782966184.346954,
-    "ast_hash": "b5b798927e470cca6fd6fea0afb58a3c",
+    "mtime": 1782970130.0203912,
+    "ast_hash": "d2fcc65fb4e259c98926659e33dd9be0",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/_components/batch-form.tsx": {
@@ -5170,8 +5145,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/actions.ts": {
-    "mtime": 1782964573.0045516,
-    "ast_hash": "b28415f79dd8ff5ddecae05946110170",
+    "mtime": 1782969928.71629,
+    "ast_hash": "ec77560de91210ae2ce4e32833432b6d",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/new/page.tsx": {
@@ -5180,8 +5155,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/page.tsx": {
-    "mtime": 1782930133.9751158,
-    "ast_hash": "fd1c3a168104d2025c4d52605b7f1ccd",
+    "mtime": 1782969684.296202,
+    "ast_hash": "f116dcff4844de8e44280601679151f9",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/student-lookup/page.tsx": {
@@ -5205,13 +5180,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/batches/[id]/waitlist/promote/route.ts": {
-    "mtime": 1782930102.1529214,
-    "ast_hash": "05bab1b10ab47befbc110322e54b834c",
+    "mtime": 1782969289.7422354,
+    "ast_hash": "d5eca4bb2a15ae6dad16b358953f1746",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/batches/[id]/waitlist/route.ts": {
-    "mtime": 1782965612.8382623,
-    "ast_hash": "1f2a474fbfb9191a7be627d26cb3e544",
+    "mtime": 1782973666.512758,
+    "ast_hash": "933ff2c061eadf65728d25418fdabd02",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/batches/route.ts": {
@@ -5235,18 +5210,18 @@
     "semantic_hash": ""
   },
   "packages/training-delivery/src/application/batch-service.ts": {
-    "mtime": 1782964105.5223439,
-    "ast_hash": "c825736812b06ac11cc33396f3517543",
+    "mtime": 1782973678.8976662,
+    "ast_hash": "0a40ba59f0857f6f8c6f3a5e71cf445e",
     "semantic_hash": ""
   },
   "packages/training-delivery/src/domain/batch.ts": {
-    "mtime": 1782929927.9427845,
-    "ast_hash": "09ac6891c100b54cfc8b05ba53dc9d56",
+    "mtime": 1782973656.3444023,
+    "ast_hash": "2cef34250f45e1914cdbd5cf822edf1b",
     "semantic_hash": ""
   },
   "packages/training-delivery/src/domain/errors.ts": {
-    "mtime": 1782960871.8551018,
-    "ast_hash": "b74d3534ba1b1edacaeca9b7092b6868",
+    "mtime": 1782973646.5719457,
+    "ast_hash": "5057c454c1bd6d71221cbfb020b8e36e",
     "semantic_hash": ""
   },
   "packages/training-delivery/src/domain/repositories.ts": {
@@ -5260,13 +5235,13 @@
     "semantic_hash": ""
   },
   "packages/training-delivery/src/infrastructure/batch-repository.ts": {
-    "mtime": 1782929940.3536747,
-    "ast_hash": "1bca150a8c587308886ce870426e63c9",
+    "mtime": 1782969193.6449087,
+    "ast_hash": "39492e52cba5c27f628d4a6333891183",
     "semantic_hash": ""
   },
   "packages/training-delivery/tests/training-delivery.spec.ts": {
-    "mtime": 1782964178.0159855,
-    "ast_hash": "b38ebb6115cff5d07c955d044a315c8a",
+    "mtime": 1782973697.66431,
+    "ast_hash": "09cffd33df44e0a28aef39abcf0edb94",
     "semantic_hash": ""
   },
   "packages/training-delivery/tsconfig.json": {
@@ -5280,8 +5255,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/_components/batch-details-tabs.tsx": {
-    "mtime": 1782964146.965397,
-    "ast_hash": "117282b66a3d08e390fbee527c4353f3",
+    "mtime": 1782969385.6624274,
+    "ast_hash": "ada54c6018a1b9929e7a37fdae4a46f4",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/[id]/edit/page.tsx": {
@@ -5357,6 +5332,81 @@
   "packages/database/prisma/migrations/20260702100000_add_student_profiles_and_admission_refs/migration.sql": {
     "mtime": 1782966705.2783425,
     "ast_hash": "74d1be792bbf7dab08eb44455ec00446",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/batches/_components/batches-client-list.tsx": {
+    "mtime": 1782969677.895089,
+    "ast_hash": "97bbb3a323b34d5acb6e3e5e408a0ad4",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/batches/[id]/waitlist/[waitlistId]/route.ts": {
+    "mtime": 1782969715.7314916,
+    "ast_hash": "de9a8de16d537c4856d8bd9fbaa48948",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/batches/[id]/waitlist/reactivate/route.ts": {
+    "mtime": 1782969301.7642584,
+    "ast_hash": "b6403f99632e82ed8497dfe0d3427117",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/batches/[id]/waitlist/reorder/route.ts": {
+    "mtime": 1782969293.0147057,
+    "ast_hash": "e3c2c2ac4a4804e695ba3093370dcba9",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/batches/[id]/waitlist/skip/route.ts": {
+    "mtime": 1782969299.0067425,
+    "ast_hash": "70d81408d37878d20922900f913dab7c",
+    "semantic_hash": ""
+  },
+  "packages/database/prisma/migrations/20260702104500_update_waitlist_model/migration.sql": {
+    "mtime": 1782969150.3316495,
+    "ast_hash": "840fab95ae64e0ce08d26f18a52d8acb",
+    "semantic_hash": ""
+  },
+  "tests/batch-waitlist-integration.spec.ts": {
+    "mtime": 1782973772.853066,
+    "ast_hash": "7b439122ba4126124d36fa45837c3f18",
+    "semantic_hash": ""
+  },
+  "tests/e2e/batch-waitlist.spec.ts": {
+    "mtime": 1782973804.974352,
+    "ast_hash": "c3b71af32ab32edef423bbe9920bb3f1",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/batches/[id]/waitlist/route.test.ts": {
+    "mtime": 1782973718.478837,
+    "ast_hash": "5360574c34289eed7bae2e059a70c87f",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-02-batch-waitlist-spec/.openspec.yaml": {
+    "mtime": 1782921641.3448148,
+    "ast_hash": "bf78f855d6a0425db6bc305ffd968e0f",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-02-batch-waitlist-spec/design.md": {
+    "mtime": 1782968610.7631426,
+    "ast_hash": "339efcf28f95479fcc073b514e73206a",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-02-batch-waitlist-spec/proposal.md": {
+    "mtime": 1782968605.748239,
+    "ast_hash": "4f7eab983487a31d4f749c41a6a675d6",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-02-batch-waitlist-spec/specs/batch-waitlist/spec.md": {
+    "mtime": 1782968614.814836,
+    "ast_hash": "5771e2af7bc8a26717feb5c246170846",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-02-batch-waitlist-spec/tasks.md": {
+    "mtime": 1782969816.860312,
+    "ast_hash": "ec317c240dae10eef388d39fc14ad055",
+    "semantic_hash": ""
+  },
+  "openspec/specs/batch-waitlist/spec.md": {
+    "mtime": 1782975563.9408455,
+    "ast_hash": "cecc37c34713fa652db29d4d2f169f97",
     "semantic_hash": ""
   }
 }

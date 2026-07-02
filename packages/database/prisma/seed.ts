@@ -77,6 +77,7 @@ const systemPermissions = [
   { moduleCode: 'courses',      featureCode: 'batches',    actionCode: 'create',  permissionCode: 'batch.delivery.create',           permissionType: 'Action' as const, description: 'Create course delivery batches.' },
   { moduleCode: 'courses',      featureCode: 'batches',    actionCode: 'update',  permissionCode: 'batch.delivery.update',           permissionType: 'Action' as const, description: 'Update course delivery batches.' },
   { moduleCode: 'courses',      featureCode: 'batches',    actionCode: 'transition', permissionCode: 'batch.delivery.transition',      permissionType: 'Action' as const, description: 'Transition course delivery batches status.' },
+  { moduleCode: 'courses',      featureCode: 'batches',    actionCode: 'waitlist',permissionCode: 'batch.waitlist.manage',           permissionType: 'Action' as const, description: 'Manage batch waitlists.' },
   { moduleCode: 'scheduling',   featureCode: 'sessions',    actionCode: 'manage', permissionCode: 'schedule.manage',                permissionType: 'Action' as const, description: 'Create and update schedules.' },
   
   // Attendance & Completion
@@ -222,6 +223,7 @@ async function seed() {
     'batch.delivery.create',
     'batch.delivery.update',
     'batch.delivery.transition',
+    'batch.waitlist.manage',
     'attendance.record', 'result.record', 'certificate.generate',
     'certificate.verify', 'dashboard.branch', 'dashboard.security', 'dashboard.view',
     'REPORTING_VIEW_CRM_DASHBOARD', 'REPORTING_VIEW_COUNSELOR_METRICS', 'LEAD_VIEW_ALL_IN_BRANCH'
@@ -681,13 +683,83 @@ async function seed() {
     }
   }
 
+  // Seed Mock Student Profiles
+  console.log('\n🌱 Seeding mock students & CRM leads...');
+  const firstCourse = await prisma.course.findFirst({ where: { isDeleted: false } });
+  const firstCourseId = firstCourse ? firstCourse.id : crypto.randomUUID();
+
+  const mockStudents = [
+    { firstName: 'Ahmed', lastName: 'Al-Balushi', email: 'ahmed.balushi@asti.edu', mobile: '+96899123456', number: 'STU-2026-0001' },
+    { firstName: 'Fatima', lastName: 'Al-Hashmi', email: 'fatima.hashmi@asti.edu', mobile: '+96899123457', number: 'STU-2026-0002' },
+    { firstName: 'Said', lastName: 'Al-Siyabi', email: 'said.siyabi@asti.edu', mobile: '+96899123458', number: 'STU-2026-0003' },
+    { firstName: 'Muna', lastName: 'Al-Riyami', email: 'muna.riyami@asti.edu', mobile: '+96899123459', number: 'STU-2026-0004' }
+  ];
+
+  for (const ms of mockStudents) {
+    const person = await prisma.person.create({
+      data: {
+        id: crypto.randomUUID(),
+        firstName: ms.firstName,
+        lastName: ms.lastName,
+        email: ms.email,
+        mobile: ms.mobile,
+      }
+    });
+
+    await prisma.studentProfile.create({
+      data: {
+        id: crypto.randomUUID(),
+        personId: person.id,
+        studentNumber: ms.number,
+        status: 'Active',
+      }
+    });
+    console.log(`  ✓ Mock Student created: ${ms.firstName} ${ms.lastName}`);
+  }
+
+  // Seed Mock Leads
+  const mockLeads = [
+    { firstName: 'Khalid', lastName: 'Al-Busaidi', email: 'khalid.busaidi@gmail.com', mobile: '+96899789012', number: 'LD-2026-0001' },
+    { firstName: 'Asma', lastName: 'Al-Kharusi', email: 'asma.kharusi@gmail.com', mobile: '+96899789013', number: 'LD-2026-0002' },
+    { firstName: 'Salim', lastName: 'Al-Mamari', email: 'salim.mamari@gmail.com', mobile: '+96899789014', number: 'LD-2026-0003' }
+  ];
+
+  for (const ml of mockLeads) {
+    const person = await prisma.person.create({
+      data: {
+        id: crypto.randomUUID(),
+        firstName: ml.firstName,
+        lastName: ml.lastName,
+        email: ml.email,
+        mobile: ml.mobile,
+      }
+    });
+
+    await prisma.lead.create({
+      data: {
+        id: crypto.randomUUID(),
+        leadNumber: ml.number,
+        personId: person.id,
+        branchId: riyadhBranch.id,
+        firstName: ml.firstName,
+        lastName: ml.lastName,
+        email: ml.email,
+        phone: ml.mobile,
+        interestedCourseId: firstCourseId,
+        stage: 'New',
+        source: 'Web',
+      }
+    });
+    console.log(`  ✓ Mock CRM Lead created: ${ml.firstName} ${ml.lastName}`);
+  }
+
   console.log('\n🌱 Seed script complete! Database seeded successfully.');
 
 }
 
 seed()
   .catch((err) => {
-    console.error('❌ Seed failed:', err);
+    console.error('❌ Seed failed:', err.message, err.stack || err);
     process.exit(1);
   })
   .finally(() => prisma.$disconnect());

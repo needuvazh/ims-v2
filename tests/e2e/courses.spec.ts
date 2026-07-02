@@ -37,7 +37,8 @@ test.describe('Course Catalog UI Flow', () => {
     await page.locator('input[name="courseCode"]').fill(uniqueCode);
     
     // Select first department option
-    await page.locator('select[name="departmentId"]').selectOption({ index: 1 });
+    await page.getByRole('button', { name: 'Select department' }).click();
+    await page.locator('div.cursor-pointer', { hasText: 'Information Technology' }).click();
     
     await page.locator('input[name="nameEnglish"]').fill('Playwright Test Course');
     await page.locator('input[name="nameArabic"]').fill('دورة اختبار بلاي رايت');
@@ -45,9 +46,14 @@ test.describe('Course Catalog UI Flow', () => {
     await page.locator('textarea[name="descriptionArabic"]').fill('دورة آلية للاختبارات الكاملة.');
 
     // Select category and classification
-    await page.locator('select[name="categoryId"]').selectOption({ index: 1 });
-    await page.locator('select[name="courseClassification"]').selectOption('Regular');
-    await page.locator('select[name="durationType"]').selectOption('Weeks');
+    await page.getByRole('button', { name: 'Select category (Optional)' }).click();
+    await page.locator('div.cursor-pointer', { hasText: 'Technology & Engineering' }).click();
+
+    await page.getByRole('button', { name: 'Regular (Open Batches)' }).click();
+    await page.locator('div.cursor-pointer', { hasText: 'Regular (Open Batches)' }).click();
+
+    await page.getByRole('button', { name: 'Weeks' }).click();
+    await page.locator('div.cursor-pointer', { hasText: 'Weeks' }).click();
     await page.locator('input[name="durationValue"]').fill('10');
     
     await page.locator('input[name="effectiveStartDate"]').fill('2026-07-02');

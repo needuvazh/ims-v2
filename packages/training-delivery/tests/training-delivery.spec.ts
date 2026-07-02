@@ -10,7 +10,9 @@ const mockBatchRepository = {
   findByCode: vi.fn(),
   findAll: vi.fn(),
   findActiveWaitlist: vi.fn(),
+  findWaitlist: vi.fn(),
   addWaitlistEntry: vi.fn(),
+  updateWaitlistEntry: vi.fn(),
   findTrainers: vi.fn(),
   findPrimaryTrainer: vi.fn(),
   findSessions: vi.fn(),
@@ -35,6 +37,7 @@ const mockPrisma = {
   batchTrainer: { updateMany: vi.fn() },
   auditLog: { create: vi.fn() },
   outboxEvent: { create: vi.fn() },
+  $queryRawUnsafe: vi.fn(),
   $transaction: vi.fn((cb) => cb(mockPrisma)),
 } as any;
 
@@ -384,4 +387,299 @@ test('BatchService.checkTrainerConflicts should reject if actor lacks branch acc
       actorId
     )
   ).rejects.toThrow('ERR_IAM_INSUFFICIENT_PERMISSIONS');
+});
+
+test('BatchService.enqueueWaitlist should successfully add student or lead to active waitlist queue', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const studentId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  
+  mockPrisma.$queryRawUnsafe.mockResolvedValueOnce([{
+    id: batchId,
+    courseId: createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+    capacity: 20,
+    currentEnrollmentCount: 20,
+    waitingListEnabled: true,
+    status: 'OpenForEnrollment',
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+    createdAt: new Date(),
+  }]);
+
+  mockBatchRepository.findActiveWaitlist.mockResolvedValueOnce([]);
+  mockBatchRepository.addWaitlistEntry.mockResolvedValueOnce({
+    id: 'wl-1',
+    studentId,
+    queuePosition: 1,
+    status: 'Waiting',
+  });
+
+  const result = await batchService.enqueueWaitlist(batchId, studentId, null, 'user-id');
+  expect(result.status).toBe('Waiting');
+  expect(result.queuePosition).toBe(1);
+  expect(mockBatchRepository.addWaitlistEntry).toHaveBeenCalled();
+});
+
+test('BatchService.enqueueWaitlist should reject duplicate active entries', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const studentId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockPrisma.$queryRawUnsafe.mockResolvedValueOnce([{
+    id: batchId,
+    courseId: createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+    capacity: 20,
+    currentEnrollmentCount: 20,
+    waitingListEnabled: true,
+    status: 'OpenForEnrollment',
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+    createdAt: new Date(),
+  }]);
+
+  mockBatchRepository.findActiveWaitlist.mockResolvedValueOnce([
+    { id: 'wl-existing', studentId, status: 'Waiting' }
+  ]);
+
+  await expect(
+    batchService.enqueueWaitlist(batchId, studentId, null, 'user-id')
+  ).rejects.toThrow('ERR_CRS_DUPLICATE_WAITLIST');
+});
+
+test('BatchService.manualPromoteWaitlist should fail if capacity is full and overbooking is false', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const wlId = 'wl-1';
+
+  mockPrisma.$queryRawUnsafe.mockResolvedValueOnce([{
+    id: batchId,
+    courseId: createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+    capacity: 20,
+    currentEnrollmentCount: 20,
+    waitingListEnabled: true,
+    allowOverbooking: false,
+    status: 'OpenForEnrollment',
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+    createdAt: new Date(),
+  }]);
+
+  mockBatchRepository.findWaitlist.mockResolvedValueOnce([
+    { id: wlId, batchId, status: 'Waiting', studentId: 'stu-1' }
+  ]);
+
+  await expect(
+    batchService.manualPromoteWaitlist(batchId, wlId, 'user-id')
+  ).rejects.toThrow('ERR_CRS_BATCH_FULL');
+});
+
+test('BatchService.skipWaitlistEntry should transition status to Held and shift positions', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const wlId = 'wl-1';
+
+  mockPrisma.$queryRawUnsafe.mockResolvedValueOnce([{
+    id: batchId,
+    courseId: createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+    status: 'OpenForEnrollment',
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+    createdAt: new Date(),
+  }]);
+
+  mockBatchRepository.findWaitlist.mockResolvedValueOnce([
+    { id: wlId, batchId, status: 'Waiting', studentId: 'stu-1', queuePosition: 1 }
+  ]);
+  mockBatchRepository.findActiveWaitlist.mockResolvedValueOnce([
+    { id: wlId, status: 'Waiting', queuePosition: 1 },
+    { id: 'wl-2', status: 'Waiting', queuePosition: 2 }
+  ]);
+
+  const result = await batchService.skipWaitlistEntry(batchId, wlId, 'Manual Skip Reason', 'user-id');
+  expect(result.status).toBe('Held');
+  expect(result.statusReason).toBe('Manual Skip Reason');
+  expect(mockBatchRepository.updateWaitlistEntry).toHaveBeenCalledWith(wlId, expect.objectContaining({ status: 'Held', queuePosition: 0 }), expect.anything());
+});
+
+test('BatchService.reactivateWaitlistEntry should transition held entry to Waiting and place at end', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const wlId = 'wl-1';
+
+  mockPrisma.$queryRawUnsafe.mockResolvedValueOnce([{
+    id: batchId,
+    courseId: createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+    status: 'OpenForEnrollment',
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+    createdAt: new Date(),
+  }]);
+
+  mockBatchRepository.findWaitlist.mockResolvedValueOnce([
+    { id: wlId, batchId, status: 'Held', studentId: 'stu-1', queuePosition: 0 }
+  ]);
+  mockBatchRepository.findActiveWaitlist.mockResolvedValueOnce([
+    { id: 'wl-2', status: 'Waiting', queuePosition: 1 }
+  ]);
+
+  await batchService.reactivateWaitlistEntry(batchId, wlId, 'user-id');
+  expect(mockBatchRepository.updateWaitlistEntry).toHaveBeenCalledWith(wlId, expect.objectContaining({ status: 'Waiting', queuePosition: 2 }), expect.anything());
+});
+
+test('BatchService.revertPromotion should decrement count, set status Held and trigger next auto-promotion', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const studentId = 'stu-1';
+  const correlationId = 'corr-1';
+
+  mockPrisma.$queryRawUnsafe.mockResolvedValue([{
+    id: batchId,
+    courseId: createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+    currentEnrollmentCount: 20,
+    waitingListEnabled: true,
+    version: 1,
+    status: 'OpenForEnrollment',
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+    createdAt: new Date(),
+  }]);
+
+  mockBatchRepository.findWaitlist.mockResolvedValueOnce([
+    { id: 'wl-1', batchId, status: 'Promoted', studentId, promotionCorrelationId: correlationId }
+  ]);
+  mockBatchRepository.update.mockResolvedValueOnce({
+    id: batchId,
+    waitingListEnabled: true,
+    version: 2,
+  });
+  mockBatchRepository.findActiveWaitlist.mockResolvedValueOnce([
+    { id: 'wl-2', status: 'Waiting', queuePosition: 1, studentId: 'stu-2' }
+  ]);
+
+  await batchService.revertPromotion(batchId, studentId, null, correlationId, 'Doc Failed', 'user-id');
+  expect(mockBatchRepository.updateWaitlistEntry).toHaveBeenCalledWith('wl-1', expect.objectContaining({ status: 'Held', statusReason: 'Doc Failed' }), expect.anything());
+  expect(mockBatchRepository.update).toHaveBeenCalledWith(batchId, { currentEnrollmentCount: 19 }, 1, expect.anything());
+  // Verifies it triggers promotion for next candidate wl-2
+  expect(mockBatchRepository.updateWaitlistEntry).toHaveBeenCalledWith('wl-2', expect.objectContaining({ status: 'Promoted' }), expect.anything());
+});
+
+test('BatchService.updateBatch should auto-promote waitlist candidates on capacity increase', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockBatchRepository.findById.mockResolvedValueOnce({
+    id: batchId,
+    capacity: 20,
+    currentEnrollmentCount: 20,
+    waitingListEnabled: true,
+    status: 'OpenForEnrollment',
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+    version: 1,
+  });
+
+  mockBatchRepository.update.mockResolvedValueOnce({
+    id: batchId,
+    capacity: 22,
+    currentEnrollmentCount: 20,
+    waitingListEnabled: true,
+    version: 2,
+  });
+
+  mockBatchRepository.findActiveWaitlist.mockResolvedValueOnce([
+    { id: 'wl-1', status: 'Waiting', queuePosition: 1, studentId: 'stu-1' },
+    { id: 'wl-2', status: 'Waiting', queuePosition: 2, studentId: 'stu-2' }
+  ]);
+
+  await batchService.updateBatch(batchId, { capacity: 22 }, 1, 'user-id');
+
+  // Verify updates for both candidates to Promoted
+  expect(mockBatchRepository.updateWaitlistEntry).toHaveBeenCalledWith('wl-1', expect.objectContaining({ status: 'Promoted' }), expect.anything());
+  expect(mockBatchRepository.updateWaitlistEntry).toHaveBeenCalledWith('wl-2', expect.objectContaining({ status: 'Promoted' }), expect.anything());
+  // Verify it updates final batch count to 22
+  expect(mockBatchRepository.update).toHaveBeenLastCalledWith(batchId, { currentEnrollmentCount: 22 }, 2, expect.anything());
+});
+
+test('BatchService.enqueueWaitlist should reject if waitingListEnabled is false', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const studentId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockPrisma.$queryRawUnsafe.mockResolvedValueOnce([{
+    id: batchId,
+    courseId: createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+    capacity: 20,
+    currentEnrollmentCount: 20,
+    waitingListEnabled: false,
+    status: 'OpenForEnrollment',
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+    createdAt: new Date(),
+  }]);
+
+  await expect(
+    batchService.enqueueWaitlist(batchId, studentId, null, 'user-id')
+  ).rejects.toThrow('Waiting list is not enabled for this batch.');
+});
+
+test('BatchService.enqueueWaitlist should reject if batch has not reached capacity', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const studentId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockPrisma.$queryRawUnsafe.mockResolvedValueOnce([{
+    id: batchId,
+    courseId: createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+    capacity: 20,
+    currentEnrollmentCount: 15,
+    waitingListEnabled: true,
+    status: 'OpenForEnrollment',
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+    createdAt: new Date(),
+  }]);
+
+  await expect(
+    batchService.enqueueWaitlist(batchId, studentId, null, 'user-id')
+  ).rejects.toThrow('Cannot enqueue candidate because the batch has not reached capacity.');
+});
+
+test('BatchService.reorderWaitlist should reject duplicate waitlist IDs', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockPrisma.$queryRawUnsafe.mockResolvedValueOnce([{
+    id: batchId,
+    courseId: createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+    capacity: 20,
+    currentEnrollmentCount: 20,
+    waitingListEnabled: true,
+    status: 'OpenForEnrollment',
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+    createdAt: new Date(),
+  }]);
+
+  mockBatchRepository.findActiveWaitlist.mockResolvedValueOnce([
+    { id: 'wl-1', status: 'Waiting' },
+    { id: 'wl-2', status: 'Waiting' }
+  ]);
+
+  await expect(
+    batchService.reorderWaitlist(batchId, ['wl-1', 'wl-1'], 'user-id')
+  ).rejects.toThrow('ERR_CRS_INVALID_REORDER_PAYLOAD');
+});
+
+test('BatchService.removeWaitlistEntry should reject if entry is already Promoted or Removed', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockPrisma.$queryRawUnsafe.mockResolvedValueOnce([{
+    id: batchId,
+    courseId: createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+    capacity: 20,
+    currentEnrollmentCount: 20,
+    waitingListEnabled: true,
+    status: 'OpenForEnrollment',
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+    createdAt: new Date(),
+  }]);
+
+  mockBatchRepository.findWaitlist.mockResolvedValueOnce([
+    { id: 'wl-promoted', status: 'Promoted' }
+  ]);
+
+  await expect(
+    batchService.removeWaitlistEntry(batchId, 'wl-promoted', 'user-id')
+  ).rejects.toThrow('Cannot remove a waitlist entry that has already been removed or promoted.');
 });

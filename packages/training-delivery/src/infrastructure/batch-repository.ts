@@ -161,7 +161,6 @@ export class BatchRepository implements IBatchRepository {
     return trainer as any as BatchTrainer | null;
   }
 
-  // WaitingList Queue
   async addWaitlistEntry(data: any, tx?: Prisma.TransactionClient): Promise<WaitingList> {
     const client = tx || this.prisma;
     const wl = await client.waitingList.create({
@@ -173,6 +172,8 @@ export class BatchRepository implements IBatchRepository {
         leadId: data.leadId || null,
         queuePosition: data.queuePosition,
         status: data.status || 'Waiting',
+        statusReason: data.statusReason || null,
+        promotionCorrelationId: data.promotionCorrelationId || null,
         isDeleted: false,
         createdBy: data.createdBy || null,
       },
