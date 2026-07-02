@@ -4949,11 +4949,6 @@
     "ast_hash": "17338e66f66e22f6960a28d708b51568",
     "semantic_hash": ""
   },
-  "openspec/changes/batch-delivery-spec/.openspec.yaml": {
-    "mtime": 1782921638.6902409,
-    "ast_hash": "bf78f855d6a0425db6bc305ffd968e0f",
-    "semantic_hash": ""
-  },
   "openspec/changes/batch-waitlist-spec/.openspec.yaml": {
     "mtime": 1782921641.3448148,
     "ast_hash": "bf78f855d6a0425db6bc305ffd968e0f",
@@ -4967,26 +4962,6 @@
   "openspec/changes/trainer-assignment-spec/.openspec.yaml": {
     "mtime": 1782921640.0254457,
     "ast_hash": "bf78f855d6a0425db6bc305ffd968e0f",
-    "semantic_hash": ""
-  },
-  "openspec/changes/batch-delivery-spec/design.md": {
-    "mtime": 1782929764.0009832,
-    "ast_hash": "c0d6d57df838bc8158372ba970466034",
-    "semantic_hash": ""
-  },
-  "openspec/changes/batch-delivery-spec/proposal.md": {
-    "mtime": 1782929757.90048,
-    "ast_hash": "a4b01df5ce7069e308d9461cf2e28499",
-    "semantic_hash": ""
-  },
-  "openspec/changes/batch-delivery-spec/specs/batch-delivery/spec.md": {
-    "mtime": 1782929770.5356019,
-    "ast_hash": "8b781d6d0e00a3ffcf1b7662b3d60b9f",
-    "semantic_hash": ""
-  },
-  "openspec/changes/batch-delivery-spec/tasks.md": {
-    "mtime": 1782930411.2354383,
-    "ast_hash": "8b57ac03b3462bfc71da6284ff489259",
     "semantic_hash": ""
   },
   "openspec/changes/batch-waitlist-spec/design.md": {
@@ -5337,6 +5312,36 @@
   "apps/admin-portal/app/(protected)/batches/[id]/edit/page.tsx": {
     "mtime": 1782959349.3201227,
     "ast_hash": "34351a0ddadade18b84e2851776099a1",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-02-batch-delivery-spec/.openspec.yaml": {
+    "mtime": 1782921638.6902409,
+    "ast_hash": "bf78f855d6a0425db6bc305ffd968e0f",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-02-batch-delivery-spec/design.md": {
+    "mtime": 1782929764.0009832,
+    "ast_hash": "c0d6d57df838bc8158372ba970466034",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-02-batch-delivery-spec/proposal.md": {
+    "mtime": 1782929757.90048,
+    "ast_hash": "a4b01df5ce7069e308d9461cf2e28499",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-02-batch-delivery-spec/specs/batch-delivery/spec.md": {
+    "mtime": 1782929770.5356019,
+    "ast_hash": "8b781d6d0e00a3ffcf1b7662b3d60b9f",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-02-batch-delivery-spec/tasks.md": {
+    "mtime": 1782930411.2354383,
+    "ast_hash": "8b57ac03b3462bfc71da6284ff489259",
+    "semantic_hash": ""
+  },
+  "openspec/specs/batch-delivery/spec.md": {
+    "mtime": 1782960120.7346954,
+    "ast_hash": "f79a356d0913a5afe538e337c85d4508",
     "semantic_hash": ""
   }
 }
