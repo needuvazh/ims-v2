@@ -7,6 +7,7 @@ test('LeadConversionOrchestrator should convert lead and create admission succes
     auditLog: { create: vi.fn().mockResolvedValue(null) },
   } as any;
 
+  const dob = new Date('1995-05-15');
   const mockLeadService = {
     convertLead: vi.fn().mockResolvedValue({
       id: 'lead-1',
@@ -15,6 +16,8 @@ test('LeadConversionOrchestrator should convert lead and create admission succes
       email: 'john@example.com',
       phone: '+96899999999',
       branchId: 'branch-1',
+      interestedCourseId: 'course-1',
+      person: { dateOfBirth: dob },
     }),
   } as any;
 
@@ -48,6 +51,8 @@ test('LeadConversionOrchestrator should convert lead and create admission succes
     phone: '+96899999999',
     branchId: 'branch-1',
     leadId: 'lead-1',
+    courseId: 'course-1',
+    dateOfBirth: dob,
   }, 'actor-1', mockPrisma);
   expect(mockPrisma.auditLog.create).toHaveBeenCalled();
 });
@@ -58,6 +63,7 @@ test('LeadConversionOrchestrator should be idempotent and succeed when student p
     auditLog: { create: vi.fn().mockResolvedValue(null) },
   } as any;
 
+  const dob = new Date('1995-05-15');
   const mockLeadService = {
     convertLead: vi.fn().mockResolvedValue({
       id: 'lead-1',
@@ -66,6 +72,8 @@ test('LeadConversionOrchestrator should be idempotent and succeed when student p
       email: 'john@example.com',
       phone: '+96899999999',
       branchId: 'branch-1',
+      interestedCourseId: 'course-1',
+      person: { dateOfBirth: dob },
     }),
   } as any;
 

@@ -27,6 +27,7 @@ export class LeadConversionOrchestrator {
         branchId: lead.branchId,
         leadId: lead.id,
         courseId: lead.interestedCourseId,
+        dateOfBirth: lead.person?.dateOfBirth,
       }, actorId || null, tx);
 
       // 3. Log the audit event (simulated or direct write)

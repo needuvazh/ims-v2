@@ -4,9 +4,9 @@ CRM lead conversion is a separate business step from admission and must stay cle
 
 ## What Changes
 
-- Define the CRM-to-admissions handoff behavior.
+- Define the CRM-to-admissions handoff behavior for existing qualified leads only.
 - Reuse or create the person and student profile during conversion.
-- Preserve downstream follow-up cancellation and outbox events.
+- Preserve downstream follow-up cancellation, audit logging, and outbox events.
 
 ## Capabilities
 
@@ -20,4 +20,4 @@ CRM lead conversion is a separate business step from admission and must stay cle
 
 ## Impact
 
-Affected areas include CRM conversion routes, admissions application services, outbox events, and tests.
+Affected areas include CRM conversion routes, admissions application services, outbox events, and tests. Lead creation itself is out of scope for this change.

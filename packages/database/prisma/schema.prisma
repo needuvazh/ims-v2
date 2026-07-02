@@ -1202,6 +1202,7 @@ model Enrollment {
   certificateStatus       String           @default("NotEligible") @db.VarChar(50)
   confirmedAt             DateTime?        @db.Timestamptz(6)
   completedAt             DateTime?        @db.Timestamptz(6)
+  priceEvaluationTimestamp DateTime?       @db.Timestamptz(6)
 
   studentProfile StudentProfile @relation(fields: [studentProfileId], references: [id])
   admission      Admission      @relation(fields: [admissionId], references: [id])

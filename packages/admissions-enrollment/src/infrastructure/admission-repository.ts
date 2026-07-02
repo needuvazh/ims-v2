@@ -96,6 +96,7 @@ export class AdmissionRepository implements IAdmissionRepository {
           lastName: data.lastName,
           mobile: data.phone,
           email: data.email || null,
+          dateOfBirth: data.dateOfBirth || null,
         },
       });
     }
@@ -123,6 +124,7 @@ export class AdmissionRepository implements IAdmissionRepository {
         leadId: data.leadId || null,
         courseId: data.courseId || null,
         admissionStatus: 'Draft',
+        admissionDate: data.admissionDate || undefined,
       },
     });
 

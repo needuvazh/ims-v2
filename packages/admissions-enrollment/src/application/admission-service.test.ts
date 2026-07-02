@@ -168,3 +168,129 @@ test('rejectAdmission should transition Submitted to Rejected and cancelAdmissio
   await service.cancelAdmission('adm-1', 'actor-1');
   expect(mockAdmission.admissionStatus).toBe('Cancelled');
 });
+
+test('createStudentAdmission should block draft creation if student is under 12 years old', async () => {
+  const mockRepo = {
+    findPersonByEmailOrPhone: vi.fn().mockResolvedValue(null),
+    findStudentProfileByPersonId: vi.fn().mockResolvedValue(null),
+    getNextStudentNumber: vi.fn().mockResolvedValue('STU-123'),
+    getNextAdmissionNumber: vi.fn().mockResolvedValue('ADM-123'),
+    hasActiveAdmission: vi.fn().mockResolvedValue(false),
+  } as any;
+
+  const mockPrisma = {
+    $transaction: vi.fn((callback) => callback(mockPrisma)),
+  } as any;
+
+  const service = new AdmissionService(mockRepo, mockPrisma);
+
+  const birthDateUnder12 = new Date();
+  birthDateUnder12.setFullYear(birthDateUnder12.getFullYear() - 10); // 10 years old
+
+  const input = {
+    firstName: 'Young',
+    lastName: 'Learner',
+    email: 'young@example.om',
+    phone: '+96899112233',
+    branchId: 'branch-1',
+    dateOfBirth: birthDateUnder12,
+  };
+
+  await expect(service.createStudentAdmission(input))
+    .rejects
+    .toThrow('ERR_ADM_AGE_LIMIT');
+});
+
+test('createStudentAdmission should succeed if student is at least 12 years old', async () => {
+  const mockRepo = {
+    findPersonByEmailOrPhone: vi.fn().mockResolvedValue(null),
+    findStudentProfileByPersonId: vi.fn().mockResolvedValue(null),
+    getNextStudentNumber: vi.fn().mockResolvedValue('STU-123'),
+    getNextAdmissionNumber: vi.fn().mockResolvedValue('ADM-123'),
+    hasActiveAdmission: vi.fn().mockResolvedValue(false),
+    createStudentProfileAndAdmission: vi.fn().mockResolvedValue({
+      personId: 'person-1',
+      studentProfileId: 'profile-1',
+      admissionId: 'admission-1',
+      admissionNumber: 'ADM-123',
+    }),
+  } as any;
+
+  const mockPrisma = {
+    $transaction: vi.fn((callback) => callback(mockPrisma)),
+    outboxEvent: { create: vi.fn().mockResolvedValue(null) },
+    auditLog: { create: vi.fn().mockResolvedValue(null) },
+  } as any;
+
+  const service = new AdmissionService(mockRepo, mockPrisma);
+
+  const birthDateOver12 = new Date();
+  birthDateOver12.setFullYear(birthDateOver12.getFullYear() - 15); // 15 years old
+
+  const input = {
+    firstName: 'Older',
+    lastName: 'Learner',
+    email: 'older@example.om',
+    phone: '+96899112233',
+    branchId: 'branch-1',
+    dateOfBirth: birthDateOver12,
+  };
+
+  const result = await service.createStudentAdmission(input);
+  expect(result.admissionId).toBe('admission-1');
+});
+
+test('createStudentAdmission should calculate age relative to admissionDate if provided', async () => {
+  const mockRepo = {
+    findPersonByEmailOrPhone: vi.fn().mockResolvedValue(null),
+    findStudentProfileByPersonId: vi.fn().mockResolvedValue(null),
+    getNextStudentNumber: vi.fn().mockResolvedValue('STU-123'),
+    getNextAdmissionNumber: vi.fn().mockResolvedValue('ADM-123'),
+    hasActiveAdmission: vi.fn().mockResolvedValue(false),
+    createStudentProfileAndAdmission: vi.fn().mockResolvedValue({
+      personId: 'person-1',
+      studentProfileId: 'profile-1',
+      admissionId: 'admission-1',
+      admissionNumber: 'ADM-123',
+    }),
+  } as any;
+
+  const mockPrisma = {
+    $transaction: vi.fn((callback) => callback(mockPrisma)),
+    outboxEvent: { create: vi.fn().mockResolvedValue(null) },
+    auditLog: { create: vi.fn().mockResolvedValue(null) },
+  } as any;
+
+  const service = new AdmissionService(mockRepo, mockPrisma);
+
+  const dob = new Date('2010-01-01');
+
+  // Test 1: Admission date is 2020-01-01 (student is 10, should throw)
+  const inputUnder12 = {
+    firstName: 'Young',
+    lastName: 'Learner',
+    phone: '+96899112233',
+    branchId: 'branch-1',
+    dateOfBirth: dob,
+    admissionDate: new Date('2020-01-01'),
+  };
+
+  await expect(service.createStudentAdmission(inputUnder12))
+    .rejects
+    .toThrow('ERR_ADM_AGE_LIMIT');
+
+  // Test 2: Admission date is 2025-01-01 (student is 15, should succeed)
+  const inputOver12 = {
+    firstName: 'Young',
+    lastName: 'Learner',
+    phone: '+96899112233',
+    branchId: 'branch-1',
+    dateOfBirth: dob,
+    admissionDate: new Date('2025-01-01'),
+  };
+
+  const result = await service.createStudentAdmission(inputOver12);
+  expect(result.admissionId).toBe('admission-1');
+});
+
+

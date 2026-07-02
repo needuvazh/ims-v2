@@ -8,6 +8,15 @@ export const CreateStudentProfileAdmissionSchema = z.object({
   branchId: z.string().uuid(),
   leadId: z.string().uuid().nullable().optional(),
   courseId: z.string().uuid().nullable().optional(),
+  dateOfBirth: z.preprocess((val) => {
+    if (typeof val === 'string') {
+      if (!val.trim()) return null;
+      const d = new Date(val);
+      return isNaN(d.getTime()) ? val : d;
+    }
+    return val;
+  }, z.date({ invalid_type_error: 'Invalid date of birth' }).nullable().optional()),
+  admissionDate: z.preprocess((val) => (val ? new Date(val as string) : undefined), z.date()).nullable().optional(),
 });
 
 export type CreateStudentProfileAdmissionInput = z.infer<typeof CreateStudentProfileAdmissionSchema>;

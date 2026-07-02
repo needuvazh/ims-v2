@@ -1,7 +1,7 @@
 ## ADDED Requirements
 
 ### Requirement: Lead to Admission Handoff
-The system SHALL allow CRM to hand off a qualified lead into the Admission & Enrollment workflow without creating a separate learner lifecycle.
+The system SHALL allow CRM to hand off an existing qualified lead into the Admission & Enrollment workflow without creating a separate learner lifecycle.
 
 #### Scenario: Convert qualified lead into admission
 - **WHEN** a qualified lead is converted from the CRM screen
@@ -10,10 +10,6 @@ The system SHALL allow CRM to hand off a qualified lead into the Admission & Enr
 #### Scenario: Prevent duplicate learner creation during handoff
 - **WHEN** a lead conversion request finds an existing person and student profile for the same contact identity
 - **THEN** the system SHALL reuse the existing records instead of creating duplicates.
-
-#### Scenario: Enforce minimum age limit of 12 years
-- **WHEN** a lead conversion is initiated for a person whose age is less than 12 years relative to the admission date
-- **THEN** the system SHALL reject the conversion and throw an "ERR_ADM_AGE_LIMIT" error.
 
 #### Scenario: Reject conversion if active admission exists
 - **WHEN** a lead conversion is initiated for a student who already has an active admission in the target branch
@@ -38,3 +34,6 @@ The system SHALL cancel outstanding follow-ups and publish lifecycle events when
   | AdmissionCreated | Admission | admissionId, admissionNumber, studentProfileId, personId, branchId, leadId, courseId |
   | StudentProfileCreated | StudentProfile | studentProfileId, studentNumber, personId, status, joinedAt |
 
+#### Scenario: Preserve transaction atomicity
+- **WHEN** the handoff succeeds or fails
+- **THEN** the system SHALL commit or rollback lead conversion, document registration, follow-up cancellation, admission creation, and outbox writes in a single transaction.

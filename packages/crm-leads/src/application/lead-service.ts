@@ -393,7 +393,7 @@ export class LeadService {
     if (!lead) {
       throw new Error('ERR_CRM_LEAD_NOT_FOUND');
     }
-    if (lead.stage === 'Converted') {
+    if (lead.stage !== 'Qualified') {
       throw new Error('ERR_CRM_INVALID_STAGE_TRANSITION');
     }
 

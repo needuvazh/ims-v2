@@ -15,7 +15,7 @@ Can you assume the role of senior staff engineer and perform a review on the cur
 Can you assume the role of senior staff engineer and perform a review on the current OpenSpec proposal for Change 3 for the Lead & CRM Workflows module: "Workflows & Follow-up Scheduling" (under openspec/changes/)? Evaluate if there are any gaps in the proposed design specs and verify if any of the existing business logic  will be broken by this change. Highlight design discrepancies and suggest clear technical remedies.  Use DDD and FRD document for references
 
 
-Can you assume the role of senior staff engineer and perform a review on the current OpenSpec proposal for lead-to-admission-handoff (under openspec/changes/)? Evaluate if there are any gaps in the proposed design specs and verify if any of the existing business logic  will be broken by this change. Highlight design discrepancies and suggest clear technical remedies.  Use DDD and module-04-admission-enrollment document for references and source of truth, don't check other FRD document and don't get confused, if you have any question and needs clarification plese feel free to ask me?
+Can you assume the role of senior staff engineer and perform a review on the current OpenSpec proposal for enrollment-lifecycle (under openspec/changes/)? Evaluate if there are any gaps in the proposed design specs and verify if any of the existing business logic  will be broken by this change. Highlight design discrepancies and suggest clear technical remedies.  Use DDD and module-04-admission-enrollment document for references and source of truth, don't check other FRD document and don't get confused, if you have any question and needs clarification plese feel free to ask me?
 
 
 /opsx-verify lead-to-admission-handoff

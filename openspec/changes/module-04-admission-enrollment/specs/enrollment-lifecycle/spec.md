@@ -1,38 +1,143 @@
 ## ADDED Requirements
 
-### Requirement: Enrollment Creation from Approved Admission
-The system SHALL allow an authorized admissions user to create an enrollment only from an approved admission record.
+### Requirement: Enrollment Creation & pricingResolution snapshotting
+The system SHALL support creating regular and corporate enrollments, resolving and snapshotting pricing to prevent pricing drift.
 
-#### Scenario: Create enrollment from approved admission
-- **WHEN** a valid approved admission, course, and batch are supplied
-- **THEN** the system SHALL create an enrollment linked to the student profile, admission, course, batch, and branch.
+#### Scenario: Resolve and snapshot pricing during draft creation
+- **GIVEN** an approved Admission exists for a student
+- **WHEN** the Registrar initiates an enrollment draft with `courseId`, `batchId`, `branchId`, `enrollmentType`, and `customerType`
+- **THEN** the system SHALL resolve pricing by calling the Course Catalog's `CoursePricingService` passing:
+  - `courseId`, `customerType` ('Individual' or 'Corporate'), `branchId`, `batchId`, and the current timestamp as `asOfDate`
+- **AND** snapshot the following immutable pricing fields on the `Enrollment` record:
+  - `pricingSource` (BatchLevel, BranchLevel, or GlobalDefault)
+  - `resolvedPrice` (Decimal)
+  - `resolvedDiscount` (Decimal)
+  - `finalAmount` (resolvedPrice - resolvedDiscount, minimum 0)
+  - `paymentValidationRequired` (true if finalAmount > 0, else false)
+  - `priceEvaluationTimestamp` (DateTime set to current timestamp)
+- **AND** initialize the status to "Draft".
 
-#### Scenario: Reject enrollment from unapproved admission
-- **WHEN** an enrollment creation request references an admission that is not approved
-- **THEN** the system SHALL reject the request with a validation error.
+#### Scenario: Reject enrollment draft from unapproved admission
+- **WHEN** a regular enrollment creation is initiated
+- **AND** the linked admission status is not "Approved"
+- **THEN** the system SHALL reject the request with error code "ERR_ENR_MISSING_ADMISSION".
+
+#### Scenario: Walk-in fast-track registration bypass
+- **WHEN** a Walk-In enrollment is initialized for a course allowing walk-ins
+- **THEN** the system SHALL bypass the approved admission check, create the profile, and initialize the enrollment draft in a single decoupled transaction.
+
+#### Scenario: Corporate Participant enrollment and automatic profile conversion
+- **GIVEN** a corporate participant identified by `corporateParticipantId`
+- **WHEN** a corporate enrollment draft is created
+- **THEN** if no `StudentProfile` exists for the participant, the system SHALL automatically create a `StudentProfile` and Admission in the same database transaction.
+- **AND** create the `Enrollment` draft linked to the corporate participant, student profile, and admission.
 
 ---
 
-### Requirement: Enrollment Status Transitions
-The system SHALL support enrollment status transitions for approval, confirmation, cancellation, and completion within the enrollment lifecycle.
+### Requirement: Enrollment Status Transitions & Validation Matrix
+The system SHALL strictly enforce the allowed state transitions and execute capacity, waitlist, credit, and document verification guards.
 
-#### Scenario: Confirm an approved enrollment
-- **WHEN** an authorized user confirms an approved enrollment and the required seat and financial checks pass
-- **THEN** the system SHALL mark the enrollment as confirmed and persist the confirmation timestamp.
+#### Transition Matrix:
+The system SHALL only permit status transitions that follow this transition table. Any invalid transition SHALL throw `ERR_ENR_INVALID_STATE`:
+- `Draft` -> `Submitted` (via submit command)
+- `Draft` -> `Cancelled` (via cancel command)
+- `Submitted` -> `Approved` (via approve command)
+- `Submitted` -> `Cancelled` (via reject/cancel command)
+- `Approved` -> `Confirmed` (via event-driven payment receipt + document check)
+- `Approved` -> `Cancelled` (via cancel unpaid command)
+- `Confirmed` -> `Active` (via BatchStarted event)
+- `Confirmed` -> `Dropped` (via drop command)
+- `Active` -> `Dropped` (via drop command)
 
-#### Scenario: Cancel an enrollment and release the seat
-- **WHEN** an authorized user cancels an active enrollment
-- **THEN** the system SHALL mark the enrollment as cancelled, release the seat from the batch, and emit the downstream cancellation event.
+#### Scenario: Approve enrollment and check capacity limits
+- **GIVEN** the enrollment is in "Submitted" status
+- **WHEN** the Branch Manager approves the enrollment
+- **THEN** the system SHALL execute a serializable transaction to verify batch capacity
+- **AND** if capacity is available, transition status to "Approved"
+- **AND** publish the "EnrollmentApproved" outbox event to generate an invoice.
+
+#### Scenario: Route full batch to waitlist during approval
+- **GIVEN** the batch has reached its max capacity limit
+- **AND** waitlisting is enabled for the batch
+- **WHEN** the Branch Manager approves the enrollment
+- **THEN** the system SHALL keep the enrollment in "Submitted" status (pending review)
+- **AND** trigger the Training Delivery waitlist flow to register a waitlist entry
+- **AND** publish the "StudentAddedToWaitingList" outbox event.
+
+#### Scenario: Block approval if batch is full and waitlist is disabled
+- **GIVEN** the batch has reached its max capacity limit
+- **AND** waitlisting is disabled for the batch
+- **WHEN** the Branch Manager approves the enrollment
+- **THEN** the system SHALL reject the approval with error code "ERR_ENR_BATCH_FULL".
+
+#### Scenario: Validate corporate credit limit during approval
+- **GIVEN** a corporate enrollment is in "Submitted" status
+- **WHEN** the Branch Manager approves the enrollment
+- **THEN** the system SHALL call the Corporate Sales context to check outstanding B2B balance + new enrollment cost against the corporate credit limit
+- **AND** if the limit is exceeded and `blockEnrollment` is true, the system SHALL reject the approval with error code "ERR_ENR_CREDIT_EXCEEDED"
+- **AND** if `blockEnrollment` is false, proceed with approval and log a credit warning.
+
+#### Scenario: Idempotent event-driven confirmation with document gate
+- **GIVEN** an enrollment is in "Approved" status and has `paymentValidationRequired` as true
+- **WHEN** the Finance context publishes a `ReceiptGenerated` event with payload:
+  ```json
+  {
+    "enrollmentId": "uuid",
+    "invoiceId": "uuid",
+    "amountPaid": "decimal",
+    "receiptNumber": "string"
+  }
+  ```
+- **THEN** the system SHALL correlate the event via `enrollmentId`
+- **AND** check if the enrollment is already in "Confirmed" or later status (if so, ignore the event for idempotency)
+- **AND** execute the `verifyEnrollmentDocumentsGate` to ensure mandatory documents are active and verified
+- **AND** if document check passes, transition status to "Confirmed", set `confirmedAt` to the current timestamp, and publish the "EnrollmentConfirmed" event.
+- **AND** if document check fails, log a verification failure, keep the enrollment status as "Approved", and raise an administrative alert.
+
+#### Scenario: Reactive batch start activation
+- **WHEN** the Training Delivery context publishes a `BatchStarted` event containing `batchId`
+- **THEN** the system SHALL query all enrollments for that `batchId` that are in "Confirmed" status
+- **AND** transition their status to "Active".
+
+#### Scenario: Drop active enrollment and release seat
+- **GIVEN** the enrollment is in "Confirmed" or "Active" status
+- **WHEN** the Branch Manager processes a drop request with a mandatory reason code
+- **THEN** the system SHALL transition status to "Dropped"
+- **AND** publish the "EnrollmentCancelled" outbox event to trigger seat release and refund calculations.
 
 ---
 
-### Requirement: Enrollment Screen Visibility
-The system SHALL show enrollment status, pricing context, and linked records on admin enrollment screens.
+### Requirement: Critical Actions Audit Coverage
+The system SHALL automatically log all lifecycle mutations in the `AuditLog` table, capturing target entity, transition details, performer, timestamp, and optional remarks.
+
+#### Scenario: Audit log requirements for mutations
+- **WHEN** any of the following lifecycle mutations are executed:
+  - Create Enrollment Draft (Draft)
+  - Submit Enrollment (Submitted)
+  - Approve Enrollment (Approved)
+  - Waitlist Route (Submitted + Waitlist log)
+  - Confirm Enrollment (Confirmed)
+  - Activate Enrollment (Active)
+  - Drop/Cancel Enrollment (Dropped/Cancelled)
+- **THEN** the system SHALL write a record to `AuditLog` containing:
+  - `entityId` and `entityType` (Enrollment)
+  - `action` (e.g. "EnrollmentCreated", "EnrollmentSubmitted", "EnrollmentApproved", "EnrollmentConfirmed", "EnrollmentActivated", "EnrollmentDropped")
+  - `oldValue` and `newValue` (representing the status and fields changed)
+  - `performedBy` (User ID or 'System')
+  - `performedAt` (timestamp)
+  - `branchId` (branch scope context).
+
+---
+
+### Requirement: Enrollment Screen Visibility & Branch Scoping
+The system SHALL show enrollment status, pricing snapshot fields, and enforce branch scoping server-side.
 
 #### Scenario: Render enrollment detail screen
-- **WHEN** an authorized user opens an enrollment detail page
-- **THEN** the system SHALL show the enrollment number, status, pricing summary, and linked admission and batch references.
+- **GIVEN** the user has "enrollment.read" permission
+- **WHEN** the user requests the details page of an enrollment in their active branch
+- **THEN** the system SHALL render the enrollment number, status, pricing snapshot summary (including resolvedPrice, resolvedDiscount, finalAmount, and priceEvaluationTimestamp), and linked references.
 
-#### Scenario: Reject unauthorized enrollment access
-- **WHEN** a user without branch access requests an enrollment from another branch
-- **THEN** the system SHALL deny access with `403 Forbidden`.
+#### Scenario: Reject unauthorized cross-branch enrollment access
+- **WHEN** a user requests details for an enrollment belonging to another branch
+- **AND** the user does not possess global Super Admin rights
+- **THEN** the system SHALL block the request with "ERR_AUTH_BRANCH_DENIED" (403 Forbidden).

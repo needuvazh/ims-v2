@@ -146,7 +146,10 @@ export async function convertLeadAction(leadId: string, documents: any[]) {
     const session = await assertPermission('lead.convert');
 
     // Enforce counselor scoping check
-    await assertCounselorLeadScope(leadId, session);
+    const lead = await assertCounselorLeadScope(leadId, session);
+
+    // Enforce branch scope check
+    await assertBranchScope(lead.branchId);
 
     const actorId = await getActorId();
     const { leadConversionOrchestrator } = await import('../../lib/runtime');

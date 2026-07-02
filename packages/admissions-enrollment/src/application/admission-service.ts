@@ -11,8 +11,23 @@ export class AdmissionService {
 
   async createStudentAdmission(input: CreateStudentProfileAdmissionInput, actorId: string | null = null, tx?: Prisma.TransactionClient) {
     const run = async (activeClient: Prisma.TransactionClient) => {
-      // 1. Resolve existing person and profile to check for duplicate active admission
+            // 1. Resolve existing person and profile to check for duplicate active admission
       const existingPerson = await this.admissionRepository.findPersonByEmailOrPhone(input.email || null, input.phone || null, activeClient);
+      
+      const dob = input.dateOfBirth || existingPerson?.dateOfBirth;
+      if (dob) {
+        const anchorDate = input.admissionDate || new Date();
+        const birthDate = new Date(dob);
+        let age = anchorDate.getFullYear() - birthDate.getFullYear();
+        const monthDiff = anchorDate.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && anchorDate.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        if (age < 12) {
+          throw new Error('ERR_ADM_AGE_LIMIT');
+        }
+      }
+
       let existingProfile = null;
       if (existingPerson) {
         existingProfile = await this.admissionRepository.findStudentProfileByPersonId(existingPerson.id, activeClient);
@@ -110,6 +125,23 @@ export class AdmissionService {
       const hasActive = await this.admissionRepository.hasActiveAdmission(input.studentProfileId, branchId, activeClient);
       if (hasActive) {
         throw new Error('ERR_ADM_ACTIVE_ADMISSION_EXISTS');
+      }
+
+      // Check age constraint
+      const person = await activeClient.person.findFirst({
+        where: { studentProfile: { id: input.studentProfileId } }
+      });
+      if (person?.dateOfBirth) {
+        const today = new Date();
+        const birthDate = new Date(person.dateOfBirth);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        if (age < 12) {
+          throw new Error('ERR_ADM_AGE_LIMIT');
+        }
       }
 
       const admissionNumber = await this.admissionRepository.getNextAdmissionNumber(activeClient);

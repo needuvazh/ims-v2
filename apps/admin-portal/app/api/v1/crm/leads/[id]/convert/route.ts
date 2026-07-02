@@ -65,6 +65,11 @@ function crmErrorResponse(error: Error) {
     code = 'ERR_ADM_ACTIVE_ADMISSION_EXISTS';
     messageEn = 'An active admission already exists for this student in this branch.';
     messageAr = 'يوجد طلب قبول نشط بالفعل لهذا الطالب في هذا الفرع.';
+  } else if (msg.includes('ERR_ADM_AGE_LIMIT')) {
+    status = 400;
+    code = 'ERR_ADM_AGE_LIMIT';
+    messageEn = 'Learner must be at least 12 years old.';
+    messageAr = 'يجب أن يكون عمر الطالب 12 عاماً على الأقل.';
   }
 
   return NextResponse.json(
@@ -143,7 +148,6 @@ export async function POST(request: Request, props: { params: Promise<{ id: stri
             leadStage: 'Converted',
             admissionId: admissionResult.admissionId,
             studentProfileId: admissionResult.studentProfileId,
-            studentId: admissionResult.studentProfileId,
             convertedAt: new Date(),
           },
         },

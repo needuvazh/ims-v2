@@ -202,6 +202,7 @@ test('LeadService.convertLead should enforce Won outcome preconditions', async (
         phone: '+968 12345678',
         version: 1,
         branchId: 'branch-1',
+        stage: 'Qualified',
         person: {
           dateOfBirth: new Date('1995-05-15'), // valid birthdate
         },
@@ -229,6 +230,21 @@ test('LeadService.convertLead should enforce Won outcome preconditions', async (
   expect(mockPrisma.document.create).toHaveBeenCalled();
   expect(mockPrisma.documentOwner.create).toHaveBeenCalled();
   expect(mockPrisma.documentVerification.create).toHaveBeenCalled();
+
+  // Fails if stage is not Qualified (e.g. New)
+  mockLeadRepo.findById.mockResolvedValueOnce({
+    id: 'lead-1',
+    personId: 'person-1',
+    email: 'salim@example.com',
+    phone: '+968 12345678',
+    version: 1,
+    branchId: 'branch-1',
+    stage: 'New',
+    person: { dateOfBirth: new Date('1995-05-15') },
+  });
+  await expect(
+    leadService.convertLead('lead-1', [{ fileName: 'civil.pdf', fileKey: 'uploads/civil.pdf', fileType: 'application/pdf', documentType: 'CIVIL_ID_FRONT' }], mockPrisma)
+  ).rejects.toThrow('ERR_CRM_INVALID_STAGE_TRANSITION');
 });
 
 test('LeadService.updateLead should merge partial updates and detect active duplicates', async () => {
