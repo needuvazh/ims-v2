@@ -39,6 +39,45 @@ enum PermissionType {
   Report
 }
 
+enum AdmissionStatus {
+  Draft
+  Submitted
+  Approved
+  Rejected
+  Cancelled
+}
+
+enum EnrollmentType {
+  Regular
+  Corporate
+  WalkIn
+  Online
+}
+
+enum EnrollmentStatus {
+  Draft
+  Submitted
+  Approved
+  Confirmed
+  Active
+  Completed
+  Cancelled
+  Dropped
+  CertificateIssued
+}
+
+enum PricingSource {
+  BatchLevel
+  BranchLevel
+  GlobalDefault
+}
+
+enum StudentStatus {
+  Active
+  Suspended
+  Inactive
+}
+
 model Person {
   id          String    @id @default(uuid()) @db.Uuid
   firstName   String    @db.VarChar(100)
@@ -52,6 +91,8 @@ model Person {
 
   user User?
   leads Lead[]
+  admissions Admission[]
+  studentProfile StudentProfile?
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -425,6 +466,7 @@ model Branch {
   addresses     BranchAddress[]
   settings      BranchSettings?
   policies      BranchPolicy[]
+  enrollments   Enrollment[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -803,6 +845,7 @@ model Course {
   completionRules       CourseCompletionRule[]
   discounts             CourseDiscount[]
   batches               Batch[]
+  enrollments           Enrollment[]
 
   leads                 Lead[]
   inquiries             Inquiry[]
@@ -845,6 +888,7 @@ model Batch {
   waitlist               WaitingList[]
   pricings               CoursePricing[]
   discounts              CourseDiscount[]
+  enrollments            Enrollment[]
 
   createdAt              DateTime         @default(now()) @db.Timestamptz(6)
   createdBy              String?          @db.Uuid
@@ -1011,6 +1055,7 @@ model Lead {
   followUps          LeadFollowUp[]
   notesRelation      LeadNote[]     @relation("LeadNotes")
   stageHistory       LeadStageHistory[] @relation("StageHistory")
+  admissions         Admission[]
 
   createdAt          DateTime       @default(now()) @db.Timestamptz(6)
   createdBy          String?        @db.Uuid
@@ -1055,16 +1100,18 @@ model LeadFollowUp {
   @@map("lead_follow_ups")
 }
 
-model Student {
-  id            String       @id @default(uuid()) @db.Uuid
-  firstName     String       @db.VarChar(100)
-  lastName      String       @db.VarChar(100)
-  email         String?      @unique @db.VarChar(255)
-  phone         String?      @db.VarChar(30)
-  studentNumber String       @unique @db.VarChar(50)
-  status        RecordStatus @default(Active)
+model StudentProfile {
+  id            String        @id @default(uuid()) @db.Uuid
+  personId      String        @unique @db.Uuid
+  studentNumber String        @unique @db.VarChar(50)
+  status        StudentStatus @default(Active)
+  idCardIssued  Boolean       @default(false)
+  idCardNumber  String?       @unique @db.VarChar(50)
+  joinedAt      DateTime      @default(now()) @db.Timestamptz(6)
 
+  person     Person    @relation(fields: [personId], references: [id])
   admissions Admission[]
+  enrollments Enrollment[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -1074,21 +1121,29 @@ model Student {
   deletedBy String?   @db.Uuid
   isDeleted Boolean   @default(false)
 
-  @@index([email])
-  @@index([phone])
-  @@map("students")
+  @@index([personId])
+  @@map("student_profiles")
 }
 
 model Admission {
-  id            String       @id @default(uuid()) @db.Uuid
-  studentId     String       @db.Uuid
-  branchId      String       @db.Uuid
-  admissionDate DateTime     @default(now()) @db.Timestamptz(6)
-  status        RecordStatus @default(Active)
-  leadId        String?      @db.Uuid
+  id              String          @id @default(uuid()) @db.Uuid
+  admissionNumber String          @unique @db.VarChar(50)
+  personId        String          @db.Uuid
+  studentProfileId String         @db.Uuid
+  branchId        String          @db.Uuid
+  leadId          String?         @db.Uuid
+  admissionDate   DateTime        @default(now()) @db.Timestamptz(6)
+  admissionStatus AdmissionStatus @default(Draft)
+  submittedAt     DateTime?       @db.Timestamptz(6)
+  approvedAt      DateTime?       @db.Timestamptz(6)
+  approvedBy      String?         @db.Uuid
+  remarks         String?         @db.Text
 
-  student Student @relation(fields: [studentId], references: [id])
-  branch  Branch  @relation(fields: [branchId], references: [id])
+  person        Person         @relation(fields: [personId], references: [id])
+  studentProfile StudentProfile @relation(fields: [studentProfileId], references: [id])
+  branch        Branch         @relation(fields: [branchId], references: [id])
+  lead          Lead?          @relation(fields: [leadId], references: [id])
+  enrollments   Enrollment[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -1098,9 +1153,100 @@ model Admission {
   deletedBy String?   @db.Uuid
   isDeleted Boolean   @default(false)
 
-  @@index([studentId])
+  @@index([personId])
+  @@index([studentProfileId])
   @@index([branchId])
+  @@index([leadId])
   @@map("admissions")
+}
+
+model Enrollment {
+  id                      String           @id @default(uuid()) @db.Uuid
+  enrollmentNumber        String           @unique @db.VarChar(50)
+  studentProfileId        String           @db.Uuid
+  corporateParticipantId  String?          @db.Uuid
+  admissionId             String           @db.Uuid
+  courseId                String           @db.Uuid
+  batchId                 String           @db.Uuid
+  branchId                String           @db.Uuid
+  enrollmentType          EnrollmentType   @default(Regular)
+  enrollmentStatus        EnrollmentStatus @default(Draft)
+  pricingSource           PricingSource    @default(GlobalDefault)
+  resolvedPrice           Decimal          @db.Decimal(12, 3)
+  resolvedDiscount        Decimal          @db.Decimal(12, 3) @default(0.000)
+  finalAmount             Decimal          @db.Decimal(12, 3)
+  paymentValidationRequired Boolean         @default(true)
+  completionStatus        String           @default("Pending") @db.VarChar(50)
+  certificateStatus       String           @default("NotEligible") @db.VarChar(50)
+  confirmedAt             DateTime?        @db.Timestamptz(6)
+  completedAt             DateTime?        @db.Timestamptz(6)
+
+  studentProfile StudentProfile @relation(fields: [studentProfileId], references: [id])
+  admission      Admission      @relation(fields: [admissionId], references: [id])
+  branch         Branch         @relation(fields: [branchId], references: [id])
+  course         Course         @relation(fields: [courseId], references: [id])
+  batch          Batch          @relation(fields: [batchId], references: [id])
+  walkInEnrollment WalkInEnrollment?
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  @@index([studentProfileId])
+  @@index([admissionId])
+  @@index([batchId])
+  @@index([branchId])
+  @@map("enrollments")
+}
+
+model WalkInEnrollment {
+  id                 String   @id @default(uuid()) @db.Uuid
+  enrollmentId       String   @unique @db.Uuid
+  walkInDate         DateTime @default(now()) @db.Timestamptz(6)
+  counterUserId      String   @db.Uuid
+  paymentCollected   Decimal  @db.Decimal(12, 3)
+  confirmationIssued Boolean  @default(false)
+  remarks            String?  @db.Text
+
+  enrollment Enrollment @relation(fields: [enrollmentId], references: [id])
+  confirmation WalkInConfirmation?
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  @@index([enrollmentId])
+  @@map("walk_in_enrollments")
+}
+
+model WalkInConfirmation {
+  id                 String   @id @default(uuid()) @db.Uuid
+  walkInEnrollmentId String   @unique @db.Uuid
+  confirmationNumber String   @unique @db.VarChar(50)
+  issuedAt           DateTime @default(now()) @db.Timestamptz(6)
+  issuedBy           String   @db.Uuid
+  documentUrl        String   @db.VarChar(255)
+
+  walkInEnrollment WalkInEnrollment @relation(fields: [walkInEnrollmentId], references: [id])
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  @@index([walkInEnrollmentId])
+  @@map("walk_in_confirmations")
 }
 
 model LeadNote {

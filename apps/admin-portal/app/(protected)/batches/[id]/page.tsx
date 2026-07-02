@@ -94,15 +94,27 @@ export default async function BatchDetailPage(props: {
   }));
 
   // Fetch active students
-  const studentsList = await prisma.student.findMany({
+  const studentsListRaw = await prisma.studentProfile.findMany({
     where: { isDeleted: false },
     select: {
       id: true,
-      firstName: true,
-      lastName: true,
-      email: true,
+      person: {
+        select: {
+          firstName: true,
+          lastName: true,
+          email: true,
+          mobile: true,
+        },
+      },
     },
   });
+
+  const studentsList = studentsListRaw.map((student) => ({
+    id: student.id,
+    firstName: student.person.firstName,
+    lastName: student.person.lastName,
+    email: student.person.email ?? student.person.mobile,
+  }));
 
   // Fetch active CRM leads
   const leadsList = await prisma.lead.findMany({

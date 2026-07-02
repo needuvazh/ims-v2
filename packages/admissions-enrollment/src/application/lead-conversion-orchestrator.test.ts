@@ -18,14 +18,14 @@ test('LeadConversionOrchestrator should abort if student duplicate exists', asyn
   } as any;
 
   const mockAdmissionService = {
-    createStudentAdmission: vi.fn().mockRejectedValue(new Error('A student with this email or phone already exists')),
+    createStudentAdmission: vi.fn().mockRejectedValue(new Error('A student profile already exists for this person')),
   } as any;
 
   const orchestrator = new LeadConversionOrchestrator(mockPrisma, mockLeadService, mockAdmissionService);
 
   await expect(orchestrator.convertLeadToAdmission('lead-1', ['https://example.com/doc.pdf']))
     .rejects
-    .toThrow('A student with this email or phone already exists');
+    .toThrow('A student profile already exists for this person');
 
   expect(mockLeadService.convertLead).toHaveBeenCalledWith('lead-1', ['https://example.com/doc.pdf'], mockPrisma, undefined);
   expect(mockAdmissionService.createStudentAdmission).toHaveBeenCalled();

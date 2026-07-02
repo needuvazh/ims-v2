@@ -85,8 +85,8 @@ export async function POST(
 
         // Verify existence in database
         if (studentId) {
-          const student = await prisma.student.findUnique({ where: { id: studentId } });
-          if (!student) throw new Error('ERR_CRS_STUDENT_NOT_FOUND');
+          const studentProfile = await prisma.studentProfile.findUnique({ where: { id: studentId } });
+          if (!studentProfile) throw new Error('ERR_CRS_STUDENT_NOT_FOUND');
         }
         if (leadId) {
           const lead = await prisma.lead.findUnique({ where: { id: leadId } });

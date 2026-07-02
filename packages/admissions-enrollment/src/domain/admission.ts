@@ -1,17 +1,18 @@
 import { z } from 'zod';
 
-export const CreateStudentAdmissionSchema = z.object({
+export const CreateStudentProfileAdmissionSchema = z.object({
   firstName: z.string().min(1),
   lastName: z.string().min(1),
   email: z.string().email().nullable().optional(),
-  phone: z.string().nullable().optional(),
+  phone: z.string().min(1),
   branchId: z.string().uuid(),
   leadId: z.string().uuid().nullable().optional(),
 });
 
-export type CreateStudentAdmissionInput = z.infer<typeof CreateStudentAdmissionSchema>;
+export type CreateStudentProfileAdmissionInput = z.infer<typeof CreateStudentProfileAdmissionSchema>;
 
 export interface IAdmissionRepository {
-  findByEmailOrPhone(email: string | null, phone: string | null, tx?: any): Promise<any>;
-  createStudentAndAdmission(data: CreateStudentAdmissionInput, studentNumber: string, tx?: any): Promise<{ studentId: string, admissionId: string }>;
+  findPersonByEmailOrPhone(email: string | null, phone: string | null, tx?: any): Promise<any>;
+  findStudentProfileByPersonId(personId: string, tx?: any): Promise<any>;
+  createStudentProfileAndAdmission(data: CreateStudentProfileAdmissionInput, studentNumber: string, tx?: any): Promise<{ personId: string; studentProfileId: string; admissionId: string }>;
 }

@@ -15,19 +15,43 @@ export default async function StudentLookupPage(props: {
 
   const query = searchParams.q || '';
   
-  // Search students / leads in the DB
-  const students = await prisma.student.findMany({
+  // Search student profiles / leads in the DB
+  const studentProfiles = await prisma.studentProfile.findMany({
     where: {
       isDeleted: false,
       OR: [
         { studentNumber: { contains: query, mode: 'insensitive' } },
-        { firstName: { contains: query, mode: 'insensitive' } },
-        { lastName: { contains: query, mode: 'insensitive' } },
-        { phone: { contains: query } },
+        { person: { firstName: { contains: query, mode: 'insensitive' } } },
+        { person: { lastName: { contains: query, mode: 'insensitive' } } },
+        { person: { mobile: { contains: query } } },
       ],
+      person: {
+        isDeleted: false,
+      },
+    },
+    select: {
+      id: true,
+      studentNumber: true,
+      status: true,
+      person: {
+        select: {
+          firstName: true,
+          lastName: true,
+          mobile: true,
+        },
+      },
     },
     take: 20,
   });
+
+  const students = studentProfiles.map((student) => ({
+    id: student.id,
+    studentNumber: student.studentNumber,
+    firstName: student.person.firstName,
+    lastName: student.person.lastName,
+    phone: student.person.mobile,
+    status: student.status,
+  }));
 
   return (
     <div className="space-y-6 p-6">

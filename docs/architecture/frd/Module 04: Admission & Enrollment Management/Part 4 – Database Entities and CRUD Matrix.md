@@ -22,7 +22,7 @@ This module owns the admission and enrollment lifecycle data. The current Prisma
 
 ### 1.3 `Admission`
 * Purpose: administrative admission record for a student profile in a branch.
-* Fields: `id`, `admissionNumber`, `studentProfileId`, `branchId`, `leadId?`, `admissionDate`, `admissionStatus`, `submittedAt?`, `approvedAt?`, `approvedBy?`, `remarks?`, audit fields, soft delete fields.
+* Fields: `id`, `admissionNumber`, `personId`, `studentProfileId`, `branchId`, `leadId?`, `admissionDate`, `admissionStatus`, `submittedAt?`, `approvedAt?`, `approvedBy?`, `remarks?`, audit fields, soft delete fields.
 * Constraints:
   * `admissionNumber` unique.
   * `studentProfileId` required.
@@ -63,6 +63,7 @@ This module owns the admission and enrollment lifecycle data. The current Prisma
 | `Person` | 1 to 0..1 `StudentProfile` |
 | `StudentProfile` | 1 to many `Admission` |
 | `StudentProfile` | 1 to many `Enrollment` |
+| `Admission` | many to 1 `Person` |
 | `Admission` | many to 1 `Branch` |
 | `Admission` | many to 1 `StudentProfile` |
 | `Admission` | 0..1 to 1 `Lead` (logical reference only) |
@@ -157,6 +158,7 @@ model StudentProfile {
 model Admission {
   id              String          @id @default(uuid()) @db.Uuid
   admissionNumber String          @unique @db.VarChar(50)
+  personId        String          @db.Uuid
   studentProfileId String         @db.Uuid
   branchId        String          @db.Uuid
   leadId          String?         @db.Uuid

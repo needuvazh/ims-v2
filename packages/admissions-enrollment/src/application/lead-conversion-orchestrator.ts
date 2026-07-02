@@ -16,7 +16,7 @@ export class LeadConversionOrchestrator {
       // If it's already converted, this will throw an error and abort the tx.
       const lead = await this.leadService.convertLead(leadId, documentLinks, tx, actorId);
 
-      // 2. Create the Student and Admission record.
+      // 2. Create the StudentProfile and Admission record.
       // This will check for duplicates based on email/phone and throw an error if found.
       const admissionResult = await this.admissionService.createStudentAdmission({
         firstName: lead.firstName,
@@ -38,7 +38,7 @@ export class LeadConversionOrchestrator {
           performedAt: new Date(),
           module: 'AdmissionsEnrollment',
           newValue: {
-            studentId: admissionResult.studentId,
+            studentProfileId: admissionResult.studentProfileId,
             admissionId: admissionResult.admissionId,
           }
         }

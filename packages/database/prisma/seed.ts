@@ -120,7 +120,7 @@ async function seed() {
   // 1. Clean up existing relations to prevent duplicate key errors in fresh seeds
   console.log('🧹 Cleaning old records...');
   await prisma.admission.deleteMany({});
-  await prisma.student.deleteMany({});
+  await prisma.studentProfile.deleteMany({});
   await prisma.leadStageHistory.deleteMany({});
   await prisma.leadFollowUp.deleteMany({});
   await prisma.leadNote.deleteMany({});

@@ -320,8 +320,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/next-env.d.ts": {
-    "mtime": 1782961214.0624745,
-    "ast_hash": "2a74d3909800ca5467fa83b0ab4a4890",
+    "mtime": 1782964882.9473717,
+    "ast_hash": "d0f8375ae1199dc7acd3977fc33b78b8",
     "semantic_hash": ""
   },
   "apps/admin-portal/next.config.ts": {
@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "packages/database/prisma/seed.ts": {
-    "mtime": 1782964552.3004217,
-    "ast_hash": "6385d485ec4adb969384e0d94115c262",
+    "mtime": 1782965604.5666647,
+    "ast_hash": "265aed13a23b564d8a454a428d00b874",
     "semantic_hash": ""
   },
   "packages/database/src/client.ts": {
@@ -2670,23 +2670,23 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/admission-service.ts": {
-    "mtime": 1782679687.7359514,
-    "ast_hash": "14acd1fe3247725449dc9ae38e2faf63",
+    "mtime": 1782966054.6123722,
+    "ast_hash": "42773d13d037c246eb574c877d7ff895",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/lead-conversion-orchestrator.test.ts": {
-    "mtime": 1782893401.9231703,
-    "ast_hash": "f2e293892b79c6d38966deda6c521b94",
+    "mtime": 1782965598.810264,
+    "ast_hash": "075ae646ff664e3f60f0eeba4828e7f3",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/lead-conversion-orchestrator.ts": {
-    "mtime": 1782893347.2128778,
-    "ast_hash": "7098304b6b6d2b931bd2476a7069b814",
+    "mtime": 1782965577.7138429,
+    "ast_hash": "f0359010a8fde6bbe34c6a01f1043b49",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/domain/admission.ts": {
-    "mtime": 1782679687.741189,
-    "ast_hash": "981919616be6df212339506b46f9a062",
+    "mtime": 1782965541.8202286,
+    "ast_hash": "e4717dc23b2f0c970c384f25ddde0c26",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/index.ts": {
@@ -2695,8 +2695,8 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/infrastructure/admission-repository.ts": {
-    "mtime": 1782679687.7430987,
-    "ast_hash": "e37dbce9abb364621d14bfd8c45ab8c6",
+    "mtime": 1782966028.79764,
+    "ast_hash": "77b80b20be238cabf11a8e8200c28d2f",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/tsconfig.json": {
@@ -4395,8 +4395,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/crm/leads/[id]/convert/route.ts": {
-    "mtime": 1782872896.2181332,
-    "ast_hash": "c78ff3a23544e09c1b8c61716aaa1b20",
+    "mtime": 1782965618.865638,
+    "ast_hash": "6e0e3b6e6c88f3decf67aa4f5712ac7e",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/crm/leads/[id]/follow-ups/route.ts": {
@@ -4745,8 +4745,8 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
-    "mtime": 1782963805.8034594,
-    "ast_hash": "0f492d737e676a983493c19caef7a186",
+    "mtime": 1782965702.397883,
+    "ast_hash": "0f0b54824bd99be50cb06c87933614b0",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 5 \u2013 API Contracts.md": {
@@ -5160,8 +5160,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/[id]/page.tsx": {
-    "mtime": 1782959363.793799,
-    "ast_hash": "485881dc74994f950e643ac43935edd1",
+    "mtime": 1782966184.346954,
+    "ast_hash": "b5b798927e470cca6fd6fea0afb58a3c",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/_components/batch-form.tsx": {
@@ -5185,8 +5185,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/student-lookup/page.tsx": {
-    "mtime": 1782930218.9940653,
-    "ast_hash": "a095b4e0080a327427ca7bcc3cbf5cc1",
+    "mtime": 1782966196.2525234,
+    "ast_hash": "108ab5485e2dc6988510107ecdfc92f6",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/batches/[id]/route.ts": {
@@ -5210,8 +5210,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/batches/[id]/waitlist/route.ts": {
-    "mtime": 1782930084.3799107,
-    "ast_hash": "6b3cf2d576527df3d402195d6f3d8ef1",
+    "mtime": 1782965612.8382623,
+    "ast_hash": "1f2a474fbfb9191a7be627d26cb3e544",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/batches/route.ts": {
@@ -5352,6 +5352,11 @@
   "openspec/changes/archive/2026-07-02-trainer-assignment-spec/tasks.md": {
     "mtime": 1782961169.7007468,
     "ast_hash": "32bad6d3450ddaf35642a7fb34cbdc05",
+    "semantic_hash": ""
+  },
+  "packages/database/prisma/migrations/20260702100000_add_student_profiles_and_admission_refs/migration.sql": {
+    "mtime": 1782966705.2783425,
+    "ast_hash": "74d1be792bbf7dab08eb44455ec00446",
     "semantic_hash": ""
   }
 }

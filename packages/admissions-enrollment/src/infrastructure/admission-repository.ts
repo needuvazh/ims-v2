@@ -1,48 +1,72 @@
 import { PrismaClient, Prisma } from '@prisma/client';
-import { IAdmissionRepository, CreateStudentAdmissionInput } from '../domain/admission';
+import { IAdmissionRepository, CreateStudentProfileAdmissionInput } from '../domain/admission';
 
 export class AdmissionRepository implements IAdmissionRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async findByEmailOrPhone(email: string | null, phone: string | null, tx?: Prisma.TransactionClient): Promise<any> {
+  async findPersonByEmailOrPhone(email: string | null, phone: string | null, tx?: Prisma.TransactionClient): Promise<any> {
     const client = tx || this.prisma;
     
     if (!email && !phone) return null;
 
     const OR: any[] = [];
     if (email) OR.push({ email });
-    if (phone) OR.push({ phone });
+    if (phone) OR.push({ mobile: phone });
 
-    return client.student.findFirst({
+    return client.person.findFirst({
       where: { OR },
     });
   }
 
-  async createStudentAndAdmission(data: CreateStudentAdmissionInput, studentNumber: string, tx?: Prisma.TransactionClient): Promise<{ studentId: string; admissionId: string; }> {
+  async findStudentProfileByPersonId(personId: string, tx?: Prisma.TransactionClient): Promise<any> {
     const client = tx || this.prisma;
+
+    return client.studentProfile.findFirst({
+      where: { personId },
+    });
+  }
+
+  async createStudentProfileAndAdmission(data: CreateStudentProfileAdmissionInput, studentNumber: string, tx?: Prisma.TransactionClient): Promise<{ personId: string; studentProfileId: string; admissionId: string; }> {
+    const client = tx || this.prisma;
+
+    let person = await this.findPersonByEmailOrPhone(data.email || null, data.phone || null, tx);
+
+    if (!person) {
+      person = await client.person.create({
+        data: {
+          firstName: data.firstName,
+          lastName: data.lastName,
+          mobile: data.phone,
+          email: data.email || null,
+        },
+      });
+    }
     
-    // Create student
-    const student = await client.student.create({
+    // Create student profile
+    const studentProfile = await client.studentProfile.create({
       data: {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email || null,
-        phone: data.phone || null,
+        personId: person.id,
         studentNumber,
       },
     });
 
+    const admissionNumber = `ADM-${Date.now().toString().slice(-6)}`;
+
     // Create admission
     const admission = await client.admission.create({
       data: {
-        studentId: student.id,
+        admissionNumber,
+        personId: person.id,
+        studentProfileId: studentProfile.id,
         branchId: data.branchId,
         leadId: data.leadId || null,
+        admissionStatus: 'Draft',
       },
     });
 
     return {
-      studentId: student.id,
+      personId: person.id,
+      studentProfileId: studentProfile.id,
       admissionId: admission.id,
     };
   }
