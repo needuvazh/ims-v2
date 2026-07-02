@@ -320,8 +320,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/next-env.d.ts": {
-    "mtime": 1782997394.6395519,
-    "ast_hash": "d0f8375ae1199dc7acd3977fc33b78b8",
+    "mtime": 1783006430.2571425,
+    "ast_hash": "2a74d3909800ca5467fa83b0ab4a4890",
     "semantic_hash": ""
   },
   "apps/admin-portal/next.config.ts": {
@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "packages/database/prisma/seed.ts": {
-    "mtime": 1783002719.654543,
-    "ast_hash": "f917b47ece221a52f2696f2c64266341",
+    "mtime": 1783005825.2890756,
+    "ast_hash": "19e50b76092b02ba2261e3ab6161bed5",
     "semantic_hash": ""
   },
   "packages/database/src/client.ts": {
@@ -2655,8 +2655,8 @@
     "semantic_hash": ""
   },
   "apps/worker/src/index.ts": {
-    "mtime": 1783001833.8432133,
-    "ast_hash": "8264254581e7bfe54ef2f825c3afe068",
+    "mtime": 1783008697.37221,
+    "ast_hash": "99c3512eb42381f3438cdb7371e9fa7a",
     "semantic_hash": ""
   },
   "apps/worker/tsconfig.json": {
@@ -4525,8 +4525,8 @@
     "semantic_hash": ""
   },
   "openspec/specs/crm-core-models-apis/spec.md": {
-    "mtime": 1782901334.9683673,
-    "ast_hash": "f7054421403bccc344268b6ae1a0bef7",
+    "mtime": 1783008854.89454,
+    "ast_hash": "a5cc8dec48b06aa501baf4238397e1bf",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/inquiries/_components/inquiries-client-list.tsx": {
@@ -5120,8 +5120,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/actions.ts": {
-    "mtime": 1782969928.71629,
-    "ast_hash": "ec77560de91210ae2ce4e32833432b6d",
+    "mtime": 1783007723.0834475,
+    "ast_hash": "21b1d95e9113e660bc9ce627670813bd",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/new/page.tsx": {
@@ -5155,13 +5155,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/batches/[id]/waitlist/promote/route.ts": {
-    "mtime": 1782969289.7422354,
-    "ast_hash": "d5eca4bb2a15ae6dad16b358953f1746",
+    "mtime": 1783005838.708178,
+    "ast_hash": "8279d3a0d3e132a62281486aab0b702a",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/batches/[id]/waitlist/route.ts": {
-    "mtime": 1783002780.0778828,
-    "ast_hash": "ee5ebe33a89768dcc066ff6127681efc",
+    "mtime": 1783007727.9208937,
+    "ast_hash": "c949d9a9ad63b85723fbe1fc6618c817",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/batches/route.ts": {
@@ -5185,13 +5185,13 @@
     "semantic_hash": ""
   },
   "packages/training-delivery/src/application/batch-service.ts": {
-    "mtime": 1782973678.8976662,
-    "ast_hash": "0a40ba59f0857f6f8c6f3a5e71cf445e",
+    "mtime": 1783008703.1588876,
+    "ast_hash": "6782495d1a995225596805496114ddb9",
     "semantic_hash": ""
   },
   "packages/training-delivery/src/domain/batch.ts": {
-    "mtime": 1782977351.6551175,
-    "ast_hash": "1b53deaf73ed9471f3f4d20b99fc3269",
+    "mtime": 1783008689.171741,
+    "ast_hash": "03f890fbb2c82f75b77d16c56a50d464",
     "semantic_hash": ""
   },
   "packages/training-delivery/src/domain/errors.ts": {
@@ -5210,13 +5210,13 @@
     "semantic_hash": ""
   },
   "packages/training-delivery/src/infrastructure/batch-repository.ts": {
-    "mtime": 1782977355.3441994,
-    "ast_hash": "bd903b470e8e44a8450a8e98cd937405",
+    "mtime": 1783008639.2439988,
+    "ast_hash": "0faf29b776992db637699e542b536d2b",
     "semantic_hash": ""
   },
   "packages/training-delivery/tests/training-delivery.spec.ts": {
-    "mtime": 1782973697.66431,
-    "ast_hash": "09cffd33df44e0a28aef39abcf0edb94",
+    "mtime": 1783007755.8955092,
+    "ast_hash": "729c3df13a127375cee2fdb61c786ab0",
     "semantic_hash": ""
   },
   "packages/training-delivery/tsconfig.json": {
@@ -5230,8 +5230,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/_components/batch-details-tabs.tsx": {
-    "mtime": 1782969385.6624274,
-    "ast_hash": "ada54c6018a1b9929e7a37fdae4a46f4",
+    "mtime": 1783006400.9042697,
+    "ast_hash": "a0906e7106100b137d4e481a1a1e5092",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/[id]/edit/page.tsx": {
@@ -5315,23 +5315,23 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/batches/[id]/waitlist/[waitlistId]/route.ts": {
-    "mtime": 1782969715.7314916,
-    "ast_hash": "de9a8de16d537c4856d8bd9fbaa48948",
+    "mtime": 1783005834.6448667,
+    "ast_hash": "65eb27883f1a196d4cdea5df8827f10a",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/batches/[id]/waitlist/reactivate/route.ts": {
-    "mtime": 1782969301.7642584,
-    "ast_hash": "b6403f99632e82ed8497dfe0d3427117",
+    "mtime": 1783005843.6680667,
+    "ast_hash": "59fca69ee4d65c77bc7155f800bdda0c",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/batches/[id]/waitlist/reorder/route.ts": {
-    "mtime": 1782969293.0147057,
-    "ast_hash": "e3c2c2ac4a4804e695ba3093370dcba9",
+    "mtime": 1783005847.93889,
+    "ast_hash": "7dec6a4d8979e2dc9f6957868f13dfec",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/batches/[id]/waitlist/skip/route.ts": {
-    "mtime": 1782969299.0067425,
-    "ast_hash": "70d81408d37878d20922900f913dab7c",
+    "mtime": 1783005856.2206903,
+    "ast_hash": "4ceaad88f59c9fc515e1413995a2cb05",
     "semantic_hash": ""
   },
   "packages/database/prisma/migrations/20260702104500_update_waitlist_model/migration.sql": {
@@ -5340,8 +5340,8 @@
     "semantic_hash": ""
   },
   "tests/batch-waitlist-integration.spec.ts": {
-    "mtime": 1782973772.853066,
-    "ast_hash": "7b439122ba4126124d36fa45837c3f18",
+    "mtime": 1783007762.7823813,
+    "ast_hash": "c961e4c5d792750c53c93ae129d193e4",
     "semantic_hash": ""
   },
   "tests/e2e/batch-waitlist.spec.ts": {
@@ -5350,8 +5350,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/batches/[id]/waitlist/route.test.ts": {
-    "mtime": 1783002908.810723,
-    "ast_hash": "a2ad99bf0b354064b30e0dc4130f6126",
+    "mtime": 1783007766.9665596,
+    "ast_hash": "afaa1d86c7292da899bbf1b54c5d3340",
     "semantic_hash": ""
   },
   "openspec/changes/archive/2026-07-02-batch-waitlist-spec/.openspec.yaml": {
@@ -5380,8 +5380,8 @@
     "semantic_hash": ""
   },
   "openspec/specs/batch-waitlist/spec.md": {
-    "mtime": 1782975563.9408455,
-    "ast_hash": "cecc37c34713fa652db29d4d2f169f97",
+    "mtime": 1783008859.5502026,
+    "ast_hash": "7cca06666ff8eff707710d19976abb93",
     "semantic_hash": ""
   },
   "openspec/changes/module-04-admission-enrollment/.openspec.yaml": {
@@ -5410,8 +5410,8 @@
     "semantic_hash": ""
   },
   "openspec/changes/module-04-admission-enrollment/specs/crm-core-models-apis/spec.md": {
-    "mtime": 1782976343.5331929,
-    "ast_hash": "980057afd1650acc5f60decb86df4657",
+    "mtime": 1783008850.0184712,
+    "ast_hash": "0e4acec17d78cf72677247b97d05fccd",
     "semantic_hash": ""
   },
   "openspec/changes/module-04-admission-enrollment/specs/document-management/spec.md": {
@@ -5554,49 +5554,24 @@
     "ast_hash": "5cb58f712224aa903e1ad817f4d68427",
     "semantic_hash": ""
   },
-  "openspec/changes/batch-waitlist-student-profile/.openspec.yaml": {
-    "mtime": 1782983401.3386352,
-    "ast_hash": "7f48377552c3f516e4e868cb6ea8d4f2",
-    "semantic_hash": ""
-  },
-  "openspec/changes/batch-waitlist-student-profile/design.md": {
-    "mtime": 1783005427.6463273,
-    "ast_hash": "52043f75766070680dca449777725ec5",
-    "semantic_hash": ""
-  },
-  "openspec/changes/batch-waitlist-student-profile/proposal.md": {
-    "mtime": 1783005436.239116,
-    "ast_hash": "75f325976dbdf0e999e606f1a92c4153",
-    "semantic_hash": ""
-  },
-  "openspec/changes/batch-waitlist-student-profile/specs/batch-waitlist/spec.md": {
-    "mtime": 1783005432.015989,
-    "ast_hash": "33f940d7163733b845b0137cbc93c401",
-    "semantic_hash": ""
-  },
-  "openspec/changes/batch-waitlist-student-profile/tasks.md": {
-    "mtime": 1783005444.6181083,
-    "ast_hash": "7296b43535839c34373d1496159b2571",
-    "semantic_hash": ""
-  },
   "openspec/changes/crm-core-models-apis-admission-handoff/.openspec.yaml": {
     "mtime": 1782983399.8457592,
     "ast_hash": "7f48377552c3f516e4e868cb6ea8d4f2",
     "semantic_hash": ""
   },
   "openspec/changes/crm-core-models-apis-admission-handoff/design.md": {
-    "mtime": 1782983579.465822,
-    "ast_hash": "4c682d82153d0b3a590406cb9ad50a8f",
+    "mtime": 1783008861.624729,
+    "ast_hash": "a314aeb99285e430da97108407240f85",
     "semantic_hash": ""
   },
   "openspec/changes/crm-core-models-apis-admission-handoff/proposal.md": {
-    "mtime": 1782983579.4654865,
-    "ast_hash": "9cebf97a3f16a4f99d3d7e3e8b0e0291",
+    "mtime": 1783006487.4558656,
+    "ast_hash": "9010f69214487c27f9b0fa5984faecf7",
     "semantic_hash": ""
   },
   "openspec/changes/crm-core-models-apis-admission-handoff/specs/crm-core-models-apis/spec.md": {
-    "mtime": 1782983579.4670193,
-    "ast_hash": "980057afd1650acc5f60decb86df4657",
+    "mtime": 1783008844.0826712,
+    "ast_hash": "0e4acec17d78cf72677247b97d05fccd",
     "semantic_hash": ""
   },
   "openspec/changes/crm-core-models-apis-admission-handoff/tasks.md": {
@@ -5610,23 +5585,23 @@
     "semantic_hash": ""
   },
   "openspec/changes/walkin-enrollment/design.md": {
-    "mtime": 1782983523.1213622,
-    "ast_hash": "e5a09dcb845839c462d8b605210da6c9",
+    "mtime": 1783008599.7916007,
+    "ast_hash": "deb25cc10087e53aa5f14869a1b15147",
     "semantic_hash": ""
   },
   "openspec/changes/walkin-enrollment/proposal.md": {
-    "mtime": 1782983523.1210558,
-    "ast_hash": "d491fbefd1c8a18a64889743dcad3d0e",
+    "mtime": 1783008590.2679257,
+    "ast_hash": "56863e34434d8003a1bcefa54e3cf134",
     "semantic_hash": ""
   },
   "openspec/changes/walkin-enrollment/specs/walkin-enrollment/spec.md": {
-    "mtime": 1782983523.1225393,
-    "ast_hash": "7743f1cacc14efb93a897920aaad3bd7",
+    "mtime": 1783008610.8816926,
+    "ast_hash": "fc2f64bf01f7fec60a963b283a4d04a0",
     "semantic_hash": ""
   },
   "openspec/changes/walkin-enrollment/tasks.md": {
-    "mtime": 1782983523.1218488,
-    "ast_hash": "a3271529e3a40a6946c98aa79abbcd4e",
+    "mtime": 1783008620.3447523,
+    "ast_hash": "ef07a4da4a8f8f040ba58149bc8c8ae8",
     "semantic_hash": ""
   },
   "openspec/specs/course-pricing-discounts/spec.md": {
@@ -5640,8 +5615,8 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/enrollment-service.ts": {
-    "mtime": 1783002666.815945,
-    "ast_hash": "218ab751ee628da5e2c5c86cb37c7252",
+    "mtime": 1783007735.6982107,
+    "ast_hash": "2516b98c31f95ef6bd8f36dee550b1c4",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/requirements-resolver.ts": {
@@ -5890,8 +5865,8 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/enrollment-lifecycle.test.ts": {
-    "mtime": 1783002865.576177,
-    "ast_hash": "98b97749030c500722b6773241a60883",
+    "mtime": 1783007777.9561992,
+    "ast_hash": "5675f735b163ba474c66d19241853b9f",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/person/lookup/route.ts": {
@@ -5982,6 +5957,36 @@
   "openspec/specs/student-profile-lookup/spec.md": {
     "mtime": 1783005507.4524732,
     "ast_hash": "1f27b158ac0daea1a97a56064b2d4f0a",
+    "semantic_hash": ""
+  },
+  "packages/database/prisma/migrations/20260702152316_rename_student_id_to_student_profile_id_waitlist/migration.sql": {
+    "mtime": 1783008644.9920688,
+    "ast_hash": "c10c7a6711d2a7a99fd633a14bf25739",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-02-batch-waitlist-student-profile/.openspec.yaml": {
+    "mtime": 1782983401.3386352,
+    "ast_hash": "7f48377552c3f516e4e868cb6ea8d4f2",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-02-batch-waitlist-student-profile/design.md": {
+    "mtime": 1783005427.6463273,
+    "ast_hash": "52043f75766070680dca449777725ec5",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-02-batch-waitlist-student-profile/proposal.md": {
+    "mtime": 1783005436.239116,
+    "ast_hash": "75f325976dbdf0e999e606f1a92c4153",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-02-batch-waitlist-student-profile/specs/batch-waitlist/spec.md": {
+    "mtime": 1783005432.015989,
+    "ast_hash": "33f940d7163733b845b0137cbc93c401",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-02-batch-waitlist-student-profile/tasks.md": {
+    "mtime": 1783006275.7791684,
+    "ast_hash": "8ef0836d20d01e321881edee21b028e0",
     "semantic_hash": ""
   }
 }

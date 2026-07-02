@@ -96,9 +96,9 @@ model Person {
   dateOfBirth DateTime? @db.Date
   gender      String?   @db.VarChar(20)
 
-  user User?
-  leads Lead[]
-  admissions Admission[]
+  user           User?
+  leads          Lead[]
+  admissions     Admission[]
   studentProfile StudentProfile?
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
@@ -152,11 +152,11 @@ model User {
   deletedBy String?   @db.Uuid
   isDeleted Boolean   @default(false)
 
-  leads     Lead[]         @relation("CounselorLeads")
-  followUps LeadFollowUp[] @relation("CounselorFollowUps")
-  inquiries Inquiry[]      @relation("CounselorInquiries")
-  leadNotes LeadNote[]     @relation("AuthorNotes")
-  stageChanges LeadStageHistory[] @relation("StageChanges")
+  leads         Lead[]                 @relation("CounselorLeads")
+  followUps     LeadFollowUp[]         @relation("CounselorFollowUps")
+  inquiries     Inquiry[]              @relation("CounselorInquiries")
+  leadNotes     LeadNote[]             @relation("AuthorNotes")
+  stageChanges  LeadStageHistory[]     @relation("StageChanges")
   verifications DocumentVerification[] @relation("UserVerifications")
 
   @@index([status])
@@ -226,10 +226,10 @@ model UserRole {
   userId String @db.Uuid
   roleId String @db.Uuid
 
-  status                 String    @default("Active") @db.VarChar(50) // "Active", "Revoked"
-  revokedAt              DateTime? @db.Timestamptz(6)
-  revokedBy              String?   @db.Uuid
-  reason                 String?   @db.Text
+  status    String    @default("Active") @db.VarChar(50) // "Active", "Revoked"
+  revokedAt DateTime? @db.Timestamptz(6)
+  revokedBy String?   @db.Uuid
+  reason    String?   @db.Text
 
   user User @relation(fields: [userId], references: [id])
   role Role @relation(fields: [roleId], references: [id])
@@ -352,16 +352,16 @@ model ExportJob {
 }
 
 model UserSession {
-  id             String   @id @default(uuid()) @db.Uuid
-  userId         String   @db.Uuid
-  tokenHash      String   @unique @db.Text
-  previousTokenHash String? @db.Text
-  userAgent      String?  @db.Text
-  ipAddress      String?  @db.VarChar(45)
-  status         String   @db.VarChar(50) // "Active", "Expired", "Revoked"
-  expiresAt      DateTime @db.Timestamptz(6)
-  lastAccessAt   DateTime @db.Timestamptz(6)
-  activeBranchId String?  @db.Uuid
+  id                String   @id @default(uuid()) @db.Uuid
+  userId            String   @db.Uuid
+  tokenHash         String   @unique @db.Text
+  previousTokenHash String?  @db.Text
+  userAgent         String?  @db.Text
+  ipAddress         String?  @db.VarChar(45)
+  status            String   @db.VarChar(50) // "Active", "Expired", "Revoked"
+  expiresAt         DateTime @db.Timestamptz(6)
+  lastAccessAt      DateTime @db.Timestamptz(6)
+  activeBranchId    String?  @db.Uuid
 
   user User @relation(fields: [userId], references: [id])
 
@@ -423,15 +423,15 @@ model Institute {
   country            String?      @db.VarChar(100)
   status             RecordStatus @default(Active)
 
-  legalNameEnglish   String?      @db.VarChar(255)
-  legalNameArabic    String?      @db.VarChar(255)
-  tradeName          String?      @db.VarChar(255)
-  shortName          String?      @db.VarChar(100)
-  effectiveStartDate DateTime?    @db.Date
-  effectiveEndDate   DateTime?    @db.Date
-  currency           String?      @db.VarChar(10)
-  timezone           String?      @db.VarChar(50)
-  language           String?      @db.VarChar(10)
+  legalNameEnglish   String?   @db.VarChar(255)
+  legalNameArabic    String?   @db.VarChar(255)
+  tradeName          String?   @db.VarChar(255)
+  shortName          String?   @db.VarChar(100)
+  effectiveStartDate DateTime? @db.Date
+  effectiveEndDate   DateTime? @db.Date
+  currency           String?   @db.VarChar(10)
+  timezone           String?   @db.VarChar(50)
+  language           String?   @db.VarChar(10)
 
   branches Branch[]
 
@@ -461,20 +461,20 @@ model Branch {
   effectiveStartDate DateTime?    @db.Date
   effectiveEndDate   DateTime?    @db.Date
 
-  parentBranchId     String?      @db.Uuid
-  parentBranch       Branch?      @relation("BranchHierarchy", fields: [parentBranchId], references: [id])
-  childBranches      Branch[]     @relation("BranchHierarchy")
+  parentBranchId String?  @db.Uuid
+  parentBranch   Branch?  @relation("BranchHierarchy", fields: [parentBranchId], references: [id])
+  childBranches  Branch[] @relation("BranchHierarchy")
 
   institute     Institute    @relation(fields: [instituteId], references: [id])
   branchManager User?        @relation("BranchManager", fields: [branchManagerId], references: [id])
   departments   Department[]
   classrooms    Classroom[]
 
-  contacts      BranchContact[]
-  addresses     BranchAddress[]
-  settings      BranchSettings?
-  policies      BranchPolicy[]
-  enrollments   Enrollment[]
+  contacts    BranchContact[]
+  addresses   BranchAddress[]
+  settings    BranchSettings?
+  policies    BranchPolicy[]
+  enrollments Enrollment[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -498,83 +498,83 @@ model Branch {
 }
 
 model BranchContact {
-  id          String   @id @default(uuid()) @db.Uuid
-  branchId    String   @db.Uuid
-  contactType String   @db.VarChar(50)
+  id           String  @id @default(uuid()) @db.Uuid
+  branchId     String  @db.Uuid
+  contactType  String  @db.VarChar(50)
   contactValue String  @db.VarChar(255)
-  isPrimary   Boolean  @default(false)
-  branch      Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  isPrimary    Boolean @default(false)
+  branch       Branch  @relation(fields: [branchId], references: [id], onDelete: Cascade)
 
-  createdAt   DateTime @default(now()) @db.Timestamptz(6)
-  createdBy   String?  @db.Uuid
-  updatedAt   DateTime? @db.Timestamptz(6)
-  updatedBy   String?  @db.Uuid
-  deletedAt   DateTime? @db.Timestamptz(6)
-  deletedBy   String?  @db.Uuid
-  isDeleted   Boolean  @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
 
   @@map("branch_contacts")
 }
 
 model BranchAddress {
-  id           String   @id @default(uuid()) @db.Uuid
-  branchId     String   @db.Uuid
-  building     String?  @db.VarChar(100)
-  street       String?  @db.VarChar(255)
-  city         String?  @db.VarChar(100)
-  governorate  String?  @db.VarChar(100)
-  country      String?  @db.VarChar(100)
-  postalCode   String?  @db.VarChar(30)
-  latitude     Float?
-  longitude    Float?
-  mapUrl       String?  @db.Text
-  branch       Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  id          String  @id @default(uuid()) @db.Uuid
+  branchId    String  @db.Uuid
+  building    String? @db.VarChar(100)
+  street      String? @db.VarChar(255)
+  city        String? @db.VarChar(100)
+  governorate String? @db.VarChar(100)
+  country     String? @db.VarChar(100)
+  postalCode  String? @db.VarChar(30)
+  latitude    Float?
+  longitude   Float?
+  mapUrl      String? @db.Text
+  branch      Branch  @relation(fields: [branchId], references: [id], onDelete: Cascade)
 
-  createdAt    DateTime @default(now()) @db.Timestamptz(6)
-  createdBy    String?  @db.Uuid
-  updatedAt    DateTime? @db.Timestamptz(6)
-  updatedBy    String?  @db.Uuid
-  deletedAt    DateTime? @db.Timestamptz(6)
-  deletedBy    String?  @db.Uuid
-  isDeleted    Boolean  @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
 
   @@map("branch_addresses")
 }
 
 model BranchSettings {
-  id              String   @id @default(uuid()) @db.Uuid
-  branchId        String   @unique @db.Uuid
-  currency        String?  @db.VarChar(10)
-  timezone        String?  @db.VarChar(50)
-  weekStartDay    String?  @db.VarChar(20)
-  workingCalendar String?  @db.VarChar(100)
-  branch          Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  id              String  @id @default(uuid()) @db.Uuid
+  branchId        String  @unique @db.Uuid
+  currency        String? @db.VarChar(10)
+  timezone        String? @db.VarChar(50)
+  weekStartDay    String? @db.VarChar(20)
+  workingCalendar String? @db.VarChar(100)
+  branch          Branch  @relation(fields: [branchId], references: [id], onDelete: Cascade)
 
-  createdAt       DateTime @default(now()) @db.Timestamptz(6)
-  createdBy       String?  @db.Uuid
-  updatedAt       DateTime? @db.Timestamptz(6)
-  updatedBy       String?  @db.Uuid
-  deletedAt       DateTime? @db.Timestamptz(6)
-  deletedBy       String?  @db.Uuid
-  isDeleted       Boolean  @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
 
   @@map("branch_settings")
 }
 
 model BranchPolicy {
-  id            String   @id @default(uuid()) @db.Uuid
-  branchId      String   @db.Uuid
-  policyType    String   @db.VarChar(50)
-  policyContent String?  @db.Text
-  branch        Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  id            String  @id @default(uuid()) @db.Uuid
+  branchId      String  @db.Uuid
+  policyType    String  @db.VarChar(50)
+  policyContent String? @db.Text
+  branch        Branch  @relation(fields: [branchId], references: [id], onDelete: Cascade)
 
-  createdAt     DateTime @default(now()) @db.Timestamptz(6)
-  createdBy     String?  @db.Uuid
-  updatedAt     DateTime? @db.Timestamptz(6)
-  updatedBy     String?  @db.Uuid
-  deletedAt     DateTime? @db.Timestamptz(6)
-  deletedBy     String?  @db.Uuid
-  isDeleted     Boolean  @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
 
   @@map("branch_policies")
 }
@@ -706,15 +706,15 @@ model Campaign {
   effectiveStartDate DateTime  @db.Date
   effectiveEndDate   DateTime? @db.Date
   status             String    @default("Active") @db.VarChar(50)
-  
-  leads              Lead[]
 
-  createdAt          DateTime  @default(now()) @db.Timestamptz(6)
-  createdBy          String?   @db.Uuid
-  updatedAt          DateTime? @db.Timestamptz(6)
-  updatedBy          String?   @db.Uuid
-  deletedAt          DateTime? @db.Timestamptz(6)
-  isDeleted          Boolean   @default(false)
+  leads Lead[]
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  isDeleted Boolean   @default(false)
 
   @@unique([utmSource, utmMedium, utmCampaign])
   @@map("campaigns")
@@ -731,16 +731,16 @@ model CourseCategory {
   childCategories  CourseCategory[] @relation("CategoryHierarchy")
   courses          Course[]
 
-  status           RecordStatus     @default(Active)
-  version          Int              @default(1)
+  status  RecordStatus @default(Active)
+  version Int          @default(1)
 
-  createdAt        DateTime         @default(now()) @db.Timestamptz(6)
-  createdBy        String?          @db.Uuid
-  updatedAt        DateTime?        @updatedAt @db.Timestamptz(6)
-  updatedBy        String?          @db.Uuid
-  deletedAt        DateTime?        @db.Timestamptz(6)
-  deletedBy        String?          @db.Uuid
-  isDeleted        Boolean          @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
 
   @@map("course_categories")
 }
@@ -765,13 +765,13 @@ model CoursePricing {
   status             ConfigStatus @default(Active)
   version            Int          @default(1)
 
-  createdAt          DateTime     @default(now()) @db.Timestamptz(6)
-  createdBy          String?      @db.Uuid
-  updatedAt          DateTime?    @updatedAt @db.Timestamptz(6)
-  updatedBy          String?      @db.Uuid
-  deletedAt          DateTime?    @db.Timestamptz(6)
-  deletedBy          String?      @db.Uuid
-  isDeleted          Boolean      @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
 
   @@index([courseId])
   @@index([branchId])
@@ -796,13 +796,13 @@ model CourseDiscount {
   effectiveEndDate   DateTime?    @db.Date
   status             ConfigStatus @default(Active)
 
-  createdAt          DateTime     @default(now()) @db.Timestamptz(6)
-  createdBy          String?      @db.Uuid
-  updatedAt          DateTime?    @updatedAt @db.Timestamptz(6)
-  updatedBy          String?      @db.Uuid
-  deletedAt          DateTime?    @db.Timestamptz(6)
-  deletedBy          String?      @db.Uuid
-  isDeleted          Boolean      @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
 
   @@index([courseId])
   @@index([branchId])
@@ -822,9 +822,9 @@ model CourseCompletionRule {
   effectiveEndDate         DateTime?    @db.Date
   status                   ConfigStatus @default(Active)
 
-  createdAt                DateTime     @default(now()) @db.Timestamptz(6)
-  createdBy                String?      @db.Uuid
-  updatedAt                DateTime?    @updatedAt @db.Timestamptz(6)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
   updatedBy String?   @db.Uuid
   deletedAt DateTime? @db.Timestamptz(6)
   deletedBy String?   @db.Uuid
@@ -835,43 +835,43 @@ model CourseCompletionRule {
 }
 
 model Course {
-  id                    String                 @id @default(uuid()) @db.Uuid
-  courseCode            String                 @unique @db.VarChar(50)
-  nameEnglish           String                 @db.VarChar(150)
-  nameArabic            String                 @db.VarChar(150)
-  descriptionEnglish    String?                @db.Text
-  descriptionArabic     String?                @db.Text
-  departmentId          String                 @db.Uuid
-  categoryId            String?                @db.Uuid
-  courseClassification  String                 @db.VarChar(50)
-  durationType          String                 @db.VarChar(50)
+  id                    String  @id @default(uuid()) @db.Uuid
+  courseCode            String  @unique @db.VarChar(50)
+  nameEnglish           String  @db.VarChar(150)
+  nameArabic            String  @db.VarChar(150)
+  descriptionEnglish    String? @db.Text
+  descriptionArabic     String? @db.Text
+  departmentId          String  @db.Uuid
+  categoryId            String? @db.Uuid
+  courseClassification  String  @db.VarChar(50)
+  durationType          String  @db.VarChar(50)
   durationValue         Int
-  allowWalkInCompletion Boolean                @default(false)
-  status                String                 @default("Draft") @db.VarChar(50) // Draft, InReview, Approved, Published, Archived
-  
-  effectiveStartDate    DateTime               @db.Date
-  effectiveEndDate      DateTime?              @db.Date
+  allowWalkInCompletion Boolean @default(false)
+  status                String  @default("Draft") @db.VarChar(50) // Draft, InReview, Approved, Published, Archived
 
-  version               Int                    @default(1)
+  effectiveStartDate DateTime  @db.Date
+  effectiveEndDate   DateTime? @db.Date
 
-  category              CourseCategory?        @relation(fields: [categoryId], references: [id])
-  pricings              CoursePricing[]
-  completionRules       CourseCompletionRule[]
-  discounts             CourseDiscount[]
-  batches               Batch[]
-  enrollments           Enrollment[]
-  admissions            Admission[]
+  version Int @default(1)
 
-  leads                 Lead[]
-  inquiries             Inquiry[]
+  category        CourseCategory?        @relation(fields: [categoryId], references: [id])
+  pricings        CoursePricing[]
+  completionRules CourseCompletionRule[]
+  discounts       CourseDiscount[]
+  batches         Batch[]
+  enrollments     Enrollment[]
+  admissions      Admission[]
 
-  createdAt             DateTime               @default(now()) @db.Timestamptz(6)
-  createdBy             String?                @db.Uuid
-  updatedAt             DateTime?              @updatedAt @db.Timestamptz(6)
-  updatedBy             String?                @db.Uuid
-  deletedAt             DateTime?              @db.Timestamptz(6)
-  deletedBy             String?                @db.Uuid
-  isDeleted             Boolean                @default(false)
+  leads     Lead[]
+  inquiries Inquiry[]
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
 
   @@index([categoryId])
   @@index([departmentId])
@@ -879,40 +879,40 @@ model Course {
 }
 
 model Batch {
-  id                     String           @id @default(uuid()) @db.Uuid
-  courseId               String           @db.Uuid
-  course                 Course           @relation(fields: [courseId], references: [id])
-  branchId               String           @db.Uuid // logical reference
-  classroomId            String?          @db.Uuid // logical reference
-  batchCode              String           @unique @db.VarChar(50)
-  batchNameEnglish       String           @db.VarChar(150)
-  batchNameArabic        String           @db.VarChar(150)
-  startDate              DateTime         @db.Date
-  endDate                DateTime         @db.Date
-  capacity               Int              @db.Integer
-  currentEnrollmentCount Int              @default(0) @db.Integer
-  waitingListEnabled     Boolean          @default(true)
-  allowOverbooking       Boolean          @default(false)
-  isWalkIn               Boolean          @default(false)
-  corporateAccountId     String?          @db.Uuid // logical reference
-  status                 String           @db.VarChar(50) // Draft, OpenForEnrollment, InProgress, Completed, Cancelled
-  version                Int              @default(1)
-  batchType              String           @default("Regular") @db.VarChar(50) // Regular, FastTrack, Weekend
+  id                     String   @id @default(uuid()) @db.Uuid
+  courseId               String   @db.Uuid
+  course                 Course   @relation(fields: [courseId], references: [id])
+  branchId               String   @db.Uuid // logical reference
+  classroomId            String?  @db.Uuid // logical reference
+  batchCode              String   @unique @db.VarChar(50)
+  batchNameEnglish       String   @db.VarChar(150)
+  batchNameArabic        String   @db.VarChar(150)
+  startDate              DateTime @db.Date
+  endDate                DateTime @db.Date
+  capacity               Int      @db.Integer
+  currentEnrollmentCount Int      @default(0) @db.Integer
+  waitingListEnabled     Boolean  @default(true)
+  allowOverbooking       Boolean  @default(false)
+  isWalkIn               Boolean  @default(false)
+  corporateAccountId     String?  @db.Uuid // logical reference
+  status                 String   @db.VarChar(50) // Draft, OpenForEnrollment, InProgress, Completed, Cancelled
+  version                Int      @default(1)
+  batchType              String   @default("Regular") @db.VarChar(50) // Regular, FastTrack, Weekend
 
-  trainers               BatchTrainer[]
-  sessions               Session[]
-  waitlist               WaitingList[]
-  pricings               CoursePricing[]
-  discounts              CourseDiscount[]
-  enrollments            Enrollment[]
+  trainers    BatchTrainer[]
+  sessions    Session[]
+  waitlist    WaitingList[]
+  pricings    CoursePricing[]
+  discounts   CourseDiscount[]
+  enrollments Enrollment[]
 
-  createdAt              DateTime         @default(now()) @db.Timestamptz(6)
-  createdBy              String?          @db.Uuid
-  updatedAt              DateTime?        @updatedAt @db.Timestamptz(6)
-  updatedBy              String?          @db.Uuid
-  deletedAt              DateTime?        @db.Timestamptz(6)
-  deletedBy              String?          @db.Uuid
-  isDeleted              Boolean          @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
 
   @@index([courseId])
   @@index([branchId])
@@ -922,22 +922,22 @@ model Batch {
 }
 
 model BatchTrainer {
-  id             String    @id @default(uuid()) @db.Uuid
-  batchId        String    @db.Uuid
-  batch          Batch     @relation(fields: [batchId], references: [id])
-  trainerId      String    @db.Uuid // logical reference
-  role           String    @db.VarChar(50) // Primary, Assistant, Observer
-  assignedFrom   DateTime  @db.Date
-  assignedTo     DateTime  @db.Date
-  status         String    @default("Active") @db.VarChar(50)
+  id           String   @id @default(uuid()) @db.Uuid
+  batchId      String   @db.Uuid
+  batch        Batch    @relation(fields: [batchId], references: [id])
+  trainerId    String   @db.Uuid // logical reference
+  role         String   @db.VarChar(50) // Primary, Assistant, Observer
+  assignedFrom DateTime @db.Date
+  assignedTo   DateTime @db.Date
+  status       String   @default("Active") @db.VarChar(50)
 
-  createdAt      DateTime  @default(now()) @db.Timestamptz(6)
-  createdBy      String?   @db.Uuid
-  updatedAt      DateTime? @updatedAt @db.Timestamptz(6)
-  updatedBy      String?   @db.Uuid
-  deletedAt      DateTime? @db.Timestamptz(6)
-  deletedBy      String?   @db.Uuid
-  isDeleted      Boolean   @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
 
   @@index([batchId])
   @@index([trainerId])
@@ -945,54 +945,58 @@ model BatchTrainer {
 }
 
 model WaitingList {
-  id                     String    @id @default(uuid()) @db.Uuid
-  courseId               String    @db.Uuid
-  batchId                String    @db.Uuid
-  batch                  Batch     @relation(fields: [batchId], references: [id])
-  studentId              String?   @db.Uuid // logical reference
-  leadId                 String?   @db.Uuid // logical reference
-  queuePosition          Int       @db.Integer
-  status                 String    @db.VarChar(50) // Waiting, Promoted, Removed, Held, Suspended
+  id                     String  @id @default(uuid()) @db.Uuid
+  courseId               String  @db.Uuid
+  batchId                String  @db.Uuid
+  batch                  Batch   @relation(fields: [batchId], references: [id])
+  studentProfileId       String? @db.Uuid // logical reference to StudentProfile
+  leadId                 String? @db.Uuid // logical reference
+  enrollmentId           String? @db.Uuid // logical reference
+  queuePosition          Int     @db.Integer
+  status                 String  @db.VarChar(50) // Waiting, Promoted, Removed, Held, Suspended
   statusReason           String?
   promotionCorrelationId String?
 
-  createdAt              DateTime  @default(now()) @db.Timestamptz(6)
-  createdBy              String?   @db.Uuid
-  updatedAt              DateTime? @updatedAt @db.Timestamptz(6)
-  updatedBy              String?   @db.Uuid
-  deletedAt              DateTime? @db.Timestamptz(6)
-  deletedBy              String?   @db.Uuid
-  isDeleted              Boolean   @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
 
   @@index([courseId])
   @@index([batchId])
-  @@index([studentId])
+  @@index([studentProfileId])
   @@index([leadId])
+  @@index([enrollmentId])
+  @@index([studentProfileId, batchId])
+  @@index([leadId, batchId])
   @@map("waiting_lists")
 }
 
 model Session {
-  id            String    @id @default(uuid()) @db.Uuid
-  batchId       String    @db.Uuid
-  batch         Batch     @relation(fields: [batchId], references: [id])
-  sessionNumber Int       @db.Integer
-  titleEnglish  String    @db.VarChar(150)
-  titleArabic   String    @db.VarChar(150)
-  sessionDate   DateTime  @db.Date
-  startTime     String    @db.VarChar(10) // HH:MM
-  endTime       String    @db.VarChar(10) // HH:MM
-  trainerId     String?   @db.Uuid // logical reference
-  classroomId   String?   @db.Uuid // logical reference
-  status        String    @db.VarChar(50) // Scheduled, Completed, Cancelled, Rescheduled
-  version       Int       @default(1)
+  id            String   @id @default(uuid()) @db.Uuid
+  batchId       String   @db.Uuid
+  batch         Batch    @relation(fields: [batchId], references: [id])
+  sessionNumber Int      @db.Integer
+  titleEnglish  String   @db.VarChar(150)
+  titleArabic   String   @db.VarChar(150)
+  sessionDate   DateTime @db.Date
+  startTime     String   @db.VarChar(10) // HH:MM
+  endTime       String   @db.VarChar(10) // HH:MM
+  trainerId     String?  @db.Uuid // logical reference
+  classroomId   String?  @db.Uuid // logical reference
+  status        String   @db.VarChar(50) // Scheduled, Completed, Cancelled, Rescheduled
+  version       Int      @default(1)
 
-  createdAt     DateTime  @default(now()) @db.Timestamptz(6)
-  createdBy     String?   @db.Uuid
-  updatedAt     DateTime? @updatedAt @db.Timestamptz(6)
-  updatedBy     String?   @db.Uuid
-  deletedAt     DateTime? @db.Timestamptz(6)
-  deletedBy     String?   @db.Uuid
-  isDeleted     Boolean   @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
 
   @@index([batchId])
   @@index([trainerId])
@@ -1002,37 +1006,37 @@ model Session {
 }
 
 model Inquiry {
-  id                 String    @id @default(uuid()) @db.Uuid
-  inquiryNumber      String    @unique @db.VarChar(50)
-  branchId           String    @db.Uuid
-  firstName          String    @db.VarChar(100)
-  lastName           String    @db.VarChar(100)
-  mobile             String    @db.VarChar(30)
-  email              String?   @db.VarChar(255)
+  id                 String     @id @default(uuid()) @db.Uuid
+  inquiryNumber      String     @unique @db.VarChar(50)
+  branchId           String     @db.Uuid
+  firstName          String     @db.VarChar(100)
+  lastName           String     @db.VarChar(100)
+  mobile             String     @db.VarChar(30)
+  email              String?    @db.VarChar(255)
   source             LeadSource @default(Other)
-  interestedCourseId String?   @db.Uuid
-  counselorId        String?   @db.Uuid
-  priority           String    @default("Medium") @db.VarChar(20)
-  notes              String?   @db.Text
-  status             String    @default("Captured") @db.VarChar(50)
-  isDuplicate        Boolean   @default(false)
-  duplicateRefId     String?   @db.VarChar(150)
-  utmSource          String?   @db.VarChar(100)
-  utmMedium          String?   @db.VarChar(100)
-  utmCampaign        String?   @db.VarChar(100)
+  interestedCourseId String?    @db.Uuid
+  counselorId        String?    @db.Uuid
+  priority           String     @default("Medium") @db.VarChar(20)
+  notes              String?    @db.Text
+  status             String     @default("Captured") @db.VarChar(50)
+  isDuplicate        Boolean    @default(false)
+  duplicateRefId     String?    @db.VarChar(150)
+  utmSource          String?    @db.VarChar(100)
+  utmMedium          String?    @db.VarChar(100)
+  utmCampaign        String?    @db.VarChar(100)
 
-  branch             Branch    @relation(fields: [branchId], references: [id])
-  counselor          User?     @relation("CounselorInquiries", fields: [counselorId], references: [id])
-  interestedCourse   Course?   @relation(fields: [interestedCourseId], references: [id])
-  leads              Lead[]
+  branch           Branch  @relation(fields: [branchId], references: [id])
+  counselor        User?   @relation("CounselorInquiries", fields: [counselorId], references: [id])
+  interestedCourse Course? @relation(fields: [interestedCourseId], references: [id])
+  leads            Lead[]
 
-  createdAt          DateTime  @default(now()) @db.Timestamptz(6)
-  createdBy          String?   @db.Uuid
-  updatedAt          DateTime? @updatedAt @db.Timestamptz(6)
-  updatedBy          String?   @db.Uuid
-  deletedAt          DateTime? @db.Timestamptz(6)
-  deletedBy          String?   @db.Uuid
-  isDeleted          Boolean   @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
 
   @@index([branchId])
   @@index([counselorId])
@@ -1041,46 +1045,46 @@ model Inquiry {
 }
 
 model Lead {
-  id                 String         @id @default(uuid()) @db.Uuid
-  leadNumber         String         @unique @db.VarChar(50)
-  personId           String         @db.Uuid
-  branchId           String         @db.Uuid
-  firstName          String         @db.VarChar(100)
-  lastName           String         @db.VarChar(100)
-  email              String?        @db.VarChar(255)
-  phone              String         @db.VarChar(30)
-  stage              LeadStage      @default(New)
-  source             LeadSource     @default(Other)
-  counselorId        String?        @db.Uuid
-  interestedCourseId String         @db.Uuid
-  campaignId         String?        @db.Uuid
-  priority           String         @default("Medium") @db.VarChar(20)
-  notes              String?        @db.Text
-  lostReasonCode     String?        @db.VarChar(50)
-  lostReasonNotes    String?        @db.Text
-  inquiryId          String?        @db.Uuid
-  version            Int            @default(1)
-  nextFollowUpDate   DateTime?      @db.Timestamptz(6)
+  id                 String     @id @default(uuid()) @db.Uuid
+  leadNumber         String     @unique @db.VarChar(50)
+  personId           String     @db.Uuid
+  branchId           String     @db.Uuid
+  firstName          String     @db.VarChar(100)
+  lastName           String     @db.VarChar(100)
+  email              String?    @db.VarChar(255)
+  phone              String     @db.VarChar(30)
+  stage              LeadStage  @default(New)
+  source             LeadSource @default(Other)
+  counselorId        String?    @db.Uuid
+  interestedCourseId String     @db.Uuid
+  campaignId         String?    @db.Uuid
+  priority           String     @default("Medium") @db.VarChar(20)
+  notes              String?    @db.Text
+  lostReasonCode     String?    @db.VarChar(50)
+  lostReasonNotes    String?    @db.Text
+  inquiryId          String?    @db.Uuid
+  version            Int        @default(1)
+  nextFollowUpDate   DateTime?  @db.Timestamptz(6)
 
-  person             Person         @relation(fields: [personId], references: [id])
-  branch             Branch         @relation(fields: [branchId], references: [id])
-  counselor          User?          @relation("CounselorLeads", fields: [counselorId], references: [id])
-  campaign           Campaign?      @relation(fields: [campaignId], references: [id])
-  inquiry            Inquiry?       @relation(fields: [inquiryId], references: [id])
-  interestedCourse   Course         @relation(fields: [interestedCourseId], references: [id])
-  followUps          LeadFollowUp[]
-  notesRelation      LeadNote[]     @relation("LeadNotes")
-  stageHistory       LeadStageHistory[] @relation("StageHistory")
-  admissions         Admission[]
+  person           Person             @relation(fields: [personId], references: [id])
+  branch           Branch             @relation(fields: [branchId], references: [id])
+  counselor        User?              @relation("CounselorLeads", fields: [counselorId], references: [id])
+  campaign         Campaign?          @relation(fields: [campaignId], references: [id])
+  inquiry          Inquiry?           @relation(fields: [inquiryId], references: [id])
+  interestedCourse Course             @relation(fields: [interestedCourseId], references: [id])
+  followUps        LeadFollowUp[]
+  notesRelation    LeadNote[]         @relation("LeadNotes")
+  stageHistory     LeadStageHistory[] @relation("StageHistory")
+  admissions       Admission[]
 
-  createdAt          DateTime       @default(now()) @db.Timestamptz(6)
-  createdBy          String?        @db.Uuid
-  updatedAt          DateTime?      @updatedAt @db.Timestamptz(6)
-  updatedBy          String?        @db.Uuid
-  deletedAt          DateTime?      @db.Timestamptz(6)
-  deletedBy          String?        @db.Uuid
-  isDeleted          Boolean        @default(false)
-  status             RecordStatus   @default(Active)
+  createdAt DateTime     @default(now()) @db.Timestamptz(6)
+  createdBy String?      @db.Uuid
+  updatedAt DateTime?    @updatedAt @db.Timestamptz(6)
+  updatedBy String?      @db.Uuid
+  deletedAt DateTime?    @db.Timestamptz(6)
+  deletedBy String?      @db.Uuid
+  isDeleted Boolean      @default(false)
+  status    RecordStatus @default(Active)
 
   @@index([branchId])
   @@index([counselorId])
@@ -1090,25 +1094,25 @@ model Lead {
 }
 
 model LeadFollowUp {
-  id           String    @id @default(uuid()) @db.Uuid
-  leadId       String    @db.Uuid
-  counselorId  String    @db.Uuid
-  followUpDate DateTime  @db.Timestamptz(6)
-  followUpType String    @db.VarChar(50)
-  notes        String?   @db.Text
-  outcome      String?   @db.VarChar(50)
-  status       String    @default("Scheduled") @db.VarChar(50)
+  id           String   @id @default(uuid()) @db.Uuid
+  leadId       String   @db.Uuid
+  counselorId  String   @db.Uuid
+  followUpDate DateTime @db.Timestamptz(6)
+  followUpType String   @db.VarChar(50)
+  notes        String?  @db.Text
+  outcome      String?  @db.VarChar(50)
+  status       String   @default("Scheduled") @db.VarChar(50)
 
-  lead         Lead      @relation(fields: [leadId], references: [id])
-  counselor    User      @relation("CounselorFollowUps", fields: [counselorId], references: [id])
+  lead      Lead @relation(fields: [leadId], references: [id])
+  counselor User @relation("CounselorFollowUps", fields: [counselorId], references: [id])
 
-  createdAt    DateTime  @default(now()) @db.Timestamptz(6)
-  createdBy    String?   @db.Uuid
-  updatedAt    DateTime? @db.Timestamptz(6)
-  updatedBy    String?   @db.Uuid
-  deletedAt    DateTime? @db.Timestamptz(6)
-  deletedBy    String?   @db.Uuid
-  isDeleted    Boolean   @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
 
   @@index([leadId])
   @@index([counselorId])
@@ -1125,8 +1129,8 @@ model StudentProfile {
   idCardNumber  String?       @unique @db.VarChar(50)
   joinedAt      DateTime      @default(now()) @db.Timestamptz(6)
 
-  person     Person    @relation(fields: [personId], references: [id])
-  admissions Admission[]
+  person      Person       @relation(fields: [personId], references: [id])
+  admissions  Admission[]
   enrollments Enrollment[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
@@ -1142,30 +1146,30 @@ model StudentProfile {
 }
 
 model Admission {
-  id              String          @id @default(uuid()) @db.Uuid
-  admissionNumber String          @unique @db.VarChar(50)
-  personId        String          @db.Uuid
-  studentProfileId String         @db.Uuid
-  branchId        String          @db.Uuid
-  leadId          String?         @db.Uuid
-  courseId        String?         @db.Uuid
-  admissionDate   DateTime        @default(now()) @db.Timestamptz(6)
-  admissionStatus AdmissionStatus @default(Draft)
-  submittedAt     DateTime?       @db.Timestamptz(6)
-  approvedAt      DateTime?       @db.Timestamptz(6)
-  approvedBy      String?         @db.Uuid
-  rejectedAt      DateTime?       @db.Timestamptz(6)
-  rejectedBy      String?         @db.Uuid
-  cancelledAt     DateTime?       @db.Timestamptz(6)
-  cancelledBy     String?         @db.Uuid
-  remarks         String?         @db.Text
+  id               String          @id @default(uuid()) @db.Uuid
+  admissionNumber  String          @unique @db.VarChar(50)
+  personId         String          @db.Uuid
+  studentProfileId String          @db.Uuid
+  branchId         String          @db.Uuid
+  leadId           String?         @db.Uuid
+  courseId         String?         @db.Uuid
+  admissionDate    DateTime        @default(now()) @db.Timestamptz(6)
+  admissionStatus  AdmissionStatus @default(Draft)
+  submittedAt      DateTime?       @db.Timestamptz(6)
+  approvedAt       DateTime?       @db.Timestamptz(6)
+  approvedBy       String?         @db.Uuid
+  rejectedAt       DateTime?       @db.Timestamptz(6)
+  rejectedBy       String?         @db.Uuid
+  cancelledAt      DateTime?       @db.Timestamptz(6)
+  cancelledBy      String?         @db.Uuid
+  remarks          String?         @db.Text
 
-  person        Person         @relation(fields: [personId], references: [id])
+  person         Person         @relation(fields: [personId], references: [id])
   studentProfile StudentProfile @relation(fields: [studentProfileId], references: [id])
-  branch        Branch         @relation(fields: [branchId], references: [id])
-  lead          Lead?          @relation(fields: [leadId], references: [id])
-  course        Course?        @relation(fields: [courseId], references: [id])
-  enrollments   Enrollment[]
+  branch         Branch         @relation(fields: [branchId], references: [id])
+  lead           Lead?          @relation(fields: [leadId], references: [id])
+  course         Course?        @relation(fields: [courseId], references: [id])
+  enrollments    Enrollment[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -1183,32 +1187,32 @@ model Admission {
 }
 
 model Enrollment {
-  id                      String           @id @default(uuid()) @db.Uuid
-  enrollmentNumber        String           @unique @db.VarChar(50)
-  studentProfileId        String           @db.Uuid
-  corporateParticipantId  String?          @db.Uuid
-  admissionId             String           @db.Uuid
-  courseId                String           @db.Uuid
-  batchId                 String           @db.Uuid
-  branchId                String           @db.Uuid
-  enrollmentType          EnrollmentType   @default(Regular)
-  enrollmentStatus        EnrollmentStatus @default(Draft)
-  pricingSource           PricingSource    @default(GlobalDefault)
-  resolvedPrice           Decimal          @db.Decimal(12, 3)
-  resolvedDiscount        Decimal          @db.Decimal(12, 3) @default(0.000)
-  finalAmount             Decimal          @db.Decimal(12, 3)
-  paymentValidationRequired Boolean         @default(true)
-  completionStatus        String           @default("Pending") @db.VarChar(50)
-  certificateStatus       String           @default("NotEligible") @db.VarChar(50)
-  confirmedAt             DateTime?        @db.Timestamptz(6)
-  completedAt             DateTime?        @db.Timestamptz(6)
-  priceEvaluationTimestamp DateTime?       @db.Timestamptz(6)
+  id                        String           @id @default(uuid()) @db.Uuid
+  enrollmentNumber          String           @unique @db.VarChar(50)
+  studentProfileId          String           @db.Uuid
+  corporateParticipantId    String?          @db.Uuid
+  admissionId               String           @db.Uuid
+  courseId                  String           @db.Uuid
+  batchId                   String           @db.Uuid
+  branchId                  String           @db.Uuid
+  enrollmentType            EnrollmentType   @default(Regular)
+  enrollmentStatus          EnrollmentStatus @default(Draft)
+  pricingSource             PricingSource    @default(GlobalDefault)
+  resolvedPrice             Decimal          @db.Decimal(12, 3)
+  resolvedDiscount          Decimal          @default(0.000) @db.Decimal(12, 3)
+  finalAmount               Decimal          @db.Decimal(12, 3)
+  paymentValidationRequired Boolean          @default(true)
+  completionStatus          String           @default("Pending") @db.VarChar(50)
+  certificateStatus         String           @default("NotEligible") @db.VarChar(50)
+  confirmedAt               DateTime?        @db.Timestamptz(6)
+  completedAt               DateTime?        @db.Timestamptz(6)
+  priceEvaluationTimestamp  DateTime?        @db.Timestamptz(6)
 
-  studentProfile StudentProfile @relation(fields: [studentProfileId], references: [id])
-  admission      Admission      @relation(fields: [admissionId], references: [id])
-  branch         Branch         @relation(fields: [branchId], references: [id])
-  course         Course         @relation(fields: [courseId], references: [id])
-  batch          Batch          @relation(fields: [batchId], references: [id])
+  studentProfile   StudentProfile    @relation(fields: [studentProfileId], references: [id])
+  admission        Admission         @relation(fields: [admissionId], references: [id])
+  branch           Branch            @relation(fields: [branchId], references: [id])
+  course           Course            @relation(fields: [courseId], references: [id])
+  batch            Batch             @relation(fields: [batchId], references: [id])
   walkInEnrollment WalkInEnrollment?
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
@@ -1223,6 +1227,7 @@ model Enrollment {
   @@index([admissionId])
   @@index([batchId])
   @@index([branchId])
+  @@index([studentProfileId, batchId])
   @@map("enrollments")
 }
 
@@ -1235,7 +1240,7 @@ model WalkInEnrollment {
   confirmationIssued Boolean  @default(false)
   remarks            String?  @db.Text
 
-  enrollment Enrollment @relation(fields: [enrollmentId], references: [id])
+  enrollment   Enrollment          @relation(fields: [enrollmentId], references: [id])
   confirmation WalkInConfirmation?
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
@@ -1296,34 +1301,34 @@ model LeadStageHistory {
   performedBy     String    @db.Uuid
   performedAt     DateTime  @default(now()) @db.Timestamptz(6)
 
-  lead            Lead      @relation("StageHistory", fields: [leadId], references: [id])
-  performer       User      @relation("StageChanges", fields: [performedBy], references: [id])
+  lead      Lead @relation("StageHistory", fields: [leadId], references: [id])
+  performer User @relation("StageChanges", fields: [performedBy], references: [id])
 
   @@index([leadId])
   @@map("lead_stage_history")
 }
 
 model Document {
-  id            String                 @id @default(uuid()) @db.Uuid
-  fileKey       String                 @db.VarChar(255)
-  fileName      String                 @db.VarChar(255)
-  fileType      String                 @db.VarChar(100)
-  documentType  DocumentType
-  branchId      String                 @db.Uuid
-  status        DocumentStatus         @default(Active)
+  id           String         @id @default(uuid()) @db.Uuid
+  fileKey      String         @db.VarChar(255)
+  fileName     String         @db.VarChar(255)
+  fileType     String         @db.VarChar(100)
+  documentType DocumentType
+  branchId     String         @db.Uuid
+  status       DocumentStatus @default(Active)
 
   owners        DocumentOwner[]
   verifications DocumentVerification[]
 
-  createdAt     DateTime               @default(now()) @db.Timestamptz(6)
-  createdBy     String?                @db.Uuid
-  updatedAt     DateTime?              @db.Timestamptz(6)
-  updatedBy     String?                @db.Uuid
-  deletedAt     DateTime?              @db.Timestamptz(6)
-  deletedBy     String?                @db.Uuid
-  isDeleted     Boolean                @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
 
-  branch        Branch                 @relation("BranchDocuments", fields: [branchId], references: [id])
+  branch Branch @relation("BranchDocuments", fields: [branchId], references: [id])
 
   @@index([branchId])
   @@map("documents")
@@ -1335,10 +1340,10 @@ model DocumentOwner {
   ownerId    String    @db.Uuid
   ownerType  OwnerType
 
-  document   Document  @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
 
-  createdAt  DateTime  @default(now()) @db.Timestamptz(6)
-  createdBy  String?   @db.Uuid
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  createdBy String?  @db.Uuid
 
   @@unique([documentId, ownerId, ownerType])
   @@index([ownerId])
@@ -1346,18 +1351,18 @@ model DocumentOwner {
 }
 
 model DocumentVerification {
-  id         String             @id @default(uuid()) @db.Uuid
-  documentId String             @db.Uuid
+  id         String              @id @default(uuid()) @db.Uuid
+  documentId String              @db.Uuid
   outcome    VerificationOutcome @default(Pending)
-  verifiedBy String?            @db.Uuid
-  verifiedAt DateTime?          @db.Timestamptz(6)
-  remarks    String?            @db.Text
+  verifiedBy String?             @db.Uuid
+  verifiedAt DateTime?           @db.Timestamptz(6)
+  remarks    String?             @db.Text
 
-  document   Document           @relation(fields: [documentId], references: [id], onDelete: Cascade)
-  verifier   User?              @relation("UserVerifications", fields: [verifiedBy], references: [id])
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  verifier User?    @relation("UserVerifications", fields: [verifiedBy], references: [id])
 
-  createdAt  DateTime           @default(now()) @db.Timestamptz(6)
-  createdBy  String?            @db.Uuid
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  createdBy String?  @db.Uuid
 
   @@index([documentId])
   @@map("document_verifications")

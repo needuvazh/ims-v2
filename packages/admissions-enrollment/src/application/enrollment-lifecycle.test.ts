@@ -163,6 +163,11 @@ test('EnrollmentService approveEnrollment should handle full batch waitlisting',
         enrollmentStatus: 'Submitted',
       }),
       count: vi.fn().mockResolvedValue(15), // Capacity reached!
+      findFirst: vi.fn().mockResolvedValue(null), // No duplicate enrollment
+    },
+    waitingList: {
+      findFirst: vi.fn().mockResolvedValue(null), // No promotion reservation
+      count: vi.fn().mockResolvedValue(0),
     },
     batch: {
       findUnique: vi.fn().mockResolvedValue({
@@ -187,10 +192,13 @@ test('EnrollmentService approveEnrollment should handle full batch waitlisting',
   await enrollmentService.approveEnrollment('enr-1', 'actor-1');
 
   expect((enrollmentService as any).batchService.enqueueWaitlist).toHaveBeenCalledWith(
-    'batch-1',
-    'stu-1',
-    null,
-    'actor-1',
+    {
+      batchId: 'batch-1',
+      studentProfileId: 'stu-1',
+      leadId: null,
+      enrollmentId: 'enr-1',
+      actorId: 'actor-1',
+    },
     mockPrisma
   );
   expect(mockPrisma.outboxEvent.create).toHaveBeenCalledWith({
@@ -213,6 +221,11 @@ test('EnrollmentService approveEnrollment should throw ERR_ENR_CREDIT_EXCEEDED i
       }),
       count: vi.fn().mockResolvedValue(5), // Seats available
       update: vi.fn().mockResolvedValue(null),
+      findFirst: vi.fn().mockResolvedValue(null), // No duplicate enrollment
+    },
+    waitingList: {
+      findFirst: vi.fn().mockResolvedValue(null), // No promotion reservation
+      count: vi.fn().mockResolvedValue(0),
     },
     batch: {
       findUnique: vi.fn().mockResolvedValue({
@@ -308,4 +321,234 @@ test('EnrollmentService createEnrollment should consume canonical totalPrice con
   expect(res.resolvedPrice).toEqual(new Prisma.Decimal(200));
   expect(res.resolvedDiscount).toEqual(new Prisma.Decimal(30));
   expect(res.finalAmount).toEqual(new Prisma.Decimal(190));
+});
+
+test('EnrollmentService approveEnrollment should throw ERR_ENR_DUPLICATE_ENROLLMENT if active/pending enrollment exists', async () => {
+  const mockPrisma = {
+    enrollment: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'enr-1',
+        batchId: 'batch-1',
+        branchId: 'branch-1',
+        studentProfileId: 'stu-1',
+        enrollmentStatus: 'Submitted',
+      }),
+      findFirst: vi.fn().mockResolvedValue({ id: 'enr-duplicate' }), // Duplicate exists
+    },
+    batch: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'batch-1',
+        capacity: 15,
+        waitingListEnabled: true,
+      }),
+    },
+    $transaction: vi.fn().mockImplementation((cb) => cb(mockPrisma)),
+  } as any;
+
+  const enrollmentService = new EnrollmentService(mockPrisma);
+  await expect(enrollmentService.approveEnrollment('enr-1', 'actor-1')).rejects.toThrow('ERR_ENR_DUPLICATE_ENROLLMENT');
+});
+
+test('EnrollmentService approveEnrollment should bypass capacity check and resolve waitlist entry if candidate holds a reservation', async () => {
+  const mockPrisma = {
+    enrollment: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'enr-1',
+        batchId: 'batch-1',
+        branchId: 'branch-1',
+        studentProfileId: 'stu-1',
+        enrollmentStatus: 'Submitted',
+      }),
+      findFirst: vi.fn().mockResolvedValue(null),
+      count: vi.fn().mockResolvedValue(15), // Capacity is full!
+      update: vi.fn().mockResolvedValue({ id: 'enr-1', enrollmentStatus: 'Approved' }),
+    },
+    waitingList: {
+      findFirst: vi.fn().mockResolvedValue({ id: 'wl-promoted', status: 'Promoted' }), // Holds reservation!
+    },
+    batch: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'batch-1',
+        capacity: 15,
+        waitingListEnabled: true,
+      }),
+      update: vi.fn().mockResolvedValue(null),
+    },
+    auditLog: {
+      create: vi.fn().mockResolvedValue(null),
+    },
+    outboxEvent: {
+      create: vi.fn().mockResolvedValue(null),
+    },
+    $transaction: vi.fn().mockImplementation((cb) => cb(mockPrisma)),
+  } as any;
+
+  const enrollmentService = new EnrollmentService(mockPrisma);
+  vi.spyOn((enrollmentService as any).batchService, 'resolveWaitlistEntry').mockResolvedValue(null);
+
+  await enrollmentService.approveEnrollment('enr-1', 'actor-1');
+
+  expect(mockPrisma.enrollment.update).toHaveBeenCalledWith({
+    where: { id: 'enr-1' },
+    data: { enrollmentStatus: 'Approved' },
+  });
+  expect((enrollmentService as any).batchService.resolveWaitlistEntry).toHaveBeenCalledWith(
+    'stu-1',
+    'batch-1',
+    mockPrisma
+  );
+});
+
+test('EnrollmentService approveEnrollment should prevent seat stealing by waitlisted student without reservation', async () => {
+  const mockPrisma = {
+    enrollment: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'enr-stealer',
+        batchId: 'batch-1',
+        branchId: 'branch-1',
+        studentProfileId: 'stu-stealer',
+        enrollmentStatus: 'Submitted',
+      }),
+      findFirst: vi.fn().mockResolvedValue(null),
+      count: vi.fn().mockResolvedValue(14), // 14 active seats taken
+    },
+    waitingList: {
+      findFirst: vi.fn().mockResolvedValue(null), // Holds NO reservation!
+      count: vi.fn().mockResolvedValue(1), // But 1 seat is reserved by A (Promoted)
+    },
+    batch: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'batch-1',
+        capacity: 15, // Max capacity is 15. So 14 + 1 = 15 = full.
+        waitingListEnabled: true,
+      }),
+    },
+    outboxEvent: {
+      create: vi.fn().mockResolvedValue(null),
+    },
+    auditLog: {
+      create: vi.fn().mockResolvedValue(null),
+    },
+    $transaction: vi.fn().mockImplementation((cb) => cb(mockPrisma)),
+  } as any;
+
+  const enrollmentService = new EnrollmentService(mockPrisma);
+  vi.spyOn((enrollmentService as any).batchService, 'enqueueWaitlist').mockResolvedValue({ id: 'wl-new' });
+
+  await enrollmentService.approveEnrollment('enr-stealer', 'actor-1');
+
+  // Should get redirected to waitlist (enqueueWaitlist called)
+  expect((enrollmentService as any).batchService.enqueueWaitlist).toHaveBeenCalledWith(
+    {
+      batchId: 'batch-1',
+      studentProfileId: 'stu-stealer',
+      leadId: null,
+      enrollmentId: 'enr-stealer',
+      actorId: 'actor-1',
+    },
+    mockPrisma
+  );
+});
+
+test('EnrollmentService approveEnrollment should allow approval for student holding a promotion reservation and resolve reservation', async () => {
+  const mockPrisma = {
+    enrollment: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'enr-promoted',
+        batchId: 'batch-1',
+        branchId: 'branch-1',
+        studentProfileId: 'stu-promoted',
+        enrollmentStatus: 'Submitted',
+      }),
+      findFirst: vi.fn().mockResolvedValue(null),
+      count: vi.fn().mockResolvedValue(14), // 14 active seats taken
+      update: vi.fn().mockResolvedValue({ id: 'enr-promoted', enrollmentStatus: 'Approved' }),
+    },
+    waitingList: {
+      findFirst: vi.fn().mockResolvedValue({ id: 'wl-promoted', status: 'Promoted' }), // Holds reservation!
+      count: vi.fn().mockResolvedValue(1),
+    },
+    batch: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'batch-1',
+        capacity: 15,
+        waitingListEnabled: true,
+      }),
+      update: vi.fn().mockResolvedValue(null),
+    },
+    auditLog: {
+      create: vi.fn().mockResolvedValue(null),
+    },
+    outboxEvent: {
+      create: vi.fn().mockResolvedValue(null),
+    },
+    $transaction: vi.fn().mockImplementation((cb) => cb(mockPrisma)),
+  } as any;
+
+  const enrollmentService = new EnrollmentService(mockPrisma);
+  vi.spyOn((enrollmentService as any).batchService, 'resolveWaitlistEntry').mockResolvedValue(null);
+
+  await enrollmentService.approveEnrollment('enr-promoted', 'actor-1');
+
+  // Should bypass capacity check, transition to Approved, and resolve waitlist
+  expect(mockPrisma.enrollment.update).toHaveBeenCalledWith({
+    where: { id: 'enr-promoted' },
+    data: { enrollmentStatus: 'Approved' },
+  });
+  expect((enrollmentService as any).batchService.resolveWaitlistEntry).toHaveBeenCalledWith(
+    'stu-promoted',
+    'batch-1',
+    mockPrisma
+  );
+});
+
+test('EnrollmentService approveEnrollment should support worker resolution when enrollmentId must be looked up by studentProfileId and batchId', async () => {
+  const mockPrisma = {
+    enrollment: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'enr-resolved-by-worker',
+        batchId: 'batch-1',
+        branchId: 'branch-1',
+        studentProfileId: 'stu-1',
+        enrollmentStatus: 'Submitted',
+      }),
+      findFirst: vi.fn().mockResolvedValue(null),
+      count: vi.fn().mockResolvedValue(10),
+      update: vi.fn().mockResolvedValue({ id: 'enr-resolved-by-worker', enrollmentStatus: 'Approved' }),
+    },
+    waitingList: {
+      findFirst: vi.fn().mockResolvedValue({ id: 'wl-promoted', status: 'Promoted' }),
+    },
+    batch: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'batch-1',
+        capacity: 15,
+        waitingListEnabled: true,
+      }),
+      update: vi.fn().mockResolvedValue(null),
+    },
+    auditLog: {
+      create: vi.fn().mockResolvedValue(null),
+    },
+    outboxEvent: {
+      create: vi.fn().mockResolvedValue(null),
+    },
+    $transaction: vi.fn().mockImplementation((cb) => cb(mockPrisma)),
+  } as any;
+
+  const enrollmentService = new EnrollmentService(mockPrisma);
+  vi.spyOn((enrollmentService as any).batchService, 'resolveWaitlistEntry').mockResolvedValue(null);
+
+  const foundEnrollmentId = 'enr-resolved-by-worker';
+  await enrollmentService.approveEnrollment(foundEnrollmentId, 'system-worker');
+
+  expect(mockPrisma.enrollment.update).toHaveBeenCalledWith({
+    where: { id: foundEnrollmentId },
+    data: { enrollmentStatus: 'Approved' },
+  });
+  expect((enrollmentService as any).batchService.resolveWaitlistEntry).toHaveBeenCalledWith(
+    'stu-1',
+    'batch-1',
+    mockPrisma
+  );
 });

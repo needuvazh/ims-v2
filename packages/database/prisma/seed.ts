@@ -82,7 +82,7 @@ const systemPermissions = [
   { moduleCode: 'courses',      featureCode: 'batches',    actionCode: 'create',  permissionCode: 'batch.delivery.create',           permissionType: 'Action' as const, description: 'Create course delivery batches.' },
   { moduleCode: 'courses',      featureCode: 'batches',    actionCode: 'update',  permissionCode: 'batch.delivery.update',           permissionType: 'Action' as const, description: 'Update course delivery batches.' },
   { moduleCode: 'courses',      featureCode: 'batches',    actionCode: 'transition', permissionCode: 'batch.delivery.transition',      permissionType: 'Action' as const, description: 'Transition course delivery batches status.' },
-  { moduleCode: 'courses',      featureCode: 'batches',    actionCode: 'waitlist',permissionCode: 'batch.waitlist.manage',           permissionType: 'Action' as const, description: 'Manage batch waitlists.' },
+  { moduleCode: 'courses',      featureCode: 'batches',    actionCode: 'waitlist',permissionCode: 'waitinglist.manage',           permissionType: 'Action' as const, description: 'Manage batch waitlists.' },
   { moduleCode: 'scheduling',   featureCode: 'sessions',    actionCode: 'manage', permissionCode: 'schedule.manage',                permissionType: 'Action' as const, description: 'Create and update schedules.' },
   
   // Attendance & Completion
@@ -230,7 +230,7 @@ async function seed() {
     'batch.delivery.create',
     'batch.delivery.update',
     'batch.delivery.transition',
-    'batch.waitlist.manage',
+    'waitinglist.manage',
     'attendance.record', 'result.record', 'certificate.generate',
     'certificate.verify', 'dashboard.branch', 'dashboard.security', 'dashboard.view',
     'REPORTING_VIEW_CRM_DASHBOARD', 'REPORTING_VIEW_COUNSELOR_METRICS', 'LEAD_VIEW_ALL_IN_BRANCH'

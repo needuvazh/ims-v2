@@ -35,6 +35,9 @@ const mockPrisma = {
   user: { findUnique: vi.fn() },
   session: { updateMany: vi.fn() },
   batchTrainer: { updateMany: vi.fn() },
+  studentProfile: { findFirst: vi.fn() },
+  admission: { findFirst: vi.fn() },
+  lead: { findFirst: vi.fn() },
   auditLog: { create: vi.fn() },
   outboxEvent: { create: vi.fn() },
   $queryRawUnsafe: vi.fn(),
@@ -55,6 +58,9 @@ beforeEach(() => {
       },
     },
   ]);
+  mockPrisma.studentProfile.findFirst.mockResolvedValue({ id: 'stu-123', status: 'Active' });
+  mockPrisma.admission.findFirst.mockResolvedValue({ id: 'adm-123', status: 'Approved' });
+  mockPrisma.lead.findFirst.mockResolvedValue({ id: 'lead-123', stage: 'Enquiry', status: 'Active', branchId: 'branch-123' });
   mockBatchRepository.findSessions.mockResolvedValue([]);
   mockPrisma.$transaction.mockImplementation((cb) => cb(mockPrisma));
   mockPrisma.user.findUnique.mockResolvedValue({
@@ -391,7 +397,7 @@ test('BatchService.checkTrainerConflicts should reject if actor lacks branch acc
 
 test('BatchService.enqueueWaitlist should successfully add student or lead to active waitlist queue', async () => {
   const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
-  const studentId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const studentProfileId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
   
   mockPrisma.$queryRawUnsafe.mockResolvedValueOnce([{
     id: batchId,
@@ -408,12 +414,12 @@ test('BatchService.enqueueWaitlist should successfully add student or lead to ac
   mockBatchRepository.findActiveWaitlist.mockResolvedValueOnce([]);
   mockBatchRepository.addWaitlistEntry.mockResolvedValueOnce({
     id: 'wl-1',
-    studentId,
+    studentProfileId,
     queuePosition: 1,
     status: 'Waiting',
   });
 
-  const result = await batchService.enqueueWaitlist(batchId, studentId, null, 'user-id');
+  const result = await batchService.enqueueWaitlist({ batchId, studentProfileId, actorId: 'user-id' });
   expect(result.status).toBe('Waiting');
   expect(result.queuePosition).toBe(1);
   expect(mockBatchRepository.addWaitlistEntry).toHaveBeenCalled();
@@ -421,7 +427,7 @@ test('BatchService.enqueueWaitlist should successfully add student or lead to ac
 
 test('BatchService.enqueueWaitlist should reject duplicate active entries', async () => {
   const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
-  const studentId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const studentProfileId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
 
   mockPrisma.$queryRawUnsafe.mockResolvedValueOnce([{
     id: batchId,
@@ -436,11 +442,11 @@ test('BatchService.enqueueWaitlist should reject duplicate active entries', asyn
   }]);
 
   mockBatchRepository.findActiveWaitlist.mockResolvedValueOnce([
-    { id: 'wl-existing', studentId, status: 'Waiting' }
+    { id: 'wl-existing', studentProfileId, status: 'Waiting' }
   ]);
 
   await expect(
-    batchService.enqueueWaitlist(batchId, studentId, null, 'user-id')
+    batchService.enqueueWaitlist({ batchId, studentProfileId, actorId: 'user-id' })
   ).rejects.toThrow('ERR_CRS_DUPLICATE_WAITLIST');
 });
 
@@ -462,7 +468,7 @@ test('BatchService.manualPromoteWaitlist should fail if capacity is full and ove
   }]);
 
   mockBatchRepository.findWaitlist.mockResolvedValueOnce([
-    { id: wlId, batchId, status: 'Waiting', studentId: 'stu-1' }
+    { id: wlId, batchId, status: 'Waiting', studentProfileId: 'stu-1' }
   ]);
 
   await expect(
@@ -484,7 +490,7 @@ test('BatchService.skipWaitlistEntry should transition status to Held and shift 
   }]);
 
   mockBatchRepository.findWaitlist.mockResolvedValueOnce([
-    { id: wlId, batchId, status: 'Waiting', studentId: 'stu-1', queuePosition: 1 }
+    { id: wlId, batchId, status: 'Waiting', studentProfileId: 'stu-1', queuePosition: 1 }
   ]);
   mockBatchRepository.findActiveWaitlist.mockResolvedValueOnce([
     { id: wlId, status: 'Waiting', queuePosition: 1 },
@@ -511,7 +517,7 @@ test('BatchService.reactivateWaitlistEntry should transition held entry to Waiti
   }]);
 
   mockBatchRepository.findWaitlist.mockResolvedValueOnce([
-    { id: wlId, batchId, status: 'Held', studentId: 'stu-1', queuePosition: 0 }
+    { id: wlId, batchId, status: 'Held', studentProfileId: 'stu-1', queuePosition: 0 }
   ]);
   mockBatchRepository.findActiveWaitlist.mockResolvedValueOnce([
     { id: 'wl-2', status: 'Waiting', queuePosition: 1 }
@@ -523,7 +529,7 @@ test('BatchService.reactivateWaitlistEntry should transition held entry to Waiti
 
 test('BatchService.revertPromotion should decrement count, set status Held and trigger next auto-promotion', async () => {
   const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
-  const studentId = 'stu-1';
+  const studentProfileId = 'stu-1';
   const correlationId = 'corr-1';
 
   mockPrisma.$queryRawUnsafe.mockResolvedValue([{
@@ -539,7 +545,7 @@ test('BatchService.revertPromotion should decrement count, set status Held and t
   }]);
 
   mockBatchRepository.findWaitlist.mockResolvedValueOnce([
-    { id: 'wl-1', batchId, status: 'Promoted', studentId, promotionCorrelationId: correlationId }
+    { id: 'wl-1', batchId, status: 'Promoted', studentProfileId, promotionCorrelationId: correlationId }
   ]);
   mockBatchRepository.update.mockResolvedValueOnce({
     id: batchId,
@@ -547,10 +553,10 @@ test('BatchService.revertPromotion should decrement count, set status Held and t
     version: 2,
   });
   mockBatchRepository.findActiveWaitlist.mockResolvedValueOnce([
-    { id: 'wl-2', status: 'Waiting', queuePosition: 1, studentId: 'stu-2' }
+    { id: 'wl-2', status: 'Waiting', queuePosition: 1, studentProfileId: 'stu-2' }
   ]);
 
-  await batchService.revertPromotion(batchId, studentId, null, correlationId, 'Doc Failed', 'user-id');
+  await batchService.revertPromotion(batchId, studentProfileId, null, correlationId, 'Doc Failed', 'user-id');
   expect(mockBatchRepository.updateWaitlistEntry).toHaveBeenCalledWith('wl-1', expect.objectContaining({ status: 'Held', statusReason: 'Doc Failed' }), expect.anything());
   expect(mockBatchRepository.update).toHaveBeenCalledWith(batchId, { currentEnrollmentCount: 19 }, 1, expect.anything());
   // Verifies it triggers promotion for next candidate wl-2
@@ -580,8 +586,8 @@ test('BatchService.updateBatch should auto-promote waitlist candidates on capaci
   });
 
   mockBatchRepository.findActiveWaitlist.mockResolvedValueOnce([
-    { id: 'wl-1', status: 'Waiting', queuePosition: 1, studentId: 'stu-1' },
-    { id: 'wl-2', status: 'Waiting', queuePosition: 2, studentId: 'stu-2' }
+    { id: 'wl-1', status: 'Waiting', queuePosition: 1, studentProfileId: 'stu-1' },
+    { id: 'wl-2', status: 'Waiting', queuePosition: 2, studentProfileId: 'stu-2' }
   ]);
 
   await batchService.updateBatch(batchId, { capacity: 22 }, 1, 'user-id');
@@ -595,7 +601,7 @@ test('BatchService.updateBatch should auto-promote waitlist candidates on capaci
 
 test('BatchService.enqueueWaitlist should reject if waitingListEnabled is false', async () => {
   const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
-  const studentId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const studentProfileId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
 
   mockPrisma.$queryRawUnsafe.mockResolvedValueOnce([{
     id: batchId,
@@ -610,13 +616,13 @@ test('BatchService.enqueueWaitlist should reject if waitingListEnabled is false'
   }]);
 
   await expect(
-    batchService.enqueueWaitlist(batchId, studentId, null, 'user-id')
+    batchService.enqueueWaitlist({ batchId, studentProfileId, actorId: 'user-id' })
   ).rejects.toThrow('Waiting list is not enabled for this batch.');
 });
 
 test('BatchService.enqueueWaitlist should reject if batch has not reached capacity', async () => {
   const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
-  const studentId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const studentProfileId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
 
   mockPrisma.$queryRawUnsafe.mockResolvedValueOnce([{
     id: batchId,
@@ -631,7 +637,7 @@ test('BatchService.enqueueWaitlist should reject if batch has not reached capaci
   }]);
 
   await expect(
-    batchService.enqueueWaitlist(batchId, studentId, null, 'user-id')
+    batchService.enqueueWaitlist({ batchId, studentProfileId, actorId: 'user-id' })
   ).rejects.toThrow('Cannot enqueue candidate because the batch has not reached capacity.');
 });
 
@@ -682,4 +688,88 @@ test('BatchService.removeWaitlistEntry should reject if entry is already Promote
   await expect(
     batchService.removeWaitlistEntry(batchId, 'wl-promoted', 'user-id')
   ).rejects.toThrow('Cannot remove a waitlist entry that has already been removed or promoted.');
+});
+
+test('BatchService.enqueueWaitlist should reject enqueuing if student profile status is inactive', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const studentProfileId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockPrisma.$queryRawUnsafe.mockResolvedValueOnce([{
+    id: batchId,
+    courseId: createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+    capacity: 20,
+    currentEnrollmentCount: 20,
+    waitingListEnabled: true,
+    status: 'OpenForEnrollment',
+  }]);
+
+  mockPrisma.studentProfile.findFirst.mockResolvedValueOnce({ id: studentProfileId, status: 'Inactive', isDeleted: false });
+
+  await expect(
+    batchService.enqueueWaitlist({ batchId, studentProfileId, actorId: 'user-id' })
+  ).rejects.toThrow('ERR_STU_PROFILE_INACTIVE');
+});
+
+test('BatchService.enqueueWaitlist should reject enqueuing if student profile lacks admission in target branch', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const studentProfileId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockPrisma.$queryRawUnsafe.mockResolvedValueOnce([{
+    id: batchId,
+    courseId: createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+    capacity: 20,
+    currentEnrollmentCount: 20,
+    waitingListEnabled: true,
+    status: 'OpenForEnrollment',
+    branchId: 'Muscat',
+  }]);
+
+  mockPrisma.studentProfile.findFirst.mockResolvedValueOnce({ id: studentProfileId, status: 'Active', isDeleted: false });
+  mockPrisma.admission.findFirst.mockResolvedValueOnce(null); // No admission
+
+  await expect(
+    batchService.enqueueWaitlist({ batchId, studentProfileId, actorId: 'user-id' })
+  ).rejects.toThrow('ERR_AUTH_BRANCH_DENIED');
+});
+
+test('BatchService.enqueueWaitlist should reject enqueuing if lead is converted', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const leadId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockPrisma.$queryRawUnsafe.mockResolvedValueOnce([{
+    id: batchId,
+    courseId: createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+    capacity: 20,
+    currentEnrollmentCount: 20,
+    waitingListEnabled: true,
+    status: 'OpenForEnrollment',
+    branchId: 'Muscat',
+  }]);
+
+  mockPrisma.lead.findFirst.mockResolvedValueOnce({ id: leadId, stage: 'Converted', isDeleted: false });
+
+  await expect(
+    batchService.enqueueWaitlist({ batchId, leadId, actorId: 'user-id' })
+  ).rejects.toThrow('ERR_CRM_LEAD_ALREADY_CONVERTED');
+});
+
+test('BatchService.enqueueWaitlist should reject enqueuing if lead branch does not match batch branch', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const leadId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockPrisma.$queryRawUnsafe.mockResolvedValueOnce([{
+    id: batchId,
+    courseId: createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+    capacity: 20,
+    currentEnrollmentCount: 20,
+    waitingListEnabled: true,
+    status: 'OpenForEnrollment',
+    branchId: 'Muscat',
+  }]);
+
+  mockPrisma.lead.findFirst.mockResolvedValueOnce({ id: leadId, stage: 'Enquiry', status: 'Active', branchId: 'Sohar', isDeleted: false });
+
+  await expect(
+    batchService.enqueueWaitlist({ batchId, leadId, actorId: 'user-id' })
+  ).rejects.toThrow('ERR_AUTH_BRANCH_DENIED');
 });

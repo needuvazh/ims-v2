@@ -16,6 +16,14 @@ import { randomUUID } from 'crypto';
 
 const CODE_REGEX = /^[A-Z0-9-]{3,20}$/;
 
+export interface EnqueueWaitlistInput {
+  batchId: string;
+  studentProfileId?: string | null;
+  leadId?: string | null;
+  enrollmentId?: string | null;
+  actorId?: string;
+}
+
 export interface ISchedulingService {
   getSessionsForTrainer(
     trainerId: string,
@@ -299,9 +307,10 @@ export class BatchService {
                   aggregateId: id,
                   payload: {
                     batchId: id,
-                    studentId: candidate.studentId,
+                    studentProfileId: candidate.studentProfileId,
                     leadId: candidate.leadId,
-                    correlationId: promoCorrelationId,
+                    enrollmentId: candidate.enrollmentId,
+                    promotionCorrelationId: promoCorrelationId,
                   },
                   status: 'Pending',
                   availableAt: new Date(),
@@ -841,9 +850,10 @@ export class BatchService {
               aggregateId: batchId,
               payload: {
                 batchId,
-                studentId: candidate.studentId,
+                studentProfileId: candidate.studentProfileId,
                 leadId: candidate.leadId,
-                correlationId: promoCorrelationId,
+                enrollmentId: candidate.enrollmentId,
+                promotionCorrelationId: promoCorrelationId,
               },
               status: 'Pending',
               availableAt: new Date(),
@@ -863,19 +873,17 @@ export class BatchService {
   }
 
   async enqueueWaitlist(
-    batchId: string,
-    studentId: string | null,
-    leadId: string | null,
-    actorId?: string,
+    input: EnqueueWaitlistInput,
     tx?: Prisma.TransactionClient
   ) {
+    const { batchId, studentProfileId, leadId, enrollmentId, actorId } = input;
     const execute = async (client: Prisma.TransactionClient) => {
       const batch = await this.acquireBatchLock(batchId, client);
       
-      if (!studentId && !leadId) {
+      if (!studentProfileId && !leadId) {
         throw new Error('ERR_CRS_CANDIDATE_REQUIRED');
       }
-      if (studentId && leadId) {
+      if (studentProfileId && leadId) {
         throw new Error('ERR_CRS_AMBIGUOUS_CANDIDATE');
       }
 
@@ -883,11 +891,55 @@ export class BatchService {
       const aggregate = new BatchAggregate(batch);
       aggregate.validateWaitlistEnqueue();
 
+      // Enforce Candidate Validations & Branch Scoping Checks transactionally
+      if (studentProfileId) {
+        const studentProfile = await client.studentProfile.findFirst({
+          where: { id: studentProfileId, isDeleted: false }
+        });
+        if (!studentProfile) {
+          throw new Error('ERR_STU_PROFILE_NOT_FOUND');
+        }
+        if (studentProfile.status !== 'Active') {
+          throw new Error('ERR_STU_PROFILE_INACTIVE');
+        }
+
+        // Verify Student Branch Admission scope
+        const hasAdmissionInBranch = await client.admission.findFirst({
+          where: {
+            studentProfileId,
+            branchId: batch.branchId,
+            admissionStatus: { in: ['Submitted', 'Approved'] },
+            isDeleted: false
+          }
+        });
+        if (!hasAdmissionInBranch) {
+          throw new Error('ERR_AUTH_BRANCH_DENIED');
+        }
+      }
+
+      if (leadId) {
+        const lead = await client.lead.findFirst({
+          where: { id: leadId, isDeleted: false }
+        });
+        if (!lead) {
+          throw new Error('ERR_CRS_LEAD_NOT_FOUND');
+        }
+        if (lead.stage === 'Converted') {
+          throw new Error('ERR_CRM_LEAD_ALREADY_CONVERTED');
+        }
+        if (lead.stage === 'Lost' || lead.status !== 'Active') {
+          throw new Error('ERR_CRM_LEAD_INACTIVE');
+        }
+        if (lead.branchId !== batch.branchId) {
+          throw new Error('ERR_AUTH_BRANCH_DENIED');
+        }
+      }
+
       // Check duplicates
       const active = await this.batchRepository.findActiveWaitlist(batchId, client);
       const isDuplicate = active.some(
         (entry) =>
-          (studentId && entry.studentId === studentId) ||
+          (studentProfileId && entry.studentProfileId === studentProfileId) ||
           (leadId && entry.leadId === leadId)
       );
       if (isDuplicate) {
@@ -899,8 +951,9 @@ export class BatchService {
         id: createUuid(randomUUID()),
         courseId: batch.courseId,
         batchId,
-        studentId,
+        studentProfileId,
         leadId,
+        enrollmentId: enrollmentId || null,
         queuePosition,
         status: 'Waiting',
         createdBy: actorId,
@@ -916,7 +969,7 @@ export class BatchService {
           entityType: 'WaitingList',
           entityId: wl.id,
           action: 'ENQUEUE_WAITLIST',
-          newValue: { batchId, studentId, leadId, queuePosition },
+          newValue: { batchId, studentProfileId, leadId, enrollmentId, queuePosition },
         },
       });
 
@@ -1012,9 +1065,10 @@ export class BatchService {
           aggregateId: batchId,
           payload: {
             batchId,
-            studentId: entry.studentId,
+            studentProfileId: entry.studentProfileId,
             leadId: entry.leadId,
-            correlationId,
+            enrollmentId: entry.enrollmentId,
+            promotionCorrelationId: correlationId,
           },
           status: 'Pending',
           availableAt: new Date(),
@@ -1191,7 +1245,7 @@ export class BatchService {
 
   async revertPromotion(
     batchId: string,
-    studentId: string | null,
+    studentProfileId: string | null,
     leadId: string | null,
     correlationId?: string | null,
     reason?: string | null,
@@ -1204,7 +1258,7 @@ export class BatchService {
       const entry = list.find(
         (x) =>
           x.status === 'Promoted' &&
-          ((studentId && x.studentId === studentId) || (leadId && x.leadId === leadId))
+          ((studentProfileId && x.studentProfileId === studentProfileId) || (leadId && x.leadId === leadId))
       );
 
       if (!entry) {
@@ -1264,15 +1318,43 @@ export class BatchService {
               aggregateId: batchId,
               payload: {
                 batchId,
-                studentId: nextCandidate.studentId,
+                studentProfileId: nextCandidate.studentProfileId,
                 leadId: nextCandidate.leadId,
-                correlationId: promoCorrelationId,
+                enrollmentId: nextCandidate.enrollmentId,
+                promotionCorrelationId: promoCorrelationId,
               },
               status: 'Pending',
               availableAt: new Date(),
             },
           });
         }
+      }
+    };
+
+    return tx ? execute(tx) : this.prisma.$transaction(execute);
+  }
+
+  async resolveWaitlistEntry(
+    studentProfileId: string | null,
+    batchId: string,
+    tx?: Prisma.TransactionClient,
+    leadId?: string | null
+  ) {
+    const execute = async (client: Prisma.TransactionClient) => {
+      const list = await this.batchRepository.findWaitlist(batchId, client);
+      const entry = list.find(
+        (x) =>
+          x.status === 'Promoted' &&
+          ((studentProfileId && x.studentProfileId === studentProfileId) || (leadId && x.leadId === leadId))
+      );
+
+      if (entry) {
+        await this.batchRepository.updateWaitlistEntry(entry.id, {
+          status: 'Removed',
+          statusReason: 'ConsumedByEnrollment',
+          promotionCorrelationId: null,
+          isDeleted: true,
+        }, client);
       }
     };
 

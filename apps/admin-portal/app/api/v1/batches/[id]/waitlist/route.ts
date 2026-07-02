@@ -12,15 +12,15 @@ import { batchErrorResponse } from '../../route';
 import { prisma } from '@ims/database';
 
 const waitlistSchema = z.object({
-  studentId: z.string().uuid().nullable().optional(),
+  studentProfileId: z.string().uuid().nullable().optional(),
   leadId: z.string().uuid().nullable().optional(),
-}).refine(data => {
-  const hasStudent = !!data.studentId;
+}).strict().refine(data => {
+  const hasStudent = !!data.studentProfileId;
   const hasLead = !!data.leadId;
   return (hasStudent && !hasLead) || (!hasStudent && hasLead);
 }, {
-  message: "Exactly one of studentId or leadId must be provided.",
-  path: ["studentId"]
+  message: "Exactly one of studentProfileId or leadId must be provided.",
+  path: ["studentProfileId"]
 });
 
 function problemJson(
@@ -48,7 +48,7 @@ export async function POST(
 ) {
   const { id } = await params;
   return withRouteObservability(request.headers, async () =>
-    withPermission(request, 'batch.waitlist.manage', async ({ session }) => {
+    withPermission(request, 'waitinglist.manage', async ({ session }) => {
       const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
       let payload: unknown;
@@ -100,23 +100,23 @@ export async function POST(
           }
         }
 
-        const { studentId, leadId } = parsed.data;
+        const { studentProfileId, leadId } = parsed.data;
 
         // Verify student existence, status and branch scope
-        if (studentId) {
-          await studentQueryService.verifyBranchScope(studentId, batch.branchId);
+        if (studentProfileId) {
+          await studentQueryService.verifyBranchScope(studentProfileId, batch.branchId);
         }
         if (leadId) {
           const lead = await prisma.lead.findUnique({ where: { id: leadId } });
           if (!lead) throw new Error('ERR_CRS_LEAD_NOT_FOUND');
         }
 
-        const result = await batchService.enqueueWaitlist(
-          id,
-          studentId || null,
-          leadId || null,
-          session.userId
-        );
+        const result = await batchService.enqueueWaitlist({
+          batchId: id,
+          studentProfileId: studentProfileId || null,
+          leadId: leadId || null,
+          actorId: session.userId,
+        });
 
         const response = NextResponse.json(
           {

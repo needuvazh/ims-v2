@@ -16,7 +16,7 @@ export async function DELETE(
 ) {
   const { id, waitlistId } = await params;
   return withRouteObservability(request.headers, async () =>
-    withPermission(request, 'batch.waitlist.manage', async ({ session }) => {
+    withPermission(request, 'waitinglist.manage', async ({ session }) => {
       const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
       try {

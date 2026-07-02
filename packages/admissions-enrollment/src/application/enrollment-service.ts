@@ -200,6 +200,15 @@ export class EnrollmentService {
         throw new Error('ERR_ENROLLMENT_NOT_FOUND');
       }
 
+      if (
+        enrollment.enrollmentStatus === 'Approved' ||
+        enrollment.enrollmentStatus === 'Confirmed' ||
+        enrollment.enrollmentStatus === 'Active'
+      ) {
+        // Idempotency short-circuit
+        return;
+      }
+
       if (enrollment.enrollmentStatus !== 'Submitted') {
         throw new Error('ERR_ENR_INVALID_STATE');
       }
@@ -228,6 +237,31 @@ export class EnrollmentService {
         throw new Error('ERR_BATCH_NOT_FOUND');
       }
 
+      // Enforce enrollment uniqueness invariant: at most one active/pending enrollment per student profile per batch
+      const duplicateEnrollment = await activeClient.enrollment.findFirst({
+        where: {
+          studentProfileId: enrollment.studentProfileId,
+          batchId: enrollment.batchId,
+          id: { not: enrollmentId },
+          enrollmentStatus: { in: ['Draft', 'Submitted', 'Approved', 'Confirmed', 'Active'] },
+          isDeleted: false
+        }
+      });
+      if (duplicateEnrollment) {
+        throw new Error('ERR_ENR_DUPLICATE_ENROLLMENT');
+      }
+
+      // Check if student holds a waitlist promotion reservation
+      const promotedWaitlistEntry = await activeClient.waitingList.findFirst({
+        where: {
+          batchId: enrollment.batchId,
+          studentProfileId: enrollment.studentProfileId,
+          status: 'Promoted',
+          isDeleted: false
+        }
+      });
+      const hasReservation = !!promotedWaitlistEntry;
+
       const activeCount = await activeClient.enrollment.count({
         where: {
           batchId: enrollment.batchId,
@@ -237,16 +271,26 @@ export class EnrollmentService {
       });
 
       const maxCapacity = batch.capacity || 0;
-      if (activeCount >= maxCapacity) {
-        if (batch.waitingListEnabled) {
-          // Add to waitlist
-          await this.batchService.enqueueWaitlist(
-            enrollment.batchId,
-            enrollment.studentProfileId,
-            null,
-            actorId,
-            activeClient
-          );
+      if (!hasReservation) {
+        const promotedCount = await activeClient.waitingList.count({
+          where: {
+            batchId: enrollment.batchId,
+            status: 'Promoted',
+            isDeleted: false
+          }
+        });
+        const totalReserved = activeCount + promotedCount;
+
+        if (totalReserved >= maxCapacity) {
+          if (batch.waitingListEnabled) {
+            // Add to waitlist (passing enrollmentId to command)
+            await this.batchService.enqueueWaitlist({
+              batchId: enrollment.batchId,
+              studentProfileId: enrollment.studentProfileId,
+              leadId: null,
+              enrollmentId,
+              actorId,
+            }, activeClient);
 
           // Publish StudentAddedToWaitingList
           await activeClient.outboxEvent.create({
@@ -282,6 +326,7 @@ export class EnrollmentService {
           throw new Error('ERR_ENR_BATCH_FULL');
         }
       }
+    }
 
       // Corporate credit limit validation
       if (enrollment.enrollmentType === 'Corporate' && enrollment.corporateParticipantId) {
@@ -298,11 +343,22 @@ export class EnrollmentService {
         data: { enrollmentStatus: 'Approved' }
       });
 
-      // Synchronize currentEnrollmentCount on Batch
-      await activeClient.batch.update({
-        where: { id: enrollment.batchId },
-        data: { currentEnrollmentCount: activeCount + 1 }
-      });
+      // Synchronize currentEnrollmentCount on Batch only if no waitlist reservation was held
+      if (!hasReservation) {
+        await activeClient.batch.update({
+          where: { id: enrollment.batchId },
+          data: { currentEnrollmentCount: activeCount + 1 }
+        });
+      }
+
+      // Resolve Waitlist Reservation inside the transaction
+      if (hasReservation) {
+        await this.batchService.resolveWaitlistEntry(
+          enrollment.studentProfileId,
+          enrollment.batchId,
+          activeClient
+        );
+      }
 
       // Audit log
       await activeClient.auditLog.create({

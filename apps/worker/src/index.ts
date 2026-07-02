@@ -233,6 +233,42 @@ async function sweepOverdueFollowUps() {
   }
 }
 
+async function handleWaitlistEntryPromoted(payload: Record<string, unknown>) {
+  const enrollmentId = payload.enrollmentId as string | undefined;
+  const promotionCorrelationId = payload.promotionCorrelationId as string | undefined;
+  const studentProfileId = payload.studentProfileId as string | undefined;
+  const batchId = payload.batchId as string | undefined;
+
+  logger.info(`Handling WaitlistEntryPromoted - enrollmentId: ${enrollmentId}, promotionCorrelationId: ${promotionCorrelationId}, studentProfileId: ${studentProfileId}, batchId: ${batchId}`);
+
+  if (enrollmentId) {
+    await enrollmentService.approveEnrollment(enrollmentId, 'system-worker');
+    return;
+  }
+
+  if (studentProfileId && batchId) {
+    const enrollments = await prisma.enrollment.findMany({
+      where: {
+        studentProfileId,
+        batchId,
+        enrollmentStatus: 'Submitted',
+        isDeleted: false,
+      },
+    });
+    if (enrollments.length === 1) {
+      await enrollmentService.approveEnrollment(enrollments[0].id, 'system-worker');
+    } else if (enrollments.length === 0) {
+      logger.info(`Manual waitlist entry promoted with no pending enrollment - studentProfileId: ${studentProfileId}, batchId: ${batchId}. Awaiting manual resolution.`);
+    } else {
+      throw new Error(`Could not uniquely resolve pending enrollment for waitlist candidate - studentProfileId: ${studentProfileId}, batchId: ${batchId}, foundCount: ${enrollments.length}`);
+    }
+    return;
+  }
+
+  // Lead or other manual enqueue without student profile
+  logger.info(`Manual waitlist entry promoted with no student profile - payload: ${JSON.stringify(payload)}. Awaiting manual resolution.`);
+}
+
 async function processOutboxEvents() {
   if (isShuttingDown) return;
 
@@ -269,21 +305,26 @@ async function processOutboxEvents() {
           const payload = event.payload as { batchId: string; releasedSeats?: number };
           logger.info(`Handling EnrollmentCancelled for batch ${payload.batchId}`);
           await batchService.releaseSeatAndPromote(payload.batchId, payload.releasedSeats || 1);
+        } else if (event.eventType === 'WaitlistEntryPromoted') {
+          await handleWaitlistEntryPromoted(event.payload as Record<string, unknown>);
         } else if (event.eventType === 'EnrollmentCreationFailed') {
           const payload = event.payload as {
             batchId: string;
+            studentProfileId?: string | null;
             studentId?: string | null;
             leadId?: string | null;
+            promotionCorrelationId?: string | null;
             correlationId?: string | null;
             reason?: string | null;
           };
           logger.info(`Handling EnrollmentCreationFailed for batch ${payload.batchId}`);
           await batchService.revertPromotion(
             payload.batchId,
-            payload.studentId || null,
+            payload.studentProfileId || payload.studentId || null,
             payload.leadId || null,
-            payload.correlationId || null,
-            payload.reason || null
+            payload.promotionCorrelationId || payload.correlationId || null,
+            payload.reason || null,
+            'system-worker'
           );
         } else {
           // TODO: In Phase 2, route event.payload to the actual domain handlers.

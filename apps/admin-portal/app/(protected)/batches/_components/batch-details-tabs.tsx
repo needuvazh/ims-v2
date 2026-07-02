@@ -734,8 +734,9 @@ export function BatchDetailsTabs({
                     {waitlist.map((w, index) => {
                       let displayName = '-';
                       let typeLabel = '-';
-                      if (w.studentId) {
-                        const student = studentsList.find((s) => s.id === w.studentId);
+                      const studentId = w.studentProfileId || w.studentId;
+                      if (studentId) {
+                        const student = studentsList.find((s) => s.id === studentId);
                         displayName = student ? `${student.firstName} ${student.lastName}` : 'Unknown Student';
                         typeLabel = 'Student Profile';
                       } else if (w.leadId) {

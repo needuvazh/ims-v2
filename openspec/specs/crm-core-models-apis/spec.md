@@ -59,7 +59,7 @@ The system MUST support base CRUD operations, stage progression, and counselor a
 - **AND** The system MUST call the Admissions context's `createAdmissionFromLead(leadId, tx)` synchronously inside the transaction to create a student profile and admission record.
 - **AND** Transition the lead stage to `Converted`.
 - **AND** Cancel all outstanding `Scheduled` follow-ups for this lead.
-- **AND** Write `LeadWon` and `LeadConvertedToAdmission` events to the outbox.
+- **AND** Write `LeadWon` and `LeadConverted` events to the outbox.
 
 
 #### Scenario: Stage history logging

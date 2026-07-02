@@ -169,8 +169,9 @@ export class BatchRepository implements IBatchRepository {
         id: data.id,
         courseId: data.courseId,
         batchId: data.batchId,
-        studentId: data.studentId || null,
+        studentProfileId: data.studentProfileId || null,
         leadId: data.leadId || null,
+        enrollmentId: data.enrollmentId || null,
         queuePosition: data.queuePosition,
         status: data.status || 'Waiting',
         statusReason: data.statusReason || null,
@@ -203,7 +204,7 @@ export class BatchRepository implements IBatchRepository {
   async findActiveWaitlist(batchId: string, tx?: Prisma.TransactionClient): Promise<WaitingList[]> {
     const client = tx || this.prisma;
     const list = await client.waitingList.findMany({
-      where: { batchId, status: 'Waiting', isDeleted: false },
+      where: { batchId, status: { in: ['Waiting', 'Promoted'] }, isDeleted: false },
       orderBy: { queuePosition: 'asc' },
     });
     return list as any as WaitingList[];

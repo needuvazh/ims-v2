@@ -167,8 +167,8 @@ describe('Batch Waitlist Integration Tests', () => {
     });
 
     // Enqueue candidate 1 & 2
-    const wl1 = await batchService.enqueueWaitlist(batch.id, studentProfileId1, null, actorId);
-    const wl2 = await batchService.enqueueWaitlist(batch.id, null, leadId, actorId);
+    const wl1 = await batchService.enqueueWaitlist({ batchId: batch.id, studentProfileId: studentProfileId1, actorId });
+    const wl2 = await batchService.enqueueWaitlist({ batchId: batch.id, leadId, actorId });
 
     expect(wl1.queuePosition).toBe(1);
     expect(wl2.queuePosition).toBe(2);
@@ -209,8 +209,8 @@ describe('Batch Waitlist Integration Tests', () => {
     });
 
     // Add student1 & student2 to waitlist
-    const wl1 = await batchService.enqueueWaitlist(batch.id, studentProfileId1, null, actorId);
-    const wl2 = await batchService.enqueueWaitlist(batch.id, studentProfileId2, null, actorId);
+    const wl1 = await batchService.enqueueWaitlist({ batchId: batch.id, studentProfileId: studentProfileId1, actorId });
+    const wl2 = await batchService.enqueueWaitlist({ batchId: batch.id, studentProfileId: studentProfileId2, actorId });
 
     // Manually simulate student1 promoted
     const correlationId = randomUUID();
@@ -259,8 +259,8 @@ describe('Batch Waitlist Integration Tests', () => {
     });
 
     // Enqueue candidate 1 & 2
-    const wl1 = await batchService.enqueueWaitlist(batch.id, studentProfileId1, null, actorId);
-    const wl2 = await batchService.enqueueWaitlist(batch.id, studentProfileId2, null, actorId);
+    const wl1 = await batchService.enqueueWaitlist({ batchId: batch.id, studentProfileId: studentProfileId1, actorId });
+    const wl2 = await batchService.enqueueWaitlist({ batchId: batch.id, studentProfileId: studentProfileId2, actorId });
 
     // Increase capacity bounds from 1 to 3
     await batchService.updateBatch(batch.id, { capacity: 3 }, 1, actorId);
@@ -318,7 +318,7 @@ describe('Batch Waitlist Integration Tests', () => {
 
     // Run parallel enqueues!
     const promises = tempStudents.map((sId) => {
-      return batchService.enqueueWaitlist(batch.id, sId, null, actorId);
+      return batchService.enqueueWaitlist({ batchId: batch.id, studentProfileId: sId, actorId });
     });
 
     const results = await Promise.all(promises);

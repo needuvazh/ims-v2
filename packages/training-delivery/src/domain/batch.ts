@@ -71,8 +71,9 @@ export interface WaitingList {
   id: string;
   courseId: string;
   batchId: string;
-  studentId?: string | null;
+  studentProfileId?: string | null;
   leadId?: string | null;
+  enrollmentId?: string | null;
   queuePosition: number;
   status: string;
   statusReason?: string | null;
@@ -201,7 +202,7 @@ export class BatchAggregate {
     }
 
     // Manual promote override increments capacity count if candidate wasn't auto-promoted in vacated space
-    const updatedCount = options?.force || isFull ? this.state.currentEnrollmentCount + 1 : this.state.currentEnrollmentCount;
+    const updatedCount = this.state.currentEnrollmentCount + 1;
 
     const updatedEntry: WaitingList = {
       ...entry,

@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
-import { assertPermission, getSession } from '../../lib/auth-guard';
+import { assertPermission, getSession, assertBranchScope } from '../../lib/auth-guard';
 import { prisma } from '@ims/database';
 
 export async function createBatchAction(data: any) {
@@ -69,16 +69,20 @@ export async function assignTrainerAction(batchId: string, data: any) {
 
 export async function addToWaitlistAction(batchId: string, data: any) {
   try {
-    await assertPermission('batch.waitlist.manage');
+    await assertPermission('waitinglist.manage');
     const session = await getSession();
 
+    const batch = await prisma.batch.findUnique({ where: { id: batchId } });
+    if (!batch) throw new Error('ERR_CRS_BATCH_NOT_FOUND');
+    await assertBranchScope(batch.branchId);
+
     const { batchService } = await import('../../lib/runtime');
-    const result = await batchService.enqueueWaitlist(
+    const result = await batchService.enqueueWaitlist({
       batchId,
-      data.studentId || null,
-      data.leadId || null,
-      session.userId
-    );
+      studentProfileId: data.studentProfileId || data.studentId || null,
+      leadId: data.leadId || null,
+      actorId: session.userId,
+    });
 
     revalidatePath(`/batches/${batchId}`);
     return { success: true as const, data: result };
@@ -90,8 +94,12 @@ export async function addToWaitlistAction(batchId: string, data: any) {
 
 export async function manualPromoteAction(batchId: string, waitlistId: string) {
   try {
-    await assertPermission('batch.waitlist.manage');
+    await assertPermission('waitinglist.manage');
     const session = await getSession();
+
+    const batch = await prisma.batch.findUnique({ where: { id: batchId } });
+    if (!batch) throw new Error('ERR_CRS_BATCH_NOT_FOUND');
+    await assertBranchScope(batch.branchId);
 
     const { batchService } = await import('../../lib/runtime');
     const result = await batchService.manualPromoteWaitlist(batchId, waitlistId, session.userId);
@@ -105,8 +113,12 @@ export async function manualPromoteAction(batchId: string, waitlistId: string) {
 
 export async function skipWaitlistAction(batchId: string, waitlistId: string, reason: string) {
   try {
-    await assertPermission('batch.waitlist.manage');
+    await assertPermission('waitinglist.manage');
     const session = await getSession();
+
+    const batch = await prisma.batch.findUnique({ where: { id: batchId } });
+    if (!batch) throw new Error('ERR_CRS_BATCH_NOT_FOUND');
+    await assertBranchScope(batch.branchId);
 
     const { batchService } = await import('../../lib/runtime');
     const result = await batchService.skipWaitlistEntry(batchId, waitlistId, reason, session.userId);
@@ -120,8 +132,12 @@ export async function skipWaitlistAction(batchId: string, waitlistId: string, re
 
 export async function reactivateWaitlistAction(batchId: string, waitlistId: string) {
   try {
-    await assertPermission('batch.waitlist.manage');
+    await assertPermission('waitinglist.manage');
     const session = await getSession();
+
+    const batch = await prisma.batch.findUnique({ where: { id: batchId } });
+    if (!batch) throw new Error('ERR_CRS_BATCH_NOT_FOUND');
+    await assertBranchScope(batch.branchId);
 
     const { batchService } = await import('../../lib/runtime');
     const result = await batchService.reactivateWaitlistEntry(batchId, waitlistId, session.userId);
@@ -135,8 +151,12 @@ export async function reactivateWaitlistAction(batchId: string, waitlistId: stri
 
 export async function removeWaitlistAction(batchId: string, waitlistId: string) {
   try {
-    await assertPermission('batch.waitlist.manage');
+    await assertPermission('waitinglist.manage');
     const session = await getSession();
+
+    const batch = await prisma.batch.findUnique({ where: { id: batchId } });
+    if (!batch) throw new Error('ERR_CRS_BATCH_NOT_FOUND');
+    await assertBranchScope(batch.branchId);
 
     const { batchService } = await import('../../lib/runtime');
     await batchService.removeWaitlistEntry(batchId, waitlistId, session.userId);
@@ -150,8 +170,12 @@ export async function removeWaitlistAction(batchId: string, waitlistId: string) 
 
 export async function reorderWaitlistAction(batchId: string, waitlistIds: string[]) {
   try {
-    await assertPermission('batch.waitlist.manage');
+    await assertPermission('waitinglist.manage');
     const session = await getSession();
+
+    const batch = await prisma.batch.findUnique({ where: { id: batchId } });
+    if (!batch) throw new Error('ERR_CRS_BATCH_NOT_FOUND');
+    await assertBranchScope(batch.branchId);
 
     const { batchService } = await import('../../lib/runtime');
     await batchService.reorderWaitlist(batchId, waitlistIds, session.userId);

@@ -15,7 +15,7 @@ CRM lead conversion requirements changed because the admission handoff now creat
 
 ### Modified Capabilities
 
-- `crm-core-models-apis`: lead conversion behavior now references StudentProfile and Admission creation.
+- `crm-core-models-apis`: lead conversion behavior now references the decoupled Admissions handoff flow (creating/reusing `StudentProfile` and `Admission` without direct upstream package dependencies).
 
 ## Impact
 
