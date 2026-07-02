@@ -2,7 +2,7 @@
 
 Define the shared observability foundation for IMS server-side code, including request correlation propagation, structured logging, OpenTelemetry bootstrap, and server-side error capture.
 
-## ADDED Requirements
+## Requirements
 
 ### Requirement: Shared observability package
 The system SHALL provide a shared observability package for IMS server-side code that exposes reusable helpers for request context propagation, structured logging, and OpenTelemetry bootstrap registration.

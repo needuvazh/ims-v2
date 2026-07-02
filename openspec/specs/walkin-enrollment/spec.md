@@ -1,4 +1,9 @@
-## ADDED Requirements
+# walkin-enrollment Specification
+
+## Purpose
+This specification defines the functional requirements and scenarios for Walk-In Fast Track enrollment, payment recording, and completion routing in ASTI IMS.
+
+## Requirements
 
 ### Requirement: Walk-In Enrollment Intake
 The system SHALL support walk-in intake via a dedicated route `POST /api/v1/enrollments/walk-in`, verifying course eligibility, checking person deduplication, and executing immediate auto-submission and auto-approval.

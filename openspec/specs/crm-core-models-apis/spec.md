@@ -1,5 +1,6 @@
 # CRM Core Models & Base APIs
 
+## Purpose
 This specification defines the core data models, validation rules, business logic, and API endpoints for managing raw inquiries, prospects (leads), scheduled follow-ups, and admissions handoff.
 
 ## Requirements

@@ -17,10 +17,20 @@ Module 04 covers the core learner lifecycle in ASTI IMS, but it is too large to 
 
 - `admission-intake`: admin-facing admission creation, review, and admission detail workflows.
 - `enrollment-lifecycle`: enrollment status actions such as submit, approve, confirm, cancel, and complete.
+- `enrollment-operations-console`: admin enrollment screen for lifecycle actions and status monitoring.
 - `walkin-enrollment`: fast-track walk-in enrollment screens and same-day learner handling.
 - `student-profile-lookup`: student search, selection, and profile resolution used by admissions and batch workflows.
+- `person-lookup`: global person duplicate lookup and admission preflight checks.
+- `enrollment-pricing-resolution`: pricing hierarchy resolution and manual discount handling for enrollment drafts.
+- `student-directory`: branch-scoped student directory UI and lookup actions.
+- `student-profile-dashboard`: student detail dashboard with admissions, enrollments, documents, and ID card status.
+- `create-enrollment-form`: enrollment creation screen with course/batch selection and pricing snapshot panel.
+- `student-id-card-management`: student ID card status, download, generation, and reissue flows.
+- `reports-dashboards`: student, admission, enrollment, batch, and ID card reporting/dashboard views.
+- `module-04-reporting-pages`: broader Module 04 reports index plus dedicated student, enrollment, batch roster, and ID card report pages.
 - `lead-to-admission-handoff`: CRM-to-admissions handoff behavior for converting a qualified lead into the admission pipeline.
 - `document-management`: document upload, verification, and admission/enrollment document evidence needed by Module 04 flows.
+- `identity-provisioning`: admission-driven student identity card generation, download, and reissue flows.
 
 ### Modified Capabilities
 

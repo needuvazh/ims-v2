@@ -97,6 +97,10 @@ enum VerificationOutcome {
 }
 ```
 
+#### Scenario: Schema validation
+- **WHEN** the prisma schema is compiled
+- **THEN** the models SHALL contain Document, DocumentOwner, and DocumentVerification with proper fields and constraints.
+
 ---
 
 ### Requirement: Document Capture and Branch Scoping

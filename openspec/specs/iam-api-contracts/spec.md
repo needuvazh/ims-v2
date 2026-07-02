@@ -69,6 +69,10 @@ The system SHALL publish a complete IAM endpoint inventory and contract matrix t
 ### Requirement: Standard IAM Contract Surface
 The endpoint inventory SHALL cover at minimum the following routes:
 
+#### Scenario: Verify standard endpoints exist
+- **WHEN** the IAM API context is loaded
+- **THEN** it SHALL support the standard endpoints specified in the contract surface table.
+
 | Method | Route | Permission | Notes |
 | --- | --- | --- | --- |
 | POST | `/api/v1/auth/login` | Public | Supports `rememberMe` within session policy |

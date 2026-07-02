@@ -1,3 +1,8 @@
+# identity-access Specification
+
+## Purpose
+This specification defines the identity, access management, role-based access control, session management, and branch-scoped authorization rules.
+
 ## Requirements
 
 ### Requirement: Session scopes integration

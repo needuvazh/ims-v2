@@ -27,3 +27,30 @@
 - [ ] 4.3 Add UI tests for the admission intake, enrollment lifecycle, walk-in, student lookup, and document review screens.
 - [ ] 4.4 Run `npx prisma validate --schema packages/database/prisma/schema.prisma`, package typechecks, affected tests, and `git diff --check`.
 - [ ] 4.5 Run `graphify update . --force` after implementation changes are complete.
+
+## 5. Missing Module 04 Gaps
+
+- [ ] 5.1 Implement the global person lookup / duplicate preflight flow.
+- [ ] 5.2 Implement the enrollment pricing resolution screen and discount authorization rules.
+- [ ] 5.3 Implement the enrollment operations console UI and lifecycle action feedback.
+- [ ] 5.4 Implement admission-triggered student identity provisioning and ID card reissue flows.
+- [ ] 5.5 Add targeted tests for the new screen and lifecycle gaps.
+
+## 6. New UI Specs
+
+- [ ] 6.1 Add the student directory spec and page behavior.
+- [ ] 6.2 Add the student profile dashboard spec and page behavior.
+- [ ] 6.3 Add the create enrollment form spec with pricing panel behavior.
+- [ ] 6.4 Add the student ID card management spec and reissue behavior.
+
+## 7. Reports and Dashboards
+
+- [ ] 7.1 Add Module 04 report/dashboard overview requirements.
+- [ ] 7.2 Add student, admission, and enrollment KPI/dashboard requirements.
+- [ ] 7.3 Add batch roster and ID card reporting requirements.
+- [ ] 7.4 Add the admissions dashboard page and navigation entry.
+- [ ] 7.5 Add the broader Module 04 reports index page.
+- [ ] 7.6 Add the student report page.
+- [ ] 7.7 Add the enrollment report page.
+- [ ] 7.8 Add the batch roster/fill-rate report page.
+- [ ] 7.9 Add the ID card report page.
