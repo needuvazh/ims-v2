@@ -123,6 +123,21 @@ export function batchErrorResponse(error: Error) {
     code = 'ERR_CRS_CONCURRENCY_VIOLATION';
     messageEn = 'Conflict: The record has been modified by another process.';
     messageAr = 'تعارض: تم تعديل السجل من قبل عملية أخرى.';
+  } else if (msg.includes('ERR_STUDENT_PROFILE_NOT_FOUND') || msg.includes('ERR_CRS_STUDENT_NOT_FOUND') || msg.includes('ERR_STUDENT_NOT_FOUND')) {
+    status = 404;
+    code = 'ERR_STUDENT_PROFILE_NOT_FOUND';
+    messageEn = 'Student profile not found.';
+    messageAr = 'لم يتم العثور على ملف الطالب.';
+  } else if (msg.includes('ERR_STU_PROFILE_INACTIVE')) {
+    status = 422;
+    code = 'ERR_STU_PROFILE_INACTIVE';
+    messageEn = 'Student profile is inactive or suspended.';
+    messageAr = 'ملف الطالب غير نشط أو معلق.';
+  } else if (msg.includes('ERR_AUTH_BRANCH_DENIED')) {
+    status = 403;
+    code = 'ERR_AUTH_BRANCH_DENIED';
+    messageEn = 'Access denied: student profile is not authorized for this branch scope.';
+    messageAr = 'تم رفض الوصول: غير مصرح بملف الطالب لنقاط هذا الفرع.';
   }
 
   return NextResponse.json(

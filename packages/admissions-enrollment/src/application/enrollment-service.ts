@@ -3,6 +3,7 @@ import { RequirementsResolver } from './requirements-resolver';
 import { DocumentsService } from '@ims/documents';
 import { CoursePricingService, CoursePricingRepository, CourseDiscountRepository } from '@ims/course-catalog';
 import { BatchService, BatchRepository } from '@ims/training-delivery';
+import { StudentQueryService } from './student-query-service';
 
 export class EnrollmentService {
   private readonly pricingService: CoursePricingService;
@@ -80,6 +81,12 @@ export class EnrollmentService {
             throw new Error('ERR_ENR_MISSING_ADMISSION');
           }
         }
+      }
+
+      // Enforce student branch scope check
+      if (data.enrollmentType !== 'WalkIn' && data.enrollmentType !== 'Corporate') {
+        const studentQueryService = new StudentQueryService(this.prisma);
+        await studentQueryService.verifyBranchScope(studentProfileId, data.branchId);
       }
 
       // Resolve course pricing & snapshot it

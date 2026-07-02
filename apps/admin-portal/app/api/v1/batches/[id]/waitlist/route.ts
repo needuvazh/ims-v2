@@ -7,7 +7,7 @@ import {
   createStructuredLogger,
   getCurrentRequestContext,
 } from '../../../../../../lib/observability';
-import { batchService } from '../../../../../../lib/runtime';
+import { batchService, studentQueryService } from '../../../../../../lib/runtime';
 import { batchErrorResponse } from '../../route';
 import { prisma } from '@ims/database';
 
@@ -102,10 +102,9 @@ export async function POST(
 
         const { studentId, leadId } = parsed.data;
 
-        // Verify existence in database
+        // Verify student existence, status and branch scope
         if (studentId) {
-          const studentProfile = await prisma.studentProfile.findUnique({ where: { id: studentId } });
-          if (!studentProfile) throw new Error('ERR_CRS_STUDENT_NOT_FOUND');
+          await studentQueryService.verifyBranchScope(studentId, batch.branchId);
         }
         if (leadId) {
           const lead = await prisma.lead.findUnique({ where: { id: leadId } });

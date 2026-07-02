@@ -89,20 +89,13 @@ export default async function AdmissionsPage(props: {
     select: { id: true, nameEnglish: true },
   });
 
-  const students = await prisma.studentProfile.findMany({
-    where: { isDeleted: false },
-    select: {
-      id: true,
-      studentNumber: true,
-      person: {
-        select: {
-          firstName: true,
-          lastName: true,
-        },
-      },
-    },
-    take: 50,
-  });
+  const { studentQueryService } = await import('@/lib/runtime');
+  const result = await studentQueryService.searchBranchScopedStudents(
+    '',
+    allowedBranchIds as string[],
+    { page: 1, limit: 100 }
+  );
+  const students = result.items;
 
   return (
     <div className="p-6">

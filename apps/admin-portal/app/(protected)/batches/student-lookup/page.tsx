@@ -1,5 +1,4 @@
 import { assertPermission } from '@/lib/auth-guard';
-import { prisma } from '@ims/database';
 import { Card, PageHeader, Table, TableHeader, TableBody, TableRow, TableHead, TableCell, Badge, Input, Button } from '@ims/shared-ui';
 import { Search, Home, Users } from 'lucide-react';
 
@@ -11,40 +10,22 @@ export default async function StudentLookupPage(props: {
   }>;
 }) {
   const searchParams = await props.searchParams;
-  await assertPermission('student.read');
+  const session = await assertPermission('student.read');
 
   const query = searchParams.q || '';
-  
-  // Search student profiles / leads in the DB
-  const studentProfiles = await prisma.studentProfile.findMany({
-    where: {
-      isDeleted: false,
-      OR: [
-        { studentNumber: { contains: query, mode: 'insensitive' } },
-        { person: { firstName: { contains: query, mode: 'insensitive' } } },
-        { person: { lastName: { contains: query, mode: 'insensitive' } } },
-        { person: { mobile: { contains: query } } },
-      ],
-      person: {
-        isDeleted: false,
-      },
-    },
-    select: {
-      id: true,
-      studentNumber: true,
-      status: true,
-      person: {
-        select: {
-          firstName: true,
-          lastName: true,
-          mobile: true,
-        },
-      },
-    },
-    take: 20,
-  });
+  const { branchScopeResolver, studentQueryService } = await import('@/lib/runtime');
+  const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
+    session.userId as any,
+    session.activeBranchId as any
+  );
 
-  const students = studentProfiles.map((student) => ({
+  const result = await studentQueryService.searchBranchScopedStudents(
+    query,
+    allowedBranchIds as string[],
+    { page: 1, limit: 20 }
+  );
+
+  const students = result.items.map((student) => ({
     id: student.id,
     studentNumber: student.studentNumber,
     firstName: student.person.firstName,

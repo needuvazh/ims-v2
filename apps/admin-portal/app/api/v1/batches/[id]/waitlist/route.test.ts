@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 const withPermissionMock = vi.fn();
 const findByIdMock = vi.fn();
 const enqueueWaitlistMock = vi.fn();
+const verifyBranchScopeMock = vi.fn();
 
 vi.mock('../../../../../../lib/api-middleware', () => ({
   withPermission: withPermissionMock,
@@ -12,6 +13,9 @@ vi.mock('../../../../../../lib/runtime', () => ({
   batchService: {
     batchRepository: { findById: findByIdMock },
     enqueueWaitlist: enqueueWaitlistMock,
+  },
+  studentQueryService: {
+    verifyBranchScope: (...args: any[]) => verifyBranchScopeMock(...args),
   },
 }));
 
@@ -43,6 +47,7 @@ describe('Batch waitlist enqueue API routes', () => {
     findFirstMock.mockReset();
     findManyMock.mockReset();
     findUniqueMock.mockReset();
+    verifyBranchScopeMock.mockReset();
   });
 
   it('POST /api/v1/batches/[id]/waitlist enqueues candidate successfully with correct permissions', async () => {
@@ -58,7 +63,7 @@ describe('Batch waitlist enqueue API routes', () => {
 
     findByIdMock.mockResolvedValue({ id: 'batch-123', branchId: 'branch-123' });
     findFirstMock.mockResolvedValue({ id: 'access-123', status: 'Active' });
-    findUniqueMock.mockResolvedValue({ id: studentId });
+    verifyBranchScopeMock.mockResolvedValue(undefined);
     enqueueWaitlistMock.mockResolvedValue({ id: 'wl-123', queuePosition: 1, status: 'Waiting' });
 
     const { POST } = await import('./route');
@@ -133,5 +138,35 @@ describe('Batch waitlist enqueue API routes', () => {
     expect(body.success).toBe(false);
     expect(body.errorCode).toBe('CRS-VAL-BATCHES-INVALID_BODY');
     expect(body.invalidFields[0].message).toBe('Exactly one of studentId or leadId must be provided.');
+  });
+
+  it('POST /api/v1/batches/[id]/waitlist rejects if verifyBranchScope fails', async () => {
+    const studentId = '11111111-1111-1111-1111-111111111111';
+    withPermissionMock.mockImplementation((req, perm, cb) =>
+      cb({
+        session: {
+          userId: 'user-1',
+          permissions: ['batch.waitlist.manage'],
+        },
+      })
+    );
+
+    findByIdMock.mockResolvedValue({ id: 'batch-123', branchId: 'branch-123' });
+    findFirstMock.mockResolvedValue({ id: 'access-123', status: 'Active' });
+    verifyBranchScopeMock.mockRejectedValue(new Error('ERR_AUTH_BRANCH_DENIED'));
+
+    const { POST } = await import('./route');
+    const response = await POST(
+      new Request('http://localhost/api/v1/batches/batch-123/waitlist', {
+        method: 'POST',
+        body: JSON.stringify({ studentId }),
+      }),
+      { params: Promise.resolve({ id: 'batch-123' }) }
+    );
+
+    const body = await response.json();
+    expect(response.status).toBe(403);
+    expect(body.success).toBe(false);
+    expect(body.errorCode).toBe('ERR_AUTH_BRANCH_DENIED');
   });
 });

@@ -4,14 +4,15 @@ import { IAdmissionRepository, CreateStudentProfileAdmissionInput } from '../dom
 export class AdmissionRepository implements IAdmissionRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async findPersonByEmailOrPhone(email: string | null, phone: string | null, tx?: Prisma.TransactionClient): Promise<any> {
+  async findPersonByUniqueKeys(email: string | null, phone: string | null, nationalId: string | null, tx?: Prisma.TransactionClient): Promise<any> {
     const client = tx || this.prisma;
     
-    if (!email && !phone) return null;
+    if (!email && !phone && !nationalId) return null;
 
     const OR: any[] = [];
     if (email) OR.push({ email });
     if (phone) OR.push({ mobile: phone });
+    if (nationalId) OR.push({ nationalId });
 
     return client.person.findFirst({
       where: { OR },
@@ -87,7 +88,7 @@ export class AdmissionRepository implements IAdmissionRepository {
   async createStudentProfileAndAdmission(data: CreateStudentProfileAdmissionInput, studentNumber: string, tx?: Prisma.TransactionClient): Promise<{ personId: string; studentProfileId: string; admissionId: string; admissionNumber: string; }> {
     const client = tx || this.prisma;
 
-    let person = await this.findPersonByEmailOrPhone(data.email || null, data.phone || null, tx);
+    let person = await this.findPersonByUniqueKeys(data.email || null, data.phone || null, data.nationalId || null, tx);
 
     if (!person) {
       person = await client.person.create({
@@ -96,6 +97,7 @@ export class AdmissionRepository implements IAdmissionRepository {
           lastName: data.lastName,
           mobile: data.phone,
           email: data.email || null,
+          nationalId: data.nationalId || null,
           dateOfBirth: data.dateOfBirth || null,
         },
       });

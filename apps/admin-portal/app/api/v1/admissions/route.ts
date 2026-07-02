@@ -30,6 +30,9 @@ function errorResponse(error: Error) {
   } else if (msg.includes('ERR_AUTH_BRANCH_DENIED')) {
     status = 403;
     code = 'ERR_AUTH_BRANCH_DENIED';
+  } else if (msg.includes('ERR_STU_PROFILE_INACTIVE')) {
+    status = 422;
+    code = 'ERR_STU_PROFILE_INACTIVE';
   }
 
   return NextResponse.json(

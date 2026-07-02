@@ -97,27 +97,24 @@ export default async function BatchDetailPage(props: {
     displayName: `${t.person.firstName} ${t.person.lastName}`,
   }));
 
-  // Fetch active students
-  const studentsListRaw = await prisma.studentProfile.findMany({
-    where: { isDeleted: false },
-    select: {
-      id: true,
-      person: {
-        select: {
-          firstName: true,
-          lastName: true,
-          email: true,
-          mobile: true,
-        },
-      },
-    },
-  });
+  // Fetch active branch-scoped students via query service (enforcing PII masking)
+  const { branchScopeResolver, studentQueryService } = await import('@/lib/runtime');
+  const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
+    session.userId as any,
+    session.activeBranchId as any
+  );
 
-  const studentsList = studentsListRaw.map((student) => ({
+  const scopedStudentsResult = await studentQueryService.searchBranchScopedStudents(
+    '',
+    allowedBranchIds as string[],
+    { page: 1, limit: 1000 }
+  );
+
+  const studentsList = scopedStudentsResult.items.map((student) => ({
     id: student.id,
     firstName: student.person.firstName,
     lastName: student.person.lastName,
-    email: student.person.email ?? student.person.mobile,
+    email: student.person.email ?? student.person.mobile ?? 'No Contact',
   }));
 
   // Fetch active CRM leads

@@ -57,6 +57,7 @@ const systemPermissions = [
   
   // Admissions & Enrollments
   { moduleCode: 'enrollment',   featureCode: 'student',     actionCode: 'read',   permissionCode: 'student.read',                   permissionType: 'Action' as const, description: 'View student details.' },
+  { moduleCode: 'enrollment',   featureCode: 'student',     actionCode: 'reveal_pii', permissionCode: 'student.reveal_pii',            permissionType: 'Action' as const, description: 'Reveal masked student contact PII with audit.' },
   { moduleCode: 'enrollment',   featureCode: 'student',     actionCode: 'write',  permissionCode: 'student.write',                  permissionType: 'Action' as const, description: 'Register or edit student profiles.' },
   { moduleCode: 'enrollment',   featureCode: 'enroll',      actionCode: 'write',  permissionCode: 'enrollment.create',              permissionType: 'Action' as const, description: 'Create enrollments in courses/batches.' },
   { moduleCode: 'enrollment',   featureCode: 'enroll',      actionCode: 'submit',  permissionCode: 'enrollment.submit',              permissionType: 'Action' as const, description: 'Submit enrollments for approval.' },
@@ -220,7 +221,7 @@ async function seed() {
     'report.iam.user', 'report.iam.login-history', 'report.iam.security',
     'lead.read', 'lead.write', 'lead.create', 'lead.update', 'lead.delete', 'lead.assign', 'lead.lost', 'lead.reveal_pii', 'lead.qualify', 'lead.convert', 'crm.leads.read.all',
     'followup.create', 'followup.update',
-    'student.read', 'student.write', 'enrollment.create', 'enrollment.submit',
+    'student.read', 'student.reveal_pii', 'student.write', 'enrollment.create', 'enrollment.submit',
     'admission.read', 'admission.create', 'admission.approve',
     'payment.create', 'refund.request', 'course.manage', 'schedule.manage',
     'course.catalog.view', 'course.catalog.create', 'course.catalog.update', 'course.catalog.publish', 'course.catalog.archive',

@@ -16,6 +16,7 @@ All permissions are server-enforced and branch-scoped. UI visibility is not auth
 | `admission.reject` | Yes | Yes | No | No | No | No | Reject admission |
 | `admission.delete` | Yes | No | No | No | No | No | Soft delete admission |
 | `student.read` | Yes | Yes | Yes | Yes | No | No | Read student profiles |
+| `student.reveal_pii` | Yes | Yes | Yes | No | No | No | Reveal masked student contact PII with audit |
 | `student.delete` | Yes | No | No | No | No | No | Soft delete student profile |
 | `enrollment.create` | Yes | Yes | Yes | Yes | No | No | Create enrollment draft |
 | `enrollment.read` | Yes | Yes | Yes | Yes | Yes | No | Read enrollment records |

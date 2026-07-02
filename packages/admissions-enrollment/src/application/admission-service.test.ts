@@ -3,7 +3,7 @@ import { AdmissionService } from './admission-service';
 
 test('createStudentAdmission should check duplicates, generate STU/ADM numbers and create draft admission with outbox events', async () => {
   const mockRepo = {
-    findPersonByEmailOrPhone: vi.fn().mockResolvedValue(null),
+    findPersonByUniqueKeys: vi.fn().mockResolvedValue(null),
     findStudentProfileByPersonId: vi.fn().mockResolvedValue(null),
     getNextStudentNumber: vi.fn().mockResolvedValue('STU-2026-10001'),
     getNextAdmissionNumber: vi.fn().mockResolvedValue('ADM-2026-10001'),
@@ -47,7 +47,7 @@ test('createStudentAdmission should check duplicates, generate STU/ADM numbers a
 
 test('createStudentAdmission should block draft creation if active admission already exists in target branch', async () => {
   const mockRepo = {
-    findPersonByEmailOrPhone: vi.fn().mockResolvedValue({ id: 'person-1' }),
+    findPersonByUniqueKeys: vi.fn().mockResolvedValue({ id: 'person-1' }),
     findStudentProfileByPersonId: vi.fn().mockResolvedValue({ id: 'profile-1', studentNumber: 'STU-123' }),
     hasActiveAdmission: vi.fn().mockResolvedValue(true),
   } as any;
@@ -171,7 +171,7 @@ test('rejectAdmission should transition Submitted to Rejected and cancelAdmissio
 
 test('createStudentAdmission should block draft creation if student is under 12 years old', async () => {
   const mockRepo = {
-    findPersonByEmailOrPhone: vi.fn().mockResolvedValue(null),
+    findPersonByUniqueKeys: vi.fn().mockResolvedValue(null),
     findStudentProfileByPersonId: vi.fn().mockResolvedValue(null),
     getNextStudentNumber: vi.fn().mockResolvedValue('STU-123'),
     getNextAdmissionNumber: vi.fn().mockResolvedValue('ADM-123'),
@@ -203,7 +203,7 @@ test('createStudentAdmission should block draft creation if student is under 12 
 
 test('createStudentAdmission should succeed if student is at least 12 years old', async () => {
   const mockRepo = {
-    findPersonByEmailOrPhone: vi.fn().mockResolvedValue(null),
+    findPersonByUniqueKeys: vi.fn().mockResolvedValue(null),
     findStudentProfileByPersonId: vi.fn().mockResolvedValue(null),
     getNextStudentNumber: vi.fn().mockResolvedValue('STU-123'),
     getNextAdmissionNumber: vi.fn().mockResolvedValue('ADM-123'),
@@ -242,7 +242,7 @@ test('createStudentAdmission should succeed if student is at least 12 years old'
 
 test('createStudentAdmission should calculate age relative to admissionDate if provided', async () => {
   const mockRepo = {
-    findPersonByEmailOrPhone: vi.fn().mockResolvedValue(null),
+    findPersonByUniqueKeys: vi.fn().mockResolvedValue(null),
     findStudentProfileByPersonId: vi.fn().mockResolvedValue(null),
     getNextStudentNumber: vi.fn().mockResolvedValue('STU-123'),
     getNextAdmissionNumber: vi.fn().mockResolvedValue('ADM-123'),

@@ -12,7 +12,7 @@ export class AdmissionService {
   async createStudentAdmission(input: CreateStudentProfileAdmissionInput, actorId: string | null = null, tx?: Prisma.TransactionClient) {
     const run = async (activeClient: Prisma.TransactionClient) => {
             // 1. Resolve existing person and profile to check for duplicate active admission
-      const existingPerson = await this.admissionRepository.findPersonByEmailOrPhone(input.email || null, input.phone || null, activeClient);
+      const existingPerson = await this.admissionRepository.findPersonByUniqueKeys(input.email || null, input.phone || null, input.nationalId || null, activeClient);
       
       const dob = input.dateOfBirth || existingPerson?.dateOfBirth;
       if (dob) {
@@ -121,6 +121,20 @@ export class AdmissionService {
 
   async createAdmissionDraftDirect(input: CreateAdmissionInput, branchId: string, actorId: string | null = null, tx?: Prisma.TransactionClient) {
     const run = async (activeClient: Prisma.TransactionClient) => {
+      // Verify student profile exists, is active, and is not deleted
+      const studentProfile = await activeClient.studentProfile.findUnique({
+        where: { id: input.studentProfileId },
+        include: { person: true }
+      });
+
+      if (!studentProfile || studentProfile.isDeleted) {
+        throw new Error('ERR_STUDENT_PROFILE_NOT_FOUND');
+      }
+
+      if (studentProfile.status !== 'Active' || studentProfile.person.isDeleted) {
+        throw new Error('ERR_STU_PROFILE_INACTIVE');
+      }
+
       // Check for active admission in target branch
       const hasActive = await this.admissionRepository.hasActiveAdmission(input.studentProfileId, branchId, activeClient);
       if (hasActive) {
@@ -128,9 +142,7 @@ export class AdmissionService {
       }
 
       // Check age constraint
-      const person = await activeClient.person.findFirst({
-        where: { studentProfile: { id: input.studentProfileId } }
-      });
+      const person = studentProfile.person;
       if (person?.dateOfBirth) {
         const today = new Date();
         const birthDate = new Date(person.dateOfBirth);

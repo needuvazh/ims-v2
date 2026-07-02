@@ -16,9 +16,11 @@ All endpoints are branch-scoped server-side. The branch context is derived from 
 | `/api/admissions/{id}/approve` | `POST` | Approve admission | `admission.approve` |
 | `/api/admissions/{id}/reject` | `POST` | Reject admission with reason | `admission.reject` |
 | `/api/admissions/{id}` | `DELETE` | Soft delete draft/pending admission | `admission.delete` |
-| `/api/students` | `GET` | List student profiles | `student.read` |
+| `/api/students` | `GET` | List student profiles (branch-scoped) | `student.read` |
+| `/api/students/{id}/reveal-pii` | `POST` | Retrieve unmasked student PII (audited) | `student.reveal_pii` |
 | `/api/students/{id}` | `GET` | Read student profile dashboard | `student.read` |
 | `/api/students/{id}` | `DELETE` | Soft delete student profile | `student.delete` |
+| `/api/person/lookup` | `GET` | Global unique check for Person duplicates | `admission.create` |
 | `/api/enrollments` | `POST` | Create enrollment draft | `enrollment.create` |
 | `/api/enrollments` | `GET` | List enrollments | `enrollment.read` |
 | `/api/enrollments/{id}` | `GET` | Read enrollment details | `enrollment.read` |
@@ -179,3 +181,55 @@ All endpoints are branch-scoped server-side. The branch context is derived from 
 * Purpose: confirm the enrollment when Finance reports cleared payment.
 * Permission: system/internal only.
 * Result: set `confirmedAt`, move enrollment to `Confirmed`, write audit log, emit `EnrollmentConfirmed`.
+
+---
+
+## 4. Added Endpoints Details
+
+### `GET /api/person/lookup`
+* Request Query Params:
+  * `query`: string (required) - email, mobile, or nationalId
+  * `branchId`: UUID (required) - target branch for preflight check
+* Success: `200 OK`
+* Response DTO:
+  ```json
+  {
+    "success": true,
+    "data": {
+      "personFound": true,
+      "personId": "uuid",
+      "firstNameMasked": "A*****",
+      "lastNameMasked": "A********",
+      "studentProfileId": "uuid",
+      "studentNumber": "STU-2026-00001",
+      "preflight": {
+        "hasActiveAdmission": true,
+        "activeAdmissionId": "uuid",
+        "hasEnrollment": true,
+        "conflictCode": "ERR_ADM_ACTIVE_ADMISSION_EXISTS"
+      }
+    }
+  }
+  ```
+* Errors: `ERR_VAL_FAILED` if query is empty.
+
+### `POST /api/students/{id}/reveal-pii`
+* Request Body:
+  * `field`: "email" | "phone" | "nationalId" (required)
+  * `reason`: string (required)
+* Success: `200 OK`
+* Response DTO:
+  ```json
+  {
+    "success": true,
+    "data": {
+      "studentProfileId": "uuid",
+      "field": "phone",
+      "value": "+96899123456",
+      "revealedAt": "2026-07-02T19:56:55Z"
+    }
+  }
+  ```
+* Side effects: Creates an entry in the central `AuditLog` table mapping user access to PII.
+* Errors: `ERR_AUTH_BRANCH_DENIED`, `ERR_VAL_FAILED` if reason is empty.
+

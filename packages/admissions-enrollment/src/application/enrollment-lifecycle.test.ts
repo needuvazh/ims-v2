@@ -27,6 +27,16 @@ test('EnrollmentService createEnrollment should validate Approved Admission and 
     enrollment: {
       create: vi.fn().mockImplementation(({ data }) => Promise.resolve({ id: 'enr-1', ...data })),
     },
+    studentProfile: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'stu-1',
+        status: 'Active',
+        isDeleted: false,
+        person: { isDeleted: false },
+        admissions: [{ id: 'adm-1', branchId: 'branch-1', isDeleted: false }],
+        enrollments: [],
+      }),
+    },
     auditLog: {
       create: vi.fn().mockResolvedValue(null),
     },
@@ -250,6 +260,16 @@ test('EnrollmentService createEnrollment should consume canonical totalPrice con
     },
     enrollment: {
       create: vi.fn().mockImplementation(({ data }) => Promise.resolve({ id: 'enr-1', ...data })),
+    },
+    studentProfile: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'stu-1',
+        status: 'Active',
+        isDeleted: false,
+        person: { isDeleted: false },
+        admissions: [{ id: 'adm-1', branchId: 'branch-1', isDeleted: false }],
+        enrollments: [],
+      }),
     },
     auditLog: {
       create: vi.fn().mockResolvedValue(null),

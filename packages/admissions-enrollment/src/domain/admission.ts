@@ -5,6 +5,7 @@ export const CreateStudentProfileAdmissionSchema = z.object({
   lastName: z.string().min(1),
   email: z.string().email().nullable().optional(),
   phone: z.string().min(1),
+  nationalId: z.string().nullable().optional(),
   branchId: z.string().uuid(),
   leadId: z.string().uuid().nullable().optional(),
   courseId: z.string().uuid().nullable().optional(),
@@ -30,7 +31,7 @@ export const CreateAdmissionInputSchema = z.object({
 export type CreateAdmissionInput = z.infer<typeof CreateAdmissionInputSchema>;
 
 export interface IAdmissionRepository {
-  findPersonByEmailOrPhone(email: string | null, phone: string | null, tx?: any): Promise<any>;
+  findPersonByUniqueKeys(email: string | null, phone: string | null, nationalId: string | null, tx?: any): Promise<any>;
   findStudentProfileByPersonId(personId: string, tx?: any): Promise<any>;
   createStudentProfileAndAdmission(data: CreateStudentProfileAdmissionInput, studentNumber: string, tx?: any): Promise<{ personId: string; studentProfileId: string; admissionId: string; admissionNumber: string }>;
   

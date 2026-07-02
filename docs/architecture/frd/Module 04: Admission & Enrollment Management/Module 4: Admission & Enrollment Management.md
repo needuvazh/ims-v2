@@ -72,10 +72,11 @@ The primary purpose of **Module 04: Admission & Enrollment Management** is to ma
 
 ```text
 Module 04: Admission & Enrollment Management
- ├── 1. Student Profile & Person Manager
- │    ├── Person Deduplication & Search
- │    ├── Student Profile Generation
- │    └── Student ID Card Rendering
+  ├── 1. Student Profile & Person Manager
+  │    ├── Person Deduplication & Global Lookup (person-lookup)
+  │    ├── Student Directory & Local Lookup (student-profile-lookup)
+  │    ├── Student PII Reveal Audit (student-pii-reveal)
+  │    └── Student ID Card Rendering
  ├── 2. Admission Workflow Engine
  │    ├── Lead Conversion Handoff
  │    ├── Document Submission & Verification
