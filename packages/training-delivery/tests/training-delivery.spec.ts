@@ -30,6 +30,7 @@ const mockPrisma = {
   trainerProfile: { findUnique: vi.fn() },
   userBranchAccess: { findFirst: vi.fn() },
   userRole: { findMany: vi.fn() },
+  user: { findUnique: vi.fn() },
   session: { updateMany: vi.fn() },
   batchTrainer: { updateMany: vi.fn() },
   auditLog: { create: vi.fn() },
@@ -40,10 +41,30 @@ const mockPrisma = {
 const batchService = new BatchService(mockPrisma, mockBatchRepository, mockSchedulingService);
 
 beforeEach(() => {
-  vi.clearAllMocks();
+  vi.resetAllMocks();
   // Default mocks to bypass user branch scoping
   mockPrisma.userBranchAccess.findFirst.mockResolvedValue({ id: 'access-id' });
+  mockPrisma.userRole.findMany.mockResolvedValue([
+    {
+      role: {
+        roleCode: 'SUPER_ADMIN',
+        permissions: [],
+      },
+    },
+  ]);
   mockBatchRepository.findSessions.mockResolvedValue([]);
+  mockPrisma.$transaction.mockImplementation((cb) => cb(mockPrisma));
+  mockPrisma.user.findUnique.mockResolvedValue({
+    id: 'trainer-id',
+    status: 'Active',
+    roles: [
+      {
+        role: {
+          roleCode: 'TRAINER',
+        },
+      },
+    ],
+  });
 });
 
 test('BatchService.createBatch should fail if course is not published', async () => {
@@ -173,4 +194,194 @@ test('BatchService should support waitlist queue positioning', async () => {
 
   expect(result.queuePosition).toBe(2);
   expect(result.status).toBe('Waiting');
+});
+
+test('BatchService.assignTrainer should reject assignment if user lacks access to batch branch', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const trainerId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const userId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockBatchRepository.findById.mockResolvedValueOnce({
+    id: batchId,
+    branchId: createUuid('11111111-1111-1111-1111-111111111111'),
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+    trainers: [],
+  });
+
+  // Mock branch access search to return null (no access)
+  mockPrisma.userBranchAccess.findFirst.mockResolvedValueOnce(null);
+  // Mock user roles to be empty (not admin)
+  mockPrisma.userRole.findMany.mockResolvedValueOnce([]);
+
+  const assignment = {
+    trainerId,
+    role: 'Primary' as const,
+    assignedFrom: new Date('2026-10-01'),
+    assignedTo: new Date('2026-10-31'),
+  };
+
+  await expect(
+    batchService.assignTrainer(batchId, assignment, userId)
+  ).rejects.toThrow('ERR_IAM_INSUFFICIENT_PERMISSIONS');
+});
+
+test('BatchService.assignTrainer should reject assignment if dates fall outside batch bounds', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const trainerId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockBatchRepository.findById.mockResolvedValueOnce({
+    id: batchId,
+    startDate: new Date('2026-10-05'),
+    endDate: new Date('2026-10-25'),
+    trainers: [],
+  });
+
+  const assignment = {
+    trainerId,
+    role: 'Primary' as const,
+    assignedFrom: new Date('2026-10-01'), // starts before batch
+    assignedTo: new Date('2026-10-31'), // ends after batch
+  };
+
+  await expect(
+    batchService.assignTrainer(batchId, assignment, createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'))
+  ).rejects.toThrow('Assignment date range falls outside the batch bounds');
+});
+
+test('BatchService.assignTrainer should reject assignment if batch is Completed or Cancelled', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const trainerId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockBatchRepository.findById.mockResolvedValueOnce({
+    id: batchId,
+    status: 'Completed',
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+    trainers: [],
+  });
+
+  const assignment = {
+    trainerId,
+    role: 'Primary' as const,
+    assignedFrom: new Date('2026-10-01'),
+    assignedTo: new Date('2026-10-31'),
+  };
+
+  await expect(
+    batchService.assignTrainer(batchId, assignment, createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'))
+  ).rejects.toThrow('Cannot assign trainer to a completed or cancelled batch');
+});
+
+test('BatchService.assignTrainer should reject if primary trainer already assigned for overlapping range', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const trainerId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockBatchRepository.findById.mockResolvedValueOnce({
+    id: batchId,
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+    trainers: [],
+  });
+
+  // Mock already assigned primary trainer for Oct 10th to Oct 20th
+  mockBatchRepository.findTrainers.mockResolvedValueOnce([
+    {
+      id: 'existing-bt',
+      batchId,
+      trainerId: 'other-trainer',
+      role: 'Primary',
+      assignedFrom: new Date('2026-10-10'),
+      assignedTo: new Date('2026-10-20'),
+      status: 'Active',
+    },
+  ]);
+
+  const assignment = {
+    trainerId,
+    role: 'Primary' as const,
+    assignedFrom: new Date('2026-10-15'), // overlaps with existing primary range (10th-20th)
+    assignedTo: new Date('2026-10-25'),
+  };
+
+  await expect(
+    batchService.assignTrainer(batchId, assignment, createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'))
+  ).rejects.toThrow('A primary trainer is already assigned for this range');
+});
+
+test('BatchService.assignTrainer should reject if role type is invalid', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const trainerId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockBatchRepository.findById.mockResolvedValueOnce({
+    id: batchId,
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+    trainers: [],
+  });
+
+  const assignment = {
+    trainerId,
+    role: 'Secondary' as any, // invalid role type
+    assignedFrom: new Date('2026-10-01'),
+    assignedTo: new Date('2026-10-31'),
+  };
+
+  await expect(
+    batchService.assignTrainer(batchId, assignment, createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'))
+  ).rejects.toThrow('ERR_CRS_INVALID_TRAINER_ROLE');
+});
+
+test('BatchService.assignTrainer should reject if trainer is inactive or lacks TRAINER role', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const trainerId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockBatchRepository.findById.mockResolvedValueOnce({
+    id: batchId,
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+    trainers: [],
+  });
+
+  // Mock inactive trainer
+  mockPrisma.user.findUnique.mockResolvedValueOnce({
+    id: trainerId,
+    status: 'Inactive',
+    roles: [{ role: { roleCode: 'TRAINER' } }],
+  });
+
+  const assignment = {
+    trainerId,
+    role: 'Primary' as const,
+    assignedFrom: new Date('2026-10-01'),
+    assignedTo: new Date('2026-10-31'),
+  };
+
+  await expect(
+    batchService.assignTrainer(batchId, assignment, createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'))
+  ).rejects.toThrow('ERR_CRS_TRAINER_NOT_ACTIVE');
+});
+
+test('BatchService.checkTrainerConflicts should reject if actor lacks branch access permissions', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const trainerId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const actorId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockBatchRepository.findById.mockResolvedValueOnce({
+    id: batchId,
+    branchId: createUuid('11111111-1111-1111-1111-111111111111'),
+  });
+
+  mockPrisma.userBranchAccess.findFirst.mockResolvedValueOnce(null); // No access
+  mockPrisma.userRole.findMany.mockResolvedValueOnce([]); // No roles
+
+  await expect(
+    batchService.checkTrainerConflicts(
+      batchId,
+      trainerId,
+      new Date('2026-10-01'),
+      new Date('2026-10-31'),
+      actorId
+    )
+  ).rejects.toThrow('ERR_IAM_INSUFFICIENT_PERMISSIONS');
 });

@@ -42,6 +42,30 @@ export default async function CreateBatchPage() {
     select: { id: true, classroomName: true, capacity: true },
   });
 
+  // Fetch active trainers with person details
+  const trainersListRaw = await prisma.user.findMany({
+    where: {
+      isDeleted: false,
+      status: 'Active',
+      roles: {
+        some: {
+          role: {
+            roleCode: 'TRAINER',
+          },
+        },
+      },
+    },
+    include: {
+      person: true,
+    },
+  });
+
+  const trainersList = trainersListRaw.map((t) => ({
+    id: t.id,
+    displayName: t.person ? `${t.person.firstName} ${t.person.lastName}` : t.email,
+    email: t.email,
+  }));
+
   return (
     <div className="space-y-8 p-6">
       <PageHeader
@@ -63,6 +87,7 @@ export default async function CreateBatchPage() {
           courses={courses}
           branches={branches}
           classrooms={classrooms}
+          trainersList={trainersList}
           onSubmitAction={createBatchAction}
         />
       </div>

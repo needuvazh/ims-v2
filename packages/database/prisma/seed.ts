@@ -73,6 +73,10 @@ const systemPermissions = [
   { moduleCode: 'courses',      featureCode: 'catalog',    actionCode: 'publish', permissionCode: 'course.catalog.publish',          permissionType: 'Action' as const, description: 'Publish courses in catalog.' },
   { moduleCode: 'courses',      featureCode: 'catalog',    actionCode: 'archive', permissionCode: 'course.catalog.archive',          permissionType: 'Action' as const, description: 'Archive courses in catalog.' },
   { moduleCode: 'courses',      featureCode: 'batches',    actionCode: 'view',    permissionCode: 'batch.delivery.view',             permissionType: 'Action' as const, description: 'View and manage course delivery batches.' },
+  { moduleCode: 'courses',      featureCode: 'batches',    actionCode: 'assign',  permissionCode: 'batch.delivery.assign',           permissionType: 'Action' as const, description: 'Assign faculty/trainers to batches.' },
+  { moduleCode: 'courses',      featureCode: 'batches',    actionCode: 'create',  permissionCode: 'batch.delivery.create',           permissionType: 'Action' as const, description: 'Create course delivery batches.' },
+  { moduleCode: 'courses',      featureCode: 'batches',    actionCode: 'update',  permissionCode: 'batch.delivery.update',           permissionType: 'Action' as const, description: 'Update course delivery batches.' },
+  { moduleCode: 'courses',      featureCode: 'batches',    actionCode: 'transition', permissionCode: 'batch.delivery.transition',      permissionType: 'Action' as const, description: 'Transition course delivery batches status.' },
   { moduleCode: 'scheduling',   featureCode: 'sessions',    actionCode: 'manage', permissionCode: 'schedule.manage',                permissionType: 'Action' as const, description: 'Create and update schedules.' },
   
   // Attendance & Completion
@@ -214,6 +218,10 @@ async function seed() {
     'payment.create', 'refund.request', 'course.manage', 'schedule.manage',
     'course.catalog.view', 'course.catalog.create', 'course.catalog.update', 'course.catalog.publish', 'course.catalog.archive',
     'batch.delivery.view',
+    'batch.delivery.assign',
+    'batch.delivery.create',
+    'batch.delivery.update',
+    'batch.delivery.transition',
     'attendance.record', 'result.record', 'certificate.generate',
     'certificate.verify', 'dashboard.branch', 'dashboard.security', 'dashboard.view',
     'REPORTING_VIEW_CRM_DASHBOARD', 'REPORTING_VIEW_COUNSELOR_METRICS', 'LEAD_VIEW_ALL_IN_BRANCH'

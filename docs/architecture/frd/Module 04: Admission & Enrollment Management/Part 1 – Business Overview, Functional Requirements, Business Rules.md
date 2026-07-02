@@ -8,7 +8,7 @@
 The Admission & Enrollment Management module acts as the core intake engine of the Al Saud Training Institute (ASTI) Integrated Institute Management System (IMS). By decoupling **Admission** (establishing a student's legal and administrative profile at the institute) from **Enrollment** (scheduling a student into a specific course and batch), the system achieves maximum operational flexibility.
 
 ### Key Business Benefits:
-1.  **Deduplicated Biological Records:** Linking every Student profile to a single physical `Person` record eliminates redundant data entries and ensures clean communication channels.
+1.  **Deduplicated Identity Records:** Linking every StudentProfile to a single physical `Person` record eliminates redundant data entries and ensures clean communication channels.
 2.  **Enforced Branch Isolation:** Operates under strict server-side tenant scoping, preventing unauthorized staff from accessing or leakage of learner information across ASTI branches.
 3.  **Strict Audit Trails:** Records all historical state changes of admissions and enrollments, preserving corporate auditing history.
 4.  **Optimized Batch Planning:** Real-time capacity checks prevent trainer double-bookings and batch over-enrollment, improving training delivery metrics.
@@ -21,14 +21,14 @@ The Admission & Enrollment Management module acts as the core intake engine of t
 ### FR-ADM-001: Create Student Profile with Person Link
 *   **Description & Actors:** Creates a system `StudentProfile` for a customer. The Registrar or Counselor performs this action. The student profile is linked directly to a master `Person` record.
 *   **Preconditions:** 
-    *   The user must have the `ADMISSION_CREATE` permission.
+    *   The user must have the `admission.create` permission.
     *   The target `Person` record must already exist (or be created in the same transaction) and not be soft-deleted.
 *   **Inputs:**
     *   `personId` (UUID)
     *   `branchId` (UUID)
 *   **Processing Steps:**
     1.  Validate that the user's session has write access to the targeted `branchId`.
-    2.  Check if a `StudentProfile` record already exists linking to the given `personId`. If yes, throw a `DuplicateStudentDetected` exception.
+    2.  Check if a `StudentProfile` record already exists linking to the given `personId`. If yes, throw `ERR_ADM_DUPLICATE_PERSON`.
     3.  Generate a unique, non-repeating `studentNumber` using the configured numbering series pattern (e.g., `STU-YYYY-XXXXX`).
     4.  Create the `StudentProfile` database record with status `Active` and soft-delete flags initialized (`isDeleted = false`, `deletedAt = null`).
     5.  Publish `StudentProfileCreated` via the transaction outbox table.
@@ -54,7 +54,7 @@ The Admission & Enrollment Management module acts as the core intake engine of t
     2.  Validate branch status by calling a read-only query service in the Organization Management context.
     3.  Generate a unique `admissionNumber` using the configuration numbering series (e.g. `ADM-YYYY-XXXXX`).
     4.  Create the `Admission` record in the `Draft` state with the generated `admissionNumber`.
-    5.  If `leadId` is provided, verify it is in a qualified stage and write an audit log entry documenting lead conversion.
+    5.  If `leadId` is provided, verify it is in a qualified stage and write an audit log entry documenting lead handoff.
     6.  Save default metadata: `createdAt`, `createdBy` set to active user, `isDeleted = false`.
     7.  Write a record to the `AuditLog` table capturing the creation of the admission application in `Draft` state under the active branch.
     8.  Publish `AdmissionCreated` to the outbox.
@@ -101,7 +101,7 @@ The Admission & Enrollment Management module acts as the core intake engine of t
     *   `enrollmentType` (Enum: Regular, Corporate, WalkIn, Online)
     *   `corporateParticipantId` (UUID, Nullable)
 *   **Processing Steps:**
-    1.  Verify the `Admission` status is `Approved` (except for Walk-In flows which bypass this).
+    1.  Verify the `Admission` status is `Approved` (except for Walk-In flows which bypass the normal admission approval path).
     2.  Validate course and batch status by querying the Course Catalog and Training Delivery modules respectively.
     3.  Assert that `enrollmentType = Corporate` requires a non-null `corporateParticipantId`.
     4.  Generate a unique `enrollmentNumber`.
@@ -143,15 +143,15 @@ The Admission & Enrollment Management module acts as the core intake engine of t
 *   **Description & Actors:** Reviews the enrollment draft, checks limits, and transitions it to the approved stage. Completed by the Branch Manager or Registrar.
 *   **Preconditions:**
     *   `Enrollment` status must be `Draft` or `Submitted`.
-    *   The user must possess `ENROLLMENT_APPROVE` permission.
+    *   The user must possess `enrollment.approve` permission.
 *   **Inputs:**
     *   `enrollmentId` (UUID)
     *   `approvalRemarks` (String)
 *   **Processing Steps:**
     1.  Invoke the capacity verification API in the `Training Delivery` context to check if the batch is full. Training Delivery manages atomic reservation locks internally.
     2.  If capacity is full:
-        *   If waitlisting is enabled for the batch (queried from Training Delivery), prompt user to route to the waitlist (notifying Training Delivery to create a waitlist entry, while setting enrollment status to `Draft`).
-        *   If waitlisting is disabled, throw `EnrollmentCapacityExceeded` error.
+        *   If waitlisting is enabled for the batch (queried from Training Delivery), create a waitlist entry in the Training Delivery context and keep the enrollment approval pending.
+        *   If waitlisting is disabled, throw `ERR_ENR_BATCH_FULL`.
     3.  If `enrollmentType = Corporate`, execute B2B credit validation by calling the public verification service in the `Corporate Sales` context:
         *   If credit validation fails:
             *   If `blockEnrollment = true`, abort the transaction and throw `ERR_ENR_CREDIT_EXCEEDED` error.
@@ -178,10 +178,10 @@ The Admission & Enrollment Management module acts as the core intake engine of t
     2.  Verify that the sum of cleared payments equals or exceeds `finalAmount` (or complies with the installment configuration rule).
     3.  If payment validation passes, set `confirmedAt = now()`.
     4.  Transition `enrollmentStatus` to `Confirmed`.
-    5.  Publish `EnrollmentConfirmed` to the transactional outbox. The `Training Delivery` context subscribes to this event to atomically decrement its available batch capacity.
+    5.  Publish `EnrollmentConfirmed` to the transactional outbox. The `Training Delivery` context subscribes to this event to atomically update roster and capacity projections.
     6.  Write a record to the `AuditLog` table capturing the transition to `Confirmed`.
 *   **Outputs & Postconditions:**
-    *   Enrollment transitions to `Confirmed`. Student is legally committed to the class schedule.
+    *   Enrollment transitions to `Confirmed`. The student profile is legally committed to the class schedule.
 *   **Priority:** Must Have (MoSCoW).
 
 ---
@@ -198,12 +198,12 @@ The Admission & Enrollment Management module acts as the core intake engine of t
     1.  Validate that the target enrollment is not already `Completed`.
     2.  If `actionType = Cancel`:
         *   Transition status to `Cancelled`.
-        *   Publish `EnrollmentCancelled` via the transactional outbox. The `Training Delivery` context subscribes to this event to increment available batch capacity (+1 seat).
+        *   Publish `EnrollmentCancelled` via the transactional outbox. The `Training Delivery` context subscribes to this event to increment available batch capacity.
     3.  If `actionType = Drop`:
         *   Transition status to `Dropped`.
-        *   Publish `EnrollmentDropped` via the transactional outbox. The `Training Delivery` context subscribes to this event to increment available batch capacity (+1 seat).
+        *   Publish `EnrollmentCancelled` via the transactional outbox. The `Training Delivery` context subscribes to this event to increment available batch capacity.
     4.  Audit change: write a record to the `AuditLog` table capturing the transition, user ID, timestamp, pre-state, post-state, and `reasonCode` under the target branch.
-    5.  The Finance context will asynchronously subscribe to `EnrollmentDropped` or `EnrollmentCancelled` to evaluate credit refunds or invoice voiding rules, removing direct synchronous logic from this module.
+    5.  The Finance context will asynchronously subscribe to `EnrollmentCancelled` to evaluate credit refunds or invoice voiding rules, removing direct synchronous logic from this module.
 *   **Outputs & Postconditions:**
     *   The enrollment is marked as `Cancelled` or `Dropped`.
 *   **Priority:** Must Have (MoSCoW).
@@ -220,8 +220,8 @@ The system enforces the following declarative constraints. Any operational handl
 | **BR-ADM-002** | Branch Scoping | All Read/Write Operations | Every admission and enrollment record must have a valid `branchId`. Operations are restricted based on user branch permission contexts. |
 | **BR-ADM-003** | Soft Delete Protection | `deletedAt`, `isDeleted` | No entity (StudentProfile, Admission, Enrollment) is hard-deleted from the database. A delete call sets `isDeleted = true` and logs `deletedAt` and `deletedBy`. |
 | **BR-ENR-001** | Structure Integrity | `courseId`, `batchId` | An enrollment cannot be created or saved in the database without both a valid `courseId` and a scheduled `batchId` (logical UUIDs). |
-| **BR-ENR-002** | Pricing Resolution Hierarchy | `resolvedPrice`, `pricingSource` | Resolution must proceed in Course Catalog: <br>1. Check `BatchPricingOverride` <br>2. Check `BranchCoursePricingOverride` <br>3. Read Global `CoursePricing`. |
-| **BR-ENR-003** | Batch Capacity Check | `Batch.maxCapacity` | Checked via public api call to `Training Delivery`. Enrollment cannot transition to `Approved` if the batch reaches capacity unless overridden. |
+| **BR-ENR-002** | Pricing Resolution Hierarchy | `resolvedPrice`, `pricingSource` | Resolution must proceed in Course Catalog: <br>1. Batch override <br>2. Branch override <br>3. Global course pricing. |
+| **BR-ENR-003** | Batch Capacity Check | `Batch.capacity` | Checked via public query call to `Training Delivery`. Enrollment cannot transition to `Approved` if the batch reaches capacity unless overridden. |
 | **BR-ENR-004** | B2B Corporate Credit Rule | `CorporateAccount` credit limit | Checked via service call to `Corporate Sales`. Blocks approval if credits are exceeded and block flag is set, otherwise issues warnings. |
 | **BR-ENR-005** | Certificate Eligibility Guard | `certificateStatus` | Transition to `CertificateIssued` is prohibited unless: <br>1. `completionStatus = Passed` <br>2. `paymentValidationRequired = false` or outstanding invoice balance is zero (projections matched). |
 | **BR-ENR-006** | Inactive Master Constraints | `Course.status`, `Batch.status` | Checked via Catalog/Delivery queries. Creating admissions or enrollments against inactive records is blocked. |

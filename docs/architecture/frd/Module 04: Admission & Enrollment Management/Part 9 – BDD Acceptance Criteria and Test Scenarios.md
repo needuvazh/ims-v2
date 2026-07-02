@@ -1,109 +1,88 @@
 # Functional Requirement Document (Part 9)
-## Module 04: Admission & Enrollment Management – BDD Test Scenarios
-
-This document outlines the Behavior-Driven Development (BDD) test specifications for the Admission & Enrollment Bounded Context. These scenarios act as contract tests for API, integration, and E2E validations.
+## Module 04: Admission & Enrollment Management - BDD Test Scenarios
 
 ---
 
-## Feature: Admission Creation & Student Identity Lifecycle
+## Feature: Student Profile and Admission Lifecycle
 
-  As an authorized registrar
-  I want to create student admissions and link them to persons
-  So that I can register learners legally without duplicate profile entries.
+Scenario: Create student profile from matched person
+  Given the Registrar is logged in with permission "admission.create"
+  And a matching Person exists
+  When the Registrar creates a StudentProfile for that Person
+  Then the system creates a StudentProfile with a unique studentNumber
+  And publishes StudentProfileCreated
 
-  Background:
-    Given the database contains active branches "Muscat" and "Sohar"
-    And a Course "IELTS Prep" exists in the course catalog
+Scenario: Reject duplicate person linkage
+  Given a StudentProfile already exists for the Person
+  When the Registrar attempts to create another StudentProfile
+  Then the system rejects the request with error code "ERR_ADM_DUPLICATE_PERSON"
 
-  Scenario: Register a new student profile and link to an existing Person
-    Given the user is logged in as "Registrar" with permission "admission.create"
-    And a Person record exists in the system with mobile "+96899123456" and email "ahmed@example.om"
-    And no StudentProfile is linked to this Person
-    When the Registrar submits a request to register a student for this Person ID at "Muscat" branch
-    Then the system should create a StudentProfile linked to this Person ID
-    And generate a unique studentNumber starting with "STU-2026-"
-    And set the StudentProfile status to "Active"
-    And write a "StudentProfileCreated" event to the transactional outbox table
+Scenario: Deny cross-branch admission access
+  Given the user is restricted to branch "Sohar"
+  And an Admission exists in branch "Muscat"
+  When the user requests the admission details
+  Then the system returns 403 Forbidden
 
-  Scenario Outline: Reject student registration due to age boundary checks
-    Given the user is logged in as "Registrar"
-    And a Person record exists with dateOfBirth "<birthDate>"
-    When the Registrar attempts to create an Admission for this Person at "Muscat" branch
-    Then the system should block the registration
-    And return error code "ERR_ADM_AGE_LIMIT" with message "<errorMessage>"
-
-    Examples:
-      | birthDate            | errorMessage                                |
-      | 2018-07-01T00:00:00Z | Student must be at least 12 years of age.   |
-      | 2022-01-01T00:00:00Z | Student must be at least 12 years of age.   |
-
-  Scenario: Prevent duplicate StudentProfile linking
-    Given a Person record exists with mobile "+96899334455"
-    And a StudentProfile already exists linked to this Person
-    When a Registrar attempts to create a new StudentProfile for this Person ID
-    Then the system should block the write operation
-    And throw a "ERR_ADM_DUPLICATE_ID" conflict exception
-
-  Scenario: Enforce server-side branch data isolation on Admissions read
-    Given a Counselor is logged in with branch access restricted to "Sohar"
-    And an Admission record exists for "Fatima Al-Riyami" under the "Muscat" branch
-    When the Counselor requests the details of this Admission record
-    Then the system should reject the request with a "403 Forbidden" HTTP status
-    And return error message "Access denied to target branch data context."
+Scenario: Block admission approval when document verification fails
+  Given an Admission is ready for approval
+  And the Document Management context reports verification failure
+  When the Branch Manager approves the admission
+  Then the system rejects the approval with error code "ERR_DOC_VERIFICATION_FAILED"
 
 ---
 
-## Feature: Enrollment Lifecycle & Business Invariants Engine
+## Feature: Enrollment Lifecycle
 
-  As a branch administrator
-  I want to register students into specific courses and batches
-  So that I can allocate capacity, handle billing invoices, and update timetables.
+Scenario: Create enrollment draft
+  Given an approved Admission exists
+  And an active Course and Batch exist
+  When the Registrar creates an enrollment draft
+  Then the system creates an Enrollment in Draft status
+  And resolves pricing using batch, then branch, then global course pricing
 
-  Background:
-    Given an active student "STU-2026-00055" exists
-    And an approved Admission "ADM-102" exists for this student
-    And course "Web Development" has active batch "WD-B02" with maxCapacity "15" and registered count "14"
+Scenario: Block enrollment approval when batch is full
+  Given a Batch is at full capacity
+  When the Branch Manager approves the enrollment
+  Then the system rejects the action with error code "ERR_ENR_BATCH_FULL"
 
-  Scenario: Create and save an enrollment in Draft status
-    Given the user is logged in as "Registrar"
-    When the Registrar submits a request to enroll "STU-2026-00055" in course "Web Development" and batch "WD-B02"
-    Then the system should initialize an Enrollment in status "Draft"
-    And resolve the price based on the hierarchy, setting pricingSource to "GlobalDefault"
-    And compute finalAmount equal to resolvedPrice
-    And set paymentValidationRequired to true
+Scenario: Route full batch to waitlist
+  Given a Batch is at full capacity
+  And waitlisting is enabled
+  When the Branch Manager approves the enrollment
+  Then the system creates a waitlist entry in Training Delivery
+  And keeps the enrollment pending
 
-  Scenario: Approve enrollment draft and transition state
-    Given an Enrollment exists in status "Draft" for batch "WD-B02"
-    And the user is logged in as "Branch Manager" with permission "enrollment.approve"
-    When the Branch Manager approves the enrollment
-    Then the system should set enrollmentStatus to "Approved"
-    And write an "EnrollmentApproved" event to the outbox table to trigger invoicing
+Scenario: Confirm enrollment after payment receipt
+  Given an Enrollment is Approved and payment validation is required
+  And Finance publishes ReceiptGenerated
+  When the system processes the receipt event
+  Then the system transitions the enrollment to Confirmed
+  And sets confirmedAt
 
-  Scenario Outline: Block enrollment approval when batch capacity limits are breached
-    Given course "Python Intro" has batch "PY-B09" with maxCapacity "10" and registered count "10"
-    And waitlist option is "<waitlistOption>"
-    When the Branch Manager attempts to approve an enrollment for batch "PY-B09"
-    Then the system should <expectedAction>
-    And return status "<expectedStatus>"
+Scenario: Drop active enrollment
+  Given an Enrollment is Active
+  When the Branch Manager drops the enrollment
+  Then the system transitions the enrollment to Dropped
+  And publishes EnrollmentCancelled
 
-    Examples:
-      | waitlistOption | expectedAction                                     | expectedStatus |
-      | Enabled        | place student in waitlist and create queue record  | Waitlisted     |
-      | Disabled       | reject enrollment approval with ERR_ENR_BATCH_FULL | Rejected       |
+Scenario: Prevent confirmation without payment clearance
+  Given an Enrollment is Approved and payment validation is required
+  When the system receives no payment clearance
+  Then the system blocks confirmation with error code "ERR_ENR_PAYMENT_INCOMPLETE"
 
-  Scenario: Confirm enrollment and allocate seat upon invoice clearance
-    Given an Enrollment exists in status "Approved" with paymentValidationRequired as true
-    And the associated Invoice in Finance is fully paid
-    When the system processes the payment cleared event
-    Then the system should transition enrollmentStatus to "Confirmed"
-    And set confirmedAt to the current timestamp
-    And the batch registered count should update to "15" (decrementing available capacity by 1)
-    And dispatch the "EnrollmentConfirmed" notification event
+Scenario: Soft delete admission preserves audit trail
+  Given a draft Admission exists in the active branch
+  When the Registrar soft deletes the Admission
+  Then the system marks isDeleted as true
+  And writes an AuditLog entry
 
-  Scenario: Drop active enrollment and release seat
-    Given an Enrollment exists in status "Active" for batch "WD-B02" (seats available is 0)
-    And the user is logged in as "Branch Manager"
-    When the Branch Manager drops the enrollment with reason "Withdrawal Request"
-    Then the system should transition enrollmentStatus to "Dropped"
-    And the batch seats available should update to "1" via reactive event subscription
-    And publish "EnrollmentDropped" to adjust attendance sheets
+Scenario: Deny report export without permission
+  Given the user does not have report.branch_enrollments permission
+  When the user requests an enrollment export
+  Then the system rejects the request with 403 Forbidden
+
+Scenario: Deny cross-branch student read
+  Given the user is scoped to branch "Sohar"
+  And a StudentProfile exists in branch "Muscat"
+  When the user requests that student profile
+  Then the system rejects the request with 403 Forbidden

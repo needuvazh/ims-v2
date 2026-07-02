@@ -132,6 +132,7 @@ export function batchErrorResponse(error: Error) {
       messageEnglish: messageEn,
       messageArabic: messageAr,
       statusCode: status,
+      conflicts: (error as any).conflicts,
     },
     { status }
   );
@@ -209,7 +210,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   return withRouteObservability(request.headers, async () =>
-    withPermission(request, 'schedule.manage', async ({ session }) => {
+    withPermission(request, 'batch.delivery.create', async ({ session }) => {
       const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
       let payload: unknown;

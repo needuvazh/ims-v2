@@ -7,7 +7,7 @@ import { prisma } from '@ims/database';
 
 export async function createBatchAction(data: any) {
   try {
-    await assertPermission('schedule.manage');
+    await assertPermission('batch.delivery.create');
     const session = await getSession();
 
     const { batchService } = await import('../../lib/runtime');
@@ -22,7 +22,7 @@ export async function createBatchAction(data: any) {
 
 export async function updateBatchAction(id: string, version: number, data: any) {
   try {
-    await assertPermission('schedule.manage');
+    await assertPermission('batch.delivery.update');
     const session = await getSession();
 
     const { batchService } = await import('../../lib/runtime');
@@ -38,7 +38,7 @@ export async function updateBatchAction(id: string, version: number, data: any) 
 
 export async function transitionBatchStatusAction(id: string, targetStatus: string, version: number) {
   try {
-    await assertPermission('schedule.manage');
+    await assertPermission('batch.delivery.transition');
     const session = await getSession();
 
     const { batchService } = await import('../../lib/runtime');
@@ -54,7 +54,7 @@ export async function transitionBatchStatusAction(id: string, targetStatus: stri
 
 export async function assignTrainerAction(batchId: string, data: any) {
   try {
-    await assertPermission('schedule.manage');
+    await assertPermission('batch.delivery.assign');
     const session = await getSession();
 
     const { batchService } = await import('../../lib/runtime');

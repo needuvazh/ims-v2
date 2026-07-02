@@ -1,94 +1,51 @@
 # Functional Requirement Document (Part 7)
-## Module 04: Admission & Enrollment Management – Validations, Errors, & Notifications
+## Module 04: Admission & Enrollment Management - Validations, Errors, & Notifications
 
 ---
 
-## 1. Custom Business Validation Rules
+## 1. Validation Rules
 
-The Admission and Enrollment module executes validation logic prior to database state persistence. These validation schemas are written in Zod and verified inside domain aggregate services.
-
-### 1.1 Age Verification Rule
-*   **Rule:** A learner must be at least 12 years old on the date of admission registration.
-*   **Validation Logic:**
-    The student's age is calculated based on their date of birth:
-    $$\text{Age} = \text{admissionDate} - \text{dateOfBirth} \ge 12\text{ years}$$
-    This rule is checked programmatically inside the student registration aggregate validation layer during profile creation.
-
-### 1.2 Overlapping Enrollment Rule
-*   **Rule:** A student cannot be enrolled in two active batches that overlap in their scheduled session timings.
-*   **Validation Logic:**
-    When checking a proposed `batchId` for an active student, conflict checking is delegated to the Scheduling context:
-    1. The Enrollment application service calls the public `SchedulingQueryService` (or equivalent timetable validation API) passing the proposed `batchId` and the `studentId`.
-    2. The Scheduling context retrieves existing schedules and validates that:
-       $$\forall \text{ session } S_1 \in \text{Proposed Batch}, \forall \text{ session } S_2 \in \text{Existing Batches}, \text{Interval}(S_1) \cap \text{Interval}(S_2) = \emptyset$$
-    3. If an overlap timing intersection is detected, the Scheduling query returns a validation failure, and the Enrollment context blocks the action with `ERR_ENR_OVERLAPPING_SCHEDULE`.
-
-### 1.3 Batch Capacity Validation Rule
-*   **Rule:** Cannot confirm student enrollment if the batch seat count is exhausted.
-*   **Validation Logic:**
-    During the transition to `Approved` or `Confirmed` status:
-    1. The Application Service queries the Training Delivery Bounded Context's public service interface (e.g. `BatchQueryService`) to fetch active batch occupancy metrics.
-    2. Alternatively, a logical seat reservation request is dispatched via the Application Service.
-    3. The validation asserts that the batch is active and that the capacity is not fully allocated.
-    4. If capacity is exhausted, the application layer throws the `ERR_ENR_BATCH_FULL` domain error.
+| Rule ID | Rule | Location | Error Code |
+| --- | --- | --- | --- |
+| VAL-ADM-001 | Person must be at least 12 years old on admission date | Domain service | `ERR_ADM_AGE_LIMIT` |
+| VAL-ADM-002 | Student profile must link to exactly one non-deleted Person | Domain service / DB constraint | `ERR_ADM_DUPLICATE_PERSON` |
+| VAL-ADM-003 | Admission must be in a valid lifecycle state for submit/approve/reject/cancel | Domain service | `ERR_ADM_INVALID_STATE` |
+| VAL-ADM-004 | Mandatory identity document verification must succeed before admission approval | Document Management integration | `ERR_DOC_VERIFICATION_FAILED` |
+| VAL-ENR-001 | Enrollment must link to approved admission, course, batch, and branch | Domain service | `ERR_ENR_MISSING_ADMISSION` |
+| VAL-ENR-002 | Course and batch must be active | Cross-context query | `ERR_ENR_INACTIVE_COURSE` |
+| VAL-ENR-003 | Batch capacity must not be exceeded unless override is granted | Cross-context query | `ERR_ENR_BATCH_FULL` |
+| VAL-ENR-004 | Corporate credit limit must be validated when enrollment type is Corporate | Cross-context query | `ERR_ENR_CREDIT_EXCEEDED` |
+| VAL-ENR-005 | Enrollment cannot confirm without payment clearance when required | Finance event handler | `ERR_ENR_PAYMENT_INCOMPLETE` |
+| VAL-ENR-006 | Enrollment cannot transition to an invalid state | Domain service | `ERR_ENR_INVALID_STATE` |
+| VAL-BRN-001 | Read/write actions must stay within authenticated branch scope | API / application service | `ERR_AUTH_BRANCH_DENIED` |
 
 ---
 
-## 2. Structured Error Code Catalog
+## 2. Error Catalog
 
-Custom exceptions thrown by this context carry distinct application codes and translate to standard HTTP response bodies.
-
-| Error Code | HTTP Status | User-Facing Message (English) | Custom Details & Diagnostics |
-| :--- | :---: | :--- | :--- |
-| **`ERR_ADM_DUPLICATE_ID`** | `409` | "A student with this Civil ID or Passport is already registered." | Occurs during student creation. Contains conflicting ID string in diagnostic logs. |
-| **`ERR_ADM_AGE_LIMIT`** | `400` | "Learner must be at least 12 years old." | Triggered if date of birth fails the 12-year boundary check. |
-| **`ERR_ENR_BATCH_FULL`** | `422` | "The selected batch is full. Student has been placed on the waitlist." | Returned on enrollment approval requests if capacity is fully allocated. |
-| **`ERR_ENR_CREDIT_EXCEEDED`**| `422` | "The corporate account credit limit has been exceeded." | Triggered for B2B nominations if outstanding invoices exceed allowed boundaries. |
-| **`ERR_ENR_OVERLAPPING`** | `400` | "This student is already enrolled in a batch with conflicting schedules." | Thrown if timetable overlaps are detected. |
-| **`ERR_ENR_INVOICE_REQUIRED`**| `402` | "Payment verification is required before confirming this enrollment." | Occurs if attempting to confirm enrollment without associated payment invoice clearance. |
-| **`ERR_STUDENT_HAS_ACTIVE_ENROLLMENTS`**| `400` | "Cannot delete student with active or confirmed enrollments." | Occurs during student profile deletion if they have unresolved learning history. |
-| **`ERR_AUTH_BRANCH_DENIED`**| `403` | "You are not authorized to access records in this branch." | Occurs if active user attempt to request data or execute mutation outside their branch access list. |
-
----
-
-## 3. System Notification Events & Messaging Triggers
-
-State transitions in the Admission and Enrollment aggregates publish messages to communication adapters.
-
-### 3.1 `AdmissionApproved` Notification
-*   **Trigger Event:** `AdmissionApproved`
-*   **Channels:** Email & SMS
-*   **Template Variables:**
-    *   `{{studentName}}` - Full name of the student.
-    *   `{{studentNumber}}` - Generated unique identifier.
-    *   `{{branchName}}` - Target admission branch.
-    *   `{{idCardDownloadUrl}}` - Signed URL to download the generated PDF ID card.
-*   **Email Content Summary:**
-    > "Dear {{studentName}}, welcome to ASTI! Your admission application at our {{branchName}} branch has been approved. Your Student ID number is {{studentNumber}}. You can download your official student ID card here: {{idCardDownloadUrl}}."
+| Error Code | HTTP Status | Message |
+| --- | --- | --- |
+| `ERR_ADM_DUPLICATE_PERSON` | 409 | A student profile already exists for the matched person. |
+| `ERR_ADM_AGE_LIMIT` | 400 | Learner must be at least 12 years old. |
+| `ERR_ADM_INVALID_STATE` | 400 | Admission is not in a valid state for this operation. |
+| `ERR_DOC_VERIFICATION_FAILED` | 422 | Mandatory identity document verification failed. |
+| `ERR_ENR_MISSING_ADMISSION` | 400 | Approved admission, course, and batch are required. |
+| `ERR_ENR_INACTIVE_COURSE` | 400 | Selected course or batch is inactive. |
+| `ERR_ENR_BATCH_FULL` | 422 | The selected batch is full. |
+| `ERR_ENR_CREDIT_EXCEEDED` | 422 | Corporate credit limit has been exceeded. |
+| `ERR_ENR_PAYMENT_INCOMPLETE` | 422 | Payment clearance is required before confirmation. |
+| `ERR_ENR_INVALID_STATE` | 400 | Enrollment is not in a valid state for this operation. |
+| `ERR_AUTH_BRANCH_DENIED` | 403 | You are not authorized to access this branch. |
 
 ---
 
-### 3.2 `EnrollmentConfirmed` Notification
-*   **Trigger Event:** `EnrollmentConfirmed`
-*   **Channels:** Email, SMS, WhatsApp
-*   **Template Variables:**
-    *   `{{studentName}}` - Student name.
-    *   `{{courseName}}` - Enrolled course title.
-    *   `{{batchCode}}` - Enrolled batch identifier.
-    *   `{{startDate}}` - First day of classes.
-    *   `{{timetableDetails}}` - Weekly class schedule.
-*   **WhatsApp Content Summary:**
-    > "Hello {{studentName}}, your enrollment in {{courseName}} (Batch: {{batchCode}}) is confirmed! Classes start on {{startDate}}. Schedule: {{timetableDetails}}. We look forward to seeing you at Al Saud Training Institute."
+## 3. Notifications
 
----
-
-### 3.3 `StudentAddedToWaitingList` Notification
-*   **Trigger Event:** `StudentAddedToWaitingList`
-*   **Channels:** SMS & WhatsApp
-*   **Template Variables:**
-    *   `{{studentName}}` - Student name.
-    *   `{{courseName}}` - Course title.
-    *   `{{batchCode}}` - Full batch code.
-    *   `{{waitlistPosition}}` - Current queue index number.
-*   **SMS Content Summary:**
-    > "Dear {{studentName}}, batch {{batchCode}} for {{courseName}} is currently full. You have been placed on the waiting list at position #{{waitlistPosition}}. We will notify you as soon as a seat becomes available."
+| Event | Channel | Purpose |
+| --- | --- | --- |
+| `AdmissionCreated` | Internal / outbox | Downstream audit and lead tracking |
+| Admission approval completed | Email / SMS | Notify student that the admission approval application succeeded and the ID card is being generated. This is a notification trigger, not a new domain event. |
+| `EnrollmentApproved` | Outbox | Request invoice generation in Finance |
+| `ReceiptGenerated` | Internal event | Confirm enrollment and update projections |
+| `EnrollmentConfirmed` | Email / SMS / WhatsApp | Confirm enrollment and communicate schedule details |
+| `StudentAddedToWaitingList` | SMS / WhatsApp | Notify user that batch capacity is full |

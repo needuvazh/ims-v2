@@ -1,7 +1,7 @@
 # ASTI Integrated Institute Management System (IMS) - Project Status Document (PSD)
 
-**Version:** 3.3.1  
-**Last Updated:** 2026-07-01  
+**Version:** 3.6.0  
+**Last Updated:** 2026-07-02  
 **Document Owner:** ASTI Technical Program Manager & Enterprise Architect  
 **Project Scope:** Single-client implementation for Al Saud Training Institute (ASTI)
 
@@ -16,12 +16,12 @@ architecture decision records, OpenSpec change proposals, and codebase milestone
 into a unified tracking index.
 
 * **Project Name:** ASTI Integrated Institute Management System (IMS)
-* **Current Version:** v3.4.0 (Core Foundation, CRM & Dashboards, Admissions Handoff)
-* **Last Updated:** 2026-07-01
+* **Current Version:** v3.6.0 (Core Foundation, Course & Batch Management, Trainer Assignment & Conflicts)
+* **Last Updated:** 2026-07-02
 * **Document Owner:** ASTI Technical Program Manager & Enterprise Architect
 * **Current Phase:** Core Workflow Implementation & Testing
-* **Overall Progress (%):** **35%** (79 completed FRD requirements out of the total 226)
-* **Overall Health:** **Green** (Core foundation of IAM and Organization completed. CRM core flows, follow-up scheduling workflows, worker auto-assignments, Admissions conversion handoffs, and CRM Dashboards & Reports implemented and verified.)
+* **Overall Progress (%):** **38%** (86 completed FRD requirements out of the total 226)
+* **Overall Health:** **Green** (Core foundation of IAM and Organization completed. CRM core flows, follow-up scheduling workflows, worker auto-assignments, Admissions conversion handoffs, CRM Dashboards, Course Catalog, Batch Management, and Trainer Assignment with Conflict Validator implemented and verified.)
 
 ---
 
@@ -68,7 +68,7 @@ into a unified tracking index.
 | **Admissions** | Approved | Draft | Approved | Approved | Draft | In Progress | In Progress (Stub) | Completed (BE) | In Progress |
 | **Student Management** | Approved | Not Started | Draft | Not Started | Draft (Shell) | Planned | Not Started | Not Started | Under Review |
 | **Course Management** | Approved | Approved | Approved | Approved | Approved | Implemented | Completed | Completed | Complete (Course Catalog) |
-| **Batch Management** | Approved | Not Started | Draft | Not Started | Not Started | Planned | Not Started | Not Started | Under Review |
+| **Batch Management** | Approved | Approved | Approved | Approved | Completed | Implemented | Completed | Completed | Complete (Trainer Assignment) |
 | **Attendance** | Approved | Not Started | Not Started | Not Started | Draft (Shell) | Planned | Not Started | Not Started | Under Review |
 | **Finance** | Approved | Not Started | Not Started | Not Started | Draft (Shell) | Planned | Not Started | Not Started | Under Review |
 | **Corporate Training** | Approved | Not Started | Not Started | Not Started | Not Started | Planned | Not Started | Not Started | Under Review |
@@ -151,6 +151,7 @@ complete implementation and code-review sync.
 | `crm-core-models-apis` | CRM Core Database Models & APIs | Implemented | CRM, Admissions, Database | Approved | Set up Inquiry, Lead, LeadFollowUp schemas, PII masking, domain services, events, and transactional handoff. |
 | `crm-portal-ui-scoped-filtering` | CRM Portal UI & Scoped Filtering | Implemented | CRM, Portal UI | Approved | Interactive page views for `/leads` and `/inquiries`, Counselor-scoped filtering, form validations, timeline stepper, notes, duplicate bypass modal. |
 | `crm-workflows-followup-scheduling` | Workflows & Follow-up Scheduling | Implemented | CRM, Worker, Database, Portal UI | Approved | Dynamic follow-up scheduling, automatic counselor workload-based assignment, hourly sweeping job, and concurrency protection. |
+| `trainer-assignment` | Trainer Assignment & Conflict Validator | Implemented | Course Management, Portal UI, Database | Approved | Implemented trainer assignment APIs, server actions, schedule conflict validator UI steps & modals. |
 
 ### Details for Recently Completed Changes (2026-07-01)
 
@@ -361,6 +362,7 @@ Each module is rated on an overall implementation implementation readiness scale
 | **2026-07-01** | v3.3.1 | Codex | Applied code review suggestions to `crm-portal-ui-scoped-filtering`. Added counselor scoping check on lead conversion, mandatory version concurrency check, client-side re-synchronization on stage changes, and delegated stage/closure updates to LeadService. |
 | **2026-07-01** | v3.4.0 | Codex | Completed Change 4 (crm-dashboards-and-reports). Scaffolded reporting-dashboards package, implemented LeadAnalyticsReadService and CrmDashboardQueryService with RBAC and Audits, added MetricCard and ChartWidget to shared-ui, and created the protected CRM dashboard page with responsive charts. |
 | **2026-07-01** | v3.5.0 | Codex | Completed Course Catalog change (course-catalog-spec). Scaffolded course-catalog package, designed domain errors, bilingual validation rules, cyclic parent checks, active batch checks. Exposed courses and categories API handlers, added navigation menu mapping, and implemented Course Catalog List dashboard and bilingual Course Form with state machine transitions. |
+| **2026-07-02** | v3.6.0 | Codex | Completed Trainer Assignment change (trainer-assignment-spec). Implemented trainer assignment invariants, date checks, branch RBAC permissions, and schedule overlap preview. Added multi-step form stepper logic and interactive conflict validator alerts/tables in BatchForm and BatchDetailsTabs. |
 
 ---
 
@@ -428,9 +430,9 @@ The following variables are required to build and run the monorepo:
 * **Linter Pipeline:** `pnpm lint` $\rightarrow$ **100% Passing** (with 58 style warnings)
 * **Formatter Check:** `pnpm format` $\rightarrow$ **Completed** (with Prettier configuration warnings)
 * **Test Runners:**
-  * Unit Tests (Vitest): **134 Tests** $\rightarrow$ **100% Passing**
+  * Unit Tests (Vitest): **138 Tests** $\rightarrow$ **100% Passing**
   * Integration Tests (Prisma/Vitest): **0 Tests**
-  * E2E Tests (Playwright): **2 Tests** $\rightarrow$ **100% Passing**
+  * E2E Tests (Playwright): **3 Tests** $\rightarrow$ **100% Passing**
 
 ---
 

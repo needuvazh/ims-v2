@@ -40,7 +40,7 @@ export async function PUT(
 ) {
   const { id } = await params;
   return withRouteObservability(request.headers, async () =>
-    withPermission(request, 'schedule.manage', async ({ session }) => {
+    withPermission(request, 'batch.delivery.transition', async ({ session }) => {
       const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
       let payload: unknown;

@@ -4,7 +4,7 @@
 **Module Code:** ADM / ENR  
 **Phase:** Phase 1  
 **Status:** Approved  
-**Owned Bounded Contexts:** Admission & Enrollment Management, Student Identity & Lifecycle
+**Owned Bounded Contexts:** Admission & Enrollment Management
 
 ---
 
@@ -13,11 +13,11 @@
 The primary purpose of **Module 04: Admission & Enrollment Management** is to manage the legal, organizational, and operational lifecycle of learners at the Al Saud Training Institute (ASTI). It governs the transition of individuals from prospects (Leads/Inquiries) into officially admitted students and subsequently registers them into scheduled batches.
 
 ### Core Objectives:
-*   **Unique Identity Lifecycle:** Maintain a unified single-person registry to prevent duplicate student profiles, connecting the `Student` entity to a shared `Person` record.
+*   **Shared Person Linkage:** Maintain a unified single-person registry to prevent duplicate student profiles, connecting the `StudentProfile` entity to a shared `Person` record.
 *   **Structured Admissions:** Manage the legal and administrative approval of a student to study at ASTI under a specific branch context.
 *   **Unified Enrollment Aggregate:** Provide a single state-machine engine for all learner pathways (Regular, Corporate, Walk-In, Online) linking a student to a course, branch, and batch.
 *   **Branch Scoping and Security:** Ensure strict data isolation so branch-level operations cannot view, edit, or manipulate student data outside their authorized branch scope.
-*   **Automatic Identity Provisioning:** Generate digital Student ID Cards upon successful admission to secure campus entry and register student presence.
+*   **Automatic Identity Provisioning:** Generate digital Student ID Cards asynchronously upon successful admission approval.
 
 ---
 
@@ -36,7 +36,7 @@ The primary purpose of **Module 04: Admission & Enrollment Management** is to ma
 ## 3. Scope
 
 ### 3.1 In Scope
-*   **Person Record Integration:** Search, validation, and linking of biological individuals to avoid redundant contact records.
+*   **Person Record Integration:** Search, validation, and linking of individuals to avoid redundant contact records.
 *   **Admission Lifecycle:** Creation (draft), document verification, manager review, approval, rejection (with reasons), and cancellation.
 *   **Enrollment Lifecycle:** Draft initialization, automated pricing resolution, coordinator approval, payment validation checks, confirmation, activation, dropping, and completion status.
 *   **Pricing & Discount Engine integration:** Resolving course pricing hierarchy (Batch Override $\rightarrow$ Branch Override $\rightarrow$ Global Default) and validating authorization limits for discounts.
@@ -60,7 +60,6 @@ The primary purpose of **Module 04: Admission & Enrollment Management** is to ma
 *   **Branch Admin / Manager:** Manages admissions and enrollments specific to their branch. Approves/rejects admissions and reviews local waitlists.
 *   **Registrar:** Administrative staff responsible for checking student documents, registering new profiles, entering data, and initiating enrollments.
 *   **Counselor:** Sales/CRM user who converts leads into admissions and coordinates initial document collection.
-*   **Student:** The external learner who applies online or walks in, submits registration details, receives an ID card, and attends classes.
 
 ### System Actors:
 *   **Admission Service:** Backend aggregate root manager that handles validation invariants and state persistence.
@@ -97,13 +96,12 @@ Module 04: Admission & Enrollment Management
 
 ### Internal User Capabilities (ASTI Staff):
 *   **Lead-to-Admission Handoff:** Instantly pull lead details from Module 03 to prepopulate admission forms.
-*   **Global Person Lookup:** Enter National ID / Phone / Email to check if a student already exists as a person in another context (e.g., trainer, coordinator).
+*   **Global Person Lookup:** Enter National ID / Phone / Email to check whether a person already exists in the shared identity registry.
 *   **Discount Approval Request:** Submit price overrides for manager authorization if a discount exceeds the branch default rule threshold.
-*   **Manual Batch Promotion:** Promote students from the Batch Waitlist when a seat is freed.
+*   **Branch-Scoped Enrollment Management:** Approve, cancel, or drop enrollments within the authenticated branch context.
 
-### External User Capabilities (Students):
-*   **Self-Registration Portal:** Submit contact information, upload identification documents, and select course interest.
-*   **Digital ID Retrieval:** View and download the generated PDF Student ID card.
+### Future Portal Capabilities (Not Phase 1):
+*   No external student portal capability is included in Phase 1.
 
 ---
 
@@ -113,9 +111,9 @@ Module 04: Admission & Enrollment Management
 *   **FR-ADM-001:** Search and link existing `Person` record during `StudentProfile` creation.
 *   **FR-ADM-002:** Create `StudentProfile` with auto-generated unique `studentNumber`.
 *   **FR-ADM-003:** Create Admission record scoped to a `branchId` (logical reference) and optional `leadId`.
-*   **FR-ADM-004:** Upload and verify mandatory identity documents (Passport, Civil ID, Certificates).
-*   **FR-ADM-005:** Transition Admission to "Pending Approval" state.
-*   **FR-ADM-006:** Approve Admission, triggering automatic student ID card compilation.
+*   **FR-ADM-004:** Request upload and verification of mandatory identity documents (Passport, Civil ID, Certificates) through the Document Management context, storing only document references in this module.
+*   **FR-ADM-005:** Submit Admission for review.
+*   **FR-ADM-006:** Approve Admission, triggering asynchronous student ID card compilation.
 *   **FR-ADM-007:** Reject Admission with mandatory reason text input.
 *   **FR-ADM-008:** Soft-delete StudentProfile or Admission record, archiving metadata with `isDeleted = true`.
 *   **FR-ADM-009:** Download generated Student ID Card.
@@ -123,14 +121,14 @@ Module 04: Admission & Enrollment Management
 ### 7.2 Enrollment Management (ENR)
 *   **FR-ENR-001:** Initialize Enrollment in `Draft` state linking to `studentProfileId`, `courseId`, and `batchId` (logical UUIDs).
 *   **FR-ENR-002:** Resolve course pricing using the hierarchy: Batch Level Override $\rightarrow$ Branch Level Override $\rightarrow$ Global Catalog Default.
-*   **FR-ENR-003:** Validate batch capacity and route to `Waitlist` if the capacity limit is reached via Training Delivery context.
+*   **FR-ENR-003:** Validate batch capacity and route to a Training Delivery waitlist entry if the capacity limit is reached.
 *   **FR-ENR-004:** Execute B2B Corporate Credit Limit validation rules during Corporate enrollments.
 *   **FR-ENR-005:** Submit Enrollment for review, transitioning state to `Submitted`.
-*   **FR-ENR-006:** Approve Enrollment, transitioning state to `Approved` and dispatching an billing trigger.
-*   **FR-ENR-007:** Confirm Enrollment, transitioning status to `Confirmed` reactively upon receiving the `ReceiptGenerated` event from Finance.
+*   **FR-ENR-006:** Approve Enrollment, transitioning state to `Approved` and dispatching a billing trigger.
+*   **FR-ENR-007:** Confirm Enrollment reactively upon receiving the `ReceiptGenerated` event from Finance.
 *   **FR-ENR-008:** Activate Enrollment (`Active` status) on batch start date, making the student visible in the timetable and attendance register.
 *   **FR-ENR-009:** Cancel Enrollment (pre-active states) or Drop Enrollment (active state), publishing outbox events to trigger capacity releases and asynchronous refund calculations in Finance.
-*   **FR-ENR-010:** Evaluate completion rules and payment clearance status to flag certificate eligibility.
+*   **FR-ENR-010:** Consume completion and payment-clearance projections to flag certificate eligibility when downstream completion and finance events indicate eligibility.
 *   **FR-ENR-011:** Execute Walk-In fast-track bypass to auto-approve and confirm enrollment in a decoupled transactional workflow.
 
 ---
@@ -141,19 +139,20 @@ The module uses Role-Based Access Control (RBAC) enforced server-side. Permissio
 
 | Permission Name | Authorized Roles | Scope / Constraints |
 | :--- | :--- | :--- |
-| `ADMISSION_CREATE` | Registrar, Counselor, Super Admin | Write scoped to user's home branch. |
-| `ADMISSION_APPROVE` | Branch Manager, Super Admin | Write scoped to user's assigned branch. |
-| `ENROLLMENT_CREATE` | Registrar, Counselor, Super Admin | Write scoped to user's home branch. |
-| `ENROLLMENT_APPROVE` | Branch Manager, Super Admin | Write scoped to user's assigned branch. |
-| `ENROLLMENT_CONFIRM` | Finance Clerk, Branch Manager, Super Admin | Enforces verification of billing receipt status. |
-| `ENROLLMENT_OVERRIDE` | Super Admin | Allows bypassing capacity and discount limits. |
-| `STUDENT_VIEW` | Registrar, Counselor, Trainer, Manager, Super Admin | Scoped to branch (unless Super Admin). |
+| `admission.create` | Registrar, Counselor, Super Admin | Write scoped to user's active branch. |
+| `admission.approve` | Branch Manager, Super Admin | Write scoped to user's assigned branch. |
+| `admission.read` | Registrar, Counselor, Branch Manager, Super Admin | Read scoped to user's active branch. |
+| `enrollment.create` | Registrar, Counselor, Super Admin | Write scoped to user's active branch. |
+| `enrollment.approve` | Branch Manager, Super Admin | Write scoped to user's assigned branch. |
+| `enrollment.confirm` | System / Finance integration | Event-driven only. |
+| `enrollment.override` | Super Admin | Allows bypassing capacity and discount limits. |
+| `student.read` | Registrar, Counselor, Trainer, Branch Manager, Super Admin | Scoped to branch (unless Super Admin). |
 
 ---
 
 ## 9. Security & Audit Requirements
 
-1.  **Branch Isolation Guard:** All database read queries must apply a WHERE condition on `branchId` based on the user's active branch access token. Cross-branch operations are blocked unless executed by a Super Admin.
+1.  **Branch Isolation Guard:** All database read queries must apply a WHERE condition on `branchId` based on the authenticated branch context. Cross-branch operations are blocked unless executed by a Super Admin.
 2.  **PII Encryption:** Sensitive identity fields in the `Person` record (e.g., National ID) must be encrypted at rest.
 3.  **Critical State Audit:** Any transition in `enrollmentStatus` or `admissionStatus` must write a record to the `AuditLog` table containing:
     *   Target record ID.

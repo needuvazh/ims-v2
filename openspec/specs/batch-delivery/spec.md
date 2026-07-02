@@ -101,19 +101,35 @@ The system SHALL support promoting waitlisted students chronologically when batc
 ---
 
 ### Requirement: Faculty Allocation & Conflict checks (FR-CRS-011, FR-CRS-012)
-The system SHALL validate trainer mappings, prevent schedule double-bookings, and emit assignment notifications.
+The system SHALL support allocating active qualified trainers to batch deliveries within the execution start and end dates, validating trainer availability, checking for overlapping session schedules across multiple batches to prevent double-booking, and enforcing authorization/state invariants.
 
-#### Scenario: Successfully assign trainer and emit event
-- **WHEN** a trainer is mapped to a batch via `POST /api/v1/batches/:id/trainers` with valid dates and no timetable conflicts
-- **THEN** the system SHALL persist the `BatchTrainer` allocation, publish a `TrainerAssignedToBatch` event to the outbox, and log the audit trace.
+#### Scenario: Successfully assign active primary trainer
+- **WHEN** a trainer assignment request is submitted with a valid batch ID, active trainer profile ID, assignment role `Primary`, and date range matching the batch duration
+- **THEN** the system SHALL create a `BatchTrainer` record, update the status to active, log `TRAINER_ASSIGNED_TO_BATCH` audit event, and publish a `TrainerAssignedToBatch` event to the outbox.
+
+#### Scenario: Reject trainer assignment when branch access is missing
+- **WHEN** a trainer assignment request is submitted and the authenticated user does not have active branch access for the batch branch
+- **THEN** the system SHALL reject the assignment and return a `403 Forbidden` response.
+
+#### Scenario: Reject trainer assignment if dates fall outside batch limits
+- **WHEN** a trainer assignment start date is prior to the batch start date or the assignment end date exceeds the batch end date
+- **THEN** the system SHALL reject the assignment and return a validation error.
+
+#### Scenario: Reject trainer assignment if batch is closed
+- **WHEN** a trainer assignment request targets a batch in `Completed` or `Cancelled` status
+- **THEN** the system SHALL reject the assignment and return a validation error.
+
+#### Scenario: Enforce single primary trainer constraint per date range
+- **WHEN** a trainer assignment is requested as `Primary` role, and there is already another active `Primary` trainer assigned to that batch for an overlapping date range
+- **THEN** the system SHALL reject the assignment and throw a `PrimaryTrainerAlreadyAssigned` DomainError (`ERR_CRS_PRIMARY_TRAINER_ALREADY_ASSIGNED`).
 
 #### Scenario: Block assignment on scheduling overlaps
-- **WHEN** a trainer assignment is requested, and the Scheduling context query returns day-and-time session intersections with another batch assigned to that trainer
-- **THEN** the system SHALL block the assignment and return `ERR_CRS_TRAINER_SCHEDULE_CONFLICT`.
+- **WHEN** a trainer assignment is requested, and the trainer is already booked for another batch session with overlapping date and time intervals (queried via the Scheduling context's availability contracts)
+- **THEN** the system SHALL reject the assignment and throw a `TrainerScheduleConflict` DomainError (`ERR_CRS_TRAINER_SCHEDULE_CONFLICT`) with conflict details including batch code, date, and time.
 
-#### Scenario: Limit primary trainer assignments to one
-- **WHEN** a trainer assignment with role `Primary` is requested on dates that overlap with an existing primary trainer's assignment dates
-- **THEN** the system SHALL reject the assignment and throw `ERR_CRS_PRIMARY_TRAINER_ALREADY_ASSIGNED`.
+#### Scenario: Block batch activation if no trainer is assigned (BR-CRS-014)
+- **WHEN** a batch status transition to `OpenForEnrollment` is requested, but no active `Primary` trainer is registered in the batch trainer list
+- **THEN** the system SHALL block the transition and return an `ERR_CRS_BATCH_NO_TRAINER` validation error.
 
 ---
 

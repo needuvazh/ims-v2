@@ -64,9 +64,51 @@ export function BatchDetailsTabs({
 
   // Trainer form state
   const [selectedTrainerId, setSelectedTrainerId] = useState('');
-  const [trainerRole, setTrainerRole] = useState<'Primary' | 'Secondary'>('Primary');
+  const [trainerRole, setTrainerRole] = useState<'Primary' | 'Assistant' | 'Observer'>('Primary');
   const [trainerFrom, setTrainerFrom] = useState(batchStartDate.split('T')[0]);
   const [trainerTo, setTrainerTo] = useState(batchEndDate.split('T')[0]);
+
+  // Trainer Conflicts
+  const [conflicts, setConflicts] = useState<any[]>([]);
+  const [checkingConflicts, setCheckingConflicts] = useState(false);
+
+  const checkTrainerConflicts = async (trainerId: string, fromDate: string, toDate: string) => {
+    if (!trainerId) {
+      setConflicts([]);
+      return;
+    }
+    setCheckingConflicts(true);
+    try {
+      const res = await fetch(
+        `/api/v1/batches/${batchId}/trainers/conflicts?trainerId=${trainerId}&assignedFrom=${fromDate}&assignedTo=${toDate}`
+      );
+      const json = await res.json();
+      if (json.success) {
+        setConflicts(json.conflicts || []);
+      } else {
+        setConflicts([]);
+      }
+    } catch {
+      setConflicts([]);
+    } finally {
+      setCheckingConflicts(false);
+    }
+  };
+
+  const handleTrainerChange = (val: string) => {
+    setSelectedTrainerId(val);
+    checkTrainerConflicts(val, trainerFrom, trainerTo);
+  };
+
+  const handleFromDateChange = (val: string) => {
+    setTrainerFrom(val);
+    checkTrainerConflicts(selectedTrainerId, val, trainerTo);
+  };
+
+  const handleToDateChange = (val: string) => {
+    setTrainerTo(val);
+    checkTrainerConflicts(selectedTrainerId, trainerFrom, val);
+  };
 
   // Waitlist form state
   const [candidateType, setCandidateType] = useState<'Student' | 'Lead'>('Student');
@@ -145,6 +187,7 @@ export function BatchDetailsTabs({
         } else {
           toast.success('Trainer successfully assigned!');
           setSelectedTrainerId('');
+          setConflicts([]);
           router.refresh();
         }
       } catch (err: any) {
@@ -452,7 +495,7 @@ export function BatchDetailsTabs({
                       <Select
                         placeholder="Select Trainer Profile"
                         value={selectedTrainerId}
-                        onChange={(e) => setSelectedTrainerId(e.target.value)}
+                        onChange={(e) => handleTrainerChange(e.target.value)}
                         options={trainersList.map((t) => ({ value: t.id, label: `${t.displayName} (${t.email})` }))}
                       />
                     </FormControl>
@@ -467,7 +510,8 @@ export function BatchDetailsTabs({
                         className="flex h-10 w-full rounded-md border border-[color:var(--ims-border)] bg-[color:var(--ims-card)] px-3 py-2 text-sm focus-visible:outline-none"
                       >
                         <option value="Primary">Primary Trainer</option>
-                        <option value="Secondary">Secondary Trainer</option>
+                        <option value="Assistant">Assistant Trainer</option>
+                        <option value="Observer">Observer</option>
                       </select>
                     </FormControl>
                   </FormField>
@@ -478,7 +522,7 @@ export function BatchDetailsTabs({
                       <Input
                         type="date"
                         value={trainerFrom}
-                        onChange={(e) => setTrainerFrom(e.target.value)}
+                        onChange={(e) => handleFromDateChange(e.target.value)}
                       />
                     </FormControl>
                   </FormField>
@@ -489,12 +533,49 @@ export function BatchDetailsTabs({
                       <Input
                         type="date"
                         value={trainerTo}
-                        onChange={(e) => setTrainerTo(e.target.value)}
+                        onChange={(e) => handleToDateChange(e.target.value)}
                       />
                     </FormControl>
                   </FormField>
 
-                  <Button type="submit" disabled={isPending} className="w-full mt-2">
+                  {checkingConflicts && (
+                    <div className="flex items-center gap-2 text-xs text-slate-500">
+                      <Loader2 className="h-3 w-3 animate-spin" />
+                      <span>Checking schedule conflicts...</span>
+                    </div>
+                  )}
+
+                  {conflicts.length > 0 && (
+                    <div className="space-y-3">
+                      <div className="text-xs font-semibold text-red-600 bg-red-50 p-2.5 rounded-lg border border-red-100">
+                        Trainer has schedule conflicts in the following batches:
+                      </div>
+                      <div className="border border-red-100 bg-red-50/20 rounded-lg overflow-hidden text-[10px]">
+                        <table className="min-w-full divide-y divide-red-100">
+                          <thead className="bg-red-50 text-red-700">
+                            <tr>
+                              <th className="px-3 py-1.5 text-left font-semibold">Batch</th>
+                              <th className="px-3 py-1.5 text-left font-semibold">Date</th>
+                              <th className="px-3 py-1.5 text-left font-semibold">Start</th>
+                              <th className="px-3 py-1.5 text-left font-semibold">End</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-red-100 text-slate-600">
+                            {conflicts.map((c, idx) => (
+                              <tr key={idx}>
+                                <td className="px-3 py-1.5 font-mono font-bold">{c.batchCode}</td>
+                                <td className="px-3 py-1.5">{new Date(c.sessionDate).toLocaleDateString()}</td>
+                                <td className="px-3 py-1.5">{c.startTime}</td>
+                                <td className="px-3 py-1.5">{c.endTime}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
+
+                  <Button type="submit" disabled={isPending || conflicts.length > 0 || checkingConflicts} className="w-full mt-2">
                     {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Assign Faculty'}
                   </Button>
                 </form>

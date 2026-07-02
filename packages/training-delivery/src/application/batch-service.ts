@@ -9,6 +9,7 @@ import {
   PrimaryTrainerAlreadyAssigned,
   TrainerScheduleConflict,
   CourseNotPublished,
+  ScheduleConflict,
 } from '../domain/errors';
 import { createUuid } from '@ims/shared-kernel';
 import { randomUUID } from 'crypto';
@@ -127,10 +128,11 @@ export class BatchService {
         }
       }
 
+      const { primaryTrainerId, ...batchInput } = input;
       const id = createUuid(randomUUID());
       const batch = await this.batchRepository.create(
         {
-          ...input,
+          ...batchInput,
           id,
           status: BATCH_STATUSES.DRAFT,
           currentEnrollmentCount: 0,
@@ -138,6 +140,20 @@ export class BatchService {
         },
         client
       );
+
+      if (primaryTrainerId) {
+        await this.assignTrainer(
+          batch.id,
+          {
+            trainerId: primaryTrainerId,
+            role: 'Primary',
+            assignedFrom: batch.startDate,
+            assignedTo: batch.endDate,
+          },
+          actorId,
+          client
+        );
+      }
 
       // Audit log
       await client.auditLog.create({
@@ -402,6 +418,75 @@ export class BatchService {
         throw new Error('ERR_CRS_BATCH_NOT_FOUND');
       }
 
+      // Validate role type
+      const ALLOWED_ROLES = ['Primary', 'Assistant', 'Observer'];
+      if (!input.role || !ALLOWED_ROLES.includes(input.role)) {
+        throw new Error('ERR_CRS_INVALID_TRAINER_ROLE');
+      }
+
+      // Verify trainer is active and has the TRAINER role
+      const trainer = await client.user.findUnique({
+        where: { id: input.trainerId, isDeleted: false },
+        include: {
+          roles: {
+            include: {
+              role: true,
+            },
+          },
+        },
+      });
+
+      if (!trainer || trainer.status !== 'Active') {
+        throw new Error('ERR_CRS_TRAINER_NOT_ACTIVE');
+      }
+
+      const hasTrainerRole = trainer.roles.some((ur) => ur.role.roleCode === 'TRAINER');
+      if (!hasTrainerRole) {
+        throw new Error('ERR_CRS_INVALID_TRAINER_PROFILE');
+      }
+
+      // Enforce batch.delivery.assign permission and active branch authorization
+      if (actorId) {
+        const hasAccess = await client.userBranchAccess.findFirst({
+          where: { userId: actorId, branchId: batch.branchId, status: 'Active' },
+        });
+        let isAuthorized = !!hasAccess;
+
+        const userRoles = await client.userRole.findMany({
+          where: { userId: actorId },
+          include: {
+            role: {
+              include: {
+                permissions: {
+                  include: {
+                    permission: true,
+                  },
+                },
+              },
+            },
+          },
+        });
+
+        const isSuperAdmin = userRoles.some(
+          (ur) => ur.role.roleCode === 'SUPER_ADMIN' || ur.role.roleCode === 'OWNER'
+        );
+
+        if (!isSuperAdmin) {
+          const permissions = userRoles.flatMap((ur) =>
+            ur.role.permissions.map((rp) => rp.permission.permissionCode)
+          );
+          const hasPermission = permissions.includes('batch.delivery.assign');
+          if (!isAuthorized || !hasPermission) {
+            throw new Error('ERR_IAM_INSUFFICIENT_PERMISSIONS');
+          }
+        }
+      }
+
+      // Reject trainer assignment if batch is closed
+      if (batch.status === BATCH_STATUSES.COMPLETED || batch.status === BATCH_STATUSES.CANCELLED) {
+        throw new InvalidStateTransition('Cannot assign trainer to a completed or cancelled batch.');
+      }
+
       // Verify date ranges
       const assignedFrom = new Date(input.assignedFrom);
       const assignedTo = new Date(input.assignedTo);
@@ -438,6 +523,8 @@ export class BatchService {
         );
         const batchSessions = await this.batchRepository.findSessions(batchId, client);
 
+        const conflicts: ScheduleConflict[] = [];
+
         for (const bs of batchSessions) {
           const bsDateStr = getGSTDateString(bs.sessionDate);
           for (const ts of trainerSessions) {
@@ -445,12 +532,22 @@ export class BatchService {
             if (bsDateStr === tsDateStr) {
               // Overlap check on time
               if (bs.startTime < ts.endTime && bs.endTime > ts.startTime) {
-                throw new TrainerScheduleConflict(
-                  `Trainer is already scheduled on ${bsDateStr} from ${ts.startTime} to ${ts.endTime} in batch ${ts.batchCode}`
-                );
+                conflicts.push({
+                  batchCode: ts.batchCode,
+                  sessionDate: ts.sessionDate,
+                  startTime: ts.startTime,
+                  endTime: ts.endTime,
+                });
               }
             }
           }
+        }
+
+        if (conflicts.length > 0) {
+          throw new TrainerScheduleConflict(
+            `Trainer is already scheduled: conflicts in ${conflicts.map((c) => c.batchCode).join(', ')}`,
+            conflicts
+          );
         }
       }
 
@@ -499,6 +596,95 @@ export class BatchService {
       });
 
       return bt;
+    };
+
+    return tx ? execute(tx) : this.prisma.$transaction(execute);
+  }
+
+  async checkTrainerConflicts(
+    batchId: string,
+    trainerId: string,
+    assignedFrom: Date,
+    assignedTo: Date,
+    actorId?: string,
+    tx?: Prisma.TransactionClient
+  ): Promise<ScheduleConflict[]> {
+    const execute = async (client: Prisma.TransactionClient) => {
+      const batch = await this.batchRepository.findById(batchId, client);
+      if (!batch) {
+        throw new Error('ERR_CRS_BATCH_NOT_FOUND');
+      }
+
+      // Enforce batch branch authorization for non-superadmins
+      if (actorId) {
+        const hasAccess = await client.userBranchAccess.findFirst({
+          where: { userId: actorId, branchId: batch.branchId, status: 'Active' },
+        });
+        let isAuthorized = !!hasAccess;
+
+        const userRoles = await client.userRole.findMany({
+          where: { userId: actorId },
+          include: {
+            role: {
+              include: {
+                permissions: {
+                  include: {
+                    permission: true,
+                  },
+                },
+              },
+            },
+          },
+        });
+
+        const isSuperAdmin = userRoles.some(
+          (ur) => ur.role.roleCode === 'SUPER_ADMIN' || ur.role.roleCode === 'OWNER'
+        );
+
+        if (!isSuperAdmin) {
+          const permissions = userRoles.flatMap((ur) =>
+            ur.role.permissions.map((rp) => rp.permission.permissionCode)
+          );
+          const hasPermission = permissions.includes('batch.delivery.assign');
+          if (!isAuthorized || !hasPermission) {
+            throw new Error('ERR_IAM_INSUFFICIENT_PERMISSIONS');
+          }
+        }
+      }
+
+      if (!this.schedulingService) {
+        return [];
+      }
+
+      const trainerSessions = await this.schedulingService.getSessionsForTrainer(
+        trainerId,
+        assignedFrom,
+        assignedTo,
+        client
+      );
+      const batchSessions = await this.batchRepository.findSessions(batchId, client);
+
+      const conflicts: ScheduleConflict[] = [];
+
+      for (const bs of batchSessions) {
+        const bsDateStr = getGSTDateString(bs.sessionDate);
+        for (const ts of trainerSessions) {
+          const tsDateStr = getGSTDateString(ts.sessionDate);
+          if (bsDateStr === tsDateStr) {
+            // Overlap check on time
+            if (bs.startTime < ts.endTime && bs.endTime > ts.startTime) {
+              conflicts.push({
+                batchCode: ts.batchCode,
+                sessionDate: ts.sessionDate,
+                startTime: ts.startTime,
+                endTime: ts.endTime,
+              });
+            }
+          }
+        }
+      }
+
+      return conflicts;
     };
 
     return tx ? execute(tx) : this.prisma.$transaction(execute);

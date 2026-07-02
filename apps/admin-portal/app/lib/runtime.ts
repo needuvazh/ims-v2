@@ -270,9 +270,68 @@ export const crmDashboardQueryService = new CrmDashboardQueryService(
 );
 
 // ─── Training Delivery Repositories & Services ────────────────────────────
-import { BatchRepository, BatchService } from '@ims/training-delivery';
+import { BatchRepository, BatchService, ISchedulingService } from '@ims/training-delivery';
+
+class PrismaSchedulingService implements ISchedulingService {
+  constructor(private readonly prisma: any) {}
+
+  async getSessionsForTrainer(
+    trainerId: string,
+    startDate: Date,
+    endDate: Date,
+    tx?: any
+  ): Promise<any[]> {
+    const client = tx || this.prisma;
+    const assignments = await client.batchTrainer.findMany({
+      where: {
+        trainerId,
+        status: 'Active',
+        isDeleted: false,
+        assignedFrom: { lte: endDate },
+        assignedTo: { gte: startDate },
+      },
+      select: {
+        batchId: true,
+      },
+    });
+
+    if (assignments.length === 0) {
+      return [];
+    }
+
+    const batchIds = assignments.map((a: any) => a.batchId);
+
+    const sessions = await client.session.findMany({
+      where: {
+        batchId: { in: batchIds },
+        sessionDate: {
+          gte: startDate,
+          lte: endDate,
+        },
+        status: 'Scheduled',
+        isDeleted: false,
+      },
+      include: {
+        batch: {
+          select: {
+            batchCode: true,
+          },
+        },
+      },
+    });
+
+    return sessions.map((s: any) => ({
+      batchCode: s.batch.batchCode,
+      sessionDate: s.sessionDate,
+      startTime: s.startTime,
+      endTime: s.endTime,
+    }));
+  }
+}
+
 const batchRepository = new BatchRepository(prisma);
-export const batchService = new BatchService(prisma, batchRepository);
+const schedulingService = new PrismaSchedulingService(prisma);
+export const batchService = new BatchService(prisma, batchRepository, schedulingService);
 
 
 

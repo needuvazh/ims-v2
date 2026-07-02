@@ -42,7 +42,7 @@ export async function POST(
 ) {
   const { id } = await params;
   return withRouteObservability(request.headers, async () =>
-    withPermission(request, 'schedule.manage', async ({ session }) => {
+    withPermission(request, 'batch.delivery.assign', async ({ session }) => {
       const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
       let payload: unknown;

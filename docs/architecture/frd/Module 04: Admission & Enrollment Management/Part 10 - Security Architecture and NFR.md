@@ -1,46 +1,24 @@
 # Functional Requirement Document (Part 10)
-## Module 04: Admission & Enrollment Management – Security Architecture & NFRs
-
-This document details the security constraints, data protection mechanisms, and Non-Functional Requirements (NFRs) for the Admission & Enrollment Bounded Context.
+## Module 04: Admission & Enrollment Management - Security Architecture & NFRs
 
 ---
 
-## 1. Security Architecture & Data Protection
+## 1. Security Architecture
 
-### 1.1 Personally Identifiable Information (PII) Encryption
-To comply with Omani data protection laws and general compliance guidelines:
-*   **Encrypted Fields:** The `nationalId` (Civil ID / Passport Number) field in the `Person` model must be encrypted at the database application layer before write operations.
-*   **Algorithm:** `AES-256-GCM` with a unique key initialization vector (IV) stored in the environment configuration (`ENCRYPTION_SECRET`).
-*   **Key Rotation:** The encryption keys must support rotation without system downtime. The database service layers must handle dual decryption checks during rotation cycles.
-
-### 1.2 Document Access Control & Object Storage Security
-Admissions document uploads (Passports, Civil IDs, academic certificate files) are stored in private object storage:
-*   **No Public Access:** The storage buckets must block all direct public reads/writes.
-*   **Signed URLs:** Access to files in the browser is granted exclusively via ephemeral, pre-signed URLs generated on the server:
-    ```typescript
-    const presignedUrl = await storageClient.getPresignedUrl({
-      bucket: "asti-student-documents",
-      key: `admissions/${admissionId}/${documentId}.pdf`,
-      expiresIn: 900 // Valid for 15 minutes (900 seconds)
-    });
-    ```
-*   **Permission Checks:** The pre-signed URL generator API endpoint must verify the user holds `admission.read` and shares the same `branchId` context as the document owner before returning the link.
-
-### 1.3 Row-Level Security (RLS) & Tenant Scoping
-*   **Scoping:** Every database query affecting admissions, students, and enrollments must apply a predicate filter `WHERE branch_id = :userBranchId` unless executed by a Super Admin.
-*   **Data Access Layer Tenant Guard:** To prevent authorization bypasses, the database service layer (or ORM-specific query middleware) must programmatically enforce row-level scoping on all query retrievals for the `Admission` and `Enrollment` models.
+* `Person.nationalId` must be encrypted at the application layer before persistence.
+* Identity document access must be handled by the Document Management context using private object storage and signed URLs only; this module stores references and consumes signed links.
+* All admission and enrollment reads and writes must be branch-scoped server-side.
+* Audit logs are required for admission approval, enrollment approval, enrollment confirmation, soft delete, and branch access changes.
 
 ---
 
-## 2. Non-Functional Requirements (NFR) Targets
+## 2. Non-Functional Requirements
 
-| Category | Metric / Target | Specification & Threshold |
-| :--- | :--- | :--- |
-| **Performance** | API Response Time (95th percentile) | $\le 200\text{ms}$ for student directory searches and registration lookups under typical load. |
-| **Performance** | API Response Time (Write Operations) | $\le 500\text{ms}$ for admission approval and enrollment state transitions (including PDF ID Card generation trigger). |
-| **Performance** | PDF Card Generation | Digital ID Card PDF compilation must run asynchronously via background worker in $\le 5\text{ seconds}$ from approval. |
-| **Availability** | System Uptime | $99.9\%$ core module availability, measured monthly. |
-| **Scalability** | Concurrent Requests | Support $\ge 100$ concurrent registration requests without database deadlock. |
-| **Usability** | Form Processing | Standard forms must be fully keyboard navigable and support accessibility ARIA labels. |
-| **Compliance** | Audit Logs | All status changes on `Admission` and `Enrollment` must be written to read-only audit log tables within the same transactional scope. |
-| **Concurrency** | Race Condition Guard | Batch seat allocation checks must use `SELECT FOR UPDATE` or serializable transactions to prevent double-booking. |
+| Category | Target |
+| --- | --- |
+| Search/read performance | 200ms p95 under normal load |
+| Write performance | 500ms p95 for admission/enrollment transitions excluding background jobs |
+| ID card generation | Asynchronous completion within 5 seconds of approval |
+| Availability | 99.9% monthly |
+| Concurrency | Prevent double-booking through transaction isolation or row locks |
+| Accessibility | Keyboard navigable forms with ARIA labels |

@@ -35,8 +35,18 @@ export class PrimaryTrainerAlreadyAssigned extends DomainError {
   }
 }
 
+export interface ScheduleConflict {
+  batchCode: string;
+  sessionDate: Date | string;
+  startTime: string;
+  endTime: string;
+}
+
 export class TrainerScheduleConflict extends DomainError {
-  constructor(message = 'Trainer has a schedule conflict.') {
+  constructor(
+    message = 'Trainer has a schedule conflict.',
+    public readonly conflicts?: ScheduleConflict[]
+  ) {
     super(message, 'ERR_CRS_TRAINER_SCHEDULE_CONFLICT');
   }
 }

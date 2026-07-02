@@ -13,7 +13,7 @@
 *   **Acceptance Criteria (Gherkin format):**
     ```gherkin
     Scenario: Successfully register a StudentProfile with a unique Person link
-      Given the Registrar is logged in and authorized with "ADMISSION_CREATE" permission
+      Given the Registrar is logged in and authorized with "admission.create" permission
       And a Person record exists with mobile "+96899123456" and email "ahmed@example.om"
       And no StudentProfile is currently linked to this Person record
       When the Registrar submits a request to register a student for this Person ID
@@ -27,7 +27,7 @@
       And a Person record exists with mobile "+96899123456"
       And a StudentProfile already exists linked to this Person record
       When the Registrar attempts to create a new StudentProfile for this Person ID
-      Then the system should reject the request with a "DuplicateStudentDetected" error
+      Then the system should reject the request with a "ERR_ADM_DUPLICATE_PERSON" error
       And make no changes to the database
     ```
 
@@ -47,7 +47,7 @@
       Then the system should verify the person record exists or create one
       And initialize an Admission record in the Counselor's branch with status "Draft"
       And link the Admission to the original leadId
-      And publish a "LeadConvertedToAdmission" event to the outbox
+      And publish an "AdmissionCreated" event to the outbox
     ```
 
 ---
@@ -83,7 +83,7 @@
       And the batch has waitlist enabled
       When a Registrar attempts to approve an enrollment for student "STU-2026-00102" in batch "Python-101"
       Then the system should block the enrollment approval
-      And notify the Training Delivery context to create a "WaitingListEntry" with status "Pending"
+      And notify the Training Delivery context to create a waitlist entry
       And log the request order timestamp
       And publish a "StudentAddedToWaitingList" event
 
@@ -91,7 +91,7 @@
       Given the batch "Excel-Pro" has maxCapacity "10" and registered count "10"
       And the batch has waitlist disabled
       When a Registrar attempts to approve an enrollment for student "STU-2026-00103" in batch "Excel-Pro"
-      Then the system should reject the transition with "EnrollmentCapacityExceeded" error
+      Then the system should reject the transition with "ERR_ENR_BATCH_FULL" error
     ```
 
 ---
@@ -108,9 +108,9 @@
       And their outstanding unpaid invoices total OMR 2,000
       When the Coordinator nominates employee "Salim Al-Harthy" for batch "Safety-02" (costing OMR 500)
       Then the system should validate that outstanding balance + new cost (OMR 2,500) is less than the credit limit (OMR 5,000)
-      And create a "CorporateParticipant" record
+      And create or link a "CorporateParticipant" record
       And initialize an Enrollment in "Approved" state with "enrollmentType" as "Corporate"
-      And skip payment validation checks
+      And skip payment validation checks when the corporate credit rule permits it
     ```
 
 ---
@@ -125,9 +125,9 @@
     Scenario: Walk-in enrollment auto-confirms reactively
       Given the course "First Aid Certificate" explicitly allows walk-in completions
       When the Registrar submits a Walk-in Registration form for a new person
-      Then the system should create a Person record and active Student profile in a single transaction
-      And create an Enrollment in status "Confirmed" in a secondary transaction
-      And publish an outbox event to generate and auto-clear the invoice in Finance
+      Then the system should create or link a Person record and active StudentProfile in a single transaction
+      And create a WalkInEnrollment linked to the Enrollment aggregate
+      And publish an outbox event to generate the invoice in Finance
       And publish an outbox event to notify Training Delivery context of batch occupancy
 
     Scenario: Walk-in enrollment handles waitlist if batch is full
@@ -151,8 +151,8 @@
       Given student "STU-2026-00105" has an enrollment in status "Active" for batch "React-09"
       When the Branch Manager processes a drop request with reason "Medical Leave"
       Then the system should transition enrollmentStatus to "Dropped"
-      And publish a "EnrollmentDropped" event which triggers the Training Delivery context to increment the batch seatsAvailable by 1
-      And publish a "EnrollmentDropped" event to update attendance rosters
+      And publish a "EnrollmentCancelled" event which triggers the Training Delivery context to increment the batch seatsAvailable
+      And publish a "EnrollmentCancelled" event to update attendance rosters
     ```
 
 ---
@@ -169,7 +169,7 @@
       And the enrollment has paymentValidationRequired as true
       And the outstanding balance on the enrollment invoice is OMR 150
       When the user attempts to transition the status to "CertificateIssued"
-      Then the system should block the action with a "PaymentVerificationFailed" error
+      Then the system should block the action with a "ERR_ENR_PAYMENT_INCOMPLETE" error
     ```
 
 ---
@@ -182,13 +182,13 @@
     *   Lead exists in CRM (Module 03) in status "Qualified" or "Pre-Registered".
     *   Counselor is authenticated and assigned to the same branch context as the Lead.
 *   **Main Success Scenario:**
-    1.  Counselor clicks "Convert to Student" on the Lead Detail view.
+    1.  Counselor clicks "Convert to Admission" on the Lead Detail view.
     2.  System calls the CRM service to retrieve contact details (Name, Civil ID, Mobile, Email, Course Interest).
     3.  System checks the master Person directory using Civil ID and mobile number to detect duplicates. No match is found.
-    4.  System creates a new `Person` record in the database.
+    4.  System creates or links a `Person` record through the shared identity service.
     5.  System generates a `StudentProfile`, auto-generating a unique `studentNumber` (e.g. `STU-2026-00342`).
     6.  System creates a new `Admission` record linked to the student profile and lead in the status `Draft`.
-    7.  System triggers a `LeadConvertedToAdmission` event.
+    7.  System publishes `AdmissionCreated` and `StudentProfileCreated` events.
 *   **Alternative Flows:**
     *   *A1: Person Already Exists:* In step 3, if the Person is found (matching Civil ID or Mobile), the system skips `Person` creation and links the new `StudentProfile` to the existing `Person` record.
     *   *A2: Student Profile Already Links to Person:* In step 3, if a `StudentProfile` is already linked to the found Person, the system blocks the creation and redirects the counselor to the existing StudentProfile.
@@ -206,12 +206,12 @@
     1.  Registrar opens the Walk-In Form and enters the learner's personal details, target course, and batch.
     2.  Registrar inputs the cash/card payment amount received.
     3.  System creates the `Person` and `StudentProfile` records (Transaction 1).
-    4.  System creates the `Enrollment` record, bypasses the "Draft" and "Submitted" states, sets status to `Confirmed`, and commits the record (Transaction 2).
+    4.  System creates the `Enrollment` record and links it to a `WalkInEnrollment` record, then follows the same enrollment lifecycle with fast-track approval and confirmation.
     5.  System writes a `WalkInEnrollmentCreated` event to the local transactional outbox.
     6.  The Finance context asynchronously subscribes to this event, then creates the cash invoice and records the payment transaction receipt in its own database context.
-    7.  The Training Delivery context asynchronously subscribes to this event and atomically decrements the Batch capacity in its own database context.
+    7.  The Training Delivery context asynchronously subscribes to this event and atomically updates batch occupancy in its own database context.
 *   **Alternative Flows:**
-    *   *A1: Batch Capacity Reached:* If batch is full, system checks for waitlist. If waitlist is available, student is placed in waitlist and cannot proceed as confirmed. If no waitlist, transaction aborts.
+    *   *A1: Batch Capacity Reached:* If batch is full, system checks for waitlist. If waitlist is available, a waitlist entry is created and the enrollment cannot proceed as confirmed. If no waitlist, transaction aborts.
 *   **Postconditions:**
     *   Learner profile and enrollment are created, and outbox events are written to reconcile invoicing and capacity asynchronously.
 
@@ -226,7 +226,7 @@
     2.  Manager inputs a mandatory drop reason and date of withdrawal.
     3.  System checks the attendance record of the student.
     4.  System changes the enrollment status to `Dropped` and records the withdrawal date.
-    5.  System dispatches the `EnrollmentDropped` outbox event.
+    5.  System dispatches the `EnrollmentCancelled` outbox event.
     6.  The Training Delivery context subscribes to this event and increments the batch availability count:
         $$\text{seatsAvailable} = \text{seatsAvailable} + 1$$
 *   **Alternative Flows:**
@@ -289,7 +289,7 @@ stateDiagram-v2
     Submitted --> Approved : Review & Approve (Manager)
     Submitted --> Cancelled : Reject/Cancel (Manager)
     
-    Approved --> Confirmed : Invoice Cleared (Finance/Auto)
+    Approved --> Confirmed : ReceiptGenerated Event
     Approved --> Cancelled : Cancel unpaid (Registrar)
     
     Confirmed --> Active : Batch Start Date reached (System)
@@ -297,6 +297,7 @@ stateDiagram-v2
     
     Active --> Completed : Evaluation Rules Met (Trainer)
     Active --> Dropped : Drop from training (Manager)
+    Completed --> CertificateIssued : Certificate Eligible Event
 ```
 
 ### 4.2 Status Transition Rules Matrix
@@ -305,13 +306,14 @@ Transitions must be governed by the following permission constraints:
 
 | From Status | To Status | Required Action / Event | Authorized Permission | Guard Conditions / Rules |
 | :--- | :--- | :--- | :--- | :--- |
-| `None` | `Draft` | Create Draft command | `ENROLLMENT_CREATE` | Validates `studentId`, `courseId`, and `batchId` exist and are active. |
-| `Draft` | `Submitted` | Submit for Review | `ENROLLMENT_CREATE` | All mandatory details inputted; pricing calculation completed. |
-| `Draft` | `Cancelled` | Cancel Application | `ENROLLMENT_CREATE` | Marks enrollment as cancelled; no financial obligations. |
-| `Submitted` | `Approved` | Manager Review Approval | `ENROLLMENT_APPROVE` | Checks batch capacity under transactional isolation; validates corporate credit limits. |
-| `Submitted` | `Cancelled` | Rejection by Manager | `ENROLLMENT_APPROVE` | Requires input of rejection reason code. |
-| `Approved` | `Confirmed` | Record payment receipt | `ENROLLMENT_CONFIRM` | Bypassed if `paymentValidationRequired = false` (Corporate or 0 price). |
+| `None` | `Draft` | Create Draft command | `enrollment.create` | Validates `studentProfileId`, `courseId`, and `batchId` exist and are active. |
+| `Draft` | `Submitted` | Submit for Review | `enrollment.submit` | All mandatory details inputted; pricing calculation completed. |
+| `Draft` | `Cancelled` | Cancel Application | `enrollment.cancel` | Marks enrollment as cancelled; no financial obligations. |
+| `Submitted` | `Approved` | Manager Review Approval | `enrollment.approve` | Checks batch capacity under transactional isolation; validates corporate credit limits. |
+| `Submitted` | `Cancelled` | Rejection by Manager | `enrollment.approve` | Requires input of rejection reason code. |
+| `Approved` | `Confirmed` | Record payment receipt | system/event | Triggered from `ReceiptGenerated`. |
 | `Confirmed` | `Active` | Batch Start Event | `System Runner` | Automatically runs on batch start date. |
-| `Confirmed` | `Dropped` | Pre-course withdrawal | `ENROLLMENT_DROP` | Restores batch capacity (+1 seat). |
-| `Active` | `Completed` | Submit course evaluation | `COURSE_COMPLETE` | Verified by Module 12 (Exams & Completion). |
-| `Active` | `Dropped` | Active drop / Absenteeism | `ENROLLMENT_DROP` | Restores batch capacity (+1 seat). |
+| `Confirmed` | `Dropped` | Pre-course withdrawal | `enrollment.drop` | Restores batch capacity. |
+| `Active` | `Completed` | Submit course evaluation | external `completion.approve` | Verified by Module 12 (Exams & Completion). |
+| `Active` | `Dropped` | Active drop / Absenteeism | `enrollment.drop` | Restores batch capacity. |
+| `Completed` | `CertificateIssued` | Certificate Eligible Event | `system/event` | Certificate context issues the certificate. |
