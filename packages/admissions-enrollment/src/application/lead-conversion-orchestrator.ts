@@ -27,7 +27,7 @@ export class LeadConversionOrchestrator {
         branchId: lead.branchId,
         leadId: lead.id,
         courseId: lead.interestedCourseId,
-      }, tx);
+      }, actorId || null, tx);
 
       // 3. Log the audit event (simulated or direct write)
       await tx.auditLog.create({

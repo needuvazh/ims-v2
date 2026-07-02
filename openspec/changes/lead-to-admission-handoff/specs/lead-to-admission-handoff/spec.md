@@ -11,6 +11,14 @@ The system SHALL allow CRM to hand off a qualified lead into the Admission & Enr
 - **WHEN** a lead conversion request finds an existing person and student profile for the same contact identity
 - **THEN** the system SHALL reuse the existing records instead of creating duplicates.
 
+#### Scenario: Enforce minimum age limit of 12 years
+- **WHEN** a lead conversion is initiated for a person whose age is less than 12 years relative to the admission date
+- **THEN** the system SHALL reject the conversion and throw an "ERR_ADM_AGE_LIMIT" error.
+
+#### Scenario: Reject conversion if active admission exists
+- **WHEN** a lead conversion is initiated for a student who already has an active admission in the target branch
+- **THEN** the system SHALL reject the conversion and throw an "ERR_ADM_ACTIVE_ADMISSION_EXISTS" error.
+
 ---
 
 ### Requirement: Lead Handoff Side Effects
@@ -22,4 +30,11 @@ The system SHALL cancel outstanding follow-ups and publish lifecycle events when
 
 #### Scenario: Publish admission handoff events
 - **WHEN** the handoff creates the admission and student profile successfully
-- **THEN** the system SHALL publish the admission handoff events to the transactional outbox.
+- **THEN** the system SHALL publish the following events to the transactional outbox:
+  | Event Type | Aggregate Type | Required Payload Fields |
+  | --- | --- | --- |
+  | LeadWon | Lead | leadId, leadNumber |
+  | LeadConverted | Lead | leadId, leadNumber, studentEmail |
+  | AdmissionCreated | Admission | admissionId, admissionNumber, studentProfileId, personId, branchId, leadId, courseId |
+  | StudentProfileCreated | StudentProfile | studentProfileId, studentNumber, personId, status, joinedAt |
+

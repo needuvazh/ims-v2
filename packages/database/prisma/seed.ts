@@ -59,6 +59,9 @@ const systemPermissions = [
   { moduleCode: 'enrollment',   featureCode: 'student',     actionCode: 'read',   permissionCode: 'student.read',                   permissionType: 'Action' as const, description: 'View student details.' },
   { moduleCode: 'enrollment',   featureCode: 'student',     actionCode: 'write',  permissionCode: 'student.write',                  permissionType: 'Action' as const, description: 'Register or edit student profiles.' },
   { moduleCode: 'enrollment',   featureCode: 'enroll',      actionCode: 'write',  permissionCode: 'enrollment.create',              permissionType: 'Action' as const, description: 'Create enrollments in courses/batches.' },
+  { moduleCode: 'enrollment',   featureCode: 'admission',   actionCode: 'read',   permissionCode: 'admission.read',                 permissionType: 'Action' as const, description: 'View admission detail.' },
+  { moduleCode: 'enrollment',   featureCode: 'admission',   actionCode: 'create', permissionCode: 'admission.create',               permissionType: 'Action' as const, description: 'Create and cancel admissions.' },
+  { moduleCode: 'enrollment',   featureCode: 'admission',   actionCode: 'approve',permissionCode: 'admission.approve',              permissionType: 'Action' as const, description: 'Approve or reject admissions.' },
   
   // Finance & Fee Management
   { moduleCode: 'finance',      featureCode: 'payment',     actionCode: 'write',  permissionCode: 'payment.create',                 permissionType: 'Action' as const, description: 'Record payments and issue receipts.' },
@@ -133,6 +136,7 @@ async function seed() {
   await prisma.batch.deleteMany({});
   await prisma.coursePricing.deleteMany({});
   await prisma.courseCompletionRule.deleteMany({});
+  await prisma.courseDiscount.deleteMany({});
   await prisma.course.deleteMany({});
   await prisma.courseCategory.deleteMany({});
   await prisma.passwordResetToken.deleteMany({});
@@ -216,6 +220,7 @@ async function seed() {
     'lead.read', 'lead.write', 'lead.create', 'lead.update', 'lead.delete', 'lead.assign', 'lead.lost', 'lead.reveal_pii', 'lead.qualify', 'lead.convert', 'crm.leads.read.all',
     'followup.create', 'followup.update',
     'student.read', 'student.write', 'enrollment.create',
+    'admission.read', 'admission.create', 'admission.approve',
     'payment.create', 'refund.request', 'course.manage', 'schedule.manage',
     'course.catalog.view', 'course.catalog.create', 'course.catalog.update', 'course.catalog.publish', 'course.catalog.archive',
     'batch.delivery.view',
@@ -244,7 +249,8 @@ async function seed() {
     'course.catalog.view',
     'batch.delivery.view',
     'student.read', 'dashboard.crm', 'report.iam.user', 'dashboard.view',
-    'REPORTING_VIEW_CRM_DASHBOARD'
+    'REPORTING_VIEW_CRM_DASHBOARD',
+    'admission.read', 'admission.create'
   ];
   const counselorPerms = permRecords.filter(p => counselorPermCodes.includes(p.permissionCode));
   for (const perm of counselorPerms) {

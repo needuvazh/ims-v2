@@ -9,7 +9,7 @@ export class AdmissionService {
     private readonly prisma: PrismaClient
   ) {}
 
-  async createStudentAdmission(input: CreateStudentProfileAdmissionInput, tx?: Prisma.TransactionClient) {
+  async createStudentAdmission(input: CreateStudentProfileAdmissionInput, actorId: string | null = null, tx?: Prisma.TransactionClient) {
     const run = async (activeClient: Prisma.TransactionClient) => {
       // 1. Resolve existing person and profile to check for duplicate active admission
       const existingPerson = await this.admissionRepository.findPersonByEmailOrPhone(input.email || null, input.phone || null, activeClient);
@@ -82,7 +82,7 @@ export class AdmissionService {
           action: 'AdmissionCreated',
           entityType: 'Admission',
           entityId: result.admissionId,
-          performedBy: null,
+          performedBy: actorId,
           branchId: input.branchId,
           performedAt: new Date(),
           module: 'AdmissionsEnrollment',
@@ -104,7 +104,7 @@ export class AdmissionService {
     }
   }
 
-  async createAdmissionDraftDirect(input: CreateAdmissionInput, branchId: string, tx?: Prisma.TransactionClient) {
+  async createAdmissionDraftDirect(input: CreateAdmissionInput, branchId: string, actorId: string | null = null, tx?: Prisma.TransactionClient) {
     const run = async (activeClient: Prisma.TransactionClient) => {
       // Check for active admission in target branch
       const hasActive = await this.admissionRepository.hasActiveAdmission(input.studentProfileId, branchId, activeClient);
@@ -151,7 +151,7 @@ export class AdmissionService {
           action: 'AdmissionCreated',
           entityType: 'Admission',
           entityId: result.admissionId,
-          performedBy: null,
+          performedBy: actorId,
           branchId,
           performedAt: new Date(),
           module: 'AdmissionsEnrollment',

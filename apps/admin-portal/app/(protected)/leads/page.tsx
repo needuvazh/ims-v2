@@ -32,11 +32,11 @@ export default async function LeadsPage(props: {
 
   // Build filters checking that requested branchId parameter lies within session permissions bounds
   let filterBranchIds = allowedBranchIds;
-  if (searchParams.branchId) {
+  if (filterBranchIds.length === 0) {
+    filterBranchIds = [createUuid('00000000-0000-0000-0000-000000000000')];
+  } else if (searchParams.branchId) {
     const requestedUuid = createUuid(searchParams.branchId);
     if (allowedBranchIds.includes(requestedUuid)) {
-      filterBranchIds = [requestedUuid];
-    } else if (allowedBranchIds.length === 0) {
       filterBranchIds = [requestedUuid];
     } else {
       // Force empty to return no leads if unauthorized branch was requested

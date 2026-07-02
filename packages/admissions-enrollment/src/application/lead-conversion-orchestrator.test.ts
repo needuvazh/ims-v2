@@ -48,7 +48,7 @@ test('LeadConversionOrchestrator should convert lead and create admission succes
     phone: '+96899999999',
     branchId: 'branch-1',
     leadId: 'lead-1',
-  }, mockPrisma);
+  }, 'actor-1', mockPrisma);
   expect(mockPrisma.auditLog.create).toHaveBeenCalled();
 });
 
