@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { RequirementsResolver } from './requirements-resolver';
 
 export class AdmissionQueryService {
   constructor(private readonly prisma: PrismaClient) {}
@@ -34,6 +35,49 @@ export class AdmissionQueryService {
       }
     });
 
+    // Resolve required documents list using the resolver
+    const resolver = new RequirementsResolver(this.prisma);
+    const requiredDocTypes = await resolver.getRequiredDocuments(
+      admission.courseId,
+      admission.branchId
+    );
+
+    // Fetch documents linked to the Person
+    const uploadedDocs = await this.prisma.document.findMany({
+      where: {
+        owners: {
+          some: {
+            ownerId: admission.personId,
+            ownerType: 'Person',
+          },
+        },
+        isDeleted: false,
+      },
+      include: {
+        verifications: {
+          orderBy: { createdAt: 'desc' },
+          take: 1,
+        },
+      },
+    });
+
+    // Map both resolved and uploaded docs into a clean document status structure
+    const documents = requiredDocTypes.map((type) => {
+      const doc = uploadedDocs.find((d) => d.documentType === type);
+      const verification = doc?.verifications?.[0];
+      return {
+        id: doc?.id || null,
+        documentType: type,
+        fileName: doc?.fileName || null,
+        fileKey: doc?.fileKey || null,
+        status: doc?.status || null,
+        verificationOutcome: verification?.outcome || 'NotUploaded',
+        verifiedAt: verification?.verifiedAt || null,
+        verifiedBy: verification?.verifiedBy || null,
+        remarks: verification?.remarks || null,
+      };
+    });
+
     return {
       admission: {
         id: admission.id,
@@ -65,6 +109,7 @@ export class AdmissionQueryService {
           mobile: admission.person?.mobile,
         },
         leadId: admission.leadId,
+        documents,
       },
       history: auditLogs.map((log) => ({
         id: log.id,

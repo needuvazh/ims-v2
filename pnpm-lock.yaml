@@ -91,6 +91,9 @@ importers:
       '@ims/database':
         specifier: workspace:*
         version: link:../../packages/database
+      '@ims/documents':
+        specifier: workspace:*
+        version: link:../../packages/documents
       '@ims/identity-access':
         specifier: workspace:*
         version: link:../../packages/identity-access

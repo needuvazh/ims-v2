@@ -34,6 +34,10 @@ export default async function AdmissionDetailPage(props: {
         approvedAt: detail.admission.approvedAt?.toISOString() || null,
         rejectedAt: detail.admission.rejectedAt?.toISOString() || null,
         cancelledAt: detail.admission.cancelledAt?.toISOString() || null,
+        documents: detail.admission.documents.map((doc) => ({
+          ...doc,
+          verifiedAt: doc.verifiedAt?.toISOString() || null,
+        })),
       },
       history: detail.history.map((h) => ({
         ...h,

@@ -154,11 +154,30 @@ export async function convertLeadAction(leadId: string, documents: any[]) {
     const actorId = await getActorId();
     const { leadConversionOrchestrator } = await import('../../lib/runtime');
 
-    const result = await leadConversionOrchestrator.convertLeadToAdmission(leadId, documents, actorId);
+    // Map string URLs to DocumentCaptureInput structure
+    const mappedDocs = documents.map((docOrUrl: any, index: number) => {
+      if (docOrUrl && typeof docOrUrl === 'object' && docOrUrl.documentType) {
+        return docOrUrl;
+      }
+      const url = String(docOrUrl);
+      const isFirst = index === 0;
+      const fileName = url.split('/').pop() || (isFirst ? 'civil_id_scan' : 'secondary_document');
+      const ext = fileName.split('.').pop() || 'pdf';
+      const fileType = ext === 'pdf' ? 'application/pdf' : `image/${ext}`;
+      return {
+        fileName,
+        fileKey: url,
+        fileType,
+        documentType: isFirst ? 'CIVIL_ID_FRONT' : 'PASSPORT_SCAN',
+        expiryDate: null,
+      };
+    });
+
+    const result = await leadConversionOrchestrator.convertLeadToAdmission(leadId, mappedDocs, actorId);
     revalidatePath('/leads');
     return { success: true, data: result };
   } catch (error: any) {
-    return buildCrmActionFailure(error);
+    return buildCrmActionFailure(error, 'convert');
   }
 }
 
@@ -236,6 +255,6 @@ export async function updateLeadStageAction(
     revalidatePath(`/leads/${leadId}`);
     return { success: true };
   } catch (error: any) {
-    return buildCrmActionFailure(error);
+    return buildCrmActionFailure(error, 'stage');
   }
 }

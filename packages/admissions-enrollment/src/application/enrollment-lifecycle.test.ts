@@ -232,6 +232,17 @@ test('EnrollmentService approveEnrollment should throw ERR_ENR_CREDIT_EXCEEDED i
         id: 'batch-1',
         capacity: 15,
         waitingListEnabled: true,
+        corporateAccountId: 'corp-account-1',
+      }),
+    },
+    corporateAccount: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'corp-account-1',
+        creditLimit: new Prisma.Decimal(1000),
+        currentOutstanding: new Prisma.Decimal(700),
+        blockOnCreditLimit: true,
+        status: 'Active',
+        isDeleted: false,
       }),
     },
     $transaction: vi.fn().mockImplementation((cb) => cb(mockPrisma)),
@@ -340,6 +351,17 @@ test('EnrollmentService approveEnrollment should throw ERR_ENR_DUPLICATE_ENROLLM
         id: 'batch-1',
         capacity: 15,
         waitingListEnabled: true,
+        corporateAccountId: 'corp-account-1',
+      }),
+    },
+    corporateAccount: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'corp-account-1',
+        creditLimit: new Prisma.Decimal(1000),
+        currentOutstanding: new Prisma.Decimal(900),
+        blockOnCreditLimit: true,
+        status: 'Active',
+        isDeleted: false,
       }),
     },
     $transaction: vi.fn().mockImplementation((cb) => cb(mockPrisma)),
@@ -611,7 +633,14 @@ test('EnrollmentService createWalkInEnrollment should successfully create person
       count: vi.fn().mockResolvedValue(0),
     },
     batch: {
-      findUnique: vi.fn().mockResolvedValue({ id: 'batch-walk-1', capacity: 10, waitingListEnabled: true }),
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'batch-walk-1',
+        courseId: 'crs-walk',
+        branchId: 'branch-1',
+        capacity: 10,
+        waitingListEnabled: true,
+        isDeleted: false,
+      }),
       update: vi.fn().mockResolvedValue(null),
     },
     outboxEvent: {
@@ -688,6 +717,16 @@ test('EnrollmentService createWalkInEnrollment should reject duplicate active ad
     admission: {
       count: vi.fn().mockResolvedValue(1),
     },
+    batch: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'batch-walk-1',
+        courseId: 'crs-walk',
+        branchId: 'branch-1',
+        isDeleted: false,
+        capacity: 10,
+        waitingListEnabled: true,
+      }),
+    },
     enrollment: {
       create: vi.fn(),
     },
@@ -730,6 +769,38 @@ test('EnrollmentService createWalkInEnrollment should reject walk-in for course 
       actorId: 'actor-1',
     })
   ).rejects.toThrow('ERR_COURSE_NOT_WALKIN_ENABLED');
+});
+
+test('EnrollmentService createWalkInEnrollment should reject batch/course mismatch', async () => {
+  const mockPrisma = {
+    course: {
+      findUnique: vi.fn().mockResolvedValue({ id: 'crs-walk', allowWalkInCompletion: true }),
+    },
+    batch: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'batch-walk-1',
+        courseId: 'other-course',
+        branchId: 'branch-1',
+        capacity: 10,
+        waitingListEnabled: true,
+        isDeleted: false,
+      }),
+    },
+    $transaction: vi.fn().mockImplementation((cb) => cb(mockPrisma)),
+  } as any;
+
+  const enrollmentService = new EnrollmentService(mockPrisma);
+  await expect(
+    enrollmentService.createWalkInEnrollment({
+      firstName: 'Ahmed',
+      lastName: 'Al Balushi',
+      phone: '+96899998888',
+      courseId: 'crs-walk',
+      batchId: 'batch-walk-1',
+      branchId: 'branch-1',
+      actorId: 'actor-1',
+    })
+  ).rejects.toThrow('ERR_ENR_BATCH_COURSE_MISMATCH');
 });
 
 test('EnrollmentService createWalkInEnrollment should route to waitlist when batch is full and waitlist is enabled', async () => {
@@ -778,7 +849,14 @@ test('EnrollmentService createWalkInEnrollment should route to waitlist when bat
       count: vi.fn().mockResolvedValue(0),
     },
     batch: {
-      findUnique: vi.fn().mockResolvedValue({ id: 'batch-walk-1', capacity: 10, waitingListEnabled: true }),
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'batch-walk-1',
+        courseId: 'crs-walk',
+        branchId: 'branch-1',
+        capacity: 10,
+        waitingListEnabled: true,
+        isDeleted: false,
+      }),
       update: vi.fn().mockResolvedValue(null),
     },
     outboxEvent: {
@@ -1007,4 +1085,30 @@ test('EnrollmentService recordWalkInPayment should block payment recording for w
   await expect(
     enrollmentService.recordWalkInPayment('enr-waitlisted-1', 120.0, 'actor-1')
   ).rejects.toThrow('ERR_ENR_PAYMENT_BLOCKED_WAITLIST');
+});
+
+test('EnrollmentService recordWalkInPayment should block partial payment before confirmation', async () => {
+  const mockPrisma = {
+    enrollment: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'enr-approved-1',
+        enrollmentType: 'WalkIn',
+        enrollmentStatus: 'Approved',
+        enrollmentNumber: 'ENR-888',
+        studentProfileId: 'stu-1',
+        batchId: 'batch-1',
+        branchId: 'branch-1',
+        courseId: 'crs-1',
+        finalAmount: new Prisma.Decimal(120.0),
+        admission: { personId: 'person-1' },
+        walkInEnrollment: { id: 'wie-1' },
+      }),
+    },
+    $transaction: vi.fn().mockImplementation((cb) => cb(mockPrisma)),
+  } as any;
+
+  const enrollmentService = new EnrollmentService(mockPrisma);
+  await expect(
+    enrollmentService.recordWalkInPayment('enr-approved-1', 80.0, 'actor-1', 'Cash at counter')
+  ).rejects.toThrow('ERR_ENR_PAYMENT_INCOMPLETE');
 });

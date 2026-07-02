@@ -18,6 +18,7 @@
     "@ims/crm-leads": "workspace:*",
     "@ims/course-catalog": "workspace:*",
     "@ims/database": "workspace:*",
+    "@ims/documents": "workspace:*",
     "@ims/identity-access": "workspace:*",
     "@ims/observability": "workspace:*",
     "@ims/organization": "workspace:*",

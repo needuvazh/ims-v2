@@ -185,4 +185,53 @@ describe('CRM lead convert API route', () => {
     expect(body.success).toBe(false);
     expect(body.errorCode).toBe('ERR_ADM_ACTIVE_ADMISSION_EXISTS');
   });
+
+  it('POST /api/v1/crm/leads/[id]/convert maps ERR_CRM_INVALID_STAGE_TRANSITION to 422 with proper error message', async () => {
+    withPermissionMock.mockImplementation((req, perm, cb) =>
+      cb({
+        session: {
+          userId: 'user-1',
+          permissions: ['lead.convert'],
+          activeBranchId: '11111111-1111-1111-1111-111111111111',
+        },
+      })
+    );
+
+    resolveAllowedBranchesMock.mockResolvedValue(['11111111-1111-1111-1111-111111111111']);
+
+    getLeadByIdMock.mockResolvedValue({
+      id: 'lead-123',
+      branchId: '11111111-1111-1111-1111-111111111111',
+      counselorId: 'user-1',
+    });
+
+    convertLeadToAdmissionMock.mockRejectedValue(new Error('ERR_CRM_INVALID_STAGE_TRANSITION'));
+
+    const { POST } = await import('./route');
+    const req = new Request('http://localhost/api/v1/crm/leads/lead-123/convert', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        documents: [
+          {
+            fileName: 'civil.pdf',
+            fileKey: 'uploads/civil.pdf',
+            fileType: 'application/pdf',
+            documentType: 'CIVIL_ID_FRONT',
+          },
+        ],
+      }),
+    });
+
+    const response = await POST(req, {
+      params: Promise.resolve({ id: 'lead-123' }),
+    });
+
+    const body = await response.json();
+    expect(response.status).toBe(422);
+    expect(body.success).toBe(false);
+    expect(body.errorCode).toBe('ERR_CRM_INVALID_STAGE_TRANSITION');
+    expect(body.messageEnglish).toBe("Only leads in the 'Qualified' stage can be converted to an admission.");
+    expect(body.messageArabic).toBe('يمكن فقط تحويل المهتمين في مرحلة "مؤهل" إلى قبول.');
+  });
 });

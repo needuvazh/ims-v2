@@ -37,6 +37,12 @@ function errorResponse(error: Error) {
   } else if (msg.includes('ERR_ENR_BATCH_FULL')) {
     status = 400;
     code = 'ERR_ENR_BATCH_FULL';
+  } else if (msg.includes('ERR_ENR_BATCH_COURSE_MISMATCH')) {
+    status = 400;
+    code = 'ERR_ENR_BATCH_COURSE_MISMATCH';
+  } else if (msg.includes('ERR_ENR_BATCH_BRANCH_MISMATCH')) {
+    status = 400;
+    code = 'ERR_ENR_BATCH_BRANCH_MISMATCH';
   } else if (msg.includes('ERR_ENR_DUPLICATE_ENROLLMENT')) {
     status = 400;
     code = 'ERR_ENR_DUPLICATE_ENROLLMENT';

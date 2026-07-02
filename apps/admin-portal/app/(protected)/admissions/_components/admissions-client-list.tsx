@@ -1,12 +1,28 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import Link from 'next/link';
-import { Search, SlidersHorizontal, Eye, Plus, FileSpreadsheet } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import {
+  ClipboardList,
+  Plus,
+  Eye,
+  Clock,
+  UserCheck,
+  FileText,
+  FileEdit,
+} from 'lucide-react';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+  Badge,
   Button,
-  Input,
+  Pagination,
+  DataTableFilter,
+  StatCard,
   Dialog,
   DialogContent,
   DialogHeader,
@@ -45,15 +61,27 @@ interface AdmissionsClientListProps {
   branches: Array<{ id: string; name: string }>;
   courses: CourseOption[];
   students: StudentOption[];
+  total: number;
+  currentPage: number;
+  kpis: {
+    total: number;
+    approved: number;
+    submitted: number;
+    draft: number;
+  };
 }
 
-export function AdmissionsClientList({ admissions, branches, courses, students }: AdmissionsClientListProps) {
+export function AdmissionsClientList({
+  admissions,
+  branches,
+  courses,
+  students,
+  total,
+  currentPage,
+  kpis,
+}: AdmissionsClientListProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const [query, setQuery] = useState(searchParams.get('q') || '');
-  const [status, setStatus] = useState(searchParams.get('status') || '');
-  const [branchId, setBranchId] = useState(searchParams.get('branchId') || '');
+  const totalPages = Math.ceil(total / 10);
 
   // Direct Intake Modal State
   const [isOpen, setIsOpen] = useState(false);
@@ -62,20 +90,24 @@ export function AdmissionsClientList({ admissions, branches, courses, students }
   const [selectedBranch, setSelectedBranch] = useState(branches[0]?.id || '');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSearch = () => {
-    const params = new URLSearchParams();
-    if (query) params.set('q', query);
-    if (status) params.set('status', status);
-    if (branchId) params.set('branchId', branchId);
-    router.push(`/admissions?${params.toString()}`);
-  };
-
-  const handleReset = () => {
-    setQuery('');
-    setStatus('');
-    setBranchId('');
-    router.push('/admissions');
-  };
+  const filterConfigs = [
+    {
+      key: 'branchId',
+      label: 'Branch',
+      options: branches.map((b) => ({ value: b.id, label: b.name })),
+    },
+    {
+      key: 'status',
+      label: 'Status',
+      options: [
+        { value: 'Draft', label: 'Draft' },
+        { value: 'Submitted', label: 'Submitted' },
+        { value: 'Approved', label: 'Approved' },
+        { value: 'Rejected', label: 'Rejected' },
+        { value: 'Cancelled', label: 'Cancelled' },
+      ],
+    },
+  ];
 
   const handleCreateDraft = async () => {
     if (!selectedStudent) {
@@ -111,153 +143,144 @@ export function AdmissionsClientList({ admissions, branches, courses, students }
     }
   };
 
-  const getStatusBadgeClass = (s: string) => {
+  const getStatusBadgeVariant = (s: string) => {
     switch (s) {
       case 'Approved':
-        return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+        return 'success';
       case 'Submitted':
-        return 'bg-amber-50 text-amber-700 border-amber-200';
+        return 'info';
       case 'Draft':
-        return 'bg-blue-50 text-blue-700 border-blue-200';
+        return 'outline';
       case 'Rejected':
-        return 'bg-rose-50 text-rose-700 border-rose-200';
+        return 'error';
       case 'Cancelled':
-        return 'bg-slate-100 text-slate-600 border-slate-200';
+        return 'muted';
       default:
-        return 'bg-slate-50 text-slate-700 border-slate-200';
+        return 'default';
     }
   };
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      {/* Page Header */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-[color:var(--ims-foreground)]">Admissions</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-[color:var(--ims-ink)] flex items-center gap-2">
+            <ClipboardList className="h-8 w-8 text-indigo-600" />
+            Admissions
+          </h1>
           <p className="text-sm text-[color:var(--ims-muted)]">
             Manage student admissions, review application documents, and track review status transitions.
           </p>
         </div>
-        <div>
-          <Button onClick={() => setIsOpen(true)} className="bg-green-600 text-white hover:bg-green-700 gap-1.5">
+        <div className="flex items-center gap-2">
+          <Button onClick={() => setIsOpen(true)} className="flex items-center gap-1.5">
             <Plus className="h-4 w-4" />
             Direct Intake
           </Button>
         </div>
       </div>
 
-      {/* Filters Card */}
-      <div className="rounded-xl border border-[color:var(--ims-border)] bg-[color:var(--ims-card)] p-4 shadow-sm">
-        <div className="flex flex-col gap-3 md:flex-row md:items-center">
-          <div className="relative flex-1">
-            <Search className="absolute top-2.5 left-3 h-4 w-4 text-[color:var(--ims-muted)]" />
-            <Input
-              type="text"
-              placeholder="Search by admission #, student name, email..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className="pl-9"
-              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-            />
-          </div>
-
-          <div className="flex flex-wrap items-center gap-3">
-            <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-              className="h-10 rounded-lg border border-[color:var(--ims-border)] bg-[color:var(--ims-card)] px-3 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-            >
-              <option value="">All Statuses</option>
-              <option value="Draft">Draft</option>
-              <option value="Submitted">Submitted</option>
-              <option value="Approved">Approved</option>
-              <option value="Rejected">Rejected</option>
-              <option value="Cancelled">Cancelled</option>
-            </select>
-
-            <select
-              value={branchId}
-              onChange={(e) => setBranchId(e.target.value)}
-              className="h-10 rounded-lg border border-[color:var(--ims-border)] bg-[color:var(--ims-card)] px-3 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-            >
-              <option value="">All Branches</option>
-              {branches.map((b) => (
-                <option key={b.id} value={b.id}>
-                  {b.name}
-                </option>
-              ))}
-            </select>
-
-            <Button onClick={handleSearch} className="bg-green-600 text-white hover:bg-green-700">
-              Apply Filters
-            </Button>
-
-            <Button onClick={handleReset} variant="outline">
-              Reset
-            </Button>
-          </div>
-        </div>
+      {/* KPI Stats Cards */}
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        <StatCard
+          title="Total Admissions"
+          value={kpis.total}
+          description="Total student admission profiles"
+          icon={<FileText className="h-5 w-5" />}
+          tone="indigo"
+        />
+        <StatCard
+          title="Approved"
+          value={kpis.approved}
+          description="Successfully completed admissions"
+          icon={<UserCheck className="h-5 w-5" />}
+          tone="emerald"
+        />
+        <StatCard
+          title="Submitted"
+          value={kpis.submitted}
+          description="Applications pending verification"
+          icon={<Clock className="h-5 w-5" />}
+          tone="amber"
+        />
+        <StatCard
+          title="Draft"
+          value={kpis.draft}
+          description="Incomplete draft applications"
+          icon={<FileEdit className="h-5 w-5" />}
+          tone="sky"
+        />
       </div>
 
-      {/* Table list */}
-      <div className="overflow-hidden rounded-xl border border-[color:var(--ims-border)] bg-[color:var(--ims-card)] shadow-sm">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="border-b border-[color:var(--ims-border)] bg-slate-55/10 text-xs font-semibold uppercase tracking-wider text-[color:var(--ims-muted)]">
-                <th className="py-3 px-4">Admission #</th>
-                <th className="py-3 px-4">Student</th>
-                <th className="py-3 px-4">Course</th>
-                <th className="py-3 px-4">Branch</th>
-                <th className="py-3 px-4">Date</th>
-                <th className="py-3 px-4 text-center">Status</th>
-                <th className="py-3 px-4 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[color:var(--ims-border)] text-sm text-[color:var(--ims-foreground)]">
-              {admissions.length === 0 ? (
-                <tr>
-                  <td colSpan={7} className="py-8 text-center text-[color:var(--ims-muted)]">
-                    No admissions found matching the current search parameters.
-                  </td>
-                </tr>
-              ) : (
-                admissions.map((adm) => (
-                  <tr key={adm.id} className="hover:bg-slate-50/50 transition-colors">
-                    <td className="py-3.5 px-4 font-mono font-medium text-slate-800">{adm.admissionNumber}</td>
-                    <td className="py-3.5 px-4">
-                      <div className="font-semibold">{adm.studentName}</div>
-                      <div className="text-xs text-[color:var(--ims-muted)]">{adm.studentEmail}</div>
-                    </td>
-                    <td className="py-3.5 px-4">{adm.courseName}</td>
-                    <td className="py-3.5 px-4">{adm.branchName}</td>
-                    <td className="py-3.5 px-4 text-xs text-[color:var(--ims-muted)]">
-                      {new Date(adm.createdAt).toLocaleDateString(undefined, {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                      })}
-                    </td>
-                    <td className="py-3.5 px-4 text-center">
-                      <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${getStatusBadgeClass(adm.admissionStatus)}`}>
-                        {adm.admissionStatus}
-                      </span>
-                    </td>
-                    <td className="py-3.5 px-4 text-right">
-                      <Link href={`/admissions/${adm.id}`}>
-                        <Button size="sm" variant="outline" className="h-8 gap-1.5">
-                          <Eye className="h-3.5 w-3.5" />
-                          View
-                        </Button>
-                      </Link>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+      {/* Search and Filters */}
+      <DataTableFilter
+        searchPlaceholder="Search by admission #, student name, email..."
+        filters={filterConfigs}
+      />
+
+      {/* Admissions Table */}
+      <div className="rounded-lg border border-[color:var(--ims-border)] bg-white overflow-hidden shadow-sm">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[140px]">Admission #</TableHead>
+              <TableHead>Student</TableHead>
+              <TableHead>Course</TableHead>
+              <TableHead>Branch</TableHead>
+              <TableHead className="w-[130px]">Date</TableHead>
+              <TableHead className="w-[120px] text-center">Status</TableHead>
+              <TableHead className="w-[100px] text-right">Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {admissions.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={7} className="text-center py-12 text-[color:var(--ims-muted)]">
+                  No admissions found matching the active filters.
+                </TableCell>
+              </TableRow>
+            ) : (
+              admissions.map((adm) => (
+                <TableRow key={adm.id} className="hover:bg-slate-50 transition-colors">
+                  <TableCell className="font-mono font-medium text-slate-800">{adm.admissionNumber}</TableCell>
+                  <TableCell>
+                    <div className="font-semibold text-slate-800">{adm.studentName}</div>
+                    <div className="text-xs text-[color:var(--ims-muted)]">{adm.studentEmail}</div>
+                  </TableCell>
+                  <TableCell>{adm.courseName}</TableCell>
+                  <TableCell>{adm.branchName}</TableCell>
+                  <TableCell className="text-xs text-[color:var(--ims-muted)]">
+                    {new Date(adm.createdAt).toLocaleDateString(undefined, {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    })}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <Badge variant={getStatusBadgeVariant(adm.admissionStatus)}>
+                      {adm.admissionStatus}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => router.push(`/admissions/${adm.id}`)}
+                      title="View Details"
+                    >
+                      <Eye className="h-4 w-4 text-slate-500 hover:text-indigo-600" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
       </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && <Pagination page={currentPage} totalPages={totalPages} totalCount={total} limit={10} />}
 
       {/* Direct Intake Modal */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>

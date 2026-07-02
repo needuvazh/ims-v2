@@ -37,13 +37,9 @@ import {
   User,
   Compass,
   Activity,
-  FileText,
   Home,
   ClipboardList,
   Eye,
-  History,
-  Check,
-  X,
   MessageSquare,
 } from 'lucide-react';
 
@@ -52,15 +48,6 @@ interface LeadNoteDto {
   content: string;
   createdAt: string;
   authorName: string;
-}
-
-interface AuditLogDto {
-  id: string;
-  action: string;
-  performedAt: string;
-  performerName: string;
-  oldValue: string | null;
-  newValue: string | null;
 }
 
 interface LeadStageHistoryDto {
@@ -75,28 +62,20 @@ interface LeadStageHistoryDto {
 
 interface LeadDetailsClientProps {
   lead: any;
-  sessionUserId: string;
   notes: LeadNoteDto[];
   stageHistory: LeadStageHistoryDto[];
   followUps: any[];
   followUpsTotal: number;
   currentFollowUpPage: number;
-  auditLogs: AuditLogDto[];
-  auditTotal: number;
-  currentAuditPage: number;
 }
 
 export function LeadDetailsClient({
   lead: initialLead,
-  sessionUserId,
   notes,
   stageHistory,
   followUps,
   followUpsTotal,
   currentFollowUpPage,
-  auditLogs,
-  auditTotal,
-  currentAuditPage,
 }: LeadDetailsClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -317,29 +296,6 @@ export function LeadDetailsClient({
   const totalNotesPages = Math.ceil(localNotes.length / notesLimit);
   const paginatedNotes = localNotes.slice((notesPage - 1) * notesLimit, notesPage * notesLimit);
 
-  // Render audit changes helper
-  const renderAuditDetails = (log: AuditLogDto) => {
-    try {
-      const oldVal = log.oldValue ? JSON.parse(log.oldValue) : null;
-      const newVal = log.newValue ? JSON.parse(log.newValue) : null;
-      
-      if (log.action === 'UPDATE_STAGE') {
-        return `Stage updated from '${oldVal?.stage || 'N/A'}' to '${newVal?.stage || 'N/A'}'${
-          newVal?.lostReasonCode ? ` (Reason: ${newVal.lostReasonCode})` : ''
-        }`;
-      }
-      if (log.action === 'ADD_NOTE') {
-        return `Added note: "${newVal?.content || ''}"`;
-      }
-      if (oldVal || newVal) {
-        return `Old: ${JSON.stringify(oldVal)} | New: ${JSON.stringify(newVal)}`;
-      }
-      return '—';
-    } catch {
-      return log.newValue || log.oldValue || '—';
-    }
-  };
-
   return (
     <div className="space-y-8">
       <PageHeader
@@ -409,7 +365,7 @@ export function LeadDetailsClient({
                 <div>
                   <span className="text-[color:var(--ims-muted)] block">Date of Birth</span>
                   <span className="font-semibold text-[color:var(--ims-ink)]">
-                    {lead.dateOfBirth ? new Date(lead.dateOfBirth).toLocaleDateString() : 'N/A'}
+                    {lead.person?.dateOfBirth ? new Date(lead.person.dateOfBirth).toLocaleDateString() : 'N/A'}
                   </span>
                 </div>
               </div>
@@ -590,7 +546,10 @@ export function LeadDetailsClient({
                     onChange={(e) => setStageValue(e.target.value)}
                     options={[
                       { value: 'New', label: 'New' },
+                      { value: 'Contacted', label: 'Contacted' },
                       { value: 'FollowUp', label: 'FollowUp' },
+                      { value: 'Qualified', label: 'Qualified' },
+                      { value: 'Negotiation', label: 'Negotiation' },
                       { value: 'Won', label: 'Won' },
                       { value: 'Lost', label: 'Lost' },
                     ]}
@@ -855,66 +814,6 @@ export function LeadDetailsClient({
               </>
             )}
           </div>
-        </div>
-
-        {/* Audit History Timeline with server-side pagination */}
-        <div className="border border-[color:var(--ims-border)] p-6 rounded-2xl space-y-4 bg-white/80 shadow-sm">
-          <h3 className="text-sm font-semibold flex items-center gap-2 text-[color:var(--ims-ink)] border-b border-slate-100 pb-2 font-display">
-            <History className="h-4 w-4 text-[color:var(--ims-brass)]" />
-            Audit History Log
-          </h3>
-
-          {auditLogs.length === 0 ? (
-            <EmptyState
-              icon={<History className="h-6 w-6 text-[color:var(--ims-muted)]" />}
-              title="No audit entries"
-              description="No status transitions or data updates are logged yet."
-            />
-          ) : (
-            <>
-              <div className="overflow-x-auto rounded-xl border border-[color:var(--ims-border)]">
-                <Table>
-                  <TableHeader className="bg-slate-50/50">
-                    <TableRow>
-                      <TableHead>Event Type / Action</TableHead>
-                      <TableHead>Details & Changes</TableHead>
-                      <TableHead>User Performed</TableHead>
-                      <TableHead>Timestamp</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {auditLogs.map((log) => (
-                      <TableRow key={log.id}>
-                        <TableCell className="font-mono text-[10px] font-bold text-slate-800">
-                          {log.action}
-                        </TableCell>
-                        <TableCell className="text-slate-600 max-w-md break-words">
-                          {renderAuditDetails(log)}
-                        </TableCell>
-                        <TableCell className="font-semibold text-slate-900">{log.performerName}</TableCell>
-                        <TableCell className="whitespace-nowrap text-slate-500">
-                          {new Date(log.performedAt).toLocaleString()}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-
-              <Pagination
-                page={currentAuditPage}
-                totalPages={Math.ceil(auditTotal / 5)}
-                totalCount={auditTotal}
-                limit={5}
-                buildHref={(p) => {
-                  const currentParams = new URLSearchParams(searchParams.toString());
-                  currentParams.set('auditPage', p.toString());
-                  return `?${currentParams.toString()}`;
-                }}
-                pageSizeOptions={[5]}
-              />
-            </>
-          )}
         </div>
 
         {/* Audit Timestamps */}

@@ -9,6 +9,7 @@ export default async function AdmissionsPage(props: {
     q?: string;
     status?: string;
     branchId?: string;
+    page?: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
@@ -32,6 +33,10 @@ export default async function AdmissionsPage(props: {
     }
   }
 
+  const page = searchParams.page ? parseInt(searchParams.page, 10) : 1;
+  const limit = 10;
+  const skip = (page - 1) * limit;
+
   const whereClause: any = {
     isDeleted: false,
   };
@@ -53,15 +58,22 @@ export default async function AdmissionsPage(props: {
     ];
   }
 
-  const admissions = await prisma.admission.findMany({
-    where: whereClause,
-    orderBy: { createdAt: 'desc' },
-    include: {
-      person: true,
-      branch: true,
-      course: true,
-    },
-  });
+  const [admissions, total] = await Promise.all([
+    prisma.admission.findMany({
+      where: whereClause,
+      orderBy: { createdAt: 'desc' },
+      skip,
+      take: limit,
+      include: {
+        person: true,
+        branch: true,
+        course: true,
+      },
+    }),
+    prisma.admission.count({
+      where: whereClause,
+    }),
+  ]);
 
   const mappedAdmissions = admissions.map((adm) => ({
     id: adm.id,
@@ -97,6 +109,26 @@ export default async function AdmissionsPage(props: {
   );
   const students = result.items;
 
+  // Calculate high-level KPIs for Admissions
+  const kpiWhere = {
+    isDeleted: false,
+    branchId: allowedBranchIds.length > 0 ? { in: allowedBranchIds.map(id => id as string) } : undefined,
+  };
+
+  const [allAdmissionsCount, approvedAdmissionsCount, submittedAdmissionsCount, draftAdmissionsCount] = await Promise.all([
+    prisma.admission.count({ where: kpiWhere }),
+    prisma.admission.count({ where: { ...kpiWhere, admissionStatus: 'Approved' } }),
+    prisma.admission.count({ where: { ...kpiWhere, admissionStatus: 'Submitted' } }),
+    prisma.admission.count({ where: { ...kpiWhere, admissionStatus: 'Draft' } }),
+  ]);
+
+  const kpis = {
+    total: allAdmissionsCount,
+    approved: approvedAdmissionsCount,
+    submitted: submittedAdmissionsCount,
+    draft: draftAdmissionsCount,
+  };
+
   return (
     <div className="p-6">
       <AdmissionsClientList
@@ -107,6 +139,9 @@ export default async function AdmissionsPage(props: {
           id: s.id,
           label: `${s.person.firstName} ${s.person.lastName} (${s.studentNumber || 'No Student Num'})`,
         }))}
+        total={total}
+        currentPage={page}
+        kpis={kpis}
       />
     </div>
   );

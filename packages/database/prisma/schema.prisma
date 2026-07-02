@@ -921,6 +921,30 @@ model Batch {
   @@map("batches")
 }
 
+model CorporateAccount {
+  id                  String   @id @default(uuid()) @db.Uuid
+  organizationId      String   @db.Uuid
+  accountCode         String   @unique @db.VarChar(50)
+  accountName         String   @db.VarChar(150)
+  creditLimit         Decimal  @db.Decimal(12, 3)
+  currentOutstanding  Decimal  @default(0.000) @db.Decimal(12, 3)
+  blockOnCreditLimit  Boolean  @default(true)
+  billingCycle        String   @default("Monthly") @db.VarChar(50)
+  status              String   @default("Active") @db.VarChar(50)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  @@index([organizationId])
+  @@index([status])
+  @@map("corporate_accounts")
+}
+
 model BatchTrainer {
   id           String   @id @default(uuid()) @db.Uuid
   batchId      String   @db.Uuid

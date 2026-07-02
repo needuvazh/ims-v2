@@ -10,7 +10,7 @@ export const metadata = { title: 'Lead Details - CRM | ASTI IMS' };
 
 export default async function LeadDetailsPage(props: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ auditPage?: string; followUpPage?: string }>;
+  searchParams: Promise<{ followUpPage?: string }>;
 }) {
   const { id: leadId } = await props.params;
   const searchParams = await props.searchParams;
@@ -110,45 +110,6 @@ export default async function LeadDetailsPage(props: {
     status: f.status,
   }));
 
-  // Fetch paginated audit history logs
-  const auditPage = searchParams.auditPage ? parseInt(searchParams.auditPage, 10) : 1;
-  const auditLimit = 5;
-  const auditSkip = (auditPage - 1) * auditLimit;
-
-  const [auditLogs, auditLogsTotal] = await Promise.all([
-    prisma.auditLog.findMany({
-      where: {
-        entityType: 'Lead',
-        entityId: leadId,
-      },
-      orderBy: { performedAt: 'desc' },
-      skip: auditSkip,
-      take: auditLimit,
-    }),
-    prisma.auditLog.count({
-      where: {
-        entityType: 'Lead',
-        entityId: leadId,
-      },
-    }),
-  ]);
-
-  const performerIds = auditLogs.map((l) => l.performedBy).filter(Boolean) as string[];
-  const performers = await prisma.user.findMany({
-    where: { id: { in: performerIds } },
-    select: { id: true, username: true },
-  });
-  const performerMap = new Map(performers.map((p) => [p.id, p.username]));
-
-  const mappedAuditLogs = auditLogs.map((log) => ({
-    id: log.id,
-    action: log.action,
-    performedAt: log.performedAt.toISOString(),
-    performerName: log.performedBy ? performerMap.get(log.performedBy) || 'System' : 'System',
-    oldValue: log.oldValue ? JSON.stringify(log.oldValue) : null,
-    newValue: log.newValue ? JSON.stringify(log.newValue) : null,
-  }));
-
   // Map database lead fields to match UI expectations
   const mappedLead = {
     ...lead,
@@ -161,15 +122,11 @@ export default async function LeadDetailsPage(props: {
     <div className="p-6">
       <LeadDetailsClient
         lead={mappedLead}
-        sessionUserId={session.userId}
         notes={notes}
         stageHistory={mappedStageHistory}
         followUps={mappedFollowUps}
         followUpsTotal={followUpsTotal}
         currentFollowUpPage={followUpPage}
-        auditLogs={mappedAuditLogs}
-        auditTotal={auditLogsTotal}
-        currentAuditPage={auditPage}
       />
     </div>
   );

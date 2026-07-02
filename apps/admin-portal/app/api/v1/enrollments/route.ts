@@ -32,6 +32,12 @@ function errorResponse(error: Error) {
   } else if (msg.includes('ERR_CRS_PRICING_NOT_FOUND')) {
     status = 404;
     code = 'ERR_CRS_PRICING_NOT_FOUND';
+  } else if (msg.includes('ERR_ENR_CREDIT_EXCEEDED')) {
+    status = 409;
+    code = 'ERR_ENR_CREDIT_EXCEEDED';
+  } else if (msg.includes('ERR_ENR_CREDIT_RULE_NOT_FOUND')) {
+    status = 404;
+    code = 'ERR_ENR_CREDIT_RULE_NOT_FOUND';
   }
 
   return NextResponse.json(

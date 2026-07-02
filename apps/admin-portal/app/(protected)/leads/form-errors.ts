@@ -8,7 +8,7 @@ export type ActionFailure = {
   duplicateRefId?: string;
 };
 
-export function buildCrmActionFailure(error: any): ActionFailure {
+export function buildCrmActionFailure(error: any, context?: 'convert' | 'stage'): ActionFailure {
   if (error instanceof z.ZodError) {
     return {
       success: false,
@@ -59,6 +59,16 @@ export function buildCrmActionFailure(error: any): ActionFailure {
       success: false,
       status: 'DOMAIN_ERROR',
       error: 'Cannot convert lead. Missing preconditions (e.g., email, date of birth, or identity documents).',
+    };
+  }
+
+  if (message.includes('ERR_CRM_INVALID_STAGE_TRANSITION')) {
+    return {
+      success: false,
+      status: 'DOMAIN_ERROR',
+      error: context === 'convert'
+        ? "Only leads in the 'Qualified' stage can be converted to an admission."
+        : "Forbidden stage transition. Pipeline rules violated.",
     };
   }
 

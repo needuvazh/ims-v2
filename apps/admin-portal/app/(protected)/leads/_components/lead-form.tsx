@@ -24,7 +24,7 @@ import {
 const leadFormSchema = CreateLeadSchema.extend({
   id: z.string().uuid().optional(),
   version: z.number().int().optional(),
-  stage: z.enum(['New', 'FollowUp', 'Won', 'Lost', 'Converted']).default('New'),
+  stage: z.enum(['New', 'Contacted', 'FollowUp', 'Qualified', 'Negotiation', 'Won', 'Lost', 'Converted']).default('New'),
   lostReasonCode: z.string().optional().nullable().or(z.literal('')),
   lostReasonNotes: z.string().optional().nullable().or(z.literal('')),
   bypassDuplicateBlock: z.boolean().optional(),
@@ -71,14 +71,18 @@ export function LeadForm({
   const [errorState, setErrorState] = useState<string | null>(null);
   const [showDuplicateWarning, setShowDuplicateWarning] = useState(false);
 
-  const defaultValues: Partial<LeadFormData> = {
+  const defaultValues: any = {
     id: initialData?.id,
     version: initialData?.version,
     firstName: initialData?.firstName || '',
     lastName: initialData?.lastName || '',
     email: initialData?.email || '',
     phone: initialData?.phone || '',
-    dateOfBirth: initialData?.dateOfBirth ? new Date(initialData.dateOfBirth) : null,
+    dateOfBirth: (() => {
+      if (!initialData?.dateOfBirth) return '';
+      const d = new Date(initialData.dateOfBirth);
+      return isNaN(d.getTime()) ? '' : d.toISOString().split('T')[0];
+    })(),
     branchId: initialData?.branchId || '',
     interestedCourseId: initialData?.interestedCourseId || '',
     counselorId: initialData?.counselorId || '',
@@ -384,7 +388,10 @@ export function LeadForm({
                       onChange={(e) => field.onChange(e.target.value)}
                       options={[
                         { value: 'New', label: 'New' },
+                        { value: 'Contacted', label: 'Contacted' },
                         { value: 'FollowUp', label: 'FollowUp' },
+                        { value: 'Qualified', label: 'Qualified' },
+                        { value: 'Negotiation', label: 'Negotiation' },
                         { value: 'Won', label: 'Won' },
                         { value: 'Lost', label: 'Lost' },
                         { value: 'Converted', label: 'Converted (System only)', disabled: true },

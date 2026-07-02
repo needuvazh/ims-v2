@@ -27,17 +27,34 @@ export class RequirementsResolver {
     // 2. Fetch and merge Branch level policy/rules
     const branch = await client.branch.findUnique({
       where: { id: branchId },
-      select: { branchCode: true, metadata: true } as any,
-    }) as any;
+      select: {
+        branchCode: true,
+        policies: {
+          where: {
+            policyType: 'REQUIRED_DOCUMENTS',
+            isDeleted: false,
+          },
+          select: {
+            policyContent: true,
+          },
+        },
+      },
+    });
 
-    if (branch) {
-      // Branch specific metadata rule
-      const branchMeta = branch.metadata as any;
-      if (branchMeta && Array.isArray(branchMeta.requiredDocuments)) {
-        for (const doc of branchMeta.requiredDocuments) {
-          if (VALID_DOCUMENT_TYPES.includes(doc as DocumentType)) {
-            resolved.add(doc as DocumentType);
+    if (branch && branch.policies) {
+      // Parse branch policies for required documents
+      for (const policy of branch.policies) {
+        try {
+          const docList = JSON.parse(policy.policyContent || '[]');
+          if (Array.isArray(docList)) {
+            for (const doc of docList) {
+              if (VALID_DOCUMENT_TYPES.includes(doc as DocumentType)) {
+                resolved.add(doc as DocumentType);
+              }
+            }
           }
+        } catch (e) {
+          // Ignore invalid JSON in policy content
         }
       }
     }
@@ -46,23 +63,13 @@ export class RequirementsResolver {
     if (courseId) {
       const course = await client.course.findUnique({
         where: { id: courseId },
-        select: { courseCode: true, metadata: true } as any,
-      }) as any;
+        select: { courseCode: true },
+      });
 
       if (course) {
         // Precedence: Course code CORP requires SPONSORSHIP_LETTER
         if (course.courseCode?.toUpperCase().includes('CORP')) {
           resolved.add('SPONSORSHIP_LETTER');
-        }
-
-        // Course metadata rule
-        const courseMeta = course.metadata as any;
-        if (courseMeta && Array.isArray(courseMeta.requiredDocuments)) {
-          for (const doc of courseMeta.requiredDocuments) {
-            if (VALID_DOCUMENT_TYPES.includes(doc as DocumentType)) {
-              resolved.add(doc as DocumentType);
-            }
-          }
         }
       }
     }

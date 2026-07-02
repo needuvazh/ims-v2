@@ -53,8 +53,8 @@ function crmErrorResponse(error: Error) {
   } else if (msg.includes('ERR_CRM_INVALID_STAGE_TRANSITION')) {
     status = 422;
     code = 'ERR_CRM_INVALID_STAGE_TRANSITION';
-    messageEn = 'Forbidden stage transition. Pipeline rules violated.';
-    messageAr = 'تغيير غير مسموح به في مرحلة المتابعة.';
+    messageEn = "Only leads in the 'Qualified' stage can be converted to an admission.";
+    messageAr = 'يمكن فقط تحويل المهتمين في مرحلة "مؤهل" إلى قبول.';
   } else if (msg.includes('A student with this email or phone already exists')) {
     status = 409;
     code = 'ERR_CRM_DUPLICATE_STUDENT';

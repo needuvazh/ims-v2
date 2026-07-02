@@ -27,6 +27,32 @@ test('RequirementsResolver should resolve default CIVIL_ID_FRONT and override SP
   // 2. Corporate course
   const corpReqs = await resolver.getRequiredDocuments('corp-course', 'branch-1');
   expect(corpReqs).toEqual(['CIVIL_ID_FRONT', 'SPONSORSHIP_LETTER']);
+
+  // 3. Branch with REQUIRED_DOCUMENTS policy
+  const mockPrismaWithPolicy = {
+    course: {
+      findUnique: vi.fn().mockResolvedValue({ id: 'reg-course', courseCode: 'REG-101' }),
+    },
+    branch: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'branch-2',
+        branchCode: 'BR-2',
+        policies: [
+          {
+            policyType: 'REQUIRED_DOCUMENTS',
+            policyContent: '["PASSPORT_SCAN", "ACADEMIC_TRANSCRIPT"]',
+          },
+        ],
+      }),
+    },
+  } as any;
+
+  const resolverWithPolicy = new RequirementsResolver(mockPrismaWithPolicy);
+  const branchReqs = await resolverWithPolicy.getRequiredDocuments('reg-course', 'branch-2');
+  expect(branchReqs).toContain('CIVIL_ID_FRONT');
+  expect(branchReqs).toContain('PASSPORT_SCAN');
+  expect(branchReqs).toContain('ACADEMIC_TRANSCRIPT');
+  expect(branchReqs.length).toBe(3);
 });
 
 test('AdmissionService verifyAdmissionDocumentsGate should block approval if required documents are missing or unverified', async () => {

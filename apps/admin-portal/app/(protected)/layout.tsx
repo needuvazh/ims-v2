@@ -43,6 +43,9 @@ function mapNavigationIcons(item: any): any {
     case '/admissions':
       icon = <UserCheck className="h-4.5 w-4.5" />;
       break;
+    case '/batches/student-lookup':
+      icon = <Users className="h-4.5 w-4.5" />;
+      break;
     case '/courses-catalog':
       icon = <BookOpen className="h-4.5 w-4.5" />;
       break;

@@ -26,6 +26,9 @@ function errorResponse(error: Error) {
   } else if (msg.includes('ERR_ENR_PAYMENT_BLOCKED_WAITLIST')) {
     status = 400;
     code = 'ERR_ENR_PAYMENT_BLOCKED_WAITLIST';
+  } else if (msg.includes('ERR_ENR_PAYMENT_INCOMPLETE')) {
+    status = 400;
+    code = 'ERR_ENR_PAYMENT_INCOMPLETE';
   } else if (msg.includes('ERR_ENR_INVALID_STATE')) {
     status = 400;
     code = 'ERR_ENR_INVALID_STATE';

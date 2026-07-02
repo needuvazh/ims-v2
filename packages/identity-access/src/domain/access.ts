@@ -33,6 +33,7 @@ export const adminNavigation: NavigationItem[] = [
   { href: '/dashboards/crm', label: 'CRM Dashboard', permission: 'REPORTING_VIEW_CRM_DASHBOARD', category: 'CRM' },
   { href: '/leads', label: 'Leads', permission: 'dashboard.view', category: 'CRM' },
   { href: '/admissions', label: 'Admissions', permission: 'admission.read', category: 'CRM' },
+  { href: '/batches/student-lookup', label: 'Student Lookup', permission: 'student.read', category: 'CRM' },
   { href: '/courses-catalog', label: 'Course Catalog', permission: 'course.catalog.view', category: 'CRM' },
   { href: '/batches', label: 'Batches', permission: 'batch.delivery.view', category: 'CRM' },
   {

@@ -334,7 +334,7 @@ export class EnrollmentService {
       // Corporate credit limit validation
       if (enrollment.enrollmentType === 'Corporate' && enrollment.corporateParticipantId) {
         await this.validateCorporateCredit(
-          enrollment.corporateParticipantId,
+          enrollment.batchId,
           Number(enrollment.finalAmount),
           activeClient
         );
@@ -404,8 +404,34 @@ export class EnrollmentService {
     }
   }
 
-  private async validateCorporateCredit(corporateParticipantId: string, enrollmentCost: number, tx: Prisma.TransactionClient): Promise<void> {
-    if (corporateParticipantId === 'simulate-credit-exceeded-block') {
+  private async validateCorporateCredit(batchId: string, enrollmentCost: number, tx: Prisma.TransactionClient): Promise<void> {
+    const batch = await tx.batch.findUnique({
+      where: { id: batchId },
+      select: { corporateAccountId: true },
+    });
+
+    if (!batch?.corporateAccountId) {
+      throw new Error('ERR_ENR_CREDIT_RULE_NOT_FOUND');
+    }
+
+    const corporateAccount = await tx.corporateAccount.findUnique({
+      where: { id: batch.corporateAccountId },
+      select: {
+        id: true,
+        creditLimit: true,
+        currentOutstanding: true,
+        blockOnCreditLimit: true,
+        status: true,
+        isDeleted: true,
+      },
+    });
+
+    if (!corporateAccount || corporateAccount.isDeleted || corporateAccount.status !== 'Active') {
+      throw new Error('ERR_ENR_CREDIT_RULE_NOT_FOUND');
+    }
+
+    const projectedOutstanding = Number(corporateAccount.currentOutstanding) + enrollmentCost;
+    if (projectedOutstanding > Number(corporateAccount.creditLimit) && corporateAccount.blockOnCreditLimit) {
       throw new Error('ERR_ENR_CREDIT_EXCEEDED');
     }
   }
@@ -734,6 +760,29 @@ export class EnrollmentService {
         throw new Error('ERR_COURSE_NOT_WALKIN_ENABLED');
       }
 
+      const batch = await client.batch.findUnique({
+        where: { id: data.batchId },
+        select: {
+          id: true,
+          courseId: true,
+          branchId: true,
+          isDeleted: true,
+          waitingListEnabled: true,
+        },
+      });
+
+      if (!batch || batch.isDeleted) {
+        throw new Error('ERR_BATCH_NOT_FOUND');
+      }
+
+      if (batch.courseId !== data.courseId) {
+        throw new Error('ERR_ENR_BATCH_COURSE_MISMATCH');
+      }
+
+      if (batch.branchId !== data.branchId) {
+        throw new Error('ERR_ENR_BATCH_BRANCH_MISMATCH');
+      }
+
       // 2. Resolve or Create Person & StudentProfile (Deduplication Check)
       let person = await client.person.findFirst({
         where: {
@@ -975,6 +1024,11 @@ export class EnrollmentService {
 
       if (enrollment.enrollmentStatus !== 'Approved') {
         throw new Error('ERR_ENR_INVALID_STATE');
+      }
+
+      const requiredAmount = Number(enrollment.finalAmount);
+      if (paymentAmount < requiredAmount) {
+        throw new Error('ERR_ENR_PAYMENT_INCOMPLETE');
       }
 
       const payment = await this.ensureWalkInPayment(
