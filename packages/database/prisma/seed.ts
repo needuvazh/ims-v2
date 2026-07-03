@@ -743,7 +743,12 @@ async function seed() {
     await prisma.studentProfile.create({
       data: {
         id: crypto.randomUUID(),
-        personId: person.id,
+        person: {
+          connect: { id: person.id },
+        },
+        branch: {
+          connect: { id: riyadhBranch.id },
+        },
         studentNumber: ms.number,
         status: 'Active',
       }

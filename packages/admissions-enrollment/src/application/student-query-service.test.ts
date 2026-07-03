@@ -41,10 +41,15 @@ describe('StudentQueryService', () => {
       id: 'person-1',
       firstName: 'Fatima',
       lastName: 'Al-Balushi',
-      studentProfile: {
-        id: 'profile-1',
-        studentNumber: 'STU-123',
-      },
+      email: 'fatima@example.com',
+      mobile: '+96899112233',
+      // Updated: globalPersonLookup uses studentProfiles (array relation)
+      studentProfiles: [
+        {
+          id: 'profile-1',
+          studentNumber: 'STU-123',
+        },
+      ],
     };
 
     const mockPrisma = {
@@ -74,6 +79,7 @@ describe('StudentQueryService', () => {
       conflictCode: 'ERR_ADM_ACTIVE_ADMISSION_EXISTS',
     });
   });
+
 
   test('searchBranchScopedStudents query includes draft and cancelled states and filters query parameters', async () => {
     const mockProfiles = [
@@ -175,12 +181,17 @@ describe('StudentQueryService', () => {
       studentProfile: {
         findUnique: vi.fn().mockResolvedValue({
           id: 'profile-1',
+          personId: 'person-1',
+          branchId: 'branch-2',      // NOT the queried branch
           status: 'Active',
           isDeleted: false,
           person: { isDeleted: false },
           admissions: [],
           enrollments: [],
         }),
+      },
+      lead: {
+        count: vi.fn().mockResolvedValue(0), // no lead in this branch either
       },
     } as any;
 
@@ -193,16 +204,90 @@ describe('StudentQueryService', () => {
       studentProfile: {
         findUnique: vi.fn().mockResolvedValue({
           id: 'profile-1',
+          personId: 'person-1',
+          branchId: 'branch-1',      // home branch matches — no lead.count needed
           status: 'Active',
           isDeleted: false,
           person: { isDeleted: false },
-          admissions: [{ id: 'admission-1' }],
+          admissions: [],
           enrollments: [],
         }),
+      },
+      lead: {
+        count: vi.fn().mockResolvedValue(0),
       },
     } as any;
 
     const service = new StudentQueryService(mockPrisma);
     await expect(service.verifyBranchScope('profile-1', 'branch-1')).resolves.toBeUndefined();
+  });
+
+  test('verifyBranchScope succeeds when an admission exists in the requested branch', async () => {
+    const mockPrisma = {
+      studentProfile: {
+        findUnique: vi.fn().mockResolvedValue({
+          id: 'profile-2',
+          personId: 'person-2',
+          branchId: 'branch-home',
+          status: 'Active',
+          isDeleted: false,
+          person: { isDeleted: false },
+          admissions: [{ id: 'adm-1' }],
+          enrollments: [],
+        }),
+      },
+      lead: {
+        count: vi.fn().mockResolvedValue(0),
+      },
+    } as any;
+
+    const service = new StudentQueryService(mockPrisma);
+    await expect(service.verifyBranchScope('profile-2', 'branch-2')).resolves.toBeUndefined();
+  });
+
+  test('verifyBranchScope succeeds when an enrollment exists in the requested branch', async () => {
+    const mockPrisma = {
+      studentProfile: {
+        findUnique: vi.fn().mockResolvedValue({
+          id: 'profile-3',
+          personId: 'person-3',
+          branchId: 'branch-home',
+          status: 'Active',
+          isDeleted: false,
+          person: { isDeleted: false },
+          admissions: [],
+          enrollments: [{ id: 'enr-1' }],
+        }),
+      },
+      lead: {
+        count: vi.fn().mockResolvedValue(0),
+      },
+    } as any;
+
+    const service = new StudentQueryService(mockPrisma);
+    await expect(service.verifyBranchScope('profile-3', 'branch-3')).resolves.toBeUndefined();
+  });
+
+  test('verifyBranchScope succeeds when a lead exists in the requested branch', async () => {
+    const mockPrisma = {
+      studentProfile: {
+        findUnique: vi.fn().mockResolvedValue({
+          id: 'profile-4',
+          personId: 'person-4',
+          branchId: 'branch-home',
+          status: 'Active',
+          isDeleted: false,
+          person: { isDeleted: false },
+          admissions: [],
+          enrollments: [],
+        }),
+      },
+      lead: {
+        count: vi.fn().mockResolvedValue(1),
+      },
+    } as any;
+
+    const service = new StudentQueryService(mockPrisma);
+    await expect(service.verifyBranchScope('profile-4', 'branch-4')).resolves.toBeUndefined();
   });
 });

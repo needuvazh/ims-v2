@@ -1,5 +1,6 @@
 import type { PrismaClient } from '@prisma/client';
 import type { ISecurityPolicyRepository, SecurityPolicy } from '@ims/identity-access';
+import { createDefaultSecurityPolicy } from '@ims/identity-access';
 import type { Uuid } from '@ims/shared-kernel';
 
 export class PrismaSecurityPolicyRepository implements ISecurityPolicyRepository {
@@ -33,7 +34,10 @@ export class PrismaSecurityPolicyRepository implements ISecurityPolicyRepository
       orderBy: { createdAt: 'desc' },
     });
     if (!row) {
-      throw new Error('Default security policy not found. Please seed the database.');
+      const created = await this.prisma.securityPolicy.create({
+        data: createDefaultSecurityPolicy(),
+      });
+      return this.mapPolicy(created);
     }
     return this.mapPolicy(row);
   }

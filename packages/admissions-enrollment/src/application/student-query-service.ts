@@ -44,14 +44,13 @@ export class StudentQueryService {
 
     const trimmed = query.trim();
 
-    // Match person globally on mobile, email, or nationalId
+    // Match person globally on email or mobile only
     const person = await this.prisma.person.findFirst({
       where: {
         isDeleted: false,
         OR: [
           { email: trimmed },
           { mobile: trimmed },
-          { nationalId: trimmed },
         ],
       },
       include: {
@@ -65,6 +64,8 @@ export class StudentQueryService {
         personId: null,
         firstNameMasked: null,
         lastNameMasked: null,
+        maskedMobile: null,
+        maskedEmail: null,
         studentProfileId: null,
         studentNumber: null,
         preflight: null,
@@ -108,6 +109,8 @@ export class StudentQueryService {
       personId: person.id,
       firstNameMasked: person.firstName ? `${person.firstName[0]}****` : null,
       lastNameMasked: person.lastName ? `${person.lastName[0]}****` : null,
+      maskedMobile: maskPhone(person.mobile),
+      maskedEmail: maskEmail(person.email),
       studentProfileId: studentProfile?.id || null,
       studentNumber: studentProfile?.studentNumber || null,
       preflight,
@@ -264,10 +267,20 @@ export class StudentQueryService {
       throw new Error('ERR_STU_PROFILE_INACTIVE');
     }
 
+    const isHomeBranch = studentProfile.branchId === branchId;
     const hasAdmission = studentProfile.admissions.length > 0;
     const hasEnrollment = studentProfile.enrollments.length > 0;
 
-    if (!hasAdmission && !hasEnrollment) {
+    const leadCount = await this.prisma.lead.count({
+      where: {
+        personId: studentProfile.personId,
+        branchId,
+        isDeleted: false,
+      },
+    });
+    const hasLead = leadCount > 0;
+
+    if (!isHomeBranch && !hasAdmission && !hasEnrollment && !hasLead) {
       throw new Error('ERR_AUTH_BRANCH_DENIED');
     }
   }

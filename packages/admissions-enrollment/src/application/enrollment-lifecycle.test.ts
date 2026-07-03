@@ -1,6 +1,15 @@
-import { expect, test, vi } from 'vitest';
+import { expect, test, vi, beforeAll } from 'vitest';
 import { EnrollmentService } from './enrollment-service';
+import { StudentStatusService } from './student-status-service';
 import { Prisma } from '@prisma/client';
+
+// Stub out StudentStatusService.activatePending for all enrollment-lifecycle
+// tests so they remain focused on enrollment behavior, not status transitions.
+// Status transition behavior is covered in student-management.test.ts.
+beforeAll(() => {
+  vi.spyOn(StudentStatusService.prototype, 'activatePending').mockResolvedValue(undefined);
+});
+
 
 test('EnrollmentService createEnrollment should validate Approved Admission and snapshot pricing', async () => {
   const mockPrisma = {
@@ -30,12 +39,17 @@ test('EnrollmentService createEnrollment should validate Approved Admission and 
     studentProfile: {
       findUnique: vi.fn().mockResolvedValue({
         id: 'stu-1',
+        personId: 'person-1',
+        branchId: 'branch-1',
         status: 'Active',
         isDeleted: false,
         person: { isDeleted: false },
         admissions: [{ id: 'adm-1', branchId: 'branch-1', isDeleted: false }],
         enrollments: [],
       }),
+    },
+    lead: {
+      count: vi.fn().mockResolvedValue(0),
     },
     auditLog: {
       create: vi.fn().mockResolvedValue(null),
@@ -288,12 +302,17 @@ test('EnrollmentService createEnrollment should consume canonical totalPrice con
     studentProfile: {
       findUnique: vi.fn().mockResolvedValue({
         id: 'stu-1',
+        personId: 'person-1',
+        branchId: 'branch-1',
         status: 'Active',
         isDeleted: false,
         person: { isDeleted: false },
         admissions: [{ id: 'adm-1', branchId: 'branch-1', isDeleted: false }],
         enrollments: [],
       }),
+    },
+    lead: {
+      count: vi.fn().mockResolvedValue(0),
     },
     auditLog: {
       create: vi.fn().mockResolvedValue(null),

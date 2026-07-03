@@ -4,6 +4,7 @@ import { DocumentsService } from '@ims/documents';
 import { CoursePricingService, CoursePricingRepository, CourseDiscountRepository } from '@ims/course-catalog';
 import { BatchService, BatchRepository } from '@ims/training-delivery';
 import { StudentQueryService } from './student-query-service';
+import { StudentStatusService } from './student-status-service';
 
 export class EnrollmentService {
   private readonly pricingService: CoursePricingService;
@@ -46,8 +47,17 @@ export class EnrollmentService {
               personId: data.corporateParticipantId,
               studentNumber,
               branchId: data.branchId,
-              studentStatus: 'Active',
+              studentStatus: 'Pending',
             }
+          });
+
+          // Record Pending → Active transition with history + audit
+          const statusSvc = new StudentStatusService(this.prisma);
+          await statusSvc.activatePending({
+            studentProfileId: studentProfile.id,
+            actorId: data.actorId || 'system',
+            branchId: data.branchId,
+            tx: client,
           });
         }
 
@@ -826,8 +836,17 @@ export class EnrollmentService {
             personId: person.id,
             studentNumber,
             branchId: data.branchId,
-            studentStatus: 'Active',
+            studentStatus: 'Pending',
           },
+        });
+
+        // Record Pending → Active transition with history + audit
+        const statusSvc = new StudentStatusService(this.prisma);
+        await statusSvc.activatePending({
+          studentProfileId: studentProfile.id,
+          actorId: data.actorId || 'system',
+          branchId: data.branchId,
+          tx: client,
         });
       }
 

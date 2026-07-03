@@ -1,8 +1,10 @@
 import { assertPermission } from '@/lib/auth-guard';
 import { Card, PageHeader, Badge, Button, Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@ims/shared-ui';
-import { ChevronLeft, User, Mail, Phone, Calendar, School, GraduationCap, FileCheck, ClipboardList } from 'lucide-react';
+import { ChevronLeft, User, Mail, Phone, Calendar, School, GraduationCap, FileCheck, ClipboardList, CreditCard, GitMerge } from 'lucide-react';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
+import { IdCardPanel } from '../_components/id-card-panel';
+import { MergeProfileModal } from '../_components/merge-profile-modal';
 
 export const metadata = { title: 'Student Profile Dashboard - Admin Portal | ASTI IMS' };
 
@@ -90,6 +92,24 @@ export default async function StudentProfileDashboardPage(props: {
     },
   });
 
+  // Fetch ID card history for the IdCardPanel
+  const idCardHistory = await prisma.studentIdCardHistory.findMany({
+    where: { studentProfileId: profile.id, isDeleted: false },
+    orderBy: { eventDate: 'desc' },
+    take: 20,
+    select: {
+      id: true,
+      eventType: true,
+      oldIdCardNumber: true,
+      newIdCardNumber: true,
+      eventDate: true,
+      reason: true,
+    },
+  });
+
+  const canManageIdCard = session.permissions.includes('student.id_card.issue');
+  const canMerge = session.permissions.includes('student.merge');
+
   // Query audit log trail for this student and related entities using correct schema columns (entityId, entityType)
   const audits = await prisma.auditLog.findMany({
     where: {
@@ -106,12 +126,19 @@ export default async function StudentProfileDashboardPage(props: {
 
   return (
     <div className="space-y-6 p-6">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center justify-between gap-2">
         <Link href="/students">
           <Button variant="outline" size="sm" className="h-8 gap-1">
             <ChevronLeft className="h-4 w-4" /> Back to Directory
           </Button>
         </Link>
+        {canMerge && (
+          <MergeProfileModal
+            survivorProfileId={profile.id}
+            survivorStudentNumber={profile.studentNumber}
+            onClose={() => {}}
+          />
+        )}
       </div>
 
       <PageHeader
@@ -170,6 +197,25 @@ export default async function StudentProfileDashboardPage(props: {
               </div>
             )}
           </Card>
+
+          {/* ID Card Management Panel */}
+          {canManageIdCard && (
+            <Card className="p-6">
+              <h3 className="font-bold text-slate-800 flex items-center gap-2 mb-4">
+                <CreditCard className="h-5 w-5 text-purple-500" /> ID Card Management
+              </h3>
+              <IdCardPanel
+                studentProfileId={profile.id}
+                branchId={profile.branchId}
+                idCardIssued={profile.idCardIssued}
+                idCardNumber={profile.idCardNumber ?? null}
+                idCardHistory={idCardHistory.map((h) => ({
+                  ...h,
+                  eventDate: h.eventDate.toISOString(),
+                }))}
+              />
+            </Card>
+          )}
         </div>
 
         {/* Right Columns: Admissions, Enrollments, Documents, Audits */}

@@ -5,5 +5,7 @@ export * from './application/admission-query-service';
 export * from './application/student-query-service';
 export * from './application/lead-conversion-orchestrator';
 export * from './application/requirements-resolver';
+export * from './application/otp-service';
+export * from './application/student-merge-service';
+export * from './application/student-status-service';
 export * from './application/enrollment-service';
-
