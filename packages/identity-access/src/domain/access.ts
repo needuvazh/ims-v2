@@ -32,10 +32,28 @@ export const adminNavigation: NavigationItem[] = [
   { href: '/dashboard', label: 'Dashboard', permission: 'dashboard.view', category: 'Overview' },
   { href: '/dashboards/crm', label: 'CRM Dashboard', permission: 'REPORTING_VIEW_CRM_DASHBOARD', category: 'CRM' },
   { href: '/leads', label: 'Leads', permission: 'dashboard.view', category: 'CRM' },
-  { href: '/admissions', label: 'Admissions', permission: 'admission.read', category: 'CRM' },
-  { href: '/batches/student-lookup', label: 'Student Lookup', permission: 'student.read', category: 'CRM' },
-  { href: '/courses-catalog', label: 'Course Catalog', permission: 'course.catalog.view', category: 'CRM' },
-  { href: '/batches', label: 'Batches', permission: 'batch.delivery.view', category: 'CRM' },
+  {
+    href: '/admissions',
+    label: 'Academic Operations',
+    permission: 'admission.read',
+    category: 'Operations',
+    items: [
+      { href: '/dashboards/admissions', label: 'Admissions Dashboard', permission: 'dashboard.view' },
+      { href: '/admissions', label: 'Admissions List', permission: 'admission.read' },
+      { href: '/enrollments', label: 'Enrollments List', permission: 'enrollment.read' },
+      { href: '/students', label: 'Student Directory', permission: 'student.read' },
+    ],
+  },
+  {
+    href: '/batches',
+    label: 'Training Delivery',
+    permission: 'batch.delivery.view',
+    category: 'Operations',
+    items: [
+      { href: '/courses-catalog', label: 'Course Catalog', permission: 'course.catalog.view' },
+      { href: '/batches', label: 'Batches List', permission: 'batch.delivery.view' },
+    ],
+  },
   {
     href: '/organization',
     label: 'Organization',

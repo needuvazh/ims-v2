@@ -190,6 +190,21 @@ export class StudentQueryService {
       where: whereClause,
       include: {
         person: true,
+        admissions: {
+          where: { isDeleted: false },
+          select: { id: true, admissionNumber: true, admissionStatus: true, branchId: true }
+        },
+        enrollments: {
+          where: { isDeleted: false },
+          select: {
+            id: true,
+            enrollmentStatus: true,
+            courseId: true,
+            batchId: true,
+            branchId: true,
+            course: { select: { nameEnglish: true, nameArabic: true } }
+          }
+        }
       },
       orderBy: {
         joinedAt: 'desc',
@@ -215,6 +230,8 @@ export class StudentQueryService {
         email: maskEmail(profile.person.email),
         nationalId: maskNationalId(profile.person.nationalId),
       },
+      admissions: profile.admissions,
+      enrollments: profile.enrollments,
     }));
 
     return {

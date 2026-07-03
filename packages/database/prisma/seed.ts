@@ -59,8 +59,13 @@ const systemPermissions = [
   { moduleCode: 'enrollment',   featureCode: 'student',     actionCode: 'read',   permissionCode: 'student.read',                   permissionType: 'Action' as const, description: 'View student details.' },
   { moduleCode: 'enrollment',   featureCode: 'student',     actionCode: 'reveal_pii', permissionCode: 'student.reveal_pii',            permissionType: 'Action' as const, description: 'Reveal masked student contact PII with audit.' },
   { moduleCode: 'enrollment',   featureCode: 'student',     actionCode: 'write',  permissionCode: 'student.write',                  permissionType: 'Action' as const, description: 'Register or edit student profiles.' },
+  { moduleCode: 'enrollment',   featureCode: 'enroll',      actionCode: 'read',   permissionCode: 'enrollment.read',                permissionType: 'Action' as const, description: 'View enrollments list and details.' },
   { moduleCode: 'enrollment',   featureCode: 'enroll',      actionCode: 'write',  permissionCode: 'enrollment.create',              permissionType: 'Action' as const, description: 'Create enrollments in courses/batches.' },
   { moduleCode: 'enrollment',   featureCode: 'enroll',      actionCode: 'submit',  permissionCode: 'enrollment.submit',              permissionType: 'Action' as const, description: 'Submit enrollments for approval.' },
+  { moduleCode: 'enrollment',   featureCode: 'enroll',      actionCode: 'approve',permissionCode: 'enrollment.approve',             permissionType: 'Action' as const, description: 'Approve submitted enrollments.' },
+  { moduleCode: 'enrollment',   featureCode: 'enroll',      actionCode: 'cancel', permissionCode: 'enrollment.cancel',              permissionType: 'Action' as const, description: 'Cancel or reject enrollments.' },
+  { moduleCode: 'enrollment',   featureCode: 'enroll',      actionCode: 'drop',   permissionCode: 'enrollment.drop',                permissionType: 'Action' as const, description: 'Drop active/confirmed student enrollments.' },
+  { moduleCode: 'enrollment',   featureCode: 'enroll',      actionCode: 'walk-in-payment', permissionCode: 'enrollment.walk-in-payment', permissionType: 'Action' as const, description: 'Record payment for walk-in enrollments.' },
   { moduleCode: 'enrollment',   featureCode: 'admission',   actionCode: 'read',   permissionCode: 'admission.read',                 permissionType: 'Action' as const, description: 'View admission detail.' },
   { moduleCode: 'enrollment',   featureCode: 'admission',   actionCode: 'create', permissionCode: 'admission.create',               permissionType: 'Action' as const, description: 'Create and cancel admissions.' },
   { moduleCode: 'enrollment',   featureCode: 'admission',   actionCode: 'approve',permissionCode: 'admission.approve',              permissionType: 'Action' as const, description: 'Approve or reject admissions.' },
@@ -125,6 +130,13 @@ async function seed() {
 
   // 1. Clean up existing relations to prevent duplicate key errors in fresh seeds
   console.log('🧹 Cleaning old records...');
+  await prisma.walkInConfirmation.deleteMany({});
+  await prisma.walkInPayment.deleteMany({});
+  await prisma.walkInEnrollment.deleteMany({});
+  await prisma.enrollment.deleteMany({});
+  await prisma.documentVerification.deleteMany({});
+  await prisma.documentOwner.deleteMany({});
+  await prisma.document.deleteMany({});
   await prisma.admission.deleteMany({});
   await prisma.studentProfile.deleteMany({});
   await prisma.leadStageHistory.deleteMany({});
@@ -222,6 +234,7 @@ async function seed() {
     'lead.read', 'lead.write', 'lead.create', 'lead.update', 'lead.delete', 'lead.assign', 'lead.lost', 'lead.reveal_pii', 'lead.qualify', 'lead.convert', 'crm.leads.read.all',
     'followup.create', 'followup.update',
     'student.read', 'student.reveal_pii', 'student.write', 'enrollment.create', 'enrollment.submit',
+    'enrollment.read', 'enrollment.approve', 'enrollment.cancel', 'enrollment.drop', 'enrollment.walk-in-payment',
     'admission.read', 'admission.create', 'admission.approve',
     'payment.create', 'refund.request', 'course.manage', 'schedule.manage',
     'course.catalog.view', 'course.catalog.create', 'course.catalog.update', 'course.catalog.publish', 'course.catalog.archive',
@@ -252,7 +265,7 @@ async function seed() {
     'batch.delivery.view',
     'student.read', 'dashboard.crm', 'report.iam.user', 'dashboard.view',
     'REPORTING_VIEW_CRM_DASHBOARD',
-    'admission.read', 'admission.create'
+    'admission.read', 'admission.create', 'enrollment.read'
   ];
   const counselorPerms = permRecords.filter(p => counselorPermCodes.includes(p.permissionCode));
   for (const perm of counselorPerms) {
@@ -278,7 +291,7 @@ async function seed() {
   // Accountant permissions
   const accountantPermCodes = [
     'student.read', 'payment.create', 'refund.request',
-    'dashboard.finance', 'dashboard.view'
+    'dashboard.finance', 'dashboard.view', 'enrollment.read'
   ];
   const accountantPerms = permRecords.filter(p => accountantPermCodes.includes(p.permissionCode));
   for (const perm of accountantPerms) {

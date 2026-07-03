@@ -35,6 +35,7 @@ function mapNavigationIcons(item: any): any {
       icon = <LayoutDashboard className="h-4.5 w-4.5" />;
       break;
     case '/dashboards/crm':
+    case '/dashboards/admissions':
       icon = <LayoutDashboard className="h-4.5 w-4.5" />;
       break;
     case '/leads':
@@ -43,7 +44,10 @@ function mapNavigationIcons(item: any): any {
     case '/admissions':
       icon = <UserCheck className="h-4.5 w-4.5" />;
       break;
-    case '/batches/student-lookup':
+    case '/enrollments':
+      icon = <GraduationCap className="h-4.5 w-4.5" />;
+      break;
+    case '/students':
       icon = <Users className="h-4.5 w-4.5" />;
       break;
     case '/courses-catalog':

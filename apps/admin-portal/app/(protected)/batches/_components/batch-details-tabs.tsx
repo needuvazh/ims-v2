@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { toast } from 'sonner';
 import {
   Card,
@@ -46,6 +47,7 @@ interface BatchDetailsTabsProps {
   studentsList: any[];
   leadsList: any[];
   classroomsList: any[];
+  enrolledStudents: any[];
   isRegistrar: boolean;
   isCoordinator: boolean;
 }
@@ -61,11 +63,12 @@ export function BatchDetailsTabs({
   studentsList,
   leadsList,
   classroomsList,
+  enrolledStudents,
   isRegistrar,
   isCoordinator,
 }: BatchDetailsTabsProps) {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<'sessions' | 'trainers' | 'waitlist'>('sessions');
+  const [activeTab, setActiveTab] = useState<'sessions' | 'trainers' | 'waitlist' | 'students'>('sessions');
   const [isPending, startTransition] = useTransition();
 
   // Trainer form state
@@ -383,6 +386,14 @@ export function BatchDetailsTabs({
           }`}
         >
           <Users className="h-4.5 w-4.5" /> Faculty ({trainers.length})
+        </button>
+        <button
+          onClick={() => setActiveTab('students')}
+          className={`flex-1 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 flex justify-center items-center gap-2 ${
+            activeTab === 'students' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-50'
+          }`}
+        >
+          <Users className="h-4.5 w-4.5" /> Students ({enrolledStudents.length})
         </button>
         <button
           onClick={() => setActiveTab('waitlist')}
@@ -932,6 +943,53 @@ export function BatchDetailsTabs({
             )}
           </div>
         </div>
+      )}
+
+      {activeTab === 'students' && (
+        <Card className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6">
+          <div className="flex items-center gap-2 border-b border-slate-100 pb-3 mb-4">
+            <Users className="h-5 w-5 text-indigo-600" />
+            <h3 className="font-semibold text-slate-800">Enrolled Students Roster</h3>
+          </div>
+          {enrolledStudents.length === 0 ? (
+            <div className="p-8 text-center text-sm text-[color:var(--ims-muted)]">
+              No students are currently enrolled in this batch.
+            </div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Student Number</TableHead>
+                  <TableHead>Student Name</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Mobile</TableHead>
+                  <TableHead>Enrollment Date</TableHead>
+                  <TableHead>Status</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {enrolledStudents.map((s) => (
+                  <TableRow key={s.id}>
+                    <TableCell className="font-mono text-xs font-semibold text-slate-600">{s.studentNumber}</TableCell>
+                    <TableCell className="font-medium text-slate-900">
+                      <Link href={`/admissions?q=${s.studentNumber}`} className="text-indigo-600 hover:text-indigo-700 hover:underline">
+                        {s.firstName} {s.lastName}
+                      </Link>
+                    </TableCell>
+                    <TableCell>{s.email}</TableCell>
+                    <TableCell>{s.mobile}</TableCell>
+                    <TableCell>{new Date(s.enrollmentDate).toLocaleDateString()}</TableCell>
+                    <TableCell>
+                      <Badge variant={s.status === 'Active' ? 'success' : s.status === 'Confirmed' ? 'info' : 'outline'}>
+                        {s.status}
+                      </Badge>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+        </Card>
       )}
     </div>
   );

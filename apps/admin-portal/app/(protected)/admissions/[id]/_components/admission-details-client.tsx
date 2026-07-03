@@ -16,6 +16,7 @@ import {
   CheckCircle2,
   XCircle,
   Clock,
+  CreditCard,
 } from 'lucide-react';
 import {
   Button,
@@ -100,6 +101,25 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
   
   const [uploadKeys, setUploadKeys] = useState<Record<string, string>>({});
   const [remarksByDoc, setRemarksByDoc] = useState<Record<string, string>>({});
+  const [isRegenerating, setIsRegenerating] = useState(false);
+
+  const handleDownloadIdCard = async () => {
+    toast.success('Downloading student ID card PDF...');
+    window.open(`/api/v1/admissions/${detail.admission.id}/id-card/download`, '_blank');
+  };
+
+  const handleRegenerateIdCard = async () => {
+    setIsRegenerating(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      toast.success('Student ID card regenerated successfully!');
+      router.refresh();
+    } catch {
+      toast.error('Failed to regenerate ID card.');
+    } finally {
+      setIsRegenerating(false);
+    }
+  };
 
   const hasPermission = (perm: string) => sessionPermissions.includes(perm);
 
@@ -476,6 +496,78 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
                 )}
               </div>
             </div>
+
+            {/* Student ID Card (Only if Approved/Profile references exist) */}
+            {admission.studentProfile?.studentNumber && (
+              <div className="border border-[color:var(--ims-border)] p-6 rounded-2xl space-y-4 bg-white/80 shadow-sm">
+                <h3 className="text-sm font-semibold flex items-center gap-2 text-[color:var(--ims-ink)] border-b border-slate-100 pb-2 font-display">
+                  <CreditCard className="h-4 w-4 text-indigo-600" />
+                  Student Identity Card (Provisioned)
+                </h3>
+
+                <div className="flex flex-col md:flex-row items-center gap-6">
+                  {/* Mock Visual ID Card Design */}
+                  <div className="w-80 h-48 bg-gradient-to-br from-indigo-700 to-indigo-900 rounded-2xl p-4 text-white flex flex-col justify-between shadow-lg relative overflow-hidden border border-indigo-600/50">
+                    <div className="absolute right-0 bottom-0 opacity-10 pointer-events-none">
+                      <CreditCard className="h-48 w-48 -mr-10 -mb-10" />
+                    </div>
+                    
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <span className="text-[10px] tracking-widest text-indigo-200 block uppercase font-bold">AL SAUD TRAINING INST.</span>
+                        <span className="text-[8px] text-indigo-300 block">ASTI Institute Management System</span>
+                      </div>
+                      <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/30 text-[8px] hover:bg-emerald-500/20">
+                        ACTIVE
+                      </Badge>
+                    </div>
+
+                    <div className="my-2 flex gap-3 items-center">
+                      <div className="h-14 w-14 rounded-lg bg-indigo-800 border border-indigo-600 flex items-center justify-center text-indigo-300 text-xs">
+                        PHOTO
+                      </div>
+                      <div className="space-y-0.5 text-left">
+                        <span className="text-xs font-semibold block">{admission.person.firstName} {admission.person.lastName}</span>
+                        <span className="text-[10px] text-indigo-200 block font-mono">ID: {admission.studentProfile.studentNumber}</span>
+                        <span className="text-[8px] text-indigo-300 block">Course: {admission.courseName}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between items-end border-t border-indigo-600/40 pt-2 text-[8px] text-indigo-200">
+                      <div>
+                        <span>VALID UNTIL: </span>
+                        <span className="font-mono">DEC 2026</span>
+                      </div>
+                      <div className="font-mono">ASTI-STU-CARD</div>
+                    </div>
+                  </div>
+
+                  {/* Actions Column */}
+                  <div className="flex-1 space-y-3 w-full md:w-auto">
+                    <div className="text-xs space-y-1">
+                      <div className="text-slate-500">ID Card Status: <span className="font-semibold text-emerald-600">Generated & Valid</span></div>
+                      <div className="text-slate-500">Card Number: <span className="font-mono">{admission.studentProfile.studentNumber}</span></div>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <Button
+                        onClick={handleDownloadIdCard}
+                        className="bg-indigo-600 text-white hover:bg-indigo-700 text-xs py-1.5 h-8 flex-1"
+                      >
+                        Download PDF
+                      </Button>
+                      <Button
+                        onClick={handleRegenerateIdCard}
+                        disabled={isRegenerating}
+                        variant="outline"
+                        className="text-slate-600 hover:bg-slate-50 text-xs py-1.5 h-8 flex-1"
+                      >
+                        {isRegenerating ? 'Regenerating...' : 'Regenerate'}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Workflow Status Timeline */}

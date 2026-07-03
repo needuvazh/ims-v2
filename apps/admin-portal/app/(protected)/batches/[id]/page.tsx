@@ -140,6 +140,35 @@ export default async function BatchDetailPage(props: {
     },
   });
 
+  // Fetch enrolled students
+  const enrolledStudents = await prisma.enrollment.findMany({
+    where: {
+      batchId: id,
+      isDeleted: false,
+      enrollmentStatus: { in: ['Approved', 'Confirmed', 'Active', 'Completed'] },
+    },
+    include: {
+      studentProfile: {
+        include: {
+          person: true,
+        },
+      },
+    },
+    orderBy: { createdAt: 'desc' },
+  });
+
+  const enrolledStudentsList = enrolledStudents.map((e) => ({
+    id: e.id,
+    studentNumber: e.studentProfile.studentNumber,
+    studentProfileId: e.studentProfile.id,
+    firstName: e.studentProfile.person.firstName,
+    lastName: e.studentProfile.person.lastName,
+    email: e.studentProfile.person.email || 'N/A',
+    mobile: e.studentProfile.person.mobile || 'N/A',
+    enrollmentDate: e.confirmedAt?.toISOString() || e.createdAt.toISOString(),
+    status: e.enrollmentStatus,
+  }));
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'Draft':
@@ -245,6 +274,7 @@ export default async function BatchDetailPage(props: {
             studentsList={studentsList}
             leadsList={leadsList}
             classroomsList={classroomsList}
+            enrolledStudents={enrolledStudentsList}
             isRegistrar={isRegistrar}
             isCoordinator={isCoordinator}
           />

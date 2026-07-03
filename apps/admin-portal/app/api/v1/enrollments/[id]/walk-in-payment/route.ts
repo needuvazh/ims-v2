@@ -48,7 +48,7 @@ export async function POST(
   props: { params: Promise<{ id: string }> }
 ) {
   const { id } = await props.params;
-  return withRouteObservability(request.headers, async () => withPermission(request, 'enrollment.record_payment', async ({ session }) => {
+  return withRouteObservability(request.headers, async () => withPermission(request, 'enrollment.walk-in-payment', async ({ session }) => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
     try {

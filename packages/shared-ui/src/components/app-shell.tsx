@@ -469,7 +469,7 @@ export function AdminSidebar({
     <aside
       className={cn(
         'fixed inset-y-0 left-0 z-30 hidden h-screen flex-col border-r border-[color:var(--ims-sidebar-border)] bg-[color:var(--ims-sidebar)] backdrop-blur-xl shadow-2xl shadow-slate-200/20 transition-[width] duration-300 lg:flex',
-        collapsed ? 'w-20' : 'w-64',
+        collapsed ? 'w-20' : 'w-72',
       )}
     >
       <div className="flex h-20 shrink-0 items-center justify-between gap-3 border-b border-[color:var(--ims-sidebar-border)] px-4">
@@ -595,7 +595,7 @@ export function AppShell({
         onNavigate={() => setMobileSidebarOpen(false)}
       />
 
-      <div className={cn('flex min-h-screen flex-col transition-[padding] duration-300 lg:pl-64', sidebarCollapsed && 'lg:pl-20')}>
+      <div className={cn('flex min-h-screen flex-col transition-[padding] duration-300 lg:pl-72', sidebarCollapsed && 'lg:pl-20')}>
         <header className="sticky top-0 z-20 flex h-20 shrink-0 items-center justify-between border-b border-[color:var(--ims-border)] bg-white/70 px-4 shadow-[0_2px_20px_rgba(0,0,0,0.02)] backdrop-blur-xl md:px-6 lg:px-8">
           {/* Left section: Hamburger (mobile), Breadcrumbs (desktop), and active branch badge */}
           <div className="flex min-w-0 items-center gap-4">
