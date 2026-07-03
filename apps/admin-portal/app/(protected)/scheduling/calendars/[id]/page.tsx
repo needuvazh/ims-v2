@@ -30,7 +30,8 @@ import {
   TableHead, 
   TableHeader, 
   TableRow,
-  SimpleTooltip
+  SimpleTooltip,
+  AdminDetailPageLayout
 } from '@ims/shared-ui';
 import { BranchOverrideForm } from '../../_components/branch-override-form';
 import { loadCalendarDetail } from '../../data';
@@ -58,7 +59,7 @@ export default async function CalendarDetailPage(props: {
   };
 
   return (
-    <div className="space-y-8">
+    <AdminDetailPageLayout>
       <PageHeader
         eyebrow="Scheduling Baseline"
         title={calendar.name}
@@ -84,7 +85,7 @@ export default async function CalendarDetailPage(props: {
         }
       />
 
-      <div className="grid gap-6 grid-cols-1 md:grid-cols-4">
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
         <Card className="shadow-none">
           <CardHeader className="pb-2">
             <CardDescription className="text-xs uppercase tracking-widest font-bold">Code</CardDescription>
@@ -141,9 +142,9 @@ export default async function CalendarDetailPage(props: {
                 <Table>
                   <TableHeader className="bg-[color:var(--ims-background)]">
                     <TableRow>
-                      <TableHead className="pl-6">Working Day</TableHead>
+                      <TableHead className="px-card-p">Working Day</TableHead>
                       <TableHead>Effective Hours</TableHead>
-                      <TableHead className="text-right pr-6">Source</TableHead>
+                      <TableHead className="text-right px-card-p">Source</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -153,7 +154,7 @@ export default async function CalendarDetailPage(props: {
                       );
                       return (
                         <TableRow key={day.dayOfWeek} className="hover:bg-[color:var(--ims-background)] transition-colors">
-                          <TableCell className="pl-6 font-semibold text-[color:var(--ims-ink)]">
+                          <TableCell className="px-card-p font-semibold text-[color:var(--ims-ink)]">
                             {day.dayOfWeek}
                           </TableCell>
                           <TableCell className="text-sm font-medium">
@@ -161,7 +162,7 @@ export default async function CalendarDetailPage(props: {
                               {formatDayHours(day)}
                             </span>
                           </TableCell>
-                          <TableCell className="text-right pr-6">
+                          <TableCell className="text-right px-card-p">
                             {isOverridden ? (
                               <Badge variant="success" className="bg-green-50 text-green-700 border-green-200">Local Override</Badge>
                             ) : (
@@ -250,6 +251,8 @@ export default async function CalendarDetailPage(props: {
           </div>
         </div>
       </div>
-    </div>
+    </AdminDetailPageLayout>
+  );
+}
   );
 }

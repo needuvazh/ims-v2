@@ -44,14 +44,14 @@ export const getSession: () => Promise<Session> = cache(async () => {
     (headerStore.get('authorization')?.toLowerCase().startsWith('bearer ') ? headerStore.get('authorization')!.slice(7).trim() : null);
 
   if (!accessToken) {
-    throw new DomainError('unauthorized', 'Authentication required. Please sign in.');
+    throw new DomainError('unauthorized', 'Session has expired or you are not signed in. Please sign in again.');
   }
 
   let tokenPayload: TokenPayload;
   try {
     tokenPayload = await JwtService.verifyAccessToken(accessToken, getPublicKey());
   } catch {
-    throw new DomainError('unauthorized', 'Session is invalid or has expired. Please sign in again.');
+    throw new DomainError('unauthorized', 'Your session is invalid or has expired. Please sign in again.');
   }
 
   // Enforce database check to prevent bypass of deactivated, locked, or revoked sessions
@@ -61,7 +61,7 @@ export const getSession: () => Promise<Session> = cache(async () => {
     const dbSession = await sessionRepository.findByAccessTokenJti(tokenPayload.jti ?? '');
 
     if (!dbSession || dbSession.status !== 'Active' || new Date() > dbSession.expiresAt) {
-      throw new DomainError('unauthorized', 'Session has been revoked or expired.');
+      throw new DomainError('unauthorized', 'Your session has been revoked or has expired. Please sign in again.');
     }
 
     // 2. Verify user status

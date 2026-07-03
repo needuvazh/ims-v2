@@ -137,14 +137,14 @@ export function BranchOverrideForm({
       {error && <Alert variant="error" className="mb-4">{error}</Alert>}
       
       <Card className="border-[color:var(--ims-border)] shadow-md ring-1 ring-[color:var(--ims-border)] overflow-hidden">
-        <CardHeader className="bg-[color:var(--ims-surface-hover)] border-b border-[color:var(--ims-border)]">
+        <CardHeader className="bg-[color:var(--ims-surface-hover)] border-b border-[color:var(--ims-border)] p-card-p">
           <CardTitle className="text-base flex items-center gap-2">
             <Layers3 className="h-4 w-4 text-[color:var(--ims-brass)]" /> 
             Create Branch Exception
           </CardTitle>
         </CardHeader>
         <form onSubmit={submit}>
-          <CardContent className="space-y-6 pt-6">
+          <CardContent className="space-y-6 p-card-p">
             <div className="grid gap-4">
               <Select 
                 label="Target Branch" 
@@ -213,7 +213,7 @@ export function BranchOverrideForm({
               </div>
             </div>
           </CardContent>
-          <CardFooter className="bg-[color:var(--ims-surface-hover)] border-t border-[color:var(--ims-border)] pt-4">
+          <CardFooter className="bg-[color:var(--ims-surface-hover)] border-t border-[color:var(--ims-border)] p-card-p">
             <Button type="submit" loading={isSaving} className="w-full shadow-lg">
               <Save className="h-4 w-4 mr-2" /> Commit Exception
             </Button>

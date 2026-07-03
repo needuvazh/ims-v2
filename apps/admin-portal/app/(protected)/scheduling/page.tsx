@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, CalendarDays, Layers3, LayoutDashboard, Plus, Home, Sparkles } from 'lucide-react';
-import { Breadcrumbs, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, PageHeader } from '@ims/shared-ui';
+import { Breadcrumbs, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, PageHeader, AdminListPageLayout } from '@ims/shared-ui';
 import { loadSchedulingOverview } from './data';
 
 export const metadata = { title: 'Scheduling | IMS Admin' };
@@ -26,7 +26,7 @@ export default async function SchedulingHomePage() {
   const { counts } = await loadSchedulingOverview();
 
   return (
-    <div className="space-y-8">
+    <AdminListPageLayout>
       <PageHeader
         title="Scheduling & Calendar"
         eyebrow="Management"
@@ -46,14 +46,14 @@ export default async function SchedulingHomePage() {
         }
       />
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <Card className="border-[color:var(--ims-border)]">
           <CardHeader>
             <CardTitle>Total baseline</CardTitle>
             <CardDescription>Canonical institute calendars.</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-[color:var(--ims-ink)] tracking-tight">{counts.total}</div>
+            <div className="text-card-value font-bold text-[color:var(--ims-ink)] tracking-tight">{counts.total}</div>
           </CardContent>
         </Card>
         <Card className="border-[color:var(--ims-border)]">
@@ -62,7 +62,7 @@ export default async function SchedulingHomePage() {
             <CardDescription>Currently in-use for validation.</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-[color:var(--ims-ink)] tracking-tight">{counts.active}</div>
+            <div className="text-card-value font-bold text-[color:var(--ims-ink)] tracking-tight">{counts.active}</div>
           </CardContent>
         </Card>
         <Card className="border-[color:var(--ims-border)]">
@@ -71,12 +71,12 @@ export default async function SchedulingHomePage() {
             <CardDescription>Draft, closed, or archived.</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-[color:var(--ims-ink)] tracking-tight">{counts.draft + counts.closed}</div>
+            <div className="text-card-value font-bold text-[color:var(--ims-ink)] tracking-tight">{counts.draft + counts.closed}</div>
           </CardContent>
         </Card>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {sections.map((section) => {
           const Icon = section.icon;
           return (
@@ -103,19 +103,19 @@ export default async function SchedulingHomePage() {
       </div>
 
       <Card className="overflow-hidden border-[color:var(--ims-border)] bg-[color:var(--ims-surface-hover)] shadow-none border-dashed">
-        <CardContent className="p-8 flex flex-col md:flex-row items-start md:items-center gap-6">
+        <CardContent className="p-card-p flex flex-col md:flex-row items-start md:items-center gap-6">
           <div className="h-14 w-14 rounded-full bg-[color:var(--ims-surface)] border border-[color:var(--ims-border)] flex items-center justify-center text-[color:var(--ims-brass)] shrink-0">
              <Sparkles className="h-7 w-7" />
           </div>
           <div className="space-y-1">
-             <h3 className="font-bold text-lg text-[color:var(--ims-ink)]">Resolution Design</h3>
-             <p className="text-[color:var(--ims-muted)] max-w-2xl leading-relaxed">
+             <h3 className="font-bold text-section-title text-[color:var(--ims-ink)]">Resolution Design</h3>
+             <p className="text-[color:var(--ims-muted)] max-w-2xl leading-relaxed text-sm">
                Scheduling checks always resolve rules in a deterministic hierarchy: Branch Override &gt; Institute Baseline &gt; System Defaults.
                This ensures local operational flexibility without duplicating entire calendars.
              </p>
           </div>
         </CardContent>
       </Card>
-    </div>
+    </AdminListPageLayout>
   );
 }

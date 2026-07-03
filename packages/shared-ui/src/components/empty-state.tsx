@@ -13,7 +13,7 @@ export interface EmptyStateProps extends HTMLAttributes<HTMLDivElement> {
 export function EmptyState({ icon, title, description, action, className, ...props }: EmptyStateProps) {
   return (
     <Card
-      className={cn('flex flex-col items-center border-dashed py-12 text-center', className)}
+      className={cn('flex flex-col items-center border-dashed py-section-gap px-page-px text-center', className)}
       {...props}
     >
       {icon && (

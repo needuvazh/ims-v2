@@ -20,14 +20,6 @@ export async function proxy(request: NextRequest) {
     return response;
   }
 
-  if (pathname === '/sign-in' && session) {
-    const url = request.nextUrl.clone();
-    url.pathname = '/dashboard';
-    const response = NextResponse.redirect(url);
-    applyRequestContextHeaders(response.headers, requestContext);
-    return response;
-  }
-
   const response = NextResponse.next({
     request: {
       headers: forwardedHeaders,

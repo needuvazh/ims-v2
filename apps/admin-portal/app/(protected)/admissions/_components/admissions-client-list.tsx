@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   ClipboardList,
   Plus,
@@ -12,12 +12,6 @@ import {
   FileEdit,
 } from 'lucide-react';
 import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableHead,
-  TableCell,
   Badge,
   Button,
   Pagination,
@@ -30,6 +24,12 @@ import {
   DialogDescription,
   DialogFooter,
   DialogClose,
+  ResponsiveDataTable,
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter,
+  EmptyState
 } from '@ims/shared-ui';
 import { toast } from 'sonner';
 
@@ -81,6 +81,7 @@ export function AdmissionsClientList({
   kpis,
 }: AdmissionsClientListProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const totalPages = Math.ceil(total / 10);
 
   // Direct Intake Modal State
@@ -160,21 +161,100 @@ export function AdmissionsClientList({
     }
   };
 
+  const columns = [
+    { header: 'Admission #', render: (adm: any) => <span className="font-mono font-medium text-slate-800">{adm.admissionNumber}</span> },
+    {
+      header: 'Student',
+      render: (adm: any) => (
+        <div className="flex flex-col">
+          <div className="font-semibold text-slate-800">{adm.studentName}</div>
+          <div className="text-xs text-[var(--ims-muted)]">{adm.studentEmail}</div>
+        </div>
+      )
+    },
+    { header: 'Course', render: (adm: any) => adm.courseName },
+    { header: 'Branch', render: (adm: any) => adm.branchName },
+    {
+      header: 'Date',
+      render: (adm: any) => (
+        <span className="text-xs text-[var(--ims-muted)]">
+          {new Date(adm.createdAt).toLocaleDateString(undefined, {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          })}
+        </span>
+      )
+    },
+    { header: 'Status', className: 'text-center', render: (adm: any) => <Badge variant={getStatusBadgeVariant(adm.admissionStatus)}>{adm.admissionStatus}</Badge> },
+    {
+      header: 'Actions',
+      className: 'text-right',
+      render: (adm: any) => (
+        <Button variant="ghost" size="icon" onClick={() => router.push(`/admissions/${adm.id}`)}>
+          <Eye className="h-4 w-4 text-slate-500 hover:text-indigo-600" />
+        </Button>
+      )
+    }
+  ];
+
+  const renderCard = (adm: any) => (
+    <Card className="hover:border-[var(--ims-brass)] transition-colors">
+      <CardHeader className="p-card-p border-b border-slate-100 bg-slate-50/50">
+        <div className="flex justify-between items-start">
+          <div className="space-y-1">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">
+              {adm.admissionNumber}
+            </p>
+            <p className="text-sm font-bold text-[var(--ims-ink)]">{adm.studentName}</p>
+          </div>
+          <Badge variant={getStatusBadgeVariant(adm.admissionStatus)}>{adm.admissionStatus}</Badge>
+        </div>
+      </CardHeader>
+      <CardContent className="p-card-p space-y-3">
+        <div className="grid grid-cols-2 gap-4 text-xs">
+          <div className="space-y-1">
+            <p className="font-semibold text-[var(--ims-muted)]">Course</p>
+            <p className="truncate">{adm.courseName}</p>
+          </div>
+          <div className="space-y-1">
+            <p className="font-semibold text-[var(--ims-muted)]">Branch</p>
+            <p className="truncate">{adm.branchName}</p>
+          </div>
+          <div className="col-span-2 space-y-1">
+            <p className="font-semibold text-[var(--ims-muted)]">Email</p>
+            <p className="truncate">{adm.studentEmail}</p>
+          </div>
+        </div>
+      </CardContent>
+      <CardFooter className="p-card-p pt-0">
+        <Button
+          variant="outline"
+          size="sm"
+          className="w-full text-[11px]"
+          onClick={() => router.push(`/admissions/${adm.id}`)}
+        >
+          <Eye className="h-3.5 w-3.5 mr-1.5" /> View Details
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+
   return (
     <div className="space-y-6">
       {/* Page Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-[color:var(--ims-ink)] flex items-center gap-2">
+          <h1 className="text-page-title font-bold tracking-tight text-[var(--ims-ink)] flex items-center gap-2">
             <ClipboardList className="h-8 w-8 text-indigo-600" />
             Admissions
           </h1>
-          <p className="text-sm text-[color:var(--ims-muted)]">
+          <p className="text-sm text-[var(--ims-muted)]">
             Manage student admissions, review application documents, and track review status transitions.
           </p>
         </div>
-        <div className="flex items-center gap-2">
-          <Button onClick={() => setIsOpen(true)} className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <Button onClick={() => setIsOpen(true)} className="w-full sm:w-auto flex items-center justify-center gap-1.5">
             <Plus className="h-4 w-4" />
             Direct Intake
           </Button>
@@ -219,65 +299,20 @@ export function AdmissionsClientList({
         filters={filterConfigs}
       />
 
-      {/* Admissions Table */}
-      <div className="rounded-lg border border-[color:var(--ims-border)] bg-white overflow-hidden shadow-sm">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[140px]">Admission #</TableHead>
-              <TableHead>Student</TableHead>
-              <TableHead>Course</TableHead>
-              <TableHead>Branch</TableHead>
-              <TableHead className="w-[130px]">Date</TableHead>
-              <TableHead className="w-[120px] text-center">Status</TableHead>
-              <TableHead className="w-[100px] text-right">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {admissions.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={7} className="text-center py-12 text-[color:var(--ims-muted)]">
-                  No admissions found matching the active filters.
-                </TableCell>
-              </TableRow>
-            ) : (
-              admissions.map((adm) => (
-                <TableRow key={adm.id} className="hover:bg-slate-50 transition-colors">
-                  <TableCell className="font-mono font-medium text-slate-800">{adm.admissionNumber}</TableCell>
-                  <TableCell>
-                    <div className="font-semibold text-slate-800">{adm.studentName}</div>
-                    <div className="text-xs text-[color:var(--ims-muted)]">{adm.studentEmail}</div>
-                  </TableCell>
-                  <TableCell>{adm.courseName}</TableCell>
-                  <TableCell>{adm.branchName}</TableCell>
-                  <TableCell className="text-xs text-[color:var(--ims-muted)]">
-                    {new Date(adm.createdAt).toLocaleDateString(undefined, {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                    })}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <Badge variant={getStatusBadgeVariant(adm.admissionStatus)}>
-                      {adm.admissionStatus}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => router.push(`/admissions/${adm.id}`)}
-                      title="View Details"
-                    >
-                      <Eye className="h-4 w-4 text-slate-500 hover:text-indigo-600" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </div>
+      {/* Admissions Data */}
+      <ResponsiveDataTable
+        data={admissions}
+        columns={columns}
+        renderCard={renderCard}
+        keyExtractor={(adm) => adm.id}
+        emptyState={
+          <EmptyState
+            icon={<ClipboardList className="h-6 w-6" />}
+            title="No admissions found"
+            description="No student admission profiles match your current filter criteria."
+          />
+        }
+      />
 
       {/* Pagination */}
       {totalPages > 1 && <Pagination page={currentPage} totalPages={totalPages} totalCount={total} limit={10} />}

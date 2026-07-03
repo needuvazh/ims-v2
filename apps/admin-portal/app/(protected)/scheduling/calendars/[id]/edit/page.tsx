@@ -1,5 +1,5 @@
 import { CalendarDays, Edit2, Layers3 } from 'lucide-react';
-import { Breadcrumbs, Card, CardContent, PageHeader } from '@ims/shared-ui';
+import { Breadcrumbs, Card, CardContent, PageHeader, AdminFormPageLayout } from '@ims/shared-ui';
 import { CalendarEditorForm } from '../../../_components/calendar-editor-form';
 import { loadCalendarDetail } from '../../../data';
 
@@ -11,16 +11,14 @@ export default async function EditCalendarPage(props: { params: Promise<{ id: st
   const { calendar } = await loadCalendarDetail(id, searchParams.branchId);
 
   return (
-    <div className="space-y-8">
+    <AdminFormPageLayout>
       <PageHeader
         eyebrow="Scheduling"
         title="Edit calendar"
         description="Update the institute baseline. Timezone remains fixed to Asia/Muscat."
         breadcrumbs={<Breadcrumbs items={[{ label: 'Scheduling', href: '/scheduling', icon: <CalendarDays className="h-3.5 w-3.5" /> }, { label: 'Calendars', href: '/scheduling/calendars', icon: <Layers3 className="h-3.5 w-3.5" /> }, { label: 'Edit', icon: <Edit2 className="h-3.5 w-3.5" /> }]} />}
       />
-      <Card>
-        <CardContent className="p-0"><CalendarEditorForm mode="edit" initialCalendar={calendar} /></CardContent>
-      </Card>
-    </div>
+      <CalendarEditorForm mode="edit" initialCalendar={calendar} />
+    </AdminFormPageLayout>
   );
 }

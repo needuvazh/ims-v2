@@ -29,6 +29,7 @@ export * from './components/page-header';
 export * from './components/page-templates';
 export * from './components/breadcrumbs';
 export * from './components/pagination';
+export * from './components/responsive-data-table';
 export * from './components/filter-bar';
 export * from './components/data-table-filter';
 

@@ -132,7 +132,7 @@ export default async function AdmissionsPage(props: {
 
   return (
     <div className="space-y-4 p-6">
-      <div className="flex flex-col gap-3 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-5 md:flex-row md:items-center md:justify-between">
+      {/* <div className="flex flex-col gap-3 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-5 md:flex-row md:items-center md:justify-between">
         <div>
           <p className="text-sm font-semibold text-[color:var(--ims-ink)]">Admissions operations</p>
           <p className="text-xs text-[color:var(--ims-muted)]">Use the dashboard for KPIs and the list for daily intake work.</p>
@@ -140,7 +140,7 @@ export default async function AdmissionsPage(props: {
         <Link href="/dashboards/admissions" className="inline-flex items-center gap-2 rounded-xl border border-[color:var(--ims-border)] px-4 py-2 text-sm font-semibold text-[color:var(--ims-ink)] transition hover:bg-[color:var(--ims-accent-soft)]">
           Open Dashboard
         </Link>
-      </div>
+      </div> */}
       <AdmissionsClientList
         admissions={mappedAdmissions}
         branches={branches.map((b) => ({ id: b.id, name: b.branchName }))}

@@ -19,7 +19,8 @@ import {
   TableHead, 
   TableHeader, 
   TableRow,
-  SimpleTooltip
+  SimpleTooltip,
+  AdminListPageLayout
 } from '@ims/shared-ui';
 import { loadSchedulingCalendars } from '../data';
 
@@ -41,7 +42,7 @@ export default async function CalendarsPage(props: {
   };
 
   return (
-    <div className="space-y-8">
+    <AdminListPageLayout>
       <PageHeader
         eyebrow="Scheduling"
         title="Calendar ledger"
@@ -88,69 +89,69 @@ export default async function CalendarsPage(props: {
             description="No institute baseline calendars match your current filter criteria." 
           />
         ) : (
-          <div className="rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] overflow-hidden shadow-sm">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[120px]">Code</TableHead>
-                  <TableHead>Baseline Name</TableHead>
-                  <TableHead className="w-[100px]">Year</TableHead>
-                  <TableHead className="w-[120px]">Status</TableHead>
-                  <TableHead>Effective Period</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[120px]">Code</TableHead>
+                <TableHead>Baseline Name</TableHead>
+                <TableHead className="w-[100px]">Year</TableHead>
+                <TableHead className="w-[120px]">Status</TableHead>
+                <TableHead>Effective Period</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {calendars.map((calendar) => (
+                <TableRow key={calendar.id} className="group">
+                  <TableCell className="font-mono text-xs font-semibold text-[color:var(--ims-muted)] uppercase">
+                    {calendar.code}
+                  </TableCell>
+                  <TableCell>
+                    <div className="font-semibold text-[color:var(--ims-ink)]">{calendar.name}</div>
+                    <div className="text-xs text-[color:var(--ims-muted)]">Inst: {calendar.instituteId.slice(0, 8)}...</div>
+                  </TableCell>
+                  <TableCell>
+                    <span className="font-medium">{calendar.year}</span>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant={calendar.status === 'Active' ? 'success' : 'muted'}>
+                      {calendar.status}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    <div className="flex flex-col">
+                      <span className="text-[color:var(--ims-ink)]">{formatDate(calendar.effectiveStartDate)}</span>
+                      <span className="text-[color:var(--ims-muted)] text-xs">
+                        to {calendar.effectiveEndDate ? formatDate(calendar.effectiveEndDate) : 'Indefinite'}
+                      </span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <div className="flex items-center justify-end gap-2">
+                      <SimpleTooltip content="View detail" side="top">
+                        <Link href={`/scheduling/calendars/${calendar.id}`}>
+                          <Button size="icon" variant="ghost" className="h-8 w-8">
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                        </Link>
+                      </SimpleTooltip>
+                      <SimpleTooltip content="Edit baseline" side="top">
+                        <Link href={`/scheduling/calendars/${calendar.id}/edit`}>
+                          <Button size="icon" variant="ghost" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
+                            <Edit2 className="h-4 w-4" />
+                          </Button>
+                        </Link>
+                      </SimpleTooltip>
+                    </div>
+                  </TableCell>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {calendars.map((calendar) => (
-                  <TableRow key={calendar.id} className="group">
-                    <TableCell className="font-mono text-xs font-semibold text-[color:var(--ims-muted)] uppercase">
-                      {calendar.code}
-                    </TableCell>
-                    <TableCell>
-                      <div className="font-semibold text-[color:var(--ims-ink)]">{calendar.name}</div>
-                      <div className="text-xs text-[color:var(--ims-muted)]">Inst: {calendar.instituteId.slice(0, 8)}...</div>
-                    </TableCell>
-                    <TableCell>
-                      <span className="font-medium">{calendar.year}</span>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant={calendar.status === 'Active' ? 'success' : 'muted'}>
-                        {calendar.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-sm">
-                      <div className="flex flex-col">
-                        <span className="text-[color:var(--ims-ink)]">{formatDate(calendar.effectiveStartDate)}</span>
-                        <span className="text-[color:var(--ims-muted)] text-xs">
-                          to {calendar.effectiveEndDate ? formatDate(calendar.effectiveEndDate) : 'Indefinite'}
-                        </span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <SimpleTooltip content="View detail" side="top">
-                          <Link href={`/scheduling/calendars/${calendar.id}`}>
-                            <Button size="icon" variant="ghost" className="h-8 w-8">
-                              <Eye className="h-4 w-4" />
-                            </Button>
-                          </Link>
-                        </SimpleTooltip>
-                        <SimpleTooltip content="Edit baseline" side="top">
-                          <Link href={`/scheduling/calendars/${calendar.id}/edit`}>
-                            <Button size="icon" variant="ghost" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
-                              <Edit2 className="h-4 w-4" />
-                            </Button>
-                          </Link>
-                        </SimpleTooltip>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
+              ))}
+            </TableBody>
+          </Table>
         )}
       </div>
-    </div>
+    </AdminListPageLayout>
+  );
+}
   );
 }

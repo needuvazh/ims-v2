@@ -158,7 +158,7 @@ export function CalendarEditorForm({ mode, initialCalendar }: { mode: 'create' |
   };
 
   return (
-    <form onSubmit={submit} className="space-y-10">
+    <form onSubmit={submit} className="space-y-section-gap">
       {error && (
         <Alert variant="error" className="animate-in fade-in slide-in-from-top-2 duration-300">
            <div className="flex items-center gap-2 font-semibold">
@@ -168,17 +168,17 @@ export function CalendarEditorForm({ mode, initialCalendar }: { mode: 'create' |
         </Alert>
       )}
       
-      <div className="grid gap-10 lg:grid-cols-[1fr_400px]">
-        <div className="space-y-10">
+      <div className="grid gap-section-gap lg:grid-cols-[1fr_400px]">
+        <div className="space-y-section-gap">
           <section className="space-y-4">
              <div className="flex items-center gap-2 border-b border-[color:var(--ims-border)] pb-2">
                 <CalendarDays className="h-5 w-5 text-[color:var(--ims-brass)]" />
                 <h3 className="font-bold text-lg text-[color:var(--ims-ink)] tracking-tight">Identity & Context</h3>
              </div>
-             <div className="grid gap-6 md:grid-cols-2">
+             <div className="grid gap-6 sm:grid-cols-2">
                 <Input label="Institute ID" value={state.instituteId} onChange={(e) => updateField('instituteId', e.target.value)} required placeholder="UUID" disabled={mode === 'edit'} />
                 <Input label="Calendar code" value={state.code} onChange={(e) => updateField('code', e.target.value)} required placeholder="e.g. ACAD-2026" disabled={mode === 'edit'} />
-                <Input label="Primary Name" value={state.name} onChange={(e) => updateField('name', e.target.value)} required placeholder="e.g. Academic Year 2026" className="md:col-span-2" />
+                <Input label="Primary Name" value={state.name} onChange={(e) => updateField('name', e.target.value)} required placeholder="e.g. Academic Year 2026" className="sm:col-span-2" />
                 <Input label="English label" value={state.nameLocalizedEn} onChange={(e) => updateField('nameLocalizedEn', e.target.value)} required placeholder="e.g. Academic Year 2026" />
                 <Input label="Arabic label" value={state.nameLocalizedAr} onChange={(e) => updateField('nameLocalizedAr', e.target.value)} required placeholder="التقويم الأكاديمي" className="text-right" dir="rtl" />
                 <Input label="Effective Year" type="number" value={state.year} onChange={(e) => updateField('year', e.target.value)} required min={2000} max={2100} />
@@ -193,12 +193,12 @@ export function CalendarEditorForm({ mode, initialCalendar }: { mode: 'create' |
              </div>
              <div className="grid gap-3">
                 {state.days.map((day, index) => (
-                  <div key={day.dayOfWeek} className="flex flex-col md:flex-row md:items-center justify-between p-4 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] transition-shadow hover:shadow-md gap-4">
+                  <div key={day.dayOfWeek} className="flex flex-col md:flex-row md:items-center justify-between p-card-p rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] transition-shadow hover:shadow-md gap-4">
                     <div className="w-40">
                       <div className="font-bold text-[color:var(--ims-ink)]">{DAY_LABELS[day.dayOfWeek]}</div>
                       <div className="text-[10px] uppercase tracking-widest text-[color:var(--ims-muted)] font-semibold">{day.dayOfWeek}</div>
                     </div>
-                    <div className="flex-1 flex items-center gap-6">
+                    <div className="flex-1 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
                        <Checkbox label="Operating" checked={day.isOpen} onChange={(e) => updateDay(index, { isOpen: e.target.checked })} />
                        <div className="flex items-center gap-2">
                           <Input type="time" value={day.startTime} onChange={(e) => updateDay(index, { startTime: e.target.value })} disabled={!day.isOpen} className="w-32 h-9" />
@@ -216,11 +216,11 @@ export function CalendarEditorForm({ mode, initialCalendar }: { mode: 'create' |
         </div>
 
         <aside className="space-y-6">
-           <Card className="bg-[color:var(--ims-surface-hover)] border-dashed">
-              <CardHeader>
+           <Card className="bg-[color:var(--ims-surface-hover)] border-dashed shadow-none">
+              <CardHeader className="p-card-p">
                  <CardTitle className="text-base">Lifecycle & Validity</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="p-card-p space-y-4">
                  <Select label="Release Status" value={state.status} onChange={(e) => updateField('status', e.target.value as CalendarFormState['status'])} options={[
                     { value: 'Draft', label: 'Draft — Working Copy' },
                     { value: 'Active', label: 'Active — Live & Validating' },
@@ -233,15 +233,15 @@ export function CalendarEditorForm({ mode, initialCalendar }: { mode: 'create' |
            </Card>
 
            <Card className="bg-[color:var(--ims-ink)] text-white border-none shadow-xl overflow-hidden">
-              <CardHeader>
+              <CardHeader className="p-card-p">
                  <CardTitle className="text-white flex items-center gap-2"><Sparkles className="h-5 w-5 text-[color:var(--ims-brass)]" /> Integration Note</CardTitle>
               </CardHeader>
-              <CardContent className="text-xs text-white/80 leading-relaxed space-y-2">
+              <CardContent className="p-card-p text-xs text-white/80 leading-relaxed space-y-2">
                  <p>This baseline will be used for all branches within the institute.</p>
                  <p>Changes here may affect existing schedules if they fall within this effective range.</p>
                  <p className="font-semibold text-white">Timezone: Asia/Muscat (Fixed)</p>
               </CardContent>
-              <CardFooter className="border-t border-white/10 pt-4">
+              <CardFooter className="p-card-p border-t border-white/10">
                  <Button type="submit" loading={isSaving} className="w-full bg-[color:var(--ims-brass)] hover:bg-[color:var(--ims-brass-soft)]">
                     <Save className="h-4 w-4 mr-2" /> {mode === 'create' ? 'Create baseline' : 'Commit changes'}
                  </Button>
@@ -250,5 +250,7 @@ export function CalendarEditorForm({ mode, initialCalendar }: { mode: 'create' |
         </aside>
       </div>
     </form>
+  );
+}
   );
 }

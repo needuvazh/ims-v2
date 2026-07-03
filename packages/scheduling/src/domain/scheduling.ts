@@ -95,6 +95,26 @@ export type Holiday = {
   isDeleted: boolean;
 };
 
+export type VenueBlock = {
+  id: Uuid;
+  branchId: BranchId;
+  classroomId: Uuid | null;
+  blockDate: Date;
+  startTime: string | null;
+  endTime: string | null;
+  isFullDay: boolean;
+  reasonCode: string;
+  status: 'Active' | 'Cancelled';
+  version: number;
+  createdAt: Date;
+  createdBy: Uuid | null;
+  updatedAt: Date | null;
+  updatedBy: Uuid | null;
+  deletedAt: Date | null;
+  deletedBy: Uuid | null;
+  isDeleted: boolean;
+};
+
 export const localizedTextSchema = z.object({ en: z.string().trim().min(1), ar: z.string().trim().min(1) });
 
 export const workingHourSchema = z.object({
@@ -155,11 +175,31 @@ export const createHolidaySchema = z.object({
   overridePolicy: z.enum(['NOT_ALLOWED', 'MANAGER_APPROVAL_ALLOWED', 'SUPER_ADMIN_ONLY']).default('MANAGER_APPROVAL_ALLOWED'),
 });
 
+export const createVenueBlockSchema = z.object({
+  branchId: z.string().uuid(),
+  classroomId: z.string().uuid().nullable().optional(),
+  blockDate: z.coerce.date(),
+  startTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/).nullable().optional(),
+  endTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/).nullable().optional(),
+  isFullDay: z.boolean().default(true),
+  reasonCode: z.string().trim().min(2).max(50),
+  status: z.enum(['Active', 'Cancelled']).default('Active'),
+}).refine((data) => {
+  if (!data.isFullDay) {
+    return data.startTime && data.endTime && data.startTime < data.endTime;
+  }
+  return true;
+}, { message: 'Partial-day blocks require valid start and end times.' });
+
+export const updateVenueBlockSchema = createVenueBlockSchema.partial().omit({ branchId: true });
+
 export type CreateBusinessCalendarCommand = z.infer<typeof createBusinessCalendarSchema>;
 export type UpdateBusinessCalendarCommand = z.infer<typeof updateBusinessCalendarSchema>;
 export type CreateBranchOverrideCommand = z.infer<typeof createBranchOverrideSchema>;
 export type UpdateBranchOverrideCommand = z.infer<typeof updateBranchOverrideSchema>;
 export type CreateHolidayCommand = z.infer<typeof createHolidaySchema>;
+export type CreateVenueBlockCommand = z.infer<typeof createVenueBlockSchema>;
+export type UpdateVenueBlockCommand = z.infer<typeof updateVenueBlockSchema>;
 
 export type ResolvedCalendar = {
   businessCalendar: BusinessCalendar;

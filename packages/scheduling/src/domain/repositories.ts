@@ -20,5 +20,10 @@ export interface ISchedulingRepository {
   findHolidayById(id: string, tx?: Prisma.TransactionClient): Promise<Holiday | null>;
   listHolidays(filters: { businessCalendarId?: string; branchId?: string | null; branchCalendarOverrideId?: string | null; date?: Date }, tx?: Prisma.TransactionClient): Promise<Holiday[]>;
 
+  createVenueBlock(data: Prisma.VenueBlockUncheckedCreateInput, tx?: Prisma.TransactionClient): Promise<VenueBlock>;
+  updateVenueBlock(id: string, data: Prisma.VenueBlockUncheckedUpdateInput, version: number, tx?: Prisma.TransactionClient): Promise<VenueBlock>;
+  findVenueBlockById(id: string, tx?: Prisma.TransactionClient): Promise<VenueBlock | null>;
+  listVenueBlocks(filters: { branchId?: string; classroomId?: string | null; date?: Date; status?: string }, tx?: Prisma.TransactionClient): Promise<VenueBlock[]>;
+
   resolveCalendar(branchId: string, date: Date, instituteId: string, tx?: Prisma.TransactionClient): Promise<ResolvedCalendar>;
 }

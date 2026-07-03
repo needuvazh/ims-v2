@@ -38,6 +38,23 @@ enum CalendarStatus {
   Archived
 }
 
+enum ScheduleStatus {
+  Draft
+  Conflict
+  Published
+  Rescheduled
+  Cancelled
+  Completed
+}
+
+enum ConflictType {
+  HOLIDAY
+  VENUE
+  TRAINER_OVERLAP
+  CLASSROOM_OVERLAP
+  OPERATING_HOURS
+}
+
 enum HolidayStatus {
   Draft
   Active
@@ -502,6 +519,7 @@ model Branch {
   enrollments Enrollment[]
   branchCalendarOverrides BranchCalendarOverride[]
   holidays Holiday[]
+  venueBlocks VenueBlock[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -700,6 +718,34 @@ model CalendarWorkingHour {
   @@map("calendar_working_hours")
 }
 
+model VenueBlock {
+  id          String   @id @default(uuid()) @db.Uuid
+  branchId    String   @db.Uuid
+  classroomId String?  @db.Uuid
+  blockDate   DateTime @db.Date
+  startTime   String?  @db.VarChar(5) // HH:MM
+  endTime     String?  @db.VarChar(5) // HH:MM
+  isFullDay   Boolean  @default(true)
+  reasonCode  String   @db.VarChar(50)
+  status      String   @default("Active") @db.VarChar(50)
+
+  branch    Branch     @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  classroom Classroom? @relation(fields: [classroomId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+  version   Int       @default(1)
+
+  @@index([branchId, blockDate])
+  @@index([classroomId, blockDate])
+  @@map("venue_blocks")
+}
+
 model Holiday {
   id                     String       @id @default(uuid()) @db.Uuid
   businessCalendarId      String       @db.Uuid
@@ -785,6 +831,7 @@ model Classroom {
   effectiveEndDate   DateTime?    @db.Date
 
   branch Branch @relation(fields: [branchId], references: [id])
+  venueBlocks VenueBlock[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -1182,7 +1229,12 @@ model Session {
   trainerId     String?  @db.Uuid // logical reference
   classroomId   String?  @db.Uuid // logical reference
   status        String   @db.VarChar(50) // Scheduled, Completed, Cancelled, Rescheduled
-  version       Int      @default(1)
+  
+  scheduleStatus    ScheduleStatus @default(Draft)
+  conflictType      ConflictType?
+  overrideReason    String?        @db.Text
+  isConflictIgnored Boolean        @default(false)
+  version           Int            @default(1)
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid

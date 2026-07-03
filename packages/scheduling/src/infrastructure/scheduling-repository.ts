@@ -94,6 +94,28 @@ function mapHoliday(row: any): Holiday {
   };
 }
 
+function mapVenueBlock(row: any): VenueBlock {
+  return {
+    id: row.id,
+    branchId: row.branchId,
+    classroomId: row.classroomId,
+    blockDate: row.blockDate,
+    startTime: row.startTime,
+    endTime: row.endTime,
+    isFullDay: row.isFullDay,
+    reasonCode: row.reasonCode,
+    status: row.status,
+    version: row.version,
+    createdAt: row.createdAt,
+    createdBy: row.createdBy,
+    updatedAt: row.updatedAt,
+    updatedBy: row.updatedBy,
+    deletedAt: row.deletedAt,
+    deletedBy: row.deletedBy,
+    isDeleted: row.isDeleted,
+  };
+}
+
 export class PrismaSchedulingRepository implements ISchedulingRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
@@ -335,6 +357,39 @@ export class PrismaSchedulingRepository implements ISchedulingRepository {
       },
     });
     return rows.map(mapHoliday);
+  }
+
+  async createVenueBlock(data: Prisma.VenueBlockUncheckedCreateInput, tx?: Prisma.TransactionClient): Promise<VenueBlock> {
+    const row = await this.client(tx).venueBlock.create({ data });
+    return mapVenueBlock(row);
+  }
+
+  async updateVenueBlock(id: string, data: Prisma.VenueBlockUncheckedUpdateInput, version: number, tx?: Prisma.TransactionClient): Promise<VenueBlock> {
+    const client = this.client(tx);
+    const result = await client.venueBlock.updateMany({ where: { id, version, isDeleted: false }, data: { ...data, version: { increment: 1 } } });
+    if (result.count === 0) throw new Error('ERR_SCH_CONCURRENCY_VIOLATION');
+    const row = await client.venueBlock.findUnique({ where: { id } });
+    if (!row) throw new Error('ERR_SCH_VENUE_BLOCK_NOT_FOUND');
+    return mapVenueBlock(row);
+  }
+
+  async findVenueBlockById(id: string, tx?: Prisma.TransactionClient): Promise<VenueBlock | null> {
+    const row = await this.client(tx).venueBlock.findUnique({ where: { id } });
+    return row && !row.isDeleted ? mapVenueBlock(row) : null;
+  }
+
+  async listVenueBlocks(filters: { branchId?: string; classroomId?: string | null; date?: Date; status?: string }, tx?: Prisma.TransactionClient): Promise<VenueBlock[]> {
+    const rows = await this.client(tx).venueBlock.findMany({
+      where: {
+        isDeleted: false,
+        ...(filters.branchId ? { branchId: filters.branchId } : {}),
+        ...(filters.classroomId !== undefined ? { classroomId: filters.classroomId } : {}),
+        ...(filters.date ? { blockDate: filters.date } : {}),
+        ...(filters.status ? { status: filters.status } : {}),
+      },
+      orderBy: { blockDate: 'desc' },
+    });
+    return rows.map(mapVenueBlock);
   }
 
   async resolveCalendar(branchId: string, date: Date, instituteId: string, tx?: Prisma.TransactionClient): Promise<ResolvedCalendar> {
