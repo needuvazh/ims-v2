@@ -80,26 +80,32 @@ enum PricingSource {
 }
 
 enum StudentStatus {
+  Pending
   Active
   Suspended
   Inactive
+  Archived
 }
 
 model Person {
-  id          String    @id @default(uuid()) @db.Uuid
-  firstName   String    @db.VarChar(100)
-  lastName    String    @db.VarChar(100)
-  mobile      String    @unique @db.VarChar(30)
-  email       String?   @unique @db.VarChar(255)
-  nationalId  String?   @db.VarChar(50)
-  nationality String?   @db.VarChar(50)
-  dateOfBirth DateTime? @db.Date
-  gender      String?   @db.VarChar(20)
+  id             String    @id @default(uuid()) @db.Uuid
+  firstName      String    @db.VarChar(100)
+  lastName       String    @db.VarChar(100)
+  mobile         String    @db.VarChar(30)
+  email          String?   @db.VarChar(255)
+  nationalId     String?   @db.VarChar(50)
+  passportNumber String?   @unique @db.VarChar(50)
+  visaNumber     String?   @unique @db.VarChar(50)
+  nationality    String?   @db.VarChar(50)
+  dateOfBirth    DateTime? @db.Date
+  gender         String?   @db.VarChar(20)
+  localizedName  Json?
+  photoUrl       String?   @db.VarChar(255)
 
   user           User?
   leads          Lead[]
   admissions     Admission[]
-  studentProfile StudentProfile?
+  studentProfiles StudentProfile[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -108,7 +114,10 @@ model Person {
   deletedAt DateTime? @db.Timestamptz(6)
   deletedBy String?   @db.Uuid
   isDeleted Boolean   @default(false)
+  version   Int       @default(1)
 
+  @@index([mobile])
+  @@index([email])
   @@map("persons")
 }
 
@@ -484,11 +493,17 @@ model Branch {
   deletedBy String?   @db.Uuid
   isDeleted Boolean   @default(false)
 
-  leads              Lead[]
-  admissions         Admission[]
-  inquiries          Inquiry[]
-  userBranchAccesses UserBranchAccess[]
-  documents          Document[]         @relation("BranchDocuments")
+  leads                  Lead[]
+  admissions             Admission[]
+  inquiries              Inquiry[]
+  userBranchAccesses     UserBranchAccess[]
+  documents              Document[]             @relation("BranchDocuments")
+  studentProfiles        StudentProfile[]
+  studentStatusHistories StudentStatusHistory[]
+  studentIdCardHistories StudentIdCardHistory[]
+  studentDuplicateCases  StudentDuplicateCase[]
+  studentMergeLogs       StudentMergeLog[]
+  studentExportLogs      StudentExportLog[]
 
   @@unique([branchCode])
   @@index([status])
@@ -922,15 +937,15 @@ model Batch {
 }
 
 model CorporateAccount {
-  id                  String   @id @default(uuid()) @db.Uuid
-  organizationId      String   @db.Uuid
-  accountCode         String   @unique @db.VarChar(50)
-  accountName         String   @db.VarChar(150)
-  creditLimit         Decimal  @db.Decimal(12, 3)
-  currentOutstanding  Decimal  @default(0.000) @db.Decimal(12, 3)
-  blockOnCreditLimit  Boolean  @default(true)
-  billingCycle        String   @default("Monthly") @db.VarChar(50)
-  status              String   @default("Active") @db.VarChar(50)
+  id                 String  @id @default(uuid()) @db.Uuid
+  organizationId     String  @db.Uuid
+  accountCode        String  @unique @db.VarChar(50)
+  accountName        String  @db.VarChar(150)
+  creditLimit        Decimal @db.Decimal(12, 3)
+  currentOutstanding Decimal @default(0.000) @db.Decimal(12, 3)
+  blockOnCreditLimit Boolean @default(true)
+  billingCycle       String  @default("Monthly") @db.VarChar(50)
+  status             String  @default("Active") @db.VarChar(50)
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -1145,28 +1160,223 @@ model LeadFollowUp {
 }
 
 model StudentProfile {
-  id            String        @id @default(uuid()) @db.Uuid
-  personId      String        @unique @db.Uuid
-  studentNumber String        @unique @db.VarChar(50)
-  status        StudentStatus @default(Active)
-  idCardIssued  Boolean       @default(false)
-  idCardNumber  String?       @unique @db.VarChar(50)
-  joinedAt      DateTime      @default(now()) @db.Timestamptz(6)
+  id                           String        @id @default(uuid()) @db.Uuid
+  personId                     String        @map("person_id") @db.Uuid
+  studentNumber                String        @map("student_number") @db.VarChar(50)
+  branchId                     String        @map("branch_id") @db.Uuid
+  studentStatus                StudentStatus @default(Active) @map("student_status")
+  idCardIssued                 Boolean       @default(false) @map("id_card_issued")
+  idCardNumber                 String?       @map("id_card_number") @db.VarChar(50)
+  joinedAt                     DateTime      @default(now()) @map("joined_at") @db.Timestamptz(6)
+  creationSource               String        @default("DirectRegistration") @map("creation_source") @db.VarChar(30)
+  sourceAdmissionId            String?       @map("source_admission_id") @db.Uuid
+  sourceCorporateParticipantId String?       @map("source_corporate_participant_id") @db.Uuid
+  duplicateReviewRequired      Boolean       @default(false) @map("duplicate_review_required")
+  remarks                      String?       @db.Text
+  effectiveStartDate           DateTime      @default(now()) @map("effective_start_date") @db.Date
+  effectiveEndDate             DateTime?     @map("effective_end_date") @db.Date
+  status                       String        @default("Active") @db.VarChar(30)
+  version                      Int           @default(1)
 
-  person      Person       @relation(fields: [personId], references: [id])
-  admissions  Admission[]
-  enrollments Enrollment[]
+  // Relations
+  person              Person                 @relation(fields: [personId], references: [id], onDelete: Restrict)
+  branch              Branch                 @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  admissions          Admission[]
+  enrollments         Enrollment[]
+  statusHistory       StudentStatusHistory[]
+  idCardHistory       StudentIdCardHistory[]
+  mergeLogsAsSurvivor StudentMergeLog[]      @relation("StudentMergeSurvivor")
+  mergeLogsAsSource   StudentMergeLog[]      @relation("StudentMergeSource")
 
-  createdAt DateTime  @default(now()) @db.Timestamptz(6)
-  createdBy String?   @db.Uuid
-  updatedAt DateTime? @db.Timestamptz(6)
-  updatedBy String?   @db.Uuid
-  deletedAt DateTime? @db.Timestamptz(6)
-  deletedBy String?   @db.Uuid
-  isDeleted Boolean   @default(false)
+  // Audit columns
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  createdBy String?   @map("created_by") @db.Uuid
+  updatedAt DateTime? @map("updated_at") @db.Timestamptz(6)
+  updatedBy String?   @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+  deletedBy String?   @map("deleted_by") @db.Uuid
+  isDeleted Boolean   @default(false) @map("is_deleted")
 
   @@index([personId])
+  @@index([branchId, studentStatus])
+  @@index([branchId, joinedAt])
+  @@index([sourceAdmissionId])
+  @@index([sourceCorporateParticipantId])
   @@map("student_profiles")
+}
+
+model StudentStatusHistory {
+  id                 String    @id @default(uuid()) @db.Uuid
+  studentProfileId   String    @map("student_profile_id") @db.Uuid
+  branchId           String    @map("branch_id") @db.Uuid
+  oldStatus          String    @map("old_status") @db.VarChar(30)
+  newStatus          String    @map("new_status") @db.VarChar(30)
+  changeReason       String    @map("change_reason") @db.VarChar(500)
+  effectiveStartDate DateTime  @map("effective_start_date") @db.Date
+  effectiveEndDate   DateTime? @map("effective_end_date") @db.Date
+  status             String    @default("Active") @db.VarChar(30)
+  requestedBy        String    @map("requested_by") @db.Uuid
+  approvedBy         String?   @map("approved_by") @db.Uuid
+
+  studentProfile StudentProfile @relation(fields: [studentProfileId], references: [id], onDelete: Restrict)
+  branch         Branch         @relation(fields: [branchId], references: [id], onDelete: Restrict)
+
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  createdBy String    @map("created_by") @db.Uuid
+  updatedAt DateTime? @map("updated_at") @db.Timestamptz(6)
+  updatedBy String    @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+  isDeleted Boolean   @default(false) @map("is_deleted")
+
+  @@index([studentProfileId, effectiveStartDate])
+  @@index([branchId, newStatus])
+  @@map("student_status_history")
+}
+
+model StudentIdCardHistory {
+  id                String   @id @default(uuid()) @db.Uuid
+  studentProfileId  String   @map("student_profile_id") @db.Uuid
+  branchId          String   @map("branch_id") @db.Uuid
+  eventType         String   @map("event_type") @db.VarChar(30)
+  oldIdCardNumber   String?  @map("old_id_card_number") @db.VarChar(50)
+  newIdCardNumber   String?  @map("new_id_card_number") @db.VarChar(50)
+  eventDate         DateTime @map("event_date") @db.Date
+  reason            String   @db.VarChar(500)
+  performedByUserId String   @map("performed_by_user_id") @db.Uuid
+  status            String   @default("Active") @db.VarChar(30)
+
+  studentProfile StudentProfile @relation(fields: [studentProfileId], references: [id], onDelete: Restrict)
+  branch         Branch         @relation(fields: [branchId], references: [id], onDelete: Restrict)
+
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  createdBy String    @map("created_by") @db.Uuid
+  updatedAt DateTime? @map("updated_at") @db.Timestamptz(6)
+  updatedBy String    @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+  isDeleted Boolean   @default(false) @map("is_deleted")
+
+  @@index([studentProfileId, eventDate])
+  @@index([branchId, eventType])
+  @@map("student_id_card_history")
+}
+
+model StudentDuplicateCase {
+  id                     String    @id @default(uuid()) @db.Uuid
+  branchId               String    @map("branch_id") @db.Uuid
+  caseNumber             String    @unique @map("case_number") @db.VarChar(50)
+  sourceType             String    @map("source_type") @db.VarChar(30)
+  sourceStudentProfileId String?   @map("source_student_profile_id") @db.Uuid
+  sourcePersonId         String?   @map("source_person_id") @db.Uuid
+  caseStatus             String    @map("case_status") @db.VarChar(30)
+  riskLevel              String    @map("risk_level") @db.VarChar(20)
+  triggerSummary         String    @map("trigger_summary") @db.VarChar(500)
+  resolutionType         String?   @map("resolution_type") @db.VarChar(30)
+  resolutionReason       String?   @map("resolution_reason") @db.VarChar(1000)
+  resolvedAt             DateTime? @map("resolved_at") @db.Timestamptz(6)
+  resolvedBy             String?   @map("resolved_by") @db.Uuid
+  status                 String    @default("Active") @db.VarChar(30)
+
+  branch    Branch                     @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  items     StudentDuplicateCaseItem[]
+  mergeLogs StudentMergeLog[]
+
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  createdBy String    @map("created_by") @db.Uuid
+  updatedAt DateTime? @map("updated_at") @db.Timestamptz(6)
+  updatedBy String    @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+  isDeleted Boolean   @default(false) @map("is_deleted")
+
+  @@index([branchId, caseStatus])
+  @@map("student_duplicate_cases")
+}
+
+model StudentDuplicateCaseItem {
+  id                        String  @id @default(uuid()) @db.Uuid
+  duplicateCaseId           String  @map("duplicate_case_id") @db.Uuid
+  candidateStudentProfileId String? @map("candidate_student_profile_id") @db.Uuid
+  candidatePersonId         String? @map("candidate_person_id") @db.Uuid
+  candidateBranchId         String? @map("candidate_branch_id") @db.Uuid
+  matchScore                Decimal @map("match_score") @db.Decimal(5, 2)
+  matchReasons              Json    @map("match_reasons")
+  resolutionDecision        String? @map("resolution_decision") @db.VarChar(30)
+  isPrimaryCandidate        Boolean @default(false) @map("is_primary_candidate")
+  status                    String  @default("Active") @db.VarChar(30)
+
+  duplicateCase StudentDuplicateCase @relation(fields: [duplicateCaseId], references: [id], onDelete: Restrict)
+
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  createdBy String    @map("created_by") @db.Uuid
+  updatedAt DateTime? @map("updated_at") @db.Timestamptz(6)
+  updatedBy String    @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+  isDeleted Boolean   @default(false) @map("is_deleted")
+
+  @@index([duplicateCaseId, matchScore])
+  @@map("student_duplicate_case_items")
+}
+
+model StudentMergeLog {
+  id                         String   @id @default(uuid()) @db.Uuid
+  branchId                   String   @map("branch_id") @db.Uuid
+  duplicateCaseId            String?  @map("duplicate_case_id") @db.Uuid
+  survivorStudentProfileId   String   @map("survivor_student_profile_id") @db.Uuid
+  sourceStudentProfileId     String   @map("source_student_profile_id") @db.Uuid
+  mergeReason                String   @map("merge_reason") @db.VarChar(1000)
+  mergedAt                   DateTime @map("merged_at") @db.Timestamptz(6)
+  mergedBy                   String   @map("merged_by") @db.Uuid
+  reassignedAdmissionsCount  Int      @map("reassigned_admissions_count")
+  reassignedEnrollmentsCount Int      @map("reassigned_enrollments_count")
+  reassignedDocumentsCount   Int      @map("reassigned_documents_count")
+  reassignedOtherRefsCount   Int      @map("reassigned_other_refs_count")
+  mergePayload               Json     @map("merge_payload")
+  status                     String   @default("Completed") @db.VarChar(30)
+
+  branch        Branch                @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  duplicateCase StudentDuplicateCase? @relation(fields: [duplicateCaseId], references: [id], onDelete: Restrict)
+  survivor      StudentProfile        @relation("StudentMergeSurvivor", fields: [survivorStudentProfileId], references: [id], onDelete: Restrict)
+  source        StudentProfile        @relation("StudentMergeSource", fields: [sourceStudentProfileId], references: [id], onDelete: Restrict)
+
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  createdBy String    @map("created_by") @db.Uuid
+  updatedAt DateTime? @map("updated_at") @db.Timestamptz(6)
+  updatedBy String    @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+  isDeleted Boolean   @default(false) @map("is_deleted")
+
+  @@index([survivorStudentProfileId, mergedAt])
+  @@index([sourceStudentProfileId])
+  @@index([branchId, mergedAt])
+  @@map("student_merge_logs")
+}
+
+model StudentExportLog {
+  id                     String   @id @default(uuid()) @db.Uuid
+  branchId               String   @map("branch_id") @db.Uuid
+  requestedBy            String   @map("requested_by") @db.Uuid
+  exportScope            String   @map("export_scope") @db.VarChar(30)
+  exportFormat           String   @map("export_format") @db.VarChar(10)
+  filterSnapshot         Json     @map("filter_snapshot")
+  rowCount               Int      @map("row_count")
+  includedMaskedIdentity Boolean  @map("included_masked_identity")
+  reason                 String?  @db.VarChar(500)
+  exportStatus           String   @map("export_status") @db.VarChar(30)
+  exportedAt             DateTime @map("exported_at") @db.Timestamptz(6)
+  fileReference          String?  @map("file_reference") @db.VarChar(500)
+  status                 String   @default("Active") @db.VarChar(30)
+
+  branch Branch @relation(fields: [branchId], references: [id], onDelete: Restrict)
+
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  createdBy String    @map("created_by") @db.Uuid
+  updatedAt DateTime? @map("updated_at") @db.Timestamptz(6)
+  updatedBy String    @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+  isDeleted Boolean   @default(false) @map("is_deleted")
+
+  @@index([branchId, exportedAt])
+  @@index([requestedBy, exportedAt])
+  @@map("student_export_logs")
 }
 
 model Admission {
@@ -1288,9 +1498,9 @@ model WalkInPayment {
   amount             Decimal  @db.Decimal(12, 3)
   paymentMethod      String   @db.VarChar(50)
   referenceNumber    String?  @unique @db.VarChar(100)
-  receivedBy        String   @db.Uuid
-  receivedAt        DateTime @default(now()) @db.Timestamptz(6)
-  remarks           String?  @db.Text
+  receivedBy         String   @db.Uuid
+  receivedAt         DateTime @default(now()) @db.Timestamptz(6)
+  remarks            String?  @db.Text
 
   walkInEnrollment WalkInEnrollment @relation(fields: [walkInEnrollmentId], references: [id])
   enrollment       Enrollment       @relation(fields: [enrollmentId], references: [id])

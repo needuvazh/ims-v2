@@ -45,7 +45,8 @@ export class EnrollmentService {
             data: {
               personId: data.corporateParticipantId,
               studentNumber,
-              status: 'Active',
+              branchId: data.branchId,
+              studentStatus: 'Active',
             }
           });
         }
@@ -824,7 +825,8 @@ export class EnrollmentService {
           data: {
             personId: person.id,
             studentNumber,
-            status: 'Active',
+            branchId: data.branchId,
+            studentStatus: 'Active',
           },
         });
       }

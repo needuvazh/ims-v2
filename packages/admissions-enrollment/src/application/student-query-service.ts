@@ -55,7 +55,7 @@ export class StudentQueryService {
         ],
       },
       include: {
-        studentProfile: true,
+        studentProfiles: true,
       },
     });
 
@@ -71,7 +71,7 @@ export class StudentQueryService {
       };
     }
 
-    const studentProfile = person.studentProfile;
+    const studentProfile = person.studentProfiles?.[0] || null;
     let preflight = null;
 
     if (studentProfile) {

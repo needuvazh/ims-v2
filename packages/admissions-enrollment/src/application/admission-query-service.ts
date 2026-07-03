@@ -100,6 +100,8 @@ export class AdmissionQueryService {
           id: admission.studentProfileId,
           studentNumber: admission.studentProfile?.studentNumber,
           status: admission.studentProfile?.status,
+          idCardNumber: admission.studentProfile?.idCardNumber,
+          idCardIssued: admission.studentProfile?.idCardIssued,
         },
         person: {
           id: admission.personId,

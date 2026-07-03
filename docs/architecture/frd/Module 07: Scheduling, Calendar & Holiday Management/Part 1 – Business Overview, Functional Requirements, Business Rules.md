@@ -1,0 +1,820 @@
+# Part 1 – Business Overview, Functional Requirements, Business Rules
+
+## Module 07 – Scheduling, Calendar & Holiday Management
+
+## 1. Comprehensive Introduction
+
+Scheduling, Calendar & Holiday Management is the operational planning module for ASTI IMS. It converts approved batch delivery plans into concrete dated and timed sessions while protecting ASTI from trainer conflicts, classroom conflicts, batch overlaps, holiday scheduling mistakes, and unauthorized branch data access.
+
+ASTI operates as a training institute with multiple operational capabilities: course catalog, training delivery, enrollment, attendance, trainer management, finance, certificates, reporting, and communication. Scheduling sits between Course/Batch planning and Attendance execution. It does not create a learner, does not create a batch, does not issue invoices, and does not issue certificates. Its responsibility is to determine whether a session can occur at a specific branch, date, time, trainer, and classroom, and to maintain the official timetable once that decision is made.
+
+The module supports Phase 1 manual scheduling in a modular monolith. It must not rely on external calendar providers, external brokers, microservices, CQRS, or event sourcing. All scheduling operations are implemented through in-process module boundaries inside the Next.js monorepo and persisted in the shared relational database through Prisma-backed repositories.
+
+The module enforces the following core business truth:
+
+```text
+A training session is valid only when the branch, batch, course, trainer, classroom, calendar, holiday rules, venue block rules, and user permissions are all valid for the selected date and time.
+```
+
+## 2. Business Benefits
+
+| Benefit ID | Benefit | Business Impact |
+|---|---|---|
+| BB-SCH-001 | Prevents trainer double booking. | Reduces operational disruption and trainer dissatisfaction. |
+| BB-SCH-002 | Prevents classroom double booking. | Ensures learners arrive to an available classroom and avoids front-desk escalation. |
+| BB-SCH-003 | Prevents sessions on holidays and closure days. | Aligns training operations with Oman public holidays and ASTI branch closure rules. |
+| BB-SCH-004 | Provides reliable daily timetable visibility. | Helps reception, coordinators, trainers, and branch managers coordinate daily operations. |
+| BB-SCH-005 | Improves attendance readiness. | Published schedules can feed attendance sessions without duplicate data entry. |
+| BB-SCH-006 | Improves branch governance. | Branch managers can control exceptions, venue blocks, and special closure periods. |
+| BB-SCH-007 | Supports consolidated operational reporting. | Executives with permission can analyze branch, classroom, and trainer utilization. |
+| BB-SCH-008 | Reduces manual spreadsheet dependency. | Coordinators can generate recurring schedules and validate conflicts in-system. |
+| BB-SCH-009 | Improves audit and compliance. | Sensitive schedule changes are traceable with who, what, when, before/after values, and reason. |
+| BB-SCH-010 | Supports bilingual institute operations. | Calendar, holiday, and schedule-facing labels can be displayed in English and Arabic. |
+
+## 3. Detailed Functional Requirements
+
+### FR-SCH-001 – Create Branch Business Calendar
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Allows Super Admin or authorized Branch Manager to create a business calendar for a branch and year. Actors: Super Admin, Branch Manager, Identity & Access module, Organization module, Audit module. |
+| Preconditions | User is authenticated. User has `scheduling.calendar.create`. User has access to the target branch. Target branch exists, is active, and is not soft deleted. No active non-deleted calendar already exists for the same branch and year unless previous calendar is Closed or Archived. |
+| Inputs | `branchId`, `name`, `nameLocalized.en`, `nameLocalized.ar`, `year`, `countryCode`, `timezone`, `operatingDays`, `workingHours`, `effectiveStartDate`, `effectiveEndDate`, `status`. |
+| Processing Steps | 1. Resolve active branch context from session. 2. Verify permission `scheduling.calendar.create`. 3. Verify `branchId` is within assigned branch scope. 4. Validate `year` is a four-digit year between 2000 and 2100. 5. Default `countryCode` to `OM` when not supplied. 6. Default `timezone` to Oman GST using `Asia/Muscat`. 7. Validate localized name includes non-empty English and Arabic values. 8. Validate `operatingDays` includes Monday through Sunday, each with `isOpen` boolean. 9. Validate every open day has working hours. 10. Validate each working hour range has `startTime < endTime`. 11. Validate effective dates overlap the selected calendar year. 12. Check uniqueness for active calendar by branch and year. 13. Insert BusinessCalendar with `status = Draft` unless explicitly created as Active by authorized workflow. 14. Set `isActive` according to status. 15. Set base audit fields and `version = 1`. 16. Create AuditLog entry for calendar creation. |
+| Outputs & Postconditions | BusinessCalendar is created. Calendar can be used for holiday configuration and scheduling validation when Active. AuditLog records creation. |
+| Priority | Must |
+
+### FR-SCH-002 – Update Branch Business Calendar
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Allows authorized users to update calendar name, operating days, working hours, effective dates, and status while preserving audit history. Actors: Super Admin, Branch Manager, Audit module. |
+| Preconditions | Calendar exists, is not soft deleted, and belongs to accessible branch. User has `scheduling.calendar.update`. Supplied `version` matches current record. Calendar is not Archived. |
+| Inputs | `calendarId`, `name`, `nameLocalized`, `operatingDays`, `workingHours`, `effectiveStartDate`, `effectiveEndDate`, `status`, `version`, `changeReason`. |
+| Processing Steps | 1. Load calendar by ID with branch scope. 2. Reject if not found or inaccessible. 3. Verify permission. 4. Validate optimistic locking by comparing supplied version. 5. Validate localized fields. 6. Validate operating days and working hours. 7. If making a day closed, find future Published schedule sessions on that weekday in the calendar effective period. 8. If conflicts exist, reject with affected session list unless user has approved override permission and provides reason. 9. Validate status transition using BR-SCH-007. 10. Save changes and increment version. 11. Audit old value and new value with reason. |
+| Outputs & Postconditions | Calendar is updated. Future schedule conflicts are either rejected or audited as approved override. |
+| Priority | Must |
+
+### FR-SCH-003 – Configure Calendar Operating Days and Working Hours
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Defines whether each day of week is open and what time windows are available for scheduling. Actors: Super Admin, Branch Manager, Academic Coordinator with update permission. |
+| Preconditions | Calendar exists and is Draft or Active. User has update permission. Branch access is valid. |
+| Inputs | `calendarId`, `operatingDays`, `workingHours`, `effectiveStartDate`, `effectiveEndDate`, `version`. |
+| Processing Steps | 1. Validate calendar scope. 2. Require seven day entries: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday. 3. For closed days, store empty time windows. 4. For open days, require one or more non-overlapping working hour windows. 5. Validate no window crosses midnight. 6. Validate start and end times are in HH:mm format. 7. Sort windows by start time. 8. Detect overlapping windows within same day. 9. Revalidate future draft and published sessions against new hours. 10. Reject update if any published session falls outside new working hours unless override is permitted and reason is captured. 11. Persist and audit. |
+| Outputs & Postconditions | Branch calendar has valid operating day and time rules. Future scheduling uses updated rules. |
+| Priority | Must |
+
+### FR-SCH-004 – Activate, Close, and Archive Business Calendar
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Controls the lifecycle of a business calendar. Actors: Super Admin, Branch Manager. |
+| Preconditions | Calendar exists. User has `scheduling.calendar.update` for Active/Closed or `scheduling.calendar.archive` for Archived. Branch access is valid. |
+| Inputs | `calendarId`, `targetStatus`, `version`, `reason`. |
+| Processing Steps | 1. Load calendar with branch scope. 2. Validate permission based on target status. 3. Validate status transition: Draft to Active, Active to Closed, Closed to Archived. 4. For activation, ensure no other Active calendar exists for same branch/year. 5. For activation, validate operating days and working hours are complete. 6. For close, ensure reason is supplied. 7. For archive, ensure calendar is Closed and no future Published schedule depends on it. 8. Update status and isActive. 9. Increment version. 10. Audit lifecycle change. |
+| Outputs & Postconditions | Calendar lifecycle changes. Active calendar becomes available for scheduling validations. |
+| Priority | Must |
+
+### FR-SCH-005 – Create Holiday
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Allows authorized users to register public holidays, branch closures, exam blackouts, maintenance dates, special events, or other non-training days. Actors: Super Admin, Branch Manager, Academic Coordinator where permission granted. |
+| Preconditions | User has `scheduling.holiday.create`. Calendar exists and is accessible. Calendar status is Draft or Active. |
+| Inputs | `calendarId`, `branchId`, `date`, `name`, `nameLocalized.en`, `nameLocalized.ar`, `holidayType`, `isRecurringAnnual`, `status`, `effectiveStartDate`, `effectiveEndDate`. |
+| Processing Steps | 1. Verify permission and branch access. 2. Load calendar and confirm branch alignment. 3. Validate date falls within calendar year or effective date range. 4. Validate localized names. 5. Validate holiday type against lookup. 6. Check duplicate active holiday for same branch, calendar, date, and holiday type. 7. If status is Active, find future Draft and Published schedule sessions on that date. 8. Return conflicts and require user decision for Draft sessions; Published sessions require reschedule or authorized override. 9. Insert holiday with base audit fields and version. 10. Audit creation. |
+| Outputs & Postconditions | Holiday is created. Active holiday participates in schedule conflict detection. |
+| Priority | Must |
+
+### FR-SCH-006 – Update Holiday
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Allows authorized users to modify holiday details while protecting existing published schedules. Actors: Super Admin, Branch Manager, Academic Coordinator. |
+| Preconditions | Holiday exists, not soft deleted, and belongs to accessible branch. User has `scheduling.holiday.update`. Version matches. |
+| Inputs | `holidayId`, `date`, `name`, `nameLocalized`, `holidayType`, `isRecurringAnnual`, `status`, `effectiveStartDate`, `effectiveEndDate`, `version`, `changeReason`. |
+| Processing Steps | 1. Load holiday with branch scope. 2. Verify permission and version. 3. Validate changed date remains inside calendar year. 4. Validate localized values. 5. If date or status changes to affect scheduling, run schedule impact analysis for future Draft and Published sessions. 6. Reject update when active published sessions would become invalid unless user has override permission and reason. 7. Persist updates. 8. Increment version. 9. Audit old and new values. |
+| Outputs & Postconditions | Holiday is updated and future scheduling validations use the updated details. |
+| Priority | Must |
+
+### FR-SCH-007 – Activate, Deactivate, and Soft Delete Holiday
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Controls holiday lifecycle without hard deletion. Actors: Super Admin, Branch Manager. |
+| Preconditions | Holiday exists. User has required permission. Branch access is valid. |
+| Inputs | `holidayId`, `targetStatus`, `deleteReason`, `version`. |
+| Processing Steps | 1. Load holiday by branch scope. 2. Validate permission: update for activation/deactivation, delete for soft deletion. 3. For activation, validate no duplicate active holiday exists. 4. For activation, detect affected future schedule sessions. 5. For soft delete, reject if holiday is referenced by active override records unless administrative policy permits archival with audit. 6. Set status or soft delete fields. 7. Set `isDeleted = true`, `deletedAt`, `deletedBy` for soft delete. 8. Increment version. 9. Audit action with reason. |
+| Outputs & Postconditions | Holiday lifecycle is changed. No hard delete occurs. |
+| Priority | Must |
+
+### FR-SCH-008 – Validate Holiday Conflicts Before Scheduling
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Ensures sessions are not scheduled on active holidays or closure days. Actors: Academic Coordinator, Training Coordinator, Branch Manager, system validation service. |
+| Preconditions | User attempts to create, publish, or reschedule a schedule session. Calendar and branch are known. |
+| Inputs | `branchId`, `scheduledDate`, `startTime`, `endTime`, `calendarId`, `overrideRequested`, `overrideReason`. |
+| Processing Steps | 1. Resolve active branch calendar for scheduled date. 2. Query non-deleted holidays where branch matches, status is Active, date matches scheduledDate, and effective date range includes scheduledDate. 3. If no holiday exists, validation passes. 4. If holiday exists and schedule status is Draft, return warning and mark conflict if policy requires. 5. If holiday exists and target status is Published, reject unless user has `scheduling.override.holiday`. 6. If override is allowed, require non-empty reason with minimum 10 characters and maximum 1000 characters. 7. Store override reason on ScheduleSession and audit override. |
+| Outputs & Postconditions | Validation result contains pass/fail, holiday IDs, holiday names, and required action. Published session cannot proceed without valid permission and reason when holiday conflict exists. |
+| Priority | Must |
+
+### FR-SCH-009 – Create Venue Block
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Allows authorized users to block a classroom or an entire branch for maintenance, inspection, emergency closure, internal event, private booking, or other operational reasons. Actors: Branch Manager, Academic Coordinator, Training Coordinator. |
+| Preconditions | User has `scheduling.venueBlock.create`. Branch is accessible. Classroom, when supplied, belongs to same branch and is active. |
+| Inputs | `branchId`, `classroomId`, `blockDate`, `isFullDay`, `startTime`, `endTime`, `reasonCode`, `reason`, `reasonLocalized`, `status`, `effectiveStartDate`, `effectiveEndDate`. |
+| Processing Steps | 1. Verify permission and branch scope. 2. Validate classroom belongs to branch when provided. 3. Validate block date. 4. If `isFullDay = false`, require startTime and endTime. 5. Validate startTime < endTime. 6. Validate reason code against lookup. 7. Validate reason is not empty. 8. Check overlapping active venue blocks for same branch and classroom scope. 9. If branch-wide block is created, check all active schedule sessions for that branch and date/time. 10. If classroom-specific block is created, check schedule sessions using that classroom. 11. Return conflicts for user resolution. 12. Insert venue block if no blocking conflicts or if created as Draft. 13. Audit creation. |
+| Outputs & Postconditions | Venue block is created and participates in schedule validation when Active. |
+| Priority | Must |
+
+### FR-SCH-010 – Update Venue Block
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Allows authorized users to update venue block date, time, scope, reason, and status. Actors: Branch Manager, Academic Coordinator. |
+| Preconditions | Venue block exists, not soft deleted, and is accessible. User has `scheduling.venueBlock.update`. Version matches. |
+| Inputs | `venueBlockId`, `classroomId`, `blockDate`, `isFullDay`, `startTime`, `endTime`, `reasonCode`, `reason`, `status`, `version`. |
+| Processing Steps | 1. Load venue block with branch scope. 2. Validate permission and version. 3. Validate new classroom belongs to branch when changed. 4. Validate full-day or partial-day time rules. 5. Validate no duplicate overlapping active block exists. 6. Analyze schedule impact. 7. Reject changes that create conflicts for Published sessions unless user has override permission and reason. 8. Persist, increment version, and audit. |
+| Outputs & Postconditions | Venue block is updated. Future scheduling validations use the new block configuration. |
+| Priority | Must |
+
+### FR-SCH-011 – Cancel, Deactivate, and Soft Delete Venue Block
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Controls venue block lifecycle without hard deletion. Actors: Branch Manager, Academic Coordinator, Super Admin. |
+| Preconditions | Venue block exists and belongs to accessible branch. User has `scheduling.venueBlock.cancel` `scheduling.venueBlock.cancel` for cancellation and `scheduling.venueBlock.delete` for soft deletion. |
+| Inputs | `venueBlockId`, `targetStatus`, `reason`, `version`. |
+| Processing Steps | 1. Load venue block with branch scope. 2. Verify permission and version. 3. If target is Cancelled, require reason. 4. If target is soft delete, allow only Draft, Cancelled, or Expired blocks unless Super Admin policy allows. 5. Update status or soft delete fields. 6. Increment version. 7. Audit action and old/new values. |
+| Outputs & Postconditions | Venue block is no longer active when cancelled, expired, or soft deleted. No hard delete occurs. |
+| Priority | Must |
+
+### FR-SCH-012 – Validate Venue Block Conflicts Before Scheduling
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Prevents scheduling during branch-wide or classroom-specific blocked periods. Actors: Academic Coordinator, Training Coordinator, Branch Manager, system validation service. |
+| Preconditions | User attempts to create, publish, or reschedule a session. Branch, classroom, date, start time, and end time are available. |
+| Inputs | `branchId`, `classroomId`, `scheduledDate`, `startTime`, `endTime`, `overrideRequested`, `overrideReason`. |
+| Processing Steps | 1. Query active, non-deleted venue blocks for same branch and date. 2. Include branch-wide blocks where `classroomId IS NULL`. 3. Include classroom-specific blocks where `classroomId` equals requested classroom. 4. Convert full-day blocks into 00:00 to 23:59:59 for comparison. 5. Determine overlap using `requestedStart < blockEnd AND requestedEnd > blockStart`. 6. If no overlap exists, pass validation. 7. If overlap exists and target status is Published, reject unless `scheduling.override.venueBlock` is granted. 8. If override is used, require reason and audit. |
+| Outputs & Postconditions | Validation result includes conflicting block IDs, reason codes, and time windows. Published scheduling is blocked unless authorized override is accepted. |
+| Priority | Must |
+
+### FR-SCH-013 – Create Draft Single Schedule Session
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Creates a single draft session for a selected batch, trainer, classroom, date, and time. Actors: Academic Coordinator, Training Coordinator. |
+| Preconditions | User has `scheduling.session.create`. User has access to branch. Batch exists and belongs to branch. Course exists through batch. Trainer and classroom are active. |
+| Inputs | `batchId`, `trainerId`, `classroomId`, `sessionNumber`, `title`, `titleLocalized`, `scheduledDate`, `startTime`, `endTime`, `notes`. |
+| Processing Steps | 1. Resolve branch from batch. 2. Verify user access to branch. 3. Verify permission. 4. Load batch and course. 5. Validate batch status allows scheduling: Planned, Open, Active. 6. Validate scheduledDate is within batch startDate and endDate unless authorized exception. 7. Validate sessionNumber is positive and unique within batch among non-deleted sessions. 8. Validate trainer is active and authorized for course where trainer authorization is configured. 9. Validate classroom is active and belongs to branch. 10. Validate time range. 11. Run conflict checks. 12. If conflicts exist, create Draft with `scheduleStatus = Conflict` only when policy allows draft conflict capture; otherwise reject. 13. If no conflicts, create Draft with `conflictChecked = true`. 14. Audit creation. |
+| Outputs & Postconditions | Draft ScheduleSession is created. It is not visible as official timetable until published. |
+| Priority | Must |
+
+### FR-SCH-014 – Publish Schedule Session After Successful Validations
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Publishes a draft session and makes it part of the official timetable. Actors: Academic Coordinator, Branch Manager. |
+| Preconditions | User has `scheduling.session.publish`. Session exists, is Draft or Conflict-resolved, not soft deleted, and branch-accessible. Version matches. |
+| Inputs | `scheduleSessionId`, `version`, `publishNotes`. |
+| Processing Steps | 1. Load session with branch scope. 2. Verify permission and version. 3. Re-run all conflict checks using current data. 4. Validate batch/course/branch alignment. 5. Validate trainer and classroom active statuses. 6. Validate no holiday conflict unless authorized override already captured or newly supplied. 7. Validate no venue block conflict unless authorized override exists. 8. Validate trainer double booking. 9. Validate classroom double booking. 10. Validate batch overlap. 11. Set `scheduleStatus = Published`. 12. Set `conflictChecked = true` and `conflictCheckedAt`. 13. Increment version. 14. Audit publish action. 15. Expose schedule to Attendance and Reporting read models through in-process module contracts. |
+| Outputs & Postconditions | Session becomes official. Attendance module can consume it for attendance session creation. |
+| Priority | Must |
+
+### FR-SCH-015 – Create Recurring Batch Schedule Sessions
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Generates multiple draft sessions for a batch based on recurrence rules. Actors: Academic Coordinator. |
+| Preconditions | User has `scheduling.session.create`. Batch is accessible and schedulable. Trainer and classroom are active. |
+| Inputs | `batchId`, `trainerId`, `classroomId`, `recurrenceStartDate`, `recurrenceEndDate`, `daysOfWeek`, `startTime`, `endTime`, `sessionTitlePattern`, `startingSessionNumber`, `skipHolidays`, `maxSessions`. |
+| Processing Steps | 1. Validate branch and permission. 2. Validate recurrence date range is within batch date range unless exception permission is present. 3. Validate at least one day of week. 4. Validate max sessions is between 1 and 120. 5. Generate candidate dates between start and end inclusive matching daysOfWeek. 6. Sort candidate dates ascending. 7. For each candidate, calculate sessionNumber as `startingSessionNumber + index`. 8. If `skipHolidays = true`, exclude dates with active holidays and record skipped reason. 9. For every remaining candidate, run trainer, classroom, batch, working hours, holiday, venue block, and availability checks. 10. Build per-session validation result. 11. If user selects Save Valid Only, create only valid drafts. 12. If user selects Save All as Conflict Drafts, create valid drafts and conflict drafts when policy allows. 13. Reject duplicate session numbers. 14. Persist all created sessions in one transaction when total sessions are 120 or fewer. 15. Audit bulk generation with count of created, skipped, and rejected sessions. |
+| Outputs & Postconditions | Multiple draft schedule sessions are created, with structured validation results. |
+| Priority | Must |
+
+### FR-SCH-016 – Reschedule Draft or Published Session
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Moves a session to a new date, time, trainer, and/or classroom. Actors: Academic Coordinator, Branch Manager, Training Coordinator where permitted. |
+| Preconditions | Session exists and is accessible. User has `scheduling.session.update` for Draft or `scheduling.session.reschedule` for Published. Version matches. Completed sessions cannot be rescheduled. |
+| Inputs | `scheduleSessionId`, `newScheduledDate`, `newStartTime`, `newEndTime`, `newTrainerId`, `newClassroomId`, `rescheduleReason`, `notifyAffectedUsers`, `version`. |
+| Processing Steps | 1. Load session with branch scope. 2. Reject if status is Completed or Cancelled. 3. Verify appropriate permission. 4. Validate reschedule reason for Published sessions. 5. Validate new trainer and classroom. 6. Validate new date within batch date range unless exception permission. 7. Run all conflict checks using new values while excluding current session ID from overlap queries. 8. If conflicts exist, reject unless valid override applies for holiday or venue block only; trainer/classroom/batch double booking cannot be overridden in normal policy. 9. For Draft, update same session. 10. For Published, either update session with status Rescheduled or create replacement session linked by `rescheduledFromSessionId` based on implementation policy; old schedule must remain auditable. 11. Increment version. 12. Audit old and new values. 13. If enabled, request notifications through Communication module. |
+| Outputs & Postconditions | Session schedule changes are saved. Official timetable reflects new values. Audit preserves prior values. |
+| Priority | Must |
+
+### FR-SCH-017 – Cancel Published Session with Reason
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Cancels an official schedule session without deleting it. Actors: Academic Coordinator, Branch Manager. |
+| Preconditions | Session exists, is Published or Rescheduled, and is accessible. User has `scheduling.session.cancel`. Attendance must not be finalized for the session unless cancellation policy allows post-attendance cancellation by Branch Manager. |
+| Inputs | `scheduleSessionId`, `cancellationReasonCode`, `cancellationNotes`, `notifyAffectedUsers`, `version`. |
+| Processing Steps | 1. Load session with branch scope. 2. Verify permission and version. 3. Reject if status is Completed. 4. Check Attendance module for existing finalized attendance. 5. Require reason code and notes. 6. Set status to Cancelled. 7. Set cancellation fields. 8. Increment version. 9. Audit cancellation. 10. If enabled, request communication notification. |
+| Outputs & Postconditions | Session remains in history but is removed from active timetable views by default. Attendance creation is prevented for cancelled session. |
+| Priority | Must |
+
+### FR-SCH-018 – Soft Delete Draft Session
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Allows draft sessions to be soft deleted. Actors: Academic Coordinator, Super Admin. |
+| Preconditions | Session exists, is Draft or Conflict, not Published, not Completed, and branch-accessible. User has `scheduling.session.deleteDraft`. |
+| Inputs | `scheduleSessionId`, `deleteReason`, `version`. |
+| Processing Steps | 1. Load session with branch scope. 2. Verify permission and version. 3. Reject if status is Published, Rescheduled, Cancelled, or Completed. 4. Require delete reason. 5. Set `isDeleted = true`, `deletedAt`, `deletedBy`. 6. Increment version. 7. Audit soft delete. |
+| Outputs & Postconditions | Draft session is hidden from normal views and retained for audit. |
+| Priority | Should |
+
+### FR-SCH-019 – Prevent Trainer Double Booking
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Ensures a trainer is not assigned to overlapping active sessions. Actors: System validation service, Academic Coordinator. |
+| Preconditions | Trainer ID, date, start time, and end time are provided. |
+| Inputs | `trainerId`, `scheduledDate`, `startTime`, `endTime`, `excludeScheduleSessionId`. |
+| Processing Steps | 1. Query non-deleted sessions for trainer on scheduledDate with status Published, Rescheduled, or Draft when draft conflict policy treats drafts as reserved. 2. Exclude Cancelled sessions. 3. Exclude current session when rescheduling. 4. Check time overlap using `newStart < existingEnd AND newEnd > existingStart`. 5. Return conflict when overlap exists. 6. Do not allow normal override for trainer double booking. |
+| Outputs & Postconditions | Validation fails with conflicting session details when trainer overlap exists. |
+| Priority | Must |
+
+### FR-SCH-020 – Prevent Classroom Double Booking
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Ensures a classroom is not assigned to overlapping active sessions. Actors: System validation service, Academic Coordinator. |
+| Preconditions | Classroom ID, date, start time, and end time are provided. |
+| Inputs | `classroomId`, `scheduledDate`, `startTime`, `endTime`, `excludeScheduleSessionId`. |
+| Processing Steps | 1. Query non-deleted sessions for classroom on scheduledDate with active timetable statuses. 2. Exclude Cancelled sessions and current session. 3. Check overlap using strict interval comparison. 4. Return conflict details when overlap exists. 5. Do not allow normal override for classroom double booking. |
+| Outputs & Postconditions | Validation blocks overlapping classroom use. |
+| Priority | Must |
+
+### FR-SCH-021 – Prevent Batch Session Overlap
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Ensures the same batch is not scheduled for two overlapping sessions. Actors: System validation service, Academic Coordinator. |
+| Preconditions | Batch ID, date, start time, and end time are provided. |
+| Inputs | `batchId`, `scheduledDate`, `startTime`, `endTime`, `excludeScheduleSessionId`. |
+| Processing Steps | 1. Query non-deleted sessions for batch on scheduledDate. 2. Exclude Cancelled sessions and current session. 3. Compare intervals. 4. Return conflict with existing session number and title. 5. Reject scheduling when overlap exists. |
+| Outputs & Postconditions | Batch cannot have two active sessions at same time. |
+| Priority | Must |
+
+### FR-SCH-022 – Validate Trainer Availability
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Validates requested trainer assignment against TrainerAvailability records. Actors: System validation service, Trainer Management module. |
+| Preconditions | Trainer profile exists. Trainer Management module exposes availability data. |
+| Inputs | `trainerId`, `branchId`, `scheduledDate`, `startTime`, `endTime`. |
+| Processing Steps | 1. Load trainer profile. 2. Validate trainer status is Active. 3. Load availability records where trainer, branch, dayOfWeek, effective date range, and status are valid. 4. If no availability records exist and policy requires availability, fail validation. 5. Determine if requested time is fully covered by at least one availability window. 6. Return warning or failure based on configuration. 7. Audit only when override is applied by permitted manager. |
+| Outputs & Postconditions | Validation result confirms trainer availability or provides reason for rejection. |
+| Priority | Must |
+
+### FR-SCH-023 – Validate Classroom Status and Branch Ownership
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Ensures classroom is usable and belongs to the selected branch. Actors: System validation service, Organization module. |
+| Preconditions | Classroom ID and branch ID are supplied. |
+| Inputs | `classroomId`, `branchId`, `scheduledDate`. |
+| Processing Steps | 1. Load classroom from Organization module. 2. Reject if classroom is missing, inactive, expired, or soft deleted. 3. Reject if classroom branch does not match requested branch. 4. Validate effective date range includes scheduled date. 5. Return capacity metadata for optional display. |
+| Outputs & Postconditions | Invalid classroom cannot be used for scheduling. |
+| Priority | Must |
+
+### FR-SCH-024 – Validate Batch, Course, and Branch Alignment
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Ensures schedule session references the correct batch, course, and branch. Actors: System validation service, Training Delivery module. |
+| Preconditions | Batch ID and branch ID are supplied. |
+| Inputs | `batchId`, `courseId`, `branchId`, `scheduledDate`. |
+| Processing Steps | 1. Load batch. 2. Reject if batch is missing, cancelled, completed, archived, or soft deleted. 3. Verify batch branch equals selected branch. 4. Verify course ID equals batch course ID. 5. Validate scheduled date is within batch start and end dates unless exception permission exists. 6. Return batch metadata for display. |
+| Outputs & Postconditions | Schedule can only be created for valid batch-course-branch combination. |
+| Priority | Must |
+
+### FR-SCH-025 – Daily Schedule View
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Displays branch timetable for a single date. Actors: Reception, Training Coordinator, Academic Coordinator, Branch Manager, Trainer. |
+| Preconditions | User has `scheduling.session.read`. Date and branch context are selected. |
+| Inputs | `branchId`, `date`, `filters`: trainerId, classroomId, batchId, courseId, status. |
+| Processing Steps | 1. Verify branch access. 2. Apply permission and branch scope. 3. Query non-deleted sessions for date. 4. Apply filters. 5. Hide cancelled sessions unless filter includes Cancelled. 6. Sort by startTime, classroom, batch. 7. Return localized labels based on user preferred language. |
+| Outputs & Postconditions | User sees only authorized branch schedule for the selected day. |
+| Priority | Must |
+
+### FR-SCH-026 – Weekly Schedule View
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Displays branch timetable for a selected week. Actors: Academic Coordinator, Training Coordinator, Branch Manager, Trainer. |
+| Preconditions | User has read permission and branch access. |
+| Inputs | `branchId`, `weekStartDate`, `filters`. |
+| Processing Steps | 1. Normalize week range to seven local dates in Oman timezone. 2. Verify access. 3. Query sessions for date range. 4. Apply filters and status visibility. 5. Group by date and time. 6. Include holidays and venue blocks for visual warning. |
+| Outputs & Postconditions | Weekly timetable is displayed with schedule and non-working indicators. |
+| Priority | Must |
+
+### FR-SCH-027 – Monthly Schedule View
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Displays schedule density, holidays, and venue blocks for a month. Actors: Academic Coordinator, Branch Manager, Reporting User. |
+| Preconditions | User has read permission. |
+| Inputs | `branchId`, `year`, `month`, `filters`. |
+| Processing Steps | 1. Validate month and year. 2. Verify branch access. 3. Query sessions, holidays, and venue blocks for month. 4. Aggregate counts per day by status. 5. Return day-level summaries and drill-down links. |
+| Outputs & Postconditions | Monthly calendar view supports planning and navigation. |
+| Priority | Should |
+
+### FR-SCH-028 – Trainer Timetable View
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Displays schedule assigned to a trainer. Actors: Trainer, Academic Coordinator, Branch Manager. |
+| Preconditions | User has read permission. Trainer can view own schedule. Coordinators can view trainers within accessible branch. |
+| Inputs | `trainerId`, `branchId`, `dateFrom`, `dateTo`, `status`. |
+| Processing Steps | 1. Determine whether user is trainer viewing own profile or admin user viewing assigned branch. 2. Enforce branch scope. 3. Query sessions for trainer. 4. Include batch, course, classroom, date, time, and status. 5. Exclude unauthorized branch sessions. |
+| Outputs & Postconditions | Trainer timetable is displayed without leaking other branch data. |
+| Priority | Must |
+
+### FR-SCH-029 – Classroom Timetable View
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Displays classroom occupancy and blocked periods. Actors: Training Coordinator, Branch Manager, Reception. |
+| Preconditions | User has read permission and branch access. |
+| Inputs | `classroomId`, `branchId`, `dateFrom`, `dateTo`, `includeBlocks`. |
+| Processing Steps | 1. Verify classroom belongs to branch. 2. Query sessions for classroom and date range. 3. Query venue blocks for classroom and branch-wide blocks. 4. Merge results by time order. 5. Label entries as Session or Block. |
+| Outputs & Postconditions | Classroom availability and occupancy are visible. |
+| Priority | Must |
+
+### FR-SCH-030 – Batch Timetable View
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Displays full timetable for a batch. Actors: Academic Coordinator, Training Coordinator, Trainer, Counselor, Branch Manager. |
+| Preconditions | Batch belongs to accessible branch. User has read permission. |
+| Inputs | `batchId`, `status`, `dateFrom`, `dateTo`. |
+| Processing Steps | 1. Load batch and verify branch access. 2. Query non-deleted sessions for batch. 3. Sort by scheduledDate and startTime. 4. Include trainer and classroom summary. 5. Show cancelled sessions only when requested. |
+| Outputs & Postconditions | Batch timetable supports enrollment guidance and delivery planning. |
+| Priority | Must |
+
+### FR-SCH-031 – Conflict Report View
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Lists draft conflicts, validation failures, and unresolved scheduling risks. Actors: Academic Coordinator, Branch Manager. |
+| Preconditions | User has `scheduling.conflict.read`. |
+| Inputs | `branchId`, `dateFrom`, `dateTo`, `conflictType`, `status`. |
+| Processing Steps | 1. Verify branch access. 2. Query conflict sessions and latest validation results. 3. Classify conflict types: TrainerOverlap, ClassroomOverlap, BatchOverlap, HolidayConflict, VenueBlockConflict, TrainerUnavailable, OutsideWorkingHours. 4. Sort by date and severity. 5. Provide recommended resolution actions. |
+| Outputs & Postconditions | Users can identify and resolve scheduling conflicts before publication. |
+| Priority | Should |
+
+### FR-SCH-032 – Export Schedule Data
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Exports authorized schedule data in CSV or XLSX format. Actors: Branch Manager, Reporting User. |
+| Preconditions | User has `scheduling.export`. Branch access is valid. |
+| Inputs | `branchId`, `dateFrom`, `dateTo`, `viewType`, `filters`, `format`, `language`. |
+| Processing Steps | 1. Verify permission and branch scope. 2. Limit date range to maximum 366 days per export. 3. Query schedule data and apply filters. 4. Localize headings. 5. Generate file. 6. Audit export action with filter metadata. |
+| Outputs & Postconditions | User receives schedule export. Export is audited. |
+| Priority | Should |
+
+### FR-SCH-033 – Generate Classroom Utilization Summary
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Provides summary of classroom usage by date range. Actors: Branch Manager, Reporting User. |
+| Preconditions | User has `scheduling.report.read`. |
+| Inputs | `branchId`, `dateFrom`, `dateTo`, `classroomId`. |
+| Processing Steps | 1. Verify permission and branch access. 2. Load working hours for each date from business calendar. 3. Calculate available minutes per classroom per open day. 4. Sum published and completed session minutes per classroom. 5. Exclude cancelled sessions. 6. Calculate utilization percentage as `(scheduledMinutes / availableMinutes) * 100`. 7. Return classroom-level summary. |
+| Outputs & Postconditions | Utilization summary shows scheduled minutes, available minutes, and utilization percentage. |
+| Priority | Should |
+
+### FR-SCH-034 – Generate Trainer Utilization Summary
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Provides summary of trainer scheduled workload by date range. Actors: Branch Manager, Reporting User. |
+| Preconditions | User has `scheduling.report.read`. |
+| Inputs | `branchId`, `dateFrom`, `dateTo`, `trainerId`. |
+| Processing Steps | 1. Verify permission and branch access. 2. Load trainer availability minutes for each date. 3. Sum published and completed session minutes assigned to trainer. 4. Exclude cancelled sessions. 5. Calculate utilization percentage as `(scheduledMinutes / availableMinutes) * 100` when availability is configured. 6. If availability is missing, return scheduled minutes and mark utilization percentage as unavailable. |
+| Outputs & Postconditions | Trainer utilization data is available for operational planning. |
+| Priority | Should |
+
+### FR-SCH-035 – Trigger Schedule Notifications Through Communication Module
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Requests notifications for schedule publication, rescheduling, cancellation, and reminders. Actors: Scheduling module, Communication module, Trainer, Student, Corporate Coordinator. |
+| Preconditions | Communication module is enabled for the notification type. Notification templates are active. Session is Published, Rescheduled, or Cancelled. |
+| Inputs | `scheduleSessionId`, `notificationType`, `recipientScope`, `language`, `payload`. |
+| Processing Steps | 1. Determine notification event type. 2. Build payload with course, batch, trainer, classroom, date, time, branch, and status. 3. Resolve recipients through Training Delivery, Enrollment, Trainer Management, or Corporate Training as applicable. 4. Create NotificationRequest through in-process Communication module contract. 5. Do not block schedule transaction if Communication module is unavailable unless policy says critical notification is mandatory. 6. Log notification request result. |
+| Outputs & Postconditions | Notification requests are created where enabled. Scheduling remains source of timetable truth. |
+| Priority | Could |
+
+### FR-SCH-036 – Branch-Scoped Schedule Access Enforcement
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Enforces branch isolation for all scheduling functions. Actors: Identity & Access module, all human users, Scheduling module. |
+| Preconditions | User is authenticated. Active branch context is known or requested. |
+| Inputs | `userId`, `activeBranchId`, `requestedBranchId`, `permissionCode`, `operationType`. |
+| Processing Steps | 1. Resolve user branch access list. 2. Reject request if requested branch is not assigned. 3. If parent-child access is requested, validate `canViewChildBranches`. 4. For consolidated read, validate consolidated permission. 5. Apply branch filter at repository query layer. 6. For writes, validate all referenced entities belong to allowed branch. 7. Return authorization failure without revealing existence of inaccessible records. |
+| Outputs & Postconditions | Users cannot read or mutate schedule data outside authorized branch scope. |
+| Priority | Must |
+
+### FR-SCH-037 – Audit Schedule, Holiday, Calendar, and Venue Block Changes
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Records sensitive module actions. Actors: Scheduling module, Audit module. |
+| Preconditions | A sensitive action is performed or attempted. |
+| Inputs | `entityType`, `entityId`, `action`, `oldValue`, `newValue`, `performedBy`, `ipAddress`, `reason`. |
+| Processing Steps | 1. Identify whether action is auditable. 2. Capture old value before mutation. 3. Execute mutation in transaction. 4. Capture new value after mutation. 5. Insert AuditLog in same transaction. 6. Include reason for cancellations, overrides, deletions, and archival. 7. For rejected override attempts, create security audit event where policy requires. |
+| Outputs & Postconditions | AuditLog contains complete trace of sensitive scheduling activity. |
+| Priority | Must |
+
+### FR-SCH-038 – Bilingual Labels and Localized Display
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Supports English and Arabic display of calendar, holiday, venue block, and schedule-related labels. Actors: All users, Configuration module. |
+| Preconditions | User preferred language is known or defaults to English. Localized data exists for configured entities. |
+| Inputs | `preferredLanguage`, localized JSON fields, lookup localized labels. |
+| Processing Steps | 1. Determine display language from user preference. 2. For localized fields, return requested language value when available. 3. Fall back to English when Arabic value is missing. 4. Validate required localized data on create/update for BusinessCalendar and Holiday. 5. Return localized validation messages from UI/application layer. |
+| Outputs & Postconditions | UI and exports can render labels in English or Arabic. |
+| Priority | Must |
+
+### FR-SCH-039 – Oman Timezone Normalization
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Ensures schedule dates and times are interpreted consistently in Oman GST. Actors: Scheduling module, all users. |
+| Preconditions | User enters date and time. Branch timezone is not separately configured or defaults to Oman. |
+| Inputs | `scheduledDate`, `startTime`, `endTime`, `timezone`. |
+| Processing Steps | 1. Default timezone to `Asia/Muscat`. 2. Treat schedule date and time as local branch time. 3. Validate no timezone-naive conversion changes local date. 4. Store date and time fields for business comparison. 5. Store audit timestamps as datetime. 6. Render schedules in branch timezone. |
+| Outputs & Postconditions | Date/time comparisons and display are stable for Oman operations. |
+| Priority | Must |
+
+### FR-SCH-040 – Optimistic Locking for Concurrent Schedule Updates
+
+| Field | Specification |
+|---|---|
+| Description & Actors | Prevents overwriting changes when two users edit the same calendar, holiday, venue block, or schedule session. Actors: All editing users, Scheduling module. |
+| Preconditions | Entity has `version` field. User submits update with version. |
+| Inputs | `entityId`, `submittedVersion`, update payload. |
+| Processing Steps | 1. Load current entity version. 2. Compare submitted version with current version. 3. If mismatched, reject with stale record error. 4. If matched, proceed with validation and update. 5. Increment version atomically. 6. Audit successful update. |
+| Outputs & Postconditions | Stale updates are rejected and user is asked to reload latest data. |
+| Priority | Must |
+
+## 4. Comprehensive Business Rules
+
+| Rule ID | Rule Category | Business Rule | Applies To | Enforcement |
+|---|---|---|---|---|
+| BR-SCH-001 | Branch Scope | Every BusinessCalendar, Holiday, ScheduleSession, and VenueBlock must be associated with a branch either directly or through a parent entity. | All module data | Server-side repository filters and application service validation |
+| BR-SCH-002 | Branch Scope | Users can access only assigned branches unless they have explicit consolidated reporting permission. | All reads, exports, reports | IAM branch access service |
+| BR-SCH-003 | Branch Scope | Child branch users cannot view parent branch schedules unless explicitly assigned to the parent branch. | Schedule views and reports | IAM branch hierarchy validation |
+| BR-SCH-004 | Branch Scope | Parent branch users can view child branch schedules only when `canViewChildBranches = true`. | Schedule views and reports | IAM branch hierarchy validation |
+| BR-SCH-005 | Calendar Uniqueness | Only one Active business calendar may exist for the same branch and year. | BusinessCalendar | Unique validation before activation |
+| BR-SCH-006 | Calendar Dates | Calendar effectiveStartDate must be on or before effectiveEndDate. | BusinessCalendar | Application validation |
+| BR-SCH-007 | Calendar State | Allowed calendar transitions are Draft → Active, Active → Closed, Closed → Archived. | BusinessCalendar | State machine validation |
+| BR-SCH-008 | Calendar Archive | Archived calendars cannot be edited or used for new scheduling. | BusinessCalendar | Application validation |
+| BR-SCH-009 | Operating Days | A calendar must define all seven weekdays. | BusinessCalendar | Create/update validation |
+| BR-SCH-010 | Working Hours | Open days must have at least one valid working hour window. | BusinessCalendar | Create/update validation |
+| BR-SCH-011 | Working Hours | Working hour windows must not overlap within the same weekday. | BusinessCalendar | Create/update validation |
+| BR-SCH-012 | Working Hours | Working hour start time must be earlier than end time. | BusinessCalendar | Create/update validation |
+| BR-SCH-013 | Holiday Uniqueness | Active holidays cannot duplicate the same branch, calendar, date, and holiday type. | Holiday | Create/update validation |
+| BR-SCH-014 | Holiday State | Holiday statuses are Draft, Active, Inactive, and Cancelled. | Holiday | State validation |
+| BR-SCH-015 | Holiday Scheduling | Published sessions cannot be created on active holidays unless authorized override is permitted and reason is captured. | ScheduleSession | Conflict validation |
+| BR-SCH-016 | Holiday Soft Delete | Holidays must be soft deleted using `isDeleted`, `deletedAt`, and `deletedBy`; hard delete is prohibited. | Holiday | Repository policy |
+| BR-SCH-017 | Venue Block Scope | A VenueBlock with null classroomId applies to the entire branch. | VenueBlock | Conflict validation |
+| BR-SCH-018 | Venue Block Scope | A VenueBlock with classroomId applies only to that classroom plus normal branch-wide blocks. | VenueBlock | Conflict validation |
+| BR-SCH-019 | Venue Block Time | Partial-day venue blocks require startTime and endTime. | VenueBlock | Create/update validation |
+| BR-SCH-020 | Venue Block Time | Full-day venue blocks do not require startTime and endTime and are evaluated as all-day blocks. | VenueBlock | Conflict validation |
+| BR-SCH-021 | Venue Block Overlap | Active venue blocks must not overlap for the same branch/classroom scope unless one block is Cancelled or Expired. | VenueBlock | Create/update validation |
+| BR-SCH-022 | Venue Block Scheduling | Published sessions cannot be created during active venue blocks unless authorized override is permitted and reason is captured. | ScheduleSession | Conflict validation |
+| BR-SCH-023 | Schedule Status | Schedule statuses are Draft, Conflict, Published, Rescheduled, Cancelled, and Completed. | ScheduleSession | State machine validation |
+| BR-SCH-024 | Schedule State | Draft sessions can become Published only after successful validation. | ScheduleSession | Publish validation |
+| BR-SCH-025 | Schedule State | Published sessions can become Rescheduled, Cancelled, Completed, or remain Published. | ScheduleSession | State validation |
+| BR-SCH-026 | Schedule State | Cancelled sessions cannot be published again; a replacement session must be created or existing session must be rescheduled before cancellation. | ScheduleSession | Application validation |
+| BR-SCH-027 | Schedule State | Completed sessions cannot be rescheduled or cancelled through normal scheduling workflow. | ScheduleSession | Application validation |
+| BR-SCH-028 | Draft Delete | Only Draft or Conflict schedule sessions may be soft deleted. | ScheduleSession | Soft delete validation |
+| BR-SCH-029 | Session Number | Session number must be positive and unique within a batch among non-deleted sessions. | ScheduleSession | Create/update validation |
+| BR-SCH-030 | Session Time | Session startTime must be earlier than endTime. | ScheduleSession | Create/update validation |
+| BR-SCH-031 | Session Duration | Session duration must be at least 15 minutes and not more than 8 hours unless configured exception permission is applied. | ScheduleSession | Application validation |
+| BR-SCH-032 | Batch Date Range | Scheduled date must be between batch startDate and batch endDate unless authorized exception is allowed. | ScheduleSession | Batch validation |
+| BR-SCH-033 | Batch Branch | ScheduleSession branchId must match Batch branchId. | ScheduleSession | Create/update validation |
+| BR-SCH-034 | Batch Course | ScheduleSession courseId must match Batch courseId. | ScheduleSession | Create/update validation |
+| BR-SCH-035 | Classroom Branch | Classroom must belong to the same branch as the schedule session. | ScheduleSession | Organization validation |
+| BR-SCH-036 | Classroom Status | Inactive, expired, or soft-deleted classrooms cannot be used for new published sessions. | ScheduleSession | Organization validation |
+| BR-SCH-037 | Trainer Status | Inactive, suspended, expired, or soft-deleted trainers cannot be assigned to new published sessions. | ScheduleSession | Trainer validation |
+| BR-SCH-038 | Trainer Authorization | If TrainerCourseAuthorization is configured for a course, trainer must be authorized for that course on scheduled date. | ScheduleSession | Trainer validation |
+| BR-SCH-039 | Trainer Availability | Trainer availability must cover the requested session time when availability enforcement is enabled. | ScheduleSession | Trainer validation |
+| BR-SCH-040 | Trainer Double Booking | Trainer cannot have overlapping Published or Rescheduled sessions. | ScheduleSession | Conflict validation |
+| BR-SCH-041 | Classroom Double Booking | Classroom cannot have overlapping Published or Rescheduled sessions. | ScheduleSession | Conflict validation |
+| BR-SCH-042 | Batch Overlap | Batch cannot have overlapping Published or Rescheduled sessions. | ScheduleSession | Conflict validation |
+| BR-SCH-043 | Overlap Formula | Time overlap exists when `newStart < existingEnd AND newEnd > existingStart`. | Conflict checks | Shared validation algorithm |
+| BR-SCH-044 | Back-to-Back Sessions | A session ending exactly at 10:00 and another starting exactly at 10:00 are not considered overlapping. | Conflict checks | Shared validation algorithm |
+| BR-SCH-045 | Recurrence Limit | Bulk recurring session generation is limited to 120 candidate sessions per request. | Recurring schedule | Application validation |
+| BR-SCH-046 | Recurrence Days | Recurrence must include at least one day of week. | Recurring schedule | Application validation |
+| BR-SCH-047 | Recurrence Dates | Recurrence start date must be on or before recurrence end date. | Recurring schedule | Application validation |
+| BR-SCH-048 | Skip Holidays | When skipHolidays is true, active holiday dates are skipped and recorded in validation output. | Recurring schedule | Generation algorithm |
+| BR-SCH-049 | Conflict Drafts | Conflict drafts may be saved only when module policy enables conflict draft capture. | ScheduleSession | Application configuration |
+| BR-SCH-050 | Override Scope | Trainer double booking, classroom double booking, and batch overlap cannot be overridden in normal policy. | Conflict checks | Application validation |
+| BR-SCH-051 | Override Reason | Holiday and venue block overrides require permission and reason. | Conflict checks | Permission and audit validation |
+| BR-SCH-052 | Cancellation Reason | Published session cancellation requires reason code and notes. | ScheduleSession | Cancel validation |
+| BR-SCH-053 | Reschedule Reason | Published session rescheduling requires reason. | ScheduleSession | Reschedule validation |
+| BR-SCH-054 | Attendance Constraint | A session with finalized attendance cannot be cancelled or rescheduled by normal coordinator permission. | ScheduleSession | Attendance dependency check |
+| BR-SCH-055 | Audit Required | Calendar activation, closure, archival, holiday activation, holiday deletion, venue block creation, schedule publish, reschedule, cancel, override, and export must be audited. | Sensitive actions | Audit service |
+| BR-SCH-056 | Audit Transaction | Audit record for successful sensitive mutation must be written in the same database transaction as the mutation. | Sensitive actions | Transaction boundary |
+| BR-SCH-057 | Soft Delete | Hard delete is prohibited for operational scheduling entities. | BusinessCalendar, Holiday, VenueBlock, ScheduleSession | Repository policy |
+| BR-SCH-058 | Optimistic Locking | Update and delete operations must reject stale version values. | All mutable entities | Version comparison |
+| BR-SCH-059 | Localization | BusinessCalendar and Holiday must have English and Arabic localized names. | BusinessCalendar, Holiday | Create/update validation |
+| BR-SCH-060 | Timezone | Oman GST UTC+04:00 is the default timezone for date/time display, validation, and recurrence generation. | All schedule operations | Time service |
+| BR-SCH-061 | Export Range | Schedule exports cannot exceed 366 days per request. | Export | Application validation |
+| BR-SCH-062 | Export Audit | Every schedule export must be audited with date range, branch scope, and filters. | Export | Audit service |
+| BR-SCH-063 | Data Leakage | Unauthorized branch records must be treated as not found. | All reads/writes | Authorization service |
+| BR-SCH-064 | Completed Session | Completed status is normally set by Training Delivery or Attendance completion flow, not manually by Scheduling users. | ScheduleSession | Cross-module status governance |
+| BR-SCH-065 | Calendar Dependency | Schedule creation requires an Active calendar for the branch and scheduled date. | ScheduleSession | Create/publish validation |
+| BR-SCH-066 | Working Day | Published sessions must fall on an open operating day unless manager override is permitted and audited. | ScheduleSession | Calendar validation |
+| BR-SCH-067 | Working Hours | Published sessions must fit inside configured working hours unless manager override is permitted and audited. | ScheduleSession | Calendar validation |
+| BR-SCH-068 | Classroom Effective Dates | Classroom effective dates must include scheduled date. | ScheduleSession | Organization validation |
+| BR-SCH-069 | Trainer Effective Dates | Trainer profile effective dates must include scheduled date. | ScheduleSession | Trainer validation |
+| BR-SCH-070 | Batch Capacity Ownership | Scheduling may display batch capacity but must not own enrollment capacity rules. | ScheduleSession view | Cross-module boundary |
+
+## 5. Cross-Module Dependencies Mapping
+
+| Dependency ID | Source Module | Target Module | Direction | Data / Capability Used | Rule |
+|---|---|---|---|---|---|
+| DEP-SCH-001 | Scheduling | Identity & Access Management | Consumes | User, permissions, branch access, consolidated reporting permission | Every read and write must validate permission and branch access server-side. |
+| DEP-SCH-002 | Scheduling | Organization Management | Consumes | Branch, Classroom, branch hierarchy, classroom status, classroom effective dates | Scheduling references but does not own branches or classrooms. |
+| DEP-SCH-003 | Scheduling | Configuration / Master Data | Consumes | Holiday types, cancellation reasons, venue block reason codes, schedule statuses, localized lookup labels | Business-critical values must not be hardcoded. |
+| DEP-SCH-004 | Scheduling | Training Delivery Management | Consumes | Batch, batch status, batch date range, batch branch, batch course, session delivery status | ScheduleSession must align to valid batch and course. |
+| DEP-SCH-005 | Training Delivery Management | Scheduling | Consumes | Official timetable, published sessions, cancelled/rescheduled sessions | Training delivery uses the timetable to plan operational delivery. |
+| DEP-SCH-006 | Scheduling | Course Catalog Management | References through Batch | Course identity, course title, course authorization context | Scheduling does not own course definition. |
+| DEP-SCH-007 | Scheduling | Faculty / Trainer Management | Consumes | TrainerProfile, TrainerAvailability, TrainerCourseAuthorization, trainer status | Trainer assignment must respect status, availability, and authorization. |
+| DEP-SCH-008 | Attendance Management | Scheduling | Consumes | Published schedule sessions with batch, trainer, classroom, date, and time | Attendance sessions are created or displayed from published schedules. |
+| DEP-SCH-009 | Scheduling | Attendance Management | Consumes | Attendance finalization status | Published sessions with finalized attendance cannot be normally cancelled or rescheduled. |
+| DEP-SCH-010 | Communication & Notification Management | Scheduling | Consumes | Schedule publication, reschedule, cancellation payloads | Communication sends notifications but does not own schedule truth. |
+| DEP-SCH-011 | Scheduling | Communication & Notification Management | Requests | NotificationRequest creation for trainers, students, and corporate coordinators | Notification failure must not corrupt schedule state. |
+| DEP-SCH-012 | Reporting & Executive Dashboards | Scheduling | Consumes | Schedule counts, utilization summaries, conflict counts, classroom occupancy, trainer workload | Reporting consumes data and does not own scheduling transactions. |
+| DEP-SCH-013 | Scheduling | Audit & Compliance | Publishes/Creates | AuditLog for sensitive actions | Audit records must capture old value, new value, actor, timestamp, IP, and reason. |
+| DEP-SCH-014 | Scheduling | Admission & Enrollment Management | Indirect consumer | Batch schedule availability for enrollment guidance | Enrollment remains central aggregate and Scheduling does not create enrollments. |
+| DEP-SCH-015 | Scheduling | Walk-In Fast Track Enrollment | Indirect consumer | Same-day batch session availability | Walk-in flow uses schedule visibility but still creates central Enrollment. |
+| DEP-SCH-016 | Scheduling | Corporate Training Management | Supports | Corporate batch schedule visibility for nominated participants | Corporate participant lifecycle remains under Enrollment when enrolled. |
+| DEP-SCH-017 | Website & Digital Experience | Scheduling | Optional consumer | Public training calendar display in future or where approved | Website may display approved public schedule data but does not own scheduling. |
+| DEP-SCH-018 | Document Management | Scheduling | Optional reference | Documented approval evidence for exceptional closures or blocks | Documents are attached through Document module when required. |
+| DEP-SCH-019 | Finance & Receivables | Scheduling | Read-only consumer | Training dates for invoice references, revenue recognition planning, and delivery confirmation reports | Finance remains invoice-centric and does not own schedule. |
+| DEP-SCH-020 | Certificate Management | Scheduling | Indirect reference | Training completion chronology through Attendance and Completion | Certificates are issued only after completion and payment validation, not directly from schedule. |
+
+## 6. State Transition Specifications
+
+### 6.1 BusinessCalendar State Transitions
+
+```text
+Draft
+  └── Active
+        └── Closed
+              └── Archived
+```
+
+| From | To | Allowed | Required Permission | Required Reason |
+|---|---|---|---|---|
+| Draft | Active | Yes | scheduling.calendar.update | No |
+| Active | Closed | Yes | scheduling.calendar.update | Yes |
+| Closed | Archived | Yes | scheduling.calendar.archive | Yes |
+| Active | Draft | No | Not applicable | Not applicable |
+| Archived | Active | No | Not applicable | Not applicable |
+| Archived | Closed | No | Not applicable | Not applicable |
+
+### 6.2 Holiday State Transitions
+
+```text
+Draft
+  ├── Active
+  ├── Inactive
+  └── Soft Deleted
+Active
+  ├── Inactive
+  ├── Cancelled
+  └── Soft Deleted with delete permission
+Inactive
+  ├── Active
+  └── Soft Deleted
+Cancelled
+  └── Soft Deleted
+```
+
+### 6.3 VenueBlock State Transitions
+
+```text
+Draft
+  ├── Active
+  ├── Cancelled
+  └── Soft Deleted
+Active
+  ├── Cancelled
+  ├── Expired
+  └── Soft Deleted with administrative permission
+Cancelled
+  └── Soft Deleted
+Expired
+  └── Soft Deleted
+```
+
+### 6.4 ScheduleSession State Transitions
+
+```text
+Draft
+  ├── Conflict
+  ├── Published
+  └── Soft Deleted
+Conflict
+  ├── Draft
+  ├── Published after validation
+  └── Soft Deleted
+Published
+  ├── Rescheduled
+  ├── Cancelled
+  └── Completed
+Rescheduled
+  ├── Cancelled
+  └── Completed
+Cancelled
+  └── Terminal state
+Completed
+  └── Terminal state
+```
+
+## 7. Validation Algorithms
+
+### 7.1 Time Overlap Algorithm
+
+```text
+Given:
+  newStart
+  newEnd
+  existingStart
+  existingEnd
+
+Overlap exists when:
+  newStart < existingEnd AND newEnd > existingStart
+
+No overlap when:
+  newEnd <= existingStart OR newStart >= existingEnd
+```
+
+Back-to-back sessions are allowed. Example: 09:00–10:00 and 10:00–11:00 do not overlap.
+
+### 7.2 Single Session Validation Algorithm
+
+```text
+1. Validate authenticated user.
+2. Validate permission for requested action.
+3. Resolve branch access.
+4. Load batch and verify branch/course alignment.
+5. Load active branch calendar for scheduled date.
+6. Validate operating day.
+7. Validate working hours.
+8. Load classroom and validate branch/status/effective dates.
+9. Load trainer and validate status/effective dates.
+10. Validate trainer course authorization where configured.
+11. Validate trainer availability where enforced.
+12. Validate trainer double booking.
+13. Validate classroom double booking.
+14. Validate batch overlap.
+15. Validate holiday conflicts.
+16. Validate venue block conflicts.
+17. Validate session number uniqueness.
+18. Return structured pass/fail result with conflict details.
+```
+
+### 7.3 Recurring Schedule Generation Algorithm
+
+```text
+1. Validate recurrence date range.
+2. Validate recurrence weekdays.
+3. Generate candidate dates matching selected weekdays.
+4. Stop generation when candidate count exceeds 120.
+5. Remove dates outside batch date range unless exception permission is present.
+6. If skipHolidays is true, remove active holiday dates and record skipped result.
+7. Assign session numbers sequentially from startingSessionNumber.
+8. Validate each candidate using the single session validation algorithm.
+9. Classify each candidate as Valid, Warning, Conflict, Skipped, or Rejected.
+10. Persist selected candidates in one transaction.
+11. Audit generation summary.
+```
+
+## 8. Data Contract Summary
+
+### 8.1 ScheduleSession Create Request
+
+```json
+{
+  "batchId": "clx7s8a9b0001astiims00001",
+  "trainerId": "clx7s8a9b0001astiims00001",
+  "classroomId": "clx7s8a9b0001astiims00001",
+  "sessionNumber": 1,
+  "title": "Session 1 - Introduction",
+  "titleLocalized": {
+    "en": "Session 1 - Introduction",
+    "ar": "الجلسة 1 - المقدمة"
+  },
+  "scheduledDate": "2026-08-15",
+  "startTime": "09:00",
+  "endTime": "12:00",
+  "saveMode": "Draft"
+}
+```
+
+### 8.2 Schedule Validation Response
+
+```json
+{
+  "isValid": false,
+  "resultStatus": "Conflict",
+  "conflicts": [
+    {
+      "conflictType": "TrainerOverlap",
+      "severity": "Blocking",
+      "message": "Trainer is already assigned to another published session during this time.",
+      "entityType": "ScheduleSession",
+      "entityId": "clx7s8a9b0001astiims00001",
+      "scheduledDate": "2026-08-15",
+      "startTime": "10:00",
+      "endTime": "12:00"
+    }
+  ],
+  "warnings": [],
+  "requiredPermissions": []
+}
+```
+
+### 8.3 Recurring Schedule Request
+
+```json
+{
+  "batchId": "clx7s8a9b0001astiims00001",
+  "trainerId": "clx7s8a9b0001astiims00001",
+  "classroomId": "clx7s8a9b0001astiims00001",
+  "recurrenceStartDate": "2026-08-01",
+  "recurrenceEndDate": "2026-09-30",
+  "daysOfWeek": ["Monday", "Wednesday"],
+  "startTime": "18:00",
+  "endTime": "20:00",
+  "sessionTitlePattern": "Evening Batch Session {sessionNumber}",
+  "startingSessionNumber": 1,
+  "skipHolidays": true,
+  "maxSessions": 40,
+  "saveMode": "SaveValidOnly"
+}
+```
+
+### 8.4 Venue Block Request
+
+```json
+{
+  "branchId": "clx7s8a9b0001astiims00001",
+  "classroomId": "clx7s8a9b0001astiims00001",
+  "blockDate": "2026-08-20",
+  "isFullDay": false,
+  "startTime": "13:00",
+  "endTime": "17:00",
+  "reasonCode": "Maintenance",
+  "reason": "Air conditioning maintenance",
+  "reasonLocalized": {
+    "en": "Air conditioning maintenance",
+    "ar": "صيانة مكيف الهواء"
+  },
+  "status": "Active"
+}
+```
+
+## 9. Reporting and View Outputs
+
+| View / Report | Required Columns |
+|---|---|
+| Daily Schedule | Date, start time, end time, course, batch, session number, trainer, classroom, status, conflict indicator, branch |
+| Weekly Schedule | Week date range, day, start time, end time, course, batch, trainer, classroom, status, holiday indicator, venue block indicator |
+| Monthly Calendar | Date, total sessions, published sessions, cancelled sessions, holidays, venue blocks, conflict count |
+| Trainer Timetable | Trainer, branch, date, time, course, batch, classroom, status |
+| Classroom Timetable | Classroom, branch, date, time, batch, course, trainer, status, block reason |
+| Batch Timetable | Batch, course, session number, date, time, trainer, classroom, status |
+| Conflict Report | Conflict type, severity, branch, date, time, trainer, classroom, batch, course, affected session, recommended action |
+| Classroom Utilization | Branch, classroom, date range, available minutes, scheduled minutes, utilization percentage |
+| Trainer Utilization | Branch, trainer, date range, available minutes, scheduled minutes, utilization percentage, availability configured flag |
+
+## 10. Priority Summary
+
+| Priority | Requirements |
+|---|---|
+| Must | FR-SCH-001 to FR-SCH-017, FR-SCH-019 to FR-SCH-026, FR-SCH-028 to FR-SCH-030, FR-SCH-036 to FR-SCH-040 |
+| Should | FR-SCH-018, FR-SCH-027, FR-SCH-031 to FR-SCH-034 |
+| Could | FR-SCH-035 |
+| Won't for Current Phase | External calendar sync, public self-booking, AI timetable optimization, trainer portal availability submission, HR roster scheduling, biometric integration |

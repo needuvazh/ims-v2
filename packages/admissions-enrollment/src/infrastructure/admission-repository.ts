@@ -110,6 +110,8 @@ export class AdmissionRepository implements IAdmissionRepository {
         data: {
           personId: person.id,
           studentNumber,
+          branchId: data.branchId,
+          studentStatus: 'Active',
         },
       });
     }

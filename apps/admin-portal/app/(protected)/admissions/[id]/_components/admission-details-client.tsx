@@ -63,6 +63,8 @@ interface AdmissionDetail {
       id: string;
       studentNumber: string | undefined;
       status: string | undefined;
+      idCardNumber?: string | null;
+      idCardIssued?: boolean | null;
     };
     person: {
       id: string;
@@ -111,11 +113,17 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
   const handleRegenerateIdCard = async () => {
     setIsRegenerating(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      toast.success('Student ID card regenerated successfully!');
+      const res = await fetch(`/api/v1/admissions/${detail.admission.id}/id-card/reissue`, {
+        method: 'POST',
+      });
+      const result = await res.json();
+      if (!res.ok) {
+        throw new Error(result.messageEnglish || 'Failed to reissue ID card');
+      }
+      toast.success('Student ID card reissued successfully!');
       router.refresh();
-    } catch {
-      toast.error('Failed to regenerate ID card.');
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to regenerate ID card.');
     } finally {
       setIsRegenerating(false);
     }
@@ -528,7 +536,7 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
                       </div>
                       <div className="space-y-0.5 text-left">
                         <span className="text-xs font-semibold block">{admission.person.firstName} {admission.person.lastName}</span>
-                        <span className="text-[10px] text-indigo-200 block font-mono">ID: {admission.studentProfile.studentNumber}</span>
+                        <span className="text-[10px] text-indigo-200 block font-mono">ID: {admission.studentProfile.idCardNumber || admission.studentProfile.studentNumber}</span>
                         <span className="text-[8px] text-indigo-300 block">Course: {admission.courseName}</span>
                       </div>
                     </div>
@@ -545,8 +553,27 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
                   {/* Actions Column */}
                   <div className="flex-1 space-y-3 w-full md:w-auto">
                     <div className="text-xs space-y-1">
-                      <div className="text-slate-500">ID Card Status: <span className="font-semibold text-emerald-600">Generated & Valid</span></div>
-                      <div className="text-slate-500">Card Number: <span className="font-mono">{admission.studentProfile.studentNumber}</span></div>
+                      <div className="text-slate-500">
+                        ID Card Status:{' '}
+                        <span
+                          className={`font-semibold ${
+                            admission.studentProfile.idCardIssued ? 'text-emerald-600' : 'text-amber-500'
+                          }`}
+                        >
+                          {admission.studentProfile.idCardIssued
+                            ? (admission.studentProfile.idCardNumber &&
+                              admission.studentProfile.idCardNumber !== admission.studentProfile.studentNumber
+                                ? 'Reissued & Valid'
+                                : 'Generated & Valid')
+                            : 'Pending Generation'}
+                        </span>
+                      </div>
+                      <div className="text-slate-500">
+                        Card Number:{' '}
+                        <span className="font-mono">
+                          {admission.studentProfile.idCardNumber || admission.studentProfile.studentNumber}
+                        </span>
+                      </div>
                     </div>
                     <div className="flex flex-col sm:flex-row gap-2">
                       <Button
