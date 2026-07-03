@@ -137,6 +137,7 @@ export function createDemoSession(userId: string): Session {
       'dashboard.view',
       'dashboard.ceo',
       'organization.manage',
+      'scheduling.calendar.read',
       'identity.read',
       'identity.write',
       'iam.user.read',

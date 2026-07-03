@@ -24,6 +24,7 @@
     "@ims/organization": "workspace:*",
     "@ims/portal-ui": "workspace:*",
     "@ims/reporting-dashboards": "workspace:*",
+    "@ims/scheduling": "workspace:*",
     "@ims/shared-auth": "workspace:*",
     "@ims/shared-kernel": "workspace:*",
     "@ims/shared-ui": "workspace:*",

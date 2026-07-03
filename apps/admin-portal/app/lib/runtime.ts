@@ -19,6 +19,7 @@ import {
   PrismaUserActivationTokenRepository,
 } from '@ims/database';
 import { createUuid } from '@ims/shared-kernel';
+import { PrismaSchedulingRepository, SchedulingService } from '@ims/scheduling';
 import { OrganizationService } from '@ims/organization';
 import {
   AuthService,
@@ -51,6 +52,7 @@ const outboxEventRepository = new PrismaOutboxEventRepository(prisma);
 export const exportJobRepository = new PrismaExportJobRepository(prisma);
 const loginHistoryRepository = new PrismaLoginHistoryRepository(prisma);
 const userActivationTokenRepository = new PrismaUserActivationTokenRepository(prisma);
+const schedulingRepository = new PrismaSchedulingRepository(prisma);
 
 // ─── Notification Port ────────────────────────────────────────────────────
 const notificationPort = new DummyNotificationProvider();
@@ -111,6 +113,8 @@ export const securityPolicyService = new SecurityPolicyService(
   securityPolicyRepository,
   auditRepository
 );
+
+export const schedulingCalendarService = new SchedulingService(prisma, schedulingRepository);
 
 export const auditQueryService = new AuditQueryService(
   auditRepository
@@ -358,6 +362,5 @@ const schedulingService = new PrismaSchedulingService(prisma);
 export const batchService = new BatchService(prisma, batchRepository, schedulingService);
 
 export { prisma };
-
 
 

@@ -1,0 +1,19 @@
+{
+  "name": "@ims/scheduling",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@ims/shared-kernel": "workspace:*",
+    "@prisma/client": "^6.19.3",
+    "zod": "^3.23.0"
+  }
+}

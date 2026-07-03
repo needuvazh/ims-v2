@@ -13,6 +13,7 @@ export const knownPermissions = [
   'iam.role.create',
   'iam.role.update',
   'organization.manage',
+  'scheduling.calendar.read',
   'dashboard.view',
   'certificate.verify',
   'batch.delivery.view',
@@ -52,6 +53,7 @@ export const adminNavigation: NavigationItem[] = [
     items: [
       { href: '/courses-catalog', label: 'Course Catalog', permission: 'course.catalog.view' },
       { href: '/batches', label: 'Batches List', permission: 'batch.delivery.view' },
+      { href: '/scheduling', label: 'Scheduling Calendar', permission: 'scheduling.calendar.read' },
     ],
   },
   {

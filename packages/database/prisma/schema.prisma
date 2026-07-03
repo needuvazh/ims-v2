@@ -31,6 +31,21 @@ enum BranchStatus {
   Archived
 }
 
+enum CalendarStatus {
+  Draft
+  Active
+  Closed
+  Archived
+}
+
+enum HolidayStatus {
+  Draft
+  Active
+  Inactive
+  Cancelled
+  Archived
+}
+
 enum UserStatus {
   PendingActivation
   Active
@@ -443,6 +458,7 @@ model Institute {
   language           String?   @db.VarChar(10)
 
   branches Branch[]
+  businessCalendars BusinessCalendar[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -484,6 +500,8 @@ model Branch {
   settings    BranchSettings?
   policies    BranchPolicy[]
   enrollments Enrollment[]
+  branchCalendarOverrides BranchCalendarOverride[]
+  holidays Holiday[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -574,6 +592,143 @@ model BranchSettings {
   isDeleted Boolean   @default(false)
 
   @@map("branch_settings")
+}
+
+model BusinessCalendar {
+  id                 String         @id @default(uuid()) @db.Uuid
+  instituteId        String         @db.Uuid
+  code               String         @db.VarChar(40)
+  name               String         @db.VarChar(160)
+  nameLocalized      Json?
+  year               Int
+  countryCode        String         @db.VarChar(2)
+  timezone           String         @db.VarChar(50)
+  effectiveStartDate DateTime       @db.Date
+  effectiveEndDate   DateTime?      @db.Date
+  status             CalendarStatus @default(Draft)
+  isActive           Boolean        @default(false)
+  version            Int            @default(1)
+  institute          Institute      @relation(fields: [instituteId], references: [id], onDelete: Cascade)
+  operatingDays      CalendarOperatingDay[]
+  branchOverrides    BranchCalendarOverride[]
+  holidays           Holiday[]
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  @@unique([instituteId, code])
+  @@index([instituteId, year])
+  @@index([instituteId, status])
+  @@map("business_calendars")
+}
+
+model BranchCalendarOverride {
+  id                 String         @id @default(uuid()) @db.Uuid
+  businessCalendarId  String         @db.Uuid
+  branchId           String         @db.Uuid
+  year               Int
+  name               String?        @db.VarChar(160)
+  nameLocalized      Json?
+  effectiveStartDate DateTime       @db.Date
+  effectiveEndDate   DateTime?      @db.Date
+  status             CalendarStatus @default(Draft)
+  notes              String?        @db.Text
+  version            Int            @default(1)
+  businessCalendar   BusinessCalendar @relation(fields: [businessCalendarId], references: [id], onDelete: Cascade)
+  branch             Branch          @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  operatingDays      CalendarOperatingDay[]
+  holidays           Holiday[]
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  @@unique([businessCalendarId, branchId, year])
+  @@index([branchId, year])
+  @@index([businessCalendarId])
+  @@map("branch_calendar_overrides")
+}
+
+model CalendarOperatingDay {
+  id                    String   @id @default(uuid()) @db.Uuid
+  businessCalendarId     String?  @db.Uuid
+  branchCalendarOverrideId String? @db.Uuid
+  dayOfWeek              String   @db.VarChar(20)
+  isOpen                 Boolean  @default(true)
+  businessCalendar       BusinessCalendar? @relation(fields: [businessCalendarId], references: [id], onDelete: Cascade)
+  branchCalendarOverride BranchCalendarOverride? @relation(fields: [branchCalendarOverrideId], references: [id], onDelete: Cascade)
+  workingHours           CalendarWorkingHour[]
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  @@index([businessCalendarId, dayOfWeek])
+  @@index([branchCalendarOverrideId, dayOfWeek])
+  @@map("calendar_operating_days")
+}
+
+model CalendarWorkingHour {
+  id              String   @id @default(uuid()) @db.Uuid
+  operatingDayId  String   @db.Uuid
+  startTime       String   @db.VarChar(5)
+  endTime         String   @db.VarChar(5)
+  operatingDay    CalendarOperatingDay @relation(fields: [operatingDayId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  @@index([operatingDayId])
+  @@map("calendar_working_hours")
+}
+
+model Holiday {
+  id                     String       @id @default(uuid()) @db.Uuid
+  businessCalendarId      String       @db.Uuid
+  branchCalendarOverrideId String?      @db.Uuid
+  branchId                String?      @db.Uuid
+  date                    DateTime     @db.Date
+  name                    String       @db.VarChar(160)
+  nameLocalized           Json
+  holidayType             String       @db.VarChar(50)
+  affectsScheduling       Boolean      @default(true)
+  status                  HolidayStatus @default(Draft)
+  description             String?      @db.Text
+  overridePolicy          String       @db.VarChar(50) @default("MANAGER_APPROVAL_ALLOWED")
+  version                 Int          @default(1)
+  businessCalendar        BusinessCalendar @relation(fields: [businessCalendarId], references: [id], onDelete: Cascade)
+  branchCalendarOverride  BranchCalendarOverride? @relation(fields: [branchCalendarOverrideId], references: [id], onDelete: Cascade)
+  branch                  Branch?      @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  @@index([businessCalendarId, date])
+  @@index([branchId, date])
+  @@map("holidays")
 }
 
 model BranchPolicy {

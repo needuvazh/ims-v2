@@ -12,6 +12,7 @@
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "prisma:generate": "prisma generate --schema prisma/schema.prisma",
+    "migrate:working-calendar": "node --loader ts-node/esm prisma/migrate-working-calendar.ts",
     "seed": "node --loader ts-node/esm prisma/seed.ts"
   },
   "prisma": {

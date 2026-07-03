@@ -105,6 +105,7 @@ const systemPermissions = [
   { moduleCode: 'courses',      featureCode: 'batches',    actionCode: 'update',  permissionCode: 'batch.delivery.update',           permissionType: 'Action' as const, description: 'Update course delivery batches.' },
   { moduleCode: 'courses',      featureCode: 'batches',    actionCode: 'transition', permissionCode: 'batch.delivery.transition',      permissionType: 'Action' as const, description: 'Transition course delivery batches status.' },
   { moduleCode: 'courses',      featureCode: 'batches',    actionCode: 'waitlist',permissionCode: 'waitinglist.manage',           permissionType: 'Action' as const, description: 'Manage batch waitlists.' },
+  { moduleCode: 'scheduling',   featureCode: 'calendar',   actionCode: 'read',   permissionCode: 'scheduling.calendar.read',      permissionType: 'Action' as const, description: 'View calendar rules and overrides.' },
   { moduleCode: 'scheduling',   featureCode: 'sessions',    actionCode: 'manage', permissionCode: 'schedule.manage',                permissionType: 'Action' as const, description: 'Create and update schedules.' },
   
   // Attendance & Completion
@@ -253,7 +254,7 @@ async function seed() {
     'student.read', 'student.reveal_pii', 'student.write', 'enrollment.create', 'enrollment.submit',
     'enrollment.read', 'enrollment.approve', 'enrollment.cancel', 'enrollment.drop', 'enrollment.walk-in-payment',
     'admission.read', 'admission.create', 'admission.approve',
-    'payment.create', 'refund.request', 'course.manage', 'schedule.manage',
+    'payment.create', 'refund.request', 'course.manage', 'scheduling.calendar.read', 'schedule.manage',
     'course.catalog.view', 'course.catalog.create', 'course.catalog.update', 'course.catalog.publish', 'course.catalog.archive',
     'batch.delivery.view',
     'batch.delivery.assign',
@@ -294,7 +295,7 @@ async function seed() {
 
   // Trainer permissions
   const trainerPermCodes = [
-    'student.read', 'schedule.manage', 'attendance.record',
+    'student.read', 'scheduling.calendar.read', 'schedule.manage', 'attendance.record',
     'result.record', 'dashboard.training', 'batch.delivery.view'
   ];
   const trainerPerms = permRecords.filter(p => trainerPermCodes.includes(p.permissionCode));

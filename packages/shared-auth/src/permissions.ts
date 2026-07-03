@@ -38,6 +38,13 @@ export const permissions = {
       read: 'iam.audit.read',
     },
   },
+  scheduling: {
+    calendar: {
+      read: 'scheduling.calendar.read',
+      create: 'scheduling.calendar.create',
+      update: 'scheduling.calendar.update',
+    },
+  },
   crm: {
     leads: {
       viewAllInBranch: 'LEAD_VIEW_ALL_IN_BRANCH',
