@@ -132,9 +132,9 @@ Validation is performed in four layers:
 | VR-SCH-SES-005 | Trainer active | Trainer must be active and valid for the branch/date. | `ERR_SCH_TRAINER_NOT_AVAILABLE` |
 | VR-SCH-SES-006 | Trainer course authorization | Trainer must be authorized for course when authorization is configured. | `ERR_SCH_COURSE_AUTHORIZATION_MISSING` |
 | VR-SCH-SES-007 | Batch date range | Session date must fall inside batch start and end dates unless override is approved. | `ERR_SCH_BATCH_DATE_RANGE_VIOLATION` |
-| VR-SCH-SES-008 | Calendar active | Active branch business calendar must exist for session date. | `ERR_SCH_ACTIVE_CALENDAR_NOT_FOUND` |
-| VR-SCH-SES-009 | Operating day open | Session weekday must be open in the active business calendar unless override is approved. | `ERR_SCH_OUTSIDE_WORKING_DAY` |
-| VR-SCH-SES-010 | Working hours | Session start and end must fit within a configured working-hour window unless override is approved. | `ERR_SCH_OUTSIDE_WORKING_HOURS` |
+| VR-SCH-SES-008 | Calendar active | An active institute calendar or applicable branch override must exist for the session date. | `ERR_SCH_ACTIVE_CALENDAR_NOT_FOUND` |
+| VR-SCH-SES-009 | Operating day open | Session weekday must be open in the resolved calendar unless override is approved. | `ERR_SCH_OUTSIDE_WORKING_DAY` |
+| VR-SCH-SES-010 | Working hours | Session start and end must fit within a configured working-hour window from the resolved calendar unless override is approved. | `ERR_SCH_OUTSIDE_WORKING_HOURS` |
 | VR-SCH-SES-011 | Holiday conflict | Active holiday with `affectsScheduling = true` blocks publish unless override is approved. | `ERR_SCH_HOLIDAY_CONFLICT` |
 | VR-SCH-SES-012 | Venue block conflict | Active branch or classroom venue block blocks publish unless override is approved. | `ERR_SCH_VENUE_BLOCK_CONFLICT` |
 | VR-SCH-SES-013 | Trainer overlap | Trainer cannot have overlapping Published or Rescheduled active sessions. | `ERR_SCH_TRAINER_OVERLAP` |
@@ -202,7 +202,7 @@ Input: branchId, batchId, scheduledDate, startTime, endTime, excludeSessionId
 
 ```text
 Input: branchId, scheduledDate
-1. Find active branch calendar for scheduledDate.
+1. Find resolved calendar for scheduledDate.
 2. Query active holidays for calendar/date where affectsScheduling = true.
 3. If found, return HOLIDAY_CONFLICT ERROR.
 4. If holiday.overridePolicy allows and user has scheduling.override.holiday, allow override after mandatory reason capture.
@@ -722,4 +722,3 @@ Review generated sessions: {{portalLink}}
 | TS-SCH-010 | Create branch venue block overlapping published session. | Reject activation with `ERR_SCH_VENUE_BLOCK_PUBLISHED_SESSION_CONFLICT`. |
 | TS-SCH-011 | Student tries to read another batch schedule. | Reject or return empty result due to enrollment scope. |
 | TS-SCH-012 | Trainer reads own weekly schedule. | Return only sessions assigned to own trainer profile. |
-

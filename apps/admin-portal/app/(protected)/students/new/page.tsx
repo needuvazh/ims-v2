@@ -1,7 +1,7 @@
 import { assertAnyPermission } from '@/lib/auth-guard';
 import { Breadcrumbs, PageHeader } from '@ims/shared-ui';
 import { Home, Users, PlusCircle } from 'lucide-react';
-import { StudentProfileForm } from '../_components/student-profile-form';
+import { StudentRegistrationWorkflow } from './_components/student-registration-workflow';
 
 export const metadata = { title: 'Create Student | ASTI IMS' };
 
@@ -35,10 +35,8 @@ export default async function NewStudentPage() {
         }
       />
 
-      <StudentProfileForm
-        mode="create"
+      <StudentRegistrationWorkflow
         branches={branches.map((branch) => ({ id: branch.id, name: branch.branchName }))}
-        showHeader={false}
       />
     </div>
   );

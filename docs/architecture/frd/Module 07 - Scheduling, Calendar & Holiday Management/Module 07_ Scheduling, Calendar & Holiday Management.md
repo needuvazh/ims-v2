@@ -17,7 +17,7 @@
 
 ## 1. Purpose and Objective
 
-The Scheduling, Calendar & Holiday Management module governs how ASTI plans and protects training time, classroom usage, trainer availability, branch calendars, public holidays, and operational blocking periods. It ensures that sessions are scheduled only when the selected batch, trainer, classroom, and branch calendar are compatible.
+The Scheduling, Calendar & Holiday Management module governs how ASTI plans and protects training time, classroom usage, trainer availability, the institute business calendar, branch-year overrides, public holidays, and operational blocking periods. It ensures that sessions are scheduled only when the selected batch, trainer, classroom, and resolved calendar rules are compatible.
 
 This module does not own enrollment, attendance, course catalog, trainer master data, or classroom master data. It coordinates with those modules and owns the timetable-level scheduling decisions, conflict checks, business calendars, holiday definitions, and venue blocking rules.
 
@@ -25,7 +25,7 @@ The primary objective is to provide a reliable scheduling engine for the admin p
 
 ### Core Objectives
 
-1. Maintain branch-level business calendars for Oman and ASTI-specific operating days.
+1. Maintain a single institute business calendar with branch/year overrides for Oman and ASTI-specific operating days.
 2. Maintain official holidays, special holidays, non-training days, and branch closure days.
 3. Allow authorized users to create, update, publish, cancel, and reschedule training sessions.
 4. Prevent trainer double booking, classroom double booking, batch time overlap, holiday conflicts, and venue block conflicts.
@@ -41,7 +41,7 @@ The primary objective is to provide a reliable scheduling engine for the admin p
 | BO-SCH-001 | Prevent scheduling conflicts before sessions are confirmed. | 100% of published sessions pass trainer, classroom, batch, holiday, and venue block validation. |
 | BO-SCH-002 | Improve operational visibility across branches. | Branch coordinators can view daily, weekly, and monthly schedules filtered by branch, course, batch, trainer, classroom, and status. |
 | BO-SCH-003 | Reduce manual coordination effort for batch planning. | Coordinators can generate and validate recurring session schedules for a batch from a single scheduling flow. |
-| BO-SCH-004 | Protect non-working days and ASTI closure periods. | Published sessions cannot be created on active holidays, business calendar closures, or active venue blocks unless an authorized override is captured with reason and audit. |
+| BO-SCH-004 | Protect non-working days and ASTI closure periods. | Published sessions cannot be created on active holidays, institute calendar closures, branch-year overrides, or active venue blocks unless an authorized override is captured with reason and audit. |
 | BO-SCH-005 | Support multi-branch scheduling with strict data isolation. | Users can access only schedules, calendars, holidays, and venue blocks for assigned branches unless consolidated reporting permission is granted. |
 | BO-SCH-006 | Enable downstream attendance readiness. | Attendance sessions can be derived from published schedule sessions without re-entering timetable details. |
 | BO-SCH-007 | Support bilingual operations. | Calendar, holiday, venue block, and schedule-facing labels support English and Arabic display where required. |
@@ -142,7 +142,7 @@ The primary objective is to provide a reliable scheduling engine for the admin p
 Module 07 – Scheduling, Calendar & Holiday Management
 │
 ├── 07.01 Business Calendar Management
-│   ├── Create branch calendar
+│   ├── Create institute calendar
 │   ├── Configure operating days
 │   ├── Configure working hours
 │   ├── Configure yearly calendar status
@@ -215,7 +215,7 @@ Module 07 – Scheduling, Calendar & Holiday Management
 
 | Capability ID | Capability | Primary Users | Internal / External |
 |---|---|---|---|
-| CAP-SCH-001 | Maintain branch business calendars | Super Admin, Branch Manager | Internal |
+| CAP-SCH-001 | Maintain institute business calendar and branch overrides | Super Admin, Branch Manager | Internal |
 | CAP-SCH-002 | Maintain holiday calendar | Super Admin, Branch Manager, Academic Coordinator | Internal |
 | CAP-SCH-003 | Block venue or classroom availability | Branch Manager, Academic Coordinator, Training Coordinator | Internal |
 | CAP-SCH-004 | Create draft schedule session | Academic Coordinator, Training Coordinator | Internal |
@@ -235,8 +235,8 @@ Module 07 – Scheduling, Calendar & Holiday Management
 
 | Requirement ID | Requirement Name | Priority |
 |---|---|---|
-| FR-SCH-001 | Create branch business calendar | Must |
-| FR-SCH-002 | Update branch business calendar | Must |
+| FR-SCH-001 | Create institute business calendar and branch override | Must |
+| FR-SCH-002 | Update institute business calendar and branch override | Must |
 | FR-SCH-003 | Configure calendar operating days and working hours | Must |
 | FR-SCH-004 | Activate, close, and archive business calendar | Must |
 | FR-SCH-005 | Create holiday | Must |
@@ -282,9 +282,9 @@ Permissions must be dynamic and assigned through the Identity & Access Managemen
 
 | Permission Code | Purpose | Typical Roles |
 |---|---|---|
-| scheduling.calendar.read | View business calendars | Super Admin, Branch Manager, Academic Coordinator |
-| scheduling.calendar.create | Create branch business calendar | Super Admin |
-| scheduling.calendar.update | Update business calendar | Super Admin, Branch Manager |
+| scheduling.calendar.read | View business calendars and branch overrides | Super Admin, Branch Manager, Academic Coordinator |
+| scheduling.calendar.create | Create institute business calendar | Super Admin |
+| scheduling.calendar.update | Update business calendar or branch override | Super Admin, Branch Manager |
 | scheduling.calendar.archive | Archive closed business calendar | Super Admin |
 | scheduling.holiday.read | View holidays | Super Admin, Branch Manager, Academic Coordinator, Trainer |
 | scheduling.holiday.create | Create holiday | Super Admin, Branch Manager |

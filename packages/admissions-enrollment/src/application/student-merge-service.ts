@@ -17,14 +17,13 @@ export class StudentMergeService {
     }
 
     return await this.prisma.$transaction(async (tx) => {
-      // 1. Fetch survivor and source profiles
       const survivor = await tx.studentProfile.findUnique({
         where: { id: survivorStudentProfileId },
-        include: { person: true }
+        include: { person: true },
       });
       const source = await tx.studentProfile.findUnique({
         where: { id: sourceStudentProfileId },
-        include: { person: true }
+        include: { person: true },
       });
 
       if (!survivor || survivor.isDeleted) {
@@ -36,70 +35,135 @@ export class StudentMergeService {
 
       const survivorPersonId = survivor.personId;
       const sourcePersonId = source.personId;
+      const now = new Date();
 
-      // 2. User account checks & deconfliction
-      const survivorUser = await tx.user.findUnique({
-        where: { personId: survivorPersonId }
-      });
-      const sourceUser = await tx.user.findUnique({
-        where: { personId: sourcePersonId }
-      });
+      const survivorUser = await tx.user.findUnique({ where: { personId: survivorPersonId } });
+      const sourceUser = await tx.user.findUnique({ where: { personId: sourcePersonId } });
 
       if (survivorUser && sourceUser) {
         throw new Error('ERR_STU_MERGE_USER_CONFLICT');
       }
 
-      // 3. Soft-delete duplicate profile & person
+      if (sourceUser && !survivorUser) {
+        await tx.user.update({
+          where: { id: sourceUser.id },
+          data: {
+            personId: survivorPersonId,
+            updatedBy: mergedBy,
+          },
+        });
+      }
+
+      const remappedAdmissions = await tx.admission.updateMany({
+        where: {
+          studentProfileId: sourceStudentProfileId,
+          isDeleted: false,
+        },
+        data: {
+          studentProfileId: survivorStudentProfileId,
+          personId: survivorPersonId,
+          updatedBy: mergedBy,
+        },
+      });
+
+      const remappedEnrollments = await tx.enrollment.updateMany({
+        where: {
+          studentProfileId: sourceStudentProfileId,
+          isDeleted: false,
+        },
+        data: {
+          studentProfileId: survivorStudentProfileId,
+          updatedBy: mergedBy,
+        },
+      });
+
+      const remappedLeadRefs = await tx.lead.updateMany({
+        where: {
+          personId: sourcePersonId,
+          isDeleted: false,
+        },
+        data: {
+          personId: survivorPersonId,
+          updatedBy: mergedBy,
+        },
+      });
+
+      const remappedProfileDocs = await tx.documentOwner.updateMany({
+        where: {
+          ownerId: sourceStudentProfileId,
+          ownerType: 'StudentProfile',
+        },
+        data: {
+          ownerId: survivorStudentProfileId,
+          createdBy: mergedBy,
+        },
+      });
+
+      const remappedPersonDocs = await tx.documentOwner.updateMany({
+        where: {
+          ownerId: sourcePersonId,
+          ownerType: 'Person',
+        },
+        data: {
+          ownerId: survivorPersonId,
+          createdBy: mergedBy,
+        },
+      });
+
       await tx.studentProfile.update({
         where: { id: sourceStudentProfileId },
         data: {
           isDeleted: true,
           status: 'Archived',
-          deletedAt: new Date(),
-          deletedBy: mergedBy
-        }
+          deletedAt: now,
+          deletedBy: mergedBy,
+        },
       });
 
       await tx.person.update({
         where: { id: sourcePersonId },
         data: {
           isDeleted: true,
-          deletedAt: new Date(),
-          deletedBy: mergedBy
-        }
+          deletedAt: now,
+          deletedBy: mergedBy,
+        },
       });
 
-      // 8. Log the Merge Log
       const mergeLog = await tx.studentMergeLog.create({
         data: {
           branchId: survivor.branchId,
           duplicateCaseId: duplicateCaseId || null,
-          survivorStudentProfileId: survivorStudentProfileId,
-          sourceStudentProfileId: sourceStudentProfileId,
+          survivorStudentProfileId,
+          sourceStudentProfileId,
           mergeReason,
-          mergedAt: new Date(),
+          mergedAt: now,
           mergedBy,
-          reassignedAdmissionsCount: 0,
-          reassignedEnrollmentsCount: 0,
-          reassignedDocumentsCount: 0,
-          reassignedOtherRefsCount: 0,
+          reassignedAdmissionsCount: remappedAdmissions.count,
+          reassignedEnrollmentsCount: remappedEnrollments.count,
+          reassignedDocumentsCount: remappedProfileDocs.count + remappedPersonDocs.count,
+          reassignedOtherRefsCount: remappedLeadRefs.count,
           mergePayload: {
             sourcePersonId,
             survivorPersonId,
             sourceStudentNumber: source.studentNumber,
-            survivorStudentNumber: survivor.studentNumber
+            survivorStudentNumber: survivor.studentNumber,
+            remappedAdmissions: remappedAdmissions.count,
+            remappedEnrollments: remappedEnrollments.count,
+            remappedDocuments: remappedProfileDocs.count + remappedPersonDocs.count,
+            remappedLeads: remappedLeadRefs.count,
+            userAccountMoved: !!sourceUser && !survivorUser,
           },
           createdBy: mergedBy,
           updatedBy: mergedBy,
-        }
+        },
       });
 
       return {
         mergeLogId: mergeLog.id,
-        reassignedAdmissionsCount: 0,
-        reassignedEnrollmentsCount: 0,
-        reassignedDocumentsCount: 0,
-        reassignedOtherRefsCount: 0
+        reassignedAdmissionsCount: remappedAdmissions.count,
+        reassignedEnrollmentsCount: remappedEnrollments.count,
+        reassignedDocumentsCount: remappedProfileDocs.count + remappedPersonDocs.count,
+        reassignedOtherRefsCount: remappedLeadRefs.count,
       };
     });
   }

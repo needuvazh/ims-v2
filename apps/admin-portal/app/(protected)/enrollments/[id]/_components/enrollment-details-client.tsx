@@ -58,6 +58,7 @@ interface EnrollmentDetail {
   resolvedPrice: string;
   resolvedDiscount: string;
   finalAmount: string;
+  paymentValidationRequired: boolean;
   priceEvaluationTimestamp: string | null;
   paymentCollected: string;
   enrollmentType: string;
@@ -283,6 +284,7 @@ export function EnrollmentDetailsClient({
             resolvedPrice={enrollment.resolvedPrice}
             resolvedDiscount={enrollment.resolvedDiscount}
             finalAmount={enrollment.finalAmount}
+            paymentValidationRequired={enrollment.paymentValidationRequired}
             priceEvaluationTimestamp={enrollment.priceEvaluationTimestamp}
           />
 

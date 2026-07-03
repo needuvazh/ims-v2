@@ -468,7 +468,7 @@ Purpose: Calculate classroom available minutes, scheduled minutes, and utilizati
 Calculation notes:
 
 1. Generate local date series between selected dates.
-2. Join active branch calendar and working hours for each weekday.
+2. Join active resolved calendar and working hours for each weekday.
 3. Subtract active venue block minutes for branch-level or classroom-level blocks.
 4. Add session minutes for official sessions.
 5. Calculate utilization as `scheduledMinutes / availableMinutes * 100` when available minutes > 0.
@@ -481,7 +481,7 @@ Purpose: Calculate trainer scheduled minutes against availability.
 
 Calculation notes:
 
-1. Trainer available minutes come from `TrainerAvailability` intersected with active branch calendar working hours.
+1. Trainer available minutes come from `TrainerAvailability` intersected with active resolved calendar working hours.
 2. Sessions outside availability are counted as scheduled minutes and flagged as outside-availability sessions.
 3. Cancelled sessions are excluded.
 4. Completed sessions remain included because they consumed trainer capacity.

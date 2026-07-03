@@ -304,6 +304,21 @@ export class AdmissionService {
           newValue: { status: 'Approved' }
         }
       });
+
+      await activeClient.outboxEvent.create({
+        data: {
+          eventType: 'AdmissionApproved',
+          aggregateType: 'Admission',
+          aggregateId: admissionId,
+          payload: {
+            admissionId,
+            studentProfileId: admission.studentProfileId,
+            branchId: admission.branchId,
+            personId: admission.personId,
+          },
+          availableAt: new Date(),
+        }
+      });
     };
 
     if (tx) {

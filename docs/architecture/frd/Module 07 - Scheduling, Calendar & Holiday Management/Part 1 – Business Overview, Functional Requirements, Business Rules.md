@@ -33,48 +33,48 @@ A training session is valid only when the branch, batch, course, trainer, classr
 
 ## 3. Detailed Functional Requirements
 
-### FR-SCH-001 – Create Branch Business Calendar
+### FR-SCH-001 – Create Institute Business Calendar and Branch Override
 
 | Field | Specification |
 |---|---|
-| Description & Actors | Allows Super Admin or authorized Branch Manager to create a business calendar for a branch and year. Actors: Super Admin, Branch Manager, Identity & Access module, Organization module, Audit module. |
-| Preconditions | User is authenticated. User has `scheduling.calendar.create`. User has access to the target branch. Target branch exists, is active, and is not soft deleted. No active non-deleted calendar already exists for the same branch and year unless previous calendar is Closed or Archived. |
-| Inputs | `branchId`, `name`, `nameLocalized.en`, `nameLocalized.ar`, `year`, `countryCode`, `timezone`, `operatingDays`, `workingHours`, `effectiveStartDate`, `effectiveEndDate`, `status`. |
-| Processing Steps | 1. Resolve active branch context from session. 2. Verify permission `scheduling.calendar.create`. 3. Verify `branchId` is within assigned branch scope. 4. Validate `year` is a four-digit year between 2000 and 2100. 5. Default `countryCode` to `OM` when not supplied. 6. Default `timezone` to Oman GST using `Asia/Muscat`. 7. Validate localized name includes non-empty English and Arabic values. 8. Validate `operatingDays` includes Monday through Sunday, each with `isOpen` boolean. 9. Validate every open day has working hours. 10. Validate each working hour range has `startTime < endTime`. 11. Validate effective dates overlap the selected calendar year. 12. Check uniqueness for active calendar by branch and year. 13. Insert BusinessCalendar with `status = Draft` unless explicitly created as Active by authorized workflow. 14. Set `isActive` according to status. 15. Set base audit fields and `version = 1`. 16. Create AuditLog entry for calendar creation. |
-| Outputs & Postconditions | BusinessCalendar is created. Calendar can be used for holiday configuration and scheduling validation when Active. AuditLog records creation. |
+| Description & Actors | Allows Super Admin to create the institute business calendar and authorized Branch Manager to create branch/year overrides. Actors: Super Admin, Branch Manager, Identity & Access module, Organization module, Audit module. |
+| Preconditions | User is authenticated. User has `scheduling.calendar.create` for institute calendar creation or `scheduling.calendar.update` for branch/year override changes. Target institute/branch exists, is active, and is not soft deleted. No active overlapping institute calendar exists for the same effective period. |
+| Inputs | `instituteId`, `branchId` (override only), `name`, `nameLocalized.en`, `nameLocalized.ar`, `year`, `countryCode`, `timezone`, `operatingDays`, `workingHours`, `effectiveStartDate`, `effectiveEndDate`, `status`. |
+| Processing Steps | 1. Resolve active institute and branch context from session. 2. Verify permission based on target operation. 3. Verify `branchId` is within assigned branch scope for overrides. 4. Validate `year` is a four-digit year between 2000 and 2100. 5. Default `countryCode` to `OM` when not supplied. 6. Keep `timezone` fixed to `Asia/Muscat`. 7. Validate localized name includes non-empty English and Arabic values. 8. Validate `operatingDays` includes Monday through Sunday, each with `isOpen` boolean. 9. Validate every open day has working hours. 10. Validate each working hour range has `startTime < endTime`. 11. Validate effective dates overlap the selected calendar year. 12. Check uniqueness for active institute calendar by effective period and branch override by branch/year. 13. Insert BusinessCalendar or BranchCalendarOverride with `status = Draft` unless explicitly created as Active by authorized workflow. 14. Set `isActive` according to status. 15. Set base audit fields and `version = 1`. 16. Create AuditLog entry for the change. |
+| Outputs & Postconditions | Institute calendar or branch override is created. Calendar can be used for holiday configuration and scheduling validation when Active. AuditLog records creation. |
 | Priority | Must |
 
 ### FR-SCH-002 – Update Branch Business Calendar
 
 | Field | Specification |
 |---|---|
-| Description & Actors | Allows authorized users to update calendar name, operating days, working hours, effective dates, and status while preserving audit history. Actors: Super Admin, Branch Manager, Audit module. |
-| Preconditions | Calendar exists, is not soft deleted, and belongs to accessible branch. User has `scheduling.calendar.update`. Supplied `version` matches current record. Calendar is not Archived. |
+| Description & Actors | Allows authorized users to update calendar name, operating days, working hours, effective dates, status, and branch/year override details while preserving audit history. Actors: Super Admin, Branch Manager, Audit module. |
+| Preconditions | Calendar or branch override exists, is not soft deleted, and belongs to accessible scope. User has `scheduling.calendar.update`. Supplied `version` matches current record. Record is not Archived. |
 | Inputs | `calendarId`, `name`, `nameLocalized`, `operatingDays`, `workingHours`, `effectiveStartDate`, `effectiveEndDate`, `status`, `version`, `changeReason`. |
-| Processing Steps | 1. Load calendar by ID with branch scope. 2. Reject if not found or inaccessible. 3. Verify permission. 4. Validate optimistic locking by comparing supplied version. 5. Validate localized fields. 6. Validate operating days and working hours. 7. If making a day closed, find future Published schedule sessions on that weekday in the calendar effective period. 8. If conflicts exist, reject with affected session list unless user has approved override permission and provides reason. 9. Validate status transition using BR-SCH-007. 10. Save changes and increment version. 11. Audit old value and new value with reason. |
-| Outputs & Postconditions | Calendar is updated. Future schedule conflicts are either rejected or audited as approved override. |
+| Processing Steps | 1. Load calendar or override by ID with branch scope. 2. Reject if not found or inaccessible. 3. Verify permission. 4. Validate optimistic locking by comparing supplied version. 5. Validate localized fields. 6. Validate operating days and working hours. 7. If making a day closed, find future Published schedule sessions on that weekday in the calendar effective period. 8. If conflicts exist, reject with affected session list unless user has approved override permission and provides reason. 9. Validate status transition using BR-SCH-007. 10. Save changes and increment version. 11. Audit old value and new value with reason. |
+| Outputs & Postconditions | Calendar or override is updated. Future schedule conflicts are either rejected or audited as approved override. |
 | Priority | Must |
 
 ### FR-SCH-003 – Configure Calendar Operating Days and Working Hours
 
 | Field | Specification |
 |---|---|
-| Description & Actors | Defines whether each day of week is open and what time windows are available for scheduling. Actors: Super Admin, Branch Manager, Academic Coordinator with update permission. |
-| Preconditions | Calendar exists and is Draft or Active. User has update permission. Branch access is valid. |
+| Description & Actors | Defines whether each day of week is open and what time windows are available for scheduling on the institute calendar or a branch override. Actors: Super Admin, Branch Manager, Academic Coordinator with update permission. |
+| Preconditions | Calendar or override exists and is Draft or Active. User has update permission. Branch access is valid. |
 | Inputs | `calendarId`, `operatingDays`, `workingHours`, `effectiveStartDate`, `effectiveEndDate`, `version`. |
 | Processing Steps | 1. Validate calendar scope. 2. Require seven day entries: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday. 3. For closed days, store empty time windows. 4. For open days, require one or more non-overlapping working hour windows. 5. Validate no window crosses midnight. 6. Validate start and end times are in HH:mm format. 7. Sort windows by start time. 8. Detect overlapping windows within same day. 9. Revalidate future draft and published sessions against new hours. 10. Reject update if any published session falls outside new working hours unless override is permitted and reason is captured. 11. Persist and audit. |
-| Outputs & Postconditions | Branch calendar has valid operating day and time rules. Future scheduling uses updated rules. |
+| Outputs & Postconditions | Calendar or override has valid operating day and time rules. Future scheduling uses updated rules. |
 | Priority | Must |
 
 ### FR-SCH-004 – Activate, Close, and Archive Business Calendar
 
 | Field | Specification |
 |---|---|
-| Description & Actors | Controls the lifecycle of a business calendar. Actors: Super Admin, Branch Manager. |
-| Preconditions | Calendar exists. User has `scheduling.calendar.update` for Active/Closed or `scheduling.calendar.archive` for Archived. Branch access is valid. |
+| Description & Actors | Controls the lifecycle of a business calendar or branch override. Actors: Super Admin, Branch Manager. |
+| Preconditions | Calendar or override exists. User has `scheduling.calendar.update` for Active/Closed or `scheduling.calendar.archive` for Archived. Branch access is valid. |
 | Inputs | `calendarId`, `targetStatus`, `version`, `reason`. |
 | Processing Steps | 1. Load calendar with branch scope. 2. Validate permission based on target status. 3. Validate status transition: Draft to Active, Active to Closed, Closed to Archived. 4. For activation, ensure no other Active calendar exists for same branch/year. 5. For activation, validate operating days and working hours are complete. 6. For close, ensure reason is supplied. 7. For archive, ensure calendar is Closed and no future Published schedule depends on it. 8. Update status and isActive. 9. Increment version. 10. Audit lifecycle change. |
-| Outputs & Postconditions | Calendar lifecycle changes. Active calendar becomes available for scheduling validations. |
+| Outputs & Postconditions | Calendar lifecycle changes. Active resolved calendar becomes available for scheduling validations. |
 | Priority | Must |
 
 ### FR-SCH-005 – Create Holiday
@@ -117,7 +117,7 @@ A training session is valid only when the branch, batch, course, trainer, classr
 | Description & Actors | Ensures sessions are not scheduled on active holidays or closure days. Actors: Academic Coordinator, Training Coordinator, Branch Manager, system validation service. |
 | Preconditions | User attempts to create, publish, or reschedule a schedule session. Calendar and branch are known. |
 | Inputs | `branchId`, `scheduledDate`, `startTime`, `endTime`, `calendarId`, `overrideRequested`, `overrideReason`. |
-| Processing Steps | 1. Resolve active branch calendar for scheduled date. 2. Query non-deleted holidays where branch matches, status is Active, date matches scheduledDate, and effective date range includes scheduledDate. 3. If no holiday exists, validation passes. 4. If holiday exists and schedule status is Draft, return warning and mark conflict if policy requires. 5. If holiday exists and target status is Published, reject unless user has `scheduling.override.holiday`. 6. If override is allowed, require non-empty reason with minimum 10 characters and maximum 1000 characters. 7. Store override reason on ScheduleSession and audit override. |
+| Processing Steps | 1. Resolve the calendar for the scheduled date. 2. Query non-deleted holidays where branch matches, status is Active, date matches scheduledDate, and effective date range includes scheduledDate. 3. If no holiday exists, validation passes. 4. If holiday exists and schedule status is Draft, return warning and mark conflict if policy requires. 5. If holiday exists and target status is Published, reject unless user has `scheduling.override.holiday`. 6. If override is allowed, require non-empty reason with minimum 10 characters and maximum 1000 characters. 7. Store override reason on ScheduleSession and audit override. |
 | Outputs & Postconditions | Validation result contains pass/fail, holiday IDs, holiday names, and required action. Published session cannot proceed without valid permission and reason when holiday conflict exists. |
 | Priority | Must |
 
@@ -392,7 +392,7 @@ A training session is valid only when the branch, batch, course, trainer, classr
 | Description & Actors | Provides summary of classroom usage by date range. Actors: Branch Manager, Reporting User. |
 | Preconditions | User has `scheduling.report.read`. |
 | Inputs | `branchId`, `dateFrom`, `dateTo`, `classroomId`. |
-| Processing Steps | 1. Verify permission and branch access. 2. Load working hours for each date from business calendar. 3. Calculate available minutes per classroom per open day. 4. Sum published and completed session minutes per classroom. 5. Exclude cancelled sessions. 6. Calculate utilization percentage as `(scheduledMinutes / availableMinutes) * 100`. 7. Return classroom-level summary. |
+| Processing Steps | 1. Verify permission and branch access. 2. Load working hours for each date from the resolved calendar. 3. Calculate available minutes per classroom per open day. 4. Sum published and completed session minutes per classroom. 5. Exclude cancelled sessions. 6. Calculate utilization percentage as `(scheduledMinutes / availableMinutes) * 100`. 7. Return classroom-level summary. |
 | Outputs & Postconditions | Utilization summary shows scheduled minutes, available minutes, and utilization percentage. |
 | Priority | Should |
 
@@ -477,11 +477,11 @@ A training session is valid only when the branch, batch, course, trainer, classr
 
 | Rule ID | Rule Category | Business Rule | Applies To | Enforcement |
 |---|---|---|---|---|
-| BR-SCH-001 | Branch Scope | Every BusinessCalendar, Holiday, ScheduleSession, and VenueBlock must be associated with a branch either directly or through a parent entity. | All module data | Server-side repository filters and application service validation |
+| BR-SCH-001 | Branch Scope | Every BusinessCalendar, BranchCalendarOverride, Holiday, ScheduleSession, and VenueBlock must be associated with the correct owning scope. | All module data | Server-side repository filters and application service validation |
 | BR-SCH-002 | Branch Scope | Users can access only assigned branches unless they have explicit consolidated reporting permission. | All reads, exports, reports | IAM branch access service |
 | BR-SCH-003 | Branch Scope | Child branch users cannot view parent branch schedules unless explicitly assigned to the parent branch. | Schedule views and reports | IAM branch hierarchy validation |
 | BR-SCH-004 | Branch Scope | Parent branch users can view child branch schedules only when `canViewChildBranches = true`. | Schedule views and reports | IAM branch hierarchy validation |
-| BR-SCH-005 | Calendar Uniqueness | Only one Active business calendar may exist for the same branch and year. | BusinessCalendar | Unique validation before activation |
+| BR-SCH-005 | Calendar Uniqueness | Only one Active institute business calendar may exist for the same institute and effective period; branch overrides must be unique per branch and year. | BusinessCalendar / BranchCalendarOverride | Unique validation before activation |
 | BR-SCH-006 | Calendar Dates | Calendar effectiveStartDate must be on or before effectiveEndDate. | BusinessCalendar | Application validation |
 | BR-SCH-007 | Calendar State | Allowed calendar transitions are Draft → Active, Active → Closed, Closed → Archived. | BusinessCalendar | State machine validation |
 | BR-SCH-008 | Calendar Archive | Archived calendars cannot be edited or used for new scheduling. | BusinessCalendar | Application validation |
@@ -491,7 +491,7 @@ A training session is valid only when the branch, batch, course, trainer, classr
 | BR-SCH-012 | Working Hours | Working hour start time must be earlier than end time. | BusinessCalendar | Create/update validation |
 | BR-SCH-013 | Holiday Uniqueness | Active holidays cannot duplicate the same branch, calendar, date, and holiday type. | Holiday | Create/update validation |
 | BR-SCH-014 | Holiday State | Holiday statuses are Draft, Active, Inactive, and Cancelled. | Holiday | State validation |
-| BR-SCH-015 | Holiday Scheduling | Published sessions cannot be created on active holidays unless authorized override is permitted and reason is captured. | ScheduleSession | Conflict validation |
+| BR-SCH-015 | Holiday Scheduling | Published sessions cannot be created on active holidays in the resolved calendar unless authorized override is permitted and reason is captured. | ScheduleSession | Conflict validation |
 | BR-SCH-016 | Holiday Soft Delete | Holidays must be soft deleted using `isDeleted`, `deletedAt`, and `deletedBy`; hard delete is prohibited. | Holiday | Repository policy |
 | BR-SCH-017 | Venue Block Scope | A VenueBlock with null classroomId applies to the entire branch. | VenueBlock | Conflict validation |
 | BR-SCH-018 | Venue Block Scope | A VenueBlock with classroomId applies only to that classroom plus normal branch-wide blocks. | VenueBlock | Conflict validation |
@@ -679,7 +679,7 @@ Back-to-back sessions are allowed. Example: 09:00–10:00 and 10:00–11:00 do n
 2. Validate permission for requested action.
 3. Resolve branch access.
 4. Load batch and verify branch/course alignment.
-5. Load active branch calendar for scheduled date.
+5. Load resolved calendar for scheduled date.
 6. Validate operating day.
 7. Validate working hours.
 8. Load classroom and validate branch/status/effective dates.

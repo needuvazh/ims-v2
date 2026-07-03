@@ -41,8 +41,8 @@ The screens must follow these principles:
 | SCH-ADM-006 | Session Detail & Audit | `/admin/scheduling/sessions/[id]` | Branch Manager, Academic Coordinator, Trainer, Auditor | View full session details, conflicts, attendance linkage, audit history. | `scheduling.session.read` |
 | SCH-ADM-007 | Recurring Schedule Generator | `/admin/scheduling/recurring/new` | Academic Coordinator, Training Coordinator | Generate multiple draft sessions for a batch. | `scheduling.session.create` |
 | SCH-ADM-008 | Conflict Review Center | `/admin/scheduling/conflicts` | Branch Manager, Academic Coordinator | Review unresolved conflicts, override eligible conflicts, and blocked sessions. | `scheduling.conflict.read` |
-| SCH-ADM-009 | Business Calendar List | `/admin/scheduling/calendars` | Super Admin, Branch Manager | Manage branch calendars by year and status. | `scheduling.calendar.read` |
-| SCH-ADM-010 | Business Calendar Create / Edit | `/admin/scheduling/calendars/new`, `/admin/scheduling/calendars/[id]/edit` | Super Admin, Branch Manager | Configure operating days, working hours, year, timezone, and lifecycle. | `scheduling.calendar.create`, `scheduling.calendar.update` |
+| SCH-ADM-009 | Business Calendar List | `/admin/scheduling/calendars` | Super Admin, Branch Manager | Manage institute calendars and branch overrides by year and status. | `scheduling.calendar.read` |
+| SCH-ADM-010 | Business Calendar Create / Edit | `/admin/scheduling/calendars/new`, `/admin/scheduling/calendars/[id]/edit` | Super Admin, Branch Manager | Configure operating days, working hours, year, timezone, lifecycle, and branch-year override details. | `scheduling.calendar.create`, `scheduling.calendar.update` |
 | SCH-ADM-011 | Holiday Management | `/admin/scheduling/holidays` | Branch Manager, Academic Coordinator | Configure public holidays, institute closures, branch holidays, and training blackout dates. | `scheduling.holiday.read` |
 | SCH-ADM-012 | Holiday Create / Edit Drawer | Drawer from Holiday Management | Branch Manager, Academic Coordinator | Create, update, activate, cancel, and soft delete holiday records. | `scheduling.holiday.create`, `scheduling.holiday.update` |
 | SCH-ADM-013 | Venue Block Management | `/admin/scheduling/venue-blocks` | Branch Manager, Academic Coordinator, Training Coordinator | Block classrooms or branches for maintenance, inspection, internal event, or closure. | `scheduling.venueBlock.read` |
@@ -71,7 +71,7 @@ The screens must follow these principles:
 |---|---|---|---|---|---|
 | SCH-STU-001 | My Class Schedule | `/student/schedule` | Student, Corporate Participant linked as Student | View published sessions for active enrollments. | `student.schedule.read` |
 | SCH-STU-002 | Session Detail | `/student/schedule/[id]` | Student | View course, batch, session title, date, time, classroom, trainer, branch, and holiday-related notices. | `student.schedule.read` |
-| SCH-STU-003 | Academic Calendar | `/student/calendar` | Student | View branch business calendar, holidays, closures, and training blackout notices relevant to active enrollments. | `student.calendar.read` |
+| SCH-STU-003 | Academic Calendar | `/student/calendar` | Student | View the institute calendar, branch-specific overrides, holidays, closures, and training blackout notices relevant to active enrollments. | `student.calendar.read` |
 
 ### 2.4 Public / External Portal Considerations
 
@@ -705,14 +705,14 @@ Central place to identify, review, resolve, or override schedule conflicts.
 
 ### Purpose
 
-Lists business calendars per branch and year.
+Lists the institute calendar plus branch/year override status per branch and year.
 
 ### Layout
 
 Dense table with header actions.
 
 ```text
-Header: Business Calendars | Create Calendar
+Header: Business Calendars | Create Institute Calendar | Create Branch Override
 Filter Bar: Branch, Year, Status, Country
 Table
 Pagination
@@ -750,7 +750,7 @@ Pagination
 
 ### Purpose
 
-Creates and configures branch business calendars with operating days, working hours, effective dates, and lifecycle status.
+Creates and configures the institute business calendar and branch/year overrides with operating days, working hours, effective dates, and lifecycle status.
 
 ### Layout
 
@@ -1511,7 +1511,7 @@ Month calendar with list sidebar.
 | Context | Empty Message | Action |
 |---|---|---|
 | No Sessions | `No schedule sessions found for the selected filters.` | Show Create Session when permitted. |
-| No Calendar | `No business calendar exists for this branch and year.` | Show Create Calendar when permitted. |
+| No Calendar | `No institute calendar or branch override exists for the selected branch and year.` | Show Create Calendar when permitted. |
 | No Holidays | `No holidays or closures configured for this calendar.` | Show Create Holiday when permitted. |
 | No Venue Blocks | `No venue blocks configured for the selected period.` | Show Create Venue Block when permitted. |
 | No Conflicts | `No unresolved scheduling conflicts found.` | Show Re-run Checks when permitted. |
@@ -1526,7 +1526,7 @@ Month calendar with list sidebar.
 | `scheduling.session.update` | Edit buttons and editable fields. |
 | `scheduling.session.publish` | Publish buttons and bulk publish. |
 | `scheduling.session.cancel` | Cancel buttons. |
-| `scheduling.calendar.create` | Create Calendar. |
+| `scheduling.calendar.create` | Create Institute Calendar. |
 | `scheduling.calendar.update` | Calendar edit fields and activation controls. |
 | `scheduling.holiday.create` | Create Holiday. |
 | `scheduling.holiday.update` | Holiday edit actions. |

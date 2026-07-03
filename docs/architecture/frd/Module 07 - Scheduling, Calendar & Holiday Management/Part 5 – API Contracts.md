@@ -145,8 +145,8 @@ const PaginationQuerySchema = z.object({
 
 | API ID | Route / Server Action | Method | Purpose | Required Permission |
 |---|---|---:|---|---|
-| API-SCH-001 | `/api/scheduling/calendars` | GET | Search business calendars | `scheduling.calendar.read` |
-| API-SCH-002 | `/api/scheduling/calendars` | POST | Create business calendar | `scheduling.calendar.create` |
+| API-SCH-001 | `/api/scheduling/calendars` | GET | Search business calendars and branch overrides | `scheduling.calendar.read` |
+| API-SCH-002 | `/api/scheduling/calendars` | POST | Create institute business calendar | `scheduling.calendar.create` |
 | API-SCH-003 | `/api/scheduling/calendars/{calendarId}` | GET | Read calendar detail | `scheduling.calendar.read` |
 | API-SCH-004 | `/api/scheduling/calendars/{calendarId}` | PATCH | Update calendar header and effective dates | `scheduling.calendar.update` |
 | API-SCH-005 | `/api/scheduling/calendars/{calendarId}/operating-days` | PUT | Replace operating days and working hours | `scheduling.calendar.update` |
@@ -198,7 +198,7 @@ const PaginationQuerySchema = z.object({
 | Field | Specification |
 |---|---|
 | Route | `GET /api/scheduling/calendars` |
-| Purpose | Returns branch-scoped business calendars with filters for year, status, branch, and text search. |
+| Purpose | Returns institute business calendars and branch-year overrides with filters for year, status, branch, and text search. |
 | Authentication | Required |
 | Required Permission | `scheduling.calendar.read` |
 | Branch Scoping | `branchId` query must be inside `allowedBranchIds`. If omitted, use active branch. Multi-branch read requires `scheduling.calendar.consolidated.read`. |
@@ -258,7 +258,7 @@ Error catalog:
 | Field | Specification |
 |---|---|
 | Route | `POST /api/scheduling/calendars` |
-| Purpose | Creates a draft branch business calendar with operating timezone, effective dates, and localized name. |
+| Purpose | Creates a draft institute business calendar with operating timezone, effective dates, and localized name. |
 | Authentication | Required |
 | Required Permission | `scheduling.calendar.create` |
 | Branch Scoping | `branchId` must be directly assigned to user or user must have `scheduling.admin.cross_branch.manage`. |
@@ -324,7 +324,7 @@ Success response DTO:
   "success": true,
   "data": {
     "id": "2dc9ef8a-0b77-4a64-b7d3-2cc6953f7569",
-    "branchId": "0c7fc62f-8a54-4c86-a930-c29894e817ef",
+    "instituteId": "0c7fc62f-8a54-4c86-a930-c29894e817ef",
     "code": "MCT-2026",
     "name": "Muscat Calendar 2026",
     "nameLocalized": { "en": "Muscat Calendar 2026", "ar": "تقويم مسقط 2026" },
@@ -576,7 +576,7 @@ Error catalog: `ERR_AUTH_REQUIRED`, `ERR_IAM_PERMISSION_DENIED`, `ERR_ORG_BRANCH
 | Field | Specification |
 |---|---|
 | Route | `POST /api/scheduling/holidays` |
-| Purpose | Creates an active or draft holiday for a branch calendar. |
+| Purpose | Creates an active or draft holiday for the institute calendar or a branch-scoped override calendar. |
 | Authentication | Required |
 | Required Permission | `scheduling.holiday.create` |
 | Branch Scoping | `branchId` and calendar branch must match and be inside mutation scope. |
@@ -1317,4 +1317,3 @@ Route: `GET /api/public/courses/{courseSlug}/schedule`
 Authentication: not required.
 
 Scope: only published course pages, active branches, published future sessions, no trainer personal details beyond public display name, no conflict or audit data.
-

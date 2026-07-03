@@ -141,6 +141,7 @@ export default async function EnrollmentsPage(props: {
     id: adm.id,
     studentProfileId: adm.studentProfileId,
     courseId: adm.courseId || '',
+    branchId: adm.branchId,
     label: `${adm.person.firstName} ${adm.person.lastName} (${adm.admissionNumber})`,
   }));
 

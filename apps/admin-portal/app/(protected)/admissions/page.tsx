@@ -106,7 +106,7 @@ export default async function AdmissionsPage(props: {
   const result = await studentQueryService.searchBranchScopedStudents(
     '',
     allowedBranchIds as string[],
-    { page: 1, limit: 100 }
+    { page: 1, limit: 100, studentStatus: 'Active' }
   );
   const students = result.items;
 

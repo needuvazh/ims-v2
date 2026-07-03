@@ -72,7 +72,7 @@ export async function POST(request: Request) {
         const valid = await otpService.verifyOtp(parsed.data.existingPersonId, parsed.data.otpCode);
         if (!valid) {
           return NextResponse.json(
-            { success: false, errorCode: 'ERR_OTP_INVALID_OR_EXPIRED', messageEnglish: 'The OTP is invalid or has expired. Please request a new code.', statusCode: 422 },
+            { success: false, errorCode: 'ERR_STU_OTP_INVALID', messageEnglish: 'The OTP is invalid or has expired. Please request a new code.', statusCode: 422 },
             { status: 422 }
           );
         }

@@ -85,6 +85,7 @@ export default async function EnrollmentDetailPage(props: {
       resolvedPrice: enrollment.resolvedPrice.toString(),
       resolvedDiscount: enrollment.resolvedDiscount.toString(),
       finalAmount: enrollment.finalAmount.toString(),
+      paymentValidationRequired: enrollment.paymentValidationRequired,
       priceEvaluationTimestamp: enrollment.priceEvaluationTimestamp?.toISOString() || null,
       paymentCollected: enrollment.walkInEnrollment?.paymentCollected?.toString() || '0.00',
       enrollmentType: enrollment.enrollmentType,

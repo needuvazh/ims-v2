@@ -45,10 +45,15 @@ export class StudentStatusService {
       // 1. Load the current profile
       const profile = await client.studentProfile.findUnique({
         where: { id: studentProfileId },
-        select: { id: true, studentStatus: true, isDeleted: true, branchId: true }
+        select: { id: true, studentStatus: true, isDeleted: true, branchId: true, deletedAt: true, deletedBy: true }
       });
 
-      if (!profile || profile.isDeleted) {
+      if (!profile) {
+        throw new Error('ERR_STU_STATUS_PROFILE_NOT_FOUND');
+      }
+
+      const isArchivedRestore = profile.isDeleted && profile.studentStatus === 'Archived' && newStatus === 'Active';
+      if (profile.isDeleted && !isArchivedRestore) {
         throw new Error('ERR_STU_STATUS_PROFILE_NOT_FOUND');
       }
 
@@ -104,8 +109,15 @@ export class StudentStatusService {
           status: newStatus,
           updatedAt: now,
           updatedBy: actorId,
+          isDeleted: newStatus === 'Archived' ? true : isArchivedRestore ? false : profile.isDeleted,
+          deletedAt: newStatus === 'Archived' ? effectiveStart : isArchivedRestore ? null : profile.deletedAt,
+          deletedBy: newStatus === 'Archived' ? actorId : isArchivedRestore ? null : profile.deletedBy,
           // When archiving, set effectiveEndDate to today
-          ...(newStatus === 'Archived' ? { effectiveEndDate: effectiveStart } : {}),
+          ...(newStatus === 'Archived'
+            ? { effectiveEndDate: effectiveStart }
+            : isArchivedRestore
+              ? { effectiveEndDate: null }
+              : {}),
         }
       });
 

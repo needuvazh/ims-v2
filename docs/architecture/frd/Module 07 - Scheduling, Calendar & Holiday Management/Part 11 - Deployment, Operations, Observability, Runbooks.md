@@ -661,7 +661,7 @@ After restoring scheduling data:
 
 ### Steps
 
-1. Identify holiday date, branch calendar, and branchId.
+1. Identify holiday date, resolved calendar, and branchId.
 2. Run affected sessions report for the holiday date.
 3. Verify whether holiday rule is full-day, half-day, or informational.
 4. Check whether holiday creation flow displayed affected sessions warning.

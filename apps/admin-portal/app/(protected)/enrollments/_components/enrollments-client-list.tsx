@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   GraduationCap,
@@ -32,6 +32,7 @@ import {
   DialogClose,
 } from '@ims/shared-ui';
 import { toast } from 'sonner';
+import { PricingPanel } from './pricing-panel';
 
 interface EnrollmentListItem {
   id: string;
@@ -49,6 +50,7 @@ interface AdmissionsListItem {
   id: string;
   studentProfileId: string;
   courseId: string;
+  branchId: string;
   label: string;
 }
 
@@ -87,11 +89,77 @@ export function EnrollmentsClientList({
   const [selectedBatchId, setSelectedBatchId] = useState('');
   const [enrollmentType, setEnrollmentType] = useState<'Regular' | 'Corporate' | 'Online'>('Regular');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [pricingPreview, setPricingPreview] = useState<{
+    pricingSource: string;
+    resolvedPrice: string;
+    resolvedDiscount: string;
+    finalAmount: string;
+    paymentValidationRequired: boolean;
+    priceEvaluationTimestamp: string | null;
+  } | null>(null);
+  const [pricingLoading, setPricingLoading] = useState(false);
+  const [pricingError, setPricingError] = useState<string | null>(null);
 
   const selectedAdmission = admissions.find(a => a.id === selectedAdmissionId);
   const filteredBatches = selectedAdmission 
     ? batches.filter(b => b.courseId === selectedAdmission.courseId)
     : [];
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const refreshPricing = async () => {
+      if (!selectedAdmission || !selectedBatchId) {
+        setPricingPreview(null);
+        setPricingError(null);
+        setPricingLoading(false);
+        return;
+      }
+
+      setPricingLoading(true);
+      setPricingError(null);
+
+      try {
+        const customerType = enrollmentType === 'Corporate' ? 'Corporate' : 'Individual';
+        const response = await fetch(
+          `/api/v1/courses/${selectedAdmission.courseId}/pricing/resolve?customerType=${encodeURIComponent(customerType)}&branchId=${selectedAdmission.branchId}&batchId=${selectedBatchId}`
+        );
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.messageEnglish || 'Failed to resolve pricing.');
+        }
+
+        if (!cancelled) {
+          const resolvedDiscount = (data.data.applicableDiscounts ?? []).reduce((sum: number, discount: { discountValue: number }) => sum + discount.discountValue, 0);
+          const finalAmount = Number(data.data.totalPrice);
+          setPricingPreview({
+            pricingSource: data.data.pricingSource,
+            resolvedPrice: String(data.data.basePrice),
+            resolvedDiscount: String(resolvedDiscount),
+            finalAmount: String(Math.max(0, finalAmount)),
+            paymentValidationRequired: finalAmount > 0,
+            priceEvaluationTimestamp: new Date().toISOString(),
+          });
+        }
+      } catch (error) {
+        if (!cancelled) {
+          setPricingPreview(null);
+          setPricingError((error as Error).message || 'Failed to resolve pricing.');
+        }
+      } finally {
+        if (!cancelled) {
+          setPricingLoading(false);
+        }
+      }
+    };
+
+    void refreshPricing();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedAdmission, selectedBatchId, enrollmentType]);
 
   const filterConfigs = [
     {
@@ -341,6 +409,21 @@ export function EnrollmentsClientList({
                 <option value="Corporate">Corporate Sourced</option>
                 <option value="Online">Online Intake</option>
               </select>
+            </div>
+
+            <div className="space-y-2">
+              {pricingLoading && <p className="text-xs text-slate-500">Resolving pricing snapshot…</p>}
+              {pricingError && <p className="text-xs text-rose-600">{pricingError}</p>}
+              {pricingPreview && (
+                <PricingPanel
+                  pricingSource={pricingPreview.pricingSource}
+                  resolvedPrice={pricingPreview.resolvedPrice}
+                  resolvedDiscount={pricingPreview.resolvedDiscount}
+                  finalAmount={pricingPreview.finalAmount}
+                  paymentValidationRequired={pricingPreview.paymentValidationRequired}
+                  priceEvaluationTimestamp={pricingPreview.priceEvaluationTimestamp}
+                />
+              )}
             </div>
 
             <div className="space-y-1.5">

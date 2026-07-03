@@ -63,7 +63,7 @@ The system SHALL support promoting waitlisted learners (FIFO order) when seats b
 - **THEN** the system SHALL load the batch with write-locking (`FOR UPDATE`) within the update transaction, and for each newly opened seat, transition the first active waitlist entry (`queuePosition = 1`) to `Promoted`, assign a unique `promotionCorrelationId`, decrement subsequent queue positions, increment `currentEnrollmentCount` by 1, and emit a `WaitlistEntryPromoted` event.
 
 #### Scenario: Manual queue position reprioritization
-- **WHEN** a request to change the priority queue position of waitlist entries is received from a user with `waitinglist.manage` permission
+- **WHEN** a request to change the priority queue position of waitlist entries is received from a user with `batch.waitlist.manage` permission
 - **THEN** the system SHALL acquire a pessimistic write-lock (`SELECT FOR UPDATE`) on the parent Batch row, update the `queuePosition` values of the affected entries to reflect the new sequence, and persist the updates.
 
 #### Scenario: Manual promotion fails if batch is full and overbooking is false
@@ -78,7 +78,7 @@ The system SHALL restrict waitlist operations to authorized users within the act
 
 #### Scenario: Reject waitlist action if user lacks branch access or correct permission
 - **WHEN** enqueuing, reordering, promoting, skipping, removing, or reactivating waitlist entries is requested for a batch
-- **THEN** the system SHALL verify the user has the **`waitinglist.manage`** permission and active branch authorization for the batch's branch ID in their `UserBranchAccess` configuration, failing which it SHALL reject the operation and return a `403 Forbidden` response with `ERR_IAM_INSUFFICIENT_PERMISSIONS`.
+- **THEN** the system SHALL verify the user has the **`batch.waitlist.manage`** permission and active branch authorization for the batch's branch ID in their `UserBranchAccess` configuration, failing which it SHALL reject the operation and return a `403 Forbidden` response with `ERR_IAM_INSUFFICIENT_PERMISSIONS`.
 
 ---
 
@@ -126,7 +126,7 @@ The system SHALL support reverting waitlist promotions if downstream enrollment 
 The system SHALL support manually skipping a blocked waitlist candidate (due to holds, civil ID blocks) and triggering the next candidate promotion.
 
 #### Scenario: Manually skip a blocked candidate
-- **WHEN** a skip request is received for a waitlist entry ID (`waitlistId`) with status `Waiting` from a user with `waitinglist.manage` permission
+- **WHEN** a skip request is received for a waitlist entry ID (`waitlistId`) with status `Waiting` from a user with `batch.waitlist.manage` permission
 - **THEN** the system SHALL acquire a pessimistic write-lock (`SELECT FOR UPDATE`) on the parent Batch row, update the candidate's waitlist status to `Held`, populate `statusReason` (e.g. "Manual Skip: Holds"), preserve their place out of the FIFO sequence, decrement subsequent positions, and immediately promote the next candidate.
 
 ---
@@ -136,7 +136,7 @@ The system SHALL support manually skipping a blocked waitlist candidate (due to 
 The system SHALL support removing a student or lead from the waitlist, shifting subsequent positions.
 
 #### Scenario: Remove candidate from waitlist
-- **WHEN** a request to remove a waitlist entry with status `Waiting` is received from a user with `waitinglist.manage` permission
+- **WHEN** a request to remove a waitlist entry with status `Waiting` is received from a user with `batch.waitlist.manage` permission
 - **THEN** the system SHALL acquire a pessimistic write-lock (`SELECT FOR UPDATE`) on the parent Batch row, change the status of the waitlist entry to `Removed`, decrement `queuePosition` for all subsequent entries by 1, and write a `WAITLIST_ENTRY_REMOVED` audit record.
 
 ---
@@ -146,6 +146,5 @@ The system SHALL support removing a student or lead from the waitlist, shifting 
 The system SHALL support reactivating a held or suspended waitlist entry and appending them back into the active queue.
 
 #### Scenario: Reactivate held or suspended candidate
-- **WHEN** a reactivation request is received for a waitlist entry ID (`waitlistId`) with status `Held` or `Suspended` from a user with `waitinglist.manage` permission and active branch access
+- **WHEN** a reactivation request is received for a waitlist entry ID (`waitlistId`) with status `Held` or `Suspended` from a user with `batch.waitlist.manage` permission and active branch access
 - **THEN** the system SHALL acquire a pessimistic write-lock (`SELECT FOR UPDATE`) on the parent Batch row, transition the status back to `Waiting`, calculate the next chronological queue position (`active.length + 1`), clear its `statusReason`, and write audit logs.
-

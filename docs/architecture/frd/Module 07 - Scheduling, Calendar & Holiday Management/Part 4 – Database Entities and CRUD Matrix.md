@@ -27,8 +27,9 @@ The context owns these persistent entities:
 
 | Entity | Ownership Type | Purpose |
 |---|---|---|
-| `BusinessCalendar` | Owned | Defines the branch-level operating calendar for a year or effective period. |
-| `CalendarOperatingDay` | Owned | Defines whether each weekday is open or closed for a branch calendar. |
+| `BusinessCalendar` | Owned | Defines the institute operating calendar for a year or effective period. |
+| `BranchCalendarOverride` | Owned | Defines branch-specific deviations from the institute calendar for a year. |
+| `CalendarOperatingDay` | Owned | Defines whether each weekday is open or closed for a calendar source. |
 | `CalendarWorkingHour` | Owned | Defines one or more working time windows for each operating day. |
 | `Holiday` | Owned | Defines public holidays, ASTI holidays, branch closures, and non-training days. |
 | `VenueBlock` | Owned | Blocks a full branch or a specific classroom for a date/time range. |
@@ -44,7 +45,7 @@ The context references these external entities:
 
 | External Entity | Owning Context | Usage in Scheduling |
 |---|---|---|
-| `Branch` | Organization Management | Branch ownership, branch scoping, branch calendar association. |
+| `Branch` | Organization Management | Branch ownership, branch scoping, branch override association. |
 | `Classroom` | Organization Management | Classroom booking and venue blocking. |
 | `Course` | Course Catalog Management | Course consistency with batch and schedule display. |
 | `Batch` | Training Delivery Management | Schedule sessions are planned for batches. |
@@ -327,7 +328,7 @@ model BusinessCalendar {
 
 ### Purpose
 
-`CalendarOperatingDay` stores one row per weekday per business calendar. It avoids opaque JSON rules and enables deterministic conflict checks, reporting, and validation.
+`CalendarOperatingDay` stores one row per weekday per calendar source. It avoids opaque JSON rules and enables deterministic conflict checks, reporting, and validation.
 
 ### Table Definition
 
@@ -680,7 +681,7 @@ model VenueBlock {
 | session_number | integer | Int | No |  | `uq_schedule_session_batch_number_active`, `chk_schedule_session_number_positive` | Positive number unique within batch among non-deleted sessions. |
 | title | varchar(180) | String @db.VarChar(180) | No |  |  | Session title. |
 | title_localized | jsonb | Json? | Yes |  |  | Optional English/Arabic title. |
-| scheduled_date | date | DateTime @db.Date | No |  | multiple date indexes | Session date in Oman/local branch calendar. |
+| scheduled_date | date | DateTime @db.Date | No |  | multiple date indexes | Session date in Oman/resolved calendar. |
 | start_time | time | DateTime @db.Time(0) | No |  | `chk_schedule_session_time_order` | Session start local time. |
 | end_time | time | DateTime @db.Time(0) | No |  | `chk_schedule_session_time_order` | Session end local time. |
 | start_at_utc | timestamptz | DateTime | No |  | `idx_schedule_sessions_trainer_time`, `idx_schedule_sessions_classroom_time` | Computed timestamp for overlap checks. |
@@ -1320,9 +1321,9 @@ model ScheduleExportLog {
 | Relationship | Cardinality | Required? | Delete / Cascade Rule | Business Rule |
 |---|---:|---:|---|---|
 | BusinessCalendar → CalendarOperatingDay | 1:N | Yes | Restrict delete; soft delete parent only after children are inactive/archived or soft deleted in same transaction. | A calendar must define all seven weekdays before activation. |
-| CalendarOperatingDay → CalendarWorkingHour | 1:N | Conditional | Restrict delete; child soft delete allowed while parent remains. | Open day requires at least one active working-hour window. Closed day must have no active working-hour windows. |
-| BusinessCalendar → Holiday | 1:N | Yes for Holiday | Restrict delete. | Holiday must belong to a branch calendar. |
-| BusinessCalendar → ScheduleSession | 1:N | Yes for ScheduleSession | Restrict delete. | Published sessions require an active calendar used at validation time. |
+| BranchCalendarOverride → CalendarOperatingDay | 1:N | Conditional | Restrict delete; child soft delete allowed while parent remains. | Open day requires at least one active working-hour window. Closed day must have no active working-hour windows. |
+| BusinessCalendar → Holiday | 1:N | Yes for Holiday | Restrict delete. | Holiday must belong to the institute calendar. |
+| BusinessCalendar → ScheduleSession | 1:N | Yes for ScheduleSession | Restrict delete. | Published sessions require an active resolved calendar used at validation time. |
 | ScheduleRecurrencePattern → ScheduleGenerationRun | 1:N | Optional | Set null on recurrence soft delete only at application level; physical FK uses Restrict or SetNull based on implementation preference. | Generation history must remain even if pattern is archived. |
 | ScheduleRecurrencePattern → ScheduleSession | 1:N | Optional | Set null on archived recurrence pattern only if required; recommended Restrict for auditability. | Generated sessions preserve generation source. |
 | ScheduleGenerationRun → ScheduleSession | 1:N | Optional | Restrict while sessions exist. | Bulk generation result must remain traceable. |
@@ -1435,9 +1436,10 @@ model ScheduleExportLog {
 
 | Entity | SA | BM | AC | REC | TRN | STU | AUD | CEO | SYS-SCH | SYS-ATT | SYS-COMM | SYS-RPT | Required Permissions | Branch Scoping Logic |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| BusinessCalendar | C,R,U,D,A,P | C,R,U,D,A,P within branch | R within branch; U only if granted | R limited | X | X | R,A | R summary | R validation | X | X | R summary | `scheduling.calendar.create`, `scheduling.calendar.read`, `scheduling.calendar.update`, `scheduling.calendar.archive`, `scheduling.audit.read` | Direct `branchId IN allowedBranchIds`; consolidated read requires `scheduling.calendar.consolidated.read`. |
-| CalendarOperatingDay | C,R,U,D,A | C,R,U,D,A within branch | R,U if granted | R limited | X | X | R,A | R summary | R validation | X | X | R summary | `scheduling.calendar.update`, `scheduling.calendar.read` | Direct `branchId`; must match parent BusinessCalendar branch. |
-| CalendarWorkingHour | C,R,U,D,A | C,R,U,D,A within branch | R,U if granted | R limited | X | X | R,A | R summary | R validation | X | X | R summary | `scheduling.calendar.update`, `scheduling.calendar.read` | Direct `branchId`; must match parent CalendarOperatingDay branch. |
+| BusinessCalendar | C,R,U,D,A,P | C,R,U,D,A,P within institute scope | R within branch; U only if granted | R limited | X | X | R,A | R summary | R validation | X | X | R summary | `scheduling.calendar.create`, `scheduling.calendar.read`, `scheduling.calendar.update`, `scheduling.calendar.archive`, `scheduling.audit.read` | Direct `instituteId`; consolidated read requires `scheduling.calendar.consolidated.read`. |
+| BranchCalendarOverride | C,R,U,D,A,P | C,R,U,D,A,P within branch | R,U if granted | R limited | X | X | R,A | R summary | R validation | X | X | R summary | `scheduling.calendar.update`, `scheduling.calendar.read` | Direct `branchId`; must match parent institute calendar and override year. |
+| CalendarOperatingDay | C,R,U,D,A | C,R,U,D,A within institute/branch scope | R,U if granted | R limited | X | X | R,A | R summary | R validation | X | X | R summary | `scheduling.calendar.update`, `scheduling.calendar.read` | Direct `calendarId`; must match parent BusinessCalendar or BranchCalendarOverride. |
+| CalendarWorkingHour | C,R,U,D,A | C,R,U,D,A within institute/branch scope | R,U if granted | R limited | X | X | R,A | R summary | R validation | X | X | R summary | `scheduling.calendar.update`, `scheduling.calendar.read` | Direct `calendarId`; must match parent CalendarOperatingDay. |
 | Holiday | C,R,U,D,A,P | C,R,U,D,A,P within branch | C,R,U within branch if granted | R | R own branch holiday calendar | R public/own timetable impact | R,A | R summary | R validation | X | R for notification context | R summary | `scheduling.holiday.create`, `scheduling.holiday.read`, `scheduling.holiday.update`, `scheduling.holiday.delete`, `scheduling.holiday.activate` | Direct `branchId`; consolidated holiday calendar requires reporting permission. |
 | VenueBlock | C,R,U,D,A,P | C,R,U,D,A,P within branch | C,R,U within branch if granted | R | R own affected timetable | R own affected timetable | R,A | R summary | R validation | X | R for notification context | R summary | `scheduling.venueBlock.create`, `scheduling.venueBlock.read`, `scheduling.venueBlock.update`, `scheduling.venueBlock.delete`, `scheduling.venueBlock.activate` | Direct `branchId`; classroom block additionally validates classroom branch. |
 | ScheduleSession | C,R,U,D,A,P,O | C,R,U,D,A,P,O within branch | C,R,U,D,P within branch; O only if granted | R daily view | R own assigned sessions | R own enrolled sessions | R,A | R summary | C/R/U validation support | R published sessions | R published/rescheduled/cancelled events | R summary | `scheduling.session.create`, `scheduling.session.read`, `scheduling.session.update`, `scheduling.session.delete`, `scheduling.session.publish`, `scheduling.session.cancel`, `scheduling.session.reschedule`, `scheduling.override.*` | Direct `branchId`; trainer/student portal additionally filters by trainerId or enrollment membership through Training Delivery/Enrollment. |
@@ -1452,8 +1454,8 @@ model ScheduleExportLog {
 
 | Permission Code | Description |
 |---|---|
-| `scheduling.calendar.create` | Create branch business calendar. |
-| `scheduling.calendar.read` | Read branch calendar details. |
+| `scheduling.calendar.create` | Create institute business calendar. |
+| `scheduling.calendar.read` | Read institute calendar details and branch overrides. |
 | `scheduling.calendar.update` | Update calendar, operating days, and working hours. |
 | `scheduling.calendar.archive` | Archive calendar after closure. |
 | `scheduling.holiday.create` | Create holiday. |

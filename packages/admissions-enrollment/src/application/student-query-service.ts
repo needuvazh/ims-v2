@@ -34,23 +34,29 @@ export const maskNationalId = (nationalId: string | null | undefined): string | 
   return `${nationalId.substring(0, 2)}******${nationalId.substring(nationalId.length - 2)}`;
 };
 
+export interface GlobalPersonLookupOptions {
+  revealSensitive?: boolean;
+}
+
 export class StudentQueryService {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async globalPersonLookup(query: string, activeBranchId: string) {
+  async globalPersonLookup(query: string, activeBranchId: string, options: GlobalPersonLookupOptions = {}) {
     if (!query || !query.trim()) {
       throw new Error('ERR_VAL_FAILED: Query cannot be empty');
     }
 
     const trimmed = query.trim();
+    const revealSensitive = options.revealSensitive ?? false;
 
-    // Match person globally on email or mobile only
+    // Match person globally on email, mobile, or national ID.
     const person = await this.prisma.person.findFirst({
       where: {
         isDeleted: false,
         OR: [
           { email: trimmed },
           { mobile: trimmed },
+          { nationalId: trimmed },
         ],
       },
       include: {
@@ -109,8 +115,9 @@ export class StudentQueryService {
       personId: person.id,
       firstNameMasked: person.firstName ? `${person.firstName[0]}****` : null,
       lastNameMasked: person.lastName ? `${person.lastName[0]}****` : null,
-      maskedMobile: maskPhone(person.mobile),
-      maskedEmail: maskEmail(person.email),
+      maskedMobile: revealSensitive ? person.mobile : maskPhone(person.mobile),
+      maskedEmail: revealSensitive ? person.email : maskEmail(person.email),
+      maskedNationalId: revealSensitive ? person.nationalId : maskNationalId(person.nationalId),
       studentProfileId: studentProfile?.id || null,
       studentNumber: studentProfile?.studentNumber || null,
       preflight,
@@ -157,6 +164,9 @@ export class StudentQueryService {
     } else {
       whereClause.OR = [
         {
+          branchId: { in: targetBranchIds },
+        },
+        {
           admissions: {
             some: {
               branchId: { in: targetBranchIds },
@@ -169,6 +179,16 @@ export class StudentQueryService {
             some: {
               branchId: { in: targetBranchIds },
               isDeleted: false,
+            },
+          },
+        },
+        {
+          person: {
+            leads: {
+              some: {
+                branchId: { in: targetBranchIds },
+                isDeleted: false,
+              },
             },
           },
         },

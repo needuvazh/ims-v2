@@ -43,6 +43,7 @@ describe('StudentQueryService', () => {
       lastName: 'Al-Balushi',
       email: 'fatima@example.com',
       mobile: '+96899112233',
+      nationalId: '123456789',
       // Updated: globalPersonLookup uses studentProfiles (array relation)
       studentProfiles: [
         {
@@ -70,6 +71,7 @@ describe('StudentQueryService', () => {
     expect(result.personFound).toBe(true);
     expect(result.firstNameMasked).toBe('F****');
     expect(result.lastNameMasked).toBe('A****');
+    expect(result.maskedNationalId).toBe('12******89');
     expect(result.studentProfileId).toBe('profile-1');
     expect(result.studentNumber).toBe('STU-123');
     expect(result.preflight).toEqual({
@@ -78,6 +80,29 @@ describe('StudentQueryService', () => {
       hasEnrollment: true,
       conflictCode: 'ERR_ADM_ACTIVE_ADMISSION_EXISTS',
     });
+  });
+
+  test('globalPersonLookup can reveal contact values when requested', async () => {
+    const mockPrisma = {
+      person: {
+        findFirst: vi.fn().mockResolvedValue({
+          id: 'person-2',
+          firstName: 'Mariam',
+          lastName: 'Al-Harthy',
+          email: 'mariam@example.com',
+          mobile: '+96899119911',
+          nationalId: '987654321',
+          studentProfiles: [],
+        }),
+      },
+    } as any;
+
+    const service = new StudentQueryService(mockPrisma);
+    const result = await service.globalPersonLookup('987654321', 'branch-1', { revealSensitive: true });
+
+    expect(result.maskedEmail).toBe('mariam@example.com');
+    expect(result.maskedMobile).toBe('+96899119911');
+    expect(result.maskedNationalId).toBe('987654321');
   });
 
 

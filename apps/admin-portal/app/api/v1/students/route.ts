@@ -185,7 +185,7 @@ export async function POST(request: Request) {
         return NextResponse.json(
           {
             success: false,
-            errorCode: 'ERR_STU_DUPLICATE_BLOCKING_MATCH',
+            errorCode: 'ERR_STU_IDENTITY_CONFLICT',
             messageEnglish: 'A matching person already exists. Please use duplicate resolution or admission linkage.',
             statusCode: 409,
           },
@@ -222,13 +222,45 @@ export async function POST(request: Request) {
             personId: person.id,
             studentNumber,
             branchId: parsed.data.branchId,
-            studentStatus: 'Pending',
+            studentStatus: 'Active',
             joinedAt: new Date(),
             creationSource: 'DirectRegistration',
             remarks: parsed.data.remarks || null,
-            status: 'Pending',
+            status: 'Active',
             createdBy: session.userId,
             updatedBy: session.userId,
+          },
+        });
+
+        await tx.studentStatusHistory.create({
+          data: {
+            studentProfileId: student.id,
+            branchId: parsed.data.branchId,
+            oldStatus: 'Pending',
+            newStatus: 'Active',
+            changeReason: 'Direct registration default activation',
+            effectiveStartDate: new Date(),
+            requestedBy: session.userId,
+            status: 'Active',
+            createdBy: session.userId,
+            updatedBy: session.userId,
+          },
+        });
+
+        await tx.auditLog.create({
+          data: {
+            action: 'StudentCreated',
+            entityType: 'StudentProfile',
+            entityId: student.id,
+            performedBy: session.userId,
+            branchId: parsed.data.branchId,
+            performedAt: new Date(),
+            module: 'AdmissionsEnrollment',
+            newValue: {
+              studentNumber,
+              status: 'Active',
+              creationSource: 'DirectRegistration',
+            },
           },
         });
 

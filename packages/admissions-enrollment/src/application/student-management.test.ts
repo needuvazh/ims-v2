@@ -52,6 +52,8 @@ describe('StudentStatusService', () => {
           studentStatus: 'Pending',
           isDeleted: false,
           branchId: 'branch-1',
+          deletedAt: null,
+          deletedBy: null,
         }),
         update: vi.fn().mockResolvedValue({}),
       },
@@ -70,6 +72,8 @@ describe('StudentStatusService', () => {
               studentStatus: 'Pending',
               isDeleted: false,
               branchId: 'branch-1',
+              deletedAt: null,
+              deletedBy: null,
             }),
             update: vi.fn().mockResolvedValue({}),
           },
@@ -122,8 +126,10 @@ describe('StudentStatusService', () => {
             findUnique: vi.fn().mockResolvedValue({
               id: 'stu-archived',
               studentStatus: 'Archived',
-              isDeleted: false,
+              isDeleted: true,
               branchId: 'branch-1',
+              deletedAt: new Date(),
+              deletedBy: 'user-1',
             }),
             update: vi.fn().mockResolvedValue({}),
           },
@@ -153,8 +159,8 @@ describe('StudentStatusService', () => {
   test('transition throws ERR_STU_STATUS_PROFILE_NOT_FOUND for missing profile', async () => {
     const prisma = {
       $transaction: vi.fn().mockImplementation((fn: any) =>
-        fn({
-          studentProfile: { findUnique: vi.fn().mockResolvedValue(null) },
+      fn({
+        studentProfile: { findUnique: vi.fn().mockResolvedValue(null) },
           studentStatusHistory: {},
           auditLog: {},
         })
@@ -180,6 +186,8 @@ describe('StudentStatusService', () => {
               id: 'stu-1',
               studentStatus: 'Active',
               isDeleted: true,
+              deletedAt: new Date(),
+              deletedBy: 'user-1',
             }),
           },
           studentStatusHistory: {},
@@ -197,6 +205,52 @@ describe('StudentStatusService', () => {
         reason: 'test',
       })
     ).rejects.toThrow('ERR_STU_STATUS_PROFILE_NOT_FOUND');
+  });
+
+  test('archive should soft-delete the student profile and write history', async () => {
+    const profileUpdate = vi.fn().mockResolvedValue({});
+    const prisma = {
+      $transaction: vi.fn().mockImplementation((fn: any) =>
+        fn({
+          studentProfile: {
+            findUnique: vi.fn().mockResolvedValue({
+              id: 'stu-1',
+              studentStatus: 'Active',
+              isDeleted: false,
+              branchId: 'branch-1',
+              deletedAt: null,
+              deletedBy: null,
+            }),
+            update: profileUpdate,
+          },
+          studentStatusHistory: {
+            updateMany: vi.fn().mockResolvedValue({ count: 0 }),
+            create: vi.fn().mockResolvedValue({}),
+          },
+          auditLog: {
+            create: vi.fn().mockResolvedValue({}),
+          },
+        })
+      ),
+    } as any;
+
+    const svc = new StudentStatusService(prisma);
+    await svc.archive({
+      studentProfileId: 'stu-1',
+      actorId: 'user-1',
+      branchId: 'branch-1',
+      reason: 'archived for test',
+    });
+
+    expect(profileUpdate).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          isDeleted: true,
+          status: 'Archived',
+          deletedBy: 'user-1',
+        }),
+      })
+    );
   });
 });
 
@@ -363,7 +417,7 @@ describe('StudentMergeService', () => {
     ).rejects.toThrow('ERR_STU_MERGE_USER_CONFLICT');
   });
 
-  test('mergeProfiles does not remap portal User ownership cross-context', async () => {
+  test('mergeProfiles remaps the source user to the survivor when only the source has a portal account', async () => {
     const updateUserMock = vi.fn().mockResolvedValue({});
     const tx = buildMergeTransactionClient({
       user: {
@@ -386,7 +440,15 @@ describe('StudentMergeService', () => {
       mergedBy: 'user-1',
     });
 
-    expect(updateUserMock).not.toHaveBeenCalled();
+    expect(updateUserMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: expect.any(String) },
+        data: expect.objectContaining({
+          personId: 'person-survivor',
+          updatedBy: 'user-1',
+        }),
+      })
+    );
   });
 
   test('mergeProfiles throws ERR_STU_MERGE_SURVIVOR_NOT_FOUND for deleted survivor', async () => {

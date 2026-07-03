@@ -48,24 +48,23 @@ The scenarios below assume the following deterministic test data unless a scenar
 
 ```gherkin
 Feature: Business calendar management
-  The system must allow authorized users to configure branch calendars, operating days, and working hours
+  The system must allow authorized users to configure institute calendars, branch overrides, operating days, and working hours
   while enforcing branch scope, effective dating, lifecycle status, and audit requirements.
 ```
 
-### Scenario: Create a draft business calendar for an assigned branch
+### Scenario: Create a draft institute business calendar
 
 ```gherkin
-Scenario: Authorized branch admin creates a draft business calendar
+Scenario: Authorized branch admin creates a draft institute business calendar
   Given the user is authenticated as "Branch Admin A"
-  And the active branch is "MCT-HQ"
   And the user has permission "scheduling.calendar.create"
-  When the user creates a business calendar with code "MCT-CAL-2026"
-  And the calendar name is "Muscat Business Calendar 2026"
+  When the user creates an institute business calendar with code "ASTI-CAL-2026"
+  And the calendar name is "ASTI Business Calendar 2026"
   And the effective start date is "2026-01-01"
   And the effective end date is "2026-12-31"
   Then the system creates the calendar in "Draft" status
-  And the calendar is linked to branch "MCT-HQ"
-  And the calendar is not visible as active for scheduling until activated
+  And the calendar is linked to the institute
+  And branch-specific overrides can be added later
   And an audit log entry is recorded with action "CreateBusinessCalendar"
 ```
 
@@ -75,7 +74,7 @@ Scenario: Authorized branch admin creates a draft business calendar
 Scenario Outline: Business calendar date validation
   Given the user is authenticated as "Branch Admin A"
   And the user has permission "scheduling.calendar.create"
-  When the user creates a business calendar with effective start date "<startDate>"
+  When the user creates an institute business calendar with effective start date "<startDate>"
   And effective end date "<endDate>"
   Then the system rejects the request with error code "<errorCode>"
 
@@ -92,7 +91,7 @@ Scenario Outline: Business calendar date validation
 Scenario: Activate calendar successfully
   Given the user is authenticated as "Branch Admin A"
   And the user has permission "scheduling.calendar.update"
-  And branch "MCT-HQ" has a draft calendar "MCT-CAL-2026"
+  And the institute has a draft calendar "ASTI-CAL-2026"
   And no active calendar overlaps the calendar effective period
   And the calendar has operating days for Sunday through Thursday
   And the calendar has working hours from "08:00" to "18:00"

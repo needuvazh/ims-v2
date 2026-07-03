@@ -98,7 +98,9 @@ Rollback strategy:
 
 ## Open Questions
 
-- Should institute calendars be year-scoped or effective-date-scoped at the persistence layer?
-- Should branch overrides be allowed to add branch-only holidays/closures, or only change working hours and operating days?
-- Should the admin UI show a merged resolved calendar by default, or separate institute and override panels?
-- What should happen to any existing data stored in `BranchSettings.workingCalendar` if it contains free-form text instead of a reference code?
+Resolved decisions:
+
+- Institute calendars SHALL be effective-date-scoped at the persistence layer, with `year` kept as a derived/indexed lookup field.
+- Branch overrides SHALL be allowed to add branch-specific holidays/closures as additive exceptions, but they SHALL NOT remove or rewrite institute-wide holidays.
+- The admin UI SHOULD show a merged resolved calendar by default, with provenance markers for inherited versus overridden values.
+- Any existing `BranchSettings.workingCalendar` value that cannot be mapped cleanly SHALL be treated as deprecated non-authoritative metadata and kept only for manual review.

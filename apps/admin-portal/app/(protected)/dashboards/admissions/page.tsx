@@ -231,6 +231,9 @@ export default async function AdmissionsDashboardPage(props: {
             <Link href="/admissions" className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/15">
               Admissions List <ArrowRight className="h-4 w-4" />
             </Link>
+            <Link href="/dashboards/admissions/reports" className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/15">
+              Reports <ArrowRight className="h-4 w-4" />
+            </Link>
             <Link href="/batches" className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/15">
               Batch Roster <ArrowRight className="h-4 w-4" />
             </Link>

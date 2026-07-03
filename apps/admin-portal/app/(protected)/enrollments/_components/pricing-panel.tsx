@@ -8,6 +8,7 @@ interface PricingPanelProps {
   resolvedPrice: string;
   resolvedDiscount: string;
   finalAmount: string;
+  paymentValidationRequired: boolean;
   priceEvaluationTimestamp: string | null;
 }
 
@@ -16,13 +17,16 @@ export function PricingPanel({
   resolvedPrice,
   resolvedDiscount,
   finalAmount,
+  paymentValidationRequired,
   priceEvaluationTimestamp,
 }: PricingPanelProps) {
   const getSourceBadge = (source: string) => {
     switch (source) {
       case 'BatchLevelOverride':
+      case 'BatchLevel':
         return <Badge className="bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-50">Batch Level Override</Badge>;
       case 'BranchLevelOverride':
+      case 'BranchLevel':
         return <Badge className="bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-50">Branch Level Override</Badge>;
       default:
         return <Badge className="bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-50">Global Default</Badge>;
@@ -51,6 +55,10 @@ export function PricingPanel({
         <div className="border-t border-dashed border-slate-100 pt-2 flex justify-between items-baseline">
           <span className="text-sm font-semibold text-slate-800">Final Net Amount:</span>
           <span className="text-xl font-extrabold text-slate-900 font-mono">OMR {Number(finalAmount).toFixed(3)}</span>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-slate-500">Payment Validation:</span>
+          <span className="font-medium text-slate-700">{paymentValidationRequired ? 'Required' : 'Not required'}</span>
         </div>
       </div>
 

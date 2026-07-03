@@ -566,11 +566,30 @@ Quotation Number
 
 ```text
 id
-branchId
+instituteId
 name
 year
 countryCode
+timezone
+effectiveStartDate
+effectiveEndDate
 status
+isDefault
+```
+
+---
+
+## 8.4.1 BranchCalendarOverride
+
+```text
+id
+businessCalendarId
+branchId
+year
+status
+effectiveStartDate
+effectiveEndDate
+notes
 ```
 
 ---

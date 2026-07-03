@@ -21,6 +21,9 @@ export default async function StudentLookupPage(props: {
   const branchFilter = searchParams.branchId || '';
   const admissionFilter = searchParams.admissionStatus || '';
   const canCreateStudent = session.permissions.includes('student.create') || session.permissions.includes('student.write');
+  const canReadAdmissions = session.permissions.includes('student.related.admission.read');
+  const canReadEnrollments = session.permissions.includes('student.related.enrollment.read');
+  const canManageIdCard = session.permissions.includes('student.id_card.issue') || session.permissions.includes('student.idcard.manage');
 
   const { branchScopeResolver, studentQueryService, prisma } = await import('@/lib/runtime');
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
@@ -242,11 +245,34 @@ export default async function StudentLookupPage(props: {
                         </Badge>
                       </TableCell>
                       <TableCell className="text-right">
-                        <Link href={`/students/${s.id}`}>
-                          <Button variant="outline" size="sm" className="h-8 gap-1">
-                            <Eye className="h-3 w-3" /> Profile
-                          </Button>
-                        </Link>
+                        <div className="flex flex-wrap justify-end gap-2">
+                          <Link href={`/students/${s.id}`}>
+                            <Button variant="outline" size="sm" className="h-8 gap-1">
+                              <Eye className="h-3 w-3" /> Profile
+                            </Button>
+                          </Link>
+                          {canReadAdmissions && s.admissions?.[0] && (
+                            <Link href={`/admissions/${s.admissions[0].id}`}>
+                              <Button variant="outline" size="sm" className="h-8 gap-1">
+                                Admissions
+                              </Button>
+                            </Link>
+                          )}
+                          {canReadEnrollments && activeEnrollments[0] && (
+                            <Link href={`/enrollments/${activeEnrollments[0].id}`}>
+                              <Button variant="outline" size="sm" className="h-8 gap-1">
+                                Enrollments
+                              </Button>
+                            </Link>
+                          )}
+                          {canManageIdCard && (
+                            <Link href={`/students/${s.id}#id-card-management`}>
+                              <Button variant="outline" size="sm" className="h-8 gap-1">
+                                ID Card
+                              </Button>
+                            </Link>
+                          )}
+                        </div>
                       </TableCell>
                     </TableRow>
                   );

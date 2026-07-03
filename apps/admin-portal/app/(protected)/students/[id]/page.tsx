@@ -208,7 +208,7 @@ export default async function StudentProfileDashboardPage(props: {
 
         {/* ID Card Management Panel */}
         {canManageIdCard && (
-          <Card className="p-6">
+          <Card id="id-card-management" className="p-6">
             <h3 className="font-bold text-slate-800 flex items-center gap-2 mb-4">
               <CreditCard className="h-5 w-5 text-purple-500" /> ID Card Management
             </h3>

@@ -12,8 +12,8 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
 
       try {
         const { prisma, branchScopeResolver, studentStatusService } = await import('../../../../../../lib/runtime');
-        const profile = await prisma.studentProfile.findUnique({ where: { id: studentProfileId }, select: { id: true, branchId: true, isDeleted: true } });
-        if (!profile || profile.isDeleted) {
+        const profile = await prisma.studentProfile.findUnique({ where: { id: studentProfileId }, select: { id: true, branchId: true, isDeleted: true, studentStatus: true } });
+        if (!profile || (profile.isDeleted && profile.studentStatus !== 'Archived')) {
           return NextResponse.json({ success: false, errorCode: 'ERR_STU_PROFILE_NOT_FOUND', messageEnglish: 'Student profile not found.', statusCode: 404 }, { status: 404 });
         }
 

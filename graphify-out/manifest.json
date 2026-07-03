@@ -225,8 +225,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/lib/auth-guard.ts": {
-    "mtime": 1782756201.8349743,
-    "ast_hash": "c98a72dafdb85df2f60f3420eeae963c",
+    "mtime": 1783091444.7237968,
+    "ast_hash": "1b68f2682b988e626c9ccfa5d238245a",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/lib/observability.ts": {
@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/lib/runtime.ts": {
-    "mtime": 1783002731.9024978,
-    "ast_hash": "b07bf0a32cfcadbf16c13e9ceebd4540",
+    "mtime": 1783069446.763207,
+    "ast_hash": "1cbf8a9cc538c17a4a4ef92ae5245cd5",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/page.tsx": {
@@ -245,8 +245,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/sign-out/route.ts": {
-    "mtime": 1782679686.600955,
-    "ast_hash": "82a2a89a174d4bf6ed0306d3b3a909e2",
+    "mtime": 1783090808.5587142,
+    "ast_hash": "9beaa0275f834321ef6864c753a9ddd9",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/student/(protected)/certificates/page.tsx": {
@@ -320,7 +320,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/next-env.d.ts": {
-    "mtime": 1783054713.9013126,
+    "mtime": 1783091153.942616,
     "ast_hash": "d0f8375ae1199dc7acd3977fc33b78b8",
     "semantic_hash": ""
   },
@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "packages/database/prisma/seed.ts": {
-    "mtime": 1783049075.619374,
-    "ast_hash": "9ed8699a0fbe9bf01eb02410201ef77f",
+    "mtime": 1783077773.601014,
+    "ast_hash": "5ccf8ddf21cab835d5443a7456a53984",
     "semantic_hash": ""
   },
   "packages/database/src/client.ts": {
@@ -460,8 +460,8 @@
     "semantic_hash": ""
   },
   "packages/identity-access/src/application/auth-service.ts": {
-    "mtime": 1782756201.9433398,
-    "ast_hash": "4eb54d4b5454629ffe0cd39b175e28cd",
+    "mtime": 1783091419.381574,
+    "ast_hash": "7598c5c9fd0f8cda6cd87bb648f2112f",
     "semantic_hash": ""
   },
   "packages/identity-access/src/application/navigation-service.test.ts": {
@@ -2670,8 +2670,8 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/admission-service.ts": {
-    "mtime": 1783004850.4292731,
-    "ast_hash": "2176d1a710d95e299443d6c6847038c7",
+    "mtime": 1783094940.6675465,
+    "ast_hash": "0fb35ae8471d77ea898b3018635236ad",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/lead-conversion-orchestrator.test.ts": {
@@ -2690,8 +2690,8 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/index.ts": {
-    "mtime": 1783002648.797989,
-    "ast_hash": "bfcb8e4717cada9e43b37c694f6f66c7",
+    "mtime": 1783069327.6824384,
+    "ast_hash": "feff4c54002979818d14bd0fea03af0a",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/infrastructure/admission-repository.ts": {
@@ -3300,8 +3300,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/lib/api-middleware.ts": {
-    "mtime": 1782807982.1810577,
-    "ast_hash": "f9403331fb3fadb05e68cfe966042a14",
+    "mtime": 1783091433.217524,
+    "ast_hash": "e533cb1ef48a34c42d2d0bb369f7add7",
     "semantic_hash": ""
   },
   "apps/admin-portal/smoke/iam.smoke.ts": {
@@ -3385,8 +3385,8 @@
     "semantic_hash": ""
   },
   "packages/database/src/repositories/prisma-security-policy-repository.ts": {
-    "mtime": 1782756201.9397852,
-    "ast_hash": "8dabc1eab4008cebd75fffdf82e4342a",
+    "mtime": 1783072808.8144643,
+    "ast_hash": "3414afba4a6f658b7cdb2d02c9e047cf",
     "semantic_hash": ""
   },
   "packages/database/src/repositories/prisma-user-activation-token-repository.ts": {
@@ -3520,13 +3520,13 @@
     "semantic_hash": ""
   },
   "packages/shared-auth/src/jwt.test.ts": {
-    "mtime": 1782756201.9680326,
-    "ast_hash": "9df0e8dfa277d71fd9b668e8962fa540",
+    "mtime": 1783091451.4627748,
+    "ast_hash": "d214a6b2a08e4ee20847ee235fdfa860",
     "semantic_hash": ""
   },
   "packages/shared-auth/src/jwt.ts": {
-    "mtime": 1782756201.9683692,
-    "ast_hash": "c9b6439c82496f4011f74d6e968f4401",
+    "mtime": 1783091484.7951095,
+    "ast_hash": "f3e6d5d281c475f7a3d3aea256b5e790",
     "semantic_hash": ""
   },
   "pty_migrate.py": {
@@ -3545,28 +3545,13 @@
     "semantic_hash": ""
   },
   "docs/architecture/ddd/ER Model.md": {
-    "mtime": 1782928824.322021,
-    "ast_hash": "0e0728de11de5da8323885822c417eb0",
+    "mtime": 1783092229.6009393,
+    "ast_hash": "fb7187f7c64357ab0199f02d8721b3b5",
     "semantic_hash": ""
   },
   "docs/architecture/ddd/ddd-context-map.md": {
-    "mtime": 1782926711.0594287,
-    "ast_hash": "d1aba7a89da81df5b4e9a9162c2e488c",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 02 \u2013 Organization Management/Module 02 \u2013 Organization Management.md": {
-    "mtime": 1782822429.380585,
-    "ast_hash": "5f605226634f3420ca8a031704e82861",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 02 \u2013 Organization Management/Part 2.1 Organization (Institute) Management.md": {
-    "mtime": 1782822397.9805956,
-    "ast_hash": "ee3a501fceb501d514495e76c0a0aa36",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 02 \u2013 Organization Management/Part 2.2 Branch Management.md": {
-    "mtime": 1782756201.850232,
-    "ast_hash": "9dac0e4a6ecc036ddfeb2430eddeed89",
+    "mtime": 1783092224.3584788,
+    "ast_hash": "27f0c955804c7922597a2ac471747695",
     "semantic_hash": ""
   },
   "docs/operations/iam-api.openapi.yaml": {
@@ -3575,8 +3560,8 @@
     "semantic_hash": ""
   },
   "docs/operations/jwt-key-setup.md": {
-    "mtime": 1782756201.857372,
-    "ast_hash": "36b7669c67aa49c60c368be261c6a41e",
+    "mtime": 1783091458.0918407,
+    "ast_hash": "3d928a2850f11f8c2c11e87dc0a1b3a5",
     "semantic_hash": ""
   },
   "packages/database/prisma/migrations/20260629035505_iam_module_01_schema/README.md": {
@@ -3954,66 +3939,6 @@
     "ast_hash": "db7ee02f525750aaa98ea14864b0b85f",
     "semantic_hash": ""
   },
-  "docs/architecture/frd/Module 01: Identity & Access Management/Module 1: Identity & Access Management.md": {
-    "mtime": 1782679686.7439568,
-    "ast_hash": "762a7b87cee7e04787fd6d9779d0b582",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 01: Identity & Access Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
-    "mtime": 1782756201.8536174,
-    "ast_hash": "526b965e8f360b80ee5cc6dacce0a7e0",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 01: Identity & Access Management/Part 10 - Security Architecture and NFR.md": {
-    "mtime": 1782702430.259748,
-    "ast_hash": "cadd430a33fcd1ab0b0681692f825e37",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 01: Identity & Access Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
-    "mtime": 1782756201.8541667,
-    "ast_hash": "353bf4e22a940ce8260335732c6f3f43",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 01: Identity & Access Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
-    "mtime": 1782679686.7496276,
-    "ast_hash": "89ab8b619c7a462aed565c726503e4e4",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 01: Identity & Access Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
-    "mtime": 1782679686.7521093,
-    "ast_hash": "32a368175b41509704b269710e84caca",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 01: Identity & Access Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
-    "mtime": 1782679686.7539263,
-    "ast_hash": "76fd3f63425c11d2aaf25da633171a33",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 01: Identity & Access Management/Part 5 \u2013 API Contracts.md": {
-    "mtime": 1782679686.7561073,
-    "ast_hash": "d998b8f54b75202fdfd33113f4bd4954",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 01: Identity & Access Management/Part 6 \u2013 Permission Matrix.md": {
-    "mtime": 1782679686.757718,
-    "ast_hash": "29879e1e4e9b20707444bd155eaaf49e",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 01: Identity & Access Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
-    "mtime": 1782756201.8545418,
-    "ast_hash": "d20f83af5a89b514fb5ba1f6cf30ba1e",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 01: Identity & Access Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
-    "mtime": 1782679686.7592337,
-    "ast_hash": "5371ba3f57e15de1dafe711c9e88889f",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 01: Identity & Access Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
-    "mtime": 1782756201.8557072,
-    "ast_hash": "a0db9feefd82ab13a8b3051f4b68dfc7",
-    "semantic_hash": ""
-  },
   "apps/admin-portal/app/(protected)/iam/reports/[reportType]/page.tsx": {
     "mtime": 1782828547.5171764,
     "ast_hash": "1cdf6eeed067da5396e19a947248d508",
@@ -4027,16 +3952,6 @@
   "docs/architecture/frd/FRD_Generation_Guide.md": {
     "mtime": 1782821399.5230565,
     "ast_hash": "56556b7a2da84bf8115b26dfad4327c4",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 02 \u2013 Organization Management/Part 2.3 Department Management.md": {
-    "mtime": 1782822413.3781805,
-    "ast_hash": "d220b53f4a4078e25035b32c61e894ec",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 02 \u2013 Organization Management/Part 2.4 Classroom Management.md": {
-    "mtime": 1782822421.7511466,
-    "ast_hash": "0de7c9015132c5a5b304667bba3a10e8",
     "semantic_hash": ""
   },
   "openspec/specs/iam-api-contracts/spec.md": {
@@ -4204,16 +4119,6 @@
     "ast_hash": "c44e94d5a75e7bb3391d28a9cb2c22bb",
     "semantic_hash": ""
   },
-  "docs/architecture/frd/Module 03: Lead & Inquiry Management/Module 03: Lead & Inquiry Management.md": {
-    "mtime": 1782837717.4086175,
-    "ast_hash": "b800b5c965010754e674705a9a050474",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 03: Lead & Inquiry Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
-    "mtime": 1782878272.429846,
-    "ast_hash": "b28e2c6397b807ca0b225e71a950ff76",
-    "semantic_hash": ""
-  },
   "openspec/changes/archive/2026-06-30-implement-organization-management/.openspec.yaml": {
     "mtime": 1782756201.9234,
     "ast_hash": "603c5ea41732be2351f30ab0ce563b10",
@@ -4239,56 +4144,6 @@
     "ast_hash": "144ffe61aaff093bc9e4f7203f51673d",
     "semantic_hash": ""
   },
-  "docs/architecture/frd/Module 03: Lead & Inquiry Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
-    "mtime": 1782878283.4253113,
-    "ast_hash": "a2c95cf4bd846cde467d043b3f556560",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 03: Lead & Inquiry Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
-    "mtime": 1782878292.6185594,
-    "ast_hash": "e3b7455b3169711e97a5a0fbe1818dca",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 03: Lead & Inquiry Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
-    "mtime": 1782878313.5954945,
-    "ast_hash": "2638fd168183abcfc5512da87615c61a",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 03: Lead & Inquiry Management/Part 5 \u2013 API Contracts.md": {
-    "mtime": 1782878333.819581,
-    "ast_hash": "edfb32718bedcabcf5a496505b2f47b5",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 03: Lead & Inquiry Management/Part 6 \u2013 Permission Matrix.md": {
-    "mtime": 1782838314.1507516,
-    "ast_hash": "1768da6523234dcd51d778e8b2a961dd",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 03: Lead & Inquiry Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
-    "mtime": 1782878346.2590199,
-    "ast_hash": "d409ae872583b9542b36371f2d459eed",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 03: Lead & Inquiry Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
-    "mtime": 1782837781.4295437,
-    "ast_hash": "0a1c644b83863f49722a36df20d79085",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 03: Lead & Inquiry Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
-    "mtime": 1782837813.2031376,
-    "ast_hash": "71895298f424c3693a8d7c16a35ed977",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 03: Lead & Inquiry Management/Part 10 - Security Architecture and NFR.md": {
-    "mtime": 1782837785.7242756,
-    "ast_hash": "f4a48816a42cd164d6262a629f9f830d",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 03: Lead & Inquiry Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
-    "mtime": 1782837796.8540668,
-    "ast_hash": "aacc2fefa017b7a5e6930987620e45ef",
-    "semantic_hash": ""
-  },
   "packages/database/prisma/migrations/20260630162117_update_organization_and_leads/migration.sql": {
     "mtime": 1782836490.61574,
     "ast_hash": "3cf5bab59000ca4f1c3d1bcbefbc305c",
@@ -4302,71 +4157,6 @@
   "prompts/prompt for module generation.md": {
     "mtime": 1782839008.5371425,
     "ast_hash": "c8571133003cdb52ee2551dba11932e8",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Module 06: Course Catalog & Training Delivery (Batch) Management.md": {
-    "mtime": 1782884393.2283893,
-    "ast_hash": "fff5fca80d77d6ec8d596eaceba0a0d9",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
-    "mtime": 1782928857.7874432,
-    "ast_hash": "ac853c472ffd3a5d9688047a4ab7c567",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
-    "mtime": 1782882960.6932158,
-    "ast_hash": "9de9b686a35c828279d3c74eb701ca96",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
-    "mtime": 1782882473.5415134,
-    "ast_hash": "c05f42827fcde1a42159e7cced24f20a",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
-    "mtime": 1782928864.6948497,
-    "ast_hash": "a5311a151ea8258fa2a152de942a0118",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 5 \u2013 API Contracts.md": {
-    "mtime": 1782926195.2744846,
-    "ast_hash": "9cc15460ebd20362969cde1d37a6879d",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 6 \u2013 Permission Matrix.md": {
-    "mtime": 1782839726.1639166,
-    "ast_hash": "3abb0208349280c423fb30643a95f27e",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
-    "mtime": 1782883504.3778808,
-    "ast_hash": "486959f205ae74bcd586f7489bfc722f",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
-    "mtime": 1782839738.8007355,
-    "ast_hash": "7c7f8445f388ed47332be1418847485f",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
-    "mtime": 1782839745.553772,
-    "ast_hash": "cb112eb2f878f8957020207eed84eaf3",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 10 - Security Architecture and NFR.md": {
-    "mtime": 1782882185.1268973,
-    "ast_hash": "b89af44810e662fce92e44a09256a06f",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
-    "mtime": 1782882199.8622994,
-    "ast_hash": "cef4558e40ffdf1fe6ab5e5b1df9711a",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 06: Course Catalog & Training Delivery (Batch) Management/Architectural Audit Report.md": {
-    "mtime": 1782884275.1857162,
-    "ast_hash": "71c0749baff5567072caef6039c70d77",
     "semantic_hash": ""
   },
   "prompts/useful_prompts.md": {
@@ -4665,8 +4455,8 @@
     "semantic_hash": ""
   },
   "packages/shared-ui/src/components/metric-card.tsx": {
-    "mtime": 1782897459.929742,
-    "ast_hash": "e45539e5285a04cd21b800904c583e79",
+    "mtime": 1783072433.1516352,
+    "ast_hash": "ff5d2d640eea07d1151445014230e639",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/dashboards/crm/crm-dashboard-charts.tsx": {
@@ -4675,8 +4465,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/dashboards/crm/page.tsx": {
-    "mtime": 1782897841.37985,
-    "ast_hash": "7774d4d79dc0cb33f7a71d6626139394",
+    "mtime": 1783075197.9873688,
+    "ast_hash": "c69531a48845032a568b707308870178",
     "semantic_hash": ""
   },
   "packages/crm-leads/src/application/lead-analytics-read-service.test.ts": {
@@ -4690,13 +4480,13 @@
     "semantic_hash": ""
   },
   "packages/reporting-dashboards/src/queries/crm-dashboard-query-service.test.ts": {
-    "mtime": 1782898483.6054516,
-    "ast_hash": "e7b96f3e74f1ca8c386966e934da1070",
+    "mtime": 1783074998.5543625,
+    "ast_hash": "437973d143d141508036fea8b3d1688b",
     "semantic_hash": ""
   },
   "packages/reporting-dashboards/src/queries/crm-dashboard-query-service.ts": {
-    "mtime": 1782897808.5393934,
-    "ast_hash": "483f32f83a4a77882abf29d8c5b89032",
+    "mtime": 1783074942.1637795,
+    "ast_hash": "8609eab290de6cebac8cff1b13e9a655",
     "semantic_hash": ""
   },
   "tests/crm-dashboard.spec.ts": {
@@ -4709,66 +4499,6 @@
     "ast_hash": "b91858a1702105ab6e236e9419a73344",
     "semantic_hash": ""
   },
-  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Module 4: Admission & Enrollment Management.md": {
-    "mtime": 1783002483.8946605,
-    "ast_hash": "8c64577b829977e26d7ad909e856db7d",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
-    "mtime": 1782963735.2545562,
-    "ast_hash": "b697f085dce5ea820c627959d9d5b0c8",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 10 - Security Architecture and NFR.md": {
-    "mtime": 1782964030.5283399,
-    "ast_hash": "44727b6eb46adec138ddfac2820ba09d",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
-    "mtime": 1782961812.6227434,
-    "ast_hash": "f5044babed08debdda95d357ea591d2c",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
-    "mtime": 1782963741.60516,
-    "ast_hash": "72feb0938309777b1feb769e86b3342a",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
-    "mtime": 1782961659.2054882,
-    "ast_hash": "09e34c92dc40a6b0bc5f719c0e56e72d",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
-    "mtime": 1782965702.397883,
-    "ast_hash": "0f0b54824bd99be50cb06c87933614b0",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 5 \u2013 API Contracts.md": {
-    "mtime": 1783002463.4997866,
-    "ast_hash": "80b153134a1aaad90e67b6ed711aa983",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 6 \u2013 Permission Matrix.md": {
-    "mtime": 1783002449.994536,
-    "ast_hash": "7b561d07f8ab1c8bdf5b3cdbfe5f0cf0",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
-    "mtime": 1782964075.800213,
-    "ast_hash": "f6496998b5556a27ca1c7e068d347c89",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
-    "mtime": 1782961768.4664764,
-    "ast_hash": "8905df512a094fe483a69a68ad86e4f4",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 04: Admission & Enrollment Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
-    "mtime": 1782964081.7207775,
-    "ast_hash": "fd4a73099496b59076be0c69f89f12b7",
-    "semantic_hash": ""
-  },
   "packages/crm-leads/src/application/followup-scheduler-service.test.ts": {
     "mtime": 1782899358.8980174,
     "ast_hash": "e2608dce028282d5183547500c3f1952",
@@ -4777,66 +4507,6 @@
   "packages/crm-leads/src/application/followup-scheduler-service.ts": {
     "mtime": 1782899346.2643917,
     "ast_hash": "6d6af0e3b174f3bfad78c5f8a0d07666",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Module 10: Faculty / Trainer Management.md": {
-    "mtime": 1782899345.9212344,
-    "ast_hash": "8d257092573907386e7bfeb4d57b61fc",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
-    "mtime": 1782926593.8632653,
-    "ast_hash": "6301af461d680d35a435f92dbfcdbfa3",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 10 - Security Architecture and NFR.md": {
-    "mtime": 1782926597.1847372,
-    "ast_hash": "f01e69894ed2405fb23347a281ff993d",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
-    "mtime": 1782925689.7281868,
-    "ast_hash": "43f173578eb098176201c67e250a413f",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
-    "mtime": 1782924785.965053,
-    "ast_hash": "95ba9afb9f23a4a0b453b92fcee6aa19",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
-    "mtime": 1782901047.8971105,
-    "ast_hash": "0c8c9b6a479042a7447657b0d08e3c19",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
-    "mtime": 1782925661.2436137,
-    "ast_hash": "3047184dd87a6ee6651403aba5f9e774",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 5 \u2013 API Contracts.md": {
-    "mtime": 1782925664.576574,
-    "ast_hash": "b19672193480725f26f6d9594f4600a0",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 6 \u2013 Permission Matrix.md": {
-    "mtime": 1782926584.5889277,
-    "ast_hash": "1d76aba1f951a6e9bf341487fd02420e",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
-    "mtime": 1782926589.860215,
-    "ast_hash": "854829e3f869326147b8e4d5547292cf",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
-    "mtime": 1782924861.1578934,
-    "ast_hash": "793e521d55badcdc5d84428f9d7d3ead",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10: Faculty / Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
-    "mtime": 1782899437.3204143,
-    "ast_hash": "8b66566db99b14be713f9f16414c6f44",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/cron/followups/route.ts": {
@@ -4965,18 +4635,18 @@
     "semantic_hash": ""
   },
   "packages/course-catalog/src/application/category-service.ts": {
-    "mtime": 1782929023.4899313,
-    "ast_hash": "d60fec7ddb70bb931fcf04c109e43f05",
+    "mtime": 1783074490.071521,
+    "ast_hash": "f97c8fb34318c67ec18e81ab2c311e8d",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/application/course-service.ts": {
-    "mtime": 1782977435.503411,
-    "ast_hash": "cc7e4eb65004526df8f438d690c9c6ce",
+    "mtime": 1783074483.4549847,
+    "ast_hash": "086710d45fa4a890ba18513ce9c1ff9f",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/domain/course.ts": {
-    "mtime": 1782977375.9185278,
-    "ast_hash": "381feef3a37d4556be2035b4e91c9aee",
+    "mtime": 1783074029.7733474,
+    "ast_hash": "2d372d5dde0c7dfb4ad698155b86bde4",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/domain/errors.ts": {
@@ -4985,8 +4655,8 @@
     "semantic_hash": ""
   },
   "packages/course-catalog/src/domain/repositories.ts": {
-    "mtime": 1782977380.2005577,
-    "ast_hash": "e43cc415aea091b3209373ccbf1289d4",
+    "mtime": 1783074059.408832,
+    "ast_hash": "296224c86e5be41b5cd33277547a695b",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/domain/validation-schemas.ts": {
@@ -5000,18 +4670,18 @@
     "semantic_hash": ""
   },
   "packages/course-catalog/src/infrastructure/category-repository.ts": {
-    "mtime": 1782927441.4973056,
-    "ast_hash": "27c10f1358f819d504b66a390af1aadf",
+    "mtime": 1783074074.998952,
+    "ast_hash": "f831fb341a69956bc9ce154bab50e09e",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/infrastructure/course-repository.ts": {
-    "mtime": 1782927437.378228,
-    "ast_hash": "b89d4bad009e7781ebab282f9db19f51",
+    "mtime": 1783074069.0684044,
+    "ast_hash": "14afea9a5c39e87c5ccb31b1503c2535",
     "semantic_hash": ""
   },
   "packages/course-catalog/tests/course-catalog.spec.ts": {
-    "mtime": 1782927700.2944376,
-    "ast_hash": "bff1b22806125da5086eb8f61786f703",
+    "mtime": 1783074403.4748194,
+    "ast_hash": "221cdd7c5665111e094b5efb74e9e1c1",
     "semantic_hash": ""
   },
   "packages/course-catalog/tsconfig.json": {
@@ -5100,8 +4770,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/[id]/page.tsx": {
-    "mtime": 1783053681.1405542,
-    "ast_hash": "4db2fda29da7420513107baab506d29e",
+    "mtime": 1783095359.0460725,
+    "ast_hash": "e695cca7ec8b12bb944c40e8993261e0",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/_components/batch-form.tsx": {
@@ -5135,8 +4805,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/batches/[id]/trainers/route.ts": {
-    "mtime": 1782960932.8990746,
-    "ast_hash": "bf0ea12f3f36bd36465041722fc2f38c",
+    "mtime": 1783075202.1510065,
+    "ast_hash": "4ec4acb8e029d309cea6ba461d8e8de4",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/batches/[id]/waitlist/promote/route.ts": {
@@ -5150,8 +4820,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/batches/route.ts": {
-    "mtime": 1783020848.1543324,
-    "ast_hash": "3475ee10aacbacd29276f8feb973abdb",
+    "mtime": 1783075205.9497104,
+    "ast_hash": "6a1fbf6e284d73e0d9df8ce92db888f0",
     "semantic_hash": ""
   },
   "apps/admin-portal/e2e/batches.spec.ts": {
@@ -5170,8 +4840,8 @@
     "semantic_hash": ""
   },
   "packages/training-delivery/src/application/batch-service.ts": {
-    "mtime": 1783008703.1588876,
-    "ast_hash": "6782495d1a995225596805496114ddb9",
+    "mtime": 1783074898.4818776,
+    "ast_hash": "fc65295863fcccd59962dbdee40e9485",
     "semantic_hash": ""
   },
   "packages/training-delivery/src/domain/batch.ts": {
@@ -5185,8 +4855,8 @@
     "semantic_hash": ""
   },
   "packages/training-delivery/src/domain/repositories.ts": {
-    "mtime": 1782929933.0304246,
-    "ast_hash": "75ac14013bede7b8fa276506be16093a",
+    "mtime": 1783074235.8720582,
+    "ast_hash": "479477b2c6e0e4e248f7a3cc6880e273",
     "semantic_hash": ""
   },
   "packages/training-delivery/src/index.ts": {
@@ -5195,13 +4865,13 @@
     "semantic_hash": ""
   },
   "packages/training-delivery/src/infrastructure/batch-repository.ts": {
-    "mtime": 1783008639.2439988,
-    "ast_hash": "0faf29b776992db637699e542b536d2b",
+    "mtime": 1783074251.3155684,
+    "ast_hash": "0df56026e460658d9a084bde057fb82e",
     "semantic_hash": ""
   },
   "packages/training-delivery/tests/training-delivery.spec.ts": {
-    "mtime": 1783007755.8955092,
-    "ast_hash": "729c3df13a127375cee2fdb61c786ab0",
+    "mtime": 1783074409.7281997,
+    "ast_hash": "1fcd9b3ceb02783d2afcc430fca35d36",
     "semantic_hash": ""
   },
   "packages/training-delivery/tsconfig.json": {
@@ -5430,8 +5100,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/courses-catalog/[id]/edit/_components/course-configs-panel.tsx": {
-    "mtime": 1782979506.0927339,
-    "ast_hash": "0f277f6802b6bcca65631c10554737b0",
+    "mtime": 1783075115.031916,
+    "ast_hash": "0cf3660c00082afb696ca74e299e2440",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/courses/[id]/completion-rules/active/route.ts": {
@@ -5470,38 +5140,38 @@
     "semantic_hash": ""
   },
   "packages/course-catalog/src/application/completion-rule-service.ts": {
-    "mtime": 1782977426.4483392,
-    "ast_hash": "0eeda8423502c14a081698a33e8f69a4",
+    "mtime": 1783074173.9918866,
+    "ast_hash": "0c7d706bfae075816df17fb964270af3",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/application/discount-service.ts": {
-    "mtime": 1782977423.1281505,
-    "ast_hash": "4efbf291a6f312828be0dd0adda07a7e",
+    "mtime": 1783074163.7608695,
+    "ast_hash": "cc7330290bbef0e94c83fb830974ce73",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/application/pricing-service.test.ts": {
-    "mtime": 1782981192.0194054,
-    "ast_hash": "af5ca27aff7249fb4b3830ac80b83d82",
+    "mtime": 1783074885.7167068,
+    "ast_hash": "2819711b08d3da219a220ed3e62962bf",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/application/pricing-service.ts": {
-    "mtime": 1783000368.8898666,
-    "ast_hash": "555f088066ca604b364d7f7a8af2261d",
+    "mtime": 1783074208.7154784,
+    "ast_hash": "dbb36350f0972a8d641b57af8c621924",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/infrastructure/completion-rule-repository.ts": {
-    "mtime": 1782977399.756968,
-    "ast_hash": "0f0787211214741bed70a8028632e8ba",
+    "mtime": 1783074813.1882086,
+    "ast_hash": "e1bc48b6337016f4b5af1a511ea41fd4",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/infrastructure/discount-repository.ts": {
-    "mtime": 1782977396.011776,
-    "ast_hash": "658b26e33569e386fb6b959e2c955e34",
+    "mtime": 1783074806.7480834,
+    "ast_hash": "311b846f3404b314c55df71ef71bddd3",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/infrastructure/pricing-repository.ts": {
-    "mtime": 1782977391.5459404,
-    "ast_hash": "6104c365b3aadf6b3f7711f5d21376ca",
+    "mtime": 1783074799.3679802,
+    "ast_hash": "4e9ff71966cbfc8db44807daf9a0d753",
     "semantic_hash": ""
   },
   "packages/database/prisma/migrations/20260702072859_add_course_pricing_discounts_configs/migration.sql": {
@@ -5550,8 +5220,8 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/enrollment-service.ts": {
-    "mtime": 1783063916.0970855,
-    "ast_hash": "e347a35b9680b3c125a19020afcca809",
+    "mtime": 1783069354.8379612,
+    "ast_hash": "f363775dfff517f1ea70fe34a9d9da4b",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/requirements-resolver.ts": {
@@ -5570,18 +5240,18 @@
     "semantic_hash": ""
   },
   "packages/documents/src/application/documents-service.test.ts": {
-    "mtime": 1782989348.7507937,
-    "ast_hash": "cea2aaa2f54104114c1a873a3ea2cb85",
+    "mtime": 1783073859.5293067,
+    "ast_hash": "9542615cfcf22bfcb7cb5f9428a136ff",
     "semantic_hash": ""
   },
   "packages/documents/src/application/documents-service.ts": {
-    "mtime": 1782989298.951409,
-    "ast_hash": "988b9b6f2ef5d56a7bfd7072e4fe2ab2",
+    "mtime": 1783073835.455186,
+    "ast_hash": "bd45a6c1a193d0dbe8967e0cdeec2981",
     "semantic_hash": ""
   },
   "packages/documents/src/domain/document.ts": {
-    "mtime": 1782989290.0271018,
-    "ast_hash": "722940ae602a9e084609f24c67f6699d",
+    "mtime": 1783073827.3338454,
+    "ast_hash": "33a107f32350d46e9d125037a4fa422a",
     "semantic_hash": ""
   },
   "packages/documents/src/index.ts": {
@@ -5660,8 +5330,8 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/admission-service.test.ts": {
-    "mtime": 1783002623.906905,
-    "ast_hash": "d31d60cdb788d4f3892ef743d2c9bce0",
+    "mtime": 1783095021.6417513,
+    "ast_hash": "79489e742c11dad57ab98e0d4a72012f",
     "semantic_hash": ""
   },
   "packages/database/prisma/migrations/20260702110538_add_admission_intake_fields/migration.sql": {
@@ -5675,8 +5345,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/admissions/[id]/page.tsx": {
-    "mtime": 1783016571.625348,
-    "ast_hash": "b6b6a0425b2ee2dfadddbd09fc907d87",
+    "mtime": 1783075108.4865901,
+    "ast_hash": "6a6074a2adc79d477cbb3b8e5342a28e",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/admissions/_components/admissions-client-list.tsx": {
@@ -5685,8 +5355,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/admissions/page.tsx": {
-    "mtime": 1783023437.2307634,
-    "ast_hash": "a433b84c062bc59c6b91c7b072d4854e",
+    "mtime": 1783095355.6760583,
+    "ast_hash": "a85d9cde05bc7ece03ae48b4e6caca8e",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/admissions/route.test.ts": {
@@ -5800,33 +5470,33 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/enrollment-lifecycle.test.ts": {
-    "mtime": 1783015035.6706007,
-    "ast_hash": "d814130232bafac98716ad665f84f3ef",
+    "mtime": 1783070248.4520624,
+    "ast_hash": "d8bfb3862659cf3a826cf1a6534ccd53",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/person/lookup/route.ts": {
-    "mtime": 1783004906.0088596,
-    "ast_hash": "d484d5d54736d4be80091b4ad0e2216d",
+    "mtime": 1783094763.927611,
+    "ast_hash": "946f6fffcf9fc34e591ad197512be930",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/students/[id]/reveal-pii/route.ts": {
-    "mtime": 1783004900.8578913,
-    "ast_hash": "8c8c989cf6269b19a035943d3c1c8e56",
+    "mtime": 1783087848.55425,
+    "ast_hash": "4016335545b3c1b429aed2b36a4e9a00",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/students/route.ts": {
-    "mtime": 1783005313.306954,
-    "ast_hash": "30f67fbe92c9755381af837dae466799",
+    "mtime": 1783094219.514159,
+    "ast_hash": "c0e9e78707e57f12f936fba596204a56",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/student-query-service.test.ts": {
-    "mtime": 1783005336.3855386,
-    "ast_hash": "d557e57923ce0a1b6e782d30aa1981a6",
+    "mtime": 1783094956.2091951,
+    "ast_hash": "e8f4712af4d7ee9dcad83f98530e9cfb",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/student-query-service.ts": {
-    "mtime": 1783063918.716712,
-    "ast_hash": "2118ce87a1a3230dfbdcd96025a2f0be",
+    "mtime": 1783094757.4528651,
+    "ast_hash": "0b794febc55ff1768a66f38e6dc06969",
     "semantic_hash": ""
   },
   "openspec/changes/archive/2026-07-02-enrollment-lifecycle/.openspec.yaml": {
@@ -5860,8 +5530,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/person/lookup/route.test.ts": {
-    "mtime": 1783004923.1524222,
-    "ast_hash": "ba8aab6180bc06c6f5c3ef18541ac55c",
+    "mtime": 1783094967.4771187,
+    "ast_hash": "f1ad87252f4e0090499098ea11a357c7",
     "semantic_hash": ""
   },
   "openspec/changes/archive/2026-07-02-student-profile-lookup/.openspec.yaml": {
@@ -6034,16 +5704,6 @@
     "ast_hash": "8a3f395670fc333d4694ea71fb3f2535",
     "semantic_hash": ""
   },
-  "docs/architecture/frd/Module 05: Student Management/Module 5: Student Management.md": {
-    "mtime": 1783059159.1214046,
-    "ast_hash": "44c09a4c26c798cd668b1efe9c8e8b9e",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
-    "mtime": 1783065052.9701924,
-    "ast_hash": "0cb1e44bc5ed256839f0ef9b3ca2b5b6",
-    "semantic_hash": ""
-  },
   "openspec/changes/module-04-admission-enrollment/specs/enrollment-operations-console/spec.md": {
     "mtime": 1783022043.6346269,
     "ast_hash": "dd0e89955450cb90acca22cc61cd48ca",
@@ -6065,8 +5725,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/dashboards/admissions/page.tsx": {
-    "mtime": 1783023500.2671275,
-    "ast_hash": "9ff4b987060aa5925fd4121f3cc00f76",
+    "mtime": 1783095178.9867618,
+    "ast_hash": "74b3da0b7c63a7b028881eb7dde51b00",
     "semantic_hash": ""
   },
   "openspec/changes/module-04-admission-enrollment/specs/admissions-dashboard/spec.md": {
@@ -6100,28 +5760,28 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/enrollments/[id]/_components/enrollment-details-client.tsx": {
-    "mtime": 1783053457.296175,
-    "ast_hash": "fc5afe52a26ebc24867004ab805bd75b",
+    "mtime": 1783094840.1866972,
+    "ast_hash": "49b4684bd91e0b9ba59f4eaa0ea72712",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/enrollments/[id]/page.tsx": {
-    "mtime": 1783053450.1962998,
-    "ast_hash": "ffb680cadf60b0dbdbb4074814161a17",
+    "mtime": 1783094829.6197796,
+    "ast_hash": "fb96aac29db7d647c9f8a77c8999566b",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/enrollments/_components/enrollments-client-list.tsx": {
-    "mtime": 1783024108.575797,
-    "ast_hash": "eed0a0488fb8741ec6353a7b9be81bb6",
+    "mtime": 1783095563.2446556,
+    "ast_hash": "1d147f1bf3999f4860638b7f3c2e49f9",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/enrollments/_components/pricing-panel.tsx": {
-    "mtime": 1783024129.4795802,
-    "ast_hash": "bf630bf5ea4c896fe01a74a7e643eecf",
+    "mtime": 1783094818.2753856,
+    "ast_hash": "4aae4a704e9a2fba2dd2c3d32598741c",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/enrollments/page.tsx": {
-    "mtime": 1783024102.8873594,
-    "ast_hash": "67e8520a9fa63fa825b1070c55eb3bf1",
+    "mtime": 1783094848.2044568,
+    "ast_hash": "245f9c9f33108a01e65ea672711df573",
     "semantic_hash": ""
   },
   "openspec/changes/module-04-admission-enrollment/specs/module-04-reporting-pages/spec.md": {
@@ -6130,13 +5790,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/students/[id]/page.tsx": {
-    "mtime": 1783051959.675112,
-    "ast_hash": "7bc71fd143562bef3bbd382a8e9adeac",
+    "mtime": 1783094930.7658863,
+    "ast_hash": "73ad14c64665524a22cbfd5584c02865",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/students/page.tsx": {
-    "mtime": 1783051953.2232277,
-    "ast_hash": "113ee099cf5dee665a0e1881cb8de27f",
+    "mtime": 1783094926.469191,
+    "ast_hash": "73a428895d59619b7c35ca493e43fb82",
     "semantic_hash": ""
   },
   "docs/developer-onboarding-guide.md": {
@@ -6219,54 +5879,699 @@
     "ast_hash": "f4f4398ac8c086049967b8e56422d3fe",
     "semantic_hash": ""
   },
-  "docs/architecture/frd/Module 05: Student Management/Part 10 - Security Architecture and NFR.md": {
+  "apps/admin-portal/app/(protected)/account/profile/profile-form.test.tsx": {
+    "mtime": 1783072334.0629127,
+    "ast_hash": "6d6f04cd0bed92e9081f994153bff9a6",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/account/profile/schema.test.ts": {
+    "mtime": 1783072340.2499094,
+    "ast_hash": "3502fb0b0e995fef13372157ce1aac90",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/dashboards/admissions/reports/batches/page.tsx": {
+    "mtime": 1783095366.9384,
+    "ast_hash": "de2f01db47147a39e40124ba8ddeeab0",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/dashboards/admissions/reports/enrollments/page.tsx": {
+    "mtime": 1783095563.243591,
+    "ast_hash": "f76430cde2b5748441d2b428bf459f74",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/dashboards/admissions/reports/id-cards/page.tsx": {
+    "mtime": 1783095481.9479933,
+    "ast_hash": "a112ac2e4a58161ead8d0ed68d3d676a",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/dashboards/admissions/reports/page.tsx": {
+    "mtime": 1783095366.93769,
+    "ast_hash": "29e7ae03aa71a00739667d825f596a19",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/dashboards/admissions/reports/students/page.tsx": {
+    "mtime": 1783095563.244413,
+    "ast_hash": "89da27b4e7ef117ec6f06ec3c3f51527",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/student-portal/profile/page.tsx": {
+    "mtime": 1783094474.775298,
+    "ast_hash": "463ed4656b6b330170799d0afd84c72b",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/students/[id]/_components/student-history-tabs.tsx": {
+    "mtime": 1783087283.318464,
+    "ast_hash": "cc775e50d9f7f51e9fa66ba116025532",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/students/[id]/edit/page.tsx": {
+    "mtime": 1783087332.0341418,
+    "ast_hash": "739175d259884ab7392a21e6c6b4126b",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/students/_components/id-card-panel.tsx": {
+    "mtime": 1783087580.0541747,
+    "ast_hash": "fdb5e75c8faa8495670cff880a4f24e5",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/students/_components/merge-profile-modal.tsx": {
+    "mtime": 1783069815.5194843,
+    "ast_hash": "24a59265c3cb2df26275c561f87ceef7",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/students/_components/otp-claim-modal.tsx": {
+    "mtime": 1783069785.0843246,
+    "ast_hash": "9657ea1ccc7f3e6bdecae4f405cd9cf4",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/students/_components/preflight-lookup-widget.tsx": {
+    "mtime": 1783095322.0819745,
+    "ast_hash": "efdbc3df5eb3a64a8fc03cdb022725c0",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/students/_components/student-profile-form.tsx": {
+    "mtime": 1783094291.7787683,
+    "ast_hash": "51144da98a0594f721ca74cc04232cf1",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/students/new/_components/student-registration-workflow.tsx": {
+    "mtime": 1783094559.4613733,
+    "ast_hash": "3c7e8f93616fc2a11543e79f5f964eaf",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/students/new/page.tsx": {
+    "mtime": 1783094320.400516,
+    "ast_hash": "6b1fde0f5922a279b9607f16175f4eff",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/student-portal/profile/route.ts": {
+    "mtime": 1783094425.2347631,
+    "ast_hash": "95ff0d03468a79f15a233bcaafda9dbd",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/students/[id]/archive/route.ts": {
+    "mtime": 1783087848.6594565,
+    "ast_hash": "2260df18a6f97a8999c931c63e6b7970",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/students/[id]/id-card/route.ts": {
+    "mtime": 1783087848.5548959,
+    "ast_hash": "773b1c85b565c6408aa1a5bc1ddf43ae",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/students/[id]/restore/route.ts": {
+    "mtime": 1783094489.2516625,
+    "ast_hash": "bf240ed222fd7c77b7f728ab1eec242f",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/students/[id]/route.ts": {
+    "mtime": 1783087848.5539863,
+    "ast_hash": "67b37daa0b3235bdb08510beb76aec53",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/students/[id]/status/route.ts": {
+    "mtime": 1783087848.659223,
+    "ast_hash": "6ae2562dfba2de501c2d4f186533b923",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/students/claim-profile/route.ts": {
+    "mtime": 1783094234.732803,
+    "ast_hash": "1a4b521534ee868dbf0d01e490f2b9a3",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/students/merge/route.ts": {
+    "mtime": 1783069621.8616183,
+    "ast_hash": "6224168ccc11c18cf43e7695cd534761",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/students/preflight-lookup/route.test.ts": {
+    "mtime": 1783094993.4414234,
+    "ast_hash": "0f530a4c5e3be1f0ed610e01fe575310",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/students/preflight-lookup/route.ts": {
+    "mtime": 1783095563.245231,
+    "ast_hash": "9681aa4edc8f4eea48e411be4da2e1b2",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/students/request-profile-otp/route.ts": {
+    "mtime": 1783069606.2818103,
+    "ast_hash": "32e8fc19ddf048706ab77d7b5878222b",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/sign-out/route.test.ts": {
+    "mtime": 1783090824.5390935,
+    "ast_hash": "30f20629d188aa36db4ad15727fe9b89",
+    "semantic_hash": ""
+  },
+  "packages/admissions-enrollment/src/application/otp-service.ts": {
+    "mtime": 1783069058.191967,
+    "ast_hash": "c7fa80230c6dc7c3571c4ab3d0d2c2e4",
+    "semantic_hash": ""
+  },
+  "packages/admissions-enrollment/src/application/student-management.test.ts": {
+    "mtime": 1783094359.7870111,
+    "ast_hash": "162572dc40c95c98086995456384d616",
+    "semantic_hash": ""
+  },
+  "packages/admissions-enrollment/src/application/student-merge-service.ts": {
+    "mtime": 1783094277.2119424,
+    "ast_hash": "b350613ce19463930e208c55904c27c6",
+    "semantic_hash": ""
+  },
+  "packages/admissions-enrollment/src/application/student-status-service.ts": {
+    "mtime": 1783094525.9421384,
+    "ast_hash": "ff0f85a9de6d236a92eafc6d8641f066",
+    "semantic_hash": ""
+  },
+  "packages/database/src/repositories/prisma-security-policy-repository.test.ts": {
+    "mtime": 1783072826.0306094,
+    "ast_hash": "490f7adac3fc2934fcec90a4907ba66d",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01 - Identity & Access Management/Module 1 - Identity & Access Management.md": {
+    "mtime": 1782679686.7439568,
+    "ast_hash": "762a7b87cee7e04787fd6d9779d0b582",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01 - Identity & Access Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
+    "mtime": 1782756201.8536174,
+    "ast_hash": "526b965e8f360b80ee5cc6dacce0a7e0",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01 - Identity & Access Management/Part 10 - Security Architecture and NFR.md": {
+    "mtime": 1782702430.259748,
+    "ast_hash": "cadd430a33fcd1ab0b0681692f825e37",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01 - Identity & Access Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
+    "mtime": 1782756201.8541667,
+    "ast_hash": "353bf4e22a940ce8260335732c6f3f43",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01 - Identity & Access Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
+    "mtime": 1782679686.7496276,
+    "ast_hash": "89ab8b619c7a462aed565c726503e4e4",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01 - Identity & Access Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
+    "mtime": 1782679686.7521093,
+    "ast_hash": "32a368175b41509704b269710e84caca",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01 - Identity & Access Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
+    "mtime": 1782679686.7539263,
+    "ast_hash": "76fd3f63425c11d2aaf25da633171a33",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01 - Identity & Access Management/Part 5 \u2013 API Contracts.md": {
+    "mtime": 1782679686.7561073,
+    "ast_hash": "d998b8f54b75202fdfd33113f4bd4954",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01 - Identity & Access Management/Part 6 \u2013 Permission Matrix.md": {
+    "mtime": 1782679686.757718,
+    "ast_hash": "29879e1e4e9b20707444bd155eaaf49e",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01 - Identity & Access Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
+    "mtime": 1782756201.8545418,
+    "ast_hash": "d20f83af5a89b514fb5ba1f6cf30ba1e",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01 - Identity & Access Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
+    "mtime": 1782679686.7592337,
+    "ast_hash": "5371ba3f57e15de1dafe711c9e88889f",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 01 - Identity & Access Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
+    "mtime": 1782756201.8557072,
+    "ast_hash": "a0db9feefd82ab13a8b3051f4b68dfc7",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 02 - Organization Management/Module 02 \u2013 Organization Management.md": {
+    "mtime": 1782822429.380585,
+    "ast_hash": "5f605226634f3420ca8a031704e82861",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 02 - Organization Management/Part 2.1 Organization (Institute) Management.md": {
+    "mtime": 1782822397.9805956,
+    "ast_hash": "ee3a501fceb501d514495e76c0a0aa36",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 02 - Organization Management/Part 2.2 Branch Management.md": {
+    "mtime": 1782756201.850232,
+    "ast_hash": "9dac0e4a6ecc036ddfeb2430eddeed89",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 02 - Organization Management/Part 2.3 Department Management.md": {
+    "mtime": 1782822413.3781805,
+    "ast_hash": "d220b53f4a4078e25035b32c61e894ec",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 02 - Organization Management/Part 2.4 Classroom Management.md": {
+    "mtime": 1782822421.7511466,
+    "ast_hash": "0de7c9015132c5a5b304667bba3a10e8",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 03 - Lead & Inquiry Management/Module 03 - Lead & Inquiry Management.md": {
+    "mtime": 1782837717.4086175,
+    "ast_hash": "b800b5c965010754e674705a9a050474",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 03 - Lead & Inquiry Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
+    "mtime": 1782878272.429846,
+    "ast_hash": "b28e2c6397b807ca0b225e71a950ff76",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 03 - Lead & Inquiry Management/Part 10 - Security Architecture and NFR.md": {
+    "mtime": 1782837785.7242756,
+    "ast_hash": "f4a48816a42cd164d6262a629f9f830d",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 03 - Lead & Inquiry Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
+    "mtime": 1782837796.8540668,
+    "ast_hash": "aacc2fefa017b7a5e6930987620e45ef",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 03 - Lead & Inquiry Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
+    "mtime": 1782878283.4253113,
+    "ast_hash": "a2c95cf4bd846cde467d043b3f556560",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 03 - Lead & Inquiry Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
+    "mtime": 1782878292.6185594,
+    "ast_hash": "e3b7455b3169711e97a5a0fbe1818dca",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 03 - Lead & Inquiry Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
+    "mtime": 1782878313.5954945,
+    "ast_hash": "2638fd168183abcfc5512da87615c61a",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 03 - Lead & Inquiry Management/Part 5 \u2013 API Contracts.md": {
+    "mtime": 1782878333.819581,
+    "ast_hash": "edfb32718bedcabcf5a496505b2f47b5",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 03 - Lead & Inquiry Management/Part 6 \u2013 Permission Matrix.md": {
+    "mtime": 1782838314.1507516,
+    "ast_hash": "1768da6523234dcd51d778e8b2a961dd",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 03 - Lead & Inquiry Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
+    "mtime": 1782878346.2590199,
+    "ast_hash": "d409ae872583b9542b36371f2d459eed",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 03 - Lead & Inquiry Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
+    "mtime": 1782837781.4295437,
+    "ast_hash": "0a1c644b83863f49722a36df20d79085",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 03 - Lead & Inquiry Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
+    "mtime": 1782837813.2031376,
+    "ast_hash": "71895298f424c3693a8d7c16a35ed977",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04 - Admission & Enrollment Management/Module 4 - Admission & Enrollment Management.md": {
+    "mtime": 1783073449.646626,
+    "ast_hash": "8c64577b829977e26d7ad909e856db7d",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04 - Admission & Enrollment Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
+    "mtime": 1782963735.2545562,
+    "ast_hash": "b697f085dce5ea820c627959d9d5b0c8",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04 - Admission & Enrollment Management/Part 10 - Security Architecture and NFR.md": {
+    "mtime": 1782964030.5283399,
+    "ast_hash": "44727b6eb46adec138ddfac2820ba09d",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04 - Admission & Enrollment Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
+    "mtime": 1782961812.6227434,
+    "ast_hash": "f5044babed08debdda95d357ea591d2c",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04 - Admission & Enrollment Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
+    "mtime": 1782963741.60516,
+    "ast_hash": "72feb0938309777b1feb769e86b3342a",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04 - Admission & Enrollment Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
+    "mtime": 1782961659.2054882,
+    "ast_hash": "09e34c92dc40a6b0bc5f719c0e56e72d",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04 - Admission & Enrollment Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
+    "mtime": 1782965702.397883,
+    "ast_hash": "0f0b54824bd99be50cb06c87933614b0",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04 - Admission & Enrollment Management/Part 5 \u2013 API Contracts.md": {
+    "mtime": 1783002463.4997866,
+    "ast_hash": "80b153134a1aaad90e67b6ed711aa983",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04 - Admission & Enrollment Management/Part 6 \u2013 Permission Matrix.md": {
+    "mtime": 1783002449.994536,
+    "ast_hash": "7b561d07f8ab1c8bdf5b3cdbfe5f0cf0",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04 - Admission & Enrollment Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
+    "mtime": 1782964075.800213,
+    "ast_hash": "f6496998b5556a27ca1c7e068d347c89",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04 - Admission & Enrollment Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
+    "mtime": 1782961768.4664764,
+    "ast_hash": "8905df512a094fe483a69a68ad86e4f4",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 04 - Admission & Enrollment Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
+    "mtime": 1782964081.7207775,
+    "ast_hash": "fd4a73099496b59076be0c69f89f12b7",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 05 - Student Management/Module 5 - Student Management.md": {
+    "mtime": 1783059159.1214046,
+    "ast_hash": "44c09a4c26c798cd668b1efe9c8e8b9e",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 05 - Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
+    "mtime": 1783065052.9701924,
+    "ast_hash": "0cb1e44bc5ed256839f0ef9b3ca2b5b6",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 05 - Student Management/Part 10 - Security Architecture and NFR.md": {
     "mtime": 1783065128.83065,
     "ast_hash": "98ece220d21c2be8710770f8579b6761",
     "semantic_hash": ""
   },
-  "docs/architecture/frd/Module 05: Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
+  "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
     "mtime": 1783057038.594435,
     "ast_hash": "d3bf9a7b6f14168ba9f510b56997c524",
     "semantic_hash": ""
   },
-  "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
+  "docs/architecture/frd/Module 05 - Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
     "mtime": 1783065066.9079504,
     "ast_hash": "c62ed2133ee8e24680df83f259d60686",
     "semantic_hash": ""
   },
-  "docs/architecture/frd/Module 05: Student Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
+  "docs/architecture/frd/Module 05 - Student Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
     "mtime": 1783059072.3412526,
     "ast_hash": "f7ec8f705f102f0805764cd163957438",
     "semantic_hash": ""
   },
-  "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
+  "docs/architecture/frd/Module 05 - Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
     "mtime": 1783065081.6142533,
     "ast_hash": "7422367a1f1443235cae541ca9535b2f",
     "semantic_hash": ""
   },
-  "docs/architecture/frd/Module 05: Student Management/Part 5 \u2013 API Contracts.md": {
+  "docs/architecture/frd/Module 05 - Student Management/Part 5 \u2013 API Contracts.md": {
     "mtime": 1783065099.9356995,
     "ast_hash": "c83835a3a0f3dce2245e7feef6a70859",
     "semantic_hash": ""
   },
-  "docs/architecture/frd/Module 05: Student Management/Part 6 \u2013 Permission Matrix.md": {
+  "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md": {
     "mtime": 1783065106.8968313,
     "ast_hash": "85265395a7c698db4b6c5b6fc8842b5f",
     "semantic_hash": ""
   },
-  "docs/architecture/frd/Module 05: Student Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
+  "docs/architecture/frd/Module 05 - Student Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
     "mtime": 1783059087.9606183,
     "ast_hash": "bfe1045e9df629eee14e963c738afd42",
     "semantic_hash": ""
   },
-  "docs/architecture/frd/Module 05: Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
+  "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
     "mtime": 1783057029.0777552,
     "ast_hash": "cba5f97047c82fab0947c328f101e465",
     "semantic_hash": ""
   },
-  "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
+  "docs/architecture/frd/Module 05 - Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
     "mtime": 1783065118.8026352,
     "ast_hash": "14292b4d60db535022a24fd40cd0c2c2",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Architectural Audit Report.md": {
+    "mtime": 1782884275.1857162,
+    "ast_hash": "71c0749baff5567072caef6039c70d77",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Module 06 - Course Catalog & Training Delivery (Batch) Management.md": {
+    "mtime": 1782884393.2283893,
+    "ast_hash": "fff5fca80d77d6ec8d596eaceba0a0d9",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
+    "mtime": 1782928857.7874432,
+    "ast_hash": "ac853c472ffd3a5d9688047a4ab7c567",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 10 - Security Architecture and NFR.md": {
+    "mtime": 1782882185.1268973,
+    "ast_hash": "b89af44810e662fce92e44a09256a06f",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
+    "mtime": 1782882199.8622994,
+    "ast_hash": "cef4558e40ffdf1fe6ab5e5b1df9711a",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
+    "mtime": 1782882960.6932158,
+    "ast_hash": "9de9b686a35c828279d3c74eb701ca96",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
+    "mtime": 1782882473.5415134,
+    "ast_hash": "c05f42827fcde1a42159e7cced24f20a",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
+    "mtime": 1782928864.6948497,
+    "ast_hash": "a5311a151ea8258fa2a152de942a0118",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 5 \u2013 API Contracts.md": {
+    "mtime": 1782926195.2744846,
+    "ast_hash": "9cc15460ebd20362969cde1d37a6879d",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 6 \u2013 Permission Matrix.md": {
+    "mtime": 1782839726.1639166,
+    "ast_hash": "3abb0208349280c423fb30643a95f27e",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
+    "mtime": 1782883504.3778808,
+    "ast_hash": "486959f205ae74bcd586f7489bfc722f",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
+    "mtime": 1782839738.8007355,
+    "ast_hash": "7c7f8445f388ed47332be1418847485f",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
+    "mtime": 1782839745.553772,
+    "ast_hash": "cb112eb2f878f8957020207eed84eaf3",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md": {
+    "mtime": 1783092277.0465324,
+    "ast_hash": "79101a4b03c6f45f59db554c8ac3670a",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
+    "mtime": 1783092353.8590868,
+    "ast_hash": "499b4fa1432a44ff84590287a6edf015",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 10 - Security Architecture and NFR.md": {
+    "mtime": 1783092373.4557266,
+    "ast_hash": "a110d8e3c783cf4018d29a9bcb11f237",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
+    "mtime": 1783092378.1903346,
+    "ast_hash": "597ced18267b5ed9a113523a0c72a79d",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
+    "mtime": 1783092354.0445185,
+    "ast_hash": "f2bcf2156ef6e6a1bf11a3cd750bdb3a",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
+    "mtime": 1783092302.424222,
+    "ast_hash": "97cdd61a1d96055a074b0e0da0ee44ee",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
+    "mtime": 1783092384.9529624,
+    "ast_hash": "c6bcb4124a156d5514e37f618a99c308",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md": {
+    "mtime": 1783092319.4032483,
+    "ast_hash": "4dcadc2d4db94f1818e4150130216a8d",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
+    "mtime": 1783092325.7306187,
+    "ast_hash": "0fdeaf25558f963ffeb87ee5515a763d",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
+    "mtime": 1783092354.0454547,
+    "ast_hash": "f1837a1345dea7c259bca73f40ccf3d4",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
+    "mtime": 1783092354.0462744,
+    "ast_hash": "3b25d1bab83669cf9b698dce06290714",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/ Trainer Management.md": {
+    "mtime": 1782899345.9212344,
+    "ast_hash": "8d257092573907386e7bfeb4d57b61fc",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
+    "mtime": 1782926593.8632653,
+    "ast_hash": "6301af461d680d35a435f92dbfcdbfa3",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 10 - Security Architecture and NFR.md": {
+    "mtime": 1782926597.1847372,
+    "ast_hash": "f01e69894ed2405fb23347a281ff993d",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
+    "mtime": 1782925689.7281868,
+    "ast_hash": "43f173578eb098176201c67e250a413f",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
+    "mtime": 1782924785.965053,
+    "ast_hash": "95ba9afb9f23a4a0b453b92fcee6aa19",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
+    "mtime": 1782901047.8971105,
+    "ast_hash": "0c8c9b6a479042a7447657b0d08e3c19",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
+    "mtime": 1782925661.2436137,
+    "ast_hash": "3047184dd87a6ee6651403aba5f9e774",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 5 \u2013 API Contracts.md": {
+    "mtime": 1782925664.576574,
+    "ast_hash": "b19672193480725f26f6d9594f4600a0",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 6 \u2013 Permission Matrix.md": {
+    "mtime": 1782926584.5889277,
+    "ast_hash": "1d76aba1f951a6e9bf341487fd02420e",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
+    "mtime": 1782926589.860215,
+    "ast_hash": "854829e3f869326147b8e4d5547292cf",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
+    "mtime": 1782924861.1578934,
+    "ast_hash": "793e521d55badcdc5d84428f9d7d3ead",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
+    "mtime": 1782899437.3204143,
+    "ast_hash": "8b66566db99b14be713f9f16414c6f44",
+    "semantic_hash": ""
+  },
+  "docs/operations/product-setup.md": {
+    "mtime": 1783091574.9222994,
+    "ast_hash": "5669593dbdb193579fae2b4ce8aab915",
+    "semantic_hash": ""
+  },
+  "openspec/changes/module-05-student-management/.openspec.yaml": {
+    "mtime": 1783067451.6773732,
+    "ast_hash": "02f6db0a449be79349504bc19b245e9b",
+    "semantic_hash": ""
+  },
+  "openspec/changes/module-05-student-management/README.md": {
+    "mtime": 1783067451.7046068,
+    "ast_hash": "d09878212f91a1c9c4d7bfe7871a90f9",
+    "semantic_hash": ""
+  },
+  "openspec/changes/module-05-student-management/design.md": {
+    "mtime": 1783068867.8645453,
+    "ast_hash": "056eae811cdc2f0cd93860357de158da",
+    "semantic_hash": ""
+  },
+  "openspec/changes/module-05-student-management/proposal.md": {
+    "mtime": 1783068111.9006405,
+    "ast_hash": "3023d55e6955f4fa540a331bb0769ec0",
+    "semantic_hash": ""
+  },
+  "openspec/changes/module-05-student-management/specs/duplicate-management/spec.md": {
+    "mtime": 1783068872.0376863,
+    "ast_hash": "62ea62da023c862e1c8ffd2eabd69493",
+    "semantic_hash": ""
+  },
+  "openspec/changes/module-05-student-management/specs/id-card-management/spec.md": {
+    "mtime": 1783068120.1628149,
+    "ast_hash": "199a2e848264149d35cede2f0ce46362",
+    "semantic_hash": ""
+  },
+  "openspec/changes/module-05-student-management/specs/permissions-and-branch-scope/spec.md": {
+    "mtime": 1783068125.7552638,
+    "ast_hash": "45f4b37b0847da8c6fce15bac78bc094",
+    "semantic_hash": ""
+  },
+  "openspec/changes/module-05-student-management/specs/student-portal-read/spec.md": {
+    "mtime": 1783068122.9688087,
+    "ast_hash": "47697a5c722af667eafdfec7da38f270",
+    "semantic_hash": ""
+  },
+  "openspec/changes/module-05-student-management/specs/student-profile/spec.md": {
+    "mtime": 1783068115.0841517,
+    "ast_hash": "c418458ad1833c06a2f7a307b4e3cc78",
+    "semantic_hash": ""
+  },
+  "openspec/changes/module-05-student-management/tasks.md": {
+    "mtime": 1783072463.3663871,
+    "ast_hash": "a2c42d0d793fd1543d4c318e4f7e4a06",
+    "semantic_hash": ""
+  },
+  "openspec/changes/module-07-scheduling-calendar-branch-override/.openspec.yaml": {
+    "mtime": 1783087789.143436,
+    "ast_hash": "02f6db0a449be79349504bc19b245e9b",
+    "semantic_hash": ""
+  },
+  "openspec/changes/module-07-scheduling-calendar-branch-override/design.md": {
+    "mtime": 1783091904.037286,
+    "ast_hash": "ad9d89e357a8325017bb79c20d5d5519",
+    "semantic_hash": ""
+  },
+  "openspec/changes/module-07-scheduling-calendar-branch-override/proposal.md": {
+    "mtime": 1783087881.0054724,
+    "ast_hash": "5be662eb46d54974f00f2ad787992e43",
+    "semantic_hash": ""
+  },
+  "openspec/changes/module-07-scheduling-calendar-branch-override/specs/business-calendar/spec.md": {
+    "mtime": 1783087985.3852906,
+    "ast_hash": "cb5432a4e2e5517461a90dd09defaf1b",
+    "semantic_hash": ""
+  },
+  "openspec/changes/module-07-scheduling-calendar-branch-override/tasks.md": {
+    "mtime": 1783087944.293793,
+    "ast_hash": "98b5645e2b2638672e378235f73c4542",
     "semantic_hash": ""
   }
 }

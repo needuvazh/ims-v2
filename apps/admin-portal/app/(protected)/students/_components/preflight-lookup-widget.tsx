@@ -25,6 +25,7 @@ type Props = {
   onClear: () => void;
   onMatchFound: (result: PreflightResult) => void;
   onNoMatch: () => void;
+  branchId?: string;
 };
 
 /**
@@ -38,28 +39,31 @@ type Props = {
  *  - Match found → parent shows the OTP claim modal (onMatchFound)
  *  - Clear → reset to initial state (onClear)
  */
-export function PreflightLookupWidget({ onClear, onMatchFound, onNoMatch }: Props) {
+export function PreflightLookupWidget({ onClear, onMatchFound, onNoMatch, branchId }: Props) {
   const [value, setValue] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<PreflightResult | null>(null);
 
   const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
   const isMobile = (v: string) => /^\+?[\d\s\-]{7,20}$/.test(v.trim());
+  const isNationalId = (v: string) => /^[\dA-Za-z\-]{6,50}$/.test(v.trim()) && !isEmail(v) && !isMobile(v);
 
   const handleLookup = async () => {
     const trimmed = value.trim();
     if (!trimmed) {
-      toast.error('Enter an email address or mobile number to search.');
+      toast.error('Enter an email address, mobile number, or national ID to search.');
       return;
     }
 
-    const body: { email?: string; mobile?: string } = {};
+    const body: { email?: string; mobile?: string; nationalId?: string } = {};
     if (isEmail(trimmed)) {
       body.email = trimmed;
     } else if (isMobile(trimmed)) {
       body.mobile = trimmed;
+    } else if (isNationalId(trimmed)) {
+      body.nationalId = trimmed;
     } else {
-      toast.error('Please enter a valid email address or mobile number.');
+      toast.error('Please enter a valid email address, mobile number, or national ID.');
       return;
     }
 
@@ -69,7 +73,7 @@ export function PreflightLookupWidget({ onClear, onMatchFound, onNoMatch }: Prop
       const res = await fetch('/api/v1/students/preflight-lookup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
+        body: JSON.stringify({ ...body, ...(branchId ? { branchId } : {}) }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -101,7 +105,7 @@ export function PreflightLookupWidget({ onClear, onMatchFound, onNoMatch }: Prop
     <div className="space-y-3">
       <div>
         <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
-          Email or Mobile (Duplicate Check)
+          Email, Mobile, or National ID (Duplicate Check)
         </label>
         <div className="flex gap-2">
           <div className="relative flex-1">
@@ -112,7 +116,7 @@ export function PreflightLookupWidget({ onClear, onMatchFound, onNoMatch }: Prop
               value={value}
               onChange={(e) => setValue(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleLookup()}
-              placeholder="student@example.com or +968 9XXX XXXX"
+              placeholder="student@example.com, +968 9XXX XXXX, or national ID"
               className="w-full pl-9 pr-3 h-10 rounded-lg border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[color:var(--ims-brass)] focus:border-transparent"
             />
           </div>

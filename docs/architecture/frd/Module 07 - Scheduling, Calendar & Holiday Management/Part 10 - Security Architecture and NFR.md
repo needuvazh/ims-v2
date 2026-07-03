@@ -13,7 +13,7 @@
 
 ## 1. Security Architecture Overview
 
-Scheduling controls operational time, trainer workload, classroom allocation, branch calendars, student-facing timetable visibility, and downstream attendance creation. Incorrect or unauthorized schedule changes can affect training delivery, attendance eligibility, certificate eligibility, trainer utilization, and branch operations. Therefore, all scheduling operations must be protected through server-side branch scoping, fine-grained permission checks, conflict validation, immutable audit logs for sensitive changes, and controlled publication workflows.
+Scheduling controls operational time, trainer workload, classroom allocation, institute calendars, branch-year overrides, student-facing timetable visibility, and downstream attendance creation. Incorrect or unauthorized schedule changes can affect training delivery, attendance eligibility, certificate eligibility, trainer utilization, and branch operations. Therefore, all scheduling operations must be protected through server-side branch scoping, fine-grained permission checks, conflict validation, immutable audit logs for sensitive changes, and controlled publication workflows.
 
 The module must enforce security at the application service layer, route handler layer, Prisma query construction layer, and reporting/read-model layer. UI hiding is allowed only as a convenience and must never be the only access-control mechanism.
 
@@ -61,7 +61,7 @@ The module must enforce security at the application service layer, route handler
 | overrideReason | Sensitive operational | Required text for overrides | Admin/Coordinator only | Export allowed only with audit/report permission |
 | createdBy/updatedBy | Audit-sensitive | User FK | Admin/audit users only | Export allowed only with audit permission |
 | deletedAt/isDeleted | Audit-sensitive | Soft-delete metadata | Admin/audit users only | Export allowed only with audit permission |
-| holiday nameLocalized | Public/internal depending on calendar | JSON sanitized | Visible by branch calendar scope | Export allowed |
+| holiday nameLocalized | Public/internal depending on calendar | JSON sanitized | Visible by resolved calendar scope | Export allowed |
 | venue block reason | Internal operational | Text sanitized | Admin/Coordinator/Branch Admin only | Export allowed only with operational report permission |
 | trainer availability remarks | Internal HR-adjacent operational | Text sanitized | Trainer owner, coordinator, branch admin | Export controlled |
 
@@ -120,7 +120,7 @@ Authentication must verify:
 | `scheduling.session.delete` | Soft-delete draft schedule sessions. |
 | `scheduling.session.overrideConflict` | Override eligible soft conflicts with mandatory reason. |
 | `scheduling.calendar.read` | Read business calendars and holidays. |
-| `scheduling.calendar.manage` | Create and update branch calendars. |
+| `scheduling.calendar.manage` | Create and update institute calendars and branch overrides. |
 | `scheduling.holiday.manage` | Create, update, deactivate, and soft-delete holidays. |
 | `scheduling.venueBlock.read` | Read venue blocks. |
 | `scheduling.venueBlock.manage` | Create, update, cancel, and soft-delete venue blocks. |
@@ -334,7 +334,7 @@ Soft conflicts may be overridden only with permission `scheduling.session.overri
 | Branches | Support at least 25 active branches without schema change |
 | Batches | Support at least 10,000 active and historical batches |
 | Schedule sessions | Support at least 2,000,000 historical session records |
-| Holidays | Support 20 years of branch calendars |
+| Holidays | Support 20 years of resolved calendars |
 | Venue blocks | Support at least 100,000 historical venue block records |
 | Audit records | Support at least 5,000,000 scheduling-related audit rows with indexed access |
 | Calendar query range | Default max 12 months per request for admin; 3 months for student/trainer portal |

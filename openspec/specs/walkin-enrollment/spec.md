@@ -6,12 +6,12 @@ This specification defines the functional requirements and scenarios for Walk-In
 ## Requirements
 
 ### Requirement: Walk-In Enrollment Intake
-The system SHALL support walk-in intake via a dedicated route `POST /api/v1/enrollments/walk-in`, verifying course eligibility, checking person deduplication, and executing immediate auto-submission and auto-approval.
+The system SHALL support walk-in intake via a dedicated route `POST /api/v1/enrollments/walk-in`, verifying course eligibility, checking person deduplication, and executing immediate auto-submission and auto-approval as part of the shared Enrollment lifecycle.
 
 #### Scenario: Create walk-in enrollment draft and auto-approve
 - **GIVEN** the target course has `allowWalkInCompletion` set to `true`
 - **AND** the target batch has available capacity
-- **WHEN** an authorized user submits a walk-in intake request with person details (first name, last name, phone, email, national ID), course, batch, and branch
+- **WHEN** an authorized user submits a same-day walk-in intake request with person details (first name, last name, phone, email, national ID), course, batch, branch, and payment context
 - **THEN** the system SHALL search the person registry by email, phone, or national ID to check for duplicates
 - **AND** the system SHALL link the existing `Person`/`StudentProfile` or create a new `Person` and `StudentProfile` record
 - **AND** the system SHALL create an `Admission` record in the `Draft` status

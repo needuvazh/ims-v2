@@ -4,21 +4,22 @@
 TBD - created by archiving change admission-intake. Update Purpose after archive.
 ## Requirements
 ### Requirement: Admission Draft Creation
-The system SHALL allow an authorized admissions user to create an admission draft for a selected Student Profile context within the active branch.
+The system SHALL allow an authorized admissions user to create an admission draft for a selected person or student profile within the active branch.
 
 #### Scenario: Create admission draft from admin screen
 - **GIVEN** the user is authenticated and has "admission.create" permission
-- **WHEN** the user submits an admission draft request specifying a valid `studentProfileId` (resolved active branch is extracted from session context)
+- **WHEN** the user submits an admission draft request specifying a valid `personId` or `studentProfileId`, plus course context, and the resolved active branch is extracted from session context
 - **THEN** the system SHALL:
-  - Verify that the target `StudentProfile` exists and is active.
+  - Verify that the target person or `StudentProfile` exists and is active.
   - Generate a unique `admissionNumber` using a collision-free sequential numbering-series resolver.
   - Create an admission record in the "Draft" state scoped to the resolved active branch.
   - Publish an "AdmissionCreated" event to the transactional outbox (and "StudentProfileCreated" conditionally only if a new profile is initialized).
   - Write an audit log entry documenting draft creation under the active branch.
+  - Return the draft details for review.
 
 #### Scenario: Prevent duplicate active admission in same branch
 - **GIVEN** the active branch context has been resolved
-- **WHEN** a user attempts to create a new admission draft for a `studentProfileId` that already has an active admission (status is Draft, Submitted, or Approved and `isDeleted` is false) in that same branch
+- **WHEN** a user attempts to create a new admission draft for a person or `studentProfileId` that already has an active admission (status is Draft, Submitted, or Approved and `isDeleted` is false) in that same branch
 - **THEN** the system SHALL reject the request with a domain validation error "ERR_ADM_ACTIVE_ADMISSION_EXISTS" (HTTP 409 Conflict).
 
 ---
@@ -76,4 +77,3 @@ The system SHALL show detailed admission state, linked student identity referenc
 #### Scenario: Reject out-of-branch admission access
 - **WHEN** a user without branch permission requests admission details or transitions for another branch
 - **THEN** the system SHALL deny access with `403 Forbidden` (ERR_AUTH_BRANCH_DENIED).
-

@@ -116,6 +116,19 @@ The system SHALL verify the user's branch permissions against the document's sto
 
 ---
 
+### Requirement: Admission Document Capture
+The system SHALL allow the admin portal to attach and manage admission-supporting documents for a person, student profile, admission, or enrollment record without owning the underlying document entity.
+
+#### Scenario: Upload document for admission review
+- **WHEN** an authorized admissions user uploads a civil ID, passport scan, or other required document against an admission workflow record
+- **THEN** the system SHALL create the document through the Documents context, link it to the Module 04 record by reference, and expose the document status to the admin portal.
+
+#### Scenario: Reject document capture outside branch scope
+- **WHEN** a user attempts to attach a document to an admission or enrollment record for a branch they are not authorized to access
+- **THEN** the system SHALL reject the action with a `403 Forbidden` response and SHALL NOT create or link the document reference.
+
+---
+
 ### Requirement: Lead Conversion Contract & Handoff Integration
 The CRM Lead conversion endpoint input schema and database transaction SHALL support structured document capture.
 

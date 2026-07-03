@@ -37,32 +37,31 @@ The module follows the IMS project principles:
 
 # 2. User Stories
 
-## US-SCH-001 – Create and Activate a Branch Business Calendar
+## US-SCH-001 – Create and Activate the Institute Business Calendar
 
 | Field | Specification |
 |---|---|
-| User Story | As a Super Admin, I want to create and activate a business calendar for a branch and year, so that scheduling users can create sessions only against a valid operational calendar. |
+| User Story | As a Super Admin, I want to create and activate the institute business calendar, and allow branch/year overrides where needed, so that scheduling users can create sessions only against a valid operational calendar. |
 | Priority | Must |
 | Primary Actors | Super Admin |
 | Supporting Actors | Branch Manager, Identity & Access Module, Organization Management Module, Audit & Compliance Module |
 | Related Requirements | FR-SCH-001, FR-SCH-002, FR-SCH-003, FR-SCH-004, FR-SCH-036, FR-SCH-037, FR-SCH-038, FR-SCH-039, FR-SCH-040 |
-| Business Value | Prevents schedule creation without an official branch calendar and enforces year-specific operating rules. |
+| Business Value | Prevents schedule creation without an official institute calendar and enforces branch-specific exceptions in a controlled way. |
 
 ```gherkin
-Feature: Branch business calendar setup
-  Scenario: Super Admin activates a valid calendar for a branch year
+Feature: Institute business calendar setup
+  Scenario: Super Admin activates the institute calendar
     Given the Super Admin is authenticated
     And the Super Admin has permission "scheduling.calendar.create"
-    And the Super Admin has branch access to branch "BR-MCT-001"
-    And no active business calendar exists for branch "BR-MCT-001" and year "2026"
-    When the Super Admin creates a business calendar for year "2026"
-    And provides English name "Muscat Branch Calendar 2026"
-    And provides Arabic name "تقويم فرع مسقط 2026"
+    And no active institute calendar overlaps the effective period "2026-01-01" to "2026-12-31"
+    When the Super Admin creates an institute business calendar for year "2026"
+    And provides English name "ASTI Institute Calendar 2026"
+    And provides Arabic name "تقويم المعهد 2026"
     And configures all seven weekdays with valid operating rules
     And activates the calendar
     Then the system must save the calendar with status "Active"
     And the system must set timezone to "Asia/Muscat" or equivalent UTC+04:00 display behavior
-    And the system must reject any second active calendar for the same branch and year
+    And the system must reject any second active institute calendar for the same effective period
     And the system must create an AuditLog entry with old value, new value, actor, timestamp, branch, and IP address
 ```
 
@@ -70,7 +69,7 @@ Feature: Branch business calendar setup
 
 | Field | Specification |
 |---|---|
-| User Story | As a Branch Manager, I want to define working days and operating hours for my branch calendar, so that sessions are scheduled only during permitted training hours. |
+| User Story | As a Branch Manager, I want to define branch/year working day and working hour overrides on top of the institute calendar, so that sessions are scheduled only during permitted training hours. |
 | Priority | Must |
 | Primary Actors | Branch Manager |
 | Supporting Actors | Academic Coordinator, Identity & Access Module, Audit & Compliance Module |
@@ -82,7 +81,7 @@ Feature: Calendar operating hours
   Scenario: Branch Manager updates operating hours without overlap
     Given the Branch Manager is authenticated
     And the Branch Manager has permission "scheduling.calendar.update"
-    And an active calendar exists for the selected branch and year
+    And an active institute calendar exists for the selected branch and year
     When the Branch Manager marks Sunday as open
     And adds working hour window "09:00" to "13:00"
     And adds working hour window "14:00" to "18:00"
@@ -91,7 +90,7 @@ Feature: Calendar operating hours
     And the system must audit the calendar update
 
   Scenario: Branch Manager attempts overlapping working hour windows
-    Given the Branch Manager is editing a branch calendar
+    Given the Branch Manager is editing a branch override
     When the Branch Manager adds working hour window "09:00" to "13:00"
     And adds working hour window "12:30" to "16:00"
     Then the system must reject the second window
@@ -103,7 +102,7 @@ Feature: Calendar operating hours
 
 | Field | Specification |
 |---|---|
-| User Story | As a Branch Manager, I want to create and activate official holidays and closure days, so that schedule publishing is blocked on non-training days unless a controlled override is approved. |
+| User Story | As a Branch Manager, I want to create institute holidays and branch-specific closure overrides, so that schedule publishing is blocked on non-training days unless a controlled override is approved. |
 | Priority | Must |
 | Primary Actors | Branch Manager |
 | Supporting Actors | Super Admin, Academic Coordinator, Audit & Compliance Module |
@@ -115,7 +114,7 @@ Feature: Holiday management
   Scenario: Branch Manager creates an active branch holiday
     Given the Branch Manager is authenticated
     And the Branch Manager has permission "scheduling.holiday.create"
-    And the active branch calendar contains date "2026-09-23"
+    And the active institute calendar contains date "2026-09-23"
     When the Branch Manager creates a holiday named "National Day Closure"
     And provides Arabic localized name "إغلاق اليوم الوطني"
     And sets holiday type "BranchClosure"
@@ -362,7 +361,7 @@ Feature: Schedule views and conflict reporting
 
 | Flow ID | Condition | System Behavior |
 |---|---|---|
-| UC-SCH-001-A1 | User lacks calendar create permission | Reject request with authorization error and do not reveal branch calendar details. |
+| UC-SCH-001-A1 | User lacks calendar create permission | Reject request with authorization error and do not reveal calendar details. |
 | UC-SCH-001-A2 | Branch is outside user access scope | Return not found or access denied according to security policy; do not leak branch existence. |
 | UC-SCH-001-A3 | Active calendar already exists for branch and year | Reject activation and show existing active calendar reference if user can access it. |
 | UC-SCH-001-A4 | Weekday configuration is incomplete | Reject save and identify missing weekday rules. |
@@ -376,7 +375,7 @@ Feature: Schedule views and conflict reporting
 | Primary Actor | Branch Manager |
 | Supporting Actors | Super Admin, Academic Coordinator, Audit & Compliance Module |
 | Trigger | ASTI needs to mark a public holiday, branch closure, special event day, or non-training day. |
-| Preconditions | User is authenticated; user has `scheduling.holiday.create` or `scheduling.holiday.update`; branch calendar exists and is accessible; holiday date falls inside the calendar year. |
+| Preconditions | User is authenticated; user has `scheduling.holiday.create` or `scheduling.holiday.update`; a resolved calendar exists and is accessible; holiday date falls inside the calendar year. |
 | Postconditions | Holiday is saved, activated, deactivated, cancelled, or soft deleted; schedule conflict validation uses active holidays; impacted sessions are identified. |
 
 ### Main Success Scenario
@@ -447,7 +446,7 @@ Feature: Schedule views and conflict reporting
 | Primary Actor | Academic Coordinator |
 | Supporting Actors | Training Coordinator, Training Delivery Module, Organization Module, Trainer Management Module, Audit Module |
 | Trigger | A batch requires a planned session in the timetable. |
-| Preconditions | User is authenticated; user has `scheduling.session.create`; batch exists and is schedulable; active branch calendar exists; trainer and classroom are active. |
+| Preconditions | User is authenticated; user has `scheduling.session.create`; batch exists and is schedulable; active institute calendar or branch override exists; trainer and classroom are active. |
 | Postconditions | Draft or Conflict schedule session is created according to validation result and module policy; action is audited. |
 
 ### Main Success Scenario
@@ -925,7 +924,7 @@ It references states from other modules but does not own them:
 stateDiagram-v2
     [*] --> Draft: Create calendar
     Draft --> Active: Activate after validation
-    Active --> Closed: Close calendar year or branch calendar
+    Active --> Closed: Close calendar year or calendar source
     Closed --> Archived: Archive closed calendar
     Draft --> SoftDeleted: Soft delete draft calendar if policy permits
     Active --> SoftDeleted: Administrative soft delete only when no active dependency exists
@@ -1079,7 +1078,7 @@ stateDiagram-v2
 | VAL-SCH-002 | Permission check | `scheduling.session.create` | `scheduling.session.publish` | `scheduling.session.create` | `scheduling.session.reschedule` | `scheduling.session.cancel` | `scheduling.session.read` / `scheduling.export` |
 | VAL-SCH-003 | Branch access | Required | Required | Required | Required | Required | Required |
 | VAL-SCH-004 | Optimistic locking | Not applicable for new record | Required | Not applicable for new records | Required | Required | Not applicable |
-| VAL-SCH-005 | Active branch calendar | Required | Required | Required | Required | Not applicable | Optional filter context |
+| VAL-SCH-005 | Active resolved calendar | Required | Required | Required | Required | Not applicable | Optional filter context |
 | VAL-SCH-006 | Working day and working hours | Warning or required by policy | Required | Required per candidate | Required | Not applicable | Not applicable |
 | VAL-SCH-007 | Batch date range | Required | Required | Required per candidate | Required | Not applicable | Not applicable |
 | VAL-SCH-008 | Trainer eligibility | Required | Required | Required per candidate | Required | Not applicable | Filter only |

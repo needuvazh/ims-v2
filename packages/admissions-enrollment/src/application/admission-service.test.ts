@@ -112,6 +112,7 @@ test('submitAdmission and approveAdmission lifecycle flow should succeed sequent
         return Promise.resolve(mockAdmission);
       }),
     },
+    outboxEvent: { create: vi.fn().mockResolvedValue(null) },
     auditLog: { create: vi.fn().mockResolvedValue(null) },
     document: { findMany: vi.fn().mockResolvedValue([]) }, // resolves verified documents
   } as any;
@@ -128,6 +129,14 @@ test('submitAdmission and approveAdmission lifecycle flow should succeed sequent
   // 2. Transition Submitted -> Approved
   await service.approveAdmission('adm-1', 'actor-1');
   expect(mockAdmission.admissionStatus).toBe('Approved');
+  expect(mockPrisma.outboxEvent.create).toHaveBeenCalledWith(
+    expect.objectContaining({
+      data: expect.objectContaining({
+        eventType: 'AdmissionApproved',
+        aggregateId: 'adm-1',
+      }),
+    })
+  );
 });
 
 test('rejectAdmission should transition Submitted to Rejected and cancelAdmission should transition Draft to Cancelled', async () => {
@@ -292,5 +301,4 @@ test('createStudentAdmission should calculate age relative to admissionDate if p
   const result = await service.createStudentAdmission(inputOver12);
   expect(result.admissionId).toBe('admission-1');
 });
-
 

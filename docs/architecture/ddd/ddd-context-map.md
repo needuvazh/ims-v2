@@ -481,7 +481,6 @@ Provides configurable reference data used across the IMS.
 * LookupType
 * LookupValue
 * NumberingSeries
-* BusinessCalendar
 * LocalizedText
 * BranchHierarchy
 * PricingRule
@@ -835,14 +834,15 @@ Manages actual course delivery through batches, sessions, trainers, capacity, an
 
 ### Business Purpose
 
-Manages timetable, training calendar, classroom booking, holidays, and venue blocking.
+Manages timetable, institute training calendar, branch-year overrides, classroom booking, holidays, and venue blocking.
 
 ### Key Responsibilities
 
 * Timetable creation
 * Session scheduling
 * Classroom booking
-* Holiday calendar management
+* Institute holiday calendar management
+* Branch-year calendar override management
 * Venue blocking
 * Trainer availability checking
 
@@ -851,6 +851,8 @@ Manages timetable, training calendar, classroom booking, holidays, and venue blo
 * Timetable
 * ScheduleSession
 * ClassroomBooking
+* BusinessCalendar
+* BranchCalendarOverride
 * Holiday
 * VenueBlock
 
@@ -864,6 +866,12 @@ Classroom double booking
 Batch overlap
 Holiday conflicts
 Venue blocked-date conflicts
+```
+
+### Calendar Resolution Rule
+
+```text
+branch/year override -> institute calendar -> system defaults
 ```
 
 ---

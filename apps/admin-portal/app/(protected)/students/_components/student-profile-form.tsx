@@ -32,6 +32,7 @@ type Props = {
   branches?: BranchOption[];
   initialValues?: StudentFormValues;
   showHeader?: boolean;
+  hideBranchSelector?: boolean;
 };
 
 function toInputDate(value?: string | null): string {
@@ -39,7 +40,7 @@ function toInputDate(value?: string | null): string {
   return value.slice(0, 10);
 }
 
-export function StudentProfileForm({ mode, branches = [], initialValues = {}, showHeader = true }: Props) {
+export function StudentProfileForm({ mode, branches = [], initialValues = {}, showHeader = true, hideBranchSelector = false }: Props) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [version, setVersion] = useState<number | undefined>(initialValues.version);
@@ -192,7 +193,7 @@ export function StudentProfileForm({ mode, branches = [], initialValues = {}, sh
               </div>
             </div>
 
-            {isCreate && (
+            {isCreate && !hideBranchSelector && (
               <label className="space-y-1.5">
                 <span className="text-xs font-semibold uppercase text-slate-500">Branch</span>
                 <select

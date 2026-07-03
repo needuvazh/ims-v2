@@ -52,9 +52,12 @@ export async function GET(request: Request) {
         throw new Error('ERR_AUTH_BRANCH_DENIED');
       }
 
+      const canRevealSensitive = session.permissions.includes('student.reveal_pii') || session.permissions.includes('student.identity.unmasked.read');
+
       const result = await studentQueryService.globalPersonLookup(
         parsed.data.query,
-        targetBranchId
+        targetBranchId,
+        { revealSensitive: canRevealSensitive }
       );
 
       const response = NextResponse.json(

@@ -107,7 +107,7 @@ export default async function BatchDetailPage(props: {
   const scopedStudentsResult = await studentQueryService.searchBranchScopedStudents(
     '',
     allowedBranchIds as string[],
-    { page: 1, limit: 1000 }
+    { page: 1, limit: 1000, studentStatus: 'Active' }
   );
 
   const studentsList = scopedStudentsResult.items.map((student) => ({
