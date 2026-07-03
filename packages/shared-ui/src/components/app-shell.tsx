@@ -244,11 +244,11 @@ export function SidebarItem({
   const labelId = `sidebar-item-${normalizePath(item.href).replace(/\//g, '-')}`;
 
   const base = cn(
-    'group relative flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold transition-all duration-300 relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--ims-sidebar)]',
+    'group relative flex w-full items-center gap-3 rounded-xl px-3 py-nav-py text-sm font-bold transition-all duration-300 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ims-brass)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--ims-sidebar)]',
     depth > 0 && 'rounded-lg px-3 py-1.5 text-xs font-semibold',
     isActive
-      ? 'bg-[color:var(--ims-brass-soft)] text-[color:var(--ims-brass)] shadow-[0_4px_16px_rgba(99,102,241,0.04)] border border-[color:var(--ims-sidebar-border)]'
-      : 'text-slate-500 hover:bg-slate-50 hover:text-[color:var(--ims-ink)] border border-transparent',
+      ? 'bg-[var(--ims-brass-soft)] text-[var(--ims-brass)] shadow-[0_4px_16px_rgba(99,102,241,0.04)] border border-[var(--ims-sidebar-border)]'
+      : 'text-slate-600 hover:bg-slate-50 hover:text-[var(--ims-ink)] border border-transparent',
     collapsed && 'justify-center px-2',
     depth > 0 && 'ml-1',
   );
@@ -260,8 +260,8 @@ export function SidebarItem({
       'rounded-lg flex items-center justify-center transition-all duration-300 shrink-0 border shadow-[0_1px_2px_rgba(0,0,0,0.02)]',
       depth > 0 ? 'w-6 h-6 rounded-md' : 'w-8 h-8 rounded-lg',
       isActive 
-        ? 'bg-[color:var(--ims-brass)] text-white border-transparent shadow-[0_3px_8px_rgba(99,102,241,0.22)]' 
-        : 'bg-white text-slate-400 border-[color:var(--ims-border)] group-hover:text-[color:var(--ims-brass)] group-hover:border-[color:var(--ims-brass-soft)] group-hover:shadow-sm'
+        ? 'bg-[var(--ims-brass)] text-white border-transparent shadow-[0_3px_8px_rgba(99,102,241,0.22)]' 
+        : 'bg-white text-slate-400 border-[var(--ims-border)] group-hover:text-[var(--ims-brass)] group-hover:border-[var(--ims-brass-soft)] group-hover:shadow-sm'
     )}>
       <div className={cn(
         'shrink-0 transition-all duration-300 flex items-center justify-center',
@@ -355,9 +355,9 @@ export function SidebarGroup({
   return (
     <section className="space-y-2">
       {!collapsed ? (
-          <h3 className="px-3 text-[9px] font-black text-[color:var(--ims-sidebar-muted)] uppercase tracking-[0.3em] opacity-60">{section.label}</h3>
+          <h3 className="px-3 text-[9px] font-black text-slate-500 uppercase tracking-[0.3em] opacity-60">{section.label}</h3>
         ) : (
-          <div className="mx-3 border-t border-[color:var(--ims-sidebar-border)]" aria-hidden="true" />
+          <div className="mx-3 border-t border-[var(--ims-sidebar-border)]" aria-hidden="true" />
         )}
 
       <ul className="space-y-1">
@@ -468,11 +468,11 @@ export function AdminSidebar({
   return (
     <aside
       className={cn(
-        'fixed inset-y-0 left-0 z-30 hidden h-screen flex-col border-r border-[color:var(--ims-sidebar-border)] bg-[color:var(--ims-sidebar)] backdrop-blur-xl shadow-2xl shadow-slate-200/20 transition-[width] duration-300 lg:flex',
-        collapsed ? 'w-20' : 'w-72',
+        'fixed inset-y-0 left-0 z-30 hidden h-screen flex-col border-r border-[var(--ims-sidebar-border)] bg-[var(--ims-sidebar)] backdrop-blur-xl shadow-2xl shadow-slate-200/20 transition-[width] duration-300 lg:flex',
+        collapsed ? 'w-20' : 'w-sidebar-w',
       )}
     >
-      <div className="flex h-20 shrink-0 items-center justify-between gap-3 border-b border-[color:var(--ims-sidebar-border)] px-4">
+      <div className="flex h-header-h shrink-0 items-center justify-between gap-3 border-b border-[var(--ims-sidebar-border)] px-4">
         <div className={cn('min-w-0', collapsed && 'mx-auto')}>
           <BrandLogo appName={appName} collapsed={collapsed} />
         </div>
@@ -481,18 +481,24 @@ export function AdminSidebar({
 
       <nav aria-label="Primary navigation" className="flex-1 overflow-y-auto custom-sidebar-scrollbar px-3 py-4">
         <div className="space-y-6">
-          {sections.map((section) => (
-            <SidebarGroup
-              key={section.label}
-              section={section}
-              pathname={pathname}
-              collapsed={collapsed}
-              openMap={openMap}
-              setOpenMap={setOpenMap}
-              onNavigate={onNavigate}
-              onExpandRequest={() => onCollapsedChange(false)}
-            />
-          ))}
+          {sections.length > 0 ? (
+            sections.map((section) => (
+              <SidebarGroup
+                key={section.label}
+                section={section}
+                pathname={pathname}
+                collapsed={collapsed}
+                openMap={openMap}
+                setOpenMap={setOpenMap}
+                onNavigate={onNavigate}
+                onExpandRequest={() => onCollapsedChange(false)}
+              />
+            ))
+          ) : (
+            <div className="px-4 py-8 text-center">
+              <p className="text-xs font-semibold text-slate-400">No navigation items available.</p>
+            </div>
+          )}
         </div>
       </nav>
       {/* Profile info in the bottom removed as requested */}
@@ -522,8 +528,8 @@ export function MobileSidebar({
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 lg:hidden" />
-        <DialogPrimitive.Content aria-label="Primary navigation" className="fixed inset-y-0 left-0 z-50 flex h-full w-[18rem] flex-col border-r border-[color:var(--ims-sidebar-border)] bg-[color:var(--ims-sidebar)] backdrop-blur-xl shadow-2xl outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-left-4 data-[state=open]:slide-in-from-left-4 lg:hidden">
-          <div className="flex h-20 shrink-0 items-center justify-between gap-3 border-b border-[color:var(--ims-sidebar-border)] px-4">
+        <DialogPrimitive.Content aria-label="Primary navigation" className="fixed inset-y-0 left-0 z-50 flex h-full w-[18rem] flex-col border-r border-[var(--ims-sidebar-border)] bg-[var(--ims-sidebar)] backdrop-blur-xl shadow-2xl outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-left-4 data-[state=open]:slide-in-from-left-4 lg:hidden">
+          <div className="flex h-20 shrink-0 items-center justify-between gap-3 border-b border-[var(--ims-sidebar-border)] px-4">
             <BrandLogo appName={appName} />
             <DialogPrimitive.Close
               className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-slate-400 hover:bg-indigo-50 hover:text-indigo-600 border border-slate-100/60 outline-none"
@@ -535,17 +541,23 @@ export function MobileSidebar({
 
           <nav aria-label="Primary navigation" className="flex-1 overflow-y-auto custom-sidebar-scrollbar px-3 py-4">
             <div className="space-y-6">
-              {sections.map((section) => (
-                <SidebarGroup
-                  key={section.label}
-                  section={section}
-                  pathname={pathname}
-                  collapsed={false}
-                  openMap={openMap}
-                  setOpenMap={setOpenMap}
-                  onNavigate={onNavigate}
-                />
-              ))}
+              {sections.length > 0 ? (
+                sections.map((section) => (
+                  <SidebarGroup
+                    key={section.label}
+                    section={section}
+                    pathname={pathname}
+                    collapsed={false}
+                    openMap={openMap}
+                    setOpenMap={setOpenMap}
+                    onNavigate={onNavigate}
+                  />
+                ))
+              ) : (
+                <div className="px-4 py-8 text-center">
+                  <p className="text-xs font-semibold text-slate-400">No navigation items available.</p>
+                </div>
+              )}
             </div>
           </nav>
         </DialogPrimitive.Content>
@@ -574,7 +586,7 @@ export function AppShell({
   const activeParentLabel = activeTrail.length > 1 ? activeTrail[0]?.label : undefined;
 
   return (
-    <div className={cn('min-h-screen bg-[#fbf9f5] text-[color:var(--ims-ink)]', className)}>
+    <div className={cn('min-h-screen bg-[#fbf9f5] text-[var(--ims-ink)]', className)}>
       <AdminSidebar
         key={`desktop-${pathname}`}
         appName={appName}
@@ -595,8 +607,8 @@ export function AppShell({
         onNavigate={() => setMobileSidebarOpen(false)}
       />
 
-      <div className={cn('flex min-h-screen flex-col transition-[padding] duration-300 lg:pl-72', sidebarCollapsed && 'lg:pl-20')}>
-        <header className="sticky top-0 z-20 flex h-20 shrink-0 items-center justify-between border-b border-[color:var(--ims-border)] bg-white/70 px-4 shadow-[0_2px_20px_rgba(0,0,0,0.02)] backdrop-blur-xl md:px-6 lg:px-8">
+      <div className={cn('flex min-h-screen flex-col transition-[padding] duration-300 lg:pl-sidebar-w', sidebarCollapsed && 'lg:pl-20')}>
+        <header className="sticky top-0 z-20 flex h-header-h shrink-0 items-center justify-between border-b border-[var(--ims-sidebar-border)] bg-white/70 px-page-px shadow-[0_2px_20px_rgba(0,0,0,0.02)] backdrop-blur-xl">
           {/* Left section: Hamburger (mobile), Breadcrumbs (desktop), and active branch badge */}
           <div className="flex min-w-0 items-center gap-4">
             <button
@@ -612,7 +624,7 @@ export function AppShell({
 
             {/* Mobile/Tablet title */}
             <div className="lg:hidden min-w-0">
-              <span className="truncate text-sm font-bold text-[color:var(--ims-ink)]">
+              <span className="truncate text-sm font-bold text-[var(--ims-ink)]">
                 {activeLabel ?? appName}
               </span>
             </div>
@@ -711,8 +723,8 @@ export function AppShell({
                         </div>
                       )}
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-semibold text-[color:var(--ims-ink)]">{userName ?? 'Administrator'}</p>
-                        <p className="truncate text-xs text-[color:var(--ims-muted)]">{branchName ?? 'HQ Branch'}</p>
+                        <p className="truncate text-sm font-semibold text-[var(--ims-ink)]">{userName ?? 'Administrator'}</p>
+                        <p className="truncate text-xs text-slate-500">{branchName ?? 'HQ Branch'}</p>
                       </div>
                     </div>
                     {aside ? <div>{aside}</div> : null}
@@ -723,7 +735,7 @@ export function AppShell({
           </div>
         </header>
 
-        <main className="flex-1 p-4 md:p-6 lg:p-8">{children}</main>
+        <main className="flex-1 p-page-px">{children}</main>
       </div>
     </div>
   );

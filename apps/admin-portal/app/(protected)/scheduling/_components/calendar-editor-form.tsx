@@ -1,10 +1,22 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import { CalendarDays, Save, Sparkles } from 'lucide-react';
-import { Alert, Badge, Button, Card, CardContent, CardFooter, CardHeader, CardTitle, Checkbox, Input, Select, Textarea } from '@ims/shared-ui';
+import { CalendarDays, Save, Sparkles, AlertTriangle, Clock } from 'lucide-react';
+import { 
+  Alert, 
+  Badge, 
+  Button, 
+  Card, 
+  CardContent, 
+  CardFooter, 
+  CardHeader, 
+  CardTitle, 
+  Checkbox, 
+  Input, 
+  Select 
+} from '@ims/shared-ui';
 import type { BusinessCalendar, DayOfWeek } from '@ims/scheduling';
 
 const DAY_ORDER: DayOfWeek[] = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
@@ -52,8 +64,8 @@ function buildDays(initial?: BusinessCalendar['operatingDays']) {
     return {
       dayOfWeek,
       isOpen: existing?.isOpen ?? false,
-      startTime: existing?.workingHours?.[0]?.startTime ?? '09:00',
-      endTime: existing?.workingHours?.[0]?.endTime ?? '17:00',
+      startTime: existing?.workingHours?.[0]?.startTime ?? '08:00',
+      endTime: existing?.workingHours?.[0]?.endTime ?? '16:00',
     };
   });
 }
@@ -134,70 +146,109 @@ export function CalendarEditorForm({ mode, initialCalendar }: { mode: 'create' |
         throw new Error(detail);
       }
 
-      toast.success(mode === 'create' ? 'Calendar created.' : 'Calendar updated.');
+      toast.success(mode === 'create' ? 'Calendar created successfully.' : 'Calendar updated successfully.');
       const id = json?.data?.id ?? initialCalendar?.id;
       router.push(id ? `/scheduling/calendars/${id}` : '/scheduling/calendars');
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unable to save calendar.');
-      toast.error(err instanceof Error ? err.message : 'Unable to save calendar.');
     } finally {
       setIsSaving(false);
     }
   };
 
   return (
-    <form onSubmit={submit} className="space-y-6">
-      {error && <Alert variant="error" title="Save failed">{error}</Alert>}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2"><CalendarDays className="h-5 w-5" /> Institute calendar</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid gap-4 md:grid-cols-2">
-            <Input label="Institute ID" value={state.instituteId} onChange={(e) => updateField('instituteId', e.target.value)} required placeholder="UUID" disabled={mode === 'edit'} />
-            <Input label="Calendar code" value={state.code} onChange={(e) => updateField('code', e.target.value)} required placeholder="ASTI-2026" disabled={mode === 'edit'} />
-            <Input label="Calendar name" value={state.name} onChange={(e) => updateField('name', e.target.value)} required placeholder="Academic Calendar 2026" />
-            <Input label="Year" type="number" value={state.year} onChange={(e) => updateField('year', e.target.value)} required min={2000} max={2100} />
-            <Input label="English label" value={state.nameLocalizedEn} onChange={(e) => updateField('nameLocalizedEn', e.target.value)} required placeholder="Academic Calendar 2026" />
-            <Input label="Arabic label" value={state.nameLocalizedAr} onChange={(e) => updateField('nameLocalizedAr', e.target.value)} required placeholder="التقويم الأكاديمي 2026" />
-            <Input label="Country code" value={state.countryCode} onChange={(e) => updateField('countryCode', e.target.value.toUpperCase())} maxLength={2} required />
-            <Select label="Status" value={state.status} onChange={(e) => updateField('status', e.target.value as CalendarFormState['status'])} options={[
-              { value: 'Draft', label: 'Draft' },
-              { value: 'Active', label: 'Active' },
-              { value: 'Closed', label: 'Closed' },
-              { value: 'Archived', label: 'Archived' },
-            ]} />
-            <Input label="Effective start" type="date" value={state.effectiveStartDate} onChange={(e) => updateField('effectiveStartDate', e.target.value)} required />
-            <Input label="Effective end" type="date" value={state.effectiveEndDate} onChange={(e) => updateField('effectiveEndDate', e.target.value)} />
-          </div>
+    <form onSubmit={submit} className="space-y-10">
+      {error && (
+        <Alert variant="error" className="animate-in fade-in slide-in-from-top-2 duration-300">
+           <div className="flex items-center gap-2 font-semibold">
+              <AlertTriangle className="h-4 w-4" /> Save operation failed
+           </div>
+           <p className="mt-1 opacity-90">{error}</p>
+        </Alert>
+      )}
+      
+      <div className="grid gap-10 lg:grid-cols-[1fr_400px]">
+        <div className="space-y-10">
+          <section className="space-y-4">
+             <div className="flex items-center gap-2 border-b border-[color:var(--ims-border)] pb-2">
+                <CalendarDays className="h-5 w-5 text-[color:var(--ims-brass)]" />
+                <h3 className="font-bold text-lg text-[color:var(--ims-ink)] tracking-tight">Identity & Context</h3>
+             </div>
+             <div className="grid gap-6 md:grid-cols-2">
+                <Input label="Institute ID" value={state.instituteId} onChange={(e) => updateField('instituteId', e.target.value)} required placeholder="UUID" disabled={mode === 'edit'} />
+                <Input label="Calendar code" value={state.code} onChange={(e) => updateField('code', e.target.value)} required placeholder="e.g. ACAD-2026" disabled={mode === 'edit'} />
+                <Input label="Primary Name" value={state.name} onChange={(e) => updateField('name', e.target.value)} required placeholder="e.g. Academic Year 2026" className="md:col-span-2" />
+                <Input label="English label" value={state.nameLocalizedEn} onChange={(e) => updateField('nameLocalizedEn', e.target.value)} required placeholder="e.g. Academic Year 2026" />
+                <Input label="Arabic label" value={state.nameLocalizedAr} onChange={(e) => updateField('nameLocalizedAr', e.target.value)} required placeholder="التقويم الأكاديمي" className="text-right" dir="rtl" />
+                <Input label="Effective Year" type="number" value={state.year} onChange={(e) => updateField('year', e.target.value)} required min={2000} max={2100} />
+                <Input label="ISO Country" value={state.countryCode} onChange={(e) => updateField('countryCode', e.target.value.toUpperCase())} maxLength={2} required placeholder="OM" />
+             </div>
+          </section>
 
-          <div className="rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-accent-soft)] p-4">
-            <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-[color:var(--ims-ink)]">
-              <Sparkles className="h-4 w-4 text-[color:var(--ims-brass)]" /> Weekly operating pattern
-            </div>
-            <div className="space-y-3">
-              {state.days.map((day, index) => (
-                <div key={day.dayOfWeek} className="grid gap-3 rounded-xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-3 md:grid-cols-[160px_1fr_1fr_1fr] md:items-center">
-                  <div>
-                    <div className="font-medium text-[color:var(--ims-ink)]">{DAY_LABELS[day.dayOfWeek]}</div>
-                    <div className="text-xs text-[color:var(--ims-muted)]">{day.dayOfWeek}</div>
+          <section className="space-y-4">
+             <div className="flex items-center gap-2 border-b border-[color:var(--ims-border)] pb-2">
+                <Clock className="h-5 w-5 text-[color:var(--ims-brass)]" />
+                <h3 className="font-bold text-lg text-[color:var(--ims-ink)] tracking-tight">Standard Weekly Pattern</h3>
+             </div>
+             <div className="grid gap-3">
+                {state.days.map((day, index) => (
+                  <div key={day.dayOfWeek} className="flex flex-col md:flex-row md:items-center justify-between p-4 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] transition-shadow hover:shadow-md gap-4">
+                    <div className="w-40">
+                      <div className="font-bold text-[color:var(--ims-ink)]">{DAY_LABELS[day.dayOfWeek]}</div>
+                      <div className="text-[10px] uppercase tracking-widest text-[color:var(--ims-muted)] font-semibold">{day.dayOfWeek}</div>
+                    </div>
+                    <div className="flex-1 flex items-center gap-6">
+                       <Checkbox label="Operating" checked={day.isOpen} onChange={(e) => updateDay(index, { isOpen: e.target.checked })} />
+                       <div className="flex items-center gap-2">
+                          <Input type="time" value={day.startTime} onChange={(e) => updateDay(index, { startTime: e.target.value })} disabled={!day.isOpen} className="w-32 h-9" />
+                          <span className="text-[color:var(--ims-muted)]">—</span>
+                          <Input type="time" value={day.endTime} onChange={(e) => updateDay(index, { endTime: e.target.value })} disabled={!day.isOpen} className="w-32 h-9" />
+                       </div>
+                    </div>
+                    <div className="hidden md:block">
+                       <Badge variant={day.isOpen ? 'success' : 'muted'} className="opacity-70">{day.isOpen ? 'Active' : 'Closed'}</Badge>
+                    </div>
                   </div>
-                  <Checkbox label="Open" checked={day.isOpen} onChange={(e) => updateDay(index, { isOpen: e.target.checked })} description="Closed days are excluded from working-hour checks." />
-                  <Input label="Start" type="time" value={day.startTime} onChange={(e) => updateDay(index, { startTime: e.target.value })} disabled={!day.isOpen} />
-                  <Input label="End" type="time" value={day.endTime} onChange={(e) => updateDay(index, { endTime: e.target.value })} disabled={!day.isOpen} />
-                </div>
-              ))}
-            </div>
-          </div>
+                ))}
+             </div>
+          </section>
+        </div>
 
-          <p className="text-xs text-[color:var(--ims-muted)]">Timezone is fixed to Asia/Muscat and cannot be changed from the UI.</p>
-        </CardContent>
-        <CardFooter className="justify-end gap-3">
-          <Button type="button" variant="ghost" onClick={() => router.back()}>Cancel</Button>
-          <Button type="submit" loading={isSaving}><Save className="h-4 w-4" /> {mode === 'create' ? 'Create calendar' : 'Save calendar'}</Button>
-        </CardFooter>
-      </Card>
+        <aside className="space-y-6">
+           <Card className="bg-[color:var(--ims-surface-hover)] border-dashed">
+              <CardHeader>
+                 <CardTitle className="text-base">Lifecycle & Validity</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                 <Select label="Release Status" value={state.status} onChange={(e) => updateField('status', e.target.value as CalendarFormState['status'])} options={[
+                    { value: 'Draft', label: 'Draft — Working Copy' },
+                    { value: 'Active', label: 'Active — Live & Validating' },
+                    { value: 'Closed', label: 'Closed — Retired' },
+                    { value: 'Archived', label: 'Archived — Hidden' },
+                 ]} />
+                 <Input label="Effective Start" type="date" value={state.effectiveStartDate} onChange={(e) => updateField('effectiveStartDate', e.target.value)} required />
+                 <Input label="Effective End (Optional)" type="date" value={state.effectiveEndDate} onChange={(e) => updateField('effectiveEndDate', e.target.value)} />
+              </CardContent>
+           </Card>
+
+           <Card className="bg-[color:var(--ims-ink)] text-white border-none shadow-xl overflow-hidden">
+              <CardHeader>
+                 <CardTitle className="text-white flex items-center gap-2"><Sparkles className="h-5 w-5 text-[color:var(--ims-brass)]" /> Integration Note</CardTitle>
+              </CardHeader>
+              <CardContent className="text-xs text-white/80 leading-relaxed space-y-2">
+                 <p>This baseline will be used for all branches within the institute.</p>
+                 <p>Changes here may affect existing schedules if they fall within this effective range.</p>
+                 <p className="font-semibold text-white">Timezone: Asia/Muscat (Fixed)</p>
+              </CardContent>
+              <CardFooter className="border-t border-white/10 pt-4">
+                 <Button type="submit" loading={isSaving} className="w-full bg-[color:var(--ims-brass)] hover:bg-[color:var(--ims-brass-soft)]">
+                    <Save className="h-4 w-4 mr-2" /> {mode === 'create' ? 'Create baseline' : 'Commit changes'}
+                 </Button>
+              </CardFooter>
+           </Card>
+        </aside>
+      </div>
     </form>
   );
 }

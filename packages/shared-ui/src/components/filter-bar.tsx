@@ -9,7 +9,7 @@ export function FilterBar({ className, ...props }: HTMLAttributes<HTMLDivElement
   return (
     <div
       className={cn(
-        'flex flex-wrap items-center gap-3',
+        'flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-section-gap',
         className,
       )}
       {...props}

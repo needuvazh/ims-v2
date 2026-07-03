@@ -34,9 +34,12 @@ import {
   EffectivePermissionsService,
   BranchScopeResolver,
   AuthorizationGuard,
-  NoOpPermissionCache,
+  InMemoryPermissionCache,
   DummyNotificationProvider,
 } from '@ims/identity-access';
+
+// ─── Cache ────────────────────────────────────────────────────────────────
+const permissionCache = new InMemoryPermissionCache();
 
 // ─── Repositories ──────────────────────────────────────────────────────────
 const auditRepository = new PrismaAuditLogRepository(prisma);
@@ -73,14 +76,14 @@ export const userService = new UserService(
 export const authService = new AuthService(
   userRepository,
   sessionRepository,
-  passwordHistoryRepository,
   securityPolicyRepository,
   auditRepository,
   loginHistoryRepository,
-  notificationPort,
   roleRepository,
   userBranchAccessRepository,
-  outboxEventRepository
+  outboxEventRepository,
+  notificationPort,
+  permissionCache
 );
 
 export const roleService = new RoleService(
@@ -88,7 +91,8 @@ export const roleService = new RoleService(
   permissionRepository,
   auditRepository,
   userRepository,
-  notificationRepository
+  notificationRepository,
+  permissionCache
 );
 
 export const permissionService = new PermissionService(
@@ -127,7 +131,8 @@ export const loginHistoryQueryService = new LoginHistoryQueryService(
 
 export const effectivePermissionsService = new EffectivePermissionsService(
   userRepository,
-  roleRepository
+  roleRepository,
+  permissionCache
 );
 
 export const branchScopeResolver = new BranchScopeResolver(
@@ -138,8 +143,7 @@ export const authorizationGuard = new AuthorizationGuard(
   userRepository,
   sessionRepository,
   effectivePermissionsService,
-  branchScopeResolver,
-  new NoOpPermissionCache()
+  branchScopeResolver
 );
 
 // We can instantiate organizationService using the same auditRepository pattern

@@ -44,19 +44,22 @@ export type SignInResult = {
   session: any;
 };
 
+import { IPermissionCachePort } from './permission-cache';
+
 export class AuthService {
   constructor(
     private readonly userRepository: IUserRepository,
     private readonly sessionRepository: ISessionRepository,
-    private readonly passwordHistoryRepository: IPasswordHistoryRepository,
     private readonly securityPolicyRepository: ISecurityPolicyRepository,
     private readonly auditLogRepository: IAuditLogRepository,
     private readonly loginHistoryRepository: ILoginHistoryRepository,
-    private readonly notificationPort: INotificationPort,
     private readonly roleRepository?: IRoleRepository,
     private readonly userBranchAccessRepository?: IUserBranchAccessRepository,
-    private readonly outboxEventRepository?: IOutboxEventRepository
+    private readonly outboxEventRepository?: IOutboxEventRepository,
+    private readonly notificationPort?: INotificationPort,
+    private readonly permissionCache?: IPermissionCachePort
   ) {}
+
 
   async signIn(
     command: { email: string; password: string; rememberMe?: boolean },
@@ -338,7 +341,8 @@ export class AuthService {
       userId: user.id,
       email: user.email,
       roles,
-      permissions,
+      // SLIM: Do not pack permissions into the JWT
+      // permissions, 
       activeBranchId: user.defaultBranchId,
       jti: accessTokenJti,
     };
@@ -349,7 +353,7 @@ export class AuthService {
       userId: user.id,
       displayName: user.username,
       roles,
-      permissions,
+      permissions: [], // SLIM: Empty in transport session
       dataScopes,
       activeBranchId: user.defaultBranchId,
       accessTokenJti,

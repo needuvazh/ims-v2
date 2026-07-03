@@ -1,10 +1,11 @@
 import type { ReactNode } from 'react';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { decodeSession, sessionCookieName, isGlobalScope } from '@ims/shared-auth';
+import { isGlobalScope } from '@ims/shared-auth';
 import { AppShell } from '@ims/shared-ui';
 import { resolvePortalNavigation, resolvePortalShellUser } from '@ims/identity-access';
 import { UserControls } from './user-controls';
+import { getSession } from '../lib/auth-guard';
 import { Toaster } from 'sonner';
 import {
   LayoutDashboard,
@@ -118,10 +119,7 @@ function mapNavigationIcons(item: any): any {
 }
 
 export default async function ProtectedLayout({ children }: { children: ReactNode }) {
-  const cookieStore = await cookies();
-  const session = await decodeSession(cookieStore.get(sessionCookieName)?.value);
-
-  if (!session) redirect('/sign-in');
+  const session = await getSession();
 
   const shellUser = resolvePortalShellUser(session);
   const rawNav = resolvePortalNavigation('admin', session);

@@ -193,6 +193,21 @@ const config: Config = {
         display: ['var(--font-display)', 'Sora',         'system-ui', 'sans-serif'],
         mono:    ['var(--font-mono)',    'IBM Plex Mono','monospace'],
       },
+      fontSize: {
+        'page-title':    'var(--ims-font-page-title)',
+        'section-title': 'var(--ims-font-section-title)',
+        'card-value':    'var(--ims-font-card-value)',
+        'hero-title':    'var(--ims-font-hero-title)',
+      },
+      spacing: {
+        'page-px':      'var(--ims-page-px)',
+        'section-gap':  'var(--ims-section-gap)',
+        'card-p':       'var(--ims-card-p)',
+        'hero-py':      'var(--ims-hero-py)',
+        'header-h':     'var(--ims-header-h)',
+        'sidebar-w':    'var(--ims-sidebar-w)',
+        'nav-py':       'var(--ims-nav-py)',
+      },
       borderRadius: {
         sm:      '0.125rem',
         DEFAULT: '0.25rem',

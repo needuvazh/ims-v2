@@ -95,10 +95,13 @@ export const getSession: () => Promise<Session> = cache(async () => {
 
   const session = await decodeSession(cookieStore.get(sessionCookieName)?.value ?? getCookieValue(headerStore.get('cookie'), sessionCookieName));
   if (session) {
+    // HYDRATION: Fetch permissions from cache/DB based on roles in the session
+    const { effectivePermissionsService } = await import('./runtime');
+    session.permissions = await effectivePermissionsService.getPermissionsForRoles(session.roles);
     return session;
   }
 
-  const { sessionRepository } = await import('./runtime');
+  const { sessionRepository, effectivePermissionsService } = await import('./runtime');
   const dbSession = await sessionRepository.findByAccessTokenJti(tokenPayload.jti ?? '');
   if (!dbSession) {
     throw new DomainError('unauthorized', 'Authentication required. Please sign in.');
@@ -108,7 +111,7 @@ export const getSession: () => Promise<Session> = cache(async () => {
     userId: tokenPayload.userId as Session['userId'],
     displayName: tokenPayload.email,
     roles: tokenPayload.roles ?? [],
-    permissions: tokenPayload.permissions ?? [],
+    permissions: await effectivePermissionsService.getPermissionsForRoles(tokenPayload.roles ?? []),
     dataScopes: [],
     activeBranchId: dbSession.activeBranchId,
     accessTokenJti: tokenPayload.jti ?? '',

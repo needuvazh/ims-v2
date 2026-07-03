@@ -28,7 +28,7 @@ export function PageHeader({
   return (
     <header
       className={cn(
-        'flex flex-col gap-4 border-b border-[color:var(--ims-border)] pb-6 lg:flex-row lg:items-end lg:justify-between',
+        'flex flex-col gap-section-gap border-b border-[color:var(--ims-border)] pb-section-gap lg:flex-row lg:items-end lg:justify-between',
         className,
       )}
       {...props}
@@ -48,7 +48,7 @@ export function PageHeader({
               </Button>
           </Link>
         )}
-          <h1 className="font-[family-name:var(--font-display,serif)] text-3xl tracking-tight text-[color:var(--ims-ink)] sm:text-4xl">
+          <h1 className="font-[family-name:var(--font-display,serif)] text-page-title tracking-tight text-[color:var(--ims-ink)]">
             {title}
           </h1>
         </div>

@@ -57,9 +57,12 @@ export async function POST(request: Request) {
     }
 
     try {
-      const { authService } = await import('../../../../lib/runtime');
+      const { authService, effectivePermissionsService } = await import('../../../../lib/runtime');
       const session = await decodeSession(request.headers.get('cookie')?.match(new RegExp(`${sessionCookieName}=([^;]+)`))?.[1]);
       const result = await authService.refresh(token, request.headers.get('user-agent'), request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? request.headers.get('x-real-ip'));
+
+      // Hydrate permissions if session exists
+      const permissions = session ? await effectivePermissionsService.getPermissionsForRoles(session.roles) : [];
 
       const response = NextResponse.json(
         {
@@ -68,7 +71,7 @@ export async function POST(request: Request) {
               userId: session?.userId ?? '',
               displayName: session?.displayName ?? '',
               roles: session?.roles ?? [],
-              permissions: session?.permissions ?? [],
+              permissions,
               dataScopes: session?.dataScopes ?? [],
               activeBranchId: session?.activeBranchId ?? null,
               lastActivityAt: Date.now(),

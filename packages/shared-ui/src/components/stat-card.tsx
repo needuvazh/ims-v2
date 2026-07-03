@@ -95,7 +95,7 @@ export function StatCard({
     return (
       <div
         className={cn(
-          'rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] backdrop-blur-xl p-6',
+          'rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] backdrop-blur-xl p-card-p',
           className,
         )}
         {...props}
@@ -114,7 +114,7 @@ export function StatCard({
     return (
       <div
         className={cn(
-          'group relative overflow-hidden rounded-2xl border p-5 shadow-[0_22px_50px_-28px_rgba(15,23,42,0.34)] backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_28px_60px_-30px_rgba(15,23,42,0.38)]',
+          'group relative overflow-hidden rounded-2xl border p-card-p shadow-[0_22px_50px_-28px_rgba(15,23,42,0.34)] backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_28px_60px_-30px_rgba(15,23,42,0.38)]',
           toneData.card,
           className,
         )}
@@ -126,7 +126,7 @@ export function StatCard({
             <p className={cn('text-[10px] font-black uppercase tracking-[0.28em]', toneData.eyebrow)}>
               {title}
             </p>
-            <p className="mt-3 text-3xl font-black tracking-tight text-slate-900">
+            <p className="mt-3 text-card-value font-black tracking-tight text-slate-900">
               {value}
             </p>
             {(description || trend) && (
@@ -165,7 +165,7 @@ export function StatCard({
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
             {title}
           </p>
-          <p className="mt-2 font-[family-name:var(--font-display,serif)] text-3xl font-semibold tracking-tight text-[color:var(--ims-ink)]">
+          <p className="mt-2 font-[family-name:var(--font-display,serif)] text-card-value font-semibold tracking-tight text-[color:var(--ims-ink)]">
             {value}
           </p>
           {(description || trend) && (

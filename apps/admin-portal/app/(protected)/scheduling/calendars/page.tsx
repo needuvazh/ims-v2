@@ -1,12 +1,34 @@
+import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, CalendarDays, Edit2, Eye, Home, Layers3, Plus } from 'lucide-react';
-import { Badge, Breadcrumbs, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, DataTableFilter, EmptyState, PageHeader, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@ims/shared-ui';
+import { CalendarDays, Edit2, Eye, Home, Layers3, Plus, Search } from 'lucide-react';
+import { 
+  Badge, 
+  Breadcrumbs, 
+  Button, 
+  Card, 
+  CardContent, 
+  CardDescription, 
+  CardHeader, 
+  CardTitle, 
+  DataTableFilter, 
+  EmptyState, 
+  PageHeader, 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableHead, 
+  TableHeader, 
+  TableRow,
+  SimpleTooltip
+} from '@ims/shared-ui';
 import { loadSchedulingCalendars } from '../data';
 
-export const metadata = { title: 'Scheduling Calendars | IMS Admin' };
+export const metadata = { title: 'Calendar Ledger | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
-export default async function CalendarsPage(props: { searchParams: Promise<{ q?: string; status?: 'Draft' | 'Active' | 'Closed' | 'Archived'; year?: string }> }) {
+export default async function CalendarsPage(props: { 
+  searchParams: Promise<{ q?: string; status?: 'Draft' | 'Active' | 'Closed' | 'Archived'; year?: string }> 
+}) {
   const searchParams = await props.searchParams;
   const calendars = await loadSchedulingCalendars({
     q: searchParams.q,
@@ -14,78 +36,121 @@ export default async function CalendarsPage(props: { searchParams: Promise<{ q?:
     year: searchParams.year ? Number(searchParams.year) : undefined,
   });
 
+  const formatDate = (date: Date) => {
+    return date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  };
+
   return (
     <div className="space-y-8">
       <PageHeader
         eyebrow="Scheduling"
         title="Calendar ledger"
-        description="Institute calendars are authoritative. Branch overrides remain sparse and visible in the detail view."
-        breadcrumbs={<Breadcrumbs items={[{ label: 'Scheduling', href: '/scheduling', icon: <CalendarDays className="h-3.5 w-3.5" /> }, { label: 'Calendars', icon: <Layers3 className="h-3.5 w-3.5" /> }]} />}
-        actions={<Link href="/scheduling/calendars/new"><Button><Plus className="h-4 w-4" /> New calendar</Button></Link>}
+        description="The authoritative list of institute baseline calendars. Branch exceptions are layered on top of these records."
+        breadcrumbs={
+          <Breadcrumbs 
+            items={[
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Scheduling', href: '/scheduling', icon: <CalendarDays className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Ledger', icon: <Layers3 className="h-3.5 w-3.5 text-slate-500" /> }
+            ]} 
+          />
+        }
+        actions={
+          <Link href="/scheduling/calendars/new">
+            <Button>
+              <Plus className="h-4 w-4 mr-2" /> New baseline
+            </Button>
+          </Link>
+        }
       />
 
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card><CardHeader><CardTitle>Total</CardTitle><CardDescription>All institute calendars.</CardDescription></CardHeader><CardContent><div className="text-3xl font-semibold">{calendars.length}</div></CardContent></Card>
-        <Card><CardHeader><CardTitle>Active</CardTitle><CardDescription>Currently schedulable calendars.</CardDescription></CardHeader><CardContent><div className="text-3xl font-semibold">{calendars.filter((calendar) => calendar.status === 'Active').length}</div></CardContent></Card>
-        <Card><CardHeader><CardTitle>Draft</CardTitle><CardDescription>Calendars still being prepared.</CardDescription></CardHeader><CardContent><div className="text-3xl font-semibold">{calendars.filter((calendar) => calendar.status === 'Draft').length}</div></CardContent></Card>
-      </div>
-
-      <Card className="overflow-hidden">
-        <CardHeader>
-          <CardTitle>Calendar records</CardTitle>
-          <CardDescription>Use the ledger to open a detail view or edit the institute baseline.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="mb-6">
-            <DataTableFilter
-              searchPlaceholder="Search by code or name..."
-              filters={[{ key: 'status', label: 'Status', options: [
+      <div className="space-y-4">
+        <DataTableFilter
+          searchPlaceholder="Search calendars by code or name..."
+          filters={[
+            { 
+              key: 'status', 
+              label: 'Status', 
+              options: [
                 { value: 'Draft', label: 'Draft' },
                 { value: 'Active', label: 'Active' },
                 { value: 'Closed', label: 'Closed' },
                 { value: 'Archived', label: 'Archived' },
-              ] }]}
-            />
-          </div>
+              ] 
+            }
+          ]}
+        />
 
-          {calendars.length === 0 ? (
-            <EmptyState icon={<CalendarDays className="h-6 w-6" />} title="No calendars yet" description="Create the institute baseline calendar before adding branch overrides." />
-          ) : (
+        {calendars.length === 0 ? (
+          <EmptyState 
+            icon={<CalendarDays className="h-6 w-6" />} 
+            title="No calendars found" 
+            description="No institute baseline calendars match your current filter criteria." 
+          />
+        ) : (
+          <div className="rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] overflow-hidden shadow-sm">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Code</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Year</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Range</TableHead>
+                  <TableHead className="w-[120px]">Code</TableHead>
+                  <TableHead>Baseline Name</TableHead>
+                  <TableHead className="w-[100px]">Year</TableHead>
+                  <TableHead className="w-[120px]">Status</TableHead>
+                  <TableHead>Effective Period</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {calendars.map((calendar) => (
-                  <TableRow key={calendar.id}>
-                    <TableCell className="font-mono text-xs">{calendar.code}</TableCell>
-                    <TableCell>
-                      <div className="font-medium text-[color:var(--ims-ink)]">{calendar.name}</div>
-                      <div className="text-xs text-[color:var(--ims-muted)]">Institute {calendar.instituteId}</div>
+                  <TableRow key={calendar.id} className="group">
+                    <TableCell className="font-mono text-xs font-semibold text-[color:var(--ims-muted)] uppercase">
+                      {calendar.code}
                     </TableCell>
-                    <TableCell>{calendar.year}</TableCell>
-                    <TableCell><Badge variant={calendar.status === 'Active' ? 'success' : 'muted'}>{calendar.status}</Badge></TableCell>
-                    <TableCell className="text-sm text-[color:var(--ims-muted)]">{calendar.effectiveStartDate.toISOString().split('T')[0]} to {calendar.effectiveEndDate ? calendar.effectiveEndDate.toISOString().split('T')[0] : 'Indefinite'}</TableCell>
+                    <TableCell>
+                      <div className="font-semibold text-[color:var(--ims-ink)]">{calendar.name}</div>
+                      <div className="text-xs text-[color:var(--ims-muted)]">Inst: {calendar.instituteId.slice(0, 8)}...</div>
+                    </TableCell>
+                    <TableCell>
+                      <span className="font-medium">{calendar.year}</span>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant={calendar.status === 'Active' ? 'success' : 'muted'}>
+                        {calendar.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-sm">
+                      <div className="flex flex-col">
+                        <span className="text-[color:var(--ims-ink)]">{formatDate(calendar.effectiveStartDate)}</span>
+                        <span className="text-[color:var(--ims-muted)] text-xs">
+                          to {calendar.effectiveEndDate ? formatDate(calendar.effectiveEndDate) : 'Indefinite'}
+                        </span>
+                      </div>
+                    </TableCell>
                     <TableCell className="text-right">
                       <div className="flex items-center justify-end gap-2">
-                        <Link href={`/scheduling/calendars/${calendar.id}`}><Button size="icon" variant="ghost"><Eye className="h-4 w-4" /></Button></Link>
-                        <Link href={`/scheduling/calendars/${calendar.id}/edit`}><Button size="icon" variant="ghost"><Edit2 className="h-4 w-4" /></Button></Link>
+                        <SimpleTooltip content="View detail" side="top">
+                          <Link href={`/scheduling/calendars/${calendar.id}`}>
+                            <Button size="icon" variant="ghost" className="h-8 w-8">
+                              <Eye className="h-4 w-4" />
+                            </Button>
+                          </Link>
+                        </SimpleTooltip>
+                        <SimpleTooltip content="Edit baseline" side="top">
+                          <Link href={`/scheduling/calendars/${calendar.id}/edit`}>
+                            <Button size="icon" variant="ghost" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
+                              <Edit2 className="h-4 w-4" />
+                            </Button>
+                          </Link>
+                        </SimpleTooltip>
                       </div>
                     </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
-          )}
-        </CardContent>
-      </Card>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

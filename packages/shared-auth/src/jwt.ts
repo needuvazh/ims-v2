@@ -5,7 +5,7 @@ export interface TokenPayload {
   userId: string;
   email: string;
   roles: string[];
-  permissions: string[];
+  permissions?: string[]; // SLIM: Make permissions optional in JWT
   activeBranchId: string | null;
   jti?: string;
 }

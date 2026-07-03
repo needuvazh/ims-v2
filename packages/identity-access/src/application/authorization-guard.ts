@@ -12,7 +12,8 @@ import { NoOpPermissionCache } from './permission-cache';
 export class EffectivePermissionsService {
   constructor(
     private readonly userRepository: IUserRepository,
-    private readonly roleRepository: IRoleRepository
+    private readonly roleRepository: IRoleRepository,
+    private readonly permissionCache: IPermissionCachePort = new NoOpPermissionCache()
   ) {}
 
   /**
@@ -22,16 +23,33 @@ export class EffectivePermissionsService {
   async getEffectivePermissions(userId: Uuid): Promise<string[]> {
     // 1. Get active user roles
     const userRoles = await this.roleRepository.listRolesForUser(userId);
-    const activeRoles = userRoles.filter((ur) => ur.status === 'Active' && ur.role.status === 'Active');
+    const activeRoleCodes = userRoles
+      .filter((ur) => ur.status === 'Active' && ur.role.status === 'Active')
+      .map((ur) => ur.role.roleCode);
 
-    // 2. Fetch permissions for each active role and aggregate
+    return this.getPermissionsForRoles(activeRoleCodes);
+  }
+
+  /**
+   * Get aggregated permissions for a list of roles, using cache where possible.
+   */
+  async getPermissionsForRoles(roleCodes: string[]): Promise<string[]> {
     const allPermissions = new Set<string>();
-    for (const ur of activeRoles) {
-      const perms = await this.roleRepository.listPermissionsForRole(ur.role.id);
-      for (const p of perms) {
-        if (p.status === 'Active') {
-          allPermissions.add(p.permissionCode);
+
+    for (const code of roleCodes) {
+      let rolePerms = await this.permissionCache.getPermissionsForRole(code);
+
+      if (!rolePerms) {
+        const role = await this.roleRepository.findByCode(code);
+        if (role && role.status === 'Active') {
+          const perms = await this.roleRepository.listPermissionsForRole(role.id);
+          rolePerms = perms.filter((p) => p.status === 'Active').map((p) => p.permissionCode);
+          await this.permissionCache.setPermissionsForRole(code, rolePerms);
         }
+      }
+
+      if (rolePerms) {
+        rolePerms.forEach((p) => allPermissions.add(p));
       }
     }
 
@@ -113,8 +131,7 @@ export class AuthorizationGuard {
     private readonly userRepository: IUserRepository,
     private readonly sessionRepository: ISessionRepository,
     private readonly effectivePermissionsService: EffectivePermissionsService,
-    private readonly branchScopeResolver: BranchScopeResolver,
-    private readonly permissionCache: IPermissionCachePort = new NoOpPermissionCache()
+    private readonly branchScopeResolver: BranchScopeResolver
   ) {}
 
   /**
@@ -137,8 +154,7 @@ export class AuthorizationGuard {
     }
 
     // 1. Verify permissions
-    const cachedPermissions = await this.permissionCache.getEffectivePermissions(userId);
-    const permissions = cachedPermissions ?? await this.effectivePermissionsService.getEffectivePermissions(userId);
+    const permissions = await this.effectivePermissionsService.getEffectivePermissions(userId);
     if (!permissions.includes(permissionCode)) {
       throw createIamError('IAM-AUTHZ-001');
     }

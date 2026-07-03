@@ -25,6 +25,7 @@ export const sessionSchema = z.object({
 export type Session = Omit<z.infer<typeof sessionSchema>, 'userId' | 'activeBranchId' | 'dataScopes'> & {
   userId: Uuid;
   activeBranchId: Uuid | null;
+  permissions: string[]; // Still required in the runtime object, but will be empty in the cookie
   dataScopes: Array<{
     scopeType: string;
     branchId: Uuid | null;
@@ -91,7 +92,12 @@ function getSessionSecret(): string {
  * Format: base64url(json).base64url(hmac)
  */
 export async function encodeSession(session: Session): Promise<string> {
-  const payload = base64UrlEncode(JSON.stringify(session));
+  // SLIM: Remove large permissions list before encoding to cookie
+  const slimSession = {
+    ...session,
+    permissions: [], // Empty permissions in cookie
+  };
+  const payload = base64UrlEncode(JSON.stringify(slimSession));
   const signature = await hmacSign(payload, getSessionSecret());
   return `${payload}.${signature}`;
 }
@@ -113,6 +119,7 @@ export async function decodeSession(value: string | undefined | null): Promise<S
     if (Date.now() > session.expiresAt) {
       return null;
     }
+    // Note: The permissions array will be empty here and must be hydrated by the server
     return session;
   } catch {
     return null;

@@ -10,6 +10,7 @@ import {
 } from '../domain/role';
 import { createIamError } from '../errors/iam-errors';
 import type { IRoleRepository, IAuditLogRepository, IPermissionRepository, IUserRepository, INotificationRepository } from '../domain/repositories';
+import { IPermissionCachePort } from './permission-cache';
 
 export interface RoleCommandContext {
   actorId: string;
@@ -23,7 +24,8 @@ export class RoleService {
     private readonly permissionRepository: IPermissionRepository,
     private readonly auditLogRepository: IAuditLogRepository,
     private readonly userRepository?: IUserRepository,
-    private readonly notificationRepository?: INotificationRepository
+    private readonly notificationRepository?: INotificationRepository,
+    private readonly permissionCache?: IPermissionCachePort
   ) {}
 
   private checkPermission(context: RoleCommandContext, permission: string): void {
@@ -155,6 +157,11 @@ export class RoleService {
 
     const updated = await this.roleRepository.update(existing);
 
+    // Invalidate cache if role status or permissions changed
+    if (this.permissionCache) {
+      await this.permissionCache.invalidateRole(updated.roleCode);
+    }
+
     // Sync legacy permissions if passed
     if (validated.permissionIds) {
       const existingPermissions = await this.roleRepository.listPermissionsForRole(existing.id);
@@ -248,6 +255,10 @@ export class RoleService {
 
     await this.roleRepository.assignPermissionToRole(roleId as Uuid, permissionId as Uuid, context.actorId as Uuid);
 
+    if (this.permissionCache) {
+      await this.permissionCache.invalidateRole(role.roleCode);
+    }
+
     await this.auditLogRepository.append({
       id: crypto.randomUUID() as Uuid,
       module: 'iam',
@@ -276,6 +287,10 @@ export class RoleService {
     if (!role) throw createIamError('IAM-SYS-001');
 
     await this.roleRepository.removePermissionFromRole(roleId as Uuid, permissionId as Uuid);
+
+    if (this.permissionCache) {
+      await this.permissionCache.invalidateRole(role.roleCode);
+    }
 
     await this.auditLogRepository.append({
       id: crypto.randomUUID() as Uuid,

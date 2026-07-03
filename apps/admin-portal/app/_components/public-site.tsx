@@ -456,7 +456,7 @@ export function HeroSection({
   stats?: StatCard[];
 }) {
   return (
-    <section className="relative flex items-center justify-center overflow-hidden bg-primary-900 pb-32 pt-20 lg:pb-48 lg:pt-32">
+    <section className="relative flex items-center justify-center overflow-hidden bg-primary-900 py-hero-py">
       <div className="absolute inset-0">
         <Image src={image} alt={imageAlt ?? 'Hero background'} fill className="object-cover opacity-30 mix-blend-overlay" priority />
         <div className="absolute inset-0 bg-gradient-to-b from-primary-900 via-primary-900/70 to-primary-900" />
@@ -479,7 +479,7 @@ export function HeroSection({
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-8 max-w-5xl font-display text-5xl font-bold leading-[1.1] tracking-tight text-white sm:text-6xl lg:text-7xl"
+          className="mt-8 max-w-5xl font-display text-hero-title font-bold leading-[1.1] tracking-tight text-white"
         >
           {title}
         </motion.h1>
@@ -548,7 +548,7 @@ export function SectionHeading({ eyebrow, title, description, align = 'left', li
         {eyebrow}
         {align === 'center' && <span className={`h-px w-8 ${light ? 'bg-accent-400/50' : 'bg-accent-600/50'}`} />}
       </div>
-      <h2 className={`font-display text-4xl font-bold tracking-tight sm:text-5xl ${light ? 'text-white' : 'text-neutral-900'}`}>{title}</h2>
+      <h2 className={`font-display text-section-title font-bold tracking-tight ${light ? 'text-white' : 'text-neutral-900'}`}>{title}</h2>
       {description && <p className={`text-lg leading-relaxed ${light ? 'text-neutral-300' : 'text-neutral-600'}`}>{description}</p>}
     </div>
   );
@@ -591,7 +591,7 @@ export function CourseGrid({ courses }: { courses: CourseCard[] }) {
               </Link>
             </div>
           </div>
-          <div className="flex flex-1 flex-col p-8">
+          <div className="flex flex-1 flex-col p-card-p">
             <div className="flex items-center justify-between gap-4">
               <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent-600">{course.duration}</p>
               <span className="rounded-full bg-muted-100 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-neutral-600">{course.price}</span>
@@ -648,7 +648,7 @@ export function SectionCardGrid({
           <motion.div 
             key={item.title} 
             whileHover={{ y: -8 }}
-            className="group relative overflow-hidden rounded-[2rem] border border-border-light bg-white p-8 shadow-sm transition-all hover:border-border-accent hover:shadow-xl hover:shadow-accent-600/5"
+            className="group relative overflow-hidden rounded-[2rem] border border-border-light bg-white p-card-p shadow-sm transition-all hover:border-border-accent hover:shadow-xl hover:shadow-accent-600/5"
           >
             <div className="absolute right-0 top-0 -mr-4 -mt-4 pointer-events-none text-[120px] font-black text-surface-200 opacity-50 transition-transform duration-500 group-hover:scale-110">
               0{idx + 1}
@@ -682,7 +682,7 @@ export function BulletList({ items }: { items: string[] }) {
 
 export function DetailPanel({ title, subtitle, bullets }: { title: string; subtitle?: string; bullets: string[] }) {
   return (
-    <div className="rounded-[2.5rem] border border-border-light bg-white p-8 shadow-xl shadow-primary-950/5 sm:p-10">
+    <div className="rounded-[2.5rem] border border-border-light bg-white p-card-p shadow-xl shadow-primary-950/5">
       <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent-600">{subtitle ?? 'Course details'}</p>
       <h3 className="mt-4 font-display text-3xl font-bold tracking-tight text-neutral-900">{title}</h3>
       <div className="mt-6">
@@ -694,13 +694,13 @@ export function DetailPanel({ title, subtitle, bullets }: { title: string; subti
 
 export function SimpleCTA({ title, description, href, label }: { title: string; description: string; href: string; label: string }) {
   return (
-    <div className="relative overflow-hidden rounded-[3rem] bg-primary-900 px-8 py-20 text-center shadow-2xl md:px-16 lg:py-28">
+    <div className="relative overflow-hidden rounded-[3rem] bg-primary-900 px-page-px py-hero-py text-center shadow-2xl">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.15),transparent_60%)]" />
       <div className="absolute top-0 right-0 h-[300px] w-[300px] translate-x-1/3 -translate-y-1/3 rounded-full bg-gradient-to-br from-accent-600/20 to-accent-500/20 blur-[80px]" />
       
       <div className="relative z-10 mx-auto max-w-3xl">
         <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-accent-400">Take the next step</p>
-        <h3 className="mt-6 font-display text-4xl font-bold text-white sm:text-5xl lg:text-6xl">{title}</h3>
+        <h3 className="mt-6 font-display text-hero-title font-bold text-white">{title}</h3>
         <p className="mt-6 text-lg leading-relaxed text-neutral-300">{description}</p>
         <Link href={href} className="mt-10 inline-flex items-center justify-center gap-3 rounded-full bg-white px-8 py-4 text-[13px] font-bold uppercase tracking-[0.15em] text-primary-900 transition-all hover:-translate-y-1 hover:bg-surface-200 hover:shadow-xl hover:shadow-white/10">
           {label}

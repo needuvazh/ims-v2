@@ -26,6 +26,7 @@ export * from './components/metric-card';
 export * from './components/chart-widget';
 export * from './components/avatar';
 export * from './components/page-header';
+export * from './components/page-templates';
 export * from './components/breadcrumbs';
 export * from './components/pagination';
 export * from './components/filter-bar';

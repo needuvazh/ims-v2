@@ -1,4 +1,4 @@
-import { Breadcrumbs, Card, CardContent, CardDescription, CardHeader, CardTitle, PageHeader } from '@ims/shared-ui';
+import { Breadcrumbs, Card, CardContent, CardDescription, CardHeader, CardTitle, PageHeader, AdminDetailPageLayout } from '@ims/shared-ui';
 import { UserCircle2, ShieldCheck } from 'lucide-react';
 import { getSession } from '../../../lib/auth-guard';
 import { userService } from '../../../lib/runtime';
@@ -12,7 +12,7 @@ export default async function ProfilePage() {
   const user = await userService.getUser(session.userId);
 
   return (
-    <div className="space-y-8">
+    <AdminDetailPageLayout>
       <PageHeader
         title="My Profile"
         description="Review and update your personal account details. Email remains fixed."
@@ -28,8 +28,8 @@ export default async function ProfilePage() {
         }
       />
 
-      <div className="grid gap-6 xl:grid-cols-[0.88fr_1.12fr]">
-        <Card className="border-[color:var(--ims-brass-soft)] bg-[linear-gradient(180deg,rgba(255,250,244,0.96),rgba(255,255,255,0.98))] xl:sticky xl:top-24">
+      <div className="grid gap-6 lg:grid-cols-[0.88fr_1.12fr]">
+        <Card className="border-[color:var(--ims-brass-soft)] bg-[linear-gradient(180deg,rgba(255,250,244,0.96),rgba(255,255,255,0.98))] lg:sticky lg:top-24">
           <CardHeader>
             <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-[color:var(--ims-accent-soft)] text-[color:var(--ims-brass)]">
               <UserCircle2 className="h-6 w-6" />
@@ -71,6 +71,6 @@ export default async function ProfilePage() {
           </Card>
         </div>
       </div>
-    </div>
+    </AdminDetailPageLayout>
   );
 }

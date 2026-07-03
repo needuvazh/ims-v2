@@ -1,5 +1,5 @@
 import { assertPermission } from '@/lib/auth-guard';
-import { Card, PageHeader, Table, TableHeader, TableBody, TableRow, TableHead, TableCell, Badge, Input, Button, StatCard } from '@ims/shared-ui';
+import { Card, PageHeader, Table, TableHeader, TableBody, TableRow, TableHead, TableCell, Badge, Input, Button, StatCard, AdminListPageLayout } from '@ims/shared-ui';
 import { Search, Users, Eye, GraduationCap, Plus, CheckCircle2, Clock3, Archive } from 'lucide-react';
 import Link from 'next/link';
 
@@ -55,7 +55,7 @@ export default async function StudentLookupPage(props: {
   const archivedCount = visibleStudents.filter((student: any) => student.status === 'Archived').length;
 
   return (
-    <div className="space-y-6 p-6">
+    <AdminListPageLayout>
       <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <PageHeader
           eyebrow="Academic Operations"
@@ -102,9 +102,9 @@ export default async function StudentLookupPage(props: {
         />
       </div>
 
-      <Card className="p-6">
+      <Card className="p-card-p">
         {/* Filters and search Form */}
-        <form method="GET" className="grid grid-cols-1 gap-4 md:grid-cols-4 items-end pb-4 border-b border-slate-100">
+        <form method="GET" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 items-end pb-4 border-b border-slate-100">
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Search query</label>
             <div className="relative">
@@ -282,6 +282,6 @@ export default async function StudentLookupPage(props: {
           </div>
         )}
       </Card>
-    </div>
+    </AdminListPageLayout>
   );
 }

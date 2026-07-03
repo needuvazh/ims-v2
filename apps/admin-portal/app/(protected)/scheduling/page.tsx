@@ -1,10 +1,26 @@
+import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, CalendarDays, ShieldCheck, Sparkles } from 'lucide-react';
-import { Badge, Breadcrumbs, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, PageHeader } from '@ims/shared-ui';
+import { ArrowRight, CalendarDays, Layers3, LayoutDashboard, Plus, Home, Sparkles } from 'lucide-react';
+import { Breadcrumbs, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, PageHeader } from '@ims/shared-ui';
 import { loadSchedulingOverview } from './data';
 
 export const metadata = { title: 'Scheduling | IMS Admin' };
 export const dynamic = 'force-dynamic';
+
+const sections = [
+  { 
+    href: '/scheduling/calendars', 
+    title: 'Calendar ledger', 
+    description: 'Maintain institute-level baseline operating hours and holiday rules.', 
+    icon: Layers3 
+  },
+  { 
+    href: '/scheduling/calendars/new', 
+    title: 'New calendar', 
+    description: 'Set up the baseline configuration for a new academic or business cycle.', 
+    icon: Plus 
+  },
+];
 
 export default async function SchedulingHomePage() {
   const { counts } = await loadSchedulingOverview();
@@ -12,54 +28,94 @@ export default async function SchedulingHomePage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        eyebrow="Scheduling"
-        title="Institute calendar ledger"
-        description="Manage the institute baseline calendar, then layer branch-year exceptions on top. The resolved view keeps inheritance visible instead of hiding it."
-        breadcrumbs={<Breadcrumbs items={[{ label: 'Scheduling', icon: <CalendarDays className="h-3.5 w-3.5" /> }]} />}
-        actions={<Link href="/scheduling/calendars"><Button><ArrowRight className="h-4 w-4" /> Open calendars</Button></Link>}
+        title="Scheduling & Calendar"
+        eyebrow="Management"
+        description="The institute calendar defines the authoritative baseline. Exceptions are handled via sparse branch-year overrides."
+        breadcrumbs={
+          <Breadcrumbs
+            items={[
+              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
+              { label: 'Scheduling', icon: <CalendarDays className="h-3.5 w-3.5 text-slate-500" /> },
+            ]}
+          />
+        }
+        actions={
+          <Link href="/scheduling/calendars">
+            <Button size="sm">Open ledger <ArrowRight className="ml-2 h-4 w-4" /></Button>
+          </Link>
+        }
       />
 
       <div className="grid gap-4 md:grid-cols-3">
-        <Card>
-          <CardHeader><CardTitle>Total calendars</CardTitle><CardDescription>Canonical institute calendars in the system.</CardDescription></CardHeader>
-          <CardContent><div className="text-3xl font-semibold text-[color:var(--ims-ink)]">{counts.total}</div></CardContent>
+        <Card className="border-[color:var(--ims-border)]">
+          <CardHeader>
+            <CardTitle>Total baseline</CardTitle>
+            <CardDescription>Canonical institute calendars.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-[color:var(--ims-ink)] tracking-tight">{counts.total}</div>
+          </CardContent>
         </Card>
-        <Card>
-          <CardHeader><CardTitle>Active</CardTitle><CardDescription>Available for scheduling validation.</CardDescription></CardHeader>
-          <CardContent><div className="text-3xl font-semibold text-[color:var(--ims-ink)]">{counts.active}</div></CardContent>
+        <Card className="border-[color:var(--ims-border)]">
+          <CardHeader>
+            <CardTitle>Active</CardTitle>
+            <CardDescription>Currently in-use for validation.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-[color:var(--ims-ink)] tracking-tight">{counts.active}</div>
+          </CardContent>
         </Card>
-        <Card>
-          <CardHeader><CardTitle>Draft or closed</CardTitle><CardDescription>Calendars still being prepared or retired.</CardDescription></CardHeader>
-          <CardContent><div className="text-3xl font-semibold text-[color:var(--ims-ink)]">{counts.draft + counts.closed}</div></CardContent>
+        <Card className="border-[color:var(--ims-border)]">
+          <CardHeader>
+            <CardTitle>Lifecycle</CardTitle>
+            <CardDescription>Draft, closed, or archived.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-[color:var(--ims-ink)] tracking-tight">{counts.draft + counts.closed}</div>
+          </CardContent>
         </Card>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[1.4fr_0.9fr]">
-        <Card className="overflow-hidden">
-          <div className="border-b border-[color:var(--ims-border)] bg-[linear-gradient(135deg,rgba(16,36,58,0.98),rgba(180,98,40,0.88))] p-6 text-white">
-            <div className="flex items-center gap-2 text-xs uppercase tracking-[0.24em] text-white/70"><Sparkles className="h-4 w-4" /> Design principle</div>
-            <h2 className="mt-3 font-[family-name:var(--font-display,serif)] text-2xl">One calendar, visible exceptions.</h2>
-            <p className="mt-2 max-w-xl text-sm text-white/80">Keep institute rules authoritative, keep branch overrides sparse, and make the inherited values obvious in the detail view.</p>
-          </div>
-          <CardContent className="grid gap-4 md:grid-cols-2">
-            <div className="rounded-2xl border border-[color:var(--ims-border)] p-4">
-              <div className="flex items-center gap-2 text-sm font-semibold text-[color:var(--ims-ink)]"><ShieldCheck className="h-4 w-4 text-[color:var(--ims-brass)]" /> Authorization</div>
-              <p className="mt-2 text-sm text-[color:var(--ims-muted)]">Viewing requires `scheduling.calendar.read`; creating and updating calendar rules requires `schedule.manage`.</p>
-            </div>
-            <div className="rounded-2xl border border-[color:var(--ims-border)] p-4">
-              <div className="flex items-center gap-2 text-sm font-semibold text-[color:var(--ims-ink)]"><CalendarDays className="h-4 w-4 text-[color:var(--ims-brass)]" /> Resolution</div>
-              <p className="mt-2 text-sm text-[color:var(--ims-muted)]">Branch/year overrides win first, institute defaults second, system fallback last.</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader><CardTitle>Quick actions</CardTitle><CardDescription>Start the calendar setup flow.</CardDescription></CardHeader>
-          <CardContent className="space-y-3">
-            <Link href="/scheduling/calendars/new" className="block"><Button className="w-full">Create institute calendar</Button></Link>
-            <Link href="/scheduling/calendars" className="block"><Button variant="secondary" className="w-full">Review calendar ledger</Button></Link>
-          </CardContent>
-        </Card>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {sections.map((section) => {
+          const Icon = section.icon;
+          return (
+            <Link key={section.href} href={section.href} className="group">
+              <Card className="h-full border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] transition-all duration-200 group-hover:-translate-y-0.5 group-hover:shadow-lg">
+                <CardHeader className="space-y-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[color:var(--ims-accent-soft)] text-[color:var(--ims-brass)] transition-colors group-hover:bg-[color:var(--ims-brass-soft)]">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <CardTitle>{section.title}</CardTitle>
+                    <CardDescription>{section.description}</CardDescription>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--ims-muted)] group-hover:text-[color:var(--ims-ink)]">
+                    Manage section <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </CardContent>
+              </Card>
+            </Link>
+          );
+        })}
       </div>
+
+      <Card className="overflow-hidden border-[color:var(--ims-border)] bg-[color:var(--ims-surface-hover)] shadow-none border-dashed">
+        <CardContent className="p-8 flex flex-col md:flex-row items-start md:items-center gap-6">
+          <div className="h-14 w-14 rounded-full bg-[color:var(--ims-surface)] border border-[color:var(--ims-border)] flex items-center justify-center text-[color:var(--ims-brass)] shrink-0">
+             <Sparkles className="h-7 w-7" />
+          </div>
+          <div className="space-y-1">
+             <h3 className="font-bold text-lg text-[color:var(--ims-ink)]">Resolution Design</h3>
+             <p className="text-[color:var(--ims-muted)] max-w-2xl leading-relaxed">
+               Scheduling checks always resolve rules in a deterministic hierarchy: Branch Override &gt; Institute Baseline &gt; System Defaults.
+               This ensures local operational flexibility without duplicating entire calendars.
+             </p>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
