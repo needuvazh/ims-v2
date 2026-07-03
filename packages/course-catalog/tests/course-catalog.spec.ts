@@ -1,6 +1,7 @@
 import { expect, test, vi } from 'vitest';
 import { CourseService } from '../src/application/course-service';
 import { CategoryService } from '../src/application/category-service';
+import type { PrismaClient } from '@prisma/client';
 
 // Mock course repository
 const mockCourseRepository = {
@@ -32,7 +33,7 @@ const mockPrisma = {
   auditLog: { create: vi.fn() },
   outboxEvent: { create: vi.fn() },
   $transaction: vi.fn((cb) => cb(mockPrisma)),
-} as any;
+} as unknown as PrismaClient;
 
 const courseService = new CourseService(mockPrisma, mockCourseRepository);
 const categoryService = new CategoryService(mockPrisma, mockCategoryRepository);
@@ -50,8 +51,8 @@ test('CourseService.createCourse should throw duplicate code error if code exist
   try {
     await courseService.createCourse(input, 'actor-1');
     expect.fail('Should have thrown an error');
-  } catch (error: any) {
-    expect(error.code).toBe('ERR_CRS_DUPLICATE_CODE');
+  } catch (error: unknown) {
+    expect((error as { code?: string }).code).toBe('ERR_CRS_DUPLICATE_CODE');
   }
 });
 
@@ -66,8 +67,8 @@ test('CourseService.createCourse should throw invalid code format error if forma
   try {
     await courseService.createCourse(input, 'actor-1');
     expect.fail('Should have thrown an error');
-  } catch (error: any) {
-    expect(error.code).toBe('ERR_CRS_INVALID_CODE_FORMAT');
+  } catch (error: unknown) {
+    expect((error as { code?: string }).code).toBe('ERR_CRS_INVALID_CODE_FORMAT');
   }
 });
 
@@ -84,8 +85,8 @@ test('CourseService.createCourse should throw invalid Arabic script error if nam
   try {
     await courseService.createCourse(input, 'actor-1');
     expect.fail('Should have thrown an error');
-  } catch (error: any) {
-    expect(error.message).toBe('ERR_CRS_INVALID_ARABIC_SCRIPT');
+  } catch (error: unknown) {
+    expect((error as { message?: string }).message).toBe('ERR_CRS_INVALID_ARABIC_SCRIPT');
   }
 });
 
@@ -104,8 +105,8 @@ test('CourseService.createCourse should throw duplicate name error if name alrea
   try {
     await courseService.createCourse(input, 'actor-1');
     expect.fail('Should have thrown an error');
-  } catch (error: any) {
-    expect(error.code).toBe('ERR_CRS_DUPLICATE_NAME');
+  } catch (error: unknown) {
+    expect((error as { code?: string }).code).toBe('ERR_CRS_DUPLICATE_NAME');
   }
 });
 
@@ -126,8 +127,8 @@ test('CourseService.createCourse should throw invalid date range error if end da
   try {
     await courseService.createCourse(input, 'actor-1');
     expect.fail('Should have thrown an error');
-  } catch (error: any) {
-    expect(error.code).toBe('ERR_CRS_INVALID_DATE_RANGE');
+  } catch (error: unknown) {
+    expect((error as { code?: string }).code).toBe('ERR_CRS_INVALID_DATE_RANGE');
   }
 });
 
@@ -142,8 +143,8 @@ test('CategoryService.updateCategory should prevent cyclic parent category mappi
   try {
     await categoryService.updateCategory('cat-a', input, 1, 'actor-1');
     expect.fail('Should have thrown an error');
-  } catch (error: any) {
-    expect(error.code).toBe('ERR_CRS_CYCLIC_CATEGORY');
+  } catch (error: unknown) {
+    expect((error as { code?: string }).code).toBe('ERR_CRS_CYCLIC_CATEGORY');
   }
 });
 
@@ -155,8 +156,8 @@ test('CourseService.transitionCourseStatus to Published should fail if pricing o
   try {
     await courseService.transitionCourseStatus('course-1', 'Published', 1, 'actor-1');
     expect.fail('Should have thrown an error');
-  } catch (error: any) {
-    expect(error.code).toBe('ERR_CRS_MISSING_PRICING_OR_RULES');
+  } catch (error: unknown) {
+    expect((error as { code?: string }).code).toBe('ERR_CRS_MISSING_PRICING_OR_RULES');
   }
 });
 
@@ -167,7 +168,7 @@ test('CourseService.transitionCourseStatus to Archived should fail if active bat
   try {
     await courseService.transitionCourseStatus('course-1', 'Archived', 1, 'actor-1');
     expect.fail('Should have thrown an error');
-  } catch (error: any) {
-    expect(error.code).toBe('ERR_CRS_ACTIVE_BATCHES_EXIST');
+  } catch (error: unknown) {
+    expect((error as { code?: string }).code).toBe('ERR_CRS_ACTIVE_BATCHES_EXIST');
   }
 });

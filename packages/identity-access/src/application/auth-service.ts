@@ -2,7 +2,7 @@ import { UAParser } from 'ua-parser-js';
 import crypto from 'crypto';
 import { InMemoryMetrics } from '@ims/observability';
 import { encodeSession, type Session } from '@ims/shared-auth';
-import { JwtService, RefreshTokenService, getDevelopmentKeyPair, type TokenPayload } from '@ims/shared-auth/jwt';
+import { JwtService, RefreshTokenService, type TokenPayload } from '@ims/shared-auth/jwt';
 import type { Uuid } from '@ims/shared-kernel';
 import { createIamError, IamError } from '../errors/iam-errors';
 import { PasswordPolicy } from '../domain/password-policy';
@@ -28,7 +28,13 @@ function getKeys(): { publicKey: string; privateKey: string } {
   if (privateKey && publicKey) {
     return { privateKey, publicKey };
   }
-  return getDevelopmentKeyPair();
+
+  const fallbackSecret = process.env.SESSION_SECRET;
+  if (!fallbackSecret) {
+    throw new Error('JWT_PRIVATE_KEY/JWT_PUBLIC_KEY or SESSION_SECRET environment variable is required.');
+  }
+
+  return { privateKey: fallbackSecret, publicKey: fallbackSecret };
 }
 
 export type SignInResult = {

@@ -114,6 +114,42 @@ describe('StudentStatusService', () => {
     ).rejects.toThrow('ERR_STU_STATUS_INVALID_TRANSITION');
   });
 
+  test('transition allows Archived → Active for restore', async () => {
+    const prisma = {
+      $transaction: vi.fn().mockImplementation((fn: any) =>
+        fn({
+          studentProfile: {
+            findUnique: vi.fn().mockResolvedValue({
+              id: 'stu-archived',
+              studentStatus: 'Archived',
+              isDeleted: false,
+              branchId: 'branch-1',
+            }),
+            update: vi.fn().mockResolvedValue({}),
+          },
+          studentStatusHistory: {
+            updateMany: vi.fn().mockResolvedValue({ count: 1 }),
+            create: vi.fn().mockResolvedValue({}),
+          },
+          auditLog: {
+            create: vi.fn().mockResolvedValue({}),
+          },
+        })
+      ),
+    } as any;
+
+    const svc = new StudentStatusService(prisma);
+    await expect(
+      svc.transition({
+        studentProfileId: 'stu-archived',
+        newStatus: 'Active',
+        changeReason: 'Restore after correction',
+        actorId: 'user-1',
+        branchId: 'branch-1',
+      })
+    ).resolves.toBeUndefined();
+  });
+
   test('transition throws ERR_STU_STATUS_PROFILE_NOT_FOUND for missing profile', async () => {
     const prisma = {
       $transaction: vi.fn().mockImplementation((fn: any) =>
@@ -198,13 +234,13 @@ describe('StudentMergeService', () => {
         update: vi.fn().mockResolvedValue({}),
       },
       admission: {
-        updateMany: vi.fn().mockResolvedValue({ count: 2 }),
+        updateMany: vi.fn().mockResolvedValue({ count: 0 }),
       },
       enrollment: {
-        updateMany: vi.fn().mockResolvedValue({ count: 3 }),
+        updateMany: vi.fn().mockResolvedValue({ count: 0 }),
       },
       lead: {
-        updateMany: vi.fn().mockResolvedValue({ count: 1 }),
+        updateMany: vi.fn().mockResolvedValue({ count: 0 }),
       },
       documentOwner: {
         findMany: vi.fn().mockResolvedValue([]),
@@ -236,9 +272,9 @@ describe('StudentMergeService', () => {
     });
 
     expect(result.mergeLogId).toBe('merge-log-1');
-    expect(result.reassignedAdmissionsCount).toBe(2);
-    expect(result.reassignedEnrollmentsCount).toBe(3);
-    expect(result.reassignedOtherRefsCount).toBe(1);
+    expect(result.reassignedAdmissionsCount).toBe(0);
+    expect(result.reassignedEnrollmentsCount).toBe(0);
+    expect(result.reassignedOtherRefsCount).toBe(0);
   });
 
   test('mergeProfiles soft-deletes the source profile and source person after remapping', async () => {
@@ -327,7 +363,7 @@ describe('StudentMergeService', () => {
     ).rejects.toThrow('ERR_STU_MERGE_USER_CONFLICT');
   });
 
-  test('mergeProfiles remaps source portal User to survivor when only source has account', async () => {
+  test('mergeProfiles does not remap portal User ownership cross-context', async () => {
     const updateUserMock = vi.fn().mockResolvedValue({});
     const tx = buildMergeTransactionClient({
       user: {
@@ -350,12 +386,7 @@ describe('StudentMergeService', () => {
       mergedBy: 'user-1',
     });
 
-    expect(updateUserMock).toHaveBeenCalledWith(
-      expect.objectContaining({
-        where: { id: 'user-source-portal' },
-        data: { personId: 'person-survivor' },
-      })
-    );
+    expect(updateUserMock).not.toHaveBeenCalled();
   });
 
   test('mergeProfiles throws ERR_STU_MERGE_SURVIVOR_NOT_FOUND for deleted survivor', async () => {

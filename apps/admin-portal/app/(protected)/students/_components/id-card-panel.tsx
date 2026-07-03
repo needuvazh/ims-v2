@@ -16,7 +16,6 @@ type IdCardHistoryEntry = {
 
 type Props = {
   studentProfileId: string;
-  branchId: string;
   idCardIssued: boolean;
   idCardNumber: string | null;
   idCardHistory: IdCardHistoryEntry[];
@@ -34,7 +33,6 @@ type Props = {
  */
 export function IdCardPanel({
   studentProfileId,
-  branchId,
   idCardIssued,
   idCardNumber,
   idCardHistory,
@@ -62,7 +60,6 @@ export function IdCardPanel({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          branchId,
           newIdCardNumber: cardNumber.trim(),
           reason: reason.trim(),
           eventType: isReissue ? 'Reissue' : 'Issue',

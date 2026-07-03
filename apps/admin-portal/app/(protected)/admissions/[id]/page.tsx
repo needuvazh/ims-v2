@@ -7,6 +7,8 @@ export const metadata = { title: 'Admission Details | ASTI IMS' };
 export default async function AdmissionDetailPage(props: {
   params: Promise<{ id: string }>;
 }) {
+  type AdmissionDetail = Parameters<typeof AdmissionDetailsClient>[0]['detail'];
+
   const { id: admissionId } = await props.params;
 
   // Enforce read permission
@@ -19,6 +21,8 @@ export default async function AdmissionDetailPage(props: {
     session.activeBranchId as any
   );
 
+  let mappedDetail: AdmissionDetail | null = null;
+
   try {
     const detail = await admissionQueryService.getAdmissionDetail(
       admissionId,
@@ -26,7 +30,7 @@ export default async function AdmissionDetailPage(props: {
     );
 
     // Parse values for client component
-    const mappedDetail = {
+    mappedDetail = {
       admission: {
         ...detail.admission,
         admissionDate: detail.admission.admissionDate.toISOString(),
@@ -46,16 +50,6 @@ export default async function AdmissionDetailPage(props: {
         newValue: h.newValue ? JSON.stringify(h.newValue) : null,
       })),
     };
-
-    return (
-      <div className="p-6">
-        <AdmissionDetailsClient
-          detail={mappedDetail}
-          sessionUserId={session.userId}
-          sessionPermissions={session.permissions}
-        />
-      </div>
-    );
   } catch (error: any) {
     if (error.message.includes('ERR_ADMISSION_NOT_FOUND')) {
       notFound();
@@ -77,4 +71,14 @@ export default async function AdmissionDetailPage(props: {
     }
     throw error;
   }
+
+  return (
+    <div className="p-6">
+      <AdmissionDetailsClient
+        detail={mappedDetail}
+        sessionUserId={session.userId}
+        sessionPermissions={session.permissions}
+      />
+    </div>
+  );
 }

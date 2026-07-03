@@ -260,6 +260,7 @@ export async function POST(request: Request) {
             ...parsed.data,
             startDate: new Date(parsed.data.startDate),
             endDate: new Date(parsed.data.endDate),
+            status: 'Draft',
           },
           session.userId
         );

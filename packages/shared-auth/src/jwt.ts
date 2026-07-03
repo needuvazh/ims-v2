@@ -10,6 +10,26 @@ export interface TokenPayload {
   jti?: string;
 }
 
+function isPemKey(key: string): boolean {
+  return key.includes('BEGIN ');
+}
+
+async function importSigningKey(keyMaterial: string) {
+  if (isPemKey(keyMaterial)) {
+    return jose.importPKCS8(keyMaterial, 'RS256');
+  }
+
+  return jose.importJWK({ kty: 'oct', k: Buffer.from(keyMaterial, 'utf8').toString('base64url') }, 'HS256');
+}
+
+async function importVerificationKey(keyMaterial: string) {
+  if (isPemKey(keyMaterial)) {
+    return jose.importSPKI(keyMaterial, 'RS256');
+  }
+
+  return jose.importJWK({ kty: 'oct', k: Buffer.from(keyMaterial, 'utf8').toString('base64url') }, 'HS256');
+}
+
 export class JwtService {
   /**
    * Sign an RS256 JWT access token (valid for 15 minutes by default).
@@ -19,12 +39,14 @@ export class JwtService {
     privateKeyPem: string,
     expiresIn: string = '15m'
   ): Promise<string> {
-    const privateKey = await jose.importPKCS8(privateKeyPem, 'RS256');
+    const key = await importSigningKey(privateKeyPem);
+    const alg = isPemKey(privateKeyPem) ? 'RS256' : 'HS256';
+
     return new jose.SignJWT({ ...payload })
-      .setProtectedHeader({ alg: 'RS256' })
+      .setProtectedHeader({ alg })
       .setIssuedAt()
       .setExpirationTime(expiresIn)
-      .sign(privateKey);
+      .sign(key);
   }
 
   /**
@@ -34,10 +56,9 @@ export class JwtService {
     token: string,
     publicKeyPem: string
   ): Promise<TokenPayload> {
-    const publicKey = await jose.importSPKI(publicKeyPem, 'RS256');
-    const { payload } = await jose.jwtVerify(token, publicKey, {
-      algorithms: ['RS256'],
-    });
+    const key = await importVerificationKey(publicKeyPem);
+    const algorithms = isPemKey(publicKeyPem) ? ['RS256'] : ['HS256'];
+    const { payload } = await jose.jwtVerify(token, key, { algorithms });
     return payload as unknown as TokenPayload;
   }
 

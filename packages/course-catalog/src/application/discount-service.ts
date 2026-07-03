@@ -5,13 +5,27 @@ import { createUuid } from '@ims/shared-kernel';
 import { randomUUID } from 'crypto';
 import { parseDateOnly } from './pricing-service';
 
+export interface CreateDiscountInput {
+  id?: string;
+  courseId: string;
+  branchId?: string | null;
+  batchId?: string | null;
+  discountType: string;
+  discountMode: string;
+  discountValue: number;
+  requiresApproval?: boolean;
+  effectiveStartDate: Date | string;
+  effectiveEndDate?: Date | string | null;
+  createdBy?: string | null;
+}
+
 export class CourseDiscountService {
   constructor(
     private readonly prisma: PrismaClient,
     private readonly discountRepository: ICourseDiscountRepository
   ) {}
 
-  async createDiscount(input: any, actorId?: string, tx?: Prisma.TransactionClient) {
+  async createDiscount(input: CreateDiscountInput, actorId?: string, tx?: Prisma.TransactionClient) {
     const execute = async (activeClient: Prisma.TransactionClient) => {
       // Validate Course exists
       const courseExists = await activeClient.course.findFirst({

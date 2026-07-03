@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient } from '@prisma/client';
-import { IDocumentsService, DocumentCaptureInput, OwnerType, DocumentType } from '../domain/document';
+import { IDocumentsService, type DocumentCaptureInput, type DocumentWithLatestVerification, type OwnerType } from '../domain/document';
 
 export class DocumentsService implements IDocumentsService {
   constructor(private readonly prisma: PrismaClient) {}
@@ -21,7 +21,7 @@ export class DocumentsService implements IDocumentsService {
           fileKey: input.fileKey,
           fileName: input.fileName,
           fileType: input.fileType,
-          documentType: input.documentType as any,
+          documentType: input.documentType,
           branchId: branchId,
           status: 'Active',
           createdBy: actorId || null,
@@ -33,7 +33,7 @@ export class DocumentsService implements IDocumentsService {
         data: {
           documentId: document.id,
           ownerId: ownerId,
-          ownerType: ownerType as any,
+          ownerType,
           createdBy: actorId || null,
         },
       });
@@ -96,17 +96,17 @@ export class DocumentsService implements IDocumentsService {
     ownerId: string,
     ownerType: OwnerType,
     tx?: Prisma.TransactionClient
-  ): Promise<any[]> {
+  ): Promise<DocumentWithLatestVerification[]> {
     const client = tx || this.prisma;
 
     return client.document.findMany({
       where: {
         owners: {
-          some: {
-            ownerId,
-            ownerType: ownerType as any,
+            some: {
+              ownerId,
+              ownerType,
+            },
           },
-        },
         isDeleted: false,
       },
       include: {
@@ -121,7 +121,7 @@ export class DocumentsService implements IDocumentsService {
   async getDocumentsByOwners(
     ownerRefs: { ownerId: string; ownerType: OwnerType }[],
     tx?: Prisma.TransactionClient
-  ): Promise<any[]> {
+  ): Promise<DocumentWithLatestVerification[]> {
     const client = tx || this.prisma;
 
     if (ownerRefs.length === 0) {
@@ -134,7 +134,7 @@ export class DocumentsService implements IDocumentsService {
           some: {
             OR: ownerRefs.map((ref) => ({
               ownerId: ref.ownerId,
-              ownerType: ref.ownerType as any,
+              ownerType: ref.ownerType,
             })),
           },
         },

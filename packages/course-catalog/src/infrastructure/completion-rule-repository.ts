@@ -2,10 +2,12 @@ import { PrismaClient, Prisma } from '@prisma/client';
 import { ICourseCompletionRuleRepository } from '../domain/repositories';
 import { CourseCompletionRule } from '../domain/course';
 
+type ConfigStatus = 'Draft' | 'Active' | 'Inactive' | 'Superseded';
+
 export class CourseCompletionRuleRepository implements ICourseCompletionRuleRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create(data: any, tx?: Prisma.TransactionClient): Promise<CourseCompletionRule> {
+  async create(data: Prisma.CourseCompletionRuleUncheckedCreateInput, tx?: Prisma.TransactionClient): Promise<CourseCompletionRule> {
     const client = tx || this.prisma;
     const record = await client.courseCompletionRule.create({
       data: {
@@ -22,16 +24,16 @@ export class CourseCompletionRuleRepository implements ICourseCompletionRuleRepo
         isDeleted: false,
       },
     });
-    return record as any as CourseCompletionRule;
+    return record as CourseCompletionRule;
   }
 
-  async update(id: string, data: any, tx?: Prisma.TransactionClient): Promise<CourseCompletionRule> {
+  async update(id: string, data: Prisma.CourseCompletionRuleUncheckedUpdateInput, tx?: Prisma.TransactionClient): Promise<CourseCompletionRule> {
     const client = tx || this.prisma;
     const record = await client.courseCompletionRule.update({
       where: { id },
       data,
     });
-    return record as any as CourseCompletionRule;
+    return record as CourseCompletionRule;
   }
 
   async findById(id: string, tx?: Prisma.TransactionClient): Promise<CourseCompletionRule | null> {
@@ -39,7 +41,7 @@ export class CourseCompletionRuleRepository implements ICourseCompletionRuleRepo
     const record = await client.courseCompletionRule.findFirst({
       where: { id, isDeleted: false },
     });
-    return record as any as CourseCompletionRule | null;
+    return record as CourseCompletionRule | null;
   }
 
   async findOverlappingRules(
@@ -70,7 +72,7 @@ export class CourseCompletionRuleRepository implements ICourseCompletionRuleRepo
     const records = await client.courseCompletionRule.findMany({
       where: whereClause,
     });
-    return records as any as CourseCompletionRule[];
+    return records as CourseCompletionRule[];
   }
 
   async findAll(
@@ -88,7 +90,7 @@ export class CourseCompletionRuleRepository implements ICourseCompletionRuleRepo
       whereClause.courseId = filters.courseId;
     }
     if (filters.status) {
-      whereClause.status = filters.status as any;
+      whereClause.status = filters.status as ConfigStatus;
     }
     if (filters.activeAt) {
       whereClause.effectiveStartDate = { lte: filters.activeAt };
@@ -102,6 +104,6 @@ export class CourseCompletionRuleRepository implements ICourseCompletionRuleRepo
       where: whereClause,
       orderBy: { effectiveStartDate: 'desc' },
     });
-    return records as any as CourseCompletionRule[];
+    return records as CourseCompletionRule[];
   }
 }

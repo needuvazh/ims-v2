@@ -1,7 +1,7 @@
 import { cache } from 'react';
 import { cookies, headers } from 'next/headers';
 import { decodeSession, sessionCookieName, hasPermission, isAuthorizedForBranch } from '@ims/shared-auth';
-import { JwtService, getDevelopmentKeyPair } from '@ims/shared-auth/jwt';
+import { JwtService, type TokenPayload } from '@ims/shared-auth/jwt';
 import type { Session } from '@ims/shared-auth';
 import { DomainError } from '@ims/shared-kernel';
 
@@ -20,7 +20,12 @@ function getPublicKey(): string {
   const publicKey = process.env.JWT_PUBLIC_KEY;
   if (publicKey) return publicKey;
 
-  return getDevelopmentKeyPair().publicKey;
+  const fallbackSecret = process.env.SESSION_SECRET;
+  if (!fallbackSecret) {
+    throw new Error('JWT_PUBLIC_KEY or SESSION_SECRET environment variable is required.');
+  }
+
+  return fallbackSecret;
 }
 
 /**
@@ -42,7 +47,12 @@ export const getSession: () => Promise<Session> = cache(async () => {
     throw new DomainError('unauthorized', 'Authentication required. Please sign in.');
   }
 
-  const tokenPayload = await JwtService.verifyAccessToken(accessToken, getPublicKey());
+  let tokenPayload: TokenPayload;
+  try {
+    tokenPayload = await JwtService.verifyAccessToken(accessToken, getPublicKey());
+  } catch {
+    throw new DomainError('unauthorized', 'Session is invalid or has expired. Please sign in again.');
+  }
 
   // Enforce database check to prevent bypass of deactivated, locked, or revoked sessions
   try {

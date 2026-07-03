@@ -60,12 +60,51 @@ export default async function CrmDashboardPage() {
     );
   }
 
+  type CrmWidget =
+    | {
+        id: 'lead-status-distribution';
+        title: string;
+        description?: string;
+        ariaLabel: string;
+        data: Array<{ stage: string; count: number }>;
+      }
+    | {
+        id: 'lead-conversion-rate';
+        title: string;
+        description?: string;
+        ariaLabel: string;
+        data: { value: string; total: number; converted: number };
+      }
+    | {
+        id: 'leads-by-source';
+        title: string;
+        description?: string;
+        ariaLabel: string;
+        data: Array<{ source: string; count: number }>;
+      }
+    | {
+        id: 'counselor-performance';
+        title: string;
+        description?: string;
+        ariaLabel: string;
+        data: Array<{ counselorId: string | null; counselorName: string; convertedCount: number }>;
+      }
+    | {
+        id: 'leads-vs-targets';
+        title: string;
+        description?: string;
+        ariaLabel: string;
+        data: { actual: number; target: number; progressPercentage: number };
+      };
+
+  const typedWidgets = widgets as CrmWidget[];
+
   // Find widgets
-  const conversionRateWidget = widgets.find((w: any) => w.id === 'lead-conversion-rate');
-  const leadsVsTargetsWidget = widgets.find((w: any) => w.id === 'leads-vs-targets');
-  const statusDistributionWidget = widgets.find((w: any) => w.id === 'lead-status-distribution');
-  const leadsBySourceWidget = widgets.find((w: any) => w.id === 'leads-by-source');
-  const counselorPerformanceWidget = widgets.find((w: any) => w.id === 'counselor-performance');
+  const conversionRateWidget = typedWidgets.find((w) => w.id === 'lead-conversion-rate');
+  const leadsVsTargetsWidget = typedWidgets.find((w) => w.id === 'leads-vs-targets');
+  const statusDistributionWidget = typedWidgets.find((w) => w.id === 'lead-status-distribution');
+  const leadsBySourceWidget = typedWidgets.find((w) => w.id === 'leads-by-source');
+  const counselorPerformanceWidget = typedWidgets.find((w) => w.id === 'counselor-performance');
 
   return (
     <div className="space-y-8">

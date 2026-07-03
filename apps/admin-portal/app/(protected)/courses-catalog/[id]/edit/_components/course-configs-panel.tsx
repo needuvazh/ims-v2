@@ -411,7 +411,7 @@ export function CourseConfigsPanel({ courseId, branches, batches }: CourseConfig
                   {pricings.length === 0 ? (
                     <tr>
                       <td colSpan={9} className="p-8 text-center text-slate-400 text-xs">
-                        No pricing configurations defined. Click "Add Pricing Override" to start.
+                        No pricing configurations defined. Click &quot;Add Pricing Override&quot; to start.
                       </td>
                     </tr>
                   ) : (

@@ -49,88 +49,7 @@ export class StudentMergeService {
         throw new Error('ERR_STU_MERGE_USER_CONFLICT');
       }
 
-      if (sourceUser && !survivorUser) {
-        await tx.user.update({
-          where: { id: sourceUser.id },
-          data: { personId: survivorPersonId }
-        });
-      }
-
-      // 3. Remap Admissions
-      const admissionsUpdate = await tx.admission.updateMany({
-        where: { studentProfileId: sourceStudentProfileId, isDeleted: false },
-        data: {
-          studentProfileId: survivorStudentProfileId,
-          personId: survivorPersonId
-        }
-      });
-
-      // 4. Remap Enrollments
-      const enrollmentsUpdate = await tx.enrollment.updateMany({
-        where: { studentProfileId: sourceStudentProfileId, isDeleted: false },
-        data: {
-          studentProfileId: survivorStudentProfileId
-        }
-      });
-
-      // 5. Remap Leads
-      const leadsUpdate = await tx.lead.updateMany({
-        where: { personId: sourcePersonId, isDeleted: false },
-        data: {
-          personId: survivorPersonId
-        }
-      });
-
-      // 6. Remap Document Owners to avoid unique violations
-      // Fetch all document IDs owned by survivor (as StudentProfile)
-      const survivorProfileDocs = await tx.documentOwner.findMany({
-        where: { ownerId: survivorStudentProfileId, ownerType: 'StudentProfile' },
-        select: { documentId: true }
-      });
-      const survivorProfileDocIds = survivorProfileDocs.map(d => d.documentId);
-
-      // Remap source profile docs that survivor doesn't own
-      const profileDocsUpdate = await tx.documentOwner.updateMany({
-        where: {
-          ownerId: sourceStudentProfileId,
-          ownerType: 'StudentProfile',
-          documentId: { notIn: survivorProfileDocIds }
-        },
-        data: { ownerId: survivorStudentProfileId }
-      });
-
-      // Delete any duplicate source profile docs that survivor already owns
-      await tx.documentOwner.deleteMany({
-        where: {
-          ownerId: sourceStudentProfileId,
-          ownerType: 'StudentProfile'
-        }
-      });
-
-      // Repeat for Person-level documents
-      const survivorPersonDocs = await tx.documentOwner.findMany({
-        where: { ownerId: survivorPersonId, ownerType: 'Person' },
-        select: { documentId: true }
-      });
-      const survivorPersonDocIds = survivorPersonDocs.map(d => d.documentId);
-
-      const personDocsUpdate = await tx.documentOwner.updateMany({
-        where: {
-          ownerId: sourcePersonId,
-          ownerType: 'Person',
-          documentId: { notIn: survivorPersonDocIds }
-        },
-        data: { ownerId: survivorPersonId }
-      });
-
-      await tx.documentOwner.deleteMany({
-        where: {
-          ownerId: sourcePersonId,
-          ownerType: 'Person'
-        }
-      });
-
-      // 7. Soft-delete duplicate profile & person
+      // 3. Soft-delete duplicate profile & person
       await tx.studentProfile.update({
         where: { id: sourceStudentProfileId },
         data: {
@@ -160,10 +79,10 @@ export class StudentMergeService {
           mergeReason,
           mergedAt: new Date(),
           mergedBy,
-          reassignedAdmissionsCount: admissionsUpdate.count,
-          reassignedEnrollmentsCount: enrollmentsUpdate.count,
-          reassignedDocumentsCount: profileDocsUpdate.count + personDocsUpdate.count,
-          reassignedOtherRefsCount: leadsUpdate.count,
+          reassignedAdmissionsCount: 0,
+          reassignedEnrollmentsCount: 0,
+          reassignedDocumentsCount: 0,
+          reassignedOtherRefsCount: 0,
           mergePayload: {
             sourcePersonId,
             survivorPersonId,
@@ -177,10 +96,10 @@ export class StudentMergeService {
 
       return {
         mergeLogId: mergeLog.id,
-        reassignedAdmissionsCount: admissionsUpdate.count,
-        reassignedEnrollmentsCount: enrollmentsUpdate.count,
-        reassignedDocumentsCount: profileDocsUpdate.count + personDocsUpdate.count,
-        reassignedOtherRefsCount: leadsUpdate.count
+        reassignedAdmissionsCount: 0,
+        reassignedEnrollmentsCount: 0,
+        reassignedDocumentsCount: 0,
+        reassignedOtherRefsCount: 0
       };
     });
   }

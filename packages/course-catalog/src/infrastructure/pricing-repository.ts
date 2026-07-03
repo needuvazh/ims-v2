@@ -2,10 +2,12 @@ import { PrismaClient, Prisma } from '@prisma/client';
 import { ICoursePricingRepository } from '../domain/repositories';
 import { CoursePricing } from '../domain/course';
 
+type ConfigStatus = 'Draft' | 'Active' | 'Inactive' | 'Superseded';
+
 export class CoursePricingRepository implements ICoursePricingRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create(data: any, tx?: Prisma.TransactionClient): Promise<CoursePricing> {
+  async create(data: Prisma.CoursePricingUncheckedCreateInput, tx?: Prisma.TransactionClient): Promise<CoursePricing> {
     const client = tx || this.prisma;
     const record = await client.coursePricing.create({
       data: {
@@ -29,10 +31,10 @@ export class CoursePricingRepository implements ICoursePricingRepository {
         isDeleted: false,
       },
     });
-    return record as any as CoursePricing;
+    return record as CoursePricing;
   }
 
-  async update(id: string, data: any, tx?: Prisma.TransactionClient): Promise<CoursePricing> {
+  async update(id: string, data: Prisma.CoursePricingUncheckedUpdateInput, tx?: Prisma.TransactionClient): Promise<CoursePricing> {
     const client = tx || this.prisma;
     const record = await client.coursePricing.update({
       where: { id },
@@ -41,7 +43,7 @@ export class CoursePricingRepository implements ICoursePricingRepository {
         version: data.version ? { increment: 1 } : undefined,
       },
     });
-    return record as any as CoursePricing;
+    return record as CoursePricing;
   }
 
   async findById(id: string, tx?: Prisma.TransactionClient): Promise<CoursePricing | null> {
@@ -49,7 +51,7 @@ export class CoursePricingRepository implements ICoursePricingRepository {
     const record = await client.coursePricing.findFirst({
       where: { id, isDeleted: false },
     });
-    return record as any as CoursePricing | null;
+    return record as CoursePricing | null;
   }
 
   async findOverlappingPricing(
@@ -90,7 +92,7 @@ export class CoursePricingRepository implements ICoursePricingRepository {
     const records = await client.coursePricing.findMany({
       where: whereClause,
     });
-    return records as any as CoursePricing[];
+    return records as CoursePricing[];
   }
 
   async findAll(
@@ -116,7 +118,7 @@ export class CoursePricingRepository implements ICoursePricingRepository {
       whereClause.batchId = filters.batchId || null;
     }
     if (filters.status) {
-      whereClause.status = filters.status as any;
+      whereClause.status = filters.status as ConfigStatus;
     }
     if (filters.activeAt) {
       whereClause.effectiveStartDate = { lte: filters.activeAt };
@@ -130,6 +132,6 @@ export class CoursePricingRepository implements ICoursePricingRepository {
       where: whereClause,
       orderBy: { effectiveStartDate: 'desc' },
     });
-    return records as any as CoursePricing[];
+    return records as CoursePricing[];
   }
 }

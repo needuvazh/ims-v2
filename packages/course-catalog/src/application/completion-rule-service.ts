@@ -5,13 +5,25 @@ import { createUuid } from '@ims/shared-kernel';
 import { randomUUID } from 'crypto';
 import { parseDateOnly } from './pricing-service';
 
+export interface CreateCompletionRuleInput {
+  id?: string;
+  courseId: string;
+  minimumAttendancePercent: number;
+  examRequired?: boolean;
+  feeClearanceRequired?: boolean;
+  manualApprovalRequired?: boolean;
+  effectiveStartDate: Date | string;
+  effectiveEndDate?: Date | string | null;
+  createdBy?: string | null;
+}
+
 export class CourseCompletionRuleService {
   constructor(
     private readonly prisma: PrismaClient,
     private readonly ruleRepository: ICourseCompletionRuleRepository
   ) {}
 
-  async createCompletionRule(input: any, actorId?: string, tx?: Prisma.TransactionClient) {
+  async createCompletionRule(input: CreateCompletionRuleInput, actorId?: string, tx?: Prisma.TransactionClient) {
     const execute = async (activeClient: Prisma.TransactionClient) => {
       // Validate Course exists
       const courseExists = await activeClient.course.findFirst({

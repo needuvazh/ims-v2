@@ -5,7 +5,7 @@ import { CourseCategory } from '../domain/course';
 export class CourseCategoryRepository implements ICourseCategoryRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create(data: any, tx?: Prisma.TransactionClient): Promise<CourseCategory> {
+  async create(data: Prisma.CourseCategoryUncheckedCreateInput, tx?: Prisma.TransactionClient): Promise<CourseCategory> {
     const client = tx || this.prisma;
     const category = await client.courseCategory.create({
       data: {
@@ -23,7 +23,7 @@ export class CourseCategoryRepository implements ICourseCategoryRepository {
     return category as CourseCategory;
   }
 
-  async update(id: string, data: any, version: number, tx?: Prisma.TransactionClient): Promise<CourseCategory> {
+  async update(id: string, data: Prisma.CourseCategoryUncheckedUpdateInput, version: number, tx?: Prisma.TransactionClient): Promise<CourseCategory> {
     const client = tx || this.prisma;
     const result = await client.courseCategory.updateMany({
       where: { id, version, isDeleted: false },

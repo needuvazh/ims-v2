@@ -1,6 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { CoursePricingService, parseDateOnly, getGstDateAtMidnight } from './pricing-service';
 import { Decimal } from '@prisma/client/runtime/library';
+import type { Prisma, PrismaClient } from '@prisma/client';
+import type { ICoursePricingRepository, ICourseDiscountRepository } from '../domain/repositories';
 
 describe('Course Pricing Timezone Normalizations', () => {
   it('should parse date-only strings exactly as UTC midnight dates', () => {
@@ -24,9 +26,33 @@ describe('Course Pricing Timezone Normalizations', () => {
 });
 
 describe('CoursePricingService rules & logic', () => {
-  let mockPrisma: any;
-  let mockPricingRepo: any;
-  let mockDiscountRepo: any;
+  type MockPrisma = {
+    $transaction: ReturnType<typeof vi.fn>;
+    course: { findFirst: ReturnType<typeof vi.fn> };
+    auditLog: { create: ReturnType<typeof vi.fn> };
+    outboxEvent: { create: ReturnType<typeof vi.fn> };
+    batch: { findUnique: ReturnType<typeof vi.fn> };
+  };
+
+  type MockPricingRepo = {
+    create: ReturnType<typeof vi.fn>;
+    update: ReturnType<typeof vi.fn>;
+    findById: ReturnType<typeof vi.fn>;
+    findOverlappingPricing: ReturnType<typeof vi.fn>;
+    findAll: ReturnType<typeof vi.fn>;
+  };
+
+  type MockDiscountRepo = {
+    create: ReturnType<typeof vi.fn>;
+    update: ReturnType<typeof vi.fn>;
+    findById: ReturnType<typeof vi.fn>;
+    findOverlappingDiscounts: ReturnType<typeof vi.fn>;
+    findAll: ReturnType<typeof vi.fn>;
+  };
+
+  let mockPrisma: MockPrisma;
+  let mockPricingRepo: MockPricingRepo;
+  let mockDiscountRepo: MockDiscountRepo;
   let service: CoursePricingService;
 
   beforeEach(() => {
@@ -41,6 +67,7 @@ describe('CoursePricingService rules & logic', () => {
       outboxEvent: {
         create: vi.fn().mockResolvedValue({}),
       },
+      batch: { findUnique: vi.fn().mockResolvedValue(null) },
     };
 
     mockPricingRepo = {
@@ -52,10 +79,18 @@ describe('CoursePricingService rules & logic', () => {
     };
 
     mockDiscountRepo = {
+      create: vi.fn(),
+      update: vi.fn(),
+      findById: vi.fn(),
+      findOverlappingDiscounts: vi.fn().mockResolvedValue([]),
       findAll: vi.fn().mockResolvedValue([]),
     };
 
-    service = new CoursePricingService(mockPrisma, mockPricingRepo, mockDiscountRepo);
+    service = new CoursePricingService(
+      mockPrisma as unknown as PrismaClient,
+      mockPricingRepo as unknown as ICoursePricingRepository,
+      mockDiscountRepo as unknown as ICourseDiscountRepository
+    );
   });
 
   it('should validate tax exemption metadata when isTaxExempt is true', async () => {
@@ -68,7 +103,7 @@ describe('CoursePricingService rules & logic', () => {
       effectiveStartDate: '2026-07-10',
     };
 
-    await expect(service.createPricingRule(input, 'user-1', mockPrisma)).rejects.toThrow(
+    await expect(service.createPricingRule(input, 'user-1', mockPrisma as unknown as Prisma.TransactionClient)).rejects.toThrow(
       'ERR_CRS_TAX_EXEMPTION_METADATA_REQUIRED'
     );
   });
@@ -90,7 +125,7 @@ describe('CoursePricingService rules & logic', () => {
       effectiveStartDate: '2026-07-10', // Collision (same date)
     };
 
-    await expect(service.createPricingRule(input, 'user-1', mockPrisma)).rejects.toThrow(
+    await expect(service.createPricingRule(input, 'user-1', mockPrisma as unknown as Prisma.TransactionClient)).rejects.toThrow(
       'ERR_CRS_MULTIPLE_ACTIVE_PRICING'
     );
   });
@@ -114,7 +149,7 @@ describe('CoursePricingService rules & logic', () => {
 
     mockPricingRepo.create.mockResolvedValue({ id: 'pricing-2', basePrice: 150 });
 
-    const result = await service.createPricingRule(input, 'user-1', mockPrisma);
+    const result = await service.createPricingRule(input, 'user-1', mockPrisma as unknown as Prisma.TransactionClient);
     expect(result).toBeDefined();
 
     // The existing pricing should be updated with a superseded end date of July 14 (one day prior)
@@ -209,7 +244,7 @@ describe('CoursePricingService rules & logic', () => {
         customerType: 'Individual',
         batchId: 'batch-1',
         asOfDate: '2026-07-10',
-      });
+      }, mockPrisma as unknown as Prisma.TransactionClient);
       expect(resBatch.basePrice).toBe(150);
       expect(resBatch.applicableDiscounts[0].discountValue).toBe(20);
 
@@ -219,7 +254,7 @@ describe('CoursePricingService rules & logic', () => {
         customerType: 'Individual',
         branchId: 'branch-1',
         asOfDate: '2026-07-10',
-      });
+      }, mockPrisma as unknown as Prisma.TransactionClient);
       expect(resBranch.basePrice).toBe(120);
       expect(resBranch.applicableDiscounts[0].discountValue).toBe(15);
 
@@ -228,7 +263,7 @@ describe('CoursePricingService rules & logic', () => {
         courseId: 'course-1',
         customerType: 'Individual',
         asOfDate: '2026-07-10',
-      });
+      }, mockPrisma as unknown as Prisma.TransactionClient);
       expect(resGlobal.basePrice).toBe(100);
       expect(resGlobal.applicableDiscounts[0].discountValue).toBe(10);
     });

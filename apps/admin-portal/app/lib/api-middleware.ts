@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { decodeSession, sessionCookieName, type Session } from '@ims/shared-auth';
-import { JwtService, getDevelopmentKeyPair, type TokenPayload } from '@ims/shared-auth/jwt';
+import { JwtService, type TokenPayload } from '@ims/shared-auth/jwt';
 import { createRequestContext, type RequestContext } from '@ims/observability';
 import { DomainError } from '@ims/shared-kernel';
 import type { Uuid } from '@ims/shared-kernel';
@@ -33,7 +33,12 @@ function getPublicKey(): string {
   const publicKey = process.env.JWT_PUBLIC_KEY;
   if (publicKey) return publicKey;
 
-  return getDevelopmentKeyPair().publicKey;
+  const fallbackSecret = process.env.SESSION_SECRET;
+  if (!fallbackSecret) {
+    throw new Error('JWT_PUBLIC_KEY or SESSION_SECRET environment variable is required.');
+  }
+
+  return fallbackSecret;
 }
 
 function getClientIp(headers: Headers): string | null {
@@ -92,7 +97,12 @@ export async function withAuth(request: Request): Promise<AuthenticatedRequestCo
     throw createIamError('IAM-AUTH-002');
   }
 
-  const tokenPayload = await JwtService.verifyAccessToken(accessToken, getPublicKey());
+  let tokenPayload: TokenPayload;
+  try {
+    tokenPayload = await JwtService.verifyAccessToken(accessToken, getPublicKey());
+  } catch {
+    throw createIamError('IAM-AUTH-002');
+  }
   const { sessionRepository } = await import('./runtime');
   const session = await sessionRepository.findByAccessTokenJti(tokenPayload.jti ?? '');
 

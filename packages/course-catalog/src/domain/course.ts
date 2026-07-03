@@ -50,8 +50,8 @@ export interface CoursePricing {
   customerType: string;
   batchType: string;
   currency: string;
-  basePrice: any; // Decimal type from Prisma
-  taxPercentage: any; // Decimal type from Prisma
+  basePrice: Prisma.Decimal;
+  taxPercentage: Prisma.Decimal;
   isTaxExempt: boolean;
   taxExemptionReason?: string | null;
   taxExemptionCode?: string | null;
@@ -75,7 +75,7 @@ export interface CourseDiscount {
   batchId?: string | null;
   discountType: string;
   discountMode: string;
-  discountValue: any; // Decimal type from Prisma
+  discountValue: Prisma.Decimal;
   requiresApproval: boolean;
   effectiveStartDate: Date;
   effectiveEndDate?: Date | null;
@@ -107,3 +107,4 @@ export interface CourseCompletionRule {
   deletedBy?: string | null;
   isDeleted: boolean;
 }
+import { Prisma } from '@prisma/client';

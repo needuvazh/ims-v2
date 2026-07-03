@@ -1,27 +1,28 @@
+import { Prisma } from '@prisma/client';
 import { Batch, BatchTrainer, WaitingList, Session } from './batch';
 
 export interface IBatchRepository {
-  create(data: any, tx?: any): Promise<Batch>;
-  update(id: string, data: any, version: number, tx?: any): Promise<Batch>;
-  findById(id: string, tx?: any): Promise<Batch | null>;
-  findByCode(code: string, tx?: any): Promise<Batch | null>;
-  findAll(filters: { branchId?: string; courseId?: string; status?: string }, tx?: any): Promise<Batch[]>;
-  delete(id: string, deletedBy: string, tx?: any): Promise<void>;
+  create(data: Prisma.BatchUncheckedCreateInput, tx?: Prisma.TransactionClient): Promise<Batch>;
+  update(id: string, data: Prisma.BatchUncheckedUpdateInput, version: number, tx?: Prisma.TransactionClient): Promise<Batch>;
+  findById(id: string, tx?: Prisma.TransactionClient): Promise<Batch | null>;
+  findByCode(code: string, tx?: Prisma.TransactionClient): Promise<Batch | null>;
+  findAll(filters: { branchId?: string; courseId?: string; status?: string }, tx?: Prisma.TransactionClient): Promise<Batch[]>;
+  delete(id: string, deletedBy: string, tx?: Prisma.TransactionClient): Promise<void>;
   
   // BatchTrainer Mappings
-  assignTrainer(data: any, tx?: any): Promise<BatchTrainer>;
-  removeTrainer(id: string, deletedBy: string, tx?: any): Promise<void>;
-  findTrainers(batchId: string, tx?: any): Promise<BatchTrainer[]>;
-  findPrimaryTrainer(batchId: string, tx?: any): Promise<BatchTrainer | null>;
+  assignTrainer(data: Prisma.BatchTrainerUncheckedCreateInput, tx?: Prisma.TransactionClient): Promise<BatchTrainer>;
+  removeTrainer(id: string, deletedBy: string, tx?: Prisma.TransactionClient): Promise<void>;
+  findTrainers(batchId: string, tx?: Prisma.TransactionClient): Promise<BatchTrainer[]>;
+  findPrimaryTrainer(batchId: string, tx?: Prisma.TransactionClient): Promise<BatchTrainer | null>;
   
   // WaitingList Queue
-  addWaitlistEntry(data: any, tx?: any): Promise<WaitingList>;
-  updateWaitlistEntry(id: string, data: any, tx?: any): Promise<WaitingList>;
-  findWaitlist(batchId: string, tx?: any): Promise<WaitingList[]>;
-  findActiveWaitlist(batchId: string, tx?: any): Promise<WaitingList[]>;
+  addWaitlistEntry(data: Prisma.WaitingListUncheckedCreateInput, tx?: Prisma.TransactionClient): Promise<WaitingList>;
+  updateWaitlistEntry(id: string, data: Prisma.WaitingListUncheckedUpdateInput, tx?: Prisma.TransactionClient): Promise<WaitingList>;
+  findWaitlist(batchId: string, tx?: Prisma.TransactionClient): Promise<WaitingList[]>;
+  findActiveWaitlist(batchId: string, tx?: Prisma.TransactionClient): Promise<WaitingList[]>;
   
   // Sessions
-  createSession(data: any, tx?: any): Promise<Session>;
-  findSessions(batchId: string, tx?: any): Promise<Session[]>;
-  updateSession(id: string, data: any, tx?: any): Promise<Session>;
+  createSession(data: Prisma.SessionUncheckedCreateInput, tx?: Prisma.TransactionClient): Promise<Session>;
+  findSessions(batchId: string, tx?: Prisma.TransactionClient): Promise<Session[]>;
+  updateSession(id: string, data: Prisma.SessionUncheckedUpdateInput, tx?: Prisma.TransactionClient): Promise<Session>;
 }

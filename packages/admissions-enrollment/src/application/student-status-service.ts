@@ -9,14 +9,14 @@ import { PrismaClient, StudentStatus, Prisma } from '@prisma/client';
  * Suspended → Active    (suspension lifted)
  * Suspended → Archived  (permanently closed after suspension)
  *
- * Terminal state: Archived — no further transitions allowed.
+ * Archived can be restored by policy.
  */
 const ALLOWED_TRANSITIONS: Record<string, StudentStatus[]> = {
   Pending:   ['Active'],
   Active:    ['Suspended', 'Archived'],
   Suspended: ['Active', 'Archived'],
   Inactive:  ['Active', 'Archived'],
-  Archived:  [],
+  Archived:  ['Active', 'Suspended'],
 };
 
 export class StudentStatusService {

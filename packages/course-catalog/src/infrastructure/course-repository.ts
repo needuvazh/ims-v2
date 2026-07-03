@@ -5,7 +5,7 @@ import { Course } from '../domain/course';
 export class CourseRepository implements ICourseRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create(data: any, tx?: Prisma.TransactionClient): Promise<Course> {
+  async create(data: Prisma.CourseUncheckedCreateInput, tx?: Prisma.TransactionClient): Promise<Course> {
     const client = tx || this.prisma;
     const course = await client.course.create({
       data: {
@@ -31,7 +31,7 @@ export class CourseRepository implements ICourseRepository {
     return course as Course;
   }
 
-  async update(id: string, data: any, version: number, tx?: Prisma.TransactionClient): Promise<Course> {
+  async update(id: string, data: Prisma.CourseUncheckedUpdateInput, version: number, tx?: Prisma.TransactionClient): Promise<Course> {
     const client = tx || this.prisma;
     
     // Optimistic concurrency check using updateMany
@@ -146,17 +146,13 @@ export class CourseRepository implements ICourseRepository {
   async hasActiveBatches(id: string, tx?: Prisma.TransactionClient): Promise<boolean> {
     const client = tx || this.prisma;
     // Query dynamic model 'batch' if it gets added in subsequent phases
-    const batchDelegate = (client as any).batch;
-    if (batchDelegate) {
-      const activeBatchesCount = await batchDelegate.count({
-        where: {
-          courseId: id,
-          status: { in: ['OpenForEnrollment', 'InProgress'] },
-          isDeleted: false,
-        },
-      });
-      return activeBatchesCount > 0;
-    }
-    return false;
+    const activeBatchesCount = await client.batch.count({
+      where: {
+        courseId: id,
+        status: { in: ['OpenForEnrollment', 'InProgress'] },
+        isDeleted: false,
+      },
+    });
+    return activeBatchesCount > 0;
   }
 }

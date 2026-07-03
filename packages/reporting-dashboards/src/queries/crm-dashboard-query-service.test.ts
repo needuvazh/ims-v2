@@ -1,10 +1,15 @@
 import { expect, test, vi } from 'vitest';
 import { CrmDashboardQueryService } from './crm-dashboard-query-service';
+import type { AuditLogRepository } from '@ims/audit';
+import type { LeadAnalyticsReadService } from '@ims/crm-leads';
 
 test('CrmDashboardQueryService throws forbidden if lacking permission', async () => {
-  const mockReadService = {} as any;
-  const mockAuditRepo = {} as any;
-  const service = new CrmDashboardQueryService(mockReadService, mockAuditRepo);
+  const mockReadService = {} as unknown as LeadAnalyticsReadService;
+  const mockAuditRepo = {} as unknown as AuditLogRepository;
+  const service = new CrmDashboardQueryService(
+    mockReadService as unknown as LeadAnalyticsReadService,
+    mockAuditRepo
+  );
 
   const context = {
     userId: '11111111-1111-1111-1111-111111111111',
@@ -18,19 +23,34 @@ test('CrmDashboardQueryService throws forbidden if lacking permission', async ()
 });
 
 test('CrmDashboardQueryService builds widgets and logs access', async () => {
+  type MockReadService = {
+    getLeadStatusDistribution: ReturnType<typeof vi.fn>;
+    getLeadConversionRate: ReturnType<typeof vi.fn>;
+    getLeadsBySource: ReturnType<typeof vi.fn>;
+    getCounselorPerformance: ReturnType<typeof vi.fn>;
+    getTotalLeadsVsTargets: ReturnType<typeof vi.fn>;
+  };
+
+  type MockAuditRepo = {
+    append: ReturnType<typeof vi.fn>;
+  };
+
   const mockReadService = {
     getLeadStatusDistribution: vi.fn().mockResolvedValue([{ stage: 'New', count: 5 }]),
     getLeadConversionRate: vi.fn().mockResolvedValue({ rate: 20, total: 5, converted: 1 }),
     getLeadsBySource: vi.fn().mockResolvedValue([{ source: 'Web', count: 5 }]),
     getCounselorPerformance: vi.fn().mockResolvedValue([{ counselorId: '33333333-3333-3333-3333-333333333333', counselorName: 'counselor-1', convertedCount: 1 }]),
     getTotalLeadsVsTargets: vi.fn().mockResolvedValue({ actual: 5, target: 10 }),
-  } as any;
+  } as MockReadService;
 
   const mockAuditRepo = {
     append: vi.fn().mockResolvedValue(undefined),
-  } as any;
+  } as MockAuditRepo;
 
-  const service = new CrmDashboardQueryService(mockReadService, mockAuditRepo);
+  const service = new CrmDashboardQueryService(
+    mockReadService as unknown as LeadAnalyticsReadService,
+    mockAuditRepo
+  );
 
   const context = {
     userId: '11111111-1111-1111-1111-111111111111',
@@ -57,18 +77,32 @@ test('CrmDashboardQueryService builds widgets and logs access', async () => {
 });
 
 test('CrmDashboardQueryService omits counselor performance widget if lacking permission', async () => {
+  type MockReadService = {
+    getLeadStatusDistribution: ReturnType<typeof vi.fn>;
+    getLeadConversionRate: ReturnType<typeof vi.fn>;
+    getLeadsBySource: ReturnType<typeof vi.fn>;
+    getTotalLeadsVsTargets: ReturnType<typeof vi.fn>;
+  };
+
+  type MockAuditRepo = {
+    append: ReturnType<typeof vi.fn>;
+  };
+
   const mockReadService = {
     getLeadStatusDistribution: vi.fn().mockResolvedValue([{ stage: 'New', count: 5 }]),
     getLeadConversionRate: vi.fn().mockResolvedValue({ rate: 20, total: 5, converted: 1 }),
     getLeadsBySource: vi.fn().mockResolvedValue([{ source: 'Web', count: 5 }]),
     getTotalLeadsVsTargets: vi.fn().mockResolvedValue({ actual: 5, target: 10 }),
-  } as any;
+  } as MockReadService;
 
   const mockAuditRepo = {
     append: vi.fn().mockResolvedValue(undefined),
-  } as any;
+  } as MockAuditRepo;
 
-  const service = new CrmDashboardQueryService(mockReadService, mockAuditRepo);
+  const service = new CrmDashboardQueryService(
+    mockReadService as unknown as LeadAnalyticsReadService,
+    mockAuditRepo
+  );
 
   const context = {
     userId: '11111111-1111-1111-1111-111111111111',

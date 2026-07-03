@@ -49,6 +49,10 @@ export const DocumentCaptureSchema = z.object({
 
 export type DocumentCaptureInput = z.infer<typeof DocumentCaptureSchema>;
 
+export type DocumentWithLatestVerification = Prisma.DocumentGetPayload<{
+  include: { verifications: true };
+}>;
+
 export interface IDocumentsService {
   registerDocuments(
     ownerId: string,
@@ -75,10 +79,10 @@ export interface IDocumentsService {
     ownerId: string,
     ownerType: OwnerType,
     tx?: Prisma.TransactionClient
-  ): Promise<any[]>;
+  ): Promise<DocumentWithLatestVerification[]>;
 
   getDocumentsByOwners(
     ownerRefs: { ownerId: string; ownerType: OwnerType }[],
     tx?: Prisma.TransactionClient
-  ): Promise<any[]>;
+  ): Promise<DocumentWithLatestVerification[]>;
 }

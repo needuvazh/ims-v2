@@ -8,7 +8,7 @@ export interface DashboardWidget {
   title: string;
   type: 'metric' | 'chart';
   chartType?: 'bar' | 'pie' | 'line' | 'donut';
-  data: any;
+  data: unknown;
   ariaLabel: string;
   description?: string;
 }
@@ -116,7 +116,7 @@ export class CrmDashboardQueryService {
     return widgets;
   }
 
-  async executeReport(reportId: string, userContext: UserContext, queryParams: any = {}): Promise<any> {
+  async executeReport(reportId: string, userContext: UserContext, queryParams: Record<string, unknown> = {}): Promise<unknown> {
     // Audit emission for reports
     await this.auditLogRepository.append({
       id: createUuid(crypto.randomUUID()),

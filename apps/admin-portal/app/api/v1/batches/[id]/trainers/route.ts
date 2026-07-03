@@ -75,6 +75,7 @@ export async function POST(
         const result = await batchService.assignTrainer(
           id,
           {
+            batchId: id,
             ...parsed.data,
             assignedFrom: new Date(parsed.data.assignedFrom),
             assignedTo: new Date(parsed.data.assignedTo),

@@ -2,10 +2,12 @@ import { PrismaClient, Prisma } from '@prisma/client';
 import { ICourseDiscountRepository } from '../domain/repositories';
 import { CourseDiscount } from '../domain/course';
 
+type ConfigStatus = 'Draft' | 'Active' | 'Inactive' | 'Superseded';
+
 export class CourseDiscountRepository implements ICourseDiscountRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create(data: any, tx?: Prisma.TransactionClient): Promise<CourseDiscount> {
+  async create(data: Prisma.CourseDiscountUncheckedCreateInput, tx?: Prisma.TransactionClient): Promise<CourseDiscount> {
     const client = tx || this.prisma;
     const record = await client.courseDiscount.create({
       data: {
@@ -24,16 +26,16 @@ export class CourseDiscountRepository implements ICourseDiscountRepository {
         isDeleted: false,
       },
     });
-    return record as any as CourseDiscount;
+    return record as CourseDiscount;
   }
 
-  async update(id: string, data: any, tx?: Prisma.TransactionClient): Promise<CourseDiscount> {
+  async update(id: string, data: Prisma.CourseDiscountUncheckedUpdateInput, tx?: Prisma.TransactionClient): Promise<CourseDiscount> {
     const client = tx || this.prisma;
     const record = await client.courseDiscount.update({
       where: { id },
       data,
     });
-    return record as any as CourseDiscount;
+    return record as CourseDiscount;
   }
 
   async findById(id: string, tx?: Prisma.TransactionClient): Promise<CourseDiscount | null> {
@@ -41,7 +43,7 @@ export class CourseDiscountRepository implements ICourseDiscountRepository {
     const record = await client.courseDiscount.findFirst({
       where: { id, isDeleted: false },
     });
-    return record as any as CourseDiscount | null;
+    return record as CourseDiscount | null;
   }
 
   async findOverlappingDiscounts(
@@ -78,7 +80,7 @@ export class CourseDiscountRepository implements ICourseDiscountRepository {
     const records = await client.courseDiscount.findMany({
       where: whereClause,
     });
-    return records as any as CourseDiscount[];
+    return records as CourseDiscount[];
   }
 
   async findAll(
@@ -104,7 +106,7 @@ export class CourseDiscountRepository implements ICourseDiscountRepository {
       whereClause.batchId = filters.batchId || null;
     }
     if (filters.status) {
-      whereClause.status = filters.status as any;
+      whereClause.status = filters.status as ConfigStatus;
     }
     if (filters.activeAt) {
       whereClause.effectiveStartDate = { lte: filters.activeAt };
@@ -118,6 +120,6 @@ export class CourseDiscountRepository implements ICourseDiscountRepository {
       where: whereClause,
       orderBy: { effectiveStartDate: 'desc' },
     });
-    return records as any as CourseDiscount[];
+    return records as CourseDiscount[];
   }
 }

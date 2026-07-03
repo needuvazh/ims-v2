@@ -1,5 +1,7 @@
 import { expect, test, vi } from 'vitest';
+import type { PrismaClient } from '@prisma/client';
 import { DocumentsService } from './documents-service';
+import type { DocumentType, OwnerType } from '../domain/document';
 
 test('DocumentsService.registerDocuments should create Document, Owner, and Verification records', async () => {
   const mockPrisma = {
@@ -12,7 +14,7 @@ test('DocumentsService.registerDocuments should create Document, Owner, and Veri
     documentVerification: {
       create: vi.fn().mockResolvedValue({ id: 'ver-uuid-1' }),
     },
-  } as any;
+  } as unknown as PrismaClient;
 
   const service = new DocumentsService(mockPrisma);
 
@@ -21,7 +23,7 @@ test('DocumentsService.registerDocuments should create Document, Owner, and Veri
       fileName: 'test.pdf',
       fileKey: 'uploads/test.pdf',
       fileType: 'application/pdf',
-      documentType: 'CIVIL_ID_FRONT' as any,
+      documentType: 'CIVIL_ID_FRONT' as DocumentType,
     },
   ];
 
@@ -75,7 +77,7 @@ test('DocumentsService.verifyDocumentAccess should authorize if user has branch 
         return Promise.resolve(null);
       }),
     },
-  } as any;
+  } as unknown as PrismaClient;
 
   const service = new DocumentsService(mockPrisma);
 
@@ -103,7 +105,7 @@ test('DocumentsService.getDocumentsByOwner should return document list with late
         },
       ]),
     },
-  } as any;
+  } as unknown as PrismaClient;
 
   const service = new DocumentsService(mockPrisma);
 
@@ -144,11 +146,11 @@ test('DocumentsService.getDocumentsByOwners should return document list for mult
         },
       ]),
     },
-  } as any;
+  } as unknown as PrismaClient;
 
   const service = new DocumentsService(mockPrisma);
 
-  const owners: { ownerId: string; ownerType: any }[] = [
+  const owners: { ownerId: string; ownerType: OwnerType }[] = [
     { ownerId: 'person-1', ownerType: 'Person' },
     { ownerId: 'profile-1', ownerType: 'StudentProfile' },
   ];

@@ -15,13 +15,31 @@ import { randomUUID } from 'crypto';
 const CODE_REGEX = /^[A-Z0-9-]{3,20}$/;
 const ARABIC_SCRIPT_REGEX = /^[\u0600-\u06FF\s0-9\-\.\,\(\)]+$/;
 
+export interface CreateCourseInput {
+  courseCode: string;
+  nameEnglish: string;
+  nameArabic: string;
+  descriptionEnglish?: string | null;
+  descriptionArabic?: string | null;
+  departmentId: string;
+  categoryId?: string | null;
+  courseClassification: string;
+  durationType: string;
+  durationValue: number;
+  allowWalkInCompletion: boolean;
+  effectiveStartDate: Date | string;
+  effectiveEndDate?: Date | string | null;
+}
+
+export type UpdateCourseInput = Partial<CreateCourseInput>;
+
 export class CourseService {
   constructor(
     private readonly prisma: PrismaClient,
     private readonly courseRepository: ICourseRepository
   ) {}
 
-  async createCourse(input: any, actorId?: string, tx?: Prisma.TransactionClient) {
+  async createCourse(input: CreateCourseInput, actorId?: string, tx?: Prisma.TransactionClient) {
     const execute = async (activeClient: Prisma.TransactionClient) => {
       // Validate course code format
       if (!CODE_REGEX.test(input.courseCode)) {
@@ -129,10 +147,8 @@ export class CourseService {
     return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
 
-  async updateCourse(id: string, input: any, version: number, actorId?: string, tx?: Prisma.TransactionClient) {
-    const client = tx || this.prisma;
-
-    const execute = async (activeClient: Prisma.TransactionClient) => {
+  async updateCourse(id: string, input: UpdateCourseInput, version: number, actorId?: string, tx?: Prisma.TransactionClient) {
+      const execute = async (activeClient: Prisma.TransactionClient) => {
       const course = await this.courseRepository.findById(id, activeClient);
       if (!course) {
         throw new Error('ERR_CRS_COURSE_NOT_FOUND');
@@ -251,9 +267,7 @@ export class CourseService {
     actorId?: string,
     tx?: Prisma.TransactionClient
   ) {
-    const client = tx || this.prisma;
-
-    const execute = async (activeClient: Prisma.TransactionClient) => {
+      const execute = async (activeClient: Prisma.TransactionClient) => {
       const course = await this.courseRepository.findById(id, activeClient);
       if (!course) {
         throw new Error('ERR_CRS_COURSE_NOT_FOUND');

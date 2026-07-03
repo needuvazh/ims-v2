@@ -1,15 +1,11 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { withPermission } from '../../../../../../lib/api-middleware';
-import {
-  applyObservabilityResponseHeaders,
-  withRouteObservability,
-  createStructuredLogger,
-  getCurrentRequestContext,
-} from '../../../../../../lib/observability';
+import { withAuth } from '../../../../../../lib/api-middleware';
+import { applyObservabilityResponseHeaders, withRouteObservability, createStructuredLogger, getCurrentRequestContext } from '../../../../../../lib/observability';
 import { createUuid } from '@ims/shared-kernel';
 import { prisma } from '@ims/database';
 import { randomUUID } from 'crypto';
+import { hasPermission } from '@ims/shared-auth';
 
 const RevealRequestSchema = z.object({
   field: z.enum(['email', 'phone', 'nationalId']),
@@ -18,10 +14,21 @@ const RevealRequestSchema = z.object({
 
 export async function POST(request: Request, props: { params: Promise<{ id: string }> }) {
   const { id: studentId } = await props.params;
-  return withRouteObservability(request.headers, async () => withPermission(request, 'student.reveal_pii', async ({ session }) => {
+  return withRouteObservability(request.headers, async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
     try {
+      const { session } = await withAuth(request);
+      if (
+        !hasPermission(session, 'student.read') ||
+        (!hasPermission(session, 'student.reveal_pii') && !hasPermission(session, 'student.identity.unmasked.read'))
+      ) {
+        return NextResponse.json(
+          { success: false, errorCode: 'ERR_AUTH_PERMISSION_DENIED', messageEnglish: 'Missing student.identity.unmasked.read permission.', statusCode: 403 },
+          { status: 403 }
+        );
+      }
+
       const body = await request.json();
       const parsed = RevealRequestSchema.safeParse(body);
 
@@ -37,15 +44,12 @@ export async function POST(request: Request, props: { params: Promise<{ id: stri
         );
       }
 
-      const { branchScopeResolver, studentQueryService } = await import('../../../../../../lib/runtime');
+      const { branchScopeResolver } = await import('../../../../../../lib/runtime');
 
-      // Verify user has access to the student profile's branch scope
-      const targetBranchId = session.activeBranchId;
-      if (!targetBranchId) {
-        throw new Error('ERR_AUTH_BRANCH_DENIED');
-      }
-
-      await studentQueryService.verifyBranchScope(studentId, targetBranchId);
+      const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
+        createUuid(session.userId),
+        session.activeBranchId ? createUuid(session.activeBranchId) : null
+      );
 
       // Retrieve student with person details
       const student = await prisma.studentProfile.findUnique({
@@ -62,6 +66,18 @@ export async function POST(request: Request, props: { params: Promise<{ id: stri
             statusCode: 404,
           },
           { status: 404 }
+        );
+      }
+
+      if (!allowedBranches.some((branchId) => branchId === student.branchId)) {
+        return NextResponse.json(
+          {
+            success: false,
+            errorCode: 'ERR_AUTH_BRANCH_DENIED',
+            messageEnglish: 'Student record is outside your allowed branch scope.',
+            statusCode: 403,
+          },
+          { status: 403 }
         );
       }
 
@@ -86,7 +102,7 @@ export async function POST(request: Request, props: { params: Promise<{ id: stri
           action: 'RevealPII',
           reason: parsed.data.reason,
           newValue: { field: parsed.data.field }, // log field only, not unmasked value
-          branchId: targetBranchId,
+          branchId: student.branchId,
         },
       });
 
@@ -137,5 +153,5 @@ export async function POST(request: Request, props: { params: Promise<{ id: stri
         { status }
       );
     }
-  }), { route: '/api/v1/students/[id]/reveal-pii' });
+  }, { route: '/api/v1/students/[id]/reveal-pii' });
 }

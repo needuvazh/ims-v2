@@ -6,6 +6,7 @@ import {
   createStructuredLogger,
   getCurrentRequestContext,
 } from '../../../../../lib/observability';
+import { createUuid } from '@ims/shared-kernel';
 
 /**
  * POST /api/v1/students/claim-profile
@@ -54,7 +55,18 @@ export async function POST(request: Request) {
       }
 
       try {
-        const { otpService, prisma } = await import('../../../../../lib/runtime');
+        const { otpService, admissionService, branchScopeResolver, prisma } = await import('../../../../../lib/runtime');
+
+        const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
+          createUuid(session.userId),
+          session.activeBranchId ? createUuid(session.activeBranchId) : null
+        );
+        if (!allowedBranches.some((branchId) => branchId === parsed.data.branchId)) {
+          return NextResponse.json(
+            { success: false, errorCode: 'ERR_AUTH_BRANCH_SCOPE_DENIED', messageEnglish: 'Target branch is outside your allowed scope.', statusCode: 403 },
+            { status: 403 }
+          );
+        }
 
         // 1. Verify OTP
         const valid = await otpService.verifyOtp(parsed.data.existingPersonId, parsed.data.otpCode);
@@ -92,49 +104,21 @@ export async function POST(request: Request) {
           );
         }
 
-        // 4. Create the cross-branch Admission record
-        const seqResult = await prisma.$queryRawUnsafe<{ nextval: string }[]>(
-          "SELECT nextval('admission_number_seq')::text as nextval"
-        );
-        const seq = seqResult[0]?.nextval ?? Math.floor(Math.random() * 100000).toString();
-        const admissionNumber = `ADM-2026-${seq.padStart(5, '0')}`;
-
-        const admission = await prisma.admission.create({
-          data: {
-            admissionNumber,
-            personId: parsed.data.existingPersonId,
+        const admission = await admissionService.createAdmissionDraftDirect(
+          {
             studentProfileId: parsed.data.existingStudentProfileId,
-            branchId: parsed.data.branchId,
-            admissionStatus: 'Approved',
-            approvedAt: new Date(),
-            createdBy: session.userId,
-            updatedBy: session.userId,
+            courseId: null,
+            leadId: null,
           },
-        });
-
-        // 5. Audit log
-        await prisma.auditLog.create({
-          data: {
-            action: 'StudentProfileClaimed',
-            entityType: 'Admission',
-            entityId: admission.id,
-            performedBy: session.userId,
-            branchId: parsed.data.branchId,
-            performedAt: new Date(),
-            module: 'AdmissionsEnrollment',
-            newValue: {
-              admissionNumber,
-              existingPersonId: parsed.data.existingPersonId,
-              existingStudentProfileId: parsed.data.existingStudentProfileId,
-              claimedByBranchId: parsed.data.branchId,
-            },
-          },
-        });
+          parsed.data.branchId,
+          session.userId,
+          prisma
+        );
 
         logger.info('api.students.claim-profile.success', { status: 'success' });
 
         return NextResponse.json(
-          { success: true, data: { admissionId: admission.id, admissionNumber } },
+          { success: true, data: { admissionId: admission.admissionId } },
           { status: 201 }
         );
       } catch (error) {

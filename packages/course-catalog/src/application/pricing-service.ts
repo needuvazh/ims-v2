@@ -4,6 +4,24 @@ import { CoursePricing } from '../domain/course';
 import { createUuid } from '@ims/shared-kernel';
 import { randomUUID } from 'crypto';
 
+export interface CreatePricingRuleInput {
+  id?: string;
+  courseId: string;
+  branchId?: string | null;
+  batchId?: string | null;
+  customerType: string;
+  batchType: string;
+  currency?: string;
+  basePrice: number;
+  taxPercentage?: number;
+  isTaxExempt?: boolean;
+  taxExemptionReason?: string | null;
+  taxExemptionCode?: string | null;
+  effectiveStartDate: Date | string;
+  effectiveEndDate?: Date | string | null;
+  createdBy?: string | null;
+}
+
 export interface ResolvedDiscount {
   id: string;
   discountType: string;
@@ -54,7 +72,7 @@ export class CoursePricingService {
     private readonly discountRepository: ICourseDiscountRepository
   ) {}
 
-  async createPricingRule(input: any, actorId?: string, tx?: Prisma.TransactionClient) {
+  async createPricingRule(input: CreatePricingRuleInput, actorId?: string, tx?: Prisma.TransactionClient) {
     const execute = async (activeClient: Prisma.TransactionClient) => {
       // Validate Course exists
       const courseExists = await activeClient.course.findFirst({
@@ -298,7 +316,7 @@ export class CoursePricingService {
     });
 
     // Resolve discount hierarchy by sorting by priority ascending: Global (0) -> Branch (1) -> Batch (2)
-    const getDiscountPriority = (d: any) => {
+      const getDiscountPriority = (d: { batchId?: string | null; branchId?: string | null }) => {
       if (d.batchId) return 2;
       if (d.branchId) return 1;
       return 0;

@@ -4,13 +4,23 @@ import { InvalidCategoryHierarchy } from '../domain/errors';
 import { createUuid } from '@ims/shared-kernel';
 import { randomUUID } from 'crypto';
 
+export interface CreateCategoryInput {
+  code: string;
+  nameEnglish: string;
+  nameArabic: string;
+  description?: string | null;
+  parentCategoryId?: string | null;
+}
+
+export type UpdateCategoryInput = Partial<CreateCategoryInput>;
+
 export class CategoryService {
   constructor(
     private readonly prisma: PrismaClient,
     private readonly categoryRepository: ICourseCategoryRepository
   ) {}
 
-  async createCategory(input: any, actorId?: string, tx?: Prisma.TransactionClient) {
+  async createCategory(input: CreateCategoryInput, actorId?: string, tx?: Prisma.TransactionClient) {
     const execute = async (activeClient: Prisma.TransactionClient) => {
       // Check duplicate code
       const existing = await this.categoryRepository.findByCode(input.code, activeClient);
@@ -65,9 +75,7 @@ export class CategoryService {
     return this.categoryRepository.findAll(client);
   }
 
-  async updateCategory(id: string, input: any, version: number, actorId?: string, tx?: Prisma.TransactionClient) {
-    const client = tx || this.prisma;
-    
+  async updateCategory(id: string, input: UpdateCategoryInput, version: number, actorId?: string, tx?: Prisma.TransactionClient) {
     const execute = async (activeClient: Prisma.TransactionClient) => {
       const category = await this.categoryRepository.findById(id, activeClient);
       if (!category) {

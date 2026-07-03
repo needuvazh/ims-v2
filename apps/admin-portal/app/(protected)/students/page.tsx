@@ -1,6 +1,6 @@
 import { assertPermission } from '@/lib/auth-guard';
-import { Card, PageHeader, Table, TableHeader, TableBody, TableRow, TableHead, TableCell, Badge, Input, Button } from '@ims/shared-ui';
-import { Search, Users, Eye, GraduationCap } from 'lucide-react';
+import { Card, PageHeader, Table, TableHeader, TableBody, TableRow, TableHead, TableCell, Badge, Input, Button, StatCard } from '@ims/shared-ui';
+import { Search, Users, Eye, GraduationCap, Plus, CheckCircle2, Clock3, Archive } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata = { title: 'Student Directory - Admin Portal | ASTI IMS' };
@@ -20,6 +20,7 @@ export default async function StudentLookupPage(props: {
   const statusFilter = searchParams.status || '';
   const branchFilter = searchParams.branchId || '';
   const admissionFilter = searchParams.admissionStatus || '';
+  const canCreateStudent = session.permissions.includes('student.create') || session.permissions.includes('student.write');
 
   const { branchScopeResolver, studentQueryService, prisma } = await import('@/lib/runtime');
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
@@ -45,13 +46,58 @@ export default async function StudentLookupPage(props: {
     }
   );
 
+  const visibleStudents = result.items;
+  const activeCount = visibleStudents.filter((student: any) => student.status === 'Active').length;
+  const suspendedCount = visibleStudents.filter((student: any) => student.status === 'Suspended').length;
+  const archivedCount = visibleStudents.filter((student: any) => student.status === 'Archived').length;
+
   return (
     <div className="space-y-6 p-6">
-      <PageHeader
-        eyebrow="Academic Operations"
-        title="Student Directory"
-        description="Browse branch-scoped student profiles, check enrollment history, and manage academic records."
-      />
+      <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+        <PageHeader
+          eyebrow="Academic Operations"
+          title="Student Directory"
+          description="Browse branch-scoped student profiles, check enrollment history, and manage academic records."
+        />
+        {canCreateStudent && (
+          <Link href="/students/new" className="shrink-0">
+            <Button className="gap-2">
+              <Plus className="h-4 w-4" /> Create Student
+            </Button>
+          </Link>
+        )}
+      </div>
+
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        <StatCard
+          title="Total Students"
+          value={result.total}
+          description="Branch-scoped records in view"
+          icon={<Users className="h-5 w-5" />}
+          tone="indigo"
+        />
+        <StatCard
+          title="Active"
+          value={activeCount}
+          description="Operational student profiles"
+          icon={<CheckCircle2 className="h-5 w-5" />}
+          tone="emerald"
+        />
+        <StatCard
+          title="Suspended"
+          value={suspendedCount}
+          description="Temporarily inactive profiles"
+          icon={<Clock3 className="h-5 w-5" />}
+          tone="amber"
+        />
+        <StatCard
+          title="Archived"
+          value={archivedCount}
+          description="Soft-deleted records"
+          icon={<Archive className="h-5 w-5" />}
+          tone="violet"
+        />
+      </div>
 
       <Card className="p-6">
         {/* Filters and search Form */}

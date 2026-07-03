@@ -42,7 +42,7 @@ const mockPrisma = {
   outboxEvent: { create: vi.fn() },
   $queryRawUnsafe: vi.fn(),
   $transaction: vi.fn((cb) => cb(mockPrisma)),
-} as any;
+} as unknown as import('@prisma/client').PrismaClient;
 
 const batchService = new BatchService(mockPrisma, mockBatchRepository, mockSchedulingService);
 
@@ -331,7 +331,7 @@ test('BatchService.assignTrainer should reject if role type is invalid', async (
 
   const assignment = {
     trainerId,
-    role: 'Secondary' as any, // invalid role type
+    role: 'Secondary', // invalid role type
     assignedFrom: new Date('2026-10-01'),
     assignedTo: new Date('2026-10-31'),
   };

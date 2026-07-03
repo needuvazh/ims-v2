@@ -19,9 +19,7 @@ export async function GET(request: Request) {
       }
     }
 
-    const response = NextResponse.redirect(
-      new URL('/sign-in', process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'),
-    );
+    const response = NextResponse.redirect(new URL('/sign-in', request.url));
     response.cookies.delete(sessionCookieName);
     applyObservabilityResponseHeaders(response.headers, request.headers, {
       route: '/sign-out',

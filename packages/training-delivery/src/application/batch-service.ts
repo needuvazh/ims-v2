@@ -24,12 +24,29 @@ export interface EnqueueWaitlistInput {
   actorId?: string;
 }
 
+export interface CreateBatchInput extends Prisma.BatchUncheckedCreateInput {
+  primaryTrainerId?: string | null;
+}
+
+export interface UpdateBatchInput extends Prisma.BatchUncheckedUpdateInput {
+  allowOverbooking?: boolean;
+  capacity?: number;
+  startDate?: Date | string;
+  endDate?: Date | string;
+}
+
+type BatchLockRow = Batch & {
+  startDate: string | Date;
+  endDate: string | Date;
+  createdAt: string | Date;
+};
+
 export interface ISchedulingService {
   getSessionsForTrainer(
     trainerId: string,
     start: Date,
     end: Date,
-    tx?: any
+    tx?: Prisma.TransactionClient
   ): Promise<{
     sessionDate: Date;
     startTime: string;
@@ -55,7 +72,7 @@ export class BatchService {
     private readonly schedulingService?: ISchedulingService
   ) {}
 
-  async createBatch(input: any, actorId?: string, tx?: Prisma.TransactionClient) {
+  async createBatch(input: CreateBatchInput, actorId?: string, tx?: Prisma.TransactionClient) {
     const execute = async (client: Prisma.TransactionClient) => {
       // Validate code format
       if (!CODE_REGEX.test(input.batchCode)) {
@@ -119,9 +136,10 @@ export class BatchService {
       }
 
       // Classroom validation
-      if (input.classroomId) {
+      const classroomId = typeof input.classroomId === 'string' ? input.classroomId : null;
+      if (classroomId) {
         const classroom = await client.classroom.findFirst({
-          where: { id: input.classroomId, isDeleted: false, status: 'Active' },
+          where: { id: classroomId, isDeleted: false, status: 'Active' },
         });
         if (!classroom) {
           throw new Error('ERR_CRS_CLASSROOM_NOT_FOUND');
@@ -129,9 +147,10 @@ export class BatchService {
       }
 
       // Corporate client validation
-      if (input.corporateAccountId) {
+      const corporateAccountId = typeof input.corporateAccountId === 'string' ? input.corporateAccountId : null;
+      if (corporateAccountId) {
         const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-        if (!UUID_REGEX.test(input.corporateAccountId)) {
+        if (!UUID_REGEX.test(corporateAccountId)) {
           throw new Error('ERR_CRS_INVALID_CORPORATE_ACCOUNT');
         }
       }
@@ -154,6 +173,7 @@ export class BatchService {
           batch.id,
           {
             trainerId: primaryTrainerId,
+            batchId: batch.id,
             role: 'Primary',
             assignedFrom: batch.startDate,
             assignedTo: batch.endDate,
@@ -201,7 +221,7 @@ export class BatchService {
     return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
 
-  async updateBatch(id: string, input: any, version: number, actorId?: string, tx?: Prisma.TransactionClient) {
+  async updateBatch(id: string, input: UpdateBatchInput, version: number, actorId?: string, tx?: Prisma.TransactionClient) {
     const execute = async (client: Prisma.TransactionClient) => {
       const existing = await this.batchRepository.findById(id, client);
       if (!existing) {
@@ -259,9 +279,10 @@ export class BatchService {
       }
 
       // Classroom validation
-      if (input.classroomId) {
+      const classroomId = typeof input.classroomId === 'string' ? input.classroomId : null;
+      if (classroomId) {
         const classroom = await client.classroom.findFirst({
-          where: { id: input.classroomId, isDeleted: false, status: 'Active' },
+          where: { id: classroomId, isDeleted: false, status: 'Active' },
         });
         if (!classroom) {
           throw new Error('ERR_CRS_CLASSROOM_NOT_FOUND');
@@ -270,8 +291,9 @@ export class BatchService {
 
       // Corporate client validation
       if (input.corporateAccountId) {
+        const corporateAccountId = typeof input.corporateAccountId === 'string' ? input.corporateAccountId : null;
         const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-        if (!UUID_REGEX.test(input.corporateAccountId)) {
+        if (!UUID_REGEX.test(corporateAccountId || '')) {
           throw new Error('ERR_CRS_INVALID_CORPORATE_ACCOUNT');
         }
       }
@@ -478,7 +500,7 @@ export class BatchService {
     return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
 
-  async assignTrainer(batchId: string, input: any, actorId?: string, tx?: Prisma.TransactionClient) {
+  async assignTrainer(batchId: string, input: Prisma.BatchTrainerUncheckedCreateInput, actorId?: string, tx?: Prisma.TransactionClient) {
     const execute = async (client: Prisma.TransactionClient) => {
       const batch = await this.batchRepository.findById(batchId, client);
       if (!batch) {
@@ -517,7 +539,7 @@ export class BatchService {
         const hasAccess = await client.userBranchAccess.findFirst({
           where: { userId: actorId, branchId: batch.branchId, status: 'Active' },
         });
-        let isAuthorized = !!hasAccess;
+        const isAuthorized = !!hasAccess;
 
         const userRoles = await client.userRole.findMany({
           where: { userId: actorId },
@@ -687,7 +709,7 @@ export class BatchService {
         const hasAccess = await client.userBranchAccess.findFirst({
           where: { userId: actorId, branchId: batch.branchId, status: 'Active' },
         });
-        let isAuthorized = !!hasAccess;
+        const isAuthorized = !!hasAccess;
 
         const userRoles = await client.userRole.findMany({
           where: { userId: actorId },
@@ -760,7 +782,7 @@ export class BatchService {
   async allocateSeat(batchId: string, requestedSeats: number, forceOverbook: boolean, tx?: Prisma.TransactionClient) {
     const execute = async (client: Prisma.TransactionClient) => {
       // Pessimistic write lock
-      const batches = await client.$queryRawUnsafe<any[]>(
+      const batches = await client.$queryRawUnsafe<BatchLockRow[]>(
         'SELECT * FROM "batches" WHERE "id" = $1::uuid AND "isDeleted" = false FOR UPDATE',
         batchId
       );
@@ -805,7 +827,7 @@ export class BatchService {
 
   async releaseSeatAndPromote(batchId: string, releasedSeats: number = 1, tx?: Prisma.TransactionClient) {
     const execute = async (client: Prisma.TransactionClient) => {
-      const batches = await client.$queryRawUnsafe<any[]>(
+      const batches = await client.$queryRawUnsafe<BatchLockRow[]>(
         'SELECT * FROM "batches" WHERE "id" = $1::uuid AND "isDeleted" = false FOR UPDATE',
         batchId
       );
@@ -1362,7 +1384,7 @@ export class BatchService {
   }
 
   private async acquireBatchLock(batchId: string, client: Prisma.TransactionClient): Promise<Batch> {
-    const batches = await client.$queryRawUnsafe<any[]>(
+    const batches = await client.$queryRawUnsafe<BatchLockRow[]>(
       'SELECT * FROM "batches" WHERE "id" = $1::uuid AND "isDeleted" = false FOR UPDATE',
       batchId
     );
