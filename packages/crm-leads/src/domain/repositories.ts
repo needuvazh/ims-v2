@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import { IngestInquiryInput, CreateLeadInput, LeadStage, ScheduleFollowUpInput } from './lead';
+import { IngestInquiryInput, CreateLeadInput, LeadStage, LeadSource, ScheduleFollowUpInput } from './lead';
 
 export interface IInquiryRepository {
   create(
@@ -59,11 +59,23 @@ export interface ILeadRepository {
   deleteLead(id: string, deletedBy: string, tx?: Prisma.TransactionClient): Promise<void>;
 
   findAll(
-    filters: { branchId?: string; stage?: LeadStage; counselorId?: string; search?: string; branchIds?: string[] },
+    filters: { branchId?: string; stage?: LeadStage; source?: LeadSource; counselorId?: string; search?: string; branchIds?: string[]; sortBy?: LeadSortField; sortOrder?: LeadSortOrder },
     pagination: { page: number; limit: number },
     tx?: Prisma.TransactionClient
   ): Promise<{ items: any[]; total: number }>;
 }
+
+export type LeadSortField =
+  | 'createdAt'
+  | 'updatedAt'
+  | 'leadNumber'
+  | 'name'
+  | 'phone'
+  | 'email'
+  | 'branch'
+  | 'stage';
+
+export type LeadSortOrder = 'asc' | 'desc';
 
 export interface IFollowUpRepository {
   create(

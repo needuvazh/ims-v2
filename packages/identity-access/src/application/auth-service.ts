@@ -50,6 +50,7 @@ export class AuthService {
   constructor(
     private readonly userRepository: IUserRepository,
     private readonly sessionRepository: ISessionRepository,
+    private readonly passwordHistoryRepository: IPasswordHistoryRepository,
     private readonly securityPolicyRepository: ISecurityPolicyRepository,
     private readonly auditLogRepository: IAuditLogRepository,
     private readonly loginHistoryRepository: ILoginHistoryRepository,
@@ -237,7 +238,7 @@ export class AuthService {
         });
 
         // Send lock notification
-        await this.notificationPort.sendAccountLockedNotification(
+        await this.notificationPort?.sendAccountLockedNotification(
           ['admin@ims.com'], // In practice this would be loaded admins
           { displayName: user.username, failedAttempts: user.failedLoginCount, lockedUntil: user.lockedUntil }
         );
@@ -596,7 +597,7 @@ export class AuthService {
     });
 
     // Send reset email without exposing the reset link to the adapter boundary.
-    await this.notificationPort.sendPasswordResetEmail(user.email, {
+    await this.notificationPort?.sendPasswordResetEmail(user.email, {
       firstName: user.username, // Using username as name placeholder
       resetLink: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password?token=${rawToken}`,
       expiresAt,

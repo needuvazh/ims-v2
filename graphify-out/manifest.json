@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/lib/runtime.ts": {
-    "mtime": 1783141582.2839787,
-    "ast_hash": "374a037da49ed3f8067055856b859eae",
+    "mtime": 1783173185.7615185,
+    "ast_hash": "329fbec44d1dcc1fcfb7b842f4eb5cba",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/page.tsx": {
@@ -320,8 +320,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/next-env.d.ts": {
-    "mtime": 1783138578.1864707,
-    "ast_hash": "d0f8375ae1199dc7acd3977fc33b78b8",
+    "mtime": 1783173234.6495938,
+    "ast_hash": "2a74d3909800ca5467fa83b0ab4a4890",
     "semantic_hash": ""
   },
   "apps/admin-portal/next.config.ts": {
@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "packages/database/prisma/seed.ts": {
-    "mtime": 1783164477.1695855,
-    "ast_hash": "56946dbb75b5c6defab73d919f94bca3",
+    "mtime": 1783169374.4666276,
+    "ast_hash": "c60ad6aa415255800dd51c921bee114a",
     "semantic_hash": ""
   },
   "packages/database/src/client.ts": {
@@ -455,13 +455,13 @@
     "semantic_hash": ""
   },
   "packages/identity-access/src/application/auth-service.test.ts": {
-    "mtime": 1783104198.3346765,
-    "ast_hash": "dee8f05f99392f5b173fc2fd6caee1fe",
+    "mtime": 1783173209.7419257,
+    "ast_hash": "a0fcd44624ef9ce79f91e17031fd2581",
     "semantic_hash": ""
   },
   "packages/identity-access/src/application/auth-service.ts": {
-    "mtime": 1783106747.175106,
-    "ast_hash": "0744791ae749e854ff367ea303e4c2e3",
+    "mtime": 1783173159.289495,
+    "ast_hash": "78fc247481ae5f3d2dd08214e00a1735",
     "semantic_hash": ""
   },
   "packages/identity-access/src/application/navigation-service.test.ts": {
@@ -2560,8 +2560,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/page.tsx": {
-    "mtime": 1783104197.0780275,
-    "ast_hash": "225ef7506d47b1d30a52f9e541898e13",
+    "mtime": 1783172867.728405,
+    "ast_hash": "082ba30f060cd56281ad8b706b9eeedf",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/organization/branches/[id]/edit/page.tsx": {
@@ -2710,8 +2710,8 @@
     "semantic_hash": ""
   },
   "packages/crm-leads/src/application/lead-service.ts": {
-    "mtime": 1783104198.2952032,
-    "ast_hash": "93fe9722176246ef142e60c00c7af8a3",
+    "mtime": 1783172888.7729135,
+    "ast_hash": "bd4bce0aae593bd079d2c3a905008fd1",
     "semantic_hash": ""
   },
   "packages/crm-leads/src/domain/lead.ts": {
@@ -2725,8 +2725,8 @@
     "semantic_hash": ""
   },
   "packages/crm-leads/src/infrastructure/lead-repository.ts": {
-    "mtime": 1783104198.296876,
-    "ast_hash": "d9be254858f92addf4616b06dc903586",
+    "mtime": 1783172893.3302658,
+    "ast_hash": "c0d2e669eff8f381d934af523ec1be4e",
     "semantic_hash": ""
   },
   "packages/crm-leads/tsconfig.json": {
@@ -3300,8 +3300,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/lib/api-middleware.ts": {
-    "mtime": 1783104198.9496698,
-    "ast_hash": "e533cb1ef48a34c42d2d0bb369f7add7",
+    "mtime": 1783169723.0607812,
+    "ast_hash": "b1946f4a019a57b611a3b4d2b15543f0",
     "semantic_hash": ""
   },
   "apps/admin-portal/smoke/iam.smoke.ts": {
@@ -4225,8 +4225,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/crm/leads/route.ts": {
-    "mtime": 1783104197.1172357,
-    "ast_hash": "9bce47f383eff84136fa84af543b8276",
+    "mtime": 1783172855.4781113,
+    "ast_hash": "9c8a3e7287b89568291975294c2fd000",
     "semantic_hash": ""
   },
   "packages/crm-leads/src/application/followup-service.ts": {
@@ -4245,8 +4245,8 @@
     "semantic_hash": ""
   },
   "packages/crm-leads/src/domain/repositories.ts": {
-    "mtime": 1783104198.295683,
-    "ast_hash": "6c3d50f1b840ecc651643b49b9b79f14",
+    "mtime": 1783172840.3559582,
+    "ast_hash": "d4734d7e11b7966dff79bb223a7a914d",
     "semantic_hash": ""
   },
   "packages/crm-leads/src/infrastructure/followup-repository.ts": {
@@ -4275,8 +4275,8 @@
     "semantic_hash": ""
   },
   "packages/crm-leads/tests/lead-service-query.spec.ts": {
-    "mtime": 1783104198.2973511,
-    "ast_hash": "8b0ac49c021bb1be2eb31fc71bcc6f73",
+    "mtime": 1783172900.1630266,
+    "ast_hash": "72d1191044c38b781e1763a2ac36b3bd",
     "semantic_hash": ""
   },
   "packages/database/prisma/migrations/20260701020927_add_person_email/migration.sql": {
@@ -4335,8 +4335,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/_components/leads-client-list.tsx": {
-    "mtime": 1783109927.5152962,
-    "ast_hash": "e070861c80850cc2a42ae010a70799dc",
+    "mtime": 1783173119.2067318,
+    "ast_hash": "d6bd19f711c8ab5b26ab20881ae418d0",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/[id]/edit/page.tsx": {
@@ -4465,8 +4465,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/dashboards/crm/page.tsx": {
-    "mtime": 1783104197.0410259,
-    "ast_hash": "c69531a48845032a568b707308870178",
+    "mtime": 1783172145.7086926,
+    "ast_hash": "35ed255bd94fce04596eb1961f97d3df",
     "semantic_hash": ""
   },
   "packages/crm-leads/src/application/lead-analytics-read-service.test.ts": {
@@ -4770,8 +4770,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/[id]/page.tsx": {
-    "mtime": 1783138488.3407185,
-    "ast_hash": "2cf840d1e8ae2641dadb44a8d1cf864a",
+    "mtime": 1783165310.1379058,
+    "ast_hash": "0ec9c3fe9e55fdf29a0e464348a3a012",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/_components/batch-form.tsx": {
@@ -4840,8 +4840,8 @@
     "semantic_hash": ""
   },
   "packages/training-delivery/src/application/batch-service.ts": {
-    "mtime": 1783110085.0395973,
-    "ast_hash": "acf065097c13b4d3f491ab04144763d5",
+    "mtime": 1783173168.170985,
+    "ast_hash": "2b962e3e57bf879aedcbc9951cd52795",
     "semantic_hash": ""
   },
   "packages/training-delivery/src/domain/batch.ts": {
@@ -4885,8 +4885,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/_components/batch-details-tabs.tsx": {
-    "mtime": 1783138588.4855807,
-    "ast_hash": "3857eca36a86d72002fa6238c0b87eee",
+    "mtime": 1783166336.7602215,
+    "ast_hash": "cc018d77a892d5b3835a48c0d03c2e1c",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/[id]/edit/page.tsx": {
@@ -4920,8 +4920,8 @@
     "semantic_hash": ""
   },
   "openspec/specs/batch-delivery/spec.md": {
-    "mtime": 1783104198.1767097,
-    "ast_hash": "40fb3ad384e154094f9a1f3ba07a7b50",
+    "mtime": 1783171358.3028042,
+    "ast_hash": "6579cf6ce35f0d3389cea52894dc3c5d",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/batches/[id]/trainers/conflicts/route.ts": {
@@ -6319,79 +6319,19 @@
     "ast_hash": "3b25d1bab83669cf9b698dce06290714",
     "semantic_hash": ""
   },
-  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/ Trainer Management.md": {
-    "mtime": 1783104197.2354476,
-    "ast_hash": "8d257092573907386e7bfeb4d57b61fc",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
-    "mtime": 1783104197.2357934,
-    "ast_hash": "6301af461d680d35a435f92dbfcdbfa3",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 10 - Security Architecture and NFR.md": {
-    "mtime": 1783104197.2363749,
-    "ast_hash": "f01e69894ed2405fb23347a281ff993d",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
-    "mtime": 1783104197.2369132,
-    "ast_hash": "43f173578eb098176201c67e250a413f",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
-    "mtime": 1783104197.2372673,
-    "ast_hash": "95ba9afb9f23a4a0b453b92fcee6aa19",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
-    "mtime": 1783104197.2376876,
-    "ast_hash": "0c8c9b6a479042a7447657b0d08e3c19",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
-    "mtime": 1783104197.238021,
-    "ast_hash": "3047184dd87a6ee6651403aba5f9e774",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 5 \u2013 API Contracts.md": {
-    "mtime": 1783104197.2383811,
-    "ast_hash": "b19672193480725f26f6d9594f4600a0",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 6 \u2013 Permission Matrix.md": {
-    "mtime": 1783104197.2387433,
-    "ast_hash": "1d76aba1f951a6e9bf341487fd02420e",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
-    "mtime": 1783104197.2391295,
-    "ast_hash": "854829e3f869326147b8e4d5547292cf",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
-    "mtime": 1783104197.239516,
-    "ast_hash": "793e521d55badcdc5d84428f9d7d3ead",
-    "semantic_hash": ""
-  },
-  "docs/architecture/frd/Module 10 - Faculty  Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
-    "mtime": 1783104197.2400603,
-    "ast_hash": "8b66566db99b14be713f9f16414c6f44",
-    "semantic_hash": ""
-  },
   "docs/operations/product-setup.md": {
     "mtime": 1783104197.241629,
     "ast_hash": "5669593dbdb193579fae2b4ce8aab915",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/attendance/corrections/page.tsx": {
-    "mtime": 1783162083.5335724,
-    "ast_hash": "4d3d6908ec736392d80f9f6d7922d4e7",
+    "mtime": 1783168829.1021945,
+    "ast_hash": "b118d6e7fac76737a1509e9e5a9b49bd",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/attendance/dashboard/page.tsx": {
-    "mtime": 1783162225.9497359,
-    "ast_hash": "be475cf6e9fd8cafa45999016c265cef",
+    "mtime": 1783165630.790539,
+    "ast_hash": "b1c7e7c3af801eeb0e5ba133bb45877d",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/attendance/page.tsx": {
@@ -6400,18 +6340,18 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/attendance/records/page.tsx": {
-    "mtime": 1783162083.5332174,
-    "ast_hash": "018e3561f90c3826c4a838287ad55ec9",
+    "mtime": 1783169259.496312,
+    "ast_hash": "4b187e6082bfa9a735f6a807bfdf6e52",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/attendance/reports/page.tsx": {
-    "mtime": 1783162083.5339687,
-    "ast_hash": "2b7dfe1ce0733864dd0906a7950b0af4",
+    "mtime": 1783165674.0295577,
+    "ast_hash": "b7475a4aded05bbac47dd1194f9f07b8",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/attendance/sessions/page.tsx": {
-    "mtime": 1783162083.5324395,
-    "ast_hash": "e9421b3149c1e44a02d57a49f4290c2a",
+    "mtime": 1783167411.0923412,
+    "ast_hash": "39ced19ea97a86f79bced0afffeed492",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/_components/branch-override-form.tsx": {
@@ -6575,8 +6515,8 @@
     "semantic_hash": ""
   },
   "packages/attendance/src/application/attendance-service.ts": {
-    "mtime": 1783141774.9088047,
-    "ast_hash": "c4107f7c670cb757c3abfc9f30dc6e00",
+    "mtime": 1783166321.8108249,
+    "ast_hash": "de08f863835af13934245a8b454bcbc7",
     "semantic_hash": ""
   },
   "packages/attendance/src/domain/attendance.ts": {
@@ -6700,8 +6640,8 @@
     "semantic_hash": ""
   },
   "packages/shared-ui/src/components/responsive-data-table.tsx": {
-    "mtime": 1783109352.0798926,
-    "ast_hash": "9c45d88a6421b038c1020c3de5ff3c12",
+    "mtime": 1783172634.5594864,
+    "ast_hash": "59d97ea6db832564864dca2232c451c6",
     "semantic_hash": ""
   },
   "tests/e2e/responsive-layout.spec.ts": {
@@ -7024,81 +6964,6 @@
     "ast_hash": "e6f6408a14a58644d828550ce06c264e",
     "semantic_hash": ""
   },
-  "openspec/changes/implement-module-07-scheduling/.openspec.yaml": {
-    "mtime": 1783108665.4762902,
-    "ast_hash": "02f6db0a449be79349504bc19b245e9b",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-07-scheduling/design.md": {
-    "mtime": 1783108729.1580017,
-    "ast_hash": "3f608bf76078b59d1b74b4fd818264d7",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-07-scheduling/proposal.md": {
-    "mtime": 1783108680.4237614,
-    "ast_hash": "897796931f5254ab7f03bf78f689662e",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-07-scheduling/specs/batch-delivery/spec.md": {
-    "mtime": 1783108718.1529243,
-    "ast_hash": "7fecdb4da672fcdc32bf9c1f36c0002e",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-07-scheduling/specs/business-calendar/spec.md": {
-    "mtime": 1783108697.526718,
-    "ast_hash": "9ad7b94d319e50db778775550f3f07f0",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-07-scheduling/specs/conflict-dashboard/spec.md": {
-    "mtime": 1783108710.4166148,
-    "ast_hash": "a6b57219e091f1d29d42dc938f24a6f3",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-07-scheduling/specs/holiday-management/spec.md": {
-    "mtime": 1783108701.7172465,
-    "ast_hash": "2915f6b2553452250c359b16d51b490f",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-07-scheduling/specs/timetable-scheduling/spec.md": {
-    "mtime": 1783108714.4588697,
-    "ast_hash": "8b924e33b33ab3f5f9cf3dbcfa667471",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-07-scheduling/specs/venue-blocking/spec.md": {
-    "mtime": 1783108705.9165695,
-    "ast_hash": "fcb9e190174024fc5554081dbac3795b",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-07-scheduling/tasks.md": {
-    "mtime": 1783138910.9668753,
-    "ast_hash": "3b6ed9568fec9bfeba8af47eb7b462ab",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-08-attendance-management/.openspec.yaml": {
-    "mtime": 1783140449.408136,
-    "ast_hash": "ff548009fead911022d5b7c4c25d58ae",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-08-attendance-management/design.md": {
-    "mtime": 1783140636.211965,
-    "ast_hash": "17d62f9e0244ace31b3a2f22504379d2",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-08-attendance-management/proposal.md": {
-    "mtime": 1783140533.3902235,
-    "ast_hash": "c375f1fba4882c7913fc3b0fe3f0a06a",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-08-attendance-management/specs/attendance-management/spec.md": {
-    "mtime": 1783140585.2883692,
-    "ast_hash": "9adeebb9cbe485cc4ad1b1e6c842d4bf",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-08-attendance-management/tasks.md": {
-    "mtime": 1783142165.8429184,
-    "ast_hash": "9f3116f9c5a640a26de9ed851a6a8731",
-    "semantic_hash": ""
-  },
   "openspec/changes/improve-responsive-ui-system/.openspec.yaml": {
     "mtime": 1783105526.9807332,
     "ast_hash": "02f6db0a449be79349504bc19b245e9b",
@@ -7147,6 +7012,141 @@
   "openspec/specs/student-profile/spec.md": {
     "mtime": 1783104198.2048254,
     "ast_hash": "28e85dae0f09cfdd7919b16a6437bf22",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/attendance/_components/attendance-corrections-queue.tsx": {
+    "mtime": 1783168783.3330467,
+    "ast_hash": "9e14231ae036d605eae133c0150dec14",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/attendance/_components/attendance-roster-editor.tsx": {
+    "mtime": 1783168636.5739021,
+    "ast_hash": "beb150bd71a1aba0eeb4ba6feec73ef4",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/attendance/actions.ts": {
+    "mtime": 1783166327.7679467,
+    "ast_hash": "9b757b03564dd1ed20dff7e77ef167e7",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/dashboards/crm/page.test.tsx": {
+    "mtime": 1783172161.289856,
+    "ast_hash": "9f96babae82b95c09157d01bc5795dcf",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/lib/api-middleware.test.ts": {
+    "mtime": 1783169760.0873432,
+    "ast_hash": "a9bf39ea690cef2be72ffb0397dd6efb",
+    "semantic_hash": ""
+  },
+  "packages/database/prisma/migrations/20260704094500_allow_multiple_attendance_corrections/migration.sql": {
+    "mtime": 1783169163.7492282,
+    "ast_hash": "ac47f8c22fd3d109de210a04086d13d3",
+    "semantic_hash": ""
+  },
+  "packages/database/prisma/migrations/20260704095500_drop_attendance_correction_unique_index/migration.sql": {
+    "mtime": 1783171074.2476702,
+    "ast_hash": "f63c67d5e12b574917edf77184d6eaea",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/.openspec.yaml": {
+    "mtime": 1783108665.4762902,
+    "ast_hash": "02f6db0a449be79349504bc19b245e9b",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md": {
+    "mtime": 1783108729.1580017,
+    "ast_hash": "3f608bf76078b59d1b74b4fd818264d7",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/proposal.md": {
+    "mtime": 1783108680.4237614,
+    "ast_hash": "897796931f5254ab7f03bf78f689662e",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md": {
+    "mtime": 1783108718.1529243,
+    "ast_hash": "7fecdb4da672fcdc32bf9c1f36c0002e",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/business-calendar/spec.md": {
+    "mtime": 1783108697.526718,
+    "ast_hash": "9ad7b94d319e50db778775550f3f07f0",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/conflict-dashboard/spec.md": {
+    "mtime": 1783108710.4166148,
+    "ast_hash": "a6b57219e091f1d29d42dc938f24a6f3",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md": {
+    "mtime": 1783108701.7172465,
+    "ast_hash": "2915f6b2553452250c359b16d51b490f",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/timetable-scheduling/spec.md": {
+    "mtime": 1783108714.4588697,
+    "ast_hash": "8b924e33b33ab3f5f9cf3dbcfa667471",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/venue-blocking/spec.md": {
+    "mtime": 1783108705.9165695,
+    "ast_hash": "fcb9e190174024fc5554081dbac3795b",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/tasks.md": {
+    "mtime": 1783138910.9668753,
+    "ast_hash": "3b6ed9568fec9bfeba8af47eb7b462ab",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-04-implement-module-08-attendance-management/.openspec.yaml": {
+    "mtime": 1783140449.408136,
+    "ast_hash": "ff548009fead911022d5b7c4c25d58ae",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-04-implement-module-08-attendance-management/design.md": {
+    "mtime": 1783140636.211965,
+    "ast_hash": "17d62f9e0244ace31b3a2f22504379d2",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-04-implement-module-08-attendance-management/proposal.md": {
+    "mtime": 1783140533.3902235,
+    "ast_hash": "c375f1fba4882c7913fc3b0fe3f0a06a",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-04-implement-module-08-attendance-management/specs/attendance-management/spec.md": {
+    "mtime": 1783140585.2883692,
+    "ast_hash": "9adeebb9cbe485cc4ad1b1e6c842d4bf",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-04-implement-module-08-attendance-management/tasks.md": {
+    "mtime": 1783142165.8429184,
+    "ast_hash": "9f3116f9c5a640a26de9ed851a6a8731",
+    "semantic_hash": ""
+  },
+  "openspec/specs/business-calendar/spec.md": {
+    "mtime": 1783171358.3036244,
+    "ast_hash": "06ab773260f2700b4816b1c46dab2a2c",
+    "semantic_hash": ""
+  },
+  "openspec/specs/conflict-dashboard/spec.md": {
+    "mtime": 1783171358.3041496,
+    "ast_hash": "05aae223457854edf5b731926709dbf6",
+    "semantic_hash": ""
+  },
+  "openspec/specs/holiday-management/spec.md": {
+    "mtime": 1783171358.3045826,
+    "ast_hash": "2ed512cab052b5949896bb5bd59f15b3",
+    "semantic_hash": ""
+  },
+  "openspec/specs/timetable-scheduling/spec.md": {
+    "mtime": 1783171358.3050866,
+    "ast_hash": "22ef56e370504f63c4b1c9cf77543ec1",
+    "semantic_hash": ""
+  },
+  "openspec/specs/venue-blocking/spec.md": {
+    "mtime": 1783171358.3056977,
+    "ast_hash": "88092109e66366c4183a70aa2255166f",
     "semantic_hash": ""
   }
 }

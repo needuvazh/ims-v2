@@ -41,6 +41,10 @@ type BatchLockRow = Batch & {
   createdAt: string | Date;
 };
 
+type BatchBranchRow = {
+  instituteId: string;
+};
+
 export interface ISchedulingService {
   getSessionsForTrainer(
     trainerId: string,
@@ -85,6 +89,19 @@ export class BatchService {
     public readonly batchRepository: IBatchRepository,
     private readonly schedulingService?: ISchedulingService
   ) {}
+
+  private async resolveInstituteId(branchId: string, client: Prisma.TransactionClient): Promise<string> {
+    const branch = await client.branch.findUnique({
+      where: { id: branchId, isDeleted: false },
+      select: { instituteId: true },
+    });
+
+    if (!branch) {
+      throw new Error('ERR_CRS_BRANCH_NOT_FOUND');
+    }
+
+    return (branch as BatchBranchRow).instituteId;
+  }
 
   async createBatch(input: CreateBatchInput, actorId?: string, tx?: Prisma.TransactionClient) {
     const execute = async (client: Prisma.TransactionClient) => {
@@ -619,12 +636,13 @@ export class BatchService {
       // Intercept schedule conflicts
       if (this.schedulingService) {
         const batchSessions = await this.batchRepository.findSessions(batchId, client);
+        const instituteId = await this.resolveInstituteId(batch.branchId, client);
         const conflicts: ScheduleConflict[] = [];
 
         for (const bs of batchSessions) {
           const result = await this.schedulingService.validateSession({
             branchId: batch.branchId,
-            instituteId: (batch as Record<string, unknown>).instituteId as string, 
+            instituteId,
             scheduledDate: bs.sessionDate,
             startTime: bs.startTime,
             endTime: bs.endTime,
@@ -762,12 +780,13 @@ export class BatchService {
       }
 
       const batchSessions = await this.batchRepository.findSessions(batchId, client);
+      const instituteId = await this.resolveInstituteId(batch.branchId, client);
       const conflicts: ScheduleConflict[] = [];
 
       for (const bs of batchSessions) {
         const result = await this.schedulingService.validateSession({
           branchId: batch.branchId,
-          instituteId: (batch as Record<string, unknown>).instituteId as string || '',
+          instituteId,
           scheduledDate: bs.sessionDate,
           startTime: bs.startTime,
           endTime: bs.endTime,

@@ -68,6 +68,32 @@ describe('LeadService - Query Filters', () => {
     );
   });
 
+  it('should apply sort order for name ascending', async () => {
+    await leadService.findAll({ sortBy: 'name', sortOrder: 'asc' }, { page: 1, limit: 10 });
+
+    expect(prismaMock.lead.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        orderBy: [
+          { firstName: 'asc' },
+          { lastName: 'asc' },
+          { createdAt: 'desc' },
+        ],
+      })
+    );
+  });
+
+  it('should apply source filter', async () => {
+    await leadService.findAll({ source: 'Campaign' }, { page: 1, limit: 10 });
+
+    expect(prismaMock.lead.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          source: 'Campaign',
+        }),
+      })
+    );
+  });
+
   it('should return null for invalid UUID in getLeadById without querying database', async () => {
     prismaMock.lead.findUnique = vi.fn();
     const result = await leadService.getLeadById('unassigned-id-uuid');

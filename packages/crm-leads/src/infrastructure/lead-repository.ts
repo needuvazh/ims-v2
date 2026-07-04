@@ -1,6 +1,6 @@
 import { PrismaClient, Prisma } from '@prisma/client';
-import { ILeadRepository } from '../domain/repositories';
-import { CreateLeadInput, LeadStage } from '../domain/lead';
+import { ILeadRepository, LeadSortField, LeadSortOrder } from '../domain/repositories';
+import { CreateLeadInput, LeadStage, LeadSource } from '../domain/lead';
 
 export class LeadRepository implements ILeadRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -213,7 +213,7 @@ export class LeadRepository implements ILeadRepository {
   }
 
   async findAll(
-    filters: { branchId?: string; stage?: LeadStage; counselorId?: string; search?: string; branchIds?: string[] },
+    filters: { branchId?: string; stage?: LeadStage; source?: LeadSource; counselorId?: string; search?: string; branchIds?: string[]; sortBy?: LeadSortField; sortOrder?: LeadSortOrder },
     pagination: { page: number; limit: number },
     tx?: Prisma.TransactionClient
   ): Promise<{ items: any[]; total: number }> {
@@ -228,6 +228,10 @@ export class LeadRepository implements ILeadRepository {
 
     if (filters.stage) {
       where.stage = filters.stage as any;
+    }
+
+    if (filters.source) {
+      where.source = filters.source as any;
     }
 
     if (filters.counselorId) {
@@ -246,9 +250,27 @@ export class LeadRepository implements ILeadRepository {
     }
 
     const total = await client.lead.count({ where });
+    const sortField = filters.sortBy ?? 'createdAt';
+    const sortOrder = filters.sortOrder ?? 'desc';
+    const orderBy =
+      sortField === 'branch'
+        ? ([{ branch: { branchName: sortOrder } }, { createdAt: 'desc' as const }] as Prisma.LeadOrderByWithRelationInput[])
+        : sortField === 'name'
+          ? [
+              { firstName: sortOrder } as Prisma.LeadOrderByWithRelationInput,
+              { lastName: sortOrder } as Prisma.LeadOrderByWithRelationInput,
+              { createdAt: 'desc' as const },
+            ]
+        : sortField === 'createdAt'
+          ? [{ createdAt: sortOrder } as Prisma.LeadOrderByWithRelationInput]
+          : [
+              { [sortField]: sortOrder } as Prisma.LeadOrderByWithRelationInput,
+              { createdAt: 'desc' as const },
+            ];
+
     const items = await client.lead.findMany({
       where,
-      orderBy: { createdAt: 'desc' },
+      orderBy,
       skip: (pagination.page - 1) * pagination.limit,
       take: pagination.limit,
       include: {

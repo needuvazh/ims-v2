@@ -294,10 +294,10 @@ describe('AuthService', () => {
       securityPolicyRepo,
       auditRepo,
       loginHistoryRepo,
-      notificationPort,
       roleRepo,
       branchRepo,
       outboxRepo as any,
+      notificationPort,
     );
   });
 

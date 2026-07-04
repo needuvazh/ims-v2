@@ -57,6 +57,7 @@ const roleRepository = new PrismaRoleRepository(prisma);
 const permissionRepository = new PrismaPermissionRepository(prisma);
 const userBranchAccessRepository = new PrismaUserBranchAccessRepository(prisma);
 export const sessionRepository = new PrismaSessionRepository(prisma);
+const passwordHistoryRepository = new PrismaPasswordHistoryRepository(prisma);
 const securityPolicyRepository = new PrismaSecurityPolicyRepository(prisma);
 const notificationRepository = new PrismaNotificationRepository(prisma);
 const outboxEventRepository = new PrismaOutboxEventRepository(prisma);
@@ -89,6 +90,7 @@ export const userService = new UserService(
 export const authService = new AuthService(
   userRepository,
   sessionRepository,
+  passwordHistoryRepository,
   securityPolicyRepository,
   auditRepository,
   loginHistoryRepository,

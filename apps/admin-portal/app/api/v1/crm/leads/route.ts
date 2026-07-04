@@ -8,15 +8,19 @@ import {
   createStructuredLogger,
   getCurrentRequestContext,
 } from '../../../../lib/observability';
-import { CreateLeadSchema, maskEmail, maskPhone, LeadStageEnum } from '@ims/crm-leads';
+import { CreateLeadSchema, maskEmail, maskPhone, LeadStageEnum, LeadSourceEnum } from '@ims/crm-leads';
+import type { LeadSortField, LeadSortOrder } from '@ims/crm-leads';
 
 const querySchema = z.object({
   page: z.coerce.number().int().positive().default(1),
   limit: z.coerce.number().int().positive().max(100).default(25),
   branchId: z.string().uuid().optional(),
   stage: LeadStageEnum.optional(),
+  source: LeadSourceEnum.optional(),
   counselorId: z.string().uuid().optional(),
   search: z.string().trim().optional(),
+  sortBy: z.enum(['createdAt', 'updatedAt', 'leadNumber', 'name', 'phone', 'email', 'branch', 'stage']).optional(),
+  sortOrder: z.enum(['asc', 'desc']).optional(),
 });
 
 function problemJson(status: number, title: string, detail: string, errorCode: string, invalidFields?: Array<{ field: string; message: string }>) {
@@ -84,8 +88,11 @@ export async function GET(request: Request) {
         limit: params.get('limit') ?? undefined,
         branchId: params.get('branchId') ?? undefined,
         stage: params.get('stage') ?? undefined,
+        source: params.get('source') ?? undefined,
         counselorId: params.get('counselorId') ?? undefined,
         search: params.get('search') ?? undefined,
+        sortBy: params.get('sortBy') ?? undefined,
+        sortOrder: params.get('sortOrder') ?? undefined,
       });
 
       if (!parsed.success) {
@@ -122,8 +129,11 @@ export async function GET(request: Request) {
           branchId: parsed.data.branchId,
           branchIds: allowedBranches,
           stage: parsed.data.stage,
+          source: parsed.data.source,
           counselorId,
           search: parsed.data.search,
+          sortBy: parsed.data.sortBy as LeadSortField | undefined,
+          sortOrder: parsed.data.sortOrder as LeadSortOrder | undefined,
         },
         {
           page: parsed.data.page,

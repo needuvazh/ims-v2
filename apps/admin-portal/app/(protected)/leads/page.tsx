@@ -1,7 +1,7 @@
 import { createUuid, type Uuid } from '@ims/shared-kernel';
-import { prisma } from '@ims/database';
 import { assertPermission } from '../../lib/auth-guard';
 import { LeadsClientList } from './_components/leads-client-list';
+import { AdminListPageLayout } from '@ims/shared-ui';
 
 export default async function LeadsPage(props: {
   searchParams: Promise<{
@@ -10,6 +10,8 @@ export default async function LeadsPage(props: {
     source?: string;
     branchId?: string;
     page?: string;
+    sortBy?: string;
+    sortOrder?: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
@@ -17,7 +19,7 @@ export default async function LeadsPage(props: {
   // Enforce read permission at the route entry point
   const session = await assertPermission('lead.read');
 
-  const { branchScopeResolver, leadService, organizationService, userService } =
+  const { branchScopeResolver, leadService, organizationService } =
     await import('../../lib/runtime');
 
   // Resolve allowed branch IDs for the active user context
@@ -53,6 +55,8 @@ export default async function LeadsPage(props: {
     source: searchParams.source as any,
     counselorId,
     search: searchParams.q,
+    sortBy: searchParams.sortBy as any,
+    sortOrder: searchParams.sortOrder as any,
   };
 
   const { items: rawLeads, total } = await leadService.findAll(filters, { page, limit });
@@ -74,29 +78,13 @@ export default async function LeadsPage(props: {
           .filter((b) => allowedBranchIds.includes(b.id as any))
           .map((b) => ({ id: b.id, name: b.branchName }));
 
-  const coursesResult = await prisma.course.findMany({
-    where: { status: 'Published', isDeleted: false },
-    select: { id: true, nameEnglish: true },
-  });
-  const courses = coursesResult.map((c: any) => ({ id: c.id, name: c.nameEnglish }));
-
-  const usersResult = (await userService.listUsers({
-    actorId: session.userId,
-    actorPermissions: session.permissions,
-    activeBranchId: session.activeBranchId,
-  })) as any[];
-  const counselors = usersResult.map((u: any) => ({ id: u.id, name: u.username }));
-
   return (
-    <div className="p-6">
+    <AdminListPageLayout className="pt-1 sm:pt-0">
       <LeadsClientList
         leads={leads}
         branches={branches}
-        counselors={counselors}
-        courses={courses}
         total={total}
-        sessionUserId={session.userId}
       />
-    </div>
+    </AdminListPageLayout>
   );
 }

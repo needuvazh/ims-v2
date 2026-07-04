@@ -1,13 +1,17 @@
 import React, { ReactNode } from 'react';
+import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 import { cn } from '../utils/cn';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from './table';
 
 export interface Column<T> {
-  header: string;
+  header: ReactNode;
   /** Accessor key or render function for the cell */
   render: (item: T) => ReactNode;
   className?: string;
   headerClassName?: string;
+  sortable?: boolean;
+  sortDirection?: 'asc' | 'desc' | null;
+  onSort?: () => void;
 }
 
 export interface ResponsiveDataTableProps<T> {
@@ -51,7 +55,25 @@ export function ResponsiveDataTable<T>({
             <TableRow>
               {columns.map((col, i) => (
                 <TableHead key={i} className={col.headerClassName}>
-                  {col.header}
+                  {col.sortable && col.onSort ? (
+                    <button
+                      type="button"
+                      onClick={col.onSort}
+                      className="inline-flex items-center gap-1.5 text-left transition-colors hover:text-[color:var(--ims-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                      aria-sort={col.sortDirection === 'asc' ? 'ascending' : col.sortDirection === 'desc' ? 'descending' : 'none'}
+                    >
+                      <span>{col.header}</span>
+                      {col.sortDirection === 'asc' ? (
+                        <ArrowUp className="h-3.5 w-3.5 text-[color:var(--ims-brass)]" />
+                      ) : col.sortDirection === 'desc' ? (
+                        <ArrowDown className="h-3.5 w-3.5 text-[color:var(--ims-brass)]" />
+                      ) : (
+                        <ArrowUpDown className="h-3.5 w-3.5 text-[color:var(--ims-muted)]" />
+                      )}
+                    </button>
+                  ) : (
+                    col.header
+                  )}
                 </TableHead>
               ))}
             </TableRow>

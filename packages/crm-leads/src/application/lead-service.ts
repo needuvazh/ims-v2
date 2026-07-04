@@ -2,8 +2,8 @@ import { PrismaClient, Prisma } from '@prisma/client';
 import { createUuid } from '@ims/shared-kernel';
 import { DocumentCaptureInput, DocumentsService } from '@ims/documents';
 import { randomUUID } from 'crypto';
-import { ILeadRepository, IFollowUpRepository } from '../domain/repositories';
-import { CreateLeadInput, TransitionLeadStageInput, CloseLeadLostInput, LeadStage } from '../domain/lead';
+import { ILeadRepository, IFollowUpRepository, LeadSortField, LeadSortOrder } from '../domain/repositories';
+import { CreateLeadInput, TransitionLeadStageInput, CloseLeadLostInput, LeadStage, LeadSource } from '../domain/lead';
 
 export class LeadService {
   constructor(
@@ -502,7 +502,7 @@ export class LeadService {
   }
 
   async findAll(
-    filters: { branchId?: string; branchIds?: string[]; stage?: LeadStage; counselorId?: string; search?: string },
+    filters: { branchId?: string; branchIds?: string[]; stage?: LeadStage; source?: LeadSource; counselorId?: string; search?: string; sortBy?: LeadSortField; sortOrder?: LeadSortOrder },
     pagination: { page: number; limit: number }
   ) {
     return this.leadRepository.findAll(filters, pagination, this.prisma);
@@ -661,4 +661,3 @@ export class LeadService {
     return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
 }
-
