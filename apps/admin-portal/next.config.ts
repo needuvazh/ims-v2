@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import path from 'path';
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: ['127.0.0.1'],
@@ -22,6 +23,9 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'images.pexels.com' },
       { protocol: 'https', hostname: 'i.pravatar.cc' },
     ],
+  },
+  turbopack: {
+    root: path.resolve(__dirname, '../../'),
   },
 };
 
