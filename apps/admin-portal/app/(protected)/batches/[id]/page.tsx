@@ -13,9 +13,8 @@ import {
   TableCell,
   Button,
 } from '@ims/shared-ui';
-import { Home, Layers, Calendar, Users, ShieldAlert, Edit } from 'lucide-react';
+import { Home, Edit, Layers } from 'lucide-react';
 import Link from 'next/link';
-import { assignTrainerAction, transitionBatchStatusAction, addToWaitlistAction, manualPromoteAction } from '../actions';
 import { TransitionButtons } from '../_components/transition-buttons';
 import { BatchDetailsTabs } from '../_components/batch-details-tabs';
 

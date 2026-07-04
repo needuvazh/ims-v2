@@ -1,5 +1,5 @@
 import { assertPermission } from '@/lib/auth-guard';
-import { Breadcrumbs, PageHeader } from '@ims/shared-ui';
+import { Breadcrumbs, PageHeader, AdminFormPageLayout } from '@ims/shared-ui';
 import { Home, Layers, PlusCircle } from 'lucide-react';
 import { prisma } from '@ims/database';
 import { BatchForm } from '../_components/batch-form';
@@ -67,7 +67,7 @@ export default async function CreateBatchPage() {
   }));
 
   return (
-    <div className="space-y-8 p-6">
+    <AdminFormPageLayout>
       <PageHeader
         title="Create Batch"
         description="Establish a new training batch schedule, select the classroom, and allocate capacity."
@@ -91,6 +91,6 @@ export default async function CreateBatchPage() {
           onSubmitAction={createBatchAction}
         />
       </div>
-    </div>
+    </AdminFormPageLayout>
   );
 }

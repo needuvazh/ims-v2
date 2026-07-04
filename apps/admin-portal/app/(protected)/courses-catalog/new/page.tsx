@@ -1,4 +1,4 @@
-import { Breadcrumbs, PageHeader } from '@ims/shared-ui';
+import { Breadcrumbs, PageHeader, AdminFormPageLayout } from '@ims/shared-ui';
 import { assertPermission } from '@/lib/auth-guard';
 import { CourseForm } from '../_components/course-form';
 import { createCourseAction } from '../actions';
@@ -19,7 +19,7 @@ export default async function CreateCoursePage() {
   });
 
   return (
-    <div className="space-y-8 p-6">
+    <AdminFormPageLayout>
       <PageHeader
         title="Create Course"
         description="Define a new curriculum template globally for all branches."
@@ -41,6 +41,6 @@ export default async function CreateCoursePage() {
           onSubmitAction={createCourseAction}
         />
       </div>
-    </div>
+    </AdminFormPageLayout>
   );
 }

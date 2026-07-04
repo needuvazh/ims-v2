@@ -1,5 +1,5 @@
 import { assertAnyPermission } from '@/lib/auth-guard';
-import { Breadcrumbs, PageHeader } from '@ims/shared-ui';
+import { Breadcrumbs, PageHeader, AdminFormPageLayout } from '@ims/shared-ui';
 import { Home, Users, PlusCircle } from 'lucide-react';
 import { StudentRegistrationWorkflow } from './_components/student-registration-workflow';
 
@@ -19,7 +19,7 @@ export default async function NewStudentPage() {
   });
 
   return (
-    <div className="space-y-8 p-6">
+    <AdminFormPageLayout>
       <PageHeader
         title="Create Student"
         description="Create a branch-scoped student profile."
@@ -38,6 +38,6 @@ export default async function NewStudentPage() {
       <StudentRegistrationWorkflow
         branches={branches.map((branch) => ({ id: branch.id, name: branch.branchName }))}
       />
-    </div>
+    </AdminFormPageLayout>
   );
 }

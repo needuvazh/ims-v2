@@ -254,5 +254,3 @@ export default async function CalendarDetailPage(props: {
     </AdminDetailPageLayout>
   );
 }
-  );
-}

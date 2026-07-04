@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, CalendarDays, Layers3, LayoutDashboard, Plus, Home, Sparkles } from 'lucide-react';
+import { ArrowRight, CalendarDays, Layers3, Plus, Home, Sparkles, ShieldAlert, MapPinned } from 'lucide-react';
 import { Breadcrumbs, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, PageHeader, AdminListPageLayout } from '@ims/shared-ui';
 import { loadSchedulingOverview } from './data';
 
@@ -19,6 +19,18 @@ const sections = [
     title: 'New calendar', 
     description: 'Set up the baseline configuration for a new academic or business cycle.', 
     icon: Plus 
+  },
+  {
+    href: '/scheduling/venues',
+    title: 'Venue management',
+    description: 'Block classrooms or branches for maintenance, events, or temporary closures.',
+    icon: MapPinned,
+  },
+  {
+    href: '/scheduling/conflicts',
+    title: 'Conflict dashboard',
+    description: 'Review invalid sessions and resolve them through reschedule or venue changes.',
+    icon: ShieldAlert,
   },
 ];
 
@@ -46,7 +58,7 @@ export default async function SchedulingHomePage() {
         }
       />
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Card className="border-[color:var(--ims-border)]">
           <CardHeader>
             <CardTitle>Total baseline</CardTitle>
@@ -76,7 +88,7 @@ export default async function SchedulingHomePage() {
         </Card>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {sections.map((section) => {
           const Icon = section.icon;
           return (

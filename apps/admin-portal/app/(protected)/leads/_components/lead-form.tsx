@@ -155,7 +155,7 @@ export function LeadForm({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5 lg:space-y-6">
       {initialData?.id && (
         <>
           <input type="hidden" {...register('id')} />
@@ -185,12 +185,12 @@ export function LeadForm({
         </Alert>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
         {/* Left Column: Personal Info & Additional Context */}
-        <div className="space-y-8">
+        <div className="space-y-4 sm:space-y-5">
           {/* Card 1: Personal Information */}
-          <div className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6 space-y-6">
-            <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
+          <div className="space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
+            <div className="flex items-center gap-3 border-b border-slate-100 pb-3 sm:pb-4">
               <div className="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
                 <User className="h-5 w-5" />
               </div>
@@ -200,7 +200,7 @@ export function LeadForm({
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <FormField>
                 <FormLabel required>First Name</FormLabel>
                 <FormControl>
@@ -249,8 +249,8 @@ export function LeadForm({
           </div>
 
           {/* Card 3: Additional Notes */}
-          <div className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6 space-y-6">
-            <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
+          <div className="space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
+            <div className="flex items-center gap-3 border-b border-slate-100 pb-3 sm:pb-4">
               <div className="p-2 bg-amber-50 text-amber-600 rounded-lg">
                 <FileText className="h-5 w-5" />
               </div>
@@ -271,10 +271,10 @@ export function LeadForm({
         </div>
 
         {/* Right Column: Interest, Assignment & Stage Status */}
-        <div className="space-y-8">
+        <div className="space-y-4 sm:space-y-5">
           {/* Card 2: Assignment & Interest */}
-          <div className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6 space-y-6">
-            <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
+          <div className="space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
+            <div className="flex items-center gap-3 border-b border-slate-100 pb-3 sm:pb-4">
               <div className="p-2 bg-emerald-50 text-emerald-600 rounded-lg">
                 <Compass className="h-5 w-5" />
               </div>
@@ -365,8 +365,8 @@ export function LeadForm({
 
           {/* Card 4: Pipeline Status (Only on Edit) */}
           {initialData?.id && (
-            <div className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6 space-y-6">
-              <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
+            <div className="space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
+              <div className="flex items-center gap-3 border-b border-slate-100 pb-3 sm:pb-4">
                 <div className="p-2 bg-violet-50 text-violet-600 rounded-lg">
                   <Activity className="h-5 w-5" />
                 </div>
@@ -450,7 +450,7 @@ export function LeadForm({
         </div>
       </div>
 
-      <div className="flex justify-end gap-3 border-t border-[color:var(--ims-border)] pt-4">
+      <div className="flex flex-col-reverse gap-3 border-t border-[color:var(--ims-border)] pt-4 sm:flex-row sm:justify-end">
         {onCancel && (
           <Button type="button" variant="outline" onClick={onCancel} disabled={isSubmitting}>
             Cancel

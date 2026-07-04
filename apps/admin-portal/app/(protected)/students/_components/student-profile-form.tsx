@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Card, Button, PageHeader } from '@ims/shared-ui';
+import { Card, Button, PageHeader, AdminFormPageLayout } from '@ims/shared-ui';
 import { User, Compass, Activity } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -113,7 +113,7 @@ export function StudentProfileForm({ mode, branches = [], initialValues = {}, sh
   };
 
   return (
-    <div className="space-y-6 p-6">
+    <AdminFormPageLayout>
       {showHeader && (
         <PageHeader
           eyebrow="Student Management"
@@ -122,10 +122,10 @@ export function StudentProfileForm({ mode, branches = [], initialValues = {}, sh
         />
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="space-y-8">
-          <Card className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6 space-y-6">
-            <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1.15fr)_minmax(20rem,0.85fr)]">
+        <div className="space-y-4 sm:space-y-5">
+          <Card className="space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
+            <div className="flex items-center gap-3 border-b border-slate-100 pb-3 sm:pb-4">
               <div className="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
                 <User className="h-5 w-5" />
               </div>
@@ -135,7 +135,7 @@ export function StudentProfileForm({ mode, branches = [], initialValues = {}, sh
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <label className="space-y-1.5">
                 <span className="text-xs font-semibold uppercase text-slate-500">First Name</span>
                 <input className="w-full h-10 rounded-lg border border-slate-200 px-3" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
@@ -173,7 +173,7 @@ export function StudentProfileForm({ mode, branches = [], initialValues = {}, sh
                 <input className="w-full h-10 rounded-lg border border-slate-200 px-3" value={gender} onChange={(e) => setGender(e.target.value)} />
               </label>
 
-              <label className="space-y-1.5 md:col-span-2">
+              <label className="space-y-1.5 sm:col-span-2">
                 <span className="text-xs font-semibold uppercase text-slate-500">Remarks</span>
                 <textarea className="w-full min-h-28 rounded-lg border border-slate-200 px-3 py-2" value={remarks} onChange={(e) => setRemarks(e.target.value)} />
               </label>
@@ -181,9 +181,9 @@ export function StudentProfileForm({ mode, branches = [], initialValues = {}, sh
           </Card>
         </div>
 
-        <div className="space-y-8">
-          <Card className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6 space-y-6">
-            <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
+        <div className="space-y-4 sm:space-y-5">
+          <Card className="space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
+            <div className="flex items-center gap-3 border-b border-slate-100 pb-3 sm:pb-4">
               <div className="p-2 bg-emerald-50 text-emerald-600 rounded-lg">
                 <Compass className="h-5 w-5" />
               </div>
@@ -218,7 +218,7 @@ export function StudentProfileForm({ mode, branches = [], initialValues = {}, sh
               </div>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <label className="space-y-1.5">
                 <span className="text-xs font-semibold uppercase text-slate-500">Civil ID</span>
                 <input className="w-full h-10 rounded-lg border border-slate-200 px-3" value={nationalId} onChange={(e) => setNationalId(e.target.value)} />
@@ -238,8 +238,8 @@ export function StudentProfileForm({ mode, branches = [], initialValues = {}, sh
             </div>
           </Card>
 
-          <Card className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6 space-y-6">
-            <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
+          <Card className="space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
+            <div className="flex items-center gap-3 border-b border-slate-100 pb-3 sm:pb-4">
               <div className="p-2 bg-violet-50 text-violet-600 rounded-lg">
                 <Activity className="h-5 w-5" />
               </div>
@@ -249,15 +249,15 @@ export function StudentProfileForm({ mode, branches = [], initialValues = {}, sh
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-2">
-              <Button variant="outline" onClick={() => router.back()} type="button">Cancel</Button>
-              <Button onClick={handleSubmit} disabled={loading} type="button">
+            <div className="flex flex-col-reverse gap-2 sm:flex-row sm:items-center sm:justify-end">
+              <Button variant="outline" onClick={() => router.back()} type="button" className="w-full sm:w-auto">Cancel</Button>
+              <Button onClick={handleSubmit} disabled={loading} type="button" className="w-full sm:w-auto">
                 {loading ? 'Saving…' : isCreate ? 'Create Student' : 'Save Changes'}
               </Button>
             </div>
           </Card>
         </div>
       </div>
-    </div>
+    </AdminFormPageLayout>
   );
 }

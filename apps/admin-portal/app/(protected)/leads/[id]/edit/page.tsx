@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { Breadcrumbs, PageHeader } from '@ims/shared-ui';
+import { Breadcrumbs, PageHeader, AdminFormPageLayout } from '@ims/shared-ui';
 import { assertPermission } from '@/lib/auth-guard';
 import { LeadForm } from '../../_components/lead-form';
 import { updateLeadAction } from '../../actions';
@@ -67,7 +67,7 @@ export default async function EditLeadPage(props: { params: Promise<{ id: string
   const counselors = usersResult.map((u: any) => ({ id: u.id, name: u.username }));
 
   return (
-    <div className="space-y-8 p-6">
+    <AdminFormPageLayout>
       <PageHeader
         title={`Edit Lead: ${lead.firstName} ${lead.lastName}`}
         description="Update lead details, pipeline status, or capture follow-up lost notes."
@@ -94,6 +94,6 @@ export default async function EditLeadPage(props: { params: Promise<{ id: string
           onSubmitAction={updateLeadAction}
         />
       </div>
-    </div>
+    </AdminFormPageLayout>
   );
 }

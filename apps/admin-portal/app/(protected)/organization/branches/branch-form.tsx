@@ -141,9 +141,9 @@ export function BranchForm({ mode, initialData, institutes, users }: BranchFormP
         </CardTitle>
       </CardHeader>
       <form action={formAction} noValidate>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-4 sm:space-y-5">
           {state.error && <Alert variant="error" description={state.error} />}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {mode === 'create' && (
               <>
                 <Select
@@ -272,13 +272,14 @@ export function BranchForm({ mode, initialData, institutes, users }: BranchFormP
             )}
           </div>
         </CardContent>
-        <CardFooter className="flex justify-end gap-3">
+        <CardFooter className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
           {!isView && (
             <Button
               type="button"
               variant="secondary"
               onClick={() => router.push('/organization/branches')}
               disabled={isPending}
+              className="w-full sm:w-auto"
             >
               Cancel
             </Button>
@@ -287,11 +288,12 @@ export function BranchForm({ mode, initialData, institutes, users }: BranchFormP
             <Button
               type="button"
               onClick={() => router.push(`/organization/branches/${initialData?.id}/edit`)}
+              className="w-full sm:w-auto"
             >
               Edit Branch
             </Button>
           ) : (
-            <Button type="submit" loading={isPending}>
+            <Button type="submit" loading={isPending} className="w-full sm:w-auto">
               {mode === 'create' ? 'Create Branch' : 'Save Changes'}
             </Button>
           )}

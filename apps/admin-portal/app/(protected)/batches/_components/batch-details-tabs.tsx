@@ -52,6 +52,28 @@ interface BatchDetailsTabsProps {
   isCoordinator: boolean;
 }
 
+function getSessionScheduleTone(session: any) {
+  if (session.scheduleStatus === 'Conflict') return 'bg-rose-50/70';
+  if (session.isConflictIgnored || session.overrideReason) return 'bg-amber-50/70';
+  return '';
+}
+
+function getScheduleStatusBadge(session: any) {
+  if (session.scheduleStatus === 'Conflict') {
+    return <Badge variant="error">Conflict</Badge>;
+  }
+
+  if (session.isConflictIgnored || session.overrideReason) {
+    return <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">Warning</Badge>;
+  }
+
+  if (session.scheduleStatus === 'Published') {
+    return <Badge variant="success">Published</Badge>;
+  }
+
+  return <Badge variant="outline">{session.scheduleStatus}</Badge>;
+}
+
 export function BatchDetailsTabs({
   batchId,
   batchStartDate,
@@ -431,7 +453,7 @@ export function BatchDetailsTabs({
                   </TableHeader>
                   <TableBody>
                     {sessions.map((s) => (
-                      <TableRow key={s.id}>
+                      <TableRow key={s.id} className={getSessionScheduleTone(s)}>
                         <TableCell className="font-semibold text-slate-600">#{s.sessionNumber}</TableCell>
                         <TableCell>
                           <div className="font-medium text-slate-800">{s.titleEnglish}</div>
@@ -440,9 +462,17 @@ export function BatchDetailsTabs({
                         <TableCell>{new Date(s.sessionDate).toLocaleDateString()}</TableCell>
                         <TableCell className="font-mono text-xs">{s.startTime} - {s.endTime}</TableCell>
                         <TableCell>
-                          <Badge variant={s.status === 'Scheduled' ? 'info' : s.status === 'Completed' ? 'success' : 'outline'}>
-                            {s.status}
-                          </Badge>
+                          <div className="space-y-2">
+                            <Badge variant={s.status === 'Scheduled' ? 'info' : s.status === 'Completed' ? 'success' : 'outline'}>
+                              {s.status}
+                            </Badge>
+                            <div>{getScheduleStatusBadge(s)}</div>
+                            {s.conflictType && (
+                              <div className="text-[10px] font-semibold uppercase tracking-widest text-[color:var(--ims-muted)]">
+                                {s.conflictType.split('_').join(' ')}
+                              </div>
+                            )}
+                          </div>
                         </TableCell>
                       </TableRow>
                     ))}

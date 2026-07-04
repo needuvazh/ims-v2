@@ -1,6 +1,6 @@
 import { notFound, redirect } from 'next/navigation';
 import { assertAnyPermission } from '@/lib/auth-guard';
-import { Breadcrumbs, PageHeader } from '@ims/shared-ui';
+import { Breadcrumbs, PageHeader, AdminFormPageLayout } from '@ims/shared-ui';
 import { Home, Users, Pencil } from 'lucide-react';
 import { StudentProfileForm } from '../../_components/student-profile-form';
 
@@ -29,7 +29,7 @@ export default async function EditStudentPage(props: { params: Promise<{ id: str
   }
 
   return (
-    <div className="space-y-8 p-6">
+    <AdminFormPageLayout>
       <PageHeader
         title="Edit Student"
         description="Update the student profile and identity details."
@@ -67,6 +67,6 @@ export default async function EditStudentPage(props: { params: Promise<{ id: str
           remarks: student.remarks,
         }}
       />
-    </div>
+    </AdminFormPageLayout>
   );
 }

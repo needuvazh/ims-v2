@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { Breadcrumbs, PageHeader } from '@ims/shared-ui';
+import { Breadcrumbs, PageHeader, AdminFormPageLayout } from '@ims/shared-ui';
 import { assertPermission } from '@/lib/auth-guard';
 import { CourseEditClient } from './_components/course-edit-client';
 import { prisma } from '@ims/database';
@@ -37,7 +37,7 @@ export default async function EditCoursePage(props: { params: Promise<{ id: stri
   });
 
   return (
-    <div className="space-y-8 p-6">
+    <AdminFormPageLayout>
       <PageHeader
         title={`Edit Course: ${course.nameEnglish}`}
         description="Update course details, classify under taxonomies, or transition statuses."
@@ -62,6 +62,6 @@ export default async function EditCoursePage(props: { params: Promise<{ id: stri
           sessionPermissions={session.permissions}
         />
       </div>
-    </div>
+    </AdminFormPageLayout>
   );
 }

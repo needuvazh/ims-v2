@@ -1,5 +1,5 @@
 import { assertPermission } from '@/lib/auth-guard';
-import { Card, PageHeader, ResponsiveDataTable, Badge, Input, Button, StatCard, AdminListPageLayout, EmptyState } from '@ims/shared-ui';
+import { Card, CardHeader, CardContent, CardFooter, PageHeader, ResponsiveDataTable, Badge, Input, Button, StatCard, AdminListPageLayout, EmptyState, DataTableFilter } from '@ims/shared-ui';
 import { Search, Users, Eye, GraduationCap, Plus, CheckCircle2, Clock3, Archive } from 'lucide-react';
 import Link from 'next/link';
 

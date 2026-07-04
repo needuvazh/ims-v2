@@ -28,12 +28,12 @@ export function PageHeader({
   return (
     <header
       className={cn(
-        'flex flex-col gap-section-gap border-b border-[color:var(--ims-border)] pb-section-gap lg:flex-row lg:items-end lg:justify-between',
+        'flex flex-col gap-4 border-b border-[color:var(--ims-border)] pb-4 sm:gap-5 lg:flex-row lg:items-end lg:justify-between',
         className,
       )}
       {...props}
     >
-      <div className="space-y-2">
+      <div className="min-w-0 space-y-2">
         {breadcrumbs && <div className="animate-fade-in-down">{breadcrumbs}</div>}
         {eyebrow && (
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[color:var(--ims-muted)] animate-fade-in-right">
@@ -42,13 +42,13 @@ export function PageHeader({
         )}
         <div className="flex items-center gap-4 animate-fade-in-up">
           {backUrl && (
-          <Link href={backUrl} aria-label="Go back">
+          <Link href={backUrl} aria-label="Go back" className="shrink-0">
               <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)]">
                 <ArrowLeft className="h-4 w-4" />
               </Button>
           </Link>
         )}
-          <h1 className="font-[family-name:var(--font-display,serif)] text-page-title tracking-tight text-[color:var(--ims-ink)]">
+          <h1 className="min-w-0 font-[family-name:var(--font-display,serif)] text-page-title leading-tight tracking-tight text-[color:var(--ims-ink)]">
             {title}
           </h1>
         </div>
@@ -58,7 +58,7 @@ export function PageHeader({
           </p>
         )}
       </div>
-      {actions && <div className="flex shrink-0 flex-wrap gap-3 animate-fade-in-left delay-200">{actions}</div>}
+      {actions && <div className="flex w-full shrink-0 flex-wrap gap-3 animate-fade-in-left delay-200 lg:w-auto">{actions}</div>}
     </header>
   );
 }

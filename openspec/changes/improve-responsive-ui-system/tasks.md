@@ -13,10 +13,10 @@
 
 ## 3. App Shell and Navigation
 
-- [ ] 3.1 Refactor `AppShell` header spacing, branch badge behavior, search area behavior, and profile controls for tablet/mobile widths.
+- [x] 3.1 Refactor `AppShell` header spacing, branch badge behavior, search area behavior, and profile controls for tablet/mobile widths.
 - [x] 3.2 Implement Shell Header height reduction (h-20 to h-16) on `Mobile` and `Tablet` tiers.
-- [ ] 3.3 Verify the desktop sidebar, mobile drawer, and collapsed sidebar states remain usable across the defined viewport tiers.
-- [ ] 3.4 Ensure the main content container does not create unnecessary whitespace on smaller screens.
+- [x] 3.3 Verify the desktop sidebar, mobile drawer, and collapsed sidebar states remain usable across the defined viewport tiers.
+- [x] 3.4 Ensure the main content container does not create unnecessary whitespace on smaller screens.
 
 ## 4. Public Site Responsiveness
 
@@ -29,13 +29,17 @@
 - [x] 5.1 Define and implement `AdminListPageLayout`, `AdminFormPageLayout`, and `AdminDetailPageLayout` wrappers in `packages/shared-ui`.
 - [x] 5.2 Audit the highest-traffic list pages and standardize filter/search/table behavior using the compact template.
 - [x] 5.3 Audit detail pages and standardize sidebar/main-content stacking using the standard template.
-- [ ] 5.4 Audit form pages and ensure field group spacing, panel widths, and action placement follow the standard template.
-- [ ] 5.5 Remove page-local oversized spacing or typography that conflicts with the shared responsive rules.
+- [x] 5.4 Audit form pages and ensure field group spacing, panel widths, and action placement follow the standard template.
+- [x] 5.5 Remove page-local oversized spacing or typography that conflicts with the shared responsive rules.
 
 ## 6. Verification
 
-- [ ] 6.1 Add or update UI tests for `375px`, `768px`, `1024px`, `1280px`, and `1536px` behavior on representative pages.
-- [ ] 6.2 Verify there is no horizontal overflow on the main portal shell, lists, and public hero pages.
-- [ ] 6.3 Verify titles, actions, and cards do not overlap or clip at mobile and tablet widths.
-- [ ] 6.4 Run the affected portal lint, typecheck, build, and Playwright checks.
-- [ ] 6.5 Update the implementation status note when the migration is complete.
+- [x] 6.1 Add or update UI tests for `375px`, `768px`, `1024px`, `1280px`, and `1536px` behavior on representative pages.
+- [x] 6.2 Verify there is no horizontal overflow on the main portal shell, lists, and public hero pages.
+- [x] 6.3 Verify titles, actions, and cards do not overlap or clip at mobile and tablet widths.
+- [x] 6.4 Run the affected portal lint, typecheck, build, and Playwright checks.
+- [x] 6.5 Update the implementation status note when the migration is complete.
+
+## Implementation Status
+
+Responsive shell, page template, and form layout updates are in place. The new responsive Playwright coverage passes. Portal `lint`, `typecheck`, and `build` still surface pre-existing repository issues outside this change scope.

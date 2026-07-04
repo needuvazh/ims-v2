@@ -48,7 +48,6 @@ const roleRepository = new PrismaRoleRepository(prisma);
 const permissionRepository = new PrismaPermissionRepository(prisma);
 const userBranchAccessRepository = new PrismaUserBranchAccessRepository(prisma);
 export const sessionRepository = new PrismaSessionRepository(prisma);
-const passwordHistoryRepository = new PrismaPasswordHistoryRepository(prisma);
 const securityPolicyRepository = new PrismaSecurityPolicyRepository(prisma);
 const notificationRepository = new PrismaNotificationRepository(prisma);
 const outboxEventRepository = new PrismaOutboxEventRepository(prisma);
@@ -175,7 +174,7 @@ export const organizationService = new OrganizationService(
     },
   },
   {
-    getActiveEnrollmentSize: async (classroomId: string) => {
+    getActiveEnrollmentSize: async (_classroomId: string) => {
       // Placeholder: Batch/Scheduling module not implemented yet.
       return 0;
     },
@@ -359,6 +358,20 @@ class PrismaSchedulingService implements ISchedulingService {
       endTime: s.endTime,
     }));
   }
+
+  async validateSession(input: {
+    branchId: string;
+    instituteId: string;
+    scheduledDate: Date;
+    startTime: string;
+    endTime: string;
+    trainerId?: string | null;
+    classroomId?: string | null;
+    batchId?: string | null;
+    sessionId?: string | null;
+  }, tx?: any) {
+    return schedulingCalendarService.validateSession(input, tx);
+  }
 }
 
 const batchRepository = new BatchRepository(prisma);
@@ -366,5 +379,3 @@ const schedulingService = new PrismaSchedulingService(prisma);
 export const batchService = new BatchService(prisma, batchRepository, schedulingService);
 
 export { prisma };
-
-

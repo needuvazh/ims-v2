@@ -182,6 +182,9 @@ importers:
       '@ims/observability':
         specifier: workspace:*
         version: link:../../packages/observability
+      '@ims/scheduling':
+        specifier: workspace:*
+        version: link:../../packages/scheduling
       '@ims/shared-kernel':
         specifier: workspace:*
         version: link:../../packages/shared-kernel

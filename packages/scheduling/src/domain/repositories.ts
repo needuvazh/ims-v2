@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import type { BusinessCalendar, BranchCalendarOverride, Holiday, ResolvedCalendar, CalendarStatus } from './scheduling';
+import type { BusinessCalendar, BranchCalendarOverride, Holiday, ResolvedCalendar, CalendarStatus, VenueBlock } from './scheduling';
 
 export interface ISchedulingRepository {
   findBusinessCalendarById(id: string, tx?: Prisma.TransactionClient): Promise<BusinessCalendar | null>;

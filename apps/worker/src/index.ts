@@ -5,6 +5,7 @@ import { randomUUID } from 'crypto';
 import { ExportService } from './export-service';
 import { BatchRepository, BatchService } from '@ims/training-delivery';
 import { EnrollmentService } from '@ims/admissions-enrollment';
+import { SchedulingService, PrismaSchedulingRepository } from '@ims/scheduling';
 
 const logger = createStructuredLogger({});
 const POLL_INTERVAL_MS = parseInt(process.env.OUTBOX_POLL_INTERVAL_MS || '5000', 10);
@@ -15,6 +16,8 @@ const iamQueryService = new IamQueryService(prisma);
 const batchRepository = new BatchRepository(prisma);
 const batchService = new BatchService(prisma, batchRepository);
 const enrollmentService = new EnrollmentService(prisma);
+const schedulingRepository = new PrismaSchedulingRepository(prisma);
+const schedulingService = new SchedulingService(prisma, schedulingRepository);
 
 let isShuttingDown = false;
 let lastOverdueSweepTime = 0;
@@ -307,6 +310,21 @@ async function processOutboxEvents() {
           await batchService.releaseSeatAndPromote(payload.batchId, payload.releasedSeats || 1);
         } else if (event.eventType === 'WaitlistEntryPromoted') {
           await handleWaitlistEntryPromoted(event.payload as Record<string, unknown>);
+        } else if (event.eventType === 'BusinessCalendarCreated') {
+          // Future: may want to re-validate whole year?
+        } else if (event.eventType === 'HolidayCreated') {
+          const payload = event.payload as { branchId: string; date: string; instituteId: string };
+          logger.info(`Handling HolidayCreated for branch ${payload.branchId} on ${payload.date}`);
+          await schedulingService.processExternalCalendarChange(payload.branchId, new Date(payload.date), payload.instituteId);
+        } else if (event.eventType === 'VenueBlockCreated') {
+          const payload = event.payload as { branchId: string; blockDate: string; instituteId?: string };
+          logger.info(`Handling VenueBlockCreated for branch ${payload.branchId} on ${payload.blockDate}`);
+          // Note: VenueBlock payload might miss instituteId, need to fetch it or pass it.
+          // For now assume single institute or resolve from branch.
+          const branch = await prisma.branch.findUnique({ where: { id: payload.branchId }, select: { instituteId: true } });
+          if (branch) {
+            await schedulingService.processExternalCalendarChange(payload.branchId, new Date(payload.blockDate), branch.instituteId);
+          }
         } else if (event.eventType === 'EnrollmentCreationFailed') {
           const payload = event.payload as {
             batchId: string;

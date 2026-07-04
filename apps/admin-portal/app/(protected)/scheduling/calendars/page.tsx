@@ -153,5 +153,3 @@ export default async function CalendarsPage(props: {
     </AdminListPageLayout>
   );
 }
-  );
-}

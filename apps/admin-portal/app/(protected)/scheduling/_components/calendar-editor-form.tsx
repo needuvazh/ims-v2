@@ -168,14 +168,14 @@ export function CalendarEditorForm({ mode, initialCalendar }: { mode: 'create' |
         </Alert>
       )}
       
-      <div className="grid gap-section-gap lg:grid-cols-[1fr_400px]">
-        <div className="space-y-section-gap">
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,24rem)] lg:gap-6">
+        <div className="space-y-4 sm:space-y-5">
           <section className="space-y-4">
              <div className="flex items-center gap-2 border-b border-[color:var(--ims-border)] pb-2">
                 <CalendarDays className="h-5 w-5 text-[color:var(--ims-brass)]" />
                 <h3 className="font-bold text-lg text-[color:var(--ims-ink)] tracking-tight">Identity & Context</h3>
              </div>
-             <div className="grid gap-6 sm:grid-cols-2">
+             <div className="grid gap-4 sm:grid-cols-2">
                 <Input label="Institute ID" value={state.instituteId} onChange={(e) => updateField('instituteId', e.target.value)} required placeholder="UUID" disabled={mode === 'edit'} />
                 <Input label="Calendar code" value={state.code} onChange={(e) => updateField('code', e.target.value)} required placeholder="e.g. ACAD-2026" disabled={mode === 'edit'} />
                 <Input label="Primary Name" value={state.name} onChange={(e) => updateField('name', e.target.value)} required placeholder="e.g. Academic Year 2026" className="sm:col-span-2" />
@@ -193,17 +193,17 @@ export function CalendarEditorForm({ mode, initialCalendar }: { mode: 'create' |
              </div>
              <div className="grid gap-3">
                 {state.days.map((day, index) => (
-                  <div key={day.dayOfWeek} className="flex flex-col md:flex-row md:items-center justify-between p-card-p rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] transition-shadow hover:shadow-md gap-4">
+                  <div key={day.dayOfWeek} className="flex flex-col gap-4 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-card-p transition-shadow hover:shadow-md md:flex-row md:items-center md:justify-between">
                     <div className="w-40">
                       <div className="font-bold text-[color:var(--ims-ink)]">{DAY_LABELS[day.dayOfWeek]}</div>
                       <div className="text-[10px] uppercase tracking-widest text-[color:var(--ims-muted)] font-semibold">{day.dayOfWeek}</div>
                     </div>
-                    <div className="flex-1 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
+                    <div className="flex flex-1 flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
                        <Checkbox label="Operating" checked={day.isOpen} onChange={(e) => updateDay(index, { isOpen: e.target.checked })} />
-                       <div className="flex items-center gap-2">
-                          <Input type="time" value={day.startTime} onChange={(e) => updateDay(index, { startTime: e.target.value })} disabled={!day.isOpen} className="w-32 h-9" />
+                       <div className="flex flex-wrap items-center gap-2">
+                          <Input type="time" value={day.startTime} onChange={(e) => updateDay(index, { startTime: e.target.value })} disabled={!day.isOpen} className="h-9 w-28 sm:w-32" />
                           <span className="text-[color:var(--ims-muted)]">—</span>
-                          <Input type="time" value={day.endTime} onChange={(e) => updateDay(index, { endTime: e.target.value })} disabled={!day.isOpen} className="w-32 h-9" />
+                          <Input type="time" value={day.endTime} onChange={(e) => updateDay(index, { endTime: e.target.value })} disabled={!day.isOpen} className="h-9 w-28 sm:w-32" />
                        </div>
                     </div>
                     <div className="hidden md:block">
@@ -215,7 +215,7 @@ export function CalendarEditorForm({ mode, initialCalendar }: { mode: 'create' |
           </section>
         </div>
 
-        <aside className="space-y-6">
+        <aside className="space-y-4 sm:space-y-5 lg:sticky lg:top-24 lg:self-start">
            <Card className="bg-[color:var(--ims-surface-hover)] border-dashed shadow-none">
               <CardHeader className="p-card-p">
                  <CardTitle className="text-base">Lifecycle & Validity</CardTitle>
@@ -250,7 +250,5 @@ export function CalendarEditorForm({ mode, initialCalendar }: { mode: 'create' |
         </aside>
       </div>
     </form>
-  );
-}
   );
 }

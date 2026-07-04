@@ -185,7 +185,7 @@ export function BatchForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8 w-full">
+    <form onSubmit={handleSubmit} className="w-full space-y-4 sm:space-y-5 lg:space-y-6">
       {errorMsg && (
         <Alert variant="error" title="Form Validation Error">
           {errorMsg}
@@ -193,8 +193,8 @@ export function BatchForm({
       )}
 
       {/* Stepper Header */}
-      <div className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-4 flex items-center justify-between">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-col gap-3 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:flex-row sm:items-center sm:justify-between sm:p-5">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4">
           <div className="flex items-center gap-2">
             <span
               className={`flex items-center justify-center h-7 w-7 rounded-full text-xs font-bold ${
@@ -238,14 +238,14 @@ export function BatchForm({
             </>
           )}
         </div>
-        <div className="text-xs text-slate-400 font-medium">Step {step} of {initialData ? '2' : '3'}</div>
+        <div className="text-xs font-medium text-slate-400">Step {step} of {initialData ? '2' : '3'}</div>
       </div>
 
       {step === 1 && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
           {/* Card 1: Identification & Mapping */}
-          <div className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6 space-y-6">
-            <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
+          <div className="space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
+            <div className="flex items-center gap-3 border-b border-slate-100 pb-3 sm:pb-4">
               <div className="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
                 <Layers className="h-5 w-5" />
               </div>
@@ -255,7 +255,7 @@ export function BatchForm({
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <FormField>
                 <FormLabel required>Batch Code (unique uppercase)</FormLabel>
                 <FormControl>
@@ -284,7 +284,7 @@ export function BatchForm({
               </FormField>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <FormField>
                 <FormLabel required>Select Branch</FormLabel>
                 <FormControl>
@@ -313,7 +313,7 @@ export function BatchForm({
               </FormField>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <FormField>
                 <FormLabel required>Batch Name (English)</FormLabel>
                 <FormControl>
@@ -341,9 +341,9 @@ export function BatchForm({
           </div>
 
           {/* Card 2: Scheduling Dates */}
-          <div className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6 space-y-6 flex flex-col justify-between">
-            <div className="space-y-6">
-              <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
+          <div className="flex flex-col justify-between space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
+            <div className="space-y-5">
+              <div className="flex items-center gap-3 border-b border-slate-100 pb-3 sm:pb-4">
                 <div className="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
                   <Calendar className="h-5 w-5" />
                 </div>
@@ -370,7 +370,7 @@ export function BatchForm({
               </div>
             </div>
 
-            <div className="flex justify-end pt-8">
+            <div className="flex justify-end pt-4 sm:pt-6">
               <Button type="button" onClick={handleNext} disabled={!isStep1Valid}>
                 Next: Capacity & Controls
               </Button>
@@ -380,10 +380,10 @@ export function BatchForm({
       )}
 
       {step === 2 && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
           {/* Card 1: Capacity & Corporate settings */}
-          <div className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6 space-y-6">
-            <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
+          <div className="space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
+            <div className="flex items-center gap-3 border-b border-slate-100 pb-3 sm:pb-4">
               <div className="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
                 <Sliders className="h-5 w-5" />
               </div>
@@ -393,7 +393,7 @@ export function BatchForm({
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <FormField>
                 <FormLabel required>Capacity Limit</FormLabel>
                 <FormControl>
@@ -478,9 +478,9 @@ export function BatchForm({
           </div>
 
           {/* Card 2: Summary / Guidelines */}
-          <div className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6 space-y-6 flex flex-col justify-between">
-            <div className="space-y-6">
-              <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
+          <div className="flex flex-col justify-between space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
+            <div className="space-y-5">
+              <div className="flex items-center gap-3 border-b border-slate-100 pb-3 sm:pb-4">
                 <div className="p-2 bg-green-50 text-green-600 rounded-lg">
                   <UserCheck className="h-5 w-5" />
                 </div>
@@ -512,14 +512,15 @@ export function BatchForm({
               </div>
             </div>
 
-            <div className="flex justify-between pt-8 border-t border-slate-100">
-              <Button type="button" variant="outline" onClick={handleBack}>
+            <div className="flex flex-col-reverse gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:justify-between">
+              <Button type="button" variant="outline" onClick={handleBack} className="w-full sm:w-auto">
                 Back
               </Button>
               <Button 
                 type={initialData ? "submit" : "button"} 
                 disabled={isSubmitting}
                 onClick={initialData ? undefined : handleNext}
+                className="w-full sm:w-auto"
               >
                 {initialData ? (isSubmitting ? 'Saving...' : 'Save Changes') : 'Next: Faculty Assignment'}
               </Button>
@@ -529,10 +530,10 @@ export function BatchForm({
       )}
 
       {step === 3 && (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6">
           {/* Faculty Assignment Form */}
-          <div className="lg:col-span-2 bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6 space-y-6">
-            <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
+          <div className="space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md lg:col-span-2 sm:p-5 lg:p-6">
+            <div className="flex items-center gap-3 border-b border-slate-100 pb-3 sm:pb-4">
               <div className="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
                 <Users className="h-5 w-5" />
               </div>
@@ -602,9 +603,9 @@ export function BatchForm({
           </div>
 
           {/* Action buttons & Summary */}
-          <div className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6 space-y-6 flex flex-col justify-between">
-            <div className="space-y-6">
-              <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
+          <div className="flex flex-col justify-between space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
+            <div className="space-y-5">
+              <div className="flex items-center gap-3 border-b border-slate-100 pb-3 sm:pb-4">
                 <div className="p-2 bg-green-50 text-green-600 rounded-lg">
                   <UserCheck className="h-5 w-5" />
                 </div>
@@ -641,11 +642,11 @@ export function BatchForm({
               </div>
             </div>
 
-            <div className="flex justify-between pt-8 border-t border-slate-100">
-              <Button type="button" variant="outline" onClick={handleBack}>
+            <div className="flex flex-col-reverse gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:justify-between">
+              <Button type="button" variant="outline" onClick={handleBack} className="w-full sm:w-auto">
                 Back
               </Button>
-              <Button type="submit" disabled={isSubmitting || conflicts.length > 0 || checkingConflicts}>
+              <Button type="submit" disabled={isSubmitting || conflicts.length > 0 || checkingConflicts} className="w-full sm:w-auto">
                 {isSubmitting ? (
                   <div className="flex items-center gap-2">
                     <Loader2 className="h-4 w-4 animate-spin" />

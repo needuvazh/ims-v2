@@ -190,10 +190,31 @@ export async function reorderWaitlistAction(batchId: string, waitlistIds: string
 export async function createSessionAction(batchId: string, data: any) {
   try {
     await assertPermission('schedule.manage');
-    const session = await getSession();
+    const sessionContext = await getSession();
 
-    const batch = await prisma.batch.findUnique({ where: { id: batchId } });
+    const batch = await prisma.batch.findUnique({ where: { id: batchId }, include: { course: true } });
     if (!batch) throw new Error('ERR_CRS_BATCH_NOT_FOUND');
+    const branch = await prisma.branch.findUnique({
+      where: { id: batch.branchId },
+      select: { instituteId: true },
+    });
+    if (!branch) throw new Error('ERR_ORG_BRANCH_NOT_FOUND');
+
+    const { schedulingCalendarService } = await import('../../lib/runtime');
+    const validation = await schedulingCalendarService.validateSession({
+      branchId: batch.branchId,
+      instituteId: branch.instituteId,
+      scheduledDate: new Date(data.sessionDate),
+      startTime: data.startTime,
+      endTime: data.endTime,
+      trainerId: data.trainerId || null,
+      classroomId: data.classroomId || null,
+      batchId: batch.id,
+    });
+
+    if (!validation.isValid) {
+      throw new Error(`Scheduling conflict: ${validation.conflicts[0].message}`);
+    }
 
     const result = await prisma.session.create({
       data: {
@@ -208,7 +229,8 @@ export async function createSessionAction(batchId: string, data: any) {
         classroomId: data.classroomId || null,
         trainerId: data.trainerId || null,
         status: 'Scheduled',
-        createdBy: session.userId,
+        scheduleStatus: 'Published',
+        createdBy: sessionContext.userId,
       }
     });
 

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Prisma, PrismaClient } from '@prisma/client';
 import type { ISchedulingRepository } from '../domain/repositories';
-import type { BusinessCalendar, BranchCalendarOverride, CalendarOperatingDay, Holiday, ResolvedCalendar, CalendarStatus } from '../domain/scheduling';
+import type { BusinessCalendar, BranchCalendarOverride, CalendarOperatingDay, Holiday, ResolvedCalendar, CalendarStatus, VenueBlock } from '../domain/scheduling';
 
 function mapOperatingDay(row: any): CalendarOperatingDay {
   return {

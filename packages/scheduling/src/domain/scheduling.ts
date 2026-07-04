@@ -184,12 +184,16 @@ export const createVenueBlockSchema = z.object({
   isFullDay: z.boolean().default(true),
   reasonCode: z.string().trim().min(2).max(50),
   status: z.enum(['Active', 'Cancelled']).default('Active'),
-}).refine((data) => {
+});
+
+const createVenueBlockSchemaRefined = createVenueBlockSchema.refine((data) => {
   if (!data.isFullDay) {
     return data.startTime && data.endTime && data.startTime < data.endTime;
   }
   return true;
 }, { message: 'Partial-day blocks require valid start and end times.' });
+
+export { createVenueBlockSchemaRefined as createVenueBlockRefinedSchema };
 
 export const updateVenueBlockSchema = createVenueBlockSchema.partial().omit({ branchId: true });
 
@@ -207,4 +211,19 @@ export type ResolvedCalendar = {
   holidays: Holiday[];
   resolvedOperatingDays: CalendarOperatingDay[];
   source: 'branch-override' | 'institute-calendar' | 'system-default';
+};
+
+export const conflictTypeEnum = z.enum(['HOLIDAY', 'VENUE', 'TRAINER_OVERLAP', 'CLASSROOM_OVERLAP', 'OPERATING_HOURS']);
+export type ConflictType = z.infer<typeof conflictTypeEnum>;
+
+export type ValidationConflict = {
+  type: ConflictType;
+  message: string;
+  severity: 'CRITICAL' | 'WARNING';
+  conflictEntityId?: string;
+};
+
+export type ValidationResult = {
+  isValid: boolean;
+  conflicts: ValidationConflict[];
 };

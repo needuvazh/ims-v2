@@ -1,4 +1,4 @@
-import { Breadcrumbs, PageHeader } from '@ims/shared-ui';
+import { Breadcrumbs, PageHeader, AdminFormPageLayout } from '@ims/shared-ui';
 import { assertPermission } from '@/lib/auth-guard';
 import { LeadForm } from '../_components/lead-form';
 import { createLeadAction } from '../actions';
@@ -49,7 +49,7 @@ export default async function CreateLeadPage() {
   const counselors = usersResult.map((u: any) => ({ id: u.id, name: u.username }));
 
   return (
-    <div className="space-y-8 p-6">
+    <AdminFormPageLayout>
       <PageHeader
         title="Create Lead"
         description="Add a new lead or enquiry to the CRM pipeline."
@@ -67,6 +67,6 @@ export default async function CreateLeadPage() {
       <div>
         <LeadForm branches={branches} counselors={counselors} courses={courses} onSubmitAction={createLeadAction} />
       </div>
-    </div>
+    </AdminFormPageLayout>
   );
 }

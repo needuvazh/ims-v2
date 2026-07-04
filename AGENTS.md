@@ -591,3 +591,339 @@ Rules:
 - If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
 - Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
 - After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
+
+## Frontend UI Standards
+## Responsive UI Implementation Standard
+
+When working on frontend UI changes, the agent must treat responsiveness as a system-level requirement, not as a page-level polish task.
+
+### Core Principle
+
+Tailwind CSS does not automatically make the application responsive. The agent must use Tailwind intentionally with responsive spacing, typography, layout, and component behavior across mobile, tablet, laptop, and wide desktop screens.
+
+Avoid desktop-first assumptions unless the component is explicitly desktop-only.
+
+### Required Viewport Targets
+
+All UI changes must be validated at the following viewport widths:
+
+* 375px — mobile
+* 768px — tablet
+* 1024px — small laptop
+* 1280px — standard desktop
+* 1536px — wide desktop
+
+At each width, verify:
+
+* No horizontal page overflow
+* No clipped text
+* No overlapping buttons, filters, headers, or actions
+* No excessive vertical whitespace
+* No oversized headings on mobile/tablet
+* Cards, tables, forms, and headers adapt correctly
+* Primary actions remain visible and usable
+* Sidebar, drawer, and header behavior remains usable
+* Tables do not break the page layout
+
+### Responsive Breakpoint Model
+
+Use the following layout tiers:
+
+* Mobile: `320px–639px`
+* Tablet: `640px–1023px`
+* Laptop: `1024px–1439px`
+* Wide desktop: `1440px+`
+
+The UI must not jump directly from mobile behavior to large desktop behavior. Tablet layouts must be considered separately.
+
+### Spacing Rules
+
+Do not use large fixed spacing as a default.
+
+Avoid using classes such as:
+
+* `py-20`
+* `py-24`
+* `py-28`
+* `px-8`
+* `gap-10`
+* `gap-12`
+
+unless the screen is a public marketing/hero section and the larger spacing is intentionally scoped to larger breakpoints.
+
+Prefer responsive spacing patterns:
+
+```tsx
+// Page container
+px-4 sm:px-6 lg:px-8
+
+// Admin page vertical rhythm
+space-y-4 sm:space-y-5 lg:space-y-6
+
+// Standard section padding
+py-8 sm:py-10 lg:py-12
+
+// Public marketing section padding
+py-10 sm:py-14 lg:py-20
+
+// Card padding
+p-4 sm:p-5 lg:p-6
+
+// Compact list/table card padding
+p-3 sm:p-4
+```
+
+### Typography Rules
+
+Do not use large fixed heading sizes as the default.
+
+Avoid using:
+
+* `text-5xl`
+* `text-6xl`
+* `text-7xl`
+
+outside public marketing hero sections.
+
+Use responsive or fluid typography for important text.
+
+Recommended semantic scale:
+
+```css
+--text-page-title: clamp(1.75rem, 2.5vw, 3rem);
+--text-section-title: clamp(1.5rem, 2vw, 2.25rem);
+--text-card-value: clamp(1.5rem, 2vw, 2.5rem);
+--text-hero-title: clamp(2.5rem, 5vw, 4.75rem);
+```
+
+If CSS tokens are not available, use responsive Tailwind classes:
+
+```tsx
+// Page title
+text-2xl sm:text-3xl lg:text-4xl
+
+// Section title
+text-xl sm:text-2xl lg:text-3xl
+
+// Card value
+text-2xl sm:text-3xl
+
+// Hero title
+text-4xl sm:text-5xl lg:text-6xl
+```
+
+### Density Modes
+
+Classify each page or component into one of these density modes:
+
+#### Compact
+
+Use for:
+
+* Admin dashboards
+* List pages
+* Table-heavy pages
+* Data-heavy screens
+
+Rules:
+
+* Smaller padding
+* Tighter gaps
+* Compact headers
+* Avoid decorative whitespace
+
+#### Standard
+
+Use for:
+
+* Forms
+* Detail pages
+* Settings pages
+* Profile pages
+
+Rules:
+
+* Balanced spacing
+* Readable form layout
+* Sections should stack cleanly on mobile/tablet
+
+#### Hero
+
+Use only for:
+
+* Public landing pages
+* Marketing sections
+* CTA-heavy public screens
+
+Rules:
+
+* Larger typography allowed
+* Larger vertical spacing allowed
+* Must still scale down aggressively on mobile/tablet
+
+### Shared Component Requirements
+
+The agent must update shared components first whenever possible instead of applying one-off page fixes.
+
+High-priority shared components:
+
+* `AppShell`
+* `PublicShell`
+* `PageHeader`
+* `Card`
+* `StatCard`
+* `Table`
+* `FilterBar`
+* `HeroSection`
+* `SectionHeading`
+* CTA blocks
+
+#### PageHeader
+
+Required behavior:
+
+* Mobile: title, description, and actions stack vertically
+* Tablet: actions may wrap or move to a second row
+* Desktop: title/description left, actions right
+* Must not overflow horizontally
+* Must not use oversized fixed typography
+
+#### Card / StatCard
+
+Required behavior:
+
+* Padding must reduce on mobile/tablet
+* Large numbers must scale down
+* Cards must stack cleanly on mobile
+* Grid layouts must use responsive column counts
+
+Example:
+
+```tsx
+grid-cols-1 sm:grid-cols-2 xl:grid-cols-4
+```
+
+#### FilterBar
+
+Required behavior:
+
+* Mobile: single-column layout
+* Tablet: two-column or wrapped layout
+* Desktop: inline layout if space allows
+* Buttons must not overflow
+* Search input must remain usable
+
+#### Table
+
+Required behavior:
+
+* Desktop: normal table
+* Tablet: horizontal scroll is acceptable
+* Mobile: horizontal scroll or card-row layout
+* Table must not cause full-page horizontal overflow
+* Important row actions must remain accessible
+
+### App Shell Requirements
+
+The app shell must be responsive by default.
+
+Required behavior:
+
+* Sidebar should be fixed only on `lg+`
+* Mobile should use drawer navigation
+* Tablet should use drawer or collapsed rail behavior
+* Header height should reduce on mobile/tablet
+* Header actions should collapse or wrap before they overflow
+* Search/profile/actions should not crowd the header
+
+Avoid fixed shell assumptions such as always-large headers, always-wide sidebars, or desktop-only navigation behavior.
+
+### Page Template Rules
+
+Prefer reusable page layout wrappers instead of custom spacing on every page.
+
+Recommended templates:
+
+```text
+AdminListPageLayout
+- PageHeader
+- FilterBar
+- Summary cards
+- Table or list content
+
+AdminFormPageLayout
+- PageHeader
+- Form card
+- Optional helper/sidebar content
+
+AdminDetailPageLayout
+- Main details
+- Related sidebar
+- Stacked mobile/tablet layout
+
+PublicMarketingPageLayout
+- Hero
+- Section blocks
+- CTA
+```
+
+### Implementation Order
+
+When fixing responsiveness, follow this order:
+
+1. Define or reuse responsive spacing and typography tokens
+2. Fix shell/header/sidebar behavior
+3. Fix shared components
+4. Fix tables and filter bars
+5. Fix public hero sections
+6. Migrate individual pages
+7. Validate all target viewport widths
+
+Do not start by randomly fixing individual pages unless the issue is isolated to one page.
+
+### Code Review Checklist
+
+Before marking UI work complete, verify:
+
+* The change does not introduce horizontal overflow
+* Mobile layout is intentionally designed, not accidentally stacked
+* Tablet layout is checked separately from mobile and desktop
+* Large spacing is not used by default
+* Large typography is not used outside hero/marketing sections
+* Shared components are updated instead of duplicating fixes
+* Tables and filters remain usable on small screens
+* The UI is validated at 375px, 768px, 1024px, 1280px, and 1536px
+
+### Acceptance Criteria Example
+
+```gherkin
+Given the viewport width is 375px
+When the user opens any admin list page
+Then the page must not have horizontal overflow
+And the page header actions must stack or wrap cleanly
+And filters must remain usable
+And table content must remain accessible
+And spacing must not feel excessive
+```
+
+```gherkin
+Given the viewport width is 768px
+When the user opens a dashboard page
+Then cards must use an appropriate tablet grid
+And headings must not use large desktop-only sizes
+And the sidebar/header must not crowd the content area
+```
+
+```gherkin
+Given the viewport width is 1536px
+When the user opens a public marketing page
+Then the layout may use larger spacing and typography
+But content width must remain constrained
+And text must not stretch across the full screen
+```
+
+### Agent Rule
+
+If a requested frontend change touches layout, spacing, typography, shell behavior, cards, tables, forms, filters, or public sections, the agent must consider responsive behavior as part of the task.
+
+The agent must not say the change is complete unless responsive validation has been considered and documented.

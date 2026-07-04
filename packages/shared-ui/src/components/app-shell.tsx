@@ -528,8 +528,8 @@ export function MobileSidebar({
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 lg:hidden" />
-        <DialogPrimitive.Content aria-label="Primary navigation" className="fixed inset-y-0 left-0 z-50 flex h-full w-[18rem] flex-col border-r border-[var(--ims-sidebar-border)] bg-[var(--ims-sidebar)] backdrop-blur-xl shadow-2xl outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-left-4 data-[state=open]:slide-in-from-left-4 lg:hidden">
-          <div className="flex h-20 shrink-0 items-center justify-between gap-3 border-b border-[var(--ims-sidebar-border)] px-4">
+        <DialogPrimitive.Content aria-label="Primary navigation" className="fixed inset-y-0 left-0 z-50 flex h-full w-[min(20rem,calc(100vw-1.5rem))] flex-col border-r border-[var(--ims-sidebar-border)] bg-[var(--ims-sidebar)] backdrop-blur-xl shadow-2xl outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-left-4 data-[state=open]:slide-in-from-left-4 lg:hidden">
+          <div className="flex h-header-h shrink-0 items-center justify-between gap-3 border-b border-[var(--ims-sidebar-border)] px-4">
             <BrandLogo appName={appName} />
             <DialogPrimitive.Close
               className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-slate-400 hover:bg-indigo-50 hover:text-indigo-600 border border-slate-100/60 outline-none"
@@ -586,7 +586,7 @@ export function AppShell({
   const activeParentLabel = activeTrail.length > 1 ? activeTrail[0]?.label : undefined;
 
   return (
-    <div className={cn('min-h-screen bg-[#fbf9f5] text-[var(--ims-ink)]', className)}>
+    <div className={cn('min-h-screen overflow-x-clip bg-[#fbf9f5] text-[var(--ims-ink)]', className)}>
       <AdminSidebar
         key={`desktop-${pathname}`}
         appName={appName}
@@ -607,10 +607,10 @@ export function AppShell({
         onNavigate={() => setMobileSidebarOpen(false)}
       />
 
-      <div className={cn('flex min-h-screen flex-col transition-[padding] duration-300 lg:pl-sidebar-w', sidebarCollapsed && 'lg:pl-20')}>
-        <header className="sticky top-0 z-20 flex h-header-h shrink-0 items-center justify-between border-b border-[var(--ims-sidebar-border)] bg-white/70 px-page-px shadow-[0_2px_20px_rgba(0,0,0,0.02)] backdrop-blur-xl">
+      <div className={cn('flex min-h-screen min-w-0 flex-col transition-[padding] duration-300 lg:pl-sidebar-w', sidebarCollapsed && 'lg:pl-20')}>
+        <header className="sticky top-0 z-20 flex h-header-h shrink-0 items-center justify-between gap-3 border-b border-[var(--ims-sidebar-border)] bg-white/70 px-page-px shadow-[0_2px_20px_rgba(0,0,0,0.02)] backdrop-blur-xl">
           {/* Left section: Hamburger (mobile), Breadcrumbs (desktop), and active branch badge */}
-          <div className="flex min-w-0 items-center gap-4">
+          <div className="flex min-w-0 flex-1 items-center gap-3 sm:gap-4">
             <button
               type="button"
               onClick={() => setMobileSidebarOpen(true)}
@@ -623,14 +623,14 @@ export function AppShell({
             {/* Desktop breadcrumbs removed in favor of page headers */}
 
             {/* Mobile/Tablet title */}
-            <div className="lg:hidden min-w-0">
-              <span className="truncate text-sm font-bold text-[var(--ims-ink)]">
+            <div className="min-w-0 lg:hidden">
+              <span className="truncate text-sm font-bold text-[var(--ims-ink)] sm:text-base">
                 {activeLabel ?? appName}
               </span>
             </div>
 
             {/* Active Branch Status Pill */}
-            <div className="hidden sm:flex items-center gap-1.5 rounded-full border border-indigo-100 bg-indigo-50/30 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-[color:var(--ims-brass)] transition-all hover:bg-indigo-50/50 shadow-sm">
+            <div className="hidden xl:flex items-center gap-1.5 rounded-full border border-indigo-100 bg-indigo-50/30 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-[color:var(--ims-brass)] transition-all hover:bg-indigo-50/50 shadow-sm">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[color:var(--ims-brass)] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[color:var(--ims-brass)]"></span>
@@ -640,7 +640,7 @@ export function AppShell({
           </div>
 
           {/* Center Section: Sleek capsule-shaped search mock */}
-          <div className="hidden md:flex flex-1 items-center justify-center px-4 max-w-sm">
+          <div className="hidden xl:flex flex-1 min-w-0 items-center justify-center px-4 max-w-md">
             <button
               type="button"
               className="flex items-center gap-2 w-full rounded-xl border border-[color:var(--ims-border)] bg-slate-50/40 hover:bg-slate-50 hover:border-slate-300 px-3.5 py-2 text-left text-xs font-semibold text-[color:var(--ims-muted)] transition-all duration-200 cursor-pointer shadow-sm hover:shadow"
@@ -654,11 +654,11 @@ export function AppShell({
           </div>
 
           {/* Right section: Actions and Profile menu */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             {/* Quick action shortcuts button */}
             <button
               type="button"
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-[color:var(--ims-border)] bg-white hover:border-slate-300 hover:shadow-sm text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)] transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+              className="hidden md:flex h-10 w-10 items-center justify-center rounded-xl border border-[color:var(--ims-border)] bg-white hover:border-slate-300 hover:shadow-sm text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)] transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
               title="Quick Action"
             >
               <Plus className="h-4.5 w-4.5" />
@@ -680,7 +680,7 @@ export function AppShell({
             {/* Help/Documentation */}
             <button
               type="button"
-              className="hidden sm:flex h-10 w-10 items-center justify-center rounded-xl border border-[color:var(--ims-border)] bg-white hover:border-slate-300 hover:shadow-sm text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)] transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+              className="hidden lg:flex h-10 w-10 items-center justify-center rounded-xl border border-[color:var(--ims-border)] bg-white hover:border-slate-300 hover:shadow-sm text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)] transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
               title="Documentation"
             >
               <HelpCircle className="h-4.5 w-4.5" />
@@ -691,14 +691,14 @@ export function AppShell({
               <button
                 type="button"
                 onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-                className="flex items-center gap-2.5 rounded-xl border border-[color:var(--ims-border)] bg-white px-3 py-1.5 shadow-sm transition-all duration-200 hover:border-slate-300 hover:shadow-md focus-visible:outline-none cursor-pointer"
+                className="flex items-center gap-2.5 rounded-xl border border-[color:var(--ims-border)] bg-white px-2.5 py-1.5 shadow-sm transition-all duration-200 hover:border-slate-300 hover:shadow-md focus-visible:outline-none cursor-pointer sm:px-3"
               >
                 {userAvatar || (
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 text-xs font-bold text-white shadow-md shadow-indigo-150/40">
                     {userName?.[0]?.toUpperCase() ?? 'A'}
                   </div>
                 )}
-                <div className="hidden flex-col text-left xl:flex">
+                <div className="hidden flex-col text-left 2xl:flex">
                   <span className="text-xs font-semibold text-[color:var(--ims-ink)] leading-tight">{userName ?? 'Administrator'}</span>
                   <span className="max-w-[120px] truncate text-[9px] font-bold text-[color:var(--ims-muted)] uppercase tracking-wider">
                     {branchName ?? 'HQ Branch'}
@@ -735,7 +735,7 @@ export function AppShell({
           </div>
         </header>
 
-        <main className="flex-1 p-page-px">{children}</main>
+        <main className="flex-1 min-w-0 px-page-px py-section-gap sm:py-5 lg:py-6">{children}</main>
       </div>
     </div>
   );

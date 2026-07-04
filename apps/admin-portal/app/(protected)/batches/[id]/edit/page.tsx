@@ -1,5 +1,5 @@
 import { assertPermission } from '@/lib/auth-guard';
-import { Breadcrumbs, PageHeader } from '@ims/shared-ui';
+import { Breadcrumbs, PageHeader, AdminFormPageLayout } from '@ims/shared-ui';
 import { Home, Layers, Edit } from 'lucide-react';
 import { prisma } from '@ims/database';
 import { BatchForm } from '../../_components/batch-form';
@@ -61,7 +61,7 @@ export default async function EditBatchPage(props: {
   };
 
   return (
-    <div className="space-y-8 p-6">
+    <AdminFormPageLayout>
       <PageHeader
         title={`Edit Batch: ${batch.batchCode}`}
         description="Modify batch properties, capacity limits, dates, and classroom assignments."
@@ -86,6 +86,6 @@ export default async function EditBatchPage(props: {
           onSubmitAction={onSubmitAction}
         />
       </div>
-    </div>
+    </AdminFormPageLayout>
   );
 }

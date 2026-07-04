@@ -1,4 +1,4 @@
-import { Breadcrumbs, PageHeader } from '@ims/shared-ui';
+import { Breadcrumbs, PageHeader, AdminFormPageLayout } from '@ims/shared-ui';
 import { BranchForm } from '@/app/(protected)/organization/branches/branch-form';
 import { loadOrganizationData } from '@/app/(protected)/organization/shared-data';
 import { Home, Building2, MapPin, Plus } from 'lucide-react';
@@ -10,7 +10,7 @@ export default async function CreateBranchPage() {
   const data = await loadOrganizationData();
 
   return (
-    <div className="space-y-8">
+    <AdminFormPageLayout>
       <PageHeader
         title="Add New Branch"
         description="Create a new branch under an institute."
@@ -27,6 +27,6 @@ export default async function CreateBranchPage() {
         }
       />
       <BranchForm mode="create" institutes={data.institutes} users={data.users} />
-    </div>
+    </AdminFormPageLayout>
   );
 }

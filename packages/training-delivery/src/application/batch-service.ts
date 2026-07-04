@@ -53,6 +53,20 @@ export interface ISchedulingService {
     endTime: string;
     batchCode: string;
   }[]>;
+  validateSession(input: {
+    branchId: string;
+    instituteId: string;
+    scheduledDate: Date;
+    startTime: string;
+    endTime: string;
+    trainerId?: string | null;
+    classroomId?: string | null;
+    batchId?: string | null;
+    sessionId?: string | null;
+  }, tx?: Prisma.TransactionClient): Promise<{
+    isValid: boolean;
+    conflicts: { type: string; message: string; severity: string }[];
+  }>;
 }
 
 export function getGSTDateString(date: Date | string): string {
@@ -604,28 +618,30 @@ export class BatchService {
 
       // Intercept schedule conflicts
       if (this.schedulingService) {
-        const trainerSessions = await this.schedulingService.getSessionsForTrainer(
-          input.trainerId,
-          assignedFrom,
-          assignedTo,
-          client
-        );
         const batchSessions = await this.batchRepository.findSessions(batchId, client);
-
         const conflicts: ScheduleConflict[] = [];
 
         for (const bs of batchSessions) {
-          const bsDateStr = getGSTDateString(bs.sessionDate);
-          for (const ts of trainerSessions) {
-            const tsDateStr = getGSTDateString(ts.sessionDate);
-            if (bsDateStr === tsDateStr) {
-              // Overlap check on time
-              if (bs.startTime < ts.endTime && bs.endTime > ts.startTime) {
+          const result = await this.schedulingService.validateSession({
+            branchId: batch.branchId,
+            instituteId: (batch as Record<string, unknown>).instituteId as string, 
+            scheduledDate: bs.sessionDate,
+            startTime: bs.startTime,
+            endTime: bs.endTime,
+            trainerId: input.trainerId,
+            classroomId: bs.classroomId,
+            batchId: batch.id,
+            sessionId: bs.id
+          }, client);
+
+          if (!result.isValid) {
+            for (const conflict of result.conflicts) {
+              if (conflict.type === 'TRAINER_OVERLAP' || conflict.type === 'HOLIDAY' || conflict.type === 'OPERATING_HOURS') {
                 conflicts.push({
-                  batchCode: ts.batchCode,
-                  sessionDate: ts.sessionDate,
-                  startTime: ts.startTime,
-                  endTime: ts.endTime,
+                  batchCode: 'Conflict', // The engine should ideally return the conflicting batch code
+                  sessionDate: bs.sessionDate,
+                  startTime: bs.startTime,
+                  endTime: bs.endTime,
                 });
               }
             }
@@ -634,7 +650,7 @@ export class BatchService {
 
         if (conflicts.length > 0) {
           throw new TrainerScheduleConflict(
-            `Trainer is already scheduled: conflicts in ${conflicts.map((c) => c.batchCode).join(', ')}`,
+            `Trainer schedule conflict detected by Scheduling Engine`,
             conflicts
           );
         }
@@ -745,31 +761,29 @@ export class BatchService {
         return [];
       }
 
-      const trainerSessions = await this.schedulingService.getSessionsForTrainer(
-        trainerId,
-        assignedFrom,
-        assignedTo,
-        client
-      );
       const batchSessions = await this.batchRepository.findSessions(batchId, client);
-
       const conflicts: ScheduleConflict[] = [];
 
       for (const bs of batchSessions) {
-        const bsDateStr = getGSTDateString(bs.sessionDate);
-        for (const ts of trainerSessions) {
-          const tsDateStr = getGSTDateString(ts.sessionDate);
-          if (bsDateStr === tsDateStr) {
-            // Overlap check on time
-            if (bs.startTime < ts.endTime && bs.endTime > ts.startTime) {
-              conflicts.push({
-                batchCode: ts.batchCode,
-                sessionDate: ts.sessionDate,
-                startTime: ts.startTime,
-                endTime: ts.endTime,
-              });
-            }
-          }
+        const result = await this.schedulingService.validateSession({
+          branchId: batch.branchId,
+          instituteId: (batch as Record<string, unknown>).instituteId as string || '',
+          scheduledDate: bs.sessionDate,
+          startTime: bs.startTime,
+          endTime: bs.endTime,
+          trainerId: trainerId,
+          classroomId: bs.classroomId,
+          batchId: batch.id,
+          sessionId: bs.id
+        }, client);
+
+        if (!result.isValid) {
+          conflicts.push({
+            batchCode: 'Conflict',
+            sessionDate: bs.sessionDate,
+            startTime: bs.startTime,
+            endTime: bs.endTime,
+          });
         }
       }
 
