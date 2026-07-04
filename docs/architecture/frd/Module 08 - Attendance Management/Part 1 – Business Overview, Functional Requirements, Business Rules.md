@@ -68,8 +68,8 @@ The module supports Phase 1 manual attendance. Trainers and authorized academic 
 | Field | Specification |
 |---|---|
 | Description | The system shall create or initialize an `AttendanceSession` for a valid training `Session` so that attendance can be marked for enrolled learners. |
-| Actors | Trainer, Academic Coordinator, Registrar, System Scheduler optional future job. |
-| Preconditions | User is authenticated; user has `attendance.session.create` or `attendance.session.submit` permission where applicable; target `Session` exists, is not soft-deleted, belongs to an active `Batch`, and is within the user’s authorized branch scope. |
+| Actors | Trainer, Academic Coordinator, Registrar, System Scheduler only for future automated pre-initialization jobs. Phase 1 attendance creation is manual. |
+| Preconditions | User is authenticated; user has `attendance.session.create` for initialization or `attendance.session.submit` for final submission; target `Session` exists, is not soft-deleted, belongs to an active `Batch`, and is within the user’s authorized branch scope. |
 | Inputs | `sessionId`, optional `attendanceDate`, optional `remarks`, current user context, active branch context. |
 | Processing Steps | 1. Load `Session` by `sessionId` with `Batch`, `Course`, `Branch`, `TrainerProfile`, and `Classroom` references. 2. Reject if session is cancelled, deleted, outside branch scope, or has invalid batch/course reference. 3. Validate that session date is not in the future unless user has setup permission for future pre-initialization. 4. Check if an active `AttendanceSession` already exists for `sessionId + batchId + attendanceDate`. 5. If existing active record exists, return it instead of creating duplicate. 6. Create `AttendanceSession` with status `Draft`, `markedByTrainerId` if current user is trainer, `createdBy`, `branchId`, `batchId`, `sessionId`, `attendanceDate`, `version = 1`, `isDeleted = false`. 7. Write audit log action `AttendanceSessionCreated`. |
 | Outputs & Postconditions | A unique draft `AttendanceSession` exists for the training session. No attendance records are created until roster generation or first save. |

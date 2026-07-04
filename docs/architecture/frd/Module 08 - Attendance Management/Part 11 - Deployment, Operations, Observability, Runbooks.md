@@ -56,8 +56,8 @@ Attendance Management owns and must deploy migrations for these tables:
 | `attendance_alert_rules` | `AttendanceAlertRule` | Medium |
 | `attendance_alerts` | `AttendanceAlert` | Medium |
 | `enrollment_attendance_summaries` | `EnrollmentAttendanceSummary` | Critical for completion readiness |
-| `attendance_export_requests` if implemented | `AttendanceExportRequest` | Medium |
-| `attendance_idempotency_keys` if implemented | `AttendanceIdempotencyKey` | High for retry safety |
+| `attendance_export_requests` | `AttendanceExportRequest` | Future-scope operational table for asynchronous export tracking. Not required for Phase 1 synchronous export. |
+| `attendance_idempotency_keys` | `AttendanceIdempotencyKey` | Future-scope operational table for retry safety on long-running actions. Phase 1 may use request-scoped idempotency in application memory or AuditLog correlation if the table is not present. |
 
 ### 2.3 Referenced Tables Not Owned by Attendance
 
@@ -138,7 +138,7 @@ For Attendance changes that include database migrations, deploy in this order:
 | `attendance.studentPortal.enabled` | Enables student self attendance view. | Enabled when student portal is available. |
 | `attendance.corrections.enabled` | Enables correction workflow. | Enabled. |
 | `attendance.lowAttendanceAlerts.enabled` | Enables alert generation. | Enabled after rule configuration. |
-| `attendance.bulkImport.enabled` | Enables bulk import if implemented. | Disabled unless explicitly released. |
+| `attendance.bulkImport.enabled` | Enables bulk import, which is not part of Phase 1 attendance scope. | Disabled unless ASTI explicitly approves a later import rollout. |
 | `attendance.exports.async.enabled` | Uses async export job for large reports. | Enabled for large exports. |
 | `attendance.consolidatedReports.enabled` | Enables multi-branch reporting. | Disabled unless consolidated report permissions are configured. |
 
@@ -443,8 +443,8 @@ Backups must cover Attendance-owned tables and the audit records required to int
 | Correction workflow | `attendance_corrections` |
 | Alerting | `attendance_alert_rules`, `attendance_alerts` |
 | Summaries | `enrollment_attendance_summaries` |
-| Export metadata | `attendance_export_requests`, if implemented |
-| Idempotency safety | `attendance_idempotency_keys`, if implemented |
+| Export metadata | `attendance_export_requests` if asynchronous export tracking is enabled |
+| Idempotency safety | `attendance_idempotency_keys` if retry-safety persistence is enabled |
 | Audit dependencies | `audit_logs` records where `moduleCode = 'M08-ATT'` |
 | Referenced context data for restore validation | `branches`, `batches`, `sessions`, `enrollments`, `student_profiles`, `trainer_profiles`, `users` |
 

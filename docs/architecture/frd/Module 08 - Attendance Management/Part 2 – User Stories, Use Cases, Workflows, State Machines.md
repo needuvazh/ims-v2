@@ -537,7 +537,7 @@ Feature: Attendance audit trail
 | Primary Actor | Trainer or Academic Coordinator |
 | Supporting Actors | IAM, Training Delivery, Audit |
 | Trigger | User opens a scheduled session and starts attendance. |
-| Preconditions | User is authenticated; user has `attendance.session.create` or equivalent workflow permission; selected `Session` exists; session is not deleted or cancelled; session belongs to user’s authorized branch; batch and course references are valid. |
+| Preconditions | User is authenticated; user has `attendance.session.create`; selected `Session` exists; session is not deleted or cancelled; session belongs to user’s authorized branch; batch and course references are valid. |
 | Postconditions | One active `AttendanceSession` exists for the selected session; status is `Draft`; audit log is created. |
 
 **Main Success Scenario:**
@@ -1607,4 +1607,3 @@ packages/attendance
 - Repositories must default to `isDeleted = false` unless an audit-specific query explicitly includes deleted records.
 - Domain events remain in-process for modular monolith implementation.
 - No external broker, microservice boundary, CQRS, or event sourcing is required for this module.
-
