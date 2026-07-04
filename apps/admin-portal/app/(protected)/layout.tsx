@@ -29,6 +29,7 @@ import {
   FileSpreadsheet,
   BookOpen,
   CalendarDays,
+  ClipboardList,
 } from 'lucide-react';
 
 function mapNavigationIcons(item: any): any {
@@ -62,6 +63,9 @@ function mapNavigationIcons(item: any): any {
       break;
     case '/batches':
       icon = <Layers className="h-4.5 w-4.5" />;
+      break;
+    case '/attendance':
+      icon = <ClipboardList className="h-4.5 w-4.5" />;
       break;
     case '/organization':
       icon = <Building2 className="h-4.5 w-4.5" />;

@@ -100,8 +100,8 @@ The system SHALL support promoting waitlisted students chronologically when batc
 
 ---
 
-### Requirement: Faculty Allocation & Conflict checks (FR-CRS-011, FR-CRS-012)
-The system SHALL support allocating active qualified trainers to batch deliveries within the execution start and end dates, validating trainer availability, checking for overlapping session schedules across multiple batches to prevent double-booking, and enforcing authorization/state invariants.
+### Requirement: Trainer Assignment & Scheduling Conflicts
+The system SHALL validate trainer schedules across batches to prevent double-booking, over-allocation, or scheduling on public holidays. To preserve Bounded Context separation, the timetable sessions SHALL be queried through a public Scheduling application service interface.
 
 #### Scenario: Successfully assign active primary trainer
 - **WHEN** a trainer assignment request is submitted with a valid batch ID, active trainer profile ID, assignment role `Primary`, and date range matching the batch duration
@@ -130,6 +130,15 @@ The system SHALL support allocating active qualified trainers to batch deliverie
 #### Scenario: Block batch activation if no trainer is assigned (BR-CRS-014)
 - **WHEN** a batch status transition to `OpenForEnrollment` is requested, but no active `Primary` trainer is registered in the batch trainer list
 - **THEN** the system SHALL block the transition and return an `ERR_CRS_BATCH_NO_TRAINER` validation error.
+
+---
+
+### Requirement: Session Lifecycle Integration
+Training Delivery sessions SHALL be managed and validated by the Scheduling context's Conflict Engine.
+
+#### Scenario: Marking session as conflict due to external change
+- **WHEN** a Scheduling event (e.g., `HolidayCreated`, `VenueBlockCreated`) occurs that invalidates an existing batch session
+- **THEN** the Training Delivery context SHALL update the session's status to `Conflict` and surface it on the Conflict Dashboard
 
 ---
 
@@ -190,4 +199,3 @@ The system SHALL restrict batch listing, creation, and mutation queries based on
 #### Scenario: Enforce branch check during updates and transitions
 - **WHEN** a user attempts to update details (`PUT /api/v1/batches/:id`) or execute state transitions (`PUT /api/v1/batches/:id/status`), and the batch `branchId` is not within the user's authorized branch list
 - **THEN** the system SHALL deny access and return a `403 Forbidden` response.
-

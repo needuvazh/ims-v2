@@ -5,6 +5,20 @@ TBD - created by syncing change module-05-student-management. Update Purpose aft
 
 ## Requirements
 
+## ADDED Requirements
+
+### Requirement: Student attendance self-service view
+The system SHALL allow an authenticated student to view a read-only attendance summary for their own enrollments, including attendance percentage, recent session statuses, and low-attendance warnings when applicable.
+
+#### Scenario: Student views own attendance summary
+- **WHEN** an authenticated student opens the student portal attendance summary
+- **THEN** the system SHALL return only the student's own attendance data
+- **AND** the view SHALL be read-only
+
+#### Scenario: Student cannot access another student attendance
+- **WHEN** a student requests attendance data for another student profile or enrollment
+- **THEN** the system SHALL reject the request with a forbidden response
+
 ### Requirement: REQ-SM-PORTAL-001 — Read-Only Student Portal Profile View
 The student portal SHALL allow authenticated students to view their own profile and card details. The portal MUST NOT allow students to update, edit, or delete any profile fields directly.
 

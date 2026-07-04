@@ -375,11 +375,13 @@ export class SchedulingService {
 
   async createVenueBlock(input: CreateVenueBlockCommand, context: SchedulingCommandContext = {}) {
     const parsed = createVenueBlockRefinedSchema.parse(input);
+    const blockEndDate = parsed.blockEndDate ?? parsed.blockStartDate;
     const created = await this.repository.createVenueBlock({
       id: createUuid(randomUUID()),
       branchId: parsed.branchId,
       classroomId: parsed.classroomId ?? null,
-      blockDate: parsed.blockDate,
+      blockStartDate: parsed.blockStartDate,
+      blockEndDate,
       startTime: parsed.startTime ?? null,
       endTime: parsed.endTime ?? null,
       isFullDay: parsed.isFullDay,
@@ -400,28 +402,40 @@ export class SchedulingService {
       newValue: created,
     });
 
-    await this.prisma.outboxEvent.create({
-      data: {
-        id: createUuid(randomUUID()),
-        eventType: 'VenueBlockCreated',
-        aggregateType: 'VenueBlock',
-        aggregateId: created.id,
-        payload: { venueBlockId: created.id, branchId: created.branchId, classroomId: created.classroomId, blockDate: created.blockDate },
-        status: 'Pending',
-        availableAt: new Date(),
-      },
-    });
+      await this.prisma.outboxEvent.create({
+        data: {
+          id: createUuid(randomUUID()),
+          eventType: 'VenueBlockCreated',
+          aggregateType: 'VenueBlock',
+          aggregateId: created.id,
+          payload: {
+            venueBlockId: created.id,
+            branchId: created.branchId,
+            classroomId: created.classroomId,
+            blockStartDate: created.blockStartDate,
+            blockEndDate: created.blockEndDate,
+          },
+          status: 'Pending',
+          availableAt: new Date(),
+        },
+      });
 
     return created;
   }
 
   async updateVenueBlock(id: string, input: UpdateVenueBlockCommand, version: number, context: SchedulingCommandContext = {}) {
     const parsed = updateVenueBlockSchema.parse(input);
+    const existing = await this.repository.findVenueBlockById(id);
+    if (!existing) throw new Error('ERR_SCH_VENUE_BLOCK_NOT_FOUND');
+    const nextStart = parsed.blockStartDate ?? existing.blockStartDate;
+    const nextEnd = parsed.blockEndDate ?? existing.blockEndDate;
+    ensureChronologicalRange(nextStart, nextEnd);
     const updated = await this.repository.updateVenueBlock(
       id,
       {
         ...(parsed.classroomId !== undefined ? { classroomId: parsed.classroomId } : {}),
-        ...(parsed.blockDate ? { blockDate: parsed.blockDate } : {}),
+        ...(parsed.blockStartDate ? { blockStartDate: parsed.blockStartDate } : {}),
+        ...(parsed.blockEndDate !== undefined ? { blockEndDate: parsed.blockEndDate ?? parsed.blockStartDate ?? existing.blockStartDate } : {}),
         ...(parsed.startTime !== undefined ? { startTime: parsed.startTime } : {}),
         ...(parsed.endTime !== undefined ? { endTime: parsed.endTime } : {}),
         ...(parsed.isFullDay !== undefined ? { isFullDay: parsed.isFullDay } : {}),

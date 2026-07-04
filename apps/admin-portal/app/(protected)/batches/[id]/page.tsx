@@ -55,6 +55,17 @@ export default async function BatchDetailPage(props: {
     orderBy: { sessionNumber: 'asc' },
   });
 
+  const attendanceSessions = await prisma.attendanceSession.findMany({
+    where: { batchId: id, isDeleted: false },
+    include: {
+      records: {
+        where: { isDeleted: false },
+        select: { id: true },
+      },
+    },
+    orderBy: { attendanceDate: 'asc' },
+  });
+
   // Fetch Waitlist entries
   const waitlist = await prisma.waitingList.findMany({
     where: {
@@ -267,6 +278,7 @@ export default async function BatchDetailPage(props: {
             batchStartDate={batch.startDate.toISOString()}
             batchEndDate={batch.endDate.toISOString()}
             sessions={sessions}
+            attendanceSessions={attendanceSessions}
             trainers={trainers}
             waitlist={waitlist}
             trainersList={trainersList}

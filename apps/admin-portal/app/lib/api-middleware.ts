@@ -118,12 +118,25 @@ export async function withAuth(request: Request): Promise<AuthenticatedRequestCo
     method: request.method,
   });
 
+  const { effectivePermissionsService } = await import('./runtime');
+
+  if (decodedSession) {
+    decodedSession.permissions = await effectivePermissionsService.getPermissionsForRoles(decodedSession.roles);
+    return {
+      session: decodedSession,
+      tokenPayload,
+      requestContext,
+    };
+  }
+
+  const permissions = await effectivePermissionsService.getPermissionsForRoles(tokenPayload.roles ?? []);
+
   return {
-    session: decodedSession ?? ({
+    session: {
       userId: tokenPayload.userId as Uuid,
       displayName: tokenPayload.email,
-      roles: [],
-      permissions: tokenPayload.permissions ?? [],
+      roles: tokenPayload.roles ?? [],
+      permissions,
       dataScopes: [],
       activeBranchId: tokenPayload.activeBranchId as Uuid | null,
       accessTokenJti: tokenPayload.jti ?? '',
@@ -131,7 +144,7 @@ export async function withAuth(request: Request): Promise<AuthenticatedRequestCo
       lastActivityAt: session.lastActivityAt.getTime(),
       status: session.status,
       expiresAt: session.expiresAt.getTime(),
-    } satisfies Session),
+    } satisfies Session,
     tokenPayload,
     requestContext,
   };

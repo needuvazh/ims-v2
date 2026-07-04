@@ -9,10 +9,6 @@ import {
   Badge, 
   Button, 
   Card, 
-  CardContent, 
-  CardFooter, 
-  CardHeader, 
-  CardTitle, 
   Checkbox, 
   Input, 
   Select 
@@ -51,6 +47,11 @@ type CalendarFormState = {
   days: DayState[];
 };
 
+type InstituteOption = {
+  value: string;
+  label: string;
+};
+
 function formatDateInput(date?: string | Date | null) {
   if (!date) return '';
   const value = new Date(date);
@@ -86,7 +87,15 @@ function buildState(initial?: BusinessCalendar): CalendarFormState {
   };
 }
 
-export function CalendarEditorForm({ mode, initialCalendar }: { mode: 'create' | 'edit'; initialCalendar?: BusinessCalendar }) {
+export function CalendarEditorForm({
+  mode,
+  initialCalendar,
+  instituteOptions,
+}: {
+  mode: 'create' | 'edit';
+  initialCalendar?: BusinessCalendar;
+  instituteOptions: InstituteOption[];
+}) {
   const router = useRouter();
   const [state, setState] = useState<CalendarFormState>(() => buildState(initialCalendar));
   const [isSaving, setIsSaving] = useState(false);
@@ -158,7 +167,7 @@ export function CalendarEditorForm({ mode, initialCalendar }: { mode: 'create' |
   };
 
   return (
-    <form onSubmit={submit} className="space-y-section-gap">
+    <form onSubmit={submit} className="space-y-4 sm:space-y-5">
       {error && (
         <Alert variant="error" className="animate-in fade-in slide-in-from-top-2 duration-300">
            <div className="flex items-center gap-2 font-semibold">
@@ -168,85 +177,110 @@ export function CalendarEditorForm({ mode, initialCalendar }: { mode: 'create' |
         </Alert>
       )}
       
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,24rem)] lg:gap-6">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1.12fr)_minmax(20rem,0.88fr)] lg:gap-5">
         <div className="space-y-4 sm:space-y-5">
-          <section className="space-y-4">
-             <div className="flex items-center gap-2 border-b border-[color:var(--ims-border)] pb-2">
-                <CalendarDays className="h-5 w-5 text-[color:var(--ims-brass)]" />
-                <h3 className="font-bold text-lg text-[color:var(--ims-ink)] tracking-tight">Identity & Context</h3>
-             </div>
-             <div className="grid gap-4 sm:grid-cols-2">
-                <Input label="Institute ID" value={state.instituteId} onChange={(e) => updateField('instituteId', e.target.value)} required placeholder="UUID" disabled={mode === 'edit'} />
-                <Input label="Calendar code" value={state.code} onChange={(e) => updateField('code', e.target.value)} required placeholder="e.g. ACAD-2026" disabled={mode === 'edit'} />
-                <Input label="Primary Name" value={state.name} onChange={(e) => updateField('name', e.target.value)} required placeholder="e.g. Academic Year 2026" className="sm:col-span-2" />
-                <Input label="English label" value={state.nameLocalizedEn} onChange={(e) => updateField('nameLocalizedEn', e.target.value)} required placeholder="e.g. Academic Year 2026" />
-                <Input label="Arabic label" value={state.nameLocalizedAr} onChange={(e) => updateField('nameLocalizedAr', e.target.value)} required placeholder="التقويم الأكاديمي" className="text-right" dir="rtl" />
-                <Input label="Effective Year" type="number" value={state.year} onChange={(e) => updateField('year', e.target.value)} required min={2000} max={2100} />
-                <Input label="ISO Country" value={state.countryCode} onChange={(e) => updateField('countryCode', e.target.value.toUpperCase())} maxLength={2} required placeholder="OM" />
-             </div>
-          </section>
+          <Card className="space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
+            <div className="flex items-center gap-3 border-b border-slate-100 pb-3 sm:pb-4">
+              <div className="p-2 bg-amber-50 text-amber-700 rounded-lg">
+                <CalendarDays className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-slate-800">Identity & Context</h3>
+                <p className="text-xs text-slate-500">Institute master, code, and effective range</p>
+              </div>
+            </div>
 
-          <section className="space-y-4">
-             <div className="flex items-center gap-2 border-b border-[color:var(--ims-border)] pb-2">
-                <Clock className="h-5 w-5 text-[color:var(--ims-brass)]" />
-                <h3 className="font-bold text-lg text-[color:var(--ims-ink)] tracking-tight">Standard Weekly Pattern</h3>
-             </div>
-             <div className="grid gap-3">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <Select
+                label="Institute"
+                value={state.instituteId}
+                onChange={(e) => updateField('instituteId', e.target.value)}
+                required
+                placeholder="Select institute"
+                disabled={mode === 'edit'}
+                options={instituteOptions}
+                helperText="Loaded from the institute master"
+              />
+              <Input label="Calendar code" value={state.code} onChange={(e) => updateField('code', e.target.value)} required placeholder="e.g. ACAD-2026" disabled={mode === 'edit'} />
+              <Input label="Primary Name" value={state.name} onChange={(e) => updateField('name', e.target.value)} required placeholder="e.g. Academic Year 2026" className="sm:col-span-2" />
+              <Input label="English label" value={state.nameLocalizedEn} onChange={(e) => updateField('nameLocalizedEn', e.target.value)} required placeholder="e.g. Academic Year 2026" />
+              <Input label="Arabic label" value={state.nameLocalizedAr} onChange={(e) => updateField('nameLocalizedAr', e.target.value)} required placeholder="التقويم الأكاديمي" className="text-right" dir="rtl" />
+              <Input label="Effective Year" type="number" value={state.year} onChange={(e) => updateField('year', e.target.value)} required min={2000} max={2100} />
+              <Input label="ISO Country" value={state.countryCode} onChange={(e) => updateField('countryCode', e.target.value.toUpperCase())} maxLength={2} required placeholder="OM" />
+            </div>
+          </Card>
+
+          <Card className="space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
+            <div className="flex items-center gap-3 border-b border-slate-100 pb-3 sm:pb-4">
+              <div className="p-2 bg-sky-50 text-sky-600 rounded-lg">
+                <Clock className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-slate-800">Standard Weekly Pattern</h3>
+                <p className="text-xs text-slate-500">Define open days and working hours</p>
+              </div>
+            </div>
+
+            <div className="grid gap-3">
                 {state.days.map((day, index) => (
-                  <div key={day.dayOfWeek} className="flex flex-col gap-4 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-card-p transition-shadow hover:shadow-md md:flex-row md:items-center md:justify-between">
+                  <div key={day.dayOfWeek} className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 p-4 transition-shadow hover:shadow-sm md:flex-row md:items-center md:justify-between">
                     <div className="w-40">
-                      <div className="font-bold text-[color:var(--ims-ink)]">{DAY_LABELS[day.dayOfWeek]}</div>
-                      <div className="text-[10px] uppercase tracking-widest text-[color:var(--ims-muted)] font-semibold">{day.dayOfWeek}</div>
+                      <div className="font-semibold text-slate-800">{DAY_LABELS[day.dayOfWeek]}</div>
+                      <div className="text-[10px] uppercase tracking-widest text-slate-500 font-semibold">{day.dayOfWeek}</div>
                     </div>
                     <div className="flex flex-1 flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
                        <Checkbox label="Operating" checked={day.isOpen} onChange={(e) => updateDay(index, { isOpen: e.target.checked })} />
                        <div className="flex flex-wrap items-center gap-2">
                           <Input type="time" value={day.startTime} onChange={(e) => updateDay(index, { startTime: e.target.value })} disabled={!day.isOpen} className="h-9 w-28 sm:w-32" />
-                          <span className="text-[color:var(--ims-muted)]">—</span>
+                          <span className="text-slate-400">—</span>
                           <Input type="time" value={day.endTime} onChange={(e) => updateDay(index, { endTime: e.target.value })} disabled={!day.isOpen} className="h-9 w-28 sm:w-32" />
                        </div>
                     </div>
                     <div className="hidden md:block">
-                       <Badge variant={day.isOpen ? 'success' : 'muted'} className="opacity-70">{day.isOpen ? 'Active' : 'Closed'}</Badge>
+                       <Badge variant={day.isOpen ? 'success' : 'muted'} className="opacity-80">{day.isOpen ? 'Active' : 'Closed'}</Badge>
                     </div>
                   </div>
                 ))}
-             </div>
-          </section>
+            </div>
+          </Card>
         </div>
 
         <aside className="space-y-4 sm:space-y-5 lg:sticky lg:top-24 lg:self-start">
-           <Card className="bg-[color:var(--ims-surface-hover)] border-dashed shadow-none">
-              <CardHeader className="p-card-p">
-                 <CardTitle className="text-base">Lifecycle & Validity</CardTitle>
-              </CardHeader>
-              <CardContent className="p-card-p space-y-4">
-                 <Select label="Release Status" value={state.status} onChange={(e) => updateField('status', e.target.value as CalendarFormState['status'])} options={[
-                    { value: 'Draft', label: 'Draft — Working Copy' },
-                    { value: 'Active', label: 'Active — Live & Validating' },
-                    { value: 'Closed', label: 'Closed — Retired' },
-                    { value: 'Archived', label: 'Archived — Hidden' },
-                 ]} />
-                 <Input label="Effective Start" type="date" value={state.effectiveStartDate} onChange={(e) => updateField('effectiveStartDate', e.target.value)} required />
-                 <Input label="Effective End (Optional)" type="date" value={state.effectiveEndDate} onChange={(e) => updateField('effectiveEndDate', e.target.value)} />
-              </CardContent>
-           </Card>
+          <Card className="space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
+            <div className="flex items-center gap-3 border-b border-slate-100 pb-3 sm:pb-4">
+              <div className="p-2 bg-violet-50 text-violet-600 rounded-lg">
+                <Sparkles className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-slate-800">Lifecycle & Validity</h3>
+                <p className="text-xs text-slate-500">Status and effective dates</p>
+              </div>
+            </div>
+            <div className="space-y-4">
+              <Select label="Release Status" value={state.status} onChange={(e) => updateField('status', e.target.value as CalendarFormState['status'])} options={[
+                { value: 'Draft', label: 'Draft — Working Copy' },
+                { value: 'Active', label: 'Active — Live & Validating' },
+                { value: 'Closed', label: 'Closed — Retired' },
+                { value: 'Archived', label: 'Archived — Hidden' },
+              ]} />
+              <Input label="Effective Start" type="date" value={state.effectiveStartDate} onChange={(e) => updateField('effectiveStartDate', e.target.value)} required />
+              <Input label="Effective End (Optional)" type="date" value={state.effectiveEndDate} onChange={(e) => updateField('effectiveEndDate', e.target.value)} />
+            </div>
+          </Card>
 
-           <Card className="bg-[color:var(--ims-ink)] text-white border-none shadow-xl overflow-hidden">
-              <CardHeader className="p-card-p">
-                 <CardTitle className="text-white flex items-center gap-2"><Sparkles className="h-5 w-5 text-[color:var(--ims-brass)]" /> Integration Note</CardTitle>
-              </CardHeader>
-              <CardContent className="p-card-p text-xs text-white/80 leading-relaxed space-y-2">
-                 <p>This baseline will be used for all branches within the institute.</p>
-                 <p>Changes here may affect existing schedules if they fall within this effective range.</p>
-                 <p className="font-semibold text-white">Timezone: Asia/Muscat (Fixed)</p>
-              </CardContent>
-              <CardFooter className="p-card-p border-t border-white/10">
-                 <Button type="submit" loading={isSaving} className="w-full bg-[color:var(--ims-brass)] hover:bg-[color:var(--ims-brass-soft)]">
-                    <Save className="h-4 w-4 mr-2" /> {mode === 'create' ? 'Create baseline' : 'Commit changes'}
-                 </Button>
-              </CardFooter>
-           </Card>
+          <Card className="rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
+            <div className="space-y-2">
+              <h3 className="font-semibold text-slate-800">Integration note</h3>
+              <p className="text-sm text-slate-600">This baseline will be used for all branches within the institute.</p>
+              <p className="text-sm text-slate-600">Changes here may affect existing schedules if they fall within this effective range.</p>
+              <p className="text-sm font-semibold text-slate-700">Timezone: Asia/Muscat (Fixed)</p>
+            </div>
+            <div className="mt-5">
+              <Button type="submit" loading={isSaving} className="w-full">
+                <Save className="mr-2 h-4 w-4" /> {mode === 'create' ? 'Create baseline' : 'Save changes'}
+              </Button>
+            </div>
+          </Card>
         </aside>
       </div>
     </form>

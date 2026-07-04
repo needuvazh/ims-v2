@@ -37,6 +37,11 @@ import {
   Award,
   Calendar,
   ClipboardCheck,
+  ClipboardList,
+  ListChecks,
+  FileText,
+  FileClock,
+  BarChart3,
 } from 'lucide-react';
 import { cn } from '../utils/cn';
 import { SimpleTooltip } from './tooltip';
@@ -161,6 +166,16 @@ export function getIconForHref(href: string): ReactNode | null {
       return <Calendar className="h-4.5 w-4.5" />;
     case '/attendance':
       return <ClipboardCheck className="h-4.5 w-4.5" />;
+    case '/attendance/dashboard':
+      return <ClipboardList className="h-4.5 w-4.5" />;
+    case '/attendance/sessions':
+      return <Calendar className="h-4.5 w-4.5" />;
+    case '/attendance/records':
+      return <ListChecks className="h-4.5 w-4.5" />;
+    case '/attendance/corrections':
+      return <FileClock className="h-4.5 w-4.5" />;
+    case '/attendance/reports':
+      return <BarChart3 className="h-4.5 w-4.5" />;
     default:
       return null;
   }

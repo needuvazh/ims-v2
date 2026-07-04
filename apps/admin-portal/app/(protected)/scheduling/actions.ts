@@ -3,13 +3,24 @@
 import { revalidatePath } from 'next/cache';
 import { assertAnyPermission, getSession, assertBranchScope } from '../../lib/auth-guard';
 import { prisma } from '@ims/database';
-import type { CreateVenueBlockCommand } from '@ims/scheduling';
+import type { CreateVenueBlockCommand, UpdateVenueBlockCommand } from '@ims/scheduling';
 
 export async function createVenueBlockAction(data: CreateVenueBlockCommand) {
   try {
     await assertAnyPermission(['scheduling.venueBlock.create', 'schedule.manage']);
     await assertBranchScope(data.branchId);
     const session = await getSession();
+    if (data.classroomId) {
+      const classroom = await prisma.classroom.findFirst({
+        where: {
+          id: data.classroomId,
+          branchId: data.branchId,
+          isDeleted: false,
+        },
+        select: { id: true },
+      });
+      if (!classroom) throw new Error('ERR_ORG_CLASSROOM_NOT_FOUND');
+    }
 
     const { schedulingCalendarService } = await import('../../lib/runtime');
     const result = await schedulingCalendarService.createVenueBlock(data, {
@@ -18,6 +29,43 @@ export async function createVenueBlockAction(data: CreateVenueBlockCommand) {
     });
 
     revalidatePath('/scheduling/venues');
+    return { success: true as const, data: result };
+  } catch (error: any) {
+    return { success: false as const, error: error.message };
+  }
+}
+
+export async function updateVenueBlockAction(id: string, version: number, data: UpdateVenueBlockCommand) {
+  try {
+    await assertAnyPermission(['scheduling.venueBlock.update', 'schedule.manage']);
+    const session = await getSession();
+
+    const existing = await prisma.venueBlock.findUnique({
+      where: { id },
+      select: { branchId: true },
+    });
+    if (!existing) throw new Error('ERR_SCH_VENUE_BLOCK_NOT_FOUND');
+    await assertBranchScope(existing.branchId);
+    if (data.classroomId) {
+      const classroom = await prisma.classroom.findFirst({
+        where: {
+          id: data.classroomId,
+          branchId: existing.branchId,
+          isDeleted: false,
+        },
+        select: { id: true },
+      });
+      if (!classroom) throw new Error('ERR_ORG_CLASSROOM_NOT_FOUND');
+    }
+
+    const { schedulingCalendarService } = await import('../../lib/runtime');
+    const result = await schedulingCalendarService.updateVenueBlock(id, data, version, {
+      actorId: session.userId,
+      branchId: existing.branchId,
+    });
+
+    revalidatePath('/scheduling/venues');
+    revalidatePath(`/scheduling/venues/${id}/edit`);
     return { success: true as const, data: result };
   } catch (error: any) {
     return { success: false as const, error: error.message };

@@ -66,6 +66,8 @@ describe('ConflictEngine (SchedulingService.validateSession)', () => {
     });
     mockRepo.listVenueBlocks = vi.fn().mockResolvedValue([{
       classroomId: 'r1',
+      blockStartDate: new Date('2026-07-06'),
+      blockEndDate: new Date('2026-07-08'),
       isFullDay: true,
       status: 'Active',
       reasonCode: 'MAINTENANCE'
@@ -78,6 +80,40 @@ describe('ConflictEngine (SchedulingService.validateSession)', () => {
       startTime: '09:00',
       endTime: '11:00',
       classroomId: 'r1'
+    });
+
+    expect(result.isValid).toBe(false);
+    expect(result.conflicts[0].type).toBe('VENUE');
+  });
+
+  it('should detect Venue Block conflict across a date range', async () => {
+    mockRepo.resolveCalendar = vi.fn().mockResolvedValue({
+      holidays: [],
+      resolvedOperatingDays: [
+        { dayOfWeek: 'MONDAY', isOpen: true, workingHours: [{ startTime: '08:00', endTime: '17:00' }] },
+        { dayOfWeek: 'TUESDAY', isOpen: true, workingHours: [{ startTime: '08:00', endTime: '17:00' }] },
+        { dayOfWeek: 'WEDNESDAY', isOpen: true, workingHours: [{ startTime: '08:00', endTime: '17:00' }] },
+        { dayOfWeek: 'THURSDAY', isOpen: true, workingHours: [{ startTime: '08:00', endTime: '17:00' }] },
+        { dayOfWeek: 'FRIDAY', isOpen: true, workingHours: [{ startTime: '08:00', endTime: '17:00' }] },
+        { dayOfWeek: 'SATURDAY', isOpen: true, workingHours: [{ startTime: '08:00', endTime: '17:00' }] },
+        { dayOfWeek: 'SUNDAY', isOpen: true, workingHours: [{ startTime: '08:00', endTime: '17:00' }] },
+      ],
+    });
+    mockRepo.listVenueBlocks = vi.fn().mockResolvedValue([{
+      classroomId: null,
+      blockStartDate: new Date('2026-07-06'),
+      blockEndDate: new Date('2026-07-10'),
+      isFullDay: true,
+      status: 'Active',
+      reasonCode: 'EXAM_WEEK'
+    }]);
+
+    const result = await service.validateSession({
+      branchId: 'b1',
+      instituteId: 'i1',
+      scheduledDate: new Date('2026-07-09'),
+      startTime: '09:00',
+      endTime: '11:00',
     });
 
     expect(result.isValid).toBe(false);

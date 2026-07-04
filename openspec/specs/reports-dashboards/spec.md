@@ -5,6 +5,19 @@ TBD - created by syncing change module-04-admission-enrollment. Update Purpose a
 
 ## Requirements
 
+## ADDED Requirements
+
+### Requirement: Attendance reporting and dashboards
+The system SHALL expose attendance dashboards and reports for session completion, marking compliance, attendance percentage, low-attendance risk, correction aging, and trainer submission timeliness with branch-scoped filtering.
+
+#### Scenario: Attendance dashboard opens with branch scope
+- **WHEN** an authorized user opens the attendance dashboard
+- **THEN** the system SHALL display only metrics for the user's permitted branch scope
+
+#### Scenario: Attendance report export preserves branch scope
+- **WHEN** an authorized user exports an attendance report
+- **THEN** the export SHALL include the branch scope and report filters used to generate it
+
 ### Requirement: Module 04 Reporting Dashboard Overview
 The system SHALL provide a Module 04 reporting and dashboard surface that summarizes student, admission, enrollment, batch, and ID card activity.
 

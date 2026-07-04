@@ -33,14 +33,17 @@ import {
   CircleSlash,
   Trash2,
   PlayCircle,
+  ClipboardList,
 } from 'lucide-react';
 import { assignTrainerAction, addToWaitlistAction, manualPromoteAction, createSessionAction, skipWaitlistAction, reactivateWaitlistAction, removeWaitlistAction, reorderWaitlistAction } from '../actions';
+import { openAttendanceSessionAction } from '../../attendance/actions';
 
 interface BatchDetailsTabsProps {
   batchId: string;
   batchStartDate: string;
   batchEndDate: string;
   sessions: any[];
+  attendanceSessions: any[];
   trainers: any[];
   waitlist: any[];
   trainersList: any[];
@@ -79,6 +82,7 @@ export function BatchDetailsTabs({
   batchStartDate,
   batchEndDate,
   sessions,
+  attendanceSessions,
   trainers,
   waitlist,
   trainersList,
@@ -449,33 +453,109 @@ export function BatchDetailsTabs({
                       <TableHead>Date</TableHead>
                       <TableHead>Time Range</TableHead>
                       <TableHead>Status</TableHead>
+                      <TableHead className="text-right">Attendance</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {sessions.map((s) => (
-                      <TableRow key={s.id} className={getSessionScheduleTone(s)}>
-                        <TableCell className="font-semibold text-slate-600">#{s.sessionNumber}</TableCell>
-                        <TableCell>
-                          <div className="font-medium text-slate-800">{s.titleEnglish}</div>
-                          <div className="text-xs font-arabic text-slate-400">{s.titleArabic}</div>
-                        </TableCell>
-                        <TableCell>{new Date(s.sessionDate).toLocaleDateString()}</TableCell>
-                        <TableCell className="font-mono text-xs">{s.startTime} - {s.endTime}</TableCell>
-                        <TableCell>
-                          <div className="space-y-2">
-                            <Badge variant={s.status === 'Scheduled' ? 'info' : s.status === 'Completed' ? 'success' : 'outline'}>
-                              {s.status}
-                            </Badge>
-                            <div>{getScheduleStatusBadge(s)}</div>
-                            {s.conflictType && (
-                              <div className="text-[10px] font-semibold uppercase tracking-widest text-[color:var(--ims-muted)]">
-                                {s.conflictType.split('_').join(' ')}
-                              </div>
+                    {sessions.map((s) => {
+                      const attendanceSession = attendanceSessions.find((item) => item.sessionId === s.id);
+
+                      return (
+                        <TableRow key={s.id} className={getSessionScheduleTone(s)}>
+                          <TableCell className="font-semibold text-slate-600">#{s.sessionNumber}</TableCell>
+                          <TableCell>
+                            <div className="font-medium text-slate-800">{s.titleEnglish}</div>
+                            <div className="text-xs font-arabic text-slate-400">{s.titleArabic}</div>
+                          </TableCell>
+                          <TableCell>{new Date(s.sessionDate).toLocaleDateString()}</TableCell>
+                          <TableCell className="font-mono text-xs">
+                            {s.startTime} - {s.endTime}
+                          </TableCell>
+                          <TableCell>
+                            <div className="space-y-2">
+                              <Badge variant={s.status === 'Scheduled' ? 'info' : s.status === 'Completed' ? 'success' : 'outline'}>
+                                {s.status}
+                              </Badge>
+                              <div>{getScheduleStatusBadge(s)}</div>
+                              {s.conflictType && (
+                                <div className="text-[10px] font-semibold uppercase tracking-widest text-[color:var(--ims-muted)]">
+                                  {s.conflictType.split('_').join(' ')}
+                                </div>
+                              )}
+                            </div>
+                          </TableCell>
+                          <TableCell className="text-right">
+                          {attendanceSession ? (
+                            <div className="inline-flex items-center gap-2">
+                              <Badge variant="success">Opened</Badge>
+                              {attendanceSession.records.length === 0 ? (
+                                <Button
+                                  type="button"
+                                  size="sm"
+                                  variant="outline"
+                                  disabled={isPending}
+                                  onClick={() => {
+                                    startTransition(async () => {
+                                      try {
+                                        const res = await openAttendanceSessionAction(s.id);
+                                        if (res && !res.success) {
+                                          toast.error(res.error || 'Failed to generate attendance roster.');
+                                          return;
+                                        }
+                                        toast.success('Attendance roster generated.');
+                                        router.refresh();
+                                      } catch (err: any) {
+                                        toast.error(err.message || 'An unexpected error occurred.');
+                                      }
+                                    });
+                                  }}
+                                  className="gap-2"
+                                >
+                                  {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <ClipboardList className="h-4 w-4" />}
+                                  Generate Roster
+                                </Button>
+                              ) : (
+                                <Link
+                                  href="/attendance/sessions"
+                                  className="inline-flex items-center gap-1 text-sm font-semibold text-[color:var(--ims-brass)] hover:underline"
+                                >
+                                  <ClipboardList className="h-3.5 w-3.5" />
+                                  View
+                                </Link>
+                              )}
+                            </div>
+                          ) : (
+                              <Button
+                                type="button"
+                                size="sm"
+                                variant="outline"
+                                disabled={isPending}
+                                onClick={() => {
+                                  startTransition(async () => {
+                                    try {
+                                      const res = await openAttendanceSessionAction(s.id);
+                                      if (res && !res.success) {
+                                        toast.error(res.error || 'Failed to open attendance session.');
+                                        return;
+                                      }
+                                      toast.success('Attendance session opened and roster generated.');
+                                      router.refresh();
+                                      router.push('/attendance/sessions');
+                                    } catch (err: any) {
+                                      toast.error(err.message || 'An unexpected error occurred.');
+                                    }
+                                  });
+                                }}
+                                className="gap-2"
+                              >
+                                {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <ClipboardList className="h-4 w-4" />}
+                                Open Attendance
+                              </Button>
                             )}
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
                   </TableBody>
                 </Table>
               )}

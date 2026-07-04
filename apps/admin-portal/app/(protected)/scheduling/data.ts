@@ -8,10 +8,35 @@ type BranchSummary = {
   branchName: string;
 };
 
+type InstituteSummary = {
+  id: string;
+  instituteCode: string;
+  instituteName: string;
+};
+
 type ClassroomSummary = {
   id: string;
   classroomName: string;
   branchId: string;
+};
+
+type VenueBlockSummary = {
+  id: string;
+  blockStartDate: Date;
+  blockEndDate: Date;
+  startTime: string | null;
+  endTime: string | null;
+  isFullDay: boolean;
+  reasonCode: string;
+  status: string;
+  branch: {
+    id: string;
+    branchName: string;
+  };
+  classroom: {
+    id: string;
+    classroomName: string;
+  } | null;
 };
 
 function normalizeQuery(value?: string | null) {
@@ -43,6 +68,12 @@ async function loadScopedOrganizationData() {
     allowedBranchIds,
     globalScope,
   };
+}
+
+export async function loadInstituteOptions() {
+  await assertPermission('scheduling.calendar.read');
+  const institutes = await organizationService.listInstitutes({ pageSize: 100 });
+  return institutes.items as InstituteSummary[];
 }
 
 export async function loadSchedulingCalendars(filters: { q?: string; year?: number; status?: 'Draft' | 'Active' | 'Closed' | 'Archived' }) {
@@ -78,14 +109,20 @@ export async function loadCalendarDetail(calendarId: string, branchId?: string |
   return { calendar, branches, selectedBranchId, resolved };
 }
 
-export async function loadVenueManagementData(searchParams: {
+export async function loadVenueBlocksPageData(searchParams: {
   q?: string;
   branchId?: string;
   classroomId?: string;
   status?: 'Active' | 'Cancelled';
+  page?: number;
+  limit?: number;
 }) {
   await assertAnyPermission(['scheduling.venueBlock.read', 'scheduling.venueBlock.create', 'schedule.manage']);
   const { branches, classrooms, allowedBranchIds, globalScope } = await loadScopedOrganizationData();
+  const page = Number.isFinite(searchParams.page as number) ? Math.max(1, Math.floor(searchParams.page as number)) : 1;
+  const limit = Number.isFinite(searchParams.limit as number)
+    ? Math.min(Math.max(Math.floor(searchParams.limit as number), 1), 100)
+    : 10;
 
   const selectedBranchId =
     searchParams.branchId && (globalScope || allowedBranchIds.includes(searchParams.branchId))
@@ -97,47 +134,74 @@ export async function loadVenueManagementData(searchParams: {
       ? searchParams.classroomId
       : null;
 
-  const venueBlocks = await prisma.venueBlock.findMany({
-    where: {
-      isDeleted: false,
-      ...(globalScope || allowedBranchIds.length === 0 ? {} : { branchId: { in: allowedBranchIds } }),
-      ...(selectedBranchId ? { branchId: selectedBranchId } : {}),
-      ...(selectedClassroomId ? { classroomId: selectedClassroomId } : {}),
-      ...(searchParams.status ? { status: searchParams.status } : {}),
-    },
-    include: {
-      branch: {
-        select: { id: true, branchName: true },
-      },
-      classroom: {
-        select: { id: true, classroomName: true },
-      },
-    },
-    orderBy: [{ blockDate: 'desc' }, { createdAt: 'desc' }],
-  });
-
   const q = normalizeQuery(searchParams.q);
-  const filteredBlocks = q
-    ? venueBlocks.filter((block) => {
-        const haystack = [
-          block.branch.branchName,
-          block.classroom?.classroomName ?? '',
-          block.reasonCode,
-          block.status,
-          block.isFullDay ? 'full day' : 'partial day',
-        ]
-          .join(' ')
-          .toLowerCase();
-        return haystack.includes(q);
-      })
-    : venueBlocks;
+  const where = {
+    isDeleted: false,
+    ...(globalScope || allowedBranchIds.length === 0 ? {} : { branchId: { in: allowedBranchIds } }),
+    ...(selectedBranchId ? { branchId: selectedBranchId } : {}),
+    ...(selectedClassroomId ? { classroomId: selectedClassroomId } : {}),
+    ...(searchParams.status ? { status: searchParams.status } : {}),
+    ...(q
+      ? {
+          OR: [
+            { reasonCode: { contains: q, mode: 'insensitive' as const } },
+            { status: { contains: q, mode: 'insensitive' as const } },
+            { branch: { is: { branchName: { contains: q, mode: 'insensitive' as const } } } },
+            { classroom: { is: { classroomName: { contains: q, mode: 'insensitive' as const } } } },
+          ],
+        }
+      : {}),
+  };
+
+  const [totalCount, venueBlocks] = await Promise.all([
+    prisma.venueBlock.count({ where }),
+    prisma.venueBlock.findMany({
+      where,
+      include: {
+        branch: {
+          select: { id: true, branchName: true },
+        },
+        classroom: {
+          select: { id: true, classroomName: true },
+        },
+      },
+      orderBy: [{ blockStartDate: 'desc' }, { createdAt: 'desc' }],
+      skip: (page - 1) * limit,
+      take: limit,
+    }),
+  ]);
 
   return {
     branches,
     classrooms,
-    venueBlocks: filteredBlocks,
+    venueBlocks: venueBlocks as VenueBlockSummary[],
     selectedBranchId,
     selectedClassroomId,
+    page,
+    limit,
+    totalCount,
+    totalPages: Math.max(1, Math.ceil(totalCount / limit)),
+  };
+}
+
+export async function loadVenueBlockFormData(venueBlockId?: string) {
+  await assertAnyPermission(['scheduling.venueBlock.read', 'scheduling.venueBlock.create', 'schedule.manage']);
+  const { branches, classrooms } = await loadScopedOrganizationData();
+
+  const venueBlock = venueBlockId
+    ? await prisma.venueBlock.findFirst({
+        where: { id: venueBlockId, isDeleted: false },
+        include: {
+          branch: { select: { id: true, branchName: true } },
+          classroom: { select: { id: true, classroomName: true, branchId: true } },
+        },
+      })
+    : null;
+
+  return {
+    branches,
+    classrooms,
+    venueBlock,
   };
 }
 

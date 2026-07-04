@@ -99,7 +99,8 @@ export type VenueBlock = {
   id: Uuid;
   branchId: BranchId;
   classroomId: Uuid | null;
-  blockDate: Date;
+  blockStartDate: Date;
+  blockEndDate: Date;
   startTime: string | null;
   endTime: string | null;
   isFullDay: boolean;
@@ -178,7 +179,8 @@ export const createHolidaySchema = z.object({
 export const createVenueBlockSchema = z.object({
   branchId: z.string().uuid(),
   classroomId: z.string().uuid().nullable().optional(),
-  blockDate: z.coerce.date(),
+  blockStartDate: z.coerce.date(),
+  blockEndDate: z.coerce.date().nullable().optional(),
   startTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/).nullable().optional(),
   endTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/).nullable().optional(),
   isFullDay: z.boolean().default(true),
@@ -187,11 +189,15 @@ export const createVenueBlockSchema = z.object({
 });
 
 const createVenueBlockSchemaRefined = createVenueBlockSchema.refine((data) => {
+  const blockEndDate = data.blockEndDate ?? data.blockStartDate;
+  if (blockEndDate < data.blockStartDate) {
+    return false;
+  }
   if (!data.isFullDay) {
     return data.startTime && data.endTime && data.startTime < data.endTime;
   }
   return true;
-}, { message: 'Partial-day blocks require valid start and end times.' });
+}, { message: 'Venue block end date must be on or after the start date, and partial-day blocks require valid start and end times.' });
 
 export { createVenueBlockSchemaRefined as createVenueBlockRefinedSchema };
 

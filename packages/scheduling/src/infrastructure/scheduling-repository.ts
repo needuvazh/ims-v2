@@ -99,7 +99,8 @@ function mapVenueBlock(row: any): VenueBlock {
     id: row.id,
     branchId: row.branchId,
     classroomId: row.classroomId,
-    blockDate: row.blockDate,
+    blockStartDate: row.blockStartDate,
+    blockEndDate: row.blockEndDate,
     startTime: row.startTime,
     endTime: row.endTime,
     isFullDay: row.isFullDay,
@@ -384,10 +385,15 @@ export class PrismaSchedulingRepository implements ISchedulingRepository {
         isDeleted: false,
         ...(filters.branchId ? { branchId: filters.branchId } : {}),
         ...(filters.classroomId !== undefined ? { classroomId: filters.classroomId } : {}),
-        ...(filters.date ? { blockDate: filters.date } : {}),
+        ...(filters.date
+          ? {
+              blockStartDate: { lte: filters.date },
+              blockEndDate: { gte: filters.date },
+            }
+          : {}),
         ...(filters.status ? { status: filters.status } : {}),
       },
-      orderBy: { blockDate: 'desc' },
+      orderBy: [{ blockStartDate: 'desc' }, { createdAt: 'desc' }],
     });
     return rows.map(mapVenueBlock);
   }

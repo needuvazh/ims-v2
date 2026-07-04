@@ -5,6 +5,19 @@ This specification defines the identity, access management, role-based access co
 
 ## Requirements
 
+## ADDED Requirements
+
+### Requirement: Attendance permission catalog support
+The system SHALL support attendance-related menu, action, report, dashboard, export, and audit permission codes in the dynamic RBAC catalog and SHALL include them in effective permission evaluation.
+
+#### Scenario: Attendance permissions resolve through RBAC
+- **WHEN** a role is assigned an attendance permission code
+- **THEN** the permission SHALL appear in the user's effective permission set after session hydration
+
+#### Scenario: Attendance permission checks remain server-side
+- **WHEN** a protected attendance route or action checks attendance access
+- **THEN** the system SHALL rely on server-side permission evaluation rather than UI visibility
+
 ### Requirement: Session scopes integration
 The system SHALL embed the user's data scopes collection in the encoded session cookie payload to enable database-free scope authorization checks at the boundary.
 

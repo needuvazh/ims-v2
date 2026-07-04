@@ -105,6 +105,36 @@ enum EnrollmentStatus {
   CertificateIssued
 }
 
+enum AttendanceSessionStatus {
+  Draft
+  Open
+  Submitted
+  Locked
+  Reopened
+  Cancelled
+}
+
+enum AttendanceRecordStatus {
+  Present
+  Absent
+  Late
+  Excused
+  Unmarked
+}
+
+enum AttendanceCorrectionStatus {
+  Pending
+  Approved
+  Rejected
+  Cancelled
+}
+
+enum AttendanceAlertStatus {
+  Active
+  Acknowledged
+  Resolved
+}
+
 enum PricingSource {
   BatchLevel
   BranchLevel
@@ -184,6 +214,8 @@ model User {
   resetTokens      PasswordResetToken[]
   passwordHistory  PasswordHistory[]
   activationTokens UserActivationToken[]
+  attendanceSessionsMarked AttendanceSession[]
+  attendanceRecordsMarked   AttendanceRecord[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -199,6 +231,11 @@ model User {
   leadNotes     LeadNote[]             @relation("AuthorNotes")
   stageChanges  LeadStageHistory[]     @relation("StageChanges")
   verifications DocumentVerification[] @relation("UserVerifications")
+  attendanceCorrectionsRequested AttendanceCorrection[] @relation("AttendanceCorrectionRequestedBy")
+  attendanceCorrectionsApproved  AttendanceCorrection[] @relation("AttendanceCorrectionApprovedBy")
+  attendanceCorrectionsRejected  AttendanceCorrection[] @relation("AttendanceCorrectionRejectedBy")
+  attendanceAlertsAcknowledged   AttendanceAlert[] @relation("AttendanceAlertAcknowledgedBy")
+  attendanceAlertsResolved       AttendanceAlert[] @relation("AttendanceAlertResolvedBy")
 
   @@index([status])
   @@map("users")
@@ -535,6 +572,10 @@ model Branch {
   userBranchAccesses     UserBranchAccess[]
   documents              Document[]             @relation("BranchDocuments")
   studentProfiles        StudentProfile[]
+  attendanceSessions     AttendanceSession[]
+  attendanceRecords      AttendanceRecord[]
+  attendanceCorrections   AttendanceCorrection[]
+  attendanceAlerts       AttendanceAlert[]
   studentStatusHistories StudentStatusHistory[]
   studentIdCardHistories StudentIdCardHistory[]
   studentDuplicateCases  StudentDuplicateCase[]
@@ -722,7 +763,8 @@ model VenueBlock {
   id          String   @id @default(uuid()) @db.Uuid
   branchId    String   @db.Uuid
   classroomId String?  @db.Uuid
-  blockDate   DateTime @db.Date
+  blockStartDate DateTime @db.Date
+  blockEndDate   DateTime @db.Date
   startTime   String?  @db.VarChar(5) // HH:MM
   endTime     String?  @db.VarChar(5) // HH:MM
   isFullDay   Boolean  @default(true)
@@ -741,8 +783,8 @@ model VenueBlock {
   isDeleted Boolean   @default(false)
   version   Int       @default(1)
 
-  @@index([branchId, blockDate])
-  @@index([classroomId, blockDate])
+  @@index([branchId, blockStartDate, blockEndDate])
+  @@index([classroomId, blockStartDate, blockEndDate])
   @@map("venue_blocks")
 }
 
@@ -1119,6 +1161,7 @@ model Batch {
   trainers    BatchTrainer[]
   sessions    Session[]
   waitlist    WaitingList[]
+  attendanceSessions AttendanceSession[]
   pricings    CoursePricing[]
   discounts   CourseDiscount[]
   enrollments Enrollment[]
@@ -1243,12 +1286,167 @@ model Session {
   deletedAt DateTime? @db.Timestamptz(6)
   deletedBy String?   @db.Uuid
   isDeleted Boolean   @default(false)
+  attendanceSessions AttendanceSession[]
 
   @@index([batchId])
   @@index([trainerId])
   @@index([classroomId])
   @@index([sessionDate])
   @@map("sessions")
+}
+
+model AttendanceSession {
+  id                  String                 @id @default(uuid()) @db.Uuid
+  sessionId           String                 @db.Uuid
+  batchId             String                 @db.Uuid
+  branchId            String                 @db.Uuid
+  attendanceDate      DateTime               @db.Date
+  markedByTrainerId   String?                @db.Uuid
+  status              AttendanceSessionStatus @default(Draft)
+  openedAt            DateTime?              @db.Timestamptz(6)
+  submittedAt         DateTime?              @db.Timestamptz(6)
+  lockedAt            DateTime?              @db.Timestamptz(6)
+  reopenedAt          DateTime?              @db.Timestamptz(6)
+  markedAt            DateTime?              @db.Timestamptz(6)
+  notes               String?                @db.Text
+  version             Int                    @default(1)
+  createdAt           DateTime               @default(now()) @db.Timestamptz(6)
+  createdBy           String?                @db.Uuid
+  updatedAt           DateTime?              @updatedAt @db.Timestamptz(6)
+  updatedBy           String?                @db.Uuid
+  deletedAt           DateTime?              @db.Timestamptz(6)
+  deletedBy           String?                @db.Uuid
+  isDeleted           Boolean                @default(false)
+
+  session             Session                @relation(fields: [sessionId], references: [id], onDelete: Restrict)
+  batch               Batch                  @relation(fields: [batchId], references: [id], onDelete: Restrict)
+  branch              Branch                 @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  markedByTrainer     User?                  @relation(fields: [markedByTrainerId], references: [id], onDelete: SetNull)
+  records             AttendanceRecord[]
+  alerts              AttendanceAlert[]
+
+  @@unique([sessionId])
+  @@index([batchId])
+  @@index([branchId])
+  @@index([attendanceDate])
+  @@index([status])
+  @@map("attendance_sessions")
+}
+
+model AttendanceRecord {
+  id                    String                  @id @default(uuid()) @db.Uuid
+  attendanceSessionId   String                  @db.Uuid
+  enrollmentId          String                  @db.Uuid
+  studentProfileId       String                 @db.Uuid
+  branchId              String                  @db.Uuid
+  status                AttendanceRecordStatus  @default(Unmarked)
+  remarks               String?                 @db.Text
+  markedAt              DateTime?               @db.Timestamptz(6)
+  markedBy              String?                 @db.Uuid
+  lateMinutes           Int?                    @db.Integer
+  isManualOverride      Boolean                 @default(false)
+  correctionStatus      String                  @default("None") @db.VarChar(50)
+  createdAt             DateTime                @default(now()) @db.Timestamptz(6)
+  createdBy             String?                 @db.Uuid
+  updatedAt             DateTime?               @updatedAt @db.Timestamptz(6)
+  updatedBy             String?                 @db.Uuid
+  deletedAt             DateTime?               @db.Timestamptz(6)
+  deletedBy             String?                 @db.Uuid
+  isDeleted             Boolean                 @default(false)
+  version               Int                     @default(1)
+
+  attendanceSession     AttendanceSession       @relation(fields: [attendanceSessionId], references: [id], onDelete: Cascade)
+  enrollment            Enrollment              @relation(fields: [enrollmentId], references: [id], onDelete: Restrict)
+  studentProfile        StudentProfile          @relation(fields: [studentProfileId], references: [id], onDelete: Restrict)
+  branch                Branch                  @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  markedByUser          User?                   @relation(fields: [markedBy], references: [id], onDelete: SetNull)
+  corrections           AttendanceCorrection[]
+  alerts                AttendanceAlert[]
+
+  @@unique([attendanceSessionId, enrollmentId])
+  @@index([attendanceSessionId])
+  @@index([enrollmentId])
+  @@index([studentProfileId])
+  @@index([branchId])
+  @@index([status])
+  @@map("attendance_records")
+}
+
+model AttendanceCorrection {
+  id                   String                    @id @default(uuid()) @db.Uuid
+  attendanceRecordId   String                    @db.Uuid
+  branchId             String                    @db.Uuid
+  oldStatus            AttendanceRecordStatus
+  newStatus            AttendanceRecordStatus
+  reason               String                    @db.Text
+  requestedBy          String                    @db.Uuid
+  requestedAt          DateTime                  @default(now()) @db.Timestamptz(6)
+  approvedBy           String?                   @db.Uuid
+  approvedAt           DateTime?                 @db.Timestamptz(6)
+  rejectedBy           String?                   @db.Uuid
+  rejectedAt           DateTime?                 @db.Timestamptz(6)
+  rejectionReason      String?                   @db.Text
+  status               AttendanceCorrectionStatus @default(Pending)
+  createdAt            DateTime                  @default(now()) @db.Timestamptz(6)
+  createdBy            String?                   @db.Uuid
+  updatedAt            DateTime?                 @updatedAt @db.Timestamptz(6)
+  updatedBy            String?                   @db.Uuid
+  deletedAt            DateTime?                 @db.Timestamptz(6)
+  deletedBy            String?                   @db.Uuid
+  isDeleted            Boolean                   @default(false)
+  version              Int                       @default(1)
+
+  attendanceRecord     AttendanceRecord          @relation(fields: [attendanceRecordId], references: [id], onDelete: Restrict)
+  branch               Branch                    @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  requestedByUser      User                      @relation("AttendanceCorrectionRequestedBy", fields: [requestedBy], references: [id], onDelete: Restrict)
+  approvedByUser       User?                     @relation("AttendanceCorrectionApprovedBy", fields: [approvedBy], references: [id], onDelete: SetNull)
+  rejectedByUser       User?                     @relation("AttendanceCorrectionRejectedBy", fields: [rejectedBy], references: [id], onDelete: SetNull)
+
+  @@index([branchId])
+  @@index([attendanceRecordId, status])
+  @@index([attendanceRecordId, requestedAt])
+  @@index([status])
+  @@index([requestedAt])
+  @@map("attendance_corrections")
+}
+
+model AttendanceAlert {
+  id                    String                 @id @default(uuid()) @db.Uuid
+  attendanceSessionId   String?                @db.Uuid
+  attendanceRecordId    String?                @db.Uuid
+  enrollmentId          String?                @db.Uuid
+  branchId              String                 @db.Uuid
+  alertCode             String                 @db.VarChar(100)
+  severity              String                 @db.VarChar(30)
+  thresholdPercentage   Decimal?               @db.Decimal(5, 2)
+  actualPercentage      Decimal?               @db.Decimal(5, 2)
+  message               String                 @db.Text
+  status                AttendanceAlertStatus  @default(Active)
+  triggeredAt           DateTime               @default(now()) @db.Timestamptz(6)
+  acknowledgedAt        DateTime?              @db.Timestamptz(6)
+  acknowledgedBy        String?                @db.Uuid
+  resolvedAt            DateTime?              @db.Timestamptz(6)
+  resolvedBy            String?                @db.Uuid
+  createdAt             DateTime               @default(now()) @db.Timestamptz(6)
+  createdBy             String?                @db.Uuid
+  updatedAt             DateTime?              @updatedAt @db.Timestamptz(6)
+  updatedBy             String?                @db.Uuid
+  deletedAt             DateTime?              @db.Timestamptz(6)
+  deletedBy             String?                @db.Uuid
+  isDeleted             Boolean                @default(false)
+  version               Int                    @default(1)
+
+  attendanceSession     AttendanceSession?     @relation(fields: [attendanceSessionId], references: [id], onDelete: SetNull)
+  attendanceRecord      AttendanceRecord?      @relation(fields: [attendanceRecordId], references: [id], onDelete: SetNull)
+  enrollment            Enrollment?            @relation(fields: [enrollmentId], references: [id], onDelete: SetNull)
+  branch                Branch                 @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  acknowledgedByUser    User?                  @relation("AttendanceAlertAcknowledgedBy", fields: [acknowledgedBy], references: [id], onDelete: SetNull)
+  resolvedByUser        User?                  @relation("AttendanceAlertResolvedBy", fields: [resolvedBy], references: [id], onDelete: SetNull)
+
+  @@index([branchId])
+  @@index([status])
+  @@index([triggeredAt])
+  @@map("attendance_alerts")
 }
 
 model Inquiry {
@@ -1390,6 +1588,7 @@ model StudentProfile {
   branch              Branch                 @relation(fields: [branchId], references: [id], onDelete: Restrict)
   admissions          Admission[]
   enrollments         Enrollment[]
+  attendanceRecords   AttendanceRecord[]
   statusHistory       StudentStatusHistory[]
   idCardHistory       StudentIdCardHistory[]
   mergeLogsAsSurvivor StudentMergeLog[]      @relation("StudentMergeSurvivor")
@@ -1656,6 +1855,8 @@ model Enrollment {
   batch            Batch             @relation(fields: [batchId], references: [id])
   walkInEnrollment WalkInEnrollment?
   walkInPayment    WalkInPayment?
+  attendanceRecords AttendanceRecord[]
+  attendanceAlerts  AttendanceAlert[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid

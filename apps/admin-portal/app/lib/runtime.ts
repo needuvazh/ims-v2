@@ -20,6 +20,15 @@ import {
 } from '@ims/database';
 import { createUuid } from '@ims/shared-kernel';
 import { PrismaSchedulingRepository, SchedulingService } from '@ims/scheduling';
+import {
+  AttendanceQueryService,
+  AttendanceService,
+  PrismaAttendanceAlertRepository,
+  PrismaAttendanceCorrectionRepository,
+  PrismaAttendanceQueryRepository,
+  PrismaAttendanceRecordRepository,
+  PrismaAttendanceSessionRepository,
+} from '@ims/attendance';
 import { OrganizationService } from '@ims/organization';
 import {
   AuthService,
@@ -55,6 +64,11 @@ export const exportJobRepository = new PrismaExportJobRepository(prisma);
 const loginHistoryRepository = new PrismaLoginHistoryRepository(prisma);
 const userActivationTokenRepository = new PrismaUserActivationTokenRepository(prisma);
 const schedulingRepository = new PrismaSchedulingRepository(prisma);
+const attendanceSessionRepository = new PrismaAttendanceSessionRepository(prisma);
+const attendanceRecordRepository = new PrismaAttendanceRecordRepository(prisma);
+const attendanceCorrectionRepository = new PrismaAttendanceCorrectionRepository(prisma);
+const attendanceAlertRepository = new PrismaAttendanceAlertRepository(prisma);
+const attendanceQueryRepository = new PrismaAttendanceQueryRepository(prisma);
 
 // ─── Notification Port ────────────────────────────────────────────────────
 const notificationPort = new DummyNotificationProvider();
@@ -118,6 +132,18 @@ export const securityPolicyService = new SecurityPolicyService(
 );
 
 export const schedulingCalendarService = new SchedulingService(prisma, schedulingRepository);
+export const attendanceService = new AttendanceService(
+  prisma,
+  attendanceSessionRepository,
+  attendanceRecordRepository,
+  attendanceCorrectionRepository,
+  attendanceAlertRepository,
+  attendanceQueryRepository,
+);
+export const attendanceQueryService = new AttendanceQueryService(
+  prisma,
+  attendanceQueryRepository,
+);
 
 export const auditQueryService = new AuditQueryService(
   auditRepository

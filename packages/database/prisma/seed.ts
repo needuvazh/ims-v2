@@ -106,9 +106,49 @@ const systemPermissions = [
   { moduleCode: 'courses',      featureCode: 'batches',    actionCode: 'transition', permissionCode: 'batch.delivery.transition',      permissionType: 'Action' as const, description: 'Transition course delivery batches status.' },
   { moduleCode: 'courses',      featureCode: 'batches',    actionCode: 'waitlist',permissionCode: 'waitinglist.manage',           permissionType: 'Action' as const, description: 'Manage batch waitlists.' },
   { moduleCode: 'scheduling',   featureCode: 'calendar',   actionCode: 'read',   permissionCode: 'scheduling.calendar.read',      permissionType: 'Action' as const, description: 'View calendar rules and overrides.' },
+  { moduleCode: 'scheduling',   featureCode: 'calendar',   actionCode: 'create', permissionCode: 'scheduling.calendar.create',    permissionType: 'Action' as const, description: 'Create institute calendars.' },
+  { moduleCode: 'scheduling',   featureCode: 'calendar',   actionCode: 'update', permissionCode: 'scheduling.calendar.update',    permissionType: 'Action' as const, description: 'Update institute calendars.' },
+  { moduleCode: 'scheduling',   featureCode: 'venue-block', actionCode: 'read',  permissionCode: 'scheduling.venueBlock.read',    permissionType: 'Action' as const, description: 'View venue blocks.' },
+  { moduleCode: 'scheduling',   featureCode: 'venue-block', actionCode: 'create', permissionCode: 'scheduling.venueBlock.create',  permissionType: 'Action' as const, description: 'Create venue blocks.' },
+  { moduleCode: 'scheduling',   featureCode: 'venue-block', actionCode: 'update', permissionCode: 'scheduling.venueBlock.update',  permissionType: 'Action' as const, description: 'Update venue blocks.' },
   { moduleCode: 'scheduling',   featureCode: 'sessions',    actionCode: 'manage', permissionCode: 'schedule.manage',                permissionType: 'Action' as const, description: 'Create and update schedules.' },
   
   // Attendance & Completion
+  { moduleCode: 'attendance',   featureCode: 'menu',        actionCode: 'view',   permissionCode: 'attendance.menu.view',            permissionType: 'Menu' as const, description: 'View the attendance module menu.' },
+  { moduleCode: 'attendance',   featureCode: 'dashboard',   actionCode: 'view',   permissionCode: 'attendance.dashboard.view',       permissionType: 'Menu' as const, description: 'View the attendance dashboard.' },
+  { moduleCode: 'attendance',   featureCode: 'sessions',    actionCode: 'menu.view', permissionCode: 'attendance.sessions.menu.view', permissionType: 'Menu' as const, description: 'View attendance sessions menu.' },
+  { moduleCode: 'attendance',   featureCode: 'records',     actionCode: 'menu.view', permissionCode: 'attendance.records.menu.view',   permissionType: 'Menu' as const, description: 'View attendance records menu.' },
+  { moduleCode: 'attendance',   featureCode: 'corrections', actionCode: 'menu.view', permissionCode: 'attendance.corrections.menu.view', permissionType: 'Menu' as const, description: 'View attendance corrections menu.' },
+  { moduleCode: 'attendance',   featureCode: 'reports',     actionCode: 'menu.view', permissionCode: 'attendance.reports.menu.view',   permissionType: 'Menu' as const, description: 'View attendance reports menu.' },
+  { moduleCode: 'attendance',   featureCode: 'sessions',    actionCode: 'read',   permissionCode: 'attendance.session.read',         permissionType: 'Action' as const, description: 'Read attendance sessions.' },
+  { moduleCode: 'attendance',   featureCode: 'sessions',    actionCode: 'open',   permissionCode: 'attendance.session.open',         permissionType: 'Action' as const, description: 'Open attendance sessions.' },
+  { moduleCode: 'attendance',   featureCode: 'sessions',    actionCode: 'submit', permissionCode: 'attendance.session.submit',       permissionType: 'Action' as const, description: 'Submit attendance sessions.' },
+  { moduleCode: 'attendance',   featureCode: 'sessions',    actionCode: 'lock',   permissionCode: 'attendance.session.lock',         permissionType: 'Action' as const, description: 'Lock attendance sessions.' },
+  { moduleCode: 'attendance',   featureCode: 'sessions',    actionCode: 'reopen', permissionCode: 'attendance.session.reopen',       permissionType: 'Action' as const, description: 'Reopen attendance sessions.' },
+  { moduleCode: 'attendance',   featureCode: 'records',     actionCode: 'read',   permissionCode: 'attendance.record.read',         permissionType: 'Action' as const, description: 'Read attendance records.' },
+  { moduleCode: 'attendance',   featureCode: 'records',     actionCode: 'write',  permissionCode: 'attendance.record.mark',         permissionType: 'Action' as const, description: 'Mark student attendance.' },
+  { moduleCode: 'attendance',   featureCode: 'records',     actionCode: 'update', permissionCode: 'attendance.record.update',       permissionType: 'Action' as const, description: 'Update attendance records.' },
+  { moduleCode: 'attendance',   featureCode: 'records',     actionCode: 'bulkMark', permissionCode: 'attendance.record.bulkMark',    permissionType: 'Action' as const, description: 'Bulk mark attendance records.' },
+  { moduleCode: 'attendance',   featureCode: 'records',     actionCode: 'import', permissionCode: 'attendance.record.import',       permissionType: 'Action' as const, description: 'Import attendance records.' },
+  { moduleCode: 'attendance',   featureCode: 'records',     actionCode: 'export', permissionCode: 'attendance.record.export',       permissionType: 'Action' as const, description: 'Export attendance records.' },
+  { moduleCode: 'attendance',   featureCode: 'corrections', actionCode: 'request', permissionCode: 'attendance.correction.request', permissionType: 'Action' as const, description: 'Request an attendance correction.' },
+  { moduleCode: 'attendance',   featureCode: 'corrections', actionCode: 'review',  permissionCode: 'attendance.correction.review',  permissionType: 'Action' as const, description: 'Review attendance corrections.' },
+  { moduleCode: 'attendance',   featureCode: 'corrections', actionCode: 'approve', permissionCode: 'attendance.correction.approve', permissionType: 'Action' as const, description: 'Approve attendance corrections.' },
+  { moduleCode: 'attendance',   featureCode: 'corrections', actionCode: 'reject',  permissionCode: 'attendance.correction.reject',  permissionType: 'Action' as const, description: 'Reject attendance corrections.' },
+  { moduleCode: 'attendance',   featureCode: 'audit',       actionCode: 'read',   permissionCode: 'attendance.audit.read',          permissionType: 'Report' as const, description: 'Read attendance audit trail.' },
+  { moduleCode: 'attendance',   featureCode: 'reports',     actionCode: 'daily.view', permissionCode: 'attendance.report.daily.view', permissionType: 'Report' as const, description: 'View daily attendance reports.' },
+  { moduleCode: 'attendance',   featureCode: 'reports',     actionCode: 'batch.view', permissionCode: 'attendance.report.batch.view', permissionType: 'Report' as const, description: 'View batch attendance reports.' },
+  { moduleCode: 'attendance',   featureCode: 'reports',     actionCode: 'student.view', permissionCode: 'attendance.report.student.view', permissionType: 'Report' as const, description: 'View student attendance reports.' },
+  { moduleCode: 'attendance',   featureCode: 'reports',     actionCode: 'trainer.view', permissionCode: 'attendance.report.trainer.view', permissionType: 'Report' as const, description: 'View trainer attendance reports.' },
+  { moduleCode: 'attendance',   featureCode: 'reports',     actionCode: 'lowAttendance.view', permissionCode: 'attendance.report.lowAttendance.view', permissionType: 'Report' as const, description: 'View low attendance reports.' },
+  { moduleCode: 'attendance',   featureCode: 'reports',     actionCode: 'correctionAging.view', permissionCode: 'attendance.report.correctionAging.view', permissionType: 'Report' as const, description: 'View correction aging reports.' },
+  { moduleCode: 'attendance',   featureCode: 'reports',     actionCode: 'export',  permissionCode: 'attendance.report.export',       permissionType: 'Report' as const, description: 'Export attendance reports.' },
+  { moduleCode: 'attendance',   featureCode: 'dashboard',   actionCode: 'branch.view', permissionCode: 'attendance.dashboard.branch.view', permissionType: 'Report' as const, description: 'View branch attendance dashboard.' },
+  { moduleCode: 'attendance',   featureCode: 'dashboard',   actionCode: 'consolidated.view', permissionCode: 'attendance.dashboard.consolidated.view', permissionType: 'Report' as const, description: 'View consolidated attendance dashboard.' },
+  { moduleCode: 'attendance',   featureCode: 'alerts',      actionCode: 'read',   permissionCode: 'attendance.alert.read',          permissionType: 'Action' as const, description: 'Read attendance alerts.' },
+  { moduleCode: 'attendance',   featureCode: 'alerts',      actionCode: 'detect', permissionCode: 'attendance.alert.detect',        permissionType: 'Action' as const, description: 'Trigger low attendance detection.' },
+  { moduleCode: 'attendance',   featureCode: 'admin',       actionCode: 'override', permissionCode: 'attendance.admin.override',    permissionType: 'Action' as const, description: 'Use attendance admin override controls.' },
+  { moduleCode: 'attendance',   featureCode: 'reports',     actionCode: 'consolidated.read', permissionCode: 'attendance.consolidated.read', permissionType: 'Report' as const, description: 'Read consolidated attendance data.' },
   { moduleCode: 'attendance',   featureCode: 'records',     actionCode: 'write',  permissionCode: 'attendance.record',              permissionType: 'Action' as const, description: 'Mark student attendance.' },
   { moduleCode: 'exams',        featureCode: 'results',     actionCode: 'write',  permissionCode: 'result.record',                  permissionType: 'Action' as const, description: 'Enter exam marks and grades.' },
   
@@ -148,6 +188,10 @@ async function seed() {
 
   // 1. Clean up existing relations to prevent duplicate key errors in fresh seeds
   console.log('🧹 Cleaning old records...');
+  await prisma.attendanceCorrection.deleteMany({});
+  await prisma.attendanceAlert.deleteMany({});
+  await prisma.attendanceRecord.deleteMany({});
+  await prisma.attendanceSession.deleteMany({});
   await prisma.walkInConfirmation.deleteMany({});
   await prisma.walkInPayment.deleteMany({});
   await prisma.walkInEnrollment.deleteMany({});
@@ -214,6 +258,8 @@ async function seed() {
     { code: 'STUDENT', name: 'Student', desc: 'View fees, certificates, and attendance on portal.' },
     { code: 'ACADEMIC_COORDINATOR', name: 'Academic Coordinator', desc: 'Manage syllabus, courses, and exam evaluations.' },
     { code: 'MANAGEMENT', name: 'Management', desc: 'Global read-only access to audit logs and business analytics.' },
+    { code: 'AUDITOR', name: 'Auditor', desc: 'Audit-only access to compliance-sensitive records and exports.' },
+    { code: 'READ_ONLY_EXECUTIVE', name: 'Read Only Executive', desc: 'Executive reporting access without mutation permissions.' },
   ];
 
   const roleMap: Record<string, any> = {};
@@ -254,7 +300,7 @@ async function seed() {
     'student.read', 'student.reveal_pii', 'student.write', 'enrollment.create', 'enrollment.submit',
     'enrollment.read', 'enrollment.approve', 'enrollment.cancel', 'enrollment.drop', 'enrollment.walk-in-payment',
     'admission.read', 'admission.create', 'admission.approve',
-    'payment.create', 'refund.request', 'course.manage', 'scheduling.calendar.read', 'schedule.manage',
+    'payment.create', 'refund.request', 'course.manage', 'scheduling.calendar.read', 'scheduling.calendar.create', 'scheduling.calendar.update', 'scheduling.venueBlock.read', 'scheduling.venueBlock.create', 'scheduling.venueBlock.update', 'schedule.manage',
     'course.catalog.view', 'course.catalog.create', 'course.catalog.update', 'course.catalog.publish', 'course.catalog.archive',
     'batch.delivery.view',
     'batch.delivery.assign',
@@ -262,7 +308,13 @@ async function seed() {
     'batch.delivery.update',
     'batch.delivery.transition',
     'waitinglist.manage',
-    'attendance.record', 'result.record', 'certificate.generate',
+    'attendance.menu.view', 'attendance.dashboard.view', 'attendance.sessions.menu.view', 'attendance.records.menu.view', 'attendance.corrections.menu.view', 'attendance.reports.menu.view',
+    'attendance.session.read', 'attendance.session.open', 'attendance.session.submit', 'attendance.session.lock', 'attendance.session.reopen',
+    'attendance.record.read', 'attendance.record.mark', 'attendance.record.update', 'attendance.record.bulkMark', 'attendance.record.import', 'attendance.record.export',
+    'attendance.correction.request', 'attendance.correction.review', 'attendance.correction.approve', 'attendance.correction.reject',
+    'attendance.audit.read', 'attendance.report.daily.view', 'attendance.report.batch.view', 'attendance.report.student.view', 'attendance.report.trainer.view', 'attendance.report.lowAttendance.view', 'attendance.report.correctionAging.view', 'attendance.report.export', 'attendance.dashboard.branch.view', 'attendance.dashboard.consolidated.view',
+    'attendance.alert.read', 'attendance.alert.detect', 'attendance.admin.override', 'attendance.consolidated.read',
+    'result.record', 'certificate.generate',
     'certificate.verify', 'dashboard.branch', 'dashboard.security', 'dashboard.view',
     'REPORTING_VIEW_CRM_DASHBOARD', 'REPORTING_VIEW_COUNSELOR_METRICS', 'LEAD_VIEW_ALL_IN_BRANCH'
   ];
@@ -295,7 +347,10 @@ async function seed() {
 
   // Trainer permissions
   const trainerPermCodes = [
-    'student.read', 'scheduling.calendar.read', 'schedule.manage', 'attendance.record',
+    'student.read', 'scheduling.calendar.read', 'schedule.manage', 'attendance.menu.view',
+    'attendance.dashboard.view', 'attendance.sessions.menu.view', 'attendance.records.menu.view',
+    'attendance.session.read', 'attendance.session.open', 'attendance.session.submit', 'attendance.record.read', 'attendance.record.mark', 'attendance.record.update',
+    'attendance.correction.request', 'attendance.report.daily.view', 'attendance.report.batch.view', 'attendance.report.student.view', 'attendance.report.lowAttendance.view',
     'result.record', 'dashboard.training', 'batch.delivery.view'
   ];
   const trainerPerms = permRecords.filter(p => trainerPermCodes.includes(p.permissionCode));
@@ -305,6 +360,7 @@ async function seed() {
     });
   }
   console.log(`  ✓ Assigned permissions to TRAINER`);
+  console.log(`  ✓ TRAINER role includes attendance access; SUPER_ADMIN receives all permissions`);
 
   // Accountant permissions
   const accountantPermCodes = [
@@ -320,13 +376,39 @@ async function seed() {
   console.log(`  ✓ Assigned permissions to ACCOUNTANT`);
 
   // Student permissions (mostly read-only dashboard)
-  const studentPerms = permRecords.filter(p => ['certificate.verify'].includes(p.permissionCode));
+  const studentPerms = permRecords.filter(p => ['certificate.verify', 'attendance.record.read', 'attendance.report.student.view'].includes(p.permissionCode));
   for (const perm of studentPerms) {
     await prisma.rolePermission.create({
       data: { roleId: roleMap['STUDENT'].id, permissionId: perm.id },
     });
   }
   console.log(`  ✓ Assigned permissions to STUDENT`);
+
+  // Auditor permissions
+  const auditorPermCodes = [
+    'attendance.audit.read', 'attendance.report.daily.view', 'attendance.report.batch.view', 'attendance.report.student.view', 'attendance.report.trainer.view', 'attendance.report.lowAttendance.view', 'attendance.report.correctionAging.view', 'attendance.report.export', 'attendance.consolidated.read',
+    'iam.audit.read', 'report.iam.audit-trail', 'dashboard.compliance'
+  ];
+  const auditorPerms = permRecords.filter(p => auditorPermCodes.includes(p.permissionCode));
+  for (const perm of auditorPerms) {
+    await prisma.rolePermission.create({
+      data: { roleId: roleMap['AUDITOR'].id, permissionId: perm.id },
+    });
+  }
+  console.log(`  ✓ Assigned permissions to AUDITOR`);
+
+  // Read-only executive permissions
+  const execPermCodes = [
+    'attendance.dashboard.view', 'attendance.dashboard.branch.view', 'attendance.dashboard.consolidated.view', 'attendance.report.daily.view', 'attendance.report.batch.view', 'attendance.report.student.view', 'attendance.report.trainer.view', 'attendance.report.lowAttendance.view', 'attendance.report.correctionAging.view', 'attendance.report.export', 'attendance.consolidated.read',
+    'dashboard.ceo', 'dashboard.view', 'report.iam.session', 'report.iam.audit-trail'
+  ];
+  const execPerms = permRecords.filter(p => execPermCodes.includes(p.permissionCode));
+  for (const perm of execPerms) {
+    await prisma.rolePermission.create({
+      data: { roleId: roleMap['READ_ONLY_EXECUTIVE'].id, permissionId: perm.id },
+    });
+  }
+  console.log(`  ✓ Assigned permissions to READ_ONLY_EXECUTIVE`);
 
   // 5. Seed Institute & Branches
   const institute = await prisma.institute.create({
@@ -612,6 +694,28 @@ async function seed() {
     data: { id: crypto.randomUUID(), userId: riyadhTrainerUser.id, branchId: riyadhBranch.id, isDefault: true, status: 'Active' }
   });
   console.log(`  ✓ User created: trainer.riyadh@ims.com (TRAINER, Branch AST-RIYADH)`);
+
+  // User D2: Muscat Trainer
+  const muscatTrainerPerson = await prisma.person.create({
+    data: { id: crypto.randomUUID(), firstName: 'Muscat', lastName: 'Session Trainer', mobile: '+968-500000004' }
+  });
+  const muscatTrainerUser = await prisma.user.create({
+    data: {
+      id: crypto.randomUUID(),
+      personId: muscatTrainerPerson.id,
+      username: 'trainer.muscat@ims.com',
+      email: 'trainer.muscat@ims.com',
+      userType: 'Trainer',
+      status: 'Active',
+      passwordHash,
+      effectiveStartDate: new Date(),
+    },
+  });
+  await prisma.userRole.create({ data: { userId: muscatTrainerUser.id, roleId: roleMap['TRAINER'].id } });
+  await prisma.userBranchAccess.create({
+    data: { id: crypto.randomUUID(), userId: muscatTrainerUser.id, branchId: muscatBranch.id, isDefault: true, status: 'Active' }
+  });
+  console.log(`  ✓ User created: trainer.muscat@ims.com (TRAINER, Branch AST-MUSCAT)`);
 
   // User E: Riyadh Accountant
   const riyadhAccountantPerson = await prisma.person.create({

@@ -44,6 +44,68 @@ export const permissions = {
       create: 'scheduling.calendar.create',
       update: 'scheduling.calendar.update',
     },
+    venueBlock: {
+      read: 'scheduling.venueBlock.read',
+      create: 'scheduling.venueBlock.create',
+      update: 'scheduling.venueBlock.update',
+    },
+  },
+  attendance: {
+    menu: {
+      view: 'attendance.menu.view',
+      dashboard: 'attendance.dashboard.view',
+      sessions: 'attendance.sessions.menu.view',
+      records: 'attendance.records.menu.view',
+      corrections: 'attendance.corrections.menu.view',
+      reports: 'attendance.reports.menu.view',
+    },
+    session: {
+      read: 'attendance.session.read',
+      open: 'attendance.session.open',
+      submit: 'attendance.session.submit',
+      lock: 'attendance.session.lock',
+      reopen: 'attendance.session.reopen',
+    },
+    record: {
+      read: 'attendance.record.read',
+      mark: 'attendance.record.mark',
+      update: 'attendance.record.update',
+      bulkMark: 'attendance.record.bulkMark',
+      import: 'attendance.record.import',
+      export: 'attendance.record.export',
+    },
+    correction: {
+      request: 'attendance.correction.request',
+      review: 'attendance.correction.review',
+      approve: 'attendance.correction.approve',
+      reject: 'attendance.correction.reject',
+    },
+    report: {
+      daily: 'attendance.report.daily.view',
+      batch: 'attendance.report.batch.view',
+      student: 'attendance.report.student.view',
+      trainer: 'attendance.report.trainer.view',
+      lowAttendance: 'attendance.report.lowAttendance.view',
+      correctionAging: 'attendance.report.correctionAging.view',
+      export: 'attendance.report.export',
+    },
+    dashboard: {
+      branch: 'attendance.dashboard.branch.view',
+      consolidated: 'attendance.dashboard.consolidated.view',
+    },
+    alert: {
+      read: 'attendance.alert.read',
+      detect: 'attendance.alert.detect',
+    },
+    audit: {
+      read: 'attendance.audit.read',
+    },
+    consolidated: {
+      read: 'attendance.consolidated.read',
+    },
+    admin: {
+      override: 'attendance.admin.override',
+    },
   },
   crm: {
     leads: {
