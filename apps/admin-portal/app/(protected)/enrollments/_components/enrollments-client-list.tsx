@@ -1,39 +1,35 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
-  CheckCircle,
-  Clock,
-  Eye,
-  FileEdit,
-  FileText,
   GraduationCap,
   Plus,
-  Search,
-  X,
+  Eye,
+  Clock,
+  CheckCircle,
+  FileText,
+  FileEdit,
 } from 'lucide-react';
 import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
   Badge,
   Button,
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
+  Pagination,
+  DataTableFilter,
+  StatCard,
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
-  EmptyState,
-  FormLabel,
-  Input,
-  Pagination,
-  ResponsiveDataTable,
-  Select,
-  StatCard,
+  DialogDescription,
+  DialogFooter,
+  DialogClose,
 } from '@ims/shared-ui';
 import { toast } from 'sonner';
 import { PricingPanel } from './pricing-panel';
@@ -72,16 +68,7 @@ interface EnrollmentsClientListProps {
     submitted: number;
     draft: number;
   };
-  defaultSearch: string;
-  defaultStatus: string;
-  defaultBranchId: string;
-  defaultCourseId: string;
-  defaultBatchId: string;
-  defaultSortBy: string;
-  defaultSortOrder: 'asc' | 'desc';
 }
-
-type SortOrder = 'asc' | 'desc';
 
 export function EnrollmentsClientList({
   enrollments,
@@ -92,19 +79,11 @@ export function EnrollmentsClientList({
   total,
   currentPage,
   kpis,
-  defaultSearch,
-  defaultStatus,
-  defaultBranchId,
-  defaultCourseId,
-  defaultBatchId,
-  defaultSortBy,
-  defaultSortOrder,
 }: EnrollmentsClientListProps) {
   const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
   const totalPages = Math.ceil(total / 10);
 
+  // Enrollment Intake Modal State
   const [isOpen, setIsOpen] = useState(false);
   const [selectedAdmissionId, setSelectedAdmissionId] = useState('');
   const [selectedBatchId, setSelectedBatchId] = useState('');
@@ -120,64 +99,31 @@ export function EnrollmentsClientList({
   } | null>(null);
   const [pricingLoading, setPricingLoading] = useState(false);
   const [pricingError, setPricingError] = useState<string | null>(null);
-  const [searchValue, setSearchValue] = useState(defaultSearch);
+  const [promoInput, setPromoInput] = useState('');
+  const [appliedPromoCodes, setAppliedPromoCodes] = useState<string[]>([]);
 
-  const currentSortBy = searchParams.get('sortBy') ?? defaultSortBy ?? 'createdAt';
-  const currentSortOrder = (searchParams.get('sortOrder') as SortOrder | null) ?? defaultSortOrder;
-
-  const updateParams = useCallback((updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
-
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === '') {
-        params.delete(key);
-      } else {
-        params.set(key, value);
-      }
-    });
-
-    router.push(`${pathname}?${params.toString()}`);
-  }, [pathname, router, searchParams]);
-
-  useEffect(() => {
-    const nextSearch = searchParams.get('q') || '';
-    setSearchValue((current) => (current === nextSearch ? current : nextSearch));
-  }, [searchParams]);
-
-  useEffect(() => {
-    const currentSearch = searchParams.get('q') || '';
-    if (searchValue === currentSearch) {
-      return;
-    }
-
-    const timeout = setTimeout(() => {
-      updateParams({ q: searchValue || null, page: '1' });
-    }, 300);
-
-    return () => clearTimeout(timeout);
-  }, [searchParams, searchValue, updateParams]);
-
-  const selectedAdmission = admissions.find((admission) => admission.id === selectedAdmissionId);
-  const filteredBatches = selectedAdmission ? batches.filter((batch) => batch.courseId === selectedAdmission.courseId) : [];
+  const selectedAdmission = admissions.find(a => a.id === selectedAdmissionId);
+  const filteredBatches = selectedAdmission
+    ? batches.filter(b => b.courseId === selectedAdmission.courseId)
+    : [];
 
   useEffect(() => {
     let cancelled = false;
+    if (!selectedAdmission || !selectedBatchId) {
+      setPricingPreview(null);
+      setPricingError(null);
+      return;
+    }
 
     const refreshPricing = async () => {
-      if (!selectedAdmission || !selectedBatchId) {
-        setPricingPreview(null);
-        setPricingError(null);
-        setPricingLoading(false);
-        return;
-      }
-
       setPricingLoading(true);
       setPricingError(null);
 
       try {
         const customerType = enrollmentType === 'Corporate' ? 'Corporate' : 'Individual';
+        const promoQuery = appliedPromoCodes.length > 0 ? `&promoCodes=${encodeURIComponent(appliedPromoCodes.join(','))}` : '';
         const response = await fetch(
-          `/api/v1/courses/${selectedAdmission.courseId}/pricing/resolve?customerType=${encodeURIComponent(customerType)}&branchId=${selectedAdmission.branchId}&batchId=${selectedBatchId}`
+          `/api/v1/courses/${selectedAdmission.courseId}/pricing/resolve?customerType=${encodeURIComponent(customerType)}&branchId=${selectedAdmission.branchId}&batchId=${selectedBatchId}${promoQuery}`
         );
         const data = await response.json();
 
@@ -186,15 +132,19 @@ export function EnrollmentsClientList({
         }
 
         if (!cancelled) {
-          const resolvedDiscount = (data.data.applicableDiscounts ?? []).reduce((sum: number, discount: { discountValue: number }) => sum + discount.discountValue, 0);
+          const resolvedDiscount = (data.data.applicableDiscounts ?? []).reduce((sum: number, discount: { discountValue: number, discountMode: string }) => {
+            const val = discount.discountMode === 'Percentage'
+              ? (Number(data.data.basePrice) * discount.discountValue) / 100
+              : discount.discountValue;
+            return sum + val;
+          }, 0);
           const finalAmount = Number(data.data.totalPrice);
-
           setPricingPreview({
             pricingSource: data.data.pricingSource,
             resolvedPrice: String(data.data.basePrice),
             resolvedDiscount: String(resolvedDiscount),
-            finalAmount: String(Math.max(0, finalAmount)),
-            paymentValidationRequired: finalAmount > 0,
+            finalAmount: String(Math.max(0, finalAmount - resolvedDiscount)),
+            paymentValidationRequired: Math.max(0, finalAmount - resolvedDiscount) > 0,
             priceEvaluationTimestamp: new Date().toISOString(),
           });
         }
@@ -215,182 +165,34 @@ export function EnrollmentsClientList({
     return () => {
       cancelled = true;
     };
-  }, [selectedAdmission, selectedBatchId, enrollmentType]);
+  }, [selectedAdmission, selectedBatchId, enrollmentType, appliedPromoCodes]);
 
-  const handleSort = (field: string) => {
-    const nextOrder: SortOrder = currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
-    updateParams({ sortBy: field, sortOrder: nextOrder, page: '1' });
-  };
-
-  const getStatusBadgeVariant = (status: string) => {
-    switch (status) {
-      case 'Active':
-      case 'Confirmed':
-        return 'success';
-      case 'Submitted':
-      case 'Approved':
-        return 'info';
-      case 'Draft':
-        return 'outline';
-      case 'Dropped':
-      case 'Cancelled':
-        return 'error';
-      case 'Completed':
-        return 'default';
-      default:
-        return 'default';
-    }
-  };
-
-  const requestedBranchId = searchParams.get('branchId') || '';
-  const requestedCourseId = searchParams.get('courseId') || '';
-  const requestedBatchId = searchParams.get('batchId') || '';
-  const requestedStatus = searchParams.get('status') || '';
-
-  const validStatuses = ['Draft', 'Submitted', 'Approved', 'Confirmed', 'Active', 'Completed', 'Dropped', 'Cancelled'];
-  const currentBranchId = branches.some((branch) => branch.id === requestedBranchId)
-    ? requestedBranchId
-    : branches.some((branch) => branch.id === defaultBranchId)
-      ? defaultBranchId
-      : '';
-  const currentCourseId = courses.some((course) => course.id === requestedCourseId)
-    ? requestedCourseId
-    : courses.some((course) => course.id === defaultCourseId)
-      ? defaultCourseId
-      : '';
-  const currentBatchId = batches.some((batch) => batch.id === requestedBatchId)
-    ? requestedBatchId
-    : batches.some((batch) => batch.id === defaultBatchId)
-      ? defaultBatchId
-      : '';
-  const currentStatus = validStatuses.includes(requestedStatus)
-    ? requestedStatus
-    : validStatuses.includes(defaultStatus)
-      ? defaultStatus
-      : '';
-
-  const columns = [
+  const filterConfigs = [
     {
-      header: 'Enrollment #',
-      sortable: true,
-      sortDirection: currentSortBy === 'enrollmentNumber' ? currentSortOrder : null,
-      onSort: () => handleSort('enrollmentNumber'),
-      render: (enrollment: EnrollmentListItem) => <span className="font-mono font-medium text-slate-800">{enrollment.enrollmentNumber}</span>,
-      headerClassName: 'w-[140px]',
+      key: 'branchId',
+      label: 'Branch',
+      options: branches.map((b) => ({ value: b.id, label: b.name })),
     },
     {
-      header: 'Student',
-      sortable: true,
-      sortDirection: currentSortBy === 'studentName' ? currentSortOrder : null,
-      onSort: () => handleSort('studentName'),
-      render: (enrollment: EnrollmentListItem) => (
-        <div className="space-y-1">
-          <div className="font-semibold text-slate-800">{enrollment.studentName}</div>
-          <div className="text-xs text-[color:var(--ims-muted)]">{enrollment.studentEmail}</div>
-        </div>
-      ),
+      key: 'status',
+      label: 'Status',
+      options: [
+        { value: 'Draft', label: 'Draft' },
+        { value: 'Submitted', label: 'Submitted' },
+        { value: 'Approved', label: 'Approved' },
+        { value: 'Confirmed', label: 'Confirmed' },
+        { value: 'Active', label: 'Active' },
+        { value: 'Completed', label: 'Completed' },
+        { value: 'Dropped', label: 'Dropped' },
+        { value: 'Cancelled', label: 'Cancelled' },
+      ],
     },
     {
-      header: 'Course',
-      sortable: true,
-      sortDirection: currentSortBy === 'courseName' ? currentSortOrder : null,
-      onSort: () => handleSort('courseName'),
-      render: (enrollment: EnrollmentListItem) => enrollment.courseName,
-    },
-    {
-      header: 'Batch',
-      sortable: true,
-      sortDirection: currentSortBy === 'batchCode' ? currentSortOrder : null,
-      onSort: () => handleSort('batchCode'),
-      render: (enrollment: EnrollmentListItem) => <span className="font-mono text-xs font-semibold">{enrollment.batchCode}</span>,
-    },
-    {
-      header: 'Branch',
-      sortable: true,
-      sortDirection: currentSortBy === 'branchName' ? currentSortOrder : null,
-      onSort: () => handleSort('branchName'),
-      render: (enrollment: EnrollmentListItem) => enrollment.branchName,
-    },
-    {
-      header: 'Created',
-      sortable: true,
-      sortDirection: currentSortBy === 'createdAt' ? currentSortOrder : null,
-      onSort: () => handleSort('createdAt'),
-      render: (enrollment: EnrollmentListItem) => <span className="text-xs text-[color:var(--ims-muted)]">{new Date(enrollment.createdAt).toLocaleDateString()}</span>,
-      headerClassName: 'w-[130px]',
-    },
-    {
-      header: 'Status',
-      className: 'text-center',
-      sortable: true,
-      sortDirection: currentSortBy === 'enrollmentStatus' ? currentSortOrder : null,
-      onSort: () => handleSort('enrollmentStatus'),
-      render: (enrollment: EnrollmentListItem) => <Badge variant={getStatusBadgeVariant(enrollment.enrollmentStatus)}>{enrollment.enrollmentStatus}</Badge>,
-      headerClassName: 'w-[120px] text-center',
-    },
-    {
-      header: 'Actions',
-      className: 'text-right',
-      render: (enrollment: EnrollmentListItem) => (
-        <Button variant="ghost" size="icon" onClick={() => router.push(`/enrollments/${enrollment.id}`)} title="View Details">
-          <Eye className="h-4 w-4 text-slate-500 hover:text-indigo-600" />
-        </Button>
-      ),
-      headerClassName: 'w-[100px] text-right',
+      key: 'courseId',
+      label: 'Course',
+      options: courses.map((c) => ({ value: c.id, label: c.name })),
     },
   ];
-
-  const renderCard = (enrollment: EnrollmentListItem) => (
-    <Card className="transition-colors hover:border-[var(--ims-brass)]">
-      <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p">
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0 space-y-1">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">{enrollment.enrollmentNumber}</p>
-            <p className="text-sm font-bold text-[var(--ims-ink)]">{enrollment.studentName}</p>
-          </div>
-          <Badge variant={getStatusBadgeVariant(enrollment.enrollmentStatus)}>{enrollment.enrollmentStatus}</Badge>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-3 p-card-p">
-        <div className="grid grid-cols-2 gap-4 text-xs">
-          <div className="space-y-1">
-            <p className="font-semibold text-[var(--ims-muted)]">Course</p>
-            <p className="truncate">{enrollment.courseName}</p>
-          </div>
-          <div className="space-y-1">
-            <p className="font-semibold text-[var(--ims-muted)]">Batch</p>
-            <p className="truncate font-mono">{enrollment.batchCode}</p>
-          </div>
-          <div className="col-span-2 space-y-1">
-            <p className="font-semibold text-[var(--ims-muted)]">Branch</p>
-            <p className="truncate">{enrollment.branchName}</p>
-          </div>
-          <div className="col-span-2 space-y-1">
-            <p className="font-semibold text-[var(--ims-muted)]">Created</p>
-            <p className="truncate">{new Date(enrollment.createdAt).toLocaleDateString()}</p>
-          </div>
-        </div>
-      </CardContent>
-      <CardFooter className="p-card-p pt-0">
-        <Button
-          variant="outline"
-          size="sm"
-          className="w-full text-[11px]"
-          onClick={() => router.push(`/enrollments/${enrollment.id}`)}
-        >
-          <Eye className="mr-1.5 h-3.5 w-3.5" /> View Details
-        </Button>
-      </CardFooter>
-    </Card>
-  );
-
-  const activeFilters = [
-    { label: 'Search', value: defaultSearch },
-    { label: 'Branch', value: currentBranchId ? branches.find((branch) => branch.id === currentBranchId)?.name || currentBranchId : '' },
-    { label: 'Status', value: currentStatus },
-    { label: 'Course', value: currentCourseId ? courses.find((course) => course.id === currentCourseId)?.name || currentCourseId : '' },
-    { label: 'Batch', value: currentBatchId ? batches.find((batch) => batch.id === currentBatchId)?.code || currentBatchId : '' },
-  ].filter((item) => item.value);
 
   const handleCreateEnrollment = async () => {
     if (!selectedAdmissionId) {
@@ -414,6 +216,7 @@ export function EnrollmentsClientList({
           courseId: selectedAdmission?.courseId,
           batchId: selectedBatchId,
           enrollmentType,
+          promoCodes: appliedPromoCodes,
         }),
       });
 
@@ -425,162 +228,171 @@ export function EnrollmentsClientList({
       toast.success('Enrollment initialized successfully!');
       setIsOpen(false);
       router.push(`/enrollments/${data.enrollmentId}`);
-    } catch (error: any) {
-      toast.error(error.message || 'Failed to initialize enrollment.');
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to initialize enrollment.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const getStatusBadgeVariant = (s: string) => {
+    switch (s) {
+      case 'Active':
+      case 'Confirmed':
+        return 'success';
+      case 'Submitted':
+      case 'Approved':
+        return 'info';
+      case 'Draft':
+        return 'outline';
+      case 'Dropped':
+      case 'Cancelled':
+        return 'error';
+      case 'Completed':
+        return 'default';
+      default:
+        return 'default';
+    }
+  };
+
   return (
-    <div className="space-y-4 sm:space-y-5 lg:space-y-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div className="min-w-0 space-y-1">
-          <h1 className="flex items-center gap-2 text-page-title font-bold tracking-tight text-[var(--ims-ink)]">
-            <GraduationCap className="h-6 w-6 shrink-0 text-indigo-600 sm:h-8 sm:w-8" />
+    <div className="space-y-6">
+      {/* Page Header */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-[color:var(--ims-ink)] flex items-center gap-2">
+            <GraduationCap className="h-8 w-8 text-indigo-600" />
             Enrollments
           </h1>
-          <p className="max-w-2xl text-sm text-[var(--ims-muted)]">
-            Manage student course enrollments, statuses, and batch assignments.
+          <p className="text-sm text-[color:var(--ims-muted)]">
+            Manage student course registrations, assign learning batches, and track operational states.
           </p>
         </div>
-        <Button onClick={() => setIsOpen(true)} className="h-10 w-full gap-1.5 bg-indigo-600 hover:bg-indigo-700 sm:w-auto sm:px-4">
-          <Plus className="h-4 w-4" />
-          New Enrollment
-        </Button>
-      </div>
-
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 sm:gap-5">
-        <StatCard title="Total Enrollments" value={kpis.total} description="Total active registrations" icon={<FileText className="h-5 w-5" />} tone="indigo" />
-        <StatCard title="Active / Confirmed" value={kpis.active} description="Active learning student list" icon={<CheckCircle className="h-5 w-5" />} tone="emerald" />
-        <StatCard title="Pending Approval" value={kpis.submitted} description="Submitted enrollments review queue" icon={<Clock className="h-5 w-5" />} tone="amber" />
-        <StatCard title="Draft" value={kpis.draft} description="Incomplete draft enrollments" icon={<FileEdit className="h-5 w-5" />} tone="sky" />
-      </div>
-
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
-        <div className="min-w-0 sm:col-span-2 xl:col-span-1">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Search</FormLabel>
-          <div className="relative">
-            <Input
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-              placeholder="Search by enrollment #, student name..."
-              leftIcon={<Search className="h-4 w-4" />}
-              className="h-12 pr-10"
-            />
-            {searchValue && (
-              <button
-                type="button"
-                onClick={() => {
-                  setSearchValue('');
-                  updateParams({ q: null, page: '1' });
-                }}
-                aria-label="Clear search"
-                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full text-[color:var(--ims-muted)] transition-colors hover:text-[color:var(--ims-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)]"
-              >
-                <X className="h-3.5 w-3.5" />
-              </button>
-            )}
-          </div>
-        </div>
-
-        <div className="min-w-0">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Branch</FormLabel>
-          <Select
-            value={currentBranchId}
-            onChange={(e) => updateParams({ branchId: e.target.value, page: '1' })}
-            options={[
-              { value: '', label: 'All Branches' },
-              ...branches.map((branch) => ({ value: branch.id, label: branch.name })),
-            ]}
-            className="h-12"
-            placeholder="All Branches"
-          />
-        </div>
-
-        <div className="min-w-0">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Status</FormLabel>
-          <Select
-            value={currentStatus}
-            onChange={(e) => updateParams({ status: e.target.value, page: '1' })}
-            options={[
-              { value: '', label: 'All Statuses' },
-              { value: 'Draft', label: 'Draft' },
-              { value: 'Submitted', label: 'Submitted' },
-              { value: 'Approved', label: 'Approved' },
-              { value: 'Confirmed', label: 'Confirmed' },
-              { value: 'Active', label: 'Active' },
-              { value: 'Completed', label: 'Completed' },
-              { value: 'Dropped', label: 'Dropped' },
-              { value: 'Cancelled', label: 'Cancelled' },
-            ]}
-            className="h-12"
-            placeholder="All Statuses"
-          />
-        </div>
-
-        <div className="min-w-0">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Course</FormLabel>
-          <Select
-            value={currentCourseId}
-            onChange={(e) => updateParams({ courseId: e.target.value, page: '1' })}
-            options={[
-              { value: '', label: 'All Courses' },
-              ...courses.map((course) => ({ value: course.id, label: course.name })),
-            ]}
-            className="h-12"
-            placeholder="All Courses"
-          />
-        </div>
-
-        <div className="min-w-0">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Batch</FormLabel>
-          <Select
-            value={currentBatchId}
-            onChange={(e) => updateParams({ batchId: e.target.value, page: '1' })}
-            options={[
-              { value: '', label: 'All Batches' },
-              ...batches.map((batch) => ({ value: batch.id, label: batch.code })),
-            ]}
-            className="h-12"
-            placeholder="All Batches"
-          />
+        <div className="flex items-center gap-2">
+          <Button onClick={() => setIsOpen(true)} className="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700">
+            <Plus className="h-4 w-4" />
+            New Enrollment
+          </Button>
         </div>
       </div>
 
-      {activeFilters.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2 text-xs text-[color:var(--ims-muted)]">
-          <span className="font-semibold uppercase tracking-[0.18em]">Active filters</span>
-          {activeFilters.map((filter) => (
-            <span key={`${filter.label}-${filter.value}`} className="rounded-full border border-[color:var(--ims-border)] bg-white px-3 py-1">
-              {filter.label}: {filter.value}
-            </span>
-          ))}
-        </div>
-      )}
+      {/* KPI Stats Cards */}
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        <StatCard
+          title="Total Enrollments"
+          value={kpis.total}
+          description="Total active registrations"
+          icon={<FileText className="h-5 w-5" />}
+          tone="indigo"
+        />
+        <StatCard
+          title="Active / Confirmed"
+          value={kpis.active}
+          description="Active learning student list"
+          icon={<CheckCircle className="h-5 w-5" />}
+          tone="emerald"
+        />
+        <StatCard
+          title="Pending Approval"
+          value={kpis.submitted}
+          description="Submitted enrollments review queue"
+          icon={<Clock className="h-5 w-5" />}
+          tone="amber"
+        />
+        <StatCard
+          title="Draft"
+          value={kpis.draft}
+          description="Incomplete draft enrollments"
+          icon={<FileEdit className="h-5 w-5" />}
+          tone="sky"
+        />
+      </div>
 
-      <ResponsiveDataTable
-        data={enrollments}
-        columns={columns}
-        renderCard={renderCard}
-        keyExtractor={(enrollment) => enrollment.id}
-        emptyState={
-          <EmptyState
-            icon={<GraduationCap className="h-6 w-6" />}
-            title="No enrollments found"
-            description="No enrollments match your current filter criteria."
-          />
-        }
+      {/* Search and Filters */}
+      <DataTableFilter
+        searchPlaceholder="Search by enrollment #, student name..."
+        filters={filterConfigs}
       />
 
+      {/* Enrollments Table */}
+      <div className="rounded-lg border border-[color:var(--ims-border)] bg-white overflow-hidden shadow-sm">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[140px]">Enrollment #</TableHead>
+              <TableHead>Student</TableHead>
+              <TableHead>Course</TableHead>
+              <TableHead>Batch</TableHead>
+              <TableHead>Branch</TableHead>
+              <TableHead className="w-[130px]">Created</TableHead>
+              <TableHead className="w-[120px] text-center">Status</TableHead>
+              <TableHead className="w-[100px] text-right">Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {enrollments.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={8} className="text-center py-12 text-[color:var(--ims-muted)]">
+                  No enrollments found matching the active filters.
+                </TableCell>
+              </TableRow>
+            ) : (
+              enrollments.map((enr) => (
+                <TableRow key={enr.id} className="hover:bg-slate-50 transition-colors">
+                  <TableCell className="font-mono font-medium text-slate-800">{enr.enrollmentNumber}</TableCell>
+                  <TableCell>
+                    <div className="font-semibold text-slate-800">{enr.studentName}</div>
+                    <div className="text-xs text-[color:var(--ims-muted)]">{enr.studentEmail}</div>
+                  </TableCell>
+                  <TableCell>{enr.courseName}</TableCell>
+                  <TableCell className="font-mono text-xs font-semibold">{enr.batchCode}</TableCell>
+                  <TableCell>{enr.branchName}</TableCell>
+                  <TableCell className="text-xs text-[color:var(--ims-muted)]">
+                    {new Date(enr.createdAt).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <Badge variant={getStatusBadgeVariant(enr.enrollmentStatus)}>
+                      {enr.enrollmentStatus}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => router.push(`/enrollments/${enr.id}`)}
+                      title="View Details"
+                    >
+                      <Eye className="h-4 w-4 text-slate-500 hover:text-indigo-600" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
+
+      {/* Pagination */}
       {totalPages > 1 && <Pagination page={currentPage} totalPages={totalPages} totalCount={total} limit={10} />}
 
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      {/* New Enrollment Modal */}
+      <Dialog open={isOpen} onOpenChange={(open) => {
+        setIsOpen(open);
+        if (!open) {
+          setSelectedAdmissionId('');
+          setSelectedBatchId('');
+          setEnrollmentType('Regular');
+          setPromoInput('');
+          setAppliedPromoCodes([]);
+          setPricingPreview(null);
+          setPricingError(null);
+        }
+      }}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Setup Student Enrollment</DialogTitle>
             <DialogDescription>
-              Select an approved student admission, define enrollment channel, and assign the target learning batch.
+              Select an approved student admission, define enrollment channel, and assign target learning batch.
             </DialogDescription>
           </DialogHeader>
 
@@ -593,12 +405,12 @@ export function EnrollmentsClientList({
                   setSelectedAdmissionId(e.target.value);
                   setSelectedBatchId('');
                 }}
-                className="h-10 w-full rounded-lg border border-[color:var(--ims-border)] bg-[color:var(--ims-card)] px-3 text-sm focus:outline-none"
+                className="w-full h-10 rounded-lg border border-[color:var(--ims-border)] bg-[color:var(--ims-card)] px-3 text-sm focus:outline-none"
               >
                 <option value="">-- Select Approved Student --</option>
-                {admissions.map((admission) => (
-                  <option key={admission.id} value={admission.id}>
-                    {admission.label}
+                {admissions.map((adm) => (
+                  <option key={adm.id} value={adm.id}>
+                    {adm.label}
                   </option>
                 ))}
               </select>
@@ -609,12 +421,36 @@ export function EnrollmentsClientList({
               <select
                 value={enrollmentType}
                 onChange={(e) => setEnrollmentType(e.target.value as any)}
-                className="h-10 w-full rounded-lg border border-[color:var(--ims-border)] bg-[color:var(--ims-card)] px-3 text-sm focus:outline-none"
+                className="w-full h-10 rounded-lg border border-[color:var(--ims-border)] bg-[color:var(--ims-card)] px-3 text-sm focus:outline-none"
               >
                 <option value="Regular">Regular (Individual)</option>
                 <option value="Corporate">Corporate Sourced</option>
                 <option value="Online">Online Intake</option>
               </select>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-slate-700">Promo Codes (Optional)</label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  placeholder="e.g. WELCOME10, OMAN5"
+                  value={promoInput}
+                  onChange={(e) => setPromoInput(e.target.value)}
+                  className="flex-1 h-10 rounded-lg border border-[color:var(--ims-border)] bg-[color:var(--ims-card)] px-3 text-sm focus:outline-none"
+                />
+                <Button
+                  type="button"
+                  onClick={() => {
+                    const codes = promoInput.split(',').map(s => s.trim()).filter(Boolean);
+                    setAppliedPromoCodes(codes);
+                  }}
+                  variant="outline"
+                  className="h-10 text-xs font-medium border-slate-300 hover:bg-slate-50"
+                >
+                  Apply
+                </Button>
+              </div>
             </div>
 
             <div className="space-y-2">
@@ -638,7 +474,7 @@ export function EnrollmentsClientList({
                 value={selectedBatchId}
                 disabled={!selectedAdmissionId || filteredBatches.length === 0}
                 onChange={(e) => setSelectedBatchId(e.target.value)}
-                className="h-10 w-full rounded-lg border border-[color:var(--ims-border)] bg-[color:var(--ims-card)] px-3 text-sm focus:outline-none disabled:bg-slate-50 disabled:text-slate-400"
+                className="w-full h-10 rounded-lg border border-[color:var(--ims-border)] bg-[color:var(--ims-card)] px-3 text-sm focus:outline-none disabled:bg-slate-50 disabled:text-slate-400"
               >
                 <option value="">
                   {!selectedAdmissionId
@@ -647,9 +483,9 @@ export function EnrollmentsClientList({
                       ? '-- No Active Batches for this Course --'
                       : '-- Choose Batch --'}
                 </option>
-                {filteredBatches.map((batch) => (
-                  <option key={batch.id} value={batch.id}>
-                    {batch.code}
+                {filteredBatches.map((b) => (
+                  <option key={b.id} value={b.id}>
+                    {b.code}
                   </option>
                 ))}
               </select>
