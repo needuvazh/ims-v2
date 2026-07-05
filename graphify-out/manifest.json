@@ -2450,13 +2450,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/organization/classrooms/page.tsx": {
-    "mtime": 1783226595.6121483,
-    "ast_hash": "5b6faba1dcc67d0ffff4ce5a8acc3469",
+    "mtime": 1783240297.7238185,
+    "ast_hash": "fc64232d1c592bc7721f6182dbd454fa",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/organization/departments/page.tsx": {
-    "mtime": 1783226595.6114888,
-    "ast_hash": "19452071da5f3857592a6541c6139dff",
+    "mtime": 1783240005.1845498,
+    "ast_hash": "73d05f5d78b8c46eaf27cd0965597e6c",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/organization/hierarchy/page.tsx": {
@@ -3650,8 +3650,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/audit/page.tsx": {
-    "mtime": 1783227627.6901643,
-    "ast_hash": "ad138840bc99a0c485876173cc4bd0cb",
+    "mtime": 1783241331.0470638,
+    "ast_hash": "1e59158b3b7f86956baa5c761edf51f9",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/dashboards/page.tsx": {
@@ -3665,8 +3665,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/permissions/page.tsx": {
-    "mtime": 1783225971.5614276,
-    "ast_hash": "aad824be35ca880cda3b5df0aba1c3aa",
+    "mtime": 1783240536.6634564,
+    "ast_hash": "1f2843681d439701e91b5c67bd91b3c3",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/reports/page.tsx": {
@@ -3705,8 +3705,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/sessions/page.tsx": {
-    "mtime": 1783227516.9393773,
-    "ast_hash": "ede2fb4509624d8fddce265add89bfe1",
+    "mtime": 1783240816.3696225,
+    "ast_hash": "9259a6501c820291b811aedd04aef7d2",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/users/[id]/edit/page.tsx": {
@@ -3745,8 +3745,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/login-history/page.tsx": {
-    "mtime": 1783227547.9900753,
-    "ast_hash": "9d33b50ffd184278bac7bb37291b1112",
+    "mtime": 1783241343.9391167,
+    "ast_hash": "e7bdab6d00c9959e6d33eedf49ab02fb",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/page.test.tsx": {
@@ -7250,8 +7250,8 @@
     "semantic_hash": ""
   },
   "packages/trainer-management/src/domain/repositories.ts": {
-    "mtime": 1783233995.51491,
-    "ast_hash": "f614de5041198dba93abd9820b2e0e61",
+    "mtime": 1783239243.9744709,
+    "ast_hash": "4e15cc0654662cc82f9a78ef27d310e2",
     "semantic_hash": ""
   },
   "packages/trainer-management/src/domain/trainer.ts": {
@@ -7315,8 +7315,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/faculty/eligible-trainers/page.tsx": {
-    "mtime": 1783239095.8115845,
-    "ast_hash": "201cbe678c193dbeaa0fd1898f48d9ef",
+    "mtime": 1783239277.78074,
+    "ast_hash": "bf67e1b436e200969b03a8959aea2f54",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/faculty/page.tsx": {
@@ -7397,6 +7397,36 @@
   "apps/admin-portal/app/(protected)/organization/branches/_components/branches-client-list.tsx": {
     "mtime": 1783239125.70295,
     "ast_hash": "945bd502930d5ae62bb3ef84bb8b2dad",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/organization/departments/_components/departments-client-list.tsx": {
+    "mtime": 1783240146.4746802,
+    "ast_hash": "8792076e7b52b0024ea94ebb98824c35",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/organization/classrooms/_components/classrooms-client-list.tsx": {
+    "mtime": 1783240237.9844952,
+    "ast_hash": "367831464123e6bf35eb381828a2bee3",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/iam/permissions/_components/permissions-client-list.tsx": {
+    "mtime": 1783240671.6313522,
+    "ast_hash": "5f8d6f8bebde5907c4b069a8954592fa",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/iam/sessions/_components/sessions-client-list.tsx": {
+    "mtime": 1783240750.6980715,
+    "ast_hash": "6f8d4c332c09b654a0a61718ad4ed590",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/iam/audit/_components/audit-client-list.tsx": {
+    "mtime": 1783241373.8808851,
+    "ast_hash": "94b0a5f027b3d858c91e3e6891dce8e6",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/iam/login-history/_components/login-history-client-list.tsx": {
+    "mtime": 1783241331.5038974,
+    "ast_hash": "1c8b0f03d4da27538c8df0f21430cdfc",
     "semantic_hash": ""
   }
 }

@@ -1,24 +1,6 @@
-import Link from 'next/link';
-import { 
-  Breadcrumbs, 
-  AdminListPageLayout,
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-  PageHeader,
-  Input,
-  Select,
-  Button,
-  Pagination,
-  EmptyState,
-  ResponsiveDataTable,
-} from '@ims/shared-ui';
-import { ShieldAlert as AuditIcon, Home, ShieldCheck, FileSliders } from 'lucide-react';
+import { AdminListPageLayout } from '@ims/shared-ui';
 import { getSession } from '../../../lib/auth-guard';
-import { AuditDetailsButton } from './_components/audit-details-button';
+import { AuditClientList } from './_components/audit-client-list';
 
 export const metadata = { title: 'Audit | IMS Admin' };
 export const dynamic = 'force-dynamic';
@@ -33,6 +15,8 @@ type SearchParams = Promise<{
   module?: string;
   startDate?: string;
   endDate?: string;
+  sortBy?: string;
+  sortOrder?: string;
 }>;
 
 export default async function IamAuditPage({ searchParams }: { searchParams: SearchParams }) {
@@ -41,7 +25,7 @@ export default async function IamAuditPage({ searchParams }: { searchParams: Sea
 
   const page = Number.parseInt(resolved.page ?? '1', 10) || 1;
   const pageSize = Number.parseInt(resolved.pageSize ?? '20', 10) || 20;
-  
+
   const action = resolved.action?.trim() ?? '';
   const entityType = resolved.entityType?.trim() ?? '';
   const entityId = resolved.entityId?.trim() ?? '';
@@ -52,14 +36,12 @@ export default async function IamAuditPage({ searchParams }: { searchParams: Sea
 
   const { auditQueryService } = await import('../../../lib/runtime');
 
-  // Convert string dates to Date objects if present
   let startDate: Date | undefined;
   if (startDateStr) {
     startDate = new Date(`${startDateStr}T00:00:00.000Z`);
   }
   let endDate: Date | undefined;
   if (endDateStr) {
-    // Set to end of the selected day (23:59:59)
     endDate = new Date(`${endDateStr}T23:59:59.999Z`);
   }
 
@@ -84,7 +66,7 @@ export default async function IamAuditPage({ searchParams }: { searchParams: Sea
 
   const totalPages = Math.max(1, Math.ceil(result.total / pageSize));
 
-  const rows = result.items.map((item) => ({
+  const auditLogs = result.items.map((item) => ({
     id: item.id,
     performedAt: item.performedAt.toISOString(),
     module: item.module,
@@ -94,142 +76,31 @@ export default async function IamAuditPage({ searchParams }: { searchParams: Sea
     performedBy: item.performedBy,
     branchId: item.branchId,
     reason: item.reason,
+    oldValue: item.oldValue,
+    newValue: item.newValue,
+    ipAddress: item.ipAddress,
+    userAgent: item.userAgent,
+    correlationId: item.correlationId,
   }));
-
-  const columns = [
-    { header: 'Time', render: (item: (typeof rows)[number]) => <span className="whitespace-nowrap">{new Date(item.performedAt).toLocaleString()}</span>, headerClassName: 'w-[170px]' },
-    { header: 'Module', render: (item: (typeof rows)[number]) => <span className="capitalize text-xs font-medium">{item.module}</span>, headerClassName: 'w-[110px]' },
-    { header: 'Action', render: (item: (typeof rows)[number]) => <span className="font-mono text-xs">{item.action}</span> },
-    { header: 'Entity', render: (item: (typeof rows)[number]) => <span className="font-mono text-xs truncate max-w-[180px]" title={`${item.entityType}:${item.entityId}`}>{item.entityType}:{item.entityId.substring(0, 8)}...</span> },
-    { header: 'Performed By', render: (item: (typeof rows)[number]) => item.performedBy ? <Link href={`/iam/users/${item.performedBy}`} className="font-semibold text-[color:var(--ims-brass)] hover:underline">{item.performedBy.substring(0, 8)}...</Link> : 'System' },
-    { header: 'Branch', render: (item: (typeof rows)[number]) => <span>{item.branchId ? `Branch (${item.branchId.substring(0, 8)})` : 'All Branches'}</span> },
-    { header: 'Reason', render: (item: (typeof rows)[number]) => <span className="max-w-[200px] truncate" title={item.reason ?? ''}>{item.reason ?? '—'}</span> },
-    { header: 'Details', className: 'text-center', render: (item: (typeof rows)[number]) => <AuditDetailsButton item={result.items.find((entry) => entry.id === item.id) as any} />, headerClassName: 'w-[90px] text-center' },
-  ];
-
-  const renderCard = (item: (typeof rows)[number]) => (
-    <Card className="transition-colors hover:border-[var(--ims-brass)]">
-      <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p">
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0 space-y-1">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">{new Date(item.performedAt).toLocaleString()}</p>
-            <p className="text-sm font-bold text-[var(--ims-ink)]">{item.action}</p>
-          </div>
-          <span className="rounded-full border border-[color:var(--ims-border)] px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-[color:var(--ims-muted)]">{item.module}</span>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-3 p-card-p text-xs">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="col-span-2"><p className="font-semibold text-[var(--ims-muted)]">Entity</p><p className="truncate">{item.entityType}:{item.entityId.substring(0, 8)}...</p></div>
-          <div><p className="font-semibold text-[var(--ims-muted)]">Performed By</p><p className="truncate">{item.performedBy ? item.performedBy.substring(0, 8) + '...' : 'System'}</p></div>
-          <div><p className="font-semibold text-[var(--ims-muted)]">Branch</p><p className="truncate">{item.branchId ? `Branch (${item.branchId.substring(0, 8)})` : 'All Branches'}</p></div>
-          <div className="col-span-2"><p className="font-semibold text-[var(--ims-muted)]">Reason</p><p className="line-clamp-3 text-[color:var(--ims-muted)]">{item.reason ?? '—'}</p></div>
-        </div>
-      </CardContent>
-      <CardFooter className="p-card-p pt-0">
-        <AuditDetailsButton item={result.items.find((entry) => entry.id === item.id) as any} />
-      </CardFooter>
-    </Card>
-  );
 
   return (
     <AdminListPageLayout className="pt-1 sm:pt-0">
-      <PageHeader
-        title="Audit Trail"
-        breadcrumbs={
-          <Breadcrumbs
-            items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Audit', icon: <FileSliders className="h-3.5 w-3.5 text-slate-500" /> },
-            ]}
-          />
-        }
+      <AuditClientList
+        auditLogs={auditLogs}
+        total={result.total}
+        page={page}
+        pageSize={pageSize}
+        totalPages={totalPages}
+        initialAction={action}
+        initialEntityType={entityType}
+        initialEntityId={entityId}
+        initialPerformerId={performerId}
+        initialModule={moduleParam}
+        initialStartDate={startDateStr}
+        initialEndDate={endDateStr}
+        initialSortBy={resolved.sortBy || 'performedAt'}
+        initialSortOrder={resolved.sortOrder === 'asc' ? 'asc' : 'desc'}
       />
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2"><AuditIcon className="h-5 w-5" /> Filters</CardTitle>
-          <CardDescription>Filter audit events across different actions, entities, modules, and dates.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form className="grid gap-4 sm:grid-cols-2 md:grid-cols-4" action="/iam/audit" method="get">
-            <Input name="action" label="Action" placeholder="e.g. iam.user.create" defaultValue={action} />
-            <Input name="entityType" label="Entity Type" placeholder="e.g. User" defaultValue={entityType} />
-            <Input name="entityId" label="Entity ID" placeholder="UUID" defaultValue={entityId} />
-            <Input name="performerId" label="Performer ID" placeholder="UUID" defaultValue={performerId} />
-            <Select
-              name="module"
-              label="Module"
-              defaultValue={moduleParam}
-              options={[
-                { value: '', label: 'All Modules' },
-                { value: 'iam', label: 'IAM' },
-                { value: 'organization', label: 'Organization' },
-                { value: 'finance', label: 'Finance' },
-                { value: 'courses-batches', label: 'Courses & Batches' },
-                { value: 'crm-leads', label: 'CRM / Leads' },
-                { value: 'admissions-enrollment', label: 'Admissions & Enrollment' },
-                { value: 'attendance', label: 'Attendance' },
-              ]}
-            />
-            <Input name="startDate" label="Start Date" type="date" defaultValue={startDateStr} />
-            <Input name="endDate" label="End Date" type="date" defaultValue={endDateStr} />
-            
-            <div className="flex gap-2 items-end">
-              <div className="flex-1">
-                <Select
-                  name="pageSize"
-                  label="Limit"
-                  defaultValue={String(pageSize)}
-                  options={[
-                    { value: '10', label: '10' },
-                    { value: '20', label: '20' },
-                    { value: '50', label: '50' },
-                    { value: '100', label: '100' },
-                  ]}
-                />
-              </div>
-              <input type="hidden" name="page" value="1" />
-              <Button type="submit">Filter</Button>
-              <Link
-                href="/iam/audit"
-                className="inline-flex items-center justify-center gap-2 rounded-2xl font-semibold tracking-tight transition-all duration-200 border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] text-[color:var(--ims-ink)] shadow-sm hover:border-[color:var(--ims-brass)] hover:bg-[color:var(--ims-accent-soft)] h-10 px-4 text-sm"
-              >
-                Reset
-              </Link>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Recent audit entries</CardTitle>
-          <CardDescription>
-            {result.total} audit event(s) found. Page {page} of {totalPages}.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {result.total === 0 ? (
-            <EmptyState
-              icon={<AuditIcon className="h-6 w-6 text-[color:var(--ims-muted)]" />}
-              title="No audit logs found"
-              description="No audit logs match the current filter criteria."
-            />
-          ) : (
-            <>
-              <ResponsiveDataTable data={rows} columns={columns} renderCard={renderCard} keyExtractor={(item) => item.id} emptyState={null} />
-              <Pagination
-                page={page}
-                totalPages={totalPages}
-                totalCount={result.total}
-                limit={pageSize}
-              />
-            </>
-          )}
-        </CardContent>
-      </Card>
     </AdminListPageLayout>
   );
 }
