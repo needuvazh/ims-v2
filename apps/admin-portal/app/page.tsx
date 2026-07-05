@@ -1,54 +1,81 @@
-'use client';
-
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import {
-  ArrowRight,
-  CalendarDays,
-  GraduationCap,
-  ShieldCheck,
-  Users,
-} from 'lucide-react';
-import { CountUp } from '@ims/shared-ui';
-
+import { ArrowRight } from 'lucide-react';
 import {
   PublicShell,
   SplitHero,
   SectionHeading,
   SectionCardGrid,
-  CourseGrid,
+  SectionCardGridByName,
   ContactBlock,
   SimpleCTA,
   facilityCards,
-  eventCards,
-  courseCatalog,
   contactInfo,
+  FAQAccordion,
+  TestimonialGrid,
+  WhatsAppButton,
 } from './_components/public-site';
+import { RealTimeCourseGrid, RealTimeStatStrip, RealTimeBatchSchedule } from './_components/public-site-client';
 
 const homeFeatures = [
   {
     title: 'Hands-on training',
     description: 'Practical operator-focused delivery for forklifts, cranes, and elevated work platforms.',
-    icon: GraduationCap,
+    iconName: 'GraduationCap',
   },
   {
     title: 'Safety-led instruction',
     description: 'Every course is shaped around safe operation, legal awareness, and confident workplace practice.',
-    icon: ShieldCheck,
+    iconName: 'ShieldCheck',
   },
   {
     title: 'Corporate delivery',
     description: 'Flexible group training and custom scheduling for companies and project teams.',
-    icon: Users,
+    iconName: 'Users',
   },
 ];
 
-const homeCounters = [
-  { value: '25k+', label: 'Students trained' },
-  { value: '150+', label: 'Success partners' },
-  { value: '80+', label: 'Global programs' },
-  { value: '20+', label: 'Years experience' },
+const faqItems = [
+  {
+    question: 'How do I enroll in a course?',
+    answer: 'Contact our admissions team at +968 9658 9150 or visit our contact page. We will guide you through the enrollment process, available dates, and pricing options.',
+  },
+  {
+    question: 'Do you offer corporate training packages?',
+    answer: 'Yes, we provide customized training solutions for organizations. Contact us to discuss your team size, preferred courses, and scheduling requirements.',
+  },
+  {
+    question: 'What certification do I receive?',
+    answer: 'Upon successful completion, you receive an industry-recognized certificate that validates your practical skills and safety knowledge.',
+  },
+  {
+    question: 'Are there any prerequisites for the courses?',
+    answer: 'Most courses are open to beginners. Some advanced programs may require prior experience. Contact us for specific course requirements.',
+  },
+  {
+    question: 'Can I reschedule my training?',
+    answer: 'Yes, rescheduling is possible subject to availability. Please contact our admissions team at least 48 hours before your scheduled start date.',
+  },
 ];
+
+const testimonials = [
+  {
+    quote: 'The hands-on training was exceptional. I felt confident operating heavy machinery from day one at work.',
+    author: 'Ahmed Al-Balushi',
+    role: 'Forklift Operator, PDO',
+  },
+  {
+    quote: 'Professional instructors, well-equipped facilities, and a strong focus on safety. Highly recommended.',
+    author: 'Rahul Sharma',
+    role: 'Site Supervisor, Galfar',
+  },
+  {
+    quote: 'Our entire team completed the crane operation course. The corporate scheduling was seamless.',
+    author: 'Fatima Al-Hinai',
+    role: 'HR Manager, Omran',
+  },
+];
+
+export const dynamic = 'force-dynamic';
 
 export default function HomePage() {
   return (
@@ -71,24 +98,8 @@ export default function HomePage() {
         secondaryLabel="About Us"
       />
 
-      <section className="mx-auto max-w-7xl px-4 -mt-6 sm:px-6 lg:px-8">
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {homeCounters.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.08 }}
-              className="rounded-[2rem] border border-border-light bg-white p-6 shadow-card"
-            >
-              <p className="text-3xl font-black tracking-tight text-neutral-950">
-                <CountUp value={stat.value} />
-              </p>
-              <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.24em] text-neutral-500">{stat.label}</p>
-            </motion.div>
-          ))}
-        </div>
+      <section className="mx-auto max-w-7xl px-4 -mt-6 sm:px-6 lg:px-8 relative z-10">
+        <RealTimeStatStrip />
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
@@ -98,7 +109,7 @@ export default function HomePage() {
           description="The institute combines practical instruction, safety standards, and career-ready outcomes for operators and organizations."
         />
         <div className="mt-10">
-          <SectionCardGrid items={homeFeatures} />
+          <SectionCardGridByName items={homeFeatures} />
         </div>
       </section>
 
@@ -115,7 +126,18 @@ export default function HomePage() {
           </Link>
         </div>
         <div className="mt-10">
-          <CourseGrid courses={courseCatalog} />
+          <RealTimeCourseGrid limit={6} />
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <SectionHeading
+          eyebrow="Upcoming batches"
+          title="Next available training dates"
+          description="Secure your spot in the next available batch. Limited seats per session for focused, hands-on learning."
+        />
+        <div className="mt-10">
+          <RealTimeBatchSchedule />
         </div>
       </section>
 
@@ -132,27 +154,25 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <SectionHeading
-          eyebrow="Upcoming events"
-          title="A simple public calendar"
-          description="Use the public site to surface open intakes, corporate briefings, and scheduled assessment clinics."
+          eyebrow="Testimonials"
+          title="What our graduates say"
+          description="Hear from professionals who advanced their careers through our training programs."
+          align="center"
         />
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {eventCards.map((event, index) => (
-            <motion.div
-              key={event.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.08 }}
-              whileHover={{ y: -4 }}
-              className="rounded-[2rem] border border-border-light bg-white p-6 shadow-card"
-            >
-              <CalendarDays className="h-5 w-5 text-accent-700" />
-              <h3 className="mt-5 text-xl font-black text-neutral-950">{event.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-neutral-600">{event.detail}</p>
-              <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.28em] text-neutral-500">{event.meta}</p>
-            </motion.div>
-          ))}
+        <div className="mt-10">
+          <TestimonialGrid testimonials={testimonials} />
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+        <SectionHeading
+          eyebrow="FAQ"
+          title="Frequently asked questions"
+          description="Quick answers to common questions about our courses, enrollment, and certification."
+          align="center"
+        />
+        <div className="mt-10">
+          <FAQAccordion items={faqItems} />
         </div>
       </section>
 
@@ -168,6 +188,8 @@ export default function HomePage() {
       <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <ContactBlock />
       </section>
+
+      <WhatsAppButton />
     </PublicShell>
   );
 }
