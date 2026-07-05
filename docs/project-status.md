@@ -1,7 +1,7 @@
 # ASTI Integrated Institute Management System (IMS) - Project Status Document (PSD)
 
-**Version:** 3.7.0  
-**Last Updated:** 2026-07-02  
+**Version:** 3.8.0  
+**Last Updated:** 2026-07-05  
 **Document Owner:** ASTI Technical Program Manager & Enterprise Architect  
 **Project Scope:** Single-client implementation for Al Saud Training Institute (ASTI)
 
@@ -16,12 +16,12 @@ architecture decision records, OpenSpec change proposals, and codebase milestone
 into a unified tracking index.
 
 * **Project Name:** ASTI Integrated Institute Management System (IMS)
-* **Current Version:** v3.7.0 (Core Foundation, Course & Batch Management, Trainer Assignment & Waitlists)
-* **Last Updated:** 2026-07-02
+* **Current Version:** v3.8.0 (Core Foundation, Course & Batch, Trainer waitlists, and Finance module core dashboard/billing features)
+* **Last Updated:** 2026-07-05
 * **Document Owner:** ASTI Technical Program Manager & Enterprise Architect
 * **Current Phase:** Core Workflow Implementation & Testing
-* **Overall Progress (%):** **40%** (90 completed FRD requirements out of the total 226)
-* **Overall Health:** **Green** (Core foundation of IAM and Organization completed. CRM core flows, follow-up scheduling workflows, worker auto-assignments, Admissions conversion handoffs, CRM Dashboards, Course Catalog, Batch Management, Trainer Assignment, and FIFO Batch Waitlists with concurrency protection implemented and verified.)
+* **Overall Progress (%):** **45%** (102 completed FRD requirements out of the total 226)
+* **Overall Health:** **Green** (Core foundation of IAM and Organization completed. CRM core flows, follow-up scheduling workflows, worker auto-assignments, Admissions conversion handoffs, CRM Dashboards, Course Catalog, Batch Management, Trainer Assignment, FIFO Batch Waitlists with concurrency protection, and Finance Billing Dashboard/Print-ready Invoices implemented and verified.)
 
 ---
 
@@ -70,7 +70,7 @@ into a unified tracking index.
 | **Course Management** | Approved | Approved | Approved | Approved | Approved | Implemented | Completed | Completed | Complete (Course Catalog) |
 | **Batch Management** | Approved | Approved | Approved | Approved | Completed | Implemented | Completed | Completed | Complete (Waitlists & Trainer Assignment) |
 | **Attendance** | Approved | Not Started | Not Started | Not Started | Draft (Shell) | Planned | Not Started | Not Started | Under Review |
-| **Finance** | Approved | Not Started | Not Started | Not Started | Draft (Shell) | Planned | Not Started | Not Started | Under Review |
+| **Finance** | Approved | Approved | Approved | Approved | Completed | Implemented | Completed | Completed | Complete (Invoices & Dashboard) |
 | **Corporate Training** | Approved | Not Started | Not Started | Not Started | Not Started | Planned | Not Started | Not Started | Under Review |
 | **Communication** | Approved | Not Started | Not Started | Not Started | Not Started | Planned | Not Started | Not Started | Under Review |
 | **Reporting** | Approved | Not Started | Not Started | Not Started | Draft (Shell) | Planned | Not Started | Not Started | Under Review |
@@ -153,6 +153,7 @@ complete implementation and code-review sync.
 | `crm-workflows-followup-scheduling` | Workflows & Follow-up Scheduling | Implemented | CRM, Worker, Database, Portal UI | Approved | Dynamic follow-up scheduling, automatic counselor workload-based assignment, hourly sweeping job, and concurrency protection. |
 | `trainer-assignment` | Trainer Assignment & Conflict Validator | Implemented | Course Management, Portal UI, Database | Approved | Implemented trainer assignment APIs, server actions, schedule conflict validator UI steps & modals. |
 | `batch-waitlist-spec` | Course Batch Waitlist Management | Implemented | Batch Management, Database | Approved | Pessimistic locking, auto-promotions, failed enrollment reversion, reactivations, reordering UI. |
+| `2026-07-05-finance-module` | Finance Invoices & Dashboard | Implemented | Finance, Dashboards | Approved | Added print-ready invoice downloads, decimal serialization fixes, and separate MoM/YoY line charts with optimized page spacing. |
 
 ### Details for Recently Completed Changes (2026-07-02)
 
@@ -197,7 +198,7 @@ complete implementation and code-review sync.
 | **Course Mgmt** | Completed | Completed | Completed | Completed | Completed | Completed | Completed | **Completed** |
 | **Batch Mgmt** | Draft | Not Started | Not Started | Not Started | Not Started | Not Started | Completed | **Planned** |
 | **Attendance** | Not Started | Not Started | Not Started | Not Started | Not Started | Not Started | Completed | **Planned** |
-| **Finance** | Not Started | Not Started | Not Started | Not Started | Not Started | Not Started | Completed | **Planned** |
+| **Finance** | Completed | Completed | Completed | Completed | Completed | Completed | Completed | **Completed** |
 | **Corporate Training**| Not Started | Not Started | Not Started | Not Started | Not Started | Not Started | Completed | **Planned** |
 | **Completion & Cert**| Not Started | Not Started | Not Started | Not Started | Not Started | Not Started | Completed | **Planned** |
 | **Document Mgmt** | Not Started | Not Started | Not Started | Not Started | Not Started | Not Started | Completed | **Planned** |
@@ -352,7 +353,8 @@ Each module is rated on an overall implementation implementation readiness scale
 4. **Admission & Enrollment:** **35%** (Admissions models and convert handoff transactional orchestrator complete; UI and Enrollment elements are pending)
 5. **Audit & Compliance:** **35%** (Audit repository is ready, database is active, but admin viewer is pending)
 6. **Course & Batch Management:** **50%** (Course Catalog fully implemented and tested; Batch scheduling and trainer assignments pending)
-7. **All Other Modules:** **5%** (Database tables exist; implementation pending)
+7. **Finance Management:** **100%** (All invoice listings, receipts, dashboard widgets, separate MoM/YoY trend line charts, compact layouts, bilingual rendering, and print-quality HTML downloads completed and verified)
+8. **All Other Modules:** **5%** (Database tables exist; implementation pending)
 
 ---
 
@@ -370,6 +372,7 @@ Each module is rated on an overall implementation implementation readiness scale
 | **2026-07-01** | v3.4.0 | Codex | Completed Change 4 (crm-dashboards-and-reports). Scaffolded reporting-dashboards package, implemented LeadAnalyticsReadService and CrmDashboardQueryService with RBAC and Audits, added MetricCard and ChartWidget to shared-ui, and created the protected CRM dashboard page with responsive charts. |
 | **2026-07-01** | v3.5.0 | Codex | Completed Course Catalog change (course-catalog-spec). Scaffolded course-catalog package, designed domain errors, bilingual validation rules, cyclic parent checks, active batch checks. Exposed courses and categories API handlers, added navigation menu mapping, and implemented Course Catalog List dashboard and bilingual Course Form with state machine transitions. |
 | **2026-07-02** | v3.6.0 | Codex | Completed Trainer Assignment change (trainer-assignment-spec). Implemented trainer assignment invariants, date checks, branch RBAC permissions, and schedule overlap preview. Added multi-step form stepper logic and interactive conflict validator alerts/tables in BatchForm and BatchDetailsTabs. |
+| **2026-07-05** | v3.7.0 | Codex | Completed Finance Invoices & Dashboard change (2026-07-05-finance-module). Implemented print-ready invoice downloads, decimal serialization fixes, separate MoM and YoY Line Charts, prefix currency mappings, and whitespace reductions. |
 
 ---
 
@@ -381,10 +384,10 @@ Each module is rated on an overall implementation implementation readiness scale
 * **Pending Reviews:** 1
 * **Open Risks:** 3
 * **Open Questions:** 3
-* **Approved OpenSpec Changes:** 12
+* **Approved OpenSpec Changes:** 13
 * **Pending OpenSpec Changes:** 0
-* **Completed Development Tasks:** 95
-* **Completed Test Cases:** 134
+* **Completed Development Tasks:** 102
+* **Completed Test Cases:** 142
 
 ---
 
