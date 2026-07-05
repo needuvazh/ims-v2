@@ -87,6 +87,18 @@ export default async function CreateInvoicePage() {
     course: e.course ? { nameEnglish: e.course.nameEnglish } : null,
   }));
 
+  // Query courses
+  const rawCourses = await prisma.course.findMany({
+    where: { isDeleted: false },
+    select: { id: true, nameEnglish: true, courseCode: true },
+    orderBy: { nameEnglish: 'asc' },
+  });
+
+  const courses = rawCourses.map((c) => ({
+    id: c.id,
+    name: `${c.nameEnglish} (${c.courseCode})`,
+  }));
+
   return (
     <AdminFormPageLayout>
       <PageHeader
@@ -110,6 +122,7 @@ export default async function CreateInvoicePage() {
           students={students}
           corporateAccounts={corporateAccounts}
           enrollments={enrollments}
+          courses={courses}
           onSubmitAction={createInvoiceAction}
         />
       </div>

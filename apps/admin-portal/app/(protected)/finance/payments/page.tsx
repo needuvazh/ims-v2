@@ -132,9 +132,11 @@ export default async function PaymentsListPage(props: {
           title="Payments & Receipts"
           description="View, reconcile, and record manual payments against student and corporate outstanding invoices."
         />
-        <Button className="h-10 gap-2 shrink-0">
-          <Plus className="h-4 w-4" /> Record Payment
-        </Button>
+        <Link href="/finance/payments/create">
+          <Button className="h-10 gap-2 shrink-0">
+            <Plus className="h-4 w-4" /> Record Payment
+          </Button>
+        </Link>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-4">

@@ -237,6 +237,10 @@ model User {
   attendanceCorrectionsRejected  AttendanceCorrection[] @relation("AttendanceCorrectionRejectedBy")
   attendanceAlertsAcknowledged   AttendanceAlert[] @relation("AttendanceAlertAcknowledgedBy")
   attendanceAlertsResolved       AttendanceAlert[] @relation("AttendanceAlertResolvedBy")
+  paymentsReceived               Payment[]              @relation("PaymentReceiver")
+  receiptsIssued                 Receipt[]              @relation("ReceiptIssuer")
+  refundsRequested               Refund[]               @relation("RefundRequester")
+  refundsDecided                 Refund[]               @relation("RefundDecider")
 
   @@index([status])
   @@map("users")
@@ -558,6 +562,14 @@ model Branch {
   branchCalendarOverrides BranchCalendarOverride[]
   holidays Holiday[]
   venueBlocks VenueBlock[]
+  invoices            Invoice[]
+  installmentPlans    InstallmentPlan[]
+  payments            Payment[]
+  receipts            Receipt[]
+  refunds             Refund[]
+  receivables         Receivable[]
+  corporateCreditRules CorporateCreditRule[]
+  invoiceLineItems    InvoiceLineItem[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -1123,6 +1135,7 @@ model Course {
   batches         Batch[]
   enrollments     Enrollment[]
   admissions      Admission[]
+  invoiceLineItems InvoiceLineItem[]
 
   leads     Lead[]
   inquiries Inquiry[]
@@ -1196,6 +1209,9 @@ model CorporateAccount {
   blockOnCreditLimit Boolean @default(true)
   billingCycle       String  @default("Monthly") @db.VarChar(50)
   status             String  @default("Active") @db.VarChar(50)
+  invoices           Invoice[]
+  payments           Payment[]
+  creditRules        CorporateCreditRule[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -1747,6 +1763,8 @@ model StudentProfile {
   idCardHistory       StudentIdCardHistory[]
   mergeLogsAsSurvivor StudentMergeLog[]      @relation("StudentMergeSurvivor")
   mergeLogsAsSource   StudentMergeLog[]      @relation("StudentMergeSource")
+  invoices            Invoice[]
+  payments            Payment[]
 
   // Audit columns
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
@@ -2011,6 +2029,9 @@ model Enrollment {
   walkInPayment    WalkInPayment?
   attendanceRecords AttendanceRecord[]
   attendanceAlerts  AttendanceAlert[]
+  invoices          Invoice[]
+  invoiceLineItems  InvoiceLineItem[]
+  installmentPlans  InstallmentPlan[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -2221,4 +2242,464 @@ enum VerificationOutcome {
   Pending
   Verified
   Rejected
+}
+
+enum InvoiceCategory {
+  Student
+  Corporate
+}
+
+enum InvoiceSubCategory {
+  FullPayment
+  Advance
+  PartialPayment
+  Installment
+}
+
+enum InvoiceType {
+  StudentInvoice
+  CorporateInvoice
+  AdvanceInvoice
+  MilestoneInvoice
+  FinalInvoice
+  RefundInvoice
+}
+
+enum InvoiceStatus {
+  Draft
+  Issued
+  PartiallyPaid
+  Paid
+  Overdue
+  Cancelled
+}
+
+enum InstallmentPlanStatus {
+  Draft
+  Active
+  Completed
+  Cancelled
+}
+
+enum InstallmentStatus {
+  Pending
+  PartiallyPaid
+  Paid
+  Overdue
+  Cancelled
+}
+
+enum PaymentMethod {
+  Cash
+  BankTransfer
+  Card
+  Online
+  Cheque
+  CorporateBilling
+}
+
+enum PaymentStatus {
+  Pending
+  Posted
+  Failed
+  Reversed
+  Refunded
+  PartiallyRefunded
+}
+
+enum RefundType {
+  Full
+  Partial
+}
+
+enum RefundStatus {
+  Requested
+  Approved
+  Rejected
+  Executed
+  Cancelled
+  Failed
+}
+
+enum ReceivableStatus {
+  Open
+  PartiallyPaid
+  Overdue
+  Settled
+  WrittenOff
+}
+
+enum AgingBucket {
+  Current
+  Days30
+  Days60
+  Days90
+  Days120Plus
+}
+
+enum CorporateCreditRuleStatus {
+  Draft
+  Active
+  Superseded
+  Expired
+  Suspended
+}
+
+model Invoice {
+  id                 String             @id @default(uuid()) @db.Uuid
+  invoiceNumber      String             @db.VarChar(50)
+  invoiceType        InvoiceType
+  category           InvoiceCategory
+  subCategory        InvoiceSubCategory
+  studentProfileId   String?            @db.Uuid
+  corporateAccountId String?            @db.Uuid
+  enrollmentId       String?            @db.Uuid
+  branchId           String             @db.Uuid
+  invoiceDate        DateTime      @db.Date
+  dueDate            DateTime      @db.Date
+  currency           String        @default("OMR") @db.VarChar(3)
+  subtotal           Decimal       @db.Decimal(18, 3)
+  discountAmount     Decimal       @db.Decimal(18, 3)
+  taxAmount          Decimal       @db.Decimal(18, 3)
+  totalAmount        Decimal       @db.Decimal(18, 3)
+  paidAmount         Decimal       @default(0.000) @db.Decimal(18, 3)
+  outstandingAmount  Decimal       @db.Decimal(18, 3)
+  status             InvoiceStatus @default(Draft)
+  issuedAt           DateTime?     @db.Timestamptz(6)
+  issuedBy           String?       @db.Uuid
+  cancelledAt        DateTime?     @db.Timestamptz(6)
+  cancelledBy        String?       @db.Uuid
+  cancellationReason String?       @db.VarChar(500)
+  sourceQuotationId  String?       @db.Uuid
+  sourceSalesOrderId String?       @db.Uuid
+  version            Int           @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  isDeleted Boolean   @default(false)
+
+  // Relations
+  studentProfile   StudentProfile?   @relation(fields: [studentProfileId], references: [id])
+  corporateAccount CorporateAccount? @relation(fields: [corporateAccountId], references: [id])
+  enrollment       Enrollment?       @relation(fields: [enrollmentId], references: [id])
+  branch           Branch            @relation(fields: [branchId], references: [id])
+  lineItems        InvoiceLineItem[]
+  installmentPlans InstallmentPlan[]
+  payments         Payment[]
+  refunds          Refund[]
+  receivables      Receivable[]
+
+  @@unique([branchId, invoiceNumber])
+  @@index([branchId, status, invoiceDate(sort: Desc)])
+  @@index([branchId, dueDate, status])
+  @@index([studentProfileId, invoiceDate(sort: Desc)])
+  @@index([corporateAccountId, invoiceDate(sort: Desc)])
+  @@index([enrollmentId])
+  @@map("finance_invoices")
+}
+
+model InvoiceLineItem {
+  id                 String  @id @default(uuid()) @db.Uuid
+  invoiceId          String  @db.Uuid
+  enrollmentId       String? @db.Uuid
+  courseId           String? @db.Uuid
+  sourceBranchId     String  @db.Uuid
+  lineSequence       Int
+  descriptionEnglish String  @db.VarChar(500)
+  descriptionArabic  String? @db.VarChar(500)
+  quantity           Decimal @db.Decimal(12, 3)
+  unitPrice          Decimal @db.Decimal(18, 3)
+  discountAmount     Decimal @db.Decimal(18, 3)
+  taxableAmount      Decimal @db.Decimal(18, 3)
+  taxRate            Decimal @db.Decimal(7, 4)
+  taxAmount          Decimal @db.Decimal(18, 3)
+  lineTotal          Decimal @db.Decimal(18, 3)
+  version            Int     @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  isDeleted Boolean   @default(false)
+
+  // Relations
+  invoice      Invoice     @relation(fields: [invoiceId], references: [id])
+  enrollment   Enrollment? @relation(fields: [enrollmentId], references: [id])
+  course       Course?     @relation(fields: [courseId], references: [id])
+  sourceBranch Branch      @relation(fields: [sourceBranchId], references: [id])
+
+  @@unique([invoiceId, lineSequence])
+  @@index([invoiceId])
+  @@index([enrollmentId])
+  @@index([sourceBranchId, createdAt])
+  @@map("finance_invoice_line_items")
+}
+
+model InstallmentPlan {
+  id                   String                @id @default(uuid()) @db.Uuid
+  enrollmentId         String?               @db.Uuid
+  invoiceId            String                @db.Uuid
+  branchId             String                @db.Uuid
+  planName             String                @db.VarChar(120)
+  totalAmount          Decimal               @db.Decimal(18, 3)
+  numberOfInstallments Int
+  status               InstallmentPlanStatus @default(Draft)
+  activatedAt          DateTime?             @db.Timestamptz(6)
+  completedAt          DateTime?             @db.Timestamptz(6)
+  version              Int                   @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  isDeleted Boolean   @default(false)
+
+  // Relations
+  enrollment   Enrollment?   @relation(fields: [enrollmentId], references: [id])
+  invoice      Invoice       @relation(fields: [invoiceId], references: [id])
+  branch       Branch        @relation(fields: [branchId], references: [id])
+  installments Installment[]
+
+  @@unique([invoiceId])
+  @@index([branchId, status, createdAt(sort: Desc)])
+  @@index([enrollmentId])
+  @@map("finance_installment_plans")
+}
+
+model Installment {
+  id                String            @id @default(uuid()) @db.Uuid
+  installmentPlanId String            @db.Uuid
+  sequenceNumber    Int
+  dueDate           DateTime          @db.Date
+  amount            Decimal           @db.Decimal(18, 3)
+  paidAmount        Decimal           @default(0.000) @db.Decimal(18, 3)
+  status            InstallmentStatus @default(Pending)
+  lastPaymentAt     DateTime?         @db.Timestamptz(6)
+  version           Int               @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  isDeleted Boolean   @default(false)
+
+  // Relations
+  installmentPlan InstallmentPlan     @relation(fields: [installmentPlanId], references: [id])
+  allocations     PaymentAllocation[]
+
+  @@unique([installmentPlanId, sequenceNumber])
+  @@index([dueDate, status])
+  @@index([installmentPlanId, dueDate])
+  @@map("finance_installments")
+}
+
+model Payment {
+  id                 String        @id @default(uuid()) @db.Uuid
+  paymentNumber      String        @db.VarChar(50)
+  invoiceId          String        @db.Uuid
+  studentProfileId   String?       @db.Uuid
+  corporateAccountId String?       @db.Uuid
+  branchId           String        @db.Uuid
+  paymentDate        DateTime      @db.Date
+  paymentMethod      PaymentMethod
+  currency           String        @default("OMR") @db.VarChar(3)
+  amount             Decimal       @db.Decimal(18, 3)
+  referenceNumber    String?       @db.VarChar(120)
+  remarks            String?       @db.VarChar(1000)
+  receivedBy         String        @db.Uuid
+  status             PaymentStatus @default(Pending)
+  idempotencyKey     String        @unique @db.VarChar(100)
+  postedAt           DateTime?     @db.Timestamptz(6)
+  reversedAt         DateTime?     @db.Timestamptz(6)
+  reversalReason     String?       @db.VarChar(500)
+  version            Int           @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  isDeleted Boolean   @default(false)
+
+  // Relations
+  invoice          Invoice             @relation(fields: [invoiceId], references: [id])
+  studentProfile   StudentProfile?     @relation(fields: [studentProfileId], references: [id])
+  corporateAccount CorporateAccount?   @relation(fields: [corporateAccountId], references: [id])
+  branch           Branch              @relation(fields: [branchId], references: [id])
+  receiver         User                @relation("PaymentReceiver", fields: [receivedBy], references: [id])
+  allocations      PaymentAllocation[]
+  receipt          Receipt?
+  refunds          Refund[]
+
+  @@unique([branchId, paymentNumber])
+  @@index([invoiceId, status, paymentDate(sort: Desc)])
+  @@index([branchId, paymentDate(sort: Desc)])
+  @@index([studentProfileId, paymentDate(sort: Desc)])
+  @@index([corporateAccountId, paymentDate(sort: Desc)])
+  @@index([referenceNumber])
+  @@map("finance_payments")
+}
+
+model PaymentAllocation {
+  id                 String   @id @default(uuid()) @db.Uuid
+  paymentId          String   @db.Uuid
+  invoiceId          String   @db.Uuid
+  installmentId      String?  @db.Uuid
+  allocatedAmount    Decimal  @db.Decimal(18, 3)
+  allocationSequence Int
+  allocatedAt        DateTime @db.Timestamptz(6)
+  version            Int      @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  isDeleted Boolean   @default(false)
+
+  // Relations
+  payment     Payment      @relation(fields: [paymentId], references: [id])
+  installment Installment? @relation(fields: [installmentId], references: [id])
+
+  @@unique([paymentId, allocationSequence])
+  @@index([paymentId])
+  @@index([invoiceId])
+  @@index([installmentId])
+  @@map("finance_payment_allocations")
+}
+
+model Receipt {
+  id             String    @id @default(uuid()) @db.Uuid
+  receiptNumber  String    @db.VarChar(50)
+  paymentId      String    @unique @db.Uuid
+  branchId       String    @db.Uuid
+  receiptDate    DateTime  @db.Date
+  amount         Decimal   @db.Decimal(18, 3)
+  currency       String    @default("OMR") @db.VarChar(3)
+  receiptUrl     String?   @db.Text
+  issuedBy       String    @db.Uuid
+  issuedAt       DateTime  @db.Timestamptz(6)
+  renderVersion  Int       @default(1)
+  lastRenderedAt DateTime? @db.Timestamptz(6)
+  version        Int       @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  isDeleted Boolean   @default(false)
+
+  // Relations
+  payment Payment @relation(fields: [paymentId], references: [id])
+  branch  Branch  @relation(fields: [branchId], references: [id])
+  issuer  User    @relation("ReceiptIssuer", fields: [issuedBy], references: [id])
+
+  @@unique([branchId, receiptNumber])
+  @@index([branchId, receiptDate(sort: Desc)])
+  @@map("finance_receipts")
+}
+
+model Refund {
+  id                 String       @id @default(uuid()) @db.Uuid
+  refundNumber       String       @db.VarChar(50)
+  paymentId          String       @db.Uuid
+  invoiceId          String       @db.Uuid
+  branchId           String       @db.Uuid
+  refundType         RefundType
+  amount             Decimal      @db.Decimal(18, 3)
+  currency           String       @default("OMR") @db.VarChar(3)
+  reasonCode         String       @db.VarChar(50)
+  reasonNarrative    String       @db.VarChar(1000)
+  status             RefundStatus @default(Requested)
+  requestedBy        String       @db.Uuid
+  requestedAt        DateTime     @db.Timestamptz(6)
+  decidedBy          String?      @db.Uuid
+  decidedAt          DateTime?    @db.Timestamptz(6)
+  decisionReason     String?      @db.VarChar(500)
+  executedAt         DateTime?    @db.Timestamptz(6)
+  executionReference String?      @db.VarChar(100)
+  version            Int          @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  isDeleted Boolean   @default(false)
+
+  // Relations
+  payment   Payment @relation(fields: [paymentId], references: [id])
+  invoice   Invoice @relation(fields: [invoiceId], references: [id])
+  branch    Branch  @relation(fields: [branchId], references: [id])
+  requester User    @relation("RefundRequester", fields: [requestedBy], references: [id])
+  decider   User?   @relation("RefundDecider", fields: [decidedBy], references: [id])
+
+  @@unique([branchId, refundNumber])
+  @@index([paymentId])
+  @@index([invoiceId])
+  @@index([branchId])
+  @@map("finance_refunds")
+}
+
+model Receivable {
+  id                String           @id @default(uuid()) @db.Uuid
+  invoiceId         String           @unique @db.Uuid
+  branchId          String           @db.Uuid
+  dueDate           DateTime         @db.Date
+  outstandingAmount Decimal          @db.Decimal(18, 3)
+  status            ReceivableStatus @default(Open)
+  agingBucket       AgingBucket      @default(Current)
+  lastCalculatedAt  DateTime         @db.Timestamptz(6)
+  version           Int              @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  isDeleted Boolean   @default(false)
+
+  // Relations
+  invoice Invoice @relation(fields: [invoiceId], references: [id])
+  branch  Branch  @relation(fields: [branchId], references: [id])
+
+  @@index([branchId, status, dueDate])
+  @@map("finance_receivables")
+}
+
+model CorporateCreditRule {
+  id                 String                    @id @default(uuid()) @db.Uuid
+  corporateAccountId String                    @db.Uuid
+  branchId           String                    @db.Uuid
+  creditLimit        Decimal                   @db.Decimal(18, 3)
+  currentOutstanding Decimal                   @default(0.000) @db.Decimal(18, 3)
+  committedAmount    Decimal                   @default(0.000) @db.Decimal(18, 3)
+  availableCredit    Decimal                   @db.Decimal(18, 3)
+  blockOnCreditLimit Boolean                   @default(true)
+  effectiveStartDate DateTime                  @db.Date
+  effectiveEndDate   DateTime?                 @db.Date
+  status             CorporateCreditRuleStatus @default(Draft)
+  version            Int                       @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  isDeleted Boolean   @default(false)
+
+  // Relations
+  corporateAccount CorporateAccount @relation(fields: [corporateAccountId], references: [id])
+  branch           Branch           @relation(fields: [branchId], references: [id])
+
+  @@index([corporateAccountId, status])
+  @@index([branchId])
+  @@map("finance_corporate_credit_rules")
 }

@@ -36,8 +36,13 @@ export const InvoiceLineItemInputSchema = z.object({
 
 export type InvoiceLineItemInput = z.infer<typeof InvoiceLineItemInputSchema>;
 
+export const InvoiceCategorySchema = z.enum(['Student', 'Corporate']);
+export const InvoiceSubCategorySchema = z.enum(['FullPayment', 'Advance', 'PartialPayment', 'Installment']);
+
 export const CreateInvoiceInputSchema = z.object({
   invoiceType: InvoiceTypeSchema,
+  category: InvoiceCategorySchema,
+  subCategory: InvoiceSubCategorySchema,
   studentProfileId: z.string().uuid().nullable().optional(),
   corporateAccountId: z.string().uuid().nullable().optional(),
   enrollmentId: z.string().uuid().nullable().optional(),
@@ -47,7 +52,14 @@ export const CreateInvoiceInputSchema = z.object({
   currency: z.string().length(3).default('OMR'),
   lineItems: z.array(InvoiceLineItemInputSchema).min(1),
   sourceQuotationId: z.string().uuid().nullable().optional(),
-  sourceSalesOrderId: z.string().uuid().nullable().optional()
+  sourceSalesOrderId: z.string().uuid().nullable().optional(),
+  numberOfInstallments: z.number().int().positive().nullable().optional(),
+  installments: z.array(
+    z.object({
+      dueDate: z.date(),
+      amount: z.number().positive()
+    })
+  ).nullable().optional()
 });
 
 export type CreateInvoiceInput = z.infer<typeof CreateInvoiceInputSchema>;

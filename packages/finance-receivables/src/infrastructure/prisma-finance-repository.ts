@@ -24,6 +24,8 @@ export class PrismaFinanceRepository {
     data: CalculatedInvoice & {
       invoiceNumber: string;
       invoiceType: any;
+      category: any;
+      subCategory: any;
       studentProfileId?: string | null;
       corporateAccountId?: string | null;
       enrollmentId?: string | null;
@@ -42,6 +44,8 @@ export class PrismaFinanceRepository {
       data: {
         invoiceNumber: data.invoiceNumber,
         invoiceType: data.invoiceType,
+        category: data.category,
+        subCategory: data.subCategory,
         studentProfileId: data.studentProfileId || null,
         corporateAccountId: data.corporateAccountId || null,
         enrollmentId: data.enrollmentId || null,
@@ -126,7 +130,7 @@ export class PrismaFinanceRepository {
 
     return client.installmentPlan.create({
       data: {
-        enrollmentId: data.enrollmentId,
+        enrollmentId: data.enrollmentId || null,
         invoiceId: data.invoiceId,
         branchId: data.branchId,
         planName: data.planName,

@@ -68,6 +68,13 @@ interface EnrollmentsClientListProps {
     submitted: number;
     draft: number;
   };
+  defaultSearch?: string;
+  defaultStatus?: string;
+  defaultBranchId?: string;
+  defaultCourseId?: string;
+  defaultBatchId?: string;
+  defaultSortBy?: string;
+  defaultSortOrder?: string;
 }
 
 export function EnrollmentsClientList({
@@ -79,6 +86,13 @@ export function EnrollmentsClientList({
   total,
   currentPage,
   kpis,
+  defaultSearch,
+  defaultStatus,
+  defaultBranchId,
+  defaultCourseId,
+  defaultBatchId,
+  defaultSortBy,
+  defaultSortOrder,
 }: EnrollmentsClientListProps) {
   const router = useRouter();
   const totalPages = Math.ceil(total / 10);

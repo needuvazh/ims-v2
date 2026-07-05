@@ -27,7 +27,7 @@ export const InstallmentInputSchema = z.object({
 export type InstallmentInput = z.infer<typeof InstallmentInputSchema>;
 
 export const CreateInstallmentPlanInputSchema = z.object({
-  enrollmentId: z.string().uuid(),
+  enrollmentId: z.string().uuid().nullable().optional(),
   invoiceId: z.string().uuid(),
   branchId: z.string().uuid(),
   planName: z.string().min(1),

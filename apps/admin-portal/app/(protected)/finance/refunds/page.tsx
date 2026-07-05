@@ -1,7 +1,9 @@
-import { assertPermission } from '@/lib/auth-guard';
+import { assertPermission, getSession } from '@/lib/auth-guard';
 import { Card, CardHeader, CardContent, PageHeader, ResponsiveDataTable, Badge, Button, StatCard, AdminListPageLayout, EmptyState, DataTableFilter } from '@ims/shared-ui';
 import { Search, RefreshCcw, Eye, Plus, CheckCircle2, Clock3, ArrowDownRight } from 'lucide-react';
 import Link from 'next/link';
+import { hasPermission } from '@ims/shared-auth';
+import { RefundActionsClient } from './_components/refund-actions-client';
 
 export const metadata = { title: 'Refund Requests - Admin Portal | ASTI IMS' };
 
@@ -14,6 +16,8 @@ export default async function RefundsListPage(props: {
 }) {
   const searchParams = await props.searchParams;
   const session = await assertPermission('refund.request');
+  const fullSession = await getSession();
+  const canApprove = hasPermission(fullSession, 'refund.approve');
 
   const query = searchParams.q || '';
   const statusFilter = searchParams.status || '';
@@ -43,7 +47,13 @@ export default async function RefundsListPage(props: {
     },
     orderBy: { createdAt: 'desc' },
     include: {
-      payment: true
+      payment: true,
+      decider: {
+        select: {
+          email: true,
+          person: { select: { firstName: true, lastName: true } }
+        }
+      }
     }
   });
 
@@ -85,8 +95,12 @@ export default async function RefundsListPage(props: {
       render: (ref: any) => <span className="text-xs text-slate-500">{ref.requestedBy}</span>
     },
     {
-      header: 'Approved By',
-      render: (ref: any) => <span className="text-xs text-slate-500">{ref.approvedBy || 'Pending'}</span>
+      header: 'Decided By',
+      render: (ref: any) => {
+        const d = ref.decider;
+        const name = d?.person ? `${d.person.firstName} ${d.person.lastName}`.trim() : d?.email;
+        return <span className="text-xs text-slate-500">{name || 'Pending'}</span>;
+      }
     },
     {
       header: 'Status',
@@ -98,6 +112,28 @@ export default async function RefundsListPage(props: {
         if (['Requested', 'UnderReview'].includes(ref.status)) variant = 'warning';
         return <Badge variant={variant}>{ref.status}</Badge>;
       }
+    },
+    {
+      header: 'Actions',
+      render: (ref: any) => (
+        <div className="flex items-center gap-1">
+          <Link href={`/finance/refunds/${ref.id}`}>
+            <button
+              className="inline-flex items-center justify-center h-7 w-7 rounded-md border border-slate-200 hover:bg-slate-50 text-slate-500 hover:text-indigo-600 transition-colors"
+              title="View Refund Detail"
+            >
+              <Eye className="h-3.5 w-3.5" />
+            </button>
+          </Link>
+          {canApprove && (
+            <RefundActionsClient
+              refundId={ref.id}
+              status={ref.status}
+              refundNumber={ref.refundNumber}
+            />
+          )}
+        </div>
+      )
     }
   ];
 
@@ -120,6 +156,20 @@ export default async function RefundsListPage(props: {
           {Number(ref.amount).toFixed(3)} {ref.currency}
         </span>
       </div>
+      {canApprove && (['Requested', 'Approved'].includes(ref.status)) && (
+        <div className="pt-2 border-t">
+          <RefundActionsClient
+            refundId={ref.id}
+            status={ref.status}
+            refundNumber={ref.refundNumber}
+          />
+        </div>
+      )}
+      <div className="pt-2 border-t">
+        <Link href={`/finance/refunds/${ref.id}`} className="inline-flex items-center gap-1.5 text-xs text-indigo-600 hover:text-indigo-800 font-medium">
+          <Eye className="h-3.5 w-3.5" /> View Details
+        </Link>
+      </div>
     </Card>
   );
 
@@ -131,9 +181,11 @@ export default async function RefundsListPage(props: {
           title="Refund Applications & Requests"
           description="Submit refund requests, track approval workflows, and manage payments reconciliation reversals."
         />
-        <Button className="h-10 gap-2 shrink-0">
-          <Plus className="h-4 w-4" /> Request Refund
-        </Button>
+        <Link href="/finance/refunds/create">
+          <Button className="h-10 gap-2 shrink-0">
+            <Plus className="h-4 w-4" /> Request Refund
+          </Button>
+        </Link>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-4">

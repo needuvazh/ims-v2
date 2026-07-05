@@ -28,6 +28,8 @@ export class FinanceService {
           ...calculated,
           invoiceNumber,
           invoiceType: input.invoiceType,
+          category: input.category,
+          subCategory: input.subCategory,
           studentProfileId: input.studentProfileId,
           corporateAccountId: input.corporateAccountId,
           enrollmentId: input.enrollmentId,
@@ -54,6 +56,53 @@ export class FinanceService {
         },
         client
       );
+
+      // Handle installment plan generation/validation
+      if (input.subCategory === 'Installment') {
+        if (!input.numberOfInstallments || !input.installments || input.installments.length === 0) {
+          throw new Error('Installment details (numberOfInstallments, installments) are required when subCategory is Installment');
+        }
+
+        // Validate installments
+        const planInput = {
+          enrollmentId: input.enrollmentId,
+          invoiceId: invoice.id,
+          branchId: invoice.branchId,
+          planName: `Installment Plan for ${invoiceNumber}`,
+          totalAmount: calculated.totalAmount.toNumber(),
+          numberOfInstallments: input.numberOfInstallments,
+          installments: input.installments.map((inst, index) => ({
+            sequenceNumber: index + 1,
+            dueDate: inst.dueDate,
+            amount: inst.amount
+          }))
+        };
+
+        validateInstallmentPlan(planInput);
+
+        // Create the installment plan
+        const plan = await this.repo.createInstallmentPlan(planInput, client);
+        await client.installmentPlan.update({
+          where: { id: plan.id },
+          data: { status: 'Active', activatedAt: new Date() }
+        });
+
+        // Publish outbox event for the installment plan
+        await client.outboxEvent.create({
+          data: {
+            eventType: 'InstallmentPlanCreated',
+            aggregateType: 'InstallmentPlan',
+            aggregateId: plan.id,
+            payload: {
+              installmentPlanId: plan.id,
+              invoiceId: plan.invoiceId,
+              numberOfInstallments: plan.numberOfInstallments,
+              totalAmount: plan.totalAmount.toNumber()
+            },
+            availableAt: new Date()
+          }
+        });
+      }
 
       // Publish transactional outbox event
       await client.outboxEvent.create({
@@ -488,5 +537,42 @@ export class FinanceService {
     });
 
     return true;
+  }
+
+  // 8. Issue Invoice
+  async issueInvoice(invoiceId: string, tx?: Prisma.TransactionClient) {
+    const run = async (client: Prisma.TransactionClient) => {
+      const invoice = await this.repo.findInvoiceById(invoiceId, client);
+      if (!invoice) {
+        throw new Error('ERR_FIN_INVOICE_NOT_FOUND');
+      }
+      if (invoice.status !== 'Draft') {
+        throw new Error('ERR_FIN_INVOICE_NOT_DRAFT');
+      }
+
+      const updated = await client.invoice.update({
+        where: { id: invoiceId },
+        data: { status: 'Issued', issuedAt: new Date() }
+      });
+
+      // Publish outbox event
+      await client.outboxEvent.create({
+        data: {
+          eventType: 'InvoiceIssued',
+          aggregateType: 'Invoice',
+          aggregateId: invoiceId,
+          payload: {
+            invoiceId,
+            invoiceNumber: invoice.invoiceNumber,
+            totalAmount: invoice.totalAmount.toNumber()
+          },
+          availableAt: new Date()
+        }
+      });
+
+      return updated;
+    };
+
+    return tx ? run(tx) : this.prisma.$transaction(run);
   }
 }

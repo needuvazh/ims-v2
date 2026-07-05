@@ -18,6 +18,8 @@ const CreateInvoiceRequestSchema = z.object({
     'FinalInvoice',
     'RefundInvoice'
   ]),
+  category: z.enum(['Student', 'Corporate']),
+  subCategory: z.enum(['FullPayment', 'Advance', 'PartialPayment', 'Installment']),
   studentProfileId: z.string().uuid().nullable().optional(),
   corporateAccountId: z.string().uuid().nullable().optional(),
   enrollmentId: z.string().uuid().nullable().optional(),
@@ -39,7 +41,14 @@ const CreateInvoiceRequestSchema = z.object({
     })
   ).min(1),
   sourceQuotationId: z.string().uuid().nullable().optional(),
-  sourceSalesOrderId: z.string().uuid().nullable().optional()
+  sourceSalesOrderId: z.string().uuid().nullable().optional(),
+  numberOfInstallments: z.number().int().positive().nullable().optional(),
+  installments: z.array(
+    z.object({
+      dueDate: z.preprocess((val) => (typeof val === 'string' ? new Date(val) : val), z.date()),
+      amount: z.number().positive()
+    })
+  ).nullable().optional()
 });
 
 function errorResponse(error: Error) {

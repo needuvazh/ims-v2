@@ -136,7 +136,6 @@ export const adminNavigation: NavigationItem[] = [
     items: [
       { href: '/finance', label: 'Finance Dashboard', permission: 'dashboard.finance' },
       { href: '/finance/invoices', label: 'Invoices', permission: 'dashboard.finance' },
-      { href: '/finance/invoices/create', label: 'Create Invoice', permission: 'finance.invoice.create' },
       { href: '/finance/payments', label: 'Payments', permission: 'dashboard.finance' },
       { href: '/finance/refunds', label: 'Refunds', permission: 'dashboard.finance' },
     ],

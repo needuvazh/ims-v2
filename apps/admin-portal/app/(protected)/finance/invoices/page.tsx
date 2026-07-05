@@ -1,7 +1,8 @@
 import { assertPermission } from '@/lib/auth-guard';
 import { Card, CardHeader, CardContent, PageHeader, ResponsiveDataTable, Badge, Button, StatCard, AdminListPageLayout, EmptyState, DataTableFilter } from '@ims/shared-ui';
-import { Search, FileText, Eye, Plus, CheckCircle2, Clock3 } from 'lucide-react';
+import { Search, FileText, Eye, Plus, CheckCircle2, Clock3, RotateCcw } from 'lucide-react';
 import Link from 'next/link';
+import { InvoiceActionsClient } from './_components/invoice-actions-client';
 
 export const metadata = { title: 'Invoices & Billings - Admin Portal | ASTI IMS' };
 
@@ -47,15 +48,31 @@ export default async function InvoicesListPage(props: {
           person: true
         }
       },
-      corporateAccount: true
+      corporateAccount: true,
+      refunds: {
+        where: { isDeleted: false, status: { in: ['Approved', 'Executed'] } },
+        select: { id: true, amount: true, status: true }
+      }
     }
   });
 
-  const totals = invoices.reduce(
+  // Serialize Prisma objects -> plain objects to prevent Next.js Client Component errors
+  const serializedInvoices = JSON.parse(JSON.stringify(invoices)).map((inv: any) => ({
+    ...inv,
+    totalAmount: Number(inv.totalAmount),
+    paidAmount: Number(inv.paidAmount),
+    outstandingAmount: Number(inv.outstandingAmount),
+    refunds: (inv.refunds || []).map((r: any) => ({
+      ...r,
+      amount: Number(r.amount)
+    }))
+  }));
+
+  const totals = serializedInvoices.reduce(
     (acc, inv) => {
-      acc.total = acc.total + Number(inv.totalAmount);
-      acc.outstanding = acc.outstanding + Number(inv.outstandingAmount);
-      acc.paid = acc.paid + Number(inv.paidAmount);
+      acc.total = acc.total + inv.totalAmount;
+      acc.outstanding = acc.outstanding + inv.outstandingAmount;
+      acc.paid = acc.paid + inv.paidAmount;
       return acc;
     },
     { total: 0, outstanding: 0, paid: 0 }
@@ -101,22 +118,49 @@ export default async function InvoicesListPage(props: {
     },
     {
       header: 'Outstanding',
-      render: (inv: any) => (
-        <span className="font-semibold text-rose-600 font-mono text-xs">
-          {Number(inv.outstandingAmount).toFixed(3)} {inv.currency}
-        </span>
-      )
+      render: (inv: any) => {
+        const refundedAmt = (inv.refunds || []).reduce((s: number, r: any) => s + Number(r.amount), 0);
+        const hasRefund = refundedAmt > 0;
+        return (
+          <div className="flex flex-col gap-0.5">
+            <span className={`font-semibold font-mono text-xs ${hasRefund ? 'text-orange-600' : 'text-rose-600'}`}>
+              {Number(inv.outstandingAmount).toFixed(3)} {inv.currency}
+            </span>
+            {hasRefund && (
+              <span className="text-xs text-orange-500 flex items-center gap-1">
+                <RotateCcw className="h-3 w-3" /> {refundedAmt.toFixed(3)} refunded
+              </span>
+            )}
+          </div>
+        );
+      }
     },
     {
       header: 'Status',
       render: (inv: any) => {
+        const hasRefund = (inv.refunds || []).length > 0;
         let variant: 'success' | 'warning' | 'error' | 'info' | 'outline' = 'outline';
         if (inv.status === 'Paid') variant = 'success';
         if (inv.status === 'PartiallyPaid') variant = 'warning';
         if (inv.status === 'Overdue') variant = 'error';
         if (inv.status === 'Issued') variant = 'info';
-        return <Badge variant={variant}>{inv.status}</Badge>;
+        return (
+          <div className="flex flex-col gap-1">
+            <Badge variant={variant}>{inv.status}</Badge>
+            {hasRefund && (
+              <Badge variant="outline" className="text-orange-600 border-orange-200 bg-orange-50 gap-1">
+                <RotateCcw className="h-3 w-3" /> Refunded
+              </Badge>
+            )}
+          </div>
+        );
       }
+    },
+    {
+      header: 'Actions',
+      render: (inv: any) => (
+        <InvoiceActionsClient invoice={inv} />
+      )
     }
   ];
 
@@ -204,7 +248,7 @@ export default async function InvoicesListPage(props: {
 
         <div className="mt-4">
           <ResponsiveDataTable
-            data={invoices}
+            data={serializedInvoices}
             columns={columns}
             renderCard={renderCard}
             keyExtractor={(invoice: any) => invoice.id}

@@ -27,6 +27,8 @@ test('createInvoice should compute line totals, subtotal, tax, final total and p
 
   const input = {
     invoiceType: 'StudentInvoice' as const,
+    category: 'Student' as const,
+    subCategory: 'FullPayment' as const,
     studentProfileId: 'student-123',
     branchId: 'branch-123',
     invoiceDate: new Date('2026-07-04'),
@@ -70,6 +72,83 @@ test('createInvoice should compute line totals, subtotal, tax, final total and p
 
   // Verify outbox event created
   expect(mockPrisma.outboxEvent.create).toHaveBeenCalled();
+});
+
+test('createInvoice should create an installment plan when subCategory is Installment', async () => {
+  const mockPrisma = {
+    $transaction: vi.fn((callback) => callback(mockPrisma)),
+    outboxEvent: { create: vi.fn().mockResolvedValue(null) },
+    installmentPlan: {
+      update: vi.fn().mockResolvedValue({ id: 'plan-123', status: 'Active' })
+    }
+  } as any;
+
+  const service = new FinanceService(mockPrisma);
+
+  const mockInvoice = {
+    id: 'invoice-123',
+    invoiceNumber: 'INV-2026-000002',
+    totalAmount: new Decimal(100),
+    outstandingAmount: new Decimal(100),
+    studentProfileId: 'student-123',
+    branchId: 'branch-123',
+    dueDate: new Date('2026-08-01')
+  };
+
+  const mockInstallmentPlan = {
+    id: 'plan-123',
+    invoiceId: 'invoice-123',
+    numberOfInstallments: 2,
+    totalAmount: new Decimal(100)
+  };
+
+  vi.spyOn(service['repo'], 'getNextInvoiceNumber').mockResolvedValue('INV-2026-000002');
+  vi.spyOn(service['repo'], 'createInvoice').mockResolvedValue(mockInvoice as any);
+  vi.spyOn(service['repo'], 'upsertReceivable').mockResolvedValue(null as any);
+  vi.spyOn(service['repo'], 'createInstallmentPlan').mockResolvedValue(mockInstallmentPlan as any);
+
+  const input = {
+    invoiceType: 'StudentInvoice' as const,
+    category: 'Student' as const,
+    subCategory: 'Installment' as const,
+    studentProfileId: 'student-123',
+    enrollmentId: 'enroll-123',
+    branchId: 'branch-123',
+    invoiceDate: new Date('2026-07-04'),
+    dueDate: new Date('2026-08-01'),
+    currency: 'OMR',
+    numberOfInstallments: 2,
+    installments: [
+      { dueDate: new Date('2026-08-01'), amount: 50 },
+      { dueDate: new Date('2026-09-01'), amount: 50 }
+    ],
+    lineItems: [
+      {
+        sourceBranchId: 'branch-123',
+        descriptionEnglish: 'Course Fee',
+        quantity: 1,
+        unitPrice: 100,
+        discountAmount: 0,
+        taxRate: 0
+      }
+    ]
+  };
+
+  const invoice = await service.createInvoice(input);
+
+  expect(invoice.id).toBe('invoice-123');
+  expect(service['repo'].createInstallmentPlan).toHaveBeenCalledWith(
+    expect.objectContaining({
+      invoiceId: 'invoice-123',
+      numberOfInstallments: 2,
+      totalAmount: 100
+    }),
+    mockPrisma
+  );
+  expect(mockPrisma.installmentPlan.update).toHaveBeenCalledWith({
+    where: { id: 'plan-123' },
+    data: { status: 'Active', activatedAt: expect.any(Date) }
+  });
 });
 
 test('createInstallmentPlan should fail validation if total amount does not match sum of installment amounts', async () => {

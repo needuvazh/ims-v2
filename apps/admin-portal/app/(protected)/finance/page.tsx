@@ -1,7 +1,8 @@
 import { assertPermission } from '@/lib/auth-guard';
-import { Card, CardHeader, CardContent, StatCard, PageHeader, ResponsiveDataTable, Badge, Button, AdminListPageLayout, EmptyState } from '@ims/shared-ui';
-import { CreditCard, FileText, Plus, Landmark, ArrowUpRight, ArrowDownRight, RefreshCcw, Landmark as BankIcon, Users, CheckCircle2, Clock3 } from 'lucide-react';
+import { Card, CardHeader, CardContent, PageHeader, ResponsiveDataTable, Badge, Button, EmptyState } from '@ims/shared-ui';
+import { Plus, Landmark, ArrowDownRight, FileText, RotateCcw } from 'lucide-react';
 import Link from 'next/link';
+import { FinanceDashboardClient } from './_components/finance-dashboard-client';
 
 export const metadata = { title: 'Finance Dashboard - Admin Portal | ASTI IMS' };
 
@@ -14,11 +15,11 @@ export default async function FinanceDashboardPage() {
     session.activeBranchId as any
   );
 
-  // Fetch metrics from DB
+  // 1. Fetch Invoices from DB
   const invoices = await prisma.invoice.findMany({
-    where: { branchId: { in: allowedBranchIds } },
+    where: { branchId: { in: allowedBranchIds }, isDeleted: false },
     orderBy: { createdAt: 'desc' },
-    take: 10,
+    take: 5,
     include: {
       studentProfile: {
         include: {
@@ -29,22 +30,249 @@ export default async function FinanceDashboardPage() {
     }
   });
 
+  const serializedInvoices = JSON.parse(JSON.stringify(invoices));
+
   const allInvoices = await prisma.invoice.findMany({
-    where: { branchId: { in: allowedBranchIds } }
+    where: { branchId: { in: allowedBranchIds }, isDeleted: false },
+    include: {
+      corporateAccount: true
+    }
   });
 
-  const totals = allInvoices.reduce(
-    (acc, inv) => {
-      acc.total = acc.total + Number(inv.totalAmount);
-      acc.outstanding = acc.outstanding + Number(inv.outstandingAmount);
-      acc.paid = acc.paid + Number(inv.paidAmount);
-      return acc;
-    },
-    { total: 0, outstanding: 0, paid: 0 }
-  );
+  // 2. Dates setup
+  const now = new Date();
+  const startOfThisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const endOfThisMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+  const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59, 999);
 
-  const overdueCount = allInvoices.filter(inv => inv.status === 'Overdue').length;
-  const unpaidCount = allInvoices.filter(inv => ['Issued', 'PartiallyPaid'].includes(inv.status)).length;
+  // 3. KPI Calculations
+  const nonDraftInvoices = allInvoices.filter(inv => inv.status !== 'Draft');
+  
+  const totalInvoiced = nonDraftInvoices.reduce((sum, inv) => sum + Number(inv.totalAmount), 0);
+  const revenueCollected = nonDraftInvoices.reduce((sum, inv) => sum + Number(inv.paidAmount), 0);
+
+  // Fetch executed/approved refunds — money actually returned to payers
+  const executedRefunds = await prisma.refund.findMany({
+    where: {
+      branchId: { in: allowedBranchIds },
+      status: { in: ['Executed', 'Approved'] },
+      isDeleted: false
+    },
+    select: { amount: true }
+  });
+  const totalRefunded = executedRefunds.reduce((sum, r) => sum + Number(r.amount), 0);
+
+  // Outstanding receivables must NOT include money already refunded
+  const rawOutstanding = nonDraftInvoices.reduce((sum, inv) => sum + Number(inv.outstandingAmount), 0);
+  const outstandingReceivables = Math.max(0, rawOutstanding - totalRefunded);
+  const collectionRate = totalInvoiced > 0 ? (revenueCollected / totalInvoiced) * 100 : 0;
+
+  const corporateRevenue = nonDraftInvoices
+    .filter(inv => inv.category === 'Corporate')
+    .reduce((sum, inv) => sum + Number(inv.totalAmount), 0);
+
+  const studentRevenue = nonDraftInvoices
+    .filter(inv => inv.category === 'Student')
+    .reduce((sum, inv) => sum + Number(inv.totalAmount), 0);
+
+  // Installments due this month
+  const rawInstallments = await prisma.installment.findMany({
+    where: {
+      dueDate: {
+        gte: startOfThisMonth,
+        lte: endOfThisMonth
+      },
+      status: { not: 'Paid' },
+      installmentPlan: {
+        invoice: {
+          branchId: { in: allowedBranchIds },
+          isDeleted: false
+        }
+      }
+    }
+  });
+  const installmentsDueThisMonth = rawInstallments.reduce((sum, inst) => sum + Number(inst.amount) - Number(inst.paidAmount), 0);
+
+  // MoM growth
+  const thisMonthInvoiced = nonDraftInvoices
+    .filter(inv => inv.invoiceDate >= startOfThisMonth && inv.invoiceDate <= endOfThisMonth)
+    .reduce((sum, inv) => sum + Number(inv.totalAmount), 0);
+
+  const lastMonthInvoiced = nonDraftInvoices
+    .filter(inv => inv.invoiceDate >= startOfLastMonth && inv.invoiceDate <= endOfLastMonth)
+    .reduce((sum, inv) => sum + Number(inv.totalAmount), 0);
+
+  const revenueGrowth = lastMonthInvoiced > 0 
+    ? ((thisMonthInvoiced - lastMonthInvoiced) / lastMonthInvoiced) * 100 
+    : 0;
+
+  const kpis = {
+    revenueCollected,
+    totalInvoiced,
+    outstandingReceivables,
+    collectionRate,
+    corporateRevenue,
+    studentRevenue,
+    installmentsDueThisMonth,
+    revenueGrowth,
+    totalRefunded
+  };
+
+  // 4. MoM and YoY comparative data calculations
+  const monthsList = [
+    { label: 'Jan', index: 0 },
+    { label: 'Feb', index: 1 },
+    { label: 'Mar', index: 2 },
+    { label: 'Apr', index: 3 },
+    { label: 'May', index: 4 },
+    { label: 'Jun', index: 5 },
+    { label: 'Jul', index: 6 },
+    { label: 'Aug', index: 7 },
+    { label: 'Sep', index: 8 },
+    { label: 'Oct', index: 9 },
+    { label: 'Nov', index: 10 },
+    { label: 'Dec', index: 11 },
+  ];
+
+  const currentYear = now.getFullYear();
+  const previousYear = currentYear - 1;
+
+  const yearOverYearData = monthsList.map(m => {
+    const currentYearVal = nonDraftInvoices
+      .filter(inv => {
+        const d = new Date(inv.invoiceDate);
+        return d.getFullYear() === currentYear && d.getMonth() === m.index;
+      })
+      .reduce((sum, inv) => sum + Number(inv.totalAmount), 0);
+
+    const previousYearVal = nonDraftInvoices
+      .filter(inv => {
+        const d = new Date(inv.invoiceDate);
+        return d.getFullYear() === previousYear && d.getMonth() === m.index;
+      })
+      .reduce((sum, inv) => sum + Number(inv.totalAmount), 0);
+
+    return {
+      month: m.label,
+      currentYear: Number(currentYearVal.toFixed(2)),
+      previousYear: Number(previousYearVal.toFixed(2))
+    };
+  });
+
+  const currentMonthIndex = now.getMonth();
+  const currentMonthYear = now.getFullYear();
+
+  const prevMonthDate = new Date(currentMonthYear, currentMonthIndex - 1, 1);
+  const prevMonthIndex = prevMonthDate.getMonth();
+  const prevMonthYear = prevMonthDate.getFullYear();
+
+  const daysInCurrentMonth = new Date(currentMonthYear, currentMonthIndex + 1, 0).getDate();
+  const daysInPrevMonth = new Date(prevMonthYear, prevMonthIndex + 1, 0).getDate();
+  const maxDays = Math.max(daysInCurrentMonth, daysInPrevMonth);
+
+  const monthOverMonthData = Array.from({ length: maxDays }).map((_, i) => {
+    const day = i + 1;
+
+    const currentMonthVal = nonDraftInvoices
+      .filter(inv => {
+        const d = new Date(inv.invoiceDate);
+        return d.getFullYear() === currentMonthYear && d.getMonth() === currentMonthIndex && d.getDate() === day;
+      })
+      .reduce((sum, inv) => sum + Number(inv.totalAmount), 0);
+
+    const previousMonthVal = nonDraftInvoices
+      .filter(inv => {
+        const d = new Date(inv.invoiceDate);
+        return d.getFullYear() === prevMonthYear && d.getMonth() === prevMonthIndex && d.getDate() === day;
+      })
+      .reduce((sum, inv) => sum + Number(inv.totalAmount), 0);
+
+    return {
+      day,
+      currentMonth: Number(currentMonthVal.toFixed(2)),
+      previousMonth: Number(previousMonthVal.toFixed(2))
+    };
+  });
+
+  // Original 6-month monthly trend data
+  const last6Months = Array.from({ length: 6 }).map((_, i) => {
+    const d = new Date();
+    d.setMonth(now.getMonth() - i);
+    return {
+      monthStart: new Date(d.getFullYear(), d.getMonth(), 1),
+      monthEnd: new Date(d.getFullYear(), d.getMonth() + 1, 0, 23, 59, 59, 999),
+      label: d.toLocaleString('en-US', { month: 'short' })
+    };
+  }).reverse();
+
+  const trendData = last6Months.map(m => {
+    const rev = nonDraftInvoices
+      .filter(inv => inv.invoiceDate >= m.monthStart && inv.invoiceDate <= m.monthEnd)
+      .reduce((sum, inv) => sum + Number(inv.totalAmount), 0);
+    return {
+      month: m.label,
+      revenue: Number(rev.toFixed(2))
+    };
+  });
+
+  // 5. Receivables status distribution
+  const currentOutstanding = nonDraftInvoices
+    .filter(inv => inv.dueDate >= now && Number(inv.outstandingAmount) > 0)
+    .reduce((sum, inv) => sum + Number(inv.outstandingAmount), 0);
+
+  const overdueOutstanding = nonDraftInvoices
+    .filter(inv => inv.dueDate < now && Number(inv.outstandingAmount) > 0)
+    .reduce((sum, inv) => sum + Number(inv.outstandingAmount), 0);
+
+  const installmentsOutstanding = nonDraftInvoices
+    .filter(inv => inv.subCategory === 'Installment')
+    .reduce((sum, inv) => sum + Number(inv.outstandingAmount), 0);
+
+  const corporateOutstanding = nonDraftInvoices
+    .filter(inv => inv.category === 'Corporate')
+    .reduce((sum, inv) => sum + Number(inv.outstandingAmount), 0);
+
+  const receivablesData = [
+    { name: 'Current', value: Number(currentOutstanding.toFixed(3)) },
+    { name: 'Overdue', value: Number(overdueOutstanding.toFixed(3)) },
+    { name: 'Installments', value: Number(installmentsOutstanding.toFixed(3)) },
+    { name: 'Corporate Due', value: Number(corporateOutstanding.toFixed(3)) }
+  ];
+
+  // 6. Payment Status count
+  const paidCount = nonDraftInvoices.filter(inv => inv.status === 'Paid').length;
+  const partialCount = nonDraftInvoices.filter(inv => inv.status === 'PartiallyPaid').length;
+  const pendingCount = nonDraftInvoices.filter(inv => ['Issued', 'Overdue'].includes(inv.status)).length;
+
+  const paymentStatusData = [
+    { name: 'Paid', value: paidCount },
+    { name: 'Partial', value: partialCount },
+    { name: 'Pending', value: pendingCount }
+  ];
+
+  // 7. Top 5 Corporate Clients
+  const corporateClientsMap: Record<string, { name: string; revenue: number }> = {};
+  nonDraftInvoices.forEach(inv => {
+    if (inv.category === 'Corporate' && inv.corporateAccount) {
+      const accId = inv.corporateAccountId!;
+      if (!corporateClientsMap[accId]) {
+        corporateClientsMap[accId] = {
+          name: inv.corporateAccount.accountName,
+          revenue: 0
+        };
+      }
+      corporateClientsMap[accId].revenue += Number(inv.totalAmount);
+    }
+  });
+
+  const topCorporates = Object.values(corporateClientsMap)
+    .sort((a, b) => b.revenue - a.revenue)
+    .slice(0, 5)
+    .map(c => ({
+      name: c.name,
+      revenue: Number(c.revenue.toFixed(3))
+    }));
 
   const columns = [
     {
@@ -121,7 +349,7 @@ export default async function FinanceDashboardPage() {
       <div className="flex justify-between items-center text-xs pt-2 border-t">
         <span className="text-slate-400">Total:</span>
         <span className="font-mono font-semibold text-slate-700">
-          {Number(invoice.totalAmount).toFixed(3)} OMR
+          ر.ع. {Number(invoice.totalAmount).toFixed(2)}
         </span>
       </div>
     </Card>
@@ -135,44 +363,24 @@ export default async function FinanceDashboardPage() {
         description="Monitor billings, installments, outstanding receivables, and payments across your assigned branches."
         actions={
           <div className="flex gap-3">
-            <Button variant="outline" className="h-10 gap-2">
-              <RefreshCcw className="h-4 w-4" /> Refresh
-            </Button>
             <Link href="/finance/invoices">
               <Button className="h-10 gap-2">
-                <Plus className="h-4 w-4" /> Manage Invoices
+                Manage Invoices
               </Button>
             </Link>
           </div>
         }
       />
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard
-          title="Total Billed"
-          value={`${totals.total.toFixed(3)} OMR`}
-          description="Operational billings sum"
-          icon={<FileText className="h-5 w-5 text-indigo-600" />}
-        />
-        <StatCard
-          title="Total Collected"
-          value={`${totals.paid.toFixed(3)} OMR`}
-          description="Received payments"
-          icon={<CheckCircle2 className="h-5 w-5 text-emerald-600" />}
-        />
-        <StatCard
-          title="Total Outstanding"
-          value={`${totals.outstanding.toFixed(3)} OMR`}
-          description="Unpaid invoice balance"
-          icon={<Clock3 className="h-5 w-5 text-rose-600" />}
-        />
-        <StatCard
-          title="Active Students Unpaid"
-          value={unpaidCount.toString()}
-          description="Unpaid active students"
-          icon={<Users className="h-5 w-5 text-amber-600" />}
-        />
-      </div>
+      <FinanceDashboardClient
+        kpis={kpis}
+        trendData={trendData}
+        monthOverMonthData={monthOverMonthData}
+        yearOverYearData={yearOverYearData}
+        receivablesData={receivablesData}
+        paymentStatusData={paymentStatusData}
+        topCorporates={topCorporates}
+      />
 
       <div className="grid gap-6 lg:grid-cols-3">
         <Card className="lg:col-span-2">
@@ -192,9 +400,9 @@ export default async function FinanceDashboardPage() {
             </Link>
           </CardHeader>
           <CardContent className="p-0">
-            {invoices.length > 0 ? (
+            {serializedInvoices.length > 0 ? (
               <ResponsiveDataTable
-                data={invoices}
+                data={serializedInvoices}
                 columns={columns}
                 renderCard={renderCard}
                 keyExtractor={(invoice: any) => invoice.id}
@@ -223,12 +431,12 @@ export default async function FinanceDashboardPage() {
           <CardContent className="p-card-p space-y-3">
             <Link href="/finance/invoices/create" className="block w-full">
               <Button variant="outline" className="w-full justify-start h-11 gap-3">
-                <Plus className="h-4 w-4 text-indigo-500" /> Create Student Invoice
+                <Plus className="h-4 w-4 text-indigo-500" /> Create Student/Corporate Invoice
               </Button>
             </Link>
             <Link href="/finance/payments" className="block w-full">
               <Button variant="outline" className="w-full justify-start h-11 gap-3">
-                <Landmark className="h-4 w-4 text-emerald-500" /> Record Client Payment
+                <Plus className="h-4 w-4 text-emerald-500" /> Record Client Payment
               </Button>
             </Link>
             <Link href="/finance/refunds" className="block w-full">
