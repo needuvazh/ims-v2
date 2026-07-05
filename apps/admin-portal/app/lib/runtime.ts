@@ -304,6 +304,7 @@ import {
   CoursePricingService,
   CourseDiscountService,
   CourseCompletionRuleService,
+  PublicCourseQueryService,
 } from '@ims/course-catalog';
 
 const courseRepository = new CourseRepository(prisma);
@@ -317,6 +318,7 @@ export const categoryService = new CategoryService(prisma, categoryRepository);
 export const coursePricingService = new CoursePricingService(prisma, coursePricingRepository, courseDiscountRepository);
 export const courseDiscountService = new CourseDiscountService(prisma, courseDiscountRepository);
 export const courseCompletionRuleService = new CourseCompletionRuleService(prisma, courseCompletionRuleRepository);
+export const publicCourseQueryService = new PublicCourseQueryService(prisma);
 
 // ─── Reporting & CRM Dashboards ───────────────────────────────────────────
 import { LeadAnalyticsReadService } from '@ims/crm-leads';
