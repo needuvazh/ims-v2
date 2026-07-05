@@ -58,7 +58,7 @@ export async function GET(
       <td style="padding:10px 8px;font-size:12px;color:#374151;text-align:right;">${li.quantity}</td>
       <td style="padding:10px 8px;font-size:12px;color:#374151;text-align:right;">${formatAmt(Number(li.unitPrice))}</td>
       <td style="padding:10px 8px;font-size:12px;color:#e74c3c;text-align:right;">${li.discountAmount ? `(${formatAmt(Number(li.discountAmount))})` : '—'}</td>
-      <td style="padding:10px 8px;font-size:12px;font-weight:600;color:#111827;text-align:right;">${formatAmt(Number(li.subtotal ?? (Number(li.unitPrice) * li.quantity - Number(li.discountAmount ?? 0))))}</td>
+      <td style="padding:10px 8px;font-size:12px;font-weight:600;color:#111827;text-align:right;">${formatAmt(Number(li.lineTotal ?? (Number(li.unitPrice) * Number(li.quantity) - Number(li.discountAmount ?? 0))))}</td>
     </tr>
   `).join('');
 
