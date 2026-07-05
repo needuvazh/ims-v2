@@ -69,7 +69,7 @@ export default async function InvoicesListPage(props: {
   }));
 
   const totals = serializedInvoices.reduce(
-    (acc, inv) => {
+    (acc: any, inv: any) => {
       acc.total = acc.total + inv.totalAmount;
       acc.outstanding = acc.outstanding + inv.outstandingAmount;
       acc.paid = acc.paid + inv.paidAmount;
