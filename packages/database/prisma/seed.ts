@@ -91,6 +91,12 @@ const systemPermissions = [
   { moduleCode: 'finance',      featureCode: 'payment',     actionCode: 'write',  permissionCode: 'payment.create',                 permissionType: 'Action' as const, description: 'Record payments and issue receipts.' },
   { moduleCode: 'finance',      featureCode: 'refund',      actionCode: 'request',permissionCode: 'refund.request',                 permissionType: 'Action' as const, description: 'Initiate a refund request.' },
   { moduleCode: 'finance',      featureCode: 'refund',      actionCode: 'approve',permissionCode: 'refund.approve',                 permissionType: 'Action' as const, description: 'Approve refund applications.' },
+  { moduleCode: 'finance',      featureCode: 'menu',        actionCode: 'view',   permissionCode: 'finance.menu.view',              permissionType: 'Menu' as const,   description: 'View Finance & Billings menu.' },
+  { moduleCode: 'finance',      featureCode: 'invoice',     actionCode: 'read',   permissionCode: 'finance.invoice.read',           permissionType: 'Action' as const, description: 'View invoices list and details.' },
+  { moduleCode: 'finance',      featureCode: 'invoice',     actionCode: 'create', permissionCode: 'finance.invoice.create',          permissionType: 'Action' as const, description: 'Create new invoices.' },
+  { moduleCode: 'finance',      featureCode: 'payment',     actionCode: 'read',   permissionCode: 'finance.payment.read',           permissionType: 'Action' as const, description: 'View payments list and details.' },
+  { moduleCode: 'finance',      featureCode: 'payment',     actionCode: 'create', permissionCode: 'finance.payment.create',          permissionType: 'Action' as const, description: 'Record new payments.' },
+  { moduleCode: 'finance',      featureCode: 'refund',      actionCode: 'read',   permissionCode: 'finance.refund.read',            permissionType: 'Action' as const, description: 'View refunds list and details.' },
   
   // Course & Scheduling
   { moduleCode: 'courses',      featureCode: 'syllabus',    actionCode: 'manage', permissionCode: 'course.manage',                  permissionType: 'Action' as const, description: 'Manage courses, syllabus and pricing.' },
@@ -210,6 +216,18 @@ async function seed() {
 
   // 1. Clean up existing relations to prevent duplicate key errors in fresh seeds
   console.log('🧹 Cleaning old records...');
+  // Finance cleanup
+  await prisma.refund.deleteMany({});
+  await prisma.receipt.deleteMany({});
+  await prisma.paymentAllocation.deleteMany({});
+  await prisma.payment.deleteMany({});
+  await prisma.installment.deleteMany({});
+  await prisma.installmentPlan.deleteMany({});
+  await prisma.receivable.deleteMany({});
+  await prisma.invoiceLineItem.deleteMany({});
+  await prisma.invoice.deleteMany({});
+  await prisma.corporateCreditRule.deleteMany({});
+
   await prisma.attendanceCorrection.deleteMany({});
   await prisma.attendanceAlert.deleteMany({});
   await prisma.attendanceRecord.deleteMany({});
@@ -322,7 +340,7 @@ async function seed() {
     'student.read', 'student.reveal_pii', 'student.write', 'enrollment.create', 'enrollment.submit',
     'enrollment.read', 'enrollment.approve', 'enrollment.cancel', 'enrollment.drop', 'enrollment.walk-in-payment',
     'admission.read', 'admission.create', 'admission.approve',
-    'payment.create', 'refund.request', 'course.manage', 'scheduling.calendar.read', 'scheduling.calendar.create', 'scheduling.calendar.update', 'scheduling.venueBlock.read', 'scheduling.venueBlock.create', 'scheduling.venueBlock.update', 'schedule.manage',
+    'payment.create', 'refund.request', 'refund.approve', 'course.manage', 'scheduling.calendar.read', 'scheduling.calendar.create', 'scheduling.calendar.update', 'scheduling.venueBlock.read', 'scheduling.venueBlock.create', 'scheduling.venueBlock.update', 'schedule.manage',
     'course.catalog.view', 'course.catalog.create', 'course.catalog.update', 'course.catalog.publish', 'course.catalog.archive',
     'batch.delivery.view',
     'batch.delivery.assign',
@@ -407,8 +425,10 @@ async function seed() {
 
   // Accountant permissions
   const accountantPermCodes = [
-    'student.read', 'payment.create', 'refund.request',
-    'dashboard.finance', 'dashboard.view', 'enrollment.read'
+    'student.read', 'payment.create', 'refund.request', 'refund.approve',
+    'dashboard.finance', 'dashboard.view', 'enrollment.read',
+    'finance.menu.view', 'finance.invoice.read', 'finance.invoice.create',
+    'finance.payment.read', 'finance.payment.create', 'finance.refund.read',
   ];
   const accountantPerms = permRecords.filter(p => accountantPermCodes.includes(p.permissionCode));
   for (const perm of accountantPerms) {

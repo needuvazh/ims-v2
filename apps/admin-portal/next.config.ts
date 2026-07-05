@@ -14,8 +14,15 @@ const nextConfig: NextConfig = {
     '@ims/organization',
     '@ims/database',
     '@ims/admissions-enrollment',
+    '@ims/finance-receivables',
     '@ims/crm-leads',
     '@ims/reporting-dashboards',
+    '@ims/attendance',
+    '@ims/course-catalog',
+    '@ims/documents',
+    '@ims/scheduling',
+    '@ims/trainer-management',
+    '@ims/training-delivery',
   ],
   images: {
     remotePatterns: [

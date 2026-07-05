@@ -255,7 +255,7 @@ export function SidebarItem({
   onNavigate?: () => void;
 }) {
   const hasChildren = Boolean(item.items?.length);
-  const isActive = active ?? isPathActive(pathname, item.href, Boolean(item.current));
+  const isActive = active ?? isPathActive(pathname, item.href, depth > 0 || Boolean(item.current));
   const labelId = `sidebar-item-${normalizePath(item.href).replace(/\//g, '-')}`;
 
   const base = cn(

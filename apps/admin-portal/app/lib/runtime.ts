@@ -337,7 +337,7 @@ export const crmDashboardQueryService = new CrmDashboardQueryService(
 import { BatchRepository, BatchService, ISchedulingService } from '@ims/training-delivery';
 
 class PrismaSchedulingService implements ISchedulingService {
-  constructor(private readonly prisma: any) {}
+  constructor(private readonly prisma: any) { }
 
   async getSessionsForTrainer(
     trainerId: string,
@@ -410,5 +410,9 @@ class PrismaSchedulingService implements ISchedulingService {
 const batchRepository = new BatchRepository(prisma);
 const schedulingService = new PrismaSchedulingService(prisma);
 export const batchService = new BatchService(prisma, batchRepository, schedulingService);
+
+// ─── Finance Repositories & Services ──────────────────────────────────────
+import { FinanceService } from '@ims/finance-receivables';
+export const financeService = new FinanceService(prisma);
 
 export { prisma };

@@ -42,6 +42,15 @@ export const knownPermissions = [
   'trainer.report.view',
   'trainer.report.export',
   'trainer.audit.read',
+  'dashboard.finance',
+  'finance.menu.view',
+  'finance.invoice.read',
+  'finance.invoice.create',
+  'finance.payment.read',
+  'finance.payment.create',
+  'finance.refund.read',
+  'finance.refund.request',
+  'finance.refund.approve',
 ] as const;
 
 export type KnownPermission = (typeof knownPermissions)[number];
@@ -117,6 +126,18 @@ export const adminNavigation: NavigationItem[] = [
       { href: '/faculty/trainers', label: 'Trainer Registry', permission: 'menu.faculty.trainers' },
       { href: '/faculty/eligible-trainers', label: 'Eligible Trainers', permission: 'menu.faculty.eligible-trainers' },
       { href: '/faculty/reports', label: 'Faculty Reports', permission: 'menu.faculty.reports' },
+    ],
+  },
+  {
+    href: '/finance',
+    label: 'Finance & Billings',
+    permission: 'dashboard.finance',
+    category: 'Operations',
+    items: [
+      { href: '/finance', label: 'Finance Dashboard', permission: 'dashboard.finance' },
+      { href: '/finance/invoices', label: 'Invoices', permission: 'dashboard.finance' },
+      { href: '/finance/payments', label: 'Payments', permission: 'dashboard.finance' },
+      { href: '/finance/refunds', label: 'Refunds', permission: 'dashboard.finance' },
     ],
   },
   {

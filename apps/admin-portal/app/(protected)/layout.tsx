@@ -35,6 +35,11 @@ import {
   BadgeCheck,
   CalendarClock,
   BarChart3,
+  Landmark,
+  Receipt,
+  CreditCard,
+  Undo2,
+  FilePlus,
 } from 'lucide-react';
 
 function mapNavigationIcons(item: any): any {
@@ -134,6 +139,21 @@ function mapNavigationIcons(item: any): any {
       break;
     case '/iam/reports':
       icon = <FileSpreadsheet className="h-4.5 w-4.5" />;
+      break;
+    case '/finance':
+      icon = <Landmark className="h-4.5 w-4.5" />;
+      break;
+    case '/finance/invoices':
+      icon = <Receipt className="h-4.5 w-4.5" />;
+      break;
+    case '/finance/invoices/create':
+      icon = <FilePlus className="h-4.5 w-4.5" />;
+      break;
+    case '/finance/payments':
+      icon = <CreditCard className="h-4.5 w-4.5" />;
+      break;
+    case '/finance/refunds':
+      icon = <Undo2 className="h-4.5 w-4.5" />;
       break;
   }
 
