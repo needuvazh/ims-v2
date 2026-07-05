@@ -92,28 +92,42 @@ export async function withAuth(request: Request): Promise<AuthenticatedRequestCo
   const accessToken =
     (authHeader?.toLowerCase().startsWith('bearer ') ? authHeader.slice(7).trim() : null) ??
     getCookieValue(cookieHeader, 'ims_access_token');
+  const sessionToken = getCookieValue(cookieHeader, sessionCookieName);
 
-  if (!accessToken) {
+  if (!accessToken && !sessionToken) {
     throw createIamError('IAM-AUTH-002');
   }
 
-  let tokenPayload: TokenPayload;
-  try {
-    tokenPayload = await JwtService.verifyAccessToken(accessToken, getPublicKey());
-  } catch {
-    throw createIamError('IAM-AUTH-002');
+  let tokenPayload: TokenPayload | null = null;
+  if (accessToken) {
+    try {
+      tokenPayload = await JwtService.verifyAccessToken(accessToken, getPublicKey());
+    } catch {
+      tokenPayload = null;
+    }
   }
   const { sessionRepository } = await import('./runtime');
-  const session = await sessionRepository.findByAccessTokenJti(tokenPayload.jti ?? '');
+  const decodedSession = await decodeSession(sessionToken);
+  const sessionJti = decodedSession?.accessTokenJti ?? tokenPayload?.jti ?? '';
+  const session = await sessionRepository.findByAccessTokenJti(sessionJti);
 
-  if (!session || session.status !== 'Active' || session.userId !== tokenPayload.userId) {
+  const resolvedTokenPayload = tokenPayload ?? (decodedSession
+    ? {
+        userId: decodedSession.userId,
+        email: decodedSession.displayName,
+        roles: decodedSession.roles,
+        activeBranchId: decodedSession.activeBranchId,
+        jti: decodedSession.accessTokenJti,
+      }
+    : null);
+
+  if (!session || session.status !== 'Active' || !resolvedTokenPayload || session.userId !== resolvedTokenPayload.userId) {
     throw createIamError('IAM-AUTH-002');
   }
 
-  const decodedSession = await decodeSession(cookieHeader && getCookieValue(cookieHeader, sessionCookieName));
   const requestContext = createRequestContext(headers, {
-    userId: tokenPayload.userId,
-    branchId: decodedSession?.activeBranchId ?? tokenPayload.activeBranchId ?? null,
+    userId: decodedSession?.userId ?? resolvedTokenPayload.userId,
+    branchId: decodedSession?.activeBranchId ?? resolvedTokenPayload.activeBranchId ?? null,
     route: request.url,
     method: request.method,
   });
@@ -124,28 +138,28 @@ export async function withAuth(request: Request): Promise<AuthenticatedRequestCo
     decodedSession.permissions = await effectivePermissionsService.getPermissionsForRoles(decodedSession.roles);
     return {
       session: decodedSession,
-      tokenPayload,
+      tokenPayload: resolvedTokenPayload,
       requestContext,
     };
   }
 
-  const permissions = await effectivePermissionsService.getPermissionsForRoles(tokenPayload.roles ?? []);
+  const permissions = await effectivePermissionsService.getPermissionsForRoles(resolvedTokenPayload.roles ?? []);
 
   return {
     session: {
-      userId: tokenPayload.userId as Uuid,
-      displayName: tokenPayload.email,
-      roles: tokenPayload.roles ?? [],
+      userId: resolvedTokenPayload.userId as Uuid,
+      displayName: resolvedTokenPayload.email,
+      roles: resolvedTokenPayload.roles ?? [],
       permissions,
       dataScopes: [],
-      activeBranchId: tokenPayload.activeBranchId as Uuid | null,
-      accessTokenJti: tokenPayload.jti ?? '',
+      activeBranchId: resolvedTokenPayload.activeBranchId as Uuid | null,
+      accessTokenJti: resolvedTokenPayload.jti ?? '',
       hashedRefreshToken: session.hashedRefreshToken,
       lastActivityAt: session.lastActivityAt.getTime(),
       status: session.status,
       expiresAt: session.expiresAt.getTime(),
     } satisfies Session,
-    tokenPayload,
+    tokenPayload: resolvedTokenPayload,
     requestContext,
   };
 }

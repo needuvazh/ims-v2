@@ -1,6 +1,6 @@
-import { createUuid } from '@ims/shared-kernel';
 import { prisma } from '@ims/database';
 import { assertPermission } from '@/lib/auth-guard';
+import { AdminListPageLayout } from '@ims/shared-ui';
 import { CoursesClientList } from './_components/courses-client-list';
 
 export const metadata = { title: 'Course Catalog - Admin Portal | ASTI IMS' };
@@ -11,6 +11,8 @@ export default async function CoursesPage(props: {
     categoryId?: string;
     status?: string;
     page?: string;
+    sortBy?: string;
+    sortOrder?: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
@@ -22,11 +24,15 @@ export default async function CoursesPage(props: {
 
   const page = searchParams.page ? parseInt(searchParams.page, 10) : 1;
   const limit = 10;
+  const sortBy = searchParams.sortBy || 'createdAt';
+  const sortOrder = (searchParams.sortOrder as 'asc' | 'desc' | undefined) || 'desc';
 
   const filters = {
     categoryId: searchParams.categoryId,
     status: searchParams.status,
     search: searchParams.q,
+    sortBy,
+    sortOrder,
   };
 
   const { items: courses, total } = await courseService.findAll(filters, { page, limit });
@@ -54,7 +60,7 @@ export default async function CoursesPage(props: {
   };
 
   return (
-    <div className="p-6">
+    <AdminListPageLayout>
       <CoursesClientList
         courses={courses}
         categories={categories}
@@ -63,7 +69,12 @@ export default async function CoursesPage(props: {
         kpis={kpis}
         currentPage={page}
         sessionPermissions={session.permissions}
+        defaultSearch={searchParams.q || ''}
+        defaultCategoryId={searchParams.categoryId || ''}
+        defaultStatus={searchParams.status || ''}
+        defaultSortBy={sortBy}
+        defaultSortOrder={sortOrder}
       />
-    </div>
+    </AdminListPageLayout>
   );
 }

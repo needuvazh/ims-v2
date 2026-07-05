@@ -2,19 +2,19 @@ import Link from 'next/link';
 import { Home, Edit2, Eye, Plus, Building2, GraduationCap } from 'lucide-react';
 import { 
   Breadcrumbs, 
+  AdminListPageLayout,
   PageHeader, 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow,
   Badge,
   Button,
   EmptyState,
   Pagination,
   SimpleTooltip,
-  DataTableFilter
+  DataTableFilter,
+  ResponsiveDataTable,
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader
 } from '@ims/shared-ui';
 import { loadOrganizationData } from '@/app/(protected)/organization/shared-data';
 
@@ -64,8 +64,49 @@ export default async function ClassroomsPage(props: {
 
   const branchOptions = data.branches.map(b => ({ value: b.id, label: b.branchName }));
 
+  const columns = [
+    { header: 'Classroom', render: (room: (typeof paginatedClassrooms)[number]) => <span className="font-medium text-[color:var(--ims-ink)]">{room.classroomName}</span> },
+    { header: 'Branch', render: (room: (typeof paginatedClassrooms)[number]) => { const branch = data.branches.find((b) => b.id === room.branchId); return <span className="text-sm">{branch ? branch.branchName : '—'}</span>; } },
+    { header: 'Capacity', render: (room: (typeof paginatedClassrooms)[number]) => <span className="font-mono text-sm">{room.capacity} seats</span> },
+    { header: 'Location', render: (room: (typeof paginatedClassrooms)[number]) => <span className="text-sm">{room.location ?? '—'}</span> },
+    { header: 'Dates', render: (room: (typeof paginatedClassrooms)[number]) => (<div className="text-xs"><div>Start: {formatDateForDisplay(room.effectiveStartDate) || '—'}</div><div className="text-[color:var(--ims-muted)]">End: {formatDateForDisplay(room.effectiveEndDate) || 'Indefinite'}</div></div>) },
+    { header: 'Status', render: (room: (typeof paginatedClassrooms)[number]) => <Badge variant={room.status === 'Active' ? 'success' : 'muted'}>{room.status}</Badge>, headerClassName: 'w-[110px]' },
+    { header: 'Actions', className: 'text-right', render: (room: (typeof paginatedClassrooms)[number]) => (<div className="flex items-center justify-end gap-2"><SimpleTooltip content="View Details" side="top"><Link href={`/organization/classrooms/${room.id}`}><Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]"><Eye className="h-4 w-4" /></Button></Link></SimpleTooltip><SimpleTooltip content="Edit Classroom" side="top"><Link href={`/organization/classrooms/${room.id}/edit`}><Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]"><Edit2 className="h-4 w-4" /></Button></Link></SimpleTooltip></div>), headerClassName: 'text-right w-[120px]' },
+  ];
+
+  const renderCard = (room: (typeof paginatedClassrooms)[number]) => {
+    const branch = data.branches.find((b) => b.id === room.branchId);
+    return (
+      <Card className="transition-colors hover:border-[var(--ims-brass)]">
+        <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0 space-y-1">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">{room.classroomName}</p>
+              <p className="text-sm font-bold text-[var(--ims-ink)]">{branch ? branch.branchName : '—'}</p>
+            </div>
+            <Badge variant={room.status === 'Active' ? 'success' : 'muted'}>{room.status}</Badge>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-3 p-card-p text-xs">
+          <div className="grid grid-cols-2 gap-4">
+            <div><p className="font-semibold text-[var(--ims-muted)]">Capacity</p><p className="truncate">{room.capacity} seats</p></div>
+            <div><p className="font-semibold text-[var(--ims-muted)]">Location</p><p className="truncate">{room.location ?? '—'}</p></div>
+            <div><p className="font-semibold text-[var(--ims-muted)]">Start</p><p className="truncate">{formatDateForDisplay(room.effectiveStartDate) || '—'}</p></div>
+            <div><p className="font-semibold text-[var(--ims-muted)]">End</p><p className="truncate">{formatDateForDisplay(room.effectiveEndDate) || 'Indefinite'}</p></div>
+          </div>
+        </CardContent>
+        <CardFooter className="p-card-p pt-0">
+          <div className="flex w-full gap-2">
+            <Link href={`/organization/classrooms/${room.id}`} className="flex-1"><Button variant="outline" size="sm" className="w-full text-[11px]"><Eye className="mr-1.5 h-3.5 w-3.5" /> View</Button></Link>
+            <Link href={`/organization/classrooms/${room.id}/edit`} className="flex-1"><Button variant="outline" size="sm" className="w-full text-[11px]"><Edit2 className="mr-1.5 h-3.5 w-3.5" /> Edit</Button></Link>
+          </div>
+        </CardFooter>
+      </Card>
+    );
+  };
+
   return (
-    <div className="space-y-8">
+    <AdminListPageLayout className="pt-1 sm:pt-0">
       <PageHeader
         eyebrow="Organization"
         title="Classrooms"
@@ -120,58 +161,13 @@ export default async function ClassroomsPage(props: {
           />
         ) : (
           <>
-            <Table data-testid="classrooms-table">
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Classroom Name</TableHead>
-                  <TableHead>Branch</TableHead>
-                  <TableHead>Capacity</TableHead>
-                  <TableHead>Location</TableHead>
-                  <TableHead>Dates</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {paginatedClassrooms.map((room) => {
-                  const branch = data.branches.find((b) => b.id === room.branchId);
-                  return (
-                    <TableRow key={room.id} data-testid={`room-row-${room.id}`}>
-                      <TableCell className="font-medium text-[color:var(--ims-ink)]">{room.classroomName}</TableCell>
-                      <TableCell className="text-sm">{branch ? branch.branchName : '—'}</TableCell>
-                      <TableCell className="font-mono text-sm">{room.capacity} seats</TableCell>
-                      <TableCell className="text-sm">{room.location ?? '—'}</TableCell>
-                      <TableCell className="text-xs">
-                        <div>Start: {formatDateForDisplay(room.effectiveStartDate) || '—'}</div>
-                        <div className="text-[color:var(--ims-muted)]">End: {formatDateForDisplay(room.effectiveEndDate) || 'Indefinite'}</div>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant={room.status === 'Active' ? 'success' : 'muted'}>{room.status}</Badge>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex items-center justify-end gap-2">
-                          <SimpleTooltip content="View Details" side="top">
-                            <Link href={`/organization/classrooms/${room.id}`}>
-                              <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
-                                <Eye className="h-4 w-4" />
-                              </Button>
-                            </Link>
-                          </SimpleTooltip>
-
-                          <SimpleTooltip content="Edit Classroom" side="top">
-                            <Link href={`/organization/classrooms/${room.id}/edit`}>
-                              <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
-                                <Edit2 className="h-4 w-4" />
-                              </Button>
-                            </Link>
-                          </SimpleTooltip>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
+            <ResponsiveDataTable
+              data={paginatedClassrooms}
+              columns={columns}
+              renderCard={renderCard}
+              keyExtractor={(room) => room.id}
+              emptyState={null}
+            />
             <Pagination
               page={page}
               totalPages={totalPages}
@@ -181,6 +177,6 @@ export default async function ClassroomsPage(props: {
           </>
         )}
       </div>
-    </div>
+    </AdminListPageLayout>
   );
 }

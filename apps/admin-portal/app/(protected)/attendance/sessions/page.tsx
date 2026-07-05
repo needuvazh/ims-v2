@@ -6,16 +6,13 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
   LinkButton,
+  AdminListPageLayout,
   PageHeader,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+  ResponsiveDataTable,
 } from '@ims/shared-ui';
 import { ClipboardList, Layers, PlayCircle } from 'lucide-react';
 
@@ -74,8 +71,119 @@ export default async function AttendanceSessionsPage() {
   const submittedCount = attendanceSessions.filter((item) => item.status === 'Submitted').length;
   const lockedCount = attendanceSessions.filter((item) => item.status === 'Locked').length;
 
+  const rows = attendanceSessions.map((item) => ({
+    id: item.id,
+    attendanceDate: item.attendanceDate.toISOString(),
+    titleEnglish: item.session.titleEnglish,
+    titleArabic: item.session.titleArabic,
+    sessionNumber: item.session.sessionNumber,
+    startTime: item.session.startTime,
+    endTime: item.session.endTime,
+    batchCode: item.session.batch.batchCode,
+    branchName: branchNameById.get(item.branchId) ?? item.branchId,
+    status: item.status,
+    recordsCount: item.records.length,
+    batchId: item.batchId,
+  }));
+
+  const columns = [
+    {
+      header: 'Date',
+      render: (item: (typeof rows)[number]) => <span className="font-medium">{new Date(item.attendanceDate).toLocaleDateString()}</span>,
+      headerClassName: 'w-[120px]',
+    },
+    {
+      header: 'Delivery Session',
+      render: (item: (typeof rows)[number]) => (
+        <div className="space-y-0.5">
+          <div className="font-semibold text-[color:var(--ims-ink)]">{item.titleEnglish}</div>
+          <div className="text-xs text-[color:var(--ims-muted)]">
+            #{item.sessionNumber} | {item.startTime} - {item.endTime}
+          </div>
+        </div>
+      ),
+    },
+    {
+      header: 'Batch',
+      render: (item: (typeof rows)[number]) => <span className="font-mono text-xs text-[color:var(--ims-muted)]">{item.batchCode}</span>,
+      headerClassName: 'w-[120px]',
+    },
+    {
+      header: 'Branch',
+      render: (item: (typeof rows)[number]) => item.branchName,
+    },
+    {
+      header: 'Status',
+      render: (item: (typeof rows)[number]) => statusBadge(item.status),
+      headerClassName: 'w-[110px]',
+    },
+    {
+      header: 'Records',
+      className: 'text-right',
+      render: (item: (typeof rows)[number]) => <span className="font-semibold">{item.recordsCount}</span>,
+      headerClassName: 'w-[100px] text-right',
+    },
+    {
+      header: 'Action',
+      className: 'text-right',
+      render: (item: (typeof rows)[number]) => (
+        <div className="inline-flex flex-wrap items-center justify-end gap-2">
+          {item.recordsCount === 0 ? (
+            <LinkButton href={`/batches/${item.batchId}`} size="sm" variant="outline" className="gap-2" title="Open the batch to generate the missing roster">
+              <ClipboardList className="h-4 w-4" />
+              Generate Roster
+            </LinkButton>
+          ) : null}
+          <LinkButton href={`/batches/${item.batchId}`} size="sm" variant="outline" className="gap-2">
+            <PlayCircle className="h-4 w-4" />
+            Open Batch
+          </LinkButton>
+          <LinkButton href={`/attendance/records?sessionId=${item.id}`} size="sm" variant="ghost" className="gap-2">
+            <ClipboardList className="h-4 w-4" />
+            {canMarkAttendance ? 'Mark Attendance' : 'View Records'}
+          </LinkButton>
+        </div>
+      ),
+      headerClassName: 'text-right w-[260px]',
+    },
+  ];
+
+  const renderCard = (item: (typeof rows)[number]) => (
+    <Card className="transition-colors hover:border-[var(--ims-brass)]">
+      <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0 space-y-1">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">{new Date(item.attendanceDate).toLocaleDateString()}</p>
+            <p className="text-sm font-bold text-[var(--ims-ink)]">{item.titleEnglish}</p>
+          </div>
+          {statusBadge(item.status)}
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-3 p-card-p text-xs">
+        <div className="grid grid-cols-2 gap-4">
+          <div><p className="font-semibold text-[var(--ims-muted)]">Batch</p><p className="truncate">{item.batchCode}</p></div>
+          <div><p className="font-semibold text-[var(--ims-muted)]">Branch</p><p className="truncate">{item.branchName}</p></div>
+          <div><p className="font-semibold text-[var(--ims-muted)]">Session</p><p className="truncate">#{item.sessionNumber}</p></div>
+          <div><p className="font-semibold text-[var(--ims-muted)]">Records</p><p className="truncate">{item.recordsCount}</p></div>
+        </div>
+      </CardContent>
+      <CardFooter className="p-card-p pt-0">
+        <div className="flex w-full flex-wrap gap-2">
+          {item.recordsCount === 0 ? (
+            <LinkButton href={`/batches/${item.batchId}`} size="sm" variant="outline" className="flex-1 gap-2">
+              <ClipboardList className="h-4 w-4" /> Generate Roster
+            </LinkButton>
+          ) : null}
+          <LinkButton href={`/attendance/records?sessionId=${item.id}`} size="sm" variant="ghost" className="flex-1 gap-2">
+            <ClipboardList className="h-4 w-4" /> {canMarkAttendance ? 'Mark Attendance' : 'View Records'}
+          </LinkButton>
+        </div>
+      </CardFooter>
+    </Card>
+  );
+
   return (
-    <div className="space-y-6">
+    <AdminListPageLayout className="pt-1 sm:pt-0">
       <PageHeader
         eyebrow="Attendance"
         title="Attendance Sessions"
@@ -124,64 +232,7 @@ export default async function AttendanceSessionsPage() {
               </p>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Delivery Session</TableHead>
-                    <TableHead>Batch</TableHead>
-                    <TableHead>Branch</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="text-right">Records</TableHead>
-                    <TableHead className="text-right">Action</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {attendanceSessions.map((item) => (
-                    <TableRow key={item.id}>
-                      <TableCell className="font-medium">{new Date(item.attendanceDate).toLocaleDateString()}</TableCell>
-                      <TableCell>
-                        <div className="space-y-0.5">
-                          <div className="font-semibold text-[color:var(--ims-ink)]">{item.session.titleEnglish}</div>
-                          <div className="text-xs text-[color:var(--ims-muted)]">
-                            #{item.session.sessionNumber} | {item.session.startTime} - {item.session.endTime}
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell className="font-mono text-xs text-[color:var(--ims-muted)]">{item.session.batch.batchCode}</TableCell>
-                      <TableCell>{branchNameById.get(item.branchId) ?? item.branchId}</TableCell>
-                      <TableCell>{statusBadge(item.status)}</TableCell>
-                      <TableCell className="text-right font-semibold">{item.records.length}</TableCell>
-                      <TableCell className="text-right">
-                        <div className="inline-flex items-center gap-2">
-                          {item.records.length === 0 ? (
-                            <LinkButton
-                              href={`/batches/${item.batchId}`}
-                              size="sm"
-                              variant="outline"
-                              className="gap-2"
-                              title="Open the batch to generate the missing roster"
-                            >
-                              <ClipboardList className="h-4 w-4" />
-                              Generate Roster
-                            </LinkButton>
-                          ) : null}
-                          <LinkButton href={`/batches/${item.batchId}`} size="sm" variant="outline" className="gap-2">
-                            <PlayCircle className="h-4 w-4" />
-                            Open Batch
-                          </LinkButton>
-                          <LinkButton href={`/attendance/records?sessionId=${item.id}`} size="sm" variant="ghost" className="gap-2">
-                            <ClipboardList className="h-4 w-4" />
-                            {canMarkAttendance ? 'Mark Attendance' : 'View Records'}
-                          </LinkButton>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
+            <ResponsiveDataTable data={rows} columns={columns} renderCard={renderCard} keyExtractor={(item) => item.id} emptyState={null} />
           )}
         </CardContent>
       </Card>
@@ -198,6 +249,6 @@ export default async function AttendanceSessionsPage() {
           <p>4. Return here to review status, records, and downstream correction workflow.</p>
         </CardContent>
       </Card>
-    </div>
+    </AdminListPageLayout>
   );
 }

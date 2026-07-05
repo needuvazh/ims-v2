@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { User, Compass, Activity, FileText } from 'lucide-react';
+import { User, Compass, Activity, FileText, BadgeCheck, Loader2 } from 'lucide-react';
 import { useForm, Controller } from 'react-hook-form';
 import { toast } from 'sonner';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { CreateLeadSchema } from '@ims/crm-leads';
+import { CreateLeadSchema, LeadSourceEnum } from '@ims/crm-leads';
 import {
   Input,
   Select,
@@ -19,6 +19,29 @@ import {
   Button,
   Alert,
 } from '@ims/shared-ui';
+
+type StudentLookupResult = {
+  personFound: boolean;
+  personId: string | null;
+  firstNameMasked: string | null;
+  lastNameMasked: string | null;
+  maskedMobile: string | null;
+  maskedEmail: string | null;
+  maskedNationalId?: string | null;
+  studentProfileId: string | null;
+  studentNumber: string | null;
+  branchInfo: Array<{
+    branchId: string;
+    branchName: string;
+    relation: 'Home' | 'Admission' | 'Enrollment';
+  }>;
+  preflight: {
+    hasActiveAdmission: boolean;
+    activeAdmissionId: string | null;
+    hasEnrollment: boolean;
+    conflictCode: string | null;
+  } | null;
+};
 
 // Extend CreateLeadSchema to include editing properties and conditional lost validations
 const leadFormSchema = CreateLeadSchema.extend({
@@ -70,6 +93,8 @@ export function LeadForm({
   const router = useRouter();
   const [errorState, setErrorState] = useState<string | null>(null);
   const [showDuplicateWarning, setShowDuplicateWarning] = useState(false);
+  const [studentLookup, setStudentLookup] = useState<StudentLookupResult | null>(null);
+  const [studentLookupLoading, setStudentLookupLoading] = useState(false);
 
   const defaultValues: any = {
     id: initialData?.id,
@@ -110,6 +135,75 @@ export function LeadForm({
 
   const selectedStage = watch('stage');
   const isBypassChecked = watch('bypassDuplicateBlock');
+  const watchedEmail = watch('email');
+  const watchedPhone = watch('phone');
+  const leadSourceOptions = [
+    { value: 'WalkIn', label: 'Walk-In' },
+    { value: 'Web', label: 'Website' },
+    { value: 'Campaign', label: 'Campaign' },
+    { value: 'Referral', label: 'Referral' },
+    { value: 'Phone', label: 'Phone' },
+    { value: 'WhatsApp', label: 'WhatsApp' },
+    { value: 'Facebook', label: 'Facebook' },
+    { value: 'Instagram', label: 'Instagram' },
+    { value: 'GoogleAds', label: 'Google Ads' },
+    { value: 'CorporateReferral', label: 'Corporate Referral' },
+    { value: 'Other', label: 'Other' },
+  ].filter((option) => LeadSourceEnum.options.includes(option.value as any));
+
+  useEffect(() => {
+    const email = typeof watchedEmail === 'string' ? watchedEmail.trim() : '';
+    const mobile = typeof watchedPhone === 'string' ? watchedPhone.trim() : '';
+
+    if (!email && !mobile) {
+      setStudentLookup(null);
+      setStudentLookupLoading(false);
+      return;
+    }
+
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const validMobile = mobile.length >= 7;
+
+    if (!validEmail && !validMobile) {
+      setStudentLookup(null);
+      setStudentLookupLoading(false);
+      return;
+    }
+
+    const controller = new AbortController();
+    const timeout = setTimeout(async () => {
+      setStudentLookupLoading(true);
+
+      try {
+        const params = new URLSearchParams();
+        if (validEmail) params.set('email', email);
+        if (validMobile) params.set('mobile', mobile);
+
+        const res = await fetch(`/api/v1/crm/leads/student-lookup?${params.toString()}`, {
+          signal: controller.signal,
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.messageEnglish || 'Unable to check for an existing student.');
+        }
+
+        const nextLookup = data.data as StudentLookupResult;
+        setStudentLookup(nextLookup.studentProfileId ? nextLookup : null);
+      } catch (error: any) {
+        if (error?.name !== 'AbortError') {
+          setStudentLookup(null);
+        }
+      } finally {
+        setStudentLookupLoading(false);
+      }
+    }, 350);
+
+    return () => {
+      controller.abort();
+      clearTimeout(timeout);
+    };
+  }, [watchedEmail, watchedPhone]);
 
   const onSubmit = async (values: any) => {
     setErrorState(null);
@@ -186,7 +280,7 @@ export function LeadForm({
       )}
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
-        {/* Left Column: Personal Info & Additional Context */}
+        {/* Left Column: Personal Info */}
         <div className="space-y-4 sm:space-y-5">
           {/* Card 1: Personal Information */}
           <div className="space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
@@ -196,7 +290,6 @@ export function LeadForm({
               </div>
               <div>
                 <h3 className="font-semibold text-slate-800">Personal Information</h3>
-                <p className="text-xs text-slate-500">Contact and identity details of the prospect</p>
               </div>
             </div>
 
@@ -234,40 +327,45 @@ export function LeadForm({
               <FormError>{errors.email?.message}</FormError>
             </FormField>
 
-            <FormField>
-              <FormLabel>Date of Birth</FormLabel>
-              <FormControl>
-                <Input
-                  type="date"
+          <FormField>
+            <FormLabel>Date of Birth</FormLabel>
+            <FormControl>
+              <Input
+                type="date"
                   {...register('dateOfBirth', {
                     setValueAs: (v) => (v === '' ? null : v),
                   })}
                 />
-              </FormControl>
-              <FormError>{errors.dateOfBirth?.message}</FormError>
-            </FormField>
-          </div>
+            </FormControl>
+            <FormError>{errors.dateOfBirth?.message}</FormError>
+          </FormField>
 
-          {/* Card 3: Additional Notes */}
           <div className="space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
             <div className="flex items-center gap-3 border-b border-slate-100 pb-3 sm:pb-4">
-              <div className="p-2 bg-amber-50 text-amber-600 rounded-lg">
+              <div className="rounded-lg bg-amber-50 p-2 text-amber-600">
                 <FileText className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-800">Additional Context</h3>
-                <p className="text-xs text-slate-500">Prospect background, special preferences, or logs</p>
+                <h3 className="font-semibold text-slate-800">Notes</h3>
               </div>
             </div>
 
             <FormField>
-              <FormLabel>Additional Notes</FormLabel>
               <FormControl>
                 <Textarea placeholder="Lead background context, course interest detail..." rows={5} {...register('notes')} />
               </FormControl>
               <FormError>{errors.notes?.message}</FormError>
             </FormField>
           </div>
+          </div>
+
+          {studentLookupLoading && (
+            <div className="flex items-center gap-3 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-4 text-sm text-[color:var(--ims-muted)]">
+              <Loader2 className="h-4 w-4 animate-spin text-[color:var(--ims-brass)]" />
+              Checking whether this contact already belongs to a student...
+            </div>
+          )}
+
         </div>
 
         {/* Right Column: Interest, Assignment & Stage Status */}
@@ -280,7 +378,6 @@ export function LeadForm({
               </div>
               <div>
                 <h3 className="font-semibold text-slate-800">Lead Assignment & Interest</h3>
-                <p className="text-xs text-slate-500">Specify branches, course alignment, and sales reps</p>
               </div>
             </div>
 
@@ -348,14 +445,7 @@ export function LeadForm({
                     placeholder="Select source"
                     value={field.value}
                     onChange={(e) => field.onChange(e.target.value)}
-                    options={[
-                      { value: 'WalkIn', label: 'Walk-In' },
-                      { value: 'SocialMedia', label: 'Social Media' },
-                      { value: 'Website', label: 'Website' },
-                      { value: 'Referral', label: 'Referral' },
-                      { value: 'Campaign', label: 'Campaign' },
-                      { value: 'Other', label: 'Other' },
-                    ]}
+                    options={leadSourceOptions}
                   />
                 )}
               />
@@ -372,7 +462,6 @@ export function LeadForm({
                 </div>
                 <div>
                   <h3 className="font-semibold text-slate-800">Pipeline Stage</h3>
-                  <p className="text-xs text-slate-500">Track and update lifecycle progression</p>
                 </div>
               </div>
 
@@ -449,6 +538,75 @@ export function LeadForm({
           )}
         </div>
       </div>
+
+      {studentLookup && (
+        <div className="rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-4 shadow-sm sm:p-5 lg:p-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div className="flex items-start gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[color:var(--ims-accent-soft)] text-[color:var(--ims-brass)]">
+                <BadgeCheck className="h-5 w-5" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--ims-muted)]">
+                  Existing student found
+                </p>
+                <h3 className="text-lg font-semibold text-[color:var(--ims-ink)]">
+                  {studentLookup.firstNameMasked} {studentLookup.lastNameMasked}
+                </h3>
+                <p className="text-sm text-[color:var(--ims-muted)]">
+                  This contact already has a student profile. Review the record before creating a new lead.
+                </p>
+              </div>
+            </div>
+            {studentLookup.studentNumber && (
+              <div className="rounded-xl border border-[color:var(--ims-border)] bg-white px-3 py-2 text-sm font-semibold text-[color:var(--ims-ink)]">
+                Student #{studentLookup.studentNumber}
+              </div>
+            )}
+          </div>
+
+          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="rounded-xl border border-[color:var(--ims-border)] bg-white p-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Email</p>
+              <p className="mt-1 text-sm text-[color:var(--ims-ink)]">{studentLookup.maskedEmail || 'N/A'}</p>
+            </div>
+            <div className="rounded-xl border border-[color:var(--ims-border)] bg-white p-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Mobile</p>
+              <p className="mt-1 text-sm text-[color:var(--ims-ink)]">{studentLookup.maskedMobile || 'N/A'}</p>
+            </div>
+            <div className="rounded-xl border border-[color:var(--ims-border)] bg-white p-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Active Admission</p>
+              <p className="mt-1 text-sm text-[color:var(--ims-ink)]">
+                {studentLookup.preflight?.hasActiveAdmission ? 'Yes' : 'No'}
+              </p>
+            </div>
+            <div className="rounded-xl border border-[color:var(--ims-border)] bg-white p-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Enrollment</p>
+              <p className="mt-1 text-sm text-[color:var(--ims-ink)]">
+                {studentLookup.preflight?.hasEnrollment ? 'Existing enrollment' : 'No enrollment'}
+              </p>
+            </div>
+          </div>
+
+          {studentLookup.branchInfo.length > 0 && (
+            <div className="mt-4 space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+                Branch information
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {studentLookup.branchInfo.map((branch) => (
+                  <div key={`${branch.branchId}-${branch.relation}`} className="inline-flex items-center gap-2 rounded-full border border-[color:var(--ims-border)] bg-white px-3 py-1.5 text-sm text-[color:var(--ims-ink)]">
+                    <span className="font-medium">{branch.branchName}</span>
+                    <span className="rounded-full bg-[color:var(--ims-accent-soft)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-[color:var(--ims-brass)]">
+                      {branch.relation}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="flex flex-col-reverse gap-3 border-t border-[color:var(--ims-border)] pt-4 sm:flex-row sm:justify-end">
         {onCancel && (

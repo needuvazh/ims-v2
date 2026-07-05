@@ -22,6 +22,26 @@ export const knownPermissions = [
   'dashboard.view',
   'certificate.verify',
   'batch.delivery.view',
+  'menu.faculty',
+  'menu.faculty.trainers',
+  'menu.faculty.eligible-trainers',
+  'menu.faculty.reports',
+  'trainer.read',
+  'trainer.create',
+  'trainer.update',
+  'trainer.status.manage',
+  'trainer.qualification.read',
+  'trainer.qualification.manage',
+  'trainer.availability.read',
+  'trainer.availability.manage',
+  'trainer.authorization.read',
+  'trainer.authorization.manage',
+  'trainer.compensation.read',
+  'trainer.compensation.manage',
+  'trainer.eligibility.read',
+  'trainer.report.view',
+  'trainer.report.export',
+  'trainer.audit.read',
 ] as const;
 
 export type KnownPermission = (typeof knownPermissions)[number];
@@ -45,9 +65,9 @@ export const adminNavigation: NavigationItem[] = [
     category: 'Operations',
     items: [
       { href: '/dashboards/admissions', label: 'Admissions Dashboard', permission: 'dashboard.view' },
-      { href: '/admissions', label: 'Admissions List', permission: 'admission.read' },
-      { href: '/enrollments', label: 'Enrollments List', permission: 'enrollment.read' },
-      { href: '/students', label: 'Student Directory', permission: 'student.read' },
+      { href: '/admissions', label: 'Admissions', permission: 'admission.read' },
+      { href: '/enrollments', label: 'Enrollments', permission: 'enrollment.read' },
+      { href: '/students', label: 'Student Management', permission: 'student.read' },
     ],
   },
   {
@@ -85,6 +105,18 @@ export const adminNavigation: NavigationItem[] = [
       { href: '/organization/departments', label: 'Departments' },
       { href: '/organization/classrooms', label: 'Classrooms' },
       { href: '/organization/hierarchy', label: 'Hierarchy View' },
+    ],
+  },
+  {
+    href: '/faculty',
+    label: 'Faculty & Trainers',
+    permission: 'menu.faculty',
+    category: 'Management',
+    items: [
+      { href: '/faculty/dashboard', label: 'Faculty Dashboard', permission: 'menu.faculty' },
+      { href: '/faculty/trainers', label: 'Trainer Registry', permission: 'menu.faculty.trainers' },
+      { href: '/faculty/eligible-trainers', label: 'Eligible Trainers', permission: 'menu.faculty.eligible-trainers' },
+      { href: '/faculty/reports', label: 'Faculty Reports', permission: 'menu.faculty.reports' },
     ],
   },
   {

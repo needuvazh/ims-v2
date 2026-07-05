@@ -31,6 +31,12 @@ import {
   BadgeCheck,
   AlertTriangle,
   School,
+  FileEdit,
+  Send,
+  CheckCircle2,
+  UserCheck,
+  PlayCircle,
+  Flag,
 } from 'lucide-react';
 import { decodeSession, sessionCookieName } from '@ims/shared-auth';
 
@@ -72,7 +78,9 @@ export default async function AdmissionsDashboardPage(props: {
     redirect('/login');
   }
 
-  if (!session.permissions.includes('admission.read') && !session.permissions.includes('dashboard.training') && !session.permissions.includes('dashboard.view')) {
+  const isSuperAdmin = session.roles.includes('SUPER_ADMIN') || session.roles.includes('OWNER');
+
+  if (!isSuperAdmin && !session.permissions.includes('admission.read') && !session.permissions.includes('dashboard.training') && !session.permissions.includes('dashboard.view')) {
     return (
       <div className="flex min-h-[50vh] flex-col items-center justify-center gap-3 text-center">
         <AlertTriangle className="h-14 w-14 text-rose-500" />
@@ -198,11 +206,11 @@ export default async function AdmissionsDashboardPage(props: {
     ? 0
     : Math.round(batchRows.reduce((sum, batch) => sum + percentage(batch.currentEnrollmentCount, batch.capacity), 0) / totalBatchesInScope);
 
-  return (
-    <div className="space-y-8">
+    return (
+    <div className="space-y-4 sm:space-y-6 lg:space-y-8">
       <PageHeader
         title="Admissions Dashboard"
-        description="Operational KPIs for admissions, enrollments, batches, waitlist, and ID cards."
+
         breadcrumbs={
           <Breadcrumbs
             items={[
@@ -214,7 +222,7 @@ export default async function AdmissionsDashboardPage(props: {
         }
       />
 
-      <div className="relative overflow-hidden rounded-2xl border border-white/40 bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 p-6 text-white shadow-xl">
+      <div className="relative overflow-hidden rounded-2xl border border-white/40 bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 p-6 sm:p-8 text-white shadow-xl">
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
         <div className="relative flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="space-y-2">
@@ -229,7 +237,7 @@ export default async function AdmissionsDashboardPage(props: {
           </div>
           <div className="flex flex-wrap gap-3">
             <Link href="/admissions" className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/15">
-              Admissions List <ArrowRight className="h-4 w-4" />
+              Admissions <ArrowRight className="h-4 w-4" />
             </Link>
             <Link href="/dashboards/admissions/reports" className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/15">
               Reports <ArrowRight className="h-4 w-4" />
@@ -241,172 +249,187 @@ export default async function AdmissionsDashboardPage(props: {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard title="Students" value={studentsTotal} description={`${studentsActive} active, ${studentsSuspended} suspended`} icon={<Users className="h-5 w-5" />} tone="indigo" />
         <StatCard title="Admissions" value={totalAdmissions} description={`${admissionsApproved} approved, ${admissionsSubmitted} submitted`} icon={<BadgeCheck className="h-5 w-5" />} tone="emerald" />
         <StatCard title="Enrollments" value={totalEnrollments} description={`${enrollmentsActive} active, ${enrollmentsCompleted} completed`} icon={<GraduationCap className="h-5 w-5" />} tone="violet" />
         <StatCard title="Avg Batch Fill" value={`${fillRateAverage}%`} description={`${totalBatchesInScope} batches in scope`} icon={<Activity className="h-5 w-5" />} tone="amber" />
       </div>
 
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
-        <div className="xl:col-span-2 space-y-6">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between gap-4">
-              <div>
-                <CardTitle>Recent Admissions</CardTitle>
-                <CardDescription>Latest intake records across the selected branch scope.</CardDescription>
-              </div>
-              <Link href="/admissions" className="text-sm font-semibold text-[color:var(--ims-brass)] hover:underline">
-                View all
-              </Link>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Admission</TableHead>
-                    <TableHead>Student</TableHead>
-                    <TableHead>Course</TableHead>
-                    <TableHead>Status</TableHead>
+      <div className="space-y-6">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between gap-4">
+            <div>
+              <CardTitle>Recent Admissions</CardTitle>
+            </div>
+            <Link href="/admissions" className="text-sm font-semibold text-[color:var(--ims-brass)] hover:underline">
+              View all
+            </Link>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Admission</TableHead>
+                  <TableHead>Student</TableHead>
+                  <TableHead>Course</TableHead>
+                  <TableHead>Status</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {admissionsRecent.map((admission) => (
+                  <TableRow key={admission.id}>
+                    <TableCell>
+                      <div className="space-y-0.5">
+                        <p className="font-semibold text-[color:var(--ims-ink)]">{admission.admissionNumber}</p>
+                        <p className="text-[11px] text-[color:var(--ims-muted)]">{new Date(admission.createdAt).toLocaleDateString()}</p>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="space-y-0.5">
+                        <p className="font-semibold text-[color:var(--ims-ink)]">{admission.person.firstName} {admission.person.lastName}</p>
+                        <p className="text-[11px] text-[color:var(--ims-muted)]">{admission.branch.branchName}</p>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-sm text-[color:var(--ims-muted)]">{admission.course?.nameEnglish ?? 'N/A'}</TableCell>
+                    <TableCell><Badge variant={statusTone(admission.admissionStatus)}>{admission.admissionStatus}</Badge></TableCell>
                   </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {admissionsRecent.map((admission) => (
-                    <TableRow key={admission.id}>
-                      <TableCell>
-                        <div className="space-y-0.5">
-                          <p className="font-semibold text-[color:var(--ims-ink)]">{admission.admissionNumber}</p>
-                          <p className="text-[11px] text-[color:var(--ims-muted)]">{new Date(admission.createdAt).toLocaleDateString()}</p>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="space-y-0.5">
-                          <p className="font-semibold text-[color:var(--ims-ink)]">{admission.person.firstName} {admission.person.lastName}</p>
-                          <p className="text-[11px] text-[color:var(--ims-muted)]">{admission.branch.branchName}</p>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-sm text-[color:var(--ims-muted)]">{admission.course?.nameEnglish ?? 'N/A'}</TableCell>
-                      <TableCell><Badge variant={statusTone(admission.admissionStatus)}>{admission.admissionStatus}</Badge></TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
 
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between gap-4">
-              <div>
-                <CardTitle>Recent Enrollments</CardTitle>
-                <CardDescription>Enrollment lifecycle statuses and linked batches.</CardDescription>
-              </div>
-              <Link href="/batches" className="text-sm font-semibold text-[color:var(--ims-brass)] hover:underline">
-                Open batches
-              </Link>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Enrollment</TableHead>
-                    <TableHead>Student</TableHead>
-                    <TableHead>Batch</TableHead>
-                    <TableHead>Status</TableHead>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between gap-4">
+            <div>
+              <CardTitle>Recent Enrollments</CardTitle>
+            </div>
+            <Link href="/batches" className="text-sm font-semibold text-[color:var(--ims-brass)] hover:underline">
+              Open batches
+            </Link>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Enrollment</TableHead>
+                  <TableHead>Student</TableHead>
+                  <TableHead>Batch</TableHead>
+                  <TableHead>Status</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {enrollmentsRecent.map((enrollment) => (
+                  <TableRow key={enrollment.id}>
+                    <TableCell>
+                      <div className="space-y-0.5">
+                        <p className="font-semibold text-[color:var(--ims-ink)]">{enrollment.enrollmentNumber}</p>
+                        <p className="text-[11px] text-[color:var(--ims-muted)]">{enrollment.branch.branchName}</p>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="space-y-0.5">
+                        <p className="font-semibold text-[color:var(--ims-ink)]">{enrollment.studentProfile.person.firstName} {enrollment.studentProfile.person.lastName}</p>
+                        <p className="text-[11px] text-[color:var(--ims-muted)]">{enrollment.course.nameEnglish}</p>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-sm text-[color:var(--ims-muted)]">{enrollment.batch.batchCode}</TableCell>
+                    <TableCell><Badge variant={statusTone(enrollment.enrollmentStatus)}>{enrollment.enrollmentStatus}</Badge></TableCell>
                   </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {enrollmentsRecent.map((enrollment) => (
-                    <TableRow key={enrollment.id}>
-                      <TableCell>
-                        <div className="space-y-0.5">
-                          <p className="font-semibold text-[color:var(--ims-ink)]">{enrollment.enrollmentNumber}</p>
-                          <p className="text-[11px] text-[color:var(--ims-muted)]">{enrollment.branch.branchName}</p>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="space-y-0.5">
-                          <p className="font-semibold text-[color:var(--ims-ink)]">{enrollment.studentProfile.person.firstName} {enrollment.studentProfile.person.lastName}</p>
-                          <p className="text-[11px] text-[color:var(--ims-muted)]">{enrollment.course.nameEnglish}</p>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-sm text-[color:var(--ims-muted)]">{enrollment.batch.batchCode}</TableCell>
-                      <TableCell><Badge variant={statusTone(enrollment.enrollmentStatus)}>{enrollment.enrollmentStatus}</Badge></TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
-        </div>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </div>
 
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2"><Clock3 className="h-5 w-5 text-[color:var(--ims-brass)]" /> Pipeline Snapshot</CardTitle>
-              <CardDescription>Current status distribution for admissions and enrollments.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3 text-sm">
-              <div className="flex items-center justify-between"><span className="text-[color:var(--ims-muted)]">Admission Draft</span><strong>{admissionsDraft}</strong></div>
-              <div className="flex items-center justify-between"><span className="text-[color:var(--ims-muted)]">Admission Submitted</span><strong>{admissionsSubmitted}</strong></div>
-              <div className="flex items-center justify-between"><span className="text-[color:var(--ims-muted)]">Admission Approved</span><strong>{admissionsApproved}</strong></div>
-              <div className="flex items-center justify-between"><span className="text-[color:var(--ims-muted)]">Enrollment Confirmed</span><strong>{enrollmentsConfirmed}</strong></div>
-              <div className="flex items-center justify-between"><span className="text-[color:var(--ims-muted)]">Enrollment Active</span><strong>{enrollmentsActive}</strong></div>
-              <div className="flex items-center justify-between"><span className="text-[color:var(--ims-muted)]">Enrollment Completed</span><strong>{enrollmentsCompleted}</strong></div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2"><BookOpen className="h-5 w-5 text-[color:var(--ims-brass)]" /> Batch Health</CardTitle>
-              <CardDescription>Fill rate, waitlist, and batch status summary.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-3 text-sm">
-                <div className="rounded-xl border border-[color:var(--ims-border)] p-3"><p className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Open</p><p className="mt-1 text-xl font-bold">{batchesOpenForEnrollment}</p></div>
-                <div className="rounded-xl border border-[color:var(--ims-border)] p-3"><p className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">In Progress</p><p className="mt-1 text-xl font-bold">{batchesInProgress}</p></div>
-                <div className="rounded-xl border border-[color:var(--ims-border)] p-3"><p className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Waitlist</p><p className="mt-1 text-xl font-bold">{waitlistWaiting}</p></div>
-                <div className="rounded-xl border border-[color:var(--ims-border)] p-3"><p className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">ID Cards</p><p className="mt-1 text-xl font-bold">{idCardsIssued}</p></div>
-              </div>
-              <div className="space-y-3">
-                {batchRows.map((batch) => {
-                  const fill = percentage(batch.currentEnrollmentCount, batch.capacity);
-                  return (
-                    <div key={batch.id} className="space-y-1.5 rounded-xl border border-[color:var(--ims-border)] p-3">
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
-                          <p className="font-semibold text-[color:var(--ims-ink)]">{batch.batchCode}</p>
-                          <p className="text-[11px] text-[color:var(--ims-muted)]">{batch.course.nameEnglish}</p>
-                        </div>
-                        <Badge variant={batch.status === 'Completed' ? 'success' : batch.status === 'Cancelled' ? 'error' : 'default'}>{batch.status}</Badge>
-                      </div>
-                      <div className="h-2 overflow-hidden rounded-full bg-[color:var(--ims-border)]">
-                        <div className="h-full rounded-full bg-[color:var(--ims-brass)]" style={{ width: `${fill}%` }} />
-                      </div>
-                      <div className="flex items-center justify-between text-[11px] text-[color:var(--ims-muted)]">
-                        <span>{batch.currentEnrollmentCount}/{batch.capacity} enrolled</span>
-                        <span>{fill}% full · {batch.waitlist.length} waiting</span>
-                      </div>
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2"><Clock3 className="h-5 w-5 text-[color:var(--ims-brass)]" /> Pipeline Snapshot</CardTitle>
+            <CardDescription>Current status distribution for admissions and enrollments.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="relative space-y-5">
+              {/* Vertical Line Connector */}
+              <div className="absolute left-[18px] top-2 bottom-2 w-[2px] bg-slate-100" />
+              
+              {[
+                { label: 'Admission Draft', value: admissionsDraft, icon: FileEdit, color: 'text-amber-500', bgColor: 'bg-amber-50', borderColor: 'border-amber-200' },
+                { label: 'Admission Submitted', value: admissionsSubmitted, icon: Send, color: 'text-blue-500', bgColor: 'bg-blue-50', borderColor: 'border-blue-200' },
+                { label: 'Admission Approved', value: admissionsApproved, icon: CheckCircle2, color: 'text-emerald-500', bgColor: 'bg-emerald-50', borderColor: 'border-emerald-200' },
+                { label: 'Enrollment Confirmed', value: enrollmentsConfirmed, icon: UserCheck, color: 'text-indigo-500', bgColor: 'bg-indigo-50', borderColor: 'border-indigo-200' },
+                { label: 'Enrollment Active', value: enrollmentsActive, icon: PlayCircle, color: 'text-violet-500', bgColor: 'bg-violet-50', borderColor: 'border-violet-200' },
+                { label: 'Enrollment Completed', value: enrollmentsCompleted, icon: Flag, color: 'text-slate-500', bgColor: 'bg-slate-50', borderColor: 'border-slate-200' },
+              ].map((stage, idx) => (
+                <div key={idx} className="group relative flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className={`relative z-10 flex h-9 w-9 items-center justify-center rounded-full border-2 bg-white ${stage.bgColor} ${stage.color} ${stage.borderColor} shadow-sm transition-transform group-hover:scale-110`}>
+                      <stage.icon className="h-4 w-4" />
                     </div>
-                  );
-                })}
-              </div>
-            </CardContent>
-          </Card>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-[color:var(--ims-muted)]" style={{ fontSize: '10px' }}>Stage {idx + 1}</span>
+                      <span className="text-sm font-bold text-[color:var(--ims-ink)]">{stage.label}</span>
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-end">
+                    <span className="text-lg font-black text-[color:var(--ims-ink)]">{stage.value}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2"><MapPin className="h-5 w-5 text-[color:var(--ims-brass)]" /> ID Card Status</CardTitle>
-              <CardDescription>Identity issuance readiness across the current scope.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3 text-sm">
-              <div className="flex items-center justify-between"><span className="text-[color:var(--ims-muted)]">Issued</span><strong>{idCardsIssued}</strong></div>
-              <div className="flex items-center justify-between"><span className="text-[color:var(--ims-muted)]">Pending</span><strong>{idCardsPending}</strong></div>
-              <div className="rounded-xl border border-[color:var(--ims-border)] p-3 text-xs text-[color:var(--ims-muted)]">
-                Student ID card generation still uses the shared student profile flags and will expand once the dedicated ID card workflow lands.
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        <Card className="lg:col-span-1">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2"><BookOpen className="h-5 w-5 text-[color:var(--ims-brass)]" /> Batch Health</CardTitle>
+            <CardDescription>Fill rate, waitlist, and status.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <div className="rounded-xl border border-[color:var(--ims-border)] p-3"><p className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Open</p><p className="mt-1 text-xl font-bold">{batchesOpenForEnrollment}</p></div>
+              <div className="rounded-xl border border-[color:var(--ims-border)] p-3"><p className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">In Progress</p><p className="mt-1 text-xl font-bold">{batchesInProgress}</p></div>
+            </div>
+            <div className="space-y-3">
+              {batchRows.slice(0, 3).map((batch) => {
+                const fill = percentage(batch.currentEnrollmentCount, batch.capacity);
+                return (
+                  <div key={batch.id} className="space-y-1.5 rounded-xl border border-[color:var(--ims-border)] p-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate font-semibold text-[color:var(--ims-ink)]">{batch.batchCode}</p>
+                      </div>
+                      <Badge variant={batch.status === 'Completed' ? 'success' : batch.status === 'Cancelled' ? 'error' : 'default'}>{batch.status}</Badge>
+                    </div>
+                    <div className="h-1.5 overflow-hidden rounded-full bg-[color:var(--ims-border)]">
+                      <div className="h-full rounded-full bg-[color:var(--ims-brass)]" style={{ width: `${fill}%` }} />
+                    </div>
+                    <div className="flex items-center justify-between text-[10px] text-[color:var(--ims-muted)]">
+                      <span>{batch.currentEnrollmentCount}/{batch.capacity}</span>
+                      <span>{fill}% full</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2"><MapPin className="h-5 w-5 text-[color:var(--ims-brass)]" /> ID Card Status</CardTitle>
+            <CardDescription>Issuance readiness.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3 text-sm">
+            <div className="flex items-center justify-between"><span className="text-[color:var(--ims-muted)]">Issued</span><strong>{idCardsIssued}</strong></div>
+            <div className="flex items-center justify-between"><span className="text-[color:var(--ims-muted)]">Pending</span><strong>{idCardsPending}</strong></div>
+            <div className="rounded-xl border border-[color:var(--ims-border)] p-3 text-xs text-[color:var(--ims-muted)]">
+              Student ID card generation uses shared profile flags.
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -417,7 +440,7 @@ export default async function AdmissionsDashboardPage(props: {
           </CardHeader>
           <CardContent className="grid gap-3 sm:grid-cols-2">
             <Link href="/admissions" className="group rounded-xl border border-[color:var(--ims-border)] p-4 transition hover:-translate-y-0.5 hover:shadow-md">
-              <p className="font-semibold text-[color:var(--ims-ink)]">Admissions List</p>
+              <p className="font-semibold text-[color:var(--ims-ink)]">Admissions</p>
               <p className="mt-1 text-xs text-[color:var(--ims-muted)]">Open the full intake register.</p>
               <span className="mt-3 inline-flex items-center gap-2 text-xs font-semibold text-[color:var(--ims-brass)]">Open <ArrowRight className="h-3.5 w-3.5" /></span>
             </Link>

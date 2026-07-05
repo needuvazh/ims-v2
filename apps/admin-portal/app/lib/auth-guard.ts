@@ -42,23 +42,32 @@ export const getSession: () => Promise<Session> = cache(async () => {
     cookieStore.get('ims_access_token')?.value ??
     getCookieValue(headerStore.get('cookie'), 'ims_access_token') ??
     (headerStore.get('authorization')?.toLowerCase().startsWith('bearer ') ? headerStore.get('authorization')!.slice(7).trim() : null);
+  const sessionToken = cookieStore.get(sessionCookieName)?.value ?? getCookieValue(headerStore.get('cookie'), sessionCookieName);
 
-  if (!accessToken) {
+  if (!accessToken && !sessionToken) {
     throw new DomainError('unauthorized', 'Session has expired or you are not signed in. Please sign in again.');
   }
 
-  let tokenPayload: TokenPayload;
-  try {
-    tokenPayload = await JwtService.verifyAccessToken(accessToken, getPublicKey());
-  } catch {
-    throw new DomainError('unauthorized', 'Your session is invalid or has expired. Please sign in again.');
+  let tokenPayload: TokenPayload | null = null;
+  if (accessToken) {
+    try {
+      tokenPayload = await JwtService.verifyAccessToken(accessToken, getPublicKey());
+    } catch {
+      tokenPayload = null;
+    }
   }
 
   // Enforce database check to prevent bypass of deactivated, locked, or revoked sessions
   try {
     const { userService, sessionRepository } = await import('./runtime');
 
-    const dbSession = await sessionRepository.findByAccessTokenJti(tokenPayload.jti ?? '');
+    const decodedSession = await decodeSession(sessionToken);
+    if (!decodedSession && !tokenPayload) {
+      throw new DomainError('unauthorized', 'Authentication required. Please sign in.');
+    }
+
+    const sessionJti = decodedSession?.accessTokenJti ?? tokenPayload!.jti ?? '';
+    const dbSession = await sessionRepository.findByAccessTokenJti(sessionJti);
 
     if (!dbSession || dbSession.status !== 'Active' || new Date() > dbSession.expiresAt) {
       throw new DomainError('unauthorized', 'Your session has been revoked or has expired. Please sign in again.');
@@ -93,7 +102,7 @@ export const getSession: () => Promise<Session> = cache(async () => {
     throw new DomainError('unauthorized', 'Session is invalid or user was deleted.');
   }
 
-  const session = await decodeSession(cookieStore.get(sessionCookieName)?.value ?? getCookieValue(headerStore.get('cookie'), sessionCookieName));
+  const session = await decodeSession(sessionToken);
   if (session) {
     // HYDRATION: Fetch permissions from cache/DB based on roles in the session
     const { effectivePermissionsService } = await import('./runtime');
@@ -102,6 +111,10 @@ export const getSession: () => Promise<Session> = cache(async () => {
   }
 
   const { sessionRepository, effectivePermissionsService } = await import('./runtime');
+  if (!tokenPayload) {
+    throw new DomainError('unauthorized', 'Authentication required. Please sign in.');
+  }
+
   const dbSession = await sessionRepository.findByAccessTokenJti(tokenPayload.jti ?? '');
   if (!dbSession) {
     throw new DomainError('unauthorized', 'Authentication required. Please sign in.');
@@ -110,11 +123,11 @@ export const getSession: () => Promise<Session> = cache(async () => {
   return {
     userId: tokenPayload.userId as Session['userId'],
     displayName: tokenPayload.email,
-    roles: tokenPayload.roles ?? [],
-    permissions: await effectivePermissionsService.getPermissionsForRoles(tokenPayload.roles ?? []),
-    dataScopes: [],
-    activeBranchId: dbSession.activeBranchId,
-    accessTokenJti: tokenPayload.jti ?? '',
+      roles: tokenPayload.roles ?? [],
+      permissions: await effectivePermissionsService.getPermissionsForRoles(tokenPayload.roles ?? []),
+      dataScopes: [],
+      activeBranchId: dbSession.activeBranchId,
+      accessTokenJti: tokenPayload.jti ?? '',
     hashedRefreshToken: dbSession.hashedRefreshToken,
     lastActivityAt: dbSession.lastActivityAt.getTime(),
     status: dbSession.status,

@@ -1,23 +1,20 @@
 import Link from 'next/link';
 import { 
   Breadcrumbs, 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardHeader, 
-  CardTitle, 
-  PageHeader, 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow,
+  AdminListPageLayout,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  PageHeader,
   Input,
   Select,
   Button,
   Pagination,
-  EmptyState
+  EmptyState,
+  ResponsiveDataTable,
 } from '@ims/shared-ui';
 import { ShieldAlert as AuditIcon, Home, ShieldCheck, FileSliders } from 'lucide-react';
 import { getSession } from '../../../lib/auth-guard';
@@ -87,8 +84,56 @@ export default async function IamAuditPage({ searchParams }: { searchParams: Sea
 
   const totalPages = Math.max(1, Math.ceil(result.total / pageSize));
 
+  const rows = result.items.map((item) => ({
+    id: item.id,
+    performedAt: item.performedAt.toISOString(),
+    module: item.module,
+    action: item.action,
+    entityType: item.entityType,
+    entityId: item.entityId,
+    performedBy: item.performedBy,
+    branchId: item.branchId,
+    reason: item.reason,
+  }));
+
+  const columns = [
+    { header: 'Time', render: (item: (typeof rows)[number]) => <span className="whitespace-nowrap">{new Date(item.performedAt).toLocaleString()}</span>, headerClassName: 'w-[170px]' },
+    { header: 'Module', render: (item: (typeof rows)[number]) => <span className="capitalize text-xs font-medium">{item.module}</span>, headerClassName: 'w-[110px]' },
+    { header: 'Action', render: (item: (typeof rows)[number]) => <span className="font-mono text-xs">{item.action}</span> },
+    { header: 'Entity', render: (item: (typeof rows)[number]) => <span className="font-mono text-xs truncate max-w-[180px]" title={`${item.entityType}:${item.entityId}`}>{item.entityType}:{item.entityId.substring(0, 8)}...</span> },
+    { header: 'Performed By', render: (item: (typeof rows)[number]) => item.performedBy ? <Link href={`/iam/users/${item.performedBy}`} className="font-semibold text-[color:var(--ims-brass)] hover:underline">{item.performedBy.substring(0, 8)}...</Link> : 'System' },
+    { header: 'Branch', render: (item: (typeof rows)[number]) => <span>{item.branchId ? `Branch (${item.branchId.substring(0, 8)})` : 'All Branches'}</span> },
+    { header: 'Reason', render: (item: (typeof rows)[number]) => <span className="max-w-[200px] truncate" title={item.reason ?? ''}>{item.reason ?? '—'}</span> },
+    { header: 'Details', className: 'text-center', render: (item: (typeof rows)[number]) => <AuditDetailsButton item={result.items.find((entry) => entry.id === item.id) as any} />, headerClassName: 'w-[90px] text-center' },
+  ];
+
+  const renderCard = (item: (typeof rows)[number]) => (
+    <Card className="transition-colors hover:border-[var(--ims-brass)]">
+      <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0 space-y-1">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">{new Date(item.performedAt).toLocaleString()}</p>
+            <p className="text-sm font-bold text-[var(--ims-ink)]">{item.action}</p>
+          </div>
+          <span className="rounded-full border border-[color:var(--ims-border)] px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-[color:var(--ims-muted)]">{item.module}</span>
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-3 p-card-p text-xs">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="col-span-2"><p className="font-semibold text-[var(--ims-muted)]">Entity</p><p className="truncate">{item.entityType}:{item.entityId.substring(0, 8)}...</p></div>
+          <div><p className="font-semibold text-[var(--ims-muted)]">Performed By</p><p className="truncate">{item.performedBy ? item.performedBy.substring(0, 8) + '...' : 'System'}</p></div>
+          <div><p className="font-semibold text-[var(--ims-muted)]">Branch</p><p className="truncate">{item.branchId ? `Branch (${item.branchId.substring(0, 8)})` : 'All Branches'}</p></div>
+          <div className="col-span-2"><p className="font-semibold text-[var(--ims-muted)]">Reason</p><p className="line-clamp-3 text-[color:var(--ims-muted)]">{item.reason ?? '—'}</p></div>
+        </div>
+      </CardContent>
+      <CardFooter className="p-card-p pt-0">
+        <AuditDetailsButton item={result.items.find((entry) => entry.id === item.id) as any} />
+      </CardFooter>
+    </Card>
+  );
+
   return (
-    <div className="space-y-8">
+    <AdminListPageLayout className="pt-1 sm:pt-0">
       <PageHeader
         title="Audit Trail"
         breadcrumbs={
@@ -174,46 +219,7 @@ export default async function IamAuditPage({ searchParams }: { searchParams: Sea
             />
           ) : (
             <>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Time</TableHead>
-                    <TableHead>Module</TableHead>
-                    <TableHead>Action</TableHead>
-                    <TableHead>Entity</TableHead>
-                    <TableHead>Performed By</TableHead>
-                    <TableHead>Branch</TableHead>
-                    <TableHead>Reason</TableHead>
-                    <TableHead className="w-12 text-center">Details</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {result.items.map((item) => (
-                    <TableRow key={item.id}>
-                      <TableCell className="whitespace-nowrap">{new Date(item.performedAt).toLocaleString()}</TableCell>
-                      <TableCell className="capitalize text-xs font-medium">{item.module}</TableCell>
-                      <TableCell className="font-mono text-xs">{item.action}</TableCell>
-                      <TableCell className="font-mono text-xs truncate max-w-[180px]" title={`${item.entityType}:${item.entityId}`}>
-                        {item.entityType}:{item.entityId.substring(0, 8)}...
-                      </TableCell>
-                      <TableCell className="font-mono text-xs">
-                        {item.performedBy ? (
-                          <Link href={`/iam/users/${item.performedBy}`} className="font-semibold text-[color:var(--ims-brass)] hover:underline">
-                            {item.performedBy.substring(0, 8)}...
-                          </Link>
-                        ) : (
-                          'System'
-                        )}
-                      </TableCell>
-                      <TableCell className="whitespace-nowrap">{item.branchId ? `Branch (${item.branchId.substring(0, 8)})` : 'All Branches'}</TableCell>
-                      <TableCell className="max-w-[200px] truncate" title={item.reason ?? ''}>{item.reason ?? '—'}</TableCell>
-                      <TableCell className="text-center">
-                        <AuditDetailsButton item={item as any} />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+              <ResponsiveDataTable data={rows} columns={columns} renderCard={renderCard} keyExtractor={(item) => item.id} emptyState={null} />
               <Pagination
                 page={page}
                 totalPages={totalPages}
@@ -224,6 +230,6 @@ export default async function IamAuditPage({ searchParams }: { searchParams: Sea
           )}
         </CardContent>
       </Card>
-    </div>
+    </AdminListPageLayout>
   );
 }

@@ -26,7 +26,7 @@ describe('IamSecurityPolicyPage', () => {
       passwordMinLength: 8,
       passwordExpiryDays: 90,
       resetTokenExpiryMinutes: 60,
-      accessTokenExpiryMinutes: 15,
+      accessTokenExpiryMinutes: 30,
       refreshTokenExpiryDays: 7,
       maxConcurrentSessions: 3,
       passwordRequireUppercase: true,

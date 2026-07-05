@@ -15,7 +15,8 @@ export default async function Module04ReportsIndexPage() {
     redirect('/login');
   }
 
-  const canView = session.permissions.includes('admission.read') || session.permissions.includes('student.read') || session.permissions.includes('enrollment.read') || session.permissions.includes('dashboard.view');
+  const isSuperAdmin = session.roles.includes('SUPER_ADMIN') || session.roles.includes('OWNER');
+  const canView = isSuperAdmin || session.permissions.includes('admission.read') || session.permissions.includes('student.read') || session.permissions.includes('enrollment.read') || session.permissions.includes('dashboard.view');
   if (!canView) {
     return (
       <div className="flex min-h-[50vh] flex-col items-center justify-center gap-3 text-center">

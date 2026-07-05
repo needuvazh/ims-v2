@@ -40,6 +40,7 @@ export async function signInAction(_prev: SignInState, formData: FormData): Prom
   return withServerActionObservability(async () => {
     const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
     let accessToken: string;
+    let accessTokenExpiresAt = 0;
     let refreshToken: string;
     let sessionToken: string;
     let sessionExpiresAt = 0;
@@ -48,6 +49,7 @@ export async function signInAction(_prev: SignInState, formData: FormData): Prom
       const { authService } = await import('../../lib/runtime');
       const result = await authService.login(parsed.data.email, parsed.data.password, rememberMe);
       accessToken = result.accessToken;
+      accessTokenExpiresAt = result.accessTokenExpiresAt.getTime();
       refreshToken = result.refreshToken;
       sessionToken = await (await import('@ims/shared-auth')).encodeSession(result.session);
       sessionExpiresAt = result.session.expiresAt;
@@ -80,7 +82,7 @@ export async function signInAction(_prev: SignInState, formData: FormData): Prom
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       path: '/',
-      maxAge: 15 * 60,
+      maxAge: Math.max(0, Math.floor((accessTokenExpiresAt - Date.now()) / 1000)),
     });
     cookieStore.set('ims_refresh_token', refreshToken, {
       httpOnly: true,

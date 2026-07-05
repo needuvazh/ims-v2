@@ -30,7 +30,7 @@ describe('StudentQueryService', () => {
     } as any;
 
     const service = new StudentQueryService(mockPrisma);
-    const result = await service.globalPersonLookup('notfound@example.com', 'branch-1');
+    const result = await service.globalPersonLookup('notfound@example.com', null);
 
     expect(result.personFound).toBe(false);
     expect(result.personId).toBeNull();
@@ -49,6 +49,32 @@ describe('StudentQueryService', () => {
         {
           id: 'profile-1',
           studentNumber: 'STU-123',
+          branch: {
+            id: 'branch-home',
+            branchName: 'Muscat Main',
+          },
+          admissions: [
+            {
+              id: 'admission-1',
+              branchId: 'branch-admission',
+              admissionStatus: 'Submitted',
+              branch: {
+                id: 'branch-admission',
+                branchName: 'Seeb Center',
+              },
+            },
+          ],
+          enrollments: [
+            {
+              id: 'enrollment-1',
+              branchId: 'branch-enrollment',
+              enrollmentStatus: 'Confirmed',
+              branch: {
+                id: 'branch-enrollment',
+                branchName: 'Nizwa Campus',
+              },
+            },
+          ],
         },
       ],
     };
@@ -57,16 +83,13 @@ describe('StudentQueryService', () => {
       person: {
         findFirst: vi.fn().mockResolvedValue(person),
       },
-      admission: {
-        findFirst: vi.fn().mockResolvedValue({ id: 'admission-1' }),
-      },
       enrollment: {
         count: vi.fn().mockResolvedValue(2),
       },
     } as any;
 
     const service = new StudentQueryService(mockPrisma);
-    const result = await service.globalPersonLookup('fatima@example.com', 'branch-1');
+    const result = await service.globalPersonLookup('fatima@example.com', null);
 
     expect(result.personFound).toBe(true);
     expect(result.firstNameMasked).toBe('F****');
@@ -74,11 +97,16 @@ describe('StudentQueryService', () => {
     expect(result.maskedNationalId).toBe('12******89');
     expect(result.studentProfileId).toBe('profile-1');
     expect(result.studentNumber).toBe('STU-123');
+    expect(result.branchInfo).toEqual([
+      { branchId: 'branch-home', branchName: 'Muscat Main', relation: 'Home' },
+      { branchId: 'branch-admission', branchName: 'Seeb Center', relation: 'Admission' },
+      { branchId: 'branch-enrollment', branchName: 'Nizwa Campus', relation: 'Enrollment' },
+    ]);
     expect(result.preflight).toEqual({
-      hasActiveAdmission: true,
-      activeAdmissionId: 'admission-1',
+      hasActiveAdmission: false,
+      activeAdmissionId: null,
       hasEnrollment: true,
-      conflictCode: 'ERR_ADM_ACTIVE_ADMISSION_EXISTS',
+      conflictCode: null,
     });
   });
 
@@ -98,7 +126,7 @@ describe('StudentQueryService', () => {
     } as any;
 
     const service = new StudentQueryService(mockPrisma);
-    const result = await service.globalPersonLookup('987654321', 'branch-1', { revealSensitive: true });
+    const result = await service.globalPersonLookup('987654321', null, { revealSensitive: true });
 
     expect(result.maskedEmail).toBe('mariam@example.com');
     expect(result.maskedMobile).toBe('+96899119911');
@@ -168,6 +196,30 @@ describe('StudentQueryService', () => {
             },
           },
         }),
+      })
+    );
+  });
+
+  test('searchBranchScopedStudents applies sort order for full name', async () => {
+    const mockPrisma = {
+      studentProfile: {
+        findMany: vi.fn().mockResolvedValue([]),
+        count: vi.fn().mockResolvedValue(0),
+      },
+    } as any;
+
+    const service = new StudentQueryService(mockPrisma);
+    await service.searchBranchScopedStudents('', ['branch-1'], {
+      sortBy: 'fullName',
+      sortOrder: 'asc',
+    });
+
+    expect(mockPrisma.studentProfile.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        orderBy: [
+          { person: { firstName: 'asc' } },
+          { person: { lastName: 'asc' } },
+        ],
       })
     );
   });

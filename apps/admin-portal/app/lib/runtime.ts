@@ -19,6 +19,7 @@ import {
   PrismaUserActivationTokenRepository,
 } from '@ims/database';
 import { createUuid } from '@ims/shared-kernel';
+import { PrismaTrainerManagementRepository, TrainerManagementService } from '@ims/trainer-management';
 import { PrismaSchedulingRepository, SchedulingService } from '@ims/scheduling';
 import {
   AttendanceQueryService,
@@ -70,6 +71,7 @@ const attendanceRecordRepository = new PrismaAttendanceRecordRepository(prisma);
 const attendanceCorrectionRepository = new PrismaAttendanceCorrectionRepository(prisma);
 const attendanceAlertRepository = new PrismaAttendanceAlertRepository(prisma);
 const attendanceQueryRepository = new PrismaAttendanceQueryRepository(prisma);
+const trainerManagementRepository = new PrismaTrainerManagementRepository(prisma);
 
 // ─── Notification Port ────────────────────────────────────────────────────
 const notificationPort = new DummyNotificationProvider();
@@ -146,6 +148,7 @@ export const attendanceQueryService = new AttendanceQueryService(
   prisma,
   attendanceQueryRepository,
 );
+export const trainerManagementService = new TrainerManagementService(trainerManagementRepository);
 
 export const auditQueryService = new AuditQueryService(
   auditRepository

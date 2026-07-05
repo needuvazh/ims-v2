@@ -17,6 +17,8 @@ const querySchema = z.object({
   branchId: z.string().uuid().optional(),
   admissionStatus: z.string().trim().optional(),
   studentStatus: z.string().trim().optional(),
+  sortBy: z.enum(['studentNumber', 'fullName', 'status', 'joinedAt', 'branch']).optional(),
+  sortOrder: z.enum(['asc', 'desc']).optional(),
 });
 
 const createStudentSchema = z.object({
@@ -47,6 +49,8 @@ export async function GET(request: Request) {
         branchId: params.get('branchId') ?? undefined,
         admissionStatus: params.get('admissionStatus') ?? undefined,
         studentStatus: params.get('studentStatus') ?? undefined,
+        sortBy: params.get('sortBy') ?? undefined,
+        sortOrder: params.get('sortOrder') ?? undefined,
       });
 
       if (!parsed.success) {
@@ -72,14 +76,16 @@ export async function GET(request: Request) {
       const result = await studentQueryService.searchBranchScopedStudents(
         parsed.data.search,
         allowedBranches as string[],
-        {
-          page: parsed.data.page,
-          limit: parsed.data.limit,
-          branchId: parsed.data.branchId,
-          admissionStatus: parsed.data.admissionStatus,
-          studentStatus: parsed.data.studentStatus,
-        }
-      );
+          {
+            page: parsed.data.page,
+            limit: parsed.data.limit,
+            branchId: parsed.data.branchId,
+            admissionStatus: parsed.data.admissionStatus,
+            studentStatus: parsed.data.studentStatus,
+            sortBy: parsed.data.sortBy,
+            sortOrder: parsed.data.sortOrder,
+          }
+        );
 
       const response = NextResponse.json(
         {

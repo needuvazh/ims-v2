@@ -413,7 +413,7 @@ export class CourseService {
   }
 
   async findAll(
-    filters: { categoryId?: string; status?: string; search?: string },
+    filters: { categoryId?: string; status?: string; search?: string; sortBy?: string; sortOrder?: 'asc' | 'desc' },
     pagination: { page: number; limit: number },
     tx?: Prisma.TransactionClient
   ) {

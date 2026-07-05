@@ -32,12 +32,12 @@ async function importVerificationKey(keyMaterial: string) {
 
 export class JwtService {
   /**
-   * Sign an RS256 JWT access token (valid for 15 minutes by default).
+   * Sign an RS256 JWT access token (valid for 30 minutes by default).
    */
   public static async signAccessToken(
     payload: TokenPayload,
     privateKeyPem: string,
-    expiresIn: string = '15m'
+    expiresIn: string = '30m'
   ): Promise<string> {
     const key = await importSigningKey(privateKeyPem);
     const alg = isPemKey(privateKeyPem) ? 'RS256' : 'HS256';

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import {
   Breadcrumbs, 
+  AdminListPageLayout,
   PageHeader, 
   Table, 
   TableBody, 
@@ -11,10 +12,9 @@ import {
   Badge,
   EmptyState,
   Pagination,
-  DataTableFilter,
-  Button
+  DataTableFilter
 } from '@ims/shared-ui';
-import { KeyRound, Plus, Home, ShieldCheck, Key } from 'lucide-react';
+import { KeyRound, Home, ShieldCheck, Key } from 'lucide-react';
 import { assertPermission } from '@/lib/auth-guard';
 
 type PermissionRecord = {
@@ -85,7 +85,7 @@ export default async function IamPermissionsPage(props: {
   const paginatedPermissions = filteredPermissions.slice(offset, offset + limit);
 
   return (
-    <div className="space-y-8">
+    <AdminListPageLayout className="pt-1 sm:pt-0">
       <PageHeader
         title="Permissions"
         breadcrumbs={
@@ -214,6 +214,6 @@ export default async function IamPermissionsPage(props: {
           </>
         )}
       </div>
-    </div>
+    </AdminListPageLayout>
   );
 }

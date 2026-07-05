@@ -1,5 +1,6 @@
 import { assertPermission } from '@/lib/auth-guard';
 import { prisma } from '@ims/database';
+import { AdminListPageLayout } from '@ims/shared-ui';
 import { EnrollmentsClientList } from './_components/enrollments-client-list';
 
 export const metadata = { title: 'Enrollments - Operations | ASTI IMS' };
@@ -12,6 +13,8 @@ export default async function EnrollmentsPage(props: {
     courseId?: string;
     batchId?: string;
     page?: string;
+    sortBy?: string;
+    sortOrder?: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
@@ -38,6 +41,8 @@ export default async function EnrollmentsPage(props: {
   const page = searchParams.page ? parseInt(searchParams.page, 10) : 1;
   const limit = 10;
   const skip = (page - 1) * limit;
+  const sortBy = searchParams.sortBy || 'createdAt';
+  const sortOrder = (searchParams.sortOrder as 'asc' | 'desc' | undefined) || 'desc';
 
   const whereClause: any = {
     isDeleted: false,
@@ -68,10 +73,23 @@ export default async function EnrollmentsPage(props: {
     ];
   }
 
+  let orderBy: any;
+  if (sortBy === 'studentName') {
+    orderBy = [{ studentProfile: { person: { firstName: sortOrder } } }, { studentProfile: { person: { lastName: sortOrder } } }];
+  } else if (sortBy === 'courseName') {
+    orderBy = [{ course: { nameEnglish: sortOrder } }, { createdAt: 'desc' }];
+  } else if (sortBy === 'batchCode') {
+    orderBy = [{ batch: { batchCode: sortOrder } }, { createdAt: 'desc' }];
+  } else if (sortBy === 'branchName') {
+    orderBy = [{ branch: { branchName: sortOrder } }, { createdAt: 'desc' }];
+  } else {
+    orderBy = [{ [sortBy]: sortOrder }];
+  }
+
   const [enrollments, total] = await Promise.all([
     prisma.enrollment.findMany({
       where: whereClause,
-      orderBy: { createdAt: 'desc' },
+      orderBy,
       skip,
       take: limit,
       include: {
@@ -166,7 +184,7 @@ export default async function EnrollmentsPage(props: {
   };
 
   return (
-    <div className="space-y-4 p-6">
+    <AdminListPageLayout className="pt-1 sm:pt-0">
       <EnrollmentsClientList
         enrollments={mappedEnrollments}
         branches={branches.map((b) => ({ id: b.id, name: b.branchName }))}
@@ -176,7 +194,14 @@ export default async function EnrollmentsPage(props: {
         total={total}
         currentPage={page}
         kpis={kpis}
+        defaultSearch={searchParams.q || ''}
+        defaultStatus={searchParams.status || ''}
+        defaultBranchId={searchParams.branchId || ''}
+        defaultCourseId={searchParams.courseId || ''}
+        defaultBatchId={searchParams.batchId || ''}
+        defaultSortBy={sortBy}
+        defaultSortOrder={sortOrder}
       />
-    </div>
+    </AdminListPageLayout>
   );
 }

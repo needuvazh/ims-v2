@@ -97,7 +97,7 @@ export class CourseRepository implements ICourseRepository {
   }
 
   async findAll(
-    filters: { categoryId?: string; status?: string; search?: string },
+    filters: { categoryId?: string; status?: string; search?: string; sortBy?: string; sortOrder?: 'asc' | 'desc' },
     pagination: { page: number; limit: number },
     tx?: Prisma.TransactionClient
   ): Promise<{ items: Course[]; total: number }> {
@@ -120,9 +120,26 @@ export class CourseRepository implements ICourseRepository {
     }
 
     const total = await client.course.count({ where });
+
+    const sortOrder = filters.sortOrder ?? 'desc';
+    const sortBy = filters.sortBy ?? 'createdAt';
+
+    const orderBy =
+      sortBy === 'courseCode'
+        ? [{ courseCode: sortOrder }, { createdAt: 'desc' as const }]
+        : sortBy === 'nameEnglish'
+          ? [{ nameEnglish: sortOrder }, { createdAt: 'desc' as const }]
+          : sortBy === 'nameArabic'
+            ? [{ nameArabic: sortOrder }, { createdAt: 'desc' as const }]
+            : sortBy === 'durationValue'
+              ? [{ durationValue: sortOrder }, { createdAt: 'desc' as const }]
+              : sortBy === 'status'
+                ? [{ status: sortOrder }, { createdAt: 'desc' as const }]
+                : [{ createdAt: sortOrder }];
+
     const items = await client.course.findMany({
       where,
-      orderBy: { createdAt: 'desc' },
+      orderBy,
       skip: (pagination.page - 1) * pagination.limit,
       take: pagination.limit,
     });

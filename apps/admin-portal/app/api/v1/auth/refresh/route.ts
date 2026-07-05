@@ -88,7 +88,7 @@ export async function POST(request: Request) {
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
         path: '/',
-        maxAge: 15 * 60,
+        maxAge: Math.max(0, Math.floor((result.accessTokenExpiresAt.getTime() - Date.now()) / 1000)),
       });
 
       response.cookies.set(refreshTokenCookieName, result.refreshToken, {

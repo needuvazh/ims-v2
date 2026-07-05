@@ -31,26 +31,25 @@ export class EffectivePermissionsService {
   }
 
   /**
-   * Get aggregated permissions for a list of roles, using cache where possible.
+   * Get aggregated permissions for a list of roles from the database.
+   *
+   * We intentionally read the current role-permission mapping every time so a
+   * reseed or permission update is reflected immediately in menu visibility and
+   * authorization checks.
    */
   async getPermissionsForRoles(roleCodes: string[]): Promise<string[]> {
     const allPermissions = new Set<string>();
 
     for (const code of roleCodes) {
-      let rolePerms = await this.permissionCache.getPermissionsForRole(code);
-
-      if (!rolePerms) {
-        const role = await this.roleRepository.findByCode(code);
-        if (role && role.status === 'Active') {
-          const perms = await this.roleRepository.listPermissionsForRole(role.id);
-          rolePerms = perms.filter((p) => p.status === 'Active').map((p) => p.permissionCode);
-          await this.permissionCache.setPermissionsForRole(code, rolePerms);
-        }
+      const role = await this.roleRepository.findByCode(code);
+      if (!role || role.status !== 'Active') {
+        continue;
       }
 
-      if (rolePerms) {
-        rolePerms.forEach((p) => allPermissions.add(p));
-      }
+      const perms = await this.roleRepository.listPermissionsForRole(role.id);
+      perms
+        .filter((p) => p.status === 'Active')
+        .forEach((p) => allPermissions.add(p.permissionCode));
     }
 
     return Array.from(allPermissions);

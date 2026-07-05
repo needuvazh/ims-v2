@@ -30,6 +30,11 @@ import {
   BookOpen,
   CalendarDays,
   ClipboardList,
+  UsersRound,
+  UserCog,
+  BadgeCheck,
+  CalendarClock,
+  BarChart3,
 } from 'lucide-react';
 
 function mapNavigationIcons(item: any): any {
@@ -63,6 +68,21 @@ function mapNavigationIcons(item: any): any {
       break;
     case '/batches':
       icon = <Layers className="h-4.5 w-4.5" />;
+      break;
+    case '/faculty':
+      icon = <UsersRound className="h-4.5 w-4.5" />;
+      break;
+    case '/faculty/dashboard':
+      icon = <BarChart3 className="h-4.5 w-4.5" />;
+      break;
+    case '/faculty/trainers':
+      icon = <UserCog className="h-4.5 w-4.5" />;
+      break;
+    case '/faculty/eligible-trainers':
+      icon = <BadgeCheck className="h-4.5 w-4.5" />;
+      break;
+    case '/faculty/reports':
+      icon = <CalendarClock className="h-4.5 w-4.5" />;
       break;
     case '/attendance':
       icon = <ClipboardList className="h-4.5 w-4.5" />;

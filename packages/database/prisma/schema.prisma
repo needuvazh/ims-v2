@@ -168,6 +168,7 @@ model Person {
   leads          Lead[]
   admissions     Admission[]
   studentProfiles StudentProfile[]
+  trainerProfiles TrainerProfile[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -576,11 +577,13 @@ model Branch {
   attendanceRecords      AttendanceRecord[]
   attendanceCorrections   AttendanceCorrection[]
   attendanceAlerts       AttendanceAlert[]
+  trainerAvailability    TrainerAvailability[]
   studentStatusHistories StudentStatusHistory[]
   studentIdCardHistories StudentIdCardHistory[]
   studentDuplicateCases  StudentDuplicateCase[]
   studentMergeLogs       StudentMergeLog[]
   studentExportLogs      StudentExportLog[]
+  trainerProfiles        TrainerProfile[]
 
   @@unique([branchCode])
   @@index([status])
@@ -1123,6 +1126,7 @@ model Course {
 
   leads     Lead[]
   inquiries Inquiry[]
+  trainerAuthorizations TrainerCourseAuthorization[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -1159,6 +1163,7 @@ model Batch {
   batchType              String   @default("Regular") @db.VarChar(50) // Regular, FastTrack, Weekend
 
   trainers    BatchTrainer[]
+  trainerCompensationRates TrainerCompensationRate[]
   sessions    Session[]
   waitlist    WaitingList[]
   attendanceSessions AttendanceSession[]
@@ -1228,6 +1233,154 @@ model BatchTrainer {
   @@map("batch_trainers")
 }
 
+model TrainerProfile {
+  id                   String   @id @default(uuid()) @db.Uuid
+  personId             String   @unique @db.Uuid
+  branchId             String   @db.Uuid
+  trainerCode          String   @unique @db.VarChar(50)
+  trainerType          String   @db.VarChar(50)
+  specialization       String   @db.VarChar(500)
+  qualificationSummary String?  @db.Text
+  status               String   @default("Inactive") @db.VarChar(50)
+  effectiveStartDate   DateTime @db.Date
+  effectiveEndDate     DateTime? @db.Date
+  version              Int      @default(1)
+
+  person            Person  @relation(fields: [personId], references: [id])
+  branch            Branch  @relation(fields: [branchId], references: [id])
+  qualifications    TrainerQualification[]
+  availability      TrainerAvailability[]
+  authorizations    TrainerCourseAuthorization[]
+  compensationRates TrainerCompensationRate[]
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  @@index([branchId])
+  @@index([status])
+  @@index([trainerType])
+  @@index([effectiveStartDate])
+  @@map("trainer_profiles")
+}
+
+model TrainerQualification {
+  id                   String   @id @default(uuid()) @db.Uuid
+  trainerId            String   @db.Uuid
+  trainer              TrainerProfile @relation(fields: [trainerId], references: [id])
+  qualificationName    String   @db.VarChar(200)
+  institution          String   @db.VarChar(200)
+  yearCompleted        Int      @db.Integer
+  documentId           String?  @db.Uuid
+  status               String   @default("Active") @db.VarChar(50)
+  effectiveStartDate   DateTime @default(now()) @db.Date
+  effectiveEndDate     DateTime? @db.Date
+  version              Int      @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  @@index([trainerId])
+  @@index([status])
+  @@index([yearCompleted])
+  @@map("trainer_qualifications")
+}
+
+model TrainerAvailability {
+  id                 String   @id @default(uuid()) @db.Uuid
+  trainerId          String   @db.Uuid
+  trainer            TrainerProfile @relation(fields: [trainerId], references: [id])
+  branchId           String   @db.Uuid
+  branch             Branch   @relation(fields: [branchId], references: [id])
+  dayOfWeek          String   @db.VarChar(20)
+  startTime          String   @db.VarChar(5)
+  endTime            String   @db.VarChar(5)
+  status             String   @default("Active") @db.VarChar(50)
+  effectiveStartDate DateTime @db.Date
+  effectiveEndDate   DateTime? @db.Date
+  version            Int      @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  @@index([trainerId])
+  @@index([branchId])
+  @@index([dayOfWeek])
+  @@map("trainer_availability")
+}
+
+model TrainerCourseAuthorization {
+  id                 String   @id @default(uuid()) @db.Uuid
+  trainerId          String   @db.Uuid
+  trainer            TrainerProfile @relation(fields: [trainerId], references: [id])
+  courseId           String   @db.Uuid
+  course             Course   @relation(fields: [courseId], references: [id])
+  status             String   @default("Active") @db.VarChar(50)
+  effectiveStartDate DateTime @db.Date
+  effectiveEndDate   DateTime? @db.Date
+  reason             String?  @db.Text
+  version            Int      @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  @@index([trainerId])
+  @@index([courseId])
+  @@index([status])
+  @@map("trainer_course_authorizations")
+}
+
+model TrainerCompensationRate {
+  id                 String   @id @default(uuid()) @db.Uuid
+  trainerId          String   @db.Uuid
+  trainer            TrainerProfile @relation(fields: [trainerId], references: [id])
+  batchId            String?  @db.Uuid
+  batch              Batch?   @relation(fields: [batchId], references: [id])
+  sessionId          String?  @db.Uuid
+  session            Session? @relation(fields: [sessionId], references: [id])
+  paymentBasis       String   @db.VarChar(50)
+  amount             Decimal  @db.Decimal(12, 3)
+  currency           String   @default("OMR") @db.VarChar(10)
+  status             String   @default("Active") @db.VarChar(50)
+  remarks            String?  @db.Text
+  effectiveStartDate DateTime @db.Date
+  effectiveEndDate   DateTime? @db.Date
+  version            Int      @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  @@index([trainerId])
+  @@index([batchId])
+  @@index([sessionId])
+  @@index([status])
+  @@map("trainer_compensation_rates")
+}
+
 model WaitingList {
   id                     String  @id @default(uuid()) @db.Uuid
   courseId               String  @db.Uuid
@@ -1287,6 +1440,7 @@ model Session {
   deletedBy String?   @db.Uuid
   isDeleted Boolean   @default(false)
   attendanceSessions AttendanceSession[]
+  trainerCompensationRates TrainerCompensationRate[]
 
   @@index([batchId])
   @@index([trainerId])

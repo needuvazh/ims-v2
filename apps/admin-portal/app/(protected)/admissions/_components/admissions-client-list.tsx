@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import {
   ClipboardList,
   Plus,
@@ -10,12 +10,13 @@ import {
   UserCheck,
   FileText,
   FileEdit,
+  Search,
+  X,
 } from 'lucide-react';
 import {
   Badge,
   Button,
   Pagination,
-  DataTableFilter,
   StatCard,
   Dialog,
   DialogContent,
@@ -29,7 +30,10 @@ import {
   CardHeader,
   CardContent,
   CardFooter,
-  EmptyState
+  EmptyState,
+  FormLabel,
+  Input,
+  Select,
 } from '@ims/shared-ui';
 import { toast } from 'sonner';
 
@@ -71,6 +75,8 @@ interface AdmissionsClientListProps {
   };
 }
 
+type SortOrder = 'asc' | 'desc';
+
 export function AdmissionsClientList({
   admissions,
   branches,
@@ -81,8 +87,12 @@ export function AdmissionsClientList({
   kpis,
 }: AdmissionsClientListProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const totalPages = Math.ceil(total / 10);
+
+  const currentSortBy = searchParams.get('sortBy') ?? 'createdAt';
+  const currentSortOrder = (searchParams.get('sortOrder') as SortOrder | null) ?? 'desc';
 
   // Direct Intake Modal State
   const [isOpen, setIsOpen] = useState(false);
@@ -90,25 +100,44 @@ export function AdmissionsClientList({
   const [selectedCourse, setSelectedCourse] = useState('');
   const [selectedBranch, setSelectedBranch] = useState(branches[0]?.id || '');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [searchValue, setSearchValue] = useState(searchParams.get('q') || '');
 
-  const filterConfigs = [
-    {
-      key: 'branchId',
-      label: 'Branch',
-      options: branches.map((b) => ({ value: b.id, label: b.name })),
-    },
-    {
-      key: 'status',
-      label: 'Status',
-      options: [
-        { value: 'Draft', label: 'Draft' },
-        { value: 'Submitted', label: 'Submitted' },
-        { value: 'Approved', label: 'Approved' },
-        { value: 'Rejected', label: 'Rejected' },
-        { value: 'Cancelled', label: 'Cancelled' },
-      ],
-    },
-  ];
+  const updateParams = useCallback((updates: Record<string, string | null>) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value === null || value === '') {
+        params.delete(key);
+      } else {
+        params.set(key, value);
+      }
+    });
+
+    router.push(`${pathname}?${params.toString()}`);
+  }, [pathname, router, searchParams]);
+
+  useEffect(() => {
+    const nextSearch = searchParams.get('q') || '';
+    setSearchValue((current) => (current === nextSearch ? current : nextSearch));
+  }, [searchParams]);
+
+  useEffect(() => {
+    const currentSearch = searchParams.get('q') || '';
+    if (searchValue === currentSearch) {
+      return;
+    }
+
+    const timeout = setTimeout(() => {
+      updateParams({ q: searchValue || null, page: '1' });
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [searchParams, searchValue, updateParams]);
+
+  const handleSort = (field: string) => {
+    const nextOrder: SortOrder = currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
+    updateParams({ sortBy: field, sortOrder: nextOrder, page: '1' });
+  };
 
   const handleCreateDraft = async () => {
     if (!selectedStudent) {
@@ -162,9 +191,18 @@ export function AdmissionsClientList({
   };
 
   const columns = [
-    { header: 'Admission #', render: (adm: any) => <span className="font-mono font-medium text-slate-800">{adm.admissionNumber}</span> },
+    {
+      header: 'Admission #',
+      sortable: true,
+      sortDirection: currentSortBy === 'admissionNumber' ? currentSortOrder : null,
+      onSort: () => handleSort('admissionNumber'),
+      render: (adm: any) => <span className="font-mono font-medium text-slate-800">{adm.admissionNumber}</span>
+    },
     {
       header: 'Student',
+      sortable: true,
+      sortDirection: currentSortBy === 'studentName' ? currentSortOrder : null,
+      onSort: () => handleSort('studentName'),
       render: (adm: any) => (
         <div className="flex flex-col">
           <div className="font-semibold text-slate-800">{adm.studentName}</div>
@@ -172,10 +210,25 @@ export function AdmissionsClientList({
         </div>
       )
     },
-    { header: 'Course', render: (adm: any) => adm.courseName },
-    { header: 'Branch', render: (adm: any) => adm.branchName },
+    {
+      header: 'Course',
+      sortable: true,
+      sortDirection: currentSortBy === 'courseName' ? currentSortOrder : null,
+      onSort: () => handleSort('courseName'),
+      render: (adm: any) => adm.courseName
+    },
+    {
+      header: 'Branch',
+      sortable: true,
+      sortDirection: currentSortBy === 'branchName' ? currentSortOrder : null,
+      onSort: () => handleSort('branchName'),
+      render: (adm: any) => adm.branchName
+    },
     {
       header: 'Date',
+      sortable: true,
+      sortDirection: currentSortBy === 'createdAt' ? currentSortOrder : null,
+      onSort: () => handleSort('createdAt'),
       render: (adm: any) => (
         <span className="text-xs text-[var(--ims-muted)]">
           {new Date(adm.createdAt).toLocaleDateString(undefined, {
@@ -186,7 +239,14 @@ export function AdmissionsClientList({
         </span>
       )
     },
-    { header: 'Status', className: 'text-center', render: (adm: any) => <Badge variant={getStatusBadgeVariant(adm.admissionStatus)}>{adm.admissionStatus}</Badge> },
+    {
+      header: 'Status',
+      className: 'text-center',
+      sortable: true,
+      sortDirection: currentSortBy === 'admissionStatus' ? currentSortOrder : null,
+      onSort: () => handleSort('admissionStatus'),
+      render: (adm: any) => <Badge variant={getStatusBadgeVariant(adm.admissionStatus)}>{adm.admissionStatus}</Badge>
+    },
     {
       header: 'Actions',
       className: 'text-right',
@@ -241,28 +301,23 @@ export function AdmissionsClientList({
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-5 lg:space-y-6">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h1 className="text-page-title font-bold tracking-tight text-[var(--ims-ink)] flex items-center gap-2">
-            <ClipboardList className="h-8 w-8 text-indigo-600" />
+      <div className="flex flex-row items-center justify-between gap-3">
+        <div className="min-w-0">
+          <h1 className="text-page-title flex items-center gap-2 font-bold tracking-tight text-[var(--ims-ink)]">
+            <ClipboardList className="h-6 w-6 shrink-0 text-indigo-600 sm:h-8 sm:w-8" />
             Admissions
           </h1>
-          <p className="text-sm text-[var(--ims-muted)]">
-            Manage student admissions, review application documents, and track review status transitions.
-          </p>
         </div>
-        <div className="flex items-center gap-2 w-full sm:w-auto">
-          <Button onClick={() => setIsOpen(true)} className="w-full sm:w-auto flex items-center justify-center gap-1.5">
-            <Plus className="h-4 w-4" />
-            Direct Intake
-          </Button>
-        </div>
+        <Button onClick={() => setIsOpen(true)} className="h-10 w-10 shrink-0 gap-0 px-0 sm:w-auto sm:px-4">
+          <Plus className="h-4 w-4 sm:mr-2" />
+          <span className="sr-only sm:not-sr-only">Direct Intake</span>
+        </Button>
       </div>
 
       {/* KPI Stats Cards */}
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 sm:gap-5">
         <StatCard
           title="Total Admissions"
           value={kpis.total}
@@ -294,10 +349,73 @@ export function AdmissionsClientList({
       </div>
 
       {/* Search and Filters */}
-      <DataTableFilter
-        searchPlaceholder="Search by admission #, student name, email..."
-        filters={filterConfigs}
-      />
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,2.2fr)_repeat(2,minmax(0,1fr))]">
+        <div className="min-w-0">
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Search
+          </FormLabel>
+          <div className="relative">
+            <Input
+              value={searchValue}
+              onChange={(e) => {
+                setSearchValue(e.target.value);
+              }}
+              placeholder="Search by admission #, student name, email..."
+              leftIcon={<Search className="h-4 w-4" />}
+              className="h-12 pr-10"
+            />
+            {searchValue && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchValue('');
+                  updateParams({ q: null, page: '1' });
+                }}
+                aria-label="Clear search"
+                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full text-[color:var(--ims-muted)] transition-colors hover:text-[color:var(--ims-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)]"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="min-w-0">
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Branch
+          </FormLabel>
+          <Select
+            value={searchParams.get('branchId') || ''}
+            onChange={(e) => updateParams({ branchId: e.target.value, page: '1' })}
+            options={[
+              { value: '', label: 'All Branches' },
+              ...branches.map((b) => ({ value: b.id, label: b.name })),
+            ]}
+            className="h-12"
+            placeholder="All Branches"
+          />
+        </div>
+
+        <div className="min-w-0">
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Status
+          </FormLabel>
+          <Select
+            value={searchParams.get('status') || ''}
+            onChange={(e) => updateParams({ status: e.target.value, page: '1' })}
+            options={[
+              { value: '', label: 'All Statuses' },
+              { value: 'Draft', label: 'Draft' },
+              { value: 'Submitted', label: 'Submitted' },
+              { value: 'Approved', label: 'Approved' },
+              { value: 'Rejected', label: 'Rejected' },
+              { value: 'Cancelled', label: 'Cancelled' },
+            ]}
+            className="h-12"
+            placeholder="All Statuses"
+          />
+        </div>
+      </div>
 
       {/* Admissions Data */}
       <ResponsiveDataTable

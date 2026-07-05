@@ -1,32 +1,36 @@
 # ASTI IMS: FRD Generation Guide
 
-This guide provides a structured, repeatable methodology for generating high-quality, comprehensive **Functional Requirement Documents (FRDs)** for the ASTI Integrated Institute Management System (IMS) modules. It uses the **Module 01: Identity & Access Management (IAM)** directory structure as the golden template.
+This guide provides a structured, repeatable methodology for generating high-quality, comprehensive Functional Requirement Documents (FRDs) for the ASTI Integrated Institute Management System (IMS) modules.
+
+The goal is not only to generate FRDs, but to keep them aligned with the authoritative DDD and ER sources already in the repo.
 
 ---
 
-## 1. The Challenge of Large-Scale FRD Generation
+## 1. Why FRD Generation Needs Guardrails
 
-Generating a full, enterprise-grade FRD spanning 12 detailed parts in a single LLM prompt is practically impossible due to:
-1. **Context Window & Output Token Limits:** The LLM will truncate details, skip crucial fields, or hallucinate placeholders.
-2. **Quality Degradation:** High-level summaries replace granular requirements, API contracts, screen specifications, and test cases.
-3. **Loss of Bounded Context Alignment:** The model will forget the strict boundaries defined in the DDD context map.
+Generating a full enterprise FRD in one prompt is usually low quality because:
+1. Context windows force omissions or placeholders.
+2. Long outputs drift across module boundaries.
+3. Requirements, entities, APIs, permissions, and workflows can diverge from the DDD context map.
 
-### The Solution: Sequential, Context-Aware Generation
-To achieve the depth of Module 01, you must generate the FRD **part-by-part** using a shared session context. The LLM must be primed with:
-- `docs/architecture/ddd/ddd-context-map.md` (Domain Boundaries, Rules, and Events)
-- `docs/architecture/ddd/ER Model.md` (Data Model and Entities)
-- `packages/database/prisma/schema.prisma` (Active Schema State)
-- The target module's existing brief description or checklist (e.g., `docs/architecture/frd/Module 03: Lead & Inquiry Management.md`).
+### The solution
+Generate the FRD part by part, then compare each part against:
+- `docs/architecture/ddd/ddd-context-map.md`
+- `docs/architecture/ddd/ER Model.md`
+- `packages/database/prisma/schema.prisma`
+- Earlier FRD parts for the same module
+
+If the FRD introduces a concept that is not present in the DDD or ER sources, mark it as a gap, dependency, or future-phase item instead of silently inventing it.
 
 ---
 
-## 2. Target Directory & File Structure
+## 2. Target Directory and File Structure
 
-For any module (e.g., Module 03: Lead & Inquiry Management), create a dedicated folder under `docs/architecture/frd/Module 03: Lead & Inquiry Management/` and generate the following files:
+For any module, create a dedicated folder under `docs/architecture/frd/Module 03 - Lead & Inquiry Management/` style naming and generate the following files:
 
 ```text
-Module 03: Lead & Inquiry Management/
-├── Module 3: Lead & Inquiry Management.md (Main Index & Summary)
+Module 03 - Lead & Inquiry Management/
+├── Module 03 - Lead & Inquiry Management.md (Main Index & Summary)
 ├── Part 1 – Business Overview, Functional Requirements, Business Rules.md
 ├── Part 2 – User Stories, Use Cases, Workflows, State Machines.md
 ├── Part 3 – Screen Specifications and UI Components.md
@@ -40,182 +44,233 @@ Module 03: Lead & Inquiry Management/
 └── Part 11 - Deployment, Operations, Observability, Runbooks.md
 ```
 
+Optional but recommended for larger modules:
+- `ASTI IMS <Module> FRD Validation Against DDD, ER Model, and Implementation Architecture.md`
+
 ---
 
 ## 3. Master System Prompt Template
 
-Copy and paste this prompt to prime your AI assistant before generating any module's FRD.
+Copy and paste this prompt before generating any module FRD:
 
 ```markdown
 You are a Principal Solutions Architect and Senior Staff Engineer specializing in clean architecture, Domain-Driven Design (DDD), and TypeScript/Next.js monorepos. Your task is to help me generate a production-grade, highly detailed Functional Requirement Document (FRD) divided into 12 distinct parts for a specific module of the Al Saud Training Institute (ASTI) Integrated Institute Management System (IMS).
 
 ### Project Principles & Context Rules:
-1. **Modular Monolith first:** Do not propose microservices, external brokers (like RabbitMQ), or CQRS/Event Sourcing unless explicitly asked.
-2. **Enrollment-Centric Model:** All learning lifecycles (Regular, Corporate, Walk-In) must flow into the central `Enrollment` aggregate. Do not duplicate learner lifecycles.
-3. **Person/Party Model:** Follow the shared party pattern to avoid identity duplication.
-4. **Soft Deletes & Auditing:** No hard deletes. Every sensitive action (Finance, RBAC, Certificate, Attendance, Completion) must be audited and support `effectiveStartDate/EndDate` and soft delete fields (`isDeleted`, `deletedAt`).
-5. **Branch Isolation:** Enforce server-side branch scoping. Users can only access data within their assigned branch context unless granted a consolidated reporting permission.
-6. **No Placeholders:** Write full, concrete schemas, rules, fields, and contracts. Avoid using "...", "etc.", or generic placeholders.
-7. **Oman Localization:** Adhere to Oman tax invoice / receipt norms, bilingual (English/Arabic) UI support where required, and Oman timezone defaults (GST - UTC+4).
+1. Modular monolith first: Do not propose microservices, external brokers, or CQRS/Event Sourcing unless explicitly asked.
+2. Enrollment-centric model: All learning lifecycles must flow into the central `Enrollment` aggregate.
+3. Person/Party model: Follow the shared party pattern to avoid identity duplication.
+4. Soft deletes & auditing: No hard deletes. Sensitive actions must be auditable and use the repo's audit/soft-delete conventions.
+5. Branch isolation: Enforce server-side branch scoping.
+6. No placeholders: Write full, concrete schemas, rules, fields, and contracts.
+7. Oman localization: Respect Oman tax invoice / receipt norms and GST timezone defaults.
+8. DDD alignment first: Every requirement, entity, API, screen, permission, validation rule, report, and test case must map back to an owning bounded context, aggregate, or read model from the DDD context map or ER model. If it does not map cleanly, flag it as a gap instead of inventing a new model.
 
 ### Inputs Provided:
 - DDD Context Map (`docs/architecture/ddd/ddd-context-map.md`)
 - ER Model Specification (`docs/architecture/ddd/ER Model.md`)
 - Prisma Database Schema (`packages/database/prisma/schema.prisma`)
-- Existing brief module description or target checklist.
+- Existing brief module description or target checklist
 
-We will generate this FRD systematically, one part at a time. Do not jump ahead. Wait for my confirmation after each part. Let's begin by confirming you understand the principles and inputs.
+We will generate this FRD systematically, one part at a time. Do not jump ahead. Wait for my confirmation after each part. After each part is drafted, compare it against the DDD context map, ER model, and earlier FRD parts for conflicts before moving on.
 ```
 
 ---
 
 ## 4. Part-by-Part Prompt Sequence
 
-Once the AI confirms, execute the following prompt sequence step-by-step. Replace `[Module Name]` and `[Module Number]` with your target module (e.g., "Lead & Inquiry Management", "03").
+Use the following sequence step by step. Replace `[Module Name]` and `[Module Number]` with the target module.
 
-### Step 1: The Main Index & Part 1
-**Prompt:**
+### Step 1: Main Index and Part 1
+
 ```markdown
-Generate the following two files for Module [Module Number] – [Module Name] based on our inputs:
+Generate the following two files for Module [Module Number] - [Module Name] based on our inputs:
 
-1. `Module [Module Number]: [Module Name].md`
+1. `Module [Module Number] - [Module Name].md`
    - Purpose and Objective
    - Business Goals (BO-xxx format)
    - Scope (Included / Excluded)
    - Stakeholders & Actors (Human & System)
-   - Functional Overview (Tree diagram of submodules)
+   - Functional Overview (tree diagram of submodules)
    - Business Capabilities & User Types (Internal / External)
    - Functional Requirements Checklist (FR-[Module Code]-xxx)
    - Permission Model Overview
    - Security & Audit Requirements Summary
    - Non-Functional Requirements Summary
+   - DDD ownership notes and known cross-context dependencies
 
 2. `Part 1 – Business Overview, Functional Requirements, Business Rules.md`
-   - Comprehensive introduction and business benefits.
-   - Detailed functional requirements specifications. For each requirement (e.g., FR-[Module Code]-001), specify:
+   - Comprehensive introduction and business benefits
+   - Detailed functional requirements specifications
+   - For each requirement, specify:
      * Description & Actors
      * Preconditions
      * Inputs
-     * Processing Steps (Detailed algorithms, calculations, or checks)
+     * Processing Steps
      * Outputs & Postconditions
      * Priority (MoSCoW)
-   - Comprehensive Business Rules table (BR-[Module Code]-xxx) detailing state transitions, limits, validations, and bounds.
-   - Cross-module dependencies mapping.
+   - Comprehensive Business Rules table (BR-[Module Code]-xxx)
+   - Cross-module dependencies mapping
+   - Explicit comparison notes showing how the rules align with the DDD context map and ER model
 
 Be exhaustive, concrete, and write out all requirements in full. No placeholders.
 ```
 
-### Step 2: Part 2 – User Stories & Use Cases
-**Prompt:**
+### Step 2: Part 2 - User Stories and Use Cases
+
 ```markdown
-Now generate `Part 2 – User Stories, Use Cases, Workflows, State Machines.md` for Module [Module Number] – [Module Name].
+Now generate `Part 2 – User Stories, Use Cases, Workflows, State Machines.md` for Module [Module Number] - [Module Name].
 
 Requirements:
-1. **User Stories:** Write at least 8 detailed User Stories in the "As a... I want to... So that..." format. Prioritize them using MoSCoW and provide a BDD-style Gherkin acceptance criteria block (Given/When/Then) for each.
-2. **Use Cases:** Document the primary use cases with:
-   - Primary Actor
-   - Preconditions
-   - Main Success Scenario (Numbered steps)
-   - Alternative Flows (e.g., validation failures, exceptions)
-   - Postconditions
-3. **Business Workflows:** Describe the core operational workflows in structured text or ASCII/Mermaid sequence diagrams.
-4. **State Machines:** Identify any entity that undergoes state transitions (e.g., Lead Status, Enrollment Status, Invoice Status). Include a Mermaid state diagram and a transition rules matrix mapping allowed from/to statuses and the permissions required.
+1. User stories: Write at least 8 detailed user stories in the "As a... I want to... So that..." format. Prioritize them using MoSCoW and provide Gherkin acceptance criteria for each.
+2. Use cases: Document the primary use cases with primary actor, preconditions, main success scenario, alternative flows, and postconditions.
+3. Business workflows: Describe the core operational workflows in structured text or ASCII/Mermaid sequence diagrams.
+4. State machines: Identify any entity that undergoes state transitions. Include a Mermaid state diagram and a transition rules matrix mapping allowed from/to statuses and permissions.
 ```
 
-### Step 3: Part 3 – Screen Specifications & UI Components
-**Prompt:**
+### Step 3: Part 3 - Screen Specifications and UI Components
+
 ```markdown
-Generate `Part 3 – Screen Specifications and UI Components.md` for Module [Module Number] – [Module Name].
+Generate `Part 3 – Screen Specifications and UI Components.md` for Module [Module Number] - [Module Name].
 
 Requirements:
-1. **Screen Inventory:** List all screens required for the Admin, Student, and Trainer portals where applicable.
-2. **Screen Details:** For each screen, define:
-   - Layout & Grid Structure (dense, data-rich dashboard style)
-   - Interactive Elements (buttons, tabs, selectors)
-   - Input Form Fields with exact validations (e.g., type, regex, length, mandatory)
-   - Table columns with sorting, filtering, and paging behaviors
-3. **Dynamic UI States:** Document form validation error states, loading skeletons, empty states, and permission-based element hiding.
-4. **Bilingual Layout Rules:** Specify English (LTR) and Arabic (RTL) rendering differences.
+1. Screen inventory: List all screens required for the Admin, Student, and Trainer portals where applicable.
+2. Screen details: For each screen, define layout, interactive elements, input validations, and table behaviors.
+3. Dynamic UI states: Document validation errors, loading skeletons, empty states, and permission-based hiding.
+4. Bilingual layout rules: Specify English (LTR) and Arabic (RTL) rendering differences.
+5. DDD fit check: Each screen must map to an application service or use case and must not imply UI-driven business logic that belongs in another context.
 ```
 
-### Step 4: Part 4 – Database Entities & CRUD Matrix
-**Prompt:**
+### Step 4: Part 4 - Database Entities and CRUD Matrix
+
 ```markdown
-Generate `Part 4 – Database Entities and CRUD Matrix.md` for Module [Module Number] – [Module Name].
+Generate `Part 4 – Database Entities and CRUD Matrix.md` for Module [Module Number] - [Module Name].
 
 Requirements:
-1. **Entity Specifications:** Define all database models owned by this context. For each table, provide:
-   - Field name, Data Type (PostgreSQL & Prisma equivalent)
-   - Nullability, Keys (PK, FK, Unique)
-   - Indexes and constraints
-   - Audit columns (`createdAt`, `createdBy`, `updatedAt`, `updatedBy`, `deletedAt`, `isDeleted`)
-   - Effective dating columns where rules/pricing apply (`effectiveStartDate`, `effectiveEndDate`, `status`)
-2. **Relationships:** Detail 1:1, 1:N, and N:M relationships with cascading/restrict rules.
-3. **CRUD Matrix:** Provide a Markdown table mapping Human/System Actors against entities, specifying allowed actions (Create, Read, Update, Delete, Audit) and the required branch-scoping logic.
+1. Entity specifications: Define all database models owned by this context. For each table, provide field names, data types, nullability, keys, indexes, constraints, audit columns, and effective dating columns where relevant.
+2. Relationships: Detail 1:1, 1:N, and N:M relationships with cascading/restrict rules.
+3. CRUD matrix: Provide a table mapping Human/System Actors against entities and allowed actions, including branch-scoping logic.
+4. Ownership check: Mark whether each entity is owned by the module, referenced from another bounded context, or should not exist because the DDD model owns it elsewhere.
 ```
 
-### Step 5: Parts 5, 6, & 7 – API, Permissions, and Validations
-**Prompt:**
+### Step 5: Part 5 - API Contracts
+
 ```markdown
-Generate the following three files for Module [Module Number] – [Module Name]:
+Generate `Part 5 – API Contracts.md` for Module [Module Number] - [Module Name].
 
-1. `Part 5 – API Contracts.md`
-   - List all REST endpoints/Server Actions (Route, Method, Purpose).
-   - For each endpoint, detail:
-     * Authentication & Required Permission
-     * Branch-scoping behavior
-     * Request payload schema (Zod specification structure)
-     * Success Response DTO (JSON format)
-     * Error Response Catalog (HTTP status codes & custom application error codes)
-
-2. `Part 6 – Permission Matrix.md`
-   - tabular mapping of all business roles (Super Admin, Branch Admin, Counselor, Accountant, Trainer, Student, etc.) against fine-grained permissions.
-   - Separate permissions by: Action-level, Menu-level, and Report-level.
-
-3. `Part 7 – Validation Rules, Error Catalog, Notifications.md`
-   - Custom business validation schemas (e.g., age limits, date overlaps, payment rules).
-   - Structured error code catalog (e.g., `ERR_FIN_INSUFFICIENT_FUNDS`, `ERR_CRM_DUPLICATE_LEAD`).
-   - System notification events (Email, SMS, WhatsApp) triggered by domain events in this module, including exact template variables.
+Requirements:
+- List all REST endpoints/Server Actions (Route, Method, Purpose)
+- For each endpoint, detail authentication, required permission, branch-scoping behavior, request schema, success DTO, and error responses
 ```
 
-### Step 6: Parts 8 & 9 – Reports, KPIs, and BDD Tests
-**Prompt:**
+### Step 6: Part 6 - Permission Matrix
+
 ```markdown
-Generate the following two files for Module [Module Number] – [Module Name]:
+Generate `Part 6 – Permission Matrix.md` for Module [Module Number] - [Module Name].
 
-1. `Part 8 - Reports, Dashboards, KPIs, Analytics.md`
-   - Define module-specific KPIs (e.g., conversion rate, collection efficiency, seat utilization).
-   - Detail Admin & Portal Dashboard widgets (Metric summaries, charts, table widgets) with permission scopes.
-   - List operational reports with filters, columns, sorting, export options (CSV, PDF, XLSX).
-   - Explain read models or reporting database views to support fast reporting queries.
-
-2. `Part 9 – BDD Acceptance Criteria and Test Scenarios.md`
-   - Write out comprehensive Gherkin (Feature, Scenario Outline, Scenario) test scenarios covering all positive, negative, validation, and boundary conditions.
-   - Provide test cases for authorization guards and branch data isolation.
+Requirements:
+- Tabular mapping of all business roles against fine-grained permissions
+- Separate permissions by action-level, menu-level, and report-level
+- Highlight permissions that are branch-scoped, global, or consolidated-report only
 ```
 
-### Step 7: Parts 10 & 11 – Non-Functional Requirements & Runbooks
-**Prompt:**
+### Step 7: Part 7 - Validation Rules, Error Catalog, Notifications
+
 ```markdown
-Generate the final two files for Module [Module Number] – [Module Name]:
+Generate `Part 7 – Validation Rules, Error Catalog, Notifications.md` for Module [Module Number] - [Module Name].
 
-1. `Part 10 - Security Architecture and NFR.md`
-   - Detail security measures specific to this module (e.g., PII encryption, payment auditing, certificate signing).
-   - Specify Non-Functional performance, availability, scalability, usability, and compliance targets (e.g., API response thresholds, concurrent limits).
+Requirements:
+- Custom business validation schemas
+- Structured error code catalog
+- System notification events triggered by domain events in this module
+- Comparison table showing whether each validation rule belongs in the module, is delegated to another bounded context, or is shared-kernel only
+```
 
-2. `Part 11 - Deployment, Operations, Observability, Runbooks.md`
-   - Observability setup: Structured logs format, tracing boundaries, metrics instrumentation.
-   - Operations: System healthcheck rules, backup/recovery instructions for owned tables.
-   - Troubleshooting Runbooks: Step-by-step guides for operational failures (e.g., transaction failure recovery, bulk import sync issues).
+### Step 8: Part 8 - Reports, Dashboards, KPIs, Analytics
+
+```markdown
+Generate `Part 8 - Reports, Dashboards, KPIs, Analytics.md` for Module [Module Number] - [Module Name].
+
+Requirements:
+- Define module-specific KPIs
+- Detail dashboard widgets with permission scopes
+- List operational reports with filters, columns, sorting, and export options
+- Explain read models or reporting database views
+- Confirm that any read model is explicitly read-only and does not replace authoritative transactional tables
+```
+
+### Step 9: Part 9 - BDD Acceptance Criteria and Test Scenarios
+
+```markdown
+Generate `Part 9 – BDD Acceptance Criteria and Test Scenarios.md` for Module [Module Number] - [Module Name].
+
+Requirements:
+- Write comprehensive Gherkin scenarios covering positive, negative, validation, and boundary conditions
+- Provide test cases for authorization guards and branch data isolation
+- Include at least one scenario proving behavior matches the DDD ownership rule for the module's core aggregate
+```
+
+### Step 10: Part 10 - Security Architecture and NFR
+
+```markdown
+Generate `Part 10 - Security Architecture and NFR.md` for Module [Module Number] - [Module Name].
+
+Requirements:
+- Detail security measures specific to this module
+- Specify non-functional performance, availability, scalability, usability, and compliance targets
+- Confirm audit requirements for sensitive state changes and cross-context side effects
+```
+
+### Step 11: Part 11 - Deployment, Operations, Observability, Runbooks
+
+```markdown
+Generate `Part 11 - Deployment, Operations, Observability, Runbooks.md` for Module [Module Number] - [Module Name].
+
+Requirements:
+- Observability setup: structured logs, tracing boundaries, metrics instrumentation
+- Operations: system health checks, backup/recovery instructions for owned tables
+- Troubleshooting runbooks for operational failures
+- Final consistency check confirming the module still matches the DDD and ER source documents after all parts are written
 ```
 
 ---
 
-## 5. Verification Checklist
+## 5. DDD / ER Model Validation Workflow
+
+Before a generated FRD is considered complete, compare the entire module against the source documents in this order:
+1. `docs/architecture/ddd/ddd-context-map.md`
+2. `docs/architecture/ddd/ER Model.md`
+3. `packages/database/prisma/schema.prisma`
+4. The FRD main index and all 11 part files
+
+Use this comparison table while reviewing each part:
+
+| Check Area | Question |
+| --- | --- |
+| Bounded context ownership | Does the requirement belong to the module's owning context, or is it owned elsewhere? |
+| Aggregate boundaries | Does the FRD avoid direct mutation of aggregates owned by another context? |
+| Entity alignment | Does every owned entity match the ER model and Prisma schema intent? |
+| Domain events | Are only documented events used, and are side effects routed through the correct context? |
+| Permissions and branch scope | Are action, menu, and report permissions explicit and server-enforced? |
+| Workflow and state machine | Do the states and transitions match the DDD model and related module documents? |
+| API contracts | Are endpoints thin adapters over application services with no hidden business rules? |
+| Reporting | Are dashboard and report requirements clearly read-only? |
+| Audit and NFRs | Are sensitive actions, financial actions, and state transitions auditable and testable? |
+
+If a section introduces a new concept that is not in the DDD or ER model, label it as one of the following:
+1. A required gap in the architecture source documents.
+2. A referenced concept owned by another bounded context.
+3. A future-phase item that should not be implemented in Phase 1.
+
+---
+
+## 6. Verification Checklist
 
 Before archiving a generated FRD module folder, verify that:
-1. **Aggregate Root Integrity:** No aggregate root modifications bypass the owner's application services.
-2. **Branch Scoping:** Every user interface page, endpoint, and query specifies branch data isolation behavior.
-3. **Oman Tax & Receipting Compliant:** (For Finance/Billing) Oman tax laws and standard Omani Rial decimal formatting (3 decimals, e.g., `OMR 12.500`) are respected.
-4. **Soft Deletes:** No Prisma `delete` operations are allowed; logical updates only.
-5. **Seeding:** Part 6's permission matrix perfectly aligns with the permissions list to be seeded in the database.
+1. Aggregate root integrity is preserved and no aggregate is mutated outside its owning application service.
+2. Branch scoping is defined for every user interface page, endpoint, query, and report.
+3. Oman tax and receipting rules are respected for finance/billing modules.
+4. No Prisma `delete` operations are used where soft delete is required.
+5. Part 6 permission matrices align with the permissions seeded in the database.
+6. The final FRD set does not contradict the DDD context map, ER model, or Prisma schema.
+7. Part 1 through Part 11 agree on ownership, names, statuses, permissions, and cross-context dependencies.

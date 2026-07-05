@@ -7,6 +7,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  AdminListPageLayout,
   LinkButton,
   PageHeader,
 } from '@ims/shared-ui';
@@ -54,7 +55,7 @@ export default async function AttendanceCorrectionsPage() {
   });
 
   return (
-    <div className="space-y-6">
+    <AdminListPageLayout className="pt-1 sm:pt-0">
       <PageHeader
         eyebrow="Attendance"
         title="Attendance Corrections"
@@ -104,6 +105,6 @@ export default async function AttendanceCorrectionsPage() {
           )}
         </CardContent>
       </Card>
-    </div>
+    </AdminListPageLayout>
   );
 }

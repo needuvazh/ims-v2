@@ -70,7 +70,6 @@ export default async function EditLeadPage(props: { params: Promise<{ id: string
     <AdminFormPageLayout>
       <PageHeader
         title={`Edit Lead: ${lead.firstName} ${lead.lastName}`}
-        description="Update lead details, pipeline status, or capture follow-up lost notes."
         backUrl="/leads"
         breadcrumbs={
           <Breadcrumbs

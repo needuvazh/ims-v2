@@ -7,7 +7,17 @@ export interface ICourseRepository {
   findById(id: string, tx?: Prisma.TransactionClient): Promise<Course | null>;
   findByCode(code: string, tx?: Prisma.TransactionClient): Promise<Course | null>;
   findByNameInDepartment(nameEnglish: string, nameArabic: string, departmentId: string, tx?: Prisma.TransactionClient): Promise<Course | null>;
-  findAll(filters: { categoryId?: string; status?: string; search?: string }, pagination: { page: number; limit: number }, tx?: Prisma.TransactionClient): Promise<{ items: Course[]; total: number }>;
+  findAll(
+    filters: {
+      categoryId?: string;
+      status?: string;
+      search?: string;
+      sortBy?: string;
+      sortOrder?: 'asc' | 'desc';
+    },
+    pagination: { page: number; limit: number },
+    tx?: Prisma.TransactionClient
+  ): Promise<{ items: Course[]; total: number }>;
   delete(id: string, deletedBy: string, tx?: Prisma.TransactionClient): Promise<void>;
   hasActiveBatches(id: string, tx?: Prisma.TransactionClient): Promise<boolean>;
 }

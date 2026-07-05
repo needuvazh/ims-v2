@@ -377,14 +377,12 @@ export function LeadsClientList({ leads, branches, total }: LeadsClientListProps
 
   return (
     <div className="space-y-4 sm:space-y-5 lg:space-y-6">
-      <header className="flex flex-row items-center justify-between gap-3 rounded-3xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
+      <header className="flex flex-row items-center justify-between gap-3">
         <div className="min-w-0">
-          <div className="flex items-center gap-3">
-            <div className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[color:var(--ims-accent-soft)] text-[color:var(--ims-brass)] shadow-[0_10px_28px_rgba(161,123,68,0.14)]">
-              <Compass className="h-5 w-5" />
-            </div>
-            <h1 className="truncate text-page-title font-bold tracking-tight text-[var(--ims-ink)]">Leads</h1>
-          </div>
+          <h1 className="text-page-title flex items-center gap-2 font-bold tracking-tight text-[var(--ims-ink)]">
+            <Compass className="h-6 w-6 shrink-0 text-[color:var(--ims-brass)] sm:h-8 sm:w-8" />
+            Leads
+          </h1>
         </div>
 
         <Button className="h-10 w-10 shrink-0 gap-0 px-0 sm:w-auto sm:px-4" onClick={() => router.push('/leads/create')}>
@@ -393,59 +391,55 @@ export function LeadsClientList({ leads, branches, total }: LeadsClientListProps
         </Button>
       </header>
 
-      <Card className="border-[color:var(--ims-border)] bg-white/80 shadow-sm">
-        <CardContent className="p-4 sm:p-5 lg:p-6">
-          <div className="grid gap-4 lg:grid-cols-[minmax(0,2.2fr)_repeat(3,minmax(0,1fr))]">
-            <div className="min-w-0">
-              <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
-                Search
-              </FormLabel>
-              <div className="relative">
-                <Input
-                  value={searchValue}
-                  onChange={(e) => {
-                    setSearchValue(e.target.value);
-                  }}
-                  placeholder="Search leads by name, phone, or email..."
-                  leftIcon={<Search className="h-4 w-4" />}
-                  className="h-12 pr-10"
-                />
-                {searchValue && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSearchValue('');
-                      updateParams({ q: null, page: '1' });
-                    }}
-                    aria-label="Clear search"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full text-[color:var(--ims-muted)] transition-colors hover:text-[color:var(--ims-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)]"
-                  >
-                    <X className="h-3.5 w-3.5" />
-                  </button>
-                )}
-              </div>
-            </div>
-
-            {filterRow.map((filter) => (
-              <div key={filter.key} className="min-w-0">
-                <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
-                  {filter.label}
-                </FormLabel>
-                <Select
-                  value={searchParams.get(filter.key) || ''}
-                  onChange={(e) => updateParams({ [filter.key]: e.target.value, page: '1' })}
-                  options={[
-                    { value: '', label: 'All' },
-                    ...filter.options,
-                  ]}
-                  className="h-12"
-                  placeholder={`All ${filter.label.toLowerCase()}`}
-                />
-              </div>
-            ))}
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,2.2fr)_repeat(3,minmax(0,1fr))]">
+        <div className="min-w-0">
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Search
+          </FormLabel>
+          <div className="relative">
+            <Input
+              value={searchValue}
+              onChange={(e) => {
+                setSearchValue(e.target.value);
+              }}
+              placeholder="Search leads by name, phone, or email..."
+              leftIcon={<Search className="h-4 w-4" />}
+              className="h-12 pr-10"
+            />
+            {searchValue && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchValue('');
+                  updateParams({ q: null, page: '1' });
+                }}
+                aria-label="Clear search"
+                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full text-[color:var(--ims-muted)] transition-colors hover:text-[color:var(--ims-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)]"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            )}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+
+        {filterRow.map((filter) => (
+          <div key={filter.key} className="min-w-0">
+            <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+              {filter.label}
+            </FormLabel>
+            <Select
+              value={searchParams.get(filter.key) || ''}
+              onChange={(e) => updateParams({ [filter.key]: e.target.value, page: '1' })}
+              options={[
+                { value: '', label: 'All' },
+                ...filter.options,
+              ]}
+              className="h-12"
+              placeholder={`All ${filter.label.toLowerCase()}`}
+            />
+          </div>
+        ))}
+      </div>
 
       <ResponsiveDataTable
         data={leads}

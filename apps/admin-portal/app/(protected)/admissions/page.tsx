@@ -2,6 +2,7 @@ import { assertPermission } from '@/lib/auth-guard';
 import { prisma } from '@ims/database';
 import { AdmissionsClientList } from './_components/admissions-client-list';
 import Link from 'next/link';
+import { AdminListPageLayout } from '@ims/shared-ui';
 
 export const metadata = { title: 'Admissions - CRM | ASTI IMS' };
 
@@ -11,6 +12,8 @@ export default async function AdmissionsPage(props: {
     status?: string;
     branchId?: string;
     page?: string;
+    sortBy?: string;
+    sortOrder?: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
@@ -59,10 +62,25 @@ export default async function AdmissionsPage(props: {
     ];
   }
 
+  // Sorting logic
+  const sortBy = searchParams.sortBy || 'createdAt';
+  const sortOrder = searchParams.sortOrder || 'desc';
+
+  let orderBy: any = {};
+  if (sortBy === 'studentName') {
+    orderBy = { person: { firstName: sortOrder } };
+  } else if (sortBy === 'courseName') {
+    orderBy = { course: { nameEnglish: sortOrder } };
+  } else if (sortBy === 'branchName') {
+    orderBy = { branch: { branchName: sortOrder } };
+  } else {
+    orderBy = { [sortBy]: sortOrder };
+  }
+
   const [admissions, total] = await Promise.all([
     prisma.admission.findMany({
       where: whereClause,
-      orderBy: { createdAt: 'desc' },
+      orderBy,
       skip,
       take: limit,
       include: {
@@ -131,16 +149,7 @@ export default async function AdmissionsPage(props: {
   };
 
   return (
-    <div className="space-y-4 p-6">
-      {/* <div className="flex flex-col gap-3 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-5 md:flex-row md:items-center md:justify-between">
-        <div>
-          <p className="text-sm font-semibold text-[color:var(--ims-ink)]">Admissions operations</p>
-          <p className="text-xs text-[color:var(--ims-muted)]">Use the dashboard for KPIs and the list for daily intake work.</p>
-        </div>
-        <Link href="/dashboards/admissions" className="inline-flex items-center gap-2 rounded-xl border border-[color:var(--ims-border)] px-4 py-2 text-sm font-semibold text-[color:var(--ims-ink)] transition hover:bg-[color:var(--ims-accent-soft)]">
-          Open Dashboard
-        </Link>
-      </div> */}
+    <AdminListPageLayout className="pt-1 sm:pt-0">
       <AdmissionsClientList
         admissions={mappedAdmissions}
         branches={branches.map((b) => ({ id: b.id, name: b.branchName }))}
@@ -153,6 +162,6 @@ export default async function AdmissionsPage(props: {
         currentPage={page}
         kpis={kpis}
       />
-    </div>
+    </AdminListPageLayout>
   );
 }

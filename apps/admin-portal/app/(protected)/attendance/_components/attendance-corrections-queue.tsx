@@ -8,18 +8,17 @@ import {
   Alert,
   Badge,
   Button,
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+  ResponsiveDataTable,
   Textarea,
 } from '@ims/shared-ui';
 
@@ -111,91 +110,178 @@ export function AttendanceCorrectionsQueue({
     });
   };
 
+  const columns = [
+    {
+      header: 'Student',
+      render: (correction: CorrectionRow) => (
+        <div className="space-y-0.5">
+          <div className="font-semibold text-[color:var(--ims-ink)]">{correction.studentName}</div>
+          <div className="text-xs text-[color:var(--ims-muted)]">{correction.studentNumber}</div>
+        </div>
+      ),
+    },
+    {
+      header: 'Batch / Session',
+      render: (correction: CorrectionRow) => (
+        <div className="space-y-0.5">
+          <div className="font-semibold">{correction.sessionTitle}</div>
+          <div className="text-xs text-[color:var(--ims-muted)]">{correction.batchCode} | #{correction.sessionNumber ?? '—'}</div>
+        </div>
+      ),
+    },
+    {
+      header: 'Transition',
+      render: (correction: CorrectionRow) => (
+        <div className="text-sm">
+          <span className="font-semibold">{correction.oldStatus}</span>
+          <span className="text-[color:var(--ims-muted)]"> → </span>
+          <span className="font-semibold">{correction.newStatus}</span>
+          <p className="mt-1 text-xs text-[color:var(--ims-muted)]">{correction.reason}</p>
+        </div>
+      ),
+    },
+    {
+      header: 'Status',
+      render: (correction: CorrectionRow) => statusBadge(correction.status),
+      headerClassName: 'w-[110px]',
+    },
+    {
+      header: 'Requested By',
+      render: (correction: CorrectionRow) => <span className="text-sm text-[color:var(--ims-muted)]">{correction.requestedByLabel}</span>,
+    },
+    {
+      header: 'Requested At',
+      className: 'text-right',
+      render: (correction: CorrectionRow) => <span className="text-sm text-[color:var(--ims-muted)]">{new Date(correction.requestedAt).toLocaleString()}</span>,
+      headerClassName: 'text-right w-[180px]',
+    },
+    {
+      header: 'Actions',
+      className: 'text-right',
+      render: (correction: CorrectionRow) => (
+        correction.status === 'Pending' ? (
+          <div className="inline-flex flex-wrap justify-end gap-2">
+            {canApprove ? (
+              <Button type="button" size="sm" variant="primary" className="gap-2" disabled={isPending} onClick={() => handleApprove(correction.id)}>
+                {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <CheckCircle2 className="h-4 w-4" />}
+                Approve
+              </Button>
+            ) : null}
+            {canReject ? (
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                className="gap-2"
+                disabled={isPending}
+                onClick={() => {
+                  setError(null);
+                  setRejectTarget(correction);
+                  setRejectReason('');
+                }}
+              >
+                <XCircle className="h-4 w-4" />
+                Reject
+              </Button>
+            ) : null}
+          </div>
+        ) : (
+          <span className="text-sm text-[color:var(--ims-muted)]">No action</span>
+        )
+      ),
+      headerClassName: 'text-right w-[220px]',
+    },
+  ];
+
   return (
     <>
       {error ? <Alert variant="error" title="Correction action failed" description={error} /> : null}
-      <div className="overflow-x-auto">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Student</TableHead>
-              <TableHead>Batch / Session</TableHead>
-              <TableHead>Transition</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Requested By</TableHead>
-              <TableHead className="text-right">Requested At</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {corrections.map((correction) => (
-              <TableRow key={correction.id}>
-                <TableCell>
-                  <div className="space-y-0.5">
-                    <div className="font-semibold text-[color:var(--ims-ink)]">{correction.studentName}</div>
-                    <div className="text-xs text-[color:var(--ims-muted)]">{correction.studentNumber}</div>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <div className="space-y-0.5">
-                    <div className="font-semibold">{correction.sessionTitle}</div>
-                    <div className="text-xs text-[color:var(--ims-muted)]">{correction.batchCode} | #{correction.sessionNumber ?? '—'}</div>
-                  </div>
-                </TableCell>
-                <TableCell className="text-sm">
-                  <span className="font-semibold">{correction.oldStatus}</span>
-                  <span className="text-[color:var(--ims-muted)]"> → </span>
-                  <span className="font-semibold">{correction.newStatus}</span>
-                  <p className="mt-1 text-xs text-[color:var(--ims-muted)]">{correction.reason}</p>
-                </TableCell>
-                <TableCell>{statusBadge(correction.status)}</TableCell>
-                <TableCell className="text-sm text-[color:var(--ims-muted)]">{correction.requestedByLabel}</TableCell>
-                <TableCell className="text-right text-sm text-[color:var(--ims-muted)]">
-                  {new Date(correction.requestedAt).toLocaleString()}
-                </TableCell>
-                <TableCell className="text-right">
-                  {correction.status === 'Pending' ? (
-                    <div className="inline-flex flex-wrap justify-end gap-2">
-                      {canApprove ? (
-                        <Button
-                          type="button"
-                          size="sm"
-                          variant="primary"
-                          className="gap-2"
-                          disabled={isPending}
-                          onClick={() => handleApprove(correction.id)}
-                        >
-                          {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <CheckCircle2 className="h-4 w-4" />}
-                          Approve
-                        </Button>
-                      ) : null}
-                      {canReject ? (
-                        <Button
-                          type="button"
-                          size="sm"
-                          variant="outline"
-                          className="gap-2"
-                          disabled={isPending}
-                          onClick={() => {
-                            setError(null);
-                            setRejectTarget(correction);
-                            setRejectReason('');
-                          }}
-                        >
-                          <XCircle className="h-4 w-4" />
-                          Reject
-                        </Button>
-                      ) : null}
-                    </div>
-                  ) : (
-                    <span className="text-sm text-[color:var(--ims-muted)]">No action</span>
-                  )}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+      <ResponsiveDataTable
+        data={corrections}
+        keyExtractor={(correction) => correction.id}
+        emptyState={null}
+        columns={columns}
+        renderCard={(correction) => (
+          <Card className="transition-colors hover:border-[var(--ims-brass)]">
+            <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0 space-y-1">
+                  <p className="text-sm font-bold text-[var(--ims-ink)]">{correction.studentName}</p>
+                  <p className="text-xs text-[var(--ims-muted)]">{correction.studentNumber}</p>
+                </div>
+                {statusBadge(correction.status)}
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-3 p-card-p text-xs">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="font-semibold text-[var(--ims-muted)]">Batch</p>
+                  <p className="truncate">{correction.batchCode}</p>
+                </div>
+                <div>
+                  <p className="font-semibold text-[var(--ims-muted)]">Session</p>
+                  <p className="truncate">#{correction.sessionNumber ?? '—'}</p>
+                </div>
+                <div className="col-span-2">
+                  <p className="font-semibold text-[var(--ims-muted)]">Session Title</p>
+                  <p className="truncate">{correction.sessionTitle}</p>
+                </div>
+                <div className="col-span-2">
+                  <p className="font-semibold text-[var(--ims-muted)]">Transition</p>
+                  <p className="truncate">
+                    <span className="font-semibold">{correction.oldStatus}</span>
+                    <span className="text-[color:var(--ims-muted)]"> → </span>
+                    <span className="font-semibold">{correction.newStatus}</span>
+                  </p>
+                </div>
+                <div className="col-span-2">
+                  <p className="font-semibold text-[var(--ims-muted)]">Reason</p>
+                  <p className="line-clamp-3 text-[color:var(--ims-muted)]">{correction.reason}</p>
+                </div>
+                <div>
+                  <p className="font-semibold text-[var(--ims-muted)]">Requested By</p>
+                  <p className="truncate">{correction.requestedByLabel}</p>
+                </div>
+                <div>
+                  <p className="font-semibold text-[var(--ims-muted)]">Requested At</p>
+                  <p className="truncate">{new Date(correction.requestedAt).toLocaleString()}</p>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter className="p-card-p pt-0">
+              {correction.status === 'Pending' ? (
+                <div className="flex w-full flex-wrap gap-2">
+                  {canApprove ? (
+                    <Button type="button" size="sm" variant="primary" className="flex-1 gap-2" disabled={isPending} onClick={() => handleApprove(correction.id)}>
+                      {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <CheckCircle2 className="h-4 w-4" />}
+                      Approve
+                    </Button>
+                  ) : null}
+                  {canReject ? (
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      className="flex-1 gap-2"
+                      disabled={isPending}
+                      onClick={() => {
+                        setError(null);
+                        setRejectTarget(correction);
+                        setRejectReason('');
+                      }}
+                    >
+                      <XCircle className="h-4 w-4" />
+                      Reject
+                    </Button>
+                  ) : null}
+                </div>
+              ) : (
+                <span className="text-sm text-[color:var(--ims-muted)]">No action</span>
+              )}
+            </CardFooter>
+          </Card>
+        )}
+      />
 
       <Dialog open={Boolean(rejectTarget)} onOpenChange={(open) => !open && setRejectTarget(null)}>
         <DialogContent className="max-w-xl">

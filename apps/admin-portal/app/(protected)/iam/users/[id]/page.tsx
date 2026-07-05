@@ -67,6 +67,9 @@ export default async function IamViewUserPage(props: { params: Promise<{ id: str
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+            <Link href={`/faculty/trainers/new?userId=${params.id}`}>
+              <Button variant="secondary">Register as Trainer</Button>
+            </Link>
             <Link href={`/iam/users/${params.id}/roles`}>
               <Button variant="secondary">Manage Roles</Button>
             </Link>

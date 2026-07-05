@@ -11,14 +11,11 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  AdminListPageLayout,
   LinkButton,
   PageHeader,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+  CardFooter,
+  ResponsiveDataTable,
 } from '@ims/shared-ui';
 import { ClipboardList, Layers } from 'lucide-react';
 import { AttendanceRosterEditor } from '../_components/attendance-roster-editor';
@@ -130,8 +127,101 @@ export default async function AttendanceRecordsPage(props: {
         take: 200,
       });
 
+  const readOnlyRows = readOnlyRecords.map((record) => ({
+    id: record.id,
+    studentName: `${record.enrollment.studentProfile.person.firstName} ${record.enrollment.studentProfile.person.lastName}`,
+    studentNumber: record.enrollment.studentProfile.studentNumber,
+    batchCode: record.attendanceSession.batch.batchCode,
+    sessionTitle: record.attendanceSession.session.titleEnglish,
+    sessionNumber: record.attendanceSession.session.sessionNumber,
+    branchName: branchNameById.get(record.branchId) ?? record.branchId,
+    status: record.status,
+    correctionStatus: record.corrections[0]?.status ?? null,
+    lateMinutes: record.lateMinutes,
+    markedAt: record.markedAt,
+  }));
+
+  const columns = [
+    {
+      header: 'Student',
+      render: (record: (typeof readOnlyRows)[number]) => (
+        <div className="space-y-0.5">
+          <div className="font-semibold text-[color:var(--ims-ink)]">{record.studentName}</div>
+          <div className="text-xs text-[color:var(--ims-muted)]">{record.studentNumber}</div>
+        </div>
+      ),
+    },
+    {
+      header: 'Batch / Session',
+      render: (record: (typeof readOnlyRows)[number]) => (
+        <div className="space-y-0.5">
+          <div className="font-semibold">{record.sessionTitle}</div>
+          <div className="text-xs text-[color:var(--ims-muted)]">{record.batchCode} | #{record.sessionNumber}</div>
+        </div>
+      ),
+    },
+    {
+      header: 'Branch',
+      render: (record: (typeof readOnlyRows)[number]) => record.branchName,
+    },
+    {
+      header: 'Status',
+      render: (record: (typeof readOnlyRows)[number]) => recordBadge(record.status),
+      headerClassName: 'w-[110px]',
+    },
+    {
+      header: 'Correction',
+      render: (record: (typeof readOnlyRows)[number]) => (
+        record.correctionStatus ? (
+          <Badge variant={record.correctionStatus === 'Approved' ? 'success' : record.correctionStatus === 'Rejected' ? 'error' : 'outline'}>{record.correctionStatus}</Badge>
+        ) : (
+          <span className="text-sm text-[color:var(--ims-muted)]">None</span>
+        )
+      ),
+      headerClassName: 'w-[120px]',
+    },
+    {
+      header: 'Late Mins',
+      className: 'text-right',
+      render: (record: (typeof readOnlyRows)[number]) => <span>{record.lateMinutes ?? '—'}</span>,
+      headerClassName: 'text-right w-[100px]',
+    },
+    {
+      header: 'Marked At',
+      className: 'text-right',
+      render: (record: (typeof readOnlyRows)[number]) => <span className="text-sm text-[color:var(--ims-muted)]">{record.markedAt ? new Date(record.markedAt).toLocaleString() : '—'}</span>,
+      headerClassName: 'text-right w-[180px]',
+    },
+  ];
+
+  const renderCard = (record: (typeof readOnlyRows)[number]) => (
+    <Card className="transition-colors hover:border-[var(--ims-brass)]">
+      <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0 space-y-1">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">{record.studentNumber}</p>
+            <p className="text-sm font-bold text-[var(--ims-ink)]">{record.studentName}</p>
+          </div>
+          {recordBadge(record.status)}
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-3 p-card-p text-xs">
+        <div className="grid grid-cols-2 gap-4">
+          <div><p className="font-semibold text-[var(--ims-muted)]">Batch</p><p className="truncate">{record.batchCode}</p></div>
+          <div><p className="font-semibold text-[var(--ims-muted)]">Session</p><p className="truncate">#{record.sessionNumber}</p></div>
+          <div className="col-span-2"><p className="font-semibold text-[var(--ims-muted)]">Branch</p><p className="truncate">{record.branchName}</p></div>
+          <div><p className="font-semibold text-[var(--ims-muted)]">Correction</p><p className="truncate">{record.correctionStatus ?? 'None'}</p></div>
+          <div><p className="font-semibold text-[var(--ims-muted)]">Late Mins</p><p className="truncate">{record.lateMinutes ?? '—'}</p></div>
+        </div>
+      </CardContent>
+      <CardFooter className="p-card-p pt-0">
+        <div className="w-full text-xs text-[color:var(--ims-muted)]">Marked at: {record.markedAt ? new Date(record.markedAt).toLocaleString() : '—'}</div>
+      </CardFooter>
+    </Card>
+  );
+
   return (
-    <div className="space-y-6">
+    <AdminListPageLayout className="pt-1 sm:pt-0">
       <PageHeader
         eyebrow="Attendance"
         title="Attendance Records"
@@ -211,64 +301,11 @@ export default async function AttendanceRecordsPage(props: {
                 </p>
               </div>
             ) : (
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Student</TableHead>
-                      <TableHead>Batch / Session</TableHead>
-                      <TableHead>Branch</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Correction</TableHead>
-                      <TableHead className="text-right">Late Mins</TableHead>
-                      <TableHead className="text-right">Marked At</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {readOnlyRecords.map((record) => (
-                      <TableRow key={record.id}>
-                        <TableCell>
-                          <div className="space-y-0.5">
-                            <div className="font-semibold text-[color:var(--ims-ink)]">
-                              {record.enrollment.studentProfile.person.firstName} {record.enrollment.studentProfile.person.lastName}
-                            </div>
-                            <div className="text-xs text-[color:var(--ims-muted)]">
-                              {record.enrollment.studentProfile.studentNumber}
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="space-y-0.5">
-                            <div className="font-semibold">{record.attendanceSession.session.titleEnglish}</div>
-                            <div className="text-xs text-[color:var(--ims-muted)]">
-                              {record.attendanceSession.batch.batchCode} | #{record.attendanceSession.session.sessionNumber}
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell>{branchNameById.get(record.branchId) ?? record.branchId}</TableCell>
-                        <TableCell>{recordBadge(record.status)}</TableCell>
-                        <TableCell>
-                          {record.corrections[0] ? (
-                            <Badge variant={record.corrections[0].status === 'Approved' ? 'success' : record.corrections[0].status === 'Rejected' ? 'error' : 'outline'}>
-                              {record.corrections[0].status}
-                            </Badge>
-                          ) : (
-                            <span className="text-sm text-[color:var(--ims-muted)]">None</span>
-                          )}
-                        </TableCell>
-                        <TableCell className="text-right">{record.lateMinutes ?? '—'}</TableCell>
-                        <TableCell className="text-right text-sm text-[color:var(--ims-muted)]">
-                          {record.markedAt ? new Date(record.markedAt).toLocaleString() : '—'}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
+              <ResponsiveDataTable data={readOnlyRows} columns={columns} renderCard={renderCard} keyExtractor={(record) => record.id} emptyState={null} />
             )}
           </CardContent>
         </Card>
       ) : null}
-    </div>
+    </AdminListPageLayout>
   );
 }

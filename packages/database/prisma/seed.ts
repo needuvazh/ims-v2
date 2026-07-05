@@ -150,6 +150,28 @@ const systemPermissions = [
   { moduleCode: 'attendance',   featureCode: 'admin',       actionCode: 'override', permissionCode: 'attendance.admin.override',    permissionType: 'Action' as const, description: 'Use attendance admin override controls.' },
   { moduleCode: 'attendance',   featureCode: 'reports',     actionCode: 'consolidated.read', permissionCode: 'attendance.consolidated.read', permissionType: 'Report' as const, description: 'Read consolidated attendance data.' },
   { moduleCode: 'attendance',   featureCode: 'records',     actionCode: 'write',  permissionCode: 'attendance.record',              permissionType: 'Action' as const, description: 'Mark student attendance.' },
+  
+  // Faculty / Trainer Management
+  { moduleCode: 'faculty', featureCode: 'menu', actionCode: 'view', permissionCode: 'menu.faculty', permissionType: 'Menu' as const, description: 'View the faculty and trainer module menu.' },
+  { moduleCode: 'faculty', featureCode: 'menu', actionCode: 'trainers', permissionCode: 'menu.faculty.trainers', permissionType: 'Menu' as const, description: 'View the trainer registry menu.' },
+  { moduleCode: 'faculty', featureCode: 'menu', actionCode: 'eligible-trainers', permissionCode: 'menu.faculty.eligible-trainers', permissionType: 'Menu' as const, description: 'View eligible trainers menu.' },
+  { moduleCode: 'faculty', featureCode: 'menu', actionCode: 'reports', permissionCode: 'menu.faculty.reports', permissionType: 'Menu' as const, description: 'View faculty reports menu.' },
+  { moduleCode: 'faculty', featureCode: 'trainer', actionCode: 'read', permissionCode: 'trainer.read', permissionType: 'Action' as const, description: 'Read trainer profiles and assignments.' },
+  { moduleCode: 'faculty', featureCode: 'trainer', actionCode: 'create', permissionCode: 'trainer.create', permissionType: 'Action' as const, description: 'Create trainer profiles.' },
+  { moduleCode: 'faculty', featureCode: 'trainer', actionCode: 'update', permissionCode: 'trainer.update', permissionType: 'Action' as const, description: 'Update trainer profiles.' },
+  { moduleCode: 'faculty', featureCode: 'trainer', actionCode: 'status.manage', permissionCode: 'trainer.status.manage', permissionType: 'Action' as const, description: 'Change trainer status.' },
+  { moduleCode: 'faculty', featureCode: 'qualification', actionCode: 'read', permissionCode: 'trainer.qualification.read', permissionType: 'Action' as const, description: 'Read trainer qualifications.' },
+  { moduleCode: 'faculty', featureCode: 'qualification', actionCode: 'manage', permissionCode: 'trainer.qualification.manage', permissionType: 'Action' as const, description: 'Create and update trainer qualifications.' },
+  { moduleCode: 'faculty', featureCode: 'availability', actionCode: 'read', permissionCode: 'trainer.availability.read', permissionType: 'Action' as const, description: 'Read trainer availability.' },
+  { moduleCode: 'faculty', featureCode: 'availability', actionCode: 'manage', permissionCode: 'trainer.availability.manage', permissionType: 'Action' as const, description: 'Create and update trainer availability.' },
+  { moduleCode: 'faculty', featureCode: 'authorization', actionCode: 'read', permissionCode: 'trainer.authorization.read', permissionType: 'Action' as const, description: 'Read trainer course authorizations.' },
+  { moduleCode: 'faculty', featureCode: 'authorization', actionCode: 'manage', permissionCode: 'trainer.authorization.manage', permissionType: 'Action' as const, description: 'Create and update trainer course authorizations.' },
+  { moduleCode: 'faculty', featureCode: 'compensation', actionCode: 'read', permissionCode: 'trainer.compensation.read', permissionType: 'Action' as const, description: 'Read trainer compensation rates.' },
+  { moduleCode: 'faculty', featureCode: 'compensation', actionCode: 'manage', permissionCode: 'trainer.compensation.manage', permissionType: 'Action' as const, description: 'Create and update trainer compensation rates.' },
+  { moduleCode: 'faculty', featureCode: 'eligibility', actionCode: 'read', permissionCode: 'trainer.eligibility.read', permissionType: 'Report' as const, description: 'Validate eligible trainers for scheduling.' },
+  { moduleCode: 'faculty', featureCode: 'reports', actionCode: 'view', permissionCode: 'trainer.report.view', permissionType: 'Report' as const, description: 'View trainer reports.' },
+  { moduleCode: 'faculty', featureCode: 'reports', actionCode: 'export', permissionCode: 'trainer.report.export', permissionType: 'Report' as const, description: 'Export trainer reports.' },
+  { moduleCode: 'faculty', featureCode: 'audit', actionCode: 'read', permissionCode: 'trainer.audit.read', permissionType: 'Report' as const, description: 'Read trainer audit history.' },
   { moduleCode: 'exams',        featureCode: 'results',     actionCode: 'write',  permissionCode: 'result.record',                  permissionType: 'Action' as const, description: 'Enter exam marks and grades.' },
   
   // Certificates
@@ -314,6 +336,8 @@ async function seed() {
     'attendance.correction.request', 'attendance.correction.review', 'attendance.correction.approve', 'attendance.correction.reject',
     'attendance.audit.read', 'attendance.report.daily.view', 'attendance.report.batch.view', 'attendance.report.student.view', 'attendance.report.trainer.view', 'attendance.report.lowAttendance.view', 'attendance.report.correctionAging.view', 'attendance.report.export', 'attendance.dashboard.branch.view', 'attendance.dashboard.consolidated.view',
     'attendance.alert.read', 'attendance.alert.detect', 'attendance.admin.override', 'attendance.consolidated.read',
+    'menu.faculty', 'menu.faculty.trainers', 'menu.faculty.eligible-trainers', 'menu.faculty.reports',
+    'trainer.read', 'trainer.create', 'trainer.update', 'trainer.status.manage', 'trainer.qualification.read', 'trainer.qualification.manage', 'trainer.availability.read', 'trainer.availability.manage', 'trainer.authorization.read', 'trainer.authorization.manage', 'trainer.compensation.read', 'trainer.compensation.manage', 'trainer.eligibility.read', 'trainer.report.view', 'trainer.report.export', 'trainer.audit.read',
     'result.record', 'certificate.generate',
     'certificate.verify', 'dashboard.branch', 'dashboard.security', 'dashboard.view',
     'REPORTING_VIEW_CRM_DASHBOARD', 'REPORTING_VIEW_COUNSELOR_METRICS', 'LEAD_VIEW_ALL_IN_BRANCH'
@@ -344,6 +368,25 @@ async function seed() {
     });
   }
   console.log(`  ✓ Assigned permissions to COUNSELOR`);
+
+  // Academic Coordinator permissions
+  const academicCoordinatorPermCodes = [
+    'course.manage', 'course.catalog.view', 'course.catalog.create', 'course.catalog.update',
+    'course.catalog.publish', 'course.catalog.archive', 'batch.delivery.view', 'batch.delivery.create',
+    'batch.delivery.update', 'batch.delivery.assign', 'batch.delivery.transition', 'schedule.manage',
+    'scheduling.calendar.read', 'scheduling.calendar.create', 'scheduling.calendar.update',
+    'menu.faculty', 'menu.faculty.trainers', 'menu.faculty.eligible-trainers', 'menu.faculty.reports',
+    'trainer.read', 'trainer.update', 'trainer.qualification.read', 'trainer.qualification.manage',
+    'trainer.availability.read', 'trainer.availability.manage', 'trainer.authorization.read', 'trainer.authorization.manage',
+    'trainer.compensation.read', 'trainer.report.view', 'trainer.report.export', 'trainer.eligibility.read'
+  ];
+  const academicCoordinatorPerms = permRecords.filter(p => academicCoordinatorPermCodes.includes(p.permissionCode));
+  for (const perm of academicCoordinatorPerms) {
+    await prisma.rolePermission.create({
+      data: { roleId: roleMap['ACADEMIC_COORDINATOR'].id, permissionId: perm.id },
+    });
+  }
+  console.log(`  ✓ Assigned permissions to ACADEMIC_COORDINATOR`);
 
   // Trainer permissions
   const trainerPermCodes = [
@@ -557,7 +600,7 @@ async function seed() {
       passwordHistoryCount: 5,
       passwordExpiryDays: 90,
       resetTokenExpiryMinutes: 15,
-      accessTokenExpiryMinutes: 15,
+      accessTokenExpiryMinutes: 30,
       refreshTokenExpiryDays: 7,
       rememberMeRefreshTokenDays: 30,
       sessionInactivityMinutes: 30,

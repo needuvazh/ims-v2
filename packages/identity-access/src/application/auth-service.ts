@@ -39,6 +39,7 @@ function getKeys(): { publicKey: string; privateKey: string } {
 
 export type SignInResult = {
   accessToken: string;
+  accessTokenExpiresAt: Date;
   refreshToken: string;
   user: any;
   session: any;
@@ -348,7 +349,8 @@ export class AuthService {
       jti: accessTokenJti,
     };
 
-    const accessToken = await JwtService.signAccessToken(payload, keys.privateKey);
+    const accessTokenExpiresAt = new Date(now.getTime() + policy.accessTokenExpiryMinutes * 60 * 1000);
+    const accessToken = await JwtService.signAccessToken(payload, keys.privateKey, `${policy.accessTokenExpiryMinutes}m`);
 
     const session: Session = {
       userId: user.id,
@@ -424,6 +426,7 @@ export class AuthService {
 
     return {
       accessToken,
+      accessTokenExpiresAt,
       refreshToken,
       user,
       session,
@@ -434,7 +437,7 @@ export class AuthService {
     refreshTokenRaw: string,
     userAgent: string | null = null,
     ipAddress: string | null = null
-  ): Promise<{ accessToken: string; refreshToken: string }> {
+  ): Promise<{ accessToken: string; accessTokenExpiresAt: Date; refreshToken: string }> {
     const hashedToken = crypto.createHash('sha256').update(refreshTokenRaw).digest('hex');
     const session = await this.sessionRepository.findByHashedRefreshToken(hashedToken);
     const now = new Date();
@@ -474,6 +477,8 @@ export class AuthService {
       throw createIamError('IAM-AUTH-001');
     }
 
+    const policy = await this.securityPolicyRepository.get();
+
     // Refresh token rotation (issue new refresh token, invalidate old one)
     const { raw: newRefreshToken, hash: hashedNewRefreshToken } = RefreshTokenService.generate();
     session.previousHashedRefreshToken = session.hashedRefreshToken;
@@ -491,10 +496,12 @@ export class AuthService {
       jti: session.id,
     };
 
-    const newAccessToken = await JwtService.signAccessToken(payload, keys.privateKey);
+    const accessTokenExpiresAt = new Date(now.getTime() + policy.accessTokenExpiryMinutes * 60 * 1000);
+    const newAccessToken = await JwtService.signAccessToken(payload, keys.privateKey, `${policy.accessTokenExpiryMinutes}m`);
 
     return {
       accessToken: newAccessToken,
+      accessTokenExpiresAt,
       refreshToken: newRefreshToken,
     };
   }

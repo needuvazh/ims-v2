@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Breadcrumbs, Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Input, PageHeader, Select, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@ims/shared-ui';
+import { Breadcrumbs, Badge, Button, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Input, AdminListPageLayout, PageHeader, ResponsiveDataTable, Select } from '@ims/shared-ui';
 import { Clock3, Home, ShieldCheck, History } from 'lucide-react';
 import { getSession } from '../../../lib/auth-guard';
 
@@ -60,8 +60,58 @@ export default async function IamLoginHistoryPage({ searchParams }: { searchPara
 
   const totalPages = Math.max(1, Math.ceil(result.total / pageSize));
 
+  const rows = result.items.map((item) => ({
+    id: item.id,
+    createdAt: item.createdAt.toISOString(),
+    attemptedEmail: item.attemptedEmail,
+    status: item.status,
+    failureReason: item.failureReason,
+    browser: item.browser,
+    os: item.os,
+    device: item.device,
+    ipAddress: item.ipAddress,
+    branchId: item.branchId,
+    userId: item.userId,
+  }));
+
+  const columns = [
+    { header: 'Time', render: (item: (typeof rows)[number]) => <span>{new Date(item.createdAt).toLocaleString()}</span>, headerClassName: 'w-[170px]' },
+    { header: 'Email', render: (item: (typeof rows)[number]) => <span className="font-medium">{item.attemptedEmail}</span> },
+    { header: 'Status', render: (item: (typeof rows)[number]) => <Badge variant={item.status === 'Success' ? 'success' : 'error'}>{item.status}</Badge>, headerClassName: 'w-[110px]' },
+    { header: 'Reason', render: (item: (typeof rows)[number]) => <span className="text-sm text-[color:var(--ims-muted)]">{item.failureReason ?? '—'}</span> },
+    { header: 'Browser', render: (item: (typeof rows)[number]) => <span className="text-sm text-[color:var(--ims-muted)]">{[item.browser, item.os, item.device].filter(Boolean).join(' / ') || '—'}</span> },
+    { header: 'IP', render: (item: (typeof rows)[number]) => <span className="text-sm text-[color:var(--ims-muted)]">{item.ipAddress ?? '—'}</span> },
+    { header: 'Branch', render: (item: (typeof rows)[number]) => <span className="text-sm text-[color:var(--ims-muted)]">{item.branchId ?? '—'}</span> },
+    { header: 'Open', className: 'text-right', render: (item: (typeof rows)[number]) => (item.userId ? <Link href={`/iam/users/${item.userId}`} className="font-semibold text-[color:var(--ims-brass)] hover:underline">User</Link> : '—'), headerClassName: 'text-right w-[100px]' },
+  ];
+
+  const renderCard = (item: (typeof rows)[number]) => (
+    <Card className="transition-colors hover:border-[var(--ims-brass)]">
+      <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0 space-y-1">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">{new Date(item.createdAt).toLocaleString()}</p>
+            <p className="text-sm font-bold text-[var(--ims-ink)]">{item.attemptedEmail}</p>
+          </div>
+          <Badge variant={item.status === 'Success' ? 'success' : 'error'}>{item.status}</Badge>
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-3 p-card-p text-xs">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="col-span-2"><p className="font-semibold text-[var(--ims-muted)]">Reason</p><p className="truncate">{item.failureReason ?? '—'}</p></div>
+          <div className="col-span-2"><p className="font-semibold text-[var(--ims-muted)]">Browser</p><p className="truncate">{[item.browser, item.os, item.device].filter(Boolean).join(' / ') || '—'}</p></div>
+          <div><p className="font-semibold text-[var(--ims-muted)]">IP</p><p className="truncate">{item.ipAddress ?? '—'}</p></div>
+          <div><p className="font-semibold text-[var(--ims-muted)]">Branch</p><p className="truncate">{item.branchId ?? '—'}</p></div>
+        </div>
+      </CardContent>
+      <CardFooter className="p-card-p pt-0">
+        {item.userId ? <Link href={`/iam/users/${item.userId}`} className="text-sm font-semibold text-[color:var(--ims-brass)] hover:underline">Open user</Link> : <span className="text-sm text-[color:var(--ims-muted)]">—</span>}
+      </CardFooter>
+    </Card>
+  );
+
   return (
-    <div className="space-y-8">
+    <AdminListPageLayout className="pt-1 sm:pt-0">
       <PageHeader
         title="Login History"
         breadcrumbs={
@@ -108,36 +158,7 @@ export default async function IamLoginHistoryPage({ searchParams }: { searchPara
           <CardDescription>{result.total} login event(s) found. Page {page} of {totalPages}.</CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Time</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Reason</TableHead>
-                <TableHead>Browser</TableHead>
-                <TableHead>IP</TableHead>
-                <TableHead>Branch</TableHead>
-                <TableHead>Open</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {result.items.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell>{new Date(item.createdAt).toLocaleString()}</TableCell>
-                  <TableCell>{item.attemptedEmail}</TableCell>
-                  <TableCell><Badge variant={item.status === 'Success' ? 'success' : 'error'}>{item.status}</Badge></TableCell>
-                  <TableCell>{item.failureReason ?? '—'}</TableCell>
-                  <TableCell>{[item.browser, item.os, item.device].filter(Boolean).join(' / ') || '—'}</TableCell>
-                  <TableCell>{item.ipAddress ?? '—'}</TableCell>
-                  <TableCell>{item.branchId ?? '—'}</TableCell>
-                  <TableCell>
-                    {item.userId ? <Link href={`/iam/users/${item.userId}`} className="font-semibold text-[color:var(--ims-brass)] hover:underline">User</Link> : '—'}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <ResponsiveDataTable data={rows} columns={columns} renderCard={renderCard} keyExtractor={(item) => item.id} emptyState={null} />
           <div className="mt-6 flex items-center justify-between text-sm text-[color:var(--ims-muted)]">
             <span>Showing {result.items.length} of {result.total}</span>
             <div className="flex items-center gap-2">
@@ -147,6 +168,6 @@ export default async function IamLoginHistoryPage({ searchParams }: { searchPara
           </div>
         </CardContent>
       </Card>
-    </div>
+    </AdminListPageLayout>
   );
 }

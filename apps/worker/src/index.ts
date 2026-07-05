@@ -22,6 +22,68 @@ const schedulingService = new SchedulingService(prisma, schedulingRepository);
 let isShuttingDown = false;
 let lastOverdueSweepTime = 0;
 const OVERDUE_SWEEP_INTERVAL_MS = 60 * 60 * 1000; // 1 hour
+const DATABASE_RETRY_BACKOFF_MS = 30_000;
+let databaseUnavailable = false;
+let lastDatabaseWarningAt = 0;
+
+function isDatabaseConnectivityError(error: unknown) {
+  if (!error || typeof error !== 'object') {
+    return false;
+  }
+
+  const candidate = error as { name?: string; message?: string; code?: string };
+  return (
+    candidate.name === 'PrismaClientInitializationError' ||
+    candidate.code === 'P1001' ||
+    Boolean(candidate.message?.includes("Can't reach database server"))
+  );
+}
+
+function getDatabaseErrorMessage(error: unknown) {
+  if (error && typeof error === 'object') {
+    const candidate = error as { message?: string };
+    if (typeof candidate.message === 'string' && candidate.message.trim()) {
+      return candidate.message.trim().split('\n').slice(-1)[0] ?? candidate.message.trim();
+    }
+  }
+
+  return 'Unknown database connectivity error';
+}
+
+function getDatabaseErrorCode(error: unknown) {
+  if (error && typeof error === 'object') {
+    const candidate = error as { code?: string; name?: string };
+    if (typeof candidate.code === 'string' && candidate.code.trim()) {
+      return candidate.code.trim();
+    }
+    if (typeof candidate.name === 'string' && candidate.name.trim()) {
+      return candidate.name.trim();
+    }
+  }
+
+  return 'DB_UNAVAILABLE';
+}
+
+function reportDatabaseWarning(scope: string, error: unknown) {
+  const now = Date.now();
+  if (!databaseUnavailable || now - lastDatabaseWarningAt >= DATABASE_RETRY_BACKOFF_MS) {
+    logger.warn(`Database unavailable while ${scope}; retrying in ${DATABASE_RETRY_BACKOFF_MS / 1000}s`, {
+      code: getDatabaseErrorCode(error),
+      message: getDatabaseErrorMessage(error)
+    });
+    lastDatabaseWarningAt = now;
+  }
+
+  databaseUnavailable = true;
+}
+
+function clearDatabaseWarning() {
+  databaseUnavailable = false;
+}
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 async function handleWebsiteInquirySubmitted(payload: Record<string, unknown>) {
   const inquiryId = payload.id as string | undefined;
@@ -231,7 +293,13 @@ async function sweepOverdueFollowUps() {
     }
 
     logger.info('Finished overdue follow-ups sweep.');
+    clearDatabaseWarning();
   } catch (err) {
+    if (isDatabaseConnectivityError(err)) {
+      reportDatabaseWarning('sweeping overdue follow-ups', err);
+      return;
+    }
+
     logger.error('Error sweeping overdue follow-ups', { error: err as Error });
   }
 }
@@ -377,7 +445,14 @@ async function processOutboxEvents() {
         });
       }
     }
+
+    clearDatabaseWarning();
   } catch (err) {
+    if (isDatabaseConnectivityError(err)) {
+      reportDatabaseWarning('polling outbox events', err);
+      return;
+    }
+
     logger.error('Error polling outbox events', { error: err as Error });
   }
 }
@@ -444,7 +519,14 @@ async function processExportJobs() {
         });
       }
     }
+
+    clearDatabaseWarning();
   } catch (err) {
+    if (isDatabaseConnectivityError(err)) {
+      reportDatabaseWarning('polling export jobs', err);
+      return;
+    }
+
     logger.error('Error polling export jobs', { error: err as Error });
   }
 }
@@ -462,9 +544,10 @@ async function startWorker() {
       lastOverdueSweepTime = now;
     }
 
-    for (let i = 0; i < POLL_INTERVAL_MS; i += 100) {
+    const waitMs = databaseUnavailable ? Math.max(POLL_INTERVAL_MS, DATABASE_RETRY_BACKOFF_MS) : POLL_INTERVAL_MS;
+    for (let i = 0; i < waitMs; i += 100) {
       if (isShuttingDown) break;
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await sleep(100);
     }
   }
   

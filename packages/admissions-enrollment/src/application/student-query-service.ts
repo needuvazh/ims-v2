@@ -38,10 +38,16 @@ export interface GlobalPersonLookupOptions {
   revealSensitive?: boolean;
 }
 
+export interface StudentBranchInfo {
+  branchId: string;
+  branchName: string;
+  relation: 'Home' | 'Admission' | 'Enrollment';
+}
+
 export class StudentQueryService {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async globalPersonLookup(query: string, activeBranchId: string, options: GlobalPersonLookupOptions = {}) {
+  async globalPersonLookup(query: string, activeBranchId?: string | null, options: GlobalPersonLookupOptions = {}) {
     if (!query || !query.trim()) {
       throw new Error('ERR_VAL_FAILED: Query cannot be empty');
     }
@@ -60,7 +66,45 @@ export class StudentQueryService {
         ],
       },
       include: {
-        studentProfiles: true,
+        studentProfiles: {
+          where: { isDeleted: false },
+          include: {
+            branch: {
+              select: {
+                id: true,
+                branchName: true,
+              },
+            },
+            admissions: {
+              where: { isDeleted: false },
+              select: {
+                id: true,
+                branchId: true,
+                admissionStatus: true,
+                branch: {
+                  select: {
+                    id: true,
+                    branchName: true,
+                  },
+                },
+              },
+            },
+            enrollments: {
+              where: { isDeleted: false },
+              select: {
+                id: true,
+                branchId: true,
+                enrollmentStatus: true,
+                branch: {
+                  select: {
+                    id: true,
+                    branchName: true,
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     });
 
@@ -79,28 +123,57 @@ export class StudentQueryService {
     }
 
     const studentProfile = person.studentProfiles?.[0] || null;
+    const branchInfoMap = new Map<string, StudentBranchInfo>();
     let preflight = null;
 
     if (studentProfile) {
-      // Check active admission in active branch
-      const activeAdmission = await this.prisma.admission.findFirst({
-        where: {
-          studentProfileId: studentProfile.id,
-          branchId: activeBranchId,
-          isDeleted: false,
-          admissionStatus: {
-            in: ['Draft', 'Submitted', 'Approved'],
-          },
-        },
-      });
+      if (studentProfile.branch) {
+        branchInfoMap.set(studentProfile.branch.id, {
+          branchId: studentProfile.branch.id,
+          branchName: studentProfile.branch.branchName,
+          relation: 'Home',
+        });
+      }
 
-      // Check enrollment globally (advisory only)
+      const activeAdmission = activeBranchId
+        ? await this.prisma.admission.findFirst({
+            where: {
+              studentProfileId: studentProfile.id,
+              branchId: activeBranchId,
+              isDeleted: false,
+              admissionStatus: {
+                in: ['Draft', 'Submitted', 'Approved'],
+              },
+            },
+          })
+        : null;
+
       const enrollmentCount = await this.prisma.enrollment.count({
         where: {
           studentProfileId: studentProfile.id,
           isDeleted: false,
         },
       });
+
+      for (const admission of studentProfile.admissions || []) {
+        if (admission.branch) {
+          branchInfoMap.set(admission.branch.id, {
+            branchId: admission.branch.id,
+            branchName: admission.branch.branchName,
+            relation: 'Admission',
+          });
+        }
+      }
+
+      for (const enrollment of studentProfile.enrollments || []) {
+        if (enrollment.branch) {
+          branchInfoMap.set(enrollment.branch.id, {
+            branchId: enrollment.branch.id,
+            branchName: enrollment.branch.branchName,
+            relation: 'Enrollment',
+          });
+        }
+      }
 
       preflight = {
         hasActiveAdmission: !!activeAdmission,
@@ -120,6 +193,7 @@ export class StudentQueryService {
       maskedNationalId: revealSensitive ? person.nationalId : maskNationalId(person.nationalId),
       studentProfileId: studentProfile?.id || null,
       studentNumber: studentProfile?.studentNumber || null,
+      branchInfo: Array.from(branchInfoMap.values()),
       preflight,
     };
   }
@@ -133,6 +207,8 @@ export class StudentQueryService {
       branchId?: string;
       admissionStatus?: string;
       studentStatus?: string;
+      sortBy?: 'studentNumber' | 'fullName' | 'status' | 'joinedAt' | 'branch';
+      sortOrder?: 'asc' | 'desc';
     }
   ) {
     const page = options?.page ?? 1;
@@ -209,10 +285,29 @@ export class StudentQueryService {
       ];
     }
 
+    const sortBy = options?.sortBy ?? 'joinedAt';
+    const sortOrder = options?.sortOrder ?? 'desc';
+
+    let orderBy: any;
+    if (sortBy === 'fullName') {
+      orderBy = [{ person: { firstName: sortOrder } }, { person: { lastName: sortOrder } }];
+    } else if (sortBy === 'branch') {
+      orderBy = [{ branch: { branchName: sortOrder } }, { joinedAt: 'desc' }];
+    } else {
+      orderBy = [{ [sortBy]: sortOrder }];
+    }
+
     const items = await this.prisma.studentProfile.findMany({
       where: whereClause,
       include: {
         person: true,
+        branch: {
+          select: {
+            id: true,
+            branchName: true,
+            branchCode: true,
+          },
+        },
         admissions: {
           where: { isDeleted: false },
           select: { id: true, admissionNumber: true, admissionStatus: true, branchId: true }
@@ -229,9 +324,7 @@ export class StudentQueryService {
           }
         }
       },
-      orderBy: {
-        joinedAt: 'desc',
-      },
+      orderBy,
       skip,
       take: limit,
     });
@@ -253,6 +346,7 @@ export class StudentQueryService {
         email: maskEmail(profile.person.email),
         nationalId: maskNationalId(profile.person.nationalId),
       },
+      branch: profile.branch,
       admissions: profile.admissions,
       enrollments: profile.enrollments,
     }));

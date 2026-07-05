@@ -34,7 +34,7 @@ export const DEFAULT_SECURITY_POLICY: SecurityPolicy = {
   passwordHistoryCount: 10,
   passwordExpiryDays: 90,
   resetTokenExpiryMinutes: 15,
-  accessTokenExpiryMinutes: 15,
+  accessTokenExpiryMinutes: 30,
   refreshTokenExpiryDays: 7,
   rememberMeRefreshTokenDays: 30,
   sessionInactivityMinutes: 30,
