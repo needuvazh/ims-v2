@@ -204,7 +204,7 @@ export function LeadsClientList({ leads, branches, total }: LeadsClientListProps
       render: (lead: any) => <Badge variant={getStageBadgeVariant(lead.stage)}>{lead.stage}</Badge>,
     },
     {
-      header: 'Created',
+      header: 'Date & Time',
       sortable: true,
       sortDirection: currentSortBy === 'createdAt' ? currentSortOrder : null,
       onSort: () => handleSort('createdAt'),

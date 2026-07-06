@@ -33,6 +33,7 @@ export class PublicCourseQueryService {
 
     const where: Prisma.CourseWhereInput = {
       status: 'Published',
+      isPubliclyExposed: true,
       isDeleted: false,
       ...(filters.categoryId && { categoryId: filters.categoryId }),
       ...(filters.search && {
@@ -92,6 +93,7 @@ export class PublicCourseQueryService {
     const items: PublicCourseListItem[] = coursesRaw.map((course: any) => {
       const nextBatch = course.batches?.[0];
       const pricing = course.pricings?.[0];
+      const showPricing = !!course.showPricingPublicly;
 
       return {
         id: course.id,
@@ -103,11 +105,14 @@ export class PublicCourseQueryService {
         categoryName: course.category?.nameEnglish ?? null,
         durationType: course.durationType,
         durationValue: course.durationValue,
-        basePrice: pricing?.basePrice?.toString() ?? null,
-        currency: pricing?.currency ?? null,
+        basePrice: showPricing && pricing?.basePrice ? pricing.basePrice.toString() : null,
+        currency: showPricing && pricing?.currency ? pricing.currency : null,
         nextBatchDate: nextBatch?.startDate?.toISOString().split('T')[0] ?? null,
         availableSeats: nextBatch ? nextBatch.capacity - nextBatch.currentEnrollmentCount : null,
-        imageUrl: null,
+        imageUrl: course.bannerImage ?? null,
+        showPricingPublicly: showPricing,
+        hasPracticalInstruction: !!course.hasPracticalInstruction,
+        practicalTestingDescription: course.practicalTestingDescription ?? null,
       };
     });
 
@@ -123,6 +128,8 @@ export class PublicCourseQueryService {
   async getCourseDetail(idOrSlug: string): Promise<PublicCourseDetail | null> {
     const courseRaw = await this.prisma.course.findFirst({
       where: {
+        status: 'Published',
+        isPubliclyExposed: true,
         isDeleted: false,
         OR: [
           { id: idOrSlug },
@@ -171,6 +178,8 @@ export class PublicCourseQueryService {
     if (!courseRaw) return null;
 
     const pricing = courseRaw.pricings?.[0];
+    const categoryHierarchy = await this.getCategoryHierarchy(courseRaw.categoryId);
+    const showPricing = !!courseRaw.showPricingPublicly;
 
     const batches = (courseRaw.batches ?? []).map((batch: any) => {
       const primaryTrainer = batch.trainers?.find((t: any) => t.role === 'Primary') ?? batch.trainers?.[0];
@@ -201,9 +210,18 @@ export class PublicCourseQueryService {
       categoryName: courseRaw.category?.nameEnglish ?? null,
       durationType: courseRaw.durationType,
       durationValue: courseRaw.durationValue,
-      basePrice: pricing?.basePrice?.toString() ?? null,
-      taxPercentage: pricing?.taxPercentage?.toString() ?? null,
-      currency: pricing?.currency ?? null,
+      basePrice: showPricing && pricing?.basePrice ? pricing.basePrice.toString() : null,
+      taxPercentage: showPricing && pricing?.taxPercentage ? pricing.taxPercentage.toString() : null,
+      currency: showPricing && pricing?.currency ? pricing.currency : null,
+      imageUrl: courseRaw.bannerImage ?? null,
+      showPricingPublicly: showPricing,
+      hasPracticalInstruction: !!courseRaw.hasPracticalInstruction,
+      practicalTestingDescription: courseRaw.practicalTestingDescription ?? null,
+      metaTitle: courseRaw.metaTitle ?? null,
+      metaDescription: courseRaw.metaDescription ?? null,
+      metaKeywords: courseRaw.metaKeywords ?? null,
+      syllabusOutline: courseRaw.syllabusOutline ?? null,
+      categoryHierarchy,
       batches,
     };
   }
@@ -295,6 +313,32 @@ export class PublicCourseQueryService {
         courseName: courseRaw.nameEnglish,
       };
     });
+  }
+
+  private async getCategoryHierarchy(
+    categoryId: string | null | undefined
+  ): Promise<Array<{ id: string; code: string; nameEnglish: string; nameArabic: string }>> {
+    if (!categoryId) return [];
+    const hierarchy: Array<{ id: string; code: string; nameEnglish: string; nameArabic: string }> = [];
+    let currentId: string | null = categoryId;
+    const visited = new Set<string>();
+
+    while (currentId && !visited.has(currentId)) {
+      visited.add(currentId);
+      const cat: any = await this.prisma.courseCategory.findUnique({
+        where: { id: currentId, isDeleted: false },
+        select: { id: true, code: true, nameEnglish: true, nameArabic: true, parentCategoryId: true },
+      });
+      if (!cat) break;
+      hierarchy.unshift({
+        id: cat.id,
+        code: cat.code,
+        nameEnglish: cat.nameEnglish,
+        nameArabic: cat.nameArabic,
+      });
+      currentId = cat.parentCategoryId;
+    }
+    return hierarchy;
   }
 
   private generateSlug(courseCode: string, nameEnglish: string): string {

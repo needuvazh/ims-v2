@@ -3,7 +3,7 @@
 ## Purpose
 Define the shared responsive layout, spacing, typography, and component behavior rules for the IMS admin portal and public site so the UI is responsive by default across common device widths.
 
-## Requirements
+## ADDED Requirements
 
 ### Requirement: Standard viewport tiers and density modes
 The system SHALL classify responsive behavior using the following viewport tiers: Mobile (`320px–639px`), Tablet (`640px–1023px`), Laptop (`1024px–1439px`), and Wide Desktop (`1440px+`).

@@ -206,6 +206,46 @@ export class CoursePricingService {
     return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
 
+  async disablePricingRule(id: string, actorId?: string, tx?: Prisma.TransactionClient) {
+    const execute = async (activeClient: Prisma.TransactionClient) => {
+      const record = await this.pricingRepository.findById(id, activeClient);
+      if (!record) {
+        throw new Error('ERR_CRS_PRICING_NOT_FOUND');
+      }
+
+      if (record.status === 'Inactive') {
+        return record;
+      }
+
+      const updated = await this.pricingRepository.update(
+        id,
+        {
+          status: 'Inactive',
+        },
+        activeClient
+      );
+
+      // Audit Log
+      await activeClient.auditLog.create({
+        data: {
+          id: createUuid(randomUUID()),
+          module: 'CourseCatalog',
+          performedBy: actorId || null,
+          performedAt: new Date(),
+          entityType: 'CoursePricing',
+          entityId: id,
+          action: 'Disable',
+          oldValue: { status: record.status },
+          newValue: { status: 'Inactive' },
+        },
+      });
+
+      return updated;
+    };
+
+    return tx ? execute(tx) : this.prisma.$transaction(execute);
+  }
+
   async resolveCoursePricing(
     filters: {
       courseId: string;

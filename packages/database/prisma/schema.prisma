@@ -1126,6 +1126,16 @@ model Course {
   effectiveStartDate DateTime  @db.Date
   effectiveEndDate   DateTime? @db.Date
 
+  isPubliclyExposed     Boolean   @default(false)
+  bannerImage           String?   @db.Text
+  metaTitle             String?   @db.VarChar(255)
+  metaDescription       String?   @db.Text
+  metaKeywords          String?   @db.Text
+  syllabusOutline       String?   @db.Text
+  showPricingPublicly   Boolean   @default(true)
+  hasPracticalInstruction Boolean @default(false)
+  practicalTestingDescription String? @db.Text
+
   version Int @default(1)
 
   category        CourseCategory?        @relation(fields: [categoryId], references: [id])
@@ -1669,6 +1679,8 @@ model Lead {
   lastName           String     @db.VarChar(100)
   email              String?    @db.VarChar(255)
   phone              String     @db.VarChar(30)
+  nationality        String?    @db.VarChar(50)
+  nationalId         String?    @db.VarChar(50)
   stage              LeadStage  @default(New)
   source             LeadSource @default(Other)
   counselorId        String?    @db.Uuid

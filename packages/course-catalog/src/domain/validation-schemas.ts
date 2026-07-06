@@ -38,6 +38,15 @@ export const CreateCourseSchema = z.object({
   allowWalkInCompletion: z.boolean().default(false),
   effectiveStartDate: z.coerce.date(),
   effectiveEndDate: z.preprocess((val) => (val === '' ? null : val), z.coerce.date().optional().nullable()),
+  isPubliclyExposed: z.boolean().default(false),
+  bannerImage: z.string().trim().optional().nullable(),
+  metaTitle: z.string().trim().max(255).optional().nullable(),
+  metaDescription: z.string().trim().optional().nullable(),
+  metaKeywords: z.string().trim().optional().nullable(),
+  syllabusOutline: z.string().trim().optional().nullable(),
+  showPricingPublicly: z.boolean().default(true),
+  hasPracticalInstruction: z.boolean().default(false),
+  practicalTestingDescription: z.string().trim().optional().nullable(),
 });
 
 export const UpdateCourseSchema = CreateCourseSchema.partial().omit({ courseCode: true });

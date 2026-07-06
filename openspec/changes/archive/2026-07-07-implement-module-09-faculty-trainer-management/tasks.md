@@ -31,20 +31,20 @@
 ## 5. Admin Portal UI
 
 - [x] 5.1 Add `/faculty/dashboard`, `/faculty/trainers`, `/faculty/trainers/new`, and `/faculty/trainers/[trainerId]` screens in the admin portal.
-- [ ] 5.2 Add tab or drawer experiences for qualifications, availability, authorizations, compensation, assignment references, and audit history.
-- [ ] 5.3 Add the eligible trainer finder and trainer reports screens with branch-aware filters and export actions.
-- [ ] 5.4 Wire responsive loading, empty, validation, permission-denied, and compensation-redacted states into the new screens.
+- [x] 5.2 Add tab or drawer experiences for qualifications, availability, authorizations, compensation, assignment references, and audit history.
+- [x] 5.3 Add the eligible trainer finder and trainer reports screens with branch-aware filters and export actions.
+- [x] 5.4 Wire responsive loading, empty, validation, permission-denied, and compensation-redacted states into the new screens.
 
 ## 6. Reporting, Audit, and Integration
 
-- [ ] 6.1 Implement trainer reporting projections and export logic for roster, authorization coverage, availability coverage, utilization reference, qualification compliance, and compensation coverage.
-- [ ] 6.2 Add audit/outbox emission for sensitive trainer mutations and ensure audit history reads from immutable trainer change records.
-- [ ] 6.3 Integrate eligibility and availability validation into the Training Delivery and Scheduling read-side flows without transferring ownership.
+- [x] 6.1 Implement trainer reporting projections and export logic for roster, authorization coverage, availability coverage, utilization reference, qualification compliance, and compensation coverage.
+- [x] 6.2 Add audit/outbox emission for sensitive trainer mutations and ensure audit history reads from immutable trainer change records.
+- [x] 6.3 Integrate eligibility and availability validation into the Training Delivery and Scheduling read-side flows without transferring ownership.
 
 ## 7. Tests and Verification
 
-- [ ] 7.1 Add domain unit tests for trainer lifecycle, overlap validation, authorization transitions, compensation resolution, and redaction rules.
-- [ ] 7.2 Add application and API tests for permission checks, branch scope, validation failures, audit behavior, and error mapping.
-- [ ] 7.3 Add repository/integration tests for Prisma persistence, soft delete filtering, effective dating, and export behavior.
-- [ ] 7.4 Add Playwright or UI tests for core Module 09 screens, role-based visibility, and successful trainer workflows.
-- [ ] 7.5 Run typecheck, lint, targeted tests, and affected builds; update `docs/project-status.md` if implementation materially changes the FRD completion state.
+- [x] 7.1 Add domain unit tests for trainer lifecycle, overlap validation, authorization transitions, compensation resolution, and redaction rules.
+- [x] 7.2 Add application and API tests for permission checks, branch scope, validation failures, audit behavior, and error mapping.
+- [x] 7.3 Add repository/integration tests for Prisma persistence, soft delete filtering, effective dating, and export behavior.
+- [x] 7.4 Add Playwright or UI tests for core Module 09 screens, role-based visibility, and successful trainer workflows.
+- [x] 7.5 Run typecheck, lint, targeted tests, and affected builds; update `docs/project-status.md` if implementation materially changes the FRD completion state.

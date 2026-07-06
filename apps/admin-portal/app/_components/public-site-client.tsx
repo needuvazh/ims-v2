@@ -110,6 +110,24 @@ function RealTimeCourseCard({ course, index }: { course: PublicCourseListItem; i
     ? `${course.currency ?? 'OMR'} ${parseFloat(course.basePrice).toFixed(3)}`
     : 'Please enquire';
 
+  const normalizedImageUrl = (() => {
+    if (!course.imageUrl) return null;
+    const url = course.imageUrl.trim();
+    if (!url) return null;
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      try {
+        new URL(url);
+        return url;
+      } catch {
+        return null;
+      }
+    }
+    if (url.startsWith('/')) {
+      return url;
+    }
+    return `/${url}`;
+  })();
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 20 }}
@@ -120,8 +138,8 @@ function RealTimeCourseCard({ course, index }: { course: PublicCourseListItem; i
       className="group flex flex-col overflow-hidden rounded-[2rem] border border-border-light bg-white shadow-sm transition-all hover:border-border-strong hover:shadow-2xl hover:shadow-primary-950/5"
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-surface-100">
-        {course.imageUrl ? (
-          <Image src={course.imageUrl} alt={course.nameEnglish} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+        {normalizedImageUrl ? (
+          <Image src={normalizedImageUrl} alt={course.nameEnglish} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-primary-100 to-accent-50 flex items-center justify-center">
             <Clock className="h-12 w-12 text-primary-300" />

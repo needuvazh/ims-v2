@@ -211,3 +211,25 @@ The system SHALL resolve the allowed branch list recursively down the organizati
 #### Scenario: Child branch access does not resolve ancestors
 - **WHEN** a user is assigned to Branch C (which is child to Branch A)
 - **THEN** the user's allowed branch ID list SHALL NOT include Branch A
+
+### Requirement: Module 09 trainer permission catalog support
+The system SHALL support Module 09 trainer menu, action, report, and export permission codes in the dynamic RBAC catalog and SHALL include them in effective permission evaluation.
+
+#### Scenario: Trainer permissions resolve through RBAC
+- **WHEN** a role is assigned a Module 09 trainer permission code
+- **THEN** the permission SHALL appear in the user's effective permission set after session hydration
+
+#### Scenario: Menu visibility does not replace authorization
+- **WHEN** the Faculty menu is hidden because a user lacks menu permission
+- **THEN** server-side permission checks SHALL still be enforced for direct route access
+
+### Requirement: Module 09 permission names are code-driven
+The system SHALL evaluate Module 09 access by permission code and branch scope, not by role name or UI visibility.
+
+#### Scenario: Role name alone does not grant trainer access
+- **WHEN** a user has a trainer-related role name but no trainer permission codes
+- **THEN** the system SHALL deny access to Module 09 protected routes
+
+#### Scenario: Session retains trainer permissions
+- **WHEN** a user signs in with trainer permissions assigned
+- **THEN** the session SHALL preserve the effective trainer permissions for server-side checks

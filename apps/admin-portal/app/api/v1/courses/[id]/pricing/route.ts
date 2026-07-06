@@ -8,6 +8,7 @@ import {
 } from '../../../../../../lib/observability';
 import { z } from 'zod';
 import { prisma } from '@ims/database';
+import { Prisma } from '@prisma/client';
 
 const pricingPostSchema = z.object({
   branchId: z.string().uuid().nullable().optional(),
@@ -138,24 +139,44 @@ export async function GET(request: Request, props: { params: Promise<{ id: strin
     try {
       const params = new URL(request.url).searchParams;
       const branchId = params.get('branchId') || undefined;
-      const batchId = params.get('batchId') || undefined;
       const status = params.get('status') || undefined;
+      const q = params.get('q') || '';
+      
+      const page = parseInt(params.get('page') || '1', 10);
+      const limit = parseInt(params.get('limit') || '10', 10);
+      const skip = (page - 1) * limit;
+
+      const sortBy = params.get('sortBy') || 'effectiveStartDate';
+      const sortOrder = (params.get('sortOrder') as 'asc' | 'desc') || 'desc';
+
+      const where: Prisma.CoursePricingWhereInput = {
+        courseId: id,
+        isDeleted: false,
+        branchId: branchId === undefined ? undefined : (branchId || null),
+        status: status as any || undefined,
+      };
+
+      if (q) {
+        where.OR = [
+          { customerType: { contains: q, mode: 'insensitive' } },
+          { batchType: { contains: q, mode: 'insensitive' } },
+        ];
+      }
+
+      const total = await prisma.coursePricing.count({ where });
 
       const records = await prisma.coursePricing.findMany({
-        where: {
-          courseId: id,
-          branchId: branchId === undefined ? undefined : (branchId || null),
-          batchId: batchId === undefined ? undefined : (batchId || null),
-          status: status as any || undefined,
-          isDeleted: false,
-        },
-        orderBy: { effectiveStartDate: 'desc' },
+        where,
+        orderBy: { [sortBy]: sortOrder },
+        skip,
+        take: limit,
       });
 
       const response = NextResponse.json(
         {
           success: true,
           data: records,
+          total,
         },
         { status: 200 }
       );
@@ -177,6 +198,86 @@ export async function GET(request: Request, props: { params: Promise<{ id: strin
           statusCode: 500,
         },
         { status: 500 }
+      );
+    }
+  }), { route: '/api/v1/courses/[id]/pricing' });
+}
+
+const pricingPatchSchema = z.object({
+  id: z.string().uuid(),
+  action: z.enum(['disable']),
+});
+
+export async function PATCH(request: Request, props: { params: Promise<{ id: string }> }) {
+  const { id } = await props.params;
+
+  let payload: unknown;
+  try {
+    payload = await request.json();
+  } catch {
+    return problemJson(400, 'Request body must be valid JSON.', 'CRS-VAL-PRICING-INVALID_JSON');
+  }
+
+  const parsed = pricingPatchSchema.safeParse(payload);
+  if (!parsed.success) {
+    return problemJson(
+      400,
+      'Pricing patch parameters are invalid.',
+      'CRS-VAL-PRICING-INVALID_PATCH_BODY',
+      parsed.error.issues.map((issue) => ({
+        field: issue.path.join('.') || 'body',
+        message: issue.message,
+      }))
+    );
+  }
+
+  return withRouteObservability(request.headers, async () => withPermission(request, 'course.pricing.override', async ({ session }) => {
+    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+
+    try {
+      const { coursePricingService } = await import('../../../../../../lib/runtime');
+
+      if (parsed.data.action === 'disable') {
+        const result = await coursePricingService.disablePricingRule(parsed.data.id, session.userId);
+        const response = NextResponse.json(
+          {
+            success: true,
+            data: result,
+          },
+          { status: 200 }
+        );
+
+        applyObservabilityResponseHeaders(response.headers, request.headers, {
+          route: '/api/v1/courses/[id]/pricing',
+          method: request.method,
+          status: 'success',
+        });
+
+        return response;
+      }
+
+      return problemJson(400, 'Unsupported patch action.', 'CRS-VAL-PRICING-UNSUPPORTED_ACTION');
+    } catch (error) {
+      logger.error('api.courses.pricing.patch.failed', { status: 'failed', error: error as Error });
+      const msg = (error as Error).message;
+      let status = 500;
+      let code = 'ERR_SYSTEM';
+      let messageEn = 'An unexpected error occurred.';
+
+      if (msg.includes('ERR_CRS_PRICING_NOT_FOUND')) {
+        status = 404;
+        code = 'ERR_CRS_PRICING_NOT_FOUND';
+        messageEn = 'Pricing override not found.';
+      }
+
+      return NextResponse.json(
+        {
+          success: false,
+          errorCode: code,
+          messageEnglish: messageEn,
+          statusCode: status,
+        },
+        { status }
       );
     }
   }), { route: '/api/v1/courses/[id]/pricing' });

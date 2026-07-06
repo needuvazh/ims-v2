@@ -109,10 +109,10 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
         secondaryHref="/courses"
         secondaryLabel="Back to Courses"
         stats={[
-          { value: durationLabel, label: 'Duration', icon: Clock },
-          { value: 'Safety-first', label: 'Training method', icon: ShieldCheck },
-          { value: 'Certified', label: 'Outcome', icon: Award },
-          { value: priceLabel, label: 'Price', icon: MapPin },
+          { value: durationLabel, label: 'Duration', icon: 'clock' },
+          { value: 'Safety-first', label: 'Training method', icon: 'shield' },
+          { value: 'Certified', label: 'Outcome', icon: 'award' },
+          { value: priceLabel, label: 'Price', icon: 'mapPin' },
         ]}
       />
 

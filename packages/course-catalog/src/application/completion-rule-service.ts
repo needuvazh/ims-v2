@@ -136,4 +136,44 @@ export class CourseCompletionRuleService {
 
     return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
+
+  async disableCompletionRule(id: string, actorId?: string, tx?: Prisma.TransactionClient) {
+    const execute = async (activeClient: Prisma.TransactionClient) => {
+      const record = await this.ruleRepository.findById(id, activeClient);
+      if (!record) {
+        throw new Error('ERR_CRS_RULE_NOT_FOUND');
+      }
+
+      if (record.status === 'Inactive') {
+        return record;
+      }
+
+      const updated = await this.ruleRepository.update(
+        id,
+        {
+          status: 'Inactive',
+        },
+        activeClient
+      );
+
+      // Audit Log
+      await activeClient.auditLog.create({
+        data: {
+          id: createUuid(randomUUID()),
+          module: 'CourseCatalog',
+          performedBy: actorId || null,
+          performedAt: new Date(),
+          entityType: 'CourseCompletionRule',
+          entityId: id,
+          action: 'Disable',
+          oldValue: { status: record.status },
+          newValue: { status: 'Inactive' },
+        },
+      });
+
+      return updated;
+    };
+
+    return tx ? execute(tx) : this.prisma.$transaction(execute);
+  }
 }

@@ -2,9 +2,7 @@
 
 ## Purpose
 Manages courses, course categories, course options, fee structures, pricing hierarchy, discount hierarchy, publishing, and completion rules globally across ASTI IMS.
-
 ## Requirements
-
 ### Requirement: Course Profile Creation (FR-CRS-001)
 The system SHALL support creating a training course profile in a draft state, enforcing bilingual names, unique course codes, and valid department owner associations.
 
@@ -69,3 +67,20 @@ The system SHALL support transitioning course status through the lifecycle (Draf
 #### Scenario: Archiving a course marks it as logically deleted
 - **WHEN** a course status is transitioned to `Archived`
 - **THEN** the system SHALL set `isDeleted = true`, populate `deletedAt`, transition status to `Archived`, and ensure all associated batches are either completed or cancelled.
+
+### Requirement: Course Configurations Pagination & Search (FR-CRS-006)
+The system SHALL support server-side pagination, sorting, status filtering, and query-based searching for course fee structure overrides, discount segments, and graduation completion rules.
+
+#### Scenario: Successfully query paginated list of configs overrides
+- **WHEN** a client requests a list of course overrides with `page`, `limit`, `status`, and `sortBy` sorting attributes
+- **THEN** the system SHALL return the matching page segment along with the total count metadata in the response.
+
+---
+
+### Requirement: Rules Override Status Deactivation (FR-CRS-007)
+The system SHALL support disabling active course fee structure overrides, discount segments, and graduation completion rules, shifting their status to `Inactive` and logging the action.
+
+#### Scenario: Disable completion rules version
+- **WHEN** an administrator requests to deactivate a graduation completion rules version
+- **THEN** the system SHALL mark the rule status as `Inactive` in the database and write an audit event with old and new values.
+

@@ -320,7 +320,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/next-env.d.ts": {
-    "mtime": 1783352378.2733042,
+    "mtime": 1783364003.0378118,
     "ast_hash": "2a74d3909800ca5467fa83b0ab4a4890",
     "semantic_hash": ""
   },
@@ -330,8 +330,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/package.json": {
-    "mtime": 1783311406.5924568,
-    "ast_hash": "137107b7484efbcb9b4fc57c63229021",
+    "mtime": 1783361912.688335,
+    "ast_hash": "dc29e6c3fefae6408d6315b3e3f555d2",
     "semantic_hash": ""
   },
   "apps/admin-portal/postcss.config.mjs": {
@@ -2425,8 +2425,8 @@
     "semantic_hash": ""
   },
   "openspec/specs/identity-access/spec.md": {
-    "mtime": 1783140601.403862,
-    "ast_hash": "2eccf837de3c60d0f18834f17917cb3c",
+    "mtime": 1783364213.6800213,
+    "ast_hash": "7cfd3bcd16ef4152404dccb319b69acf",
     "semantic_hash": ""
   },
   "openspec/specs/observability/spec.md": {
@@ -2555,8 +2555,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/actions.ts": {
-    "mtime": 1783104197.0765889,
-    "ast_hash": "60ce932dcb8c4b8cf9d80bec5fd4dedf",
+    "mtime": 1783356068.5493062,
+    "ast_hash": "bd3a06c26476c11c24117dc063eec28c",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/page.tsx": {
@@ -2680,13 +2680,13 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/lead-conversion-orchestrator.ts": {
-    "mtime": 1783104198.2113128,
+    "mtime": 1783358189.3788128,
     "ast_hash": "cd10c42645bbfab3f52c9ed13e8c69ee",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/domain/admission.ts": {
-    "mtime": 1783104198.2659335,
-    "ast_hash": "ef38f32c231fa1cf37ad018edb0bd3fd",
+    "mtime": 1783355375.4364684,
+    "ast_hash": "10a56c9bd90f99eed7f469c1b72aa110",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/index.ts": {
@@ -2695,8 +2695,8 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/infrastructure/admission-repository.ts": {
-    "mtime": 1783104198.2681563,
-    "ast_hash": "1266e2dde76084003e52210b58da6411",
+    "mtime": 1783355378.0323775,
+    "ast_hash": "7c3390b60e702863bdc76adbf4cab6b3",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/tsconfig.json": {
@@ -2710,13 +2710,13 @@
     "semantic_hash": ""
   },
   "packages/crm-leads/src/application/lead-service.ts": {
-    "mtime": 1783172888.7729135,
-    "ast_hash": "bd4bce0aae593bd079d2c3a905008fd1",
+    "mtime": 1783355363.1257331,
+    "ast_hash": "3a723f733fa91d1f43da54304cd9e233",
     "semantic_hash": ""
   },
   "packages/crm-leads/src/domain/lead.ts": {
-    "mtime": 1783104198.2955225,
-    "ast_hash": "10ec1b081d81439acb8bf3d3e4c9ebd4",
+    "mtime": 1783355924.876901,
+    "ast_hash": "6335aa25f9e573ea0a3f043d0e28e025",
     "semantic_hash": ""
   },
   "packages/crm-leads/src/index.ts": {
@@ -2725,8 +2725,8 @@
     "semantic_hash": ""
   },
   "packages/crm-leads/src/infrastructure/lead-repository.ts": {
-    "mtime": 1783172893.3302658,
-    "ast_hash": "c0d2e669eff8f381d934af523ec1be4e",
+    "mtime": 1783355348.8773136,
+    "ast_hash": "c306e1cf324f39f9dde680610f15d9ac",
     "semantic_hash": ""
   },
   "packages/crm-leads/tsconfig.json": {
@@ -2835,8 +2835,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/_components/public-site.tsx": {
-    "mtime": 1783252156.215118,
-    "ast_hash": "5c9eae87acad4428346cd935e4aa2b0f",
+    "mtime": 1783363594.640218,
+    "ast_hash": "964f6e9cfbe21bdb2d39c7713e1fe220",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/about/page.tsx": {
@@ -4330,27 +4330,27 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/_components/lead-form.tsx": {
-    "mtime": 1783187110.6786127,
-    "ast_hash": "c576061d3d1303371c28f42d50a63846",
+    "mtime": 1783356708.0268018,
+    "ast_hash": "d2ead83ab6dea9ed6474388b10afef4b",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/_components/leads-client-list.tsx": {
-    "mtime": 1783187554.7148497,
-    "ast_hash": "e2bbc2484bd232d12ca41b1fc73c259e",
+    "mtime": 1783355415.0211995,
+    "ast_hash": "77a478c1837656c9a0f7c14bd388377b",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/[id]/edit/page.tsx": {
-    "mtime": 1783187000.6773872,
-    "ast_hash": "51a431d25be4edd3f51c73b5d3971012",
+    "mtime": 1783355399.26638,
+    "ast_hash": "48ddc197114664dc113fc7c0dce87396",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/create/page.tsx": {
-    "mtime": 1783138099.3065715,
-    "ast_hash": "61bad6c3101dd37a140b520fbff71c4b",
+    "mtime": 1783355396.011151,
+    "ast_hash": "52e1d9e5d91d084a4a4c31db4c3eec1c",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/[id]/_components/lead-details-client.tsx": {
-    "mtime": 1783104197.074166,
+    "mtime": 1783358189.378071,
     "ast_hash": "5ed733075783331f26556050d44a4a7b",
     "semantic_hash": ""
   },
@@ -4640,13 +4640,13 @@
     "semantic_hash": ""
   },
   "packages/course-catalog/src/application/course-service.ts": {
-    "mtime": 1783190311.299236,
-    "ast_hash": "ba0e5eab17e6d200402950740a759ec8",
+    "mtime": 1783360404.9301403,
+    "ast_hash": "ad7b42cc5d55012f4288355b7e156911",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/domain/course.ts": {
-    "mtime": 1783104198.288975,
-    "ast_hash": "2d372d5dde0c7dfb4ad698155b86bde4",
+    "mtime": 1783360371.7027948,
+    "ast_hash": "b8e9ebd43c2040b8e094dff7564bf1de",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/domain/errors.ts": {
@@ -4660,8 +4660,8 @@
     "semantic_hash": ""
   },
   "packages/course-catalog/src/domain/validation-schemas.ts": {
-    "mtime": 1783104198.289763,
-    "ast_hash": "e6c45a8cf34a0381078306de84af5314",
+    "mtime": 1783360380.8572605,
+    "ast_hash": "067a92591e787b45e87641cc115166ac",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/index.ts": {
@@ -4675,13 +4675,13 @@
     "semantic_hash": ""
   },
   "packages/course-catalog/src/infrastructure/course-repository.ts": {
-    "mtime": 1783190311.2987251,
-    "ast_hash": "0d12253d7aba78490e2d75e6f228a830",
+    "mtime": 1783360399.0343864,
+    "ast_hash": "58c64d07eb0b8299aeefe74f20327ffa",
     "semantic_hash": ""
   },
   "packages/course-catalog/tests/course-catalog.spec.ts": {
-    "mtime": 1783104198.2921953,
-    "ast_hash": "221cdd7c5665111e094b5efb74e9e1c1",
+    "mtime": 1783360471.7592146,
+    "ast_hash": "5faf53d819c8d68b7893dd641f228734",
     "semantic_hash": ""
   },
   "packages/course-catalog/tsconfig.json": {
@@ -4705,8 +4705,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/courses-catalog/_components/course-form.tsx": {
-    "mtime": 1783104197.0358799,
-    "ast_hash": "a3a2a1ec006ac7e6a218f95cd072a36e",
+    "mtime": 1783360763.8707657,
+    "ast_hash": "63103f4215ab8d1cc28d7670497cbe1e",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/courses-catalog/_components/courses-client-list.tsx": {
@@ -4765,8 +4765,8 @@
     "semantic_hash": ""
   },
   "openspec/specs/course-catalog/spec.md": {
-    "mtime": 1783104198.177735,
-    "ast_hash": "3d28fcffb05790b573404e7031f80f7f",
+    "mtime": 1783363932.6783304,
+    "ast_hash": "42b387aeab85a0c5573a582189a20a9e",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/[id]/page.tsx": {
@@ -4870,8 +4870,8 @@
     "semantic_hash": ""
   },
   "packages/training-delivery/tests/training-delivery.spec.ts": {
-    "mtime": 1783104198.6978414,
-    "ast_hash": "1fcd9b3ceb02783d2afcc430fca35d36",
+    "mtime": 1783364056.343288,
+    "ast_hash": "888c91c7b61a35aebc5765ab64d2209f",
     "semantic_hash": ""
   },
   "packages/training-delivery/tsconfig.json": {
@@ -5040,8 +5040,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/courses-catalog/[id]/edit/_components/course-configs-panel.tsx": {
-    "mtime": 1783104197.0347805,
-    "ast_hash": "0cf3660c00082afb696ca74e299e2440",
+    "mtime": 1783363441.985881,
+    "ast_hash": "def13031325979b34fdb229c12bc26d5",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/courses/[id]/completion-rules/active/route.ts": {
@@ -5050,13 +5050,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/courses/[id]/completion-rules/route.ts": {
-    "mtime": 1783104197.110248,
-    "ast_hash": "df455ff94de1ceb6dadd73e2c1ba062f",
+    "mtime": 1783363328.1498616,
+    "ast_hash": "f8c916be83830dd72d3dfcbf643cdeaa",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/courses/[id]/discounts/route.ts": {
-    "mtime": 1783104197.1106095,
-    "ast_hash": "7c995dbbc2d1f2eee686428484e301f9",
+    "mtime": 1783362994.8777976,
+    "ast_hash": "82671267cb498708067a6d99d6742e6f",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/courses/[id]/pricing/resolve/route.ts": {
@@ -5070,8 +5070,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/courses/[id]/pricing/route.ts": {
-    "mtime": 1783104197.1116502,
-    "ast_hash": "5f0b9c0686fd16f5a679e3ecd3ab21d3",
+    "mtime": 1783362858.6109507,
+    "ast_hash": "c35551d7b5e56345b3997d115c9f4e05",
     "semantic_hash": ""
   },
   "apps/admin-portal/e2e/course-pricing-discounts.spec.ts": {
@@ -5080,13 +5080,13 @@
     "semantic_hash": ""
   },
   "packages/course-catalog/src/application/completion-rule-service.ts": {
-    "mtime": 1783104198.2873397,
-    "ast_hash": "0c7d706bfae075816df17fb964270af3",
+    "mtime": 1783363318.278242,
+    "ast_hash": "c96b1a1c01e31078d025b170138171dd",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/application/discount-service.ts": {
-    "mtime": 1783104198.2880213,
-    "ast_hash": "cc7330290bbef0e94c83fb830974ce73",
+    "mtime": 1783362984.6639836,
+    "ast_hash": "ff695c1b347761beeec0839aeb3e3d19",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/application/pricing-service.test.ts": {
@@ -5095,8 +5095,8 @@
     "semantic_hash": ""
   },
   "packages/course-catalog/src/application/pricing-service.ts": {
-    "mtime": 1783104198.2886474,
-    "ast_hash": "dbb36350f0972a8d641b57af8c621924",
+    "mtime": 1783361669.3724952,
+    "ast_hash": "a00010c62f2b0dd7e07112688e1ce75b",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/infrastructure/completion-rule-repository.ts": {
@@ -5150,8 +5150,8 @@
     "semantic_hash": ""
   },
   "openspec/specs/course-pricing-discounts/spec.md": {
-    "mtime": 1783104198.1788878,
-    "ast_hash": "f05c21bc754bce7f47c8b51b3fcd10de",
+    "mtime": 1783363932.678843,
+    "ast_hash": "b41d03a52b0b53f1cd307e7420820246",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/document-management-gates.test.ts": {
@@ -5435,8 +5435,8 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/student-query-service.ts": {
-    "mtime": 1783188146.9077582,
-    "ast_hash": "de7b81544d689b4d6017a8156a90eba4",
+    "mtime": 1783356601.6848898,
+    "ast_hash": "74eb191010204f469bc8cac71908bb00",
     "semantic_hash": ""
   },
   "openspec/changes/archive/2026-07-02-enrollment-lifecycle/.openspec.yaml": {
@@ -5660,7 +5660,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/enrollments/_components/enrollments-client-list.tsx": {
-    "mtime": 1783266097.2233922,
+    "mtime": 1783358189.3773751,
     "ast_hash": "f3d1a8093e710ada9247afbf71524e1d",
     "semantic_hash": ""
   },
@@ -5740,8 +5740,8 @@
     "semantic_hash": ""
   },
   "openspec/specs/reports-dashboards/spec.md": {
-    "mtime": 1783140608.5040371,
-    "ast_hash": "1bd06325494bb9913b613d5189828506",
+    "mtime": 1783364223.9679508,
+    "ast_hash": "2fbf83a3433c7fbbc2c4d908d59d6317",
     "semantic_hash": ""
   },
   "openspec/specs/student-directory/spec.md": {
@@ -6964,31 +6964,6 @@
     "ast_hash": "e6f6408a14a58644d828550ce06c264e",
     "semantic_hash": ""
   },
-  "openspec/changes/improve-responsive-ui-system/.openspec.yaml": {
-    "mtime": 1783105526.9807332,
-    "ast_hash": "02f6db0a449be79349504bc19b245e9b",
-    "semantic_hash": ""
-  },
-  "openspec/changes/improve-responsive-ui-system/design.md": {
-    "mtime": 1783105535.1754365,
-    "ast_hash": "19706a60941154c5e2f17d553e52b721",
-    "semantic_hash": ""
-  },
-  "openspec/changes/improve-responsive-ui-system/proposal.md": {
-    "mtime": 1783105529.2332144,
-    "ast_hash": "241629de5927fb16dbce589dabcf940e",
-    "semantic_hash": ""
-  },
-  "openspec/changes/improve-responsive-ui-system/specs/responsive-ui-system/spec.md": {
-    "mtime": 1783105543.2961924,
-    "ast_hash": "b8304e6f53c5f7d01f4cc4483471cd55",
-    "semantic_hash": ""
-  },
-  "openspec/changes/improve-responsive-ui-system/tasks.md": {
-    "mtime": 1783138614.4599786,
-    "ast_hash": "8c589c38e10dd783ceaa8554878e7fe3",
-    "semantic_hash": ""
-  },
   "openspec/specs/duplicate-management/spec.md": {
     "mtime": 1783104198.188551,
     "ast_hash": "16ffc39068c66ef2ef66bb58d566c647",
@@ -7000,8 +6975,8 @@
     "semantic_hash": ""
   },
   "openspec/specs/permissions-and-branch-scope/spec.md": {
-    "mtime": 1783140604.9392033,
-    "ast_hash": "ef40dc3217b05bbeeb43fa461f28b388",
+    "mtime": 1783364218.686075,
+    "ast_hash": "4481e989bb483233ed982d2c07aa656e",
     "semantic_hash": ""
   },
   "openspec/specs/student-portal-read/spec.md": {
@@ -7155,8 +7130,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/crm/leads/student-lookup/route.ts": {
-    "mtime": 1783178550.146184,
-    "ast_hash": "bfa4e94b3b02c8100716fdf382860021",
+    "mtime": 1783356604.5782216,
+    "ast_hash": "eb0a8610ddc6db4d1352bcf761755158",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Module 09_ Faculty - Trainer Management.md": {
@@ -7224,16 +7199,6 @@
     "ast_hash": "efbf6bb9d735ddb2d8cd870556cc3021",
     "semantic_hash": ""
   },
-  "openspec/changes/implement-module-09-faculty-trainer-management/.openspec.yaml": {
-    "mtime": 1783187813.473401,
-    "ast_hash": "ff548009fead911022d5b7c4c25d58ae",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-09-faculty-trainer-management/proposal.md": {
-    "mtime": 1783187907.871361,
-    "ast_hash": "e5d8a2a815a4d1c760c56dab9f97a162",
-    "semantic_hash": ""
-  },
   "packages/database/prisma/migrations/20260705000000_module_09_faculty_trainer_management/migration.sql": {
     "mtime": 1783224238.4285111,
     "ast_hash": "42f9293232f2845dccd74240b752cd3d",
@@ -7272,36 +7237,6 @@
   "packages/trainer-management/tsconfig.json": {
     "mtime": 1783224099.8696375,
     "ast_hash": "b9a29883f11495aadd761fe07368dfbf",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-09-faculty-trainer-management/design.md": {
-    "mtime": 1783191201.7510614,
-    "ast_hash": "9be3ce503c91cd201efccee246711501",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-09-faculty-trainer-management/specs/faculty-trainer-management/spec.md": {
-    "mtime": 1783191201.748629,
-    "ast_hash": "26ca36431f028e9097ce9ffc6537867c",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-09-faculty-trainer-management/specs/identity-access/spec.md": {
-    "mtime": 1783191201.7494683,
-    "ast_hash": "e405aa7da01d33e0b62e2d6d168c43e8",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md": {
-    "mtime": 1783191201.7499647,
-    "ast_hash": "bec8069c23d2c33c97d947f6df7bdcb6",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-09-faculty-trainer-management/specs/reports-dashboards/spec.md": {
-    "mtime": 1783191201.750443,
-    "ast_hash": "67b810464e4b20a7a8bb22f29df51120",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-09-faculty-trainer-management/tasks.md": {
-    "mtime": 1783226058.6534412,
-    "ast_hash": "18c5bdb8ec00773624958de83374cd75",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/faculty/_lib.ts": {
@@ -7380,8 +7315,8 @@
     "semantic_hash": ""
   },
   "packages/trainer-management/src/application/trainer-management-service.test.ts": {
-    "mtime": 1783234059.3912988,
-    "ast_hash": "d00f33f47fdc69ea877252f96e0106c8",
+    "mtime": 1783364090.8710387,
+    "ast_hash": "3bed180d446701e3d7d141c21f9f7e9e",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/faculty/trainers/[trainerId]/_components/trainer-child-record-drawers.tsx": {
@@ -7560,8 +7495,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/_components/public-site-client.tsx": {
-    "mtime": 1783242193.5071325,
-    "ast_hash": "1691cc07d1866263f8598b41b24db682",
+    "mtime": 1783363501.7588649,
+    "ast_hash": "654eaef97c84f9805cbd6aadb2d2211c",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/public/categories/route.ts": {
@@ -7700,18 +7635,18 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/courses/[slug]/page.tsx": {
-    "mtime": 1783243147.611962,
-    "ast_hash": "33b8210330b77f25a5c08284570b532e",
+    "mtime": 1783363599.2455592,
+    "ast_hash": "0e60af6d5655db73e97af9edf2516c85",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/application/public-course-query-service.ts": {
-    "mtime": 1783242983.8792775,
-    "ast_hash": "a330b0e890752a3e239a192b4020531c",
+    "mtime": 1783360429.658022,
+    "ast_hash": "9eed8ef60b8801e317bf017c36a03eef",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/domain/public-dtos.ts": {
-    "mtime": 1783241828.0102446,
-    "ast_hash": "41c6aa04dd653ab8c12c2c78fd80c230",
+    "mtime": 1783360389.99173,
+    "ast_hash": "8c0b2bbef060c36490a87d3cfe249945",
     "semantic_hash": ""
   },
   "packages/database/prisma/migrations/20260704135420_attendance/migration.sql": {
@@ -8214,86 +8149,6 @@
     "ast_hash": "cbd034ebd9e3809485dd59fb674f83ae",
     "semantic_hash": ""
   },
-  "openspec/changes/implement-module-10-exam-result-completion/.openspec.yaml": {
-    "mtime": 1783272248.9449408,
-    "ast_hash": "80abc064fb03c04c055eb3363f6520a5",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-10-exam-result-completion/design.md": {
-    "mtime": 1783272467.485627,
-    "ast_hash": "00b04b54b0cba16e61924381b6ad6ff9",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-10-exam-result-completion/proposal.md": {
-    "mtime": 1783272347.3007722,
-    "ast_hash": "3535f97806c44134bcdb2f42b49d7e9b",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-10-exam-result-completion/specs/batch-delivery/spec.md": {
-    "mtime": 1783272715.801942,
-    "ast_hash": "c1248171f397f3120fe232b71e4a88d2",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md": {
-    "mtime": 1783272612.8463542,
-    "ast_hash": "6eefc7b232776f400140c05fbf96cf59",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-10-exam-result-completion/specs/completion-evaluation/spec.md": {
-    "mtime": 1783272586.813232,
-    "ast_hash": "8eaf4af7778de8e5af60fff96e93b6a5",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md": {
-    "mtime": 1783272631.2401962,
-    "ast_hash": "7fddeef5737a038bcfc0a96a61188e3b",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-10-exam-result-completion/specs/course-catalog/spec.md": {
-    "mtime": 1783272725.8549945,
-    "ast_hash": "50f3425b9c0cb7a94412308220c906cd",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-10-exam-result-completion/specs/enrollment-lifecycle/spec.md": {
-    "mtime": 1783272704.8447943,
-    "ast_hash": "fdeaa564fc26c89dba1150c9acc8fd20",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-10-exam-result-completion/specs/exam-management/spec.md": {
-    "mtime": 1783272514.5764046,
-    "ast_hash": "f95c88941b567186c5aee59d933d3e46",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-10-exam-result-completion/specs/exam-result-notifications/spec.md": {
-    "mtime": 1783272681.7412152,
-    "ast_hash": "aecb1a33fd16b9d5d03e07d3a33199e4",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-10-exam-result-completion/specs/exam-result-reporting/spec.md": {
-    "mtime": 1783272650.609802,
-    "ast_hash": "09d9e7d97fbc926a17c674cf70130eda",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md": {
-    "mtime": 1783272561.0848126,
-    "ast_hash": "314f627caa3a1c266fc745c944646344",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-10-exam-result-completion/specs/result-recording/spec.md": {
-    "mtime": 1783272541.9831576,
-    "ast_hash": "6232386b533b4fe51e41041b5bb9f2a0",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-10-exam-result-completion/specs/walkin-enrollment/spec.md": {
-    "mtime": 1783272737.0497856,
-    "ast_hash": "8f39b682221d838ee7d67ae4bb4269fe",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-module-10-exam-result-completion/tasks.md": {
-    "mtime": 1783312634.4711654,
-    "ast_hash": "68374d5d2a42304cfffead37f7a882ea",
-    "semantic_hash": ""
-  },
   "apps/admin-portal/app/(protected)/exam-completion/approval-queue/_components/approval-queue-client-list.tsx": {
     "mtime": 1783352403.4498098,
     "ast_hash": "8d63f34c4913473fcd67555c4fca7179",
@@ -8347,6 +8202,286 @@
   "apps/admin-portal/app/(protected)/exam-completion/evaluate/page.tsx": {
     "mtime": 1783349692.5702834,
     "ast_hash": "7af05e2bb2b6badf4fbe6c65ebd12fa2",
+    "semantic_hash": ""
+  },
+  "packages/database/prisma/migrations/20260706162848_add_nationality_national_id_to_lead/migration.sql": {
+    "mtime": 1783355328.922662,
+    "ast_hash": "e1bd6e6b3b5fb22879e91d9c1fa4c4a9",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/.openspec.yaml": {
+    "mtime": 1783272248.9449408,
+    "ast_hash": "80abc064fb03c04c055eb3363f6520a5",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/design.md": {
+    "mtime": 1783272467.485627,
+    "ast_hash": "00b04b54b0cba16e61924381b6ad6ff9",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/proposal.md": {
+    "mtime": 1783272347.3007722,
+    "ast_hash": "3535f97806c44134bcdb2f42b49d7e9b",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/batch-delivery/spec.md": {
+    "mtime": 1783272715.801942,
+    "ast_hash": "c1248171f397f3120fe232b71e4a88d2",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-approval/spec.md": {
+    "mtime": 1783272612.8463542,
+    "ast_hash": "6eefc7b232776f400140c05fbf96cf59",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-evaluation/spec.md": {
+    "mtime": 1783272586.813232,
+    "ast_hash": "8eaf4af7778de8e5af60fff96e93b6a5",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md": {
+    "mtime": 1783272631.2401962,
+    "ast_hash": "7fddeef5737a038bcfc0a96a61188e3b",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/course-catalog/spec.md": {
+    "mtime": 1783272725.8549945,
+    "ast_hash": "50f3425b9c0cb7a94412308220c906cd",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/enrollment-lifecycle/spec.md": {
+    "mtime": 1783272704.8447943,
+    "ast_hash": "fdeaa564fc26c89dba1150c9acc8fd20",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/exam-management/spec.md": {
+    "mtime": 1783272514.5764046,
+    "ast_hash": "f95c88941b567186c5aee59d933d3e46",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/exam-result-notifications/spec.md": {
+    "mtime": 1783272681.7412152,
+    "ast_hash": "aecb1a33fd16b9d5d03e07d3a33199e4",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/exam-result-reporting/spec.md": {
+    "mtime": 1783272650.609802,
+    "ast_hash": "09d9e7d97fbc926a17c674cf70130eda",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-correction/spec.md": {
+    "mtime": 1783272561.0848126,
+    "ast_hash": "314f627caa3a1c266fc745c944646344",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md": {
+    "mtime": 1783272541.9831576,
+    "ast_hash": "6232386b533b4fe51e41041b5bb9f2a0",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/walkin-enrollment/spec.md": {
+    "mtime": 1783272737.0497856,
+    "ast_hash": "8f39b682221d838ee7d67ae4bb4269fe",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/tasks.md": {
+    "mtime": 1783312634.4711654,
+    "ast_hash": "68374d5d2a42304cfffead37f7a882ea",
+    "semantic_hash": ""
+  },
+  "packages/database/prisma/migrations/20260706175241_add_public_course_fields/migration.sql": {
+    "mtime": 1783360361.7199936,
+    "ast_hash": "4608874c39e7edee136079dff4b9732a",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-expose-public-courses/.openspec.yaml": {
+    "mtime": 1783360257.9310832,
+    "ast_hash": "4fb8aab7bc408cb12b0db7b36bd05670",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-expose-public-courses/design.md": {
+    "mtime": 1783360313.414796,
+    "ast_hash": "1b9fc805a8f29cc7e1538a349d13d245",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-expose-public-courses/proposal.md": {
+    "mtime": 1783360288.6036508,
+    "ast_hash": "6cf7e0a9c022ecf2532e7d700ecdcb06",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-expose-public-courses/specs/course-catalog/delta.md": {
+    "mtime": 1783360303.2137806,
+    "ast_hash": "d1d9d7cb21bad862d97190ddda93fdfb",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-expose-public-courses/tasks.md": {
+    "mtime": 1783360520.2218173,
+    "ast_hash": "55dfdc9449a9809b143c7dc1ebaf85b9",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 11 - Certificate Management/Module 11 - Certificate Management.md": {
+    "mtime": 1783361672.6493347,
+    "ast_hash": "3dd27e3f5027c004bfa2affa48327d66",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
+    "mtime": 1783361677.3030212,
+    "ast_hash": "27809ea68e121f11a6c3d8e3800dffa2",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 11 - Certificate Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
+    "mtime": 1783361687.9202538,
+    "ast_hash": "5e63d7919a7fc0c73f783d2278152a36",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 11 - Certificate Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
+    "mtime": 1783361695.612534,
+    "ast_hash": "dc06924ccf2f15bc6c2b7535af34540c",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 11 - Certificate Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
+    "mtime": 1783361707.956543,
+    "ast_hash": "5973e4d19265c1dd8e99e9c2235586aa",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 11 - Certificate Management/Part 5 \u2013 API Contracts.md": {
+    "mtime": 1783361714.0885253,
+    "ast_hash": "7f11bfc2132ef09669918d1aee4a5deb",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md": {
+    "mtime": 1783361728.3646562,
+    "ast_hash": "952d0ac05f942ffcc2394c366c9c9b57",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 11 - Certificate Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
+    "mtime": 1783361737.559809,
+    "ast_hash": "1838e74e7dfc1987fe7781dd4243ecae",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 11 - Certificate Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
+    "mtime": 1783362245.1760364,
+    "ast_hash": "c4fbc4caa8bbe5df79759211fc23a652",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/.openspec.yaml": {
+    "mtime": 1783363889.2870867,
+    "ast_hash": "4fb8aab7bc408cb12b0db7b36bd05670",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md": {
+    "mtime": 1783363897.4082692,
+    "ast_hash": "e439bab444202220a6ed28a02b608621",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/proposal.md": {
+    "mtime": 1783363892.9334638,
+    "ast_hash": "fa42fea9a07410f9d4c3da87227cc70b",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/specs/course-catalog/spec.md": {
+    "mtime": 1783363904.233177,
+    "ast_hash": "eda704ed8b173ea2eb62b5afbdfa583a",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/specs/course-pricing-discounts/spec.md": {
+    "mtime": 1783363930.2453558,
+    "ast_hash": "8ab6ae3a36b86d69988fb40f2d3e8c30",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/tasks.md": {
+    "mtime": 1783363901.1764786,
+    "ast_hash": "e7fbe15f7a807fa9aad42461785cb0b0",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-improve-responsive-ui-system/.openspec.yaml": {
+    "mtime": 1783105526.9807332,
+    "ast_hash": "02f6db0a449be79349504bc19b245e9b",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-improve-responsive-ui-system/design.md": {
+    "mtime": 1783105535.1754365,
+    "ast_hash": "19706a60941154c5e2f17d553e52b721",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-improve-responsive-ui-system/proposal.md": {
+    "mtime": 1783105529.2332144,
+    "ast_hash": "241629de5927fb16dbce589dabcf940e",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-improve-responsive-ui-system/specs/responsive-ui-system/spec.md": {
+    "mtime": 1783363761.1839385,
+    "ast_hash": "36da80ad35047e91f1b75c154a3ff2e7",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-06-improve-responsive-ui-system/tasks.md": {
+    "mtime": 1783138614.4599786,
+    "ast_hash": "8c589c38e10dd783ceaa8554878e7fe3",
+    "semantic_hash": ""
+  },
+  "openspec/specs/responsive-ui-system/spec.md": {
+    "mtime": 1783363767.5586603,
+    "ast_hash": "2abdf9bfca0a99a7bc932a272f34e728",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 11 - Certificate Management/Part 10 - Security Architecture and NFR.md": {
+    "mtime": 1783363718.762289,
+    "ast_hash": "69b4c4f9a1f877aa3b26e711ca836ecd",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 11 - Certificate Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
+    "mtime": 1783364092.8169768,
+    "ast_hash": "9f801fe77b32798e86abfcd4d2bd0e31",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 11 - Certificate Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
+    "mtime": 1783362842.9542294,
+    "ast_hash": "0b86bf9bab9b1c4e883b99154fd4aec3",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-07-implement-module-09-faculty-trainer-management/.openspec.yaml": {
+    "mtime": 1783187813.473401,
+    "ast_hash": "ff548009fead911022d5b7c4c25d58ae",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-07-implement-module-09-faculty-trainer-management/design.md": {
+    "mtime": 1783191201.7510614,
+    "ast_hash": "9be3ce503c91cd201efccee246711501",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-07-implement-module-09-faculty-trainer-management/proposal.md": {
+    "mtime": 1783187907.871361,
+    "ast_hash": "e5d8a2a815a4d1c760c56dab9f97a162",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-07-implement-module-09-faculty-trainer-management/specs/faculty-trainer-management/spec.md": {
+    "mtime": 1783191201.748629,
+    "ast_hash": "26ca36431f028e9097ce9ffc6537867c",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-07-implement-module-09-faculty-trainer-management/specs/identity-access/spec.md": {
+    "mtime": 1783191201.7494683,
+    "ast_hash": "e405aa7da01d33e0b62e2d6d168c43e8",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-07-implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md": {
+    "mtime": 1783191201.7499647,
+    "ast_hash": "bec8069c23d2c33c97d947f6df7bdcb6",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-07-implement-module-09-faculty-trainer-management/specs/reports-dashboards/spec.md": {
+    "mtime": 1783191201.750443,
+    "ast_hash": "67b810464e4b20a7a8bb22f29df51120",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-07-implement-module-09-faculty-trainer-management/tasks.md": {
+    "mtime": 1783364101.5730002,
+    "ast_hash": "2ce97c008eabf8feb5a67f70ee341d92",
+    "semantic_hash": ""
+  },
+  "openspec/specs/faculty-trainer-management/spec.md": {
+    "mtime": 1783364208.4971936,
+    "ast_hash": "8d10d32f22f77865fd8bb4c8a87df00a",
     "semantic_hash": ""
   }
 }
