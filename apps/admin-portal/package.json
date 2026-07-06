@@ -20,6 +20,7 @@
     "@ims/crm-leads": "workspace:*",
     "@ims/database": "workspace:*",
     "@ims/documents": "workspace:*",
+    "@ims/exam-result-completion": "workspace:*",
     "@ims/finance-receivables": "workspace:*",
     "@ims/identity-access": "workspace:*",
     "@ims/observability": "workspace:*",

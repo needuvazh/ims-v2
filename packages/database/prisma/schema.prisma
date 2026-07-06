@@ -1140,6 +1140,7 @@ model Course {
   leads     Lead[]
   inquiries Inquiry[]
   trainerAuthorizations TrainerCourseAuthorization[]
+  exams     Exam[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -1183,6 +1184,7 @@ model Batch {
   pricings    CoursePricing[]
   discounts   CourseDiscount[]
   enrollments Enrollment[]
+  exams       Exam[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -2032,6 +2034,8 @@ model Enrollment {
   invoices          Invoice[]
   invoiceLineItems  InvoiceLineItem[]
   installmentPlans  InstallmentPlan[]
+  results           Result[]
+  courseCompletion  CourseCompletion?
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -2702,4 +2706,168 @@ model CorporateCreditRule {
   @@index([corporateAccountId, status])
   @@index([branchId])
   @@map("finance_corporate_credit_rules")
+}
+
+// ============================================================================
+// Module 10 – Exam, Result & Completion Management
+// ============================================================================
+
+enum ExamStatus {
+  Draft
+  Scheduled
+  OpenForResultEntry
+  Closed
+  Cancelled
+  Archived
+}
+
+enum ResultStatus {
+  Pending
+  Recorded
+  Finalized
+  Corrected
+}
+
+enum CompletionStatus {
+  Pending
+  EvidenceIncomplete
+  AwaitingTrainerRecommendation
+  AwaitingCoordinatorReview
+  AwaitingFinalApproval
+  Approved
+  Rejected
+  ReevaluationRequired
+  ExceptionReview
+}
+
+enum ApprovalLevel {
+  TrainerRecommendation
+  CoordinatorReview
+  FinalApproval
+}
+
+enum ApprovalStatus {
+  Pending
+  Approved
+  Rejected
+}
+
+model Exam {
+  id         String      @id @default(uuid()) @db.Uuid
+  courseId   String      @db.Uuid
+  batchId    String      @db.Uuid
+  examName   String      @db.VarChar(200)
+  examDate   DateTime    @db.Date
+  maxMarks   Decimal     @db.Decimal(10, 2)
+  passMarks  Decimal     @db.Decimal(10, 2)
+  status     ExamStatus  @default(Draft)
+  version    Int         @default(1)
+
+  course     Course      @relation(fields: [courseId], references: [id])
+  batch      Batch       @relation(fields: [batchId], references: [id])
+  results    Result[]
+
+  createdAt  DateTime    @default(now()) @db.Timestamptz(6)
+  createdBy  String?     @db.Uuid
+  updatedAt  DateTime?   @db.Timestamptz(6)
+  updatedBy  String?     @db.Uuid
+  deletedAt  DateTime?   @db.Timestamptz(6)
+  deletedBy  String?     @db.Uuid
+  isDeleted  Boolean     @default(false)
+
+  @@index([batchId, status])
+  @@index([courseId])
+  @@index([examDate])
+  @@map("exams")
+}
+
+model Result {
+  id             String       @id @default(uuid()) @db.Uuid
+  examId         String       @db.Uuid
+  enrollmentId   String       @db.Uuid
+  marksObtained  Decimal      @db.Decimal(10, 2)
+  resultStatus   ResultStatus @default(Pending)
+  grade          String?      @db.VarChar(20)
+  finalizedAt    DateTime?    @db.Timestamptz(6)
+  finalizedBy    String?      @db.Uuid
+  version        Int          @default(1)
+
+  exam           Exam         @relation(fields: [examId], references: [id])
+  enrollment     Enrollment   @relation(fields: [enrollmentId], references: [id])
+
+  createdAt      DateTime     @default(now()) @db.Timestamptz(6)
+  createdBy      String?      @db.Uuid
+  updatedAt      DateTime?    @db.Timestamptz(6)
+  updatedBy      String?      @db.Uuid
+  deletedAt      DateTime?    @db.Timestamptz(6)
+  deletedBy      String?      @db.Uuid
+  isDeleted      Boolean      @default(false)
+
+  @@unique([examId, enrollmentId])
+  @@index([examId, enrollmentId])
+  @@index([enrollmentId])
+  @@index([resultStatus])
+  @@map("results")
+}
+
+model CourseCompletion {
+  id                       String           @id @default(uuid()) @db.Uuid
+  enrollmentId             String           @db.Uuid
+  attendancePercentage     Decimal?         @db.Decimal(5, 2)
+  attendanceOutcome        String?          @db.VarChar(30)
+  examRequired             Boolean          @default(false)
+  examOutcome              String?          @db.VarChar(30)
+  paymentRequired          Boolean          @default(false)
+  paymentOutcome           String?          @db.VarChar(30)
+  manualApprovalRequired   Boolean          @default(false)
+  completionStatus         CompletionStatus @default(Pending)
+  certificateAllowed       Boolean          @default(false)
+  attendanceUpdatedAt      DateTime?        @db.Timestamptz(6)
+  resultUpdatedAt          DateTime?        @db.Timestamptz(6)
+  paymentUpdatedAt         DateTime?        @db.Timestamptz(6)
+  lastEvaluatedAt          DateTime?        @db.Timestamptz(6)
+  evidenceStale            Boolean          @default(false)
+  version                  Int              @default(1)
+
+  enrollment               Enrollment       @relation(fields: [enrollmentId], references: [id])
+  approvals                CompletionApproval[]
+
+  createdAt                DateTime         @default(now()) @db.Timestamptz(6)
+  createdBy                String?          @db.Uuid
+  updatedAt                DateTime?        @db.Timestamptz(6)
+  updatedBy                String?          @db.Uuid
+  deletedAt                DateTime?        @db.Timestamptz(6)
+  deletedBy                String?          @db.Uuid
+  isDeleted                Boolean          @default(false)
+
+  @@unique([enrollmentId])
+  @@index([enrollmentId, completionStatus])
+  @@index([completionStatus])
+  @@map("course_completions")
+}
+
+model CompletionApproval {
+  id                 String          @id @default(uuid()) @db.Uuid
+  courseCompletionId String          @db.Uuid
+  approvalLevel      ApprovalLevel
+  status             ApprovalStatus  @default(Pending)
+  actorId            String          @db.Uuid
+  actionDate         DateTime?       @db.Timestamptz(6)
+  remarks            String?         @db.Text
+  version            Int             @default(1)
+
+  courseCompletion   CourseCompletion @relation(fields: [courseCompletionId], references: [id])
+
+  createdAt          DateTime        @default(now()) @db.Timestamptz(6)
+  createdBy          String?         @db.Uuid
+  updatedAt          DateTime?       @db.Timestamptz(6)
+  updatedBy          String?         @db.Uuid
+  deletedAt          DateTime?       @db.Timestamptz(6)
+  deletedBy          String?         @db.Uuid
+  isDeleted          Boolean         @default(false)
+
+  @@index([courseCompletionId, approvalLevel])
+  @@index([courseCompletionId])
+  @@index([actorId])
+  @@map("completion_approvals")
 }
