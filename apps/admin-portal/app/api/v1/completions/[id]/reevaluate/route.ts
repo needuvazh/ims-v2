@@ -15,6 +15,7 @@ import {
   PrismaAttendanceEvidenceReader,
   PrismaFinanceValidationReader,
   PrismaEnrollmentReader,
+  PrismaExamEvidenceReader,
   ReevaluateCompletionSchema,
 } from '@ims/exam-result-completion';
 import { examResultErrorResponse, examResultProblemJson } from '../../../exams/error-response';
@@ -74,13 +75,15 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
           const attendanceReader = new PrismaAttendanceEvidenceReader(prisma);
           const financeReader = new PrismaFinanceValidationReader(prisma);
           const enrollmentReader = new PrismaEnrollmentReader(prisma);
+          const examEvidenceReader = new PrismaExamEvidenceReader(prisma);
 
           const evalHandler = new EvaluateCompletionCommandHandler(
             completionRepository,
             ruleReader,
             attendanceReader,
             financeReader,
-            enrollmentReader
+            enrollmentReader,
+            examEvidenceReader
           );
 
           await evalHandler.execute({

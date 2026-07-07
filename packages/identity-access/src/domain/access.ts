@@ -69,6 +69,11 @@ export const knownPermissions = [
   'exam-completion.report.view',
   'exam-completion.report.export',
   'exam-completion.menu.view',
+  'certificate.view',
+  'certificate.create',
+  'certificate.issue',
+  'certificate.reissue',
+  'certificate.revoke',
 ] as const;
 
 export type KnownPermission = (typeof knownPermissions)[number];
@@ -170,6 +175,12 @@ export const adminNavigation: NavigationItem[] = [
       { href: '/exam-completion/completions', label: 'Completions', permission: 'completion.view' },
       { href: '/exam-completion/approval-queue', label: 'Approval Queue', permission: 'completion.recommend' },
     ],
+  },
+  {
+    href: '/certificates',
+    label: 'Certificates',
+    permission: 'certificate.view',
+    category: 'Operations',
   },
   {
     href: '/iam',

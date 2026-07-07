@@ -3,6 +3,7 @@ import { CourseCompletionRuleReader } from '../../domain/interfaces/CourseComple
 import { AttendanceEvidenceReader } from '../../domain/interfaces/AttendanceEvidenceReader';
 import { FinanceValidationReader } from '../../domain/interfaces/FinanceValidationReader';
 import { EnrollmentReader } from '../../domain/interfaces/EnrollmentReader';
+import { ExamEvidenceReader } from '../../domain/interfaces/ExamEvidenceReader';
 import { CourseCompletionAggregate, EvaluateCompletionCommand, COMPLETION_STATUSES } from '../../domain/aggregates/CourseCompletion';
 import { CompletionInvalidStateError, CompletionDuplicateError } from '../../domain/errors';
 
@@ -18,6 +19,7 @@ export class EvaluateCompletionCommandHandler {
     private readonly attendanceReader: AttendanceEvidenceReader,
     private readonly financeReader: FinanceValidationReader,
     private readonly enrollmentReader: EnrollmentReader,
+    private readonly examEvidenceReader: ExamEvidenceReader,
   ) {}
 
   async execute(input: EvaluateCompletionInput): Promise<string> {
@@ -42,7 +44,13 @@ export class EvaluateCompletionCommandHandler {
     const attendancePercentage = attendance?.attendancePercentage ?? 0;
     const attendanceOutcome = attendance?.outcome === 'Met' ? 'Met' : 'NotMet';
     const examRequired = rule.examRequired;
-    const examOutcome = examRequired ? 'Pending' : 'NotRequired';
+
+    const examEvidence = examRequired
+      ? await this.examEvidenceReader.getExamSummaryForEnrollment(input.enrollmentId, enrollment.batchId)
+      : null;
+    const examOutcome = examRequired
+      ? (examEvidence?.outcome ?? 'Pending')
+      : 'NotRequired';
     const paymentRequired = rule.feeClearanceRequired;
     const paymentOutcome = finance?.outcome === 'Cleared' ? 'Cleared' : 'Outstanding';
     const manualApprovalRequired = rule.manualApprovalRequired;
@@ -55,11 +63,12 @@ export class EvaluateCompletionCommandHandler {
         examOutcome,
         paymentOutcome: finance ? paymentOutcome : undefined,
         attendanceUpdatedAt: attendance?.lastUpdated ?? undefined,
-        resultUpdatedAt: new Date(),
+        resultUpdatedAt: examEvidence?.lastUpdated ?? undefined,
         paymentUpdatedAt: finance?.lastPaymentDate ?? undefined,
       });
 
-      const evaluated = updated.evidenceStale ? updated : aggregate.evaluate();
+      const evaluated = updated.evidenceStale ? updated : new CourseCompletionAggregate(updated).evaluate();
+
       evaluated.updatedBy = input.userId;
       await this.completionRepository.save(evaluated);
       return existing.id;

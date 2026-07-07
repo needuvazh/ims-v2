@@ -310,8 +310,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/verify/page.tsx": {
-    "mtime": 1783104197.1490374,
-    "ast_hash": "50bf0f83e7110d6083b522280a81d403",
+    "mtime": 1783395552.8925517,
+    "ast_hash": "f045a1cb7a3ae812bdf46ecac31a8f28",
     "semantic_hash": ""
   },
   "apps/admin-portal/instrumentation.ts": {
@@ -320,8 +320,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/next-env.d.ts": {
-    "mtime": 1783364003.0378118,
-    "ast_hash": "2a74d3909800ca5467fa83b0ab4a4890",
+    "mtime": 1783395144.8964453,
+    "ast_hash": "d0f8375ae1199dc7acd3977fc33b78b8",
     "semantic_hash": ""
   },
   "apps/admin-portal/next.config.ts": {
@@ -330,8 +330,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/package.json": {
-    "mtime": 1783361912.688335,
-    "ast_hash": "dc29e6c3fefae6408d6315b3e3f555d2",
+    "mtime": 1783365194.3276772,
+    "ast_hash": "eb9d0f50cf3fe01f17d4b7c631a2605b",
     "semantic_hash": ""
   },
   "apps/admin-portal/postcss.config.mjs": {
@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "packages/database/prisma/seed.ts": {
-    "mtime": 1783343854.5611517,
-    "ast_hash": "2e982bff0582b4de88a5fd2c76cf10ac",
+    "mtime": 1783395497.4439454,
+    "ast_hash": "057035e308a2574f3bc25f5e4c974149",
     "semantic_hash": ""
   },
   "packages/database/src/client.ts": {
@@ -495,8 +495,8 @@
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/access.ts": {
-    "mtime": 1783319060.5449831,
-    "ast_hash": "603f739c8e9606487382363ac2cb0678",
+    "mtime": 1783395430.3396027,
+    "ast_hash": "d046fabcb22995ac49f6f816f51cd925",
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/role.ts": {
@@ -2285,8 +2285,8 @@
     "semantic_hash": ""
   },
   "docs/project-status.md": {
-    "mtime": 1783266097.2294762,
-    "ast_hash": "d6ce47b869aaeee20bb62dbe7a665fb2",
+    "mtime": 1783365353.5712245,
+    "ast_hash": "a98a4036c465112b9e5bc447ccc1ac7c",
     "semantic_hash": ""
   },
   "memory/PRD.md": {
@@ -7535,8 +7535,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/completions/[id]/reevaluate/route.ts": {
-    "mtime": 1783352828.250165,
-    "ast_hash": "38b94e2279992407af1af298ba308e50",
+    "mtime": 1783396908.1142092,
+    "ast_hash": "70211ed9203fc707cee14f11db5bce8e",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/completions/[id]/route.ts": {
@@ -7545,8 +7545,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/completions/route.ts": {
-    "mtime": 1783311586.3259249,
-    "ast_hash": "6ca75e1552c722eb8d242f49e0173d9b",
+    "mtime": 1783396902.1346312,
+    "ast_hash": "6d49b3fcd9b3a546c2d6fd5b2774fd7f",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/exams/[id]/activate/route.ts": {
@@ -7730,8 +7730,8 @@
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/application/commands/EvaluateCompletionCommandHandler.ts": {
-    "mtime": 1783286513.0390513,
-    "ast_hash": "372e57b0aa96e85dbd46ff4837164434",
+    "mtime": 1783396993.6064324,
+    "ast_hash": "315c5ec2d4ceb26d030f3c196e84db1a",
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/application/commands/FinalApproveCompletionCommandHandler.ts": {
@@ -7915,8 +7915,8 @@
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/index.ts": {
-    "mtime": 1783312031.141394,
-    "ast_hash": "6a2b802ece17126e9e2330eeb512ac1c",
+    "mtime": 1783396875.1881294,
+    "ast_hash": "ca54d05de4d28b04da0b439b224b4d9c",
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/infrastructure/PrismaAuditRepository.ts": {
@@ -7930,8 +7930,8 @@
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/infrastructure/index.ts": {
-    "mtime": 1783285434.5441031,
-    "ast_hash": "4800e0f08df0df82d9350783efcbeecb",
+    "mtime": 1783396881.6633763,
+    "ast_hash": "f93fdcec38a5960a2392a41e828819e7",
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/infrastructure/readers/PrismaAttendanceEvidenceReader.ts": {
@@ -8180,8 +8180,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/exam-completion/completions/[id]/_components/completion-detail-client.tsx": {
-    "mtime": 1783352413.5435028,
-    "ast_hash": "f7a0b1520c8e13b3ae2b85d6bebfe9a2",
+    "mtime": 1783397694.6573398,
+    "ast_hash": "e13eb55c4efd0663dade7d161368dbfd",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/exam-completion/completions/[id]/page.tsx": {
@@ -8482,6 +8482,191 @@
   "openspec/specs/faculty-trainer-management/spec.md": {
     "mtime": 1783364208.4971936,
     "ast_hash": "8d10d32f22f77865fd8bb4c8a87df00a",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/certificates/_components/certificates-client-view.tsx": {
+    "mtime": 1783395548.5863147,
+    "ast_hash": "46748b4eefaa27d04f6a647059d2db91",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/certificates/actions.ts": {
+    "mtime": 1783365186.2444756,
+    "ast_hash": "2703619ba47a3434d2c37b5d09365383",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/certificates/page.tsx": {
+    "mtime": 1783365310.275484,
+    "ast_hash": "f17a669ec1508d2e40c550547c534ef2",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/public/v1/certificates/verify/route.ts": {
+    "mtime": 1783365177.46167,
+    "ast_hash": "bdaa6e55cdd6dc1d80034a9b83343421",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/certificates/[id]/issue/route.ts": {
+    "mtime": 1783365252.3999093,
+    "ast_hash": "ca0c53c64d3827edb4eee9e00a65ff74",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/certificates/[id]/revoke/route.ts": {
+    "mtime": 1783365256.221062,
+    "ast_hash": "9cb34f3718fcb91db2a337ecf28de3a5",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/certificates/error-response.ts": {
+    "mtime": 1783365146.7830515,
+    "ast_hash": "3e693ee028c9b9d910180ef68fdbfaa5",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/certificates/reissue/[requestId]/replacement/route.ts": {
+    "mtime": 1783365261.3557856,
+    "ast_hash": "6a15cf27aedced9274c4b956135474f3",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/certificates/reissue/[requestId]/review/route.ts": {
+    "mtime": 1783365266.3963335,
+    "ast_hash": "7fce668c5d3e117f98cae4994eb2eb4c",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/certificates/reissue/route.ts": {
+    "mtime": 1783365156.9012954,
+    "ast_hash": "367839f502abb8ca86e29d73f0c55f65",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/certificates/route.ts": {
+    "mtime": 1783365149.6029303,
+    "ast_hash": "92167a21b530a72ae396eede56ad5a6c",
+    "semantic_hash": ""
+  },
+  "packages/certificates/package.json": {
+    "mtime": 1783365044.1184955,
+    "ast_hash": "1db7482660b931d1cebb36274d25219f",
+    "semantic_hash": ""
+  },
+  "packages/certificates/src/application/GenerateCertificateService.ts": {
+    "mtime": 1783397481.5347245,
+    "ast_hash": "be7e42d606e874bc78c9149fe9f752b0",
+    "semantic_hash": ""
+  },
+  "packages/certificates/src/application/IssueCertificateService.ts": {
+    "mtime": 1783365116.6877096,
+    "ast_hash": "eb8636028328caf1b3e3f5c659be0325",
+    "semantic_hash": ""
+  },
+  "packages/certificates/src/application/ReissueService.ts": {
+    "mtime": 1783397493.4405296,
+    "ast_hash": "f874c114cf78c6622eeab4dce137ade4",
+    "semantic_hash": ""
+  },
+  "packages/certificates/src/application/RevocationService.ts": {
+    "mtime": 1783365122.2077622,
+    "ast_hash": "ccb94f7eac43bfe52e7d50c742e03b4d",
+    "semantic_hash": ""
+  },
+  "packages/certificates/src/application/VerificationService.ts": {
+    "mtime": 1783365124.4283798,
+    "ast_hash": "1c8f568576e242dde8150978f9e3d33d",
+    "semantic_hash": ""
+  },
+  "packages/certificates/src/application/certificates.test.ts": {
+    "mtime": 1783365340.421702,
+    "ast_hash": "939beaae5383f2d88bcc2b725cf92947",
+    "semantic_hash": ""
+  },
+  "packages/certificates/src/domain/errors.ts": {
+    "mtime": 1783365050.6798682,
+    "ast_hash": "9239ba2482713d6b6617a4fac54513a9",
+    "semantic_hash": ""
+  },
+  "packages/certificates/src/domain/validators.ts": {
+    "mtime": 1783365054.7138567,
+    "ast_hash": "11168baf8b721d85faf24e0d2e748f0d",
+    "semantic_hash": ""
+  },
+  "packages/certificates/src/index.ts": {
+    "mtime": 1783365126.691406,
+    "ast_hash": "cfd66f2397756cefb46c6469101b31ad",
+    "semantic_hash": ""
+  },
+  "packages/certificates/src/infrastructure/PrismaAdapters.ts": {
+    "mtime": 1783365224.5279179,
+    "ast_hash": "f153f7050e01fb3ad731d75e28ef7b70",
+    "semantic_hash": ""
+  },
+  "packages/certificates/src/ports/index.ts": {
+    "mtime": 1783365057.8965397,
+    "ast_hash": "13edcc86761cf1906f8451a52937eb49",
+    "semantic_hash": ""
+  },
+  "packages/certificates/tsconfig.json": {
+    "mtime": 1783365046.9868627,
+    "ast_hash": "498cb392b5b47c698707ae678582271a",
+    "semantic_hash": ""
+  },
+  "packages/database/prisma/migrations/20260706191007_add_certificate_models/migration.sql": {
+    "mtime": 1783365015.6312652,
+    "ast_hash": "05b14b6c3036b22ae1f42813053edc6f",
+    "semantic_hash": ""
+  },
+  "packages/exam-result-completion/src/domain/interfaces/ExamEvidenceReader.ts": {
+    "mtime": 1783396866.7933118,
+    "ast_hash": "caacc587a2f87548268ba2e6f6be2542",
+    "semantic_hash": ""
+  },
+  "packages/exam-result-completion/src/infrastructure/readers/PrismaExamEvidenceReader.ts": {
+    "mtime": 1783396871.807904,
+    "ast_hash": "8cb98d10e43edd6afecef115a7b47b3b",
+    "semantic_hash": ""
+  },
+  "openspec/changes/certificate-management/.openspec.yaml": {
+    "mtime": 1783364809.2689688,
+    "ast_hash": "4fb8aab7bc408cb12b0db7b36bd05670",
+    "semantic_hash": ""
+  },
+  "openspec/changes/certificate-management/design.md": {
+    "mtime": 1783364857.7783124,
+    "ast_hash": "85074c0583d1e7425728a8bdd9972120",
+    "semantic_hash": ""
+  },
+  "openspec/changes/certificate-management/proposal.md": {
+    "mtime": 1783364826.153274,
+    "ast_hash": "ac03115926875656950a3fe84993604b",
+    "semantic_hash": ""
+  },
+  "openspec/changes/certificate-management/specs/certificate-issuance/spec.md": {
+    "mtime": 1783364837.988438,
+    "ast_hash": "72345ff16c05567eb2b36da64661ead7",
+    "semantic_hash": ""
+  },
+  "openspec/changes/certificate-management/specs/certificate-reissue/spec.md": {
+    "mtime": 1783364841.0889869,
+    "ast_hash": "9821b5094334623e9751d46121993c72",
+    "semantic_hash": ""
+  },
+  "openspec/changes/certificate-management/specs/certificate-revocation/spec.md": {
+    "mtime": 1783364847.0995083,
+    "ast_hash": "ff142cc9d5a3bcfa08832cbb747ce1a9",
+    "semantic_hash": ""
+  },
+  "openspec/changes/certificate-management/specs/certificate-verification/spec.md": {
+    "mtime": 1783364844.3648162,
+    "ast_hash": "2381152981486dbe0388a28cc3f29b04",
+    "semantic_hash": ""
+  },
+  "openspec/changes/certificate-management/tasks.md": {
+    "mtime": 1783365359.3049612,
+    "ast_hash": "d4233292e6d53f31d71b0f90bab34c56",
+    "semantic_hash": ""
+  },
+  "packages/certificates/src/infrastructure/PdfHelper.ts": {
+    "mtime": 1783397497.9179063,
+    "ast_hash": "263f974c1612dbddb04aee1b00d91acf",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/public/certificates/CERT-BR1-999999.pdf": {
+    "mtime": 1783397520.358731,
+    "ast_hash": "1205a90014fe8ab4ca1d44e09f1745cd",
     "semantic_hash": ""
   }
 }

@@ -15,9 +15,11 @@ import {
   PrismaAttendanceEvidenceReader,
   PrismaFinanceValidationReader,
   PrismaEnrollmentReader,
+  PrismaExamEvidenceReader,
   EvaluateCompletionSchema,
 } from '@ims/exam-result-completion';
 import { examResultErrorResponse, examResultProblemJson } from '../exams/error-response';
+
 
 export async function GET(request: Request) {
   return withRouteObservability(request.headers, async () =>
@@ -78,12 +80,14 @@ export async function POST(request: Request) {
         const attendanceReader = new PrismaAttendanceEvidenceReader(prisma);
         const financeReader = new PrismaFinanceValidationReader(prisma);
         const enrollmentReader = new PrismaEnrollmentReader(prisma);
+        const examEvidenceReader = new PrismaExamEvidenceReader(prisma);
         const handler = new EvaluateCompletionCommandHandler(
           completionRepository,
           ruleReader,
           attendanceReader,
           financeReader,
           enrollmentReader,
+          examEvidenceReader,
         );
 
         const completionId = await handler.execute({

@@ -15,6 +15,12 @@ import {
   LinkButton,
   Textarea,
   Breadcrumbs,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
 } from '@ims/shared-ui';
 import { Home, Layers, GraduationCap, RefreshCw, Send, CheckCircle2, AlertTriangle } from 'lucide-react';
 
@@ -59,6 +65,7 @@ export function CompletionDetailClient({ completion, context, permissions }: Com
   const router = useRouter();
   const [remarks, setRemarks] = useState('');
   const [loading, setLoading] = useState<string | null>(null);
+  const [isReevalDialogOpen, setIsReevalDialogOpen] = useState(false);
 
   const canRecommend = hasPermission(permissions, 'completion.recommend');
   const canReview = hasPermission(permissions, 'completion.coordinator-review');
@@ -168,7 +175,7 @@ export function CompletionDetailClient({ completion, context, permissions }: Com
           <div className="flex items-center gap-2">
             {canReevaluate && (
               <Button
-                onClick={handleReevaluate}
+                onClick={() => setIsReevalDialogOpen(true)}
                 disabled={loading !== null}
                 variant="outline"
                 className="gap-2"
@@ -435,6 +442,43 @@ export function CompletionDetailClient({ completion, context, permissions }: Com
           </CardContent>
         </Card>
       </div>
+
+      <Dialog open={isReevalDialogOpen} onOpenChange={setIsReevalDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-amber-600">
+              <AlertTriangle className="h-5 w-5" />
+              Confirm Evidence Reevaluation
+            </DialogTitle>
+            <DialogDescription className="mt-2 text-slate-500 font-medium">
+              Are you sure you want to re-evaluate the course completion evidence for this student?
+              <br /><br />
+              <span className="text-amber-700 block bg-amber-50 p-3 rounded-xl border border-amber-200">
+                <strong>Warning:</strong> If the completion is currently in progress (e.g., awaiting Trainer Recommendation or Coordinator Review), re-evaluating the evidence will refresh all criteria and reset the workflow back to the beginning of the approval pipeline.
+              </span>
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="mt-6 flex justify-end gap-2">
+            <Button
+              variant="secondary"
+              onClick={() => setIsReevalDialogOpen(false)}
+              disabled={loading === 'reevaluate'}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="primary"
+              onClick={async () => {
+                setIsReevalDialogOpen(false);
+                await handleReevaluate();
+              }}
+              disabled={loading === 'reevaluate'}
+            >
+              {loading === 'reevaluate' ? 'Reevaluating...' : 'Yes, Reevaluate'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

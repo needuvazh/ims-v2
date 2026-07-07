@@ -15,6 +15,7 @@
     "@hookform/resolvers": "^5.4.0",
     "@ims/admissions-enrollment": "workspace:*",
     "@ims/attendance": "workspace:*",
+    "@ims/certificates": "workspace:*",
     "@ims/audit": "workspace:*",
     "@ims/course-catalog": "workspace:*",
     "@ims/crm-leads": "workspace:*",

@@ -12,6 +12,7 @@ export * from './domain/interfaces/AttendanceEvidenceReader';
 export * from './domain/interfaces/FinanceValidationReader';
 export * from './domain/interfaces/TrainerAssignmentReader';
 export * from './domain/interfaces/EnrollmentReader';
+export * from './domain/interfaces/ExamEvidenceReader';
 export * from './infrastructure/index';
 export * from './application/index';
 export * from './contracts/index';

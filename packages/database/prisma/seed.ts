@@ -210,7 +210,11 @@ const systemPermissions = [
   { moduleCode: 'exam-completion', featureCode: 'menu', actionCode: 'view', permissionCode: 'exam-completion.menu.view', permissionType: 'Menu' as const, description: 'View Exam & Completion menu.' },
   
   // Certificates
-  { moduleCode: 'certificate',  featureCode: 'issue',       actionCode: 'write',  permissionCode: 'certificate.generate',           permissionType: 'Action' as const, description: 'Generate and issue certificates.' },
+  { moduleCode: 'certificate',  featureCode: 'issue',       actionCode: 'view',   permissionCode: 'certificate.view',               permissionType: 'Action' as const, description: 'View certificates registry.' },
+  { moduleCode: 'certificate',  featureCode: 'issue',       actionCode: 'create', permissionCode: 'certificate.create',             permissionType: 'Action' as const, description: 'Generate certificates.' },
+  { moduleCode: 'certificate',  featureCode: 'issue',       actionCode: 'issue',  permissionCode: 'certificate.issue',              permissionType: 'Action' as const, description: 'Issue generated certificates.' },
+  { moduleCode: 'certificate',  featureCode: 'issue',       actionCode: 'reissue',permissionCode: 'certificate.reissue',            permissionType: 'Action' as const, description: 'Request, review, and approve certificate reissues.' },
+  { moduleCode: 'certificate',  featureCode: 'issue',       actionCode: 'revoke', permissionCode: 'certificate.revoke',             permissionType: 'Action' as const, description: 'Revoke issued certificates.' },
   { moduleCode: 'certificate',  featureCode: 'public',      actionCode: 'verify', permissionCode: 'certificate.verify',             permissionType: 'Action' as const, description: 'Verify certificates publicly.' },
   
   // Dashboard & Audit
@@ -264,6 +268,14 @@ async function seed() {
   await prisma.walkInConfirmation.deleteMany({});
   await prisma.walkInPayment.deleteMany({});
   await prisma.walkInEnrollment.deleteMany({});
+  // Exam, Completion & Certificate cleanup
+  await prisma.certificateVerification.deleteMany({});
+  await prisma.certificateReissueRequest.deleteMany({});
+  await prisma.certificate.deleteMany({});
+  await prisma.courseCompletion.deleteMany({});
+  await prisma.result.deleteMany({});
+  await prisma.exam.deleteMany({});
+
   await prisma.enrollment.deleteMany({});
   await prisma.documentVerification.deleteMany({});
   await prisma.documentOwner.deleteMany({});
@@ -396,7 +408,7 @@ async function seed() {
     'attendance.alert.read', 'attendance.alert.detect', 'attendance.admin.override', 'attendance.consolidated.read',
     'menu.faculty', 'menu.faculty.trainers', 'menu.faculty.eligible-trainers', 'menu.faculty.reports',
     'trainer.read', 'trainer.create', 'trainer.update', 'trainer.status.manage', 'trainer.qualification.read', 'trainer.qualification.manage', 'trainer.availability.read', 'trainer.availability.manage', 'trainer.authorization.read', 'trainer.authorization.manage', 'trainer.compensation.read', 'trainer.compensation.manage', 'trainer.eligibility.read', 'trainer.report.view', 'trainer.report.export', 'trainer.audit.read',
-    'result.record', 'certificate.generate',
+    'result.record', 'certificate.view', 'certificate.create', 'certificate.issue', 'certificate.reissue', 'certificate.revoke',
     'exam.view', 'exam.create', 'exam.update', 'exam.delete',
     'result.view', 'result.create', 'result.finalize', 'result.correct',
     'completion.view', 'completion.evaluate', 'completion.final-approve',
@@ -444,7 +456,7 @@ async function seed() {
     'trainer.compensation.read', 'trainer.report.view', 'trainer.report.export', 'trainer.eligibility.read',
     'exam.view', 'result.view', 'result.create', 'result.finalize',
     'completion.view', 'completion.evaluate', 'completion.coordinator-review',
-    'exam-completion.report.view', 'exam-completion.menu.view'
+    'exam-completion.report.view', 'exam-completion.menu.view', 'certificate.view', 'certificate.reissue'
   ];
   const academicCoordinatorPerms = permRecords.filter(p => academicCoordinatorPermCodes.includes(p.permissionCode));
   for (const perm of academicCoordinatorPerms) {

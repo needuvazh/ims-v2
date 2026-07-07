@@ -74,7 +74,7 @@ into a unified tracking index.
 | **Corporate Training** | Approved | Not Started | Not Started | Not Started | Not Started | Planned | Not Started | Not Started | Under Review |
 | **Communication** | Approved | Not Started | Not Started | Not Started | Not Started | Planned | Not Started | Not Started | Under Review |
 | **Reporting** | Approved | Not Started | Not Started | Not Started | Draft (Shell) | Planned | Not Started | Not Started | Under Review |
-| **Certificates** | Approved | Not Started | Not Started | Not Started | Draft (Shell) | Planned | Not Started | Not Started | Under Review |
+| **Certificates** | Approved | Approved | Approved | Approved | Completed | Implemented | Completed | Completed | Complete |
 | **Website** | Approved | Not Started | Not Started | Not Started | Not Started | Planned | Not Started | Not Started | Under Review |
 | **Document Management**| Approved | Not Started | Not Started | Not Started | Not Started | Planned | Not Started | Not Started | Under Review |
 | **Audit** | Approved | Draft | Approved | Draft | Draft (Shell) | Planned | In Progress (Fdtn)| In Progress | Under Review |
