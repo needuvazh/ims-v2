@@ -118,6 +118,36 @@ export default async function LeadDetailsPage(props: {
     interestedCourse: lead.interestedCourse ? { id: lead.interestedCourseId, nameEnglish: lead.interestedCourse.nameEnglish } : null,
   };
 
+  // Fetch existing documents for the lead's Person
+  const existingDocs = await prisma.document.findMany({
+    where: {
+      isDeleted: false,
+      owners: {
+        some: {
+          ownerId: lead.personId,
+          ownerType: 'Person',
+        },
+      },
+    },
+  });
+
+  const initialDocuments = existingDocs.map((doc) => ({
+    id: doc.id,
+    fileName: doc.fileName,
+    fileKey: doc.fileKey,
+    fileType: doc.fileType,
+    documentType: doc.documentType,
+  }));
+
+  let admissionId: string | null = null;
+  if (lead.stage === 'Converted') {
+    const linkedAdmission = await prisma.admission.findFirst({
+      where: { leadId },
+      select: { id: true },
+    });
+    admissionId = linkedAdmission?.id || null;
+  }
+
   return (
     <div className="p-6">
       <LeadDetailsClient
@@ -127,6 +157,8 @@ export default async function LeadDetailsPage(props: {
         followUps={mappedFollowUps}
         followUpsTotal={followUpsTotal}
         currentFollowUpPage={followUpPage}
+        admissionId={admissionId}
+        initialDocuments={initialDocuments}
       />
     </div>
   );

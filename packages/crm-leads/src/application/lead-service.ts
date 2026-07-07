@@ -414,27 +414,78 @@ export class LeadService {
     if (!lead.person || !lead.person.dateOfBirth) {
       throw new Error('ERR_CRM_WON_PRECONDITIONS_MISSED');
     }
-    // Check identity document upload presence (must supply at least 1)
-    if (!documents || documents.length === 0) {
-      throw new Error('ERR_CRM_WON_PRECONDITIONS_MISSED');
-    }
-    const hasIdentityDoc = documents.some(
-      (doc) => doc.documentType === 'CIVIL_ID_FRONT' || doc.documentType === 'PASSPORT_SCAN'
-    );
-    if (!hasIdentityDoc) {
-      throw new Error('ERR_CRM_WON_PRECONDITIONS_MISSED');
+    // Fetch dynamic document requirements for STUDENT (global, branch-specific, or course-specific)
+    const requirements = await tx.documentRequirement.findMany({
+      where: {
+        targetEntity: 'STUDENT',
+        status: 'Active',
+        isMandatory: true,
+        OR: [
+          { branchId: null, courseId: null },
+          { branchId: lead.branchId, courseId: null },
+          { branchId: null, courseId: lead.interestedCourseId || undefined },
+          { branchId: lead.branchId, courseId: lead.interestedCourseId || undefined },
+        ],
+      },
+    });
+
+    const mandatoryTypes = requirements.map((r) => r.documentType);
+
+    if (mandatoryTypes.length > 0) {
+      const existingPersonDocs = await tx.document.findMany({
+        where: {
+          isDeleted: false,
+          owners: {
+            some: {
+              ownerId: lead.personId,
+              ownerType: 'Person',
+            },
+          },
+        },
+        select: { documentType: true },
+      });
+
+      const allDocTypes = [
+        ...existingPersonDocs.map((d) => d.documentType),
+        ...(documents || []).map((d) => d.documentType),
+      ];
+
+      const missingTypes = mandatoryTypes.filter((t) => !allDocTypes.includes(t));
+
+      if (missingTypes.length > 0) {
+        throw new Error(`ERR_CRM_WON_PRECONDITIONS_MISSED: Missing required documents: ${missingTypes.join(', ')}`);
+      }
     }
 
-    // Register documents in Documents context
-    const documentsService = new DocumentsService(this.prisma);
-    await documentsService.registerDocuments(
-      lead.personId,
-      'Person',
-      lead.branchId,
-      documents,
-      tx,
-      actorId
+    // Register documents in Documents context, checking for existing ones to avoid duplicates
+    const existingDocs = await tx.document.findMany({
+      where: {
+        isDeleted: false,
+        owners: {
+          some: {
+            ownerId: lead.personId,
+            ownerType: 'Person',
+          },
+        },
+      },
+      select: { fileKey: true, documentType: true },
+    });
+
+    const newDocsToRegister = documents.filter(
+      (doc) => !existingDocs.some((e) => e.fileKey === doc.fileKey || e.documentType === doc.documentType)
     );
+
+    if (newDocsToRegister.length > 0) {
+      const documentsService = new DocumentsService(this.prisma);
+      await documentsService.registerDocuments(
+        lead.personId,
+        'Person',
+        lead.branchId,
+        newDocsToRegister,
+        tx,
+        actorId
+      );
+    }
 
     // 1. Transition Stage to Won
     await this.leadRepository.updateStage(leadId, 'Won', lead.version, tx);

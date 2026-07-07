@@ -1,6 +1,13 @@
 import { PrismaClient } from '@prisma/client';
 import argon2 from 'argon2';
 
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('Unhandled Rejection:', reason);
+});
+
 const prisma = new PrismaClient();
 
 const systemPermissions = [
@@ -242,6 +249,15 @@ const systemPermissions = [
   { moduleCode: 'report',       featureCode: 'crm-dashboard', actionCode: 'view',    permissionCode: 'REPORTING_VIEW_CRM_DASHBOARD',     permissionType: 'Action' as const, description: 'View CRM dashboard.' },
   { moduleCode: 'report',       featureCode: 'counselor-metrics', actionCode: 'view', permissionCode: 'REPORTING_VIEW_COUNSELOR_METRICS', permissionType: 'Action' as const, description: 'View counselor performance metrics.' },
   { moduleCode: 'crm',          featureCode: 'leads',       actionCode: 'read.all_branch', permissionCode: 'LEAD_VIEW_ALL_IN_BRANCH', permissionType: 'Action' as const, description: 'View all leads in active branch.' },
+
+  // Document Management
+  { moduleCode: 'documents',    featureCode: 'document',    actionCode: 'create', permissionCode: 'document.create',              permissionType: 'Action' as const, description: 'Create and upload documents.' },
+  { moduleCode: 'documents',    featureCode: 'document',    actionCode: 'view',   permissionCode: 'document.view',                permissionType: 'Action' as const, description: 'View documents list and details.' },
+  { moduleCode: 'documents',    featureCode: 'document',    actionCode: 'verify.submit', permissionCode: 'document.verify.submit', permissionType: 'Action' as const, description: 'Submit documents for verification.' },
+  { moduleCode: 'documents',    featureCode: 'document',    actionCode: 'verify.approve', permissionCode: 'document.verify.approve', permissionType: 'Action' as const, description: 'Approve document verification.' },
+  { moduleCode: 'documents',    featureCode: 'document',    actionCode: 'verify.reject', permissionCode: 'document.verify.reject', permissionType: 'Action' as const, description: 'Reject document verification.' },
+  { moduleCode: 'documents',    featureCode: 'document',    actionCode: 'retire', permissionCode: 'document.retire',              permissionType: 'Action' as const, description: 'Retire or soft-delete documents.' },
+  { moduleCode: 'documents',    featureCode: 'requirement', actionCode: 'manage', permissionCode: 'document.requirement.manage',  permissionType: 'Action' as const, description: 'Configure dynamic document requirement rules (Document Master).' },
 ];
 
 async function seed() {
@@ -415,7 +431,8 @@ async function seed() {
     'exam-completion.report.view', 'exam-completion.report.export',
     'exam-completion.menu.view',
     'certificate.verify', 'dashboard.branch', 'dashboard.security', 'dashboard.view',
-    'REPORTING_VIEW_CRM_DASHBOARD', 'REPORTING_VIEW_COUNSELOR_METRICS', 'LEAD_VIEW_ALL_IN_BRANCH'
+    'REPORTING_VIEW_CRM_DASHBOARD', 'REPORTING_VIEW_COUNSELOR_METRICS', 'LEAD_VIEW_ALL_IN_BRANCH',
+    'document.create', 'document.view', 'document.verify.submit', 'document.verify.approve', 'document.verify.reject', 'document.retire', 'document.requirement.manage'
   ];
   const managerPerms = permRecords.filter(p => managerPermCodes.includes(p.permissionCode));
   for (const perm of managerPerms) {
@@ -434,7 +451,8 @@ async function seed() {
     'batch.delivery.view',
     'student.read', 'dashboard.crm', 'report.iam.user', 'dashboard.view',
     'REPORTING_VIEW_CRM_DASHBOARD',
-    'admission.read', 'admission.create', 'enrollment.read'
+    'admission.read', 'admission.create', 'enrollment.read',
+    'document.create', 'document.view', 'document.verify.submit', 'document.retire'
   ];
   const counselorPerms = permRecords.filter(p => counselorPermCodes.includes(p.permissionCode));
   for (const perm of counselorPerms) {
@@ -456,7 +474,8 @@ async function seed() {
     'trainer.compensation.read', 'trainer.report.view', 'trainer.report.export', 'trainer.eligibility.read',
     'exam.view', 'result.view', 'result.create', 'result.finalize',
     'completion.view', 'completion.evaluate', 'completion.coordinator-review',
-    'exam-completion.report.view', 'exam-completion.menu.view', 'certificate.view', 'certificate.reissue'
+    'exam-completion.report.view', 'exam-completion.menu.view', 'certificate.view', 'certificate.reissue',
+    'document.view', 'document.verify.submit', 'document.verify.approve', 'document.verify.reject'
   ];
   const academicCoordinatorPerms = permRecords.filter(p => academicCoordinatorPermCodes.includes(p.permissionCode));
   for (const perm of academicCoordinatorPerms) {
@@ -474,7 +493,8 @@ async function seed() {
     'attendance.correction.request', 'attendance.report.daily.view', 'attendance.report.batch.view', 'attendance.report.student.view', 'attendance.report.lowAttendance.view',
     'result.record', 'dashboard.training', 'batch.delivery.view',
     'exam.view', 'result.view', 'result.create',
-    'completion.view', 'completion.recommend', 'exam-completion.menu.view'
+    'completion.view', 'completion.recommend', 'exam-completion.menu.view',
+    'document.create', 'document.view', 'document.verify.submit'
   ];
   const trainerPerms = permRecords.filter(p => trainerPermCodes.includes(p.permissionCode));
   for (const perm of trainerPerms) {
@@ -501,7 +521,10 @@ async function seed() {
   console.log(`  ✓ Assigned permissions to ACCOUNTANT`);
 
   // Student permissions (mostly read-only dashboard)
-  const studentPerms = permRecords.filter(p => ['certificate.verify', 'attendance.record.read', 'attendance.report.student.view'].includes(p.permissionCode));
+  const studentPerms = permRecords.filter(p => [
+    'certificate.verify', 'attendance.record.read', 'attendance.report.student.view',
+    'document.create', 'document.view'
+  ].includes(p.permissionCode));
   for (const perm of studentPerms) {
     await prisma.rolePermission.create({
       data: { roleId: roleMap['STUDENT'].id, permissionId: perm.id },
@@ -1043,6 +1066,44 @@ async function seed() {
     });
     console.log(`  ✓ Mock CRM Lead created: ${ml.firstName} ${ml.lastName}`);
   }
+
+  // Seed Document Requirements (Document Master)
+  console.log('\n🌱 Seeding document requirements...');
+  await prisma.documentRequirement.deleteMany({});
+
+  const riyadh = await prisma.branch.findFirst({ where: { branchCode: 'AST-RIYADH' } });
+  const muscat = await prisma.branch.findFirst({ where: { branchCode: 'AST-MUSCAT' } });
+  const uiux = await prisma.course.findFirst({ where: { courseCode: 'CS-UIUX' } });
+
+  const dynamicRequirements = [
+    // Student requirements
+    { targetEntity: 'STUDENT' as const, documentType: 'CIVIL_ID_FRONT' as const, isMandatory: true, branchId: null, courseId: null },
+    { targetEntity: 'STUDENT' as const, documentType: 'PASSPORT_SCAN' as const, isMandatory: false, branchId: null, courseId: null },
+    { targetEntity: 'STUDENT' as const, documentType: 'ACADEMIC_TRANSCRIPT' as const, isMandatory: true, branchId: riyadh?.id || null, courseId: null },
+    { targetEntity: 'STUDENT' as const, documentType: 'SPONSORSHIP_LETTER' as const, isMandatory: false, branchId: null, courseId: uiux?.id || null },
+
+    // Trainer requirements
+    { targetEntity: 'TRAINER' as const, documentType: 'CIVIL_ID_FRONT' as const, isMandatory: true, branchId: null, courseId: null },
+    { targetEntity: 'TRAINER' as const, documentType: 'CIVIL_ID_BACK' as const, isMandatory: true, branchId: null, courseId: null },
+    { targetEntity: 'TRAINER' as const, documentType: 'OTHER' as const, isMandatory: true, branchId: muscat?.id || null, courseId: null },
+    { targetEntity: 'TRAINER' as const, documentType: 'PASSPORT_SCAN' as const, isMandatory: false, branchId: null, courseId: null },
+  ];
+
+  for (const req of dynamicRequirements) {
+    await prisma.documentRequirement.create({
+      data: {
+        id: crypto.randomUUID(),
+        targetEntity: req.targetEntity,
+        documentType: req.documentType,
+        isMandatory: req.isMandatory,
+        branchId: req.branchId,
+        courseId: req.courseId,
+        status: 'Active',
+        effectiveStartDate: new Date(),
+      },
+    });
+  }
+  console.log('  ✓ Document requirements seeded.');
 
   console.log('\n🌱 Seed script complete! Database seeded successfully.');
 

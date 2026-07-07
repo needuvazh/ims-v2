@@ -6,13 +6,19 @@ import type { DocumentType, OwnerType } from '../domain/document';
 test('DocumentsService.registerDocuments should create Document, Owner, and Verification records', async () => {
   const mockPrisma = {
     document: {
-      create: vi.fn().mockResolvedValue({ id: 'doc-uuid-1' }),
+      create: vi.fn().mockResolvedValue({ id: 'doc-uuid-1', fileName: 'test.pdf', fileKey: 'uploads/test.pdf', fileType: 'application/pdf', documentType: 'CIVIL_ID_FRONT', branchId: 'branch-1' }),
     },
     documentOwner: {
       create: vi.fn().mockResolvedValue({ id: 'owner-uuid-1' }),
     },
     documentVerification: {
       create: vi.fn().mockResolvedValue({ id: 'ver-uuid-1' }),
+    },
+    outboxEvent: {
+      create: vi.fn().mockResolvedValue(null),
+    },
+    auditLog: {
+      create: vi.fn().mockResolvedValue(null),
     },
   } as unknown as PrismaClient;
 
@@ -37,6 +43,9 @@ test('DocumentsService.registerDocuments should create Document, Owner, and Veri
       documentType: 'CIVIL_ID_FRONT',
       branchId: 'branch-1',
       status: 'Active',
+      issueDate: null,
+      expiryDate: null,
+      version: 1,
       createdBy: 'actor-1',
     },
   });
@@ -178,3 +187,77 @@ test('DocumentsService.getDocumentsByOwners should return document list for mult
     },
   });
 });
+
+test('DocumentsService.applyVerificationDecision should create verification and increment version', async () => {
+  const mockPrisma = {
+    document: {
+      findUnique: vi.fn().mockResolvedValue({ id: 'doc-1', version: 1, isDeleted: false, branchId: 'branch-1' }),
+      update: vi.fn().mockResolvedValue({ id: 'doc-1' }),
+    },
+    documentVerification: {
+      create: vi.fn().mockResolvedValue({ id: 'ver-1' }),
+    },
+    outboxEvent: {
+      create: vi.fn().mockResolvedValue(null),
+    },
+    auditLog: {
+      create: vi.fn().mockResolvedValue(null),
+    },
+  } as unknown as PrismaClient;
+
+  const service = new DocumentsService(mockPrisma);
+  await service.applyVerificationDecision('doc-1', 'Verified', undefined, 'actor-1', mockPrisma);
+
+  expect(mockPrisma.documentVerification.create).toHaveBeenCalledWith(expect.objectContaining({
+    data: expect.objectContaining({
+      documentId: 'doc-1',
+      outcome: 'Verified',
+      createdBy: 'actor-1',
+    }),
+  }));
+
+  expect(mockPrisma.document.update).toHaveBeenCalledWith({
+    where: { id: 'doc-1', version: 1 },
+    data: { version: { increment: 1 } },
+  });
+});
+
+test('DocumentsService.applyVerificationDecision should throw if rejected but no remarks', async () => {
+  const mockPrisma = {
+    document: {
+      findUnique: vi.fn().mockResolvedValue({ id: 'doc-1', version: 1, isDeleted: false, branchId: 'branch-1' }),
+    },
+  } as unknown as PrismaClient;
+
+  const service = new DocumentsService(mockPrisma);
+  await expect(service.applyVerificationDecision('doc-1', 'Rejected', ' ', 'actor-1', mockPrisma))
+    .rejects.toThrow('DOC_REJECT_REMARKS_REQUIRED');
+});
+
+test('DocumentsService.retireDocument should soft-delete the document', async () => {
+  const mockPrisma = {
+    document: {
+      findUnique: vi.fn().mockResolvedValue({ id: 'doc-1', version: 1, isDeleted: false, branchId: 'branch-1' }),
+      update: vi.fn().mockResolvedValue({ id: 'doc-1' }),
+    },
+    outboxEvent: {
+      create: vi.fn().mockResolvedValue(null),
+    },
+    auditLog: {
+      create: vi.fn().mockResolvedValue(null),
+    },
+  } as unknown as PrismaClient;
+
+  const service = new DocumentsService(mockPrisma);
+  await service.retireDocument('doc-1', 'actor-1', mockPrisma);
+
+  expect(mockPrisma.document.update).toHaveBeenCalledWith(expect.objectContaining({
+    where: { id: 'doc-1', version: 1 },
+    data: expect.objectContaining({
+      isDeleted: true,
+      status: 'Deleted',
+      deletedBy: 'actor-1',
+    }),
+  }));
+});
+

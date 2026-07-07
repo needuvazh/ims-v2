@@ -44,8 +44,20 @@ export const DocumentCaptureSchema = z.object({
   fileKey: z.string().min(1),
   fileType: z.string().min(1),
   documentType: DocumentTypeEnum,
+  issueDate: z.preprocess((val) => (typeof val === 'string' ? new Date(val) : val), z.date().optional().nullable()),
   expiryDate: z.preprocess((val) => (typeof val === 'string' ? new Date(val) : val), z.date().optional().nullable()),
-});
+}).refine(
+  (data) => {
+    if (data.issueDate && data.expiryDate) {
+      return data.expiryDate >= data.issueDate;
+    }
+    return true;
+  },
+  {
+    message: 'expiryDate must be on or after issueDate',
+    path: ['expiryDate'],
+  }
+);
 
 export type DocumentCaptureInput = z.infer<typeof DocumentCaptureSchema>;
 
@@ -85,4 +97,18 @@ export interface IDocumentsService {
     ownerRefs: { ownerId: string; ownerType: OwnerType }[],
     tx?: Prisma.TransactionClient
   ): Promise<DocumentWithLatestVerification[]>;
+
+  applyVerificationDecision(
+    documentId: string,
+    outcome: VerificationOutcome,
+    remarks?: string,
+    actorId?: string,
+    tx?: Prisma.TransactionClient
+  ): Promise<void>;
+
+  retireDocument(
+    documentId: string,
+    actorId?: string,
+    tx?: Prisma.TransactionClient
+  ): Promise<void>;
 }

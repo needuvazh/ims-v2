@@ -74,6 +74,7 @@ export const knownPermissions = [
   'certificate.issue',
   'certificate.reissue',
   'certificate.revoke',
+  'document.requirement.manage',
 ] as const;
 
 export type KnownPermission = (typeof knownPermissions)[number];
@@ -137,6 +138,7 @@ export const adminNavigation: NavigationItem[] = [
       { href: '/organization/departments', label: 'Departments' },
       { href: '/organization/classrooms', label: 'Classrooms' },
       { href: '/organization/hierarchy', label: 'Hierarchy View' },
+      { href: '/organization/documents', label: 'Document Master', permission: 'document.requirement.manage' },
     ],
   },
   {

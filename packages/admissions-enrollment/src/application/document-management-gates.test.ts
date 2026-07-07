@@ -5,16 +5,25 @@ import { EnrollmentService } from './enrollment-service';
 
 test('RequirementsResolver should resolve default CIVIL_ID_FRONT and override SPONSORSHIP_LETTER for CORP courses', async () => {
   const mockPrisma = {
-    course: {
-      findUnique: vi.fn().mockImplementation(({ where }) => {
-        if (where.id === 'corp-course') {
-          return Promise.resolve({ id: 'corp-course', courseCode: 'CORP-101' });
+    documentRequirement: {
+      findMany: vi.fn().mockImplementation(({ where }) => {
+        if (where.OR && where.OR.some((or: any) => or.courseId === 'corp-course')) {
+          return Promise.resolve([
+            { documentType: 'CIVIL_ID_FRONT' },
+            { documentType: 'SPONSORSHIP_LETTER' },
+          ]);
         }
-        return Promise.resolve({ id: 'reg-course', courseCode: 'REG-101' });
+        if (where.OR && where.OR.some((or: any) => or.branchId === 'branch-2')) {
+          return Promise.resolve([
+            { documentType: 'CIVIL_ID_FRONT' },
+            { documentType: 'PASSPORT_SCAN' },
+            { documentType: 'ACADEMIC_TRANSCRIPT' },
+          ]);
+        }
+        return Promise.resolve([
+          { documentType: 'CIVIL_ID_FRONT' },
+        ]);
       }),
-    },
-    branch: {
-      findUnique: vi.fn().mockResolvedValue({ id: 'branch-1', branchCode: 'BR-1' }),
     },
   } as any;
 
@@ -29,26 +38,7 @@ test('RequirementsResolver should resolve default CIVIL_ID_FRONT and override SP
   expect(corpReqs).toEqual(['CIVIL_ID_FRONT', 'SPONSORSHIP_LETTER']);
 
   // 3. Branch with REQUIRED_DOCUMENTS policy
-  const mockPrismaWithPolicy = {
-    course: {
-      findUnique: vi.fn().mockResolvedValue({ id: 'reg-course', courseCode: 'REG-101' }),
-    },
-    branch: {
-      findUnique: vi.fn().mockResolvedValue({
-        id: 'branch-2',
-        branchCode: 'BR-2',
-        policies: [
-          {
-            policyType: 'REQUIRED_DOCUMENTS',
-            policyContent: '["PASSPORT_SCAN", "ACADEMIC_TRANSCRIPT"]',
-          },
-        ],
-      }),
-    },
-  } as any;
-
-  const resolverWithPolicy = new RequirementsResolver(mockPrismaWithPolicy);
-  const branchReqs = await resolverWithPolicy.getRequiredDocuments('reg-course', 'branch-2');
+  const branchReqs = await resolver.getRequiredDocuments('reg-course', 'branch-2');
   expect(branchReqs).toContain('CIVIL_ID_FRONT');
   expect(branchReqs).toContain('PASSPORT_SCAN');
   expect(branchReqs).toContain('ACADEMIC_TRANSCRIPT');
@@ -66,17 +56,15 @@ test('AdmissionService verifyAdmissionDocumentsGate should block approval if req
         lead: null,
       }),
     },
-    course: {
-      findUnique: vi.fn().mockResolvedValue({ id: 'corp-course', courseCode: 'CORP-101' }),
+    documentRequirement: {
+      findMany: vi.fn().mockResolvedValue([
+        { documentType: 'CIVIL_ID_FRONT' },
+        { documentType: 'SPONSORSHIP_LETTER' },
+      ]),
     },
-    branch: {
-      findUnique: vi.fn().mockResolvedValue({ id: 'branch-1', branchCode: 'BR-1' }),
-    },
-    // Mock user branch access
     userBranchAccess: {
       findFirst: vi.fn().mockResolvedValue({ id: 'access-1' }),
     },
-    // Mock documents get: returns civil ID front but no sponsorship letter
     document: {
       findMany: vi.fn().mockResolvedValue([
         {
@@ -92,7 +80,6 @@ test('AdmissionService verifyAdmissionDocumentsGate should block approval if req
   const mockRepo = {} as any;
   const admissionService = new AdmissionService(mockRepo, mockPrisma);
 
-  // Should throw because SPONSORSHIP_LETTER is missing/unverified
   await expect(admissionService.verifyAdmissionDocumentsGate('adm-1', mockPrisma))
     .rejects
     .toThrow('ERR_DOCUMENTS_VERIFICATION_GATE_FAILED');
@@ -110,16 +97,15 @@ test('AdmissionService verifyAdmissionDocumentsGate should permit approval if al
       }),
       update: vi.fn().mockResolvedValue(null),
     },
-    course: {
-      findUnique: vi.fn().mockResolvedValue({ id: 'corp-course', courseCode: 'CORP-101' }),
-    },
-    branch: {
-      findUnique: vi.fn().mockResolvedValue({ id: 'branch-1', branchCode: 'BR-1' }),
+    documentRequirement: {
+      findMany: vi.fn().mockResolvedValue([
+        { documentType: 'CIVIL_ID_FRONT' },
+        { documentType: 'SPONSORSHIP_LETTER' },
+      ]),
     },
     userBranchAccess: {
       findFirst: vi.fn().mockResolvedValue({ id: 'access-1' }),
     },
-    // Mock documents: both are active and verified
     document: {
       findMany: vi.fn().mockResolvedValue([
         {
@@ -141,7 +127,6 @@ test('AdmissionService verifyAdmissionDocumentsGate should permit approval if al
   const mockRepo = {} as any;
   const admissionService = new AdmissionService(mockRepo, mockPrisma);
 
-  // Should succeed without throwing
   await expect(admissionService.verifyAdmissionDocumentsGate('adm-1', mockPrisma)).resolves.not.toThrow();
 });
 
@@ -159,11 +144,10 @@ test('EnrollmentService confirmEnrollment should block if unverified and permit 
       }),
       update: vi.fn().mockResolvedValue(null),
     },
-    course: {
-      findUnique: vi.fn().mockResolvedValue({ id: 'reg-course', courseCode: 'REG-101' }),
-    },
-    branch: {
-      findUnique: vi.fn().mockResolvedValue({ id: 'branch-1', branchCode: 'BR-1' }),
+    documentRequirement: {
+      findMany: vi.fn().mockResolvedValue([
+        { documentType: 'CIVIL_ID_FRONT' },
+      ]),
     },
     userBranchAccess: {
       findFirst: vi.fn().mockResolvedValue({ id: 'access-1' }),
@@ -174,7 +158,6 @@ test('EnrollmentService confirmEnrollment should block if unverified and permit 
     outboxEvent: {
       create: vi.fn().mockResolvedValue(null),
     },
-    // Mock documents: Civil ID is uploaded but outcome is Pending (unverified)
     document: {
       findMany: vi.fn().mockImplementation(() => {
         return Promise.resolve([
@@ -191,12 +174,10 @@ test('EnrollmentService confirmEnrollment should block if unverified and permit 
 
   const enrollmentService = new EnrollmentService(mockPrisma);
 
-  // 1. Should fail because verification status is Pending (unverified)
   await expect(enrollmentService.confirmEnrollment('enr-1', 'actor-1', mockPrisma))
     .rejects
     .toThrow('ERR_DOCUMENTS_VERIFICATION_GATE_FAILED');
 
-  // 2. Change mock documents to return Verified
   mockPrisma.document.findMany = vi.fn().mockResolvedValue([
     {
       id: 'doc-civil',
@@ -206,7 +187,6 @@ test('EnrollmentService confirmEnrollment should block if unverified and permit 
     },
   ]);
 
-  // Should now succeed
   await expect(enrollmentService.confirmEnrollment('enr-1', 'actor-1', mockPrisma)).resolves.not.toThrow();
   expect(mockPrisma.enrollment.update).toHaveBeenCalledWith({
     where: { id: 'enr-1' },

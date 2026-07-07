@@ -112,6 +112,9 @@ function mapNavigationIcons(item: any): any {
     case '/organization/hierarchy':
       icon = <FolderTree className="h-4.5 w-4.5" />;
       break;
+    case '/organization/documents':
+      icon = <FileText className="h-4.5 w-4.5" />;
+      break;
     case '/iam':
       icon = <ShieldCheck className="h-4.5 w-4.5" />;
       break;

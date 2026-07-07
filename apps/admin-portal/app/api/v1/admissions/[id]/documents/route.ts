@@ -33,11 +33,44 @@ export async function POST(request: Request, props: { params: Promise<{ id: stri
         return NextResponse.json({ success: false, messageEnglish: 'Access Denied' }, { status: 403 });
       }
 
-      const body = await request.json();
-      const { documentType, fileKey } = body;
+      const contentType = request.headers.get('content-type') || '';
+      let documentType: string;
+      let fileKey: string;
+      let fileName = 'document.pdf';
+      let fileType = 'application/pdf';
 
-      if (!documentType || !fileKey) {
-        return NextResponse.json({ success: false, messageEnglish: 'documentType and fileKey are required' }, { status: 400 });
+      if (contentType.includes('multipart/form-data')) {
+        const formData = await request.formData();
+        const file = formData.get('file') as File;
+        documentType = formData.get('documentType') as string;
+
+        if (!file || !documentType) {
+          return NextResponse.json({ success: false, messageEnglish: 'file and documentType are required' }, { status: 400 });
+        }
+
+        const { put } = await import('@vercel/blob');
+        const token = process.env.BLOB_READ_WRITE_TOKEN;
+        
+        // Structure the pathname: students/${personId}/documents/${documentType}/${fileName}
+        const pathname = `students/${admission.personId}/documents/${documentType}/${file.name}`;
+        const blobResult = await put(pathname, file, {
+          access: 'private',
+          token,
+          allowOverwrite: true,
+        });
+
+        fileKey = blobResult.url;
+        fileName = file.name;
+        fileType = file.type || 'application/pdf';
+      } else {
+        const body = await request.json();
+        documentType = body.documentType;
+        fileKey = body.fileKey;
+
+        if (!documentType || !fileKey) {
+          return NextResponse.json({ success: false, messageEnglish: 'documentType and fileKey are required' }, { status: 400 });
+        }
+        fileName = fileKey.split('/').pop() || 'document.pdf';
       }
 
       const documentsService = new DocumentsService(prisma);
@@ -48,10 +81,10 @@ export async function POST(request: Request, props: { params: Promise<{ id: stri
           'Person',
           admission.branchId,
           [{
-            documentType,
+            documentType: documentType as any,
             fileKey,
-            fileName: fileKey.split('/').pop() || 'document.pdf',
-            fileType: 'application/pdf',
+            fileName,
+            fileType,
           }],
           tx,
           session.userId

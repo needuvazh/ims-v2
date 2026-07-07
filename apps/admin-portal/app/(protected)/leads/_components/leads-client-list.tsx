@@ -49,10 +49,155 @@ export function LeadsClientList({ leads, branches, total }: LeadsClientListProps
   const currentSortOrder = (searchParams.get('sortOrder') as SortOrder | null) ?? 'desc';
 
   const [convertingLead, setConvertingLead] = useState<any | null>(null);
-  const [docLink1, setDocLink1] = useState('');
-  const [docLink2, setDocLink2] = useState('');
+  const [requirements, setRequirements] = useState<any[]>([]);
+  const [uploadedFiles, setUploadedFiles] = useState<Record<string, { url: string; fileName: string; id?: string }>>({});
+  const [uploadingStates, setUploadingStates] = useState<Record<string, boolean>>({});
+
+  // Fetch dynamic requirements and existing documents when a lead is selected for conversion
+  useEffect(() => {
+    if (!convertingLead) {
+      setRequirements([]);
+      setUploadedFiles({});
+      setUploadingStates({});
+      return;
+    }
+
+    const loadData = async () => {
+      try {
+        const reqsRes = await fetch(
+          `/api/v1/documents/requirements?targetEntity=STUDENT&branchId=${convertingLead.branchId}&courseId=${convertingLead.interestedCourseId || ''}`
+        );
+        if (reqsRes.ok) {
+          const result = await reqsRes.json();
+          setRequirements(result.data || []);
+        }
+
+        const docsRes = await fetch(`/api/v1/documents?ownerId=${convertingLead.personId}&ownerType=Person`);
+        if (docsRes.ok) {
+          const result = await docsRes.json();
+          const docs = result.data?.documents || [];
+          const mapped: Record<string, { url: string; fileName: string; id?: string }> = {};
+          for (const d of docs) {
+            mapped[d.documentType] = { url: d.fileKey, fileName: d.fileName, id: d.id };
+          }
+          setUploadedFiles(mapped);
+        }
+      } catch (err) {
+        console.error('Failed to load conversion checklist', err);
+      }
+    };
+
+    loadData();
+  }, [convertingLead]);
+
+  const handleLeadDocUpload = async (documentType: string, file: File | undefined) => {
+    if (!file || !convertingLead) return;
+
+    setUploadingStates((prev) => ({ ...prev, [documentType]: true }));
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('ownerId', convertingLead.personId);
+      formData.append('documentType', documentType);
+      formData.append('branchId', convertingLead.branchId);
+
+      const res = await fetch('/api/v1/documents/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await res.json();
+      if (!res.ok) {
+        throw new Error(result.messageEnglish || 'Failed to upload file');
+      }
+
+      setUploadedFiles((prev) => ({
+        ...prev,
+        [documentType]: { url: result.data.url, fileName: result.data.fileName, id: result.data.id },
+      }));
+      toast.success(`Uploaded ${result.data.fileName} successfully!`);
+      router.refresh();
+    } catch (err: any) {
+      toast.error(err.message || 'File upload failed');
+    } finally {
+      setUploadingStates((prev) => ({ ...prev, [documentType]: false }));
+    }
+  };
+
+  const handleClearDoc = async (documentType: string) => {
+    const targetFile = uploadedFiles[documentType];
+    if (!targetFile) return;
+
+    if (!confirm('Are you sure you want to delete this document? The entire document will be deleted.')) {
+      return;
+    }
+
+    if (targetFile.id) {
+      try {
+        const res = await fetch(`/api/v1/documents/${targetFile.id}`, {
+          method: 'DELETE',
+        });
+        const result = await res.json();
+        if (!res.ok) {
+          throw new Error(result.messageEnglish || 'Failed to delete document');
+        }
+        toast.success('Document deleted successfully!');
+      } catch (err: any) {
+        toast.error(err.message || 'Failed to delete document');
+        return;
+      }
+    }
+
+    setUploadedFiles((prev) => {
+      const copy = { ...prev };
+      delete copy[documentType];
+      return copy;
+    });
+    router.refresh();
+  };
+
   const [docError, setDocError] = useState<string | null>(null);
   const [isConverting, setIsConverting] = useState(false);
+
+  const handleConvertSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setDocError(null);
+
+    const missingMandatory = requirements
+      .filter((r) => r.isMandatory && !uploadedFiles[r.documentType])
+      .map((r) => r.documentType.replace(/_/g, ' '));
+
+    if (missingMandatory.length > 0) {
+      setDocError(`The following required documents are missing: ${missingMandatory.join(', ')}`);
+      return;
+    }
+
+    try {
+      setIsConverting(true);
+      const docsPayload = Object.entries(uploadedFiles).map(([docType, f]) => ({
+        documentType: docType,
+        fileKey: f.url,
+        fileName: f.fileName,
+        fileType: 'application/pdf', // fallback
+        expiryDate: null,
+      }));
+
+      const response = await convertLeadAction(convertingLead.id, docsPayload);
+      const res = response as any;
+      if (res && !res.success) {
+        setDocError(res.error || 'Conversion failed. Make sure lead has valid DOB and Email.');
+      } else {
+        toast.success('Lead converted to student successfully!');
+        setConvertingLead(null);
+        setUploadedFiles({});
+        router.refresh();
+      }
+    } catch (err: any) {
+      setDocError(err.message || 'An unexpected conversion error occurred.');
+    } finally {
+      setIsConverting(false);
+    }
+  };
   const [searchValue, setSearchValue] = useState(searchParams.get('q') || '');
 
   const updateParams = useCallback((updates: Record<string, string | null>) => {
@@ -122,39 +267,7 @@ export function LeadsClientList({ leads, branches, total }: LeadsClientListProps
     }).format(date);
   };
 
-  const handleConvertSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setDocError(null);
 
-    if (!docLink1.trim()) {
-      setDocError('At least one identity document URL (e.g. National ID scan link) is mandatory.');
-      return;
-    }
-
-    try {
-      setIsConverting(true);
-      const links = [docLink1.trim()];
-      if (docLink2.trim()) {
-        links.push(docLink2.trim());
-      }
-
-      const response = await convertLeadAction(convertingLead.id, links);
-      const res = response as any;
-      if (res && !res.success) {
-        setDocError(res.error || 'Conversion failed. Make sure lead has valid DOB and Email.');
-      } else {
-        toast.success('Lead converted to student successfully!');
-        setConvertingLead(null);
-        setDocLink1('');
-        setDocLink2('');
-        router.refresh();
-      }
-    } catch (err: any) {
-      setDocError(err.message || 'An unexpected conversion error occurred.');
-    } finally {
-      setIsConverting(false);
-    }
-  };
 
   const columns = [
     {
@@ -473,37 +586,53 @@ export function LeadsClientList({ leads, branches, total }: LeadsClientListProps
               </div>
             )}
 
-            <FormField>
-              <FormLabel required>Identity Document URL (Civil ID Scan)</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="https://storage.example.com/docs/civil_id.pdf"
-                  value={docLink1}
-                  onChange={(e) => setDocLink1(e.target.value)}
-                  required
-                />
-              </FormControl>
-              <span className="text-[10px] text-[color:var(--ims-muted)]">
-                Civil ID scan or equivalent national registration document.
-              </span>
-            </FormField>
-
-            <FormField>
-              <FormLabel>Secondary Document URL (Optional)</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="https://storage.example.com/docs/passport.pdf"
-                  value={docLink2}
-                  onChange={(e) => setDocLink2(e.target.value)}
-                />
-              </FormControl>
-            </FormField>
+            {requirements.map((req) => {
+              const file = uploadedFiles[req.documentType];
+              const isUploading = uploadingStates[req.documentType];
+              return (
+                <FormField key={req.documentType}>
+                  <FormLabel required={req.isMandatory}>
+                    {req.documentType.replace(/_/g, ' ')} {req.isMandatory ? '' : '(Optional)'}
+                  </FormLabel>
+                  <FormControl>
+                    {file ? (
+                      <div className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs">
+                        <span className="truncate max-w-[200px] font-mono font-medium">{file.fileName}</span>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleClearDoc(req.documentType)}
+                          className="h-5 px-1.5 text-xs text-rose-600 hover:bg-rose-50"
+                          disabled={isConverting}
+                        >
+                          Clear
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="space-y-1">
+                        <input
+                          type="file"
+                          onChange={(e) => {
+                            const f = e.target.files?.[0];
+                            handleLeadDocUpload(req.documentType, f);
+                          }}
+                          disabled={isConverting || isUploading}
+                          className="block w-full text-xs text-slate-500 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[11px] file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200"
+                        />
+                        {isUploading && <span className="text-[10px] text-slate-500 italic">Uploading to store...</span>}
+                      </div>
+                    )}
+                  </FormControl>
+                </FormField>
+              );
+            })}
 
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => setConvertingLead(null)} disabled={isConverting}>
                 Cancel
               </Button>
-              <Button type="submit" disabled={isConverting || !docLink1.trim()}>
+              <Button type="submit" disabled={isConverting}>
                 {isConverting ? 'Converting...' : 'Complete Admissions Handoff'}
               </Button>
             </DialogFooter>
