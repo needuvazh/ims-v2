@@ -32,6 +32,15 @@ export interface Course {
   status: string;
   effectiveStartDate: Date;
   effectiveEndDate?: Date | null;
+  isPubliclyExposed: boolean;
+  bannerImage?: string | null;
+  metaTitle?: string | null;
+  metaDescription?: string | null;
+  metaKeywords?: string | null;
+  syllabusOutline?: string | null;
+  showPricingPublicly: boolean;
+  hasPracticalInstruction: boolean;
+  practicalTestingDescription?: string | null;
   version: number;
   createdAt: Date;
   createdBy?: string | null;

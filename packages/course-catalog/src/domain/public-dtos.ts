@@ -15,6 +15,9 @@ export const PublicCourseListItemSchema = z.object({
   nextBatchDate: z.string().nullable(),
   availableSeats: z.number().nullable(),
   imageUrl: z.string().nullable(),
+  showPricingPublicly: z.boolean(),
+  hasPracticalInstruction: z.boolean(),
+  practicalTestingDescription: z.string().nullable(),
 });
 
 export type PublicCourseListItem = z.infer<typeof PublicCourseListItemSchema>;
@@ -34,6 +37,22 @@ export const PublicCourseDetailSchema = z.object({
   basePrice: z.string().nullable(),
   taxPercentage: z.string().nullable(),
   currency: z.string().nullable(),
+  imageUrl: z.string().nullable(),
+  showPricingPublicly: z.boolean(),
+  hasPracticalInstruction: z.boolean(),
+  practicalTestingDescription: z.string().nullable(),
+  metaTitle: z.string().nullable(),
+  metaDescription: z.string().nullable(),
+  metaKeywords: z.string().nullable(),
+  syllabusOutline: z.string().nullable(),
+  categoryHierarchy: z.array(
+    z.object({
+      id: z.string().uuid(),
+      code: z.string(),
+      nameEnglish: z.string(),
+      nameArabic: z.string(),
+    })
+  ),
   batches: z.array(
     z.object({
       id: z.string().uuid(),

@@ -6,6 +6,7 @@ export const CreateStudentProfileAdmissionSchema = z.object({
   email: z.string().email().nullable().optional(),
   phone: z.string().min(1),
   nationalId: z.string().nullable().optional(),
+  nationality: z.string().nullable().optional(),
   branchId: z.string().uuid(),
   leadId: z.string().uuid().nullable().optional(),
   courseId: z.string().uuid().nullable().optional(),

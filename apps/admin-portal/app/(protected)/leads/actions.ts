@@ -4,10 +4,25 @@ import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { buildCrmActionFailure } from './form-errors';
 import { assertPermission, assertBranchScope, getSession } from '../../lib/auth-guard';
-import { CreateLeadSchema } from '@ims/crm-leads';
+import { CreateLeadSchema, LeadSourceEnum } from '@ims/crm-leads';
 import { prisma } from '@ims/database';
 
+const FormDateOfBirthSchema = z.preprocess((val) => {
+  if (typeof val === 'string') {
+    if (!val.trim()) return undefined;
+    const d = new Date(val);
+    return isNaN(d.getTime()) ? val : d;
+  }
+  return val;
+}, z.date({ required_error: 'Date of birth is required', invalid_type_error: 'Invalid date of birth' }));
+
 const createLeadSchema = CreateLeadSchema.extend({
+  email: z.string().min(1, 'Email address is required').email('Invalid email'),
+  dateOfBirth: FormDateOfBirthSchema,
+  nationality: z.string().min(1, 'Nationality is required'),
+  nationalId: z.string().min(1, 'ID Number is required'),
+  counselorId: z.string().min(1, 'Assigned staff is required').uuid('Invalid staff reference'),
+  source: LeadSourceEnum,
   bypassDuplicateBlock: z.boolean().optional(),
 });
 
@@ -41,8 +56,8 @@ export async function createLeadAction(data: any) {
   try {
     const preparedData = {
       ...data,
-      email: data.email === '' ? undefined : data.email,
-      counselorId: data.counselorId === '' ? undefined : data.counselorId,
+      email: data.email,
+      counselorId: data.counselorId,
       notes: data.notes === '' ? undefined : data.notes,
       bypassDuplicateBlock: !!data.bypassDuplicateBlock,
     };
@@ -63,6 +78,8 @@ export async function createLeadAction(data: any) {
         email: parsed.email || undefined,
         phone: parsed.phone,
         dateOfBirth: parsed.dateOfBirth,
+        nationality: parsed.nationality || undefined,
+        nationalId: parsed.nationalId || undefined,
         interestedCourseId: parsed.interestedCourseId,
         source: parsed.source,
         counselorId: parsed.counselorId || undefined,
@@ -84,8 +101,8 @@ export async function updateLeadAction(data: any) {
     console.log('updateLeadAction raw data:', data);
     const preparedData = {
       ...data,
-      email: data.email === '' ? null : data.email,
-      counselorId: data.counselorId === '' ? null : data.counselorId,
+      email: data.email,
+      counselorId: data.counselorId,
       notes: data.notes === '' ? null : data.notes,
       lostReasonCode: data.lostReasonCode === '' ? null : data.lostReasonCode,
       lostReasonNotes: data.lostReasonNotes === '' ? null : data.lostReasonNotes,
@@ -119,6 +136,8 @@ export async function updateLeadAction(data: any) {
       phone: parsed.phone,
       email: parsed.email,
       dateOfBirth: parsed.dateOfBirth,
+      nationality: parsed.nationality,
+      nationalId: parsed.nationalId,
       notes: parsed.notes,
       interestedCourseId: parsed.interestedCourseId,
       counselorId: parsed.counselorId,

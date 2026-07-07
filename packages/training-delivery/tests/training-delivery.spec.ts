@@ -23,10 +23,12 @@ const mockBatchRepository = {
 const mockSchedulingService = {
   validateTrainerAssignment: vi.fn(),
   getSessionsForTrainer: vi.fn(),
+  validateSession: vi.fn(),
 };
 
 // Mock Prisma
 const mockPrisma = {
+  branch: { findUnique: vi.fn() },
   classroom: { findUnique: vi.fn() },
   course: { findUnique: vi.fn() },
   trainerProfile: { findUnique: vi.fn() },
@@ -74,6 +76,8 @@ beforeEach(() => {
       },
     ],
   });
+  mockPrisma.branch.findUnique.mockResolvedValue({ id: 'branch-123', instituteId: 'inst-123' });
+  mockSchedulingService.validateSession.mockResolvedValue({ isValid: true });
 });
 
 test('BatchService.createBatch should fail if course is not published', async () => {
@@ -127,10 +131,10 @@ test('BatchService.assignTrainer should check for trainer schedule overlaps and 
   mockBatchRepository.findSessions.mockResolvedValueOnce([
     { id: 's1', sessionDate: '2026-10-15T00:00:00.000Z', startTime: '09:00', endTime: '12:00' }
   ]);
-  mockSchedulingService.getSessionsForTrainer.mockResolvedValueOnce([
-    { id: 's2', sessionDate: '2026-10-15T00:00:00.000Z', startTime: '10:00', endTime: '13:00', batchCode: 'B-OTHER' }
-  ]);
-  mockPrisma.trainerProfile.findUnique.mockResolvedValueOnce({ id: trainerId, status: 'Active' });
+  mockSchedulingService.validateSession.mockResolvedValueOnce({
+    isValid: false,
+    conflicts: [{ type: 'TRAINER_OVERLAP' }],
+  });
 
   const assignment = {
     trainerId,
@@ -139,7 +143,7 @@ test('BatchService.assignTrainer should check for trainer schedule overlaps and 
     assignedTo: new Date('2026-10-31'),
   };
 
-  await expect(batchService.assignTrainer(batchId, assignment, createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'))).rejects.toThrow('Trainer is already scheduled');
+  await expect(batchService.assignTrainer(batchId, assignment, createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'))).rejects.toThrow('Trainer schedule conflict detected by Scheduling Engine');
 });
 
 test('BatchService.transitionBatchStatus should cascade sessions status and publish outbox event on Cancelled', async () => {

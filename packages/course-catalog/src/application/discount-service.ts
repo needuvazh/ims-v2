@@ -138,4 +138,44 @@ export class CourseDiscountService {
 
     return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
+
+  async disableDiscount(id: string, actorId?: string, tx?: Prisma.TransactionClient) {
+    const execute = async (activeClient: Prisma.TransactionClient) => {
+      const record = await this.discountRepository.findById(id, activeClient);
+      if (!record) {
+        throw new Error('ERR_CRS_DISCOUNT_NOT_FOUND');
+      }
+
+      if (record.status === 'Inactive') {
+        return record;
+      }
+
+      const updated = await this.discountRepository.update(
+        id,
+        {
+          status: 'Inactive',
+        },
+        activeClient
+      );
+
+      // Audit Log
+      await activeClient.auditLog.create({
+        data: {
+          id: createUuid(randomUUID()),
+          module: 'CourseCatalog',
+          performedBy: actorId || null,
+          performedAt: new Date(),
+          entityType: 'CourseDiscount',
+          entityId: id,
+          action: 'Disable',
+          oldValue: { status: record.status },
+          newValue: { status: 'Inactive' },
+        },
+      });
+
+      return updated;
+    };
+
+    return tx ? execute(tx) : this.prisma.$transaction(execute);
+  }
 }

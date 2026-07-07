@@ -241,6 +241,10 @@ model User {
   receiptsIssued                 Receipt[]              @relation("ReceiptIssuer")
   refundsRequested               Refund[]               @relation("RefundRequester")
   refundsDecided                 Refund[]               @relation("RefundDecider")
+  issuedCertificates             Certificate[]          @relation("IssuedCertificates")
+  revokedCertificates            Certificate[]          @relation("RevokedCertificates")
+  reissueRequestsRequested       CertificateReissueRequest[] @relation("ReissueRequestedBy")
+  reissueRequestsApproved        CertificateReissueRequest[] @relation("ReissueApprovedBy")
 
   @@index([status])
   @@map("users")
@@ -1126,6 +1130,16 @@ model Course {
   effectiveStartDate DateTime  @db.Date
   effectiveEndDate   DateTime? @db.Date
 
+  isPubliclyExposed     Boolean   @default(false)
+  bannerImage           String?   @db.Text
+  metaTitle             String?   @db.VarChar(255)
+  metaDescription       String?   @db.Text
+  metaKeywords          String?   @db.Text
+  syllabusOutline       String?   @db.Text
+  showPricingPublicly   Boolean   @default(true)
+  hasPracticalInstruction Boolean @default(false)
+  practicalTestingDescription String? @db.Text
+
   version Int @default(1)
 
   category        CourseCategory?        @relation(fields: [categoryId], references: [id])
@@ -1134,12 +1148,14 @@ model Course {
   discounts       CourseDiscount[]
   batches         Batch[]
   enrollments     Enrollment[]
+  certificates    Certificate[]
   admissions      Admission[]
   invoiceLineItems InvoiceLineItem[]
 
   leads     Lead[]
   inquiries Inquiry[]
   trainerAuthorizations TrainerCourseAuthorization[]
+  exams     Exam[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -1183,6 +1199,8 @@ model Batch {
   pricings    CoursePricing[]
   discounts   CourseDiscount[]
   enrollments Enrollment[]
+  certificates Certificate[]
+  exams       Exam[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -1667,6 +1685,8 @@ model Lead {
   lastName           String     @db.VarChar(100)
   email              String?    @db.VarChar(255)
   phone              String     @db.VarChar(30)
+  nationality        String?    @db.VarChar(50)
+  nationalId         String?    @db.VarChar(50)
   stage              LeadStage  @default(New)
   source             LeadSource @default(Other)
   counselorId        String?    @db.Uuid
@@ -1765,6 +1785,7 @@ model StudentProfile {
   mergeLogsAsSource   StudentMergeLog[]      @relation("StudentMergeSource")
   invoices            Invoice[]
   payments            Payment[]
+  certificates        Certificate[]
 
   // Audit columns
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
@@ -2032,6 +2053,9 @@ model Enrollment {
   invoices          Invoice[]
   invoiceLineItems  InvoiceLineItem[]
   installmentPlans  InstallmentPlan[]
+  results           Result[]
+  courseCompletion  CourseCompletion?
+  certificates      Certificate[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -2702,4 +2726,271 @@ model CorporateCreditRule {
   @@index([corporateAccountId, status])
   @@index([branchId])
   @@map("finance_corporate_credit_rules")
+}
+
+// ============================================================================
+// Module 10 – Exam, Result & Completion Management
+// ============================================================================
+
+enum ExamStatus {
+  Draft
+  Scheduled
+  OpenForResultEntry
+  Closed
+  Cancelled
+  Archived
+}
+
+enum ResultStatus {
+  Pending
+  Recorded
+  Finalized
+  Corrected
+}
+
+enum CompletionStatus {
+  Pending
+  EvidenceIncomplete
+  AwaitingTrainerRecommendation
+  AwaitingCoordinatorReview
+  AwaitingFinalApproval
+  Approved
+  Rejected
+  ReevaluationRequired
+  ExceptionReview
+}
+
+enum ApprovalLevel {
+  TrainerRecommendation
+  CoordinatorReview
+  FinalApproval
+}
+
+enum ApprovalStatus {
+  Pending
+  Approved
+  Rejected
+}
+
+model Exam {
+  id         String      @id @default(uuid()) @db.Uuid
+  courseId   String      @db.Uuid
+  batchId    String      @db.Uuid
+  examName   String      @db.VarChar(200)
+  examDate   DateTime    @db.Date
+  maxMarks   Decimal     @db.Decimal(10, 2)
+  passMarks  Decimal     @db.Decimal(10, 2)
+  status     ExamStatus  @default(Draft)
+  version    Int         @default(1)
+
+  course     Course      @relation(fields: [courseId], references: [id])
+  batch      Batch       @relation(fields: [batchId], references: [id])
+  results    Result[]
+
+  createdAt  DateTime    @default(now()) @db.Timestamptz(6)
+  createdBy  String?     @db.Uuid
+  updatedAt  DateTime?   @db.Timestamptz(6)
+  updatedBy  String?     @db.Uuid
+  deletedAt  DateTime?   @db.Timestamptz(6)
+  deletedBy  String?     @db.Uuid
+  isDeleted  Boolean     @default(false)
+
+  @@index([batchId, status])
+  @@index([courseId])
+  @@index([examDate])
+  @@map("exams")
+}
+
+model Result {
+  id             String       @id @default(uuid()) @db.Uuid
+  examId         String       @db.Uuid
+  enrollmentId   String       @db.Uuid
+  marksObtained  Decimal      @db.Decimal(10, 2)
+  resultStatus   ResultStatus @default(Pending)
+  grade          String?      @db.VarChar(20)
+  finalizedAt    DateTime?    @db.Timestamptz(6)
+  finalizedBy    String?      @db.Uuid
+  version        Int          @default(1)
+
+  exam           Exam         @relation(fields: [examId], references: [id])
+  enrollment     Enrollment   @relation(fields: [enrollmentId], references: [id])
+
+  createdAt      DateTime     @default(now()) @db.Timestamptz(6)
+  createdBy      String?      @db.Uuid
+  updatedAt      DateTime?    @db.Timestamptz(6)
+  updatedBy      String?      @db.Uuid
+  deletedAt      DateTime?    @db.Timestamptz(6)
+  deletedBy      String?      @db.Uuid
+  isDeleted      Boolean      @default(false)
+
+  @@unique([examId, enrollmentId])
+  @@index([examId, enrollmentId])
+  @@index([enrollmentId])
+  @@index([resultStatus])
+  @@map("results")
+}
+
+model CourseCompletion {
+  id                       String           @id @default(uuid()) @db.Uuid
+  enrollmentId             String           @db.Uuid
+  attendancePercentage     Decimal?         @db.Decimal(5, 2)
+  attendanceOutcome        String?          @db.VarChar(30)
+  examRequired             Boolean          @default(false)
+  examOutcome              String?          @db.VarChar(30)
+  paymentRequired          Boolean          @default(false)
+  paymentOutcome           String?          @db.VarChar(30)
+  manualApprovalRequired   Boolean          @default(false)
+  completionStatus         CompletionStatus @default(Pending)
+  certificateAllowed       Boolean          @default(false)
+  attendanceUpdatedAt      DateTime?        @db.Timestamptz(6)
+  resultUpdatedAt          DateTime?        @db.Timestamptz(6)
+  paymentUpdatedAt         DateTime?        @db.Timestamptz(6)
+  lastEvaluatedAt          DateTime?        @db.Timestamptz(6)
+  evidenceStale            Boolean          @default(false)
+  version                  Int              @default(1)
+
+  enrollment               Enrollment       @relation(fields: [enrollmentId], references: [id])
+  approvals                CompletionApproval[]
+
+  createdAt                DateTime         @default(now()) @db.Timestamptz(6)
+  createdBy                String?          @db.Uuid
+  updatedAt                DateTime?        @db.Timestamptz(6)
+  updatedBy                String?          @db.Uuid
+  deletedAt                DateTime?        @db.Timestamptz(6)
+  deletedBy                String?          @db.Uuid
+  isDeleted                Boolean          @default(false)
+
+  @@unique([enrollmentId])
+  @@index([enrollmentId, completionStatus])
+  @@index([completionStatus])
+  @@map("course_completions")
+}
+
+model CompletionApproval {
+  id                 String          @id @default(uuid()) @db.Uuid
+  courseCompletionId String          @db.Uuid
+  approvalLevel      ApprovalLevel
+  status             ApprovalStatus  @default(Pending)
+  actorId            String          @db.Uuid
+  actionDate         DateTime?       @db.Timestamptz(6)
+  remarks            String?         @db.Text
+  version            Int             @default(1)
+
+  courseCompletion   CourseCompletion @relation(fields: [courseCompletionId], references: [id])
+
+  createdAt          DateTime        @default(now()) @db.Timestamptz(6)
+  createdBy          String?         @db.Uuid
+  updatedAt          DateTime?       @db.Timestamptz(6)
+  updatedBy          String?         @db.Uuid
+  deletedAt          DateTime?       @db.Timestamptz(6)
+  deletedBy          String?         @db.Uuid
+  isDeleted          Boolean         @default(false)
+
+  @@index([courseCompletionId, approvalLevel])
+  @@index([courseCompletionId])
+  @@index([actorId])
+  @@map("completion_approvals")
+}
+
+model Certificate {
+  id                String           @id @default(uuid()) @db.Uuid
+  certificateNumber String           @unique @db.VarChar(100)
+  enrollmentId      String           @db.Uuid
+  studentProfileId  String           @db.Uuid
+  courseId          String           @db.Uuid
+  batchId           String           @db.Uuid
+  issuedDate        DateTime?        @db.Timestamptz(6)
+  issuedBy          String?          @db.Uuid
+  certificateStatus String           @db.VarChar(50) // e.g. Generated, Issued, Revoked, Replaced
+  certificateUrl    String           @db.Text
+  verificationCode  String           @unique @db.VarChar(100)
+  qrCodeUrl         String           @db.Text
+  language          String           @db.VarChar(10) // "en" or "ar"
+
+  // Revocation fields (physically expanded)
+  revokedAt         DateTime?        @db.Timestamptz(6)
+  revokedBy         String?          @db.Uuid
+  revocationReason  String?          @db.Text
+
+  // Relations
+  enrollment        Enrollment       @relation(fields: [enrollmentId], references: [id])
+  studentProfile    StudentProfile   @relation(fields: [studentProfileId], references: [id])
+  course            Course           @relation(fields: [courseId], references: [id])
+  batch             Batch            @relation(fields: [batchId], references: [id])
+  issuedByUser      User?            @relation("IssuedCertificates", fields: [issuedBy], references: [id])
+  revokedByUser     User?            @relation("RevokedCertificates", fields: [revokedBy], references: [id])
+  reissueRequests   CertificateReissueRequest[] @relation("OriginalCertificate")
+  replacementFor    CertificateReissueRequest[] @relation("ReplacementCertificate")
+  verifications     CertificateVerification[]
+
+  // Audit columns
+  createdAt         DateTime         @default(now()) @db.Timestamptz(6)
+  createdBy         String?          @db.Uuid
+  updatedAt         DateTime?        @updatedAt @db.Timestamptz(6)
+  updatedBy         String?          @db.Uuid
+  deletedAt         DateTime?        @db.Timestamptz(6)
+  isActive          Boolean          @default(true)
+  version           Int              @default(1)
+
+  @@index([enrollmentId])
+  @@index([studentProfileId])
+  @@index([courseId])
+  @@index([batchId])
+  @@index([certificateStatus])
+  @@map("certificates")
+}
+
+model CertificateVerification {
+  id                 String           @id @default(uuid()) @db.Uuid
+  certificateId      String           @db.Uuid
+  verificationCode   String           @db.VarChar(100)
+  verifiedAt         DateTime         @default(now()) @db.Timestamptz(6)
+  verifiedByIp       String?          @db.VarChar(45)
+  verificationStatus String           @db.VarChar(50) // Valid, Revoked, Replaced
+
+  // Relations
+  certificate        Certificate      @relation(fields: [certificateId], references: [id])
+
+  // Audit columns
+  createdAt          DateTime         @default(now()) @db.Timestamptz(6)
+  createdBy          String?          @db.Uuid
+  updatedAt          DateTime?        @updatedAt @db.Timestamptz(6)
+  updatedBy          String?          @db.Uuid
+  deletedAt          DateTime?        @db.Timestamptz(6)
+  isActive           Boolean          @default(true)
+  version            Int              @default(1)
+
+  @@index([certificateId])
+  @@index([verificationCode])
+  @@map("certificate_verifications")
+}
+
+model CertificateReissueRequest {
+  id               String           @id @default(uuid()) @db.Uuid
+  certificateId    String           @db.Uuid
+  requestedBy      String           @db.Uuid
+  reason           String           @db.Text
+  status           String           @db.VarChar(50) // PendingReview, Approved, Rejected, Completed
+  approvedBy       String?          @db.Uuid
+  approvedAt       DateTime?        @db.Timestamptz(6)
+  newCertificateId String?          @db.Uuid
+
+  // Relations
+  certificate      Certificate      @relation("OriginalCertificate", fields: [certificateId], references: [id])
+  replacementCert  Certificate?     @relation("ReplacementCertificate", fields: [newCertificateId], references: [id])
+  requestedByUser  User             @relation("ReissueRequestedBy", fields: [requestedBy], references: [id])
+  approvedByUser   User?            @relation("ReissueApprovedBy", fields: [approvedBy], references: [id])
+
+  // Audit columns
+  createdAt        DateTime         @default(now()) @db.Timestamptz(6)
+  createdBy        String?          @db.Uuid
+  updatedAt        DateTime?        @updatedAt @db.Timestamptz(6)
+  updatedBy        String?          @db.Uuid
+  deletedAt        DateTime?        @db.Timestamptz(6)
+  isActive         Boolean          @default(true)
+  version           Int              @default(1)
+
+  @@index([certificateId])
+  @@index([newCertificateId])
+  @@map("certificate_reissue_requests")
 }

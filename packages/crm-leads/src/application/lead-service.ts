@@ -80,6 +80,8 @@ export class LeadService {
           mobile: input.phone,
           email: input.email || null,
           dateOfBirth: input.dateOfBirth || null,
+          nationality: input.nationality || null,
+          nationalId: input.nationalId || null,
           isDeleted: false,
         },
       });
@@ -87,6 +89,8 @@ export class LeadService {
       const personUpdateData: Prisma.PersonUpdateInput = {};
       if (input.email && !person.email) personUpdateData.email = input.email;
       if (input.dateOfBirth && !person.dateOfBirth) personUpdateData.dateOfBirth = input.dateOfBirth;
+      if (input.nationality && !person.nationality) personUpdateData.nationality = input.nationality;
+      if (input.nationalId && !person.nationalId) personUpdateData.nationalId = input.nationalId;
 
       if (Object.keys(personUpdateData).length > 0) {
         person = await client.person.update({
@@ -134,6 +138,8 @@ export class LeadService {
           lastName: input.lastName,
           phone: input.phone,
           email: input.email,
+          nationality: input.nationality,
+          nationalId: input.nationalId,
           stage: lead.stage,
           counselorId: input.counselorId,
         },
@@ -578,6 +584,8 @@ export class LeadService {
             lastName: originalLead.lastName,
             email: originalLead.email,
             phone: originalLead.phone,
+            nationality: originalLead.nationality,
+            nationalId: originalLead.nationalId,
             notes: originalLead.notes,
             branchId: originalLead.branchId,
             interestedCourseId: originalLead.interestedCourseId,
@@ -587,6 +595,8 @@ export class LeadService {
             lastName: data.lastName !== undefined ? data.lastName : originalLead.lastName,
             email: data.email !== undefined ? data.email : originalLead.email,
             phone: data.phone !== undefined ? data.phone : originalLead.phone,
+            nationality: data.nationality !== undefined ? data.nationality : originalLead.nationality,
+            nationalId: data.nationalId !== undefined ? data.nationalId : originalLead.nationalId,
             notes: data.notes !== undefined ? data.notes : originalLead.notes,
             branchId: data.branchId !== undefined ? data.branchId : originalLead.branchId,
             interestedCourseId: data.interestedCourseId !== undefined ? data.interestedCourseId : originalLead.interestedCourseId,
@@ -609,6 +619,8 @@ export class LeadService {
             lastName: data.lastName !== undefined ? data.lastName : originalLead.lastName,
             phone: data.phone !== undefined ? data.phone : originalLead.phone,
             email: data.email !== undefined ? data.email : originalLead.email,
+            nationality: data.nationality !== undefined ? data.nationality : originalLead.nationality,
+            nationalId: data.nationalId !== undefined ? data.nationalId : originalLead.nationalId,
           },
           status: 'Pending',
           availableAt: new Date(),

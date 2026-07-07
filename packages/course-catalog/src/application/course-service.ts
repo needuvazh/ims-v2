@@ -29,6 +29,15 @@ export interface CreateCourseInput {
   allowWalkInCompletion: boolean;
   effectiveStartDate: Date | string;
   effectiveEndDate?: Date | string | null;
+  isPubliclyExposed?: boolean;
+  bannerImage?: string | null;
+  metaTitle?: string | null;
+  metaDescription?: string | null;
+  metaKeywords?: string | null;
+  syllabusOutline?: string | null;
+  showPricingPublicly?: boolean;
+  hasPracticalInstruction?: boolean;
+  practicalTestingDescription?: string | null;
 }
 
 export type UpdateCourseInput = Partial<CreateCourseInput>;

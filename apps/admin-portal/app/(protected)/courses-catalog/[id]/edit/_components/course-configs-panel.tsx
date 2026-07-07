@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useState, useEffect, useCallback } from 'react';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { toast } from 'sonner';
@@ -15,8 +16,16 @@ import {
   FormError,
   Checkbox,
   Badge,
+  ResponsiveDataTable,
+  Pagination,
+  EmptyState,
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter,
 } from '@ims/shared-ui';
-import { Plus, Tag, GraduationCap, DollarSign, Calendar, RefreshCw, Landmark, Info, AlertCircle, Check, ArrowLeft } from 'lucide-react';
+import { Plus, Tag, GraduationCap, DollarSign, Calendar, RefreshCw, Landmark, Info, AlertCircle, Check, ArrowLeft, ChevronDown, Search, X } from 'lucide-react';
+import * as Popover from '@radix-ui/react-popover';
 
 interface BranchOption {
   id: string;
@@ -30,6 +39,105 @@ interface BatchOption {
   batchNameEnglish: string;
 }
 
+interface MultiSelectProps {
+  options: { value: string; label: string }[];
+  selectedValues: string[];
+  onChange: (values: string[]) => void;
+  placeholder?: string;
+  disabled?: boolean;
+}
+
+export function MultiSelect({ options, selectedValues, onChange, placeholder, disabled }: MultiSelectProps) {
+  const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState('');
+
+  const filtered = options.filter(opt =>
+    opt.label.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const handleToggle = (value: string) => {
+    if (selectedValues.includes(value)) {
+      onChange(selectedValues.filter(v => v !== value));
+    } else {
+      onChange([...selectedValues, value]);
+    }
+  };
+
+  const handleClear = (e: React.MouseEvent, value: string) => {
+    e.stopPropagation();
+    onChange(selectedValues.filter(v => v !== value));
+  };
+
+  return (
+    <Popover.Root open={open} onOpenChange={setOpen}>
+      <Popover.Trigger asChild>
+        <button
+          type="button"
+          disabled={disabled}
+          className="flex min-h-11 w-full items-center justify-between rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] px-4 py-2 text-sm text-[color:var(--ims-ink)] shadow-[0_8px_24px_rgba(16,36,58,0.04)] outline-none transition-all text-left"
+        >
+          <div className="flex flex-wrap gap-1.5 max-w-[90%]">
+            {selectedValues.length === 0 ? (
+              <span className="text-[color:var(--ims-muted)]">{placeholder || 'Select branches'}</span>
+            ) : (
+              selectedValues.map(val => {
+                const label = options.find(o => o.value === val)?.label || val;
+                return (
+                  <span key={val} className="inline-flex items-center gap-1 bg-slate-100 text-slate-700 text-xs px-2 py-0.5 rounded-lg border border-slate-200">
+                    {label}
+                    <X className="h-3 w-3 cursor-pointer hover:text-slate-900" onClick={(e) => handleClear(e, val)} />
+                  </span>
+                );
+              })
+            )}
+          </div>
+          <ChevronDown className="h-4 w-4 text-[color:var(--ims-muted)] flex-shrink-0 ml-2" />
+        </button>
+      </Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content
+          align="start"
+          sideOffset={4}
+          className="z-50 w-[var(--radix-popover-trigger-width)] rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-2 shadow-[0_18px_40px_rgba(16,36,58,0.12)]"
+          style={{ width: 'var(--radix-popover-trigger-width)' }}
+        >
+          <div className="flex items-center border-b border-slate-100 px-3 pb-2 pt-1 mb-1">
+            <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+            <input
+              type="text"
+              placeholder="Search branches..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="flex h-8 w-full bg-transparent text-sm outline-none placeholder:text-[color:var(--ims-muted)]"
+            />
+          </div>
+          <div className="max-h-[200px] overflow-y-auto p-1 space-y-1">
+            {filtered.length === 0 ? (
+              <div className="py-4 text-center text-xs text-slate-400">No branches found.</div>
+            ) : (
+              filtered.map(opt => {
+                const isSelected = selectedValues.includes(opt.value);
+                return (
+                  <div
+                    key={opt.value}
+                    onClick={() => handleToggle(opt.value)}
+                    className={`flex items-center justify-between rounded-lg px-3 py-2 text-xs cursor-pointer select-none transition-colors ${
+                      isSelected ? 'bg-slate-50 font-semibold' : 'hover:bg-slate-50'
+                    }`}
+                  >
+                    <span>{opt.label}</span>
+                    {isSelected && <Check className="h-3.5 w-3.5 text-slate-800" />}
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
+  );
+}
+
 interface CourseConfigsPanelProps {
   courseId: string;
   branches: BranchOption[];
@@ -38,10 +146,9 @@ interface CourseConfigsPanelProps {
 
 // --- Zod Validation Schemas ---
 const pricingFormSchema = z.object({
-  branchId: z.string().optional(),
-  batchId: z.string().optional(),
-  customerType: z.enum(['Individual', 'Corporate', 'WalkIn']),
-  batchType: z.string().min(1, 'Batch type is required'),
+  branchIds: z.array(z.string()).optional(),
+  customerTypes: z.array(z.enum(['Individual', 'Corporate', 'WalkIn'])).optional(),
+  batchTypes: z.array(z.string()).optional(),
   currency: z.literal('OMR'),
   basePrice: z.coerce.number().positive('Price must be greater than zero'),
   taxPercentage: z.coerce.number().nonnegative('Tax percentage cannot be negative').default(5),
@@ -61,8 +168,7 @@ const pricingFormSchema = z.object({
 });
 
 const discountFormSchema = z.object({
-  branchId: z.string().optional(),
-  batchId: z.string().optional(),
+  branchIds: z.array(z.string()).optional(),
   discountType: z.enum(['Individual', 'Corporate', 'EarlyBird']),
   discountMode: z.enum(['Percentage', 'FixedAmount']),
   discountValue: z.coerce.number().positive('Value must be greater than zero'),
@@ -89,6 +195,82 @@ export function CourseConfigsPanel({ courseId, branches, batches }: CourseConfig
   const [rules, setRules] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // Pricing URL-derived State
+  const pricingPage = searchParams.get('pricingPage') ? parseInt(searchParams.get('pricingPage')!, 10) : 1;
+  const pricingSearch = searchParams.get('pricingQ') || '';
+  const pricingBranchFilter = searchParams.get('pricingBranchId') || '';
+  const pricingStatusFilter = searchParams.get('pricingStatus') || '';
+  const pricingSortBy = searchParams.get('pricingSortBy') || 'effectiveStartDate';
+  const pricingSortOrder = (searchParams.get('pricingSortOrder') as 'asc' | 'desc') || 'desc';
+
+  const [pricingTotal, setPricingTotal] = useState(0);
+  const [searchValue, setSearchValue] = useState(pricingSearch);
+
+  const updatePricingParams = useCallback((updates: Record<string, string | null>) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value === null || value === '') {
+        params.delete(key);
+      } else {
+        params.set(key, value);
+      }
+    });
+
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  }, [pathname, router, searchParams]);
+
+  // Discount URL-derived State
+  const discountPage = searchParams.get('discountPage') ? parseInt(searchParams.get('discountPage')!, 10) : 1;
+  const discountSearch = searchParams.get('discountQ') || '';
+  const discountBranchFilter = searchParams.get('discountBranchId') || '';
+  const discountStatusFilter = searchParams.get('discountStatus') || '';
+  const discountSortBy = searchParams.get('discountSortBy') || 'effectiveStartDate';
+  const discountSortOrder = (searchParams.get('discountSortOrder') as 'asc' | 'desc') || 'desc';
+
+  const [discountTotal, setDiscountTotal] = useState(0);
+  const [discountSearchValue, setDiscountSearchValue] = useState(discountSearch);
+
+  const updateDiscountParams = useCallback((updates: Record<string, string | null>) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value === null || value === '') {
+        params.delete(key);
+      } else {
+        params.set(key, value);
+      }
+    });
+
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  }, [pathname, router, searchParams]);
+
+  // Rule URL-derived State
+  const rulePage = searchParams.get('rulePage') ? parseInt(searchParams.get('rulePage')!, 10) : 1;
+  const ruleStatusFilter = searchParams.get('ruleStatus') || '';
+  const ruleSortBy = searchParams.get('ruleSortBy') || 'effectiveStartDate';
+  const ruleSortOrder = (searchParams.get('ruleSortOrder') as 'asc' | 'desc') || 'desc';
+
+  const [ruleTotal, setRuleTotal] = useState(0);
+
+  const updateRuleParams = useCallback((updates: Record<string, string | null>) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value === null || value === '') {
+        params.delete(key);
+      } else {
+        params.set(key, value);
+      }
+    });
+
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  }, [pathname, router, searchParams]);
+
   // Drawer States
   const [drawerType, setDrawerType] = useState<'create-pricing' | 'view-pricing' | 'create-discount' | 'view-discount' | 'create-rule' | 'view-rule' | null>(null);
   const [activeRecord, setActiveRecord] = useState<any | null>(null);
@@ -99,10 +281,9 @@ export function CourseConfigsPanel({ courseId, branches, batches }: CourseConfig
   const pricingForm = useForm({
     resolver: zodResolver(pricingFormSchema),
     defaultValues: {
-      branchId: '',
-      batchId: '',
-      customerType: 'Individual' as const,
-      batchType: 'Regular',
+      branchIds: [] as string[],
+      customerTypes: [] as ('Individual' | 'Corporate' | 'WalkIn')[],
+      batchTypes: [] as string[],
       currency: 'OMR' as const,
       basePrice: 0,
       taxPercentage: 5,
@@ -117,8 +298,7 @@ export function CourseConfigsPanel({ courseId, branches, batches }: CourseConfig
   const discountForm = useForm({
     resolver: zodResolver(discountFormSchema),
     defaultValues: {
-      branchId: '',
-      batchId: '',
+      branchIds: [] as string[],
       discountType: 'Individual' as const,
       discountMode: 'Percentage' as const,
       discountValue: 0,
@@ -149,23 +329,55 @@ export function CourseConfigsPanel({ courseId, branches, batches }: CourseConfig
   const fetchData = async () => {
     try {
       setLoading(true);
+      
+      const pricingParams = new URLSearchParams({
+        page: pricingPage.toString(),
+        limit: '10',
+        q: pricingSearch,
+        branchId: pricingBranchFilter,
+        status: pricingStatusFilter,
+        sortBy: pricingSortBy,
+        sortOrder: pricingSortOrder,
+      });
+
+      const discountParams = new URLSearchParams({
+        page: discountPage.toString(),
+        limit: '10',
+        q: discountSearch,
+        branchId: discountBranchFilter,
+        status: discountStatusFilter,
+        sortBy: discountSortBy,
+        sortOrder: discountSortOrder,
+      });
+
+      const ruleParams = new URLSearchParams({
+        page: rulePage.toString(),
+        limit: '10',
+        status: ruleStatusFilter,
+        sortBy: ruleSortBy,
+        sortOrder: ruleSortOrder,
+      });
+
       const [pricingRes, discountRes, rulesRes] = await Promise.all([
-        fetch(`/api/v1/courses/${courseId}/pricing`),
-        fetch(`/api/v1/courses/${courseId}/discounts`),
-        fetch(`/api/v1/courses/${courseId}/completion-rules`),
+        fetch(`/api/v1/courses/${courseId}/pricing?${pricingParams.toString()}`),
+        fetch(`/api/v1/courses/${courseId}/discounts?${discountParams.toString()}`),
+        fetch(`/api/v1/courses/${courseId}/completion-rules?${ruleParams.toString()}`),
       ]);
 
       if (pricingRes.ok) {
         const json = await pricingRes.json();
         setPricings(json.data || []);
+        setPricingTotal(json.total || 0);
       }
       if (discountRes.ok) {
         const json = await discountRes.json();
         setDiscounts(json.data || []);
+        setDiscountTotal(json.total || 0);
       }
       if (rulesRes.ok) {
         const json = await rulesRes.json();
         setRules(json.data || []);
+        setRuleTotal(json.total || 0);
       }
     } catch (err) {
       toast.error('Failed to load configurations data.');
@@ -174,9 +386,56 @@ export function CourseConfigsPanel({ courseId, branches, batches }: CourseConfig
     }
   };
 
+  // Pricing Search Debounce Effect
+  useEffect(() => {
+    if (searchValue === pricingSearch) return;
+    const handler = setTimeout(() => {
+      updatePricingParams({ pricingQ: searchValue || null, pricingPage: '1' });
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [searchValue, pricingSearch, updatePricingParams]);
+
+  // Sync pricing search input from URL changes
+  useEffect(() => {
+    setSearchValue(pricingSearch);
+  }, [pricingSearch]);
+
+  // Discount Search Debounce Effect
+  useEffect(() => {
+    if (discountSearchValue === discountSearch) return;
+    const handler = setTimeout(() => {
+      updateDiscountParams({ discountQ: discountSearchValue || null, discountPage: '1' });
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [discountSearchValue, discountSearch, updateDiscountParams]);
+
+  // Sync discount search input from URL changes
+  useEffect(() => {
+    setDiscountSearchValue(discountSearch);
+  }, [discountSearch]);
+
+  // Main Fetch Trigger Effect
   useEffect(() => {
     fetchData();
-  }, [courseId]);
+  }, [
+    courseId,
+    pricingPage,
+    pricingSearch,
+    pricingBranchFilter,
+    pricingStatusFilter,
+    pricingSortBy,
+    pricingSortOrder,
+    discountPage,
+    discountSearch,
+    discountBranchFilter,
+    discountStatusFilter,
+    discountSortBy,
+    discountSortOrder,
+    rulePage,
+    ruleStatusFilter,
+    ruleSortBy,
+    ruleSortOrder,
+  ]);
 
   // Fetch Audit Logs for View Drawer
   const fetchAuditLogs = async (entityType: 'CoursePricing' | 'CourseDiscount' | 'CourseCompletionRule', entityId: string) => {
@@ -212,28 +471,110 @@ export function CourseConfigsPanel({ courseId, branches, batches }: CourseConfig
     ruleForm.reset();
   };
 
+  const handleDisablePricing = async (pricingId: string) => {
+    try {
+      const res = await fetch(`/api/v1/courses/${courseId}/pricing`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: pricingId, action: 'disable' }),
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        toast.error(json.messageEnglish || 'Failed to disable pricing override.');
+      } else {
+        toast.success('Pricing override disabled successfully!');
+        setPricings((prev) =>
+          prev.map((p) => (p.id === pricingId ? { ...p, status: 'Inactive' } : p))
+        );
+        closeDrawer();
+      }
+    } catch (err) {
+      toast.error('Error disabling pricing override.');
+    }
+  };
+
+  const handleDisableDiscount = async (discountId: string) => {
+    try {
+      const res = await fetch(`/api/v1/courses/${courseId}/discounts`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: discountId, action: 'disable' }),
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        toast.error(json.messageEnglish || 'Failed to disable discount segment.');
+      } else {
+        toast.success('Discount segment disabled successfully!');
+        setDiscounts((prev) =>
+          prev.map((d) => (d.id === discountId ? { ...d, status: 'Inactive' } : d))
+        );
+        closeDrawer();
+      }
+    } catch (err) {
+      toast.error('Error disabling discount segment.');
+    }
+  };
+
+  const handleDisableCompletionRule = async (ruleId: string) => {
+    try {
+      const res = await fetch(`/api/v1/courses/${courseId}/completion-rules`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: ruleId, action: 'disable' }),
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        toast.error(json.messageEnglish || 'Failed to disable completion rule.');
+      } else {
+        toast.success('Completion rule disabled successfully!');
+        setRules((prev) =>
+          prev.map((r) => (r.id === ruleId ? { ...r, status: 'Inactive' } : r))
+        );
+        closeDrawer();
+      }
+    } catch (err) {
+      toast.error('Error disabling completion rule.');
+    }
+  };
+
   // Submit Handlers
   const handlePricingSubmit = async (data: any) => {
     try {
-      const payload = {
-        ...data,
-        branchId: data.branchId || null,
-        batchId: data.batchId || null,
-        effectiveEndDate: data.effectiveEndDate || null,
-        taxExemptionReason: data.isTaxExempt ? data.taxExemptionReason : null,
-        taxExemptionCode: data.isTaxExempt ? data.taxExemptionCode : null,
-      };
+      const branchIds = data.branchIds && data.branchIds.length > 0 ? data.branchIds : [null];
+      const customerTypes = data.customerTypes && data.customerTypes.length > 0 ? data.customerTypes : ['Individual', 'Corporate', 'WalkIn'];
+      const batchTypes = data.batchTypes && data.batchTypes.length > 0 ? data.batchTypes : ['Regular', 'FastTrack', 'Weekend'];
 
-      const res = await fetch(`/api/v1/courses/${courseId}/pricing`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+      await Promise.all(
+        branchIds.flatMap((branchId: string | null) =>
+          customerTypes.flatMap((customerType: string) =>
+            batchTypes.map(async (batchType: string) => {
+              const payload = {
+                ...data,
+                branchId,
+                batchId: null,
+                customerType,
+                batchType,
+                effectiveEndDate: data.effectiveEndDate || null,
+                taxExemptionReason: data.isTaxExempt ? data.taxExemptionReason : null,
+                taxExemptionCode: data.isTaxExempt ? data.taxExemptionCode : null,
+              };
 
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.messageEnglish || 'Failed to save pricing rule.');
+              const res = await fetch(`/api/v1/courses/${courseId}/pricing`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+              });
 
-      toast.success('Pricing rule saved successfully.');
+              const json = await res.json();
+              if (!res.ok || !json.success) {
+                throw new Error(json.messageEnglish || `Failed to save pricing rule for branch: ${branchId}, customer: ${customerType}, batch: ${batchType}`);
+              }
+            })
+          )
+        ).flat()
+      );
+
+      toast.success('Pricing rule override(s) saved successfully.');
       closeDrawer();
       fetchData();
     } catch (err: any) {
@@ -243,23 +584,31 @@ export function CourseConfigsPanel({ courseId, branches, batches }: CourseConfig
 
   const handleDiscountSubmit = async (data: any) => {
     try {
-      const payload = {
-        ...data,
-        branchId: data.branchId || null,
-        batchId: data.batchId || null,
-        effectiveEndDate: data.effectiveEndDate || null,
-      };
+      const branchIds = data.branchIds && data.branchIds.length > 0 ? data.branchIds : [null];
 
-      const res = await fetch(`/api/v1/courses/${courseId}/discounts`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+      await Promise.all(
+        branchIds.map(async (branchId: string | null) => {
+          const payload = {
+            ...data,
+            branchId,
+            batchId: null,
+            effectiveEndDate: data.effectiveEndDate || null,
+          };
 
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.messageEnglish || 'Failed to save discount.');
+          const res = await fetch(`/api/v1/courses/${courseId}/discounts`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
 
-      toast.success('Discount campaign saved successfully.');
+          const json = await res.json();
+          if (!res.ok || !json.success) {
+            throw new Error(json.messageEnglish || `Failed to save discount for branch: ${branchId}`);
+          }
+        })
+      );
+
+      toast.success('Discount overrides saved successfully.');
       closeDrawer();
       fetchData();
     } catch (err: any) {
@@ -321,6 +670,475 @@ export function CourseConfigsPanel({ courseId, branches, batches }: CourseConfig
         return 'text-slate-600 bg-slate-50 border border-slate-200';
     }
   };
+
+  const pricingTotalPages = Math.ceil(pricingTotal / 10);
+
+  const handleSort = (field: string) => {
+    const nextOrder = pricingSortBy === field && pricingSortOrder === 'asc' ? 'desc' : 'asc';
+    updatePricingParams({
+      pricingSortBy: field,
+      pricingSortOrder: nextOrder,
+      pricingPage: '1',
+    });
+  };
+
+  const pricingColumns = [
+    {
+      header: 'Level',
+      render: (p: any) => (
+        p.batchId ? (
+          <div className="space-y-1">
+            <span className="text-rose-600 bg-rose-50 px-2 py-0.5 rounded text-[11px] font-bold border border-rose-100">Batch Override</span>
+            <span className="text-[11px] text-slate-500 block font-normal mt-0.5">
+              Batch: {batches.find((b) => b.id === p.batchId)?.batchCode || p.batchId}
+            </span>
+          </div>
+        ) : p.branchId ? (
+          <div className="space-y-1">
+            <span className="text-amber-600 bg-amber-50 px-2 py-0.5 rounded text-[11px] font-bold border border-amber-100">Branch Override</span>
+            <span className="text-[11px] text-slate-500 block font-normal mt-0.5">
+              Branch: {branches.find((b) => b.id === p.branchId)?.branchName || p.branchId}
+            </span>
+          </div>
+        ) : (
+          <span className="text-slate-600 bg-slate-100 px-2 py-0.5 rounded text-[11px] font-bold border border-slate-200">Global Default</span>
+        )
+      ),
+    },
+    {
+      header: 'Customer Type',
+      sortable: true,
+      sortDirection: pricingSortBy === 'customerType' ? pricingSortOrder : null,
+      onSort: () => handleSort('customerType'),
+      render: (p: any) => <span className="font-semibold text-slate-800">{p.customerType}</span>,
+    },
+    {
+      header: 'Batch Type',
+      sortable: true,
+      sortDirection: pricingSortBy === 'batchType' ? pricingSortOrder : null,
+      onSort: () => handleSort('batchType'),
+      render: (p: any) => <span className="text-slate-600">{p.batchType}</span>,
+    },
+    {
+      header: 'Base Price',
+      sortable: true,
+      sortDirection: pricingSortBy === 'basePrice' ? pricingSortOrder : null,
+      onSort: () => handleSort('basePrice'),
+      className: 'text-right',
+      render: (p: any) => <span className="font-bold text-slate-800">{Number(p.basePrice).toFixed(3)} {p.currency}</span>,
+      headerClassName: 'text-right',
+    },
+    {
+      header: 'Tax Rate',
+      render: (p: any) => <span>{Number(p.taxPercentage).toFixed(1)}%</span>,
+      className: 'text-right',
+      headerClassName: 'text-right',
+    },
+    {
+      header: 'Tax Exemption',
+      render: (p: any) => (
+        p.isTaxExempt ? (
+          <span className="text-emerald-700 font-medium text-xs">Exempt ({p.taxExemptionCode})</span>
+        ) : (
+          <span className="text-slate-400 text-xs">Standard Rate</span>
+        )
+      ),
+    },
+    {
+      header: 'Effective Range',
+      sortable: true,
+      sortDirection: pricingSortBy === 'effectiveStartDate' ? pricingSortOrder : null,
+      onSort: () => handleSort('effectiveStartDate'),
+      render: (p: any) => <span className="text-slate-500 font-medium text-xs">{formatDate(p.effectiveStartDate)} - {formatDate(p.effectiveEndDate)}</span>,
+    },
+    {
+      header: 'Status',
+      sortable: true,
+      sortDirection: pricingSortBy === 'status' ? pricingSortOrder : null,
+      onSort: () => handleSort('status'),
+      render: (p: any) => getStatusBadge(p.status),
+    },
+    {
+      header: 'Actions',
+      className: 'text-center',
+      headerClassName: 'text-center',
+      render: (p: any) => (
+        <div className="flex items-center justify-center gap-3">
+          <button
+            onClick={() => openViewDrawer('view-pricing', p)}
+            className="text-[color:var(--ims-brand)] hover:underline text-xs font-semibold"
+          >
+            View details
+          </button>
+          {p.status === 'Active' && (
+            <button
+              onClick={() => {
+                if (confirm('Are you sure you want to disable this pricing override?')) {
+                  handleDisablePricing(p.id);
+                }
+              }}
+              className="text-red-600 hover:underline text-xs font-semibold"
+            >
+              Disable
+            </button>
+          )}
+        </div>
+      ),
+    },
+  ];
+
+  const renderPricingCard = (p: any) => (
+    <Card className="transition-colors hover:border-[var(--ims-brass)] text-xs">
+      <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p flex flex-row justify-between items-center">
+        <div>
+          {p.batchId ? (
+            <Badge variant="outline" className="text-rose-600 border-rose-200 bg-rose-50">Batch Override</Badge>
+          ) : p.branchId ? (
+            <Badge variant="outline" className="text-amber-600 border-amber-200 bg-amber-50">Branch Override</Badge>
+          ) : (
+            <Badge variant="outline" className="text-slate-600 border-slate-200 bg-slate-100">Global Default</Badge>
+          )}
+          <span className="block text-[10px] text-slate-500 mt-1 font-semibold">
+            {p.branchId ? branches.find((b) => b.id === p.branchId)?.branchName : 'All Branches'}
+          </span>
+        </div>
+        {getStatusBadge(p.status)}
+      </CardHeader>
+      <CardContent className="p-card-p space-y-2">
+        <div className="grid grid-cols-2 gap-2">
+          <div>
+            <p className="font-semibold text-slate-400">Customer / Batch</p>
+            <p className="text-slate-800">{p.customerType} / {p.batchType}</p>
+          </div>
+          <div>
+            <p className="font-semibold text-slate-400">Base Price</p>
+            <p className="text-slate-800 font-bold">{Number(p.basePrice).toFixed(3)} {p.currency}</p>
+          </div>
+          <div className="col-span-2">
+            <p className="font-semibold text-slate-400">Effective dates</p>
+            <p className="text-slate-600">{formatDate(p.effectiveStartDate)} - {formatDate(p.effectiveEndDate)}</p>
+          </div>
+        </div>
+      </CardContent>
+      <CardFooter className="p-card-p pt-0 flex justify-end gap-2">
+        <Button size="sm" variant="outline" onClick={() => openViewDrawer('view-pricing', p)}>
+          View Details
+        </Button>
+        {p.status === 'Active' && (
+          <Button size="sm" variant="ghost" className="text-red-600 hover:text-red-700 hover:bg-red-50" onClick={() => {
+            if (confirm('Are you sure you want to disable this pricing override?')) {
+              handleDisablePricing(p.id);
+            }
+          }}>
+            Disable
+          </Button>
+        )}
+      </CardFooter>
+    </Card>
+  );
+
+  const discountTotalPages = Math.ceil(discountTotal / 10);
+
+  const handleDiscountSort = (field: string) => {
+    const nextOrder = discountSortBy === field && discountSortOrder === 'asc' ? 'desc' : 'asc';
+    updateDiscountParams({
+      discountSortBy: field,
+      discountSortOrder: nextOrder,
+      discountPage: '1',
+    });
+  };
+
+  const discountColumns = [
+    {
+      header: 'Level',
+      render: (d: any) => (
+        d.batchId ? (
+          <div className="space-y-1">
+            <span className="text-rose-600 bg-rose-50 px-2 py-0.5 rounded text-[11px] font-bold border border-rose-100">Batch Campaign</span>
+            <span className="text-[11px] text-slate-500 block font-normal mt-0.5">
+              Batch: {batches.find((b) => b.id === d.batchId)?.batchCode || d.batchId}
+            </span>
+          </div>
+        ) : d.branchId ? (
+          <div className="space-y-1">
+            <span className="text-amber-600 bg-amber-50 px-2 py-0.5 rounded text-[11px] font-bold border border-amber-100">Branch Campaign</span>
+            <span className="text-[11px] text-slate-500 block font-normal mt-0.5">
+              Branch: {branches.find((b) => b.id === d.branchId)?.branchName || d.branchId}
+            </span>
+          </div>
+        ) : (
+          <span className="text-slate-600 bg-slate-100 px-2 py-0.5 rounded text-[11px] font-bold border border-slate-200">Global Campaign</span>
+        )
+      ),
+    },
+    {
+      header: 'Discount Segment',
+      sortable: true,
+      sortDirection: discountSortBy === 'discountType' ? discountSortOrder : null,
+      onSort: () => handleDiscountSort('discountType'),
+      render: (d: any) => <span className="font-semibold text-slate-800">{d.discountType}</span>,
+    },
+    {
+      header: 'Discount Value',
+      sortable: true,
+      sortDirection: discountSortBy === 'discountValue' ? discountSortOrder : null,
+      onSort: () => handleDiscountSort('discountValue'),
+      className: 'text-right',
+      render: (d: any) => (
+        <span className="font-bold text-slate-800">
+          {d.discountMode === 'Percentage' ? `${Number(d.discountValue).toFixed(1)}%` : `${Number(d.discountValue).toFixed(3)} OMR`}
+        </span>
+      ),
+      headerClassName: 'text-right',
+    },
+    {
+      header: 'Requires Approval?',
+      render: (d: any) => (
+        d.requiresApproval ? (
+          <span className="text-amber-600 font-semibold text-xs bg-amber-50 border border-amber-100 px-1.5 py-0.5 rounded">Requires Review</span>
+        ) : (
+          <span className="text-slate-400 text-xs">Auto-Applied</span>
+        )
+      ),
+    },
+    {
+      header: 'Validity Dates',
+      sortable: true,
+      sortDirection: discountSortBy === 'effectiveStartDate' ? discountSortOrder : null,
+      onSort: () => handleDiscountSort('effectiveStartDate'),
+      render: (d: any) => (
+        <span className="text-slate-500 font-medium text-xs">
+          {formatDate(d.effectiveStartDate)} - {formatDate(d.effectiveEndDate)}
+        </span>
+      ),
+    },
+    {
+      header: 'Status',
+      sortable: true,
+      sortDirection: discountSortBy === 'status' ? discountSortOrder : null,
+      onSort: () => handleDiscountSort('status'),
+      render: (d: any) => getStatusBadge(d.status),
+    },
+    {
+      header: 'Actions',
+      className: 'text-center',
+      headerClassName: 'text-center',
+      render: (d: any) => (
+        <div className="flex items-center justify-center gap-3">
+          <button
+            onClick={() => openViewDrawer('view-discount', d)}
+            className="text-[color:var(--ims-brand)] hover:underline text-xs font-semibold"
+          >
+            View details
+          </button>
+          {d.status === 'Active' && (
+            <button
+              onClick={() => {
+                if (confirm('Are you sure you want to disable this discount override?')) {
+                  handleDisableDiscount(d.id);
+                }
+              }}
+              className="text-red-600 hover:underline text-xs font-semibold"
+            >
+              Disable
+            </button>
+          )}
+        </div>
+      ),
+    },
+  ];
+
+  const renderDiscountCard = (d: any) => (
+    <Card className="transition-colors hover:border-[var(--ims-brass)] text-xs">
+      <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p flex flex-row justify-between items-center">
+        <div>
+          {d.batchId ? (
+            <Badge variant="outline" className="text-rose-600 border-rose-200 bg-rose-50">Batch Campaign</Badge>
+          ) : d.branchId ? (
+            <Badge variant="outline" className="text-amber-600 border-amber-200 bg-amber-50">Branch Campaign</Badge>
+          ) : (
+            <Badge variant="outline" className="text-slate-600 border-slate-200 bg-slate-100">Global Campaign</Badge>
+          )}
+          <span className="block text-[10px] text-slate-500 mt-1 font-semibold">
+            {d.branchId ? branches.find((b) => b.id === d.branchId)?.branchName : 'All Branches'}
+          </span>
+        </div>
+        {getStatusBadge(d.status)}
+      </CardHeader>
+      <CardContent className="p-card-p space-y-2">
+        <div className="grid grid-cols-2 gap-2">
+          <div>
+            <p className="font-semibold text-slate-400">Discount Segment</p>
+            <p className="text-slate-800">{d.discountType}</p>
+          </div>
+          <div>
+            <p className="font-semibold text-slate-400">Discount Value</p>
+            <p className="text-slate-800 font-bold">
+              {d.discountMode === 'Percentage' ? `${Number(d.discountValue).toFixed(1)}%` : `${Number(d.discountValue).toFixed(3)} OMR`}
+            </p>
+          </div>
+          <div className="col-span-2">
+            <p className="font-semibold text-slate-400">Effective dates</p>
+            <p className="text-slate-600">{formatDate(d.effectiveStartDate)} - {formatDate(d.effectiveEndDate)}</p>
+          </div>
+        </div>
+      </CardContent>
+      <CardFooter className="p-card-p pt-0 flex justify-end gap-2">
+        <Button size="sm" variant="outline" onClick={() => openViewDrawer('view-discount', d)}>
+          View Details
+        </Button>
+        {d.status === 'Active' && (
+          <Button size="sm" variant="ghost" className="text-red-600 hover:text-red-700 hover:bg-red-50" onClick={() => {
+            if (confirm('Are you sure you want to disable this discount override?')) {
+              handleDisableDiscount(d.id);
+            }
+          }}>
+            Disable
+          </Button>
+        )}
+      </CardFooter>
+    </Card>
+  );
+
+  const ruleTotalPages = Math.ceil(ruleTotal / 10);
+
+  const handleRuleSort = (field: string) => {
+    const nextOrder = ruleSortBy === field && ruleSortOrder === 'asc' ? 'desc' : 'asc';
+    updateRuleParams({
+      ruleSortBy: field,
+      ruleSortOrder: nextOrder,
+      rulePage: '1',
+    });
+  };
+
+  const ruleColumns = [
+    {
+      header: 'Min Attendance',
+      sortable: true,
+      sortDirection: ruleSortBy === 'minimumAttendancePercent' ? ruleSortOrder : null,
+      onSort: () => handleRuleSort('minimumAttendancePercent'),
+      render: (r: any) => <span className="font-semibold text-slate-800">{r.minimumAttendancePercent}%</span>,
+    },
+    {
+      header: 'Exam Required',
+      render: (r: any) => (
+        r.examRequired ? (
+          <span className="text-rose-600 bg-rose-50 border border-rose-100 px-1.5 py-0.5 rounded text-[11px] font-bold">Yes</span>
+        ) : (
+          <span className="text-slate-400 text-xs">No</span>
+        )
+      ),
+    },
+    {
+      header: 'Fee Clearance',
+      render: (r: any) => (
+        r.feeClearanceRequired ? (
+          <span className="text-emerald-600 bg-emerald-50 border border-emerald-100 px-1.5 py-0.5 rounded text-[11px] font-bold">Required</span>
+        ) : (
+          <span className="text-slate-400 text-xs">Optional</span>
+        )
+      ),
+    },
+    {
+      header: 'Manual Approval',
+      render: (r: any) => (
+        r.manualApprovalRequired ? (
+          <span className="text-amber-600 bg-amber-50 border border-amber-100 px-1.5 py-0.5 rounded text-[11px] font-bold">Required</span>
+        ) : (
+          <span className="text-slate-400 text-xs">Auto</span>
+        )
+      ),
+    },
+    {
+      header: 'Validity Dates',
+      sortable: true,
+      sortDirection: ruleSortBy === 'effectiveStartDate' ? ruleSortOrder : null,
+      onSort: () => handleRuleSort('effectiveStartDate'),
+      render: (r: any) => (
+        <span className="text-slate-500 font-medium text-xs">
+          {formatDate(r.effectiveStartDate)} - {formatDate(r.effectiveEndDate)}
+        </span>
+      ),
+    },
+    {
+      header: 'Status',
+      sortable: true,
+      sortDirection: ruleSortBy === 'status' ? ruleSortOrder : null,
+      onSort: () => handleRuleSort('status'),
+      render: (r: any) => getStatusBadge(r.status),
+    },
+    {
+      header: 'Actions',
+      className: 'text-center',
+      headerClassName: 'text-center',
+      render: (r: any) => (
+        <div className="flex items-center justify-center gap-3">
+          <button
+            onClick={() => openViewDrawer('view-rule', r)}
+            className="text-[color:var(--ims-brand)] hover:underline text-xs font-semibold"
+          >
+            View details
+          </button>
+          {r.status === 'Active' && (
+            <button
+              onClick={() => {
+                if (confirm('Are you sure you want to disable this completion rule version?')) {
+                  handleDisableCompletionRule(r.id);
+                }
+              }}
+              className="text-red-600 hover:underline text-xs font-semibold"
+            >
+              Disable
+            </button>
+          )}
+        </div>
+      ),
+    },
+  ];
+
+  const renderRuleCard = (r: any) => (
+    <Card className="transition-colors hover:border-[var(--ims-brass)] text-xs">
+      <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p flex flex-row justify-between items-center">
+        <div>
+          <span className="font-semibold text-slate-800">Rule Version</span>
+          <span className="block text-[10px] text-slate-500 mt-1 font-semibold">
+            Min Attendance: {r.minimumAttendancePercent}%
+          </span>
+        </div>
+        {getStatusBadge(r.status)}
+      </CardHeader>
+      <CardContent className="p-card-p space-y-2">
+        <div className="grid grid-cols-2 gap-2">
+          <div>
+            <p className="font-semibold text-slate-400">Exam Required</p>
+            <p className="text-slate-800">{r.examRequired ? 'Yes' : 'No'}</p>
+          </div>
+          <div>
+            <p className="font-semibold text-slate-400">Fee Clearance</p>
+            <p className="text-slate-800">{r.feeClearanceRequired ? 'Yes' : 'No'}</p>
+          </div>
+          <div className="col-span-2">
+            <p className="font-semibold text-slate-400">Effective dates</p>
+            <p className="text-slate-600">{formatDate(r.effectiveStartDate)} - {formatDate(r.effectiveEndDate)}</p>
+          </div>
+        </div>
+      </CardContent>
+      <CardFooter className="p-card-p pt-0 flex justify-end gap-2">
+        <Button size="sm" variant="outline" onClick={() => openViewDrawer('view-rule', r)}>
+          View Details
+        </Button>
+        {r.status === 'Active' && (
+          <Button size="sm" variant="ghost" className="text-red-600 hover:text-red-700 hover:bg-red-50" onClick={() => {
+            if (confirm('Are you sure you want to disable this completion rule version?')) {
+              handleDisableCompletionRule(r.id);
+            }
+          }}>
+            Disable
+          </Button>
+        )}
+      </CardFooter>
+    </Card>
+  );
 
   return (
     <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mt-8">
@@ -392,71 +1210,101 @@ export function CourseConfigsPanel({ courseId, branches, batches }: CourseConfig
               </Button>
             </div>
 
-            <div className="border border-slate-100 rounded-lg overflow-x-auto">
-              <table className="w-full text-left border-collapse text-sm">
-                <thead>
-                  <tr className="bg-slate-50 text-slate-600 font-bold border-b border-slate-100">
-                    <th className="p-4 text-xs uppercase">Level</th>
-                    <th className="p-4 text-xs uppercase">Customer Segment</th>
-                    <th className="p-4 text-xs uppercase">Batch Type</th>
-                    <th className="p-4 text-xs uppercase text-right">Base Price</th>
-                    <th className="p-4 text-xs uppercase text-right">VAT</th>
-                    <th className="p-4 text-xs uppercase">Exemption Status</th>
-                    <th className="p-4 text-xs uppercase">Validity Dates</th>
-                    <th className="p-4 text-xs uppercase">Status</th>
-                    <th className="p-4 text-xs uppercase text-center">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {pricings.length === 0 ? (
-                    <tr>
-                      <td colSpan={9} className="p-8 text-center text-slate-400 text-xs">
-                        No pricing configurations defined. Click &quot;Add Pricing Override&quot; to start.
-                      </td>
-                    </tr>
-                  ) : (
-                    pricings.map((p) => (
-                      <tr key={p.id} className="border-b border-slate-50 hover:bg-slate-50 transition-all">
-                        <td className="p-4 font-semibold text-slate-700">
-                          {p.batchId ? (
-                            <span className="text-rose-600 bg-rose-50 px-2 py-0.5 rounded text-[11px] font-bold border border-rose-100">Batch Override</span>
-                          ) : p.branchId ? (
-                            <span className="text-amber-600 bg-amber-50 px-2 py-0.5 rounded text-[11px] font-bold border border-amber-100">Branch Override</span>
-                          ) : (
-                            <span className="text-slate-600 bg-slate-100 px-2 py-0.5 rounded text-[11px] font-bold border border-slate-200">Global Default</span>
-                          )}
-                        </td>
-                        <td className="p-4 font-semibold">{p.customerType}</td>
-                        <td className="p-4">{p.batchType}</td>
-                        <td className="p-4 text-right font-bold text-slate-800">{Number(p.basePrice).toFixed(3)} {p.currency}</td>
-                        <td className="p-4 text-right">{Number(p.taxPercentage).toFixed(1)}%</td>
-                        <td className="p-4">
-                          {p.isTaxExempt ? (
-                            <span className="text-emerald-700 font-medium text-xs">
-                              Exempt ({p.taxExemptionCode})
-                            </span>
-                          ) : (
-                            <span className="text-slate-400 text-xs">Standard Rate</span>
-                          )}
-                        </td>
-                        <td className="p-4 text-xs text-slate-500 font-medium">
-                          {formatDate(p.effectiveStartDate)} - {formatDate(p.effectiveEndDate)}
-                        </td>
-                        <td className="p-4">{getStatusBadge(p.status)}</td>
-                        <td className="p-4 text-center">
-                          <button
-                            onClick={() => openViewDrawer('view-pricing', p)}
-                            className="text-[color:var(--ims-brand)] hover:underline text-xs font-semibold"
-                          >
-                            View details
-                          </button>
-                        </td>
-                      </tr>
-                    ))
+            {/* Filters */}
+            <div className="grid gap-4 md:grid-cols-[minmax(0,2fr)_repeat(2,minmax(0,1fr))] items-end">
+              <div className="min-w-0">
+                <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+                  Search
+                </FormLabel>
+                <div className="relative">
+                  <Input
+                    value={searchValue}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    placeholder="Search overrides by customer type or batch type..."
+                    leftIcon={<Search className="h-4 w-4" />}
+                    className="h-11 pr-10"
+                  />
+                  {searchValue && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSearchValue('');
+                        updatePricingParams({ pricingQ: null, pricingPage: '1' });
+                      }}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full text-[color:var(--ims-muted)] transition-colors hover:text-[color:var(--ims-ink)]"
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
                   )}
-                </tbody>
-              </table>
+                </div>
+              </div>
+
+              <div className="min-w-0">
+                <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+                  Target Branch
+                </FormLabel>
+                <Select
+                  value={pricingBranchFilter}
+                  onChange={(e) => {
+                    updatePricingParams({ pricingBranchId: e.target.value || null, pricingPage: '1' });
+                  }}
+                  options={[
+                    { value: '', label: 'All Branches' },
+                    ...branches.map((b) => ({ value: b.id, label: b.branchName })),
+                  ]}
+                  className="h-11"
+                  placeholder="All Branches"
+                />
+              </div>
+
+              <div className="min-w-0">
+                <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+                  Status
+                </FormLabel>
+                <Select
+                  value={pricingStatusFilter}
+                  onChange={(e) => {
+                    updatePricingParams({ pricingStatus: e.target.value || null, pricingPage: '1' });
+                  }}
+                  options={[
+                    { value: '', label: 'All Statuses' },
+                    { value: 'Active', label: 'Active' },
+                    { value: 'Inactive', label: 'Inactive' },
+                    { value: 'Superseded', label: 'Superseded' },
+                  ]}
+                  className="h-11"
+                  placeholder="All Statuses"
+                />
+              </div>
             </div>
+
+            <ResponsiveDataTable
+              data={pricings}
+              columns={pricingColumns}
+              renderCard={renderPricingCard}
+              keyExtractor={(p) => p.id}
+              emptyState={
+                <EmptyState
+                  icon={<DollarSign className="h-6 w-6" />}
+                  title="No configurations found"
+                  description="No pricing overrides match your current filter criteria."
+                />
+              }
+            />
+
+            {pricingTotalPages > 1 && (
+              <Pagination
+                page={pricingPage}
+                totalPages={pricingTotalPages}
+                totalCount={pricingTotal}
+                limit={10}
+                buildHref={(p) => {
+                  const params = new URLSearchParams(searchParams.toString());
+                  params.set('pricingPage', p.toString());
+                  return `${pathname}?${params.toString()}`;
+                }}
+              />
+            )}
           </div>
         )}
 
@@ -474,69 +1322,101 @@ export function CourseConfigsPanel({ courseId, branches, batches }: CourseConfig
               </Button>
             </div>
 
-            <div className="border border-slate-100 rounded-lg overflow-x-auto">
-              <table className="w-full text-left border-collapse text-sm">
-                <thead>
-                  <tr className="bg-slate-50 text-slate-600 font-bold border-b border-slate-100">
-                    <th className="p-4 text-xs uppercase">Scope</th>
-                    <th className="p-4 text-xs uppercase">Type</th>
-                    <th className="p-4 text-xs uppercase">Calculation Mode</th>
-                    <th className="p-4 text-xs uppercase text-right">Value</th>
-                    <th className="p-4 text-xs uppercase">Approvals</th>
-                    <th className="p-4 text-xs uppercase">Validity Dates</th>
-                    <th className="p-4 text-xs uppercase">Status</th>
-                    <th className="p-4 text-xs uppercase text-center">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {discounts.length === 0 ? (
-                    <tr>
-                      <td colSpan={8} className="p-8 text-center text-slate-400 text-xs">
-                        No discounts or promotional policies configured.
-                      </td>
-                    </tr>
-                  ) : (
-                    discounts.map((d) => (
-                      <tr key={d.id} className="border-b border-slate-50 hover:bg-slate-50 transition-all">
-                        <td className="p-4 font-semibold text-slate-700">
-                          {d.batchId ? (
-                            <span className="text-rose-600 bg-rose-50 px-2 py-0.5 rounded text-[11px] font-bold border border-rose-100">Batch Specific</span>
-                          ) : d.branchId ? (
-                            <span className="text-amber-600 bg-amber-50 px-2 py-0.5 rounded text-[11px] font-bold border border-amber-100">Branch Specific</span>
-                          ) : (
-                            <span className="text-slate-600 bg-slate-100 px-2 py-0.5 rounded text-[11px] font-bold border border-slate-200">Global Campaign</span>
-                          )}
-                        </td>
-                        <td className="p-4 font-semibold">{d.discountType}</td>
-                        <td className="p-4">{d.discountMode}</td>
-                        <td className="p-4 text-right font-bold text-slate-800">
-                          {d.discountMode === 'Percentage' ? `${Number(d.discountValue).toFixed(1)}%` : `${Number(d.discountValue).toFixed(3)} OMR`}
-                        </td>
-                        <td className="p-4">
-                          {d.requiresApproval ? (
-                            <span className="text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full text-xs font-semibold">Requires Approval</span>
-                          ) : (
-                            <span className="text-slate-400 text-xs">Auto-Applied</span>
-                          )}
-                        </td>
-                        <td className="p-4 text-xs text-slate-500 font-medium">
-                          {formatDate(d.effectiveStartDate)} - {formatDate(d.effectiveEndDate)}
-                        </td>
-                        <td className="p-4">{getStatusBadge(d.status)}</td>
-                        <td className="p-4 text-center">
-                          <button
-                            onClick={() => openViewDrawer('view-discount', d)}
-                            className="text-[color:var(--ims-brand)] hover:underline text-xs font-semibold"
-                          >
-                            View details
-                          </button>
-                        </td>
-                      </tr>
-                    ))
+            {/* Filters */}
+            <div className="grid gap-4 md:grid-cols-[minmax(0,2fr)_repeat(2,minmax(0,1fr))] items-end">
+              <div className="min-w-0">
+                <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+                  Search
+                </FormLabel>
+                <div className="relative">
+                  <Input
+                    value={discountSearchValue}
+                    onChange={(e) => setDiscountSearchValue(e.target.value)}
+                    placeholder="Search overrides by discount type..."
+                    leftIcon={<Search className="h-4 w-4" />}
+                    className="h-11 pr-10"
+                  />
+                  {discountSearchValue && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setDiscountSearchValue('');
+                        updateDiscountParams({ discountQ: null, discountPage: '1' });
+                      }}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full text-[color:var(--ims-muted)] transition-colors hover:text-[color:var(--ims-ink)]"
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
                   )}
-                </tbody>
-              </table>
+                </div>
+              </div>
+
+              <div className="min-w-0">
+                <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+                  Target Branch
+                </FormLabel>
+                <Select
+                  value={discountBranchFilter}
+                  onChange={(e) => {
+                    updateDiscountParams({ discountBranchId: e.target.value || null, discountPage: '1' });
+                  }}
+                  options={[
+                    { value: '', label: 'All Branches' },
+                    ...branches.map((b) => ({ value: b.id, label: b.branchName })),
+                  ]}
+                  className="h-11"
+                  placeholder="All Branches"
+                />
+              </div>
+
+              <div className="min-w-0">
+                <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+                  Status
+                </FormLabel>
+                <Select
+                  value={discountStatusFilter}
+                  onChange={(e) => {
+                    updateDiscountParams({ discountStatus: e.target.value || null, discountPage: '1' });
+                  }}
+                  options={[
+                    { value: '', label: 'All Statuses' },
+                    { value: 'Active', label: 'Active' },
+                    { value: 'Inactive', label: 'Inactive' },
+                    { value: 'Superseded', label: 'Superseded' },
+                  ]}
+                  className="h-11"
+                  placeholder="All Statuses"
+                />
+              </div>
             </div>
+
+            <ResponsiveDataTable
+              data={discounts}
+              columns={discountColumns}
+              renderCard={renderDiscountCard}
+              keyExtractor={(d) => d.id}
+              emptyState={
+                <EmptyState
+                  icon={<DollarSign className="h-6 w-6" />}
+                  title="No discount policies found"
+                  description="No discount configurations match your current filter criteria."
+                />
+              }
+            />
+
+            {discountTotalPages > 1 && (
+              <Pagination
+                page={discountPage}
+                totalPages={discountTotalPages}
+                totalCount={discountTotal}
+                limit={10}
+                buildHref={(p) => {
+                  const params = new URLSearchParams(searchParams.toString());
+                  params.set('discountPage', p.toString());
+                  return `${pathname}?${params.toString()}`;
+                }}
+              />
+            )}
           </div>
         )}
 
@@ -554,69 +1434,57 @@ export function CourseConfigsPanel({ courseId, branches, batches }: CourseConfig
               </Button>
             </div>
 
-            <div className="border border-slate-100 rounded-lg overflow-x-auto">
-              <table className="w-full text-left border-collapse text-sm">
-                <thead>
-                  <tr className="bg-slate-50 text-slate-600 font-bold border-b border-slate-100">
-                    <th className="p-4 text-xs uppercase">Min. Attendance</th>
-                    <th className="p-4 text-xs uppercase">Exam Needed?</th>
-                    <th className="p-4 text-xs uppercase">Zero Balance?</th>
-                    <th className="p-4 text-xs uppercase">Manual Review?</th>
-                    <th className="p-4 text-xs uppercase">Effective Range</th>
-                    <th className="p-4 text-xs uppercase">Status</th>
-                    <th className="p-4 text-xs uppercase text-center">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rules.length === 0 ? (
-                    <tr>
-                      <td colSpan={7} className="p-8 text-center text-slate-400 text-xs">
-                        No graduation completion rules defined. A course must have a rule to be published.
-                      </td>
-                    </tr>
-                  ) : (
-                    rules.map((r) => (
-                      <tr key={r.id} className="border-b border-slate-50 hover:bg-slate-50 transition-all">
-                        <td className="p-4 font-bold text-slate-800">{r.minimumAttendancePercent}%</td>
-                        <td className="p-4">
-                          {r.examRequired ? (
-                            <span className="text-rose-600 font-semibold text-xs">Required</span>
-                          ) : (
-                            <span className="text-slate-400 text-xs">No exam</span>
-                          )}
-                        </td>
-                        <td className="p-4">
-                          {r.feeClearanceRequired ? (
-                            <span className="text-rose-600 font-semibold text-xs">Required</span>
-                          ) : (
-                            <span className="text-slate-400 text-xs">Not required</span>
-                          )}
-                        </td>
-                        <td className="p-4">
-                          {r.manualApprovalRequired ? (
-                            <span className="text-rose-600 font-semibold text-xs">Required</span>
-                          ) : (
-                            <span className="text-slate-400 text-xs">Auto-approve</span>
-                          )}
-                        </td>
-                        <td className="p-4 text-xs text-slate-500 font-medium">
-                          {formatDate(r.effectiveStartDate)} - {formatDate(r.effectiveEndDate)}
-                        </td>
-                        <td className="p-4">{getStatusBadge(r.status)}</td>
-                        <td className="p-4 text-center">
-                          <button
-                            onClick={() => openViewDrawer('view-rule', r)}
-                            className="text-[color:var(--ims-brand)] hover:underline text-xs font-semibold"
-                          >
-                            View details
-                          </button>
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
+            {/* Filters */}
+            <div className="grid gap-4 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] items-end">
+              <div /> {/* Spacer / align grid layout */}
+              <div className="min-w-0">
+                <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+                  Status
+                </FormLabel>
+                <Select
+                  value={ruleStatusFilter}
+                  onChange={(e) => {
+                    updateRuleParams({ ruleStatus: e.target.value || null, rulePage: '1' });
+                  }}
+                  options={[
+                    { value: '', label: 'All Statuses' },
+                    { value: 'Active', label: 'Active' },
+                    { value: 'Inactive', label: 'Inactive' },
+                    { value: 'Superseded', label: 'Superseded' },
+                  ]}
+                  className="h-11"
+                  placeholder="All Statuses"
+                />
+              </div>
             </div>
+
+            <ResponsiveDataTable
+              data={rules}
+              columns={ruleColumns}
+              renderCard={renderRuleCard}
+              keyExtractor={(r) => r.id}
+              emptyState={
+                <EmptyState
+                  icon={<GraduationCap className="h-6 w-6" />}
+                  title="No completion rules found"
+                  description="No rules match your current filter criteria."
+                />
+              }
+            />
+
+            {ruleTotalPages > 1 && (
+              <Pagination
+                page={rulePage}
+                totalPages={ruleTotalPages}
+                totalCount={ruleTotal}
+                limit={10}
+                buildHref={(p) => {
+                  const params = new URLSearchParams(searchParams.toString());
+                  params.set('rulePage', p.toString());
+                  return `${pathname}?${params.toString()}`;
+                }}
+              />
+            )}
           </div>
         )}
       </div>
@@ -667,77 +1535,73 @@ export function CourseConfigsPanel({ courseId, branches, batches }: CourseConfig
               {/* 1. Create Pricing Override Form */}
               {drawerType === 'create-pricing' && (
                 <form onSubmit={pricingForm.handleSubmit(handlePricingSubmit)} className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <FormField>
-                      <FormLabel htmlFor="pricing-branchId">Target Branch (Override)</FormLabel>
-                      <FormControl>
-                        <Select
-                          id="pricing-branchId"
-                          value={pricingForm.watch('branchId') || ''}
-                          onChange={(e) => pricingForm.setValue('branchId', e.target.value)}
-                          options={[
-                            { value: '', label: '-- Global Default --' },
-                            ...branches.map((b) => ({ value: b.id, label: `${b.branchName} (${b.branchCode})` })),
-                          ]}
-                          disabled={isSubmittingPricing}
-                        />
-                      </FormControl>
-                      <FormError>{pricingForm.formState.errors.branchId?.message}</FormError>
-                    </FormField>
-
-                    <FormField>
-                      <FormLabel htmlFor="pricing-batchId">Target Batch (Override)</FormLabel>
-                      <FormControl>
-                        <Select
-                          id="pricing-batchId"
-                          value={pricingForm.watch('batchId') || ''}
-                          onChange={(e) => pricingForm.setValue('batchId', e.target.value)}
-                          options={[
-                            { value: '', label: '-- None (Branch/Global) --' },
-                            ...batches.map((b) => ({ value: b.id, label: b.batchCode })),
-                          ]}
-                          disabled={isSubmittingPricing}
-                        />
-                      </FormControl>
-                      <FormError>{pricingForm.formState.errors.batchId?.message}</FormError>
-                    </FormField>
-                  </div>
+                  <FormField>
+                    <FormLabel>Target Branches (Override)</FormLabel>
+                    <FormControl>
+                      <Controller
+                        name="branchIds"
+                        control={pricingForm.control}
+                        render={({ field }) => (
+                          <MultiSelect
+                            options={branches.map((b) => ({ value: b.id, label: `${b.branchName} (${b.branchCode})` }))}
+                            selectedValues={field.value || []}
+                            onChange={(vals) => field.onChange(vals)}
+                            placeholder="-- Global Default (All Branches) --"
+                            disabled={isSubmittingPricing}
+                          />
+                        )}
+                      />
+                    </FormControl>
+                    <FormError>{(pricingForm.formState.errors.branchIds as any)?.message}</FormError>
+                  </FormField>
 
                   <div className="grid grid-cols-2 gap-4">
                     <FormField>
-                      <FormLabel htmlFor="customerType">Customer Type</FormLabel>
+                      <FormLabel>Customer Types</FormLabel>
                       <FormControl>
-                        <Select
-                          id="customerType"
-                          value={pricingForm.watch('customerType')}
-                          onChange={(e) => pricingForm.setValue('customerType', e.target.value as any)}
-                          options={[
-                            { value: 'Individual', label: 'Individual Student' },
-                            { value: 'Corporate', label: 'Corporate Client' },
-                            { value: 'WalkIn', label: 'Walk-In FastTrack' },
-                          ]}
-                          disabled={isSubmittingPricing}
+                        <Controller
+                          name="customerTypes"
+                          control={pricingForm.control}
+                          render={({ field }) => (
+                            <MultiSelect
+                              options={[
+                                { value: 'Individual', label: 'Individual Student' },
+                                { value: 'Corporate', label: 'Corporate Client' },
+                                { value: 'WalkIn', label: 'Walk-In FastTrack' },
+                              ]}
+                              selectedValues={field.value || []}
+                              onChange={(vals) => field.onChange(vals)}
+                              placeholder="-- All Customer Types --"
+                              disabled={isSubmittingPricing}
+                            />
+                          )}
                         />
                       </FormControl>
-                      <FormError>{pricingForm.formState.errors.customerType?.message}</FormError>
+                      <FormError>{(pricingForm.formState.errors.customerTypes as any)?.message}</FormError>
                     </FormField>
 
                     <FormField>
-                      <FormLabel htmlFor="batchType">Batch Type</FormLabel>
+                      <FormLabel>Batch Types</FormLabel>
                       <FormControl>
-                        <Select
-                          id="batchType"
-                          value={pricingForm.watch('batchType')}
-                          onChange={(e) => pricingForm.setValue('batchType', e.target.value)}
-                          options={[
-                            { value: 'Regular', label: 'Regular Sessions' },
-                            { value: 'FastTrack', label: 'Fast Track' },
-                            { value: 'Weekend', label: 'Weekend Programs' },
-                          ]}
-                          disabled={isSubmittingPricing}
+                        <Controller
+                          name="batchTypes"
+                          control={pricingForm.control}
+                          render={({ field }) => (
+                            <MultiSelect
+                              options={[
+                                { value: 'Regular', label: 'Regular Sessions' },
+                                { value: 'FastTrack', label: 'Fast Track' },
+                                { value: 'Weekend', label: 'Weekend Programs' },
+                              ]}
+                              selectedValues={field.value || []}
+                              onChange={(vals) => field.onChange(vals)}
+                              placeholder="-- All Batch Types --"
+                              disabled={isSubmittingPricing}
+                            />
+                          )}
                         />
                       </FormControl>
-                      <FormError>{pricingForm.formState.errors.batchType?.message}</FormError>
+                      <FormError>{(pricingForm.formState.errors.batchTypes as any)?.message}</FormError>
                     </FormField>
                   </div>
 
@@ -965,41 +1829,48 @@ export function CourseConfigsPanel({ courseId, branches, batches }: CourseConfig
                       </div>
                     )}
                   </div>
+
+                  {/* Actions Footer */}
+                  <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
+                    <Button type="button" variant="outline" onClick={closeDrawer}>
+                      Close
+                    </Button>
+                    {activeRecord.status === 'Active' && (
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          if (confirm('Are you sure you want to disable this pricing override?')) {
+                            handleDisablePricing(activeRecord.id);
+                          }
+                        }}
+                        className="bg-red-600 hover:bg-red-700 text-white font-semibold"
+                      >
+                        Disable Override
+                      </Button>
+                    )}
+                  </div>
                 </div>
               )}
 
               {/* 3. Create Discount Campaign Form */}
               {drawerType === 'create-discount' && (
                 <form onSubmit={discountForm.handleSubmit(handleDiscountSubmit)} className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 gap-4">
                     <FormField>
-                      <FormLabel htmlFor="discount-branchId">Target Branch</FormLabel>
+                      <FormLabel htmlFor="discount-branchIds">Target Branch(es)</FormLabel>
                       <FormControl>
-                        <Select
-                          id="discount-branchId"
-                          value={discountForm.watch('branchId') || ''}
-                          onChange={(e) => discountForm.setValue('branchId', e.target.value)}
-                          options={[
-                            { value: '', label: '-- All Branches --' },
-                            ...branches.map((b) => ({ value: b.id, label: b.branchName })),
-                          ]}
-                          disabled={isSubmittingDiscount}
-                        />
-                      </FormControl>
-                    </FormField>
-
-                    <FormField>
-                      <FormLabel htmlFor="discount-batchId">Target Batch</FormLabel>
-                      <FormControl>
-                        <Select
-                          id="discount-batchId"
-                          value={discountForm.watch('batchId') || ''}
-                          onChange={(e) => discountForm.setValue('batchId', e.target.value)}
-                          options={[
-                            { value: '', label: '-- All Batches --' },
-                            ...batches.map((b) => ({ value: b.id, label: b.batchCode })),
-                          ]}
-                          disabled={isSubmittingDiscount}
+                        <Controller
+                          control={discountForm.control}
+                          name="branchIds"
+                          render={({ field }) => (
+                            <MultiSelect
+                              options={branches.map((b) => ({ value: b.id, label: b.branchName }))}
+                              selectedValues={field.value || []}
+                              onChange={field.onChange}
+                              placeholder="Select Target Branches (Leave empty for Global)"
+                              disabled={isSubmittingDiscount}
+                            />
+                          )}
                         />
                       </FormControl>
                     </FormField>
@@ -1196,6 +2067,26 @@ export function CourseConfigsPanel({ courseId, branches, batches }: CourseConfig
                       </div>
                     )}
                   </div>
+
+                  {/* Actions Footer */}
+                  <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
+                    <Button type="button" variant="outline" onClick={closeDrawer}>
+                      Close
+                    </Button>
+                    {activeRecord.status === 'Active' && (
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          if (confirm('Are you sure you want to disable this discount override?')) {
+                            handleDisableDiscount(activeRecord.id);
+                          }
+                        }}
+                        className="bg-red-600 hover:bg-red-700 text-white font-semibold"
+                      >
+                        Disable Override
+                      </Button>
+                    )}
+                  </div>
                 </div>
               )}
 
@@ -1217,44 +2108,84 @@ export function CourseConfigsPanel({ courseId, branches, batches }: CourseConfig
                     <FormError>{ruleForm.formState.errors.minimumAttendancePercent?.message}</FormError>
                   </FormField>
 
-                  <div className="space-y-3 bg-slate-50 p-4 rounded-lg border border-slate-100">
-                    <span className="text-xs font-bold text-slate-700 block mb-1">Graduation Checks Required</span>
+                  <div className="space-y-3 bg-slate-50 p-5 rounded-xl border border-slate-200/60">
+                    <span className="text-xs font-bold text-slate-700 block mb-1.5 uppercase tracking-wider">
+                      Graduation Requirements & Checks
+                    </span>
 
-                    <FormField className="flex items-center gap-2">
-                      <FormControl>
+                    <div className="grid gap-3">
+                      {/* Checkbox 1: Exam Required */}
+                      <label
+                        htmlFor="examRequired"
+                        className={`flex items-start gap-3.5 p-3.5 rounded-lg border transition-all cursor-pointer ${
+                          ruleForm.watch('examRequired')
+                            ? 'border-[color:var(--ims-brand)] bg-[color:var(--ims-brand)]/[0.02] shadow-sm'
+                            : 'border-slate-200 bg-white hover:border-slate-300'
+                        }`}
+                      >
                         <Checkbox
                           id="examRequired"
                           checked={ruleForm.watch('examRequired')}
                           onChange={(e: any) => ruleForm.setValue('examRequired', e.target.checked)}
                           disabled={isSubmittingRule}
+                          className="mt-0.5"
                         />
-                      </FormControl>
-                      <FormLabel htmlFor="examRequired" className="text-xs text-slate-600">Must pass all exams / assessments</FormLabel>
-                    </FormField>
+                        <div className="space-y-1">
+                          <span className="block text-xs font-bold text-slate-800">Exam / Assessment Passing</span>
+                          <span className="block text-[11px] text-slate-500 leading-normal">
+                            Students must take and pass all mandatory exams, course assessments, or practical evaluations.
+                          </span>
+                        </div>
+                      </label>
 
-                    <FormField className="flex items-center gap-2">
-                      <FormControl>
+                      {/* Checkbox 2: Fee Clearance Required */}
+                      <label
+                        htmlFor="feeClearanceRequired"
+                        className={`flex items-start gap-3.5 p-3.5 rounded-lg border transition-all cursor-pointer ${
+                          ruleForm.watch('feeClearanceRequired')
+                            ? 'border-[color:var(--ims-brand)] bg-[color:var(--ims-brand)]/[0.02] shadow-sm'
+                            : 'border-slate-200 bg-white hover:border-slate-300'
+                        }`}
+                      >
                         <Checkbox
                           id="feeClearanceRequired"
                           checked={ruleForm.watch('feeClearanceRequired')}
                           onChange={(e: any) => ruleForm.setValue('feeClearanceRequired', e.target.checked)}
                           disabled={isSubmittingRule}
+                          className="mt-0.5"
                         />
-                      </FormControl>
-                      <FormLabel htmlFor="feeClearanceRequired" className="text-xs text-slate-600">Must clear all outstanding tuition fees</FormLabel>
-                    </FormField>
+                        <div className="space-y-1">
+                          <span className="block text-xs font-bold text-slate-800">Financial Balance Clearance</span>
+                          <span className="block text-[11px] text-slate-500 leading-normal">
+                            Restricts certificate release until the student clears all outstanding tuition installment balances.
+                          </span>
+                        </div>
+                      </label>
 
-                    <FormField className="flex items-center gap-2">
-                      <FormControl>
+                      {/* Checkbox 3: Manual Approval Required */}
+                      <label
+                        htmlFor="manualApprovalRequired"
+                        className={`flex items-start gap-3.5 p-3.5 rounded-lg border transition-all cursor-pointer ${
+                          ruleForm.watch('manualApprovalRequired')
+                            ? 'border-[color:var(--ims-brand)] bg-[color:var(--ims-brand)]/[0.02] shadow-sm'
+                            : 'border-slate-200 bg-white hover:border-slate-300'
+                        }`}
+                      >
                         <Checkbox
                           id="manualApprovalRequired"
                           checked={ruleForm.watch('manualApprovalRequired')}
                           onChange={(e: any) => ruleForm.setValue('manualApprovalRequired', e.target.checked)}
                           disabled={isSubmittingRule}
+                          className="mt-0.5"
                         />
-                      </FormControl>
-                      <FormLabel htmlFor="manualApprovalRequired" className="text-xs text-slate-600">Requires academic director review</FormLabel>
-                    </FormField>
+                        <div className="space-y-1">
+                          <span className="block text-xs font-bold text-slate-800">Academic Director Approval</span>
+                          <span className="block text-[11px] text-slate-500 leading-normal">
+                            Forces a manual verification step where the academic director reviews individual attendance logs and grade books.
+                          </span>
+                        </div>
+                      </label>
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
@@ -1370,6 +2301,26 @@ export function CourseConfigsPanel({ courseId, branches, batches }: CourseConfig
                           </div>
                         ))}
                       </div>
+                    )}
+                  </div>
+
+                  {/* Actions Footer */}
+                  <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
+                    <Button type="button" variant="outline" onClick={closeDrawer}>
+                      Close
+                    </Button>
+                    {activeRecord.status === 'Active' && (
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          if (confirm('Are you sure you want to disable this completion rule version?')) {
+                            handleDisableCompletionRule(activeRecord.id);
+                          }
+                        }}
+                        className="bg-red-600 hover:bg-red-700 text-white font-semibold"
+                      >
+                        Disable Rule Version
+                      </Button>
                     )}
                   </div>
                 </div>

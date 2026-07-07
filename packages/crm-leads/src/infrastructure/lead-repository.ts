@@ -19,6 +19,8 @@ export class LeadRepository implements ILeadRepository {
         lastName: data.lastName,
         email: data.email || null,
         phone: data.phone,
+        nationality: data.nationality || null,
+        nationalId: data.nationalId || null,
         stage: 'New',
         source: data.source as any,
         counselorId: data.counselorId || null,
@@ -109,6 +111,8 @@ export class LeadRepository implements ILeadRepository {
     if (updateData.lastName !== undefined) updatePayload.lastName = updateData.lastName;
     if (updateData.email !== undefined) updatePayload.email = updateData.email || null;
     if (updateData.phone !== undefined) updatePayload.phone = updateData.phone;
+    if (updateData.nationality !== undefined) updatePayload.nationality = updateData.nationality || null;
+    if (updateData.nationalId !== undefined) updatePayload.nationalId = updateData.nationalId || null;
     if (updateData.notes !== undefined) updatePayload.notes = updateData.notes || null;
     if (updateData.lostReasonCode !== undefined) updatePayload.lostReasonCode = updateData.lostReasonCode || null;
     if (updateData.lostReasonNotes !== undefined) updatePayload.lostReasonNotes = updateData.lostReasonNotes || null;
@@ -151,6 +155,8 @@ export class LeadRepository implements ILeadRepository {
       if (updateData.lastName) personUpdateData.lastName = updateData.lastName;
       if (updateData.email !== undefined) personUpdateData.email = updateData.email || null;
       if (updateData.dateOfBirth !== undefined) personUpdateData.dateOfBirth = updateData.dateOfBirth || null;
+      if (updateData.nationality !== undefined) personUpdateData.nationality = updateData.nationality || null;
+      if (updateData.nationalId !== undefined) personUpdateData.nationalId = updateData.nationalId || null;
 
       if (Object.keys(personUpdateData).length > 0) {
         await client.person.update({

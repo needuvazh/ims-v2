@@ -43,7 +43,7 @@ export async function GET(request: Request) {
 
       let matchedResult: any = null;
       for (const lookup of lookups) {
-        const result = await studentQueryService.globalPersonLookup(lookup, null, { revealSensitive: false });
+        const result = await studentQueryService.globalPersonLookup(lookup, null, { revealSensitive: true });
         if (result.studentProfileId) {
           matchedResult = result;
           break;

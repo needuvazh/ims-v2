@@ -15,6 +15,7 @@ import {
   CheckCircle2,
   ChevronRight,
   ClipboardList,
+  Clock,
   FileText,
   GraduationCap,
   Mail,
@@ -44,10 +45,21 @@ export type CourseCard = {
   points: string[];
 };
 
+export const iconMap = {
+  users: Users,
+  shield: ShieldCheck,
+  book: BookOpen,
+  award: Award,
+  clock: Clock,
+  mapPin: MapPin,
+  calendar: CalendarDays,
+  graduation: GraduationCap,
+};
+
 export type StatCard = {
   value: string;
   label: string;
-  icon: LucideIcon;
+  icon: any;
 };
 
 export const contactInfo = {
@@ -520,7 +532,9 @@ export function HeroSection({
              className="grid grid-cols-4 gap-px overflow-hidden rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-2xl shadow-black/50 backdrop-blur-xl"
           >
             {heroStats.map((item) => {
-              const Icon = item.icon;
+              const Icon = typeof item.icon === 'string'
+                ? (iconMap[item.icon as keyof typeof iconMap] || Users)
+                : item.icon;
               return (
                 <div key={item.label} className="group relative flex flex-col items-center justify-center overflow-hidden rounded-[1.5rem] bg-primary-900/90 px-6 py-10">
                   <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />

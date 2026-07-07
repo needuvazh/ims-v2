@@ -46,7 +46,9 @@ export default async function CreateLeadPage() {
     actorPermissions: session.permissions,
     activeBranchId: session.activeBranchId,
   })) as any[];
-  const counselors = usersResult.map((u: any) => ({ id: u.id, name: u.username }));
+  const counselors = usersResult
+    .filter((u: any) => u.roleSummaries?.some((r: any) => r.roleCode === 'COUNSELOR'))
+    .map((u: any) => ({ id: u.id, name: u.username }));
 
   return (
     <AdminFormPageLayout>

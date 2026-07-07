@@ -123,4 +123,95 @@ describe('TrainerManagementService', () => {
     ).rejects.toMatchObject({ code: 'branch_scope_violation' });
     expect(repository.createTrainerProfile).not.toHaveBeenCalled();
   });
+
+  it('enforces availability branch scope checks on creation', async () => {
+    const { service, repository } = createService();
+    await expect(
+      service.createAvailability(
+        'trainer-1',
+        {
+          branchId: 'branch-2',
+          dayOfWeek: 'Monday',
+          startTime: '09:00',
+          endTime: '12:00',
+          status: 'Active',
+          effectiveStartDate: new Date('2025-01-01'),
+          effectiveEndDate: null,
+          createdBy: 'actor-1',
+        } as any,
+        {
+          actorId: 'actor-1',
+          permissions: ['trainer.availability.manage'],
+          allowedBranchIds: ['branch-1'],
+        },
+      ),
+    ).rejects.toMatchObject({ code: 'branch_scope_violation' });
+    expect(repository.createAvailability).not.toHaveBeenCalled();
+  });
+
+  it('enforces authorizations permissions on creation', async () => {
+    const { service, repository } = createService();
+    await expect(
+      service.createAuthorization(
+        'trainer-1',
+        {
+          courseId: 'course-1',
+          status: 'Active',
+          effectiveStartDate: new Date('2025-01-01'),
+          effectiveEndDate: null,
+        } as any,
+        {
+          actorId: 'actor-1',
+          permissions: ['trainer.read'], // missing trainer.authorization.manage
+          allowedBranchIds: ['branch-1'],
+        },
+      ),
+    ).rejects.toMatchObject({ code: 'forbidden' });
+    expect(repository.createAuthorization).not.toHaveBeenCalled();
+  });
+
+  it('resolves the most specific compensation rate', async () => {
+    const { service, repository } = createService();
+    const expectedRate = { id: 'rate-1', amount: '50', currency: 'OMR' };
+    repository.resolveCompensationRate.mockResolvedValue(expectedRate);
+
+    const result = await service.resolveCompensationRate(
+      {
+        trainerId: 'trainer-1',
+        paymentBasis: 'PerHour',
+        effectiveOn: new Date('2025-01-01'),
+      },
+      {
+        actorId: 'actor-1',
+        permissions: ['trainer.compensation.read'],
+        allowedBranchIds: ['branch-1'],
+      },
+    );
+
+    expect(result).toBe(expectedRate);
+    expect(repository.resolveCompensationRate).toHaveBeenCalledWith({
+      trainerId: 'trainer-1',
+      paymentBasis: 'PerHour',
+      effectiveOn: expect.any(Date),
+    });
+  });
+
+  it('blocks compensation rate resolution if permissions are missing', async () => {
+    const { service, repository } = createService();
+    await expect(
+      service.resolveCompensationRate(
+        {
+          trainerId: 'trainer-1',
+          paymentBasis: 'PerHour',
+          effectiveOn: new Date('2025-01-01'),
+        },
+        {
+          actorId: 'actor-1',
+          permissions: ['trainer.read'], // missing trainer.compensation.read
+          allowedBranchIds: ['branch-1'],
+        },
+      ),
+    ).rejects.toMatchObject({ code: 'forbidden' });
+    expect(repository.resolveCompensationRate).not.toHaveBeenCalled();
+  });
 });

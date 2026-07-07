@@ -98,6 +98,7 @@ export class AdmissionRepository implements IAdmissionRepository {
           mobile: data.phone,
           email: data.email || null,
           nationalId: data.nationalId || null,
+          nationality: data.nationality || null,
           dateOfBirth: data.dateOfBirth || null,
         },
       });

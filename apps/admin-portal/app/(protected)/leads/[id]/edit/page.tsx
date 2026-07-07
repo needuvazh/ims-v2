@@ -64,7 +64,9 @@ export default async function EditLeadPage(props: { params: Promise<{ id: string
     actorPermissions: session.permissions,
     activeBranchId: session.activeBranchId,
   })) as any[];
-  const counselors = usersResult.map((u: any) => ({ id: u.id, name: u.username }));
+  const counselors = usersResult
+    .filter((u: any) => u.roleSummaries?.some((r: any) => r.roleCode === 'COUNSELOR'))
+    .map((u: any) => ({ id: u.id, name: u.username }));
 
   return (
     <AdminFormPageLayout>
@@ -86,6 +88,8 @@ export default async function EditLeadPage(props: { params: Promise<{ id: string
           initialData={{
             ...lead,
             dateOfBirth: lead.person?.dateOfBirth,
+            nationality: lead.nationality || lead.person?.nationality,
+            nationalId: lead.nationalId || lead.person?.nationalId,
           }}
           branches={branches}
           counselors={counselors}

@@ -195,6 +195,13 @@ export class StudentQueryService {
       studentNumber: studentProfile?.studentNumber || null,
       branchInfo: Array.from(branchInfoMap.values()),
       preflight,
+      firstName: revealSensitive ? person.firstName : undefined,
+      lastName: revealSensitive ? person.lastName : undefined,
+      mobile: revealSensitive ? person.mobile : undefined,
+      email: revealSensitive ? person.email : undefined,
+      nationalId: revealSensitive ? person.nationalId : undefined,
+      nationality: revealSensitive ? person.nationality : undefined,
+      dateOfBirth: revealSensitive ? person.dateOfBirth : undefined,
     };
   }
 

@@ -82,3 +82,10 @@ The system SHALL carry `batchType` across the batch execution domain to differen
 - **WHEN** a batch is instantiated with `batchType` set to `Regular`, `FastTrack`, or `Weekend`
 - **THEN** the system SHALL save the batch, defaulting to `Regular` if omitted to preserve backward compatibility with existing tests and scripts.
 
+### Requirement: Course Overrides Branch Selection (FR-PRC-003)
+Pricing overrides and discount segments SHALL support selecting multiple target branches during creation while removing individual batch select configurations.
+
+#### Scenario: Bulk create pricing overrides for multiple branches
+- **WHEN** a coordinator creates a pricing override selecting multiple target branches
+- **THEN** the system SHALL create individual pricing override records for each selected branch and set `batchId` to `null`.
+

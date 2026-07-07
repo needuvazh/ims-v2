@@ -40,6 +40,8 @@ import {
   CreditCard,
   Undo2,
   FilePlus,
+  Award,
+  FileText,
 } from 'lucide-react';
 
 function mapNavigationIcons(item: any): any {
@@ -154,6 +156,24 @@ function mapNavigationIcons(item: any): any {
       break;
     case '/finance/refunds':
       icon = <Undo2 className="h-4.5 w-4.5" />;
+      break;
+    case '/exam-completion':
+      icon = <Award className="h-4.5 w-4.5" />;
+      break;
+    case '/exam-completion/dashboard':
+      icon = <LayoutDashboard className="h-4.5 w-4.5" />;
+      break;
+    case '/exam-completion/exams':
+      icon = <FileText className="h-4.5 w-4.5" />;
+      break;
+    case '/exam-completion/results':
+      icon = <FileSpreadsheet className="h-4.5 w-4.5" />;
+      break;
+    case '/exam-completion/completions':
+      icon = <BadgeCheck className="h-4.5 w-4.5" />;
+      break;
+    case '/exam-completion/approval-queue':
+      icon = <UserCheck className="h-4.5 w-4.5" />;
       break;
   }
 

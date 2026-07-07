@@ -180,8 +180,41 @@ const systemPermissions = [
   { moduleCode: 'faculty', featureCode: 'audit', actionCode: 'read', permissionCode: 'trainer.audit.read', permissionType: 'Report' as const, description: 'Read trainer audit history.' },
   { moduleCode: 'exams',        featureCode: 'results',     actionCode: 'write',  permissionCode: 'result.record',                  permissionType: 'Action' as const, description: 'Enter exam marks and grades.' },
   
+  // Exam, Result & Completion Management Permissions (from packages/exam-result-completion)
+  // Exam Permissions
+  { moduleCode: 'exam-completion', featureCode: 'exam', actionCode: 'view', permissionCode: 'exam.view', permissionType: 'Action' as const, description: 'View exams list and details.' },
+  { moduleCode: 'exam-completion', featureCode: 'exam', actionCode: 'create', permissionCode: 'exam.create', permissionType: 'Action' as const, description: 'Create new exams.' },
+  { moduleCode: 'exam-completion', featureCode: 'exam', actionCode: 'update', permissionCode: 'exam.update', permissionType: 'Action' as const, description: 'Update exam details and schedule.' },
+  { moduleCode: 'exam-completion', featureCode: 'exam', actionCode: 'delete', permissionCode: 'exam.delete', permissionType: 'Action' as const, description: 'Cancel or archive exams.' },
+
+  // Result Permissions
+  { moduleCode: 'exam-completion', featureCode: 'result', actionCode: 'view', permissionCode: 'result.view', permissionType: 'Action' as const, description: 'View results list and details.' },
+  { moduleCode: 'exam-completion', featureCode: 'result', actionCode: 'create', permissionCode: 'result.create', permissionType: 'Action' as const, description: 'Record exam results.' },
+  { moduleCode: 'exam-completion', featureCode: 'result', actionCode: 'finalize', permissionCode: 'result.finalize', permissionType: 'Action' as const, description: 'Finalize recorded results.' },
+  { moduleCode: 'exam-completion', featureCode: 'result', actionCode: 'correct', permissionCode: 'result.correct', permissionType: 'Action' as const, description: 'Correct finalized results.' },
+  { moduleCode: 'exam-completion', featureCode: 'result', actionCode: 'export', permissionCode: 'result.export', permissionType: 'Action' as const, description: 'Export results data.' },
+
+  // Completion Permissions
+  { moduleCode: 'exam-completion', featureCode: 'completion', actionCode: 'view', permissionCode: 'completion.view', permissionType: 'Action' as const, description: 'View completions list and details.' },
+  { moduleCode: 'exam-completion', featureCode: 'completion', actionCode: 'evaluate', permissionCode: 'completion.evaluate', permissionType: 'Action' as const, description: 'Evaluate course completions.' },
+  { moduleCode: 'exam-completion', featureCode: 'completion', actionCode: 'reevaluate', permissionCode: 'completion.reevaluate', permissionType: 'Action' as const, description: 'Request reevaluation of approved completions.' },
+  { moduleCode: 'exam-completion', featureCode: 'completion', actionCode: 'recommend', permissionCode: 'completion.recommend', permissionType: 'Action' as const, description: 'Recommend completions (Trainer role).' },
+  { moduleCode: 'exam-completion', featureCode: 'completion', actionCode: 'coordinator-review', permissionCode: 'completion.coordinator-review', permissionType: 'Action' as const, description: 'Review completions (Coordinator role).' },
+  { moduleCode: 'exam-completion', featureCode: 'completion', actionCode: 'final-approve', permissionCode: 'completion.final-approve', permissionType: 'Action' as const, description: 'Final approval of completions (Branch Manager role).' },
+
+  // Report Permissions
+  { moduleCode: 'exam-completion', featureCode: 'report', actionCode: 'view', permissionCode: 'exam-completion.report.view', permissionType: 'Action' as const, description: 'View exam and completion reports.' },
+  { moduleCode: 'exam-completion', featureCode: 'report', actionCode: 'export', permissionCode: 'exam-completion.report.export', permissionType: 'Action' as const, description: 'Export exam and completion reports.' },
+
+  // Menu Permissions
+  { moduleCode: 'exam-completion', featureCode: 'menu', actionCode: 'view', permissionCode: 'exam-completion.menu.view', permissionType: 'Menu' as const, description: 'View Exam & Completion menu.' },
+  
   // Certificates
-  { moduleCode: 'certificate',  featureCode: 'issue',       actionCode: 'write',  permissionCode: 'certificate.generate',           permissionType: 'Action' as const, description: 'Generate and issue certificates.' },
+  { moduleCode: 'certificate',  featureCode: 'issue',       actionCode: 'view',   permissionCode: 'certificate.view',               permissionType: 'Action' as const, description: 'View certificates registry.' },
+  { moduleCode: 'certificate',  featureCode: 'issue',       actionCode: 'create', permissionCode: 'certificate.create',             permissionType: 'Action' as const, description: 'Generate certificates.' },
+  { moduleCode: 'certificate',  featureCode: 'issue',       actionCode: 'issue',  permissionCode: 'certificate.issue',              permissionType: 'Action' as const, description: 'Issue generated certificates.' },
+  { moduleCode: 'certificate',  featureCode: 'issue',       actionCode: 'reissue',permissionCode: 'certificate.reissue',            permissionType: 'Action' as const, description: 'Request, review, and approve certificate reissues.' },
+  { moduleCode: 'certificate',  featureCode: 'issue',       actionCode: 'revoke', permissionCode: 'certificate.revoke',             permissionType: 'Action' as const, description: 'Revoke issued certificates.' },
   { moduleCode: 'certificate',  featureCode: 'public',      actionCode: 'verify', permissionCode: 'certificate.verify',             permissionType: 'Action' as const, description: 'Verify certificates publicly.' },
   
   // Dashboard & Audit
@@ -235,10 +268,24 @@ async function seed() {
   await prisma.walkInConfirmation.deleteMany({});
   await prisma.walkInPayment.deleteMany({});
   await prisma.walkInEnrollment.deleteMany({});
+  // Exam, Completion & Certificate cleanup
+  await prisma.certificateVerification.deleteMany({});
+  await prisma.certificateReissueRequest.deleteMany({});
+  await prisma.certificate.deleteMany({});
+  await prisma.courseCompletion.deleteMany({});
+  await prisma.result.deleteMany({});
+  await prisma.exam.deleteMany({});
+
   await prisma.enrollment.deleteMany({});
   await prisma.documentVerification.deleteMany({});
   await prisma.documentOwner.deleteMany({});
   await prisma.document.deleteMany({});
+  await prisma.studentDuplicateCaseItem.deleteMany({});
+  await prisma.studentMergeLog.deleteMany({});
+  await prisma.studentStatusHistory.deleteMany({});
+  await prisma.studentIdCardHistory.deleteMany({});
+  await prisma.studentDuplicateCase.deleteMany({});
+  await prisma.studentExportLog.deleteMany({});
   await prisma.admission.deleteMany({});
   await prisma.studentProfile.deleteMany({});
   await prisma.leadStageHistory.deleteMany({});
@@ -253,6 +300,11 @@ async function seed() {
   await prisma.coursePricing.deleteMany({});
   await prisma.courseCompletionRule.deleteMany({});
   await prisma.courseDiscount.deleteMany({});
+  await prisma.trainerCourseAuthorization.deleteMany({});
+  await prisma.trainerCompensationRate.deleteMany({});
+  await prisma.trainerAvailability.deleteMany({});
+  await prisma.trainerQualification.deleteMany({});
+  await prisma.trainerProfile.deleteMany({});
   await prisma.course.deleteMany({});
   await prisma.courseCategory.deleteMany({});
   await prisma.passwordResetToken.deleteMany({});
@@ -356,7 +408,12 @@ async function seed() {
     'attendance.alert.read', 'attendance.alert.detect', 'attendance.admin.override', 'attendance.consolidated.read',
     'menu.faculty', 'menu.faculty.trainers', 'menu.faculty.eligible-trainers', 'menu.faculty.reports',
     'trainer.read', 'trainer.create', 'trainer.update', 'trainer.status.manage', 'trainer.qualification.read', 'trainer.qualification.manage', 'trainer.availability.read', 'trainer.availability.manage', 'trainer.authorization.read', 'trainer.authorization.manage', 'trainer.compensation.read', 'trainer.compensation.manage', 'trainer.eligibility.read', 'trainer.report.view', 'trainer.report.export', 'trainer.audit.read',
-    'result.record', 'certificate.generate',
+    'result.record', 'certificate.view', 'certificate.create', 'certificate.issue', 'certificate.reissue', 'certificate.revoke',
+    'exam.view', 'exam.create', 'exam.update', 'exam.delete',
+    'result.view', 'result.create', 'result.finalize', 'result.correct',
+    'completion.view', 'completion.evaluate', 'completion.final-approve',
+    'exam-completion.report.view', 'exam-completion.report.export',
+    'exam-completion.menu.view',
     'certificate.verify', 'dashboard.branch', 'dashboard.security', 'dashboard.view',
     'REPORTING_VIEW_CRM_DASHBOARD', 'REPORTING_VIEW_COUNSELOR_METRICS', 'LEAD_VIEW_ALL_IN_BRANCH'
   ];
@@ -396,7 +453,10 @@ async function seed() {
     'menu.faculty', 'menu.faculty.trainers', 'menu.faculty.eligible-trainers', 'menu.faculty.reports',
     'trainer.read', 'trainer.update', 'trainer.qualification.read', 'trainer.qualification.manage',
     'trainer.availability.read', 'trainer.availability.manage', 'trainer.authorization.read', 'trainer.authorization.manage',
-    'trainer.compensation.read', 'trainer.report.view', 'trainer.report.export', 'trainer.eligibility.read'
+    'trainer.compensation.read', 'trainer.report.view', 'trainer.report.export', 'trainer.eligibility.read',
+    'exam.view', 'result.view', 'result.create', 'result.finalize',
+    'completion.view', 'completion.evaluate', 'completion.coordinator-review',
+    'exam-completion.report.view', 'exam-completion.menu.view', 'certificate.view', 'certificate.reissue'
   ];
   const academicCoordinatorPerms = permRecords.filter(p => academicCoordinatorPermCodes.includes(p.permissionCode));
   for (const perm of academicCoordinatorPerms) {
@@ -412,7 +472,9 @@ async function seed() {
     'attendance.dashboard.view', 'attendance.sessions.menu.view', 'attendance.records.menu.view',
     'attendance.session.read', 'attendance.session.open', 'attendance.session.submit', 'attendance.record.read', 'attendance.record.mark', 'attendance.record.update',
     'attendance.correction.request', 'attendance.report.daily.view', 'attendance.report.batch.view', 'attendance.report.student.view', 'attendance.report.lowAttendance.view',
-    'result.record', 'dashboard.training', 'batch.delivery.view'
+    'result.record', 'dashboard.training', 'batch.delivery.view',
+    'exam.view', 'result.view', 'result.create',
+    'completion.view', 'completion.recommend', 'exam-completion.menu.view'
   ];
   const trainerPerms = permRecords.filter(p => trainerPermCodes.includes(p.permissionCode));
   for (const perm of trainerPerms) {
@@ -450,7 +512,10 @@ async function seed() {
   // Auditor permissions
   const auditorPermCodes = [
     'attendance.audit.read', 'attendance.report.daily.view', 'attendance.report.batch.view', 'attendance.report.student.view', 'attendance.report.trainer.view', 'attendance.report.lowAttendance.view', 'attendance.report.correctionAging.view', 'attendance.report.export', 'attendance.consolidated.read',
-    'iam.audit.read', 'report.iam.audit-trail', 'dashboard.compliance'
+    'iam.audit.read', 'report.iam.audit-trail', 'dashboard.compliance',
+    'exam.view', 'result.view', 'result.export', 'completion.view',
+    'exam-completion.report.view', 'exam-completion.report.export',
+    'exam-completion.menu.view'
   ];
   const auditorPerms = permRecords.filter(p => auditorPermCodes.includes(p.permissionCode));
   for (const perm of auditorPerms) {
@@ -463,7 +528,9 @@ async function seed() {
   // Read-only executive permissions
   const execPermCodes = [
     'attendance.dashboard.view', 'attendance.dashboard.branch.view', 'attendance.dashboard.consolidated.view', 'attendance.report.daily.view', 'attendance.report.batch.view', 'attendance.report.student.view', 'attendance.report.trainer.view', 'attendance.report.lowAttendance.view', 'attendance.report.correctionAging.view', 'attendance.report.export', 'attendance.consolidated.read',
-    'dashboard.ceo', 'dashboard.view', 'report.iam.session', 'report.iam.audit-trail'
+    'dashboard.ceo', 'dashboard.view', 'report.iam.session', 'report.iam.audit-trail',
+    'exam.view', 'result.view', 'completion.view',
+    'exam-completion.report.view', 'exam-completion.menu.view'
   ];
   const execPerms = permRecords.filter(p => execPermCodes.includes(p.permissionCode));
   for (const perm of execPerms) {

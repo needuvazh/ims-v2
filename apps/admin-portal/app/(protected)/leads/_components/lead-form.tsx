@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { User, Compass, Activity, FileText, BadgeCheck, Loader2 } from 'lucide-react';
+import { User, Compass, Activity, FileText, BadgeCheck, Loader2, ExternalLink } from 'lucide-react';
 import { useForm, Controller } from 'react-hook-form';
 import { toast } from 'sonner';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -41,7 +41,23 @@ type StudentLookupResult = {
     hasEnrollment: boolean;
     conflictCode: string | null;
   } | null;
+  firstName?: string;
+  lastName?: string;
+  mobile?: string;
+  email?: string;
+  nationalId?: string;
+  nationality?: string;
+  dateOfBirth?: string | Date;
 };
+
+const FormDateOfBirthSchema = z.preprocess((val) => {
+  if (typeof val === 'string') {
+    if (!val.trim()) return undefined;
+    const d = new Date(val);
+    return isNaN(d.getTime()) ? val : d;
+  }
+  return val;
+}, z.date({ required_error: 'Date of birth is required', invalid_type_error: 'Invalid date of birth' }));
 
 // Extend CreateLeadSchema to include editing properties and conditional lost validations
 const leadFormSchema = CreateLeadSchema.extend({
@@ -51,6 +67,12 @@ const leadFormSchema = CreateLeadSchema.extend({
   lostReasonCode: z.string().optional().nullable().or(z.literal('')),
   lostReasonNotes: z.string().optional().nullable().or(z.literal('')),
   bypassDuplicateBlock: z.boolean().optional(),
+  email: z.string().min(1, 'Email address is required').email('Invalid email'),
+  dateOfBirth: FormDateOfBirthSchema,
+  nationality: z.string().min(1, 'Nationality is required'),
+  nationalId: z.string().min(1, 'ID Number is required'),
+  counselorId: z.string().min(1, 'Assigned staff is required').uuid('Invalid staff reference'),
+  source: LeadSourceEnum,
 }).refine((data) => {
   if (data.stage === 'Lost') {
     return !!data.lostReasonCode && data.lostReasonCode.trim() !== '';
@@ -70,6 +92,25 @@ const leadFormSchema = CreateLeadSchema.extend({
 });
 
 export type LeadFormData = z.infer<typeof leadFormSchema>;
+
+const nationalityOptions = [
+  { value: 'Omani', label: 'Omani' },
+  { value: 'Saudi', label: 'Saudi' },
+  { value: 'Emirati', label: 'Emirati' },
+  { value: 'Bahraini', label: 'Bahraini' },
+  { value: 'Qatari', label: 'Qatari' },
+  { value: 'Kuwaiti', label: 'Kuwaiti' },
+  { value: 'Yemeni', label: 'Yemeni' },
+  { value: 'Egyptian', label: 'Egyptian' },
+  { value: 'Indian', label: 'Indian' },
+  { value: 'Pakistani', label: 'Pakistani' },
+  { value: 'Bangladeshi', label: 'Bangladeshi' },
+  { value: 'Filipino', label: 'Filipino' },
+  { value: 'Syrian', label: 'Syrian' },
+  { value: 'Jordanian', label: 'Jordanian' },
+  { value: 'Sudanese', label: 'Sudanese' },
+  { value: 'Other', label: 'Other' },
+];
 
 interface LeadFormProps {
   initialData?: Partial<LeadFormData>;
@@ -95,6 +136,58 @@ export function LeadForm({
   const [showDuplicateWarning, setShowDuplicateWarning] = useState(false);
   const [studentLookup, setStudentLookup] = useState<StudentLookupResult | null>(null);
   const [studentLookupLoading, setStudentLookupLoading] = useState(false);
+  const [showLookupModal, setShowLookupModal] = useState(false);
+  const [pendingStudentLookup, setPendingStudentLookup] = useState<StudentLookupResult | null>(null);
+  const initialEmailRef = useRef(initialData?.email || '');
+  const initialPhoneRef = useRef(initialData?.phone || '');
+
+  const handleCancelLookup = () => {
+    const email = typeof watchedEmail === 'string' ? watchedEmail.trim() : '';
+    const mobile = typeof watchedPhone === 'string' ? watchedPhone.trim() : '';
+    
+    if (email !== initialEmailRef.current) {
+      setValue('email', initialEmailRef.current || '');
+    }
+    if (mobile !== initialPhoneRef.current) {
+      setValue('phone', initialPhoneRef.current || '');
+    }
+    
+    setShowLookupModal(false);
+    setPendingStudentLookup(null);
+  };
+
+  const handleConfirmLookup = () => {
+    if (pendingStudentLookup) {
+      setStudentLookup(pendingStudentLookup);
+      
+      if (pendingStudentLookup.firstName) {
+        setValue('firstName', pendingStudentLookup.firstName);
+      }
+      if (pendingStudentLookup.lastName) {
+        setValue('lastName', pendingStudentLookup.lastName);
+      }
+      if (pendingStudentLookup.email) {
+        setValue('email', pendingStudentLookup.email);
+      }
+      if (pendingStudentLookup.mobile) {
+        setValue('phone', pendingStudentLookup.mobile);
+      }
+      if (pendingStudentLookup.nationality) {
+        setValue('nationality', pendingStudentLookup.nationality);
+      }
+      if (pendingStudentLookup.nationalId) {
+        setValue('nationalId', pendingStudentLookup.nationalId);
+      }
+      if (pendingStudentLookup.dateOfBirth) {
+        const dob = new Date(pendingStudentLookup.dateOfBirth);
+        if (!isNaN(dob.getTime())) {
+          setValue('dateOfBirth', dob.toISOString().split('T')[0]);
+        }
+      }
+    }
+    setShowLookupModal(false);
+    setPendingStudentLookup(null);
+  };
 
   const defaultValues: any = {
     id: initialData?.id,
@@ -112,6 +205,8 @@ export function LeadForm({
     interestedCourseId: initialData?.interestedCourseId || '',
     counselorId: initialData?.counselorId || '',
     source: initialData?.source || 'Other',
+    nationality: initialData?.nationality || '',
+    nationalId: initialData?.nationalId || '',
     notes: initialData?.notes || '',
     stage: initialData?.stage || 'New',
     lostReasonCode: initialData?.lostReasonCode || '',
@@ -125,6 +220,7 @@ export function LeadForm({
     handleSubmit,
     watch,
     setError,
+    setValue,
     formState: { errors: rawErrors, isSubmitting },
   } = useForm<any>({
     resolver: zodResolver(leadFormSchema),
@@ -189,7 +285,18 @@ export function LeadForm({
         }
 
         const nextLookup = data.data as StudentLookupResult;
-        setStudentLookup(nextLookup.studentProfileId ? nextLookup : null);
+        if (nextLookup.studentProfileId) {
+          const emailChanged = email !== initialEmailRef.current;
+          const phoneChanged = mobile !== initialPhoneRef.current;
+          if (emailChanged || phoneChanged) {
+            setPendingStudentLookup(nextLookup);
+            setShowLookupModal(true);
+          } else {
+            setStudentLookup(nextLookup);
+          }
+        } else {
+          setStudentLookup(null);
+        }
       } catch (error: any) {
         if (error?.name !== 'AbortError') {
           setStudentLookup(null);
@@ -320,7 +427,7 @@ export function LeadForm({
             </FormField>
 
             <FormField>
-              <FormLabel>Email Address</FormLabel>
+              <FormLabel required>Email Address</FormLabel>
               <FormControl>
                 <Input type="email" placeholder="e.g. student@example.com" {...register('email')} />
               </FormControl>
@@ -328,7 +435,7 @@ export function LeadForm({
             </FormField>
 
           <FormField>
-            <FormLabel>Date of Birth</FormLabel>
+            <FormLabel required>Date of Birth</FormLabel>
             <FormControl>
               <Input
                 type="date"
@@ -339,6 +446,33 @@ export function LeadForm({
             </FormControl>
             <FormError>{errors.dateOfBirth?.message}</FormError>
           </FormField>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <FormField>
+              <FormLabel required>Nationality</FormLabel>
+              <Controller
+                name="nationality"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    placeholder="Select nationality"
+                    value={field.value || ''}
+                    onChange={(e) => field.onChange(e.target.value)}
+                    options={nationalityOptions}
+                  />
+                )}
+              />
+              <FormError>{errors.nationality?.message}</FormError>
+            </FormField>
+
+            <FormField>
+              <FormLabel required>ID Number</FormLabel>
+              <FormControl>
+                <Input placeholder="Civil ID or Passport Number" {...register('nationalId')} />
+              </FormControl>
+              <FormError>{errors.nationalId?.message}</FormError>
+            </FormField>
+          </div>
 
           <div className="space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
             <div className="flex items-center gap-3 border-b border-slate-100 pb-3 sm:pb-4">
@@ -399,7 +533,7 @@ export function LeadForm({
             </FormField>
 
             <FormField>
-              <FormLabel required>Interested Course</FormLabel>
+              <FormLabel required>Course Required</FormLabel>
               <Controller
                 name="interestedCourseId"
                 control={control}
@@ -416,19 +550,16 @@ export function LeadForm({
             </FormField>
 
             <FormField>
-              <FormLabel>Assigned Counselor</FormLabel>
+              <FormLabel required>Assigned Staff</FormLabel>
               <Controller
                 name="counselorId"
                 control={control}
                 render={({ field }) => (
                   <Select
-                    placeholder="Select counselor"
+                    placeholder="Select staff"
                     value={field.value || ''}
                     onChange={(e) => field.onChange(e.target.value || null)}
-                    options={[
-                      { value: '', label: 'Unassigned' },
-                      ...counselors.map((c) => ({ value: c.id, label: c.name })),
-                    ]}
+                    options={counselors.map((c) => ({ value: c.id, label: c.name }))}
                   />
                 )}
               />
@@ -436,13 +567,13 @@ export function LeadForm({
             </FormField>
 
             <FormField>
-              <FormLabel>Lead Source</FormLabel>
+              <FormLabel required>Source of Enquiry</FormLabel>
               <Controller
                 name="source"
                 control={control}
                 render={({ field }) => (
                   <Select
-                    placeholder="Select source"
+                    placeholder="Select source of enquiry"
                     value={field.value}
                     onChange={(e) => field.onChange(e.target.value)}
                     options={leadSourceOptions}
@@ -558,11 +689,24 @@ export function LeadForm({
                 </p>
               </div>
             </div>
-            {studentLookup.studentNumber && (
-              <div className="rounded-xl border border-[color:var(--ims-border)] bg-white px-3 py-2 text-sm font-semibold text-[color:var(--ims-ink)]">
-                Student #{studentLookup.studentNumber}
-              </div>
-            )}
+            <div className="flex items-center gap-2">
+              {studentLookup.studentProfileId && (
+                <a
+                  href={`/students/${studentLookup.studentProfileId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl border border-[color:var(--ims-border)] bg-white text-[color:var(--ims-ink)] hover:bg-slate-50 transition-colors shadow-sm"
+                >
+                  <ExternalLink className="h-3.5 w-3.5" />
+                  View Profile
+                </a>
+              )}
+              {studentLookup.studentNumber && (
+                <div className="rounded-xl border border-[color:var(--ims-border)] bg-white px-3 py-2 text-sm font-semibold text-[color:var(--ims-ink)]">
+                  Student #{studentLookup.studentNumber}
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -605,6 +749,76 @@ export function LeadForm({
               </div>
             </div>
           )}
+        </div>
+      )}
+
+      {showLookupModal && pendingStudentLookup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+          <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl p-6 space-y-5 animate-in fade-in zoom-in duration-200">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-full bg-amber-100 flex items-center justify-center">
+                <BadgeCheck className="h-5 w-5 text-amber-600" />
+              </div>
+              <div>
+                <h2 className="text-base font-semibold text-slate-800">Existing Student Profile Found</h2>
+                <p className="text-xs text-slate-500">
+                  A matching student profile was found for the entered details.
+                </p>
+              </div>
+            </div>
+
+            <div className="rounded-xl border border-slate-100 bg-slate-50 p-4 space-y-2">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h4 className="font-semibold text-slate-700">
+                    {pendingStudentLookup.firstNameMasked} {pendingStudentLookup.lastNameMasked}
+                  </h4>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Email: {pendingStudentLookup.maskedEmail || 'N/A'}
+                  </p>
+                  <p className="text-xs text-slate-500">
+                    Mobile: {pendingStudentLookup.maskedMobile || 'N/A'}
+                  </p>
+                </div>
+                {pendingStudentLookup.studentNumber && (
+                  <span className="inline-block rounded-lg bg-white border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-600">
+                    #{pendingStudentLookup.studentNumber}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <p className="text-sm text-slate-600 font-medium">
+              Do you want to link this lead to the existing student profile and proceed with displaying their detailed history in this form?
+            </p>
+
+            <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 pt-2 border-t border-slate-100">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleCancelLookup}
+              >
+                Cancel
+              </Button>
+              {pendingStudentLookup.studentProfileId && (
+                <a
+                  href={`/students/${pendingStudentLookup.studentProfileId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 transition-colors"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  View Profile
+                </a>
+              )}
+              <Button
+                type="button"
+                onClick={handleConfirmLookup}
+              >
+                Link & Proceed
+              </Button>
+            </div>
+          </div>
         </div>
       )}
 
