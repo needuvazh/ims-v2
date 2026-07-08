@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   GraduationCap,
@@ -23,16 +22,8 @@ import {
   Pagination,
   DataTableFilter,
   StatCard,
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-  DialogClose,
 } from '@ims/shared-ui';
-import { toast } from 'sonner';
-import { PricingPanel } from './pricing-panel';
+import Link from 'next/link';
 
 interface EnrollmentListItem {
   id: string;
@@ -97,108 +88,6 @@ export function EnrollmentsClientList({
   const router = useRouter();
   const totalPages = Math.ceil(total / 10);
 
-  // Enrollment Intake Modal State
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedAdmissionId, setSelectedAdmissionId] = useState('');
-  const [selectedBatchId, setSelectedBatchId] = useState('');
-  const [enrollmentType, setEnrollmentType] = useState<
-    'Regular' | 'Corporate' | 'Online'
-  >('Regular');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [pricingPreview, setPricingPreview] = useState<{
-    pricingSource: string;
-    resolvedPrice: string;
-    resolvedDiscount: string;
-    finalAmount: string;
-    paymentValidationRequired: boolean;
-    priceEvaluationTimestamp: string | null;
-  } | null>(null);
-  const [pricingLoading, setPricingLoading] = useState(false);
-  const [pricingError, setPricingError] = useState<string | null>(null);
-  const [promoInput, setPromoInput] = useState('');
-  const [appliedPromoCodes, setAppliedPromoCodes] = useState<string[]>([]);
-
-  const selectedAdmission = admissions.find(
-    (a) => a.id === selectedAdmissionId,
-  );
-  const filteredBatches = selectedAdmission
-    ? batches.filter((b) => b.courseId === selectedAdmission.courseId)
-    : [];
-
-  useEffect(() => {
-    let cancelled = false;
-    if (!selectedAdmission || !selectedBatchId) {
-      setPricingPreview(null);
-      setPricingError(null);
-      return;
-    }
-
-    const refreshPricing = async () => {
-      setPricingLoading(true);
-      setPricingError(null);
-
-      try {
-        const customerType =
-          enrollmentType === 'Corporate' ? 'Corporate' : 'Individual';
-        const promoQuery =
-          appliedPromoCodes.length > 0
-            ? `&promoCodes=${encodeURIComponent(appliedPromoCodes.join(','))}`
-            : '';
-        const response = await fetch(
-          `/api/v1/courses/${selectedAdmission.courseId}/pricing/resolve?customerType=${encodeURIComponent(customerType)}&branchId=${selectedAdmission.branchId}&batchId=${selectedBatchId}${promoQuery}`,
-        );
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.messageEnglish || 'Failed to resolve pricing.');
-        }
-
-        if (!cancelled) {
-          const resolvedDiscount = (data.data.applicableDiscounts ?? []).reduce(
-            (
-              sum: number,
-              discount: { discountValue: number; discountMode: string },
-            ) => {
-              const val =
-                discount.discountMode === 'Percentage'
-                  ? (Number(data.data.basePrice) * discount.discountValue) / 100
-                  : discount.discountValue;
-              return sum + val;
-            },
-            0,
-          );
-          const finalAmount = Number(data.data.totalPrice);
-          setPricingPreview({
-            pricingSource: data.data.pricingSource,
-            resolvedPrice: String(data.data.basePrice),
-            resolvedDiscount: String(resolvedDiscount),
-            finalAmount: String(Math.max(0, finalAmount - resolvedDiscount)),
-            paymentValidationRequired:
-              Math.max(0, finalAmount - resolvedDiscount) > 0,
-            priceEvaluationTimestamp: new Date().toISOString(),
-          });
-        }
-      } catch (error) {
-        if (!cancelled) {
-          setPricingPreview(null);
-          setPricingError(
-            (error as Error).message || 'Failed to resolve pricing.',
-          );
-        }
-      } finally {
-        if (!cancelled) {
-          setPricingLoading(false);
-        }
-      }
-    };
-
-    void refreshPricing();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [selectedAdmission, selectedBatchId, enrollmentType, appliedPromoCodes]);
-
   const filterConfigs = [
     {
       key: 'branchId',
@@ -225,49 +114,6 @@ export function EnrollmentsClientList({
       options: courses.map((c) => ({ value: c.id, label: c.name })),
     },
   ];
-
-  const handleCreateEnrollment = async () => {
-    if (!selectedAdmissionId) {
-      toast.error('Please select an approved admission profile.');
-      return;
-    }
-    if (!selectedBatchId) {
-      toast.error('Please select a batch assignment.');
-      return;
-    }
-    setIsSubmitting(true);
-    try {
-      const response = await fetch('/api/v1/enrollments', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          studentProfileId: selectedAdmission?.studentProfileId,
-          admissionId: selectedAdmissionId,
-          courseId: selectedAdmission?.courseId,
-          batchId: selectedBatchId,
-          enrollmentType,
-          promoCodes: appliedPromoCodes,
-        }),
-      });
-
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(
-          data.messageEnglish || 'Failed to initialize enrollment.',
-        );
-      }
-
-      toast.success('Enrollment initialized successfully!');
-      setIsOpen(false);
-      router.push(`/enrollments/${data.enrollmentId}`);
-    } catch (err: any) {
-      toast.error(err.message || 'Failed to initialize enrollment.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   const getStatusBadgeVariant = (s: string) => {
     switch (s) {
@@ -304,13 +150,14 @@ export function EnrollmentsClientList({
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Button
-            onClick={() => setIsOpen(true)}
-            className="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700"
-          >
-            <Plus className="h-4 w-4" />
-            New Enrollment
-          </Button>
+          <Link href="/enrollments/create">
+            <Button
+              className="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white"
+            >
+              <Plus className="h-4 w-4" />
+              New Enrollment
+            </Button>
+          </Link>
         </div>
       </div>
 
@@ -435,165 +282,6 @@ export function EnrollmentsClientList({
           limit={10}
         />
       )}
-
-      {/* New Enrollment Modal */}
-      <Dialog
-        open={isOpen}
-        onOpenChange={(open) => {
-          setIsOpen(open);
-          if (!open) {
-            setSelectedAdmissionId('');
-            setSelectedBatchId('');
-            setEnrollmentType('Regular');
-            setPromoInput('');
-            setAppliedPromoCodes([]);
-            setPricingPreview(null);
-            setPricingError(null);
-          }
-        }}
-      >
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Setup Student Enrollment</DialogTitle>
-            <DialogDescription>
-              Select an approved student admission, define enrollment channel,
-              and assign target learning batch.
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="space-y-4 py-4 text-sm">
-            <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700">
-                Approved Admission Profile
-              </label>
-              <select
-                value={selectedAdmissionId}
-                onChange={(e) => {
-                  setSelectedAdmissionId(e.target.value);
-                  setSelectedBatchId('');
-                }}
-                className="w-full h-10 rounded-lg border border-[color:var(--ims-border)] bg-[color:var(--ims-card)] px-3 text-sm focus:outline-none"
-              >
-                <option value="">-- Select Approved Student --</option>
-                {admissions.map((adm) => (
-                  <option key={adm.id} value={adm.id}>
-                    {adm.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700">
-                Enrollment Type
-              </label>
-              <select
-                value={enrollmentType}
-                onChange={(e) => setEnrollmentType(e.target.value as any)}
-                className="w-full h-10 rounded-lg border border-[color:var(--ims-border)] bg-[color:var(--ims-card)] px-3 text-sm focus:outline-none"
-              >
-                <option value="Regular">Regular (Individual)</option>
-                <option value="Corporate">Corporate Sourced</option>
-                <option value="Online">Online Intake</option>
-              </select>
-            </div>
-
-            <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700">
-                Promo Codes (Optional)
-              </label>
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  placeholder="e.g. WELCOME10, OMAN5"
-                  value={promoInput}
-                  onChange={(e) => setPromoInput(e.target.value)}
-                  className="flex-1 h-10 rounded-lg border border-[color:var(--ims-border)] bg-[color:var(--ims-card)] px-3 text-sm focus:outline-none"
-                />
-                <Button
-                  type="button"
-                  onClick={() => {
-                    const codes = promoInput
-                      .split(',')
-                      .map((s) => s.trim())
-                      .filter(Boolean);
-                    setAppliedPromoCodes(codes);
-                  }}
-                  variant="outline"
-                  className="h-10 text-xs font-medium border-slate-300 hover:bg-slate-50"
-                >
-                  Apply
-                </Button>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              {pricingLoading && (
-                <p className="text-xs text-slate-500">
-                  Resolving pricing snapshot…
-                </p>
-              )}
-              {pricingError && (
-                <p className="text-xs text-rose-600">{pricingError}</p>
-              )}
-              {pricingPreview && (
-                <PricingPanel
-                  pricingSource={pricingPreview.pricingSource}
-                  resolvedPrice={pricingPreview.resolvedPrice}
-                  resolvedDiscount={pricingPreview.resolvedDiscount}
-                  finalAmount={pricingPreview.finalAmount}
-                  paymentValidationRequired={
-                    pricingPreview.paymentValidationRequired
-                  }
-                  priceEvaluationTimestamp={
-                    pricingPreview.priceEvaluationTimestamp
-                  }
-                />
-              )}
-            </div>
-
-            <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700">
-                Target Learning Batch
-              </label>
-              <select
-                value={selectedBatchId}
-                disabled={!selectedAdmissionId || filteredBatches.length === 0}
-                onChange={(e) => setSelectedBatchId(e.target.value)}
-                className="w-full h-10 rounded-lg border border-[color:var(--ims-border)] bg-[color:var(--ims-card)] px-3 text-sm focus:outline-none disabled:bg-slate-50 disabled:text-slate-400"
-              >
-                <option value="">
-                  {!selectedAdmissionId
-                    ? '-- Select Student Admission First --'
-                    : filteredBatches.length === 0
-                      ? '-- No Active Batches for this Course --'
-                      : '-- Choose Batch --'}
-                </option>
-                {filteredBatches.map((b) => (
-                  <option key={b.id} value={b.id}>
-                    {b.code}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-            <Button
-              onClick={handleCreateEnrollment}
-              disabled={
-                isSubmitting || !selectedAdmissionId || !selectedBatchId
-              }
-              className="bg-indigo-600 text-white hover:bg-indigo-700"
-            >
-              {isSubmitting ? 'Initializing...' : 'Create Enrollment'}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
