@@ -1,1 +1,1471 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md", "label": "Part 4 \u2013 Database Entities and CRUD Matrix.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "label": "Part 4 \u2013 Database Entities and CRUD Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_module_09_faculty_trainer_management", "label": "Module 09 \u2013 Faculty / Trainer Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L3"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_1_purpose", "label": "1. Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L14"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_persistence_conventions", "label": "2. Persistence Conventions", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L41"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_1_primary_keys", "label": "2.1 Primary Keys", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L43"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_2_audit_columns", "label": "2.2 Audit Columns", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L53"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_3_effective_dating_convention", "label": "2.3 Effective-Dating Convention", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L81"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_4_soft_delete", "label": "2.4 Soft Delete", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L111"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_5_foreign_key_delete_policy", "label": "2.5 Foreign-Key Delete Policy", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L127"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_6_query_invariant", "label": "2.6 Query Invariant", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L142"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_enumerations", "label": "3. Enumerations", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L154"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_1_trainertype", "label": "3.1 `TrainerType`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L156"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_2_trainerstatus", "label": "3.2 `TrainerStatus`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L166"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_3_dayofweek", "label": "3.3 `DayOfWeek`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L188"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_4_traineravailabilitystatus", "label": "3.4 `TrainerAvailabilityStatus`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L204"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_5_trainercourseauthorizationstatus", "label": "3.5 `TrainerCourseAuthorizationStatus`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L215"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_6_trainercompensationratestatus", "label": "3.6 `TrainerCompensationRateStatus`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L240"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_7_trainerpaymentbasis", "label": "3.7 `TrainerPaymentBasis`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L249"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_entity_specifications", "label": "4. Entity Specifications", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L264"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_trainerprofile", "label": "4.1 `TrainerProfile`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L266"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_1_purpose", "label": "4.1.1 Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L268"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_2_field_specification", "label": "4.1.2 Field Specification", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L272"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_3_indexes", "label": "4.1.3 Indexes", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L294"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_4_constraints", "label": "4.1.4 Constraints", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L321"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_5_prisma_model_shape", "label": "4.1.5 Prisma Model Shape", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L333"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_trainerqualification", "label": "4.2 `TrainerQualification`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L376"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_1_purpose", "label": "4.2.1 Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L378"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_2_field_specification", "label": "4.2.2 Field Specification", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L382"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_3_indexes", "label": "4.2.3 Indexes", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L400"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_4_constraints", "label": "4.2.4 Constraints", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L425"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_5_prisma_model_shape", "label": "4.2.5 Prisma Model Shape", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L434"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_traineravailability", "label": "4.3 `TrainerAvailability`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L467"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_1_purpose", "label": "4.3.1 Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L469"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_2_field_specification", "label": "4.3.2 Field Specification", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L473"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_3_indexes", "label": "4.3.3 Indexes", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L494"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_4_constraints", "label": "4.3.4 Constraints", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L517"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_5_overlap_predicate", "label": "4.3.5 Overlap Predicate", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L529"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_6_prisma_model_shape", "label": "4.3.6 Prisma Model Shape", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L549"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_trainercourseauthorization", "label": "4.4 `TrainerCourseAuthorization`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L582"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_1_purpose", "label": "4.4.1 Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L584"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_2_field_specification", "label": "4.4.2 Field Specification", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L588"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_3_indexes", "label": "4.4.3 Indexes", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L606"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_4_constraints", "label": "4.4.4 Constraints", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L632"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_5_prisma_model_shape", "label": "4.4.5 Prisma Model Shape", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L644"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_trainercompensationrate", "label": "4.5 `TrainerCompensationRate`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L675"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_1_purpose", "label": "4.5.1 Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L677"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_2_field_specification", "label": "4.5.2 Field Specification", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L691"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_3_specificity_constraint", "label": "4.5.3 Specificity Constraint", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L713"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_4_indexes", "label": "4.5.4 Indexes", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L741"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_5_constraints", "label": "4.5.5 Constraints", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L769"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_6_prisma_model_shape", "label": "4.5.6 Prisma Model Shape", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L786"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_relationship_model", "label": "5. Relationship Model", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L822"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_1_context_owned_relationships", "label": "5.1 Context-Owned Relationships", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L824"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_2_external_reference_relationships", "label": "5.2 External Reference Relationships", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L833"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_3_conceptual_n_m_relationships", "label": "5.3 Conceptual N:M Relationships", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L846"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_trainer_course", "label": "Trainer \u2194 Course", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L850"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_trainer_batch_and_session", "label": "Trainer \u2194 Batch and Session", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L873"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_4_cascading_policy_summary", "label": "5.4 Cascading Policy Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L877"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_recommended_transaction_boundaries", "label": "6. Recommended Transaction Boundaries", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L891"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_1_create_trainer_profile", "label": "6.1 Create Trainer Profile", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L893"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_2_availability_mutation", "label": "6.2 Availability Mutation", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L908"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_3_course_authorization_mutation", "label": "6.3 Course Authorization Mutation", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L920"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_4_compensation_rate_mutation", "label": "6.4 Compensation Rate Mutation", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L933"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_7_crud_action_definitions", "label": "7. CRUD Action Definitions", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L950"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_8_human_actor_crud_matrix", "label": "8. Human Actor CRUD Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L968"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_8_1_core_human_roles", "label": "8.1 Core Human Roles", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L970"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_8_1_1_human_actor_notes", "label": "8.1.1 Human Actor Notes", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L988"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_9_system_actor_crud_matrix", "label": "9. System Actor CRUD Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L999"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_10_fine_grained_crud_permission_mapping", "label": "10. Fine-Grained CRUD Permission Mapping", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1022"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_branch_scoping_rules_by_entity", "label": "11. Branch-Scoping Rules by Entity", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1042"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_1_trainerprofile", "label": "11.1 `TrainerProfile`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1044"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_2_trainerqualification", "label": "11.2 `TrainerQualification`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1060"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_3_traineravailability", "label": "11.3 `TrainerAvailability`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1072"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_4_trainercourseauthorization", "label": "11.4 `TrainerCourseAuthorization`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1090"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_5_trainercompensationrate", "label": "11.5 `TrainerCompensationRate`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1100"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_database_constraints_and_migration_requirements", "label": "12. Database Constraints and Migration Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1122"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_1_required_sql_level_checks", "label": "12.1 Required SQL-Level Checks", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1124"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_2_partial_index_migration_requirement", "label": "12.2 Partial Index Migration Requirement", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1172"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_3_overlap_enforcement", "label": "12.3 Overlap Enforcement", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1183"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_read_models_and_query_projections", "label": "13. Read Models and Query Projections", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1202"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_1_trainer_directory_projection", "label": "13.1 Trainer Directory Projection", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1206"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_2_trainer_eligibility_projection", "label": "13.2 Trainer Eligibility Projection", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1219"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_3_compensation_resolution_projection", "label": "13.3 Compensation Resolution Projection", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1237"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_14_referential_integrity_and_deactivation_rules", "label": "14. Referential Integrity and Deactivation Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1256"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_14_1_trainer_soft_delete_precheck", "label": "14.1 Trainer Soft Delete Precheck", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1258"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_14_2_branch_reassignment", "label": "14.2 Branch Reassignment", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1275"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_15_audit_matrix_by_entity_and_operation", "label": "15. Audit Matrix by Entity and Operation", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1288"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_16_data_retention_and_historical_query_behavior", "label": "16. Data Retention and Historical Query Behavior", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1305"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_17_entity_to_requirement_traceability", "label": "17. Entity-to-Requirement Traceability", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1316"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_18_database_acceptance_checklist", "label": "18. Database Acceptance Checklist", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1328"}, {"id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_19_final_persistence_boundary", "label": "19. Final Persistence Boundary", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1359"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_module_09_faculty_trainer_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L3", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L14", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_persistence_conventions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L41", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_persistence_conventions", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_1_primary_keys", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L43", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_persistence_conventions", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_2_audit_columns", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L53", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_persistence_conventions", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_3_effective_dating_convention", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L81", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_persistence_conventions", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_4_soft_delete", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L111", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_persistence_conventions", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_5_foreign_key_delete_policy", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L127", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_persistence_conventions", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_6_query_invariant", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L142", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_enumerations", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L154", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_enumerations", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_1_trainertype", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L156", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_enumerations", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_2_trainerstatus", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L166", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_enumerations", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_3_dayofweek", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L188", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_enumerations", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_4_traineravailabilitystatus", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L204", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_enumerations", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_5_trainercourseauthorizationstatus", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L215", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_enumerations", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_6_trainercompensationratestatus", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L240", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_enumerations", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_7_trainerpaymentbasis", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L249", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_entity_specifications", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L264", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_entity_specifications", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_trainerprofile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L266", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_trainerprofile", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L268", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_trainerprofile", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_2_field_specification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L272", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_trainerprofile", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_3_indexes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L294", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_trainerprofile", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_4_constraints", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L321", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_trainerprofile", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_5_prisma_model_shape", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L333", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_entity_specifications", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_trainerqualification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L376", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_trainerqualification", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L378", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_trainerqualification", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_2_field_specification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L382", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_trainerqualification", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_3_indexes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L400", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_trainerqualification", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_4_constraints", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L425", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_trainerqualification", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_5_prisma_model_shape", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L434", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_entity_specifications", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_traineravailability", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L467", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_traineravailability", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L469", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_traineravailability", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_2_field_specification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L473", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_traineravailability", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_3_indexes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L494", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_traineravailability", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_4_constraints", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L517", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_traineravailability", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_5_overlap_predicate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L529", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_traineravailability", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_6_prisma_model_shape", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L549", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_entity_specifications", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_trainercourseauthorization", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L582", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_trainercourseauthorization", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L584", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_trainercourseauthorization", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_2_field_specification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L588", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_trainercourseauthorization", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_3_indexes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L606", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_trainercourseauthorization", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_4_constraints", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L632", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_trainercourseauthorization", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_5_prisma_model_shape", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L644", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_entity_specifications", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_trainercompensationrate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L675", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_trainercompensationrate", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L677", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_trainercompensationrate", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_2_field_specification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L691", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_trainercompensationrate", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_3_specificity_constraint", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L713", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_trainercompensationrate", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_4_indexes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L741", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_trainercompensationrate", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_5_constraints", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L769", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_trainercompensationrate", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_6_prisma_model_shape", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L786", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_relationship_model", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L822", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_relationship_model", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_1_context_owned_relationships", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L824", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_relationship_model", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_2_external_reference_relationships", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L833", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_relationship_model", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_3_conceptual_n_m_relationships", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L846", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_3_conceptual_n_m_relationships", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_trainer_course", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L850", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_3_conceptual_n_m_relationships", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_trainer_batch_and_session", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L873", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_relationship_model", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_4_cascading_policy_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L877", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_recommended_transaction_boundaries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L891", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_recommended_transaction_boundaries", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_1_create_trainer_profile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L893", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_recommended_transaction_boundaries", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_2_availability_mutation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L908", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_recommended_transaction_boundaries", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_3_course_authorization_mutation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L920", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_recommended_transaction_boundaries", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_4_compensation_rate_mutation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L933", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_7_crud_action_definitions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L950", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_8_human_actor_crud_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L968", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_8_human_actor_crud_matrix", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_8_1_core_human_roles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L970", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_8_1_core_human_roles", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_8_1_1_human_actor_notes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L988", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_9_system_actor_crud_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L999", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_10_fine_grained_crud_permission_mapping", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1022", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_branch_scoping_rules_by_entity", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1042", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_branch_scoping_rules_by_entity", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_1_trainerprofile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1044", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_branch_scoping_rules_by_entity", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_2_trainerqualification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1060", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_branch_scoping_rules_by_entity", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_3_traineravailability", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1072", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_branch_scoping_rules_by_entity", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_4_trainercourseauthorization", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1090", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_branch_scoping_rules_by_entity", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_5_trainercompensationrate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1100", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_database_constraints_and_migration_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1122", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_database_constraints_and_migration_requirements", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_1_required_sql_level_checks", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1124", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_database_constraints_and_migration_requirements", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_2_partial_index_migration_requirement", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1172", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_database_constraints_and_migration_requirements", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_3_overlap_enforcement", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1183", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_read_models_and_query_projections", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1202", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_read_models_and_query_projections", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_1_trainer_directory_projection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1206", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_read_models_and_query_projections", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_2_trainer_eligibility_projection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1219", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_read_models_and_query_projections", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_3_compensation_resolution_projection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1237", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_14_referential_integrity_and_deactivation_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1256", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_14_referential_integrity_and_deactivation_rules", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_14_1_trainer_soft_delete_precheck", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1258", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_14_referential_integrity_and_deactivation_rules", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_14_2_branch_reassignment", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1275", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_15_audit_matrix_by_entity_and_operation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1288", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_16_data_retention_and_historical_query_behavior", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1305", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_17_entity_to_requirement_traceability", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1316", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_18_database_acceptance_checklist", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1328", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md", "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_19_final_persistence_boundary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1359", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md",
+      "label": "Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "label": "Part 4 \u2013 Database Entities and CRUD Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_module_09_faculty_trainer_management",
+      "label": "Module 09 \u2013 Faculty / Trainer Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_1_purpose",
+      "label": "1. Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L14"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_persistence_conventions",
+      "label": "2. Persistence Conventions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L41"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_1_primary_keys",
+      "label": "2.1 Primary Keys",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L43"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_2_audit_columns",
+      "label": "2.2 Audit Columns",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L53"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_3_effective_dating_convention",
+      "label": "2.3 Effective-Dating Convention",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L81"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_4_soft_delete",
+      "label": "2.4 Soft Delete",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L111"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_5_foreign_key_delete_policy",
+      "label": "2.5 Foreign-Key Delete Policy",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L127"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_6_query_invariant",
+      "label": "2.6 Query Invariant",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L142"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_enumerations",
+      "label": "3. Enumerations",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L154"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_1_trainertype",
+      "label": "3.1 `TrainerType`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L156"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_2_trainerstatus",
+      "label": "3.2 `TrainerStatus`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L166"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_3_dayofweek",
+      "label": "3.3 `DayOfWeek`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L188"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_4_traineravailabilitystatus",
+      "label": "3.4 `TrainerAvailabilityStatus`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L204"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_5_trainercourseauthorizationstatus",
+      "label": "3.5 `TrainerCourseAuthorizationStatus`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L215"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_6_trainercompensationratestatus",
+      "label": "3.6 `TrainerCompensationRateStatus`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L240"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_7_trainerpaymentbasis",
+      "label": "3.7 `TrainerPaymentBasis`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L249"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_entity_specifications",
+      "label": "4. Entity Specifications",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L264"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_trainerprofile",
+      "label": "4.1 `TrainerProfile`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L266"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_1_purpose",
+      "label": "4.1.1 Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L268"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_2_field_specification",
+      "label": "4.1.2 Field Specification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L272"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_3_indexes",
+      "label": "4.1.3 Indexes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L294"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_4_constraints",
+      "label": "4.1.4 Constraints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L321"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_5_prisma_model_shape",
+      "label": "4.1.5 Prisma Model Shape",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L333"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_trainerqualification",
+      "label": "4.2 `TrainerQualification`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L376"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_1_purpose",
+      "label": "4.2.1 Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L378"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_2_field_specification",
+      "label": "4.2.2 Field Specification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L382"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_3_indexes",
+      "label": "4.2.3 Indexes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L400"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_4_constraints",
+      "label": "4.2.4 Constraints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L425"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_5_prisma_model_shape",
+      "label": "4.2.5 Prisma Model Shape",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L434"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_traineravailability",
+      "label": "4.3 `TrainerAvailability`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L467"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_1_purpose",
+      "label": "4.3.1 Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L469"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_2_field_specification",
+      "label": "4.3.2 Field Specification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L473"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_3_indexes",
+      "label": "4.3.3 Indexes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L494"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_4_constraints",
+      "label": "4.3.4 Constraints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L517"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_5_overlap_predicate",
+      "label": "4.3.5 Overlap Predicate",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L529"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_6_prisma_model_shape",
+      "label": "4.3.6 Prisma Model Shape",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L549"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_trainercourseauthorization",
+      "label": "4.4 `TrainerCourseAuthorization`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L582"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_1_purpose",
+      "label": "4.4.1 Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L584"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_2_field_specification",
+      "label": "4.4.2 Field Specification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L588"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_3_indexes",
+      "label": "4.4.3 Indexes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L606"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_4_constraints",
+      "label": "4.4.4 Constraints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L632"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_5_prisma_model_shape",
+      "label": "4.4.5 Prisma Model Shape",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L644"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_trainercompensationrate",
+      "label": "4.5 `TrainerCompensationRate`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L675"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_1_purpose",
+      "label": "4.5.1 Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L677"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_2_field_specification",
+      "label": "4.5.2 Field Specification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L691"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_3_specificity_constraint",
+      "label": "4.5.3 Specificity Constraint",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L713"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_4_indexes",
+      "label": "4.5.4 Indexes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L741"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_5_constraints",
+      "label": "4.5.5 Constraints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L769"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_6_prisma_model_shape",
+      "label": "4.5.6 Prisma Model Shape",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L786"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_relationship_model",
+      "label": "5. Relationship Model",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L822"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_1_context_owned_relationships",
+      "label": "5.1 Context-Owned Relationships",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L824"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_2_external_reference_relationships",
+      "label": "5.2 External Reference Relationships",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L833"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_3_conceptual_n_m_relationships",
+      "label": "5.3 Conceptual N:M Relationships",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L846"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_trainer_course",
+      "label": "Trainer \u2194 Course",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L850"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_trainer_batch_and_session",
+      "label": "Trainer \u2194 Batch and Session",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L873"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_4_cascading_policy_summary",
+      "label": "5.4 Cascading Policy Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L877"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_recommended_transaction_boundaries",
+      "label": "6. Recommended Transaction Boundaries",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L891"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_1_create_trainer_profile",
+      "label": "6.1 Create Trainer Profile",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L893"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_2_availability_mutation",
+      "label": "6.2 Availability Mutation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L908"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_3_course_authorization_mutation",
+      "label": "6.3 Course Authorization Mutation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L920"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_4_compensation_rate_mutation",
+      "label": "6.4 Compensation Rate Mutation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L933"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_7_crud_action_definitions",
+      "label": "7. CRUD Action Definitions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L950"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_8_human_actor_crud_matrix",
+      "label": "8. Human Actor CRUD Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L968"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_8_1_core_human_roles",
+      "label": "8.1 Core Human Roles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L970"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_8_1_1_human_actor_notes",
+      "label": "8.1.1 Human Actor Notes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L988"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_9_system_actor_crud_matrix",
+      "label": "9. System Actor CRUD Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L999"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_10_fine_grained_crud_permission_mapping",
+      "label": "10. Fine-Grained CRUD Permission Mapping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1022"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_branch_scoping_rules_by_entity",
+      "label": "11. Branch-Scoping Rules by Entity",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1042"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_1_trainerprofile",
+      "label": "11.1 `TrainerProfile`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1044"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_2_trainerqualification",
+      "label": "11.2 `TrainerQualification`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1060"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_3_traineravailability",
+      "label": "11.3 `TrainerAvailability`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1072"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_4_trainercourseauthorization",
+      "label": "11.4 `TrainerCourseAuthorization`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1090"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_5_trainercompensationrate",
+      "label": "11.5 `TrainerCompensationRate`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1100"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_database_constraints_and_migration_requirements",
+      "label": "12. Database Constraints and Migration Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1122"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_1_required_sql_level_checks",
+      "label": "12.1 Required SQL-Level Checks",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1124"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_2_partial_index_migration_requirement",
+      "label": "12.2 Partial Index Migration Requirement",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1172"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_3_overlap_enforcement",
+      "label": "12.3 Overlap Enforcement",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1183"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_read_models_and_query_projections",
+      "label": "13. Read Models and Query Projections",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1202"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_1_trainer_directory_projection",
+      "label": "13.1 Trainer Directory Projection",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1206"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_2_trainer_eligibility_projection",
+      "label": "13.2 Trainer Eligibility Projection",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1219"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_3_compensation_resolution_projection",
+      "label": "13.3 Compensation Resolution Projection",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1237"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_14_referential_integrity_and_deactivation_rules",
+      "label": "14. Referential Integrity and Deactivation Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1256"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_14_1_trainer_soft_delete_precheck",
+      "label": "14.1 Trainer Soft Delete Precheck",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1258"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_14_2_branch_reassignment",
+      "label": "14.2 Branch Reassignment",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1275"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_15_audit_matrix_by_entity_and_operation",
+      "label": "15. Audit Matrix by Entity and Operation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1288"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_16_data_retention_and_historical_query_behavior",
+      "label": "16. Data Retention and Historical Query Behavior",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1305"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_17_entity_to_requirement_traceability",
+      "label": "17. Entity-to-Requirement Traceability",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1316"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_18_database_acceptance_checklist",
+      "label": "18. Database Acceptance Checklist",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1328"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_19_final_persistence_boundary",
+      "label": "19. Final Persistence Boundary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1359"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_module_09_faculty_trainer_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_persistence_conventions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_persistence_conventions",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_1_primary_keys",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_persistence_conventions",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_2_audit_columns",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L53",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_persistence_conventions",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_3_effective_dating_convention",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L81",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_persistence_conventions",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_4_soft_delete",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L111",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_persistence_conventions",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_5_foreign_key_delete_policy",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L127",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_persistence_conventions",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_2_6_query_invariant",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L142",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_enumerations",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L154",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_enumerations",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_1_trainertype",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L156",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_enumerations",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_2_trainerstatus",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L166",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_enumerations",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_3_dayofweek",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L188",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_enumerations",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_4_traineravailabilitystatus",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L204",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_enumerations",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_5_trainercourseauthorizationstatus",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L215",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_enumerations",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_6_trainercompensationratestatus",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L240",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_enumerations",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_3_7_trainerpaymentbasis",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L249",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_entity_specifications",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L264",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_entity_specifications",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_trainerprofile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L266",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_trainerprofile",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L268",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_trainerprofile",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_2_field_specification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L272",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_trainerprofile",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_3_indexes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L294",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_trainerprofile",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_4_constraints",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L321",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_trainerprofile",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_1_5_prisma_model_shape",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L333",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_entity_specifications",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_trainerqualification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L376",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_trainerqualification",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L378",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_trainerqualification",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_2_field_specification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L382",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_trainerqualification",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_3_indexes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L400",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_trainerqualification",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_4_constraints",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L425",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_trainerqualification",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_2_5_prisma_model_shape",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L434",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_entity_specifications",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_traineravailability",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L467",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_traineravailability",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L469",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_traineravailability",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_2_field_specification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L473",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_traineravailability",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_3_indexes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L494",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_traineravailability",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_4_constraints",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L517",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_traineravailability",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_5_overlap_predicate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L529",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_traineravailability",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_3_6_prisma_model_shape",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L549",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_entity_specifications",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_trainercourseauthorization",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L582",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_trainercourseauthorization",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L584",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_trainercourseauthorization",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_2_field_specification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L588",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_trainercourseauthorization",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_3_indexes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L606",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_trainercourseauthorization",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_4_constraints",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L632",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_trainercourseauthorization",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_4_5_prisma_model_shape",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L644",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_entity_specifications",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_trainercompensationrate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L675",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_trainercompensationrate",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L677",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_trainercompensationrate",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_2_field_specification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L691",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_trainercompensationrate",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_3_specificity_constraint",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L713",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_trainercompensationrate",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_4_indexes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L741",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_trainercompensationrate",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_5_constraints",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L769",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_trainercompensationrate",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_4_5_6_prisma_model_shape",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L786",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_relationship_model",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L822",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_relationship_model",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_1_context_owned_relationships",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L824",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_relationship_model",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_2_external_reference_relationships",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L833",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_relationship_model",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_3_conceptual_n_m_relationships",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L846",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_3_conceptual_n_m_relationships",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_trainer_course",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L850",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_3_conceptual_n_m_relationships",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_trainer_batch_and_session",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L873",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_relationship_model",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_5_4_cascading_policy_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L877",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_recommended_transaction_boundaries",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L891",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_recommended_transaction_boundaries",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_1_create_trainer_profile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L893",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_recommended_transaction_boundaries",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_2_availability_mutation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L908",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_recommended_transaction_boundaries",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_3_course_authorization_mutation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L920",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_recommended_transaction_boundaries",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_6_4_compensation_rate_mutation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L933",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_7_crud_action_definitions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L950",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_8_human_actor_crud_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L968",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_8_human_actor_crud_matrix",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_8_1_core_human_roles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L970",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_8_1_core_human_roles",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_8_1_1_human_actor_notes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L988",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_9_system_actor_crud_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L999",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_10_fine_grained_crud_permission_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1022",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_branch_scoping_rules_by_entity",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1042",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_branch_scoping_rules_by_entity",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_1_trainerprofile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1044",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_branch_scoping_rules_by_entity",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_2_trainerqualification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1060",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_branch_scoping_rules_by_entity",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_3_traineravailability",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1072",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_branch_scoping_rules_by_entity",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_4_trainercourseauthorization",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1090",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_branch_scoping_rules_by_entity",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_11_5_trainercompensationrate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1100",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_database_constraints_and_migration_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1122",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_database_constraints_and_migration_requirements",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_1_required_sql_level_checks",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1124",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_database_constraints_and_migration_requirements",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_2_partial_index_migration_requirement",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1172",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_database_constraints_and_migration_requirements",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_12_3_overlap_enforcement",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1183",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_read_models_and_query_projections",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1202",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_read_models_and_query_projections",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_1_trainer_directory_projection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1206",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_read_models_and_query_projections",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_2_trainer_eligibility_projection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1219",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_read_models_and_query_projections",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_13_3_compensation_resolution_projection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1237",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_14_referential_integrity_and_deactivation_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1256",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_14_referential_integrity_and_deactivation_rules",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_14_1_trainer_soft_delete_precheck",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1258",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_14_referential_integrity_and_deactivation_rules",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_14_2_branch_reassignment",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1275",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_15_audit_matrix_by_entity_and_operation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1288",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_16_data_retention_and_historical_query_behavior",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1305",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_17_entity_to_requirement_traceability",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1316",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_18_database_acceptance_checklist",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1328",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_09_faculty_trainer_management_part_4_database_entities_and_crud_matrix_19_final_persistence_boundary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1359",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

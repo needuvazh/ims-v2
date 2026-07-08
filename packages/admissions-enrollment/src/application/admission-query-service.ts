@@ -9,11 +9,22 @@ export class AdmissionQueryService {
       where: { id: admissionId },
       include: {
         person: true,
-        studentProfile: true,
+        studentProfile: {
+          include: {
+            enrollments: {
+              where: { isDeleted: false },
+              include: {
+                course: true,
+                batch: true,
+                branch: true,
+              },
+            },
+          },
+        },
         branch: true,
         course: true,
         lead: true,
-      }
+      },
     });
 
     if (!admission || admission.isDeleted) {
@@ -31,15 +42,15 @@ export class AdmissionQueryService {
         entityType: 'Admission',
       },
       orderBy: {
-        performedAt: 'asc'
-      }
+        performedAt: 'asc',
+      },
     });
 
     // Resolve required documents list using the resolver
     const resolver = new RequirementsResolver(this.prisma);
     const requiredDocTypes = await resolver.getRequiredDocuments(
       admission.courseId,
-      admission.branchId
+      admission.branchId,
     );
 
     // Fetch documents linked to the Person
@@ -102,6 +113,7 @@ export class AdmissionQueryService {
           status: admission.studentProfile?.status,
           idCardNumber: admission.studentProfile?.idCardNumber,
           idCardIssued: admission.studentProfile?.idCardIssued,
+          enrollments: (admission.studentProfile as any)?.enrollments || [],
         },
         person: {
           id: admission.personId,
@@ -120,7 +132,7 @@ export class AdmissionQueryService {
         performedAt: log.performedAt,
         oldValue: log.oldValue as Record<string, any> | null,
         newValue: log.newValue as Record<string, any> | null,
-      }))
+      })),
     };
   }
 }

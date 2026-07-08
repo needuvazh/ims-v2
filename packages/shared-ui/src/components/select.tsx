@@ -1,6 +1,12 @@
 'use client';
 
-import { forwardRef, type SelectHTMLAttributes, useId, useState, useRef } from 'react';
+import {
+  forwardRef,
+  type SelectHTMLAttributes,
+  useId,
+  useState,
+  useRef,
+} from 'react';
 import { ChevronDown, Search, Check } from 'lucide-react';
 import { cn } from '../utils/cn';
 import * as Popover from '@radix-ui/react-popover';
@@ -11,7 +17,10 @@ export interface SelectOption {
   disabled?: boolean;
 }
 
-export interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'onChange' | 'value' | 'defaultValue'> {
+export interface SelectProps extends Omit<
+  SelectHTMLAttributes<HTMLSelectElement>,
+  'onChange' | 'value' | 'defaultValue'
+> {
   label?: string;
   placeholder?: string;
   options: SelectOption[];
@@ -25,7 +34,22 @@ export interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement
 
 const Select = forwardRef<HTMLSelectElement, SelectProps>(
   (
-    { className, label, placeholder, options, helperText, errorText, id, required, disabled, value: controlledValue, defaultValue, onChange, onValueChange, ...props },
+    {
+      className,
+      label,
+      placeholder,
+      options,
+      helperText,
+      errorText,
+      id,
+      required,
+      disabled,
+      value: controlledValue,
+      defaultValue,
+      onChange,
+      onValueChange,
+      ...props
+    },
     ref,
   ) => {
     const generatedId = useId();
@@ -35,7 +59,9 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
     const hasError = Boolean(errorText);
 
     const isControlled = controlledValue !== undefined;
-    const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue ?? '');
+    const [uncontrolledValue, setUncontrolledValue] = useState(
+      defaultValue ?? '',
+    );
     const value = isControlled ? controlledValue : uncontrolledValue;
 
     // Sync uncontrolled value if defaultValue changes (e.g., when React reuses the component instance)
@@ -59,10 +85,12 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
       }
     };
 
-    const selectedOption = options.find((opt) => String(opt.value) === String(value));
+    const selectedOption = options.find(
+      (opt) => String(opt.value) === String(value),
+    );
 
     const filteredOptions = options.filter((opt) =>
-      opt.label.toLowerCase().includes(searchQuery.toLowerCase())
+      opt.label.toLowerCase().includes(searchQuery.toLowerCase()),
     );
 
     const handleSelect = (selectedValue: string) => {
@@ -85,14 +113,22 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <div className="flex w-full flex-col gap-1.5">
         {label && (
-          <label htmlFor={selectId} className="text-sm font-medium text-[color:var(--ims-ink)]">
+          <label
+            htmlFor={selectId}
+            className="text-sm font-medium text-[color:var(--ims-ink)]"
+          >
             {label}
             {required && (
-              <span className="ml-1 text-[color:var(--ims-error)]" aria-hidden="true">*</span>
+              <span
+                className="ml-1 text-[color:var(--ims-error)]"
+                aria-hidden="true"
+              >
+                *
+              </span>
             )}
           </label>
         )}
-        
+
         <div className="relative">
           <Popover.Root open={open} onOpenChange={setOpen}>
             <Popover.Trigger asChild>
@@ -100,16 +136,21 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
                 type="button"
                 disabled={disabled}
                 aria-invalid={hasError}
-                aria-describedby={hasError ? errorId : helperText ? helperId : undefined}
+                aria-describedby={
+                  hasError ? errorId : helperText ? helperId : undefined
+                }
                 className={cn(
                   'flex h-11 w-full items-center justify-between rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] px-4 text-sm text-[color:var(--ims-ink)] shadow-[0_8px_24px_rgba(16,36,58,0.04)] outline-none transition-all focus:border-[color:var(--ims-brass)] focus:ring-2 focus:ring-[color:var(--ims-brass-soft)] disabled:cursor-not-allowed disabled:opacity-50 text-left',
-                  hasError && 'border-[color:var(--ims-error)] focus:ring-[rgba(185,28,28,0.2)]',
+                  hasError &&
+                    'border-[color:var(--ims-error)] focus:ring-[rgba(185,28,28,0.2)]',
                   !selectedOption && 'text-[color:var(--ims-muted)]',
                   className,
                 )}
               >
                 <span className="truncate">
-                  {selectedOption ? selectedOption.label : placeholder || 'Select an option'}
+                  {selectedOption
+                    ? selectedOption.label
+                    : placeholder || 'Select an option'}
                 </span>
                 <ChevronDown
                   className="h-4 w-4 text-[color:var(--ims-muted)] flex-shrink-0 ml-2"
@@ -117,7 +158,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
                 />
               </button>
             </Popover.Trigger>
-            
+
             <Popover.Portal>
               <Popover.Content
                 align="start"
@@ -160,10 +201,11 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
                         }}
                         className={cn(
                           'relative flex w-full cursor-default select-none items-center rounded-lg py-2 pl-8 pr-2 text-sm outline-none transition-colors',
-                          option.disabled 
+                          option.disabled
                             ? 'opacity-50 cursor-not-allowed'
                             : 'cursor-pointer hover:bg-[color:var(--ims-background)] hover:text-[color:var(--ims-ink)]',
-                          String(value) === String(option.value) && 'bg-[color:var(--ims-background)] font-medium'
+                          String(value) === String(option.value) &&
+                            'bg-[color:var(--ims-background)] font-medium',
                         )}
                       >
                         {String(value) === String(option.value) && (
@@ -196,9 +238,17 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
             aria-hidden="true"
             {...props}
           >
-            {placeholder && <option value="" disabled>{placeholder}</option>}
+            {placeholder && (
+              <option value="" disabled>
+                {placeholder}
+              </option>
+            )}
             {options.map((option) => (
-              <option key={option.value} value={option.value} disabled={option.disabled}>
+              <option
+                key={option.value}
+                value={option.value}
+                disabled={option.disabled}
+              >
                 {option.label}
               </option>
             ))}
@@ -206,10 +256,18 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
         </div>
 
         {helperText && !hasError && (
-          <p id={helperId} className="text-xs text-[color:var(--ims-muted)]">{helperText}</p>
+          <p id={helperId} className="text-xs text-[color:var(--ims-muted)]">
+            {helperText}
+          </p>
         )}
         {hasError && (
-          <p id={errorId} role="alert" className="text-xs text-[color:var(--ims-error)]">{errorText}</p>
+          <p
+            id={errorId}
+            role="alert"
+            className="text-xs text-[color:var(--ims-error)]"
+          >
+            {errorText}
+          </p>
         )}
       </div>
     );

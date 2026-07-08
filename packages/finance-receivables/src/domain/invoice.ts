@@ -10,7 +10,7 @@ export const InvoiceTypeSchema = z.enum([
   'AdvanceInvoice',
   'MilestoneInvoice',
   'FinalInvoice',
-  'RefundInvoice'
+  'RefundInvoice',
 ]);
 
 export const InvoiceStatusSchema = z.enum([
@@ -19,7 +19,7 @@ export const InvoiceStatusSchema = z.enum([
   'PartiallyPaid',
   'Paid',
   'Overdue',
-  'Cancelled'
+  'Cancelled',
 ]);
 
 export const InvoiceLineItemInputSchema = z.object({
@@ -31,13 +31,18 @@ export const InvoiceLineItemInputSchema = z.object({
   quantity: z.number().positive(),
   unitPrice: z.number().nonnegative(),
   discountAmount: z.number().nonnegative().default(0),
-  taxRate: z.number().nonnegative().default(0.05) // Standard 5% Oman VAT
+  taxRate: z.number().nonnegative().default(0.05), // Standard 5% Oman VAT
 });
 
 export type InvoiceLineItemInput = z.infer<typeof InvoiceLineItemInputSchema>;
 
 export const InvoiceCategorySchema = z.enum(['Student', 'Corporate']);
-export const InvoiceSubCategorySchema = z.enum(['FullPayment', 'Advance', 'PartialPayment', 'Installment']);
+export const InvoiceSubCategorySchema = z.enum([
+  'FullPayment',
+  'Advance',
+  'PartialPayment',
+  'Installment',
+]);
 
 export const CreateInvoiceInputSchema = z.object({
   invoiceType: InvoiceTypeSchema,
@@ -54,12 +59,15 @@ export const CreateInvoiceInputSchema = z.object({
   sourceQuotationId: z.string().uuid().nullable().optional(),
   sourceSalesOrderId: z.string().uuid().nullable().optional(),
   numberOfInstallments: z.number().int().positive().nullable().optional(),
-  installments: z.array(
-    z.object({
-      dueDate: z.date(),
-      amount: z.number().positive()
-    })
-  ).nullable().optional()
+  installments: z
+    .array(
+      z.object({
+        dueDate: z.date(),
+        amount: z.number().positive(),
+      }),
+    )
+    .nullable()
+    .optional(),
 });
 
 export type CreateInvoiceInput = z.infer<typeof CreateInvoiceInputSchema>;
@@ -99,14 +107,16 @@ export function calculateInvoice(input: CreateInvoiceInput): CalculatedInvoice {
     const qty = new Decimal(item.quantity);
     const unitPrice = new Decimal(item.unitPrice);
     const discount = new Decimal(item.discountAmount);
-    
+
     // Line Subtotal = qty * unitPrice
     const lineSubtotal = qty.times(unitPrice);
-    
+
     // Taxable Amount = (qty * unitPrice) - discount
     const taxable = lineSubtotal.minus(discount);
     if (taxable.isNegative()) {
-      throw new Error(`Discount cannot exceed line subtotal for item ${idx + 1}`);
+      throw new Error(
+        `Discount cannot exceed line subtotal for item ${idx + 1}`,
+      );
     }
 
     const taxRate = new Decimal(item.taxRate);
@@ -131,7 +141,7 @@ export function calculateInvoice(input: CreateInvoiceInput): CalculatedInvoice {
       taxableAmount: taxable,
       taxRate: taxRate,
       taxAmount: taxAmt,
-      lineTotal: lineTotal
+      lineTotal: lineTotal,
     };
   });
 
@@ -141,7 +151,7 @@ export function calculateInvoice(input: CreateInvoiceInput): CalculatedInvoice {
     taxAmount: totalTax,
     totalAmount,
     outstandingAmount: totalAmount,
-    lineItems: calculatedItems
+    lineItems: calculatedItems,
   };
 }
 
@@ -150,12 +160,15 @@ export const AgingBucketSchema = z.enum([
   'Days30',
   'Days60',
   'Days90',
-  'Days120Plus'
+  'Days120Plus',
 ]);
 
 export type AgingBucket = z.infer<typeof AgingBucketSchema>;
 
-export function resolveAgingBucket(dueDate: Date, calculationDate: Date = new Date()): AgingBucket {
+export function resolveAgingBucket(
+  dueDate: Date,
+  calculationDate: Date = new Date(),
+): AgingBucket {
   const diffTime = calculationDate.getTime() - dueDate.getTime();
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 

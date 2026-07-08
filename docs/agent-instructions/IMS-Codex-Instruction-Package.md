@@ -520,27 +520,27 @@ Open questions:
 
 ## 3. Recommended Existing Skills
 
-| Skill | Why It Is Useful | When To Use It | Priority |
-|---|---|---|---|
-| `frontend-skill` | IMS has multiple workflow-heavy portals and needs clear, dense, accessible operational UI. | Use for admin, student, trainer, public verification, dashboards, forms, tables, and workflow screens. | Mandatory for UI work |
-| `Spreadsheets` | Reporting, import templates, reconciliation, finance summaries, and operational exports are likely. | Use for `.xlsx`, `.csv`, report packs, import/export templates, and spreadsheet-based analysis. | Optional |
-| `documents` | Formal project documents, API inventories, implementation plans, and operational policies may need polished `.docx` output. | Use when creating or editing Word-style documents. | Optional |
-| `pdfs` | Certificates, receipts, invoices, student ID cards, and verification packets may require PDF generation or inspection. | Use for PDF generation, rendering, QA, extraction, certificate layouts, and printable artifacts. | Optional |
-| `openai-docs` | AI Intelligence is final phase and may need current OpenAI API guidance. | Use only when implementing or planning OpenAI/API-based AI features. | Optional |
-| `skill-creator` | The project would benefit from repeatable IMS-specific workflows. | Use to create the custom skills below. | Optional |
+| Skill            | Why It Is Useful                                                                                                            | When To Use It                                                                                         | Priority              |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | --------------------- |
+| `frontend-skill` | IMS has multiple workflow-heavy portals and needs clear, dense, accessible operational UI.                                  | Use for admin, student, trainer, public verification, dashboards, forms, tables, and workflow screens. | Mandatory for UI work |
+| `Spreadsheets`   | Reporting, import templates, reconciliation, finance summaries, and operational exports are likely.                         | Use for `.xlsx`, `.csv`, report packs, import/export templates, and spreadsheet-based analysis.        | Optional              |
+| `documents`      | Formal project documents, API inventories, implementation plans, and operational policies may need polished `.docx` output. | Use when creating or editing Word-style documents.                                                     | Optional              |
+| `pdfs`           | Certificates, receipts, invoices, student ID cards, and verification packets may require PDF generation or inspection.      | Use for PDF generation, rendering, QA, extraction, certificate layouts, and printable artifacts.       | Optional              |
+| `openai-docs`    | AI Intelligence is final phase and may need current OpenAI API guidance.                                                    | Use only when implementing or planning OpenAI/API-based AI features.                                   | Optional              |
+| `skill-creator`  | The project would benefit from repeatable IMS-specific workflows.                                                           | Use to create the custom skills below.                                                                 | Optional              |
 
 ## 4. Custom Skills To Create
 
-| Custom Skill | Why It Is Useful | When To Use It | Priority |
-|---|---|---|---|
-| `ims-ddd-domain-modeling` | Keeps aggregates, entities, value objects, invariants, and events aligned with the uploaded IMS DDD model. | Use before implementing any bounded context or major domain feature. | Mandatory for domain-heavy work |
-| `ims-api-contract-planner` | Converts module requirements into API groups, DTOs, validation rules, permissions, errors, and audit behavior. | Use before building APIs for Identity, Organization, Leads, Enrollment, Courses, Finance, Attendance, and Certificates. | Mandatory for API work |
-| `ims-prisma-schema-designer` | Protects data ownership, effective dating, soft delete, audit fields, and relational consistency. | Use when designing or changing PostgreSQL/Prisma schema. | Mandatory for persistence work |
-| `ims-rbac-branch-authorization` | Dynamic RBAC and branch scoping are central security requirements. | Use when implementing permissions, menus, reports, branch visibility, counselor visibility, and access tests. | Mandatory for security work |
-| `ims-workflow-test-generator` | Core value depends on end-to-end business workflows. | Use to generate tests for lead-to-admission, enrollment, payment, completion, certificate, walk-in, and branch-scoped access. | Optional but strongly recommended |
-| `ims-finance-audit-rules` | Finance is high-risk and audit-sensitive. | Use for manual payments, receipts, discounts, refunds, due tracking, approval hierarchy, and audit logs. | Mandatory for finance work |
-| `ims-certificate-workflow` | Certificate eligibility and public verification are high-visibility business capabilities. | Use for templates, eligibility checks, generation, issuance, public verification, and audit trails. | Mandatory for certificate work |
-| `ims-document-verification` | Student/trainer/corporate documents require storage, verification, required document types, and signed access. | Use for document upload, type configuration, verification workflows, and object storage integration. | Optional |
+| Custom Skill                    | Why It Is Useful                                                                                               | When To Use It                                                                                                                | Priority                          |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| `ims-ddd-domain-modeling`       | Keeps aggregates, entities, value objects, invariants, and events aligned with the uploaded IMS DDD model.     | Use before implementing any bounded context or major domain feature.                                                          | Mandatory for domain-heavy work   |
+| `ims-api-contract-planner`      | Converts module requirements into API groups, DTOs, validation rules, permissions, errors, and audit behavior. | Use before building APIs for Identity, Organization, Leads, Enrollment, Courses, Finance, Attendance, and Certificates.       | Mandatory for API work            |
+| `ims-prisma-schema-designer`    | Protects data ownership, effective dating, soft delete, audit fields, and relational consistency.              | Use when designing or changing PostgreSQL/Prisma schema.                                                                      | Mandatory for persistence work    |
+| `ims-rbac-branch-authorization` | Dynamic RBAC and branch scoping are central security requirements.                                             | Use when implementing permissions, menus, reports, branch visibility, counselor visibility, and access tests.                 | Mandatory for security work       |
+| `ims-workflow-test-generator`   | Core value depends on end-to-end business workflows.                                                           | Use to generate tests for lead-to-admission, enrollment, payment, completion, certificate, walk-in, and branch-scoped access. | Optional but strongly recommended |
+| `ims-finance-audit-rules`       | Finance is high-risk and audit-sensitive.                                                                      | Use for manual payments, receipts, discounts, refunds, due tracking, approval hierarchy, and audit logs.                      | Mandatory for finance work        |
+| `ims-certificate-workflow`      | Certificate eligibility and public verification are high-visibility business capabilities.                     | Use for templates, eligibility checks, generation, issuance, public verification, and audit trails.                           | Mandatory for certificate work    |
+| `ims-document-verification`     | Student/trainer/corporate documents require storage, verification, required document types, and signed access. | Use for document upload, type configuration, verification workflows, and object storage integration.                          | Optional                          |
 
 ## 5. Usage Notes
 

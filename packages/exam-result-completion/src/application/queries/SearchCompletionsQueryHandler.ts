@@ -21,7 +21,9 @@ export interface CompletionSummary {
 }
 
 export class SearchCompletionsQueryHandler {
-  constructor(private readonly completionRepository: CourseCompletionRepository) {}
+  constructor(
+    private readonly completionRepository: CourseCompletionRepository,
+  ) {}
 
   async execute(input: SearchCompletionsInput): Promise<{
     completions: CompletionSummary[];
@@ -30,7 +32,9 @@ export class SearchCompletionsQueryHandler {
     pageSize: number;
   }> {
     let completions = input.enrollmentId
-      ? await this.completionRepository.findByEnrollmentId(input.enrollmentId).then(c => c ? [c] : [])
+      ? await this.completionRepository
+          .findByEnrollmentId(input.enrollmentId)
+          .then((c) => (c ? [c] : []))
       : input.status
         ? await this.completionRepository.findByStatus(input.status)
         : [];
@@ -42,7 +46,7 @@ export class SearchCompletionsQueryHandler {
     const pagedCompletions = completions.slice(start, start + pageSize);
 
     return {
-      completions: pagedCompletions.map(c => ({
+      completions: pagedCompletions.map((c) => ({
         id: c.id,
         enrollmentId: c.enrollmentId,
         completionStatus: c.completionStatus,

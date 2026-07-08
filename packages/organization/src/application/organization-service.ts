@@ -47,24 +47,45 @@ export interface OrganizationRepository {
   findBranchById(id: string): Promise<Branch | null>;
   findBranchByCode(branchCode: string): Promise<Branch | null>;
   updateBranch(id: string, updates: Partial<Branch>): Promise<Branch>;
-  listBranches(filters?: Omit<ListFilters, 'status'> & { status?: BranchStatus; instituteId?: string }): Promise<PaginatedResult<Branch>>;
+  listBranches(
+    filters?: Omit<ListFilters, 'status'> & {
+      status?: BranchStatus;
+      instituteId?: string;
+    },
+  ): Promise<PaginatedResult<Branch>>;
 
   // Department
   createDepartment(input: Department): Promise<Department>;
   findDepartmentById(id: string): Promise<Department | null>;
-  findDepartmentByCode(branchId: string, departmentCode: string): Promise<Department | null>;
-  updateDepartment(id: string, updates: Partial<Department>): Promise<Department>;
-  listDepartments(branchId: string, filters?: { status?: RecordStatus }): Promise<Department[]>;
+  findDepartmentByCode(
+    branchId: string,
+    departmentCode: string,
+  ): Promise<Department | null>;
+  updateDepartment(
+    id: string,
+    updates: Partial<Department>,
+  ): Promise<Department>;
+  listDepartments(
+    branchId: string,
+    filters?: { status?: RecordStatus },
+  ): Promise<Department[]>;
 
   // Classroom
   createClassroom(input: Classroom): Promise<Classroom>;
   findClassroomById(id: string): Promise<Classroom | null>;
-  findClassroomByName(branchId: string, classroomName: string): Promise<Classroom | null>;
+  findClassroomByName(
+    branchId: string,
+    classroomName: string,
+  ): Promise<Classroom | null>;
   updateClassroom(id: string, updates: Partial<Classroom>): Promise<Classroom>;
-  listClassrooms(filters?: ListFilters & { branchId?: string }): Promise<PaginatedResult<Classroom>>;
+  listClassrooms(
+    filters?: ListFilters & { branchId?: string },
+  ): Promise<PaginatedResult<Classroom>>;
 
   // Hierarchy Tree
-  getOrganizationHierarchy(instituteId: string): Promise<OrganizationHierarchyNode>;
+  getOrganizationHierarchy(
+    instituteId: string,
+  ): Promise<OrganizationHierarchyNode>;
 }
 
 export type OrganizationAuditAction =
@@ -103,14 +124,30 @@ export class OrganizationService {
 
   // ── Active Validation Helpers ──
 
-  private isDateWithinRange(date: Date, start: Date | null, end: Date | null): boolean {
-    const checkTime = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+  private isDateWithinRange(
+    date: Date,
+    start: Date | null,
+    end: Date | null,
+  ): boolean {
+    const checkTime = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+    ).getTime();
     if (start) {
-      const startTime = new Date(start.getFullYear(), start.getMonth(), start.getDate()).getTime();
+      const startTime = new Date(
+        start.getFullYear(),
+        start.getMonth(),
+        start.getDate(),
+      ).getTime();
       if (checkTime < startTime) return false;
     }
     if (end) {
-      const endTime = new Date(end.getFullYear(), end.getMonth(), end.getDate()).getTime();
+      const endTime = new Date(
+        end.getFullYear(),
+        end.getMonth(),
+        end.getDate(),
+      ).getTime();
       if (checkTime > endTime) return false;
     }
     return true;
@@ -120,19 +157,31 @@ export class OrganizationService {
     if (!userId || !this.userVerifier) return;
     const active = await this.userVerifier.isActiveUser(userId);
     if (!active) {
-      throw new DomainError('precondition_failed', `User ${userId} is not a valid active IAM user.`);
+      throw new DomainError(
+        'precondition_failed',
+        `User ${userId} is not a valid active IAM user.`,
+      );
     }
   }
 
-  private async verifyUserHasBranchAccess(userId: string | null, branchId: string): Promise<void> {
+  private async verifyUserHasBranchAccess(
+    userId: string | null,
+    branchId: string,
+  ): Promise<void> {
     if (!userId || !this.userVerifier) return;
     const hasAccess = await this.userVerifier.hasBranchAccess(userId, branchId);
     if (!hasAccess) {
-      throw new DomainError('branch_scope_violation', `User ${userId} does not have access to branch ${branchId}.`);
+      throw new DomainError(
+        'branch_scope_violation',
+        `User ${userId} does not have access to branch ${branchId}.`,
+      );
     }
   }
 
-  private async wouldCreateCircularDependency(branchId: string, parentBranchId: string): Promise<boolean> {
+  private async wouldCreateCircularDependency(
+    branchId: string,
+    parentBranchId: string,
+  ): Promise<boolean> {
     if (branchId === parentBranchId) return true;
     let currentParentId: string | null = parentBranchId;
     const visited = new Set<string>([branchId]);
@@ -152,14 +201,24 @@ export class OrganizationService {
     const branch = await this.repository.findBranchById(branchId);
     if (!branch) return false;
     if (branch.status !== 'Active') return false;
-    return this.isDateWithinRange(new Date(), branch.effectiveStartDate, branch.effectiveEndDate);
+    return this.isDateWithinRange(
+      new Date(),
+      branch.effectiveStartDate,
+      branch.effectiveEndDate,
+    );
   }
 
   async isClassroomActive(classroomId: string): Promise<boolean> {
     const classroom = await this.repository.findClassroomById(classroomId);
     if (!classroom) return false;
     if (classroom.status !== 'Active') return false;
-    if (!this.isDateWithinRange(new Date(), classroom.effectiveStartDate, classroom.effectiveEndDate)) {
+    if (
+      !this.isDateWithinRange(
+        new Date(),
+        classroom.effectiveStartDate,
+        classroom.effectiveEndDate,
+      )
+    ) {
       return false;
     }
     return this.isBranchActive(classroom.branchId);
@@ -169,7 +228,13 @@ export class OrganizationService {
     const dept = await this.repository.findDepartmentById(departmentId);
     if (!dept) return false;
     if (dept.status !== 'Active') return false;
-    if (!this.isDateWithinRange(new Date(), dept.effectiveStartDate, dept.effectiveEndDate)) {
+    if (
+      !this.isDateWithinRange(
+        new Date(),
+        dept.effectiveStartDate,
+        dept.effectiveEndDate,
+      )
+    ) {
       return false;
     }
     return this.isBranchActive(dept.branchId);
@@ -177,13 +242,21 @@ export class OrganizationService {
 
   // ── Institute ──
 
-  async createInstitute(command: CreateInstituteCommand, context: OrgCommandContext): Promise<Institute> {
+  async createInstitute(
+    command: CreateInstituteCommand,
+    context: OrgCommandContext,
+  ): Promise<Institute> {
     const validated = createInstituteCommandSchema.parse(command);
 
     // Uniqueness: Institute Code must be unique
-    const duplicate = await this.repository.findInstituteByCode(validated.instituteCode);
+    const duplicate = await this.repository.findInstituteByCode(
+      validated.instituteCode,
+    );
     if (duplicate) {
-      throw new DomainError('institute_code_already_exists', `Institute with code ${validated.instituteCode} already exists.`);
+      throw new DomainError(
+        'institute_code_already_exists',
+        `Institute with code ${validated.instituteCode} already exists.`,
+      );
     }
 
     const institute: Institute = {
@@ -226,7 +299,8 @@ export class OrganizationService {
 
   async getInstitute(instituteId: string): Promise<Institute> {
     const institute = await this.repository.findInstituteById(instituteId);
-    if (!institute) throw new DomainError('not_found', `Institute ${instituteId} not found.`);
+    if (!institute)
+      throw new DomainError('not_found', `Institute ${instituteId} not found.`);
     return institute;
   }
 
@@ -237,9 +311,13 @@ export class OrganizationService {
   ): Promise<Institute> {
     const validated = updateInstituteCommandSchema.parse(command);
     const existing = await this.repository.findInstituteById(instituteId);
-    if (!existing) throw new DomainError('not_found', `Institute ${instituteId} not found.`);
+    if (!existing)
+      throw new DomainError('not_found', `Institute ${instituteId} not found.`);
 
-    const updated = await this.repository.updateInstitute(instituteId, validated);
+    const updated = await this.repository.updateInstitute(
+      instituteId,
+      validated,
+    );
     await this.auditLogRepository.append({
       id: crypto.randomUUID(),
       actorId: context.actorId,
@@ -253,19 +331,29 @@ export class OrganizationService {
     return updated;
   }
 
-  async listInstitutes(filters?: ListFilters): Promise<PaginatedResult<Institute>> {
+  async listInstitutes(
+    filters?: ListFilters,
+  ): Promise<PaginatedResult<Institute>> {
     return this.repository.listInstitutes(filters);
   }
 
   // ── Branch ──
 
-  async createBranch(command: CreateBranchCommand, context: OrgCommandContext): Promise<Branch> {
+  async createBranch(
+    command: CreateBranchCommand,
+    context: OrgCommandContext,
+  ): Promise<Branch> {
     const validated = createBranchCommandSchema.parse(command);
 
     // Uniqueness: Branch Code must be unique
-    const duplicate = await this.repository.findBranchByCode(validated.branchCode);
+    const duplicate = await this.repository.findBranchByCode(
+      validated.branchCode,
+    );
     if (duplicate) {
-      throw new DomainError('branch_code_already_exists', `Branch with code ${validated.branchCode} already exists.`);
+      throw new DomainError(
+        'branch_code_already_exists',
+        `Branch with code ${validated.branchCode} already exists.`,
+      );
     }
 
     const branchId = crypto.randomUUID() as BranchId;
@@ -279,7 +367,10 @@ export class OrganizationService {
     if (validated.parentBranchId) {
       const isParentOk = await this.isBranchActive(validated.parentBranchId);
       if (!isParentOk) {
-        throw new DomainError('inactive_branch_cannot_be_used', `Parent branch ${validated.parentBranchId} is inactive.`);
+        throw new DomainError(
+          'inactive_branch_cannot_be_used',
+          `Parent branch ${validated.parentBranchId} is inactive.`,
+        );
       }
     }
 
@@ -318,14 +409,16 @@ export class OrganizationService {
         longitude: a.longitude ?? null,
         mapUrl: a.mapUrl ?? null,
       })),
-      settings: validated.settings ? {
-        id: (validated.settings.id || crypto.randomUUID()) as Uuid,
-        branchId,
-        currency: validated.settings.currency ?? null,
-        timezone: validated.settings.timezone ?? null,
-        weekStartDay: validated.settings.weekStartDay ?? null,
-        workingCalendar: validated.settings.workingCalendar ?? null,
-      } : undefined,
+      settings: validated.settings
+        ? {
+            id: (validated.settings.id || crypto.randomUUID()) as Uuid,
+            branchId,
+            currency: validated.settings.currency ?? null,
+            timezone: validated.settings.timezone ?? null,
+            weekStartDay: validated.settings.weekStartDay ?? null,
+            workingCalendar: validated.settings.workingCalendar ?? null,
+          }
+        : undefined,
       policies: validated.policies?.map((p) => ({
         id: (p.id || crypto.randomUUID()) as Uuid,
         branchId,
@@ -343,14 +436,18 @@ export class OrganizationService {
       entityType: 'Branch',
       entityId: saved.id,
       occurredAt: new Date(),
-      details: { branchCode: saved.branchCode, managerId: saved.branchManagerId },
+      details: {
+        branchCode: saved.branchCode,
+        managerId: saved.branchManagerId,
+      },
     });
     return saved;
   }
 
   async getBranch(branchId: string): Promise<Branch> {
     const branch = await this.repository.findBranchById(branchId);
-    if (!branch) throw new DomainError('not_found', `Branch ${branchId} not found.`);
+    if (!branch)
+      throw new DomainError('not_found', `Branch ${branchId} not found.`);
     return branch;
   }
 
@@ -361,7 +458,8 @@ export class OrganizationService {
   ): Promise<Branch> {
     const validated = updateBranchCommandSchema.parse(command);
     const existing = await this.repository.findBranchById(branchId);
-    if (!existing) throw new DomainError('not_found', `Branch ${branchId} not found.`);
+    if (!existing)
+      throw new DomainError('not_found', `Branch ${branchId} not found.`);
 
     // Verify manager status & branch scope access
     if (validated.branchManagerId) {
@@ -371,22 +469,39 @@ export class OrganizationService {
 
     // Verify parent branch loop checking & active dating
     if (validated.parentBranchId) {
-      const isCircular = await this.wouldCreateCircularDependency(branchId, validated.parentBranchId);
+      const isCircular = await this.wouldCreateCircularDependency(
+        branchId,
+        validated.parentBranchId,
+      );
       if (isCircular) {
-        throw new DomainError('conflict', `Setting parent branch ${validated.parentBranchId} would create a circular dependency.`);
+        throw new DomainError(
+          'conflict',
+          `Setting parent branch ${validated.parentBranchId} would create a circular dependency.`,
+        );
       }
       const isParentOk = await this.isBranchActive(validated.parentBranchId);
       if (!isParentOk) {
-        throw new DomainError('inactive_branch_cannot_be_used', `Parent branch ${validated.parentBranchId} is inactive.`);
+        throw new DomainError(
+          'inactive_branch_cannot_be_used',
+          `Parent branch ${validated.parentBranchId} is inactive.`,
+        );
       }
     }
 
     // Verify active dependencies before closing/suspending/archiving
-    if (validated.status && ['Suspended', 'Closed', 'Archived'].includes(validated.status) && validated.status !== existing.status) {
+    if (
+      validated.status &&
+      ['Suspended', 'Closed', 'Archived'].includes(validated.status) &&
+      validated.status !== existing.status
+    ) {
       if (this.branchDependencyChecker) {
-        const hasDeps = await this.branchDependencyChecker.hasActiveDependencies(branchId);
+        const hasDeps =
+          await this.branchDependencyChecker.hasActiveDependencies(branchId);
         if (hasDeps) {
-          throw new DomainError('precondition_failed', `Cannot suspend, close, or archive branch ${branchId} due to active dependencies.`);
+          throw new DomainError(
+            'precondition_failed',
+            `Cannot suspend, close, or archive branch ${branchId} due to active dependencies.`,
+          );
         }
       }
     }
@@ -413,14 +528,16 @@ export class OrganizationService {
         longitude: a.longitude ?? null,
         mapUrl: a.mapUrl ?? null,
       })),
-      settings: validated.settings ? {
-        id: (validated.settings.id || crypto.randomUUID()) as Uuid,
-        branchId: branchId as BranchId,
-        currency: validated.settings.currency ?? null,
-        timezone: validated.settings.timezone ?? null,
-        weekStartDay: validated.settings.weekStartDay ?? null,
-        workingCalendar: validated.settings.workingCalendar ?? null,
-      } : undefined,
+      settings: validated.settings
+        ? {
+            id: (validated.settings.id || crypto.randomUUID()) as Uuid,
+            branchId: branchId as BranchId,
+            currency: validated.settings.currency ?? null,
+            timezone: validated.settings.timezone ?? null,
+            weekStartDay: validated.settings.weekStartDay ?? null,
+            workingCalendar: validated.settings.workingCalendar ?? null,
+          }
+        : undefined,
       policies: validated.policies?.map((p) => ({
         id: (p.id || crypto.randomUUID()) as Uuid,
         branchId: branchId as BranchId,
@@ -442,7 +559,10 @@ export class OrganizationService {
     });
 
     if (validated.status && validated.status !== existing.status) {
-      const action = validated.status === 'Active' ? 'organization.branch_activated' : 'organization.branch_deactivated';
+      const action =
+        validated.status === 'Active'
+          ? 'organization.branch_activated'
+          : 'organization.branch_deactivated';
       await this.auditLogRepository.append({
         id: crypto.randomUUID(),
         actorId: context.actorId,
@@ -455,7 +575,10 @@ export class OrganizationService {
       });
     }
 
-    if (validated.branchManagerId !== undefined && validated.branchManagerId !== existing.branchManagerId) {
+    if (
+      validated.branchManagerId !== undefined &&
+      validated.branchManagerId !== existing.branchManagerId
+    ) {
       await this.auditLogRepository.append({
         id: crypto.randomUUID(),
         actorId: context.actorId,
@@ -470,31 +593,51 @@ export class OrganizationService {
     return updated;
   }
 
-  async listBranches(filters?: Omit<ListFilters, 'status'> & { status?: BranchStatus; instituteId?: string }): Promise<PaginatedResult<Branch>> {
+  async listBranches(
+    filters?: Omit<ListFilters, 'status'> & {
+      status?: BranchStatus;
+      instituteId?: string;
+    },
+  ): Promise<PaginatedResult<Branch>> {
     return this.repository.listBranches(filters);
   }
 
   // ── Department ──
 
-  async createDepartment(command: CreateDepartmentCommand, context: OrgCommandContext): Promise<Department> {
+  async createDepartment(
+    command: CreateDepartmentCommand,
+    context: OrgCommandContext,
+  ): Promise<Department> {
     const validated = createDepartmentCommandSchema.parse(command);
 
     // Validate active branch
     const isBranchOk = await this.isBranchActive(validated.branchId);
     if (!isBranchOk) {
-      throw new DomainError('inactive_branch_cannot_be_used', `Cannot create department under inactive or expired branch ${validated.branchId}.`);
+      throw new DomainError(
+        'inactive_branch_cannot_be_used',
+        `Cannot create department under inactive or expired branch ${validated.branchId}.`,
+      );
     }
 
     // Uniqueness: Department Code must be unique per branch
-    const duplicate = await this.repository.findDepartmentByCode(validated.branchId, validated.departmentCode);
+    const duplicate = await this.repository.findDepartmentByCode(
+      validated.branchId,
+      validated.departmentCode,
+    );
     if (duplicate) {
-      throw new DomainError('department_code_already_exists', `Department with code ${validated.departmentCode} already exists in branch ${validated.branchId}.`);
+      throw new DomainError(
+        'department_code_already_exists',
+        `Department with code ${validated.departmentCode} already exists in branch ${validated.branchId}.`,
+      );
     }
 
     // Verify department head status
     if (validated.departmentHeadId) {
       await this.verifyUserIsActive(validated.departmentHeadId);
-      await this.verifyUserHasBranchAccess(validated.departmentHeadId, validated.branchId);
+      await this.verifyUserHasBranchAccess(
+        validated.departmentHeadId,
+        validated.branchId,
+      );
     }
 
     const department: Department = {
@@ -518,14 +661,21 @@ export class OrganizationService {
       entityType: 'Department',
       entityId: saved.id,
       occurredAt: new Date(),
-      details: { departmentCode: saved.departmentCode, headId: saved.departmentHeadId },
+      details: {
+        departmentCode: saved.departmentCode,
+        headId: saved.departmentHeadId,
+      },
     });
     return saved;
   }
 
   async getDepartment(departmentId: string): Promise<Department> {
     const department = await this.repository.findDepartmentById(departmentId);
-    if (!department) throw new DomainError('not_found', `Department ${departmentId} not found.`);
+    if (!department)
+      throw new DomainError(
+        'not_found',
+        `Department ${departmentId} not found.`,
+      );
     return department;
   }
 
@@ -536,16 +686,26 @@ export class OrganizationService {
   ): Promise<Department> {
     const validated = updateDepartmentCommandSchema.parse(command);
     const existing = await this.repository.findDepartmentById(departmentId);
-    if (!existing) throw new DomainError('not_found', `Department ${departmentId} not found.`);
+    if (!existing)
+      throw new DomainError(
+        'not_found',
+        `Department ${departmentId} not found.`,
+      );
 
     if (validated.status === 'Active') {
       const isBranchOk = await this.isBranchActive(existing.branchId);
       if (!isBranchOk) {
-        throw new DomainError('inactive_branch_cannot_be_used', `Cannot activate department under inactive or expired branch ${existing.branchId}.`);
+        throw new DomainError(
+          'inactive_branch_cannot_be_used',
+          `Cannot activate department under inactive or expired branch ${existing.branchId}.`,
+        );
       }
     }
 
-    const updated = await this.repository.updateDepartment(departmentId, validated);
+    const updated = await this.repository.updateDepartment(
+      departmentId,
+      validated,
+    );
     await this.auditLogRepository.append({
       id: crypto.randomUUID(),
       actorId: context.actorId,
@@ -558,7 +718,10 @@ export class OrganizationService {
     });
 
     if (validated.status && validated.status !== existing.status) {
-      const action = validated.status === 'Active' ? 'organization.department_activated' : 'organization.department_deactivated';
+      const action =
+        validated.status === 'Active'
+          ? 'organization.department_activated'
+          : 'organization.department_deactivated';
       await this.auditLogRepository.append({
         id: crypto.randomUUID(),
         actorId: context.actorId,
@@ -571,10 +734,16 @@ export class OrganizationService {
       });
     }
 
-    if (validated.departmentHeadId !== undefined && validated.departmentHeadId !== existing.departmentHeadId) {
+    if (
+      validated.departmentHeadId !== undefined &&
+      validated.departmentHeadId !== existing.departmentHeadId
+    ) {
       if (validated.departmentHeadId) {
         await this.verifyUserIsActive(validated.departmentHeadId);
-        await this.verifyUserHasBranchAccess(validated.departmentHeadId, existing.branchId);
+        await this.verifyUserHasBranchAccess(
+          validated.departmentHeadId,
+          existing.branchId,
+        );
       }
       await this.auditLogRepository.append({
         id: crypto.randomUUID(),
@@ -590,25 +759,40 @@ export class OrganizationService {
     return updated;
   }
 
-  async listDepartments(branchId: string, filters?: { status?: RecordStatus }): Promise<Department[]> {
+  async listDepartments(
+    branchId: string,
+    filters?: { status?: RecordStatus },
+  ): Promise<Department[]> {
     return this.repository.listDepartments(branchId, filters);
   }
 
   // ── Classroom ──
 
-  async createClassroom(command: CreateClassroomCommand, context: OrgCommandContext): Promise<Classroom> {
+  async createClassroom(
+    command: CreateClassroomCommand,
+    context: OrgCommandContext,
+  ): Promise<Classroom> {
     const validated = createClassroomCommandSchema.parse(command);
 
     // Validate active branch
     const isBranchOk = await this.isBranchActive(validated.branchId);
     if (!isBranchOk) {
-      throw new DomainError('inactive_branch_cannot_be_used', `Cannot create classroom under inactive or expired branch ${validated.branchId}.`);
+      throw new DomainError(
+        'inactive_branch_cannot_be_used',
+        `Cannot create classroom under inactive or expired branch ${validated.branchId}.`,
+      );
     }
 
     // Uniqueness: Classroom Name must be unique per branch
-    const duplicate = await this.repository.findClassroomByName(validated.branchId, validated.classroomName);
+    const duplicate = await this.repository.findClassroomByName(
+      validated.branchId,
+      validated.classroomName,
+    );
     if (duplicate) {
-      throw new DomainError('classroom_name_already_exists', `Classroom with name ${validated.classroomName} already exists in branch ${validated.branchId}.`);
+      throw new DomainError(
+        'classroom_name_already_exists',
+        `Classroom with name ${validated.classroomName} already exists in branch ${validated.branchId}.`,
+      );
     }
 
     const classroom: Classroom = {
@@ -638,7 +822,8 @@ export class OrganizationService {
 
   async getClassroom(classroomId: string): Promise<Classroom> {
     const classroom = await this.repository.findClassroomById(classroomId);
-    if (!classroom) throw new DomainError('not_found', `Classroom ${classroomId} not found.`);
+    if (!classroom)
+      throw new DomainError('not_found', `Classroom ${classroomId} not found.`);
     return classroom;
   }
 
@@ -649,22 +834,41 @@ export class OrganizationService {
   ): Promise<Classroom> {
     const validated = updateClassroomCommandSchema.parse(command);
     const existing = await this.repository.findClassroomById(classroomId);
-    if (!existing) throw new DomainError('not_found', `Classroom ${classroomId} not found.`);
+    if (!existing)
+      throw new DomainError('not_found', `Classroom ${classroomId} not found.`);
 
     // Verify classroom name uniqueness strictly scoped by branchId
-    if (validated.classroomName && validated.classroomName !== existing.classroomName) {
-      const duplicate = await this.repository.findClassroomByName(existing.branchId, validated.classroomName);
+    if (
+      validated.classroomName &&
+      validated.classroomName !== existing.classroomName
+    ) {
+      const duplicate = await this.repository.findClassroomByName(
+        existing.branchId,
+        validated.classroomName,
+      );
       if (duplicate && duplicate.id !== classroomId) {
-        throw new DomainError('classroom_name_already_exists', `Classroom with name ${validated.classroomName} already exists in branch ${existing.branchId}.`);
+        throw new DomainError(
+          'classroom_name_already_exists',
+          `Classroom with name ${validated.classroomName} already exists in branch ${existing.branchId}.`,
+        );
       }
     }
 
     // Verify if capacity is decreased and falls below active enrollment size
-    if (validated.capacity !== undefined && validated.capacity < existing.capacity) {
+    if (
+      validated.capacity !== undefined &&
+      validated.capacity < existing.capacity
+    ) {
       if (this.classroomUsageVerifier) {
-        const activeEnrollmentSize = await this.classroomUsageVerifier.getActiveEnrollmentSize(classroomId);
+        const activeEnrollmentSize =
+          await this.classroomUsageVerifier.getActiveEnrollmentSize(
+            classroomId,
+          );
         if (validated.capacity < activeEnrollmentSize) {
-          throw new DomainError('precondition_failed', `New capacity ${validated.capacity} is below active enrollment size ${activeEnrollmentSize} of batches scheduled in classroom.`);
+          throw new DomainError(
+            'precondition_failed',
+            `New capacity ${validated.capacity} is below active enrollment size ${activeEnrollmentSize} of batches scheduled in classroom.`,
+          );
         }
       }
     }
@@ -672,11 +876,17 @@ export class OrganizationService {
     if (validated.status === 'Active') {
       const isBranchOk = await this.isBranchActive(existing.branchId);
       if (!isBranchOk) {
-        throw new DomainError('inactive_branch_cannot_be_used', `Cannot activate classroom under inactive or expired branch ${existing.branchId}.`);
+        throw new DomainError(
+          'inactive_branch_cannot_be_used',
+          `Cannot activate classroom under inactive or expired branch ${existing.branchId}.`,
+        );
       }
     }
 
-    const updated = await this.repository.updateClassroom(classroomId, validated);
+    const updated = await this.repository.updateClassroom(
+      classroomId,
+      validated,
+    );
     await this.auditLogRepository.append({
       id: crypto.randomUUID(),
       actorId: context.actorId,
@@ -689,7 +899,10 @@ export class OrganizationService {
     });
 
     if (validated.status && validated.status !== existing.status) {
-      const action = validated.status === 'Active' ? 'organization.classroom_activated' : 'organization.classroom_deactivated';
+      const action =
+        validated.status === 'Active'
+          ? 'organization.classroom_activated'
+          : 'organization.classroom_deactivated';
       await this.auditLogRepository.append({
         id: crypto.randomUUID(),
         actorId: context.actorId,
@@ -704,13 +917,17 @@ export class OrganizationService {
     return updated;
   }
 
-  async listClassrooms(filters?: ListFilters & { branchId?: string }): Promise<PaginatedResult<Classroom>> {
+  async listClassrooms(
+    filters?: ListFilters & { branchId?: string },
+  ): Promise<PaginatedResult<Classroom>> {
     return this.repository.listClassrooms(filters);
   }
 
   // ── Hierarchy query ──
 
-  async getOrganizationHierarchy(instituteId: string): Promise<OrganizationHierarchyNode> {
+  async getOrganizationHierarchy(
+    instituteId: string,
+  ): Promise<OrganizationHierarchyNode> {
     return this.repository.getOrganizationHierarchy(instituteId);
   }
 
@@ -729,4 +946,3 @@ export class OrganizationService {
     };
   }
 }
-

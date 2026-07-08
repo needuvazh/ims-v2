@@ -11,14 +11,17 @@ export const metadata = { title: 'Create Lead - CRM | ASTI IMS' };
 export default async function CreateLeadPage() {
   const session = await assertPermission('lead.create');
 
-  const { branchScopeResolver, organizationService, userService } = await import('@/lib/runtime');
+  const { branchScopeResolver, organizationService, userService } =
+    await import('@/lib/runtime');
 
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
     session.userId as any,
-    session.activeBranchId as any
+    session.activeBranchId as any,
   );
 
-  const branchesResult = await organizationService.listBranches({ pageSize: 100 });
+  const branchesResult = await organizationService.listBranches({
+    pageSize: 100,
+  });
   const branches =
     allowedBranchIds.length === 0
       ? branchesResult.items.map((b) => ({ id: b.id, name: b.branchName }))
@@ -30,16 +33,23 @@ export default async function CreateLeadPage() {
     where: { status: 'Published', isDeleted: false },
     select: { id: true, nameEnglish: true },
   });
-  const courses = coursesResult.length > 0
-    ? coursesResult.map((c: any) => ({ id: c.id, name: c.nameEnglish }))
-    : [
-        { id: 'CS-FSWD', name: 'Full Stack Web Development (Fallback)' },
-        { id: 'CS-MDEV', name: 'Mobile App Development (Fallback)' },
-        { id: 'CS-CSEC', name: 'Advanced Cyber Security & Ethical Hacking (Fallback)' },
-        { id: 'CS-DSAI', name: 'Data Science and Artificial Intelligence (Fallback)' },
-        { id: 'CS-CLAW', name: 'Cloud Solutions Architecture (Fallback)' },
-        { id: 'CS-UIUX', name: 'UI/UX Design & Product Strategy (Fallback)' },
-      ];
+  const courses =
+    coursesResult.length > 0
+      ? coursesResult.map((c: any) => ({ id: c.id, name: c.nameEnglish }))
+      : [
+          { id: 'CS-FSWD', name: 'Full Stack Web Development (Fallback)' },
+          { id: 'CS-MDEV', name: 'Mobile App Development (Fallback)' },
+          {
+            id: 'CS-CSEC',
+            name: 'Advanced Cyber Security & Ethical Hacking (Fallback)',
+          },
+          {
+            id: 'CS-DSAI',
+            name: 'Data Science and Artificial Intelligence (Fallback)',
+          },
+          { id: 'CS-CLAW', name: 'Cloud Solutions Architecture (Fallback)' },
+          { id: 'CS-UIUX', name: 'UI/UX Design & Product Strategy (Fallback)' },
+        ];
 
   const usersResult = (await userService.listUsers({
     actorId: session.userId,
@@ -47,7 +57,9 @@ export default async function CreateLeadPage() {
     activeBranchId: session.activeBranchId,
   })) as any[];
   const counselors = usersResult
-    .filter((u: any) => u.roleSummaries?.some((r: any) => r.roleCode === 'COUNSELOR'))
+    .filter((u: any) =>
+      u.roleSummaries?.some((r: any) => r.roleCode === 'COUNSELOR'),
+    )
     .map((u: any) => ({ id: u.id, name: u.username }));
 
   return (
@@ -59,15 +71,28 @@ export default async function CreateLeadPage() {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5" /> },
-              { label: 'Leads', href: '/leads', icon: <ClipboardList className="h-3.5 w-3.5" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5" />,
+              },
+              {
+                label: 'Leads',
+                href: '/leads',
+                icon: <ClipboardList className="h-3.5 w-3.5" />,
+              },
               { label: 'Create', icon: <PlusCircle className="h-3.5 w-3.5" /> },
             ]}
           />
         }
       />
       <div>
-        <LeadForm branches={branches} counselors={counselors} courses={courses} onSubmitAction={createLeadAction} />
+        <LeadForm
+          branches={branches}
+          counselors={counselors}
+          courses={courses}
+          onSubmitAction={createLeadAction}
+        />
       </div>
     </AdminFormPageLayout>
   );

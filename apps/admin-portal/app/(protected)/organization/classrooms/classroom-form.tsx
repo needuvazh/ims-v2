@@ -1,6 +1,12 @@
 'use client';
 
-import { useActionState, useEffect, useState, type ChangeEvent, type InvalidEvent } from 'react';
+import {
+  useActionState,
+  useEffect,
+  useState,
+  type ChangeEvent,
+  type InvalidEvent,
+} from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Card,
@@ -14,8 +20,15 @@ import {
   Alert,
 } from '@ims/shared-ui';
 import type { Classroom, Branch } from '@ims/organization';
-import { createClassroomAction, updateClassroomAction, type ActionResult } from '@/app/(protected)/organization/actions';
-import { clearErrorField, getFieldValidationMessage } from '@/app/(protected)/organization/validation';
+import {
+  createClassroomAction,
+  updateClassroomAction,
+  type ActionResult,
+} from '@/app/(protected)/organization/actions';
+import {
+  clearErrorField,
+  getFieldValidationMessage,
+} from '@/app/(protected)/organization/validation';
 
 export interface ClassroomFormProps {
   mode: 'create' | 'edit' | 'view';
@@ -52,9 +65,15 @@ function buildClassroomValues(initialData?: Classroom): ClassroomFormValues {
   };
 }
 
-export function ClassroomForm({ mode, initialData, branches }: ClassroomFormProps) {
+export function ClassroomForm({
+  mode,
+  initialData,
+  branches,
+}: ClassroomFormProps) {
   const router = useRouter();
-  const [values, setValues] = useState<ClassroomFormValues>(() => buildClassroomValues(initialData));
+  const [values, setValues] = useState<ClassroomFormValues>(() =>
+    buildClassroomValues(initialData),
+  );
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const [state, formAction, isPending] = useActionState(
@@ -101,33 +120,44 @@ export function ClassroomForm({ mode, initialData, branches }: ClassroomFormProp
     clearErrorField(setFieldErrors, field);
   };
 
-  const handleTextChange = (field: keyof ClassroomFormValues) => (
-    e: ChangeEvent<HTMLInputElement>,
-  ) => updateField(field)(e.target.value);
+  const handleTextChange =
+    (field: keyof ClassroomFormValues) => (e: ChangeEvent<HTMLInputElement>) =>
+      updateField(field)(e.target.value);
 
-  const handleSelectChange = (field: keyof ClassroomFormValues) => (
-    e: ChangeEvent<HTMLSelectElement>,
-  ) => updateField(field)(e.target.value);
+  const handleSelectChange =
+    (field: keyof ClassroomFormValues) => (e: ChangeEvent<HTMLSelectElement>) =>
+      updateField(field)(e.target.value);
 
-  const handleInvalid = (field: keyof ClassroomFormValues, label: string) => (
-    e: InvalidEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
-    const target = e.currentTarget;
-    setFieldErrors((prev) => ({
-      ...prev,
-      [field]: getFieldValidationMessage(target, label, 'type' in target ? target.type : undefined),
-    }));
-  };
+  const handleInvalid =
+    (field: keyof ClassroomFormValues, label: string) =>
+    (e: InvalidEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const target = e.currentTarget;
+      setFieldErrors((prev) => ({
+        ...prev,
+        [field]: getFieldValidationMessage(
+          target,
+          label,
+          'type' in target ? target.type : undefined,
+        ),
+      }));
+    };
 
   const isView = mode === 'view';
   const isEdit = mode === 'edit';
-  const branchOptions = branches.map((b) => ({ value: b.id, label: b.branchName }));
+  const branchOptions = branches.map((b) => ({
+    value: b.id,
+    label: b.branchName,
+  }));
 
   return (
     <Card className="w-full">
       <CardHeader>
         <CardTitle>
-          {mode === 'create' ? 'Add New Classroom' : mode === 'edit' ? 'Edit Classroom' : 'Classroom Details'}
+          {mode === 'create'
+            ? 'Add New Classroom'
+            : mode === 'edit'
+              ? 'Edit Classroom'
+              : 'Classroom Details'}
         </CardTitle>
       </CardHeader>
       <form action={formAction} noValidate>
@@ -157,7 +187,10 @@ export function ClassroomForm({ mode, initialData, branches }: ClassroomFormProp
               disabled={isView}
               required
               onChange={handleTextChange('classroomName')}
-              onInvalidCapture={handleInvalid('classroomName', 'Classroom Name / Number')}
+              onInvalidCapture={handleInvalid(
+                'classroomName',
+                'Classroom Name / Number',
+              )}
               errorText={fieldErrors.classroomName}
             />
             <Input
@@ -234,7 +267,9 @@ export function ClassroomForm({ mode, initialData, branches }: ClassroomFormProp
           {isView ? (
             <Button
               type="button"
-              onClick={() => router.push(`/organization/classrooms/${initialData?.id}/edit`)}
+              onClick={() =>
+                router.push(`/organization/classrooms/${initialData?.id}/edit`)
+              }
             >
               Edit Classroom
             </Button>

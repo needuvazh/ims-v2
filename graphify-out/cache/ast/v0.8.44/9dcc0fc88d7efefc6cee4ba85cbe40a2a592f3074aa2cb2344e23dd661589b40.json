@@ -1,1 +1,415 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_1_business_overview_functional_requirements_business_rules_md", "label": "Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_functional_requirement_document_part_1", "label": "Functional Requirement Document (Part 1)", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_module_05_student_management_business_overview_functional_requirements_business_rules", "label": "Module 05: Student Management - Business Overview, Functional Requirements, Business Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L2"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_1_introduction_and_business_benefits", "label": "1. Introduction and Business Benefits", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L11"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_business_benefits", "label": "Business Benefits", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L17"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "label": "2. Detailed Functional Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L27"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_001_search_branch_scoped_student_profiles", "label": "FR-STU-001: Search Branch-Scoped Student Profiles", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L29"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_002_perform_global_duplicate_preflight_on_person_records", "label": "FR-STU-002: Perform Global Duplicate Preflight on Person Records", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L58"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_003_create_student_profile", "label": "FR-STU-003: Create Student Profile", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L80"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_004_view_student_profile_details", "label": "FR-STU-004: View Student Profile Details", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L103"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_005_reveal_masked_pii_with_justification", "label": "FR-STU-005: Reveal Masked PII with Justification", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L122"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_006_update_student_linked_identity_data", "label": "FR-STU-006: Update Student Linked Identity Data", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L144"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_007_change_student_status", "label": "FR-STU-007: Change Student Status", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L171"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_008_issue_or_reissue_student_identity_card", "label": "FR-STU-008: Issue or Reissue Student Identity Card", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L193"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_009_attach_and_review_student_documents", "label": "FR-STU-009: Attach and Review Student Documents", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L217"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_010_surface_student_document_compliance_status", "label": "FR-STU-010: Surface Student Document Compliance Status", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L240"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_011_record_student_audit_trail_entries", "label": "FR-STU-011: Record Student Audit Trail Entries", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L258"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_012_provide_student_timeline_and_history_view", "label": "FR-STU-012: Provide Student Timeline and History View", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L279"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_3_business_rules_table", "label": "3. Business Rules Table", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L298"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_state_transition_rules", "label": "4. State Transition Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L317"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_1_student_status_state_machine", "label": "4.1 Student Status State Machine", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L319"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_2_student_status_guard_conditions", "label": "4.2 Student Status Guard Conditions", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L329"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_3_identity_card_state_rules", "label": "4.3 Identity Card State Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L336"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_4_document_verification_rules", "label": "4.4 Document Verification Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L341"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_5_cross_module_dependencies_mapping", "label": "5. Cross-Module Dependencies Mapping", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L348"}, {"id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_6_notes_on_business_boundaries", "label": "6. Notes on Business Boundaries", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L363"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_1_business_overview_functional_requirements_business_rules_md", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_functional_requirement_document_part_1", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_functional_requirement_document_part_1", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_module_05_student_management_business_overview_functional_requirements_business_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L2", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_functional_requirement_document_part_1", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_1_introduction_and_business_benefits", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L11", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_1_introduction_and_business_benefits", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_business_benefits", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L17", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_functional_requirement_document_part_1", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L27", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_001_search_branch_scoped_student_profiles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L29", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_002_perform_global_duplicate_preflight_on_person_records", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L58", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_003_create_student_profile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L80", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_004_view_student_profile_details", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L103", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_005_reveal_masked_pii_with_justification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L122", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_006_update_student_linked_identity_data", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L144", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_007_change_student_status", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L171", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_008_issue_or_reissue_student_identity_card", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L193", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_009_attach_and_review_student_documents", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L217", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_010_surface_student_document_compliance_status", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L240", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_011_record_student_audit_trail_entries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L258", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_012_provide_student_timeline_and_history_view", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L279", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_functional_requirement_document_part_1", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_3_business_rules_table", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L298", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_functional_requirement_document_part_1", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_state_transition_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L317", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_state_transition_rules", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_1_student_status_state_machine", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L319", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_state_transition_rules", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_2_student_status_guard_conditions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L329", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_state_transition_rules", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_3_identity_card_state_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L336", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_state_transition_rules", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_4_document_verification_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L341", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_functional_requirement_document_part_1", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_5_cross_module_dependencies_mapping", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L348", "weight": 1.0}, {"source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_functional_requirement_document_part_1", "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_6_notes_on_business_boundaries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L363", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_1_business_overview_functional_requirements_business_rules_md",
+      "label": "Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_functional_requirement_document_part_1",
+      "label": "Functional Requirement Document (Part 1)",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_module_05_student_management_business_overview_functional_requirements_business_rules",
+      "label": "Module 05: Student Management - Business Overview, Functional Requirements, Business Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L2"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_1_introduction_and_business_benefits",
+      "label": "1. Introduction and Business Benefits",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L11"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_business_benefits",
+      "label": "Business Benefits",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L17"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "label": "2. Detailed Functional Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L27"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_001_search_branch_scoped_student_profiles",
+      "label": "FR-STU-001: Search Branch-Scoped Student Profiles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L29"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_002_perform_global_duplicate_preflight_on_person_records",
+      "label": "FR-STU-002: Perform Global Duplicate Preflight on Person Records",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L58"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_003_create_student_profile",
+      "label": "FR-STU-003: Create Student Profile",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L80"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_004_view_student_profile_details",
+      "label": "FR-STU-004: View Student Profile Details",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L103"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_005_reveal_masked_pii_with_justification",
+      "label": "FR-STU-005: Reveal Masked PII with Justification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L122"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_006_update_student_linked_identity_data",
+      "label": "FR-STU-006: Update Student Linked Identity Data",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L144"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_007_change_student_status",
+      "label": "FR-STU-007: Change Student Status",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L171"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_008_issue_or_reissue_student_identity_card",
+      "label": "FR-STU-008: Issue or Reissue Student Identity Card",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L193"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_009_attach_and_review_student_documents",
+      "label": "FR-STU-009: Attach and Review Student Documents",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L217"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_010_surface_student_document_compliance_status",
+      "label": "FR-STU-010: Surface Student Document Compliance Status",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L240"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_011_record_student_audit_trail_entries",
+      "label": "FR-STU-011: Record Student Audit Trail Entries",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L258"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_012_provide_student_timeline_and_history_view",
+      "label": "FR-STU-012: Provide Student Timeline and History View",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L279"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_3_business_rules_table",
+      "label": "3. Business Rules Table",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L298"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_state_transition_rules",
+      "label": "4. State Transition Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L317"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_1_student_status_state_machine",
+      "label": "4.1 Student Status State Machine",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L319"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_2_student_status_guard_conditions",
+      "label": "4.2 Student Status Guard Conditions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L329"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_3_identity_card_state_rules",
+      "label": "4.3 Identity Card State Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L336"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_4_document_verification_rules",
+      "label": "4.4 Document Verification Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L341"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_5_cross_module_dependencies_mapping",
+      "label": "5. Cross-Module Dependencies Mapping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L348"
+    },
+    {
+      "id": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_6_notes_on_business_boundaries",
+      "label": "6. Notes on Business Boundaries",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L363"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_1_business_overview_functional_requirements_business_rules_md",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_functional_requirement_document_part_1",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_functional_requirement_document_part_1",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_module_05_student_management_business_overview_functional_requirements_business_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_functional_requirement_document_part_1",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_1_introduction_and_business_benefits",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_1_introduction_and_business_benefits",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_business_benefits",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_functional_requirement_document_part_1",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_001_search_branch_scoped_student_profiles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_002_perform_global_duplicate_preflight_on_person_records",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_003_create_student_profile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L80",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_004_view_student_profile_details",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L103",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_005_reveal_masked_pii_with_justification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L122",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_006_update_student_linked_identity_data",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L144",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_007_change_student_status",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L171",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_008_issue_or_reissue_student_identity_card",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L193",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_009_attach_and_review_student_documents",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L217",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_010_surface_student_document_compliance_status",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L240",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_011_record_student_audit_trail_entries",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L258",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_fr_stu_012_provide_student_timeline_and_history_view",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L279",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_functional_requirement_document_part_1",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_3_business_rules_table",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L298",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_functional_requirement_document_part_1",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_state_transition_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L317",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_state_transition_rules",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_1_student_status_state_machine",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L319",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_state_transition_rules",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_2_student_status_guard_conditions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L329",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_state_transition_rules",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_3_identity_card_state_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L336",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_state_transition_rules",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_4_4_document_verification_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L341",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_functional_requirement_document_part_1",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_5_cross_module_dependencies_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L348",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_functional_requirement_document_part_1",
+      "target": "module_05_student_management_part_1_business_overview_functional_requirements_business_rules_6_notes_on_business_boundaries",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L363",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

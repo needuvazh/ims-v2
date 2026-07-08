@@ -9,6 +9,7 @@ We will introduce the `WaitingList` model, enqueue/dequeue/skip/reactivate metho
 ## Capabilities
 
 ### New Capabilities
+
 - `batch-waitlist`: Covers waitlist queuing, FIFO positions management, drag-and-drop reprioritization, auto/manual promotions, candidate skips (holds), queue cancellations, and reactivation of suspended entries.
 
 ### Modified Capabilities

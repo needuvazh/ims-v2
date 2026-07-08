@@ -1,1 +1,127 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_md", "label": "Part 10 - Security Architecture and NFR.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1"}, {"id": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "label": "Part 10 - Security Architecture and NFR", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1"}, {"id": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_module_09_faculty_trainer_management", "label": "Module 09 - Faculty / Trainer Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md", "source_location": "L3"}, {"id": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_1_purpose", "label": "1. Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md", "source_location": "L5"}, {"id": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_2_security_principles", "label": "2. Security Principles", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md", "source_location": "L13"}, {"id": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_3_threat_controls", "label": "3. Threat Controls", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md", "source_location": "L28"}, {"id": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_4_non_functional_requirements", "label": "4. Non-Functional Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md", "source_location": "L45"}, {"id": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_5_security_validation_summary", "label": "5. Security Validation Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md", "source_location": "L60"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_md", "target": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_module_09_faculty_trainer_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md", "source_location": "L3", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md", "source_location": "L5", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_2_security_principles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md", "source_location": "L13", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_3_threat_controls", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md", "source_location": "L28", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_4_non_functional_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md", "source_location": "L45", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_5_security_validation_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md", "source_location": "L60", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_md",
+      "label": "Part 10 - Security Architecture and NFR.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "label": "Part 10 - Security Architecture and NFR",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_module_09_faculty_trainer_management",
+      "label": "Module 09 - Faculty / Trainer Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_1_purpose",
+      "label": "1. Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_2_security_principles",
+      "label": "2. Security Principles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L13"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_3_threat_controls",
+      "label": "3. Threat Controls",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L28"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_4_non_functional_requirements",
+      "label": "4. Non-Functional Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L45"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_5_security_validation_summary",
+      "label": "5. Security Validation Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L60"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_module_09_faculty_trainer_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_2_security_principles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_3_threat_controls",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_4_non_functional_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_09_faculty_trainer_management_part_10_security_architecture_and_nfr_5_security_validation_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L60",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

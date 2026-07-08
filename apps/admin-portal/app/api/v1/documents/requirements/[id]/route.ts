@@ -9,7 +9,7 @@ import { prisma } from '@ims/database';
 
 export async function PUT(
   request: Request,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   const { id } = await params;
   return withRouteObservability(request.headers, async () =>
@@ -17,12 +17,22 @@ export async function PUT(
       const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
       try {
         const payload = await request.json();
-        const { targetEntity, documentType, isMandatory, branchId, courseId, status } = payload;
+        const {
+          targetEntity,
+          documentType,
+          isMandatory,
+          branchId,
+          courseId,
+          status,
+        } = payload;
 
         if (!targetEntity || !documentType) {
           return NextResponse.json(
-            { success: false, messageEnglish: 'targetEntity and documentType are required' },
-            { status: 400 }
+            {
+              success: false,
+              messageEnglish: 'targetEntity and documentType are required',
+            },
+            { status: 400 },
           );
         }
 
@@ -40,19 +50,24 @@ export async function PUT(
 
         return NextResponse.json({ success: true, data: updated });
       } catch (err: any) {
-        logger.error('Failed to update document requirement', { error: err.message });
+        logger.error('Failed to update document requirement', {
+          error: err.message,
+        });
         return NextResponse.json(
-          { success: false, messageEnglish: err.message || 'Internal server error' },
-          { status: 500 }
+          {
+            success: false,
+            messageEnglish: err.message || 'Internal server error',
+          },
+          { status: 500 },
         );
       }
-    })
+    }),
   );
 }
 
 export async function DELETE(
   request: Request,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   const { id } = await params;
   return withRouteObservability(request.headers, async () =>
@@ -65,12 +80,17 @@ export async function DELETE(
 
         return NextResponse.json({ success: true });
       } catch (err: any) {
-        logger.error('Failed to delete document requirement', { error: err.message });
+        logger.error('Failed to delete document requirement', {
+          error: err.message,
+        });
         return NextResponse.json(
-          { success: false, messageEnglish: err.message || 'Internal server error' },
-          { status: 500 }
+          {
+            success: false,
+            messageEnglish: err.message || 'Internal server error',
+          },
+          { status: 500 },
         );
       }
-    })
+    }),
   );
 }

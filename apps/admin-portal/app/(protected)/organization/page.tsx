@@ -6,4 +6,3 @@ export const dynamic = 'force-dynamic';
 export default function OrganizationIndexPage() {
   redirect('/organization/institutes');
 }
-

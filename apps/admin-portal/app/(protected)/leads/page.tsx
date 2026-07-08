@@ -12,6 +12,7 @@ export default async function LeadsPage(props: {
     page?: string;
     sortBy?: string;
     sortOrder?: string;
+    nationalId?: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
@@ -25,7 +26,7 @@ export default async function LeadsPage(props: {
   // Resolve allowed branch IDs for the active user context
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
     session.userId as any,
-    session.activeBranchId as any
+    session.activeBranchId as any,
   );
 
   // Counselor Isolation Check: non-global users only see their own assigned leads
@@ -57,20 +58,33 @@ export default async function LeadsPage(props: {
     search: searchParams.q,
     sortBy: searchParams.sortBy as any,
     sortOrder: searchParams.sortOrder as any,
+    nationalId: searchParams.nationalId,
   };
 
-  const { items: rawLeads, total } = await leadService.findAll(filters, { page, limit });
+  const { items: rawLeads, total } = await leadService.findAll(filters, {
+    page,
+    limit,
+  });
 
   // Map database lead fields to match UI expectations
   const leads = rawLeads.map((l) => ({
     ...l,
     branch: l.branch ? { id: l.branchId, name: l.branch.branchName } : null,
-    counselor: l.counselor ? { id: l.counselorId, name: l.counselor.username } : null,
-    interestedCourse: l.interestedCourse ? { id: l.interestedCourseId, nameEnglish: l.interestedCourse.nameEnglish } : null,
+    counselor: l.counselor
+      ? { id: l.counselorId, name: l.counselor.username }
+      : null,
+    interestedCourse: l.interestedCourse
+      ? {
+          id: l.interestedCourseId,
+          nameEnglish: l.interestedCourse.nameEnglish,
+        }
+      : null,
   }));
 
   // Resolve master values lists (branches, courses, counselors) for the form inputs
-  const branchesResult = await organizationService.listBranches({ pageSize: 100 });
+  const branchesResult = await organizationService.listBranches({
+    pageSize: 100,
+  });
   const branches =
     allowedBranchIds.length === 0
       ? branchesResult.items.map((b) => ({ id: b.id, name: b.branchName }))
@@ -80,11 +94,7 @@ export default async function LeadsPage(props: {
 
   return (
     <AdminListPageLayout className="pt-1 sm:pt-0">
-      <LeadsClientList
-        leads={leads}
-        branches={branches}
-        total={total}
-      />
+      <LeadsClientList leads={leads} branches={branches} total={total} />
     </AdminListPageLayout>
   );
 }

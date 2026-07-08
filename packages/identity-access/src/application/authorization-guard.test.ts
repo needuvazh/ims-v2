@@ -1,12 +1,21 @@
 import crypto from 'crypto';
 import { beforeEach, describe, expect, it } from 'vitest';
-import type { IUserBranchAccessRepository, IRoleRepository, ISessionRepository, IUserRepository } from '../domain/repositories';
+import type {
+  IUserBranchAccessRepository,
+  IRoleRepository,
+  ISessionRepository,
+  IUserRepository,
+} from '../domain/repositories';
 import type { User } from '../domain/user';
 import type { Role } from '../domain/role';
 import type { Permission } from '../domain/permission';
 import type { UserBranchAccess } from '../domain/user-branch-access';
 import type { UserSessionDto } from '../domain/repositories';
-import { AuthorizationGuard, BranchScopeResolver, EffectivePermissionsService } from './authorization-guard';
+import {
+  AuthorizationGuard,
+  BranchScopeResolver,
+  EffectivePermissionsService,
+} from './authorization-guard';
 
 function createUser(overrides: Partial<User> = {}): User {
   return {
@@ -48,7 +57,11 @@ function createRole(overrides: Partial<Role> = {}): Role {
   };
 }
 
-function createBranchAccess(userId: string, branchId: string, overrides: Partial<UserBranchAccess> = {}): UserBranchAccess {
+function createBranchAccess(
+  userId: string,
+  branchId: string,
+  overrides: Partial<UserBranchAccess> = {},
+): UserBranchAccess {
   return {
     id: crypto.randomUUID(),
     userId: userId as never,
@@ -95,27 +108,57 @@ describe('AuthorizationGuard', () => {
   let service: AuthorizationGuard;
 
   beforeEach(() => {
-    const users = new Map<string, User>([[userId, createUser({ id: userId as never })]]);
-    const sessions = new Map<string, UserSessionDto>([[
-      'session-1',
-      {
-        id: 'session-1' as never,
-        userId: userId as never,
-        accessTokenJti: 'session-1',
-        hashedRefreshToken: 'hash',
-        previousHashedRefreshToken: null,
-        activeBranchId: branchId as never,
-        userAgent: null,
-        ipAddress: null,
-        status: 'Active',
-        expiresAt: new Date(Date.now() + 60_000),
-        lastActivityAt: new Date(),
-        createdAt: new Date(),
-      },
-    ]]);
-    const rolePermissions = new Map<string, Permission[]>([[role.id, [permission]]]);
-    const userRoles = new Map<string, Array<{ role: Role; status: string; revokedAt: Date | null; revokedBy: string | null; reason: string | null }>>([[userId, [{ role, status: 'Active', revokedAt: null, revokedBy: null, reason: null }]]]);
-    const branchAccess = new Map<string, UserBranchAccess[]>([[userId, [createBranchAccess(userId, branchId)]]]);
+    const users = new Map<string, User>([
+      [userId, createUser({ id: userId as never })],
+    ]);
+    const sessions = new Map<string, UserSessionDto>([
+      [
+        'session-1',
+        {
+          id: 'session-1' as never,
+          userId: userId as never,
+          accessTokenJti: 'session-1',
+          hashedRefreshToken: 'hash',
+          previousHashedRefreshToken: null,
+          activeBranchId: branchId as never,
+          userAgent: null,
+          ipAddress: null,
+          status: 'Active',
+          expiresAt: new Date(Date.now() + 60_000),
+          lastActivityAt: new Date(),
+          createdAt: new Date(),
+        },
+      ],
+    ]);
+    const rolePermissions = new Map<string, Permission[]>([
+      [role.id, [permission]],
+    ]);
+    const userRoles = new Map<
+      string,
+      Array<{
+        role: Role;
+        status: string;
+        revokedAt: Date | null;
+        revokedBy: string | null;
+        reason: string | null;
+      }>
+    >([
+      [
+        userId,
+        [
+          {
+            role,
+            status: 'Active',
+            revokedAt: null,
+            revokedBy: null,
+            reason: null,
+          },
+        ],
+      ],
+    ]);
+    const branchAccess = new Map<string, UserBranchAccess[]>([
+      [userId, [createBranchAccess(userId, branchId)]],
+    ]);
 
     userRepo = {
       findById: async (id) => users.get(String(id)) ?? null,
@@ -136,7 +179,10 @@ describe('AuthorizationGuard', () => {
     sessionRepo = {
       create: async (session) => session,
       findById: async (id) => sessions.get(String(id)) ?? null,
-      findByAccessTokenJti: async (jti) => Array.from(sessions.values()).find((session) => session.accessTokenJti === jti) ?? null,
+      findByAccessTokenJti: async (jti) =>
+        Array.from(sessions.values()).find(
+          (session) => session.accessTokenJti === jti,
+        ) ?? null,
       findByHashedRefreshToken: async () => null,
       update: async (session) => {
         sessions.set(String(session.id), session);
@@ -144,7 +190,11 @@ describe('AuthorizationGuard', () => {
       },
       revoke: async () => undefined,
       revokeAllForUser: async () => undefined,
-      listActiveForUser: async (targetUserId) => Array.from(sessions.values()).filter((session) => session.userId === targetUserId && session.status === 'Active'),
+      listActiveForUser: async (targetUserId) =>
+        Array.from(sessions.values()).filter(
+          (session) =>
+            session.userId === targetUserId && session.status === 'Active',
+        ),
     };
 
     roleRepo = {
@@ -168,19 +218,42 @@ describe('AuthorizationGuard', () => {
       update: async (access) => access,
     };
 
-    service = new AuthorizationGuard(userRepo, sessionRepo, new EffectivePermissionsService(userRepo, roleRepo), new BranchScopeResolver(branchAccessRepo));
+    service = new AuthorizationGuard(
+      userRepo,
+      sessionRepo,
+      new EffectivePermissionsService(userRepo, roleRepo),
+      new BranchScopeResolver(branchAccessRepo),
+    );
   });
 
   it('verifies permissions for active sessions and branches', async () => {
-    await expect(service.verifyPermission(userId as never, 'iam.user.read', branchId as never)).resolves.toBe(true);
+    await expect(
+      service.verifyPermission(
+        userId as never,
+        'iam.user.read',
+        branchId as never,
+      ),
+    ).resolves.toBe(true);
   });
 
   it('rejects users without an active session', async () => {
     sessionRepo.listActiveForUser = async () => [];
-    await expect(service.verifyPermission(userId as never, 'iam.user.read', branchId as never)).rejects.toMatchObject({ errorCode: 'IAM-AUTH-002' });
+    await expect(
+      service.verifyPermission(
+        userId as never,
+        'iam.user.read',
+        branchId as never,
+      ),
+    ).rejects.toMatchObject({ errorCode: 'IAM-AUTH-002' });
   });
 
   it('rejects branch access outside active assignments', async () => {
-    await expect(service.verifyPermission(userId as never, 'iam.user.read', '22222222-2222-2222-2222-222222222222' as never)).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
+    await expect(
+      service.verifyPermission(
+        userId as never,
+        'iam.user.read',
+        '22222222-2222-2222-2222-222222222222' as never,
+      ),
+    ).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
   });
 });

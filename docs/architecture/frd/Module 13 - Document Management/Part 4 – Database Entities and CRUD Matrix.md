@@ -49,21 +49,21 @@ The actual `packages/database/prisma/schema.prisma` is implemented in the codeba
 
 # 2. Aggregate and Table Ownership Summary
 
-| Entity / Table | Classification | Owning Bounded Context | Module 13 Usage | Create Local Table? |
-|---|---|---|---|---|
-| `Document` | Owned aggregate/lifecycle record | Document Management | Primary document metadata, file reference, branch link, and overall lifecycle status | Yes |
-| `DocumentOwner` | Owned relation table | Document Management | Many-to-many link between a Document and its business owners (Student, Trainer, Corporate, Person) | Yes |
-| `DocumentVerification` | Owned child/history entity | Document Management | Immutable verification decision history | Yes |
-| `DocumentType` | Scalar Enum | Document Management / Master Data | Validate and classify document category | No (Prisma enum) |
-| `StudentProfile` | Referenced | Admission & Enrollment | Owner validation | No |
-| `TrainerProfile` | Referenced | Faculty / Trainer Management | Owner validation | No |
-| `CorporateAccount` | Referenced | Corporate Training | Owner validation | No |
-| `Person` | Referenced | Shared Party / Person model | Generic person-level document owner | No |
-| `User` | Referenced | Identity & Access Management | `createdBy`, verifier, authorization context | No |
-| `Branch` | Referenced | Organization Management | Branch isolation via direct branch reference | No |
-| `UserBranchAccess` | Referenced | Identity & Access Management | Authorized branch set and consolidated access | No |
-| `AuditLog` | Referenced side-effect target | Audit & Compliance | Sensitive action audit facts | No |
-| `NotificationRequest` | Referenced side-effect target | Communication & Notification | Expiry reminder delivery | No |
+| Entity / Table         | Classification                   | Owning Bounded Context            | Module 13 Usage                                                                                    | Create Local Table? |
+| ---------------------- | -------------------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------- | ------------------- |
+| `Document`             | Owned aggregate/lifecycle record | Document Management               | Primary document metadata, file reference, branch link, and overall lifecycle status               | Yes                 |
+| `DocumentOwner`        | Owned relation table             | Document Management               | Many-to-many link between a Document and its business owners (Student, Trainer, Corporate, Person) | Yes                 |
+| `DocumentVerification` | Owned child/history entity       | Document Management               | Immutable verification decision history                                                            | Yes                 |
+| `DocumentType`         | Scalar Enum                      | Document Management / Master Data | Validate and classify document category                                                            | No (Prisma enum)    |
+| `StudentProfile`       | Referenced                       | Admission & Enrollment            | Owner validation                                                                                   | No                  |
+| `TrainerProfile`       | Referenced                       | Faculty / Trainer Management      | Owner validation                                                                                   | No                  |
+| `CorporateAccount`     | Referenced                       | Corporate Training                | Owner validation                                                                                   | No                  |
+| `Person`               | Referenced                       | Shared Party / Person model       | Generic person-level document owner                                                                | No                  |
+| `User`                 | Referenced                       | Identity & Access Management      | `createdBy`, verifier, authorization context                                                       | No                  |
+| `Branch`               | Referenced                       | Organization Management           | Branch isolation via direct branch reference                                                       | No                  |
+| `UserBranchAccess`     | Referenced                       | Identity & Access Management      | Authorized branch set and consolidated access                                                      | No                  |
+| `AuditLog`             | Referenced side-effect target    | Audit & Compliance                | Sensitive action audit facts                                                                       | No                  |
+| `NotificationRequest`  | Referenced side-effect target    | Communication & Notification      | Expiry reminder delivery                                                                           | No                  |
 
 ---
 
@@ -80,40 +80,43 @@ Prisma model name: `Document`
 
 ## 3.3 Field specification
 
-| Field | Recommended DB Type | Prisma-Oriented Type | Nullability | Key / Constraint | Description |
-|---|---|---|---|---|---|
-| `id` | `uuid` | `String @id @default(uuid()) @db.Uuid` | NOT NULL | PK | Unique document identifier |
-| `fileKey` | `varchar(255)` | `String @db.VarChar(255)` | NOT NULL | None | Storage file path/key returned by Vercel Blob |
-| `fileName` | `varchar(255)` | `String @db.VarChar(255)` | NOT NULL | None | Original/safe file name for UI display |
-| `fileType` | `varchar(100)` | `String @db.VarChar(100)` | NOT NULL | None | MIME content-type of the file (e.g. application/pdf) |
-| `documentType` | `varchar(50)` (enum) | `DocumentType` enum | NOT NULL | Enum constraint | Standard category: `CIVIL_ID_FRONT`, `CIVIL_ID_BACK`, `PASSPORT_SCAN`, `ACADEMIC_TRANSCRIPT`, `SPONSORSHIP_LETTER`, `OTHER` |
-| `branchId` | `uuid` | `String @db.Uuid` | NOT NULL | FK → `Branch.id` | Branch this document belongs to, derived from owner during upload |
-| `status` | `varchar(32)` (enum) | `DocumentStatus` enum | NOT NULL | Default `Active` | Lifecycle state: `Draft`, `Active`, `Expired`, `Replaced`, `Deleted` |
-| `issueDate` | `date` | `DateTime? @db.Date` | NULL | **IMPLEMENTATION GAP** | Business issue date (To be added via migration) |
-| `expiryDate` | `date` | `DateTime? @db.Date` | NULL | **IMPLEMENTATION GAP** | Business expiry date (To be added via migration) |
-| `version` | `integer` | `Int @default(1)` | NOT NULL | **IMPLEMENTATION GAP** | Optimistic lock token (To be added via migration) |
-| `createdAt` | `timestamptz` | `DateTime @default(now()) @db.Timestamptz(6)` | NOT NULL | None | Record creation timestamp |
-| `createdBy` | `uuid` | `String? @db.Uuid` | NULL | None | Creator user ID (resolves to IAM User) |
-| `updatedAt` | `timestamptz` | `DateTime? @db.Timestamptz(6)` | NULL | None | Record update timestamp |
-| `updatedBy` | `uuid` | `String? @db.Uuid` | NULL | None | Editor user ID |
-| `deletedAt` | `timestamptz` | `DateTime? @db.Timestamptz(6)` | NULL | None | Soft-delete timestamp |
-| `deletedBy` | `uuid` | `String? @db.Uuid` | NULL | None | Soft-delete actor |
-| `isDeleted` | `boolean` | `Boolean @default(false)` | NOT NULL | Default `false` | Soft-delete flag |
+| Field          | Recommended DB Type  | Prisma-Oriented Type                          | Nullability | Key / Constraint       | Description                                                                                                                 |
+| -------------- | -------------------- | --------------------------------------------- | ----------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `id`           | `uuid`               | `String @id @default(uuid()) @db.Uuid`        | NOT NULL    | PK                     | Unique document identifier                                                                                                  |
+| `fileKey`      | `varchar(255)`       | `String @db.VarChar(255)`                     | NOT NULL    | None                   | Storage file path/key returned by Vercel Blob                                                                               |
+| `fileName`     | `varchar(255)`       | `String @db.VarChar(255)`                     | NOT NULL    | None                   | Original/safe file name for UI display                                                                                      |
+| `fileType`     | `varchar(100)`       | `String @db.VarChar(100)`                     | NOT NULL    | None                   | MIME content-type of the file (e.g. application/pdf)                                                                        |
+| `documentType` | `varchar(50)` (enum) | `DocumentType` enum                           | NOT NULL    | Enum constraint        | Standard category: `CIVIL_ID_FRONT`, `CIVIL_ID_BACK`, `PASSPORT_SCAN`, `ACADEMIC_TRANSCRIPT`, `SPONSORSHIP_LETTER`, `OTHER` |
+| `branchId`     | `uuid`               | `String @db.Uuid`                             | NOT NULL    | FK → `Branch.id`       | Branch this document belongs to, derived from owner during upload                                                           |
+| `status`       | `varchar(32)` (enum) | `DocumentStatus` enum                         | NOT NULL    | Default `Active`       | Lifecycle state: `Draft`, `Active`, `Expired`, `Replaced`, `Deleted`                                                        |
+| `issueDate`    | `date`               | `DateTime? @db.Date`                          | NULL        | **IMPLEMENTATION GAP** | Business issue date (To be added via migration)                                                                             |
+| `expiryDate`   | `date`               | `DateTime? @db.Date`                          | NULL        | **IMPLEMENTATION GAP** | Business expiry date (To be added via migration)                                                                            |
+| `version`      | `integer`            | `Int @default(1)`                             | NOT NULL    | **IMPLEMENTATION GAP** | Optimistic lock token (To be added via migration)                                                                           |
+| `createdAt`    | `timestamptz`        | `DateTime @default(now()) @db.Timestamptz(6)` | NOT NULL    | None                   | Record creation timestamp                                                                                                   |
+| `createdBy`    | `uuid`               | `String? @db.Uuid`                            | NULL        | None                   | Creator user ID (resolves to IAM User)                                                                                      |
+| `updatedAt`    | `timestamptz`        | `DateTime? @db.Timestamptz(6)`                | NULL        | None                   | Record update timestamp                                                                                                     |
+| `updatedBy`    | `uuid`               | `String? @db.Uuid`                            | NULL        | None                   | Editor user ID                                                                                                              |
+| `deletedAt`    | `timestamptz`        | `DateTime? @db.Timestamptz(6)`                | NULL        | None                   | Soft-delete timestamp                                                                                                       |
+| `deletedBy`    | `uuid`               | `String? @db.Uuid`                            | NULL        | None                   | Soft-delete actor                                                                                                           |
+| `isDeleted`    | `boolean`            | `Boolean @default(false)`                     | NOT NULL    | Default `false`        | Soft-delete flag                                                                                                            |
 
 ## 3.4 Keys and constraints
 
 ### Primary key
+
 ```text
 PK_Document(id)
 ```
 
 ### Foreign keys
+
 ```text
 FK_Document_Branch
 (branchId) REFERENCES branches(id) ON DELETE RESTRICT
 ```
 
 ### Required check constraints (Logical/Application-level)
+
 ```text
 CHK_Document_DateRange
 expiryDate IS NULL OR issueDate IS NULL OR expiryDate >= issueDate
@@ -121,11 +124,11 @@ expiryDate IS NULL OR issueDate IS NULL OR expiryDate >= issueDate
 
 ## 3.5 Indexes
 
-| Index Name | Columns | Type | Purpose |
-|---|---|---|---|
-| `IDX_Document_Branch` | `(branchId)` | B-tree | Branch-scoping queries (Exists in Prisma: `@@index([branchId])`) |
-| `IDX_Document_Status` | `(status, isDeleted)` | B-tree | Registry filtering |
-| `IDX_Document_Expiry` | `(expiryDate)` | B-tree | Expiry alerts and background batch evaluation |
+| Index Name            | Columns               | Type   | Purpose                                                          |
+| --------------------- | --------------------- | ------ | ---------------------------------------------------------------- |
+| `IDX_Document_Branch` | `(branchId)`          | B-tree | Branch-scoping queries (Exists in Prisma: `@@index([branchId])`) |
+| `IDX_Document_Status` | `(status, isDeleted)` | B-tree | Registry filtering                                               |
+| `IDX_Document_Expiry` | `(expiryDate)`        | B-tree | Expiry alerts and background batch evaluation                    |
 
 ## 3.6 Current-state consistency rules
 
@@ -142,32 +145,36 @@ expiryDate IS NULL OR issueDate IS NULL OR expiryDate >= issueDate
 # 3.7 Entity Specification – `DocumentOwner`
 
 ## 3.7.1 Purpose
+
 `DocumentOwner` is a relation table mapping `Document` to multiple business owners (`StudentProfile`, `TrainerProfile`, `CorporateAccount`, `Person`). This supports polymorphic ownership and shared evidence.
 
 ## 3.7.2 Physical table
+
 Physical SQL table name: `document_owners`  
 Prisma model name: `DocumentOwner`
 
 ## 3.7.3 Field specification
 
-| Field | Recommended DB Type | Prisma-Oriented Type | Nullability | Key / Constraint | Description |
-|---|---|---|---|---|---|
-| `id` | `uuid` | `String @id @default(uuid()) @db.Uuid` | NOT NULL | PK | Unique record ID |
-| `documentId` | `uuid` | `String @db.Uuid` | NOT NULL | FK → `Document.id` | Associated document |
-| `ownerId` | `uuid` | `String @db.Uuid` | NOT NULL | Logical FK | ID of the owner in their source context |
-| `ownerType` | `varchar(32)` | `OwnerType` enum | NOT NULL | Enum constraint | Owner type: `Person`, `StudentProfile`, `Admission`, `Enrollment` |
-| `createdAt` | `timestamptz` | `DateTime @default(now()) @db.Timestamptz(6)` | NOT NULL | None | Mapping creation time |
-| `createdBy` | `uuid` | `String? @db.Uuid` | NULL | None | User who created mapping |
+| Field        | Recommended DB Type | Prisma-Oriented Type                          | Nullability | Key / Constraint   | Description                                                       |
+| ------------ | ------------------- | --------------------------------------------- | ----------- | ------------------ | ----------------------------------------------------------------- |
+| `id`         | `uuid`              | `String @id @default(uuid()) @db.Uuid`        | NOT NULL    | PK                 | Unique record ID                                                  |
+| `documentId` | `uuid`              | `String @db.Uuid`                             | NOT NULL    | FK → `Document.id` | Associated document                                               |
+| `ownerId`    | `uuid`              | `String @db.Uuid`                             | NOT NULL    | Logical FK         | ID of the owner in their source context                           |
+| `ownerType`  | `varchar(32)`       | `OwnerType` enum                              | NOT NULL    | Enum constraint    | Owner type: `Person`, `StudentProfile`, `Admission`, `Enrollment` |
+| `createdAt`  | `timestamptz`       | `DateTime @default(now()) @db.Timestamptz(6)` | NOT NULL    | None               | Mapping creation time                                             |
+| `createdBy`  | `uuid`              | `String? @db.Uuid`                            | NULL        | None               | User who created mapping                                          |
 
 ## 3.7.4 Keys and constraints
 
 ### Unique Constraint
+
 ```text
 UQ_DocumentOwner_Document_Owner
 UNIQUE (documentId, ownerId, ownerType)
 ```
 
 ### Foreign keys
+
 ```text
 FK_DocumentOwner_Document
 (documentId) REFERENCES documents(id) ON DELETE CASCADE
@@ -188,25 +195,27 @@ Recommended Prisma model name: `DocumentVerification`
 
 ## 4.3 Field specification
 
-| Field | Recommended DB Type | Prisma-Oriented Type | Nullability | Key / Constraint | Description |
-|---|---|---|---|---|---|
-| `id` | `uuid` | `String @id @default(uuid()) @db.Uuid` | NOT NULL | PK | Unique verification record ID |
-| `documentId` | `uuid` | `String @db.Uuid` | NOT NULL | FK → `Document.id`, ON DELETE CASCADE | Parent document reference |
-| `outcome` | `varchar(32)` (enum) | `VerificationOutcome` enum | NOT NULL | Default `Pending` | Verification outcome: `Pending`, `Verified`, `Rejected` |
-| `verifiedBy` | `uuid` | `String? @db.Uuid` | NULL | FK → `User.id` | User who made the verification decision |
-| `verifiedAt` | `timestamptz` | `DateTime? @db.Timestamptz(6)` | NULL | None | Timestamp when verification was completed |
-| `remarks` | `text` | `String? @db.Text` | NULL | Mandatory on `Rejected` | Remarks/rejection reason |
-| `createdAt` | `timestamptz` | `DateTime @default(now()) @db.Timestamptz(6)` | NOT NULL | None | Creation timestamp of the record |
-| `createdBy` | `uuid` | `String? @db.Uuid` | NULL | None | Actor who registered the record |
+| Field        | Recommended DB Type  | Prisma-Oriented Type                          | Nullability | Key / Constraint                      | Description                                             |
+| ------------ | -------------------- | --------------------------------------------- | ----------- | ------------------------------------- | ------------------------------------------------------- |
+| `id`         | `uuid`               | `String @id @default(uuid()) @db.Uuid`        | NOT NULL    | PK                                    | Unique verification record ID                           |
+| `documentId` | `uuid`               | `String @db.Uuid`                             | NOT NULL    | FK → `Document.id`, ON DELETE CASCADE | Parent document reference                               |
+| `outcome`    | `varchar(32)` (enum) | `VerificationOutcome` enum                    | NOT NULL    | Default `Pending`                     | Verification outcome: `Pending`, `Verified`, `Rejected` |
+| `verifiedBy` | `uuid`               | `String? @db.Uuid`                            | NULL        | FK → `User.id`                        | User who made the verification decision                 |
+| `verifiedAt` | `timestamptz`        | `DateTime? @db.Timestamptz(6)`                | NULL        | None                                  | Timestamp when verification was completed               |
+| `remarks`    | `text`               | `String? @db.Text`                            | NULL        | Mandatory on `Rejected`               | Remarks/rejection reason                                |
+| `createdAt`  | `timestamptz`        | `DateTime @default(now()) @db.Timestamptz(6)` | NOT NULL    | None                                  | Creation timestamp of the record                        |
+| `createdBy`  | `uuid`               | `String? @db.Uuid`                            | NULL        | None                                  | Actor who registered the record                         |
 
 ## 4.4 Keys and constraints
 
 ### Primary key
+
 ```text
 PK_DocumentVerification(id)
 ```
 
 ### Foreign keys
+
 ```text
 FK_DocumentVerification_Document
 (documentId) REFERENCES documents(id) ON DELETE CASCADE
@@ -216,16 +225,17 @@ FK_DocumentVerification_Verifier
 ```
 
 ### Rejection remarks constraint (Application-level)
+
 ```text
 outcome = 'Rejected' -> remarks is required and trim(remarks) <> ''
 ```
 
 ## 4.5 Indexes
 
-| Index Name | Columns | Type | Purpose |
-|---|---|---|---|
-| `IDX_DocumentVerification_Document` | `(documentId)` | B-tree | Fetch document verification history (Exists in Prisma: `@@index([documentId])`) |
-| `IDX_DocumentVerification_OutcomeTime` | `(outcome, createdAt DESC)` | B-tree | Decision reporting |
+| Index Name                             | Columns                     | Type   | Purpose                                                                         |
+| -------------------------------------- | --------------------------- | ------ | ------------------------------------------------------------------------------- |
+| `IDX_DocumentVerification_Document`    | `(documentId)`              | B-tree | Fetch document verification history (Exists in Prisma: `@@index([documentId])`) |
+| `IDX_DocumentVerification_OutcomeTime` | `(outcome, createdAt DESC)` | B-tree | Decision reporting                                                              |
 
 ## 4.6 Immutability rules
 
@@ -241,27 +251,28 @@ outcome = 'Rejected' -> remarks is required and trim(remarks) <> ''
 
 ## 5.1 Owned relationships
 
-| Parent | Child | Cardinality | Physical FK | Delete Rule | Update Rule | Notes |
-|---|---|---:|---|---|---|---|
-| `Document` | `DocumentVerification` | 1:N | `DocumentVerification.documentId -> Document.id` | RESTRICT | RESTRICT | Verification history is preserved; parent uses soft delete |
+| Parent     | Child                  | Cardinality | Physical FK                                      | Delete Rule | Update Rule | Notes                                                      |
+| ---------- | ---------------------- | ----------: | ------------------------------------------------ | ----------- | ----------- | ---------------------------------------------------------- |
+| `Document` | `DocumentVerification` |         1:N | `DocumentVerification.documentId -> Document.id` | RESTRICT    | RESTRICT    | Verification history is preserved; parent uses soft delete |
 
 There is no DDD/ER evidence for a 1:1 or N:M relationship owned internally by this context.
 
 ## 5.2 Cross-context references
 
-| Local Entity.Field | Referenced Entity | Cardinality | Enforcement | Delete Rule | Ownership Note |
-|---|---|---|---|---|---|
-| `DocumentOwner.ownerId` where `ownerType=StudentProfile` | `StudentProfile.id` | N:1 logical | Application-service validation/read boundary | Source owner hard delete prohibited; reject new links to soft-deleted owner | Admission & Enrollment owns StudentProfile |
-| `DocumentOwner.ownerId` where `ownerType=TrainerProfile` | `TrainerProfile.id` | N:1 logical | Application-service validation/read boundary | Same principle | Faculty / Trainer owns TrainerProfile |
-| `DocumentOwner.ownerId` where `ownerType=CorporateAccount` | `CorporateAccount.id` | N:1 logical | Application-service validation/read boundary | Same principle | Corporate Training owns CorporateAccount |
-| `DocumentOwner.ownerId` where `ownerType=Person` | `Person.id` | N:1 logical | Application-service validation/read boundary | Same principle | Party / Person model owns Person |
-| `Document.createdBy` | `User.id` | N:1 | Physical FK | RESTRICT | IAM owns User |
-| `Document.updatedBy` | `User.id` | N:1 | Physical FK | RESTRICT | IAM owns User |
-| `DocumentVerification.verifiedBy` | `User.id` | N:1 optional | Physical FK | RESTRICT | IAM owns User |
+| Local Entity.Field                                         | Referenced Entity     | Cardinality  | Enforcement                                  | Delete Rule                                                                 | Ownership Note                             |
+| ---------------------------------------------------------- | --------------------- | ------------ | -------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------ |
+| `DocumentOwner.ownerId` where `ownerType=StudentProfile`   | `StudentProfile.id`   | N:1 logical  | Application-service validation/read boundary | Source owner hard delete prohibited; reject new links to soft-deleted owner | Admission & Enrollment owns StudentProfile |
+| `DocumentOwner.ownerId` where `ownerType=TrainerProfile`   | `TrainerProfile.id`   | N:1 logical  | Application-service validation/read boundary | Same principle                                                              | Faculty / Trainer owns TrainerProfile      |
+| `DocumentOwner.ownerId` where `ownerType=CorporateAccount` | `CorporateAccount.id` | N:1 logical  | Application-service validation/read boundary | Same principle                                                              | Corporate Training owns CorporateAccount   |
+| `DocumentOwner.ownerId` where `ownerType=Person`           | `Person.id`           | N:1 logical  | Application-service validation/read boundary | Same principle                                                              | Party / Person model owns Person           |
+| `Document.createdBy`                                       | `User.id`             | N:1          | Physical FK                                  | RESTRICT                                                                    | IAM owns User                              |
+| `Document.updatedBy`                                       | `User.id`             | N:1          | Physical FK                                  | RESTRICT                                                                    | IAM owns User                              |
+| `DocumentVerification.verifiedBy`                          | `User.id`             | N:1 optional | Physical FK                                  | RESTRICT                                                                    | IAM owns User                              |
 
 ## 5.3 Polymorphic owner mapping via DocumentOwner join table
 
 Rather than using direct polymorphic columns on the `Document` model, the system uses the `DocumentOwner` join table. A single `Document` references multiple owners via this mapping:
+
 - The application service validates owner existence using the `ownerType` to select the correct context resolver.
 - The resolver checks existence and active status.
 - Document Management stores mapping references in `DocumentOwner`.
@@ -378,12 +389,12 @@ authenticated user
 
 ## 7.3 Owner-specific branch rules
 
-| Owner Type | Source of Branch Scope | Document Rule |
-|---|---|---|
-| Student | Enrollment/Student read boundary as approved by Admission & Enrollment model | Actor must be authorized for the student's relevant operational branch scope; exact canonical derivation must follow the approved owner read contract |
-| Trainer | `TrainerProfile.branchId` and IAM branch hierarchy rules | Actor must have access to trainer branch or authorized parent/child scope |
-| Corporate | Corporate Training account relationship/read boundary | Actor must satisfy the branch/account visibility rule defined by Corporate Training; Document Management must not invent branch ownership |
-| Person | Shared Person has no branch field in ER baseline | Access requires an approved contextual ownership/branch derivation rule; unrestricted Person-document access is prohibited |
+| Owner Type | Source of Branch Scope                                                       | Document Rule                                                                                                                                         |
+| ---------- | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Student    | Enrollment/Student read boundary as approved by Admission & Enrollment model | Actor must be authorized for the student's relevant operational branch scope; exact canonical derivation must follow the approved owner read contract |
+| Trainer    | `TrainerProfile.branchId` and IAM branch hierarchy rules                     | Actor must have access to trainer branch or authorized parent/child scope                                                                             |
+| Corporate  | Corporate Training account relationship/read boundary                        | Actor must satisfy the branch/account visibility rule defined by Corporate Training; Document Management must not invent branch ownership             |
+| Person     | Shared Person has no branch field in ER baseline                             | Access requires an approved contextual ownership/branch derivation rule; unrestricted Person-document access is prohibited                            |
 
 ### Gap: Person branch scope
 
@@ -411,18 +422,18 @@ Permissions are capability-based. Role names below represent business actors, no
 
 ## 9.1 `Document`
 
-| Human Actor | C | R | U | D | Verification Transition | Branch Scope Logic |
-|---|---:|---:|---:|---:|---|---|
-| Document Administrator | Yes | Yes | Yes | Yes, soft delete only | Submit; approve/reject only if separately granted verifier capabilities | Owner-derived branch intersection; consolidated access only when IAM allows |
-| Admission Officer | Yes for accessible Student/Person owners | Yes | Limited metadata update before/under allowed lifecycle policy | Usually No unless explicitly granted | Submit if granted; no approve/reject by default assumption | Student/Person contextual scope derived through Admission & Enrollment plus IAM branches |
-| Trainer Coordinator | Yes for accessible Trainer owners | Yes | Limited metadata update | Usually No unless granted | Submit if granted; no approve/reject unless verifier permission granted | `TrainerProfile.branchId` intersected with IAM scope |
-| Corporate Account Coordinator | Yes for accessible Corporate owners | Yes | Limited metadata update | Usually No unless granted | Submit if granted; no approve/reject unless verifier permission granted | Corporate account visibility from Corporate Training read boundary intersected with IAM scope |
-| Document Verifier | No by verifier capability alone | Yes for verification queue/detail | No general metadata update by verifier capability alone | No | Approve or reject PendingVerification records according to distinct capabilities | Only records whose owners fall inside authorized branch/account scope |
-| Branch Manager | No unless `document.create` granted | Yes when read capability granted | No unless update capability granted | Yes only if retire capability granted | May approve/reject only if capability explicitly assigned | Own branch plus child branches only where IAM grants it |
-| Auditor / Compliance Reviewer | No | Read-only, including history when authorized | No | No | No | Authorized branch/consolidated scope plus audit/report permissions |
-| Reporting User | No | Read through approved report/read model only | No | No | No | Report permission + IAM branch/consolidated scope |
-| Student Self-Service User | Conditional future portal: create only own allowed types | Own documents only | Limited metadata only before submission if future policy permits | No | Submit own document if future policy permits; never approve/reject | Identity-bound owner scope; never arbitrary ownerId |
-| Trainer Self-Service User | Conditional future portal: create only own allowed types | Own trainer documents only | Limited metadata only before submission if future policy permits | No | Submit own document if future policy permits; never approve/reject | Authenticated trainer-to-owner binding + branch policy |
+| Human Actor                   |                                                        C |                                            R |                                                                U |                                     D | Verification Transition                                                          | Branch Scope Logic                                                                            |
+| ----------------------------- | -------------------------------------------------------: | -------------------------------------------: | ---------------------------------------------------------------: | ------------------------------------: | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| Document Administrator        |                                                      Yes |                                          Yes |                                                              Yes |                 Yes, soft delete only | Submit; approve/reject only if separately granted verifier capabilities          | Owner-derived branch intersection; consolidated access only when IAM allows                   |
+| Admission Officer             |                 Yes for accessible Student/Person owners |                                          Yes |    Limited metadata update before/under allowed lifecycle policy |  Usually No unless explicitly granted | Submit if granted; no approve/reject by default assumption                       | Student/Person contextual scope derived through Admission & Enrollment plus IAM branches      |
+| Trainer Coordinator           |                        Yes for accessible Trainer owners |                                          Yes |                                          Limited metadata update |             Usually No unless granted | Submit if granted; no approve/reject unless verifier permission granted          | `TrainerProfile.branchId` intersected with IAM scope                                          |
+| Corporate Account Coordinator |                      Yes for accessible Corporate owners |                                          Yes |                                          Limited metadata update |             Usually No unless granted | Submit if granted; no approve/reject unless verifier permission granted          | Corporate account visibility from Corporate Training read boundary intersected with IAM scope |
+| Document Verifier             |                          No by verifier capability alone |            Yes for verification queue/detail |          No general metadata update by verifier capability alone |                                    No | Approve or reject PendingVerification records according to distinct capabilities | Only records whose owners fall inside authorized branch/account scope                         |
+| Branch Manager                |                      No unless `document.create` granted |             Yes when read capability granted |                              No unless update capability granted | Yes only if retire capability granted | May approve/reject only if capability explicitly assigned                        | Own branch plus child branches only where IAM grants it                                       |
+| Auditor / Compliance Reviewer |                                                       No | Read-only, including history when authorized |                                                               No |                                    No | No                                                                               | Authorized branch/consolidated scope plus audit/report permissions                            |
+| Reporting User                |                                                       No | Read through approved report/read model only |                                                               No |                                    No | No                                                                               | Report permission + IAM branch/consolidated scope                                             |
+| Student Self-Service User     | Conditional future portal: create only own allowed types |                           Own documents only | Limited metadata only before submission if future policy permits |                                    No | Submit own document if future policy permits; never approve/reject               | Identity-bound owner scope; never arbitrary ownerId                                           |
+| Trainer Self-Service User     | Conditional future portal: create only own allowed types |                   Own trainer documents only | Limited metadata only before submission if future policy permits |                                    No | Submit own document if future policy permits; never approve/reject               | Authenticated trainer-to-owner binding + branch policy                                        |
 
 ### Important authorization rule
 
@@ -443,49 +454,49 @@ document.operations.reconcile
 
 ## 9.2 `DocumentVerification`
 
-| Human Actor | C | R | U | D | Branch Scope Logic |
-|---|---:|---:|---:|---:|---|
-| Document Administrator | Only indirectly through approve/reject use case if verifier permission granted | Yes when document read/history permission granted | No | No | Same owner-derived scope as parent Document |
-| Admission Officer | No direct create | Read if permitted for accessible owner | No | No | Parent Document owner scope |
-| Trainer Coordinator | No direct create | Read if permitted | No | No | Parent Document owner scope |
-| Corporate Account Coordinator | No direct create | Read if permitted | No | No | Parent Document owner scope |
-| Document Verifier | Yes, only through approve/reject application service | Yes | No | No | Parent Document must be accessible and PendingVerification |
-| Branch Manager | Only when explicit approve/reject capability granted | Yes if permitted | No | No | IAM branch hierarchy + parent Document scope |
-| Auditor / Compliance Reviewer | No | Yes, read-only | No | No | Authorized audit/consolidated scope |
-| Reporting User | No | Read through reporting projection only | No | No | Report permission + IAM scope |
-| Student Self-Service User | No | Optional limited display of own decision outcome/remarks according to policy | No | No | Own identity only |
-| Trainer Self-Service User | No | Optional limited display of own decision outcome/remarks according to policy | No | No | Own trainer identity only |
+| Human Actor                   |                                                                              C |                                                                            R |   U |   D | Branch Scope Logic                                         |
+| ----------------------------- | -----------------------------------------------------------------------------: | ---------------------------------------------------------------------------: | --: | --: | ---------------------------------------------------------- |
+| Document Administrator        | Only indirectly through approve/reject use case if verifier permission granted |                            Yes when document read/history permission granted |  No |  No | Same owner-derived scope as parent Document                |
+| Admission Officer             |                                                               No direct create |                                       Read if permitted for accessible owner |  No |  No | Parent Document owner scope                                |
+| Trainer Coordinator           |                                                               No direct create |                                                            Read if permitted |  No |  No | Parent Document owner scope                                |
+| Corporate Account Coordinator |                                                               No direct create |                                                            Read if permitted |  No |  No | Parent Document owner scope                                |
+| Document Verifier             |                           Yes, only through approve/reject application service |                                                                          Yes |  No |  No | Parent Document must be accessible and PendingVerification |
+| Branch Manager                |                           Only when explicit approve/reject capability granted |                                                             Yes if permitted |  No |  No | IAM branch hierarchy + parent Document scope               |
+| Auditor / Compliance Reviewer |                                                                             No |                                                               Yes, read-only |  No |  No | Authorized audit/consolidated scope                        |
+| Reporting User                |                                                                             No |                                       Read through reporting projection only |  No |  No | Report permission + IAM scope                              |
+| Student Self-Service User     |                                                                             No | Optional limited display of own decision outcome/remarks according to policy |  No |  No | Own identity only                                          |
+| Trainer Self-Service User     |                                                                             No | Optional limited display of own decision outcome/remarks according to policy |  No |  No | Own trainer identity only                                  |
 
 ---
 
 # 10. System Actor CRUD Matrix
 
-| System Actor / Application Service | `Document` Actions | `DocumentVerification` Actions | Branch / Scope Rule |
-|---|---|---|---|
-| Document Registration Service | C, R for validation response | — | Must validate owner existence and owner-derived branch access before create |
-| Document Query Service | R | R | All queries server-scoped; soft-deleted records excluded from normal operational queries |
-| Verification Submission Service | R, U (`Uploaded -> PendingVerification`) | — | Permission + owner branch scope + optimistic version check |
-| Verification Decision Service | R, U (`PendingVerification -> Approved/Rejected`) | C immutable decision row | Permission + owner branch scope + atomic transaction |
-| Expiry Evaluation Job | R; conditional U to `Expired` only if approved persisted-expiry policy exists | — | Evaluates all authorized/system-scope records; preserves history; no owner mutation |
-| Expiry Work Queue Query | R | R if needed for context | Server-scoped by requester's authorized owner/branch visibility |
-| Reporting Projection Builder | R only | R only | No mutation; scope materialization must preserve branch dimensions |
-| Audit Integration | No direct Document write required | No direct history write | Receives critical action facts; Audit context owns `AuditLog` |
-| Communication Integration | R minimal document/owner notification facts through approved contract | — | Does not mutate Document state; owns notification delivery state |
-| Vercel Blob Storage Adapter | No domain CRUD; supplies/reads file storage reference | — | Called only after authorization; storage credential scope is infrastructure-owned |
-| Reconciliation Operations Process | R; possible administrative repair only through approved runbook/application service | — | Restricted system/admin capability; must not bypass branch/ownership checks for business repair actions |
+| System Actor / Application Service | `Document` Actions                                                                  | `DocumentVerification` Actions | Branch / Scope Rule                                                                                     |
+| ---------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
+| Document Registration Service      | C, R for validation response                                                        | —                              | Must validate owner existence and owner-derived branch access before create                             |
+| Document Query Service             | R                                                                                   | R                              | All queries server-scoped; soft-deleted records excluded from normal operational queries                |
+| Verification Submission Service    | R, U (`Uploaded -> PendingVerification`)                                            | —                              | Permission + owner branch scope + optimistic version check                                              |
+| Verification Decision Service      | R, U (`PendingVerification -> Approved/Rejected`)                                   | C immutable decision row       | Permission + owner branch scope + atomic transaction                                                    |
+| Expiry Evaluation Job              | R; conditional U to `Expired` only if approved persisted-expiry policy exists       | —                              | Evaluates all authorized/system-scope records; preserves history; no owner mutation                     |
+| Expiry Work Queue Query            | R                                                                                   | R if needed for context        | Server-scoped by requester's authorized owner/branch visibility                                         |
+| Reporting Projection Builder       | R only                                                                              | R only                         | No mutation; scope materialization must preserve branch dimensions                                      |
+| Audit Integration                  | No direct Document write required                                                   | No direct history write        | Receives critical action facts; Audit context owns `AuditLog`                                           |
+| Communication Integration          | R minimal document/owner notification facts through approved contract               | —                              | Does not mutate Document state; owns notification delivery state                                        |
+| Vercel Blob Storage Adapter        | No domain CRUD; supplies/reads file storage reference                               | —                              | Called only after authorization; storage credential scope is infrastructure-owned                       |
+| Reconciliation Operations Process  | R; possible administrative repair only through approved runbook/application service | —                              | Restricted system/admin capability; must not bypass branch/ownership checks for business repair actions |
 
 ---
 
 # 11. State-Dependent CRUD Restrictions
 
-| Current Document State | Metadata Read | Metadata Update | Submit | Approve | Reject | Retire | File Replace |
-|---|---|---|---|---|---|---|---|
-| Uploaded | Yes | Yes with permission and version check | Yes | No | No | Yes with permission | Allowed only under approved upload/update policy |
-| PendingVerification | Yes | Restrict changes that would invalidate evidence under review | No duplicate submit | Yes with approve permission | Yes with reject permission and remarks | Yes only under explicit operational permission; should be audited | Not allowed without explicit cancellation/replacement policy |
-| Approved | Yes | Non-evidence metadata corrections only where policy permits; history preserved | No baseline resubmit | No | No | Yes with retire permission | Not defined; must not silently preserve approval for different evidence |
-| Rejected | Yes | Limited according to resubmission policy | Resubmission not defined in current baseline | No | No | Yes with retire permission | Replacement/resubmission policy gap |
-| Expired | Yes | Metadata correction only if policy permits | Renewal submission not defined | No | No | Yes with retire permission | Renewal/replacement policy gap |
-| Soft Deleted | Excluded from normal queries; audit/recovery path only | No normal update | No | No | No | Already retired | No |
+| Current Document State | Metadata Read                                          | Metadata Update                                                                | Submit                                       | Approve                     | Reject                                 | Retire                                                            | File Replace                                                            |
+| ---------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------ | -------------------------------------------- | --------------------------- | -------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Uploaded               | Yes                                                    | Yes with permission and version check                                          | Yes                                          | No                          | No                                     | Yes with permission                                               | Allowed only under approved upload/update policy                        |
+| PendingVerification    | Yes                                                    | Restrict changes that would invalidate evidence under review                   | No duplicate submit                          | Yes with approve permission | Yes with reject permission and remarks | Yes only under explicit operational permission; should be audited | Not allowed without explicit cancellation/replacement policy            |
+| Approved               | Yes                                                    | Non-evidence metadata corrections only where policy permits; history preserved | No baseline resubmit                         | No                          | No                                     | Yes with retire permission                                        | Not defined; must not silently preserve approval for different evidence |
+| Rejected               | Yes                                                    | Limited according to resubmission policy                                       | Resubmission not defined in current baseline | No                          | No                                     | Yes with retire permission                                        | Replacement/resubmission policy gap                                     |
+| Expired                | Yes                                                    | Metadata correction only if policy permits                                     | Renewal submission not defined               | No                          | No                                     | Yes with retire permission                                        | Renewal/replacement policy gap                                          |
+| Soft Deleted           | Excluded from normal queries; audit/recovery path only | No normal update                                                               | No                                           | No                          | No                                     | Already retired                                                   | No                                                                      |
 
 ---
 
@@ -558,31 +569,31 @@ Notification delivery state must not be stored in the Document aggregate unless 
 
 ## 13.1 Entities owned by Module 13
 
-| Entity | Ownership | Rationale |
-|---|---|---|
-| `Document` | Owned | DDD Document Management core entity; ER section 24.1 |
-| `DocumentVerification` | Owned | DDD Document Management verification responsibility; ER section 24.2 |
+| Entity                 | Ownership | Rationale                                                            |
+| ---------------------- | --------- | -------------------------------------------------------------------- |
+| `Document`             | Owned     | DDD Document Management core entity; ER section 24.1                 |
+| `DocumentVerification` | Owned     | DDD Document Management verification responsibility; ER section 24.2 |
 
 ## 13.2 Referenced entities from other contexts
 
-| Entity | Owning Context | Module 13 Reference Purpose | Forbidden Local Duplication |
-|---|---|---|---|
-| `Party` | Shared Party foundation | Identity model root concept | Do not create document-specific Party clone |
-| `Person` | Shared Party / Person | Person-owned documents and display resolution | Do not copy civil ID/passport/profile master data into Document |
-| `StudentProfile` | Admission & Enrollment | Student document ownership | Do not create DocumentStudent |
-| `TrainerProfile` | Faculty / Trainer | Trainer document ownership | Do not create DocumentTrainer |
-| `CorporateAccount` | Corporate Training | Corporate document ownership | Do not create DocumentCorporateAccount |
-| `EmployeeProfile` | Future HRMS | Future employee document ownership | Do not enable before HRMS |
-| `User` | IAM | upload/verify/audit actor references | Do not store role names as authorization logic |
-| `UserBranchAccess` | IAM | scope authorization | Do not create separate document branch ACL table without architecture approval |
-| `Branch` | Organization | display/scope dimension | Do not make Document Management owner of branch hierarchy |
-| `LookupType` / `LookupValue` | Configuration / Master Data | document type validation if lookup-backed | Do not create competing local document type master |
-| `AuditLog` | Audit & Compliance | sensitive action evidence | Do not duplicate AuditLog locally |
-| `ApprovalRequest` / `ApprovalHistory` | Audit & Compliance | Only if a future document action explicitly uses general approval workflow | Verification history is not to be replaced by generic approval tables without DDD change |
-| `NotificationRequest` / `NotificationLog` | Communication | expiry reminders | Do not store delivery attempts in Document |
-| `DashboardDefinition`, `DashboardWidget`, `MetricSnapshot` | Reporting & Dashboards | reporting consumption | No mutation from Document Management |
-| `Certificate` | Certificate Management | possible read-only supporting evidence use | Do not store certificate lifecycle in Document |
-| `Invoice`, `Receipt`, `Payment`, `Refund` | Finance | finance-owned generated artifacts/business records | Do not move finance lifecycle to Document Management merely because files exist |
+| Entity                                                     | Owning Context              | Module 13 Reference Purpose                                                | Forbidden Local Duplication                                                              |
+| ---------------------------------------------------------- | --------------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `Party`                                                    | Shared Party foundation     | Identity model root concept                                                | Do not create document-specific Party clone                                              |
+| `Person`                                                   | Shared Party / Person       | Person-owned documents and display resolution                              | Do not copy civil ID/passport/profile master data into Document                          |
+| `StudentProfile`                                           | Admission & Enrollment      | Student document ownership                                                 | Do not create DocumentStudent                                                            |
+| `TrainerProfile`                                           | Faculty / Trainer           | Trainer document ownership                                                 | Do not create DocumentTrainer                                                            |
+| `CorporateAccount`                                         | Corporate Training          | Corporate document ownership                                               | Do not create DocumentCorporateAccount                                                   |
+| `EmployeeProfile`                                          | Future HRMS                 | Future employee document ownership                                         | Do not enable before HRMS                                                                |
+| `User`                                                     | IAM                         | upload/verify/audit actor references                                       | Do not store role names as authorization logic                                           |
+| `UserBranchAccess`                                         | IAM                         | scope authorization                                                        | Do not create separate document branch ACL table without architecture approval           |
+| `Branch`                                                   | Organization                | display/scope dimension                                                    | Do not make Document Management owner of branch hierarchy                                |
+| `LookupType` / `LookupValue`                               | Configuration / Master Data | document type validation if lookup-backed                                  | Do not create competing local document type master                                       |
+| `AuditLog`                                                 | Audit & Compliance          | sensitive action evidence                                                  | Do not duplicate AuditLog locally                                                        |
+| `ApprovalRequest` / `ApprovalHistory`                      | Audit & Compliance          | Only if a future document action explicitly uses general approval workflow | Verification history is not to be replaced by generic approval tables without DDD change |
+| `NotificationRequest` / `NotificationLog`                  | Communication               | expiry reminders                                                           | Do not store delivery attempts in Document                                               |
+| `DashboardDefinition`, `DashboardWidget`, `MetricSnapshot` | Reporting & Dashboards      | reporting consumption                                                      | No mutation from Document Management                                                     |
+| `Certificate`                                              | Certificate Management      | possible read-only supporting evidence use                                 | Do not store certificate lifecycle in Document                                           |
+| `Invoice`, `Receipt`, `Payment`, `Refund`                  | Finance                     | finance-owned generated artifacts/business records                         | Do not move finance lifecycle to Document Management merely because files exist          |
 
 ## 13.3 Entities that should not exist in Module 13
 
@@ -665,38 +676,41 @@ Audit/recovery queries require separate explicit authorization and must not be e
 
 # 16. DDD and ER Consistency Check
 
-| Concern | DDD / ER Baseline | Part 4 Treatment | Result |
-|---|---|---|---|
-| Document ownership | Document Management owns Document | `Document` defined as owned root/lifecycle record | Aligned |
-| Verification ownership | Document Management owns verification | `DocumentVerification` defined as owned append-only history | Aligned |
-| Owner model | Student/Trainer/Corporate/Person references | Logical relations via `DocumentOwner` join table | Aligned |
-| Employee documents | Future HRMS | Not enabled; future reference only | Aligned |
-| Branch access | IAM + owner context | Direct `Document.branchId` persisted and derived from owner | Aligned |
-| Document type | Configurable lookup or static enum | Stored as static enum `DocumentType` in Prisma | Align Gap noted |
-| Current status | Draft, Active, Expired, Replaced, Deleted | Mapped to `DocumentStatus` and `VerificationOutcome` | Aligned |
-| Verification history | DocumentVerification | Append-only 1:N history | Aligned |
-| Soft delete | Project-wide convention | `isDeleted` and `deletedAt`, no hard delete | Aligned |
-| Auditing | Audit context owns AuditLog | `createdBy`/`createdAt` columns; Audit owns `AuditLog` | Aligned |
-| Binary storage | User decision: Vercel Blob | `fileKey` reference; no domain ownership transfer | Aligned |
-| Blob reconciliation | FRD operational requirement; no ER entity | Reconciliation job state is infrastructural | Aligned |
-| Prisma schema | Complete codebase implementation | Code base schema validated directly in this report | Resolved |
+| Concern                | DDD / ER Baseline                           | Part 4 Treatment                                            | Result          |
+| ---------------------- | ------------------------------------------- | ----------------------------------------------------------- | --------------- |
+| Document ownership     | Document Management owns Document           | `Document` defined as owned root/lifecycle record           | Aligned         |
+| Verification ownership | Document Management owns verification       | `DocumentVerification` defined as owned append-only history | Aligned         |
+| Owner model            | Student/Trainer/Corporate/Person references | Logical relations via `DocumentOwner` join table            | Aligned         |
+| Employee documents     | Future HRMS                                 | Not enabled; future reference only                          | Aligned         |
+| Branch access          | IAM + owner context                         | Direct `Document.branchId` persisted and derived from owner | Aligned         |
+| Document type          | Configurable lookup or static enum          | Stored as static enum `DocumentType` in Prisma              | Align Gap noted |
+| Current status         | Draft, Active, Expired, Replaced, Deleted   | Mapped to `DocumentStatus` and `VerificationOutcome`        | Aligned         |
+| Verification history   | DocumentVerification                        | Append-only 1:N history                                     | Aligned         |
+| Soft delete            | Project-wide convention                     | `isDeleted` and `deletedAt`, no hard delete                 | Aligned         |
+| Auditing               | Audit context owns AuditLog                 | `createdBy`/`createdAt` columns; Audit owns `AuditLog`      | Aligned         |
+| Binary storage         | User decision: Vercel Blob                  | `fileKey` reference; no domain ownership transfer           | Aligned         |
+| Blob reconciliation    | FRD operational requirement; no ER entity   | Reconciliation job state is infrastructural                 | Aligned         |
+| Prisma schema          | Complete codebase implementation            | Code base schema validated directly in this report          | Resolved        |
 
 ---
 
 # 17. Explicit Gaps Requiring Resolution Before Final Migration Design
 
 ## GAP-DOC-DB-001 – Prisma schema validation
+
 **Status: Resolved.** The actual schema has been validated. Mismatches in owner polymorphism (join table `DocumentOwner` used) and branch scoping (direct `branchId` column used) have been reconciled in this FRD.
 
 ## GAP-DOC-DB-002 – Document type persistence representation
+
 **Status: Align Gap.** Prisma hardcodes document types as the enum `DocumentType`. If dynamic configurations are needed later, a database migration is required to change `documentType` into a VarChar lookup code referencing Master Data.
 
 ## GAP-DOC-DB-003 – Expired state persistence
+
 **Status: Align Gap.** Prisma includes `Expired` in `DocumentStatus`. This indicates expiry is a persisted state. A background cron job must be scheduled to evaluate document expiration dates and transition `status` to `Expired`.
 
 ## GAP-DOC-DB-008 – Missing Date and Version fields in Prisma (CRITICAL IMPLEMENTATION GAP)
-**Status: Open.** The actual `Document` model in `schema.prisma` is currently missing the `issueDate`, `expiryDate`, and `version` (optimistic locking) fields. These must be added via a database migration before Module 13 implementation begins.
 
+**Status: Open.** The actual `Document` model in `schema.prisma` is currently missing the `issueDate`, `expiryDate`, and `version` (optimistic locking) fields. These must be added via a database migration before Module 13 implementation begins.
 
 ## GAP-DOC-DB-004 – Person owner branch scoping
 

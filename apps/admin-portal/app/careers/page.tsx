@@ -2,7 +2,13 @@
 
 import { BriefcaseBusiness, CheckCircle2 } from 'lucide-react';
 
-import { PublicShell, SectionHeading, SimpleCTA, SplitHero, careerCards } from '../_components/public-site';
+import {
+  PublicShell,
+  SectionHeading,
+  SimpleCTA,
+  SplitHero,
+  careerCards,
+} from '../_components/public-site';
 
 export default function CareersPage() {
   return (
@@ -26,13 +32,24 @@ export default function CareersPage() {
       />
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <SectionHeading eyebrow="Open roles" title="A clean recruitment landing section" description="The reference site includes careers in the footer navigation, so this route keeps a branded hiring entry point." />
+        <SectionHeading
+          eyebrow="Open roles"
+          title="A clean recruitment landing section"
+          description="The reference site includes careers in the footer navigation, so this route keeps a branded hiring entry point."
+        />
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {careerCards.map((role) => (
-            <div key={role.title} className="rounded-[2rem] border border-border-light bg-white p-6 shadow-card">
+            <div
+              key={role.title}
+              className="rounded-[2rem] border border-border-light bg-white p-6 shadow-card"
+            >
               <BriefcaseBusiness className="h-5 w-5 text-accent-700" />
-              <h3 className="mt-5 text-xl font-black text-neutral-950">{role.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-neutral-600">{role.description}</p>
+              <h3 className="mt-5 text-xl font-black text-neutral-950">
+                {role.title}
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-neutral-600">
+                {role.description}
+              </p>
               <div className="mt-6 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.24em] text-neutral-500">
                 <CheckCircle2 className="h-4 w-4" />
                 Enquiries welcome
@@ -43,7 +60,12 @@ export default function CareersPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <SimpleCTA title="Interested in joining the institute?" description="Send your CV and tell the team which role fits your experience." href="/contact-us" label="Contact HR" />
+        <SimpleCTA
+          title="Interested in joining the institute?"
+          description="Send your CV and tell the team which role fits your experience."
+          href="/contact-us"
+          label="Contact HR"
+        />
       </section>
     </PublicShell>
   );

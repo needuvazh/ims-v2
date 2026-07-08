@@ -9,25 +9,24 @@
  * - Accessible error messages
  */
 
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
 // 1. Define Zod validation schema
 const loginSchema = z.object({
-  email: z.string()
-    .min(1, 'Email is required')
-    .email('Invalid email address'),
-  password: z.string()
+  email: z.string().min(1, 'Email is required').email('Invalid email address'),
+  password: z
+    .string()
     .min(8, 'Password must be at least 8 characters')
     .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
     .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
     .regex(/[0-9]/, 'Password must contain at least one number'),
   rememberMe: z.boolean().optional(),
-})
+});
 
 // 2. Infer TypeScript type from schema
-type LoginFormData = z.infer<typeof loginSchema>
+type LoginFormData = z.infer<typeof loginSchema>;
 
 export function BasicLoginForm() {
   // 3. Initialize form with zodResolver
@@ -44,36 +43,39 @@ export function BasicLoginForm() {
       password: '',
       rememberMe: false,
     },
-  })
+  });
 
   // 4. Handle form submission
   const onSubmit = async (data: LoginFormData) => {
     try {
-      console.log('Form data:', data)
+      console.log('Form data:', data);
 
       // Make API call
       const response = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
-      })
+      });
 
       if (!response.ok) {
-        throw new Error('Login failed')
+        throw new Error('Login failed');
       }
 
-      const result = await response.json()
-      console.log('Login successful:', result)
+      const result = await response.json();
+      console.log('Login successful:', result);
 
       // Reset form after successful submission
-      reset()
+      reset();
     } catch (error) {
-      console.error('Login error:', error)
+      console.error('Login error:', error);
     }
-  }
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-md mx-auto">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4 max-w-md mx-auto"
+    >
       <h2 className="text-2xl font-bold">Login</h2>
 
       {/* Email Field */}
@@ -159,21 +161,23 @@ export function BasicLoginForm() {
         )}
       </div>
     </form>
-  )
+  );
 }
 
 /**
  * Signup Form Variant
  */
-const signupSchema = loginSchema.extend({
-  confirmPassword: z.string(),
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ['confirmPassword'],
-})
+const signupSchema = loginSchema
+  .extend({
+    confirmPassword: z.string(),
+    name: z.string().min(2, 'Name must be at least 2 characters'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword'],
+  });
 
-type SignupFormData = z.infer<typeof signupSchema>
+type SignupFormData = z.infer<typeof signupSchema>;
 
 export function BasicSignupForm() {
   const {
@@ -189,15 +193,18 @@ export function BasicSignupForm() {
       confirmPassword: '',
       rememberMe: false,
     },
-  })
+  });
 
   const onSubmit = async (data: SignupFormData) => {
-    console.log('Signup data:', data)
+    console.log('Signup data:', data);
     // API call
-  }
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-md mx-auto">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4 max-w-md mx-auto"
+    >
       <h2 className="text-2xl font-bold">Sign Up</h2>
 
       {/* Name Field */}
@@ -257,7 +264,10 @@ export function BasicSignupForm() {
 
       {/* Confirm Password Field */}
       <div>
-        <label htmlFor="confirmPassword" className="block text-sm font-medium mb-1">
+        <label
+          htmlFor="confirmPassword"
+          className="block text-sm font-medium mb-1"
+        >
           Confirm Password
         </label>
         <input
@@ -281,5 +291,5 @@ export function BasicSignupForm() {
         {isSubmitting ? 'Creating account...' : 'Sign Up'}
       </button>
     </form>
-  )
+  );
 }

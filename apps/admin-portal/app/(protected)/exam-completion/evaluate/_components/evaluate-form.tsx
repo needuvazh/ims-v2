@@ -50,10 +50,14 @@ export function EvaluateForm({ enrollments }: EvaluateFormProps) {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.messageEnglish || data.message || 'Evaluation failed.');
+        throw new Error(
+          data.messageEnglish || data.message || 'Evaluation failed.',
+        );
       }
 
-      toast.success('Course completion evaluated successfully!', { id: toastId });
+      toast.success('Course completion evaluated successfully!', {
+        id: toastId,
+      });
       // Redirect to the newly created completion details page
       router.push(`/exam-completion/completions/${data.data.id}`);
       router.refresh();
@@ -70,7 +74,8 @@ export function EvaluateForm({ enrollments }: EvaluateFormProps) {
       <CardHeader>
         <CardTitle>Evaluation Parameters</CardTitle>
         <CardDescription>
-          Run checks across the academic registry. The system verifies attendance threshold, exam marks, and payment standing.
+          Run checks across the academic registry. The system verifies
+          attendance threshold, exam marks, and payment standing.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -100,11 +105,7 @@ export function EvaluateForm({ enrollments }: EvaluateFormProps) {
             >
               Cancel
             </Button>
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              variant="primary"
-            >
+            <Button type="submit" disabled={isSubmitting} variant="primary">
               {isSubmitting ? 'Evaluating...' : 'Evaluate Completion'}
             </Button>
           </div>

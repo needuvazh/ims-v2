@@ -5,19 +5,20 @@
 **Version:** 3.0  
 **Status:** Draft  
 **Domain:** Course Catalog & Training Delivery  
-**Module Code:** CRS  
+**Module Code:** CRS
 
 ---
 
 # Feature: Course Profile Administration & Publishing
 
-  As an Academic Director  
-  I want to create, validate, and publish training courses in the catalog  
-  So that they can be used for scheduling student batches.
+As an Academic Director  
+ I want to create, validate, and publish training courses in the catalog  
+ So that they can be used for scheduling student batches.
 
-  ---
+---
 
-  ### Scenario: Successfully create and publish a new course profile
+### Scenario: Successfully create and publish a new course profile
+
     Given the user is authenticated as "Academic Director" (User UUID: "987a46b8-adfb-0af496bd58cd")
     And has the "course.catalog.create" and "course.catalog.publish" permissions
     And the department "Health & Safety Division" (UUID: "89f4b007-4235-46b0-bb82-f54228da3542") is Active
@@ -33,9 +34,10 @@
     Then the system updates the Course status to "Active"
     And registers the "COURSE_STATUS_CHANGED" audit ledger record with old value "Draft" and new value "Active"
 
-  ---
+---
 
-  ### Scenario Outline: Block course creation on invalid input validation boundaries
+### Scenario Outline: Block course creation on invalid input validation boundaries
+
     Given the user is authenticated as "Academic Director"
     And has the "course.catalog.create" permission
     When the user attempts to create a course with code "<Code>", English name "<Name>", and duration value <Duration>
@@ -52,13 +54,14 @@
 
 # Feature: Batch Capacity & Waiting List Promotion
 
-  As a Counselor or Automated System  
-  I want the system to manage batch seat capacities and queue promotions dynamically  
-  So that seat allocations are optimized.
+As a Counselor or Automated System  
+ I want the system to manage batch seat capacities and queue promotions dynamically  
+ So that seat allocations are optimized.
 
-  ---
+---
 
-  ### Scenario Outline: Check capacity limits and redirect to waitlist when batch is full
+### Scenario Outline: Check capacity limits and redirect to waitlist when batch is full
+
     Given a batch "B-OSHA-01" exists with capacity <Capacity> and current enrollment count <CurrentCount>
     And the batch configuration parameters are:
       | waitingListEnabled | allowOverbooking |
@@ -74,9 +77,10 @@
       | 25       | 25           | false           | false       | 1              | ERR_CRS_BATCH_FULL| 25         |
       | 25       | 25           | false           | true        | 1              | SUCCESS_OVERBOOKED| 26         |
 
-  ---
+---
 
-  ### Scenario: Auto-promote waitlisted student when a seat is vacated
+### Scenario: Auto-promote waitlisted student when a seat is vacated
+
     Given a batch "B-OSHA-01" has capacity 20 and current enrollment count 20
     And the waitlist for "B-OSHA-01" is populated chronologically:
       | Student Name | Queue Position | Status  | Requested At             |
@@ -95,13 +99,14 @@
 
 # Feature: Trainer Assignment & Scheduling Conflicts
 
-  As an Academic Coordinator  
-  I want the system to intercept trainer schedules during assignment  
-  So that double-bookings are prevented.
+As an Academic Coordinator  
+ I want the system to intercept trainer schedules during assignment  
+ So that double-bookings are prevented.
 
-  ---
+---
 
-  ### Scenario: Block trainer mapping on session day and hour overlap
+### Scenario: Block trainer mapping on session day and hour overlap
+
     Given a batch "B-OSHA-01" has scheduled sessions:
       | Day    | Start Time | End Time | Date Range            |
       | Monday | 18:00      | 20:00    | 2026-07-01 to 2026-07-31 |
@@ -117,13 +122,14 @@
 
 # Feature: Server-Side Branch Scoping Isolation Guards
 
-  As an ASTI security guard  
-  I want the system to isolate batch data access by branch  
-  So that unauthorized branch managers cannot modify or view other branch operations.
+As an ASTI security guard  
+ I want the system to isolate batch data access by branch  
+ So that unauthorized branch managers cannot modify or view other branch operations.
 
-  ---
+---
 
-  ### Scenario: Block branch manager from accessing batches of another branch
+### Scenario: Block branch manager from accessing batches of another branch
+
     Given the user is authenticated as "Branch Manager (Sohar Branch)" (User ID: "ca8012d3-0e1e-4227-8f9a-88ff5ae056f8")
     And their active session branch context is "Sohar Branch" (UUID: "89f4b007-4235-46b0-bb82-f54228da3542")
     And they do not possess the `consolidatedVisibility` or `report.batch.utilization` permissions
@@ -133,9 +139,10 @@
     And returns a `403 Forbidden` response with error code "ERR_IAM_INSUFFICIENT_PERMISSIONS"
     And registers an access violation record in the security audit database
 
-  ---
+---
 
-  ### Scenario: Allow consolidated visibility manager to query cross-branch data
+### Scenario: Allow consolidated visibility manager to query cross-branch data
+
     Given the user is authenticated as "General Manager"
     And possesses the "consolidatedVisibility" flag set to true in their `UserBranchAccess` mapping
     When the General Manager requests the batch utilization report across all branches

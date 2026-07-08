@@ -16,7 +16,13 @@ import {
   Badge,
   EmptyState,
 } from '@ims/shared-ui';
-import { UploadCloud, CheckCircle, Trash2, Calendar, ClipboardList } from 'lucide-react';
+import {
+  UploadCloud,
+  CheckCircle,
+  Trash2,
+  Calendar,
+  ClipboardList,
+} from 'lucide-react';
 
 type ExamItem = {
   id: string;
@@ -56,7 +62,7 @@ export function BulkResultsForm({ exams, enrollments }: BulkResultsFormProps) {
   const [parsedRows, setParsedRows] = useState<ParsedRow[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const selectedExam = exams.find(e => e.id === examId);
+  const selectedExam = exams.find((e) => e.id === examId);
 
   // Parse file or typed text
   const handleParse = (textToParse: string) => {
@@ -79,7 +85,9 @@ export function BulkResultsForm({ exams, enrollments }: BulkResultsFormProps) {
       const rawGrade = parts[2]?.trim() || '';
 
       const matchedEnrollment = enrollments.find(
-        (e) => e.enrollmentNumber.toLowerCase() === rawEnrollmentNumber.toLowerCase()
+        (e) =>
+          e.enrollmentNumber.toLowerCase() ===
+          rawEnrollmentNumber.toLowerCase(),
       );
 
       const parsedMarks = parseFloat(rawMarks);
@@ -113,9 +121,11 @@ export function BulkResultsForm({ exams, enrollments }: BulkResultsFormProps) {
 
     setParsedRows(tempRows);
     if (tempRows.length > 0) {
-      const invalidCount = tempRows.filter(r => !r.isValid).length;
+      const invalidCount = tempRows.filter((r) => !r.isValid).length;
       if (invalidCount > 0) {
-        toast.warning(`Parsed ${tempRows.length} rows. Found ${invalidCount} validation errors.`);
+        toast.warning(
+          `Parsed ${tempRows.length} rows. Found ${invalidCount} validation errors.`,
+        );
       } else {
         toast.success(`Successfully parsed ${tempRows.length} valid rows!`);
       }
@@ -148,16 +158,16 @@ export function BulkResultsForm({ exams, enrollments }: BulkResultsFormProps) {
       return;
     }
 
-    const validRows = parsedRows.filter(r => r.isValid);
+    const validRows = parsedRows.filter((r) => r.isValid);
     if (validRows.length === 0) {
       toast.error('There are no valid rows to submit.');
       return;
     }
 
-    const invalidRows = parsedRows.filter(r => !r.isValid);
+    const invalidRows = parsedRows.filter((r) => !r.isValid);
     if (invalidRows.length > 0) {
       const confirmProceed = window.confirm(
-        `There are ${invalidRows.length} invalid rows that will be ignored. Do you want to proceed with submitting the ${validRows.length} valid rows?`
+        `There are ${invalidRows.length} invalid rows that will be ignored. Do you want to proceed with submitting the ${validRows.length} valid rows?`,
       );
       if (!confirmProceed) return;
     }
@@ -171,7 +181,7 @@ export function BulkResultsForm({ exams, enrollments }: BulkResultsFormProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           examId,
-          results: validRows.map(r => ({
+          results: validRows.map((r) => ({
             enrollmentId: r.enrollmentId,
             marksObtained: r.marksObtained,
             grade: r.grade || undefined,
@@ -181,15 +191,24 @@ export function BulkResultsForm({ exams, enrollments }: BulkResultsFormProps) {
 
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.messageEnglish || data.message || 'Failed to submit bulk results.');
+        throw new Error(
+          data.messageEnglish ||
+            data.message ||
+            'Failed to submit bulk results.',
+        );
       }
 
-      toast.success(`Bulk entry successful! Processed ${validRows.length} results.`, { id: toastId });
+      toast.success(
+        `Bulk entry successful! Processed ${validRows.length} results.`,
+        { id: toastId },
+      );
       router.push(`/exam-completion/results?examId=${examId}`);
       router.refresh();
     } catch (err: any) {
       console.error(err);
-      toast.error(err.message || 'Failed to submit bulk results.', { id: toastId });
+      toast.error(err.message || 'Failed to submit bulk results.', {
+        id: toastId,
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -200,14 +219,17 @@ export function BulkResultsForm({ exams, enrollments }: BulkResultsFormProps) {
       <CardHeader>
         <CardTitle>Bulk Import Roster</CardTitle>
         <CardDescription>
-          Import scores in bulk. Select an active exam open for entry, then import using CSV or raw text.
+          Import scores in bulk. Select an active exam open for entry, then
+          import using CSV or raw text.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Step 1: Select Exam */}
           <div className="space-y-4">
-            <h2 className="text-sm font-bold text-slate-800 border-b pb-2 tracking-wide uppercase text-slate-600">1. Select Active Exam</h2>
+            <h2 className="text-sm font-bold text-slate-800 border-b pb-2 tracking-wide uppercase text-slate-600">
+              1. Select Active Exam
+            </h2>
             <Select
               label="Active Exam (Open for entry)"
               placeholder="Choose Exam"
@@ -228,13 +250,17 @@ export function BulkResultsForm({ exams, enrollments }: BulkResultsFormProps) {
           {/* Step 2: Import Source */}
           {examId && (
             <div className="space-y-4 animate-fade-in-up">
-              <h2 className="text-sm font-bold text-slate-800 border-b pb-2 tracking-wide uppercase text-slate-600">2. Upload File or Paste CSV</h2>
+              <h2 className="text-sm font-bold text-slate-800 border-b pb-2 tracking-wide uppercase text-slate-600">
+                2. Upload File or Paste CSV
+              </h2>
 
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 {/* File Uploader */}
                 <div className="flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-2xl p-6 text-center hover:bg-slate-50 transition-colors">
                   <UploadCloud className="h-8 w-8 text-indigo-500 mb-2" />
-                  <span className="text-sm font-semibold text-slate-700">Upload CSV File</span>
+                  <span className="text-sm font-semibold text-slate-700">
+                    Upload CSV File
+                  </span>
                   <span className="text-xs text-[color:var(--ims-muted)] mt-1 max-w-[220px]">
                     Columns must align to: EnrollmentNumber, Marks, Grade
                   </span>
@@ -273,23 +299,46 @@ export function BulkResultsForm({ exams, enrollments }: BulkResultsFormProps) {
           {/* Step 3: Roster Preview */}
           {parsedRows.length > 0 && (
             <div className="space-y-4 animate-fade-in-up">
-              <h2 className="text-sm font-bold text-slate-800 border-b pb-2 tracking-wide uppercase text-slate-600">3. Import Verification Preview</h2>
+              <h2 className="text-sm font-bold text-slate-800 border-b pb-2 tracking-wide uppercase text-slate-600">
+                3. Import Verification Preview
+              </h2>
               <div className="overflow-hidden rounded-xl border border-slate-100 shadow-sm">
                 <table className="min-w-full divide-y divide-slate-100">
                   <thead className="bg-slate-50/70">
                     <tr>
-                      <th className="px-4 py-3 text-left text-xs font-bold uppercase text-slate-500">Student Name</th>
-                      <th className="px-4 py-3 text-left text-xs font-bold uppercase text-slate-500 w-[140px]">Enrollment #</th>
-                      <th className="px-4 py-3 text-left text-xs font-bold uppercase text-slate-500 w-[100px]">Marks</th>
-                      <th className="px-4 py-3 text-left text-xs font-bold uppercase text-slate-500 w-[100px]">Grade</th>
-                      <th className="px-4 py-3 text-left text-xs font-bold uppercase text-slate-500 w-[200px]">Verification Status</th>
+                      <th className="px-4 py-3 text-left text-xs font-bold uppercase text-slate-500">
+                        Student Name
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-bold uppercase text-slate-500 w-[140px]">
+                        Enrollment #
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-bold uppercase text-slate-500 w-[100px]">
+                        Marks
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-bold uppercase text-slate-500 w-[100px]">
+                        Grade
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-bold uppercase text-slate-500 w-[200px]">
+                        Verification Status
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 bg-white">
                     {parsedRows.map((r, idx) => (
-                      <tr key={idx} className={r.isValid ? 'hover:bg-slate-50/50 transition-colors' : 'bg-red-50/30 hover:bg-red-50/40 transition-colors'}>
+                      <tr
+                        key={idx}
+                        className={
+                          r.isValid
+                            ? 'hover:bg-slate-50/50 transition-colors'
+                            : 'bg-red-50/30 hover:bg-red-50/40 transition-colors'
+                        }
+                      >
                         <td className="px-4 py-3 text-sm font-semibold text-slate-800">
-                          {r.studentName || <span className="text-red-500 italic">Unknown Student</span>}
+                          {r.studentName || (
+                            <span className="text-red-500 italic">
+                              Unknown Student
+                            </span>
+                          )}
                         </td>
                         <td className="px-4 py-3 text-sm text-slate-500 font-mono">
                           {r.enrollmentNumber}
@@ -304,7 +353,10 @@ export function BulkResultsForm({ exams, enrollments }: BulkResultsFormProps) {
                           {r.isValid ? (
                             <Badge variant="success">Valid Item</Badge>
                           ) : (
-                            <Badge variant="error" className="normal-case tracking-normal">
+                            <Badge
+                              variant="error"
+                              className="normal-case tracking-normal"
+                            >
                               {r.errorReason}
                             </Badge>
                           )}
@@ -330,7 +382,10 @@ export function BulkResultsForm({ exams, enrollments }: BulkResultsFormProps) {
                 </Button>
                 <Button
                   type="submit"
-                  disabled={isSubmitting || parsedRows.filter(r => r.isValid).length === 0}
+                  disabled={
+                    isSubmitting ||
+                    parsedRows.filter((r) => r.isValid).length === 0
+                  }
                   variant="primary"
                 >
                   {isSubmitting ? 'Importing...' : 'Confirm Bulk Import'}

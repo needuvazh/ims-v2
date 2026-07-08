@@ -4,7 +4,10 @@ import { AuditMetadata } from '@ims/shared-kernel';
 export class PrismaAuditRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async append(entry: AuditMetadata, tx?: Prisma.TransactionClient): Promise<void> {
+  async append(
+    entry: AuditMetadata,
+    tx?: Prisma.TransactionClient,
+  ): Promise<void> {
     const client = tx || this.prisma;
 
     await client.auditLog.create({

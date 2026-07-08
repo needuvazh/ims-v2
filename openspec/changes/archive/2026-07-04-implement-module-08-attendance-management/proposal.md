@@ -15,9 +15,11 @@ ASTI needs a dedicated Attendance Management bounded context to support manual a
 ## Capabilities
 
 ### New Capabilities
+
 - `attendance-management`: Manual attendance session lifecycle, roster generation, attendance marking, corrections, summaries, low-attendance detection, reports, exports, and audit-ready workflows.
 
 ### Modified Capabilities
+
 - `student-portal-read`: Add read-only attendance summary and low-attendance visibility for the authenticated student.
 - `identity-access`: Add attendance menu, action, report, dashboard, and export permissions plus role mappings.
 - `permissions-and-branch-scope`: Extend branch-isolation rules to attendance sessions, records, corrections, reports, and exports.

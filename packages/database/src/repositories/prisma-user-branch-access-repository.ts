@@ -1,5 +1,9 @@
 import type { PrismaClient } from '@prisma/client';
-import type { IUserBranchAccessRepository, UserBranchAccess, UserBranchAccessStatus } from '@ims/identity-access';
+import type {
+  IUserBranchAccessRepository,
+  UserBranchAccess,
+  UserBranchAccessStatus,
+} from '@ims/identity-access';
 import type { Uuid } from '@ims/shared-kernel';
 
 export class PrismaUserBranchAccessRepository implements IUserBranchAccessRepository {
@@ -98,7 +102,12 @@ export class PrismaUserBranchAccessRepository implements IUserBranchAccessReposi
     });
   }
 
-  async remove(userId: Uuid, branchId: Uuid, actorId?: Uuid, reason: string | null = null): Promise<void> {
+  async remove(
+    userId: Uuid,
+    branchId: Uuid,
+    actorId?: Uuid,
+    reason: string | null = null,
+  ): Promise<void> {
     await this.prisma.$transaction(async (tx) => {
       const row = await tx.userBranchAccess.findUnique({
         where: { userId_branchId: { userId, branchId } },
@@ -119,7 +128,11 @@ export class PrismaUserBranchAccessRepository implements IUserBranchAccessReposi
     });
   }
 
-  async setDefault(userId: Uuid, branchId: Uuid, actorId?: Uuid): Promise<void> {
+  async setDefault(
+    userId: Uuid,
+    branchId: Uuid,
+    actorId?: Uuid,
+  ): Promise<void> {
     await this.prisma.$transaction(async (tx) => {
       await tx.userBranchAccess.updateMany({
         where: { userId },
@@ -147,7 +160,7 @@ export class PrismaUserBranchAccessRepository implements IUserBranchAccessReposi
   async resolveChildBranchIds(branchId: Uuid): Promise<Uuid[]> {
     const allBranches = await this.prisma.branch.findMany({
       where: { status: 'Active', isDeleted: false },
-      select: { id: true, parentBranchId: true }
+      select: { id: true, parentBranchId: true },
     });
 
     const childrenMap = new Map<string, string[]>();

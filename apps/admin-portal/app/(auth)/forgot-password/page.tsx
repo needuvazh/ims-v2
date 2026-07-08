@@ -2,12 +2,23 @@
 
 import { useActionState, useState } from 'react';
 import {
-  ArrowLeft, Mail, Users, Award, TrendingUp, CheckCircle2, ChevronRight, Sparkles, KeyRound
+  ArrowLeft,
+  Mail,
+  Users,
+  Award,
+  TrendingUp,
+  CheckCircle2,
+  ChevronRight,
+  Sparkles,
+  KeyRound,
 } from 'lucide-react';
 import Link from 'next/link';
 import { Alert, CountUp } from '@ims/shared-ui';
 import { PortalAuthHeroPanel, PortalAuthLayout } from '@ims/portal-ui';
-import { requestPasswordResetAction, type ForgotPasswordState } from './actions';
+import {
+  requestPasswordResetAction,
+  type ForgotPasswordState,
+} from './actions';
 import { parseForgotFieldErrors, type ForgotFieldErrors } from './schema';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -19,14 +30,13 @@ const STATS = [
   { icon: TrendingUp, value: '98%', label: 'Success Rate' },
 ];
 
-const TRUST = [
-  'ISO 9001 Certified',
-  'MoL & PDO Approved',
-  'NEBOSH Authorized',
-];
+const TRUST = ['ISO 9001 Certified', 'MoL & PDO Approved', 'NEBOSH Authorized'];
 
 export default function ForgotPasswordPage() {
-  const [state, formAction, isPending] = useActionState(requestPasswordResetAction, initialState);
+  const [state, formAction, isPending] = useActionState(
+    requestPasswordResetAction,
+    initialState,
+  );
   const [fieldErrors, setFieldErrors] = useState<ForgotFieldErrors>({});
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -71,8 +81,12 @@ export default function ForgotPasswordPage() {
                 <Sparkles className="h-6 w-6 text-white" />
               </div>
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-accent-200">Al-Saud Training</p>
-                <p className="text-xl font-black tracking-tight text-white">Institute</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-accent-200">
+                  Al-Saud Training
+                </p>
+                <p className="text-xl font-black tracking-tight text-white">
+                  Institute
+                </p>
               </div>
             </Link>
           }
@@ -80,17 +94,23 @@ export default function ForgotPasswordPage() {
             <>
               <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent-200/30 bg-white/10 px-4 py-1.5 backdrop-blur-sm">
                 <span className="h-2 w-2 rounded-full bg-accent-200 animate-pulse" />
-                <span className="text-xs font-bold uppercase tracking-widest text-accent-50">Admin Portal</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-accent-50">
+                  Admin Portal
+                </span>
               </div>
 
               <h1 className="mb-6 text-5xl font-black leading-[1.1] xl:text-7xl">
                 Reset. <br />
-                <span className="bg-gradient-to-r from-brand-100 via-accent-200 to-white bg-clip-text text-transparent">Recover.</span><br />
+                <span className="bg-gradient-to-r from-brand-100 via-accent-200 to-white bg-clip-text text-transparent">
+                  Recover.
+                </span>
+                <br />
                 Return.
               </h1>
 
               <p className="mb-8 max-w-md text-lg text-accent-50/80">
-                The self-service credentials recovery portal. Securely request a reset token to regain administrative access.
+                The self-service credentials recovery portal. Securely request a
+                reset token to regain administrative access.
               </p>
 
               <div className="flex flex-wrap gap-3">
@@ -103,7 +123,9 @@ export default function ForgotPasswordPage() {
                     className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-md"
                   >
                     <CheckCircle2 className="h-4 w-4 text-brand-300" />
-                    <span className="text-xs font-bold text-white/90">{item}</span>
+                    <span className="text-xs font-bold text-white/90">
+                      {item}
+                    </span>
                   </motion.div>
                 ))}
               </div>
@@ -115,14 +137,19 @@ export default function ForgotPasswordPage() {
                 {STATS.map((stat) => {
                   const Icon = stat.icon;
                   return (
-                    <div key={stat.label} className="flex flex-col items-center gap-2 px-4 text-center first:pl-0 last:pr-0">
+                    <div
+                      key={stat.label}
+                      className="flex flex-col items-center gap-2 px-4 text-center first:pl-0 last:pr-0"
+                    >
                       <div className="rounded-xl bg-white/10 p-2 text-accent-200">
                         <Icon className="h-5 w-5" />
                       </div>
                       <p className="text-2xl font-black">
                         <CountUp value={stat.value} />
                       </p>
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-white/50">{stat.label}</p>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-white/50">
+                        {stat.label}
+                      </p>
                     </div>
                   );
                 })}
@@ -133,7 +160,10 @@ export default function ForgotPasswordPage() {
       }
       topBar={
         <>
-          <Link href="/sign-in" className="group flex items-center gap-2 text-xs font-bold text-neutral-500 transition-colors hover:text-accent-700">
+          <Link
+            href="/sign-in"
+            className="group flex items-center gap-2 text-xs font-bold text-neutral-500 transition-colors hover:text-accent-700"
+          >
             <div className="rounded-full bg-muted-100 p-2 transition-colors group-hover:bg-accent-50">
               <ArrowLeft className="h-4 w-4" />
             </div>
@@ -157,8 +187,12 @@ export default function ForgotPasswordPage() {
         >
           <KeyRound className="h-8 w-8 text-accent-700" />
         </motion.div>
-        <h1 className="mb-3 text-3xl font-black text-slate-900">Forgot Password?</h1>
-        <p className="text-sm text-slate-500">Enter your email and we&apos;ll generate a secure reset link.</p>
+        <h1 className="mb-3 text-3xl font-black text-slate-900">
+          Forgot Password?
+        </h1>
+        <p className="text-sm text-slate-500">
+          Enter your email and we&apos;ll generate a secure reset link.
+        </p>
       </div>
 
       <AnimatePresence mode="wait">
@@ -176,7 +210,8 @@ export default function ForgotPasswordPage() {
               description="If an account matches that email, a password reset link has been generated. Since we are in development mode, please copy the reset link printed in your terminal or backend console logs to complete your password reset."
             />
             <div className="rounded-2xl border-2 border-slate-200 bg-slate-50/50 p-5 text-center text-sm text-slate-600">
-              Check the console logs where your development server is running to find the link.
+              Check the console logs where your development server is running to
+              find the link.
             </div>
             <Link
               href="/sign-in"
@@ -195,14 +230,23 @@ export default function ForgotPasswordPage() {
           >
             <AnimatePresence>
               {state.error ? (
-                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                >
                   <Alert variant="error" description={state.error} />
                 </motion.div>
               ) : null}
             </AnimatePresence>
 
             <div className="space-y-1.5">
-              <label htmlFor="fp-email" className="ml-1 text-xs font-bold text-slate-700">Email Address</label>
+              <label
+                htmlFor="fp-email"
+                className="ml-1 text-xs font-bold text-slate-700"
+              >
+                Email Address
+              </label>
               <div className="relative group">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
                   <Mail className="h-5 w-5 text-neutral-400 transition-colors group-focus-within:text-accent-600" />
@@ -213,13 +257,19 @@ export default function ForgotPasswordPage() {
                   type="email"
                   placeholder="admin@ims.com"
                   aria-invalid={Boolean(fieldErrors.email)}
-                  aria-describedby={fieldErrors.email ? 'fp-email-error' : undefined}
+                  aria-describedby={
+                    fieldErrors.email ? 'fp-email-error' : undefined
+                  }
                   className="w-full rounded-2xl border-2 border-border-light bg-muted-50/50 py-3.5 pl-11 pr-4 text-sm text-neutral-900 outline-none transition-all focus:border-accent-600 focus:bg-white focus:ring-4 focus:ring-accent-600/10"
                   data-testid="forgot-password-email"
                 />
               </div>
               {fieldErrors.email ? (
-                <p id="fp-email-error" role="alert" className="ml-1 text-xs font-medium text-rose-600">
+                <p
+                  id="fp-email-error"
+                  role="alert"
+                  className="ml-1 text-xs font-medium text-rose-600"
+                >
                   {fieldErrors.email}
                 </p>
               ) : null}
@@ -236,7 +286,9 @@ export default function ForgotPasswordPage() {
               {isPending ? (
                 <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
               ) : (
-                <>Generate Reset Link <ChevronRight className="h-4 w-4" /></>
+                <>
+                  Generate Reset Link <ChevronRight className="h-4 w-4" />
+                </>
               )}
             </motion.button>
           </motion.form>

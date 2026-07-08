@@ -1,4 +1,7 @@
-import { CourseCompletion, CompletionStatus } from '../aggregates/CourseCompletion';
+import {
+  CourseCompletion,
+  CompletionStatus,
+} from '../aggregates/CourseCompletion';
 
 export interface CourseCompletionRepository {
   findById(id: string): Promise<CourseCompletion | null>;

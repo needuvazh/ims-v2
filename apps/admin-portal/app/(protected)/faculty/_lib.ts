@@ -4,7 +4,10 @@ import { createUuid } from '@ims/shared-kernel';
 export async function getFacultyTrainerContext() {
   const session = await getSession();
   const { branchScopeResolver } = await import('../../lib/runtime');
-  const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(createUuid(session.userId), session.activeBranchId ? createUuid(session.activeBranchId) : null);
+  const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
+    createUuid(session.userId),
+    session.activeBranchId ? createUuid(session.activeBranchId) : null,
+  );
 
   return {
     session,

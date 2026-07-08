@@ -6,7 +6,14 @@ export const metadata = { title: 'IAM Roles | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
 export default async function IdentityRolesPage(props: {
-  searchParams: Promise<{ page?: string; limit?: string; q?: string; status?: string; sortBy?: string; sortOrder?: string }>;
+  searchParams: Promise<{
+    page?: string;
+    limit?: string;
+    q?: string;
+    status?: string;
+    sortBy?: string;
+    sortOrder?: string;
+  }>;
 }) {
   const searchParams = await props.searchParams;
   const data = await loadIdentityData();
@@ -20,9 +27,18 @@ export default async function IdentityRolesPage(props: {
           roleName: role.roleName,
           description: role.description,
           status: role.status,
-          effectiveStartDate: role.effectiveStartDate instanceof Date ? role.effectiveStartDate.toISOString() : String(role.effectiveStartDate),
-          effectiveEndDate: role.effectiveEndDate ? (role.effectiveEndDate instanceof Date ? role.effectiveEndDate.toISOString() : String(role.effectiveEndDate)) : null,
-          permissionsCount: Array.isArray(role.permissions) ? role.permissions.length : 0,
+          effectiveStartDate:
+            role.effectiveStartDate instanceof Date
+              ? role.effectiveStartDate.toISOString()
+              : String(role.effectiveStartDate),
+          effectiveEndDate: role.effectiveEndDate
+            ? role.effectiveEndDate instanceof Date
+              ? role.effectiveEndDate.toISOString()
+              : String(role.effectiveEndDate)
+            : null,
+          permissionsCount: Array.isArray(role.permissions)
+            ? role.permissions.length
+            : 0,
         }))}
         initialSearch={searchParams.q || ''}
         initialStatus={searchParams.status || ''}

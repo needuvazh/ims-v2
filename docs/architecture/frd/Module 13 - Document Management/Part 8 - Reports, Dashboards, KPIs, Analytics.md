@@ -45,32 +45,32 @@ This Part is aligned with Parts 1-7 and does not introduce new lifecycle states,
 
 ## 3.1 KPI Summary
 
-| KPI ID | KPI Name | Definition | Calculation | Default Grain | Scope | Primary Permission |
-|---|---|---|---|---|---|---|
-| KPI-DOC-001 | Total Active Documents | Count of non-soft-deleted documents in authorized scope. | `COUNT(Document WHERE deletedAt IS NULL)` | Current snapshot | B/B+/C | `document.report.operational.view` |
-| KPI-DOC-002 | Pending Verification Count | Active documents currently in `PendingVerification`. | `COUNT(status = PendingVerification)` | Current snapshot | B/B+/C | `document.report.verification.view` |
-| KPI-DOC-003 | Verification Backlog Age | Age distribution of pending verification items. | `businessNow - submittedForVerificationAt` or approved equivalent timestamp source | Current snapshot | B/B+/C | `document.report.verification.view` |
-| KPI-DOC-004 | Average Verification Turnaround Time | Average elapsed time from submission to terminal verification decision. | `AVG(decisionAt - submissionAt)` | Day/week/month | B/B+/C | `document.report.verification.view` |
-| KPI-DOC-005 | Median Verification Turnaround Time | Median elapsed time from submission to decision. | `P50(decisionAt - submissionAt)` | Day/week/month | B/B+/C | `document.report.verification.view` |
-| KPI-DOC-006 | Verification SLA Compliance Rate | Percentage of completed verification decisions within configured target duration. | `(decisions within target / decisions total) * 100` | Day/week/month | B/B+/C | `document.report.verification.view` |
-| KPI-DOC-007 | Approval Rate | Approved decisions as a percentage of terminal verification decisions. | `Approved / (Approved + Rejected) * 100` | Day/week/month | B/B+/C | `document.report.verification.view` |
-| KPI-DOC-008 | Rejection Rate | Rejected decisions as a percentage of terminal verification decisions. | `Rejected / (Approved + Rejected) * 100` | Day/week/month | B/B+/C | `document.report.verification.view` |
-| KPI-DOC-009 | Expired Active Documents | Active documents whose effective expiry date is before business date. | `COUNT(expiryDate < businessDate)` | Current snapshot | B/B+/C | `document.report.expiry.view` |
-| KPI-DOC-010 | Expiring in 30 Days | Active documents expiring from business date through +30 calendar days. | `COUNT(expiryDate BETWEEN today AND today+30)` | Current snapshot | B/B+/C | `document.report.expiry.view` |
-| KPI-DOC-011 | Expiring in 31-60 Days | Active documents expiring from +31 through +60 days. | Date-window count | Current snapshot | B/B+/C | `document.report.expiry.view` |
-| KPI-DOC-012 | Expiring in 61-90 Days | Active documents expiring from +61 through +90 days. | Date-window count | Current snapshot | B/B+/C | `document.report.expiry.view` |
-| KPI-DOC-013 | Missing Expiry Date Count | Count of active documents of configured expiry-relevant types with null `expiryDate`. | Configurable type set + null expiry | Current snapshot | B/B+/C | `document.report.compliance.view` |
-| KPI-DOC-014 | Verification Coverage Rate | Percentage of active documents that are Approved among documents requiring verification. | `Approved eligible docs / eligible docs * 100` | Current snapshot | B/B+/C | `document.report.compliance.view` |
-| KPI-DOC-015 | Document Type Coverage | Distribution and count of active documents by document type. | `COUNT GROUP BY documentType` | Current snapshot | B/B+/C | `document.report.owner.view` |
-| KPI-DOC-016 | Owner Type Coverage | Distribution of active documents by owner type. | `COUNT GROUP BY ownerType` | Current snapshot | B/B+/C | `document.report.owner.view` |
-| KPI-DOC-017 | Owners with No Documents | Count of eligible owners returned by owning-context reporting adapters with zero active documents. | owner population LEFT JOIN document projection | Current snapshot | B/B+/C | `document.report.owner.view` |
-| KPI-DOC-018 | Owners with Expired Evidence | Distinct owners with one or more expired active documents. | `COUNT(DISTINCT ownerRef)` | Current snapshot | B/B+/C | `document.report.compliance.view` |
-| KPI-DOC-019 | Repeated Rejection Count | Documents with more than one rejected verification decision. | verification history group count > 1 | Week/month | B/B+/C | `document.report.verification.view` |
-| KPI-DOC-020 | Document Upload Volume | Number of successfully registered documents in period. | `COUNT(createdAt in period)` | Day/week/month | B/B+/C | `document.report.operational.view` |
-| KPI-DOC-021 | Document Retirement Volume | Number of documents soft-retired during period, from authoritative audit facts. | count retirement actions | Day/week/month | B/B+/C | `document.report.audit.view` |
-| KPI-DOC-022 | Blob Consistency Incident Count | Count of detected Blob/database consistency incidents within period. | incident facts from approved operational source | Day/week/month | G | restricted operations/report permission |
-| KPI-DOC-023 | Unresolved Blob Consistency Incidents | Current number of unresolved reconciliation incidents. | active unresolved incident count | Current snapshot | G | `document.operations.reconcile` or approved ops report permission |
-| KPI-DOC-024 | Branch Compliance Rate | Percentage of in-scope compliance-required documents that are Approved and not expired. | compliant required docs / required docs * 100 | Current/monthly | B+/C | `document.report.compliance.view` + consolidated rules where applicable |
+| KPI ID      | KPI Name                              | Definition                                                                                         | Calculation                                                                        | Default Grain    | Scope  | Primary Permission                                                      |
+| ----------- | ------------------------------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------- | ------ | ----------------------------------------------------------------------- |
+| KPI-DOC-001 | Total Active Documents                | Count of non-soft-deleted documents in authorized scope.                                           | `COUNT(Document WHERE deletedAt IS NULL)`                                          | Current snapshot | B/B+/C | `document.report.operational.view`                                      |
+| KPI-DOC-002 | Pending Verification Count            | Active documents currently in `PendingVerification`.                                               | `COUNT(status = PendingVerification)`                                              | Current snapshot | B/B+/C | `document.report.verification.view`                                     |
+| KPI-DOC-003 | Verification Backlog Age              | Age distribution of pending verification items.                                                    | `businessNow - submittedForVerificationAt` or approved equivalent timestamp source | Current snapshot | B/B+/C | `document.report.verification.view`                                     |
+| KPI-DOC-004 | Average Verification Turnaround Time  | Average elapsed time from submission to terminal verification decision.                            | `AVG(decisionAt - submissionAt)`                                                   | Day/week/month   | B/B+/C | `document.report.verification.view`                                     |
+| KPI-DOC-005 | Median Verification Turnaround Time   | Median elapsed time from submission to decision.                                                   | `P50(decisionAt - submissionAt)`                                                   | Day/week/month   | B/B+/C | `document.report.verification.view`                                     |
+| KPI-DOC-006 | Verification SLA Compliance Rate      | Percentage of completed verification decisions within configured target duration.                  | `(decisions within target / decisions total) * 100`                                | Day/week/month   | B/B+/C | `document.report.verification.view`                                     |
+| KPI-DOC-007 | Approval Rate                         | Approved decisions as a percentage of terminal verification decisions.                             | `Approved / (Approved + Rejected) * 100`                                           | Day/week/month   | B/B+/C | `document.report.verification.view`                                     |
+| KPI-DOC-008 | Rejection Rate                        | Rejected decisions as a percentage of terminal verification decisions.                             | `Rejected / (Approved + Rejected) * 100`                                           | Day/week/month   | B/B+/C | `document.report.verification.view`                                     |
+| KPI-DOC-009 | Expired Active Documents              | Active documents whose effective expiry date is before business date.                              | `COUNT(expiryDate < businessDate)`                                                 | Current snapshot | B/B+/C | `document.report.expiry.view`                                           |
+| KPI-DOC-010 | Expiring in 30 Days                   | Active documents expiring from business date through +30 calendar days.                            | `COUNT(expiryDate BETWEEN today AND today+30)`                                     | Current snapshot | B/B+/C | `document.report.expiry.view`                                           |
+| KPI-DOC-011 | Expiring in 31-60 Days                | Active documents expiring from +31 through +60 days.                                               | Date-window count                                                                  | Current snapshot | B/B+/C | `document.report.expiry.view`                                           |
+| KPI-DOC-012 | Expiring in 61-90 Days                | Active documents expiring from +61 through +90 days.                                               | Date-window count                                                                  | Current snapshot | B/B+/C | `document.report.expiry.view`                                           |
+| KPI-DOC-013 | Missing Expiry Date Count             | Count of active documents of configured expiry-relevant types with null `expiryDate`.              | Configurable type set + null expiry                                                | Current snapshot | B/B+/C | `document.report.compliance.view`                                       |
+| KPI-DOC-014 | Verification Coverage Rate            | Percentage of active documents that are Approved among documents requiring verification.           | `Approved eligible docs / eligible docs * 100`                                     | Current snapshot | B/B+/C | `document.report.compliance.view`                                       |
+| KPI-DOC-015 | Document Type Coverage                | Distribution and count of active documents by document type.                                       | `COUNT GROUP BY documentType`                                                      | Current snapshot | B/B+/C | `document.report.owner.view`                                            |
+| KPI-DOC-016 | Owner Type Coverage                   | Distribution of active documents by owner type.                                                    | `COUNT GROUP BY ownerType`                                                         | Current snapshot | B/B+/C | `document.report.owner.view`                                            |
+| KPI-DOC-017 | Owners with No Documents              | Count of eligible owners returned by owning-context reporting adapters with zero active documents. | owner population LEFT JOIN document projection                                     | Current snapshot | B/B+/C | `document.report.owner.view`                                            |
+| KPI-DOC-018 | Owners with Expired Evidence          | Distinct owners with one or more expired active documents.                                         | `COUNT(DISTINCT ownerRef)`                                                         | Current snapshot | B/B+/C | `document.report.compliance.view`                                       |
+| KPI-DOC-019 | Repeated Rejection Count              | Documents with more than one rejected verification decision.                                       | verification history group count > 1                                               | Week/month       | B/B+/C | `document.report.verification.view`                                     |
+| KPI-DOC-020 | Document Upload Volume                | Number of successfully registered documents in period.                                             | `COUNT(createdAt in period)`                                                       | Day/week/month   | B/B+/C | `document.report.operational.view`                                      |
+| KPI-DOC-021 | Document Retirement Volume            | Number of documents soft-retired during period, from authoritative audit facts.                    | count retirement actions                                                           | Day/week/month   | B/B+/C | `document.report.audit.view`                                            |
+| KPI-DOC-022 | Blob Consistency Incident Count       | Count of detected Blob/database consistency incidents within period.                               | incident facts from approved operational source                                    | Day/week/month   | G      | restricted operations/report permission                                 |
+| KPI-DOC-023 | Unresolved Blob Consistency Incidents | Current number of unresolved reconciliation incidents.                                             | active unresolved incident count                                                   | Current snapshot | G      | `document.operations.reconcile` or approved ops report permission       |
+| KPI-DOC-024 | Branch Compliance Rate                | Percentage of in-scope compliance-required documents that are Approved and not expired.            | compliant required docs / required docs \* 100                                     | Current/monthly  | B+/C   | `document.report.compliance.view` + consolidated rules where applicable |
 
 ## 3.2 KPI Calculation Notes
 
@@ -218,24 +218,24 @@ This dashboard is read-only and does not expose transaction mutation controls.
 
 # 5. Dashboard Widget Specifications
 
-| Widget ID | Widget Title | Type | Data | Default Interaction | Permission | Scope |
-|---|---|---|---|---|---|---|
-| W-DOC-001 | Total Active Documents | Metric card | KPI-DOC-001 | Click opens authorized registry filter | `document.report.operational.view` | B/B+/C |
-| W-DOC-002 | Pending Verification | Metric card | KPI-DOC-002 | Click opens verification report/queue based on separate menu/action permission | `document.report.verification.view` | B/B+/C |
-| W-DOC-003 | Average Verification TAT | Metric card + trend | KPI-DOC-004 | Compare current period vs prior period | `document.report.verification.view` | B/B+/C |
-| W-DOC-004 | Verification SLA Compliance | Gauge/progress | KPI-DOC-006 | Drill to SLA breach report | `document.report.verification.view` | B/B+/C |
-| W-DOC-005 | Approval vs Rejection Trend | Line/column chart | KPI-DOC-007/008 | Period and branch filters | `document.report.verification.view` | B/B+/C |
-| W-DOC-006 | Pending Backlog Aging | Stacked bar | KPI-DOC-003 | Buckets: 0-1, 2-3, 4-7, 8+ business days | `document.report.verification.view` | B/B+/C |
-| W-DOC-007 | Expired Documents | Metric card | KPI-DOC-009 | Drill to expiry report | `document.report.expiry.view` | B/B+/C |
-| W-DOC-008 | Upcoming Expiry Buckets | Stacked bar | KPI-DOC-010/011/012 | 0-30, 31-60, 61-90 days | `document.report.expiry.view` | B/B+/C |
-| W-DOC-009 | Compliance Rate | Gauge + trend | KPI-DOC-024 | Drill by branch/document type | `document.report.compliance.view` | B+/C |
-| W-DOC-010 | Document Status Distribution | Donut/bar | Counts by current effective status | Click applies status filter | `document.report.operational.view` | B/B+/C |
-| W-DOC-011 | Documents by Owner Type | Bar chart | KPI-DOC-016 | Student/Trainer/Corporate/Person | `document.report.owner.view` | B/B+/C |
-| W-DOC-012 | Documents by Type | Horizontal bar/table | KPI-DOC-015 | Top N plus full report link | `document.report.owner.view` | B/B+/C |
-| W-DOC-013 | Upload Volume Trend | Line chart | KPI-DOC-020 | Day/week/month grain | `document.report.operational.view` | B/B+/C |
-| W-DOC-014 | Repeated Rejections | Alert table | KPI-DOC-019 | Drill to document verification history | `document.report.verification.view` | B/B+/C |
-| W-DOC-015 | Branch Compliance Comparison | Ranked bar/table | KPI-DOC-024 | Branch ranking, current vs previous period | `document.report.compliance.view` + consolidated requirements | C |
-| W-DOC-016 | Blob Consistency Incidents | Restricted metric/alert | KPI-DOC-022/023 | Drill to operations report | `document.operations.reconcile` or approved ops report permission | G |
+| Widget ID | Widget Title                 | Type                    | Data                               | Default Interaction                                                            | Permission                                                        | Scope  |
+| --------- | ---------------------------- | ----------------------- | ---------------------------------- | ------------------------------------------------------------------------------ | ----------------------------------------------------------------- | ------ |
+| W-DOC-001 | Total Active Documents       | Metric card             | KPI-DOC-001                        | Click opens authorized registry filter                                         | `document.report.operational.view`                                | B/B+/C |
+| W-DOC-002 | Pending Verification         | Metric card             | KPI-DOC-002                        | Click opens verification report/queue based on separate menu/action permission | `document.report.verification.view`                               | B/B+/C |
+| W-DOC-003 | Average Verification TAT     | Metric card + trend     | KPI-DOC-004                        | Compare current period vs prior period                                         | `document.report.verification.view`                               | B/B+/C |
+| W-DOC-004 | Verification SLA Compliance  | Gauge/progress          | KPI-DOC-006                        | Drill to SLA breach report                                                     | `document.report.verification.view`                               | B/B+/C |
+| W-DOC-005 | Approval vs Rejection Trend  | Line/column chart       | KPI-DOC-007/008                    | Period and branch filters                                                      | `document.report.verification.view`                               | B/B+/C |
+| W-DOC-006 | Pending Backlog Aging        | Stacked bar             | KPI-DOC-003                        | Buckets: 0-1, 2-3, 4-7, 8+ business days                                       | `document.report.verification.view`                               | B/B+/C |
+| W-DOC-007 | Expired Documents            | Metric card             | KPI-DOC-009                        | Drill to expiry report                                                         | `document.report.expiry.view`                                     | B/B+/C |
+| W-DOC-008 | Upcoming Expiry Buckets      | Stacked bar             | KPI-DOC-010/011/012                | 0-30, 31-60, 61-90 days                                                        | `document.report.expiry.view`                                     | B/B+/C |
+| W-DOC-009 | Compliance Rate              | Gauge + trend           | KPI-DOC-024                        | Drill by branch/document type                                                  | `document.report.compliance.view`                                 | B+/C   |
+| W-DOC-010 | Document Status Distribution | Donut/bar               | Counts by current effective status | Click applies status filter                                                    | `document.report.operational.view`                                | B/B+/C |
+| W-DOC-011 | Documents by Owner Type      | Bar chart               | KPI-DOC-016                        | Student/Trainer/Corporate/Person                                               | `document.report.owner.view`                                      | B/B+/C |
+| W-DOC-012 | Documents by Type            | Horizontal bar/table    | KPI-DOC-015                        | Top N plus full report link                                                    | `document.report.owner.view`                                      | B/B+/C |
+| W-DOC-013 | Upload Volume Trend          | Line chart              | KPI-DOC-020                        | Day/week/month grain                                                           | `document.report.operational.view`                                | B/B+/C |
+| W-DOC-014 | Repeated Rejections          | Alert table             | KPI-DOC-019                        | Drill to document verification history                                         | `document.report.verification.view`                               | B/B+/C |
+| W-DOC-015 | Branch Compliance Comparison | Ranked bar/table        | KPI-DOC-024                        | Branch ranking, current vs previous period                                     | `document.report.compliance.view` + consolidated requirements     | C      |
+| W-DOC-016 | Blob Consistency Incidents   | Restricted metric/alert | KPI-DOC-022/023                    | Drill to operations report                                                     | `document.operations.reconcile` or approved ops report permission | G      |
 
 ## 5.1 Widget Permission Behavior
 
@@ -817,11 +817,11 @@ The report reads Audit & Compliance-owned records. Document Management does not 
 
 ## 7.1 Supported Formats
 
-| Format | Use | Rules |
-|---|---|---|
-| CSV | Large flat operational datasets | UTF-8 BOM where required for spreadsheet compatibility; stable headers; no raw Blob URL. |
-| XLSX | Business analysis and filtered reports | Bilingual-safe; date cells as calendar dates; filter metadata sheet recommended. |
-| PDF | Human-readable operational or management summary | Page headers, filter summary, generation timestamp, scope label, page numbers. |
+| Format | Use                                              | Rules                                                                                    |
+| ------ | ------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| CSV    | Large flat operational datasets                  | UTF-8 BOM where required for spreadsheet compatibility; stable headers; no raw Blob URL. |
+| XLSX   | Business analysis and filtered reports           | Bilingual-safe; date cells as calendar dates; filter metadata sheet recommended.         |
+| PDF    | Human-readable operational or management summary | Page headers, filter summary, generation timestamp, scope label, page numbers.           |
 
 ## 7.2 Export Authorization
 
@@ -1114,11 +1114,11 @@ This Part does not require microservices, an external broker, CQRS, or Event Sou
 
 ## 9.2 Freshness Classes
 
-| Class | Use Case | Suggested Target |
-|---|---|---|
-| Near-current operational | Verification queue, expiry workbench | seconds to a few minutes depending on implementation |
-| Daily operational analytics | Upload trends, coverage, branch summary | daily or more frequent |
-| Historical executive trends | Monthly compliance, verification performance | snapshot-based |
+| Class                       | Use Case                                     | Suggested Target                                     |
+| --------------------------- | -------------------------------------------- | ---------------------------------------------------- |
+| Near-current operational    | Verification queue, expiry workbench         | seconds to a few minutes depending on implementation |
+| Daily operational analytics | Upload trends, coverage, branch summary      | daily or more frequent                               |
+| Historical executive trends | Monthly compliance, verification performance | snapshot-based                                       |
 
 Exact refresh intervals belong to architecture/NFR configuration and should be validated in Part 10/11.
 
@@ -1158,12 +1158,12 @@ Report result
 
 ## 10.2 Scope Rules
 
-| Scope | Rule |
-|---|---|
-| B | Only owners/documents resolving to directly assigned branches. |
-| B+ | Includes child branches only when IAM `canViewChildBranches = true`. |
-| C | Consolidated read-only result; requires report permission, `document.report.consolidated`, and IAM `canViewConsolidated = true`. |
-| G | Exceptional operational scope, primarily reconciliation operations. |
+| Scope | Rule                                                                                                                             |
+| ----- | -------------------------------------------------------------------------------------------------------------------------------- |
+| B     | Only owners/documents resolving to directly assigned branches.                                                                   |
+| B+    | Includes child branches only when IAM `canViewChildBranches = true`.                                                             |
+| C     | Consolidated read-only result; requires report permission, `document.report.consolidated`, and IAM `canViewConsolidated = true`. |
+| G     | Exceptional operational scope, primarily reconciliation operations.                                                              |
 
 ## 10.3 Person Owner Gap
 
@@ -1210,15 +1210,15 @@ Prohibited or restricted analytics dimensions unless explicitly approved:
 
 The following data-quality metrics are recommended because they directly affect Document Management reporting accuracy.
 
-| DQ ID | Metric | Meaning | Owner/Action |
-|---|---|---|---|
-| DQ-DOC-001 | Unresolved Owner Reference Count | Document owner reference cannot be resolved. | Document Management investigates association integrity; owning context remains authoritative for owner. |
-| DQ-DOC-002 | Unresolved Branch Scope Count | Owner exists but branch reporting scope cannot be resolved. | Architecture/owner-context integration issue. |
-| DQ-DOC-003 | Missing File Object Count | Document metadata exists but file object is unavailable. | Restricted reconciliation operations. |
-| DQ-DOC-004 | Orphan Blob Candidate Count | Blob object exists without registered Document metadata. | Restricted reconciliation operations; persistence owner is an open gap. |
-| DQ-DOC-005 | Status-History Mismatch Count | Current status conflicts with latest immutable verification decision according to approved lifecycle semantics. | Document Management consistency investigation. |
-| DQ-DOC-006 | Invalid Date Order Count | `expiryDate < issueDate` in legacy/imported data. | Document Management data remediation under audited process. |
-| DQ-DOC-007 | Missing Expiry on Expiry-Required Type | Required expiry type lacks expiry date. | Document operations/compliance follow-up. |
+| DQ ID      | Metric                                 | Meaning                                                                                                         | Owner/Action                                                                                            |
+| ---------- | -------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| DQ-DOC-001 | Unresolved Owner Reference Count       | Document owner reference cannot be resolved.                                                                    | Document Management investigates association integrity; owning context remains authoritative for owner. |
+| DQ-DOC-002 | Unresolved Branch Scope Count          | Owner exists but branch reporting scope cannot be resolved.                                                     | Architecture/owner-context integration issue.                                                           |
+| DQ-DOC-003 | Missing File Object Count              | Document metadata exists but file object is unavailable.                                                        | Restricted reconciliation operations.                                                                   |
+| DQ-DOC-004 | Orphan Blob Candidate Count            | Blob object exists without registered Document metadata.                                                        | Restricted reconciliation operations; persistence owner is an open gap.                                 |
+| DQ-DOC-005 | Status-History Mismatch Count          | Current status conflicts with latest immutable verification decision according to approved lifecycle semantics. | Document Management consistency investigation.                                                          |
+| DQ-DOC-006 | Invalid Date Order Count               | `expiryDate < issueDate` in legacy/imported data.                                                               | Document Management data remediation under audited process.                                             |
+| DQ-DOC-007 | Missing Expiry on Expiry-Required Type | Required expiry type lacks expiry date.                                                                         | Document operations/compliance follow-up.                                                               |
 
 These are monitoring/reporting facts. Automated correction must not occur through a read model.
 
@@ -1280,20 +1280,20 @@ It must not silently assign unresolved records to the current branch.
 
 # 15. Report-to-Permission Matrix
 
-| Report | View Permission | Export Permission | Consolidated Additional Requirement |
-|---|---|---|---|
-| RPT-DOC-001 Registry | `document.report.operational.view` | `document.report.export` | `document.report.consolidated` + IAM consolidated capability + consolidated export for export |
-| RPT-DOC-002 Verification Queue | `document.report.verification.view` | `document.report.export` | Same consolidated composition |
-| RPT-DOC-003 Verification Decisions | `document.report.verification.view` | `document.report.export` | Same consolidated composition |
-| RPT-DOC-004 Expired Documents | `document.report.expiry.view` | `document.report.export` | Same consolidated composition |
-| RPT-DOC-005 Upcoming Expiry | `document.report.expiry.view` | `document.report.export` | Same consolidated composition |
-| RPT-DOC-006 Compliance Coverage | `document.report.compliance.view` | `document.report.export` | Same consolidated composition |
-| RPT-DOC-007 Type Distribution | `document.report.owner.view` | `document.report.export` | Same consolidated composition |
-| RPT-DOC-008 Owner Coverage | `document.report.owner.view` and where applicable compliance view | `document.report.export` | Same consolidated composition |
-| RPT-DOC-009 SLA Performance | `document.report.verification.view` | `document.report.export` | Same consolidated composition |
-| RPT-DOC-010 Rejection Analysis | `document.report.verification.view` | `document.report.export` | Same consolidated composition |
-| RPT-DOC-011 Audit Activity | `document.report.audit.view` plus Audit policy | approved export capability | Audit policy + consolidated rules |
-| RPT-DOC-012 Blob Consistency | `document.operations.reconcile` or approved future ops report permission | explicit restricted export policy | Global operations only; not ordinary consolidated business reporting |
+| Report                             | View Permission                                                          | Export Permission                 | Consolidated Additional Requirement                                                           |
+| ---------------------------------- | ------------------------------------------------------------------------ | --------------------------------- | --------------------------------------------------------------------------------------------- |
+| RPT-DOC-001 Registry               | `document.report.operational.view`                                       | `document.report.export`          | `document.report.consolidated` + IAM consolidated capability + consolidated export for export |
+| RPT-DOC-002 Verification Queue     | `document.report.verification.view`                                      | `document.report.export`          | Same consolidated composition                                                                 |
+| RPT-DOC-003 Verification Decisions | `document.report.verification.view`                                      | `document.report.export`          | Same consolidated composition                                                                 |
+| RPT-DOC-004 Expired Documents      | `document.report.expiry.view`                                            | `document.report.export`          | Same consolidated composition                                                                 |
+| RPT-DOC-005 Upcoming Expiry        | `document.report.expiry.view`                                            | `document.report.export`          | Same consolidated composition                                                                 |
+| RPT-DOC-006 Compliance Coverage    | `document.report.compliance.view`                                        | `document.report.export`          | Same consolidated composition                                                                 |
+| RPT-DOC-007 Type Distribution      | `document.report.owner.view`                                             | `document.report.export`          | Same consolidated composition                                                                 |
+| RPT-DOC-008 Owner Coverage         | `document.report.owner.view` and where applicable compliance view        | `document.report.export`          | Same consolidated composition                                                                 |
+| RPT-DOC-009 SLA Performance        | `document.report.verification.view`                                      | `document.report.export`          | Same consolidated composition                                                                 |
+| RPT-DOC-010 Rejection Analysis     | `document.report.verification.view`                                      | `document.report.export`          | Same consolidated composition                                                                 |
+| RPT-DOC-011 Audit Activity         | `document.report.audit.view` plus Audit policy                           | approved export capability        | Audit policy + consolidated rules                                                             |
+| RPT-DOC-012 Blob Consistency       | `document.operations.reconcile` or approved future ops report permission | explicit restricted export policy | Global operations only; not ordinary consolidated business reporting                          |
 
 ---
 
@@ -1301,38 +1301,38 @@ It must not silently assign unresolved records to the current branch.
 
 These are recommended IAM role bundles, not hardcoded role checks.
 
-| Business Role | Recommended Dashboard Access |
-|---|---|
-| Document Administrator | Operations, Expiry, selected Verification summary within branch scope. |
-| Document Verifier | Verification Performance and own/authorized queue statistics; no compliance mutation implied. |
-| Compliance Officer | Expiry & Compliance, Verification trends, audit-oriented document views subject to policy. |
-| Branch Manager | Branch Operations, Expiry & Compliance, branch-level Verification Performance. |
-| Head Office Operations Manager | Multi-branch dashboards when consolidated permission and IAM capability are granted. |
-| Auditor / Compliance Reviewer | Read-only audit/compliance reporting subject to Audit policy. |
-| MIS Analyst | Approved report/dashboard datasets; no transaction mutation or file access. |
-| Reconciliation Operator | Restricted Blob consistency widget/report only. |
+| Business Role                       | Recommended Dashboard Access                                                                                                                                            |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Document Administrator              | Operations, Expiry, selected Verification summary within branch scope.                                                                                                  |
+| Document Verifier                   | Verification Performance and own/authorized queue statistics; no compliance mutation implied.                                                                           |
+| Compliance Officer                  | Expiry & Compliance, Verification trends, audit-oriented document views subject to policy.                                                                              |
+| Branch Manager                      | Branch Operations, Expiry & Compliance, branch-level Verification Performance.                                                                                          |
+| Head Office Operations Manager      | Multi-branch dashboards when consolidated permission and IAM capability are granted.                                                                                    |
+| Auditor / Compliance Reviewer       | Read-only audit/compliance reporting subject to Audit policy.                                                                                                           |
+| MIS Analyst                         | Approved report/dashboard datasets; no transaction mutation or file access.                                                                                             |
+| Reconciliation Operator             | Restricted Blob consistency widget/report only.                                                                                                                         |
 | Student / Trainer Self-Service User | No administrative dashboard. Self-service document status widgets, if future portals are activated, must use identity-bound SELF scope and separate portal permissions. |
 
 ---
 
 # 17. DDD Fit and Ownership Check
 
-| Reporting Concern | Correct Owner | Module 13 Role | Fit Result |
-|---|---|---|---|
-| Document transactional metadata | Document Management | Authoritative source | Aligned |
-| Verification history | Document Management | Authoritative source | Aligned |
-| Expiry facts | Document Management | Authoritative/derived source | Aligned |
-| Dashboard definition | Reporting & Dashboards | Consumer/provider of document metrics only | Aligned |
-| Dashboard widget configuration | Reporting & Dashboards | Supplies document-specific dataset contract | Aligned |
-| Metric snapshots | Reporting & Dashboards | Source facts from DOC; snapshot ownership stays reporting | Aligned |
-| Branch access | IAM | DOC reports enforce resolved scope | Aligned |
-| Owner master data | Owning bounded context | Referenced through approved reporting adapters | Aligned |
-| Audit history | Audit & Compliance | Referenced for audit report | Aligned |
-| Notification delivery metrics | Communication & Notification | Referenced only through approved reporting boundary | Aligned |
-| Blob binary storage | Infrastructure adapter | Not a business analytics authority | Aligned |
-| Certificate compliance | Certificate Management | Not calculated by DOC dashboards | Aligned |
-| Enrollment eligibility | Admission & Enrollment | Not calculated by DOC dashboards | Aligned |
-| Trainer assignment eligibility | Training Delivery / Trainer contexts | Not calculated by DOC dashboards | Aligned |
+| Reporting Concern               | Correct Owner                        | Module 13 Role                                            | Fit Result |
+| ------------------------------- | ------------------------------------ | --------------------------------------------------------- | ---------- |
+| Document transactional metadata | Document Management                  | Authoritative source                                      | Aligned    |
+| Verification history            | Document Management                  | Authoritative source                                      | Aligned    |
+| Expiry facts                    | Document Management                  | Authoritative/derived source                              | Aligned    |
+| Dashboard definition            | Reporting & Dashboards               | Consumer/provider of document metrics only                | Aligned    |
+| Dashboard widget configuration  | Reporting & Dashboards               | Supplies document-specific dataset contract               | Aligned    |
+| Metric snapshots                | Reporting & Dashboards               | Source facts from DOC; snapshot ownership stays reporting | Aligned    |
+| Branch access                   | IAM                                  | DOC reports enforce resolved scope                        | Aligned    |
+| Owner master data               | Owning bounded context               | Referenced through approved reporting adapters            | Aligned    |
+| Audit history                   | Audit & Compliance                   | Referenced for audit report                               | Aligned    |
+| Notification delivery metrics   | Communication & Notification         | Referenced only through approved reporting boundary       | Aligned    |
+| Blob binary storage             | Infrastructure adapter               | Not a business analytics authority                        | Aligned    |
+| Certificate compliance          | Certificate Management               | Not calculated by DOC dashboards                          | Aligned    |
+| Enrollment eligibility          | Admission & Enrollment               | Not calculated by DOC dashboards                          | Aligned    |
+| Trainer assignment eligibility  | Training Delivery / Trainer contexts | Not calculated by DOC dashboards                          | Aligned    |
 
 ---
 
@@ -1360,15 +1360,15 @@ This Part therefore follows these rules:
 
 # 19. Traceability to Earlier FRD Parts
 
-| Earlier Part | Part 8 Alignment |
-|---|---|
-| Module Overview / Part 1 | Implements compliance visibility, reporting consumption, expiry facts, branch/consolidated constraints. |
-| Part 2 | Uses existing verification and expiry workflows; introduces no new lifecycle transitions. |
-| Part 3 | Supports Document Registry, Verification Queue, Expiry Workbench, Audit/History, and operations views. |
-| Part 4 | Uses `Document` and `DocumentVerification` as authoritative owned entities; reporting models remain projections. |
-| Part 5 | Report endpoints/actions should apply the same authentication and owner-derived branch-scope principles as transactional APIs. |
-| Part 6 | Uses canonical action/menu/report permissions and B/B+/C/G scope classifications. |
-| Part 7 | Uses defined error/validation ownership and notification event boundaries; delivery state is not duplicated. |
+| Earlier Part             | Part 8 Alignment                                                                                                               |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| Module Overview / Part 1 | Implements compliance visibility, reporting consumption, expiry facts, branch/consolidated constraints.                        |
+| Part 2                   | Uses existing verification and expiry workflows; introduces no new lifecycle transitions.                                      |
+| Part 3                   | Supports Document Registry, Verification Queue, Expiry Workbench, Audit/History, and operations views.                         |
+| Part 4                   | Uses `Document` and `DocumentVerification` as authoritative owned entities; reporting models remain projections.               |
+| Part 5                   | Report endpoints/actions should apply the same authentication and owner-derived branch-scope principles as transactional APIs. |
+| Part 6                   | Uses canonical action/menu/report permissions and B/B+/C/G scope classifications.                                              |
+| Part 7                   | Uses defined error/validation ownership and notification event boundaries; delivery state is not duplicated.                   |
 
 ---
 
@@ -1430,4 +1430,3 @@ Part 8 remains consistent with the ASTI IMS architecture and earlier Module 13 F
 - No dashboard or report performs document approval, rejection, metadata mutation, retirement, or file authorization.
 - No microservice, external broker, CQRS architecture, or Event Sourcing requirement is introduced.
 - Unresolved requirements are flagged as gaps rather than being implemented through invented aggregates or ownership.
-

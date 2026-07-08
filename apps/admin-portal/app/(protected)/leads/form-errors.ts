@@ -4,11 +4,18 @@ export type ActionFailure = {
   success: false;
   error?: string;
   fieldErrors?: Record<string, string[] | undefined>;
-  status?: 'DUPLICATE_LEAD_DETECTED' | 'VALIDATION_ERROR' | 'DOMAIN_ERROR' | 'SYSTEM_ERROR';
+  status?:
+    | 'DUPLICATE_LEAD_DETECTED'
+    | 'VALIDATION_ERROR'
+    | 'DOMAIN_ERROR'
+    | 'SYSTEM_ERROR';
   duplicateRefId?: string;
 };
 
-export function buildCrmActionFailure(error: any, context?: 'convert' | 'stage'): ActionFailure {
+export function buildCrmActionFailure(
+  error: any,
+  context?: 'convert' | 'stage',
+): ActionFailure {
   if (error instanceof z.ZodError) {
     return {
       success: false,
@@ -46,11 +53,15 @@ export function buildCrmActionFailure(error: any, context?: 'convert' | 'stage')
     };
   }
 
-  if (message.includes('ERR_CRM_BRANCH_SCOPE_VIOLATION') || message.includes('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION')) {
+  if (
+    message.includes('ERR_CRM_BRANCH_SCOPE_VIOLATION') ||
+    message.includes('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION')
+  ) {
     return {
       success: false,
       status: 'DOMAIN_ERROR',
-      error: 'You do not have permission to perform this action in this branch context.',
+      error:
+        'You do not have permission to perform this action in this branch context.',
     };
   }
 
@@ -58,7 +69,8 @@ export function buildCrmActionFailure(error: any, context?: 'convert' | 'stage')
     return {
       success: false,
       status: 'DOMAIN_ERROR',
-      error: 'Cannot convert lead. Missing preconditions (e.g., email, date of birth, or identity documents).',
+      error:
+        'Cannot convert lead. Missing preconditions (e.g., email, date of birth, or identity documents).',
     };
   }
 
@@ -66,9 +78,10 @@ export function buildCrmActionFailure(error: any, context?: 'convert' | 'stage')
     return {
       success: false,
       status: 'DOMAIN_ERROR',
-      error: context === 'convert'
-        ? "Only leads in the 'Qualified' stage can be converted to an admission."
-        : "Forbidden stage transition. Pipeline rules violated.",
+      error:
+        context === 'convert'
+          ? "Only leads in the 'Qualified' stage can be converted to an admission."
+          : 'Forbidden stage transition. Pipeline rules violated.',
     };
   }
 

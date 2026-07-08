@@ -38,76 +38,101 @@ function errorResponse(error: Error) {
   }
 
   return NextResponse.json(
-    { success: false, errorCode: code, messageEnglish: msg, statusCode: status },
-    { status }
+    {
+      success: false,
+      errorCode: code,
+      messageEnglish: msg,
+      statusCode: status,
+    },
+    { status },
   );
 }
 
 export async function POST(
   request: Request,
-  props: { params: Promise<{ id: string }> }
+  props: { params: Promise<{ id: string }> },
 ) {
   const { id } = await props.params;
-  return withRouteObservability(request.headers, async () => withPermission(request, 'enrollment.walk-in-payment', async ({ session }) => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(
+        request,
+        'enrollment.walk-in-payment',
+        async ({ session }) => {
+          const logger = createStructuredLogger(
+            getCurrentRequestContext() ?? {},
+          );
 
-    try {
-      const body = await request.json();
-      const parsed = RecordPaymentRequestSchema.parse(body);
+          try {
+            const body = await request.json();
+            const parsed = RecordPaymentRequestSchema.parse(body);
 
-      if (!session.activeBranchId) {
-        throw new Error('ERR_AUTH_BRANCH_DENIED');
-      }
+            if (!session.activeBranchId) {
+              throw new Error('ERR_AUTH_BRANCH_DENIED');
+            }
 
-      const { branchScopeResolver, enrollmentService, prisma } = await import('../../../../../../lib/runtime');
+            const { branchScopeResolver, enrollmentService, prisma } =
+              await import('../../../../../../lib/runtime');
 
-      // Verify branch permission scope
-      const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
-        session.userId,
-        session.activeBranchId ?? null
-      );
-      const enrollment = await prisma.enrollment.findUnique({
-        where: { id },
-        select: { branchId: true },
-      });
+            // Verify branch permission scope
+            const allowedBranches =
+              await branchScopeResolver.resolveAllowedBranches(
+                session.userId,
+                session.activeBranchId ?? null,
+              );
+            const enrollment = await prisma.enrollment.findUnique({
+              where: { id },
+              select: { branchId: true },
+            });
 
-      if (!enrollment) {
-        throw new Error('ERR_ENROLLMENT_NOT_FOUND');
-      }
+            if (!enrollment) {
+              throw new Error('ERR_ENROLLMENT_NOT_FOUND');
+            }
 
-      if (!allowedBranches.includes(enrollment.branchId as Uuid)) {
-        throw new Error('ERR_AUTH_BRANCH_DENIED');
-      }
+            if (!allowedBranches.includes(enrollment.branchId as Uuid)) {
+              throw new Error('ERR_AUTH_BRANCH_DENIED');
+            }
 
-      const result = await enrollmentService.recordWalkInPayment(
-        id,
-        parsed.paymentCollected,
-        session.userId,
-        parsed.remarks || undefined,
-        parsed.paymentMethod || 'Cash'
-      );
+            const result = await enrollmentService.recordWalkInPayment(
+              id,
+              parsed.paymentCollected,
+              session.userId,
+              parsed.remarks || undefined,
+              parsed.paymentMethod || 'Cash',
+            );
 
-      const response = NextResponse.json(
-        {
-          success: true,
-          enrollmentId: result.enrollment.id,
-          enrollmentStatus: result.enrollment.enrollmentStatus,
-          confirmationNumber: result.confirmation.confirmationNumber,
-          documentUrl: result.confirmation.documentUrl,
+            const response = NextResponse.json(
+              {
+                success: true,
+                enrollmentId: result.enrollment.id,
+                enrollmentStatus: result.enrollment.enrollmentStatus,
+                confirmationNumber: result.confirmation.confirmationNumber,
+                documentUrl: result.confirmation.documentUrl,
+              },
+              { status: 200 },
+            );
+
+            applyObservabilityResponseHeaders(
+              response.headers,
+              request.headers,
+              {
+                route: '/api/v1/enrollments/[id]/walk-in-payment',
+                method: request.method,
+                status: 'success',
+              },
+            );
+
+            return response;
+          } catch (error) {
+            logger.error('api.enrollments.walkin.payment.failed', {
+              status: 'failed',
+              error: error as Error,
+            });
+            return errorResponse(error as Error);
+          }
         },
-        { status: 200 }
-      );
-
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/enrollments/[id]/walk-in-payment',
-        method: request.method,
-        status: 'success',
-      });
-
-      return response;
-    } catch (error) {
-      logger.error('api.enrollments.walkin.payment.failed', { status: 'failed', error: error as Error });
-      return errorResponse(error as Error);
-    }
-  }), { route: '/api/v1/enrollments/[id]/walk-in-payment' });
+      ),
+    { route: '/api/v1/enrollments/[id]/walk-in-payment' },
+  );
 }

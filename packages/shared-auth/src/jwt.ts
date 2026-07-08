@@ -19,7 +19,10 @@ async function importSigningKey(keyMaterial: string) {
     return jose.importPKCS8(keyMaterial, 'RS256');
   }
 
-  return jose.importJWK({ kty: 'oct', k: Buffer.from(keyMaterial, 'utf8').toString('base64url') }, 'HS256');
+  return jose.importJWK(
+    { kty: 'oct', k: Buffer.from(keyMaterial, 'utf8').toString('base64url') },
+    'HS256',
+  );
 }
 
 async function importVerificationKey(keyMaterial: string) {
@@ -27,7 +30,10 @@ async function importVerificationKey(keyMaterial: string) {
     return jose.importSPKI(keyMaterial, 'RS256');
   }
 
-  return jose.importJWK({ kty: 'oct', k: Buffer.from(keyMaterial, 'utf8').toString('base64url') }, 'HS256');
+  return jose.importJWK(
+    { kty: 'oct', k: Buffer.from(keyMaterial, 'utf8').toString('base64url') },
+    'HS256',
+  );
 }
 
 export class JwtService {
@@ -37,7 +43,7 @@ export class JwtService {
   public static async signAccessToken(
     payload: TokenPayload,
     privateKeyPem: string,
-    expiresIn: string = '30m'
+    expiresIn: string = '30m',
   ): Promise<string> {
     const key = await importSigningKey(privateKeyPem);
     const alg = isPemKey(privateKeyPem) ? 'RS256' : 'HS256';
@@ -54,7 +60,7 @@ export class JwtService {
    */
   public static async verifyAccessToken(
     token: string,
-    publicKeyPem: string
+    publicKeyPem: string,
   ): Promise<TokenPayload> {
     const key = await importVerificationKey(publicKeyPem);
     const algorithms = isPemKey(publicKeyPem) ? ['RS256'] : ['HS256'];
@@ -93,7 +99,7 @@ export class RefreshTokenService {
     try {
       return crypto.timingSafeEqual(
         Buffer.from(hashedRaw, 'hex'),
-        Buffer.from(hash, 'hex')
+        Buffer.from(hash, 'hex'),
       );
     } catch {
       return false;
@@ -103,13 +109,18 @@ export class RefreshTokenService {
 
 declare global {
   // eslint-disable-next-line no-var
-  var __imsJwtDevelopmentKeyPair: { publicKey: string; privateKey: string } | undefined;
+  var __imsJwtDevelopmentKeyPair:
+    | { publicKey: string; privateKey: string }
+    | undefined;
 }
 
 /**
  * Shared dev/test RSA key pair fallback used when env-based JWT keys are absent.
  */
-export function getDevelopmentKeyPair(): { publicKey: string; privateKey: string } {
+export function getDevelopmentKeyPair(): {
+  publicKey: string;
+  privateKey: string;
+} {
   if (!globalThis.__imsJwtDevelopmentKeyPair) {
     globalThis.__imsJwtDevelopmentKeyPair = generateRSAKeyPair();
   }
@@ -120,7 +131,10 @@ export function getDevelopmentKeyPair(): { publicKey: string; privateKey: string
 /**
  * Generate a transient RSA 2048 key pair (for dev/testing fallbacks).
  */
-export function generateRSAKeyPair(): { publicKey: string; privateKey: string } {
+export function generateRSAKeyPair(): {
+  publicKey: string;
+  privateKey: string;
+} {
   const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
     modulusLength: 2048,
     publicKeyEncoding: {

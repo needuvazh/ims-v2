@@ -1,7 +1,13 @@
 import crypto from 'crypto';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { InMemoryAuditLogRepository } from '@ims/audit';
-import type { IAuditLogRepository, ISessionRepository, IUserBranchAccessRepository, IUserRepository, UserSessionDto } from '../domain/repositories';
+import type {
+  IAuditLogRepository,
+  ISessionRepository,
+  IUserBranchAccessRepository,
+  IUserRepository,
+  UserSessionDto,
+} from '../domain/repositories';
 import type { UserBranchAccess } from '../domain/user-branch-access';
 import type { User } from '../domain/user';
 import { BranchAccessService } from './branch-access-service';
@@ -27,7 +33,11 @@ function createUser(overrides: Partial<User> = {}): User {
   };
 }
 
-function createBranchAccess(userId: string, branchId: string, overrides: Partial<UserBranchAccess> = {}): UserBranchAccess {
+function createBranchAccess(
+  userId: string,
+  branchId: string,
+  overrides: Partial<UserBranchAccess> = {},
+): UserBranchAccess {
   return {
     id: crypto.randomUUID(),
     userId: userId as never,
@@ -47,7 +57,9 @@ function createBranchAccess(userId: string, branchId: string, overrides: Partial
   };
 }
 
-function createSession(overrides: Partial<UserSessionDto> = {}): UserSessionDto {
+function createSession(
+  overrides: Partial<UserSessionDto> = {},
+): UserSessionDto {
   return {
     id: crypto.randomUUID(),
     userId: crypto.randomUUID(),
@@ -83,10 +95,25 @@ describe('BranchAccessService', () => {
     branchAccess.clear();
     sessions.clear();
 
-    const user = createUser({ id: userId as never, personId: crypto.randomUUID(), defaultBranchId: '11111111-1111-1111-1111-111111111111' });
+    const user = createUser({
+      id: userId as never,
+      personId: crypto.randomUUID(),
+      defaultBranchId: '11111111-1111-1111-1111-111111111111',
+    });
     users.set(user.id, user);
-    branchAccess.set(user.id, [createBranchAccess(user.id, '11111111-1111-1111-1111-111111111111', { isDefault: true })]);
-    sessions.set('session-1', createSession({ id: 'session-1' as never, accessTokenJti: 'session-1', userId: user.id as never }));
+    branchAccess.set(user.id, [
+      createBranchAccess(user.id, '11111111-1111-1111-1111-111111111111', {
+        isDefault: true,
+      }),
+    ]);
+    sessions.set(
+      'session-1',
+      createSession({
+        id: 'session-1' as never,
+        accessTokenJti: 'session-1',
+        userId: user.id as never,
+      }),
+    );
 
     branchRepo = {
       findByUser: async (id) => branchAccess.get(id) ?? [],
@@ -119,7 +146,10 @@ describe('BranchAccessService', () => {
         users.set(user.id, user);
         return user;
       },
-      search: async () => ({ items: Array.from(users.values()), total: users.size }),
+      search: async () => ({
+        items: Array.from(users.values()),
+        total: users.size,
+      }),
       getPasswordHash: async () => null,
       updatePassword: async () => undefined,
       createResetToken: async () => undefined,
@@ -148,50 +178,148 @@ describe('BranchAccessService', () => {
           if (session.userId === targetUserId) session.status = 'Revoked';
         }
       },
-      listActiveForUser: async (targetUserId) => Array.from(sessions.values()).filter((session) => session.userId === targetUserId && session.status === 'Active'),
+      listActiveForUser: async (targetUserId) =>
+        Array.from(sessions.values()).filter(
+          (session) =>
+            session.userId === targetUserId && session.status === 'Active',
+        ),
     };
 
     auditRepo = new InMemoryAuditLogRepository();
-    service = new BranchAccessService(branchRepo, userRepo, sessionRepo, auditRepo);
+    service = new BranchAccessService(
+      branchRepo,
+      userRepo,
+      sessionRepo,
+      auditRepo,
+    );
   });
 
   it('assigns a new branch and marks it default when first assignment', async () => {
-    const result = await service.assignBranchToUser(userId as never, '22222222-2222-2222-2222-222222222222' as never, false, 'reason', { actorId: actorId as never, actorPermissions: ['iam.user.assign-branch'], activeBranchId: null });
+    const result = await service.assignBranchToUser(
+      userId as never,
+      '22222222-2222-2222-2222-222222222222' as never,
+      false,
+      'reason',
+      {
+        actorId: actorId as never,
+        actorPermissions: ['iam.user.assign-branch'],
+        activeBranchId: null,
+      },
+    );
 
     expect(result.status).toBe('Active');
     expect(result.isDefault).toBe(false);
-    expect(auditRepo.list().some((entry) => entry.action === 'iam.user.branch-assigned')).toBe(true);
+    expect(
+      auditRepo
+        .list()
+        .some((entry) => entry.action === 'iam.user.branch-assigned'),
+    ).toBe(true);
   });
 
   it('removes a branch, preserves history, and moves default branch', async () => {
-    await service.assignBranchToUser(userId as never, '22222222-2222-2222-2222-222222222222' as never, false, null, { actorId: actorId as never, actorPermissions: ['iam.user.assign-branch'], activeBranchId: null });
+    await service.assignBranchToUser(
+      userId as never,
+      '22222222-2222-2222-2222-222222222222' as never,
+      false,
+      null,
+      {
+        actorId: actorId as never,
+        actorPermissions: ['iam.user.assign-branch'],
+        activeBranchId: null,
+      },
+    );
 
-    await service.removeBranchFromUser(userId as never, '11111111-1111-1111-1111-111111111111' as never, 'reason', { actorId: actorId as never, actorPermissions: ['iam.user.assign-branch'], activeBranchId: null });
+    await service.removeBranchFromUser(
+      userId as never,
+      '11111111-1111-1111-1111-111111111111' as never,
+      'reason',
+      {
+        actorId: actorId as never,
+        actorPermissions: ['iam.user.assign-branch'],
+        activeBranchId: null,
+      },
+    );
 
-    expect(users.get(userId)?.defaultBranchId).toBe('22222222-2222-2222-2222-222222222222');
-    expect(branchAccess.get(userId)?.find((entry) => entry.branchId === '11111111-1111-1111-1111-111111111111')?.status).toBe('Revoked');
-    expect(auditRepo.list().some((entry) => entry.action === 'iam.user.branch-removed')).toBe(true);
+    expect(users.get(userId)?.defaultBranchId).toBe(
+      '22222222-2222-2222-2222-222222222222',
+    );
+    expect(
+      branchAccess
+        .get(userId)
+        ?.find(
+          (entry) => entry.branchId === '11111111-1111-1111-1111-111111111111',
+        )?.status,
+    ).toBe('Revoked');
+    expect(
+      auditRepo
+        .list()
+        .some((entry) => entry.action === 'iam.user.branch-removed'),
+    ).toBe(true);
   });
 
   it('changes the default branch when requested', async () => {
-    await service.assignBranchToUser(userId as never, '22222222-2222-2222-2222-222222222222' as never, false, null, { actorId: actorId as never, actorPermissions: ['iam.user.assign-branch'], activeBranchId: null });
+    await service.assignBranchToUser(
+      userId as never,
+      '22222222-2222-2222-2222-222222222222' as never,
+      false,
+      null,
+      {
+        actorId: actorId as never,
+        actorPermissions: ['iam.user.assign-branch'],
+        activeBranchId: null,
+      },
+    );
 
-    await service.setDefaultBranch(userId as never, '22222222-2222-2222-2222-222222222222' as never, { actorId: actorId as never, actorPermissions: ['iam.user.assign-branch'], activeBranchId: null });
+    await service.setDefaultBranch(
+      userId as never,
+      '22222222-2222-2222-2222-222222222222' as never,
+      {
+        actorId: actorId as never,
+        actorPermissions: ['iam.user.assign-branch'],
+        activeBranchId: null,
+      },
+    );
 
-    expect(users.get(userId)?.defaultBranchId).toBe('22222222-2222-2222-2222-222222222222');
-    expect(auditRepo.list().some((entry) => entry.action === 'iam.user.default-branch-changed')).toBe(true);
+    expect(users.get(userId)?.defaultBranchId).toBe(
+      '22222222-2222-2222-2222-222222222222',
+    );
+    expect(
+      auditRepo
+        .list()
+        .some((entry) => entry.action === 'iam.user.default-branch-changed'),
+    ).toBe(true);
   });
 
   it('switches active branch for the session and rejects unassigned branches', async () => {
-    await service.switchActiveBranch('session-1', '11111111-1111-1111-1111-111111111111' as never, userId as never);
-    expect(sessions.get('session-1')?.activeBranchId).toBe('11111111-1111-1111-1111-111111111111');
-    expect(auditRepo.list().some((entry) => entry.action === 'iam.session.branch-switched')).toBe(true);
+    await service.switchActiveBranch(
+      'session-1',
+      '11111111-1111-1111-1111-111111111111' as never,
+      userId as never,
+    );
+    expect(sessions.get('session-1')?.activeBranchId).toBe(
+      '11111111-1111-1111-1111-111111111111',
+    );
+    expect(
+      auditRepo
+        .list()
+        .some((entry) => entry.action === 'iam.session.branch-switched'),
+    ).toBe(true);
 
-    await expect(service.switchActiveBranch('session-1', '33333333-3333-3333-3333-333333333333' as never, userId as never)).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
+    await expect(
+      service.switchActiveBranch(
+        'session-1',
+        '33333333-3333-3333-3333-333333333333' as never,
+        userId as never,
+      ),
+    ).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
   });
 
   it('lists branch access with permission', async () => {
-    const branches = await service.getUserBranchAccess(userId as never, { actorId: actorId as never, actorPermissions: ['iam.user.read'], activeBranchId: null });
+    const branches = await service.getUserBranchAccess(userId as never, {
+      actorId: actorId as never,
+      actorPermissions: ['iam.user.read'],
+      activeBranchId: null,
+    });
     expect(branches).toHaveLength(1);
   });
 });

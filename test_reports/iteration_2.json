@@ -13,7 +13,7 @@
   "action_items": [],
   "critical_code_review_comments": [],
   "updated_files": [],
-  "success_rate": {"backend": "N/A", "frontend": "100%"},
+  "success_rate": { "backend": "N/A", "frontend": "100%" },
   "seed_data_creation": "",
   "retest_needed": false,
   "should_main_agent_self_test": false,

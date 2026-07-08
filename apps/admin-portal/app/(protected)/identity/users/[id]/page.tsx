@@ -7,11 +7,13 @@ import { Home, ShieldCheck, Users, Eye } from 'lucide-react';
 export const metadata = { title: 'View User - Identity | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
-export default async function ViewUserPage(props: { params: Promise<{ id: string }> }) {
+export default async function ViewUserPage(props: {
+  params: Promise<{ id: string }>;
+}) {
   const params = await props.params;
   const session = await getSession();
   const { userService } = await import('../../../../lib/runtime');
-  
+
   const context = {
     actorId: session.userId,
     actorPermissions: session.permissions,
@@ -33,10 +35,25 @@ export default async function ViewUserPage(props: { params: Promise<{ id: string
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Users', href: '/iam/users', icon: <Users className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'View User', icon: <Eye className="h-3.5 w-3.5 text-slate-500" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'IAM',
+                href: '/iam',
+                icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Users',
+                href: '/iam/users',
+                icon: <Users className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'View User',
+                icon: <Eye className="h-3.5 w-3.5 text-slate-500" />,
+              },
             ]}
           />
         }

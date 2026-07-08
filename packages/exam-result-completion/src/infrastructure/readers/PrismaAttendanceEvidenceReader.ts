@@ -23,11 +23,12 @@ export class PrismaAttendanceEvidenceReader implements AttendanceEvidenceReader 
     }
 
     const attendedSessions = attendanceRecords.filter(
-      (r) => r.status === 'Present' || r.status === 'Late'
+      (r) => r.status === 'Present' || r.status === 'Late',
     ).length;
 
     const totalSessions = attendanceRecords.length;
-    const attendancePercentage = totalSessions > 0 ? (attendedSessions / totalSessions) * 100 : 0;
+    const attendancePercentage =
+      totalSessions > 0 ? (attendedSessions / totalSessions) * 100 : 0;
 
     let outcome: 'Met' | 'NotMet' | 'InsufficientData';
     if (totalSessions < 1) {

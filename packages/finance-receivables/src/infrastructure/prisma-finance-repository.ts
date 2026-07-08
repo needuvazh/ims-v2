@@ -9,12 +9,21 @@ export class PrismaFinanceRepository {
 
   // --- INVOICE METHODS ---
 
-  async getNextInvoiceNumber(branchId: string, tx?: Prisma.TransactionClient): Promise<string> {
+  async getNextInvoiceNumber(
+    branchId: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<string> {
     const client = tx || this.prisma;
     const year = new Date().getFullYear();
     // Using a sequence pattern for invoices
     const count = await client.invoice.count({
-      where: { branchId, invoiceDate: { gte: new Date(`${year}-01-01`), lte: new Date(`${year}-12-31`) } }
+      where: {
+        branchId,
+        invoiceDate: {
+          gte: new Date(`${year}-01-01`),
+          lte: new Date(`${year}-12-31`),
+        },
+      },
     });
     const seq = (count + 1).toString().padStart(6, '0');
     return `INV-${year}-${seq}`;
@@ -36,7 +45,7 @@ export class PrismaFinanceRepository {
       sourceQuotationId?: string | null;
       sourceSalesOrderId?: string | null;
     },
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
     const client = tx || this.prisma;
 
@@ -57,12 +66,14 @@ export class PrismaFinanceRepository {
         discountAmount: new Prisma.Decimal(data.discountAmount.toString()),
         taxAmount: new Prisma.Decimal(data.taxAmount.toString()),
         totalAmount: new Prisma.Decimal(data.totalAmount.toString()),
-        outstandingAmount: new Prisma.Decimal(data.outstandingAmount.toString()),
+        outstandingAmount: new Prisma.Decimal(
+          data.outstandingAmount.toString(),
+        ),
         status: 'Draft',
         sourceQuotationId: data.sourceQuotationId || null,
         sourceSalesOrderId: data.sourceSalesOrderId || null,
         lineItems: {
-          create: data.lineItems.map(item => ({
+          create: data.lineItems.map((item) => ({
             enrollmentId: item.enrollmentId || null,
             courseId: item.courseId || null,
             sourceBranchId: item.sourceBranchId,
@@ -75,13 +86,13 @@ export class PrismaFinanceRepository {
             taxableAmount: new Prisma.Decimal(item.taxableAmount.toString()),
             taxRate: new Prisma.Decimal(item.taxRate.toString()),
             taxAmount: new Prisma.Decimal(item.taxAmount.toString()),
-            lineTotal: new Prisma.Decimal(item.lineTotal.toString())
-          }))
-        }
+            lineTotal: new Prisma.Decimal(item.lineTotal.toString()),
+          })),
+        },
       },
       include: {
-        lineItems: true
-      }
+        lineItems: true,
+      },
     });
   }
 
@@ -94,14 +105,14 @@ export class PrismaFinanceRepository {
         installmentPlans: {
           include: {
             installments: {
-              orderBy: { sequenceNumber: 'asc' }
-            }
-          }
+              orderBy: { sequenceNumber: 'asc' },
+            },
+          },
         },
         payments: {
-          where: { isDeleted: false }
-        }
-      }
+          where: { isDeleted: false },
+        },
+      },
     });
   }
 
@@ -110,7 +121,7 @@ export class PrismaFinanceRepository {
     status: any,
     paidAmount: number,
     outstandingAmount: number,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
     const client = tx || this.prisma;
     return client.invoice.update({
@@ -118,14 +129,17 @@ export class PrismaFinanceRepository {
       data: {
         status,
         paidAmount: new Prisma.Decimal(paidAmount.toString()),
-        outstandingAmount: new Prisma.Decimal(outstandingAmount.toString())
-      }
+        outstandingAmount: new Prisma.Decimal(outstandingAmount.toString()),
+      },
     });
   }
 
   // --- INSTALLMENT PLAN METHODS ---
 
-  async createInstallmentPlan(data: CreateInstallmentPlanInput, tx?: Prisma.TransactionClient) {
+  async createInstallmentPlan(
+    data: CreateInstallmentPlanInput,
+    tx?: Prisma.TransactionClient,
+  ) {
     const client = tx || this.prisma;
 
     return client.installmentPlan.create({
@@ -138,29 +152,32 @@ export class PrismaFinanceRepository {
         numberOfInstallments: data.numberOfInstallments,
         status: 'Draft',
         installments: {
-          create: data.installments.map(inst => ({
+          create: data.installments.map((inst) => ({
             sequenceNumber: inst.sequenceNumber,
             dueDate: inst.dueDate,
             amount: new Prisma.Decimal(inst.amount.toString()),
-            status: 'Pending'
-          }))
-        }
+            status: 'Pending',
+          })),
+        },
       },
       include: {
-        installments: true
-      }
+        installments: true,
+      },
     });
   }
 
-  async findInstallmentPlanByInvoiceId(invoiceId: string, tx?: Prisma.TransactionClient) {
+  async findInstallmentPlanByInvoiceId(
+    invoiceId: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const client = tx || this.prisma;
     return client.installmentPlan.findFirst({
       where: { invoiceId, isDeleted: false },
       include: {
         installments: {
-          orderBy: { sequenceNumber: 'asc' }
-        }
-      }
+          orderBy: { sequenceNumber: 'asc' },
+        },
+      },
     });
   }
 
@@ -168,7 +185,7 @@ export class PrismaFinanceRepository {
     installmentId: string,
     paidAmount: number,
     status: any,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
     const client = tx || this.prisma;
     return client.installment.update({
@@ -176,18 +193,27 @@ export class PrismaFinanceRepository {
       data: {
         paidAmount: new Prisma.Decimal(paidAmount.toString()),
         status,
-        lastPaymentAt: new Date()
-      }
+        lastPaymentAt: new Date(),
+      },
     });
   }
 
   // --- PAYMENT METHODS ---
 
-  async getNextPaymentNumber(branchId: string, tx?: Prisma.TransactionClient): Promise<string> {
+  async getNextPaymentNumber(
+    branchId: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<string> {
     const client = tx || this.prisma;
     const year = new Date().getFullYear();
     const count = await client.payment.count({
-      where: { branchId, paymentDate: { gte: new Date(`${year}-01-01`), lte: new Date(`${year}-12-31`) } }
+      where: {
+        branchId,
+        paymentDate: {
+          gte: new Date(`${year}-01-01`),
+          lte: new Date(`${year}-12-31`),
+        },
+      },
     });
     const seq = (count + 1).toString().padStart(6, '0');
     return `PAY-${year}-${seq}`;
@@ -195,7 +221,7 @@ export class PrismaFinanceRepository {
 
   async createPayment(
     data: CreatePaymentInput & { paymentNumber: string; status: any },
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
     const client = tx || this.prisma;
 
@@ -219,15 +245,17 @@ export class PrismaFinanceRepository {
           create: data.allocations.map((alloc, idx) => ({
             invoiceId: alloc.invoiceId,
             installmentId: alloc.installmentId || null,
-            allocatedAmount: new Prisma.Decimal(alloc.allocatedAmount.toString()),
+            allocatedAmount: new Prisma.Decimal(
+              alloc.allocatedAmount.toString(),
+            ),
             allocationSequence: idx + 1,
-            allocatedAt: new Date()
-          }))
-        }
+            allocatedAt: new Date(),
+          })),
+        },
       },
       include: {
-        allocations: true
-      }
+        allocations: true,
+      },
     });
   }
 
@@ -237,26 +265,41 @@ export class PrismaFinanceRepository {
       where: { id, isDeleted: false },
       include: {
         allocations: true,
-        receipt: true
-      }
+        receipt: true,
+      },
     });
   }
 
   // --- RECEIPT METHODS ---
 
-  async getNextReceiptNumber(branchId: string, tx?: Prisma.TransactionClient): Promise<string> {
+  async getNextReceiptNumber(
+    branchId: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<string> {
     const client = tx || this.prisma;
     const year = new Date().getFullYear();
     const count = await client.receipt.count({
-      where: { branchId, receiptDate: { gte: new Date(`${year}-01-01`), lte: new Date(`${year}-12-31`) } }
+      where: {
+        branchId,
+        receiptDate: {
+          gte: new Date(`${year}-01-01`),
+          lte: new Date(`${year}-12-31`),
+        },
+      },
     });
     const seq = (count + 1).toString().padStart(6, '0');
     return `RCP-${year}-${seq}`;
   }
 
   async createReceipt(
-    data: { paymentId: string; branchId: string; amount: number; currency: string; issuedBy: string },
-    tx?: Prisma.TransactionClient
+    data: {
+      paymentId: string;
+      branchId: string;
+      amount: number;
+      currency: string;
+      issuedBy: string;
+    },
+    tx?: Prisma.TransactionClient,
   ) {
     const client = tx || this.prisma;
     const receiptNumber = await this.getNextReceiptNumber(data.branchId, tx);
@@ -270,18 +313,27 @@ export class PrismaFinanceRepository {
         amount: new Prisma.Decimal(data.amount.toString()),
         currency: data.currency,
         issuedBy: data.issuedBy,
-        issuedAt: new Date()
-      }
+        issuedAt: new Date(),
+      },
     });
   }
 
   // --- REFUND METHODS ---
 
-  async getNextRefundNumber(branchId: string, tx?: Prisma.TransactionClient): Promise<string> {
+  async getNextRefundNumber(
+    branchId: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<string> {
     const client = tx || this.prisma;
     const year = new Date().getFullYear();
     const count = await client.refund.count({
-      where: { branchId, createdAt: { gte: new Date(`${year}-01-01`), lte: new Date(`${year}-12-31`) } }
+      where: {
+        branchId,
+        createdAt: {
+          gte: new Date(`${year}-01-01`),
+          lte: new Date(`${year}-12-31`),
+        },
+      },
     });
     const seq = (count + 1).toString().padStart(6, '0');
     return `RFD-${year}-${seq}`;
@@ -289,7 +341,7 @@ export class PrismaFinanceRepository {
 
   async createRefund(
     data: RequestRefundInput & { refundNumber: string; status: any },
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
     const client = tx || this.prisma;
 
@@ -306,15 +358,15 @@ export class PrismaFinanceRepository {
         reasonNarrative: data.reasonNarrative,
         status: data.status,
         requestedBy: data.requestedBy,
-        requestedAt: new Date()
-      }
+        requestedAt: new Date(),
+      },
     });
   }
 
   async findRefundById(id: string, tx?: Prisma.TransactionClient) {
     const client = tx || this.prisma;
     return client.refund.findFirst({
-      where: { id, isDeleted: false }
+      where: { id, isDeleted: false },
     });
   }
 
@@ -323,7 +375,7 @@ export class PrismaFinanceRepository {
     status: any,
     decidedBy?: string,
     decisionReason?: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
     const client = tx || this.prisma;
     return client.refund.update({
@@ -333,8 +385,8 @@ export class PrismaFinanceRepository {
         decidedBy: decidedBy || null,
         decidedAt: decidedBy ? new Date() : null,
         decisionReason: decisionReason || null,
-        executedAt: status === 'Executed' ? new Date() : null
-      }
+        executedAt: status === 'Executed' ? new Date() : null,
+      },
     });
   }
 
@@ -349,34 +401,41 @@ export class PrismaFinanceRepository {
       status: any;
       agingBucket: AgingBucket;
     },
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
     const client = tx || this.prisma;
 
     return client.receivable.upsert({
       where: { invoiceId: data.invoiceId },
       update: {
-        outstandingAmount: new Prisma.Decimal(data.outstandingAmount.toString()),
+        outstandingAmount: new Prisma.Decimal(
+          data.outstandingAmount.toString(),
+        ),
         status: data.status,
         agingBucket: data.agingBucket,
-        lastCalculatedAt: new Date()
+        lastCalculatedAt: new Date(),
       },
       create: {
         invoiceId: data.invoiceId,
         branchId: data.branchId,
         dueDate: data.dueDate,
-        outstandingAmount: new Prisma.Decimal(data.outstandingAmount.toString()),
+        outstandingAmount: new Prisma.Decimal(
+          data.outstandingAmount.toString(),
+        ),
         status: data.status,
         agingBucket: data.agingBucket,
-        lastCalculatedAt: new Date()
-      }
+        lastCalculatedAt: new Date(),
+      },
     });
   }
 
-  async findReceivableByInvoiceId(invoiceId: string, tx?: Prisma.TransactionClient) {
+  async findReceivableByInvoiceId(
+    invoiceId: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const client = tx || this.prisma;
     return client.receivable.findUnique({
-      where: { invoiceId, isDeleted: false }
+      where: { invoiceId, isDeleted: false },
     });
   }
 
@@ -385,13 +444,23 @@ export class PrismaFinanceRepository {
   async getCorporateCreditLimit(
     corporateAccountId: string,
     branchId: string,
-    tx?: Prisma.TransactionClient
-  ): Promise<{ creditLimit: number; currentOutstanding: number; committedAmount: number; blockOnCreditLimit: boolean }> {
+    tx?: Prisma.TransactionClient,
+  ): Promise<{
+    creditLimit: number;
+    currentOutstanding: number;
+    committedAmount: number;
+    blockOnCreditLimit: boolean;
+  }> {
     const client = tx || this.prisma;
 
     // Get from credit rules
     const rule = await client.corporateCreditRule.findFirst({
-      where: { corporateAccountId, branchId, status: 'Active', isDeleted: false }
+      where: {
+        corporateAccountId,
+        branchId,
+        status: 'Active',
+        isDeleted: false,
+      },
     });
 
     if (rule) {
@@ -399,13 +468,13 @@ export class PrismaFinanceRepository {
         creditLimit: rule.creditLimit.toNumber(),
         currentOutstanding: rule.currentOutstanding.toNumber(),
         committedAmount: rule.committedAmount.toNumber(),
-        blockOnCreditLimit: rule.blockOnCreditLimit
+        blockOnCreditLimit: rule.blockOnCreditLimit,
       };
     }
 
     // Default corporate account values
     const account = await client.corporateAccount.findFirst({
-      where: { id: corporateAccountId, isDeleted: false }
+      where: { id: corporateAccountId, isDeleted: false },
     });
 
     if (account) {
@@ -413,7 +482,7 @@ export class PrismaFinanceRepository {
         creditLimit: account.creditLimit.toNumber(),
         currentOutstanding: account.currentOutstanding.toNumber(),
         committedAmount: 0,
-        blockOnCreditLimit: account.blockOnCreditLimit
+        blockOnCreditLimit: account.blockOnCreditLimit,
       };
     }
 
@@ -421,7 +490,7 @@ export class PrismaFinanceRepository {
       creditLimit: 0,
       currentOutstanding: 0,
       committedAmount: 0,
-      blockOnCreditLimit: true
+      blockOnCreditLimit: true,
     };
   }
 
@@ -429,7 +498,7 @@ export class PrismaFinanceRepository {
     corporateAccountId: string,
     branchId: string,
     amountChange: number,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
     const client = tx || this.prisma;
     const change = new Prisma.Decimal(amountChange.toString());
@@ -439,14 +508,19 @@ export class PrismaFinanceRepository {
       where: { id: corporateAccountId },
       data: {
         currentOutstanding: {
-          increment: change
-        }
-      }
+          increment: change,
+        },
+      },
     });
 
     // Also update rule outstanding if rule exists
     const rule = await client.corporateCreditRule.findFirst({
-      where: { corporateAccountId, branchId, status: 'Active', isDeleted: false }
+      where: {
+        corporateAccountId,
+        branchId,
+        status: 'Active',
+        isDeleted: false,
+      },
     });
 
     if (rule) {
@@ -454,12 +528,12 @@ export class PrismaFinanceRepository {
         where: { id: rule.id },
         data: {
           currentOutstanding: {
-            increment: change
+            increment: change,
           },
           availableCredit: {
-            decrement: change
-          }
-        }
+            decrement: change,
+          },
+        },
       });
     }
   }

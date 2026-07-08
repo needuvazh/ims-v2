@@ -1,7 +1,13 @@
 import { ResultRepository } from '../../domain/interfaces/ResultRepository';
 import { ExamRepository } from '../../domain/interfaces/ExamRepository';
-import { ResultAggregate, RESULT_STATUSES } from '../../domain/aggregates/Result';
-import { ResultInvalidStateError, ResultMarksValidationError } from '../../domain/errors';
+import {
+  ResultAggregate,
+  RESULT_STATUSES,
+} from '../../domain/aggregates/Result';
+import {
+  ResultInvalidStateError,
+  ResultMarksValidationError,
+} from '../../domain/errors';
 
 export interface ValidateBulkResultsInput {
   examId: string;
@@ -38,7 +44,9 @@ export class ValidateBulkResultsCommandHandler {
     }
 
     if (exam.status !== 'OpenForResultEntry') {
-      throw new ResultInvalidStateError(`Exam ${input.examId} is not open for result entry (status: ${exam.status})`);
+      throw new ResultInvalidStateError(
+        `Exam ${input.examId} is not open for result entry (status: ${exam.status})`,
+      );
     }
 
     const validationResults: ValidationResultRow[] = [];
@@ -57,7 +65,10 @@ export class ValidateBulkResultsCommandHandler {
       } else if (row.marksObtained > exam.maxMarks) {
         error = `marksObtained must be <= ${exam.maxMarks}`;
       } else {
-        const existing = await this.resultRepository.findByExamAndEnrollment(input.examId, row.enrollmentId);
+        const existing = await this.resultRepository.findByExamAndEnrollment(
+          input.examId,
+          row.enrollmentId,
+        );
         if (existing && existing.resultStatus !== RESULT_STATUSES.PENDING) {
           error = `Result already finalized for enrollment ${row.enrollmentId}`;
         }

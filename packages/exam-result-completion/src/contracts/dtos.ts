@@ -9,7 +9,14 @@ export const ExamDTO = z.object({
   examDate: z.string(),
   maxMarks: z.number(),
   passMarks: z.number(),
-  status: z.enum(['Draft', 'Scheduled', 'OpenForResultEntry', 'Closed', 'Cancelled', 'Archived']),
+  status: z.enum([
+    'Draft',
+    'Scheduled',
+    'OpenForResultEntry',
+    'Closed',
+    'Cancelled',
+    'Archived',
+  ]),
   version: z.number(),
   createdAt: z.string(),
   createdBy: z.string().uuid().nullable(),
@@ -30,14 +37,16 @@ export type ExamListResponse = z.infer<typeof ExamListResponse>;
 
 export const ExamDetailResponse = z.object({
   exam: ExamDTO,
-  results: z.array(z.object({
-    id: z.string().uuid(),
-    enrollmentId: z.string().uuid(),
-    marksObtained: z.number(),
-    resultStatus: z.enum(['Pending', 'Recorded', 'Finalized', 'Corrected']),
-    grade: z.string().nullable(),
-    finalizedAt: z.string().nullable(),
-  })),
+  results: z.array(
+    z.object({
+      id: z.string().uuid(),
+      enrollmentId: z.string().uuid(),
+      marksObtained: z.number(),
+      resultStatus: z.enum(['Pending', 'Recorded', 'Finalized', 'Corrected']),
+      grade: z.string().nullable(),
+      finalizedAt: z.string().nullable(),
+    }),
+  ),
   resultStats: z.object({
     total: z.number(),
     recorded: z.number(),
@@ -85,17 +94,21 @@ export type ResultDetailResponse = z.infer<typeof ResultDetailResponse>;
 
 export const BulkResultValidationResponse = z.object({
   validationToken: z.string().uuid(),
-  results: z.array(z.object({
-    rowIndex: z.number(),
-    enrollmentId: z.string().uuid(),
-    valid: z.boolean(),
-    error: z.string().nullable(),
-  })),
+  results: z.array(
+    z.object({
+      rowIndex: z.number(),
+      enrollmentId: z.string().uuid(),
+      valid: z.boolean(),
+      error: z.string().nullable(),
+    }),
+  ),
   validCount: z.number(),
   invalidCount: z.number(),
 });
 
-export type BulkResultValidationResponse = z.infer<typeof BulkResultValidationResponse>;
+export type BulkResultValidationResponse = z.infer<
+  typeof BulkResultValidationResponse
+>;
 
 // Completion DTOs
 export const CourseCompletionDTO = z.object({
@@ -147,7 +160,11 @@ export type CompletionListResponse = z.infer<typeof CompletionListResponse>;
 export const CompletionApprovalDTO = z.object({
   id: z.string().uuid(),
   courseCompletionId: z.string().uuid(),
-  approvalLevel: z.enum(['TrainerRecommendation', 'CoordinatorReview', 'FinalApproval']),
+  approvalLevel: z.enum([
+    'TrainerRecommendation',
+    'CoordinatorReview',
+    'FinalApproval',
+  ]),
   status: z.enum(['Pending', 'Approved', 'Rejected']),
   actorId: z.string().uuid(),
   actionDate: z.string().nullable(),

@@ -14,10 +14,25 @@ export default function CreateInstitutePage() {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Organization', href: '/organization', icon: <Building2 className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Institutes', href: '/organization/institutes', icon: <Building className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Add Institute', icon: <Plus className="h-3.5 w-3.5 text-slate-500" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Organization',
+                href: '/organization',
+                icon: <Building2 className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Institutes',
+                href: '/organization/institutes',
+                icon: <Building className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Add Institute',
+                icon: <Plus className="h-3.5 w-3.5 text-slate-500" />,
+              },
             ]}
           />
         }

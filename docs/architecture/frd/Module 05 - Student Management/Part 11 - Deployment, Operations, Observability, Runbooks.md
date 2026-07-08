@@ -1,4 +1,5 @@
 # Part 11 - Deployment, Operations, Observability, Runbooks
+
 ## Module 5 – Student Management
 
 ## 1. Purpose
@@ -6,6 +7,7 @@
 This document defines deployment-facing operational guidance, observability standards, health checks, backup/recovery instructions, and troubleshooting runbooks for **Module 5 – Student Management**.
 
 This part assumes a **modular monolith** deployment with:
+
 - Next.js application runtime,
 - PostgreSQL,
 - centralized logging,
@@ -14,6 +16,7 @@ This part assumes a **modular monolith** deployment with:
 - internal job execution for exports and reporting refreshes where needed.
 
 This module owns the following operationally critical tables:
+
 - `student_profiles`
 - `student_status_history`
 - `student_id_card_history`
@@ -28,18 +31,18 @@ This module owns the following operationally critical tables:
 
 ## 2.1 Runtime Components
 
-| Component | Purpose |
-|---|---|
-| Admin Portal App Runtime | Serves admin UI and route handlers |
-| Student Portal Runtime | Serves self-view read-only endpoints |
-| Trainer Portal Runtime | Serves roster-context read-only endpoints |
+| Component                     | Purpose                                                                                            |
+| ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| Admin Portal App Runtime      | Serves admin UI and route handlers                                                                 |
+| Student Portal Runtime        | Serves self-view read-only endpoints                                                               |
+| Trainer Portal Runtime        | Serves roster-context read-only endpoints                                                          |
 | Application Background Worker | Handles async exports, reporting refresh hooks, and notification dispatch handoff where applicable |
-| PostgreSQL Database | Transactional source for module-owned tables |
-| Shared Cache (optional) | Short-lived caching of safe read models and lookup metadata |
-| Object Storage | Private storage for generated export files |
-| Central Logging Pipeline | Aggregates structured logs |
-| Metrics Backend | Stores counters, histograms, gauges |
-| Tracing Backend | Stores distributed traces and spans |
+| PostgreSQL Database           | Transactional source for module-owned tables                                                       |
+| Shared Cache (optional)       | Short-lived caching of safe read models and lookup metadata                                        |
+| Object Storage                | Private storage for generated export files                                                         |
+| Central Logging Pipeline      | Aggregates structured logs                                                                         |
+| Metrics Backend               | Stores counters, histograms, gauges                                                                |
+| Tracing Backend               | Stores distributed traces and spans                                                                |
 
 ## 2.2 Deployment Constraints
 
@@ -62,27 +65,29 @@ This module owns the following operationally critical tables:
 All application logs emitted by this module must be structured JSON.
 
 ### Required Log Fields
-| Field | Description |
-|---|---|
-| `timestamp` | ISO 8601 timestamp with offset |
-| `level` | `DEBUG`, `INFO`, `WARN`, `ERROR`, `FATAL` |
-| `service` | Application/runtime name |
-| `module` | `student-management` |
-| `environment` | `dev`, `qa`, `uat`, `prod` |
-| `requestId` | Request correlation ID |
-| `traceId` | Distributed trace ID |
-| `spanId` | Current span ID |
-| `userId` | Authenticated user ID if present |
-| `actorType` | `human`, `service`, `system` |
-| `branchId` | Effective branch context if resolved |
-| `operation` | Logical operation name |
-| `entityType` | `student_profile`, `duplicate_case`, `merge_log`, etc. |
-| `entityId` | UUID when applicable |
-| `outcome` | `success`, `failure`, `denied`, `retrying` |
-| `errorCode` | Stable application error code if applicable |
-| `durationMs` | Operation duration in milliseconds |
+
+| Field         | Description                                            |
+| ------------- | ------------------------------------------------------ |
+| `timestamp`   | ISO 8601 timestamp with offset                         |
+| `level`       | `DEBUG`, `INFO`, `WARN`, `ERROR`, `FATAL`              |
+| `service`     | Application/runtime name                               |
+| `module`      | `student-management`                                   |
+| `environment` | `dev`, `qa`, `uat`, `prod`                             |
+| `requestId`   | Request correlation ID                                 |
+| `traceId`     | Distributed trace ID                                   |
+| `spanId`      | Current span ID                                        |
+| `userId`      | Authenticated user ID if present                       |
+| `actorType`   | `human`, `service`, `system`                           |
+| `branchId`    | Effective branch context if resolved                   |
+| `operation`   | Logical operation name                                 |
+| `entityType`  | `student_profile`, `duplicate_case`, `merge_log`, etc. |
+| `entityId`    | UUID when applicable                                   |
+| `outcome`     | `success`, `failure`, `denied`, `retrying`             |
+| `errorCode`   | Stable application error code if applicable            |
+| `durationMs`  | Operation duration in milliseconds                     |
 
 ### Optional Log Fields
+
 - `httpMethod`
 - `route`
 - `statusCode`
@@ -94,7 +99,9 @@ All application logs emitted by this module must be structured JSON.
 - `retryCount`
 
 ### Log Redaction Rules
+
 Never log raw:
+
 - Civil ID
 - passport number
 - visa number
@@ -106,6 +113,7 @@ Never log raw:
 Only masked, hashed, or reference IDs may be logged.
 
 ### Example Success Log
+
 ```json
 {
   "timestamp": "2026-07-03T11:21:22+04:00",
@@ -128,6 +136,7 @@ Only masked, hashed, or reference IDs may be logged.
 ```
 
 ### Example Failure Log
+
 ```json
 {
   "timestamp": "2026-07-03T11:23:12+04:00",
@@ -157,6 +166,7 @@ Only masked, hashed, or reference IDs may be logged.
 Tracing must capture complete request paths for sensitive workflows.
 
 ### Required Trace Boundaries
+
 1. UI action → route handler → domain service → repository → DB
 2. Duplicate check → scoring engine → duplicate case persistence
 3. Merge command → validation → transactional reassignment → merge log write → audit emission
@@ -166,6 +176,7 @@ Tracing must capture complete request paths for sensitive workflows.
 7. Trainer quick view → roster authorization check → student read projection
 
 ### Recommended Span Names
+
 - `student.list`
 - `student.detail.read`
 - `student.create.direct`
@@ -186,6 +197,7 @@ Tracing must capture complete request paths for sensitive workflows.
 - `student.report.run`
 
 ### Trace Attributes
+
 - `module=student-management`
 - `branch.id`
 - `user.id`
@@ -202,51 +214,56 @@ Tracing must capture complete request paths for sensitive workflows.
 ## 3.3 Metrics Instrumentation
 
 ### Core Counters
-| Metric Name | Type | Description |
-|---|---|---|
-| `student_requests_total` | Counter | Total module requests by route/method/status |
-| `student_create_total` | Counter | Student create operations by source |
-| `student_update_total` | Counter | Student updates |
-| `student_status_change_total` | Counter | Status changes by old/new status |
-| `student_archive_total` | Counter | Archives |
-| `student_restore_total` | Counter | Restores |
-| `student_idcard_issue_total` | Counter | ID card issue actions |
-| `student_idcard_reissue_total` | Counter | ID card reissues |
-| `student_duplicate_check_total` | Counter | Duplicate check executions |
-| `student_duplicate_block_total` | Counter | Blocking duplicate outcomes |
-| `student_duplicate_case_created_total` | Counter | Duplicate cases created |
-| `student_duplicate_case_resolved_total` | Counter | Duplicate cases resolved |
-| `student_merge_total` | Counter | Merge attempts |
-| `student_merge_success_total` | Counter | Successful merges |
-| `student_merge_failure_total` | Counter | Failed merges |
-| `student_export_request_total` | Counter | Export requests |
-| `student_export_success_total` | Counter | Completed exports |
-| `student_export_failure_total` | Counter | Failed exports |
-| `student_permission_denied_total` | Counter | Permission denials |
-| `student_branch_scope_denied_total` | Counter | Branch scope denials |
+
+| Metric Name                             | Type    | Description                                  |
+| --------------------------------------- | ------- | -------------------------------------------- |
+| `student_requests_total`                | Counter | Total module requests by route/method/status |
+| `student_create_total`                  | Counter | Student create operations by source          |
+| `student_update_total`                  | Counter | Student updates                              |
+| `student_status_change_total`           | Counter | Status changes by old/new status             |
+| `student_archive_total`                 | Counter | Archives                                     |
+| `student_restore_total`                 | Counter | Restores                                     |
+| `student_idcard_issue_total`            | Counter | ID card issue actions                        |
+| `student_idcard_reissue_total`          | Counter | ID card reissues                             |
+| `student_duplicate_check_total`         | Counter | Duplicate check executions                   |
+| `student_duplicate_block_total`         | Counter | Blocking duplicate outcomes                  |
+| `student_duplicate_case_created_total`  | Counter | Duplicate cases created                      |
+| `student_duplicate_case_resolved_total` | Counter | Duplicate cases resolved                     |
+| `student_merge_total`                   | Counter | Merge attempts                               |
+| `student_merge_success_total`           | Counter | Successful merges                            |
+| `student_merge_failure_total`           | Counter | Failed merges                                |
+| `student_export_request_total`          | Counter | Export requests                              |
+| `student_export_success_total`          | Counter | Completed exports                            |
+| `student_export_failure_total`          | Counter | Failed exports                               |
+| `student_permission_denied_total`       | Counter | Permission denials                           |
+| `student_branch_scope_denied_total`     | Counter | Branch scope denials                         |
 
 ### Histograms
-| Metric Name | Type | Description |
-|---|---|---|
-| `student_request_duration_ms` | Histogram | End-to-end request latency |
-| `student_duplicate_check_duration_ms` | Histogram | Duplicate-check latency |
-| `student_merge_duration_ms` | Histogram | Merge execution latency |
-| `student_export_generation_duration_ms` | Histogram | Export generation duration |
-| `student_report_duration_ms` | Histogram | Report execution latency |
-| `student_dashboard_widget_duration_ms` | Histogram | Widget load latency |
-| `student_db_query_duration_ms` | Histogram | DB query latency by operation |
+
+| Metric Name                             | Type      | Description                   |
+| --------------------------------------- | --------- | ----------------------------- |
+| `student_request_duration_ms`           | Histogram | End-to-end request latency    |
+| `student_duplicate_check_duration_ms`   | Histogram | Duplicate-check latency       |
+| `student_merge_duration_ms`             | Histogram | Merge execution latency       |
+| `student_export_generation_duration_ms` | Histogram | Export generation duration    |
+| `student_report_duration_ms`            | Histogram | Report execution latency      |
+| `student_dashboard_widget_duration_ms`  | Histogram | Widget load latency           |
+| `student_db_query_duration_ms`          | Histogram | DB query latency by operation |
 
 ### Gauges
-| Metric Name | Type | Description |
-|---|---|---|
-| `student_duplicate_open_cases` | Gauge | Open duplicate backlog |
-| `student_exports_in_progress` | Gauge | Active export jobs |
-| `student_read_model_staleness_seconds` | Gauge | Reporting view freshness lag |
-| `student_active_sessions` | Gauge | Active module user sessions if tracked |
-| `student_health_status` | Gauge | 1 healthy / 0 unhealthy module status |
+
+| Metric Name                            | Type  | Description                            |
+| -------------------------------------- | ----- | -------------------------------------- |
+| `student_duplicate_open_cases`         | Gauge | Open duplicate backlog                 |
+| `student_exports_in_progress`          | Gauge | Active export jobs                     |
+| `student_read_model_staleness_seconds` | Gauge | Reporting view freshness lag           |
+| `student_active_sessions`              | Gauge | Active module user sessions if tracked |
+| `student_health_status`                | Gauge | 1 healthy / 0 unhealthy module status  |
 
 ### Label Dimensions
+
 Use controlled label cardinality only:
+
 - `route`
 - `method`
 - `status_code`
@@ -265,21 +282,26 @@ Avoid high-cardinality labels like raw student ID or user ID in metrics.
 ## 4.1 Health Check Levels
 
 ### Liveness Check
+
 Purpose: determine whether the process should be restarted.
 
 **Checks**
+
 - runtime event loop responsive
 - application boot completed
 - no fatal startup config error
 
 **Does Not Check**
+
 - database query health
 - downstream service health
 
 ### Readiness Check
+
 Purpose: determine whether the instance can safely serve traffic.
 
 **Checks**
+
 1. Database connectivity available
 2. Required migrations applied or runtime compatible
 3. Secrets loaded
@@ -288,9 +310,11 @@ Purpose: determine whether the instance can safely serve traffic.
 6. If export generation depends on object storage, storage credentials available
 
 ### Deep Health Check (Ops-only)
+
 Purpose: operational diagnostics.
 
 **Checks**
+
 1. lightweight query to `student_profiles`
 2. lightweight query to `student_duplicate_cases`
 3. reporting view freshness threshold
@@ -304,20 +328,21 @@ Purpose: operational diagnostics.
 
 ## 4.2 Health Status Rules
 
-| Condition | Health Result |
-|---|---|
-| Process alive, DB OK, config OK | Healthy |
-| Process alive, DB unavailable | Not Ready |
-| Process alive, DB OK, reporting views stale | Ready with warning |
-| Process alive, export subsystem failing | Ready with degraded export warning |
-| Fatal migration mismatch | Not Ready |
-| Secrets unavailable | Not Ready |
+| Condition                                   | Health Result                      |
+| ------------------------------------------- | ---------------------------------- |
+| Process alive, DB OK, config OK             | Healthy                            |
+| Process alive, DB unavailable               | Not Ready                          |
+| Process alive, DB OK, reporting views stale | Ready with warning                 |
+| Process alive, export subsystem failing     | Ready with degraded export warning |
+| Fatal migration mismatch                    | Not Ready                          |
+| Secrets unavailable                         | Not Ready                          |
 
 ---
 
 ## 5. Backup and Recovery Instructions
 
 ## 5.1 Owned Tables in Recovery Scope
+
 - `student_profiles`
 - `student_status_history`
 - `student_id_card_history`
@@ -329,16 +354,19 @@ Purpose: operational diagnostics.
 ## 5.2 Backup Strategy
 
 ### Database Backups
+
 - Full PostgreSQL backups according to platform standard
 - WAL/PITR enabled
 - Backup verification performed regularly
 
 ### Recommended Backup Cadence
+
 - full backup: daily
 - incremental / WAL continuous
 - export files in object storage backed up by storage policy where retention requires it
 
 ### Recovery Targets
+
 - RPO <= 15 minutes
 - RTO <= 2 hours for module-owned table recovery
 
@@ -356,6 +384,7 @@ Purpose: operational diagnostics.
 ## 5.4 Table Recovery Workflow
 
 ### Scenario: Recover accidentally lost rows after database incident
+
 1. Confirm incident window and affected tables.
 2. Pause non-essential write traffic if required.
 3. Identify recovery point target time.
@@ -368,7 +397,9 @@ Purpose: operational diagnostics.
 10. Record incident and recovery in ops audit log.
 
 ## 5.5 Export File Recovery
+
 If export file object is missing but export log exists:
+
 1. Confirm export status and file reference.
 2. If data window still valid and user allowed, regenerate export from saved filter snapshot.
 3. Update export log with regenerated file reference and incident note if policy allows.
@@ -379,6 +410,7 @@ If export file object is missing but export log exists:
 ## 6. Operational Procedures
 
 ## 6.1 Daily Checks
+
 1. Review module error dashboard.
 2. Review duplicate backlog gauge and blocking-case spikes.
 3. Review merge failure count.
@@ -387,6 +419,7 @@ If export file object is missing but export log exists:
 6. Review slowest student list/detail/report queries.
 
 ## 6.2 Weekly Checks
+
 1. Verify backup completion and restore test evidence.
 2. Review top permission denials and branch scope denials for anomalies.
 3. Review large export usage and sensitive export frequency.
@@ -394,6 +427,7 @@ If export file object is missing but export log exists:
 5. Review index health and slow query plans for reporting views.
 
 ## 6.3 Release-Time Checks
+
 1. Confirm schema migration compatibility.
 2. Confirm new indexes built successfully.
 3. Confirm read model refresh jobs healthy.
@@ -407,11 +441,13 @@ If export file object is missing but export log exists:
 ## 7.1 Runbook: Student Create Fails with Duplicate Blocking Match
 
 ### Symptoms
+
 - Users cannot create students
 - API returns `ERR_STU_DUPLICATE_BLOCKING_MATCH`
 - Duplicate case count spikes
 
 ### Steps
+
 1. Capture request ID and duplicate case ID from UI/API response.
 2. Open duplicate case detail in duplicate workbench.
 3. Verify which signals matched:
@@ -435,6 +471,7 @@ If export file object is missing but export log exists:
    - inspect source data input regressions
 
 ### Escalate When
+
 - blocking matches increase > 3x normal baseline
 - duplicate engine results appear inconsistent
 - multiple branches affected simultaneously
@@ -444,11 +481,13 @@ If export file object is missing but export log exists:
 ## 7.2 Runbook: Student Merge Transaction Failure
 
 ### Symptoms
+
 - API returns `ERR_STU_MERGE_TRANSACTION_FAILED`
 - merge failure alerts triggered
 - source student remains active or merge incomplete in UI
 
 ### Steps
+
 1. Capture request ID, source student ID, survivor student ID.
 2. Search logs for operation `student.merge.execute`.
 3. Confirm whether transaction rolled back fully.
@@ -475,6 +514,7 @@ If export file object is missing but export log exists:
 9. Record incident outcome and audit note.
 
 ### Escalate When
+
 - any evidence of partial merge state
 - repeated failures on same records
 - cross-module reassignment inconsistencies
@@ -484,11 +524,13 @@ If export file object is missing but export log exists:
 ## 7.3 Runbook: Export Generation Failure
 
 ### Symptoms
+
 - export request accepted but later fails
 - `student_export_failure_total` rises
 - users report missing download links
 
 ### Steps
+
 1. Capture export log ID.
 2. Open export log record:
    - status
@@ -514,6 +556,7 @@ If export file object is missing but export log exists:
 9. Notify requester on success or failure outcome.
 
 ### Escalate When
+
 - repeated export failure > 5 in 15 minutes
 - object storage unavailable
 - sensitive export cannot be accounted for in logs
@@ -523,11 +566,13 @@ If export file object is missing but export log exists:
 ## 7.4 Runbook: Read Model / Reporting View Staleness
 
 ### Symptoms
+
 - dashboard data delayed banner shown
 - report counts differ from transactional list
 - `student_read_model_staleness_seconds` above threshold
 
 ### Steps
+
 1. Identify affected view/materialized view.
 2. Check refresh job or event-driven projection status.
 3. Verify latest refresh timestamp.
@@ -541,6 +586,7 @@ If export file object is missing but export log exists:
 8. Clear degraded mode banner once freshness returns below threshold.
 
 ### Escalate When
+
 - stale duration > 30 minutes for operational dashboards
 - counts materially inconsistent after successful refresh
 - refresh failures recur after manual rerun
@@ -550,11 +596,13 @@ If export file object is missing but export log exists:
 ## 7.5 Runbook: Branch Scope Leakage Suspected
 
 ### Symptoms
+
 - user reports seeing another branch’s students
 - automated security test fails
 - unexpected records appear in reports or list views
 
 ### Steps
+
 1. Capture:
    - request ID
    - user ID
@@ -577,6 +625,7 @@ If export file object is missing but export log exists:
 10. Notify security/compliance owners per incident policy.
 
 ### Escalate When
+
 - any confirmed cross-branch disclosure
 - sensitive fields exposed
 - export included out-of-scope records
@@ -586,9 +635,11 @@ If export file object is missing but export log exists:
 ## 7.6 Runbook: ID Card Number Conflict
 
 ### Symptoms
+
 - issue/reissue fails with `ERR_STU_ID_CARD_NUMBER_EXISTS`
 
 ### Steps
+
 1. Capture request ID and masked conflicting number.
 2. Search secure admin view or DB support query for existing current holder.
 3. Determine whether:
@@ -608,10 +659,12 @@ If export file object is missing but export log exists:
 ## 7.7 Runbook: Concurrency Failure on Update
 
 ### Symptoms
+
 - `ERR_STU_CONCURRENT_MODIFICATION`
 - user says save failed because record changed
 
 ### Steps
+
 1. Confirm submitted version and current persisted version.
 2. Reload current student detail.
 3. Compare changed fields.
@@ -627,9 +680,11 @@ If export file object is missing but export log exists:
 ## 7.8 Runbook: Sensitive Export Audit Review
 
 ### Trigger
+
 Periodic compliance review or alert for sensitive export count.
 
 ### Steps
+
 1. Open export audit report filtered to `included_masked_identity=true`.
 2. Validate each export has:
    - requester,
@@ -652,11 +707,13 @@ Periodic compliance review or alert for sensitive export count.
 Although Student Management does not own a bulk import module in this spec, identity data may arrive from admission imports, corporate loads, or online handoff batches.
 
 ### Symptoms
+
 - large number of duplicate cases after upstream sync
 - student creation failures from system actors
 - source batch partially processed
 
 ### Steps
+
 1. Identify upstream source:
    - admission handoff
    - corporate participant sync
@@ -686,6 +743,7 @@ Although Student Management does not own a bulk import module in this spec, iden
 9. Document affected rows and resolution summary.
 
 ### Escalate When
+
 - batch replay would cause uncertain duplicates
 - upstream source quality is severely degraded
 - system actor branch resolution is incorrect across many records
@@ -695,6 +753,7 @@ Although Student Management does not own a bulk import module in this spec, iden
 ## 8. Diagnostic Queries and Safe Ops Notes
 
 ### Safe Ops Principles
+
 1. Prefer read-only diagnostic queries first.
 2. Never patch raw PII in production outside approved change path.
 3. Never manually delete student rows.
@@ -702,6 +761,7 @@ Although Student Management does not own a bulk import module in this spec, iden
 5. Record all production data fixes in incident/change management.
 
 ### Recommended Diagnostic Questions
+
 - Is the user in the correct branch scope?
 - Did permission fail or concealment hide the record?
 - Is the record archived?
@@ -714,15 +774,15 @@ Although Student Management does not own a bulk import module in this spec, iden
 
 ## 9. Operations Alert Matrix
 
-| Alert | Trigger | Severity | First Response |
-|---|---|---|---|
-| Student API 5xx spike | >2% over 5 min | High | Check recent deploy, logs, DB health |
-| Merge failure | Any failure | High | Freeze affected merge path, inspect transaction logs |
-| Branch scope leakage suspected | Any confirmed leak | Critical | Contain endpoint/report, open security incident |
-| Export failures spike | >5 failures in 15 min | High | Inspect worker/storage/query health |
-| Duplicate backlog spike | > configured branch baseline | Medium/High | Inspect data source and duplicate scoring |
-| Read model staleness > threshold | freshness breach | Medium | Refresh projections and inspect jobs |
-| Audit handoff failure | persistent retries or dropped events | Critical | Investigate immediately; do not ignore |
+| Alert                            | Trigger                              | Severity    | First Response                                       |
+| -------------------------------- | ------------------------------------ | ----------- | ---------------------------------------------------- |
+| Student API 5xx spike            | >2% over 5 min                       | High        | Check recent deploy, logs, DB health                 |
+| Merge failure                    | Any failure                          | High        | Freeze affected merge path, inspect transaction logs |
+| Branch scope leakage suspected   | Any confirmed leak                   | Critical    | Contain endpoint/report, open security incident      |
+| Export failures spike            | >5 failures in 15 min                | High        | Inspect worker/storage/query health                  |
+| Duplicate backlog spike          | > configured branch baseline         | Medium/High | Inspect data source and duplicate scoring            |
+| Read model staleness > threshold | freshness breach                     | Medium      | Refresh projections and inspect jobs                 |
+| Audit handoff failure            | persistent retries or dropped events | Critical    | Investigate immediately; do not ignore               |
 
 ---
 

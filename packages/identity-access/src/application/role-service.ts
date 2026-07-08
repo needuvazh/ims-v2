@@ -9,7 +9,13 @@ import {
   assertRoleArchivable,
 } from '../domain/role';
 import { createIamError } from '../errors/iam-errors';
-import type { IRoleRepository, IAuditLogRepository, IPermissionRepository, IUserRepository, INotificationRepository } from '../domain/repositories';
+import type {
+  IRoleRepository,
+  IAuditLogRepository,
+  IPermissionRepository,
+  IUserRepository,
+  INotificationRepository,
+} from '../domain/repositories';
 import { IPermissionCachePort } from './permission-cache';
 
 export interface RoleCommandContext {
@@ -25,11 +31,17 @@ export class RoleService {
     private readonly auditLogRepository: IAuditLogRepository,
     private readonly userRepository?: IUserRepository,
     private readonly notificationRepository?: INotificationRepository,
-    private readonly permissionCache?: IPermissionCachePort
+    private readonly permissionCache?: IPermissionCachePort,
   ) {}
 
-  private checkPermission(context: RoleCommandContext, permission: string): void {
-    if (context.actorPermissions && !context.actorPermissions.includes(permission)) {
+  private checkPermission(
+    context: RoleCommandContext,
+    permission: string,
+  ): void {
+    if (
+      context.actorPermissions &&
+      !context.actorPermissions.includes(permission)
+    ) {
       throw createIamError('IAM-AUTHZ-001');
     }
   }
@@ -37,7 +49,7 @@ export class RoleService {
   async listRoles(
     pageOrContext?: number | RoleCommandContext,
     pageSize?: number,
-    context?: RoleCommandContext
+    context?: RoleCommandContext,
   ): Promise<any> {
     if (pageOrContext && typeof pageOrContext === 'object') {
       const ctx = pageOrContext;
@@ -81,7 +93,10 @@ export class RoleService {
     }
   }
 
-  async createRole(command: CreateRoleCommand, context: RoleCommandContext): Promise<Role> {
+  async createRole(
+    command: CreateRoleCommand,
+    context: RoleCommandContext,
+  ): Promise<Role> {
     this.checkPermission(context, 'iam.role.create');
     const validated = createRoleCommandSchema.parse(command);
     const now = new Date();
@@ -112,7 +127,11 @@ export class RoleService {
     // Assign legacy permissions if passed
     if (validated.permissionIds) {
       for (const permId of validated.permissionIds) {
-        await this.roleRepository.assignPermissionToRole(saved.id, permId as Uuid, context.actorId as Uuid);
+        await this.roleRepository.assignPermissionToRole(
+          saved.id,
+          permId as Uuid,
+          context.actorId as Uuid,
+        );
       }
     }
 
@@ -136,7 +155,11 @@ export class RoleService {
     return saved;
   }
 
-  async updateRole(roleId: string, command: UpdateRoleCommand, context: RoleCommandContext): Promise<Role> {
+  async updateRole(
+    roleId: string,
+    command: UpdateRoleCommand,
+    context: RoleCommandContext,
+  ): Promise<Role> {
     this.checkPermission(context, 'iam.role.update');
     const validated = updateRoleCommandSchema.parse(command);
     const now = new Date();
@@ -146,11 +169,16 @@ export class RoleService {
 
     const oldRole = { ...existing };
 
-    if (validated.roleName !== undefined) existing.roleName = validated.roleName;
-    if (validated.description !== undefined) existing.description = validated.description;
-    if (validated.effectiveStartDate !== undefined) existing.effectiveStartDate = validated.effectiveStartDate;
-    if (validated.effectiveEndDate !== undefined) existing.effectiveEndDate = validated.effectiveEndDate;
-    if (validated.status !== undefined && validated.status !== null) existing.status = validated.status as any;
+    if (validated.roleName !== undefined)
+      existing.roleName = validated.roleName;
+    if (validated.description !== undefined)
+      existing.description = validated.description;
+    if (validated.effectiveStartDate !== undefined)
+      existing.effectiveStartDate = validated.effectiveStartDate;
+    if (validated.effectiveEndDate !== undefined)
+      existing.effectiveEndDate = validated.effectiveEndDate;
+    if (validated.status !== undefined && validated.status !== null)
+      existing.status = validated.status as any;
 
     existing.updatedAt = now;
     existing.updatedBy = context.actorId as Uuid;
@@ -164,12 +192,16 @@ export class RoleService {
 
     // Sync legacy permissions if passed
     if (validated.permissionIds) {
-      const existingPermissions = await this.roleRepository.listPermissionsForRole(existing.id);
-      
+      const existingPermissions =
+        await this.roleRepository.listPermissionsForRole(existing.id);
+
       // Revoke old permissions not in new list
       for (const oldPerm of existingPermissions) {
         if (!validated.permissionIds.includes(oldPerm.id)) {
-          await this.roleRepository.removePermissionFromRole(existing.id, oldPerm.id);
+          await this.roleRepository.removePermissionFromRole(
+            existing.id,
+            oldPerm.id,
+          );
         }
       }
 
@@ -177,7 +209,11 @@ export class RoleService {
       for (const newPermId of validated.permissionIds) {
         const match = existingPermissions.find((p) => p.id === newPermId);
         if (!match) {
-          await this.roleRepository.assignPermissionToRole(existing.id, newPermId as Uuid, context.actorId as Uuid);
+          await this.roleRepository.assignPermissionToRole(
+            existing.id,
+            newPermId as Uuid,
+            context.actorId as Uuid,
+          );
         }
       }
     }
@@ -202,7 +238,10 @@ export class RoleService {
     return updated;
   }
 
-  async archiveRole(roleId: string, context: RoleCommandContext): Promise<void> {
+  async archiveRole(
+    roleId: string,
+    context: RoleCommandContext,
+  ): Promise<void> {
     this.checkPermission(context, 'iam.role.archive');
     const role = await this.roleRepository.findById(roleId as Uuid);
     if (!role) throw createIamError('IAM-SYS-001');
@@ -240,7 +279,7 @@ export class RoleService {
   async assignPermissionToRole(
     roleId: string,
     permissionId: string,
-    context: RoleCommandContext
+    context: RoleCommandContext,
   ): Promise<void> {
     this.checkPermission(context, 'iam.role.permission.assign');
     const role = await this.roleRepository.findById(roleId as Uuid);
@@ -248,12 +287,18 @@ export class RoleService {
       throw createIamError('IAM-SYS-001');
     }
 
-    const permission = await this.permissionRepository.findById(permissionId as Uuid);
+    const permission = await this.permissionRepository.findById(
+      permissionId as Uuid,
+    );
     if (!permission || permission.status !== 'Active') {
       throw createIamError('IAM-SYS-001');
     }
 
-    await this.roleRepository.assignPermissionToRole(roleId as Uuid, permissionId as Uuid, context.actorId as Uuid);
+    await this.roleRepository.assignPermissionToRole(
+      roleId as Uuid,
+      permissionId as Uuid,
+      context.actorId as Uuid,
+    );
 
     if (this.permissionCache) {
       await this.permissionCache.invalidateRole(role.roleCode);
@@ -280,13 +325,16 @@ export class RoleService {
   async removePermissionFromRole(
     roleId: string,
     permissionId: string,
-    context: RoleCommandContext
+    context: RoleCommandContext,
   ): Promise<void> {
     this.checkPermission(context, 'iam.role.permission.assign');
     const role = await this.roleRepository.findById(roleId as Uuid);
     if (!role) throw createIamError('IAM-SYS-001');
 
-    await this.roleRepository.removePermissionFromRole(roleId as Uuid, permissionId as Uuid);
+    await this.roleRepository.removePermissionFromRole(
+      roleId as Uuid,
+      permissionId as Uuid,
+    );
 
     if (this.permissionCache) {
       await this.permissionCache.invalidateRole(role.roleCode);
@@ -314,7 +362,7 @@ export class RoleService {
     userId: string,
     roleId: string,
     reason: string | null = null,
-    context: RoleCommandContext
+    context: RoleCommandContext,
   ): Promise<void> {
     this.checkPermission(context, 'iam.user.assign-role');
     const role = await this.roleRepository.findById(roleId as Uuid);
@@ -322,7 +370,11 @@ export class RoleService {
       throw createIamError('IAM-SYS-001');
     }
 
-    await this.roleRepository.assignRoleToUser(userId as Uuid, roleId as Uuid, context.actorId as Uuid);
+    await this.roleRepository.assignRoleToUser(
+      userId as Uuid,
+      roleId as Uuid,
+      context.actorId as Uuid,
+    );
 
     if (this.userRepository && this.notificationRepository) {
       const recipient = await this.userRepository.findById(userId as Uuid);
@@ -367,13 +419,18 @@ export class RoleService {
     userId: string,
     roleId: string,
     reason: string | null = null,
-    context: RoleCommandContext
+    context: RoleCommandContext,
   ): Promise<void> {
     this.checkPermission(context, 'iam.user.assign-role');
     const role = await this.roleRepository.findById(roleId as Uuid);
     if (!role) throw createIamError('IAM-SYS-001');
 
-    await this.roleRepository.revokeRoleFromUser(userId as Uuid, roleId as Uuid, context.actorId as Uuid, reason);
+    await this.roleRepository.revokeRoleFromUser(
+      userId as Uuid,
+      roleId as Uuid,
+      context.actorId as Uuid,
+      reason,
+    );
 
     await this.auditLogRepository.append({
       id: crypto.randomUUID() as Uuid,
@@ -393,33 +450,56 @@ export class RoleService {
     });
   }
 
-  async getRolePermissions(roleId: string, context: RoleCommandContext): Promise<any[]> {
+  async getRolePermissions(
+    roleId: string,
+    context: RoleCommandContext,
+  ): Promise<any[]> {
     this.checkPermission(context, 'iam.role.read');
     return this.roleRepository.listPermissionsForRole(roleId as Uuid);
   }
 
-  async listUsersForRole(roleId: string, context: RoleCommandContext): Promise<{ userId: string; username: string; status: string; fullName: string | null }[]> {
+  async listUsersForRole(
+    roleId: string,
+    context: RoleCommandContext,
+  ): Promise<
+    {
+      userId: string;
+      username: string;
+      status: string;
+      fullName: string | null;
+    }[]
+  > {
     this.checkPermission(context, 'iam.role.read');
     return this.roleRepository.listUsersForRole(roleId as Uuid);
   }
 
-  async listRolesForUser(userId: string, context?: RoleCommandContext): Promise<any[]> {
+  async listRolesForUser(
+    userId: string,
+    context?: RoleCommandContext,
+  ): Promise<any[]> {
     if (context) {
       this.checkPermission(context, 'iam.user.read');
     }
     return this.roleRepository.listRolesForUser(userId as Uuid);
   }
 
-  async assignPermission(roleId: string, permissionId: string, context: RoleCommandContext): Promise<void> {
+  async assignPermission(
+    roleId: string,
+    permissionId: string,
+    context: RoleCommandContext,
+  ): Promise<void> {
     return this.assignPermissionToRole(roleId, permissionId, context);
   }
 
-  async removePermission(roleId: string, permissionId: string, context: RoleCommandContext): Promise<void> {
+  async removePermission(
+    roleId: string,
+    permissionId: string,
+    context: RoleCommandContext,
+  ): Promise<void> {
     return this.removePermissionFromRole(roleId, permissionId, context);
   }
 
   async listPermissions(): Promise<any[]> {
     return this.permissionRepository.search();
   }
-
 }

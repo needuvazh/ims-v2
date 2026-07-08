@@ -52,11 +52,24 @@ const STATUS_OPTIONS = [
   { value: 'Archived', label: 'Archived' },
 ];
 
-const SORT_FIELDS = new Set(['instituteCode', 'instituteName', 'registrationNumber', 'primaryEmail', 'country', 'status']);
+const SORT_FIELDS = new Set([
+  'instituteCode',
+  'instituteName',
+  'registrationNumber',
+  'primaryEmail',
+  'country',
+  'status',
+]);
 
-const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+const collator = new Intl.Collator(undefined, {
+  numeric: true,
+  sensitivity: 'base',
+});
 
-function compareNullableText(a: string | null | undefined, b: string | null | undefined) {
+function compareNullableText(
+  a: string | null | undefined,
+  b: string | null | undefined,
+) {
   return collator.compare(a ?? '', b ?? '');
 }
 
@@ -88,29 +101,44 @@ export function InstitutesClientList({
   const searchParams = useSearchParams();
   const [searchValue, setSearchValue] = useState(initialSearch);
 
-  const currentSortBy = searchParams.get('sortBy') ?? initialSortBy ?? 'instituteName';
-  const currentSortOrder = (searchParams.get('sortOrder') as SortOrder | null) ?? initialSortOrder;
+  const currentSortBy =
+    searchParams.get('sortBy') ?? initialSortBy ?? 'instituteName';
+  const currentSortOrder =
+    (searchParams.get('sortOrder') as SortOrder | null) ?? initialSortOrder;
   const currentStatus = searchParams.get('status') ?? initialStatus ?? '';
-  const currentPage = Math.max(parseInt(searchParams.get('page') ?? String(initialPage), 10) || 1, 1);
-  const currentLimit = Math.max(parseInt(searchParams.get('limit') ?? String(initialLimit), 10) || initialLimit || 10, 1);
+  const currentPage = Math.max(
+    parseInt(searchParams.get('page') ?? String(initialPage), 10) || 1,
+    1,
+  );
+  const currentLimit = Math.max(
+    parseInt(searchParams.get('limit') ?? String(initialLimit), 10) ||
+      initialLimit ||
+      10,
+    1,
+  );
 
-  const updateParams = useCallback((updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
+  const updateParams = useCallback(
+    (updates: Record<string, string | null>) => {
+      const params = new URLSearchParams(searchParams.toString());
 
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === '') {
-        params.delete(key);
-      } else {
-        params.set(key, value);
-      }
-    });
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value === null || value === '') {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      });
 
-    router.push(`${pathname}?${params.toString()}`);
-  }, [pathname, router, searchParams]);
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [pathname, router, searchParams],
+  );
 
   useEffect(() => {
     const nextSearch = searchParams.get('q') || '';
-    setSearchValue((current) => (current === nextSearch ? current : nextSearch));
+    setSearchValue((current) =>
+      current === nextSearch ? current : nextSearch,
+    );
   }, [searchParams]);
 
   useEffect(() => {
@@ -127,7 +155,8 @@ export function InstitutesClientList({
   }, [searchParams, searchValue, updateParams]);
 
   const handleSort = (field: string) => {
-    const nextOrder: SortOrder = currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
+    const nextOrder: SortOrder =
+      currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
     updateParams({ sortBy: field, sortOrder: nextOrder, page: '1' });
   };
 
@@ -159,23 +188,40 @@ export function InstitutesClientList({
         const direction = currentSortOrder === 'asc' ? 1 : -1;
 
         if (!SORT_FIELDS.has(currentSortBy)) {
-          return compareNullableText(left.instituteName, right.instituteName) * direction;
+          return (
+            compareNullableText(left.instituteName, right.instituteName) *
+            direction
+          );
         }
 
         switch (currentSortBy) {
           case 'instituteCode':
-            return compareNullableText(left.instituteCode, right.instituteCode) * direction;
+            return (
+              compareNullableText(left.instituteCode, right.instituteCode) *
+              direction
+            );
           case 'registrationNumber':
-            return compareNullableText(left.registrationNumber, right.registrationNumber) * direction;
+            return (
+              compareNullableText(
+                left.registrationNumber,
+                right.registrationNumber,
+              ) * direction
+            );
           case 'primaryEmail':
-            return compareNullableText(left.primaryEmail, right.primaryEmail) * direction;
+            return (
+              compareNullableText(left.primaryEmail, right.primaryEmail) *
+              direction
+            );
           case 'country':
             return compareNullableText(left.country, right.country) * direction;
           case 'status':
             return compareNullableText(left.status, right.status) * direction;
           case 'instituteName':
           default:
-            return compareNullableText(left.instituteName, right.instituteName) * direction;
+            return (
+              compareNullableText(left.instituteName, right.instituteName) *
+              direction
+            );
         }
       });
   }, [currentSortBy, currentSortOrder, institutes, searchParams]);
@@ -183,38 +229,54 @@ export function InstitutesClientList({
   const total = filteredInstitutes.length;
   const totalPages = Math.max(Math.ceil(total / currentLimit), 1);
   const safePage = Math.min(currentPage, totalPages);
-  const paginatedInstitutes = filteredInstitutes.slice((safePage - 1) * currentLimit, safePage * currentLimit);
+  const paginatedInstitutes = filteredInstitutes.slice(
+    (safePage - 1) * currentLimit,
+    safePage * currentLimit,
+  );
 
   const columns = [
     {
       header: 'Code',
       sortable: true,
-      sortDirection: currentSortBy === 'instituteCode' ? currentSortOrder : null,
+      sortDirection:
+        currentSortBy === 'instituteCode' ? currentSortOrder : null,
       onSort: () => handleSort('instituteCode'),
-      render: (inst: InstituteItem) => <span className="font-mono text-xs font-semibold text-slate-600">{inst.instituteCode}</span>,
+      render: (inst: InstituteItem) => (
+        <span className="font-mono text-xs font-semibold text-slate-600">
+          {inst.instituteCode}
+        </span>
+      ),
       headerClassName: 'w-[120px]',
     },
     {
       header: 'Institute',
       sortable: true,
-      sortDirection: currentSortBy === 'instituteName' ? currentSortOrder : null,
+      sortDirection:
+        currentSortBy === 'instituteName' ? currentSortOrder : null,
       onSort: () => handleSort('instituteName'),
       render: (inst: InstituteItem) => (
         <div className="space-y-1">
-          <div className="font-semibold text-slate-800">{inst.instituteName}</div>
-          <div className="text-xs text-[color:var(--ims-muted)]">{inst.website || 'No website listed'}</div>
+          <div className="font-semibold text-slate-800">
+            {inst.instituteName}
+          </div>
+          <div className="text-xs text-[color:var(--ims-muted)]">
+            {inst.website || 'No website listed'}
+          </div>
         </div>
       ),
     },
     {
       header: 'Registration / Tax No',
       sortable: true,
-      sortDirection: currentSortBy === 'registrationNumber' ? currentSortOrder : null,
+      sortDirection:
+        currentSortBy === 'registrationNumber' ? currentSortOrder : null,
       onSort: () => handleSort('registrationNumber'),
       render: (inst: InstituteItem) => (
         <div className="space-y-0.5 text-xs text-slate-600">
           <div>Reg: {inst.registrationNumber || '—'}</div>
-          <div className="text-[10px] text-slate-400">Tax: {inst.taxNumber || '—'}</div>
+          <div className="text-[10px] text-slate-400">
+            Tax: {inst.taxNumber || '—'}
+          </div>
         </div>
       ),
     },
@@ -226,7 +288,9 @@ export function InstitutesClientList({
       render: (inst: InstituteItem) => (
         <div className="space-y-0.5 text-xs text-slate-600">
           <div className="truncate">{inst.primaryEmail || '—'}</div>
-          <div className="text-[10px] text-slate-400">{inst.primaryPhone || '—'}</div>
+          <div className="text-[10px] text-slate-400">
+            {inst.primaryPhone || '—'}
+          </div>
         </div>
       ),
     },
@@ -235,14 +299,18 @@ export function InstitutesClientList({
       sortable: true,
       sortDirection: currentSortBy === 'country' ? currentSortOrder : null,
       onSort: () => handleSort('country'),
-      render: (inst: InstituteItem) => <span className="text-sm text-slate-700">{inst.country || '—'}</span>,
+      render: (inst: InstituteItem) => (
+        <span className="text-sm text-slate-700">{inst.country || '—'}</span>
+      ),
     },
     {
       header: 'Status',
       sortable: true,
       sortDirection: currentSortBy === 'status' ? currentSortOrder : null,
       onSort: () => handleSort('status'),
-      render: (inst: InstituteItem) => <Badge variant={getStatusVariant(inst.status)}>{inst.status}</Badge>,
+      render: (inst: InstituteItem) => (
+        <Badge variant={getStatusVariant(inst.status)}>{inst.status}</Badge>
+      ),
       headerClassName: 'w-[110px]',
     },
     {
@@ -252,7 +320,11 @@ export function InstitutesClientList({
         <div className="flex items-center justify-end gap-2">
           <SimpleTooltip content="View Details" side="top">
             <Link href={`/organization/institutes/${inst.id}`}>
-              <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]"
+              >
                 <Eye className="h-4 w-4" />
               </Button>
             </Link>
@@ -260,7 +332,11 @@ export function InstitutesClientList({
 
           <SimpleTooltip content="Edit Institute" side="top">
             <Link href={`/organization/institutes/${inst.id}/edit`}>
-              <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]"
+              >
                 <Edit2 className="h-4 w-4" />
               </Button>
             </Link>
@@ -276,8 +352,12 @@ export function InstitutesClientList({
       <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 space-y-1">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">{inst.instituteCode}</p>
-            <p className="text-sm font-bold text-[var(--ims-ink)]">{inst.instituteName}</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">
+              {inst.instituteCode}
+            </p>
+            <p className="text-sm font-bold text-[var(--ims-ink)]">
+              {inst.instituteName}
+            </p>
           </div>
           <Badge variant={getStatusVariant(inst.status)}>{inst.status}</Badge>
         </div>
@@ -285,7 +365,9 @@ export function InstitutesClientList({
       <CardContent className="space-y-3 p-card-p text-xs">
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <p className="font-semibold text-[var(--ims-muted)]">Registration</p>
+            <p className="font-semibold text-[var(--ims-muted)]">
+              Registration
+            </p>
             <p className="truncate">{inst.registrationNumber || '—'}</p>
           </div>
           <div>
@@ -313,7 +395,10 @@ export function InstitutesClientList({
               <Eye className="mr-1.5 h-3.5 w-3.5" /> View
             </Button>
           </Link>
-          <Link href={`/organization/institutes/${inst.id}/edit`} className="flex-1">
+          <Link
+            href={`/organization/institutes/${inst.id}/edit`}
+            className="flex-1"
+          >
             <Button variant="outline" size="sm" className="w-full text-[11px]">
               <Edit2 className="mr-1.5 h-3.5 w-3.5" /> Edit
             </Button>
@@ -336,7 +421,10 @@ export function InstitutesClientList({
           </p>
         </div>
 
-        <Link href="/organization/institutes/create" className="w-full sm:w-auto">
+        <Link
+          href="/organization/institutes/create"
+          className="w-full sm:w-auto"
+        >
           <Button className="h-10 w-full gap-1.5 bg-indigo-600 hover:bg-indigo-700 sm:w-auto sm:px-4">
             <Plus className="h-4 w-4" />
             Add Institute
@@ -379,7 +467,9 @@ export function InstitutesClientList({
           </FormLabel>
           <Select
             value={currentStatus}
-            onChange={(event) => updateParams({ status: event.target.value, page: '1' })}
+            onChange={(event) =>
+              updateParams({ status: event.target.value, page: '1' })
+            }
             options={[{ value: '', label: 'All Statuses' }, ...STATUS_OPTIONS]}
             className="h-12"
             placeholder="All Statuses"

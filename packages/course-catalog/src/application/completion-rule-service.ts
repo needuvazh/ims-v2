@@ -20,10 +20,14 @@ export interface CreateCompletionRuleInput {
 export class CourseCompletionRuleService {
   constructor(
     private readonly prisma: PrismaClient,
-    private readonly ruleRepository: ICourseCompletionRuleRepository
+    private readonly ruleRepository: ICourseCompletionRuleRepository,
   ) {}
 
-  async createCompletionRule(input: CreateCompletionRuleInput, actorId?: string, tx?: Prisma.TransactionClient) {
+  async createCompletionRule(
+    input: CreateCompletionRuleInput,
+    actorId?: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const execute = async (activeClient: Prisma.TransactionClient) => {
       // Validate Course exists
       const courseExists = await activeClient.course.findFirst({
@@ -34,13 +38,18 @@ export class CourseCompletionRuleService {
       }
 
       // Validate attendance threshold
-      if (input.minimumAttendancePercent < 0 || input.minimumAttendancePercent > 100) {
+      if (
+        input.minimumAttendancePercent < 0 ||
+        input.minimumAttendancePercent > 100
+      ) {
         throw new Error('ERR_CRS_INVALID_ATTENDANCE_LIMIT');
       }
 
       // Normalize date boundaries
       const startDate = parseDateOnly(input.effectiveStartDate);
-      const endDate = input.effectiveEndDate ? parseDateOnly(input.effectiveEndDate) : null;
+      const endDate = input.effectiveEndDate
+        ? parseDateOnly(input.effectiveEndDate)
+        : null;
 
       if (endDate && endDate <= startDate) {
         throw new Error('ERR_CRS_INVALID_DATE_RANGE');
@@ -53,7 +62,7 @@ export class CourseCompletionRuleService {
           startDate,
           endDate,
         },
-        activeClient
+        activeClient,
       );
 
       for (const record of overlaps) {
@@ -68,7 +77,7 @@ export class CourseCompletionRuleService {
             status: 'Superseded',
             effectiveEndDate: previousEnd,
           },
-          activeClient
+          activeClient,
         );
 
         // Audit Log
@@ -81,7 +90,10 @@ export class CourseCompletionRuleService {
             entityType: 'CourseCompletionRule',
             entityId: record.id,
             action: 'Supersede',
-            oldValue: { status: record.status, effectiveEndDate: record.effectiveEndDate },
+            oldValue: {
+              status: record.status,
+              effectiveEndDate: record.effectiveEndDate,
+            },
             newValue: { status: 'Superseded', effectiveEndDate: previousEnd },
           },
         });
@@ -94,7 +106,7 @@ export class CourseCompletionRuleService {
           effectiveEndDate: endDate,
           status: 'Active',
         },
-        activeClient
+        activeClient,
       );
 
       // Audit Log
@@ -137,7 +149,11 @@ export class CourseCompletionRuleService {
     return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
 
-  async disableCompletionRule(id: string, actorId?: string, tx?: Prisma.TransactionClient) {
+  async disableCompletionRule(
+    id: string,
+    actorId?: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const execute = async (activeClient: Prisma.TransactionClient) => {
       const record = await this.ruleRepository.findById(id, activeClient);
       if (!record) {
@@ -153,7 +169,7 @@ export class CourseCompletionRuleService {
         {
           status: 'Inactive',
         },
-        activeClient
+        activeClient,
       );
 
       // Audit Log

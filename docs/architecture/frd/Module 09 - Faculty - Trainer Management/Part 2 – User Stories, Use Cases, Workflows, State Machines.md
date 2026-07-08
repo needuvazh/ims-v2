@@ -522,9 +522,11 @@ Feature: Audit trainer management actions
 **Related Requirements:** FR-FTM-002, FR-FTM-018, FR-FTM-019, FR-FTM-020
 
 ### Primary Actor
+
 Trainer Administrator
 
 ### Supporting System Actors
+
 - Identity & Access Management
 - Party / Person capability
 - Organization Management
@@ -532,6 +534,7 @@ Trainer Administrator
 - Audit & Compliance
 
 ### Preconditions
+
 1. The actor is authenticated.
 2. The actor has `trainer.create`.
 3. The target branch is within the actor's write-authorized branch scope.
@@ -539,6 +542,7 @@ Trainer Administrator
 5. The target Person is not already linked to a non-deleted TrainerProfile.
 
 ### Main Success Scenario
+
 1. The actor opens the Create Trainer workflow.
 2. The system resolves the authenticated user's writable branch scope.
 3. The actor searches for an existing Person or starts canonical Person creation through the shared Party / Person capability.
@@ -557,32 +561,38 @@ Trainer Administrator
 ### Alternative Flows
 
 **A1 – Person already has a TrainerProfile**
+
 1. At Step 9, the uniqueness check finds a non-deleted TrainerProfile.
 2. The system rejects creation.
 3. The system returns the existing trainer reference when disclosure is allowed by branch authorization; otherwise it returns a non-leaking conflict response.
 4. No new trainer is created.
 
 **A2 – Branch outside user scope**
+
 1. At Step 4 or server validation, the target branch is not writable by the actor.
 2. The system rejects the request.
 3. No data is created and no domain event is published.
 
 **A3 – Invalid effective period**
+
 1. The effective end date precedes the start date.
 2. The system returns a field validation error.
 3. The actor corrects the dates and resubmits.
 
 **A4 – Duplicate trainer code**
+
 1. The generated or manually submitted trainer code conflicts with an existing non-deleted trainer.
 2. For generated codes, the numbering mechanism retries according to its transaction-safe numbering implementation.
 3. For manual codes, the request is rejected and the actor must provide a unique permitted code.
 
 **A5 – Concurrent duplicate creation**
+
 1. Two concurrent requests attempt to create profiles for the same Person.
 2. The database/application uniqueness constraint permits one successful create.
 3. The other request returns a duplicate trainer conflict response.
 
 ### Postconditions
+
 1. Exactly one TrainerProfile exists for the Person.
 2. The TrainerProfile is linked to the selected branch.
 3. Trainer code uniqueness is preserved.
@@ -596,18 +606,22 @@ Trainer Administrator
 **Related Requirements:** FR-FTM-006, FR-FTM-016, FR-FTM-018
 
 ### Primary Actor
+
 Trainer Administrator
 
 ### Supporting System Actors
+
 - Document Management
 - Audit & Compliance
 
 ### Preconditions
+
 1. The actor has `trainer.qualification.manage` for writes.
 2. The trainer is within the actor's authorized branch scope.
 3. The TrainerProfile is not soft-deleted.
 
 ### Main Success Scenario
+
 1. The actor opens the Qualifications section of a trainer profile.
 2. The system verifies branch scope and qualification permission.
 3. The actor selects Add Qualification.
@@ -624,27 +638,32 @@ Trainer Administrator
 ### Alternative Flows
 
 **A1 – Future completion year**
+
 1. At Step 7, yearCompleted is later than the current Oman business calendar year.
 2. The system rejects the request with a specific year validation error.
 
 **A2 – Invalid or inaccessible document**
+
 1. At Step 8, the document does not exist or is outside permitted access.
 2. The system rejects the link operation.
 3. No qualification is created with an invalid evidence reference.
 
 **A3 – Update existing qualification**
+
 1. The actor selects an existing qualification.
 2. The same validation rules are applied.
 3. Version or equivalent concurrency protection is checked where supported.
 4. The record is updated, audited, and `TrainerQualificationUpdated` is published after commit.
 
 **A4 – Remove qualification**
+
 1. The actor requests removal with a reason.
 2. The system performs a soft delete instead of a physical delete.
 3. `isDeleted` is set to true and `deletedAt` is populated.
 4. The record is excluded from normal queries but remains available for authorized audit reconstruction.
 
 ### Postconditions
+
 1. Qualification information is current and structured.
 2. Evidence is referenced, not owned, by Module 09.
 3. No hard deletion occurs.
@@ -657,18 +676,22 @@ Trainer Administrator
 **Related Requirements:** FR-FTM-007, FR-FTM-008, FR-FTM-014
 
 ### Primary Actor
+
 Trainer Administrator
 
 ### Supporting System Actors
+
 - Organization Management
 - Audit & Compliance
 
 ### Preconditions
+
 1. The actor has `trainer.availability.manage`.
 2. The trainer and target branch are within authorized scope.
 3. The TrainerProfile is not soft-deleted.
 
 ### Main Success Scenario
+
 1. The actor opens the trainer Availability section.
 2. The actor selects a weekday from Monday through Sunday.
 3. The actor enters start time and end time in Oman GST business-time semantics.
@@ -686,24 +709,29 @@ Trainer Administrator
 ### Alternative Flows
 
 **A1 – Invalid daily interval**
+
 1. Start time is equal to or later than end time.
 2. The request is rejected.
 3. Cross-midnight availability must be represented as two day-specific records.
 
 **A2 – Overlapping active window**
+
 1. The proposed interval overlaps an Active window for the same trainer, branch, weekday, and effective-date intersection.
 2. The system rejects the request.
 3. The response returns authorized conflict record identifiers and interval information.
 
 **A3 – Exact duplicate**
+
 1. The proposed record exactly duplicates an existing Active window.
 2. The system rejects the duplicate rather than creating redundant state.
 
 **A4 – Inactive historical record**
+
 1. An overlapping record exists but is Inactive or outside the effective period.
 2. It does not block the new Active availability unless another applicable Active record conflicts.
 
 ### Postconditions
+
 1. No ambiguous overlapping Active availability exists for the same trainer, branch, weekday, and effective-period intersection.
 2. Scheduling can consume the window for future availability validation.
 3. Historical inactive and end-dated records remain available for audit and historical interpretation.
@@ -715,18 +743,22 @@ Trainer Administrator
 **Related Requirements:** FR-FTM-009, FR-FTM-010, FR-FTM-013
 
 ### Primary Actor
+
 Academic Coordinator
 
 ### Supporting System Actors
+
 - Course Catalog Management
 - Audit & Compliance
 
 ### Preconditions
+
 1. The actor has `trainer.authorization.manage`.
 2. The trainer is accessible and not soft-deleted.
 3. The Course reference exists in Course Catalog.
 
 ### Main Success Scenario
+
 1. The actor opens the trainer Course Authorizations section.
 2. The actor selects an existing Course from the Course Catalog read boundary.
 3. The actor enters effective start date and optional effective end date.
@@ -742,30 +774,36 @@ Academic Coordinator
 ### Alternative Flows
 
 **A1 – Course does not exist**
+
 1. Course validation fails at Step 5.
 2. The request is rejected without creating a local Course copy.
 
 **A2 – Overlapping Active authorization**
+
 1. Step 7 finds an intersecting Active authorization.
 2. The request is rejected with a conflict error.
 
 **A3 – Suspend authorization**
+
 1. The authorization is Active.
 2. The actor requests Suspended status and supplies a mandatory reason.
 3. The system validates the transition, persists it, and audits the reason.
 4. The authorization becomes ineffective for eligibility checks.
 
 **A4 – Authorization reaches end date**
+
 1. The target assignment date is later than effectiveEndDate.
 2. The authorization is treated as ineffective even if status normalization has not yet set Expired.
 3. Eligibility returns AUTHORIZATION_EXPIRED.
 
 **A5 – Attempt to reactivate Expired authorization**
+
 1. The actor attempts Expired → Active.
 2. The system rejects the transition.
 3. A new authorization effective period must be created.
 
 ### Postconditions
+
 1. The trainer-course authorization history remains temporally interpretable.
 2. Eligibility uses only Active, effective authorization periods.
 3. Course ownership remains with Course Catalog.
@@ -777,20 +815,24 @@ Academic Coordinator
 **Related Requirements:** FR-FTM-010, FR-FTM-014
 
 ### Primary Actor
+
 Training Coordinator
 
 ### Supporting System Actors
+
 - Course Catalog Management
 - Scheduling, Calendar & Holiday Management
 - Identity & Access Management
 
 ### Preconditions
+
 1. The actor has `trainer.eligibility.read`.
 2. Course and branch references are valid.
 3. Start date-time is earlier than end date-time.
 4. The requested branch is within authorized scope.
 
 ### Main Success Scenario
+
 1. The actor selects a Course, Branch, start date-time, and end date-time.
 2. The system validates branch scope and interval bounds.
 3. The system selects non-deleted trainers whose profile status is Active.
@@ -807,20 +849,24 @@ Training Coordinator
 ### Alternative Flows
 
 **A1 – Invalid interval**
+
 1. End date-time is not later than start date-time.
 2. The query is rejected with INVALID_INTERVAL.
 
 **A2 – No eligible trainers**
+
 1. Every candidate fails one or more checks.
 2. The system returns an empty eligible list.
 3. It may return aggregate exclusion reason counts without exposing unauthorized personal data.
 
 **A3 – Scheduling boundary unavailable**
+
 1. The Scheduling conflict check cannot produce a reliable answer.
 2. The system shall not represent unchecked candidates as fully ELIGIBLE for a time-bound slot.
 3. The response returns a dependency/validation-unavailable outcome according to application error handling standards.
 
 ### Postconditions
+
 1. The result is read-only.
 2. No trainer reservation, BatchTrainer assignment, or Session assignment is created.
 3. No out-of-scope trainer is returned.
@@ -832,16 +878,20 @@ Training Coordinator
 **Related Requirements:** FR-FTM-013, FR-FTM-014
 
 ### Primary Actor
+
 Training Delivery Management system
 
 ### Supporting System Actors
+
 - Scheduling, Calendar & Holiday Management
 
 ### Preconditions
+
 1. The request originates from a trusted internal module boundary or an authorized user flow.
 2. Training Delivery supplies trainerId, courseId, batchId, branchId, assignment start/end when known, and assignment role.
 
 ### Main Success Scenario
+
 1. Training Delivery submits the assignment validation request.
 2. Module 09 verifies that the TrainerProfile exists and is not soft-deleted.
 3. Module 09 verifies that status is Active.
@@ -857,22 +907,26 @@ Training Delivery Management system
 ### Alternative Flows
 
 **A1 – Batch-level assignment without exact session time**
+
 1. No exact assignment start/end interval is supplied.
 2. Module 09 validates profile, effective period, branch compatibility, and course authorization.
 3. Availability is returned as `NOT_EVALUATED`.
 4. Session-level time validation is deferred until session scheduling.
 
 **A2 – Multiple failed checks**
+
 1. The trainer is Inactive and lacks valid authorization.
 2. The response includes both `TRAINER_INACTIVE` and the applicable authorization reason.
 3. No assignment mutation occurs in Module 09.
 
 **A3 – Scheduling conflict**
+
 1. All Module 09-owned checks pass.
 2. Scheduling reports a conflict.
 3. The result is `NOT_ELIGIBLE` with `SCHEDULE_CONFLICT`.
 
 ### Postconditions
+
 1. Trainer Management has not created or changed BatchTrainer or Session records.
 2. Training Delivery receives a deterministic eligibility result and reason set.
 
@@ -883,20 +937,24 @@ Training Delivery Management system
 **Related Requirements:** FR-FTM-005, FR-FTM-015, FR-FTM-018, FR-FTM-020
 
 ### Primary Actor
+
 Branch Manager
 
 ### Supporting System Actors
+
 - Training Delivery Management
 - Scheduling, Calendar & Holiday Management
 - Audit & Compliance
 
 ### Preconditions
+
 1. The actor has `trainer.status.manage`.
 2. The trainer is within writable branch scope.
 3. The actor supplies the current optimistic version.
 4. The requested transition is listed as allowed in the TrainerProfile state machine.
 
 ### Main Success Scenario – Active to Suspended
+
 1. The actor opens the trainer status action.
 2. The actor selects Suspended.
 3. The actor provides effective date and mandatory reason.
@@ -912,26 +970,31 @@ Branch Manager
 ### Alternative Flows
 
 **A1 – Blocking future assignments**
+
 1. At Step 6, future confirmed assignments exist.
 2. The transition is rejected.
 3. Authorized assignment references are returned for resolution.
 
 **A2 – Stale version**
+
 1. The supplied version does not match the persisted version.
 2. The request is rejected as a concurrency conflict.
 3. The actor must reload current state before resubmission.
 
 **A3 – Invalid transition**
+
 1. The current status is Inactive and target is Suspended.
 2. The transition is rejected.
 3. State remains unchanged.
 
 **A4 – Reactivation outside effective period**
+
 1. Current status is Suspended and target is Active.
 2. The activation date is outside the TrainerProfile effective period.
 3. The transition is rejected until valid temporal data is provided.
 
 ### Postconditions
+
 1. Status changes only through valid state transitions.
 2. Operational impact is checked before deactivation or suspension.
 3. Successful transitions are audited and evented after commit.
@@ -943,18 +1006,22 @@ Branch Manager
 **Related Requirements:** FR-FTM-011, FR-FTM-012, FR-FTM-018
 
 ### Primary Actor
+
 Finance Authorized User
 
 ### Supporting System Actors
+
 - Training Delivery Management
 - Audit & Compliance
 
 ### Preconditions
+
 1. The actor has `trainer.compensation.manage`.
 2. The trainer is accessible within permitted branch scope.
 3. Referenced Batch or Session exists when supplied.
 
 ### Main Success Scenario
+
 1. The actor opens Compensation Rates for the trainer.
 2. The system performs separate compensation permission authorization.
 3. The actor selects payment basis: Per Hour, Per Session, Per Student, or Fixed.
@@ -972,22 +1039,27 @@ Finance Authorized User
 ### Alternative Flows
 
 **A1 – Invalid amount**
+
 1. Amount is zero, negative, or outside configured financial precision bounds.
 2. The request is rejected.
 
 **A2 – Invalid session/batch relation**
+
 1. sessionId does not belong to batchId when both are supplied.
 2. The request is rejected.
 
 **A3 – Same-specificity ambiguity**
+
 1. An overlapping Active rate already exists at the same specificity and payment basis.
 2. The request is rejected with an ambiguity conflict.
 
 **A4 – Different specificity exists**
+
 1. A trainer-level rate exists and a valid non-overlapping or more-specific batch/session rate is configured.
 2. The configuration may be accepted because resolution precedence is deterministic.
 
 ### Postconditions
+
 1. The compensation configuration is effective-dated and auditable.
 2. No payroll amount is calculated or paid by this module.
 3. Compensation data remains protected by separate read/manage permissions.
@@ -999,13 +1071,16 @@ Finance Authorized User
 **Related Requirements:** FR-FTM-012
 
 ### Primary Actor
+
 Authorized internal Finance consumer
 
 ### Preconditions
+
 1. The caller has `trainer.compensation.read` or trusted internal finance authorization.
 2. Trainer and target date are valid.
 
 ### Main Success Scenario
+
 1. The caller provides trainerId, targetDate, optional sessionId, optional batchId, and optional paymentBasis.
 2. The module selects Active, non-deleted rates effective on targetDate.
 3. The module filters by trainerId.
@@ -1019,15 +1094,18 @@ Authorized internal Finance consumer
 ### Alternative Flows
 
 **A1 – No rate**
+
 1. No applicable rate exists at any supported specificity.
 2. The module returns `NO_RATE`.
 
 **A2 – Ambiguous winning specificity**
+
 1. More than one Active applicable rate exists at the winning specificity for the same payment basis and target date.
 2. The module returns `AMBIGUOUS_RATE`.
 3. The module does not select a rate nondeterministically.
 
 ### Postconditions
+
 1. Resolution is deterministic.
 2. No payroll calculation, payroll approval, payslip generation, or payment occurs.
 
@@ -1038,18 +1116,22 @@ Authorized internal Finance consumer
 **Related Requirements:** FR-FTM-016, FR-FTM-018
 
 ### Primary Actor
+
 Trainer Administrator or entity-specific authorized manager
 
 ### Supporting System Actors
+
 - Training Delivery Management
 - Audit & Compliance
 
 ### Preconditions
+
 1. The actor has the manage permission required for the target entity type.
 2. The target record is within authorized branch scope.
 3. A deletion or deactivation reason is supplied where required.
 
 ### Main Success Scenario
+
 1. The actor requests removal or deactivation of a trainer-owned record.
 2. The system resolves entity type and applicable management permission.
 3. The system checks branch scope.
@@ -1063,20 +1145,24 @@ Trainer Administrator or entity-specific authorized manager
 ### Alternative Flows
 
 **A1 – TrainerProfile has active or future assignments**
+
 1. Training Delivery reports active or future BatchTrainer or Session references.
 2. TrainerProfile soft deletion is blocked.
 3. The actor must resolve the references before retrying.
 
 **A2 – Unauthorized entity-specific delete**
+
 1. The actor has generic trainer read access but lacks the manage permission for the target child entity.
 2. The request is rejected.
 
 **A3 – Record already soft-deleted**
+
 1. The record is already soft-deleted.
 2. The system returns an idempotent or already-deleted outcome according to application API conventions.
 3. No duplicate business-state event is created.
 
 ### Postconditions
+
 1. No hard deletion has occurred.
 2. Historical evidence remains available to authorized audit processes.
 3. Normal operational queries exclude soft-deleted records.
@@ -1088,6 +1174,7 @@ Trainer Administrator or entity-specific authorized manager
 ## WF-FTM-001 – Trainer Onboarding and Readiness Workflow
 
 ### Objective
+
 Create a trainer from the canonical Person model and progressively establish the operational data required for assignment readiness.
 
 ### Structured Workflow
@@ -1184,6 +1271,7 @@ sequenceDiagram
 ```
 
 ### Workflow Invariants
+
 1. Person identity is resolved before TrainerProfile creation.
 2. TrainerProfile creation fails if a non-deleted profile already exists for the Person.
 3. Course authorization stores a Course reference only.
@@ -1195,6 +1283,7 @@ sequenceDiagram
 ## WF-FTM-002 – Trainer Eligibility Search and Assignment Validation Workflow
 
 ### Objective
+
 Return eligible trainers for a proposed delivery slot and validate a selected trainer before Training Delivery creates its assignment.
 
 ```mermaid
@@ -1224,6 +1313,7 @@ sequenceDiagram
 ```
 
 ### Validation Order
+
 1. Authentication/internal trust and branch authorization.
 2. Trainer exists and is not soft-deleted.
 3. TrainerProfile status is Active.
@@ -1235,6 +1325,7 @@ sequenceDiagram
 9. Only then is the result `ELIGIBLE`.
 
 ### Important Boundary Rule
+
 Module 09 returns eligibility evidence but never creates `BatchTrainer` or `Session` assignments. Training Delivery owns those records.
 
 ---
@@ -1242,6 +1333,7 @@ Module 09 returns eligibility evidence but never creates `BatchTrainer` or `Sess
 ## WF-FTM-003 – Availability Configuration and Scheduling Validation Workflow
 
 ### Objective
+
 Maintain recurring availability while allowing Scheduling to validate a concrete proposed session.
 
 ```text
@@ -1302,20 +1394,21 @@ Scheduling separately checks double-booking and timetable conflicts
 
 ### Availability Decision Codes
 
-| Code | Meaning |
-|---|---|
-| AVAILABLE | A valid effective Active availability window fully contains the requested interval. |
-| NO_WINDOW | No applicable availability window exists for the branch, weekday, and effective date. |
-| OUTSIDE_WINDOW | An applicable window exists, but the requested interval is not fully contained within it. |
-| INACTIVE_TRAINER | TrainerProfile is not Active for the requested date. |
-| BRANCH_MISMATCH | Trainer is not compatible with the requested branch under branch policy. |
-| INVALID_INTERVAL | Requested end is not later than requested start. |
+| Code             | Meaning                                                                                   |
+| ---------------- | ----------------------------------------------------------------------------------------- |
+| AVAILABLE        | A valid effective Active availability window fully contains the requested interval.       |
+| NO_WINDOW        | No applicable availability window exists for the branch, weekday, and effective date.     |
+| OUTSIDE_WINDOW   | An applicable window exists, but the requested interval is not fully contained within it. |
+| INACTIVE_TRAINER | TrainerProfile is not Active for the requested date.                                      |
+| BRANCH_MISMATCH  | Trainer is not compatible with the requested branch under branch policy.                  |
+| INVALID_INTERVAL | Requested end is not later than requested start.                                          |
 
 ---
 
 ## WF-FTM-004 – Course Authorization Lifecycle Workflow
 
 ### Objective
+
 Create and manage time-bounded trainer authorization to deliver a Course.
 
 ```mermaid
@@ -1341,6 +1434,7 @@ flowchart TD
 ```
 
 ### Workflow Rules
+
 1. Active authorization periods for the same trainer and Course may not overlap.
 2. Expired authorization history is immutable as history; future authorization requires a new effective period.
 3. Course authorization does not grant application access.
@@ -1352,6 +1446,7 @@ flowchart TD
 ## WF-FTM-005 – Compensation Rate Configuration and Resolution Workflow
 
 ### Objective
+
 Maintain non-ambiguous effective compensation inputs and resolve the most specific rate.
 
 ```mermaid
@@ -1416,6 +1511,7 @@ Input: trainerId, targetDate, optional sessionId, optional batchId, optional pay
 ```
 
 ### Boundary Rule
+
 The resolved rate is an input for downstream authorized processes. Module 09 does not calculate payroll, approve payroll, generate payslips, create bank files, or make payments.
 
 ---
@@ -1423,6 +1519,7 @@ The resolved rate is an input for downstream authorized processes. Module 09 doe
 ## WF-FTM-006 – Trainer Status Change with Operational Impact Check
 
 ### Objective
+
 Prevent status changes from silently invalidating future training delivery.
 
 ```mermaid
@@ -1458,6 +1555,7 @@ sequenceDiagram
 ```
 
 ### Operational Impact Rules
+
 1. Active → Suspended requires a reason and resolution of future assignments.
 2. Active → Inactive requires a reason and resolution of future assignments.
 3. Suspended → Active requires the suspension condition to be resolved and profile effective period to be valid.
@@ -1470,6 +1568,7 @@ sequenceDiagram
 ## WF-FTM-007 – Soft Delete and Deactivation Workflow
 
 ### Objective
+
 Preserve historical integrity while removing records from normal operational use.
 
 ```text
@@ -1511,13 +1610,13 @@ Check Active References and Historical Interpretation Needs
 
 ### Entity Handling Guidance
 
-| Entity | Preferred Removal Behavior |
-|---|---|
-| TrainerProfile | Inactivate when operationally appropriate; soft delete only when no active/future assignment references exist and business rules permit. |
-| TrainerQualification | Soft delete when removal is required; preserve audit evidence. |
-| TrainerAvailability | Prefer Inactive status or end dating for historical interpretation; soft delete where explicitly allowed. |
-| TrainerCourseAuthorization | Prefer Inactive, Suspended, or Expired state according to business reason; preserve authorization history. |
-| TrainerCompensationRate | Prefer Inactive status or end dating; compensation history remains restricted and auditable. |
+| Entity                     | Preferred Removal Behavior                                                                                                               |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| TrainerProfile             | Inactivate when operationally appropriate; soft delete only when no active/future assignment references exist and business rules permit. |
+| TrainerQualification       | Soft delete when removal is required; preserve audit evidence.                                                                           |
+| TrainerAvailability        | Prefer Inactive status or end dating for historical interpretation; soft delete where explicitly allowed.                                |
+| TrainerCourseAuthorization | Prefer Inactive, Suspended, or Expired state according to business reason; preserve authorization history.                               |
+| TrainerCompensationRate    | Prefer Inactive status or end dating; compensation history remains restricted and auditable.                                             |
 
 ---
 
@@ -1527,11 +1626,11 @@ Check Active References and Historical Interpretation Needs
 
 ### States
 
-| State | Meaning |
-|---|---|
-| Inactive | The trainer profile exists but the trainer is not currently eligible for operational assignment. |
-| Active | The trainer may participate in assignment eligibility evaluation, subject to effective dates, branch compatibility, course authorization, availability, and Scheduling checks. |
-| Suspended | The trainer is temporarily prohibited from operational assignment until the suspension condition is resolved or the profile is moved to Inactive. |
+| State     | Meaning                                                                                                                                                                        |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Inactive  | The trainer profile exists but the trainer is not currently eligible for operational assignment.                                                                               |
+| Active    | The trainer may participate in assignment eligibility evaluation, subject to effective dates, branch compatibility, course authorization, availability, and Scheduling checks. |
+| Suspended | The trainer is temporarily prohibited from operational assignment until the suspension condition is resolved or the profile is moved to Inactive.                              |
 
 ### Mermaid State Diagram
 
@@ -1559,22 +1658,23 @@ stateDiagram-v2
 
 ### Transition Rules Matrix
 
-| From | To | Allowed | Permission Required | Mandatory Conditions | Failure Result |
-|---|---|---:|---|---|---|
-| Initial | Inactive | Yes | `trainer.create` | Valid branch, Person uniqueness, valid type, valid effective period. | Creation rejected. |
-| Initial | Active | Yes | `trainer.create` | Valid branch, Person uniqueness, valid type, effective period supports activation date. | Creation rejected. |
-| Initial | Suspended | No | Not applicable | Suspended is not a valid initial state. | `INVALID_INITIAL_STATUS` |
-| Inactive | Active | Yes | `trainer.status.manage` | Effective period valid; no blocking integrity issue. | `TRANSITION_PRECONDITION_FAILED` |
-| Inactive | Suspended | No | Not applicable | Trainer must first become Active. | `INVALID_STATUS_TRANSITION` |
-| Active | Inactive | Yes | `trainer.status.manage` | Reason required; future assignments from effective date onward must be resolved. | `BLOCKING_FUTURE_ASSIGNMENTS` or `REASON_REQUIRED` |
-| Active | Suspended | Yes | `trainer.status.manage` | Reason required; future assignments from effective date onward must be resolved. | `BLOCKING_FUTURE_ASSIGNMENTS` or `REASON_REQUIRED` |
-| Suspended | Active | Yes | `trainer.status.manage` | Suspension condition resolved; effective period valid. | `TRANSITION_PRECONDITION_FAILED` |
-| Suspended | Inactive | Yes | `trainer.status.manage` | Reason required. | `REASON_REQUIRED` |
-| Active | Active | No state change | `trainer.status.manage` | Treated as idempotent/no-op if no other mutable data changes. | Current state returned; no duplicate status event. |
-| Inactive | Inactive | No state change | `trainer.status.manage` | Treated as idempotent/no-op. | Current state returned; no duplicate status event. |
-| Suspended | Suspended | No state change | `trainer.status.manage` | Treated as idempotent/no-op. | Current state returned; no duplicate status event. |
+| From      | To        |         Allowed | Permission Required     | Mandatory Conditions                                                                    | Failure Result                                     |
+| --------- | --------- | --------------: | ----------------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| Initial   | Inactive  |             Yes | `trainer.create`        | Valid branch, Person uniqueness, valid type, valid effective period.                    | Creation rejected.                                 |
+| Initial   | Active    |             Yes | `trainer.create`        | Valid branch, Person uniqueness, valid type, effective period supports activation date. | Creation rejected.                                 |
+| Initial   | Suspended |              No | Not applicable          | Suspended is not a valid initial state.                                                 | `INVALID_INITIAL_STATUS`                           |
+| Inactive  | Active    |             Yes | `trainer.status.manage` | Effective period valid; no blocking integrity issue.                                    | `TRANSITION_PRECONDITION_FAILED`                   |
+| Inactive  | Suspended |              No | Not applicable          | Trainer must first become Active.                                                       | `INVALID_STATUS_TRANSITION`                        |
+| Active    | Inactive  |             Yes | `trainer.status.manage` | Reason required; future assignments from effective date onward must be resolved.        | `BLOCKING_FUTURE_ASSIGNMENTS` or `REASON_REQUIRED` |
+| Active    | Suspended |             Yes | `trainer.status.manage` | Reason required; future assignments from effective date onward must be resolved.        | `BLOCKING_FUTURE_ASSIGNMENTS` or `REASON_REQUIRED` |
+| Suspended | Active    |             Yes | `trainer.status.manage` | Suspension condition resolved; effective period valid.                                  | `TRANSITION_PRECONDITION_FAILED`                   |
+| Suspended | Inactive  |             Yes | `trainer.status.manage` | Reason required.                                                                        | `REASON_REQUIRED`                                  |
+| Active    | Active    | No state change | `trainer.status.manage` | Treated as idempotent/no-op if no other mutable data changes.                           | Current state returned; no duplicate status event. |
+| Inactive  | Inactive  | No state change | `trainer.status.manage` | Treated as idempotent/no-op.                                                            | Current state returned; no duplicate status event. |
+| Suspended | Suspended | No state change | `trainer.status.manage` | Treated as idempotent/no-op.                                                            | Current state returned; no duplicate status event. |
 
 ### Additional Effective-State Rules
+
 1. `Active` status is necessary but not sufficient for assignment eligibility.
 2. A trainer cannot be considered active before `effectiveStartDate`.
 3. A trainer cannot be considered effective after `effectiveEndDate` when an end date exists.
@@ -1588,12 +1688,12 @@ stateDiagram-v2
 
 ### States
 
-| State | Meaning |
-|---|---|
-| Inactive | Authorization record exists but does not currently permit course-specific assignment. |
-| Active | Trainer is authorized for the Course during the applicable effective period. |
-| Suspended | Authorization is temporarily withheld and cannot satisfy assignment eligibility. |
-| Expired | Authorization has ended and is historical; future authorization requires a new effective period. |
+| State     | Meaning                                                                                          |
+| --------- | ------------------------------------------------------------------------------------------------ |
+| Inactive  | Authorization record exists but does not currently permit course-specific assignment.            |
+| Active    | Trainer is authorized for the Course during the applicable effective period.                     |
+| Suspended | Authorization is temporarily withheld and cannot satisfy assignment eligibility.                 |
+| Expired   | Authorization has ended and is historical; future authorization requires a new effective period. |
 
 ### Mermaid State Diagram
 
@@ -1620,18 +1720,18 @@ stateDiagram-v2
 
 ### Transition Rules Matrix
 
-| From | To | Allowed | Permission Required | Mandatory Conditions | Eligibility Effect |
-|---|---|---:|---|---|---|
-| Initial | Inactive | Yes | `trainer.authorization.manage` | Valid trainer, valid Course reference, valid dates. | Not eligible through this authorization. |
-| Initial | Active | Yes | `trainer.authorization.manage` | Valid trainer, valid Course, valid dates, no overlapping Active authorization. | Eligible when target date is within effective period and other trainer checks pass. |
-| Inactive | Active | Yes | `trainer.authorization.manage` | Effective dates valid; no overlapping Active authorization for same trainer/Course. | Becomes usable after successful commit. |
-| Active | Suspended | Yes | `trainer.authorization.manage` | Reason required. | Immediately ineffective for eligibility. |
-| Active | Inactive | Yes | `trainer.authorization.manage` | Administrative withdrawal decision. | Ineffective for eligibility. |
-| Active | Expired | Yes | `trainer.authorization.manage` for manual expiration; automatic temporal evaluation requires no user permission | Effective end reached or authorized manual expiration; reason required for manual expiration. | Ineffective for eligibility. |
-| Suspended | Active | Yes | `trainer.authorization.manage` | Suspension condition resolved and effective period still includes target activation date. | Usable for eligibility again. |
-| Suspended | Inactive | Yes | `trainer.authorization.manage` | Administrative withdrawal. | Ineffective for eligibility. |
-| Suspended | Expired | Yes | `trainer.authorization.manage` for manual expiration; automatic temporal evaluation requires no user permission | End date reached or authorized manual expiration. | Ineffective for eligibility. |
-| Expired | Active | No | Not applicable | Historical authorization may not be rewritten into a new active period. | New authorization record required. |
+| From      | To        | Allowed | Permission Required                                                                                             | Mandatory Conditions                                                                          | Eligibility Effect                                                                  |
+| --------- | --------- | ------: | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Initial   | Inactive  |     Yes | `trainer.authorization.manage`                                                                                  | Valid trainer, valid Course reference, valid dates.                                           | Not eligible through this authorization.                                            |
+| Initial   | Active    |     Yes | `trainer.authorization.manage`                                                                                  | Valid trainer, valid Course, valid dates, no overlapping Active authorization.                | Eligible when target date is within effective period and other trainer checks pass. |
+| Inactive  | Active    |     Yes | `trainer.authorization.manage`                                                                                  | Effective dates valid; no overlapping Active authorization for same trainer/Course.           | Becomes usable after successful commit.                                             |
+| Active    | Suspended |     Yes | `trainer.authorization.manage`                                                                                  | Reason required.                                                                              | Immediately ineffective for eligibility.                                            |
+| Active    | Inactive  |     Yes | `trainer.authorization.manage`                                                                                  | Administrative withdrawal decision.                                                           | Ineffective for eligibility.                                                        |
+| Active    | Expired   |     Yes | `trainer.authorization.manage` for manual expiration; automatic temporal evaluation requires no user permission | Effective end reached or authorized manual expiration; reason required for manual expiration. | Ineffective for eligibility.                                                        |
+| Suspended | Active    |     Yes | `trainer.authorization.manage`                                                                                  | Suspension condition resolved and effective period still includes target activation date.     | Usable for eligibility again.                                                       |
+| Suspended | Inactive  |     Yes | `trainer.authorization.manage`                                                                                  | Administrative withdrawal.                                                                    | Ineffective for eligibility.                                                        |
+| Suspended | Expired   |     Yes | `trainer.authorization.manage` for manual expiration; automatic temporal evaluation requires no user permission | End date reached or authorized manual expiration.                                             | Ineffective for eligibility.                                                        |
+| Expired   | Active    |      No | Not applicable                                                                                                  | Historical authorization may not be rewritten into a new active period.                       | New authorization record required.                                                  |
 
 ### Effective-State Evaluation Rules
 
@@ -1692,35 +1792,35 @@ Compensation rate activation/deactivation requires `trainer.compensation.manage`
 
 # 7. Use Case to Requirement Traceability Matrix
 
-| Use Case | Primary FR Coverage | Primary Business Rules |
-|---|---|---|
-| UC-FTM-001 Create Trainer Profile | FR-FTM-002, FR-FTM-018, FR-FTM-019, FR-FTM-020 | BR-FTM-001–010, BR-FTM-033–038 |
-| UC-FTM-002 Maintain Trainer Qualification | FR-FTM-006, FR-FTM-016, FR-FTM-018 | BR-FTM-011, BR-FTM-012, BR-FTM-031–033, BR-FTM-041 |
-| UC-FTM-003 Configure Trainer Availability | FR-FTM-007, FR-FTM-008, FR-FTM-014 | BR-FTM-013–017, BR-FTM-023 |
-| UC-FTM-004 Manage Course Authorization | FR-FTM-009, FR-FTM-010, FR-FTM-013 | BR-FTM-018–023, BR-FTM-040 |
-| UC-FTM-005 Query Eligible Trainers | FR-FTM-010, FR-FTM-014, FR-FTM-019 | BR-FTM-008, BR-FTM-010, BR-FTM-016–023, BR-FTM-034–036 |
-| UC-FTM-006 Validate Specific Assignment | FR-FTM-013, FR-FTM-014 | BR-FTM-010, BR-FTM-016, BR-FTM-019, BR-FTM-023, BR-FTM-039 |
-| UC-FTM-007 Change Trainer Status | FR-FTM-005, FR-FTM-015, FR-FTM-018, FR-FTM-020 | BR-FTM-006–010, BR-FTM-030, BR-FTM-033, BR-FTM-037, BR-FTM-042 |
-| UC-FTM-008 Configure Compensation Rate | FR-FTM-011, FR-FTM-018 | BR-FTM-024–029, BR-FTM-033 |
-| UC-FTM-009 Resolve Compensation Rate | FR-FTM-012 | BR-FTM-026–029, BR-FTM-032 |
-| UC-FTM-010 Soft Delete or Deactivate Record | FR-FTM-016, FR-FTM-018 | BR-FTM-030–033 |
+| Use Case                                    | Primary FR Coverage                            | Primary Business Rules                                         |
+| ------------------------------------------- | ---------------------------------------------- | -------------------------------------------------------------- |
+| UC-FTM-001 Create Trainer Profile           | FR-FTM-002, FR-FTM-018, FR-FTM-019, FR-FTM-020 | BR-FTM-001–010, BR-FTM-033–038                                 |
+| UC-FTM-002 Maintain Trainer Qualification   | FR-FTM-006, FR-FTM-016, FR-FTM-018             | BR-FTM-011, BR-FTM-012, BR-FTM-031–033, BR-FTM-041             |
+| UC-FTM-003 Configure Trainer Availability   | FR-FTM-007, FR-FTM-008, FR-FTM-014             | BR-FTM-013–017, BR-FTM-023                                     |
+| UC-FTM-004 Manage Course Authorization      | FR-FTM-009, FR-FTM-010, FR-FTM-013             | BR-FTM-018–023, BR-FTM-040                                     |
+| UC-FTM-005 Query Eligible Trainers          | FR-FTM-010, FR-FTM-014, FR-FTM-019             | BR-FTM-008, BR-FTM-010, BR-FTM-016–023, BR-FTM-034–036         |
+| UC-FTM-006 Validate Specific Assignment     | FR-FTM-013, FR-FTM-014                         | BR-FTM-010, BR-FTM-016, BR-FTM-019, BR-FTM-023, BR-FTM-039     |
+| UC-FTM-007 Change Trainer Status            | FR-FTM-005, FR-FTM-015, FR-FTM-018, FR-FTM-020 | BR-FTM-006–010, BR-FTM-030, BR-FTM-033, BR-FTM-037, BR-FTM-042 |
+| UC-FTM-008 Configure Compensation Rate      | FR-FTM-011, FR-FTM-018                         | BR-FTM-024–029, BR-FTM-033                                     |
+| UC-FTM-009 Resolve Compensation Rate        | FR-FTM-012                                     | BR-FTM-026–029, BR-FTM-032                                     |
+| UC-FTM-010 Soft Delete or Deactivate Record | FR-FTM-016, FR-FTM-018                         | BR-FTM-030–033                                                 |
 
 ---
 
 # 8. Workflow Ownership and Cross-Context Interaction Summary
 
-| Workflow Concern | Module 09 Responsibility | Other Owning Context Responsibility |
-|---|---|---|
-| Trainer identity | Reference canonical Person; prevent duplicate TrainerProfile per Person. | Party / Person owns identity lifecycle and localized names. |
-| Branch authorization | Apply server-side branch predicates to every read/write. | IAM owns UserBranchAccess; Organization owns Branch hierarchy. |
-| Course authorization | Own TrainerCourseAuthorization and its lifecycle. | Course Catalog owns Course definitions. |
-| Trainer assignment | Validate eligibility and expose reference views. | Training Delivery owns BatchTrainer and Session assignment records. |
-| Time availability | Own recurring TrainerAvailability and containment validation. | Scheduling owns double-booking, timetable, classroom, holiday, and venue-block conflict rules. |
-| Qualification evidence | Own structured qualification and document reference. | Document Management owns document metadata, verification, and expiry workflow. |
-| Compensation configuration | Own effective rate structures and deterministic rate resolution. | Future Payroll owns payroll calculation and payment; Finance owns financial transactions within its domain. |
-| Completion recommendation reference | Provide valid trainer reference. | Exam & Completion owns recommendation, result, completion evaluation, and approval. |
-| Reporting source data | Provide governed trainer data and read contracts. | Reporting & Dashboards owns dashboard/report definitions and presentation. |
-| Audit facts | Produce sensitive change facts. | Audit & Compliance owns immutable audit records and approval history capability. |
+| Workflow Concern                    | Module 09 Responsibility                                                 | Other Owning Context Responsibility                                                                         |
+| ----------------------------------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| Trainer identity                    | Reference canonical Person; prevent duplicate TrainerProfile per Person. | Party / Person owns identity lifecycle and localized names.                                                 |
+| Branch authorization                | Apply server-side branch predicates to every read/write.                 | IAM owns UserBranchAccess; Organization owns Branch hierarchy.                                              |
+| Course authorization                | Own TrainerCourseAuthorization and its lifecycle.                        | Course Catalog owns Course definitions.                                                                     |
+| Trainer assignment                  | Validate eligibility and expose reference views.                         | Training Delivery owns BatchTrainer and Session assignment records.                                         |
+| Time availability                   | Own recurring TrainerAvailability and containment validation.            | Scheduling owns double-booking, timetable, classroom, holiday, and venue-block conflict rules.              |
+| Qualification evidence              | Own structured qualification and document reference.                     | Document Management owns document metadata, verification, and expiry workflow.                              |
+| Compensation configuration          | Own effective rate structures and deterministic rate resolution.         | Future Payroll owns payroll calculation and payment; Finance owns financial transactions within its domain. |
+| Completion recommendation reference | Provide valid trainer reference.                                         | Exam & Completion owns recommendation, result, completion evaluation, and approval.                         |
+| Reporting source data               | Provide governed trainer data and read contracts.                        | Reporting & Dashboards owns dashboard/report definitions and presentation.                                  |
+| Audit facts                         | Produce sensitive change facts.                                          | Audit & Compliance owns immutable audit records and approval history capability.                            |
 
 ---
 

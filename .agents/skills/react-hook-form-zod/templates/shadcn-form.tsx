@@ -11,9 +11,9 @@
  * npx shadcn@latest add form input button
  */
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 import {
   Form,
   FormControl,
@@ -22,36 +22,37 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { Checkbox } from '@/components/ui/checkbox'
+} from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
 
 // Define schema
 const profileFormSchema = z.object({
-  username: z.string()
+  username: z
+    .string()
     .min(2, { message: 'Username must be at least 2 characters.' })
     .max(30, { message: 'Username must not be longer than 30 characters.' }),
-  email: z.string()
-    .email({ message: 'Please enter a valid email address.' }),
-  bio: z.string()
+  email: z.string().email({ message: 'Please enter a valid email address.' }),
+  bio: z
+    .string()
     .max(160, { message: 'Bio must not be longer than 160 characters.' })
     .optional(),
   role: z.enum(['admin', 'user', 'guest'], {
     required_error: 'Please select a role.',
   }),
   notifications: z.boolean().default(false).optional(),
-})
+});
 
-type ProfileFormValues = z.infer<typeof profileFormSchema>
+type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
 export function ShadcnProfileForm() {
   const form = useForm<ProfileFormValues>({
@@ -62,16 +63,19 @@ export function ShadcnProfileForm() {
       bio: '',
       notifications: false,
     },
-  })
+  });
 
   function onSubmit(data: ProfileFormValues) {
-    console.log('Form submitted:', data)
+    console.log('Form submitted:', data);
     // Make API call
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-2xl mx-auto">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 max-w-2xl mx-auto"
+      >
         <h2 className="text-3xl font-bold">Profile Settings</h2>
 
         {/* Username Field */}
@@ -151,9 +155,7 @@ export function ShadcnProfileForm() {
                   <SelectItem value="guest">Guest</SelectItem>
                 </SelectContent>
               </Select>
-              <FormDescription>
-                Choose your account type.
-              </FormDescription>
+              <FormDescription>Choose your account type.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -172,9 +174,7 @@ export function ShadcnProfileForm() {
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
-                <FormLabel>
-                  Email notifications
-                </FormLabel>
+                <FormLabel>Email notifications</FormLabel>
                 <FormDescription>
                   Receive email notifications about your account activity.
                 </FormDescription>
@@ -188,7 +188,7 @@ export function ShadcnProfileForm() {
         </Button>
       </form>
     </Form>
-  )
+  );
 }
 
 /**
@@ -203,9 +203,9 @@ const settingsFormSchema = z.object({
     updates: z.boolean().default(true),
     security: z.boolean().default(true),
   }),
-})
+});
 
-type SettingsFormValues = z.infer<typeof settingsFormSchema>
+type SettingsFormValues = z.infer<typeof settingsFormSchema>;
 
 export function ShadcnSettingsForm() {
   const form = useForm<SettingsFormValues>({
@@ -220,15 +220,18 @@ export function ShadcnSettingsForm() {
         security: true,
       },
     },
-  })
+  });
 
   function onSubmit(data: SettingsFormValues) {
-    console.log('Settings updated:', data)
+    console.log('Settings updated:', data);
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-2xl mx-auto">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 max-w-2xl mx-auto"
+      >
         <h2 className="text-3xl font-bold">Settings</h2>
 
         {/* Name */}
@@ -341,7 +344,7 @@ export function ShadcnSettingsForm() {
         <Button type="submit">Save settings</Button>
       </form>
     </Form>
-  )
+  );
 }
 
 /**

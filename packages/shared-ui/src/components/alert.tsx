@@ -2,7 +2,13 @@
 
 import React from 'react';
 import { useState, type ReactNode } from 'react';
-import { AlertCircle, CheckCircle2, Info, TriangleAlert, X } from 'lucide-react';
+import {
+  AlertCircle,
+  CheckCircle2,
+  Info,
+  TriangleAlert,
+  X,
+} from 'lucide-react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../utils/cn';
 
@@ -12,9 +18,12 @@ const alertVariants = cva(
     variants: {
       variant: {
         info: 'border-[color:var(--ims-info-border)] bg-[color:var(--ims-info-bg)] text-[color:var(--ims-info)]',
-        success: 'border-[color:var(--ims-success-border)] bg-[color:var(--ims-success-bg)] text-[color:var(--ims-success)]',
-        warning: 'border-[color:var(--ims-warning-border)] bg-[color:var(--ims-warning-bg)] text-[color:var(--ims-warning)]',
-        error: 'border-[color:var(--ims-error-border)] bg-[color:var(--ims-error-bg)] text-[color:var(--ims-error)]',
+        success:
+          'border-[color:var(--ims-success-border)] bg-[color:var(--ims-success-bg)] text-[color:var(--ims-success)]',
+        warning:
+          'border-[color:var(--ims-warning-border)] bg-[color:var(--ims-warning-bg)] text-[color:var(--ims-warning)]',
+        error:
+          'border-[color:var(--ims-error-border)] bg-[color:var(--ims-error-bg)] text-[color:var(--ims-error)]',
       },
     },
     defaultVariants: {
@@ -25,8 +34,12 @@ const alertVariants = cva(
 
 const iconMap: Record<string, ReactNode> = {
   info: <Info className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />,
-  success: <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />,
-  warning: <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />,
+  success: (
+    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+  ),
+  warning: (
+    <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+  ),
   error: <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />,
 };
 
@@ -53,10 +66,7 @@ export function Alert({
   if (dismissed) return null;
 
   return (
-    <div
-      role="alert"
-      className={cn(alertVariants({ variant }), className)}
-    >
+    <div role="alert" className={cn(alertVariants({ variant }), className)}>
       {icon ?? iconMap[variant ?? 'info']}
       <div className="flex-1 space-y-1">
         {title && <p className="font-semibold">{title}</p>}

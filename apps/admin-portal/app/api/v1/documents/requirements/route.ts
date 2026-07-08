@@ -37,10 +37,15 @@ export async function GET(request: Request) {
 
           return NextResponse.json({ success: true, data: requirements });
         } catch (err: any) {
-          logger.error('Failed to query document requirements', { error: err.message });
+          logger.error('Failed to query document requirements', {
+            error: err.message,
+          });
           return NextResponse.json(
-            { success: false, messageEnglish: 'Internal server error query requirements' },
-            { status: 500 }
+            {
+              success: false,
+              messageEnglish: 'Internal server error query requirements',
+            },
+            { status: 500 },
           );
         }
       });
@@ -58,10 +63,15 @@ export async function GET(request: Request) {
         });
         return NextResponse.json({ success: true, data: requirements });
       } catch (err: any) {
-        logger.error('Failed to list document requirements master', { error: err.message });
+        logger.error('Failed to list document requirements master', {
+          error: err.message,
+        });
         return NextResponse.json(
-          { success: false, messageEnglish: 'Failed to list document requirements' },
-          { status: 500 }
+          {
+            success: false,
+            messageEnglish: 'Failed to list document requirements',
+          },
+          { status: 500 },
         );
       }
     });
@@ -74,12 +84,16 @@ export async function POST(request: Request) {
       const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
       try {
         const payload = await request.json();
-        const { targetEntity, documentType, isMandatory, branchId, courseId } = payload;
+        const { targetEntity, documentType, isMandatory, branchId, courseId } =
+          payload;
 
         if (!targetEntity || !documentType) {
           return NextResponse.json(
-            { success: false, messageEnglish: 'targetEntity and documentType are required' },
-            { status: 400 }
+            {
+              success: false,
+              messageEnglish: 'targetEntity and documentType are required',
+            },
+            { status: 400 },
           );
         }
 
@@ -98,12 +112,17 @@ export async function POST(request: Request) {
 
         return NextResponse.json({ success: true, data: req }, { status: 201 });
       } catch (err: any) {
-        logger.error('Failed to create document requirement', { error: err.message });
+        logger.error('Failed to create document requirement', {
+          error: err.message,
+        });
         return NextResponse.json(
-          { success: false, messageEnglish: err.message || 'Internal server error' },
-          { status: 500 }
+          {
+            success: false,
+            messageEnglish: err.message || 'Internal server error',
+          },
+          { status: 500 },
         );
       }
-    })
+    }),
   );
 }

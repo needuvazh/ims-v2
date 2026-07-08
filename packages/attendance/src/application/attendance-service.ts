@@ -31,17 +31,30 @@ import type {
 } from '../domain/repositories';
 import { z } from 'zod';
 
-const editableSessionStatuses: AttendanceSessionStatus[] = ['Draft', 'Open', 'Reopened'];
+const editableSessionStatuses: AttendanceSessionStatus[] = [
+  'Draft',
+  'Open',
+  'Reopened',
+];
 
-export type OpenAttendanceSessionInput = z.infer<typeof openAttendanceSessionSchema>;
+export type OpenAttendanceSessionInput = z.infer<
+  typeof openAttendanceSessionSchema
+>;
 export type MarkAttendanceInput = z.infer<typeof markAttendanceRecordSchema>;
 export type BulkMarkAttendanceInput = z.infer<typeof bulkMarkAttendanceSchema>;
-export type SubmitAttendanceInput = z.infer<typeof submitAttendanceSessionSchema>;
-export type ReopenAttendanceInput = z.infer<typeof reopenAttendanceSessionSchema>;
-export type CorrectionRequestInput = z.infer<typeof attendanceCorrectionRequestSchema>;
+export type SubmitAttendanceInput = z.infer<
+  typeof submitAttendanceSessionSchema
+>;
+export type ReopenAttendanceInput = z.infer<
+  typeof reopenAttendanceSessionSchema
+>;
+export type CorrectionRequestInput = z.infer<
+  typeof attendanceCorrectionRequestSchema
+>;
 
 function muscatDateOnly(value: Date | string | null | undefined): Date {
-  const source = value instanceof Date ? value : value ? new Date(value) : new Date();
+  const source =
+    value instanceof Date ? value : value ? new Date(value) : new Date();
   const formatted = new Intl.DateTimeFormat('en-CA', {
     timeZone: 'Asia/Muscat',
     year: 'numeric',
@@ -51,26 +64,53 @@ function muscatDateOnly(value: Date | string | null | undefined): Date {
   return new Date(`${formatted}T00:00:00+04:00`);
 }
 
-function isAllowedBranch(context: AttendanceActionContext, branchId: string): boolean {
-  return context.allowedBranchIds.length === 0 || context.allowedBranchIds.includes(branchId);
+function isAllowedBranch(
+  context: AttendanceActionContext,
+  branchId: string,
+): boolean {
+  return (
+    context.allowedBranchIds.length === 0 ||
+    context.allowedBranchIds.includes(branchId)
+  );
 }
 
-function assertAllowedBranch(context: AttendanceActionContext, branchId: string): void {
+function assertAllowedBranch(
+  context: AttendanceActionContext,
+  branchId: string,
+): void {
   if (!isAllowedBranch(context, branchId)) {
-    throw attendanceForbidden('ERR_ATT_SESSION_BRANCH_FORBIDDEN', 'You are not authorized to access this branch.');
+    throw attendanceForbidden(
+      'ERR_ATT_SESSION_BRANCH_FORBIDDEN',
+      'You are not authorized to access this branch.',
+    );
   }
 }
 
-function validateRecordInput(status: AttendanceRecordStatus, remarks?: string | null, lateMinutes?: number | null): void {
-  if (status === 'Late' && (!Number.isFinite(lateMinutes ?? NaN) || (lateMinutes ?? 0) <= 0)) {
-    throw attendancePrecondition('ERR_ATT_LATE_MINUTES_REQUIRED', 'Late attendance requires positive late minutes.');
+function validateRecordInput(
+  status: AttendanceRecordStatus,
+  remarks?: string | null,
+  lateMinutes?: number | null,
+): void {
+  if (
+    status === 'Late' &&
+    (!Number.isFinite(lateMinutes ?? NaN) || (lateMinutes ?? 0) <= 0)
+  ) {
+    throw attendancePrecondition(
+      'ERR_ATT_LATE_MINUTES_REQUIRED',
+      'Late attendance requires positive late minutes.',
+    );
   }
   if (status === 'Excused' && !remarks?.trim()) {
-    throw attendancePrecondition('ERR_ATT_EXCUSED_REASON_REQUIRED', 'Excused attendance requires a reason.');
+    throw attendancePrecondition(
+      'ERR_ATT_EXCUSED_REASON_REQUIRED',
+      'Excused attendance requires a reason.',
+    );
   }
 }
 
-function toJsonValue(value: Record<string, unknown> | null | undefined): Prisma.InputJsonValue | undefined {
+function toJsonValue(
+  value: Record<string, unknown> | null | undefined,
+): Prisma.InputJsonValue | undefined {
   if (value === null || value === undefined) return undefined;
   return value as Prisma.InputJsonValue;
 }
@@ -96,15 +136,15 @@ async function writeAudit(
       module: 'Attendance',
       performedBy: payload.actorId,
       performedAt: new Date(),
-        entityType: payload.entityType,
-        entityId: payload.entityId,
-        action: payload.action,
-        oldValue: toJsonValue(payload.oldValue),
-        newValue: toJsonValue(payload.newValue),
-        reason: payload.reason ?? null,
-        branchId: payload.branchId,
-        userAgent: payload.userAgent ?? null,
-        ipAddress: payload.ipAddress ?? null,
+      entityType: payload.entityType,
+      entityId: payload.entityId,
+      action: payload.action,
+      oldValue: toJsonValue(payload.oldValue),
+      newValue: toJsonValue(payload.newValue),
+      reason: payload.reason ?? null,
+      branchId: payload.branchId,
+      userAgent: payload.userAgent ?? null,
+      ipAddress: payload.ipAddress ?? null,
     },
   });
 }
@@ -119,7 +159,11 @@ export class AttendanceService {
     private readonly query: AttendanceQueryRepository,
   ) {}
 
-  async openSession(input: OpenAttendanceSessionInput, context: AttendanceActionContext, tx?: AttendanceDbClient): Promise<AttendanceSessionDto> {
+  async openSession(
+    input: OpenAttendanceSessionInput,
+    context: AttendanceActionContext,
+    tx?: AttendanceDbClient,
+  ): Promise<AttendanceSessionDto> {
     const client = tx ?? this.prisma;
     const run = async (activeClient: AttendanceDbClient) => {
       const sourceSession = await activeClient.session.findUnique({
@@ -127,12 +171,20 @@ export class AttendanceService {
         include: { batch: true },
       });
       if (!sourceSession || sourceSession.isDeleted) {
-        throw attendanceNotFound('ERR_ATT_SESSION_NOT_FOUND', 'Delivery session was not found.');
+        throw attendanceNotFound(
+          'ERR_ATT_SESSION_NOT_FOUND',
+          'Delivery session was not found.',
+        );
       }
 
       assertAllowedBranch(context, sourceSession.batch.branchId);
-      const attendanceDate = muscatDateOnly(input.attendanceDate ?? sourceSession.sessionDate);
-      const existing = await this.sessions.findBySessionId(activeClient, sourceSession.id);
+      const attendanceDate = muscatDateOnly(
+        input.attendanceDate ?? sourceSession.sessionDate,
+      );
+      const existing = await this.sessions.findBySessionId(
+        activeClient,
+        sourceSession.id,
+      );
       if (existing) {
         return existing;
       }
@@ -167,15 +219,27 @@ export class AttendanceService {
       return created;
     };
 
-    return client instanceof PrismaClient ? client.$transaction(run) : run(client);
+    return client instanceof PrismaClient
+      ? client.$transaction(run)
+      : run(client);
   }
 
-  async generateRoster(attendanceSessionId: string, context: AttendanceActionContext, tx?: AttendanceDbClient): Promise<{ created: number; attendanceSession: AttendanceSessionDto }> {
+  async generateRoster(
+    attendanceSessionId: string,
+    context: AttendanceActionContext,
+    tx?: AttendanceDbClient,
+  ): Promise<{ created: number; attendanceSession: AttendanceSessionDto }> {
     const client = tx ?? this.prisma;
     const run = async (activeClient: AttendanceDbClient) => {
-      const attendanceSession = await this.sessions.findById(activeClient, attendanceSessionId);
+      const attendanceSession = await this.sessions.findById(
+        activeClient,
+        attendanceSessionId,
+      );
       if (!attendanceSession || attendanceSession.isDeleted) {
-        throw attendanceNotFound('ERR_ATT_SESSION_NOT_FOUND', 'Attendance session was not found.');
+        throw attendanceNotFound(
+          'ERR_ATT_SESSION_NOT_FOUND',
+          'Attendance session was not found.',
+        );
       }
       assertAllowedBranch(context, attendanceSession.branchId);
 
@@ -184,7 +248,10 @@ export class AttendanceService {
         include: { batch: true },
       });
       if (!sourceSession || sourceSession.isDeleted) {
-        throw attendanceNotFound('ERR_ATT_SESSION_NOT_FOUND', 'Delivery session was not found.');
+        throw attendanceNotFound(
+          'ERR_ATT_SESSION_NOT_FOUND',
+          'Delivery session was not found.',
+        );
       }
 
       const enrollments = await activeClient.enrollment.findMany({
@@ -233,28 +300,61 @@ export class AttendanceService {
 
       return { created: createdCount, attendanceSession };
     };
-    return client instanceof PrismaClient ? client.$transaction(run) : run(client);
+    return client instanceof PrismaClient
+      ? client.$transaction(run)
+      : run(client);
   }
 
-  async saveDraft(attendanceSessionId: string, input: BulkMarkAttendanceInput, context: AttendanceActionContext, tx?: AttendanceDbClient) {
+  async saveDraft(
+    attendanceSessionId: string,
+    input: BulkMarkAttendanceInput,
+    context: AttendanceActionContext,
+    tx?: AttendanceDbClient,
+  ) {
     const client = tx ?? this.prisma;
     const run = async (activeClient: AttendanceDbClient) => {
-      const attendanceSession = await this.sessions.findById(activeClient, attendanceSessionId);
+      const attendanceSession = await this.sessions.findById(
+        activeClient,
+        attendanceSessionId,
+      );
       if (!attendanceSession || attendanceSession.isDeleted) {
-        throw attendanceNotFound('ERR_ATT_SESSION_NOT_FOUND', 'Attendance session was not found.');
+        throw attendanceNotFound(
+          'ERR_ATT_SESSION_NOT_FOUND',
+          'Attendance session was not found.',
+        );
       }
       assertAllowedBranch(context, attendanceSession.branchId);
       if (!editableSessionStatuses.includes(attendanceSession.status)) {
-        throw attendanceConflict('ERR_ATT_SESSION_LOCKED', 'Attendance session is locked or cannot be edited.');
+        throw attendanceConflict(
+          'ERR_ATT_SESSION_LOCKED',
+          'Attendance session is locked or cannot be edited.',
+        );
       }
 
-      const before = await this.records.findBySessionId(activeClient, attendanceSessionId);
+      const before = await this.records.findBySessionId(
+        activeClient,
+        attendanceSessionId,
+      );
       for (const recordInput of input.records) {
-        const existing = await this.records.findById(activeClient, recordInput.attendanceRecordId);
-        if (!existing || existing.isDeleted || existing.attendanceSessionId !== attendanceSessionId) {
-          throw attendanceNotFound('ERR_ATT_RECORD_NOT_FOUND', 'Attendance record was not found.');
+        const existing = await this.records.findById(
+          activeClient,
+          recordInput.attendanceRecordId,
+        );
+        if (
+          !existing ||
+          existing.isDeleted ||
+          existing.attendanceSessionId !== attendanceSessionId
+        ) {
+          throw attendanceNotFound(
+            'ERR_ATT_RECORD_NOT_FOUND',
+            'Attendance record was not found.',
+          );
         }
-        validateRecordInput(recordInput.status, recordInput.remarks, recordInput.lateMinutes);
+        validateRecordInput(
+          recordInput.status,
+          recordInput.remarks,
+          recordInput.lateMinutes,
+        );
         await this.records.update(activeClient, existing.id, {
           status: recordInput.status,
           remarks: recordInput.remarks ?? null,
@@ -268,7 +368,10 @@ export class AttendanceService {
       }
 
       await this.sessions.update(activeClient, attendanceSessionId, {
-        status: attendanceSession.status === 'Draft' ? 'Open' : attendanceSession.status,
+        status:
+          attendanceSession.status === 'Draft'
+            ? 'Open'
+            : attendanceSession.status,
         markedAt: new Date(),
         markedByTrainerId: context.actorId,
         updatedBy: context.actorId,
@@ -287,35 +390,68 @@ export class AttendanceService {
         ipAddress: context.ipAddress ?? null,
       });
     };
-    return client instanceof PrismaClient ? client.$transaction(run) : run(client);
+    return client instanceof PrismaClient
+      ? client.$transaction(run)
+      : run(client);
   }
 
-  async submit(attendanceSessionId: string, input: SubmitAttendanceInput, context: AttendanceActionContext, tx?: AttendanceDbClient) {
+  async submit(
+    attendanceSessionId: string,
+    input: SubmitAttendanceInput,
+    context: AttendanceActionContext,
+    tx?: AttendanceDbClient,
+  ) {
     const client = tx ?? this.prisma;
     const run = async (activeClient: AttendanceDbClient) => {
-      const attendanceSession = await this.sessions.findById(activeClient, attendanceSessionId);
-      if (!attendanceSession || attendanceSession.isDeleted) throw attendanceNotFound('ERR_ATT_SESSION_NOT_FOUND', 'Attendance session was not found.');
+      const attendanceSession = await this.sessions.findById(
+        activeClient,
+        attendanceSessionId,
+      );
+      if (!attendanceSession || attendanceSession.isDeleted)
+        throw attendanceNotFound(
+          'ERR_ATT_SESSION_NOT_FOUND',
+          'Attendance session was not found.',
+        );
       assertAllowedBranch(context, attendanceSession.branchId);
       if (!editableSessionStatuses.includes(attendanceSession.status)) {
-        throw attendanceConflict('ERR_ATT_SESSION_NOT_OPEN', 'Attendance session must be open, draft, or reopened.');
+        throw attendanceConflict(
+          'ERR_ATT_SESSION_NOT_OPEN',
+          'Attendance session must be open, draft, or reopened.',
+        );
       }
 
-      const records = await this.records.findBySessionId(activeClient, attendanceSessionId);
+      const records = await this.records.findBySessionId(
+        activeClient,
+        attendanceSessionId,
+      );
       const unmarked = records.filter((record) => record.status === 'Unmarked');
       if (unmarked.length > 0 && !input.allowUnmarked) {
-        throw attendancePrecondition('ERR_ATT_UNMARKED_RECORDS_EXIST', 'Unmarked attendance records must be resolved before submission.');
+        throw attendancePrecondition(
+          'ERR_ATT_UNMARKED_RECORDS_EXIST',
+          'Unmarked attendance records must be resolved before submission.',
+        );
       }
 
-      const updated = await this.sessions.update(activeClient, attendanceSessionId, {
-        status: 'Submitted',
-        submittedAt: new Date(),
-        markedAt: new Date(),
-        updatedBy: context.actorId,
-        version: { increment: 1 },
-      });
+      const updated = await this.sessions.update(
+        activeClient,
+        attendanceSessionId,
+        {
+          status: 'Submitted',
+          submittedAt: new Date(),
+          markedAt: new Date(),
+          updatedBy: context.actorId,
+          version: { increment: 1 },
+        },
+      );
 
-      const uniqueEnrollments = [...new Set(records.map((record) => record.enrollmentId))];
-      const summaries = await Promise.all(uniqueEnrollments.map((enrollmentId) => this.query.summaryByEnrollment(activeClient, enrollmentId)));
+      const uniqueEnrollments = [
+        ...new Set(records.map((record) => record.enrollmentId)),
+      ];
+      const summaries = await Promise.all(
+        uniqueEnrollments.map((enrollmentId) =>
+          this.query.summaryByEnrollment(activeClient, enrollmentId),
+        ),
+      );
       for (const summary of summaries) {
         if (summary.attendancePercentage < 80) {
           await this.alerts.create(activeClient, {
@@ -353,24 +489,47 @@ export class AttendanceService {
 
       return updated;
     };
-    return client instanceof PrismaClient ? client.$transaction(run) : run(client);
+    return client instanceof PrismaClient
+      ? client.$transaction(run)
+      : run(client);
   }
 
-  async lock(attendanceSessionId: string, context: AttendanceActionContext, tx?: AttendanceDbClient) {
+  async lock(
+    attendanceSessionId: string,
+    context: AttendanceActionContext,
+    tx?: AttendanceDbClient,
+  ) {
     const client = tx ?? this.prisma;
     const run = async (activeClient: AttendanceDbClient) => {
-      const attendanceSession = await this.sessions.findById(activeClient, attendanceSessionId);
-      if (!attendanceSession || attendanceSession.isDeleted) throw attendanceNotFound('ERR_ATT_SESSION_NOT_FOUND', 'Attendance session was not found.');
+      const attendanceSession = await this.sessions.findById(
+        activeClient,
+        attendanceSessionId,
+      );
+      if (!attendanceSession || attendanceSession.isDeleted)
+        throw attendanceNotFound(
+          'ERR_ATT_SESSION_NOT_FOUND',
+          'Attendance session was not found.',
+        );
       assertAllowedBranch(context, attendanceSession.branchId);
-      if (attendanceSession.status !== 'Submitted' && attendanceSession.status !== 'Reopened') {
-        throw attendancePrecondition('ERR_ATT_SESSION_NOT_OPEN', 'Only submitted or reopened attendance sessions can be locked.');
+      if (
+        attendanceSession.status !== 'Submitted' &&
+        attendanceSession.status !== 'Reopened'
+      ) {
+        throw attendancePrecondition(
+          'ERR_ATT_SESSION_NOT_OPEN',
+          'Only submitted or reopened attendance sessions can be locked.',
+        );
       }
-      const updated = await this.sessions.update(activeClient, attendanceSessionId, {
-        status: 'Locked',
-        lockedAt: new Date(),
-        updatedBy: context.actorId,
-        version: { increment: 1 },
-      });
+      const updated = await this.sessions.update(
+        activeClient,
+        attendanceSessionId,
+        {
+          status: 'Locked',
+          lockedAt: new Date(),
+          updatedBy: context.actorId,
+          version: { increment: 1 },
+        },
+      );
       await writeAudit(activeClient, {
         actorId: context.actorId,
         branchId: attendanceSession.branchId,
@@ -385,25 +544,46 @@ export class AttendanceService {
       });
       return updated;
     };
-    return client instanceof PrismaClient ? client.$transaction(run) : run(client);
+    return client instanceof PrismaClient
+      ? client.$transaction(run)
+      : run(client);
   }
 
-  async reopen(attendanceSessionId: string, input: ReopenAttendanceInput, context: AttendanceActionContext, tx?: AttendanceDbClient) {
+  async reopen(
+    attendanceSessionId: string,
+    input: ReopenAttendanceInput,
+    context: AttendanceActionContext,
+    tx?: AttendanceDbClient,
+  ) {
     const client = tx ?? this.prisma;
     const run = async (activeClient: AttendanceDbClient) => {
-      const attendanceSession = await this.sessions.findById(activeClient, attendanceSessionId);
-      if (!attendanceSession || attendanceSession.isDeleted) throw attendanceNotFound('ERR_ATT_SESSION_NOT_FOUND', 'Attendance session was not found.');
+      const attendanceSession = await this.sessions.findById(
+        activeClient,
+        attendanceSessionId,
+      );
+      if (!attendanceSession || attendanceSession.isDeleted)
+        throw attendanceNotFound(
+          'ERR_ATT_SESSION_NOT_FOUND',
+          'Attendance session was not found.',
+        );
       assertAllowedBranch(context, attendanceSession.branchId);
       if (attendanceSession.status !== 'Locked') {
-        throw attendancePrecondition('ERR_ATT_SESSION_NOT_OPEN', 'Only locked attendance sessions can be reopened.');
+        throw attendancePrecondition(
+          'ERR_ATT_SESSION_NOT_OPEN',
+          'Only locked attendance sessions can be reopened.',
+        );
       }
-      const updated = await this.sessions.update(activeClient, attendanceSessionId, {
-        status: 'Reopened',
-        reopenedAt: new Date(),
-        notes: input.reason,
-        updatedBy: context.actorId,
-        version: { increment: 1 },
-      });
+      const updated = await this.sessions.update(
+        activeClient,
+        attendanceSessionId,
+        {
+          status: 'Reopened',
+          reopenedAt: new Date(),
+          notes: input.reason,
+          updatedBy: context.actorId,
+          version: { increment: 1 },
+        },
+      );
       await writeAudit(activeClient, {
         actorId: context.actorId,
         branchId: attendanceSession.branchId,
@@ -418,22 +598,50 @@ export class AttendanceService {
       });
       return updated;
     };
-    return client instanceof PrismaClient ? client.$transaction(run) : run(client);
+    return client instanceof PrismaClient
+      ? client.$transaction(run)
+      : run(client);
   }
 
-  async requestCorrection(input: CorrectionRequestInput, context: AttendanceActionContext, tx?: AttendanceDbClient): Promise<AttendanceCorrectionDto> {
+  async requestCorrection(
+    input: CorrectionRequestInput,
+    context: AttendanceActionContext,
+    tx?: AttendanceDbClient,
+  ): Promise<AttendanceCorrectionDto> {
     const client = tx ?? this.prisma;
     const run = async (activeClient: AttendanceDbClient) => {
-      const record = await this.records.findById(activeClient, input.attendanceRecordId);
-      if (!record || record.isDeleted) throw attendanceNotFound('ERR_ATT_RECORD_NOT_FOUND', 'Attendance record was not found.');
+      const record = await this.records.findById(
+        activeClient,
+        input.attendanceRecordId,
+      );
+      if (!record || record.isDeleted)
+        throw attendanceNotFound(
+          'ERR_ATT_RECORD_NOT_FOUND',
+          'Attendance record was not found.',
+        );
       assertAllowedBranch(context, record.branchId);
-      const session = await this.sessions.findById(activeClient, record.attendanceSessionId);
-      if (!session || session.isDeleted) throw attendanceNotFound('ERR_ATT_SESSION_NOT_FOUND', 'Attendance session was not found.');
-      if (await this.corrections.findPendingByRecordId(activeClient, record.id)) {
-        throw attendanceConflict('ERR_ATT_CORRECTION_DUPLICATE_PENDING', 'A pending correction already exists for this record.');
+      const session = await this.sessions.findById(
+        activeClient,
+        record.attendanceSessionId,
+      );
+      if (!session || session.isDeleted)
+        throw attendanceNotFound(
+          'ERR_ATT_SESSION_NOT_FOUND',
+          'Attendance session was not found.',
+        );
+      if (
+        await this.corrections.findPendingByRecordId(activeClient, record.id)
+      ) {
+        throw attendanceConflict(
+          'ERR_ATT_CORRECTION_DUPLICATE_PENDING',
+          'A pending correction already exists for this record.',
+        );
       }
       if (record.status === input.newStatus) {
-        throw attendanceConflict('ERR_ATT_CORRECTION_INVALID_TRANSITION', 'Correction status must differ from the current status.');
+        throw attendanceConflict(
+          'ERR_ATT_CORRECTION_INVALID_TRANSITION',
+          'Correction status must differ from the current status.',
+        );
       }
 
       const correction = await this.corrections.create(activeClient, {
@@ -473,21 +681,44 @@ export class AttendanceService {
 
       return correction;
     };
-    return client instanceof PrismaClient ? client.$transaction(run) : run(client);
+    return client instanceof PrismaClient
+      ? client.$transaction(run)
+      : run(client);
   }
 
-  async approveCorrection(correctionId: string, context: AttendanceActionContext, tx?: AttendanceDbClient): Promise<AttendanceCorrectionDto> {
+  async approveCorrection(
+    correctionId: string,
+    context: AttendanceActionContext,
+    tx?: AttendanceDbClient,
+  ): Promise<AttendanceCorrectionDto> {
     const client = tx ?? this.prisma;
     const run = async (activeClient: AttendanceDbClient) => {
-      const correction = await this.corrections.findById(activeClient, correctionId);
-      if (!correction || correction.isDeleted) throw attendanceNotFound('ERR_ATT_CORRECTION_NOT_FOUND', 'Attendance correction was not found.');
+      const correction = await this.corrections.findById(
+        activeClient,
+        correctionId,
+      );
+      if (!correction || correction.isDeleted)
+        throw attendanceNotFound(
+          'ERR_ATT_CORRECTION_NOT_FOUND',
+          'Attendance correction was not found.',
+        );
       assertAllowedBranch(context, correction.branchId);
       if (correction.status !== 'Pending') {
-        throw attendancePrecondition('ERR_ATT_CORRECTION_INVALID_TRANSITION', 'Only pending corrections can be approved.');
+        throw attendancePrecondition(
+          'ERR_ATT_CORRECTION_INVALID_TRANSITION',
+          'Only pending corrections can be approved.',
+        );
       }
 
-      const record = await this.records.findById(activeClient, correction.attendanceRecordId);
-      if (!record || record.isDeleted) throw attendanceNotFound('ERR_ATT_RECORD_NOT_FOUND', 'Attendance record was not found.');
+      const record = await this.records.findById(
+        activeClient,
+        correction.attendanceRecordId,
+      );
+      if (!record || record.isDeleted)
+        throw attendanceNotFound(
+          'ERR_ATT_RECORD_NOT_FOUND',
+          'Attendance record was not found.',
+        );
 
       await this.records.update(activeClient, record.id, {
         status: correction.newStatus,
@@ -496,13 +727,17 @@ export class AttendanceService {
         version: { increment: 1 },
       });
 
-      const updated = await this.corrections.update(activeClient, correction.id, {
-        status: 'Approved',
-        approvedBy: context.actorId,
-        approvedAt: new Date(),
-        updatedBy: context.actorId,
-        version: { increment: 1 },
-      });
+      const updated = await this.corrections.update(
+        activeClient,
+        correction.id,
+        {
+          status: 'Approved',
+          approvedBy: context.actorId,
+          approvedAt: new Date(),
+          updatedBy: context.actorId,
+          version: { increment: 1 },
+        },
+      );
 
       await writeAudit(activeClient, {
         actorId: context.actorId,
@@ -518,27 +753,48 @@ export class AttendanceService {
       });
       return updated;
     };
-    return client instanceof PrismaClient ? client.$transaction(run) : run(client);
+    return client instanceof PrismaClient
+      ? client.$transaction(run)
+      : run(client);
   }
 
-  async rejectCorrection(correctionId: string, reason: string | null, context: AttendanceActionContext, tx?: AttendanceDbClient): Promise<AttendanceCorrectionDto> {
+  async rejectCorrection(
+    correctionId: string,
+    reason: string | null,
+    context: AttendanceActionContext,
+    tx?: AttendanceDbClient,
+  ): Promise<AttendanceCorrectionDto> {
     const client = tx ?? this.prisma;
     const run = async (activeClient: AttendanceDbClient) => {
-      const correction = await this.corrections.findById(activeClient, correctionId);
-      if (!correction || correction.isDeleted) throw attendanceNotFound('ERR_ATT_CORRECTION_NOT_FOUND', 'Attendance correction was not found.');
+      const correction = await this.corrections.findById(
+        activeClient,
+        correctionId,
+      );
+      if (!correction || correction.isDeleted)
+        throw attendanceNotFound(
+          'ERR_ATT_CORRECTION_NOT_FOUND',
+          'Attendance correction was not found.',
+        );
       assertAllowedBranch(context, correction.branchId);
       if (correction.status !== 'Pending') {
-        throw attendancePrecondition('ERR_ATT_CORRECTION_INVALID_TRANSITION', 'Only pending corrections can be rejected.');
+        throw attendancePrecondition(
+          'ERR_ATT_CORRECTION_INVALID_TRANSITION',
+          'Only pending corrections can be rejected.',
+        );
       }
 
-      const updated = await this.corrections.update(activeClient, correction.id, {
-        status: 'Rejected',
-        rejectedBy: context.actorId,
-        rejectedAt: new Date(),
-        rejectionReason: reason ?? null,
-        updatedBy: context.actorId,
-        version: { increment: 1 },
-      });
+      const updated = await this.corrections.update(
+        activeClient,
+        correction.id,
+        {
+          status: 'Rejected',
+          rejectedBy: context.actorId,
+          rejectedAt: new Date(),
+          rejectionReason: reason ?? null,
+          updatedBy: context.actorId,
+          version: { increment: 1 },
+        },
+      );
 
       await this.records.update(activeClient, correction.attendanceRecordId, {
         correctionStatus: 'Rejected',
@@ -561,24 +817,44 @@ export class AttendanceService {
 
       return updated;
     };
-    return client instanceof PrismaClient ? client.$transaction(run) : run(client);
+    return client instanceof PrismaClient
+      ? client.$transaction(run)
+      : run(client);
   }
 
-  async cancelCorrection(correctionId: string, context: AttendanceActionContext, tx?: AttendanceDbClient): Promise<AttendanceCorrectionDto> {
+  async cancelCorrection(
+    correctionId: string,
+    context: AttendanceActionContext,
+    tx?: AttendanceDbClient,
+  ): Promise<AttendanceCorrectionDto> {
     const client = tx ?? this.prisma;
     const run = async (activeClient: AttendanceDbClient) => {
-      const correction = await this.corrections.findById(activeClient, correctionId);
-      if (!correction || correction.isDeleted) throw attendanceNotFound('ERR_ATT_CORRECTION_NOT_FOUND', 'Attendance correction was not found.');
+      const correction = await this.corrections.findById(
+        activeClient,
+        correctionId,
+      );
+      if (!correction || correction.isDeleted)
+        throw attendanceNotFound(
+          'ERR_ATT_CORRECTION_NOT_FOUND',
+          'Attendance correction was not found.',
+        );
       assertAllowedBranch(context, correction.branchId);
       if (correction.status !== 'Pending') {
-        throw attendancePrecondition('ERR_ATT_CORRECTION_INVALID_TRANSITION', 'Only pending corrections can be cancelled.');
+        throw attendancePrecondition(
+          'ERR_ATT_CORRECTION_INVALID_TRANSITION',
+          'Only pending corrections can be cancelled.',
+        );
       }
 
-      const updated = await this.corrections.update(activeClient, correction.id, {
-        status: 'Cancelled',
-        updatedBy: context.actorId,
-        version: { increment: 1 },
-      });
+      const updated = await this.corrections.update(
+        activeClient,
+        correction.id,
+        {
+          status: 'Cancelled',
+          updatedBy: context.actorId,
+          version: { increment: 1 },
+        },
+      );
       await this.records.update(activeClient, correction.attendanceRecordId, {
         correctionStatus: 'Cancelled',
         updatedBy: context.actorId,
@@ -598,10 +874,16 @@ export class AttendanceService {
       });
       return updated;
     };
-    return client instanceof PrismaClient ? client.$transaction(run) : run(client);
+    return client instanceof PrismaClient
+      ? client.$transaction(run)
+      : run(client);
   }
 
-  async getEnrollmentSummary(enrollmentId: string, context: AttendanceActionContext, tx?: AttendanceDbClient): Promise<AttendanceSummaryDto> {
+  async getEnrollmentSummary(
+    enrollmentId: string,
+    context: AttendanceActionContext,
+    tx?: AttendanceDbClient,
+  ): Promise<AttendanceSummaryDto> {
     const client = tx ?? this.prisma;
     const summary = await this.query.summaryByEnrollment(client, enrollmentId);
     if (summary.branchId && context.allowedBranchIds.length > 0) {
@@ -610,10 +892,18 @@ export class AttendanceService {
     return summary;
   }
 
-  async detectLowAttendance(branchId: string, context: AttendanceActionContext, tx?: AttendanceDbClient) {
+  async detectLowAttendance(
+    branchId: string,
+    context: AttendanceActionContext,
+    tx?: AttendanceDbClient,
+  ) {
     const client = tx ?? this.prisma;
     assertAllowedBranch(context, branchId);
-    const summaries = await this.query.summaryByBranch(client, branchId, context.allowedBranchIds);
+    const summaries = await this.query.summaryByBranch(
+      client,
+      branchId,
+      context.allowedBranchIds,
+    );
     return summaries;
   }
 }

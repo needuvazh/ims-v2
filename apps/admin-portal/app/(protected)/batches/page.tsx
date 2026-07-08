@@ -22,7 +22,8 @@ export default async function BatchesPage(props: {
   const session = await assertPermission('course.catalog.view');
 
   // Resolve filters based on branch access
-  const isSuperAdmin = session.roles.includes('SUPER_ADMIN') || session.roles.includes('OWNER');
+  const isSuperAdmin =
+    session.roles.includes('SUPER_ADMIN') || session.roles.includes('OWNER');
 
   // Fetch branches the user has access to
   let branches;
@@ -47,20 +48,25 @@ export default async function BatchesPage(props: {
   if (!isSuperAdmin) {
     const allowedBranchIds = branches.map((b) => b.id);
     if (finalBranchId && !allowedBranchIds.includes(finalBranchId)) {
-      finalBranchId = session.activeBranchId && allowedBranchIds.includes(session.activeBranchId)
-        ? session.activeBranchId
-        : allowedBranchIds[0] || 'none';
+      finalBranchId =
+        session.activeBranchId &&
+        allowedBranchIds.includes(session.activeBranchId)
+          ? session.activeBranchId
+          : allowedBranchIds[0] || 'none';
     } else if (!finalBranchId) {
-      finalBranchId = session.activeBranchId && allowedBranchIds.includes(session.activeBranchId)
-        ? session.activeBranchId
-        : allowedBranchIds[0] || 'none';
+      finalBranchId =
+        session.activeBranchId &&
+        allowedBranchIds.includes(session.activeBranchId)
+          ? session.activeBranchId
+          : allowedBranchIds[0] || 'none';
     }
   } else if (!finalBranchId) {
     finalBranchId = undefined;
   }
 
   const sortBy = searchParams.sortBy || 'startDate';
-  const sortOrder = (searchParams.sortOrder as 'asc' | 'desc' | undefined) || 'desc';
+  const sortOrder =
+    (searchParams.sortOrder as 'asc' | 'desc' | undefined) || 'desc';
 
   // Fetch courses list for filters dropdown
   const courses = await prisma.course.findMany({
@@ -155,9 +161,15 @@ export default async function BatchesPage(props: {
   }
 
   const totalCount = await prisma.batch.count({ where: kpiWhere });
-  const openCount = await prisma.batch.count({ where: { ...kpiWhere, status: 'OpenForEnrollment' } });
-  const inProgressCount = await prisma.batch.count({ where: { ...kpiWhere, status: 'InProgress' } });
-  const cancelledCount = await prisma.batch.count({ where: { ...kpiWhere, status: 'Cancelled' } });
+  const openCount = await prisma.batch.count({
+    where: { ...kpiWhere, status: 'OpenForEnrollment' },
+  });
+  const inProgressCount = await prisma.batch.count({
+    where: { ...kpiWhere, status: 'InProgress' },
+  });
+  const cancelledCount = await prisma.batch.count({
+    where: { ...kpiWhere, status: 'Cancelled' },
+  });
 
   const kpis = {
     total: totalCount,
@@ -180,7 +192,9 @@ export default async function BatchesPage(props: {
         canCreate={canCreate}
         defaultSearch={searchParams.q || ''}
         defaultCourseId={searchParams.courseId || ''}
-        defaultBranchId={finalBranchId && finalBranchId !== 'none' ? finalBranchId : ''}
+        defaultBranchId={
+          finalBranchId && finalBranchId !== 'none' ? finalBranchId : ''
+        }
         defaultStatus={searchParams.status || ''}
         defaultSortBy={sortBy}
         defaultSortOrder={sortOrder}

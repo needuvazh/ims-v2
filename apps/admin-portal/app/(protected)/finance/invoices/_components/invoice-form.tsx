@@ -18,92 +18,150 @@ import {
   Alert,
 } from '@ims/shared-ui';
 
-const invoiceFormSchema = z.object({
-  invoiceType: z.enum([
-    'StudentInvoice',
-    'CorporateInvoice',
-    'AdvanceInvoice',
-    'MilestoneInvoice',
-    'FinalInvoice',
-    'RefundInvoice'
-  ]),
-  category: z.enum(['Student', 'Corporate']),
-  subCategory: z.enum(['FullPayment', 'Advance', 'PartialPayment', 'Installment']),
-  studentProfileId: z.string().nullable().optional(),
-  corporateAccountId: z.string().nullable().optional(),
-  enrollmentId: z.string().nullable().optional(),
-  branchId: z.string().uuid('Please select a branch'),
-  invoiceDate: z.string().min(1, 'Invoice date is required'),
-  dueDate: z.string().min(1, 'Due date is required'),
-  currency: z.string().length(3),
-  taxRate: z.coerce.number().min(0, 'VAT rate must be positive').max(100, 'VAT rate cannot exceed 100'),
-  lineItems: z.array(
-    z.object({
-      enrollmentId: z.string().uuid().nullable().optional(),
-      courseId: z.string().uuid().nullable().optional(),
-      sourceBranchId: z.string().uuid(),
-      descriptionEnglish: z.string().min(1, 'Description is required'),
-      quantity: z.coerce.number().positive('Quantity must be greater than 0'),
-      unitPrice: z.coerce.number().nonnegative('Price must be positive'),
-      isDiscount: z.boolean().optional()
-    })
-  ).min(1, 'At least one line item is required'),
-  numberOfInstallments: z.coerce.number().int().positive().nullable().optional(),
-  installments: z.array(
-    z.object({
-      dueDate: z.string().min(1, 'Installment date is required'),
-      amount: z.coerce.number().positive('Installment amount must be greater than 0')
-    })
-  ).nullable().optional()
-}).refine((data) => {
-  if (data.category === 'Student') {
-    return !!data.studentProfileId && data.studentProfileId.trim() !== '';
-  }
-  return true;
-}, {
-  message: 'Student is required for Student Invoices',
-  path: ['studentProfileId']
-}).refine((data) => {
-  if (data.category === 'Corporate') {
-    return !!data.corporateAccountId && data.corporateAccountId.trim() !== '';
-  }
-  return true;
-}, {
-  message: 'Corporate Account is required for Corporate Invoices',
-  path: ['corporateAccountId']
-}).refine((data) => {
-  if (data.subCategory === 'Installment') {
-    return !!data.numberOfInstallments && data.numberOfInstallments >= 1;
-  }
-  return true;
-}, {
-  message: 'Number of installments must be at least 1',
-  path: ['numberOfInstallments']
-}).refine((data) => {
-  if (data.subCategory === 'Installment') {
-    return !!data.installments && data.installments.length === data.numberOfInstallments;
-  }
-  return true;
-}, {
-  message: 'Number of installment records must match number of installments',
-  path: ['numberOfInstallments']
-}).refine((data) => {
-  if (data.subCategory === 'Installment' && data.installments) {
-    const subtotal = data.lineItems.reduce((sum, item) => sum + (item.isDiscount ? 0 : Number(item.unitPrice)), 0);
-    const totalDiscount = data.lineItems.reduce((sum, item) => sum + (item.isDiscount ? Number(item.unitPrice) : 0), 0);
-    const commonTaxRate = data.taxRate / 100;
-    const taxable = Math.max(0, subtotal - totalDiscount);
-    const totalTax = taxable * commonTaxRate;
-    const totalAmt = taxable + totalTax;
+const invoiceFormSchema = z
+  .object({
+    invoiceType: z.enum([
+      'StudentInvoice',
+      'CorporateInvoice',
+      'AdvanceInvoice',
+      'MilestoneInvoice',
+      'FinalInvoice',
+      'RefundInvoice',
+    ]),
+    category: z.enum(['Student', 'Corporate']),
+    subCategory: z.enum([
+      'FullPayment',
+      'Advance',
+      'PartialPayment',
+      'Installment',
+    ]),
+    studentProfileId: z.string().nullable().optional(),
+    corporateAccountId: z.string().nullable().optional(),
+    enrollmentId: z.string().nullable().optional(),
+    branchId: z.string().uuid('Please select a branch'),
+    invoiceDate: z.string().min(1, 'Invoice date is required'),
+    dueDate: z.string().min(1, 'Due date is required'),
+    currency: z.string().length(3),
+    taxRate: z.coerce
+      .number()
+      .min(0, 'VAT rate must be positive')
+      .max(100, 'VAT rate cannot exceed 100'),
+    lineItems: z
+      .array(
+        z.object({
+          enrollmentId: z.string().uuid().nullable().optional(),
+          courseId: z.string().uuid().nullable().optional(),
+          sourceBranchId: z.string().uuid(),
+          descriptionEnglish: z.string().min(1, 'Description is required'),
+          quantity: z.coerce
+            .number()
+            .positive('Quantity must be greater than 0'),
+          unitPrice: z.coerce.number().nonnegative('Price must be positive'),
+          isDiscount: z.boolean().optional(),
+        }),
+      )
+      .min(1, 'At least one line item is required'),
+    numberOfInstallments: z.coerce
+      .number()
+      .int()
+      .positive()
+      .nullable()
+      .optional(),
+    installments: z
+      .array(
+        z.object({
+          dueDate: z.string().min(1, 'Installment date is required'),
+          amount: z.coerce
+            .number()
+            .positive('Installment amount must be greater than 0'),
+        }),
+      )
+      .nullable()
+      .optional(),
+  })
+  .refine(
+    (data) => {
+      if (data.category === 'Student') {
+        return !!data.studentProfileId && data.studentProfileId.trim() !== '';
+      }
+      return true;
+    },
+    {
+      message: 'Student is required for Student Invoices',
+      path: ['studentProfileId'],
+    },
+  )
+  .refine(
+    (data) => {
+      if (data.category === 'Corporate') {
+        return (
+          !!data.corporateAccountId && data.corporateAccountId.trim() !== ''
+        );
+      }
+      return true;
+    },
+    {
+      message: 'Corporate Account is required for Corporate Invoices',
+      path: ['corporateAccountId'],
+    },
+  )
+  .refine(
+    (data) => {
+      if (data.subCategory === 'Installment') {
+        return !!data.numberOfInstallments && data.numberOfInstallments >= 1;
+      }
+      return true;
+    },
+    {
+      message: 'Number of installments must be at least 1',
+      path: ['numberOfInstallments'],
+    },
+  )
+  .refine(
+    (data) => {
+      if (data.subCategory === 'Installment') {
+        return (
+          !!data.installments &&
+          data.installments.length === data.numberOfInstallments
+        );
+      }
+      return true;
+    },
+    {
+      message:
+        'Number of installment records must match number of installments',
+      path: ['numberOfInstallments'],
+    },
+  )
+  .refine(
+    (data) => {
+      if (data.subCategory === 'Installment' && data.installments) {
+        const subtotal = data.lineItems.reduce(
+          (sum, item) => sum + (item.isDiscount ? 0 : Number(item.unitPrice)),
+          0,
+        );
+        const totalDiscount = data.lineItems.reduce(
+          (sum, item) => sum + (item.isDiscount ? Number(item.unitPrice) : 0),
+          0,
+        );
+        const commonTaxRate = data.taxRate / 100;
+        const taxable = Math.max(0, subtotal - totalDiscount);
+        const totalTax = taxable * commonTaxRate;
+        const totalAmt = taxable + totalTax;
 
-    const installmentsSum = data.installments.reduce((sum, inst) => sum + Number(inst.amount), 0);
-    return Math.abs(totalAmt - installmentsSum) < 0.005;
-  }
-  return true;
-}, {
-  message: 'Sum of installments must equal the total invoice amount',
-  path: ['numberOfInstallments']
-});
+        const installmentsSum = data.installments.reduce(
+          (sum, inst) => sum + Number(inst.amount),
+          0,
+        );
+        return Math.abs(totalAmt - installmentsSum) < 0.005;
+      }
+      return true;
+    },
+    {
+      message: 'Sum of installments must equal the total invoice amount',
+      path: ['numberOfInstallments'],
+    },
+  );
 
 export type InvoiceFormData = z.infer<typeof invoiceFormSchema>;
 
@@ -149,7 +207,7 @@ export function InvoiceForm({
     handleSubmit,
     setValue,
     watch,
-    formState: { errors, isSubmitting }
+    formState: { errors, isSubmitting },
   } = useForm<InvoiceFormData>({
     resolver: zodResolver(invoiceFormSchema),
     defaultValues: {
@@ -174,21 +232,22 @@ export function InvoiceForm({
           descriptionEnglish: '',
           quantity: 1,
           unitPrice: 0,
-          isDiscount: false
-        }
-      ]
-    }
+          isDiscount: false,
+        },
+      ],
+    },
   });
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'lineItems'
+    name: 'lineItems',
   });
 
-  const { fields: installmentFields, replace: replaceInstallments } = useFieldArray({
-    control,
-    name: 'installments'
-  });
+  const { fields: installmentFields, replace: replaceInstallments } =
+    useFieldArray({
+      control,
+      name: 'installments',
+    });
 
   const watchInvoiceType = watch('invoiceType');
   const watchStudentId = watch('studentProfileId');
@@ -217,7 +276,7 @@ export function InvoiceForm({
 
   // Filter enrollments based on selected student
   const filteredEnrollments = enrollments.filter(
-    (e) => e.studentProfileId === watchStudentId
+    (e) => e.studentProfileId === watchStudentId,
   );
 
   // Sync line item source branch id when main branch changes
@@ -236,14 +295,14 @@ export function InvoiceForm({
     if (item.isDiscount) return sum;
     const q = Number(item.quantity) || 1;
     const p = Number(item.unitPrice) || 0;
-    return sum + (q * p);
+    return sum + q * p;
   }, 0);
 
   const totalDiscount = watchLineItems.reduce((sum, item) => {
     if (!item.isDiscount) return sum;
     const q = Number(item.quantity) || 1;
     const p = Number(item.unitPrice) || 0;
-    return sum + (q * p);
+    return sum + q * p;
   }, 0);
 
   const commonTaxRate = (Number(watchTaxRate) || 0) / 100;
@@ -258,7 +317,7 @@ export function InvoiceForm({
 
     // Equal split of totalAmount
     const baseAmt = Math.floor((totalAmount / num) * 1000) / 1000;
-    const remainder = Number((totalAmount - (baseAmt * num)).toFixed(3));
+    const remainder = Number((totalAmount - baseAmt * num).toFixed(3));
 
     const newInstallments = [];
     const baseDate = new Date(watchInvoiceDate || new Date());
@@ -271,7 +330,7 @@ export function InvoiceForm({
 
       newInstallments.push({
         dueDate: dueDate.toISOString().split('T')[0],
-        amount: Number(amt.toFixed(3))
+        amount: Number(amt.toFixed(3)),
       });
     }
 
@@ -285,7 +344,10 @@ export function InvoiceForm({
       const resolvedPrice = Number(enrollment.resolvedPrice);
       const resolvedDiscount = Number(enrollment.resolvedDiscount);
 
-      setValue('lineItems.0.descriptionEnglish', `Course Fee: ${enrollment.course?.nameEnglish || 'Course'} (${enrollment.enrollmentNumber})`);
+      setValue(
+        'lineItems.0.descriptionEnglish',
+        `Course Fee: ${enrollment.course?.nameEnglish || 'Course'} (${enrollment.enrollmentNumber})`,
+      );
       setValue('lineItems.0.unitPrice', resolvedPrice);
       setValue('lineItems.0.isDiscount', false);
       setValue('lineItems.0.quantity', 1);
@@ -307,7 +369,7 @@ export function InvoiceForm({
           descriptionEnglish: `Discount: Scholarship/Promo (${enrollment.enrollmentNumber})`,
           quantity: 1,
           unitPrice: resolvedDiscount,
-          isDiscount: true
+          isDiscount: true,
         });
       }
     }
@@ -321,21 +383,29 @@ export function InvoiceForm({
       return;
     }
 
-    const customerType = watchCategory === 'Corporate' ? 'Corporate' : 'Individual';
+    const customerType =
+      watchCategory === 'Corporate' ? 'Corporate' : 'Individual';
 
     try {
       const response = await fetch(
-        `/api/v1/courses/${courseId}/pricing/resolve?customerType=${customerType}&branchId=${watchBranchId}`
+        `/api/v1/courses/${courseId}/pricing/resolve?customerType=${customerType}&branchId=${watchBranchId}`,
       );
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.messageEnglish || 'Failed to resolve pricing for the selected course.');
+        throw new Error(
+          data.messageEnglish ||
+            'Failed to resolve pricing for the selected course.',
+        );
       }
 
-      const courseName = courses.find((c) => c.id === courseId)?.name.split(' (')[0] || 'Course';
+      const courseName =
+        courses.find((c) => c.id === courseId)?.name.split(' (')[0] || 'Course';
 
-      setValue('lineItems.0.descriptionEnglish', `${watchCategory === 'Corporate' ? 'Corporate Training' : 'Course Fee'}: ${courseName}`);
+      setValue(
+        'lineItems.0.descriptionEnglish',
+        `${watchCategory === 'Corporate' ? 'Corporate Training' : 'Course Fee'}: ${courseName}`,
+      );
       setValue('lineItems.0.unitPrice', Number(data.data.basePrice));
       setValue('lineItems.0.isDiscount', false);
       setValue('lineItems.0.quantity', 1);
@@ -343,25 +413,36 @@ export function InvoiceForm({
       setValue('lineItems.0.enrollmentId', null);
       setValue('enrollmentId', '');
 
-      toast.success(`Pricing resolved: ${Number(data.data.basePrice).toFixed(3)} OMR`);
+      toast.success(
+        `Pricing resolved: ${Number(data.data.basePrice).toFixed(3)} OMR`,
+      );
     } catch (err: any) {
       console.error(err);
-      toast.error(err.message || 'Could not resolve pricing for this course/branch combination.');
+      toast.error(
+        err.message ||
+          'Could not resolve pricing for this course/branch combination.',
+      );
     }
   };
 
   const onSubmit = async (data: InvoiceFormData) => {
     setErrorState(null);
 
-    const nonDiscountSubtotal = data.lineItems.filter(item => !item.isDiscount).reduce((sum, item) => sum + Number(item.unitPrice), 0);
-    const totalDiscount = data.lineItems.filter(item => item.isDiscount).reduce((sum, item) => sum + Number(item.unitPrice), 0);
+    const nonDiscountSubtotal = data.lineItems
+      .filter((item) => !item.isDiscount)
+      .reduce((sum, item) => sum + Number(item.unitPrice), 0);
+    const totalDiscount = data.lineItems
+      .filter((item) => item.isDiscount)
+      .reduce((sum, item) => sum + Number(item.unitPrice), 0);
 
     if (totalDiscount > nonDiscountSubtotal) {
-      setErrorState('Total discount amount cannot exceed the subtotal of all items.');
+      setErrorState(
+        'Total discount amount cannot exceed the subtotal of all items.',
+      );
       return;
     }
 
-    const nonDiscountItems = data.lineItems.filter(item => !item.isDiscount);
+    const nonDiscountItems = data.lineItems.filter((item) => !item.isDiscount);
     let remainingDiscount = totalDiscount;
 
     const mappedLineItems = nonDiscountItems.map((item) => {
@@ -377,30 +458,45 @@ export function InvoiceForm({
         quantity: Number(item.quantity),
         unitPrice: itemPrice,
         discountAmount: Number(itemDiscount.toFixed(3)),
-        taxRate: Number(data.taxRate) / 100
+        taxRate: Number(data.taxRate) / 100,
       };
     });
 
     const payload = {
       ...data,
-      studentProfileId: data.category === 'Student' && data.studentProfileId !== '' ? data.studentProfileId : null,
-      corporateAccountId: data.category === 'Corporate' && data.corporateAccountId !== '' ? data.corporateAccountId : null,
-      enrollmentId: data.category === 'Student' && data.enrollmentId !== '' ? data.enrollmentId : null,
+      studentProfileId:
+        data.category === 'Student' && data.studentProfileId !== ''
+          ? data.studentProfileId
+          : null,
+      corporateAccountId:
+        data.category === 'Corporate' && data.corporateAccountId !== ''
+          ? data.corporateAccountId
+          : null,
+      enrollmentId:
+        data.category === 'Student' && data.enrollmentId !== ''
+          ? data.enrollmentId
+          : null,
       invoiceDate: new Date(data.invoiceDate),
       dueDate: new Date(data.dueDate),
       lineItems: mappedLineItems,
-      numberOfInstallments: data.subCategory === 'Installment' ? Number(data.numberOfInstallments) : null,
-      installments: data.subCategory === 'Installment' && data.installments
-        ? data.installments.map((inst) => ({
-          dueDate: new Date(inst.dueDate),
-          amount: Number(inst.amount)
-        }))
-        : null
+      numberOfInstallments:
+        data.subCategory === 'Installment'
+          ? Number(data.numberOfInstallments)
+          : null,
+      installments:
+        data.subCategory === 'Installment' && data.installments
+          ? data.installments.map((inst) => ({
+              dueDate: new Date(inst.dueDate),
+              amount: Number(inst.amount),
+            }))
+          : null,
     };
 
     const res = await onSubmitAction(payload);
     if (res && res.success) {
-      toast.success(`Invoice manual creation success: ${res.data.invoiceNumber}`);
+      toast.success(
+        `Invoice manual creation success: ${res.data.invoiceNumber}`,
+      );
       router.push('/finance/invoices');
     } else {
       setErrorState(res?.error || 'Failed to create invoice');
@@ -409,7 +505,10 @@ export function InvoiceForm({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-4xl mx-auto pb-12">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-6 max-w-4xl mx-auto pb-12"
+    >
       {errorState && (
         <Alert variant="error" title="Submission Error">
           {errorState}
@@ -440,13 +539,15 @@ export function InvoiceForm({
                     }}
                     options={[
                       { value: 'Student', label: 'Student (B2C)' },
-                      { value: 'Corporate', label: 'Corporate (B2B)' }
+                      { value: 'Corporate', label: 'Corporate (B2B)' },
                     ]}
                   />
                 )}
               />
             </FormControl>
-            {errors.category && <FormError>{errors.category.message}</FormError>}
+            {errors.category && (
+              <FormError>{errors.category.message}</FormError>
+            )}
           </FormField>
 
           <FormField>
@@ -463,15 +564,16 @@ export function InvoiceForm({
                       { value: 'FullPayment', label: 'Full Payment' },
                       { value: 'Advance', label: 'Advance' },
                       { value: 'PartialPayment', label: 'Partial Payment' },
-                      { value: 'Installment', label: 'Installment' }
+                      { value: 'Installment', label: 'Installment' },
                     ]}
                   />
                 )}
               />
             </FormControl>
-            {errors.subCategory && <FormError>{errors.subCategory.message}</FormError>}
+            {errors.subCategory && (
+              <FormError>{errors.subCategory.message}</FormError>
+            )}
           </FormField>
-
 
           <FormField>
             <FormLabel>Branch Location</FormLabel>
@@ -484,12 +586,17 @@ export function InvoiceForm({
                     placeholder="Select branch"
                     value={field.value}
                     onChange={(e) => field.onChange(e.target.value)}
-                    options={branches.map((b) => ({ value: b.id, label: b.name }))}
+                    options={branches.map((b) => ({
+                      value: b.id,
+                      label: b.name,
+                    }))}
                   />
                 )}
               />
             </FormControl>
-            {errors.branchId && <FormError>{errors.branchId.message}</FormError>}
+            {errors.branchId && (
+              <FormError>{errors.branchId.message}</FormError>
+            )}
           </FormField>
 
           {watchInvoiceType === 'StudentInvoice' && (
@@ -508,12 +615,17 @@ export function InvoiceForm({
                           field.onChange(e.target.value);
                           setValue('enrollmentId', '');
                         }}
-                        options={students.map((s) => ({ value: s.id, label: s.name }))}
+                        options={students.map((s) => ({
+                          value: s.id,
+                          label: s.name,
+                        }))}
                       />
                     )}
                   />
                 </FormControl>
-                {errors.studentProfileId && <FormError>{errors.studentProfileId.message}</FormError>}
+                {errors.studentProfileId && (
+                  <FormError>{errors.studentProfileId.message}</FormError>
+                )}
               </FormField>
 
               {watchStudentId && (
@@ -537,7 +649,7 @@ export function InvoiceForm({
                             }}
                             options={filteredEnrollments.map((e) => ({
                               value: e.id,
-                              label: `${e.course?.nameEnglish || 'Course'} (${e.enrollmentNumber})`
+                              label: `${e.course?.nameEnglish || 'Course'} (${e.enrollmentNumber})`,
                             }))}
                           />
                         )}
@@ -556,7 +668,10 @@ export function InvoiceForm({
                             setSelectedCourseId(e.target.value);
                             handleCourseSelect(e.target.value);
                           }}
-                          options={courses.map((c) => ({ value: c.id, label: c.name }))}
+                          options={courses.map((c) => ({
+                            value: c.id,
+                            label: c.name,
+                          }))}
                         />
                       </FormControl>
                     </FormField>
@@ -579,12 +694,17 @@ export function InvoiceForm({
                         placeholder="-- Choose Corporate Payer --"
                         value={field.value || ''}
                         onChange={(e) => field.onChange(e.target.value)}
-                        options={corporateAccounts.map((c) => ({ value: c.id, label: c.name }))}
+                        options={corporateAccounts.map((c) => ({
+                          value: c.id,
+                          label: c.name,
+                        }))}
                       />
                     )}
                   />
                 </FormControl>
-                {errors.corporateAccountId && <FormError>{errors.corporateAccountId.message}</FormError>}
+                {errors.corporateAccountId && (
+                  <FormError>{errors.corporateAccountId.message}</FormError>
+                )}
               </FormField>
 
               {watch('corporateAccountId') && (
@@ -598,7 +718,10 @@ export function InvoiceForm({
                         setSelectedCourseId(e.target.value);
                         handleCourseSelect(e.target.value);
                       }}
-                      options={courses.map((c) => ({ value: c.id, label: c.name }))}
+                      options={courses.map((c) => ({
+                        value: c.id,
+                        label: c.name,
+                      }))}
                     />
                   </FormControl>
                 </FormField>
@@ -610,15 +733,22 @@ export function InvoiceForm({
         {/* Date and Currency Card */}
         <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
           <h4 className="font-bold text-slate-800 text-sm border-b pb-2 flex items-center gap-2">
-            <Calculator className="h-4 w-4 text-indigo-500" /> Scheduling & Currency
+            <Calculator className="h-4 w-4 text-indigo-500" /> Scheduling &
+            Currency
           </h4>
 
           <FormField>
             <FormLabel>Invoice Date</FormLabel>
             <FormControl>
-              <Input type="date" {...register('invoiceDate')} className="w-full" />
+              <Input
+                type="date"
+                {...register('invoiceDate')}
+                className="w-full"
+              />
             </FormControl>
-            {errors.invoiceDate && <FormError>{errors.invoiceDate.message}</FormError>}
+            {errors.invoiceDate && (
+              <FormError>{errors.invoiceDate.message}</FormError>
+            )}
           </FormField>
 
           <FormField>
@@ -632,19 +762,27 @@ export function InvoiceForm({
           <FormField>
             <FormLabel>Currency</FormLabel>
             <FormControl>
-              <Input type="text" {...register('currency')} disabled className="w-full bg-slate-50 font-bold" />
+              <Input
+                type="text"
+                {...register('currency')}
+                disabled
+                className="w-full bg-slate-50 font-bold"
+              />
             </FormControl>
           </FormField>
 
           <FormField>
             <FormLabel>VAT Rate (%)</FormLabel>
             <FormControl>
-              <Input type="number" step="0.1" {...register('taxRate')} className="w-full" />
+              <Input
+                type="number"
+                step="0.1"
+                {...register('taxRate')}
+                className="w-full"
+              />
             </FormControl>
             {errors.taxRate && <FormError>{errors.taxRate.message}</FormError>}
           </FormField>
-
-
         </div>
       </div>
 
@@ -666,7 +804,7 @@ export function InvoiceForm({
                 descriptionEnglish: '',
                 quantity: 1,
                 unitPrice: 0,
-                isDiscount: false
+                isDiscount: false,
               })
             }
             className="gap-1"
@@ -684,10 +822,17 @@ export function InvoiceForm({
         </div>
 
         {fields.map((field, index) => {
-          const isAutoFetchedCourse = index === 0 && !!(watch('lineItems.0.courseId') || watch('lineItems.0.enrollmentId'));
+          const isAutoFetchedCourse =
+            index === 0 &&
+            !!(
+              watch('lineItems.0.courseId') || watch('lineItems.0.enrollmentId')
+            );
 
           return (
-            <div key={field.id} className="grid gap-4 md:grid-cols-12 items-center border-b border-slate-100 pb-4 last:border-0 last:pb-0">
+            <div
+              key={field.id}
+              className="grid gap-4 md:grid-cols-12 items-center border-b border-slate-100 pb-4 last:border-0 last:pb-0"
+            >
               <input
                 type="hidden"
                 {...register(`lineItems.${index}.quantity` as const)}
@@ -700,13 +845,17 @@ export function InvoiceForm({
                     <Input
                       type="text"
                       placeholder="e.g. course registration fees"
-                      {...register(`lineItems.${index}.descriptionEnglish` as const)}
+                      {...register(
+                        `lineItems.${index}.descriptionEnglish` as const,
+                      )}
                       readOnly={isAutoFetchedCourse}
                       className={`w-full ${isAutoFetchedCourse ? 'bg-slate-50 border-dashed cursor-not-allowed font-medium text-slate-600' : ''}`}
                     />
                   </FormControl>
                   {errors.lineItems?.[index]?.descriptionEnglish && (
-                    <FormError>{errors.lineItems[index].descriptionEnglish.message}</FormError>
+                    <FormError>
+                      {errors.lineItems[index].descriptionEnglish.message}
+                    </FormError>
                   )}
                 </FormField>
               </div>
@@ -724,13 +873,17 @@ export function InvoiceForm({
                     />
                   </FormControl>
                   {errors.lineItems?.[index]?.unitPrice && (
-                    <FormError>{errors.lineItems[index].unitPrice.message}</FormError>
+                    <FormError>
+                      {errors.lineItems[index].unitPrice.message}
+                    </FormError>
                   )}
                 </FormField>
               </div>
 
               <div className="md:col-span-2 flex flex-col items-center justify-center">
-                <span className="md:hidden text-xs font-semibold text-slate-500 mb-1">Is Discount?</span>
+                <span className="md:hidden text-xs font-semibold text-slate-500 mb-1">
+                  Is Discount?
+                </span>
                 <input
                   type="checkbox"
                   disabled={isAutoFetchedCourse}
@@ -762,7 +915,8 @@ export function InvoiceForm({
         <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
           <div className="flex justify-between items-center border-b pb-2">
             <h4 className="font-bold text-slate-800 text-sm flex items-center gap-2">
-              <Calculator className="h-4 w-4 text-indigo-500" /> Installment Schedule
+              <Calculator className="h-4 w-4 text-indigo-500" /> Installment
+              Schedule
             </h4>
             <Button
               type="button"
@@ -793,7 +947,10 @@ export function InvoiceForm({
           </div>
 
           {installmentFields.map((field, idx) => (
-            <div key={field.id} className="grid gap-4 md:grid-cols-12 items-end border-b border-slate-50 pb-3 last:border-0 last:pb-0">
+            <div
+              key={field.id}
+              className="grid gap-4 md:grid-cols-12 items-end border-b border-slate-50 pb-3 last:border-0 last:pb-0"
+            >
               <div className="md:col-span-2 text-sm font-semibold text-slate-500 pb-2">
                 Installment #{idx + 1}
               </div>
@@ -833,7 +990,11 @@ export function InvoiceForm({
       {/* Calculations Summary Card */}
       <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="text-slate-500 text-xs max-w-sm">
-          Dynamic VAT tax is resolved automatically per item as: <span className="font-semibold text-slate-700">((Qty * Price) - Discount) * Tax Rate</span>. Ensure values are accurate.
+          Dynamic VAT tax is resolved automatically per item as:{' '}
+          <span className="font-semibold text-slate-700">
+            ((Qty * Price) - Discount) * Tax Rate
+          </span>
+          . Ensure values are accurate.
         </div>
 
         <div className="w-full md:w-80 space-y-2 border-t md:border-t-0 border-slate-200 pt-4 md:pt-0">
@@ -843,15 +1004,21 @@ export function InvoiceForm({
           </div>
           <div className="flex justify-between text-sm text-slate-600">
             <span>Total Discounts:</span>
-            <span className="font-mono text-rose-600">-{totalDiscount.toFixed(3)} OMR</span>
+            <span className="font-mono text-rose-600">
+              -{totalDiscount.toFixed(3)} OMR
+            </span>
           </div>
           <div className="flex justify-between text-sm text-slate-600">
             <span>VAT Tax (5%):</span>
-            <span className="font-mono text-slate-700">+{totalTax.toFixed(3)} OMR</span>
+            <span className="font-mono text-slate-700">
+              +{totalTax.toFixed(3)} OMR
+            </span>
           </div>
           <div className="flex justify-between border-t border-slate-300 pt-2 font-bold text-lg text-slate-900">
             <span>Total Amount:</span>
-            <span className="font-mono text-indigo-600">{totalAmount.toFixed(3)} OMR</span>
+            <span className="font-mono text-indigo-600">
+              {totalAmount.toFixed(3)} OMR
+            </span>
           </div>
         </div>
       </div>
@@ -866,7 +1033,11 @@ export function InvoiceForm({
         >
           Cancel
         </Button>
-        <Button type="submit" disabled={isSubmitting} className="min-w-32 bg-indigo-600 hover:bg-indigo-700 text-white shadow-md">
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="min-w-32 bg-indigo-600 hover:bg-indigo-700 text-white shadow-md"
+        >
           {isSubmitting ? 'Generating...' : 'Generate Invoice'}
         </Button>
       </div>

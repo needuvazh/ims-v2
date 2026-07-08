@@ -12,7 +12,7 @@ const config: Config = {
       colors: {
         // Primary: Indigo
         brand: {
-          50:  '#e0e7ff',
+          50: '#e0e7ff',
           100: '#c7d2fe',
           200: '#a5b4fc',
           300: '#818cf8',
@@ -31,7 +31,7 @@ const config: Config = {
           'on-container': '#c7d2fe',
           fixed: '#e0e7ff',
           'fixed-dim': '#a5b4fc',
-          50:  '#e0e7ff',
+          50: '#e0e7ff',
           100: '#c7d2fe',
           200: '#a5b4fc',
           300: '#818cf8',
@@ -51,7 +51,7 @@ const config: Config = {
           'on-container': '#5c2400',
           fixed: '#ffdbca',
           'fixed-dim': '#ffb690',
-          50:  '#fff4ec',
+          50: '#fff4ec',
           100: '#ffdbca',
           200: '#ffb690',
           300: '#ff8f52',
@@ -65,7 +65,7 @@ const config: Config = {
         },
         // Accent: Heritage Brass / Tertiary
         accent: {
-          50:  '#ffdcc5',
+          50: '#ffdcc5',
           100: '#ffb782',
           200: '#e99c62',
           300: '#c07a3a',
@@ -101,7 +101,7 @@ const config: Config = {
         },
         // Neutral tones
         neutral: {
-          50:  '#f5f3ef',
+          50: '#f5f3ef',
           100: '#efeeea',
           200: '#e4e2de',
           300: '#c1c7ce',
@@ -114,7 +114,7 @@ const config: Config = {
           950: '#060706',
         },
         muted: {
-          50:  '#f5f3ef',
+          50: '#f5f3ef',
           100: '#efeeea',
           200: '#e4e2de',
           300: '#c1c7ce',
@@ -136,7 +136,7 @@ const config: Config = {
         },
         // Semantic colors
         success: {
-          50:  '#f0fdf4',
+          50: '#f0fdf4',
           100: '#dcfce7',
           200: '#bbf7d0',
           300: '#86efac',
@@ -149,7 +149,7 @@ const config: Config = {
           950: '#052e16',
         },
         warning: {
-          50:  '#fffbeb',
+          50: '#fffbeb',
           100: '#fef3c7',
           200: '#fde68a',
           300: '#fcd34d',
@@ -162,7 +162,7 @@ const config: Config = {
           950: '#451a03',
         },
         error: {
-          50:  '#fef2f2',
+          50: '#fef2f2',
           100: '#ffdad6',
           200: '#fecaca',
           300: '#fca5a5',
@@ -175,7 +175,7 @@ const config: Config = {
           950: '#450a0a',
         },
         info: {
-          50:  '#eef7fb',
+          50: '#eef7fb',
           100: '#d7ecf4',
           200: '#b4d9e8',
           300: '#86bcd5',
@@ -189,48 +189,48 @@ const config: Config = {
         },
       },
       fontFamily: {
-        body:    ['var(--font-body)',    'Inter',        'system-ui', 'sans-serif'],
-        display: ['var(--font-display)', 'Sora',         'system-ui', 'sans-serif'],
-        mono:    ['var(--font-mono)',    'IBM Plex Mono','monospace'],
+        body: ['var(--font-body)', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'Sora', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'IBM Plex Mono', 'monospace'],
       },
       fontSize: {
-        'page-title':    'var(--ims-font-page-title)',
+        'page-title': 'var(--ims-font-page-title)',
         'section-title': 'var(--ims-font-section-title)',
-        'card-value':    'var(--ims-font-card-value)',
-        'hero-title':    'var(--ims-font-hero-title)',
+        'card-value': 'var(--ims-font-card-value)',
+        'hero-title': 'var(--ims-font-hero-title)',
       },
       spacing: {
-        'page-px':      'var(--ims-page-px)',
-        'section-gap':  'var(--ims-section-gap)',
-        'card-p':       'var(--ims-card-p)',
-        'hero-py':      'var(--ims-hero-py)',
-        'header-h':     'var(--ims-header-h)',
-        'sidebar-w':    'var(--ims-sidebar-w)',
-        'nav-py':       'var(--ims-nav-py)',
+        'page-px': 'var(--ims-page-px)',
+        'section-gap': 'var(--ims-section-gap)',
+        'card-p': 'var(--ims-card-p)',
+        'hero-py': 'var(--ims-hero-py)',
+        'header-h': 'var(--ims-header-h)',
+        'sidebar-w': 'var(--ims-sidebar-w)',
+        'nav-py': 'var(--ims-nav-py)',
       },
       borderRadius: {
-        sm:      '0.125rem',
+        sm: '0.125rem',
         DEFAULT: '0.25rem',
-        md:      '0.375rem',
-        lg:      '0.5rem',
-        xl:      '0.75rem',
-        '2xl':   '1rem',
-        full:    '9999px',
+        md: '0.375rem',
+        lg: '0.5rem',
+        xl: '0.75rem',
+        '2xl': '1rem',
+        full: '9999px',
       },
       boxShadow: {
         // Ambient navy glow for cards
-        soft:   '0 18px 45px rgba(0, 46, 71, 0.08)',
-        card:   '0 10px 30px rgba(0, 46, 71, 0.08)',
+        soft: '0 18px 45px rgba(0, 46, 71, 0.08)',
+        card: '0 10px 30px rgba(0, 46, 71, 0.08)',
         // Orange glow for CTAs
-        cta:    '0 8px 24px rgba(249, 115, 22, 0.20)',
-        'cta-lg':'0 16px 40px rgba(249, 115, 22, 0.28)',
+        cta: '0 8px 24px rgba(249, 115, 22, 0.20)',
+        'cta-lg': '0 16px 40px rgba(249, 115, 22, 0.28)',
         // Focus ring
-        focus:  '0 0 0 4px rgba(157, 67, 0, 0.22)',
+        focus: '0 0 0 4px rgba(157, 67, 0, 0.22)',
         // Active nav item glow
         'nav-active': '0 4px 16px rgba(253, 118, 26, 0.40)',
       },
       transitionTimingFunction: {
-        'mechanical': 'cubic-bezier(0.16, 1, 0.3, 1)',
+        mechanical: 'cubic-bezier(0.16, 1, 0.3, 1)',
       },
       transitionDuration: {
         '400': '400ms',

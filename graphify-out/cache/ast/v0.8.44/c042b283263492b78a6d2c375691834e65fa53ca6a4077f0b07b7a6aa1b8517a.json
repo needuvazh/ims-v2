@@ -1,1 +1,79 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_02_admission_intake_tasks_md", "label": "tasks.md", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-admission-intake/tasks.md", "source_location": "L1"}, {"id": "2026_07_02_admission_intake_tasks_1_database_and_persistence_schema", "label": "1. Database and Persistence Schema", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-admission-intake/tasks.md", "source_location": "L1"}, {"id": "2026_07_02_admission_intake_tasks_2_core_service_logic_and_invariants", "label": "2. Core Service Logic and Invariants", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-admission-intake/tasks.md", "source_location": "L6"}, {"id": "2026_07_02_admission_intake_tasks_3_api_routing_and_integration", "label": "3. API, Routing, and Integration", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-admission-intake/tasks.md", "source_location": "L14"}, {"id": "2026_07_02_admission_intake_tasks_4_ui_and_verification", "label": "4. UI and Verification", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-admission-intake/tasks.md", "source_location": "L20"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_02_admission_intake_tasks_md", "target": "2026_07_02_admission_intake_tasks_1_database_and_persistence_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-admission-intake/tasks.md", "source_location": "L1", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_02_admission_intake_tasks_md", "target": "2026_07_02_admission_intake_tasks_2_core_service_logic_and_invariants", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-admission-intake/tasks.md", "source_location": "L6", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_02_admission_intake_tasks_md", "target": "2026_07_02_admission_intake_tasks_3_api_routing_and_integration", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-admission-intake/tasks.md", "source_location": "L14", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_02_admission_intake_tasks_md", "target": "2026_07_02_admission_intake_tasks_4_ui_and_verification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-admission-intake/tasks.md", "source_location": "L20", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_02_admission_intake_tasks_md",
+      "label": "tasks.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-admission-intake/tasks.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "2026_07_02_admission_intake_tasks_1_database_and_persistence_schema",
+      "label": "1. Database and Persistence Schema",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-admission-intake/tasks.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "2026_07_02_admission_intake_tasks_2_core_service_logic_and_invariants",
+      "label": "2. Core Service Logic and Invariants",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-admission-intake/tasks.md",
+      "source_location": "L6"
+    },
+    {
+      "id": "2026_07_02_admission_intake_tasks_3_api_routing_and_integration",
+      "label": "3. API, Routing, and Integration",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-admission-intake/tasks.md",
+      "source_location": "L14"
+    },
+    {
+      "id": "2026_07_02_admission_intake_tasks_4_ui_and_verification",
+      "label": "4. UI and Verification",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-admission-intake/tasks.md",
+      "source_location": "L20"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_02_admission_intake_tasks_md",
+      "target": "2026_07_02_admission_intake_tasks_1_database_and_persistence_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-admission-intake/tasks.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_02_admission_intake_tasks_md",
+      "target": "2026_07_02_admission_intake_tasks_2_core_service_logic_and_invariants",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-admission-intake/tasks.md",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_02_admission_intake_tasks_md",
+      "target": "2026_07_02_admission_intake_tasks_3_api_routing_and_integration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-admission-intake/tasks.md",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_02_admission_intake_tasks_md",
+      "target": "2026_07_02_admission_intake_tasks_4_ui_and_verification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-admission-intake/tasks.md",
+      "source_location": "L20",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

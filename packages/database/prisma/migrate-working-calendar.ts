@@ -53,8 +53,12 @@ function translateWorkingCalendar(
   const value = normalizeValue(settings.workingCalendar ?? '');
   if (!value) return null;
 
-  const sameInstitute = calendars.filter((calendar) => calendar.instituteId === settings.branch.instituteId);
-  const exactCode = sameInstitute.find((calendar) => calendar.code.toLowerCase() === value.toLowerCase());
+  const sameInstitute = calendars.filter(
+    (calendar) => calendar.instituteId === settings.branch.instituteId,
+  );
+  const exactCode = sameInstitute.find(
+    (calendar) => calendar.code.toLowerCase() === value.toLowerCase(),
+  );
   if (exactCode) {
     return {
       branchSettingsId: settings.id,
@@ -88,7 +92,9 @@ function translateWorkingCalendar(
   return null;
 }
 
-export async function buildLegacyWorkingCalendarMigrationReport(prisma = new PrismaClient()): Promise<MigrationReport> {
+export async function buildLegacyWorkingCalendarMigrationReport(
+  prisma = new PrismaClient(),
+): Promise<MigrationReport> {
   const branchSettings = await prisma.branchSettings.findMany({
     where: {
       isDeleted: false,
@@ -105,7 +111,9 @@ export async function buildLegacyWorkingCalendarMigrationReport(prisma = new Pri
     return { translated: [], unresolved: [] };
   }
 
-  const instituteIds = Array.from(new Set(branchSettings.map((row) => row.branch.instituteId)));
+  const instituteIds = Array.from(
+    new Set(branchSettings.map((row) => row.branch.instituteId)),
+  );
   const calendars = await prisma.businessCalendar.findMany({
     where: {
       isDeleted: false,
@@ -118,7 +126,10 @@ export async function buildLegacyWorkingCalendarMigrationReport(prisma = new Pri
   const unresolved: MigrationReport['unresolved'] = [];
 
   for (const settings of branchSettings as LegacyBranchSettingsRow[]) {
-    const match = translateWorkingCalendar(settings, calendars as BusinessCalendarRow[]);
+    const match = translateWorkingCalendar(
+      settings,
+      calendars as BusinessCalendarRow[],
+    );
     if (match) {
       translated.push(match);
     } else {
@@ -128,7 +139,8 @@ export async function buildLegacyWorkingCalendarMigrationReport(prisma = new Pri
         instituteId: settings.branch.instituteId,
         branchName: settings.branch.branchName,
         workingCalendar: normalizeValue(settings.workingCalendar ?? ''),
-        reason: 'No exact code or single-year match in the institute calendar set.',
+        reason:
+          'No exact code or single-year match in the institute calendar set.',
       });
     }
   }

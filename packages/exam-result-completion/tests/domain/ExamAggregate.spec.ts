@@ -1,9 +1,18 @@
 import { describe, it, expect } from 'vitest';
-import { ExamAggregate, CreateExamCommand, EXAM_STATUSES } from '../../src/domain/aggregates/Exam';
-import { ExamInvalidStateError, ExamMarksValidationError } from '../../src/domain/errors';
+import {
+  ExamAggregate,
+  CreateExamCommand,
+  EXAM_STATUSES,
+} from '../../src/domain/aggregates/Exam';
+import {
+  ExamInvalidStateError,
+  ExamMarksValidationError,
+} from '../../src/domain/errors';
 
 describe('ExamAggregate', () => {
-  const createCommand = (overrides?: Partial<CreateExamCommand>): CreateExamCommand => ({
+  const createCommand = (
+    overrides?: Partial<CreateExamCommand>,
+  ): CreateExamCommand => ({
     courseId: 'course-1',
     batchId: 'batch-1',
     examName: 'Final Exam',
@@ -22,20 +31,30 @@ describe('ExamAggregate', () => {
     });
 
     it('throws when maxMarks <= 0', () => {
-      expect(() => ExamAggregate.create(createCommand({ maxMarks: 0 }))).toThrow(ExamMarksValidationError);
-      expect(() => ExamAggregate.create(createCommand({ maxMarks: -10 }))).toThrow(ExamMarksValidationError);
+      expect(() =>
+        ExamAggregate.create(createCommand({ maxMarks: 0 })),
+      ).toThrow(ExamMarksValidationError);
+      expect(() =>
+        ExamAggregate.create(createCommand({ maxMarks: -10 })),
+      ).toThrow(ExamMarksValidationError);
     });
 
     it('throws when passMarks < 0', () => {
-      expect(() => ExamAggregate.create(createCommand({ passMarks: -1 }))).toThrow(ExamMarksValidationError);
+      expect(() =>
+        ExamAggregate.create(createCommand({ passMarks: -1 })),
+      ).toThrow(ExamMarksValidationError);
     });
 
     it('throws when passMarks > maxMarks', () => {
-      expect(() => ExamAggregate.create(createCommand({ maxMarks: 50, passMarks: 60 }))).toThrow(ExamMarksValidationError);
+      expect(() =>
+        ExamAggregate.create(createCommand({ maxMarks: 50, passMarks: 60 })),
+      ).toThrow(ExamMarksValidationError);
     });
 
     it('allows passMarks equal to maxMarks', () => {
-      const aggregate = ExamAggregate.create(createCommand({ maxMarks: 100, passMarks: 100 }));
+      const aggregate = ExamAggregate.create(
+        createCommand({ maxMarks: 100, passMarks: 100 }),
+      );
       expect(aggregate.state.status).toBe(EXAM_STATUSES.DRAFT);
     });
 
@@ -73,7 +92,9 @@ describe('ExamAggregate', () => {
 
     it('throws when not in Scheduled status', () => {
       const aggregate = ExamAggregate.create(createCommand());
-      expect(() => aggregate.reschedule(new Date('2026-09-01'))).toThrow(ExamInvalidStateError);
+      expect(() => aggregate.reschedule(new Date('2026-09-01'))).toThrow(
+        ExamInvalidStateError,
+      );
     });
   });
 
@@ -88,7 +109,9 @@ describe('ExamAggregate', () => {
 
     it('throws when not in Scheduled status', () => {
       const aggregate = ExamAggregate.create(createCommand());
-      expect(() => aggregate.openForResultEntry()).toThrow(ExamInvalidStateError);
+      expect(() => aggregate.openForResultEntry()).toThrow(
+        ExamInvalidStateError,
+      );
     });
   });
 
@@ -189,7 +212,11 @@ describe('ExamAggregate', () => {
   describe('updateDetails', () => {
     it('updates details when Draft', () => {
       const aggregate = ExamAggregate.create(createCommand());
-      const updated = aggregate.updateDetails({ examName: 'Updated Exam', maxMarks: 150, passMarks: 75 });
+      const updated = aggregate.updateDetails({
+        examName: 'Updated Exam',
+        maxMarks: 150,
+        passMarks: 75,
+      });
       expect(updated.examName).toBe('Updated Exam');
       expect(updated.maxMarks).toBe(150);
       expect(updated.passMarks).toBe(75);
@@ -209,12 +236,16 @@ describe('ExamAggregate', () => {
       const agg2 = new ExamAggregate(scheduled);
       const opened = agg2.openForResultEntry();
       const agg3 = new ExamAggregate(opened);
-      expect(() => agg3.updateDetails({ examName: 'Updated' })).toThrow(ExamInvalidStateError);
+      expect(() => agg3.updateDetails({ examName: 'Updated' })).toThrow(
+        ExamInvalidStateError,
+      );
     });
 
     it('validates marks when updating', () => {
       const aggregate = ExamAggregate.create(createCommand());
-      expect(() => aggregate.updateDetails({ maxMarks: 50, passMarks: 60 })).toThrow(ExamMarksValidationError);
+      expect(() =>
+        aggregate.updateDetails({ maxMarks: 50, passMarks: 60 }),
+      ).toThrow(ExamMarksValidationError);
     });
   });
 

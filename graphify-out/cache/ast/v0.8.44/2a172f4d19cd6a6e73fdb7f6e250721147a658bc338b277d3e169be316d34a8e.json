@@ -1,1 +1,655 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "label": "Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "label": "Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_09_faculty_trainer_management", "label": "Module 09 \u2013 Faculty / Trainer Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L3"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_1_purpose", "label": "1. Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L5"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_test_data_conventions", "label": "2. Test Data Conventions", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L15"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_1_branches", "label": "2.1 Branches", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L17"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_2_users", "label": "2.2 Users", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L25"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_3_trainers", "label": "2.3 Trainers", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L41"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_4_courses_and_delivery_references", "label": "2.4 Courses and Delivery References", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L51"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_1_search_and_list_trainers", "label": "Feature 1: Search and List Trainers", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L62"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_2_create_trainer_profile", "label": "Feature 2: Create Trainer Profile", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L134"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_3_view_trainer_detail_with_section_level_permissions", "label": "Feature 3: View Trainer Detail with Section-Level Permissions", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L196"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_4_update_trainer_profile_and_optimistic_concurrency", "label": "Feature 4: Update Trainer Profile and Optimistic Concurrency", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L226"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_5_trainer_operational_status_state_machine", "label": "Feature 5: Trainer Operational Status State Machine", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L262"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_6_trainer_qualifications", "label": "Feature 6: Trainer Qualifications", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L308"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_7_trainer_availability_and_overlap_validation", "label": "Feature 7: Trainer Availability and Overlap Validation", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L347"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_8_trainer_course_authorization_lifecycle", "label": "Feature 8: Trainer Course Authorization Lifecycle", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L412"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_9_eligible_trainer_search", "label": "Feature 9: Eligible Trainer Search", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L456"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_10_compensation_rate_configuration", "label": "Feature 10: Compensation Rate Configuration", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L498"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_11_compensation_rate_resolution", "label": "Feature 11: Compensation Rate Resolution", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L551"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_12_assignment_eligibility_validation_for_training_delivery", "label": "Feature 12: Assignment Eligibility Validation for Training Delivery", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L592"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_13_assignment_reference_read_model", "label": "Feature 13: Assignment Reference Read Model", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L632"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_14_soft_delete_and_deactivation", "label": "Feature 14: Soft Delete and Deactivation", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L653"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_15_reports_dashboard_and_export", "label": "Feature 15: Reports, Dashboard, and Export", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L688"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_16_audit_sensitive_trainer_actions", "label": "Feature 16: Audit Sensitive Trainer Actions", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L752"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_17_branch_isolation", "label": "Feature 17: Branch Isolation", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L791"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_18_fine_grained_authorization_guards", "label": "Feature 18: Fine-Grained Authorization Guards", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L842"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_19_compensation_confidentiality", "label": "Feature 19: Compensation Confidentiality", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L883"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_20_effective_dating_boundaries", "label": "Feature 20: Effective Dating Boundaries", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L913"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_21_domain_event_publication", "label": "Feature 21: Domain Event Publication", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L949"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_22_dependency_failure_handling", "label": "Feature 22: Dependency Failure Handling", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L977"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_23_kpi_and_dashboard_calculation_accuracy", "label": "Feature 23: KPI and Dashboard Calculation Accuracy", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1008"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_24_read_model_staleness_and_fallback", "label": "Feature 24: Read Model Staleness and Fallback", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1056"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_25_bilingual_report_behavior", "label": "Feature 25: Bilingual Report Behavior", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1080"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_26_pagination_sorting_and_export_boundaries", "label": "Feature 26: Pagination, Sorting, and Export Boundaries", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1107"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_27_authentication_boundaries", "label": "Feature 27: Authentication Boundaries", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1149"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_28_authorization_and_branch_isolation_test_matrix", "label": "28. Authorization and Branch Isolation Test Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1172"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_29_boundary_and_validation_test_matrix", "label": "29. Boundary and Validation Test Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1194"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_30_cross_module_contract_test_matrix", "label": "30. Cross-Module Contract Test Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1216"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_31_fr_traceability_matrix", "label": "31. FR Traceability Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1232"}, {"id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_32_definition_of_done_for_acceptance_testing", "label": "32. Definition of Done for Acceptance Testing", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1259"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_09_faculty_trainer_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L3", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L5", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_test_data_conventions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L15", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_test_data_conventions", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_1_branches", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L17", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_test_data_conventions", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_2_users", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L25", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_test_data_conventions", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_3_trainers", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L41", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_test_data_conventions", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_4_courses_and_delivery_references", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L51", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_1_search_and_list_trainers", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L62", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_2_create_trainer_profile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L134", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_3_view_trainer_detail_with_section_level_permissions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L196", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_4_update_trainer_profile_and_optimistic_concurrency", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L226", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_5_trainer_operational_status_state_machine", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L262", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_6_trainer_qualifications", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L308", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_7_trainer_availability_and_overlap_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L347", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_8_trainer_course_authorization_lifecycle", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L412", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_9_eligible_trainer_search", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L456", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_10_compensation_rate_configuration", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L498", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_11_compensation_rate_resolution", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L551", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_12_assignment_eligibility_validation_for_training_delivery", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L592", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_13_assignment_reference_read_model", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L632", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_14_soft_delete_and_deactivation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L653", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_15_reports_dashboard_and_export", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L688", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_16_audit_sensitive_trainer_actions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L752", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_17_branch_isolation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L791", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_18_fine_grained_authorization_guards", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L842", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_19_compensation_confidentiality", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L883", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_20_effective_dating_boundaries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L913", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_21_domain_event_publication", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L949", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_22_dependency_failure_handling", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L977", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_23_kpi_and_dashboard_calculation_accuracy", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1008", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_24_read_model_staleness_and_fallback", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1056", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_25_bilingual_report_behavior", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1080", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_26_pagination_sorting_and_export_boundaries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1107", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_27_authentication_boundaries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1149", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_28_authorization_and_branch_isolation_test_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1172", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_29_boundary_and_validation_test_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1194", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_30_cross_module_contract_test_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1216", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_31_fr_traceability_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1232", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_32_definition_of_done_for_acceptance_testing", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1259", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "label": "Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "label": "Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_09_faculty_trainer_management",
+      "label": "Module 09 \u2013 Faculty / Trainer Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_1_purpose",
+      "label": "1. Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_test_data_conventions",
+      "label": "2. Test Data Conventions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L15"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_1_branches",
+      "label": "2.1 Branches",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L17"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_2_users",
+      "label": "2.2 Users",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L25"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_3_trainers",
+      "label": "2.3 Trainers",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L41"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_4_courses_and_delivery_references",
+      "label": "2.4 Courses and Delivery References",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L51"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_1_search_and_list_trainers",
+      "label": "Feature 1: Search and List Trainers",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L62"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_2_create_trainer_profile",
+      "label": "Feature 2: Create Trainer Profile",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L134"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_3_view_trainer_detail_with_section_level_permissions",
+      "label": "Feature 3: View Trainer Detail with Section-Level Permissions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L196"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_4_update_trainer_profile_and_optimistic_concurrency",
+      "label": "Feature 4: Update Trainer Profile and Optimistic Concurrency",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L226"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_5_trainer_operational_status_state_machine",
+      "label": "Feature 5: Trainer Operational Status State Machine",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L262"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_6_trainer_qualifications",
+      "label": "Feature 6: Trainer Qualifications",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L308"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_7_trainer_availability_and_overlap_validation",
+      "label": "Feature 7: Trainer Availability and Overlap Validation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L347"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_8_trainer_course_authorization_lifecycle",
+      "label": "Feature 8: Trainer Course Authorization Lifecycle",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L412"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_9_eligible_trainer_search",
+      "label": "Feature 9: Eligible Trainer Search",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L456"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_10_compensation_rate_configuration",
+      "label": "Feature 10: Compensation Rate Configuration",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L498"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_11_compensation_rate_resolution",
+      "label": "Feature 11: Compensation Rate Resolution",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L551"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_12_assignment_eligibility_validation_for_training_delivery",
+      "label": "Feature 12: Assignment Eligibility Validation for Training Delivery",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L592"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_13_assignment_reference_read_model",
+      "label": "Feature 13: Assignment Reference Read Model",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L632"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_14_soft_delete_and_deactivation",
+      "label": "Feature 14: Soft Delete and Deactivation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L653"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_15_reports_dashboard_and_export",
+      "label": "Feature 15: Reports, Dashboard, and Export",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L688"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_16_audit_sensitive_trainer_actions",
+      "label": "Feature 16: Audit Sensitive Trainer Actions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L752"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_17_branch_isolation",
+      "label": "Feature 17: Branch Isolation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L791"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_18_fine_grained_authorization_guards",
+      "label": "Feature 18: Fine-Grained Authorization Guards",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L842"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_19_compensation_confidentiality",
+      "label": "Feature 19: Compensation Confidentiality",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L883"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_20_effective_dating_boundaries",
+      "label": "Feature 20: Effective Dating Boundaries",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L913"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_21_domain_event_publication",
+      "label": "Feature 21: Domain Event Publication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L949"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_22_dependency_failure_handling",
+      "label": "Feature 22: Dependency Failure Handling",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L977"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_23_kpi_and_dashboard_calculation_accuracy",
+      "label": "Feature 23: KPI and Dashboard Calculation Accuracy",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1008"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_24_read_model_staleness_and_fallback",
+      "label": "Feature 24: Read Model Staleness and Fallback",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1056"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_25_bilingual_report_behavior",
+      "label": "Feature 25: Bilingual Report Behavior",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1080"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_26_pagination_sorting_and_export_boundaries",
+      "label": "Feature 26: Pagination, Sorting, and Export Boundaries",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1107"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_27_authentication_boundaries",
+      "label": "Feature 27: Authentication Boundaries",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1149"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_28_authorization_and_branch_isolation_test_matrix",
+      "label": "28. Authorization and Branch Isolation Test Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1172"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_29_boundary_and_validation_test_matrix",
+      "label": "29. Boundary and Validation Test Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1194"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_30_cross_module_contract_test_matrix",
+      "label": "30. Cross-Module Contract Test Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1216"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_31_fr_traceability_matrix",
+      "label": "31. FR Traceability Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1232"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_32_definition_of_done_for_acceptance_testing",
+      "label": "32. Definition of Done for Acceptance Testing",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1259"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_09_faculty_trainer_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_test_data_conventions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_test_data_conventions",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_1_branches",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_test_data_conventions",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_2_users",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_test_data_conventions",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_3_trainers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_test_data_conventions",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_4_courses_and_delivery_references",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_1_search_and_list_trainers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_2_create_trainer_profile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L134",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_3_view_trainer_detail_with_section_level_permissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L196",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_4_update_trainer_profile_and_optimistic_concurrency",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L226",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_5_trainer_operational_status_state_machine",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L262",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_6_trainer_qualifications",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L308",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_7_trainer_availability_and_overlap_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L347",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_8_trainer_course_authorization_lifecycle",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L412",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_9_eligible_trainer_search",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L456",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_10_compensation_rate_configuration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L498",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_11_compensation_rate_resolution",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L551",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_12_assignment_eligibility_validation_for_training_delivery",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L592",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_13_assignment_reference_read_model",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L632",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_14_soft_delete_and_deactivation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L653",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_15_reports_dashboard_and_export",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L688",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_16_audit_sensitive_trainer_actions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L752",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_17_branch_isolation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L791",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_18_fine_grained_authorization_guards",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L842",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_19_compensation_confidentiality",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L883",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_20_effective_dating_boundaries",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L913",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_21_domain_event_publication",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L949",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_22_dependency_failure_handling",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L977",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_23_kpi_and_dashboard_calculation_accuracy",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1008",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_24_read_model_staleness_and_fallback",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1056",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_25_bilingual_report_behavior",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1080",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_26_pagination_sorting_and_export_boundaries",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1107",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_27_authentication_boundaries",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1149",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_28_authorization_and_branch_isolation_test_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1172",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_29_boundary_and_validation_test_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1194",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_30_cross_module_contract_test_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1216",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_31_fr_traceability_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1232",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_09_faculty_trainer_management_part_9_bdd_acceptance_criteria_and_test_scenarios_32_definition_of_done_for_acceptance_testing",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1259",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

@@ -1,14 +1,17 @@
 # Admission & Enrollment Management UI Gaps Specification
 
 ## Purpose
+
 This specification identifies and defines the functional requirements and scenarios for the pending UI interfaces and controls within the **Admission & Enrollment Management** bounded context. It bridges the gap between the implemented backend services/APIs and the required operational admin portal screens.
 
 ## Requirements
 
 ### Requirement: Enrollment Operations Console & Actions
+
 The system SHALL provide an interface (Operations Console) to view and manage enrollment status transitions, enforcing state validation rules and roles.
 
 #### Scenario: Display Enrollment Details & Action Controls
+
 - **GIVEN** an enrollment exists in the database
 - **WHEN** an authorized user views the enrollment details page
 - **THEN** the system SHALL display:
@@ -22,6 +25,7 @@ The system SHALL provide an interface (Operations Console) to view and manage en
 - **AND** disable or hide actions if the current user lacks the required permission or if the enrollment belongs to another branch.
 
 #### Scenario: Drop Active Enrollment with Mandatory Reason
+
 - **GIVEN** an enrollment is in `Confirmed` or `Active` status
 - **WHEN** an authorized user clicks the "Drop Enrollment" action
 - **THEN** the system SHALL display a modal dialog requiring:
@@ -36,9 +40,11 @@ The system SHALL provide an interface (Operations Console) to view and manage en
 ---
 
 ### Requirement: Batch Enrollment Roster
+
 The system SHALL display the list of active/confirmed student profiles registered in a specific batch under the Training Delivery screens, allowing lookup and management.
 
 #### Scenario: Display Batch Students Tab
+
 - **GIVEN** a batch details page is open (`/batches/[id]`)
 - **WHEN** the user selects the "Enrolled Students" tab (alongside Sessions and Faculty)
 - **THEN** the system SHALL query and display a table of all student profiles with an active or confirmed enrollment in this batch, containing:
@@ -52,9 +58,11 @@ The system SHALL display the list of active/confirmed student profiles registere
 ---
 
 ### Requirement: Enrollment Pricing & Discount Snapshot Panel
+
 The system SHALL render a detailed summary of resolved course pricing and discount overrides during the enrollment creation and detail views.
 
 #### Scenario: Render Pricing Resolution Details
+
 - **GIVEN** a user is creating or viewing an enrollment
 - **WHEN** the course and batch are selected (in creation) or when viewing a saved record
 - **THEN** the system SHALL display a Pricing Panel showing:
@@ -68,9 +76,11 @@ The system SHALL render a detailed summary of resolved course pricing and discou
 ---
 
 ### Requirement: Student ID Card Preview & Actions
+
 The system SHALL support visual preview and downloading of generated Student ID cards from the student profile and admission details screens.
 
 #### Scenario: Download and Preview ID Card
+
 - **GIVEN** an admission has been approved and a Student Profile exists
 - **WHEN** an authorized user views the Student Profile Dashboard or Admission Detail page
 - **THEN** the system SHALL display a Student ID Card section showing:

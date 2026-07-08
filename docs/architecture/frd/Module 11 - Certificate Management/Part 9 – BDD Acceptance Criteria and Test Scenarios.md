@@ -20,44 +20,44 @@ The scenarios are written to support automated acceptance testing at application
 
 ### 2.1 Actors
 
-| Actor | Description |
-|---|---|
-| Certificate Administrator | Internal operator with branch-scoped certificate generation, issuance, registry, reissue, and lifecycle permissions as assigned. |
-| Branch Manager | Branch-scoped management approver for reissue decisions and authorized lifecycle actions. |
-| Academic Coordinator | Internal academic user with readiness, registry, and workflow visibility according to assigned permissions. |
-| Finance User | Finance-context user; may provide payment truth but does not mutate Certificate aggregate unless separately granted Certificate permissions. |
-| Compliance Auditor | Read-only audit/compliance user with explicit global or assigned scope. |
-| Executive Viewer | Consolidated-report consumer with no transactional mutation rights. |
-| Student | Authenticated self-service user restricted to certificates and reissue requests connected to own StudentProfile/Enrollment. |
-| Trainer | Authenticated trainer restricted to assigned batch/enrollment certificate status views. |
-| Public Verifier | Unauthenticated user of the public verification interface. |
-| Certificate Application Service | Module-owned application service orchestrating Certificate aggregate commands. |
-| Completion Service Port | Read-only application port to authoritative completion eligibility and approval state. |
-| Finance Validation Port | Read-only application port to authoritative payment validation result. |
-| IAM Authorization Service | Source of permission and branch-scope decisions. |
-| Numbering Service | Configuration-owned numbering-series provider. |
-| Audit Service | Audit & Compliance-owned recorder of sensitive actions. |
-| Communication Service | Communication context consumer of notification requests. |
-| Reporting Projection Builder | Read-only projection process consuming lifecycle facts. |
+| Actor                           | Description                                                                                                                                  |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Certificate Administrator       | Internal operator with branch-scoped certificate generation, issuance, registry, reissue, and lifecycle permissions as assigned.             |
+| Branch Manager                  | Branch-scoped management approver for reissue decisions and authorized lifecycle actions.                                                    |
+| Academic Coordinator            | Internal academic user with readiness, registry, and workflow visibility according to assigned permissions.                                  |
+| Finance User                    | Finance-context user; may provide payment truth but does not mutate Certificate aggregate unless separately granted Certificate permissions. |
+| Compliance Auditor              | Read-only audit/compliance user with explicit global or assigned scope.                                                                      |
+| Executive Viewer                | Consolidated-report consumer with no transactional mutation rights.                                                                          |
+| Student                         | Authenticated self-service user restricted to certificates and reissue requests connected to own StudentProfile/Enrollment.                  |
+| Trainer                         | Authenticated trainer restricted to assigned batch/enrollment certificate status views.                                                      |
+| Public Verifier                 | Unauthenticated user of the public verification interface.                                                                                   |
+| Certificate Application Service | Module-owned application service orchestrating Certificate aggregate commands.                                                               |
+| Completion Service Port         | Read-only application port to authoritative completion eligibility and approval state.                                                       |
+| Finance Validation Port         | Read-only application port to authoritative payment validation result.                                                                       |
+| IAM Authorization Service       | Source of permission and branch-scope decisions.                                                                                             |
+| Numbering Service               | Configuration-owned numbering-series provider.                                                                                               |
+| Audit Service                   | Audit & Compliance-owned recorder of sensitive actions.                                                                                      |
+| Communication Service           | Communication context consumer of notification requests.                                                                                     |
+| Reporting Projection Builder    | Read-only projection process consuming lifecycle facts.                                                                                      |
 
 ### 2.2 Canonical Test Data
 
 Unless a scenario overrides these values:
 
-| Fixture | Value |
-|---|---|
-| Branch A | `BR-A` |
-| Branch B | `BR-B` |
-| Parent Branch | `BR-HQ` |
-| Child Branch | `BR-A` |
-| Student A | `STU-A` |
-| Enrollment A | `ENR-A`, course `COURSE-A`, batch `BATCH-A`, branch `BR-A` |
-| Certificate A | `CERT-A`, verification code `VC-A`, branch derived from `ENR-A` |
-| Reissue Request A | `RR-A`, source certificate `CERT-A` |
-| Generated certificate state | `Generated` |
-| Issued certificate state | `Issued` |
-| Revoked certificate state | `Revoked` |
-| Reissue states | `PendingReview`, `Approved`, `Rejected`, `Completed` |
+| Fixture                     | Value                                                           |
+| --------------------------- | --------------------------------------------------------------- |
+| Branch A                    | `BR-A`                                                          |
+| Branch B                    | `BR-B`                                                          |
+| Parent Branch               | `BR-HQ`                                                         |
+| Child Branch                | `BR-A`                                                          |
+| Student A                   | `STU-A`                                                         |
+| Enrollment A                | `ENR-A`, course `COURSE-A`, batch `BATCH-A`, branch `BR-A`      |
+| Certificate A               | `CERT-A`, verification code `VC-A`, branch derived from `ENR-A` |
+| Reissue Request A           | `RR-A`, source certificate `CERT-A`                             |
+| Generated certificate state | `Generated`                                                     |
+| Issued certificate state    | `Issued`                                                        |
+| Revoked certificate state   | `Revoked`                                                       |
+| Reissue states              | `PendingReview`, `Approved`, `Rejected`, `Completed`            |
 
 ### 2.3 Expected Error Semantics
 
@@ -90,20 +90,20 @@ Tests should assert HTTP status and structured business error code where the API
 
 ## 3. Coverage Traceability Matrix
 
-| Test Area | Primary Requirements / Rules | Main Features Below |
-|---|---|---|
-| Readiness and eligibility | FR-CERT-001 to FR-CERT-005, FR-CERT-034, FR-CERT-039 | Features 1–2 |
-| Generation | FR-CERT-006 to FR-CERT-011, FR-CERT-033, FR-CERT-038 | Feature 2 |
-| Issuance and lifecycle | FR-CERT-012, FR-CERT-013, FR-CERT-037 | Feature 3 |
-| Registry/detail/download | FR-CERT-014 to FR-CERT-016 | Feature 4 |
-| Verification | FR-CERT-017 to FR-CERT-020 | Feature 5 |
-| Reissue and replacement | FR-CERT-021 to FR-CERT-026 | Features 6–7 |
-| Revocation | FR-CERT-027 | Feature 8 |
-| Authorization and branch isolation | FR-CERT-028, FR-CERT-029 | Features 9–10 |
-| Audit and notification | FR-CERT-030, FR-CERT-031 | Feature 11 |
-| Reporting/read models | FR-CERT-032, FR-CERT-036 | Feature 12 |
-| Concurrency, retries, history | FR-CERT-033, FR-CERT-035, FR-CERT-037, FR-CERT-038, FR-CERT-040 | Feature 13 |
-| DDD aggregate ownership | DDD Certificate aggregate and context integration rules | Feature 14 |
+| Test Area                          | Primary Requirements / Rules                                    | Main Features Below |
+| ---------------------------------- | --------------------------------------------------------------- | ------------------- |
+| Readiness and eligibility          | FR-CERT-001 to FR-CERT-005, FR-CERT-034, FR-CERT-039            | Features 1–2        |
+| Generation                         | FR-CERT-006 to FR-CERT-011, FR-CERT-033, FR-CERT-038            | Feature 2           |
+| Issuance and lifecycle             | FR-CERT-012, FR-CERT-013, FR-CERT-037                           | Feature 3           |
+| Registry/detail/download           | FR-CERT-014 to FR-CERT-016                                      | Feature 4           |
+| Verification                       | FR-CERT-017 to FR-CERT-020                                      | Feature 5           |
+| Reissue and replacement            | FR-CERT-021 to FR-CERT-026                                      | Features 6–7        |
+| Revocation                         | FR-CERT-027                                                     | Feature 8           |
+| Authorization and branch isolation | FR-CERT-028, FR-CERT-029                                        | Features 9–10       |
+| Audit and notification             | FR-CERT-030, FR-CERT-031                                        | Feature 11          |
+| Reporting/read models              | FR-CERT-032, FR-CERT-036                                        | Feature 12          |
+| Concurrency, retries, history      | FR-CERT-033, FR-CERT-035, FR-CERT-037, FR-CERT-038, FR-CERT-040 | Feature 13          |
+| DDD aggregate ownership            | DDD Certificate aggregate and context integration rules         | Feature 14          |
 
 # 4. Gherkin Acceptance Scenarios
 
@@ -1092,149 +1092,149 @@ Feature: Preserve DDD ownership boundaries for Certificate Management
 
 # 5. API-Level Acceptance Matrix
 
-| Endpoint | Positive Test | Negative / Validation Test | Authorization Test | Branch/Self Scope Test |
-|---|---|---|---|---|
-| `GET /api/v1/certificates/readiness` | Returns eligible rows | Invalid filters/date range | Missing `certificate.read` | Excludes inaccessible branches |
-| `GET /api/v1/certificates/readiness/{enrollmentId}` | Returns readiness decision | Missing enrollment | Unauthenticated/permission denied | Cross-branch enrollment denied |
-| `POST /api/v1/certificates` | Generates eligible certificate | Completion/payment/duplicate/language failure | Missing `certificate.generate` | Cross-branch generation denied |
-| `GET /api/v1/certificates` | Paginated registry | Unsupported sort/date filter | Missing `certificate.read` | Branch filter cannot expand scope |
-| `GET /api/v1/certificates/{certificateId}` | Returns detail | Unknown ID | Missing read permission | Cross-branch direct-ID denied |
-| `GET /api/v1/certificates/{certificateId}/artifact` | Returns artifact access | Artifact unavailable | Missing download permission | Cross-branch denied |
-| `POST /api/v1/certificates/{certificateId}/issue` | Generated→Issued | Invalid state/stale version | Missing issue permission | Cross-branch denied |
-| `POST /api/v1/certificates/{certificateId}/revoke` | Issued→Revoked | Missing reason/invalid state | Missing revoke permission | Cross-branch denied |
-| `GET /api/v1/certificates/{certificateId}/verification-activity` | Returns activity | Unknown ID | Missing activity permission | Cross-branch/global rules enforced |
-| `GET /api/v1/certificates/{certificateId}/lifecycle` | Returns lifecycle | Unknown ID | Missing audit permission | Effective audit scope enforced |
-| `POST /api/v1/certificate-reissue-requests` | Creates pending request | Empty reason/open duplicate | Missing submit permission | Cross-branch source denied |
-| `GET /api/v1/certificate-reissue-requests` | Lists queue | Invalid filters | Missing reissue read | Branch isolation enforced |
-| `GET /api/v1/certificate-reissue-requests/{requestId}` | Returns request detail | Unknown ID | Missing reissue read | Cross-branch denied |
-| `POST /api/v1/certificate-reissue-requests/{requestId}/approve` | Pending→Approved | Terminal/stale version | Missing approve permission | Cross-branch denied |
-| `POST /api/v1/certificate-reissue-requests/{requestId}/reject` | Pending→Rejected | Missing remarks when required | Missing reject permission | Cross-branch denied |
-| `POST /api/v1/certificate-reissue-requests/{requestId}/replacement` | Approved→Completed | Not approved/already generated | Missing generate permission | Cross-branch denied |
-| `POST /api/public/v1/certificates/verify` | Valid verification | Malformed/unknown/rate limit | Public policy; no internal IAM required | No registry browsing capability |
-| `GET /api/public/v1/certificates/verify/{verificationCode}` | Valid verification | Unknown/malformed | Public policy | Minimal data only |
-| `GET /api/v1/me/certificates` | Lists own certificates | Empty self result | Auth required | Other students excluded |
-| `GET /api/v1/me/certificates/{certificateId}` | Own detail | Unknown ID | Self permission | Other student denied |
-| `GET /api/v1/me/certificates/{certificateId}/artifact` | Own artifact | Artifact missing | Self download permission | Other student denied |
-| `POST /api/v1/me/certificate-reissue-requests` | Own request | Invalid reason/duplicate | Self reissue permission | Other student's cert denied |
-| `GET /api/v1/me/certificate-reissue-requests` | Own requests | Empty result | Auth/self permission | Other students excluded |
-| `GET /api/v1/trainer/certificates/status` | Assigned scope status | Invalid filter | Trainer permission | Unassigned batches excluded |
-| `GET /api/v1/certificates/dashboard` | Scoped widgets | Invalid date range | Dashboard/report permission | Branch/consolidated rules enforced |
-| `GET /api/v1/certificates/reports/registry` | Filtered report | Invalid sort/date | Report permission | Scoped rows and counts |
-| `POST /api/v1/certificates/reports/registry/export` | CSV/XLSX/PDF | Unsupported format | Report + export permissions | Scope retained in export |
-| `POST /api/v1/certificates/{certificateId}/notifications` | Requests notification | Invalid event/template payload | Notification permission | Cross-branch denied |
+| Endpoint                                                            | Positive Test                  | Negative / Validation Test                    | Authorization Test                      | Branch/Self Scope Test             |
+| ------------------------------------------------------------------- | ------------------------------ | --------------------------------------------- | --------------------------------------- | ---------------------------------- |
+| `GET /api/v1/certificates/readiness`                                | Returns eligible rows          | Invalid filters/date range                    | Missing `certificate.read`              | Excludes inaccessible branches     |
+| `GET /api/v1/certificates/readiness/{enrollmentId}`                 | Returns readiness decision     | Missing enrollment                            | Unauthenticated/permission denied       | Cross-branch enrollment denied     |
+| `POST /api/v1/certificates`                                         | Generates eligible certificate | Completion/payment/duplicate/language failure | Missing `certificate.generate`          | Cross-branch generation denied     |
+| `GET /api/v1/certificates`                                          | Paginated registry             | Unsupported sort/date filter                  | Missing `certificate.read`              | Branch filter cannot expand scope  |
+| `GET /api/v1/certificates/{certificateId}`                          | Returns detail                 | Unknown ID                                    | Missing read permission                 | Cross-branch direct-ID denied      |
+| `GET /api/v1/certificates/{certificateId}/artifact`                 | Returns artifact access        | Artifact unavailable                          | Missing download permission             | Cross-branch denied                |
+| `POST /api/v1/certificates/{certificateId}/issue`                   | Generated→Issued               | Invalid state/stale version                   | Missing issue permission                | Cross-branch denied                |
+| `POST /api/v1/certificates/{certificateId}/revoke`                  | Issued→Revoked                 | Missing reason/invalid state                  | Missing revoke permission               | Cross-branch denied                |
+| `GET /api/v1/certificates/{certificateId}/verification-activity`    | Returns activity               | Unknown ID                                    | Missing activity permission             | Cross-branch/global rules enforced |
+| `GET /api/v1/certificates/{certificateId}/lifecycle`                | Returns lifecycle              | Unknown ID                                    | Missing audit permission                | Effective audit scope enforced     |
+| `POST /api/v1/certificate-reissue-requests`                         | Creates pending request        | Empty reason/open duplicate                   | Missing submit permission               | Cross-branch source denied         |
+| `GET /api/v1/certificate-reissue-requests`                          | Lists queue                    | Invalid filters                               | Missing reissue read                    | Branch isolation enforced          |
+| `GET /api/v1/certificate-reissue-requests/{requestId}`              | Returns request detail         | Unknown ID                                    | Missing reissue read                    | Cross-branch denied                |
+| `POST /api/v1/certificate-reissue-requests/{requestId}/approve`     | Pending→Approved               | Terminal/stale version                        | Missing approve permission              | Cross-branch denied                |
+| `POST /api/v1/certificate-reissue-requests/{requestId}/reject`      | Pending→Rejected               | Missing remarks when required                 | Missing reject permission               | Cross-branch denied                |
+| `POST /api/v1/certificate-reissue-requests/{requestId}/replacement` | Approved→Completed             | Not approved/already generated                | Missing generate permission             | Cross-branch denied                |
+| `POST /api/public/v1/certificates/verify`                           | Valid verification             | Malformed/unknown/rate limit                  | Public policy; no internal IAM required | No registry browsing capability    |
+| `GET /api/public/v1/certificates/verify/{verificationCode}`         | Valid verification             | Unknown/malformed                             | Public policy                           | Minimal data only                  |
+| `GET /api/v1/me/certificates`                                       | Lists own certificates         | Empty self result                             | Auth required                           | Other students excluded            |
+| `GET /api/v1/me/certificates/{certificateId}`                       | Own detail                     | Unknown ID                                    | Self permission                         | Other student denied               |
+| `GET /api/v1/me/certificates/{certificateId}/artifact`              | Own artifact                   | Artifact missing                              | Self download permission                | Other student denied               |
+| `POST /api/v1/me/certificate-reissue-requests`                      | Own request                    | Invalid reason/duplicate                      | Self reissue permission                 | Other student's cert denied        |
+| `GET /api/v1/me/certificate-reissue-requests`                       | Own requests                   | Empty result                                  | Auth/self permission                    | Other students excluded            |
+| `GET /api/v1/trainer/certificates/status`                           | Assigned scope status          | Invalid filter                                | Trainer permission                      | Unassigned batches excluded        |
+| `GET /api/v1/certificates/dashboard`                                | Scoped widgets                 | Invalid date range                            | Dashboard/report permission             | Branch/consolidated rules enforced |
+| `GET /api/v1/certificates/reports/registry`                         | Filtered report                | Invalid sort/date                             | Report permission                       | Scoped rows and counts             |
+| `POST /api/v1/certificates/reports/registry/export`                 | CSV/XLSX/PDF                   | Unsupported format                            | Report + export permissions             | Scope retained in export           |
+| `POST /api/v1/certificates/{certificateId}/notifications`           | Requests notification          | Invalid event/template payload                | Notification permission                 | Cross-branch denied                |
 
 # 6. Authorization Guard Test Cases
 
-| Test ID | Given | When | Expected |
-|---|---|---|---|
-| AUTH-CERT-001 | Unauthenticated request | Access internal API | `UNAUTHENTICATED`; no data/mutation |
-| AUTH-CERT-002 | Authenticated, no `certificate.generate` | POST generation | `PERMISSION_DENIED`; no Certificate created |
-| AUTH-CERT-003 | Menu permission only | Call issue API | Denied; menu visibility never authorizes action |
-| AUTH-CERT-004 | Read permission only | Revoke issued certificate | Denied; state unchanged |
-| AUTH-CERT-005 | Reissue read only | Approve request | Denied; request remains PendingReview |
-| AUTH-CERT-006 | Report export only | Export inaccessible report | Denied; export permission not sufficient alone |
-| AUTH-CERT-007 | Executive report permission, no consolidated entitlement | Consolidated report | `CONSOLIDATED_SCOPE_DENIED` |
-| AUTH-CERT-008 | Consolidated entitlement, no report permission | Consolidated report | `PERMISSION_DENIED` |
-| AUTH-CERT-009 | Student own-read permission | Read another student's certificate | `SELF_SCOPE_DENIED` or privacy-safe not found |
-| AUTH-CERT-010 | Trainer status permission | Read unassigned batch | Data excluded/denied according to endpoint contract |
-| AUTH-CERT-011 | Finance role without Certificate grant | Generate certificate | Denied; role identity does not imply Certificate permission |
-| AUTH-CERT-012 | Auditor with scoped audit permission | Read outside scope | Denied/excluded unless explicit global scope exists |
-| AUTH-CERT-013 | Public anonymous user | Call public verify | Allowed under rate/input policy |
-| AUTH-CERT-014 | Public anonymous user | Call internal registry | `UNAUTHENTICATED` |
+| Test ID       | Given                                                    | When                               | Expected                                                    |
+| ------------- | -------------------------------------------------------- | ---------------------------------- | ----------------------------------------------------------- |
+| AUTH-CERT-001 | Unauthenticated request                                  | Access internal API                | `UNAUTHENTICATED`; no data/mutation                         |
+| AUTH-CERT-002 | Authenticated, no `certificate.generate`                 | POST generation                    | `PERMISSION_DENIED`; no Certificate created                 |
+| AUTH-CERT-003 | Menu permission only                                     | Call issue API                     | Denied; menu visibility never authorizes action             |
+| AUTH-CERT-004 | Read permission only                                     | Revoke issued certificate          | Denied; state unchanged                                     |
+| AUTH-CERT-005 | Reissue read only                                        | Approve request                    | Denied; request remains PendingReview                       |
+| AUTH-CERT-006 | Report export only                                       | Export inaccessible report         | Denied; export permission not sufficient alone              |
+| AUTH-CERT-007 | Executive report permission, no consolidated entitlement | Consolidated report                | `CONSOLIDATED_SCOPE_DENIED`                                 |
+| AUTH-CERT-008 | Consolidated entitlement, no report permission           | Consolidated report                | `PERMISSION_DENIED`                                         |
+| AUTH-CERT-009 | Student own-read permission                              | Read another student's certificate | `SELF_SCOPE_DENIED` or privacy-safe not found               |
+| AUTH-CERT-010 | Trainer status permission                                | Read unassigned batch              | Data excluded/denied according to endpoint contract         |
+| AUTH-CERT-011 | Finance role without Certificate grant                   | Generate certificate               | Denied; role identity does not imply Certificate permission |
+| AUTH-CERT-012 | Auditor with scoped audit permission                     | Read outside scope                 | Denied/excluded unless explicit global scope exists         |
+| AUTH-CERT-013 | Public anonymous user                                    | Call public verify                 | Allowed under rate/input policy                             |
+| AUTH-CERT-014 | Public anonymous user                                    | Call internal registry             | `UNAUTHENTICATED`                                           |
 
 # 7. Branch Isolation Test Cases
 
-| Test ID | Scenario | Expected Result |
-|---|---|---|
-| BRANCH-CERT-001 | BR-A user lists registry containing BR-A and BR-B data | Only BR-A rows/counts returned |
-| BRANCH-CERT-002 | BR-A user requests BR-B certificate by known ID | Denied or privacy-safe not found; no BR-B payload |
-| BRANCH-CERT-003 | BR-A issuer calls issue for BR-B certificate | `BRANCH_SCOPE_DENIED`; target unchanged |
-| BRANCH-CERT-004 | BR-A revoker calls revoke for BR-B certificate | Denied; target remains Issued |
-| BRANCH-CERT-005 | BR-A reissue approver opens BR-B request | Denied or excluded |
-| BRANCH-CERT-006 | Client sends branchId=BR-B while assigned only BR-A | Filter cannot expand server scope |
-| BRANCH-CERT-007 | Parent user with `canViewChildBranches=true` requests child | Allowed |
-| BRANCH-CERT-008 | Parent user with child access disabled requests child | Denied |
-| BRANCH-CERT-009 | Child user requests parent branch data | Denied unless separately assigned |
-| BRANCH-CERT-010 | Multi-branch user switches to assigned branch | Data limited to selected/effective allowed scope |
-| BRANCH-CERT-011 | Consolidated report without `canViewConsolidated` | `CONSOLIDATED_SCOPE_DENIED` |
-| BRANCH-CERT-012 | Export report under BR-A scope | Export contains no BR-B rows or aggregate leakage |
-| BRANCH-CERT-013 | Dashboard KPI under BR-A scope | KPI numerator and denominator both scoped to BR-A |
-| BRANCH-CERT-014 | Direct artifact URL attempt for BR-B certificate | Application authorization or short-lived secured artifact policy prevents bypass |
-| BRANCH-CERT-015 | Public verification of a valid code | Minimal verification response; no branch browsing or cross-branch enumeration |
+| Test ID         | Scenario                                                    | Expected Result                                                                  |
+| --------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| BRANCH-CERT-001 | BR-A user lists registry containing BR-A and BR-B data      | Only BR-A rows/counts returned                                                   |
+| BRANCH-CERT-002 | BR-A user requests BR-B certificate by known ID             | Denied or privacy-safe not found; no BR-B payload                                |
+| BRANCH-CERT-003 | BR-A issuer calls issue for BR-B certificate                | `BRANCH_SCOPE_DENIED`; target unchanged                                          |
+| BRANCH-CERT-004 | BR-A revoker calls revoke for BR-B certificate              | Denied; target remains Issued                                                    |
+| BRANCH-CERT-005 | BR-A reissue approver opens BR-B request                    | Denied or excluded                                                               |
+| BRANCH-CERT-006 | Client sends branchId=BR-B while assigned only BR-A         | Filter cannot expand server scope                                                |
+| BRANCH-CERT-007 | Parent user with `canViewChildBranches=true` requests child | Allowed                                                                          |
+| BRANCH-CERT-008 | Parent user with child access disabled requests child       | Denied                                                                           |
+| BRANCH-CERT-009 | Child user requests parent branch data                      | Denied unless separately assigned                                                |
+| BRANCH-CERT-010 | Multi-branch user switches to assigned branch               | Data limited to selected/effective allowed scope                                 |
+| BRANCH-CERT-011 | Consolidated report without `canViewConsolidated`           | `CONSOLIDATED_SCOPE_DENIED`                                                      |
+| BRANCH-CERT-012 | Export report under BR-A scope                              | Export contains no BR-B rows or aggregate leakage                                |
+| BRANCH-CERT-013 | Dashboard KPI under BR-A scope                              | KPI numerator and denominator both scoped to BR-A                                |
+| BRANCH-CERT-014 | Direct artifact URL attempt for BR-B certificate            | Application authorization or short-lived secured artifact policy prevents bypass |
+| BRANCH-CERT-015 | Public verification of a valid code                         | Minimal verification response; no branch browsing or cross-branch enumeration    |
 
 # 8. Boundary and Validation Test Matrix
 
-| Test ID | Boundary | Expected |
-|---|---|---|
-| VAL-CERT-001 | Empty certificate language | Validation error or default only if contract explicitly defines default; must not silently accept unsupported value |
-| VAL-CERT-002 | Language `en` | Accepted |
-| VAL-CERT-003 | Language `ar` | Accepted |
-| VAL-CERT-004 | Any other language | `UNSUPPORTED_CERTIFICATE_LANGUAGE` |
-| VAL-CERT-005 | Reissue reason empty/whitespace | `REISSUE_REASON_REQUIRED` |
-| VAL-CERT-006 | Reissue reason at configured minimum | Accepted |
-| VAL-CERT-007 | Reissue reason at configured maximum | Accepted |
-| VAL-CERT-008 | Reissue reason above maximum | `REISSUE_REASON_INVALID_LENGTH` |
-| VAL-CERT-009 | Revocation reason empty | `REVOCATION_REASON_REQUIRED` |
-| VAL-CERT-010 | Revocation reason at maximum | Accepted |
-| VAL-CERT-011 | Revocation reason above maximum | `REVOCATION_REASON_INVALID_LENGTH` |
-| VAL-CERT-012 | fromDate equals toDate | Accepted; single-day semantics apply |
-| VAL-CERT-013 | fromDate before toDate | Accepted |
-| VAL-CERT-014 | fromDate after toDate | `INVALID_DATE_RANGE` |
-| VAL-CERT-015 | page size zero | Validation error |
-| VAL-CERT-016 | page size above configured maximum | Validation error or capped only if contract explicitly states capping |
-| VAL-CERT-017 | unsupported sort field | `UNSUPPORTED_SORT_FIELD` |
-| VAL-CERT-018 | empty verification code | Public-safe invalid/validation response |
-| VAL-CERT-019 | verification code above maximum length | Rejected before lookup |
-| VAL-CERT-020 | stale expected version | `VERSION_CONFLICT` |
-| VAL-CERT-021 | same idempotency key, same payload | Existing success returned; no duplicate mutation |
-| VAL-CERT-022 | same idempotency key, different payload | `IDEMPOTENCY_KEY_CONFLICT` |
+| Test ID      | Boundary                                | Expected                                                                                                            |
+| ------------ | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| VAL-CERT-001 | Empty certificate language              | Validation error or default only if contract explicitly defines default; must not silently accept unsupported value |
+| VAL-CERT-002 | Language `en`                           | Accepted                                                                                                            |
+| VAL-CERT-003 | Language `ar`                           | Accepted                                                                                                            |
+| VAL-CERT-004 | Any other language                      | `UNSUPPORTED_CERTIFICATE_LANGUAGE`                                                                                  |
+| VAL-CERT-005 | Reissue reason empty/whitespace         | `REISSUE_REASON_REQUIRED`                                                                                           |
+| VAL-CERT-006 | Reissue reason at configured minimum    | Accepted                                                                                                            |
+| VAL-CERT-007 | Reissue reason at configured maximum    | Accepted                                                                                                            |
+| VAL-CERT-008 | Reissue reason above maximum            | `REISSUE_REASON_INVALID_LENGTH`                                                                                     |
+| VAL-CERT-009 | Revocation reason empty                 | `REVOCATION_REASON_REQUIRED`                                                                                        |
+| VAL-CERT-010 | Revocation reason at maximum            | Accepted                                                                                                            |
+| VAL-CERT-011 | Revocation reason above maximum         | `REVOCATION_REASON_INVALID_LENGTH`                                                                                  |
+| VAL-CERT-012 | fromDate equals toDate                  | Accepted; single-day semantics apply                                                                                |
+| VAL-CERT-013 | fromDate before toDate                  | Accepted                                                                                                            |
+| VAL-CERT-014 | fromDate after toDate                   | `INVALID_DATE_RANGE`                                                                                                |
+| VAL-CERT-015 | page size zero                          | Validation error                                                                                                    |
+| VAL-CERT-016 | page size above configured maximum      | Validation error or capped only if contract explicitly states capping                                               |
+| VAL-CERT-017 | unsupported sort field                  | `UNSUPPORTED_SORT_FIELD`                                                                                            |
+| VAL-CERT-018 | empty verification code                 | Public-safe invalid/validation response                                                                             |
+| VAL-CERT-019 | verification code above maximum length  | Rejected before lookup                                                                                              |
+| VAL-CERT-020 | stale expected version                  | `VERSION_CONFLICT`                                                                                                  |
+| VAL-CERT-021 | same idempotency key, same payload      | Existing success returned; no duplicate mutation                                                                    |
+| VAL-CERT-022 | same idempotency key, different payload | `IDEMPOTENCY_KEY_CONFLICT`                                                                                          |
 
 # 9. State Transition Test Matrix
 
 ## 9.1 Certificate State
 
-| From | Command | To | Expected |
-|---|---|---|---|
-| None | Generate eligible certificate | Generated | Allowed |
-| None | Issue | Issued | Forbidden |
-| None | Revoke | Revoked | Forbidden |
-| Generated | Issue | Issued | Allowed with guards |
-| Generated | Revoke | Revoked | Forbidden under current workflow |
-| Generated | Generate retry same command | Generated | Idempotent, no duplicate |
-| Issued | Revoke | Revoked | Allowed with permission and reason |
-| Issued | Issue retry | Issued | Idempotent |
-| Issued | Move to Generated | Generated | Forbidden |
-| Revoked | Revoke retry | Revoked | Idempotent |
-| Revoked | Issue | Issued | Forbidden |
-| Revoked | Generate reset | Generated | Forbidden |
+| From      | Command                       | To        | Expected                           |
+| --------- | ----------------------------- | --------- | ---------------------------------- |
+| None      | Generate eligible certificate | Generated | Allowed                            |
+| None      | Issue                         | Issued    | Forbidden                          |
+| None      | Revoke                        | Revoked   | Forbidden                          |
+| Generated | Issue                         | Issued    | Allowed with guards                |
+| Generated | Revoke                        | Revoked   | Forbidden under current workflow   |
+| Generated | Generate retry same command   | Generated | Idempotent, no duplicate           |
+| Issued    | Revoke                        | Revoked   | Allowed with permission and reason |
+| Issued    | Issue retry                   | Issued    | Idempotent                         |
+| Issued    | Move to Generated             | Generated | Forbidden                          |
+| Revoked   | Revoke retry                  | Revoked   | Idempotent                         |
+| Revoked   | Issue                         | Issued    | Forbidden                          |
+| Revoked   | Generate reset                | Generated | Forbidden                          |
 
 ## 9.2 Reissue Request State
 
-| From | Command | To | Expected |
-|---|---|---|---|
-| None | Submit | PendingReview | Allowed |
-| PendingReview | Approve | Approved | Allowed |
-| PendingReview | Reject | Rejected | Allowed |
-| PendingReview | Generate replacement | Completed | Forbidden |
-| Approved | Generate replacement | Completed | Allowed |
-| Approved | Approval retry | Approved | Idempotent |
-| Rejected | Approve | Approved | Forbidden under current model |
-| Rejected | Generate replacement | Completed | Forbidden |
-| Completed | Reset | PendingReview | Forbidden |
-| Completed | Replacement retry | Completed | Idempotent, no second replacement |
+| From          | Command              | To            | Expected                          |
+| ------------- | -------------------- | ------------- | --------------------------------- |
+| None          | Submit               | PendingReview | Allowed                           |
+| PendingReview | Approve              | Approved      | Allowed                           |
+| PendingReview | Reject               | Rejected      | Allowed                           |
+| PendingReview | Generate replacement | Completed     | Forbidden                         |
+| Approved      | Generate replacement | Completed     | Allowed                           |
+| Approved      | Approval retry       | Approved      | Idempotent                        |
+| Rejected      | Approve              | Approved      | Forbidden under current model     |
+| Rejected      | Generate replacement | Completed     | Forbidden                         |
+| Completed     | Reset                | PendingReview | Forbidden                         |
+| Completed     | Replacement retry    | Completed     | Idempotent, no second replacement |
 
 # 10. Cross-Context Contract Tests
 
-| Test ID | Contract | Verification |
-|---|---|---|
-| XCTX-CERT-001 | Completion eligibility | Certificate generation reads approved completion result; does not update Completion tables |
-| XCTX-CERT-002 | Payment validation | Certificate command reads pass/fail result; does not update Invoice/Payment/Receipt/Receivable |
-| XCTX-CERT-003 | Number allocation | Certificate requests next number through Configuration-owned contract; does not directly mutate NumberingSeries outside defined port |
-| XCTX-CERT-004 | IAM authorization | Server checks permission and effective branch scope for every internal operation |
-| XCTX-CERT-005 | Audit | Sensitive action emits/requests audit recording; Certificate does not become owner of AuditLog |
-| XCTX-CERT-006 | Communication | Certificate emits notification request/event; Communication owns NotificationLog and delivery status |
-| XCTX-CERT-007 | Reporting | Certificate lifecycle facts feed read-only projections; projections cannot mutate transactional tables |
-| XCTX-CERT-008 | Enrollment reference | Certificate links to Enrollment and does not create alternate student-course-batch lifecycle ownership |
+| Test ID       | Contract               | Verification                                                                                                                         |
+| ------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| XCTX-CERT-001 | Completion eligibility | Certificate generation reads approved completion result; does not update Completion tables                                           |
+| XCTX-CERT-002 | Payment validation     | Certificate command reads pass/fail result; does not update Invoice/Payment/Receipt/Receivable                                       |
+| XCTX-CERT-003 | Number allocation      | Certificate requests next number through Configuration-owned contract; does not directly mutate NumberingSeries outside defined port |
+| XCTX-CERT-004 | IAM authorization      | Server checks permission and effective branch scope for every internal operation                                                     |
+| XCTX-CERT-005 | Audit                  | Sensitive action emits/requests audit recording; Certificate does not become owner of AuditLog                                       |
+| XCTX-CERT-006 | Communication          | Certificate emits notification request/event; Communication owns NotificationLog and delivery status                                 |
+| XCTX-CERT-007 | Reporting              | Certificate lifecycle facts feed read-only projections; projections cannot mutate transactional tables                               |
+| XCTX-CERT-008 | Enrollment reference   | Certificate links to Enrollment and does not create alternate student-course-batch lifecycle ownership                               |
 
 # 11. Non-Functional Acceptance Scenarios Relevant to Functional Correctness
 

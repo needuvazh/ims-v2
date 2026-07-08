@@ -4,7 +4,10 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { isGlobalScope } from '@ims/shared-auth';
 import { AppShell } from '@ims/shared-ui';
-import { resolvePortalNavigation, resolvePortalShellUser } from '@ims/identity-access';
+import {
+  resolvePortalNavigation,
+  resolvePortalShellUser,
+} from '@ims/identity-access';
 import { DomainError } from '@ims/shared-kernel';
 import { UserControls } from './user-controls';
 import { getSession } from '../lib/auth-guard';
@@ -72,6 +75,15 @@ function mapNavigationIcons(item: any): any {
       break;
     case '/scheduling':
       icon = <CalendarDays className="h-4.5 w-4.5" />;
+      break;
+    case '/scheduling/calendars':
+      icon = <CalendarClock className="h-4.5 w-4.5" />;
+      break;
+    case '/scheduling/venues':
+      icon = <MapPin className="h-4.5 w-4.5" />;
+      break;
+    case '/scheduling/conflicts':
+      icon = <ShieldCheck className="h-4.5 w-4.5" />;
       break;
     case '/batches':
       icon = <Layers className="h-4.5 w-4.5" />;
@@ -187,7 +199,11 @@ function mapNavigationIcons(item: any): any {
   };
 }
 
-export default async function ProtectedLayout({ children }: { children: ReactNode }) {
+export default async function ProtectedLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   let session;
   try {
     session = await getSession();
@@ -201,9 +217,12 @@ export default async function ProtectedLayout({ children }: { children: ReactNod
               <Lock className="h-10 w-10" />
             </div>
             <div className="space-y-3">
-              <h1 className="text-2xl font-black text-slate-900">Session Expired</h1>
+              <h1 className="text-2xl font-black text-slate-900">
+                Session Expired
+              </h1>
               <p className="text-sm leading-relaxed text-slate-500">
-                {err.message || 'Your session has expired or been revoked for security reasons.'}
+                {err.message ||
+                  'Your session has expired or been revoked for security reasons.'}
               </p>
             </div>
             <div className="pt-4">
@@ -232,10 +251,14 @@ export default async function ProtectedLayout({ children }: { children: ReactNod
   try {
     const { organizationService } = await import('../lib/runtime');
     if (isGlobal) {
-      const { items: allBranches } = await organizationService.listBranches({ pageSize: 100 });
+      const { items: allBranches } = await organizationService.listBranches({
+        pageSize: 100,
+      });
       branches = allBranches.map((b) => ({ id: b.id, name: b.branchName }));
     } else if (session.dataScopes && session.dataScopes.length > 0) {
-      const branchScopes = session.dataScopes.filter((s) => s.scopeType === 'Branch' && s.branchId);
+      const branchScopes = session.dataScopes.filter(
+        (s) => s.scopeType === 'Branch' && s.branchId,
+      );
       for (const scope of branchScopes) {
         if (scope.branchId) {
           try {

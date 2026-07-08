@@ -16,10 +16,25 @@ export default async function CreateUserPage() {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Users', href: '/iam/users', icon: <Users className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Create', icon: <UserPlus className="h-3.5 w-3.5 text-slate-500" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'IAM',
+                href: '/iam',
+                icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Users',
+                href: '/iam/users',
+                icon: <Users className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Create',
+                icon: <UserPlus className="h-3.5 w-3.5 text-slate-500" />,
+              },
             ]}
           />
         }

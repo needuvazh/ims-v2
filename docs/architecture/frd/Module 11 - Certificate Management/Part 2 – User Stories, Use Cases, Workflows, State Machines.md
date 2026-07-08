@@ -34,17 +34,17 @@ Certificate Management must not recompute attendance, exam results, completion a
 
 ### 1.1 Primary Traceability Sources
 
-| Behavior Area | Part 1 Requirements | Primary Business Rules |
-|---|---|---|
-| Readiness and eligibility | FR-CERT-001 to FR-CERT-005 | BR-CERT-001 to BR-CERT-007, BR-CERT-044, BR-CERT-051 |
-| Generation | FR-CERT-006 to FR-CERT-011 | BR-CERT-008 to BR-CERT-016, BR-CERT-041, BR-CERT-052 |
-| Issuance and lifecycle | FR-CERT-012 to FR-CERT-013, FR-CERT-033 to FR-CERT-040 | BR-CERT-028 to BR-CERT-030, BR-CERT-037 to BR-CERT-044 |
-| Registry and download | FR-CERT-014 to FR-CERT-016 | BR-CERT-031 to BR-CERT-036, BR-CERT-045 |
-| Public verification | FR-CERT-017 to FR-CERT-020 | BR-CERT-009 to BR-CERT-011, BR-CERT-017 to BR-CERT-019, BR-CERT-030, BR-CERT-046 |
-| Reissue | FR-CERT-021 to FR-CERT-026 | BR-CERT-007, BR-CERT-020 to BR-CERT-027, BR-CERT-054 |
-| Revocation | FR-CERT-027 | BR-CERT-028 to BR-CERT-030, BR-CERT-037 to BR-CERT-038 |
-| Authorization and branch isolation | FR-CERT-028 to FR-CERT-030 | BR-CERT-031 to BR-CERT-038 |
-| Cross-context side effects | FR-CERT-031 to FR-CERT-032, FR-CERT-036 | BR-CERT-039 to BR-CERT-040, BR-CERT-050, BR-CERT-053 to BR-CERT-055 |
+| Behavior Area                      | Part 1 Requirements                                    | Primary Business Rules                                                           |
+| ---------------------------------- | ------------------------------------------------------ | -------------------------------------------------------------------------------- |
+| Readiness and eligibility          | FR-CERT-001 to FR-CERT-005                             | BR-CERT-001 to BR-CERT-007, BR-CERT-044, BR-CERT-051                             |
+| Generation                         | FR-CERT-006 to FR-CERT-011                             | BR-CERT-008 to BR-CERT-016, BR-CERT-041, BR-CERT-052                             |
+| Issuance and lifecycle             | FR-CERT-012 to FR-CERT-013, FR-CERT-033 to FR-CERT-040 | BR-CERT-028 to BR-CERT-030, BR-CERT-037 to BR-CERT-044                           |
+| Registry and download              | FR-CERT-014 to FR-CERT-016                             | BR-CERT-031 to BR-CERT-036, BR-CERT-045                                          |
+| Public verification                | FR-CERT-017 to FR-CERT-020                             | BR-CERT-009 to BR-CERT-011, BR-CERT-017 to BR-CERT-019, BR-CERT-030, BR-CERT-046 |
+| Reissue                            | FR-CERT-021 to FR-CERT-026                             | BR-CERT-007, BR-CERT-020 to BR-CERT-027, BR-CERT-054                             |
+| Revocation                         | FR-CERT-027                                            | BR-CERT-028 to BR-CERT-030, BR-CERT-037 to BR-CERT-038                           |
+| Authorization and branch isolation | FR-CERT-028 to FR-CERT-030                             | BR-CERT-031 to BR-CERT-038                                                       |
+| Cross-context side effects         | FR-CERT-031 to FR-CERT-032, FR-CERT-036                | BR-CERT-039 to BR-CERT-040, BR-CERT-050, BR-CERT-053 to BR-CERT-055              |
 
 ---
 
@@ -1300,25 +1300,25 @@ stateDiagram-v2
 
 ### 5.1.3 Certificate Transition Rules Matrix
 
-| From State | To State | Trigger | Preconditions / Guards | Required Permission | Audit Requirement | Invalid Examples |
-|---|---|---|---|---|---|---|
-| None | Generated | Generate certificate | Valid Enrollment; approved completion; payment gate passed if required; source references consistent; no prohibited duplicate; active NumberingSeries; branch access | `certificate.generate` | Generation audit according to sensitive-action policy; all later sensitive transitions mandatory | Generate for missing batch, failed payment gate, unapproved completion, inaccessible branch |
-| Generated | Issued | Issue certificate | Current gates revalidated; branch access; artifact/reference present; concurrency version valid | `certificate.issue` | Mandatory sensitive state-change audit | Issue without permission; issue outside scope; issue after authoritative gate becomes invalid |
-| Issued | Revoked | Revoke certificate | Branch access; mandatory reason; current state revocable; concurrency version valid | `certificate.revoke` | Mandatory audit with old/new state and reason | Revoke without reason; revoke by read-only user |
-| Generated | Generated | Duplicate generation retry | Same deterministic command already processed | `certificate.generate` | No duplicate business transition audit; technical retry telemetry allowed | Creating second active certificate |
-| Issued | Issued | Duplicate issue retry | Certificate already issued by completed command | `certificate.issue` | Must not create duplicate issuance transition | Overwriting original issuedAt/issuedBy on retry |
-| Revoked | Revoked | Duplicate revoke retry | Already revoked | `certificate.revoke` | Must not create misleading duplicate business transition | Restoring to Issued without an approved future domain rule |
+| From State | To State  | Trigger                    | Preconditions / Guards                                                                                                                                               | Required Permission    | Audit Requirement                                                                                | Invalid Examples                                                                              |
+| ---------- | --------- | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
+| None       | Generated | Generate certificate       | Valid Enrollment; approved completion; payment gate passed if required; source references consistent; no prohibited duplicate; active NumberingSeries; branch access | `certificate.generate` | Generation audit according to sensitive-action policy; all later sensitive transitions mandatory | Generate for missing batch, failed payment gate, unapproved completion, inaccessible branch   |
+| Generated  | Issued    | Issue certificate          | Current gates revalidated; branch access; artifact/reference present; concurrency version valid                                                                      | `certificate.issue`    | Mandatory sensitive state-change audit                                                           | Issue without permission; issue outside scope; issue after authoritative gate becomes invalid |
+| Issued     | Revoked   | Revoke certificate         | Branch access; mandatory reason; current state revocable; concurrency version valid                                                                                  | `certificate.revoke`   | Mandatory audit with old/new state and reason                                                    | Revoke without reason; revoke by read-only user                                               |
+| Generated  | Generated | Duplicate generation retry | Same deterministic command already processed                                                                                                                         | `certificate.generate` | No duplicate business transition audit; technical retry telemetry allowed                        | Creating second active certificate                                                            |
+| Issued     | Issued    | Duplicate issue retry      | Certificate already issued by completed command                                                                                                                      | `certificate.issue`    | Must not create duplicate issuance transition                                                    | Overwriting original issuedAt/issuedBy on retry                                               |
+| Revoked    | Revoked   | Duplicate revoke retry     | Already revoked                                                                                                                                                      | `certificate.revoke`   | Must not create misleading duplicate business transition                                         | Restoring to Issued without an approved future domain rule                                    |
 
 ### 5.1.4 Explicitly Forbidden Certificate Transitions
 
-| From | To | Reason |
-|---|---|---|
-| None | Issued | Generation and artifact creation must precede issuance. |
-| None | Revoked | There is no certificate transaction to revoke. |
-| Generated | Revoked | Current business workflow defines revocation for issued credentials; generated artifacts can be handled by controlled administrative lifecycle policy but must not be presented as issued certificates. |
-| Revoked | Issued | DDD/ER sources provide no reinstatement workflow. A reinstatement capability would require an approved domain change. |
-| Issued | Generated | Issuance history cannot be reversed by moving backward to generated state. |
-| Revoked | Generated | Revocation is historical invalidation, not a reset operation. |
+| From      | To        | Reason                                                                                                                                                                                                  |
+| --------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| None      | Issued    | Generation and artifact creation must precede issuance.                                                                                                                                                 |
+| None      | Revoked   | There is no certificate transaction to revoke.                                                                                                                                                          |
+| Generated | Revoked   | Current business workflow defines revocation for issued credentials; generated artifacts can be handled by controlled administrative lifecycle policy but must not be presented as issued certificates. |
+| Revoked   | Issued    | DDD/ER sources provide no reinstatement workflow. A reinstatement capability would require an approved domain change.                                                                                   |
+| Issued    | Generated | Issuance history cannot be reversed by moving backward to generated state.                                                                                                                              |
+| Revoked   | Generated | Revocation is historical invalidation, not a reset operation.                                                                                                                                           |
 
 ---
 
@@ -1370,26 +1370,26 @@ stateDiagram-v2
 
 ### 5.2.3 Reissue Transition Rules Matrix
 
-| From State | To State | Trigger | Preconditions / Guards | Required Permission | Audit / Approval Requirement | Postcondition |
-|---|---|---|---|---|---|---|
-| None | PendingReview | Submit reissue request | Existing accessible Certificate; requester identity; mandatory reason | `certificate.reissue.request` | Request action auditable according to policy | Request created; no replacement exists |
-| PendingReview | Approved | Approve request | Pending state; approver permission; branch scope; concurrency version valid | `certificate.reissue.approve` | Approval decision and history mandatory | `approvedBy` and `approvedAt` recorded |
-| PendingReview | Rejected | Reject request | Pending state; approver permission; branch scope; required decision remarks where policy requires | `certificate.reissue.approve` | Rejection decision and history mandatory | Replacement prohibited |
-| Approved | Completed | Generate replacement | Approved state; `newCertificateId` empty; source references valid; numbering config active; branch scope | `certificate.reissue.generate` | Replacement creation and lineage audit mandatory | New Certificate created and `newCertificateId` populated |
-| Approved | Approved | Duplicate approval retry | Decision already successfully committed | `certificate.reissue.approve` | No duplicate approval business action | Existing approval metadata preserved |
-| Rejected | Rejected | Duplicate rejection retry | Decision already successfully committed | `certificate.reissue.approve` | No misleading duplicate business action | Original rejection preserved |
-| Completed | Completed | Duplicate replacement retry | `newCertificateId` already identifies replacement | `certificate.reissue.generate` | No duplicate replacement transaction | Existing lineage returned/preserved |
+| From State    | To State      | Trigger                     | Preconditions / Guards                                                                                   | Required Permission            | Audit / Approval Requirement                     | Postcondition                                            |
+| ------------- | ------------- | --------------------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------ | ------------------------------------------------ | -------------------------------------------------------- |
+| None          | PendingReview | Submit reissue request      | Existing accessible Certificate; requester identity; mandatory reason                                    | `certificate.reissue.request`  | Request action auditable according to policy     | Request created; no replacement exists                   |
+| PendingReview | Approved      | Approve request             | Pending state; approver permission; branch scope; concurrency version valid                              | `certificate.reissue.approve`  | Approval decision and history mandatory          | `approvedBy` and `approvedAt` recorded                   |
+| PendingReview | Rejected      | Reject request              | Pending state; approver permission; branch scope; required decision remarks where policy requires        | `certificate.reissue.approve`  | Rejection decision and history mandatory         | Replacement prohibited                                   |
+| Approved      | Completed     | Generate replacement        | Approved state; `newCertificateId` empty; source references valid; numbering config active; branch scope | `certificate.reissue.generate` | Replacement creation and lineage audit mandatory | New Certificate created and `newCertificateId` populated |
+| Approved      | Approved      | Duplicate approval retry    | Decision already successfully committed                                                                  | `certificate.reissue.approve`  | No duplicate approval business action            | Existing approval metadata preserved                     |
+| Rejected      | Rejected      | Duplicate rejection retry   | Decision already successfully committed                                                                  | `certificate.reissue.approve`  | No misleading duplicate business action          | Original rejection preserved                             |
+| Completed     | Completed     | Duplicate replacement retry | `newCertificateId` already identifies replacement                                                        | `certificate.reissue.generate` | No duplicate replacement transaction             | Existing lineage returned/preserved                      |
 
 ### 5.2.4 Forbidden Reissue Transitions
 
-| From | To | Reason |
-|---|---|---|
-| PendingReview | Completed | Replacement requires explicit approval first. |
-| Rejected | Approved | Current source model does not define reopen/appeal transition. A new request should be used unless DDD is extended. |
-| Rejected | Completed | BR-CERT-026 forbids replacement generation from rejected request. |
-| Completed | PendingReview | Completed lineage must not be reset. |
-| Completed | Approved | Completion is terminal for that reissue request. |
-| Approved | Rejected | Source requirements do not define post-approval reversal. Such capability would require explicit domain policy and audit design. |
+| From          | To            | Reason                                                                                                                           |
+| ------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| PendingReview | Completed     | Replacement requires explicit approval first.                                                                                    |
+| Rejected      | Approved      | Current source model does not define reopen/appeal transition. A new request should be used unless DDD is extended.              |
+| Rejected      | Completed     | BR-CERT-026 forbids replacement generation from rejected request.                                                                |
+| Completed     | PendingReview | Completed lineage must not be reset.                                                                                             |
+| Completed     | Approved      | Completion is terminal for that reissue request.                                                                                 |
+| Approved      | Rejected      | Source requirements do not define post-approval reversal. Such capability would require explicit domain policy and audit design. |
 
 ---
 
@@ -1415,20 +1415,20 @@ These outcomes must not mutate Certificate status. The precise persisted enum va
 
 # 6. Authorization and State-Transition Permission Summary
 
-| Capability | Recommended Permission Code | Branch Scope Required | Public Access | Sensitive Audit |
-|---|---|---:|---:|---:|
-| View readiness | `certificate.read` | Yes | No | No, normal read telemetry only |
-| View registry/detail | `certificate.read` | Yes | No | No, except sensitive-access policy if configured |
-| Download artifact | `certificate.download` | Yes | No | Access logging recommended |
-| Generate certificate | `certificate.generate` | Yes | No | Yes according to certificate sensitive-action policy |
-| Issue certificate | `certificate.issue` | Yes | No | Yes |
-| Verify certificate | None for public endpoint | No internal branch scope exposed | Yes | Verification history + abuse telemetry |
-| Submit reissue | `certificate.reissue.request` | Yes | No in current admin-first scope | Yes according to policy |
-| Decide reissue | `certificate.reissue.approve` | Yes | No | Yes |
-| Generate replacement | `certificate.reissue.generate` | Yes | No | Yes |
-| Revoke certificate | `certificate.revoke` | Yes | No | Yes, reason mandatory |
-| View lifecycle audit | `audit.read` and/or approved certificate-audit permission contract | Audit context rules | No | Read access governed by Audit context |
-| View reporting | Reporting/dashboard permission | Reporting branch scope | No | Reporting context policy |
+| Capability           | Recommended Permission Code                                        |            Branch Scope Required |                   Public Access |                                      Sensitive Audit |
+| -------------------- | ------------------------------------------------------------------ | -------------------------------: | ------------------------------: | ---------------------------------------------------: |
+| View readiness       | `certificate.read`                                                 |                              Yes |                              No |                       No, normal read telemetry only |
+| View registry/detail | `certificate.read`                                                 |                              Yes |                              No |     No, except sensitive-access policy if configured |
+| Download artifact    | `certificate.download`                                             |                              Yes |                              No |                           Access logging recommended |
+| Generate certificate | `certificate.generate`                                             |                              Yes |                              No | Yes according to certificate sensitive-action policy |
+| Issue certificate    | `certificate.issue`                                                |                              Yes |                              No |                                                  Yes |
+| Verify certificate   | None for public endpoint                                           | No internal branch scope exposed |                             Yes |               Verification history + abuse telemetry |
+| Submit reissue       | `certificate.reissue.request`                                      |                              Yes | No in current admin-first scope |                              Yes according to policy |
+| Decide reissue       | `certificate.reissue.approve`                                      |                              Yes |                              No |                                                  Yes |
+| Generate replacement | `certificate.reissue.generate`                                     |                              Yes |                              No |                                                  Yes |
+| Revoke certificate   | `certificate.revoke`                                               |                              Yes |                              No |                                Yes, reason mandatory |
+| View lifecycle audit | `audit.read` and/or approved certificate-audit permission contract |              Audit context rules |                              No |                Read access governed by Audit context |
+| View reporting       | Reporting/dashboard permission                                     |           Reporting branch scope |                              No |                             Reporting context policy |
 
 Permission names are recommended capability codes and must be seeded/configured through IAM rather than inferred from hardcoded role names.
 
@@ -1436,20 +1436,20 @@ Permission names are recommended capability codes and must be seeded/configured 
 
 # 7. Cross-Context Workflow Responsibility Matrix
 
-| Workflow Step | Owning Context | Certificate Management Behavior | Forbidden Certificate Behavior |
-|---|---|---|---|
-| Define completion rule | Course Catalog | Read outcome indirectly through completion decision | Do not create or edit `CourseCompletionRule` |
-| Calculate attendance | Attendance | Consume only via upstream completion evaluation | Do not calculate attendance percentage |
-| Record exams/results | Exam, Result & Completion | Read approved completion result | Do not create `Exam` or `Result` |
-| Approve completion | Exam, Result & Completion, with approval history in Audit | Require approved outcome | Do not perform completion approval workflow |
-| Maintain Enrollment | Admission & Enrollment | Resolve central learning journey | Do not change learner/course/batch enrollment references |
-| Validate payment | Finance & Receivables | Consume validation decision when required | Do not calculate outstanding amount or post payment |
-| Allocate certificate number | Configuration / NumberingSeries capability | Request/consume allocation according to repository boundary | Do not invent local ad hoc numbering |
-| Authorize user/branch | IAM | Enforce permission and scope on every server command/query | Do not trust client branch filters |
-| Issue/revoke/reissue certificate | Certificate Management | Own transaction and lifecycle state | Do not delegate ownership to Reporting or Communication |
-| Record critical audit | Audit & Compliance | Submit audit facts/integration call | Do not use certificate transaction tables as replacement for global AuditLog |
-| Send notification | Communication | Submit request/intention | Do not own provider delivery status/history |
-| Build reports | Reporting | Expose/read certificate facts | Do not allow reporting projection to mutate certificate transactions |
+| Workflow Step                    | Owning Context                                            | Certificate Management Behavior                             | Forbidden Certificate Behavior                                               |
+| -------------------------------- | --------------------------------------------------------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Define completion rule           | Course Catalog                                            | Read outcome indirectly through completion decision         | Do not create or edit `CourseCompletionRule`                                 |
+| Calculate attendance             | Attendance                                                | Consume only via upstream completion evaluation             | Do not calculate attendance percentage                                       |
+| Record exams/results             | Exam, Result & Completion                                 | Read approved completion result                             | Do not create `Exam` or `Result`                                             |
+| Approve completion               | Exam, Result & Completion, with approval history in Audit | Require approved outcome                                    | Do not perform completion approval workflow                                  |
+| Maintain Enrollment              | Admission & Enrollment                                    | Resolve central learning journey                            | Do not change learner/course/batch enrollment references                     |
+| Validate payment                 | Finance & Receivables                                     | Consume validation decision when required                   | Do not calculate outstanding amount or post payment                          |
+| Allocate certificate number      | Configuration / NumberingSeries capability                | Request/consume allocation according to repository boundary | Do not invent local ad hoc numbering                                         |
+| Authorize user/branch            | IAM                                                       | Enforce permission and scope on every server command/query  | Do not trust client branch filters                                           |
+| Issue/revoke/reissue certificate | Certificate Management                                    | Own transaction and lifecycle state                         | Do not delegate ownership to Reporting or Communication                      |
+| Record critical audit            | Audit & Compliance                                        | Submit audit facts/integration call                         | Do not use certificate transaction tables as replacement for global AuditLog |
+| Send notification                | Communication                                             | Submit request/intention                                    | Do not own provider delivery status/history                                  |
+| Build reports                    | Reporting                                                 | Expose/read certificate facts                               | Do not allow reporting projection to mutate certificate transactions         |
 
 ---
 
@@ -1470,15 +1470,15 @@ Permission names are recommended capability codes and must be seeded/configured 
 
 ## 8.2 Known Source-Model Gaps Carried Forward
 
-| Gap | DDD Position | ER Position | Part 2 Treatment |
-|---|---|---|---|
-| Certificate lifecycle enum | Lifecycle responsibilities imply issuance/revocation behavior | `certificateStatus` exists, enum values unspecified | Defines required semantic states Generated, Issued, Revoked; Prisma enum must be verified |
-| Reissue status enum | Reissue approval workflow required | `status` field exists, values unspecified | Defines PendingReview, Approved, Rejected, Completed semantics; persisted names require schema confirmation |
-| CertificateIssueLog | DDD names `CertificateIssueLog` as Certificate aggregate child concept | No dedicated entity | Uses Certificate fields + AuditLog integration; does not invent new table |
-| CertificateQRCode | DDD names QR code concept | ER stores `qrCodeUrl` on Certificate | Uses `qrCodeUrl`/verification target; does not invent new QR entity |
-| Revocation metadata | DDD requires revocation | ER has `certificateStatus` but no `revokedAt`, `revokedBy`, `revocationReason` | Revocation state stored on Certificate status; actor/time/reason captured in AuditLog under current source model |
-| Reissue approval history | DDD requires management approval | ER has request approval fields and Audit approval entities | Request remains Certificate-owned; approval history remains Audit & Compliance-owned |
-| Soft-delete base fields | Project principle requires soft delete/auditing | ER recommends common base fields for most operational tables but per-entity listing may omit them | No hard delete workflow is introduced; exact Prisma fields require schema validation |
+| Gap                        | DDD Position                                                           | ER Position                                                                                       | Part 2 Treatment                                                                                                 |
+| -------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Certificate lifecycle enum | Lifecycle responsibilities imply issuance/revocation behavior          | `certificateStatus` exists, enum values unspecified                                               | Defines required semantic states Generated, Issued, Revoked; Prisma enum must be verified                        |
+| Reissue status enum        | Reissue approval workflow required                                     | `status` field exists, values unspecified                                                         | Defines PendingReview, Approved, Rejected, Completed semantics; persisted names require schema confirmation      |
+| CertificateIssueLog        | DDD names `CertificateIssueLog` as Certificate aggregate child concept | No dedicated entity                                                                               | Uses Certificate fields + AuditLog integration; does not invent new table                                        |
+| CertificateQRCode          | DDD names QR code concept                                              | ER stores `qrCodeUrl` on Certificate                                                              | Uses `qrCodeUrl`/verification target; does not invent new QR entity                                              |
+| Revocation metadata        | DDD requires revocation                                                | ER has `certificateStatus` but no `revokedAt`, `revokedBy`, `revocationReason`                    | Revocation state stored on Certificate status; actor/time/reason captured in AuditLog under current source model |
+| Reissue approval history   | DDD requires management approval                                       | ER has request approval fields and Audit approval entities                                        | Request remains Certificate-owned; approval history remains Audit & Compliance-owned                             |
+| Soft-delete base fields    | Project principle requires soft delete/auditing                        | ER recommends common base fields for most operational tables but per-entity listing may omit them | No hard delete workflow is introduced; exact Prisma fields require schema validation                             |
 
 ## 8.3 No-New-Model Confirmation
 
@@ -1488,24 +1488,24 @@ This document does not introduce a new aggregate or persistence entity. Terms su
 
 # 9. Validation Checklist for Part 2
 
-| Check | Result |
-|---|---|
-| All learning journeys use Enrollment as the certificate source | Aligned |
-| Course and Batch remain mandatory through Enrollment/source consistency | Aligned |
-| Certificate context does not compute completion eligibility | Aligned |
-| Certificate context does not own payment calculations | Aligned |
-| Certificate generation uses NumberingSeries | Aligned |
-| Public verification uses Certificate-owned verification data | Aligned |
-| Reissue request maps to ER entity and preserves original Certificate | Aligned |
-| Replacement maps through `newCertificateId` | Aligned |
-| Revocation preserves history and uses status + audit under current ER | Aligned with documented ER gap |
-| Branch isolation enforced server-side in query and command workflows | Aligned |
-| Dynamic permissions used instead of role-name checks | Aligned |
-| Sensitive actions have audit requirements | Aligned |
-| Reporting remains read-only consumer | Aligned |
-| Communication owns message delivery history | Aligned |
-| No microservice/broker/CQRS/Event Sourcing introduced | Aligned |
-| Prisma enum/constraint validation completed | Not verified; Prisma schema not available in supplied inputs |
+| Check                                                                   | Result                                                       |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------ |
+| All learning journeys use Enrollment as the certificate source          | Aligned                                                      |
+| Course and Batch remain mandatory through Enrollment/source consistency | Aligned                                                      |
+| Certificate context does not compute completion eligibility             | Aligned                                                      |
+| Certificate context does not own payment calculations                   | Aligned                                                      |
+| Certificate generation uses NumberingSeries                             | Aligned                                                      |
+| Public verification uses Certificate-owned verification data            | Aligned                                                      |
+| Reissue request maps to ER entity and preserves original Certificate    | Aligned                                                      |
+| Replacement maps through `newCertificateId`                             | Aligned                                                      |
+| Revocation preserves history and uses status + audit under current ER   | Aligned with documented ER gap                               |
+| Branch isolation enforced server-side in query and command workflows    | Aligned                                                      |
+| Dynamic permissions used instead of role-name checks                    | Aligned                                                      |
+| Sensitive actions have audit requirements                               | Aligned                                                      |
+| Reporting remains read-only consumer                                    | Aligned                                                      |
+| Communication owns message delivery history                             | Aligned                                                      |
+| No microservice/broker/CQRS/Event Sourcing introduced                   | Aligned                                                      |
+| Prisma enum/constraint validation completed                             | Not verified; Prisma schema not available in supplied inputs |
 
 ---
 

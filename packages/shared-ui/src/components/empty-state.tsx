@@ -10,10 +10,20 @@ export interface EmptyStateProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 /** Server-compatible empty state component. */
-export function EmptyState({ icon, title, description, action, className, ...props }: EmptyStateProps) {
+export function EmptyState({
+  icon,
+  title,
+  description,
+  action,
+  className,
+  ...props
+}: EmptyStateProps) {
   return (
     <Card
-      className={cn('flex flex-col items-center border-dashed py-section-gap px-page-px text-center', className)}
+      className={cn(
+        'flex flex-col items-center border-dashed py-section-gap px-page-px text-center',
+        className,
+      )}
       {...props}
     >
       {icon && (
@@ -21,9 +31,13 @@ export function EmptyState({ icon, title, description, action, className, ...pro
           {icon}
         </div>
       )}
-      <h3 className="text-base font-semibold text-[color:var(--ims-ink)]">{title}</h3>
+      <h3 className="text-base font-semibold text-[color:var(--ims-ink)]">
+        {title}
+      </h3>
       {description && (
-        <p className="mt-1.5 max-w-sm text-sm text-[color:var(--ims-muted)]">{description}</p>
+        <p className="mt-1.5 max-w-sm text-sm text-[color:var(--ims-muted)]">
+          {description}
+        </p>
       )}
       {action && <div className="mt-5">{action}</div>}
     </Card>

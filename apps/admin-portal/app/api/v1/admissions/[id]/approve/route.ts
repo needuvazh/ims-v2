@@ -12,7 +12,7 @@ function errorResponse(error: Error) {
   const msg = error.message;
   let status = 500;
   let code = 'ERR_ADMISSION_INTERNAL_ERROR';
-  
+
   if (msg.includes('ERR_ADMISSION_NOT_FOUND')) {
     status = 404;
     code = 'ERR_ADMISSION_NOT_FOUND';
@@ -28,47 +28,68 @@ function errorResponse(error: Error) {
   }
 
   return NextResponse.json(
-    { success: false, errorCode: code, messageEnglish: msg, statusCode: status },
-    { status }
+    {
+      success: false,
+      errorCode: code,
+      messageEnglish: msg,
+      statusCode: status,
+    },
+    { status },
   );
 }
 
-export async function POST(request: Request, props: { params: Promise<{ id: string }> }) {
+export async function POST(
+  request: Request,
+  props: { params: Promise<{ id: string }> },
+) {
   const { id: admissionId } = await props.params;
-  return withRouteObservability(request.headers, async () => withPermission(request, 'admission.approve', async ({ session }) => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'admission.approve', async ({ session }) => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    try {
-      const { prisma, branchScopeResolver, admissionService } = await import('../../../../../../lib/runtime');
-      
-      const admission = await prisma.admission.findUnique({
-        where: { id: admissionId }
-      });
+        try {
+          const { prisma, branchScopeResolver, admissionService } =
+            await import('../../../../../../lib/runtime');
 
-      if (!admission) {
-        throw new Error('ERR_ADMISSION_NOT_FOUND');
-      }
+          const admission = await prisma.admission.findUnique({
+            where: { id: admissionId },
+          });
 
-      const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
-        session.userId,
-        session.activeBranchId ?? null
-      );
-      if (!allowedBranches.includes(admission.branchId as Uuid)) {
-        throw new Error('ERR_AUTH_BRANCH_DENIED');
-      }
+          if (!admission) {
+            throw new Error('ERR_ADMISSION_NOT_FOUND');
+          }
 
-      await admissionService.approveAdmission(admissionId, session.userId);
+          const allowedBranches =
+            await branchScopeResolver.resolveAllowedBranches(
+              session.userId,
+              session.activeBranchId ?? null,
+            );
+          if (!allowedBranches.includes(admission.branchId as Uuid)) {
+            throw new Error('ERR_AUTH_BRANCH_DENIED');
+          }
 
-      const response = NextResponse.json({ success: true }, { status: 200 });
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/admissions/[id]/approve',
-        method: request.method,
-        status: 'success',
-      });
-      return response;
-    } catch (error) {
-      logger.error('api.admissions.approve.failed', { status: 'failed', error: error as Error });
-      return errorResponse(error as Error);
-    }
-  }), { route: '/api/v1/admissions/[id]/approve' });
+          await admissionService.approveAdmission(admissionId, session.userId);
+
+          const response = NextResponse.json(
+            { success: true },
+            { status: 200 },
+          );
+          applyObservabilityResponseHeaders(response.headers, request.headers, {
+            route: '/api/v1/admissions/[id]/approve',
+            method: request.method,
+            status: 'success',
+          });
+          return response;
+        } catch (error) {
+          logger.error('api.admissions.approve.failed', {
+            status: 'failed',
+            error: error as Error,
+          });
+          return errorResponse(error as Error);
+        }
+      }),
+    { route: '/api/v1/admissions/[id]/approve' },
+  );
 }

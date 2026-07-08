@@ -1,5 +1,21 @@
 import React from 'react';
-import { Breadcrumbs, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, PageHeader, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Badge } from '@ims/shared-ui';
+import {
+  Breadcrumbs,
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  PageHeader,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  Badge,
+} from '@ims/shared-ui';
 import { Pencil, ShieldCheck, Home, Lock } from 'lucide-react';
 import Link from 'next/link';
 import { getSession } from '../../../lib/auth-guard';
@@ -10,7 +26,11 @@ export const dynamic = 'force-dynamic';
 export default async function IamSecurityPolicyPage() {
   const session = await getSession();
   const { securityPolicyService } = await import('../../../lib/runtime');
-  const policy = await securityPolicyService.getSecurityPolicy({ actorId: session.userId as never, actorPermissions: session.permissions, activeBranchId: session.activeBranchId as never });
+  const policy = await securityPolicyService.getSecurityPolicy({
+    actorId: session.userId as never,
+    actorPermissions: session.permissions,
+    activeBranchId: session.activeBranchId as never,
+  });
 
   const rows = [
     ['Max failed attempts', policy.maxFailedAttempts],
@@ -30,9 +50,20 @@ export default async function IamSecurityPolicyPage() {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Security Policy', icon: <Lock className="h-3.5 w-3.5 text-slate-500" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'IAM',
+                href: '/iam',
+                icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Security Policy',
+                icon: <Lock className="h-3.5 w-3.5 text-slate-500" />,
+              },
             ]}
           />
         }
@@ -47,8 +78,13 @@ export default async function IamSecurityPolicyPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2"><ShieldCheck className="h-5 w-5" /> Current policy</CardTitle>
-          <CardDescription>These values are enforced by the backend and surfaced here for operational review.</CardDescription>
+          <CardTitle className="flex items-center gap-2">
+            <ShieldCheck className="h-5 w-5" /> Current policy
+          </CardTitle>
+          <CardDescription>
+            These values are enforced by the backend and surfaced here for
+            operational review.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
@@ -62,7 +98,9 @@ export default async function IamSecurityPolicyPage() {
               {rows.map(([label, value]) => (
                 <TableRow key={label}>
                   <TableCell>{label}</TableCell>
-                  <TableCell><Badge variant="default">{String(value)}</Badge></TableCell>
+                  <TableCell>
+                    <Badge variant="default">{String(value)}</Badge>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

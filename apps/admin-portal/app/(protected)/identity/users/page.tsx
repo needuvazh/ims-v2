@@ -6,7 +6,13 @@ export const metadata = { title: 'IAM Users | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
 type SortOrder = 'asc' | 'desc';
-type SortField = 'fullName' | 'branchName' | 'roleName' | 'userType' | 'status' | 'lastLoginAt';
+type SortField =
+  | 'fullName'
+  | 'branchName'
+  | 'roleName'
+  | 'userType'
+  | 'status'
+  | 'lastLoginAt';
 
 function parsePageValue(value: string | undefined, fallback: number) {
   const parsed = Number.parseInt(value ?? '', 10);
@@ -14,11 +20,17 @@ function parsePageValue(value: string | undefined, fallback: number) {
 }
 
 function compareText(left: string, right: string, order: SortOrder) {
-  const comparison = left.localeCompare(right, undefined, { sensitivity: 'base' });
+  const comparison = left.localeCompare(right, undefined, {
+    sensitivity: 'base',
+  });
   return order === 'asc' ? comparison : -comparison;
 }
 
-function compareDate(left: string | null, right: string | null, order: SortOrder) {
+function compareDate(
+  left: string | null,
+  right: string | null,
+  order: SortOrder,
+) {
   const leftTime = left ? new Date(left).getTime() : 0;
   const rightTime = right ? new Date(right).getTime() : 0;
   return order === 'asc' ? leftTime - rightTime : rightTime - leftTime;
@@ -48,21 +60,36 @@ export default async function IdentityUsersPage(props: {
   const branchFilter = searchParams.branchId || '';
   const roleFilter = searchParams.roleId || '';
   const sortBy = (searchParams.sortBy as SortField | undefined) || 'fullName';
-  const sortOrder: SortOrder = searchParams.sortOrder === 'desc' ? 'desc' : 'asc';
+  const sortOrder: SortOrder =
+    searchParams.sortOrder === 'desc' ? 'desc' : 'asc';
 
-  const branchById = new Map<string, string>(data.branches.map((branch) => [String(branch.id), branch.branchName]));
-  const roleById = new Map<string, string>(data.roles.map((role: any) => [String(role.id), role.roleName]));
+  const branchById = new Map<string, string>(
+    data.branches.map((branch) => [String(branch.id), branch.branchName]),
+  );
+  const roleById = new Map<string, string>(
+    data.roles.map((role: any) => [String(role.id), role.roleName]),
+  );
 
   const users = data.users.map((user: any) => {
-    const branchNames = (user.dataScopes ?? []).some((scope: { scopeType: string }) => scope.scopeType === 'All')
+    const branchNames = (user.dataScopes ?? []).some(
+      (scope: { scopeType: string }) => scope.scopeType === 'All',
+    )
       ? ['All Branches']
       : (user.dataScopes ?? [])
-          .filter((scope: { scopeType: string; branchId?: string | null }) => scope.scopeType === 'Branch' && scope.branchId)
+          .filter(
+            (scope: { scopeType: string; branchId?: string | null }) =>
+              scope.scopeType === 'Branch' && scope.branchId,
+          )
           .map((scope: { branchId?: string | null }) =>
-            scope.branchId ? branchById.get(scope.branchId as string) ?? String(scope.branchId) : 'Branch',
+            scope.branchId
+              ? (branchById.get(scope.branchId as string) ??
+                String(scope.branchId))
+              : 'Branch',
           );
 
-    const roleNames = (user.roleSummaries ?? []).map((role: { roleName: string }) => role.roleName).filter(Boolean);
+    const roleNames = (user.roleSummaries ?? [])
+      .map((role: { roleName: string }) => role.roleName)
+      .filter(Boolean);
 
     return {
       id: String(user.id),
@@ -71,7 +98,9 @@ export default async function IdentityUsersPage(props: {
       phone: user.phone ? String(user.phone) : null,
       userType: String(user.userType || 'Student'),
       status: String(user.status || 'Unknown'),
-      lastLoginAt: user.lastLoginAt ? new Date(user.lastLoginAt).toISOString() : null,
+      lastLoginAt: user.lastLoginAt
+        ? new Date(user.lastLoginAt).toISOString()
+        : null,
       branchNames,
       roleNames,
     };
@@ -81,7 +110,16 @@ export default async function IdentityUsersPage(props: {
 
   if (q) {
     filteredUsers = filteredUsers.filter((user) => {
-      const haystack = [user.fullName, user.email, user.phone ?? '', user.id, user.userType, user.status, ...user.branchNames, ...user.roleNames]
+      const haystack = [
+        user.fullName,
+        user.email,
+        user.phone ?? '',
+        user.id,
+        user.userType,
+        user.status,
+        ...user.branchNames,
+        ...user.roleNames,
+      ]
         .join(' ')
         .toLowerCase();
       return haystack.includes(q);
@@ -89,31 +127,49 @@ export default async function IdentityUsersPage(props: {
   }
 
   if (statusFilter) {
-    filteredUsers = filteredUsers.filter((user) => user.status === statusFilter);
+    filteredUsers = filteredUsers.filter(
+      (user) => user.status === statusFilter,
+    );
   }
 
   if (typeFilter) {
-    filteredUsers = filteredUsers.filter((user) => user.userType === typeFilter);
+    filteredUsers = filteredUsers.filter(
+      (user) => user.userType === typeFilter,
+    );
   }
 
   if (branchFilter) {
     const selectedBranchName = branchById.get(branchFilter);
-    filteredUsers = filteredUsers.filter((user) =>
-      user.branchNames.includes('All Branches') || (selectedBranchName ? user.branchNames.includes(selectedBranchName) : false),
+    filteredUsers = filteredUsers.filter(
+      (user) =>
+        user.branchNames.includes('All Branches') ||
+        (selectedBranchName
+          ? user.branchNames.includes(selectedBranchName)
+          : false),
     );
   }
 
   if (roleFilter) {
     const selectedRoleName = roleById.get(roleFilter);
-    filteredUsers = filteredUsers.filter((user) => (selectedRoleName ? user.roleNames.includes(selectedRoleName) : false));
+    filteredUsers = filteredUsers.filter((user) =>
+      selectedRoleName ? user.roleNames.includes(selectedRoleName) : false,
+    );
   }
 
   filteredUsers = [...filteredUsers].sort((left, right) => {
     switch (sortBy) {
       case 'branchName':
-        return compareText(left.branchNames.join(' '), right.branchNames.join(' '), sortOrder);
+        return compareText(
+          left.branchNames.join(' '),
+          right.branchNames.join(' '),
+          sortOrder,
+        );
       case 'roleName':
-        return compareText(left.roleNames.join(' '), right.roleNames.join(' '), sortOrder);
+        return compareText(
+          left.roleNames.join(' '),
+          right.roleNames.join(' '),
+          sortOrder,
+        );
       case 'userType':
         return compareText(left.userType, right.userType, sortOrder);
       case 'status':
@@ -147,8 +203,14 @@ export default async function IdentityUsersPage(props: {
         currentPage={currentPage}
         limit={limit}
         stats={stats}
-        branches={data.branches.map((branch: any) => ({ id: String(branch.id), name: branch.branchName }))}
-        roles={data.roles.map((role: any) => ({ id: String(role.id), name: role.roleName }))}
+        branches={data.branches.map((branch: any) => ({
+          id: String(branch.id),
+          name: branch.branchName,
+        }))}
+        roles={data.roles.map((role: any) => ({
+          id: String(role.id),
+          name: role.roleName,
+        }))}
         currentSearch={searchParams.q || ''}
         currentStatus={statusFilter}
         currentType={typeFilter}

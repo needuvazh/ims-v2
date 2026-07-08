@@ -1,1 +1,959 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_md", "label": "Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "label": "Part 1 \u2013 Business Overview, Functional Requirements, Business Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_module_11_certificate_management", "label": "Module 11 \u2013 Certificate Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L3"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_1_introduction", "label": "1. Introduction", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L5"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_1_1_business_benefits", "label": "1.1 Business Benefits", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L29"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_domain_boundary_and_core_data_model", "label": "2. Domain Boundary and Core Data Model", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L44"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_1_certificate_owned_er_entities", "label": "2.1 Certificate-Owned ER Entities", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L46"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_certificate", "label": "Certificate", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L48"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_certificateverification", "label": "CertificateVerification", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L66"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_certificatereissuerequest", "label": "CertificateReissueRequest", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L77"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_2_upstream_read_dependencies", "label": "2.2 Upstream Read Dependencies", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L90"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_3_downstream_integration_dependencies", "label": "2.3 Downstream Integration Dependencies", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L101"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "label": "3. Detailed Functional Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L109"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_001_list_certificate_ready_enrollments", "label": "FR-CERT-001 \u2013 List Certificate-Ready Enrollments", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L111"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_002_resolve_certificate_source_context", "label": "FR-CERT-002 \u2013 Resolve Certificate Source Context", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L146"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_003_validate_approved_completion_eligibility", "label": "FR-CERT-003 \u2013 Validate Approved Completion Eligibility", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L174"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_004_validate_payment_requirement_and_payment_completion", "label": "FR-CERT-004 \u2013 Validate Payment Requirement and Payment Completion", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L203"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_005_prevent_duplicate_active_certificate", "label": "FR-CERT-005 \u2013 Prevent Duplicate Active Certificate", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L233"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_006_allocate_certificate_number", "label": "FR-CERT-006 \u2013 Allocate Certificate Number", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L261"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_007_generate_unique_verification_code", "label": "FR-CERT-007 \u2013 Generate Unique Verification Code", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L291"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_008_generate_qr_verification_reference", "label": "FR-CERT-008 \u2013 Generate QR Verification Reference", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L317"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_009_render_certificate_from_approved_current_template", "label": "FR-CERT-009 \u2013 Render Certificate from Approved Current Template", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L344"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_010_support_english_and_arabic_certificate_language", "label": "FR-CERT-010 \u2013 Support English and Arabic Certificate Language", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L381"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_011_create_certificate_record", "label": "FR-CERT-011 \u2013 Create Certificate Record", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L407"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_012_issue_certificate", "label": "FR-CERT-012 \u2013 Issue Certificate", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L448"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_013_maintain_certificate_lifecycle_status", "label": "FR-CERT-013 \u2013 Maintain Certificate Lifecycle Status", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L485"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_014_search_and_filter_certificate_registry", "label": "FR-CERT-014 \u2013 Search and Filter Certificate Registry", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L516"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_015_view_certificate_detail", "label": "FR-CERT-015 \u2013 View Certificate Detail", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L553"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_016_download_certificate_artifact", "label": "FR-CERT-016 \u2013 Download Certificate Artifact", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L581"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_017_public_verification_by_code", "label": "FR-CERT-017 \u2013 Public Verification by Code", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L609"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_018_public_verification_through_qr", "label": "FR-CERT-018 \u2013 Public Verification through QR", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L638"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_019_minimize_public_verification_data", "label": "FR-CERT-019 \u2013 Minimize Public Verification Data", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L663"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_020_record_verification_attempt", "label": "FR-CERT-020 \u2013 Record Verification Attempt", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L689"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_021_submit_reissue_request", "label": "FR-CERT-021 \u2013 Submit Reissue Request", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L718"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_022_review_reissue_requests", "label": "FR-CERT-022 \u2013 Review Reissue Requests", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L750"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_023_approve_reissue_request", "label": "FR-CERT-023 \u2013 Approve Reissue Request", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L780"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_024_reject_reissue_request", "label": "FR-CERT-024 \u2013 Reject Reissue Request", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L813"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_025_generate_replacement_certificate_from_approved_reissue", "label": "FR-CERT-025 \u2013 Generate Replacement Certificate from Approved Reissue", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L841"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_026_preserve_reissue_lineage", "label": "FR-CERT-026 \u2013 Preserve Reissue Lineage", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L879"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_027_revoke_certificate", "label": "FR-CERT-027 \u2013 Revoke Certificate", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L905"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_028_enforce_server_side_permissions", "label": "FR-CERT-028 \u2013 Enforce Server-Side Permissions", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L936"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_029_enforce_branch_data_isolation", "label": "FR-CERT-029 \u2013 Enforce Branch Data Isolation", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L964"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_030_audit_sensitive_actions", "label": "FR-CERT-030 \u2013 Audit Sensitive Actions", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L993"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_031_request_certificate_notification", "label": "FR-CERT-031 \u2013 Request Certificate Notification", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1025"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_032_expose_certificate_facts_to_reporting", "label": "FR-CERT-032 \u2013 Expose Certificate Facts to Reporting", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1055"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_033_enforce_idempotent_generation_and_issuance", "label": "FR-CERT-033 \u2013 Enforce Idempotent Generation and Issuance", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1086"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_034_validate_source_state_at_command_time", "label": "FR-CERT-034 \u2013 Validate Source State at Command Time", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1113"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_035_preserve_soft_delete_and_historical_records", "label": "FR-CERT-035 \u2013 Preserve Soft-Delete and Historical Records", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1140"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_036_publish_certificate_lifecycle_facts_for_reporting_read_models", "label": "FR-CERT-036 \u2013 Publish Certificate Lifecycle Facts for Reporting Read Models", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1168"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_037_apply_optimistic_concurrency_to_lifecycle_mutations", "label": "FR-CERT-037 \u2013 Apply Optimistic Concurrency to Lifecycle Mutations", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1200"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_038_protect_generate_and_issue_commands_against_duplicate_retries", "label": "FR-CERT-038 \u2013 Protect Generate and Issue Commands Against Duplicate Retries", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1229"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_039_revalidate_authoritative_references_before_state_change", "label": "FR-CERT-039 \u2013 Revalidate Authoritative References Before State Change", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1256"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_040_retain_certificate_records_under_soft_delete_and_audit_conventions", "label": "FR-CERT-040 \u2013 Retain Certificate Records Under Soft-Delete and Audit Conventions", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1284"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_4_comprehensive_business_rules", "label": "4. Comprehensive Business Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1312"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_5_cross_module_dependencies_mapping", "label": "5. Cross-Module Dependencies Mapping", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1374"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_5_1_dependency_sequence_standard_issuance", "label": "5.1 Dependency Sequence \u2013 Standard Issuance", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1394"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_5_2_dependency_sequence_reissue", "label": "5.2 Dependency Sequence \u2013 Reissue", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1424"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_6_explicit_ddd_and_er_alignment_comparison", "label": "6. Explicit DDD and ER Alignment Comparison", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1446"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_7_rule_to_requirement_traceability_highlights", "label": "7. Rule-to-Requirement Traceability Highlights", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1475"}, {"id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_8_part_1_consistency_conclusion", "label": "8. Part 1 Consistency Conclusion", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1495"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_md", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_module_11_certificate_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L3", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_1_introduction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L5", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_1_introduction", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_1_1_business_benefits", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L29", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_domain_boundary_and_core_data_model", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L44", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_domain_boundary_and_core_data_model", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_1_certificate_owned_er_entities", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L46", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_1_certificate_owned_er_entities", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_certificate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L48", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_1_certificate_owned_er_entities", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_certificateverification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L66", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_1_certificate_owned_er_entities", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_certificatereissuerequest", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L77", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_domain_boundary_and_core_data_model", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_2_upstream_read_dependencies", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L90", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_domain_boundary_and_core_data_model", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_3_downstream_integration_dependencies", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L101", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L109", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_001_list_certificate_ready_enrollments", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L111", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_002_resolve_certificate_source_context", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L146", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_003_validate_approved_completion_eligibility", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L174", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_004_validate_payment_requirement_and_payment_completion", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L203", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_005_prevent_duplicate_active_certificate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L233", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_006_allocate_certificate_number", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L261", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_007_generate_unique_verification_code", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L291", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_008_generate_qr_verification_reference", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L317", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_009_render_certificate_from_approved_current_template", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L344", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_010_support_english_and_arabic_certificate_language", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L381", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_011_create_certificate_record", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L407", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_012_issue_certificate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L448", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_013_maintain_certificate_lifecycle_status", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L485", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_014_search_and_filter_certificate_registry", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L516", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_015_view_certificate_detail", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L553", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_016_download_certificate_artifact", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L581", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_017_public_verification_by_code", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L609", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_018_public_verification_through_qr", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L638", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_019_minimize_public_verification_data", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L663", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_020_record_verification_attempt", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L689", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_021_submit_reissue_request", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L718", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_022_review_reissue_requests", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L750", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_023_approve_reissue_request", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L780", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_024_reject_reissue_request", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L813", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_025_generate_replacement_certificate_from_approved_reissue", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L841", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_026_preserve_reissue_lineage", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L879", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_027_revoke_certificate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L905", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_028_enforce_server_side_permissions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L936", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_029_enforce_branch_data_isolation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L964", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_030_audit_sensitive_actions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L993", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_031_request_certificate_notification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1025", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_032_expose_certificate_facts_to_reporting", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1055", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_033_enforce_idempotent_generation_and_issuance", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1086", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_034_validate_source_state_at_command_time", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1113", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_035_preserve_soft_delete_and_historical_records", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1140", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_036_publish_certificate_lifecycle_facts_for_reporting_read_models", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1168", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_037_apply_optimistic_concurrency_to_lifecycle_mutations", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1200", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_038_protect_generate_and_issue_commands_against_duplicate_retries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1229", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_039_revalidate_authoritative_references_before_state_change", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1256", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_040_retain_certificate_records_under_soft_delete_and_audit_conventions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1284", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_4_comprehensive_business_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1312", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_5_cross_module_dependencies_mapping", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1374", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_5_cross_module_dependencies_mapping", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_5_1_dependency_sequence_standard_issuance", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1394", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_5_cross_module_dependencies_mapping", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_5_2_dependency_sequence_reissue", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1424", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_6_explicit_ddd_and_er_alignment_comparison", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1446", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_7_rule_to_requirement_traceability_highlights", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1475", "weight": 1.0}, {"source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_8_part_1_consistency_conclusion", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1495", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_md",
+      "label": "Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "label": "Part 1 \u2013 Business Overview, Functional Requirements, Business Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_module_11_certificate_management",
+      "label": "Module 11 \u2013 Certificate Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_1_introduction",
+      "label": "1. Introduction",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_1_1_business_benefits",
+      "label": "1.1 Business Benefits",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L29"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_domain_boundary_and_core_data_model",
+      "label": "2. Domain Boundary and Core Data Model",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L44"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_1_certificate_owned_er_entities",
+      "label": "2.1 Certificate-Owned ER Entities",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L46"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_certificate",
+      "label": "Certificate",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L48"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_certificateverification",
+      "label": "CertificateVerification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L66"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_certificatereissuerequest",
+      "label": "CertificateReissueRequest",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L77"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_2_upstream_read_dependencies",
+      "label": "2.2 Upstream Read Dependencies",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L90"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_3_downstream_integration_dependencies",
+      "label": "2.3 Downstream Integration Dependencies",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L101"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "label": "3. Detailed Functional Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L109"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_001_list_certificate_ready_enrollments",
+      "label": "FR-CERT-001 \u2013 List Certificate-Ready Enrollments",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L111"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_002_resolve_certificate_source_context",
+      "label": "FR-CERT-002 \u2013 Resolve Certificate Source Context",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L146"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_003_validate_approved_completion_eligibility",
+      "label": "FR-CERT-003 \u2013 Validate Approved Completion Eligibility",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L174"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_004_validate_payment_requirement_and_payment_completion",
+      "label": "FR-CERT-004 \u2013 Validate Payment Requirement and Payment Completion",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L203"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_005_prevent_duplicate_active_certificate",
+      "label": "FR-CERT-005 \u2013 Prevent Duplicate Active Certificate",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L233"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_006_allocate_certificate_number",
+      "label": "FR-CERT-006 \u2013 Allocate Certificate Number",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L261"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_007_generate_unique_verification_code",
+      "label": "FR-CERT-007 \u2013 Generate Unique Verification Code",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L291"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_008_generate_qr_verification_reference",
+      "label": "FR-CERT-008 \u2013 Generate QR Verification Reference",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L317"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_009_render_certificate_from_approved_current_template",
+      "label": "FR-CERT-009 \u2013 Render Certificate from Approved Current Template",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L344"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_010_support_english_and_arabic_certificate_language",
+      "label": "FR-CERT-010 \u2013 Support English and Arabic Certificate Language",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L381"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_011_create_certificate_record",
+      "label": "FR-CERT-011 \u2013 Create Certificate Record",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L407"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_012_issue_certificate",
+      "label": "FR-CERT-012 \u2013 Issue Certificate",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L448"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_013_maintain_certificate_lifecycle_status",
+      "label": "FR-CERT-013 \u2013 Maintain Certificate Lifecycle Status",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L485"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_014_search_and_filter_certificate_registry",
+      "label": "FR-CERT-014 \u2013 Search and Filter Certificate Registry",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L516"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_015_view_certificate_detail",
+      "label": "FR-CERT-015 \u2013 View Certificate Detail",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L553"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_016_download_certificate_artifact",
+      "label": "FR-CERT-016 \u2013 Download Certificate Artifact",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L581"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_017_public_verification_by_code",
+      "label": "FR-CERT-017 \u2013 Public Verification by Code",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L609"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_018_public_verification_through_qr",
+      "label": "FR-CERT-018 \u2013 Public Verification through QR",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L638"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_019_minimize_public_verification_data",
+      "label": "FR-CERT-019 \u2013 Minimize Public Verification Data",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L663"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_020_record_verification_attempt",
+      "label": "FR-CERT-020 \u2013 Record Verification Attempt",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L689"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_021_submit_reissue_request",
+      "label": "FR-CERT-021 \u2013 Submit Reissue Request",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L718"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_022_review_reissue_requests",
+      "label": "FR-CERT-022 \u2013 Review Reissue Requests",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L750"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_023_approve_reissue_request",
+      "label": "FR-CERT-023 \u2013 Approve Reissue Request",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L780"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_024_reject_reissue_request",
+      "label": "FR-CERT-024 \u2013 Reject Reissue Request",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L813"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_025_generate_replacement_certificate_from_approved_reissue",
+      "label": "FR-CERT-025 \u2013 Generate Replacement Certificate from Approved Reissue",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L841"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_026_preserve_reissue_lineage",
+      "label": "FR-CERT-026 \u2013 Preserve Reissue Lineage",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L879"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_027_revoke_certificate",
+      "label": "FR-CERT-027 \u2013 Revoke Certificate",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L905"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_028_enforce_server_side_permissions",
+      "label": "FR-CERT-028 \u2013 Enforce Server-Side Permissions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L936"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_029_enforce_branch_data_isolation",
+      "label": "FR-CERT-029 \u2013 Enforce Branch Data Isolation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L964"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_030_audit_sensitive_actions",
+      "label": "FR-CERT-030 \u2013 Audit Sensitive Actions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L993"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_031_request_certificate_notification",
+      "label": "FR-CERT-031 \u2013 Request Certificate Notification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1025"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_032_expose_certificate_facts_to_reporting",
+      "label": "FR-CERT-032 \u2013 Expose Certificate Facts to Reporting",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1055"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_033_enforce_idempotent_generation_and_issuance",
+      "label": "FR-CERT-033 \u2013 Enforce Idempotent Generation and Issuance",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1086"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_034_validate_source_state_at_command_time",
+      "label": "FR-CERT-034 \u2013 Validate Source State at Command Time",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1113"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_035_preserve_soft_delete_and_historical_records",
+      "label": "FR-CERT-035 \u2013 Preserve Soft-Delete and Historical Records",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1140"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_036_publish_certificate_lifecycle_facts_for_reporting_read_models",
+      "label": "FR-CERT-036 \u2013 Publish Certificate Lifecycle Facts for Reporting Read Models",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1168"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_037_apply_optimistic_concurrency_to_lifecycle_mutations",
+      "label": "FR-CERT-037 \u2013 Apply Optimistic Concurrency to Lifecycle Mutations",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1200"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_038_protect_generate_and_issue_commands_against_duplicate_retries",
+      "label": "FR-CERT-038 \u2013 Protect Generate and Issue Commands Against Duplicate Retries",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1229"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_039_revalidate_authoritative_references_before_state_change",
+      "label": "FR-CERT-039 \u2013 Revalidate Authoritative References Before State Change",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1256"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_040_retain_certificate_records_under_soft_delete_and_audit_conventions",
+      "label": "FR-CERT-040 \u2013 Retain Certificate Records Under Soft-Delete and Audit Conventions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1284"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_4_comprehensive_business_rules",
+      "label": "4. Comprehensive Business Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1312"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_5_cross_module_dependencies_mapping",
+      "label": "5. Cross-Module Dependencies Mapping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1374"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_5_1_dependency_sequence_standard_issuance",
+      "label": "5.1 Dependency Sequence \u2013 Standard Issuance",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1394"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_5_2_dependency_sequence_reissue",
+      "label": "5.2 Dependency Sequence \u2013 Reissue",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1424"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_6_explicit_ddd_and_er_alignment_comparison",
+      "label": "6. Explicit DDD and ER Alignment Comparison",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1446"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_7_rule_to_requirement_traceability_highlights",
+      "label": "7. Rule-to-Requirement Traceability Highlights",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1475"
+    },
+    {
+      "id": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_8_part_1_consistency_conclusion",
+      "label": "8. Part 1 Consistency Conclusion",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1495"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_md",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_module_11_certificate_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_1_introduction",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_1_introduction",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_1_1_business_benefits",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_domain_boundary_and_core_data_model",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_domain_boundary_and_core_data_model",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_1_certificate_owned_er_entities",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_1_certificate_owned_er_entities",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_certificate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_1_certificate_owned_er_entities",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_certificateverification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_1_certificate_owned_er_entities",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_certificatereissuerequest",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_domain_boundary_and_core_data_model",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_2_upstream_read_dependencies",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L90",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_domain_boundary_and_core_data_model",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_2_3_downstream_integration_dependencies",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L101",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L109",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_001_list_certificate_ready_enrollments",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L111",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_002_resolve_certificate_source_context",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L146",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_003_validate_approved_completion_eligibility",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L174",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_004_validate_payment_requirement_and_payment_completion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L203",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_005_prevent_duplicate_active_certificate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L233",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_006_allocate_certificate_number",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L261",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_007_generate_unique_verification_code",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L291",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_008_generate_qr_verification_reference",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L317",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_009_render_certificate_from_approved_current_template",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L344",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_010_support_english_and_arabic_certificate_language",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L381",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_011_create_certificate_record",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L407",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_012_issue_certificate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L448",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_013_maintain_certificate_lifecycle_status",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L485",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_014_search_and_filter_certificate_registry",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L516",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_015_view_certificate_detail",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L553",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_016_download_certificate_artifact",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L581",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_017_public_verification_by_code",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L609",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_018_public_verification_through_qr",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L638",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_019_minimize_public_verification_data",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L663",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_020_record_verification_attempt",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L689",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_021_submit_reissue_request",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L718",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_022_review_reissue_requests",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L750",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_023_approve_reissue_request",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L780",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_024_reject_reissue_request",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L813",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_025_generate_replacement_certificate_from_approved_reissue",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L841",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_026_preserve_reissue_lineage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L879",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_027_revoke_certificate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L905",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_028_enforce_server_side_permissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L936",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_029_enforce_branch_data_isolation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L964",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_030_audit_sensitive_actions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L993",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_031_request_certificate_notification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1025",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_032_expose_certificate_facts_to_reporting",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1055",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_033_enforce_idempotent_generation_and_issuance",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1086",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_034_validate_source_state_at_command_time",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1113",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_035_preserve_soft_delete_and_historical_records",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1140",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_036_publish_certificate_lifecycle_facts_for_reporting_read_models",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1168",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_037_apply_optimistic_concurrency_to_lifecycle_mutations",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1200",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_038_protect_generate_and_issue_commands_against_duplicate_retries",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1229",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_039_revalidate_authoritative_references_before_state_change",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1256",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_3_detailed_functional_requirements",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_fr_cert_040_retain_certificate_records_under_soft_delete_and_audit_conventions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1284",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_4_comprehensive_business_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1312",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_5_cross_module_dependencies_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1374",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_5_cross_module_dependencies_mapping",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_5_1_dependency_sequence_standard_issuance",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1394",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_5_cross_module_dependencies_mapping",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_5_2_dependency_sequence_reissue",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1424",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_6_explicit_ddd_and_er_alignment_comparison",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1446",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_7_rule_to_requirement_traceability_highlights",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1475",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_11_certificate_management_part_1_business_overview_functional_requirements_business_rules_8_part_1_consistency_conclusion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1495",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

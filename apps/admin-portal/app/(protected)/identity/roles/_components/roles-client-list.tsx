@@ -47,11 +47,23 @@ const STATUS_OPTIONS = [
   { value: 'Archived', label: 'Archived' },
 ];
 
-const SORT_FIELDS = new Set(['roleCode', 'roleName', 'effectiveStartDate', 'permissionsCount', 'status']);
+const SORT_FIELDS = new Set([
+  'roleCode',
+  'roleName',
+  'effectiveStartDate',
+  'permissionsCount',
+  'status',
+]);
 
-const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+const collator = new Intl.Collator(undefined, {
+  numeric: true,
+  sensitivity: 'base',
+});
 
-function compareText(a: string | null | undefined, b: string | null | undefined) {
+function compareText(
+  a: string | null | undefined,
+  b: string | null | undefined,
+) {
   return collator.compare(a ?? '', b ?? '');
 }
 
@@ -84,29 +96,44 @@ export function RolesClientList({
   const searchParams = useSearchParams();
   const [searchValue, setSearchValue] = useState(initialSearch);
 
-  const currentSortBy = searchParams.get('sortBy') ?? initialSortBy ?? 'roleName';
-  const currentSortOrder = (searchParams.get('sortOrder') as SortOrder | null) ?? initialSortOrder;
+  const currentSortBy =
+    searchParams.get('sortBy') ?? initialSortBy ?? 'roleName';
+  const currentSortOrder =
+    (searchParams.get('sortOrder') as SortOrder | null) ?? initialSortOrder;
   const currentStatus = searchParams.get('status') ?? initialStatus ?? '';
-  const currentPage = Math.max(parseInt(searchParams.get('page') ?? String(initialPage), 10) || 1, 1);
-  const currentLimit = Math.max(parseInt(searchParams.get('limit') ?? String(initialLimit), 10) || initialLimit || 10, 1);
+  const currentPage = Math.max(
+    parseInt(searchParams.get('page') ?? String(initialPage), 10) || 1,
+    1,
+  );
+  const currentLimit = Math.max(
+    parseInt(searchParams.get('limit') ?? String(initialLimit), 10) ||
+      initialLimit ||
+      10,
+    1,
+  );
 
-  const updateParams = useCallback((updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
+  const updateParams = useCallback(
+    (updates: Record<string, string | null>) => {
+      const params = new URLSearchParams(searchParams.toString());
 
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === '') {
-        params.delete(key);
-      } else {
-        params.set(key, value);
-      }
-    });
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value === null || value === '') {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      });
 
-    router.push(`${pathname}?${params.toString()}`);
-  }, [pathname, router, searchParams]);
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [pathname, router, searchParams],
+  );
 
   useEffect(() => {
     const nextSearch = searchParams.get('q') || '';
-    setSearchValue((current) => (current === nextSearch ? current : nextSearch));
+    setSearchValue((current) =>
+      current === nextSearch ? current : nextSearch,
+    );
   }, [searchParams]);
 
   useEffect(() => {
@@ -123,7 +150,8 @@ export function RolesClientList({
   }, [searchParams, searchValue, updateParams]);
 
   const handleSort = (field: string) => {
-    const nextOrder: SortOrder = currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
+    const nextOrder: SortOrder =
+      currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
     updateParams({ sortBy: field, sortOrder: nextOrder, page: '1' });
   };
 
@@ -141,7 +169,9 @@ export function RolesClientList({
           return true;
         }
 
-        return [role.roleCode, role.roleName, role.description].some((value) => value?.toLowerCase().includes(q));
+        return [role.roleCode, role.roleName, role.description].some((value) =>
+          value?.toLowerCase().includes(q),
+        );
       })
       .sort((left, right) => {
         const direction = currentSortOrder === 'asc' ? 1 : -1;
@@ -154,7 +184,11 @@ export function RolesClientList({
           case 'roleCode':
             return compareText(left.roleCode, right.roleCode) * direction;
           case 'effectiveStartDate':
-            return (new Date(left.effectiveStartDate).getTime() - new Date(right.effectiveStartDate).getTime()) * direction;
+            return (
+              (new Date(left.effectiveStartDate).getTime() -
+                new Date(right.effectiveStartDate).getTime()) *
+              direction
+            );
           case 'permissionsCount':
             return (left.permissionsCount - right.permissionsCount) * direction;
           case 'status':
@@ -169,7 +203,10 @@ export function RolesClientList({
   const total = filteredRoles.length;
   const totalPages = Math.max(Math.ceil(total / currentLimit), 1);
   const safePage = Math.min(currentPage, totalPages);
-  const paginatedRoles = filteredRoles.slice((safePage - 1) * currentLimit, safePage * currentLimit);
+  const paginatedRoles = filteredRoles.slice(
+    (safePage - 1) * currentLimit,
+    safePage * currentLimit,
+  );
 
   const columns = [
     {
@@ -177,7 +214,11 @@ export function RolesClientList({
       sortable: true,
       sortDirection: currentSortBy === 'roleCode' ? currentSortOrder : null,
       onSort: () => handleSort('roleCode'),
-      render: (role: RoleItem) => <span className="font-mono text-xs font-semibold text-slate-600">{role.roleCode}</span>,
+      render: (role: RoleItem) => (
+        <span className="font-mono text-xs font-semibold text-slate-600">
+          {role.roleCode}
+        </span>
+      ),
       headerClassName: 'w-[120px]',
     },
     {
@@ -188,35 +229,45 @@ export function RolesClientList({
       render: (role: RoleItem) => (
         <div className="space-y-1">
           <div className="font-semibold text-slate-800">{role.roleName}</div>
-          <div className="line-clamp-1 text-xs text-[color:var(--ims-muted)]">{role.description || 'No description provided'}</div>
+          <div className="line-clamp-1 text-xs text-[color:var(--ims-muted)]">
+            {role.description || 'No description provided'}
+          </div>
         </div>
       ),
     },
     {
       header: 'Validity',
       sortable: true,
-      sortDirection: currentSortBy === 'effectiveStartDate' ? currentSortOrder : null,
+      sortDirection:
+        currentSortBy === 'effectiveStartDate' ? currentSortOrder : null,
       onSort: () => handleSort('effectiveStartDate'),
       render: (role: RoleItem) => (
         <div className="space-y-0.5 text-xs text-slate-600">
           <div>Start: {formatDate(role.effectiveStartDate)}</div>
-          <div className="text-[10px] text-slate-400">End: {formatDate(role.effectiveEndDate)}</div>
+          <div className="text-[10px] text-slate-400">
+            End: {formatDate(role.effectiveEndDate)}
+          </div>
         </div>
       ),
     },
     {
       header: 'Permissions',
       sortable: true,
-      sortDirection: currentSortBy === 'permissionsCount' ? currentSortOrder : null,
+      sortDirection:
+        currentSortBy === 'permissionsCount' ? currentSortOrder : null,
       onSort: () => handleSort('permissionsCount'),
-      render: (role: RoleItem) => <Badge variant="default">{role.permissionsCount}</Badge>,
+      render: (role: RoleItem) => (
+        <Badge variant="default">{role.permissionsCount}</Badge>
+      ),
     },
     {
       header: 'Status',
       sortable: true,
       sortDirection: currentSortBy === 'status' ? currentSortOrder : null,
       onSort: () => handleSort('status'),
-      render: (role: RoleItem) => <Badge variant={getStatusVariant(role.status)}>{role.status}</Badge>,
+      render: (role: RoleItem) => (
+        <Badge variant={getStatusVariant(role.status)}>{role.status}</Badge>
+      ),
       headerClassName: 'w-[110px]',
     },
     {
@@ -225,7 +276,11 @@ export function RolesClientList({
       render: (role: RoleItem) => (
         <div className="flex items-center justify-end gap-2">
           <Link href={`/iam/roles/${role.id}`}>
-            <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]"
+            >
               <Eye className="h-4 w-4" />
             </Button>
           </Link>
@@ -240,8 +295,12 @@ export function RolesClientList({
       <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 space-y-1">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">{role.roleCode}</p>
-            <p className="text-sm font-bold text-[var(--ims-ink)]">{role.roleName}</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">
+              {role.roleCode}
+            </p>
+            <p className="text-sm font-bold text-[var(--ims-ink)]">
+              {role.roleName}
+            </p>
           </div>
           <Badge variant={getStatusVariant(role.status)}>{role.status}</Badge>
         </div>
@@ -258,7 +317,9 @@ export function RolesClientList({
           </div>
           <div className="col-span-2">
             <p className="font-semibold text-[var(--ims-muted)]">Description</p>
-            <p className="line-clamp-2 text-slate-600">{role.description || 'No description provided'}</p>
+            <p className="line-clamp-2 text-slate-600">
+              {role.description || 'No description provided'}
+            </p>
           </div>
         </div>
       </CardContent>
@@ -328,7 +389,9 @@ export function RolesClientList({
           </FormLabel>
           <Select
             value={currentStatus}
-            onChange={(event) => updateParams({ status: event.target.value, page: '1' })}
+            onChange={(event) =>
+              updateParams({ status: event.target.value, page: '1' })
+            }
             options={[{ value: '', label: 'All Statuses' }, ...STATUS_OPTIONS]}
             className="h-12"
             placeholder="All Statuses"

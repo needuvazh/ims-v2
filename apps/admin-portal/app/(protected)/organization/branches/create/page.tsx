@@ -18,15 +18,34 @@ export default async function CreateBranchPage() {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Organization', href: '/organization', icon: <Building2 className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Branches', href: '/organization/branches', icon: <MapPin className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Add Branch', icon: <Plus className="h-3.5 w-3.5 text-slate-500" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Organization',
+                href: '/organization',
+                icon: <Building2 className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Branches',
+                href: '/organization/branches',
+                icon: <MapPin className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Add Branch',
+                icon: <Plus className="h-3.5 w-3.5 text-slate-500" />,
+              },
             ]}
           />
         }
       />
-      <BranchForm mode="create" institutes={data.institutes} users={data.users} />
+      <BranchForm
+        mode="create"
+        institutes={data.institutes}
+        users={data.users}
+      />
     </AdminFormPageLayout>
   );
 }

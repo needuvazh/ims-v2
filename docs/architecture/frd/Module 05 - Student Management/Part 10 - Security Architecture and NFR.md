@@ -1,4 +1,5 @@
 # Part 10 - Security Architecture and NFR
+
 ## Module 5 – Student Management
 
 ## 1. Purpose
@@ -6,6 +7,7 @@
 This document defines the **security architecture** and **non-functional requirements (NFRs)** for **Module 5 – Student Management**.
 
 This module manages highly sensitive learner master data and therefore requires strong controls around:
+
 - personally identifiable information (PII),
 - identity deduplication,
 - cross-branch isolation,
@@ -15,6 +17,7 @@ This module manages highly sensitive learner master data and therefore requires 
 - portal-safe read-only data exposure.
 
 This part is limited to the Student Management bounded context and its owned tables:
+
 - `student_profiles`
 - `student_status_history`
 - `student_id_card_history`
@@ -46,19 +49,20 @@ It references but does not re-own shared identity, branch, admission, enrollment
 
 ## 3.1 Data Classification
 
-| Data Class | Examples in Module 5 | Protection Level |
-|---|---|---|
-| Restricted PII | Civil ID, passport number, visa number, full ID card number, date of birth | Highest |
-| Confidential Personal Data | Student name, phone, email, nationality, joined date | High |
-| Operational Sensitive Data | Duplicate cases, merge logs, export logs, archive reasons, audit summaries | High |
-| Internal Business Metadata | Student number, branch assignment, creation source, lifecycle status | Medium |
-| Non-sensitive Operational Metrics | Aggregate counts, widget totals, branch-level trends without raw PII | Medium / Low |
+| Data Class                        | Examples in Module 5                                                       | Protection Level |
+| --------------------------------- | -------------------------------------------------------------------------- | ---------------- |
+| Restricted PII                    | Civil ID, passport number, visa number, full ID card number, date of birth | Highest          |
+| Confidential Personal Data        | Student name, phone, email, nationality, joined date                       | High             |
+| Operational Sensitive Data        | Duplicate cases, merge logs, export logs, archive reasons, audit summaries | High             |
+| Internal Business Metadata        | Student number, branch assignment, creation source, lifecycle status       | Medium           |
+| Non-sensitive Operational Metrics | Aggregate counts, widget totals, branch-level trends without raw PII       | Medium / Low     |
 
 ---
 
 ## 3.2 Identity and Access Controls
 
 ### Authentication
+
 - All Admin Portal, Student Portal, and Trainer Portal access must be authenticated through the shared Identity & Access Management context.
 - Trusted internal system actions must use service identity authentication.
 - Session cookies or bearer tokens must be:
@@ -68,12 +72,15 @@ It references but does not re-own shared identity, branch, admission, enrollment
   - revocable.
 
 ### Authorization
+
 Every request must pass all three checks:
+
 1. **Authentication check**
 2. **Permission check**
 3. **Branch scope check**
 
 Required examples:
+
 - `student.read`
 - `student.create`
 - `student.update`
@@ -91,6 +98,7 @@ Required examples:
 - `student.trainer.roster.read`
 
 ### Branch Scope Enforcement
+
 - Branch scope must be enforced **server-side only**, never delegated to the client.
 - **Dynamic Scoping:** Student profile access is verified dynamically based on the student's active relationships. A user has visibility to a student profile if they have access to at least one branch containing a linked `Admission`, `Enrollment`, or `Lead` relationship for that student.
 - Active branch context is not enough by itself; the branch must also be in the user’s assigned branch set.
@@ -105,7 +113,9 @@ Required examples:
 ## 3.3 PII Protection Strategy
 
 ### At-Rest Protection
+
 The following fields must be protected as sensitive data:
+
 - Civil ID
 - Passport number
 - Visa number
@@ -115,6 +125,7 @@ The following fields must be protected as sensitive data:
 - Phone
 
 #### Recommended Protection Model
+
 1. **Database encryption at rest** for the PostgreSQL volume.
 2. **Application-layer field encryption** for the highest-risk identity fields:
    - `civil_id`
@@ -129,16 +140,19 @@ The following fields must be protected as sensitive data:
    - normalized `phone_hash`
 
 #### Rationale
+
 - Exact duplicate detection should not require exposing raw values in logs or broad query surfaces.
 - Deterministic hashes allow equality checks while preserving field secrecy.
 - Raw encrypted values should only be decrypted in tightly controlled application paths.
 
 ### In-Transit Protection
+
 - TLS 1.2+ minimum for all user-facing and service-to-service traffic.
 - HSTS enabled for web surfaces.
 - Internal admin APIs must not allow plaintext transport.
 
 ### In-Use Protection
+
 - Sensitive values must be masked by default in APIs, UI, logs, and exports unless the caller has explicit sensitive-data permission.
 - Example masking:
   - Civil ID: partial masked
@@ -155,6 +169,7 @@ The following fields must be protected as sensitive data:
 Duplicate detection is a security-relevant function because false positives and false negatives can both create operational and privacy problems.
 
 ### Controls
+
 1. Duplicate checks run **server-side** on create and identity-affecting update.
 2. Duplicate scoring inputs should use normalized/hardened identity values.
 3. Blocking duplicate cases must prevent student creation/update until resolution.
@@ -163,6 +178,7 @@ Duplicate detection is a security-relevant function because false positives and 
 6. Duplicate-case notifications must not include full raw identity numbers.
 
 ### Duplicate Risk Controls
+
 - **False negative risk:** mitigated through multi-key matching and review-required thresholds.
 - **False positive risk:** mitigated through human review workflow and case resolution logging.
 - **Abuse risk:** duplicate-check endpoint should be rate-limited and heavily logged.
@@ -174,6 +190,7 @@ Duplicate detection is a security-relevant function because false positives and 
 Merge is one of the highest-risk actions in this module because it changes identity lineage and downstream references.
 
 ### Controls
+
 1. Merge requires:
    - `student.merge`
    - `student.duplicate.resolve`
@@ -197,6 +214,7 @@ Merge is one of the highest-risk actions in this module because it changes ident
    - field-level resolution snapshot.
 
 ### Failure Handling
+
 - If any reassignment step fails, merge must roll back fully.
 - Partial merge states are forbidden.
 - Observability must emit merge failure counters and high-severity logs.
@@ -206,6 +224,7 @@ Merge is one of the highest-risk actions in this module because it changes ident
 ## 3.6 Soft Delete and Archival Security
 
 ### Controls
+
 - No hard delete endpoint or batch hard delete job is permitted.
 - Archive action must set:
   - `is_deleted = true`
@@ -223,6 +242,7 @@ Merge is one of the highest-risk actions in this module because it changes ident
 ## 3.7 Audit and Non-Repudiation Controls
 
 The following actions must always create audit events:
+
 - student create
 - student update
 - status change
@@ -235,7 +255,9 @@ The following actions must always create audit events:
 - audit-view access where policy requires access logging
 
 ### Audit Content
+
 Every critical audit event must capture:
+
 - actor user ID
 - actor display name snapshot if required
 - branch context
@@ -251,6 +273,7 @@ Every critical audit event must capture:
 - user agent or service identity where appropriate
 
 ### Integrity
+
 - Audit records must be append-only in the central Audit & Compliance context.
 - Audit viewers should not be able to mutate audit data.
 - Time synchronization is mandatory across services and nodes.
@@ -262,6 +285,7 @@ Every critical audit event must capture:
 Exports are a major data exfiltration risk.
 
 ### Controls
+
 1. Export requires explicit `student.export`.
 2. Sensitive identity inclusion requires `student.identity.unmasked.read`.
 3. Sensitive export requires reason text.
@@ -276,6 +300,7 @@ Exports are a major data exfiltration risk.
 8. Export files must not remain indefinitely available; retention must be controlled.
 
 ### Recommended Retention
+
 - generated export files: 7 days
 - export logs: permanent or compliance-defined retention minimum 2 years
 
@@ -284,12 +309,14 @@ Exports are a major data exfiltration risk.
 ## 3.9 Portal Data Minimization
 
 ### Student Portal
+
 - Self-only access
 - No browsing or searching across students
 - No duplicate, merge, archive, export, or audit access
 - No institute-wide metrics
 
 ### Trainer Portal
+
 - Roster-context only
 - No branch-wide list access
 - No duplicate, merge, archive, export, or audit access
@@ -300,6 +327,7 @@ Exports are a major data exfiltration risk.
 ## 3.10 Secure Logging Rules
 
 Application logs must never contain raw:
+
 - Civil ID
 - passport number
 - visa number
@@ -308,6 +336,7 @@ Application logs must never contain raw:
 - unmasked email/phone unless debug-level secure environment exception is explicitly approved
 
 Logging should use:
+
 - masked values,
 - hashed values,
 - or internal record IDs.
@@ -330,6 +359,7 @@ Logging should use:
 ## 3.12 Rate Limiting and Abuse Controls
 
 Recommended rate limits:
+
 - student lookup: 60 requests/minute per user
 - duplicate check: 30 requests/minute per user
 - export request: 10 requests/hour per user
@@ -337,6 +367,7 @@ Recommended rate limits:
 - audit log access pages: 120 requests/minute per user
 
 Triggered abuse responses:
+
 - throttle response
 - security warning logs
 - optional user/session lock escalation by IAM policy
@@ -365,45 +396,47 @@ Triggered abuse responses:
 ## 4.1 Performance Targets
 
 ### API Response Targets
+
 Under normal operating load and indexed branch filters:
 
-| Operation | Target | Max Acceptable |
-|---|---:|---:|
-| Student lookup | <= 500 ms | 1.5 s |
-| Student detail read | <= 800 ms | 2.0 s |
-| Student create direct | <= 1.5 s | 3.0 s |
-| Student create from admission | <= 1.5 s | 3.0 s |
-| Student update | <= 1.2 s | 2.5 s |
-| Status change | <= 1.2 s | 2.5 s |
-| Archive / restore | <= 1.2 s | 2.5 s |
-| ID card issue / reissue | <= 1.2 s | 2.5 s |
-| Duplicate-case detail | <= 1.0 s | 2.5 s |
-| Merge request acceptance | <= 3.0 s | 8.0 s |
-| Student list first page | <= 1.5 s | 3.0 s |
-| Dashboard widget summary load | <= 2.0 s | 4.0 s |
-| Report execution (standard filtered) | <= 3.0 s | 8.0 s |
-| Export request acceptance | <= 2.0 s | 4.0 s |
+| Operation                            |    Target | Max Acceptable |
+| ------------------------------------ | --------: | -------------: |
+| Student lookup                       | <= 500 ms |          1.5 s |
+| Student detail read                  | <= 800 ms |          2.0 s |
+| Student create direct                |  <= 1.5 s |          3.0 s |
+| Student create from admission        |  <= 1.5 s |          3.0 s |
+| Student update                       |  <= 1.2 s |          2.5 s |
+| Status change                        |  <= 1.2 s |          2.5 s |
+| Archive / restore                    |  <= 1.2 s |          2.5 s |
+| ID card issue / reissue              |  <= 1.2 s |          2.5 s |
+| Duplicate-case detail                |  <= 1.0 s |          2.5 s |
+| Merge request acceptance             |  <= 3.0 s |          8.0 s |
+| Student list first page              |  <= 1.5 s |          3.0 s |
+| Dashboard widget summary load        |  <= 2.0 s |          4.0 s |
+| Report execution (standard filtered) |  <= 3.0 s |          8.0 s |
+| Export request acceptance            |  <= 2.0 s |          4.0 s |
 
 ### Batch/Heavy Operation Targets
-| Operation | Target |
-|---|---:|
-| Large export generation up to 10k rows | <= 2 minutes |
-| Duplicate backlog report across multiple branches | <= 5 seconds |
-| Materialized-view refresh | <= 5 minutes from source commit for analytical freshness |
+
+| Operation                                         |                                                   Target |
+| ------------------------------------------------- | -------------------------------------------------------: |
+| Large export generation up to 10k rows            |                                             <= 2 minutes |
+| Duplicate backlog report across multiple branches |                                             <= 5 seconds |
+| Materialized-view refresh                         | <= 5 minutes from source commit for analytical freshness |
 
 ---
 
 ## 4.2 Capacity and Concurrent Usage Targets
 
-| Metric | Target |
-|---|---:|
-| Concurrent admin users on Student Management module | 150 |
-| Concurrent student portal self-views | 500 |
-| Concurrent trainer quick-view requests | 200 |
-| Sustained read requests per second | 80 RPS |
-| Sustained write requests per second | 20 RPS |
-| Peak export requests per hour | 200 |
-| Peak duplicate checks per minute | 120 |
+| Metric                                              | Target |
+| --------------------------------------------------- | -----: |
+| Concurrent admin users on Student Management module |    150 |
+| Concurrent student portal self-views                |    500 |
+| Concurrent trainer quick-view requests              |    200 |
+| Sustained read requests per second                  | 80 RPS |
+| Sustained write requests per second                 | 20 RPS |
+| Peak export requests per hour                       |    200 |
+| Peak duplicate checks per minute                    |    120 |
 
 These are module-specific planning targets for a modular monolith deployment and should be revisited at scale testing time.
 
@@ -411,17 +444,19 @@ These are module-specific planning targets for a modular monolith deployment and
 
 ## 4.3 Availability Targets
 
-| Service Surface | Target Availability |
-|---|---:|
-| Admin student read APIs | 99.9% monthly |
-| Admin student write APIs | 99.9% monthly |
-| Student portal self-view APIs | 99.9% monthly |
-| Trainer roster quick view | 99.9% monthly |
-| Reporting read models | 99.5% monthly |
-| Export generation pipeline | 99.5% monthly |
+| Service Surface               | Target Availability |
+| ----------------------------- | ------------------: |
+| Admin student read APIs       |       99.9% monthly |
+| Admin student write APIs      |       99.9% monthly |
+| Student portal self-view APIs |       99.9% monthly |
+| Trainer roster quick view     |       99.9% monthly |
+| Reporting read models         |       99.5% monthly |
+| Export generation pipeline    |       99.5% monthly |
 
 ### Degraded Mode Expectations
+
 If analytics/read models are stale:
+
 - transactional reads and writes must remain operational,
 - dashboards may show “data delayed” banner,
 - exports may fall back to slower transactional query paths only if safe and bounded.
@@ -437,6 +472,7 @@ If analytics/read models are stale:
 5. Duplicate scoring must remain performant via indexed normalized/hash columns.
 
 Target data volume planning:
+
 - `student_profiles`: up to 2 million records over lifecycle
 - `student_status_history`: up to 10 million rows
 - `student_id_card_history`: up to 5 million rows
@@ -475,6 +511,7 @@ Target data volume planning:
 ## 4.7 Backup and Recovery Targets
 
 For owned tables:
+
 - RPO target: **<= 15 minutes**
 - RTO target: **<= 2 hours** for module-specific table recovery
 - Soft-deleted data recovery should be possible without relying on point-in-time restore whenever record-level recovery can be achieved safely.
@@ -504,15 +541,15 @@ For owned tables:
 
 ## 4.10 Data Retention and Purging Targets
 
-| Data Set | Retention Guidance |
-|---|---|
-| Student master records | Retain indefinitely unless legal policy changes |
-| Status history | Retain indefinitely or compliance minimum |
-| ID card history | Retain indefinitely or compliance minimum |
-| Duplicate cases | Retain indefinitely for data lineage and compliance |
-| Merge logs | Retain indefinitely |
-| Export logs | Minimum 2 years |
-| Generated export files | 7 days unless policy changes |
+| Data Set               | Retention Guidance                                  |
+| ---------------------- | --------------------------------------------------- |
+| Student master records | Retain indefinitely unless legal policy changes     |
+| Status history         | Retain indefinitely or compliance minimum           |
+| ID card history        | Retain indefinitely or compliance minimum           |
+| Duplicate cases        | Retain indefinitely for data lineage and compliance |
+| Merge logs             | Retain indefinitely                                 |
+| Export logs            | Minimum 2 years                                     |
+| Generated export files | 7 days unless policy changes                        |
 
 No retention rule may violate soft-delete, audit, or legal retention obligations.
 
@@ -521,6 +558,7 @@ No retention rule may violate soft-delete, audit, or legal retention obligations
 ## 5. Security Test Requirements
 
 The following must be verified before release:
+
 1. Unauthorized user cannot access any admin endpoint.
 2. In-scope user cannot access out-of-scope branch records.
 3. Sensitive fields are masked by default.

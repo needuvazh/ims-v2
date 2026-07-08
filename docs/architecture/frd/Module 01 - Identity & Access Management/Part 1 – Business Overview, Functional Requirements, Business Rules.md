@@ -39,16 +39,16 @@ Every authenticated user, whether an administrator, counselor, trainer, accounta
 
 This module provides centralized services for:
 
-* Authentication
-* Authorization
-* Identity lifecycle management
-* Role-Based Access Control (RBAC)
-* Permission management
-* Branch-level access control
-* Session management
-* Password management
-* Audit logging
-* Security policy enforcement
+- Authentication
+- Authorization
+- Identity lifecycle management
+- Role-Based Access Control (RBAC)
+- Permission management
+- Branch-level access control
+- Session management
+- Password management
+- Audit logging
+- Security policy enforcement
 
 The module is designed to support both the current single-institute deployment and future SaaS multi-tenant evolution without redesign.
 
@@ -114,55 +114,55 @@ The following capabilities are included in the IAM module:
 
 ### Identity Management
 
-* User account creation
-* User account modification
-* User activation
-* User deactivation
-* User archival
+- User account creation
+- User account modification
+- User activation
+- User deactivation
+- User archival
 
 ---
 
 ### Authentication
 
-* Email and password login
-* Password reset
-* Password change
-* Account lockout
-* Session creation
-* Logout
-* Remember Me
+- Email and password login
+- Password reset
+- Password change
+- Account lockout
+- Session creation
+- Logout
+- Remember Me
 
 ---
 
 ### Authorization
 
-* Dynamic role management
-* Permission management
-* Branch access
-* Dashboard permissions
-* Report permissions
-* Menu permissions
-* API permissions
+- Dynamic role management
+- Permission management
+- Branch access
+- Dashboard permissions
+- Report permissions
+- Menu permissions
+- API permissions
 
 ---
 
 ### Security
 
-* Password policy
-* Session timeout
-* Login history
-* Failed login tracking
-* Security audit logs
+- Password policy
+- Session timeout
+- Login history
+- Failed login tracking
+- Security audit logs
 
 ---
 
 ### Administration
 
-* Role administration
-* Permission administration
-* Branch assignment
-* User assignment
-* Security policy configuration
+- Role administration
+- Permission administration
+- Branch assignment
+- User assignment
+- Security policy configuration
 
 ---
 
@@ -249,9 +249,9 @@ The system shall allow authorized administrators to create a new user account.
 
 ### Actors
 
-* Super Administrator
-* Institute Administrator
-* Branch Administrator
+- Super Administrator
+- Institute Administrator
+- Branch Administrator
 
 ### Preconditions
 
@@ -265,16 +265,16 @@ iam.user.create
 
 ### Inputs
 
-* First Name
-* Last Name
-* Email
-* Mobile
-* Employee ID (optional)
-* Branch Assignment
-* Department
-* Roles
-* Preferred Language
-* Status
+- First Name
+- Last Name
+- Email
+- Mobile
+- Employee ID (optional)
+- Branch Assignment
+- Department
+- Roles
+- Preferred Language
+- Status
 
 ### Processing
 
@@ -291,9 +291,9 @@ iam.user.create
 
 ### Outputs
 
-* User created
-* Activation email sent
-* Audit recorded
+- User created
+- Activation email sent
+- Audit recorded
 
 ### Post Conditions
 
@@ -313,12 +313,12 @@ The system shall allow administrators to update user details.
 
 Editable fields include:
 
-* Name
-* Mobile
-* Branches
-* Department
-* Preferred Language
-* Roles
+- Name
+- Mobile
+- Branches
+- Department
+- Preferred Language
+- Roles
 
 Email cannot be modified once verified unless approved by a Super Administrator.
 
@@ -336,9 +336,9 @@ The system shall suspend a user without deleting historical records.
 
 Suspended users:
 
-* Cannot authenticate.
-* Retain historical ownership.
-* Remain visible in audit logs.
+- Cannot authenticate.
+- Retain historical ownership.
+- Remain visible in audit logs.
 
 ---
 
@@ -362,8 +362,8 @@ Only logical deletion (archive) is supported.
 
 The system shall authenticate users using:
 
-* Email
-* Password
+- Email
+- Password
 
 Validation steps:
 
@@ -384,9 +384,9 @@ Validation steps:
 
 The system shall invalidate:
 
-* Access Token
-* Refresh Token
-* Active Session
+- Access Token
+- Refresh Token
+- Active Session
 
 ---
 
@@ -554,11 +554,11 @@ System shall enforce configurable password policies.
 
 Default:
 
-* Minimum 12 characters
-* Uppercase
-* Lowercase
-* Number
-* Special character
+- Minimum 12 characters
+- Uppercase
+- Lowercase
+- Number
+- Special character
 
 ---
 
@@ -590,11 +590,11 @@ The system shall retain failed login history for security analysis.
 
 Record:
 
-* Browser
-* OS
-* Device
-* IP
-* Login location (future)
+- Browser
+- OS
+- Device
+- IP
+- Login location (future)
 
 ---
 
@@ -671,9 +671,9 @@ Record:
 
 At the end of Part 1, the IAM module has:
 
-* Business context and objectives
-* Scope and stakeholders
-* Business capabilities
-* 20+ detailed functional requirements
-* Foundational business rules
-* Cross-module dependency mapping
+- Business context and objectives
+- Scope and stakeholders
+- Business capabilities
+- 20+ detailed functional requirements
+- Foundational business rules
+- Cross-module dependency mapping

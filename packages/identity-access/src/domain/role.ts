@@ -37,7 +37,7 @@ export const createRoleCommandSchema = z.object({
   description: z.string().trim().nullable().optional(),
   effectiveStartDate: z.coerce.date().optional(),
   effectiveEndDate: z.coerce.date().nullable().optional(),
-  
+
   // Legacy fields
   status: z.string().optional(),
   permissionIds: z.array(z.string().uuid()).optional(),

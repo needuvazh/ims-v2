@@ -10,7 +10,7 @@ const RequestRefundSchema = z.object({
   refundType: z.enum(['Full', 'Partial']),
   amount: z.coerce.number().positive('Amount must be positive'),
   reasonCode: z.string().min(1, 'Reason code is required'),
-  reasonNarrative: z.string().min(1, 'Description is required')
+  reasonNarrative: z.string().min(1, 'Description is required'),
 });
 
 export async function requestRefundAction(data: any) {
@@ -26,9 +26,9 @@ export async function requestRefundAction(data: any) {
       where: { id: parsed.paymentId, isDeleted: false },
       include: {
         refunds: {
-          where: { isDeleted: false, status: { not: 'Rejected' } }
-        }
-      }
+          where: { isDeleted: false, status: { not: 'Rejected' } },
+        },
+      },
     });
 
     if (!payment) {
@@ -48,7 +48,7 @@ export async function requestRefundAction(data: any) {
       amount: parsed.amount,
       reasonCode: parsed.reasonCode,
       reasonNarrative: parsed.reasonNarrative,
-      requestedBy: session.userId
+      requestedBy: session.userId,
     });
 
     revalidatePath('/finance/refunds');
@@ -59,14 +59,14 @@ export async function requestRefundAction(data: any) {
       data: {
         id: result.id,
         refundNumber: result.refundNumber,
-        amount: result.amount.toNumber()
-      }
+        amount: result.amount.toNumber(),
+      },
     };
   } catch (error: any) {
     console.error('requestRefundAction failed:', error);
     return {
       success: false,
-      error: error.message || 'An unexpected error occurred'
+      error: error.message || 'An unexpected error occurred',
     };
   }
 }
@@ -76,13 +76,20 @@ export async function approveRefundAction(refundId: string, reason: string) {
     const session = await assertPermission('refund.approve');
     const { financeService } = await import('../../../lib/runtime');
 
-    const result = await financeService.approveRefund(refundId, session.userId, reason);
+    const result = await financeService.approveRefund(
+      refundId,
+      session.userId,
+      reason,
+    );
 
     revalidatePath('/finance/refunds');
     return { success: true, data: result };
   } catch (error: any) {
     console.error('approveRefundAction failed:', error);
-    return { success: false, error: error.message || 'An unexpected error occurred' };
+    return {
+      success: false,
+      error: error.message || 'An unexpected error occurred',
+    };
   }
 }
 
@@ -97,19 +104,25 @@ export async function rejectRefundAction(refundId: string, reason: string) {
         status: 'Rejected',
         decidedBy: session.userId,
         decidedAt: new Date(),
-        decisionReason: reason
-      }
+        decisionReason: reason,
+      },
     });
 
     revalidatePath('/finance/refunds');
     return { success: true, data: result };
   } catch (error: any) {
     console.error('rejectRefundAction failed:', error);
-    return { success: false, error: error.message || 'An unexpected error occurred' };
+    return {
+      success: false,
+      error: error.message || 'An unexpected error occurred',
+    };
   }
 }
 
-export async function executeRefundAction(refundId: string, executionRef: string) {
+export async function executeRefundAction(
+  refundId: string,
+  executionRef: string,
+) {
   try {
     const session = await assertPermission('refund.approve');
     const { financeService } = await import('../../../lib/runtime');
@@ -120,7 +133,9 @@ export async function executeRefundAction(refundId: string, executionRef: string
     return { success: true, data: result };
   } catch (error: any) {
     console.error('executeRefundAction failed:', error);
-    return { success: false, error: error.message || 'An unexpected error occurred' };
+    return {
+      success: false,
+      error: error.message || 'An unexpected error occurred',
+    };
   }
 }
-

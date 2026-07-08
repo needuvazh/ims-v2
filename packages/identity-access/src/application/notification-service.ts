@@ -1,10 +1,13 @@
-import type { INotificationRepository, NotificationDto } from '../domain/repositories';
+import type {
+  INotificationRepository,
+  NotificationDto,
+} from '../domain/repositories';
 import type { INotificationPort } from '../domain/notification-port';
 
 export class NotificationService {
   constructor(
     private readonly notificationRepository: INotificationRepository,
-    private readonly notificationPort: INotificationPort
+    private readonly notificationPort: INotificationPort,
   ) {}
 
   async processPendingNotifications(limit: number = 20): Promise<number> {
@@ -15,10 +18,16 @@ export class NotificationService {
       try {
         await this.dispatchNotification(notif);
         notif.status = 'Sent';
-        notif.providerResponse = { success: true, dispatchedAt: new Date().toISOString() };
+        notif.providerResponse = {
+          success: true,
+          dispatchedAt: new Date().toISOString(),
+        };
       } catch (err: any) {
         notif.status = 'Failed';
-        notif.providerResponse = { success: false, error: err.message || String(err) };
+        notif.providerResponse = {
+          success: false,
+          error: err.message || String(err),
+        };
       }
 
       await this.notificationRepository.update(notif);
@@ -28,22 +37,33 @@ export class NotificationService {
     return processedCount;
   }
 
-  async sendNotification(notification: NotificationDto): Promise<NotificationDto> {
+  async sendNotification(
+    notification: NotificationDto,
+  ): Promise<NotificationDto> {
     const created = await this.notificationRepository.create(notification);
     try {
       await this.dispatchNotification(created);
       created.status = 'Sent';
-      created.providerResponse = { success: true, dispatchedAt: new Date().toISOString() };
+      created.providerResponse = {
+        success: true,
+        dispatchedAt: new Date().toISOString(),
+      };
     } catch (err: any) {
       created.status = 'Failed';
-      created.providerResponse = { success: false, error: err.message || String(err) };
+      created.providerResponse = {
+        success: false,
+        error: err.message || String(err),
+      };
     }
 
     return this.notificationRepository.update(created);
   }
 
   private async dispatchNotification(notif: NotificationDto): Promise<void> {
-    if (notif.type === 'user.created' || notif.type === 'user.activation_resent') {
+    if (
+      notif.type === 'user.created' ||
+      notif.type === 'user.activation_resent'
+    ) {
       await this.notificationPort.sendActivationEmail(notif.recipientEmail, {
         firstName: notif.recipientEmail.split('@')[0],
         activationLink: notif.metadata?.activationLink || notif.body,
@@ -52,10 +72,15 @@ export class NotificationService {
       return;
     }
 
-    if (notif.type === 'user.password_reset_admin' || notif.type === 'user.password_reset_requested') {
+    if (
+      notif.type === 'user.password_reset_admin' ||
+      notif.type === 'user.password_reset_requested'
+    ) {
       await this.notificationPort.sendPasswordResetEmail(notif.recipientEmail, {
         firstName: notif.recipientEmail.split('@')[0],
-        resetLink: notif.metadata?.resetLink || `${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password?token=${notif.metadata?.resetToken || ''}`,
+        resetLink:
+          notif.metadata?.resetLink ||
+          `${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password?token=${notif.metadata?.resetToken || ''}`,
         expiresAt: new Date(Date.now() + 15 * 60 * 1000),
       });
       return;

@@ -69,7 +69,9 @@ List responses use:
     "code": "ERR_FTM_VALIDATION_FAILED",
     "message": "The request contains invalid values.",
     "fieldErrors": {
-      "effectiveEndDate": ["effectiveEndDate must be on or after effectiveStartDate."]
+      "effectiveEndDate": [
+        "effectiveEndDate must be on or after effectiveStartDate."
+      ]
     },
     "details": {},
     "requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9"
@@ -85,40 +87,40 @@ const PaginationSchema = z.object({
   pageSize: z.coerce.number().int().min(25).max(100).default(25),
 });
 
-const SortDirectionSchema = z.enum(["asc", "desc"]).default("asc");
+const SortDirectionSchema = z.enum(['asc', 'desc']).default('asc');
 ```
 
 ## 3. Endpoint Inventory
 
-| ID | Method | Route / Action | Purpose | Permission |
-|---|---|---|---|---|
-| API-FTM-001 | GET | `/api/v1/faculty/trainers` | Search and list trainers. | `trainer.read` |
-| API-FTM-002 | POST | `/api/v1/faculty/trainers` | Create trainer profile. | `trainer.create` |
-| API-FTM-003 | GET | `/api/v1/faculty/trainers/{trainerId}` | Read complete trainer profile subject to section permissions. | `trainer.read` |
-| API-FTM-004 | PATCH | `/api/v1/faculty/trainers/{trainerId}` | Update TrainerProfile-owned fields. | `trainer.update` |
-| API-FTM-005 | POST | `/api/v1/faculty/trainers/{trainerId}/status-transitions` | Execute trainer status transition. | `trainer.status.manage` |
-| API-FTM-006 | GET | `/api/v1/faculty/trainers/{trainerId}/qualifications` | List qualifications. | `trainer.qualification.read` |
-| API-FTM-007 | POST | `/api/v1/faculty/trainers/{trainerId}/qualifications` | Add qualification. | `trainer.qualification.manage` |
-| API-FTM-008 | PATCH | `/api/v1/faculty/trainers/{trainerId}/qualifications/{qualificationId}` | Update qualification. | `trainer.qualification.manage` |
-| API-FTM-009 | DELETE | `/api/v1/faculty/trainers/{trainerId}/qualifications/{qualificationId}` | Soft delete qualification. | `trainer.qualification.manage` |
-| API-FTM-010 | GET | `/api/v1/faculty/trainers/{trainerId}/availability` | List availability windows. | `trainer.availability.read` |
-| API-FTM-011 | POST | `/api/v1/faculty/trainers/{trainerId}/availability` | Create availability window. | `trainer.availability.manage` |
-| API-FTM-012 | PATCH | `/api/v1/faculty/trainers/{trainerId}/availability/{availabilityId}` | Update/deactivate availability window. | `trainer.availability.manage` |
-| API-FTM-013 | DELETE | `/api/v1/faculty/trainers/{trainerId}/availability/{availabilityId}` | Soft delete availability window. | `trainer.availability.manage` |
-| API-FTM-014 | GET | `/api/v1/faculty/trainers/{trainerId}/authorizations` | List course authorizations. | `trainer.authorization.read` |
-| API-FTM-015 | POST | `/api/v1/faculty/trainers/{trainerId}/authorizations` | Create course authorization. | `trainer.authorization.manage` |
-| API-FTM-016 | POST | `/api/v1/faculty/trainers/{trainerId}/authorizations/{authorizationId}/transitions` | Change authorization state. | `trainer.authorization.manage` |
-| API-FTM-017 | GET | `/api/v1/faculty/eligible-trainers` | Find eligible trainers for course, branch, and optional interval. | `trainer.eligibility.read` |
-| API-FTM-018 | POST | `/api/v1/faculty/eligibility/validate-assignment` | Validate assignment eligibility for Training Delivery. | `trainer.eligibility.read` or trusted in-process caller |
-| API-FTM-019 | POST | `/api/v1/faculty/availability/validate` | Validate availability for Scheduling. | `trainer.eligibility.read` or trusted in-process caller |
-| API-FTM-020 | GET | `/api/v1/faculty/trainers/{trainerId}/compensation-rates` | List compensation rate structures. | `trainer.compensation.read` |
-| API-FTM-021 | POST | `/api/v1/faculty/trainers/{trainerId}/compensation-rates` | Create compensation rate. | `trainer.compensation.manage` |
-| API-FTM-022 | PATCH | `/api/v1/faculty/trainers/{trainerId}/compensation-rates/{rateId}` | Update/deactivate compensation rate. | `trainer.compensation.manage` |
-| API-FTM-023 | POST | `/api/v1/faculty/compensation-rates/resolve` | Resolve applicable rate by specificity. | `trainer.compensation.read` or trusted in-process caller |
-| API-FTM-024 | GET | `/api/v1/faculty/trainers/{trainerId}/assignments` | Read Batch/Session assignment references. | `trainer.read` |
-| API-FTM-025 | GET | `/api/v1/faculty/reports/{reportCode}` | Read trainer operational report. | `trainer.report.view` |
-| API-FTM-026 | POST | `/api/v1/faculty/reports/{reportCode}/exports` | Export report dataset. | `trainer.report.export` |
-| API-FTM-027 | GET | `/api/v1/faculty/trainers/{trainerId}/audit-history` | Read immutable audit history. | `trainer.audit.read` |
+| ID          | Method | Route / Action                                                                      | Purpose                                                           | Permission                                               |
+| ----------- | ------ | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------- | -------------------------------------------------------- |
+| API-FTM-001 | GET    | `/api/v1/faculty/trainers`                                                          | Search and list trainers.                                         | `trainer.read`                                           |
+| API-FTM-002 | POST   | `/api/v1/faculty/trainers`                                                          | Create trainer profile.                                           | `trainer.create`                                         |
+| API-FTM-003 | GET    | `/api/v1/faculty/trainers/{trainerId}`                                              | Read complete trainer profile subject to section permissions.     | `trainer.read`                                           |
+| API-FTM-004 | PATCH  | `/api/v1/faculty/trainers/{trainerId}`                                              | Update TrainerProfile-owned fields.                               | `trainer.update`                                         |
+| API-FTM-005 | POST   | `/api/v1/faculty/trainers/{trainerId}/status-transitions`                           | Execute trainer status transition.                                | `trainer.status.manage`                                  |
+| API-FTM-006 | GET    | `/api/v1/faculty/trainers/{trainerId}/qualifications`                               | List qualifications.                                              | `trainer.qualification.read`                             |
+| API-FTM-007 | POST   | `/api/v1/faculty/trainers/{trainerId}/qualifications`                               | Add qualification.                                                | `trainer.qualification.manage`                           |
+| API-FTM-008 | PATCH  | `/api/v1/faculty/trainers/{trainerId}/qualifications/{qualificationId}`             | Update qualification.                                             | `trainer.qualification.manage`                           |
+| API-FTM-009 | DELETE | `/api/v1/faculty/trainers/{trainerId}/qualifications/{qualificationId}`             | Soft delete qualification.                                        | `trainer.qualification.manage`                           |
+| API-FTM-010 | GET    | `/api/v1/faculty/trainers/{trainerId}/availability`                                 | List availability windows.                                        | `trainer.availability.read`                              |
+| API-FTM-011 | POST   | `/api/v1/faculty/trainers/{trainerId}/availability`                                 | Create availability window.                                       | `trainer.availability.manage`                            |
+| API-FTM-012 | PATCH  | `/api/v1/faculty/trainers/{trainerId}/availability/{availabilityId}`                | Update/deactivate availability window.                            | `trainer.availability.manage`                            |
+| API-FTM-013 | DELETE | `/api/v1/faculty/trainers/{trainerId}/availability/{availabilityId}`                | Soft delete availability window.                                  | `trainer.availability.manage`                            |
+| API-FTM-014 | GET    | `/api/v1/faculty/trainers/{trainerId}/authorizations`                               | List course authorizations.                                       | `trainer.authorization.read`                             |
+| API-FTM-015 | POST   | `/api/v1/faculty/trainers/{trainerId}/authorizations`                               | Create course authorization.                                      | `trainer.authorization.manage`                           |
+| API-FTM-016 | POST   | `/api/v1/faculty/trainers/{trainerId}/authorizations/{authorizationId}/transitions` | Change authorization state.                                       | `trainer.authorization.manage`                           |
+| API-FTM-017 | GET    | `/api/v1/faculty/eligible-trainers`                                                 | Find eligible trainers for course, branch, and optional interval. | `trainer.eligibility.read`                               |
+| API-FTM-018 | POST   | `/api/v1/faculty/eligibility/validate-assignment`                                   | Validate assignment eligibility for Training Delivery.            | `trainer.eligibility.read` or trusted in-process caller  |
+| API-FTM-019 | POST   | `/api/v1/faculty/availability/validate`                                             | Validate availability for Scheduling.                             | `trainer.eligibility.read` or trusted in-process caller  |
+| API-FTM-020 | GET    | `/api/v1/faculty/trainers/{trainerId}/compensation-rates`                           | List compensation rate structures.                                | `trainer.compensation.read`                              |
+| API-FTM-021 | POST   | `/api/v1/faculty/trainers/{trainerId}/compensation-rates`                           | Create compensation rate.                                         | `trainer.compensation.manage`                            |
+| API-FTM-022 | PATCH  | `/api/v1/faculty/trainers/{trainerId}/compensation-rates/{rateId}`                  | Update/deactivate compensation rate.                              | `trainer.compensation.manage`                            |
+| API-FTM-023 | POST   | `/api/v1/faculty/compensation-rates/resolve`                                        | Resolve applicable rate by specificity.                           | `trainer.compensation.read` or trusted in-process caller |
+| API-FTM-024 | GET    | `/api/v1/faculty/trainers/{trainerId}/assignments`                                  | Read Batch/Session assignment references.                         | `trainer.read`                                           |
+| API-FTM-025 | GET    | `/api/v1/faculty/reports/{reportCode}`                                              | Read trainer operational report.                                  | `trainer.report.view`                                    |
+| API-FTM-026 | POST   | `/api/v1/faculty/reports/{reportCode}/exports`                                      | Export report dataset.                                            | `trainer.report.export`                                  |
+| API-FTM-027 | GET    | `/api/v1/faculty/trainers/{trainerId}/audit-history`                                | Read immutable audit history.                                     | `trainer.audit.read`                                     |
 
 ---
 
@@ -139,11 +141,20 @@ const SortDirectionSchema = z.enum(["asc", "desc"]).default("asc");
 const TrainerListQuerySchema = PaginationSchema.extend({
   q: z.string().trim().min(1).max(120).optional(),
   branchId: z.string().min(1).max(64).optional(),
-  trainerType: z.enum(["FullTime", "PartTime", "Freelance"]).optional(),
-  status: z.enum(["Active", "Inactive", "Suspended"]).optional(),
+  trainerType: z.enum(['FullTime', 'PartTime', 'Freelance']).optional(),
+  status: z.enum(['Active', 'Inactive', 'Suspended']).optional(),
   specialization: z.string().trim().max(200).optional(),
   effectiveOn: z.coerce.date().optional(),
-  sortBy: z.enum(["trainerCode", "displayName", "trainerType", "status", "effectiveStartDate", "createdAt"]).default("displayName"),
+  sortBy: z
+    .enum([
+      'trainerCode',
+      'displayName',
+      'trainerType',
+      'status',
+      'effectiveStartDate',
+      'createdAt',
+    ])
+    .default('displayName'),
   sortDirection: SortDirectionSchema,
 });
 ```
@@ -157,8 +168,12 @@ const TrainerListQuerySchema = PaginationSchema.extend({
       "id": "trn_01J8B0L3N5R7T9V1X2Z4C6D8F0H2",
       "personId": "per_01J9C1M4P6S8U0W2Y3A5E7G9J1K3",
       "trainerCode": "TRN-MCT-00042",
-      "displayName": {"en": "Ahmed Al Harthy", "ar": "أحمد الحارثي"},
-      "branch": {"id": "br_mct", "code": "MCT", "name": {"en": "Muscat", "ar": "مسقط"}},
+      "displayName": { "en": "Ahmed Al Harthy", "ar": "أحمد الحارثي" },
+      "branch": {
+        "id": "br_mct",
+        "code": "MCT",
+        "name": { "en": "Muscat", "ar": "مسقط" }
+      },
       "trainerType": "Freelance",
       "specialization": "Occupational Health and Safety",
       "status": "Active",
@@ -167,7 +182,14 @@ const TrainerListQuerySchema = PaginationSchema.extend({
       "version": 4
     }
   ],
-  "meta": {"page": 1, "pageSize": 25, "totalItems": 1, "totalPages": 1, "requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9", "timestamp": "2026-07-04T12:00:00+04:00"}
+  "meta": {
+    "page": 1,
+    "pageSize": 25,
+    "totalItems": 1,
+    "totalPages": 1,
+    "requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9",
+    "timestamp": "2026-07-04T12:00:00+04:00"
+  }
 }
 ```
 
@@ -185,16 +207,18 @@ const TrainerListQuerySchema = PaginationSchema.extend({
 **Zod Request Schema:**
 
 ```ts
-const CreateTrainerProfileSchema = z.object({
-  personId: z.string().min(1).max(64),
-  branchId: z.string().min(1).max(64),
-  trainerType: z.enum(["FullTime", "PartTime", "Freelance"]),
-  specialization: z.string().trim().min(2).max(500),
-  qualificationSummary: z.string().trim().max(1000).optional().nullable(),
-  status: z.enum(["Active", "Inactive"]),
-  effectiveStartDate: z.coerce.date(),
-  effectiveEndDate: z.coerce.date().optional().nullable(),
-}).superRefine(validateEffectiveDateRange);
+const CreateTrainerProfileSchema = z
+  .object({
+    personId: z.string().min(1).max(64),
+    branchId: z.string().min(1).max(64),
+    trainerType: z.enum(['FullTime', 'PartTime', 'Freelance']),
+    specialization: z.string().trim().min(2).max(500),
+    qualificationSummary: z.string().trim().max(1000).optional().nullable(),
+    status: z.enum(['Active', 'Inactive']),
+    effectiveStartDate: z.coerce.date(),
+    effectiveEndDate: z.coerce.date().optional().nullable(),
+  })
+  .superRefine(validateEffectiveDateRange);
 ```
 
 **Processing Rules:** Verify Person exists; enforce one non-deleted TrainerProfile per Person; generate unique trainer code from numbering series where configured; create audit record; publish `TrainerCreated` after commit.
@@ -217,7 +241,10 @@ const CreateTrainerProfileSchema = z.object({
     "version": 1,
     "createdAt": "2026-07-04T12:00:00+04:00"
   },
-  "meta": {"requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9", "timestamp": "2026-07-04T12:00:00+04:00"}
+  "meta": {
+    "requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9",
+    "timestamp": "2026-07-04T12:00:00+04:00"
+  }
 }
 ```
 
@@ -244,8 +271,11 @@ const TrainerIdParamSchema = z.object({ trainerId: z.string().min(1).max(64) });
     "profile": {
       "id": "trn_01J8B0L3N5R7T9V1X2Z4C6D8F0H2",
       "trainerCode": "TRN-MCT-00042",
-      "person": {"id": "per_01J9C1M4P6S8U0W2Y3A5E7G9J1K3", "displayName": {"en": "Ahmed Al Harthy", "ar": "أحمد الحارثي"}},
-      "branch": {"id": "br_mct", "code": "MCT"},
+      "person": {
+        "id": "per_01J9C1M4P6S8U0W2Y3A5E7G9J1K3",
+        "displayName": { "en": "Ahmed Al Harthy", "ar": "أحمد الحارثي" }
+      },
+      "branch": { "id": "br_mct", "code": "MCT" },
       "trainerType": "Freelance",
       "specialization": "Occupational Health and Safety",
       "status": "Active",
@@ -257,9 +287,12 @@ const TrainerIdParamSchema = z.object({ trainerId: z.string().min(1).max(64) });
     "availability": [],
     "authorizations": [],
     "compensationRates": null,
-    "assignmentSummary": {"activeBatches": 2, "futureSessions": 6}
+    "assignmentSummary": { "activeBatches": 2, "futureSessions": 6 }
   },
-  "meta": {"requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9", "timestamp": "2026-07-04T12:00:00+04:00"}
+  "meta": {
+    "requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9",
+    "timestamp": "2026-07-04T12:00:00+04:00"
+  }
 }
 ```
 
@@ -275,15 +308,17 @@ const TrainerIdParamSchema = z.object({ trainerId: z.string().min(1).max(64) });
 **Zod Request Schema:**
 
 ```ts
-const UpdateTrainerProfileSchema = z.object({
-  branchId: z.string().min(1).max(64).optional(),
-  trainerType: z.enum(["FullTime", "PartTime", "Freelance"]).optional(),
-  specialization: z.string().trim().min(2).max(500).optional(),
-  qualificationSummary: z.string().trim().max(1000).nullable().optional(),
-  effectiveStartDate: z.coerce.date().optional(),
-  effectiveEndDate: z.coerce.date().nullable().optional(),
-  version: z.number().int().min(1),
-}).strict();
+const UpdateTrainerProfileSchema = z
+  .object({
+    branchId: z.string().min(1).max(64).optional(),
+    trainerType: z.enum(['FullTime', 'PartTime', 'Freelance']).optional(),
+    specialization: z.string().trim().min(2).max(500).optional(),
+    qualificationSummary: z.string().trim().max(1000).nullable().optional(),
+    effectiveStartDate: z.coerce.date().optional(),
+    effectiveEndDate: z.coerce.date().nullable().optional(),
+    version: z.number().int().min(1),
+  })
+  .strict();
 ```
 
 Person-owned fields are rejected if present.
@@ -301,7 +336,7 @@ Person-owned fields are rejected if present.
 
 ```ts
 const TrainerStatusTransitionSchema = z.object({
-  toStatus: z.enum(["Active", "Inactive", "Suspended"]),
+  toStatus: z.enum(['Active', 'Inactive', 'Suspended']),
   effectiveAt: z.coerce.date(),
   reason: z.string().trim().min(10).max(1000),
   version: z.number().int().min(1),
@@ -319,7 +354,10 @@ const TrainerStatusTransitionSchema = z.object({
     "effectiveAt": "2026-07-05T00:00:00+04:00",
     "version": 5
   },
-  "meta": {"requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9", "timestamp": "2026-07-04T12:00:00+04:00"}
+  "meta": {
+    "requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9",
+    "timestamp": "2026-07-04T12:00:00+04:00"
+  }
 }
 ```
 
@@ -336,8 +374,10 @@ Query schema:
 ```ts
 const QualificationListQuerySchema = PaginationSchema.extend({
   q: z.string().trim().max(120).optional(),
-  sortBy: z.enum(["qualificationName", "institution", "yearCompleted", "createdAt"]).default("yearCompleted"),
-  sortDirection: SortDirectionSchema.default("desc"),
+  sortBy: z
+    .enum(['qualificationName', 'institution', 'yearCompleted', 'createdAt'])
+    .default('yearCompleted'),
+  sortDirection: SortDirectionSchema.default('desc'),
 });
 ```
 
@@ -381,10 +421,16 @@ const SoftDeleteSchema = z.object({
     "qualificationName": "NEBOSH International General Certificate",
     "institution": "NEBOSH",
     "yearCompleted": 2024,
-    "document": {"id": "doc_01J3E5P7R9U1X3A5C7F9J1L3N5Q7", "verificationStatus": "Approved"},
+    "document": {
+      "id": "doc_01J3E5P7R9U1X3A5C7F9J1L3N5Q7",
+      "verificationStatus": "Approved"
+    },
     "version": 2
   },
-  "meta": {"requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9", "timestamp": "2026-07-04T12:00:00+04:00"}
+  "meta": {
+    "requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9",
+    "timestamp": "2026-07-04T12:00:00+04:00"
+  }
 }
 ```
 
@@ -399,8 +445,18 @@ const SoftDeleteSchema = z.object({
 ```ts
 const AvailabilityListQuerySchema = PaginationSchema.extend({
   branchId: z.string().max(64).optional(),
-  dayOfWeek: z.enum(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]).optional(),
-  status: z.enum(["Active", "Inactive"]).optional(),
+  dayOfWeek: z
+    .enum([
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ])
+    .optional(),
+  status: z.enum(['Active', 'Inactive']).optional(),
   effectiveOn: z.coerce.date().optional(),
 });
 ```
@@ -408,15 +464,25 @@ const AvailabilityListQuerySchema = PaginationSchema.extend({
 ### Create Availability
 
 ```ts
-const AvailabilityMutationSchema = z.object({
-  branchId: z.string().min(1).max(64),
-  dayOfWeek: z.enum(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]),
-  startTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),
-  endTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),
-  status: z.enum(["Active", "Inactive"]),
-  effectiveStartDate: z.coerce.date(),
-  effectiveEndDate: z.coerce.date().optional().nullable(),
-}).superRefine(validateTimeOrderAndDateRange);
+const AvailabilityMutationSchema = z
+  .object({
+    branchId: z.string().min(1).max(64),
+    dayOfWeek: z.enum([
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ]),
+    startTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),
+    endTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),
+    status: z.enum(['Active', 'Inactive']),
+    effectiveStartDate: z.coerce.date(),
+    effectiveEndDate: z.coerce.date().optional().nullable(),
+  })
+  .superRefine(validateTimeOrderAndDateRange);
 ```
 
 Create/update permission: `trainer.availability.manage`.
@@ -445,7 +511,10 @@ DELETE uses `SoftDeleteSchema`.
     "effectiveEndDate": null,
     "version": 1
   },
-  "meta": {"requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9", "timestamp": "2026-07-04T12:00:00+04:00"}
+  "meta": {
+    "requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9",
+    "timestamp": "2026-07-04T12:00:00+04:00"
+  }
 }
 ```
 
@@ -460,7 +529,7 @@ DELETE uses `SoftDeleteSchema`.
 ```ts
 const AuthorizationListQuerySchema = PaginationSchema.extend({
   courseId: z.string().max(64).optional(),
-  status: z.enum(["Active", "Inactive", "Suspended", "Expired"]).optional(),
+  status: z.enum(['Active', 'Inactive', 'Suspended', 'Expired']).optional(),
   effectiveOn: z.coerce.date().optional(),
 });
 ```
@@ -468,20 +537,22 @@ const AuthorizationListQuerySchema = PaginationSchema.extend({
 ### Create Authorization
 
 ```ts
-const CreateAuthorizationSchema = z.object({
-  courseId: z.string().min(1).max(64),
-  status: z.enum(["Active", "Inactive"]),
-  effectiveStartDate: z.coerce.date(),
-  effectiveEndDate: z.coerce.date().optional().nullable(),
-  reason: z.string().trim().min(10).max(1000),
-}).superRefine(validateEffectiveDateRange);
+const CreateAuthorizationSchema = z
+  .object({
+    courseId: z.string().min(1).max(64),
+    status: z.enum(['Active', 'Inactive']),
+    effectiveStartDate: z.coerce.date(),
+    effectiveEndDate: z.coerce.date().optional().nullable(),
+    reason: z.string().trim().min(10).max(1000),
+  })
+  .superRefine(validateEffectiveDateRange);
 ```
 
 ### Transition Authorization
 
 ```ts
 const AuthorizationTransitionSchema = z.object({
-  toStatus: z.enum(["Active", "Inactive", "Suspended", "Expired"]),
+  toStatus: z.enum(['Active', 'Inactive', 'Suspended', 'Expired']),
   effectiveAt: z.coerce.date(),
   reason: z.string().trim().min(10).max(1000),
   version: z.number().int().min(1),
@@ -495,13 +566,20 @@ const AuthorizationTransitionSchema = z.object({
   "data": {
     "id": "authz_01J5G7R9T1W3Z5C7E9H1L3N5Q7S9",
     "trainerId": "trn_01J8B0L3N5R7T9V1X2Z4C6D8F0H2",
-    "course": {"id": "crs_01J6H8S0U2X4A6D8F0J2M4P6R8T0", "courseCode": "HSE-101", "name": {"en": "HSE Fundamentals", "ar": "أساسيات الصحة والسلامة"}},
+    "course": {
+      "id": "crs_01J6H8S0U2X4A6D8F0J2M4P6R8T0",
+      "courseCode": "HSE-101",
+      "name": { "en": "HSE Fundamentals", "ar": "أساسيات الصحة والسلامة" }
+    },
     "status": "Active",
     "effectiveStartDate": "2026-08-01",
     "effectiveEndDate": "2027-07-31",
     "version": 1
   },
-  "meta": {"requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9", "timestamp": "2026-07-04T12:00:00+04:00"}
+  "meta": {
+    "requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9",
+    "timestamp": "2026-07-04T12:00:00+04:00"
+  }
 }
 ```
 
@@ -519,9 +597,15 @@ const EligibleTrainerQuerySchema = PaginationSchema.extend({
   courseId: z.string().min(1).max(64),
   branchId: z.string().min(1).max(64),
   targetDate: z.coerce.date(),
-  startTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/).optional(),
-  endTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/).optional(),
-  trainerType: z.enum(["FullTime", "PartTime", "Freelance"]).optional(),
+  startTime: z
+    .string()
+    .regex(/^([01]\d|2[0-3]):[0-5]\d$/)
+    .optional(),
+  endTime: z
+    .string()
+    .regex(/^([01]\d|2[0-3]):[0-5]\d$/)
+    .optional(),
+  trainerType: z.enum(['FullTime', 'PartTime', 'Freelance']).optional(),
   q: z.string().trim().max(120).optional(),
 }).superRefine(requireBothTimesOrNeither);
 ```
@@ -544,7 +628,7 @@ const EligibleTrainerQuerySchema = PaginationSchema.extend({
     {
       "trainerId": "trn_01J8B0L3N5R7T9V1X2Z4C6D8F0H2",
       "trainerCode": "TRN-MCT-00042",
-      "displayName": {"en": "Ahmed Al Harthy", "ar": "أحمد الحارثي"},
+      "displayName": { "en": "Ahmed Al Harthy", "ar": "أحمد الحارثي" },
       "trainerType": "Freelance",
       "authorizationId": "authz_01J5G7R9T1W3Z5C7E9H1L3N5Q7S9",
       "availabilityId": "avl_01J4F6Q8S0V2Y4B6D8G0K2M4P6R8",
@@ -552,7 +636,14 @@ const EligibleTrainerQuerySchema = PaginationSchema.extend({
       "schedulingConflictCheckRequired": true
     }
   ],
-  "meta": {"page": 1, "pageSize": 25, "totalItems": 1, "totalPages": 1, "requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9", "timestamp": "2026-07-04T12:00:00+04:00"}
+  "meta": {
+    "page": 1,
+    "pageSize": 25,
+    "totalItems": 1,
+    "totalPages": 1,
+    "requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9",
+    "timestamp": "2026-07-04T12:00:00+04:00"
+  }
 }
 ```
 
@@ -565,14 +656,22 @@ const EligibleTrainerQuerySchema = PaginationSchema.extend({
 **Authentication & Permission:** `trainer.eligibility.read` for user calls; trusted in-process call from Training Delivery may use service-to-module identity.
 
 ```ts
-const AssignmentEligibilitySchema = z.object({
-  trainerId: z.string().min(1).max(64),
-  courseId: z.string().min(1).max(64),
-  branchId: z.string().min(1).max(64),
-  assignmentDate: z.coerce.date(),
-  startTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/).optional(),
-  endTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/).optional(),
-}).superRefine(requireBothTimesOrNeither);
+const AssignmentEligibilitySchema = z
+  .object({
+    trainerId: z.string().min(1).max(64),
+    courseId: z.string().min(1).max(64),
+    branchId: z.string().min(1).max(64),
+    assignmentDate: z.coerce.date(),
+    startTime: z
+      .string()
+      .regex(/^([01]\d|2[0-3]):[0-5]\d$/)
+      .optional(),
+    endTime: z
+      .string()
+      .regex(/^([01]\d|2[0-3]):[0-5]\d$/)
+      .optional(),
+  })
+  .superRefine(requireBothTimesOrNeither);
 ```
 
 **Success DTO:**
@@ -587,7 +686,10 @@ const AssignmentEligibilitySchema = z.object({
     "available": false,
     "schedulingConflictCheckRequired": true
   },
-  "meta": {"requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9", "timestamp": "2026-07-04T12:00:00+04:00"}
+  "meta": {
+    "requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9",
+    "timestamp": "2026-07-04T12:00:00+04:00"
+  }
 }
 ```
 
@@ -598,13 +700,15 @@ Business ineligibility returns HTTP 200 with `eligible=false`; malformed or unau
 `POST /api/v1/faculty/availability/validate`; permission `trainer.eligibility.read` or trusted Scheduling caller.
 
 ```ts
-const AvailabilityValidationSchema = z.object({
-  trainerId: z.string().min(1).max(64),
-  branchId: z.string().min(1).max(64),
-  date: z.coerce.date(),
-  startTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),
-  endTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),
-}).superRefine(validateTimeOrder);
+const AvailabilityValidationSchema = z
+  .object({
+    trainerId: z.string().min(1).max(64),
+    branchId: z.string().min(1).max(64),
+    date: z.coerce.date(),
+    startTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),
+    endTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),
+  })
+  .superRefine(validateTimeOrder);
 ```
 
 **Success DTO:**
@@ -616,7 +720,10 @@ const AvailabilityValidationSchema = z.object({
     "availabilityId": "avl_01J4F6Q8S0V2Y4B6D8G0K2M4P6R8",
     "timezone": "Asia/Muscat"
   },
-  "meta": {"requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9", "timestamp": "2026-07-04T12:00:00+04:00"}
+  "meta": {
+    "requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9",
+    "timestamp": "2026-07-04T12:00:00+04:00"
+  }
 }
 ```
 
@@ -630,8 +737,10 @@ Possible business results: `AVAILABLE`, `NOT_AVAILABLE`, `PROFILE_INACTIVE`, `PR
 
 ```ts
 const RateListQuerySchema = PaginationSchema.extend({
-  paymentBasis: z.enum(["PerHour", "PerSession", "PerStudent", "Fixed"]).optional(),
-  status: z.enum(["Active", "Inactive"]).optional(),
+  paymentBasis: z
+    .enum(['PerHour', 'PerSession', 'PerStudent', 'Fixed'])
+    .optional(),
+  status: z.enum(['Active', 'Inactive']).optional(),
   effectiveOn: z.coerce.date().optional(),
   batchId: z.string().max(64).optional(),
   sessionId: z.string().max(64).optional(),
@@ -641,17 +750,19 @@ const RateListQuerySchema = PaginationSchema.extend({
 ### Create Rate
 
 ```ts
-const CreateRateSchema = z.object({
-  batchId: z.string().min(1).max(64).optional().nullable(),
-  sessionId: z.string().min(1).max(64).optional().nullable(),
-  paymentBasis: z.enum(["PerHour", "PerSession", "PerStudent", "Fixed"]),
-  amount: z.coerce.number().positive().multipleOf(0.001),
-  currency: z.literal("OMR").default("OMR"),
-  status: z.enum(["Active", "Inactive"]),
-  remarks: z.string().trim().max(1000).optional().nullable(),
-  effectiveStartDate: z.coerce.date(),
-  effectiveEndDate: z.coerce.date().optional().nullable(),
-}).superRefine(validateRateSpecificityAndDates);
+const CreateRateSchema = z
+  .object({
+    batchId: z.string().min(1).max(64).optional().nullable(),
+    sessionId: z.string().min(1).max(64).optional().nullable(),
+    paymentBasis: z.enum(['PerHour', 'PerSession', 'PerStudent', 'Fixed']),
+    amount: z.coerce.number().positive().multipleOf(0.001),
+    currency: z.literal('OMR').default('OMR'),
+    status: z.enum(['Active', 'Inactive']),
+    remarks: z.string().trim().max(1000).optional().nullable(),
+    effectiveStartDate: z.coerce.date(),
+    effectiveEndDate: z.coerce.date().optional().nullable(),
+  })
+  .superRefine(validateRateSpecificityAndDates);
 ```
 
 Rules: `sessionId` implies session-specific rate; `batchId` may be present with session only when the Session belongs to that Batch. Session and Batch references are validated against Training Delivery. Ambiguous overlapping active rates at the same specificity, trainer, basis, and effective period are rejected.
@@ -667,7 +778,7 @@ PATCH uses mutable fields plus mandatory `version`. Historical rate changes shou
 ```ts
 const ResolveRateSchema = z.object({
   trainerId: z.string().min(1).max(64),
-  paymentBasis: z.enum(["PerHour", "PerSession", "PerStudent", "Fixed"]),
+  paymentBasis: z.enum(['PerHour', 'PerSession', 'PerStudent', 'Fixed']),
   effectiveOn: z.coerce.date(),
   batchId: z.string().min(1).max(64).optional(),
   sessionId: z.string().min(1).max(64).optional(),
@@ -690,7 +801,10 @@ Precedence: Session-specific → Batch-specific → Trainer-level.
     "effectiveStartDate": "2026-06-01",
     "effectiveEndDate": null
   },
-  "meta": {"requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9", "timestamp": "2026-07-04T12:00:00+04:00"}
+  "meta": {
+    "requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9",
+    "timestamp": "2026-07-04T12:00:00+04:00"
+  }
 }
 ```
 
@@ -703,7 +817,7 @@ Precedence: Session-specific → Batch-specific → Trainer-level.
 
 ```ts
 const AssignmentReferenceQuerySchema = PaginationSchema.extend({
-  kind: z.enum(["Batch", "Session", "All"]).default("All"),
+  kind: z.enum(['Batch', 'Session', 'All']).default('All'),
   fromDate: z.coerce.date().optional(),
   toDate: z.coerce.date().optional(),
   status: z.string().trim().max(50).optional(),
@@ -726,7 +840,14 @@ const AssignmentReferenceQuerySchema = PaginationSchema.extend({
       "status": "Scheduled"
     }
   ],
-  "meta": {"page": 1, "pageSize": 25, "totalItems": 1, "totalPages": 1, "requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9", "timestamp": "2026-07-04T12:00:00+04:00"}
+  "meta": {
+    "page": 1,
+    "pageSize": 25,
+    "totalItems": 1,
+    "totalPages": 1,
+    "requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9",
+    "timestamp": "2026-07-04T12:00:00+04:00"
+  }
 }
 ```
 
@@ -752,8 +873,8 @@ const TrainerReportQuerySchema = PaginationSchema.extend({
   branchId: z.string().max(64).optional(),
   fromDate: z.coerce.date(),
   toDate: z.coerce.date(),
-  trainerType: z.enum(["FullTime", "PartTime", "Freelance"]).optional(),
-  status: z.enum(["Active", "Inactive", "Suspended"]).optional(),
+  trainerType: z.enum(['FullTime', 'PartTime', 'Freelance']).optional(),
+  status: z.enum(['Active', 'Inactive', 'Suspended']).optional(),
   courseId: z.string().max(64).optional(),
 });
 ```
@@ -762,9 +883,9 @@ const TrainerReportQuerySchema = PaginationSchema.extend({
 
 ```ts
 const TrainerReportExportSchema = z.object({
-  format: z.enum(["csv", "xlsx"]),
-  filters: TrainerReportQuerySchema.omit({page: true, pageSize: true}),
-  locale: z.enum(["en", "ar"]),
+  format: z.enum(['csv', 'xlsx']),
+  filters: TrainerReportQuerySchema.omit({ page: true, pageSize: true }),
+  locale: z.enum(['en', 'ar']),
 });
 ```
 
@@ -779,7 +900,10 @@ const TrainerReportExportSchema = z.object({
     "expiresAt": "2026-07-04T13:00:00+04:00",
     "rowCount": 842
   },
-  "meta": {"requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9", "timestamp": "2026-07-04T12:00:00+04:00"}
+  "meta": {
+    "requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9",
+    "timestamp": "2026-07-04T12:00:00+04:00"
+  }
 }
 ```
 
@@ -793,10 +917,18 @@ const TrainerReportExportSchema = z.object({
 ```ts
 const AuditHistoryQuerySchema = PaginationSchema.extend({
   action: z.string().trim().max(100).optional(),
-  entityType: z.enum(["TrainerProfile", "TrainerQualification", "TrainerAvailability", "TrainerCourseAuthorization", "TrainerCompensationRate"]).optional(),
+  entityType: z
+    .enum([
+      'TrainerProfile',
+      'TrainerQualification',
+      'TrainerAvailability',
+      'TrainerCourseAuthorization',
+      'TrainerCompensationRate',
+    ])
+    .optional(),
   fromDate: z.coerce.date().optional(),
   toDate: z.coerce.date().optional(),
-  sortDirection: z.enum(["asc", "desc"]).default("desc"),
+  sortDirection: z.enum(['asc', 'desc']).default('desc'),
 });
 ```
 
@@ -810,15 +942,25 @@ const AuditHistoryQuerySchema = PaginationSchema.extend({
       "entityType": "TrainerCourseAuthorization",
       "entityId": "authz_01J5G7R9T1W3Z5C7E9H1L3N5Q7S9",
       "action": "STATUS_CHANGED",
-      "oldValue": {"status": "Active"},
-      "newValue": {"status": "Suspended"},
+      "oldValue": { "status": "Active" },
+      "newValue": { "status": "Suspended" },
       "reason": "Authorization suspended pending qualification renewal.",
-      "performedBy": {"userId": "usr_01J1N3X5Z7C9F1J3L5P7S9U1W3Y5", "displayName": "Branch Manager"},
+      "performedBy": {
+        "userId": "usr_01J1N3X5Z7C9F1J3L5P7S9U1W3Y5",
+        "displayName": "Branch Manager"
+      },
       "performedAt": "2026-07-04T11:15:00+04:00",
       "ipAddressMasked": "10.20.xxx.xxx"
     }
   ],
-  "meta": {"page": 1, "pageSize": 25, "totalItems": 1, "totalPages": 1, "requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9", "timestamp": "2026-07-04T12:00:00+04:00"}
+  "meta": {
+    "page": 1,
+    "pageSize": 25,
+    "totalItems": 1,
+    "totalPages": 1,
+    "requestId": "req_01J7A9K2M4Q6R8T0V1W3X5Y7Z9",
+    "timestamp": "2026-07-04T12:00:00+04:00"
+  }
 }
 ```
 
@@ -843,11 +985,11 @@ export type ValidateTrainerAssignmentInput = {
 export type ValidateTrainerAssignmentResult = {
   eligible: boolean;
   reasonCodes: Array<
-    | "TRAINER_NOT_FOUND"
-    | "PROFILE_INACTIVE"
-    | "PROFILE_OUTSIDE_EFFECTIVE_PERIOD"
-    | "COURSE_NOT_AUTHORIZED"
-    | "TRAINER_NOT_AVAILABLE"
+    | 'TRAINER_NOT_FOUND'
+    | 'PROFILE_INACTIVE'
+    | 'PROFILE_OUTSIDE_EFFECTIVE_PERIOD'
+    | 'COURSE_NOT_AUTHORIZED'
+    | 'TRAINER_NOT_AVAILABLE'
   >;
   authorizationId?: string;
   availabilityId?: string;
@@ -858,7 +1000,7 @@ export type ValidateTrainerAssignmentResult = {
 ```ts
 export type ResolveCompensationRateInput = {
   trainerId: string;
-  paymentBasis: "PerHour" | "PerSession" | "PerStudent" | "Fixed";
+  paymentBasis: 'PerHour' | 'PerSession' | 'PerStudent' | 'Fixed';
   effectiveOn: Date;
   batchId?: string;
   sessionId?: string;
@@ -866,28 +1008,28 @@ export type ResolveCompensationRateInput = {
 
 export type ResolveCompensationRateResult = {
   rateId: string;
-  specificity: "SESSION" | "BATCH" | "TRAINER";
-  paymentBasis: "PerHour" | "PerSession" | "PerStudent" | "Fixed";
+  specificity: 'SESSION' | 'BATCH' | 'TRAINER';
+  paymentBasis: 'PerHour' | 'PerSession' | 'PerStudent' | 'Fixed';
   amount: string;
-  currency: "OMR";
+  currency: 'OMR';
 };
 ```
 
 ## 6. HTTP Status Strategy
 
-| HTTP | Meaning in Module 09 |
-|---|---|
-| 200 | Successful read, update, validation result, or transition. |
-| 201 | New resource created. |
-| 400 | Malformed query or schema validation failure. |
-| 401 | No valid authenticated session. |
-| 403 | Permission denied or branch scope denied. |
-| 404 | Resource not found inside accessible scope. |
-| 409 | Duplicate, overlap, invalid state transition, ambiguity, or optimistic concurrency conflict. |
-| 422 | Semantically invalid dates, time bounds, status effective date, or domain validation. |
-| 429 | Rate limit exceeded for report/export or abusive API use. |
-| 500 | Unexpected server error with request ID; no stack trace returned to client. |
-| 503 | Required owning module temporarily unavailable for synchronous validation. |
+| HTTP | Meaning in Module 09                                                                         |
+| ---- | -------------------------------------------------------------------------------------------- |
+| 200  | Successful read, update, validation result, or transition.                                   |
+| 201  | New resource created.                                                                        |
+| 400  | Malformed query or schema validation failure.                                                |
+| 401  | No valid authenticated session.                                                              |
+| 403  | Permission denied or branch scope denied.                                                    |
+| 404  | Resource not found inside accessible scope.                                                  |
+| 409  | Duplicate, overlap, invalid state transition, ambiguity, or optimistic concurrency conflict. |
+| 422  | Semantically invalid dates, time bounds, status effective date, or domain validation.        |
+| 429  | Rate limit exceeded for report/export or abusive API use.                                    |
+| 500  | Unexpected server error with request ID; no stack trace returned to client.                  |
+| 503  | Required owning module temporarily unavailable for synchronous validation.                   |
 
 ## 7. API Security Requirements
 

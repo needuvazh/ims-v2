@@ -20,7 +20,7 @@ function problemJson(
   title: string,
   detail: string,
   errorCode: string,
-  invalidFields?: Array<{ field: string; message: string }>
+  invalidFields?: Array<{ field: string; message: string }>,
 ) {
   return NextResponse.json(
     {
@@ -30,91 +30,103 @@ function problemJson(
       statusCode: status,
       invalidFields,
     },
-    { status }
+    { status },
   );
 }
 
 export async function PUT(
   request: Request,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   const { id } = await params;
-  return withRouteObservability(request.headers, async () =>
-    withPermission(request, 'waitinglist.manage', async ({ session }) => {
-      const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'waitinglist.manage', async ({ session }) => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-      let payload: unknown;
-      try {
-        payload = await request.json();
-      } catch {
-        return problemJson(
-          400,
-          'Invalid request body',
-          'Request body must be valid JSON.',
-          'CRS-VAL-BATCHES-INVALID_JSON'
-        );
-      }
-
-      const parsed = reorderSchema.safeParse(payload);
-      if (!parsed.success) {
-        return problemJson(
-          400,
-          'Invalid request body',
-          'Reorder details are invalid.',
-          'CRS-VAL-BATCHES-INVALID_BODY',
-          parsed.error.issues.map((issue) => ({
-            field: issue.path.join('.') || 'body',
-            message: issue.message,
-          }))
-        );
-      }
-
-      try {
-        const { waitlistIds } = parsed.data;
-
-        // Fetch batch
-        const batch = await batchService.batchRepository.findById(id);
-        if (!batch) {
-          throw new Error('ERR_CRS_BATCH_NOT_FOUND');
-        }
-
-        // Branch-scoping guard
-        const hasAccess = await prisma.userBranchAccess.findFirst({
-          where: { userId: session.userId, branchId: batch.branchId, status: 'Active' },
-        });
-        if (!hasAccess) {
-          const userRoles = await prisma.userRole.findMany({
-            where: { userId: session.userId },
-            include: { role: true },
-          });
-          const isSuperAdmin = userRoles.some(
-            (ur) => ur.role.roleCode === 'SUPER_ADMIN' || ur.role.roleCode === 'OWNER'
+        let payload: unknown;
+        try {
+          payload = await request.json();
+        } catch {
+          return problemJson(
+            400,
+            'Invalid request body',
+            'Request body must be valid JSON.',
+            'CRS-VAL-BATCHES-INVALID_JSON',
           );
-          if (!isSuperAdmin) {
-            throw new Error('ERR_IAM_INSUFFICIENT_PERMISSIONS');
-          }
         }
 
-        await batchService.reorderWaitlist(id, waitlistIds, session.userId);
+        const parsed = reorderSchema.safeParse(payload);
+        if (!parsed.success) {
+          return problemJson(
+            400,
+            'Invalid request body',
+            'Reorder details are invalid.',
+            'CRS-VAL-BATCHES-INVALID_BODY',
+            parsed.error.issues.map((issue) => ({
+              field: issue.path.join('.') || 'body',
+              message: issue.message,
+            })),
+          );
+        }
 
-        const response = NextResponse.json(
-          {
-            success: true,
-          },
-          { status: 200 }
-        );
+        try {
+          const { waitlistIds } = parsed.data;
 
-        applyObservabilityResponseHeaders(response.headers, request.headers, {
-          route: '/api/v1/batches/[id]/waitlist/reorder',
-          method: request.method,
-          status: 'success',
-        });
+          // Fetch batch
+          const batch = await batchService.batchRepository.findById(id);
+          if (!batch) {
+            throw new Error('ERR_CRS_BATCH_NOT_FOUND');
+          }
 
-        return response;
-      } catch (error) {
-        logger.error('api.batches.waitlist-reorder.failed', { status: 'failed', error: error as Error });
-        return batchErrorResponse(error as Error);
-      }
-    })
-  , { route: '/api/v1/batches/[id]/waitlist/reorder' });
+          // Branch-scoping guard
+          const hasAccess = await prisma.userBranchAccess.findFirst({
+            where: {
+              userId: session.userId,
+              branchId: batch.branchId,
+              status: 'Active',
+            },
+          });
+          if (!hasAccess) {
+            const userRoles = await prisma.userRole.findMany({
+              where: { userId: session.userId },
+              include: { role: true },
+            });
+            const isSuperAdmin = userRoles.some(
+              (ur) =>
+                ur.role.roleCode === 'SUPER_ADMIN' ||
+                ur.role.roleCode === 'OWNER',
+            );
+            if (!isSuperAdmin) {
+              throw new Error('ERR_IAM_INSUFFICIENT_PERMISSIONS');
+            }
+          }
+
+          await batchService.reorderWaitlist(id, waitlistIds, session.userId);
+
+          const response = NextResponse.json(
+            {
+              success: true,
+            },
+            { status: 200 },
+          );
+
+          applyObservabilityResponseHeaders(response.headers, request.headers, {
+            route: '/api/v1/batches/[id]/waitlist/reorder',
+            method: request.method,
+            status: 'success',
+          });
+
+          return response;
+        } catch (error) {
+          logger.error('api.batches.waitlist-reorder.failed', {
+            status: 'failed',
+            error: error as Error,
+          });
+          return batchErrorResponse(error as Error);
+        }
+      }),
+    { route: '/api/v1/batches/[id]/waitlist/reorder' },
+  );
 }

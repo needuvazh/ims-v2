@@ -12,7 +12,10 @@ export interface DomainEventPayload {
 export class PrismaOutboxPublisher {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async publish(event: DomainEventPayload, tx?: Prisma.TransactionClient): Promise<void> {
+  async publish(
+    event: DomainEventPayload,
+    tx?: Prisma.TransactionClient,
+  ): Promise<void> {
     const client = tx || this.prisma;
 
     await client.outboxEvent.create({
@@ -21,7 +24,9 @@ export class PrismaOutboxPublisher {
         eventType: event.eventType,
         aggregateType: event.aggregateType,
         aggregateId: event.aggregateId,
-        payload: JSON.parse(JSON.stringify(event.payload)) as PrismaTypes.InputJsonValue,
+        payload: JSON.parse(
+          JSON.stringify(event.payload),
+        ) as PrismaTypes.InputJsonValue,
         availableAt: event.occurredAt,
         status: 'Pending',
         attempts: 0,
@@ -29,7 +34,10 @@ export class PrismaOutboxPublisher {
     });
   }
 
-  async publishMany(events: DomainEventPayload[], tx?: Prisma.TransactionClient): Promise<void> {
+  async publishMany(
+    events: DomainEventPayload[],
+    tx?: Prisma.TransactionClient,
+  ): Promise<void> {
     const client = tx || this.prisma;
 
     if (events.length === 0) return;
@@ -40,7 +48,9 @@ export class PrismaOutboxPublisher {
         eventType: event.eventType,
         aggregateType: event.aggregateType,
         aggregateId: event.aggregateId,
-        payload: JSON.parse(JSON.stringify(event.payload)) as PrismaTypes.InputJsonValue,
+        payload: JSON.parse(
+          JSON.stringify(event.payload),
+        ) as PrismaTypes.InputJsonValue,
         availableAt: event.occurredAt,
         status: 'Pending',
         attempts: 0,

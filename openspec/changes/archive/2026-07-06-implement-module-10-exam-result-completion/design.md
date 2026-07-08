@@ -5,6 +5,7 @@ Module 10 – Exam, Result & Completion Management is defined in the IMS DDD Con
 However, `schema.prisma` currently contains zero models for these aggregates. No domain package, application services, API routes, or UI components exist. This blocks the academic completion workflow entirely.
 
 The module must integrate with five existing bounded contexts via read-only boundaries:
+
 - **Course Catalog**: CourseCompletionRule resolution
 - **Admission & Enrollment**: Enrollment context validation
 - **Attendance**: Attendance percentage/outcome evidence
@@ -12,6 +13,7 @@ The module must integrate with five existing bounded contexts via read-only boun
 - **Faculty/Trainer Management**: Trainer assignment verification
 
 The module must emit events to three downstream contexts:
+
 - **Certificate Management**: Certificate eligibility handoff
 - **Admission & Enrollment**: Enrollment completion sync
 - **Communication & Notification**: Notification event emission
@@ -19,6 +21,7 @@ The module must emit events to three downstream contexts:
 ## Goals / Non-Goals
 
 **Goals:**
+
 - Implement all 4 aggregate roots with complete state machines, invariants, and domain events
 - Provide 19 API endpoints with Zod validation, server-side authorization, and branch scoping
 - Support individual and bulk Result entry with server-derived pass/fail status
@@ -29,6 +32,7 @@ The module must emit events to three downstream contexts:
 - Achieve 142+ BDD test scenarios covering positive/negative paths, authorization, and DDD boundaries
 
 **Non-Goals:**
+
 - Student portal read access (deferred to future phase)
 - Trainer portal Result entry UI (deferred to future phase)
 - Certificate generation/issuance (owned by Certificate Management context)
@@ -42,6 +46,7 @@ The module must emit events to three downstream contexts:
 ### 1. Package Structure: Single Domain Package with Layered Internals
 
 **Decision:** Create `packages/exam-result-completion/` with internal layering:
+
 ```
 packages/exam-result-completion/
   domain/          # Aggregates, entities, value objects, domain events, repository interfaces
@@ -54,12 +59,14 @@ packages/exam-result-completion/
 **Rationale:** Keeps all Module 10 code co-located while preserving Clean Architecture boundaries. Repository interfaces in `domain/`, Prisma implementations in `infrastructure/`. Cross-context readers are infrastructure concerns that implement domain-defined interfaces.
 
 **Alternatives Considered:**
+
 - Separate packages per aggregate (exam, result, completion) → Too granular for Phase 1, adds import complexity
 - Shared package with all modules → Violates bounded context isolation
 
 ### 2. State Machine Persistence: Dedicated Status Fields per Aggregate
 
 **Decision:** Each aggregate gets a dedicated status enum field:
+
 - `Exam.status`: `ExamStatus` enum (Draft, Scheduled, OpenForResultEntry, Closed, Cancelled, Archived)
 - `Result.resultStatus`: `ResultStatus` enum (Pending, Recorded, Finalized, Corrected)
 - `CourseCompletion.completionStatus`: `CompletionStatus` enum (Pending, EvidenceIncomplete, AwaitingTrainerRecommendation, AwaitingCoordinatorReview, AwaitingFinalApproval, Approved, Rejected, ReevaluationRequired, ExceptionReview)
@@ -69,6 +76,7 @@ packages/exam-result-completion/
 **Rationale:** FRD Part 2 defines explicit state machines for each aggregate. Dedicated enums enable database-level constraints, clear API contracts, and type-safe state transitions. Avoids overloading a single status field with ambiguous semantics.
 
 **Alternatives Considered:**
+
 - Single string field with application-level validation → Loses database constraint benefits, harder to query
 - Separate lifecycle state + academic status fields → Added complexity without clear benefit for Phase 1
 
@@ -87,6 +95,7 @@ packages/exam-result-completion/
 ### 5. Branch Scoping: Entity-Derived Branch Chains, Not Client-Supplied
 
 **Decision:** Branch authorization derives from entity relationships, not request body:
+
 - Exam → Batch → Branch
 - Result → Exam → Batch → Branch
 - CourseCompletion → Enrollment → Branch
@@ -97,6 +106,7 @@ packages/exam-result-completion/
 ### 6. Bulk Result Entry: Two-Phase Validate-Then-Submit with Validation Token
 
 **Decision:** Bulk Result uses a two-phase approach:
+
 1. `POST /api/results/bulk/validate` → Returns validation results per row + validationToken
 2. `POST /api/results/bulk/submit` → Submits with validationToken, commits atomically
 
@@ -105,6 +115,7 @@ packages/exam-result-completion/
 ### 7. Cross-Context Reads: Repository Interfaces with Infrastructure Adapters
 
 **Decision:** Define read-only interfaces in `domain/` for cross-context dependencies:
+
 ```typescript
 interface CourseCompletionRuleReader {
   getActiveRule(courseId: string): Promise<CourseCompletionRule | null>;
@@ -119,7 +130,10 @@ interface FinanceValidationReader {
 }
 
 interface TrainerAssignmentReader {
-  isTrainerAssignedToBatch(trainerPersonId: string, batchId: string): Promise<boolean>;
+  isTrainerAssignedToBatch(
+    trainerPersonId: string,
+    batchId: string,
+  ): Promise<boolean>;
 }
 ```
 
@@ -128,6 +142,7 @@ Implement in `infrastructure/` using Prisma queries to other context tables.
 **Rationale:** Preserves bounded context isolation. Module 10 depends on abstractions, not concrete implementations. Enables mocking in tests. Infrastructure adapters can be replaced if context ownership changes.
 
 **Alternatives Considered:**
+
 - Direct Prisma imports from other context packages → Violates bounded context boundaries
 - Event-driven eventual consistency for reads → Overkill for Phase 1, adds complexity
 
@@ -146,6 +161,7 @@ Implement in `infrastructure/` using Prisma queries to other context tables.
 ### 10. API Error Mapping: Stable Error Codes with HTTP Status Mapping
 
 **Decision:** Domain errors map to stable error codes and HTTP responses:
+
 - `EXAM_INVALID_STATE_TRANSITION` → 409 Conflict
 - `RESULT_ALREADY_FINALIZED` → 409 Conflict
 - `COMPLETION_EVIDENCE_STALE` → 409 Conflict
@@ -173,40 +189,49 @@ Implement in `infrastructure/` using Prisma queries to other context tables.
 ## Risks / Trade-offs
 
 ### [Risk] Cross-Context Contract Gaps
+
 **Impact:** Attendance/Finance may not provide `sourceUpdatedAt` timestamps initially.
 **Mitigation:** Use `updatedAt` from source tables as proxy. Define explicit contracts in follow-up sprint.
 
 ### [Risk] Result Finalization Ambiguity
+
 **Impact:** ER model doesn't explicitly define `finalizedAt`/`finalizedBy` fields.
 **Mitigation:** Add fields to Prisma schema with documentation. Align with ER model in next revision.
 
 ### [Risk] Grade Semantics Unclear
+
 **Impact:** `Result.grade` field exists but no Grade master or scale rules defined.
 **Mitigation:** Start as free-text field. Add grade scale configuration in future phase if needed.
 
 ### [Risk] Bulk Result Performance
+
 **Impact:** 1000-row atomic commit may exceed database timeout under load.
 **Mitigation:** NFR allows chunked transaction policy as fallback. Monitor P95 latency and adjust chunk size.
 
 ### [Risk] Completion Evaluation Dependency Failures
+
 **Impact:** Attendance/Finance unavailability blocks completion evaluation.
 **Mitigation:** Fail-safe design: return `DEPENDENCY_UNAVAILABLE` error, do not false-approve. Retry via reevaluation endpoint when dependency recovers.
 
 ### [Risk] Approval Race Conditions
+
 **Impact:** Two approvers may attempt same stage concurrently.
 **Mitigation:** Optimistic locking via `version` field. One succeeds, one receives 409 CONCURRENCY_CONFLICT.
 
 ### [Trade-off] No Dedicated ResultRevision Table
+
 **Impact:** Result correction history stored in AuditLog, not separate table.
 **Mitigation:** AuditLog provides sufficient provenance for Phase 1. Add ResultRevision table if audit query performance becomes an issue.
 
 ### [Trade-off] Free-Text Grade Field
+
 **Impact:** No grade scale validation or reporting consistency.
 **Mitigation:** Acceptable for Phase 1. Add Grade master data in future phase when reporting requirements mature.
 
 ## Migration Plan
 
 ### Phase 1: Schema Foundation (Week 1)
+
 1. Add 4 Prisma models with enums, relations, constraints, indexes
 2. Generate migration: `prisma migrate dev --name add-module-10-aggregates`
 3. Review migration SQL for backward compatibility
@@ -214,24 +239,28 @@ Implement in `infrastructure/` using Prisma queries to other context tables.
 5. Run reconciliation queries to verify constraints
 
 ### Phase 2: Domain Layer (Week 2-3)
+
 1. Implement aggregate roots with state machines
 2. Implement validation rules and invariants
 3. Implement domain events and outbox integration
 4. Write unit tests for all state transitions
 
 ### Phase 3: Application Services (Week 3-4)
+
 1. Implement command/query handlers
 2. Implement authorization and branch scoping
 3. Implement cross-context readers
 4. Write application service tests
 
 ### Phase 4: API Layer (Week 4-5)
+
 1. Implement 19 route handlers with Zod validation
 2. Implement error mapping and HTTP responses
 3. Write API contract tests
 4. Integration test with admin portal
 
 ### Phase 5: Admin Portal UI (Week 5-6)
+
 1. Implement Exam management screens
 2. Implement Result entry (individual + bulk)
 3. Implement Completion evaluation and approval queues
@@ -239,12 +268,14 @@ Implement in `infrastructure/` using Prisma queries to other context tables.
 5. Write E2E tests with Playwright
 
 ### Phase 6: Testing & Hardening (Week 6-7)
+
 1. Run 142+ BDD scenarios
 2. Run security/IDOR tests
 3. Performance testing against NFR targets
 4. Operational runbook review
 
 ### Rollback Strategy
+
 - If migration fails: Revert migration, no data loss (new tables are empty)
 - If application bugs found: Disable feature flags, rollback deployment
 - If data corruption: Restore from backup, run reconciliation queries

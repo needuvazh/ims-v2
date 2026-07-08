@@ -1,5 +1,8 @@
 import type { PrismaClient } from '@prisma/client';
-import type { AttendanceActionContext, AttendanceSessionStatus } from '../domain/attendance';
+import type {
+  AttendanceActionContext,
+  AttendanceSessionStatus,
+} from '../domain/attendance';
 import type { AttendanceQueryRepository } from '../domain/repositories';
 
 export class AttendanceQueryService {
@@ -18,10 +21,18 @@ export class AttendanceQueryService {
     page: number;
     pageSize: number;
   }) {
-    return this.queryRepo.sessionRows(this.prisma, filters, filters.page, filters.pageSize);
+    return this.queryRepo.sessionRows(
+      this.prisma,
+      filters,
+      filters.page,
+      filters.pageSize,
+    );
   }
 
-  async enrollmentSummary(enrollmentId: string, context: AttendanceActionContext) {
+  async enrollmentSummary(
+    enrollmentId: string,
+    context: AttendanceActionContext,
+  ) {
     return this.queryRepo.summaryByEnrollment(this.prisma, enrollmentId);
   }
 
@@ -34,6 +45,11 @@ export class AttendanceQueryService {
   }
 
   async trainerWorkload(branchIds: string[], page = 1, pageSize = 20) {
-    return this.queryRepo.sessionRows(this.prisma, { branchIds }, page, pageSize);
+    return this.queryRepo.sessionRows(
+      this.prisma,
+      { branchIds },
+      page,
+      pageSize,
+    );
   }
 }

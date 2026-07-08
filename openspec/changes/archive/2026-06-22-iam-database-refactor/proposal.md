@@ -1,6 +1,7 @@
 ## Why
 
 The current database schema and seeding script for Module 1 (Identity & Access Management) are minimal and do not meet several critical specifications outlined in the Module 1 FRD and core architecture principles:
+
 1. **Lack of Session Tracking & Revocation:** Stateless cookie sessions cannot be monitored or revoked, preventing the implementation of "Active Sessions" views and remote logout rules.
 2. **Missing Security Lockouts:** There is no database support for brute-force lockouts (failed login tracking and lockout durations).
 3. **No Effective Dating:** Users and Roles lack effective start and end dates which are explicitly required in the FRD UI specifications and database standards.
@@ -29,6 +30,7 @@ Implementing these database and seeding improvements will solidify the platform'
 ## Capabilities
 
 ### Modified Capabilities
+
 - `database`: Database models, migrations, and seeds expanded to fully cover IAM audit, locking, and session persistence requirements.
 - `identity-access`: Domain definitions, repositories, and services modified to support the new database attributes.
 

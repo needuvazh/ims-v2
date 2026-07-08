@@ -143,7 +143,10 @@ export const permissions = {
   },
 } as const;
 
-export function hasPermission(session: Session | null, permission: string): boolean {
+export function hasPermission(
+  session: Session | null,
+  permission: string,
+): boolean {
   if (!session) {
     return false;
   }
@@ -151,7 +154,10 @@ export function hasPermission(session: Session | null, permission: string): bool
   return session.permissions.includes(permission);
 }
 
-export function hasAnyPermission(session: Session | null, permissions: readonly string[]): boolean {
+export function hasAnyPermission(
+  session: Session | null,
+  permissions: readonly string[],
+): boolean {
   return permissions.some((permission) => hasPermission(session, permission));
 }
 

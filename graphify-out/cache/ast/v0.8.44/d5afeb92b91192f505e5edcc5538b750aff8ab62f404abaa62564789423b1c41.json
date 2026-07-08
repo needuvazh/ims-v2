@@ -1,1 +1,1183 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_4_database_entities_and_crud_matrix_md", "label": "Part 4 \u2013 Database Entities and CRUD Matrix.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "label": "Part 4 \u2013 Database Entities and CRUD Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_module_5_student_management", "label": "Module 5 \u2013 Student Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L2"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_1_purpose", "label": "1. Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L4"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_2_context_ownership_boundary", "label": "2. Context Ownership Boundary", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L18"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_2_1_entities_owned_by_student_management", "label": "2.1 Entities Owned by Student Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L20"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_2_2_referenced_but_not_owned_by_student_management", "label": "2.2 Referenced but Not Owned by Student Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L30"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_shared_database_conventions", "label": "3. Shared Database Conventions", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L47"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_1_primary_key_convention", "label": "3.1 Primary Key Convention", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L49"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_2_audit_column_convention", "label": "3.2 Audit Column Convention", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L56"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_3_effective_dating_convention", "label": "3.3 Effective-Dating Convention", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L69"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_4_soft_delete_rule", "label": "3.4 Soft Delete Rule", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L79"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_5_branch_scope_rule", "label": "3.5 Branch Scope Rule", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L85"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_entity_specifications", "label": "4. Entity Specifications", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L92"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_1_student_profiles", "label": "4.1 `student_profiles`", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L94"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose", "label": "Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L96"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary", "label": "Table Definition Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L99"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification", "label": "Field Specification", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L103"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints", "label": "Constraints", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L131"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes", "label": "Recommended Indexes", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L146"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_prisma_model_sketch", "label": "Prisma Model Sketch", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L156"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_2_student_status_history", "label": "4.2 `student_status_history`", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L193"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_195", "label": "Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L195"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_198", "label": "Table Definition Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L198"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_202", "label": "Field Specification", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L202"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_224", "label": "Constraints", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L224"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_240", "label": "Recommended Indexes", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L240"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_3_student_id_card_history", "label": "4.3 `student_id_card_history`", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L246"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_248", "label": "Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L248"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_251", "label": "Table Definition Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L251"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_255", "label": "Field Specification", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L255"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_276", "label": "Constraints", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L276"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_284", "label": "Recommended Indexes", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L284"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_4_student_duplicate_cases", "label": "4.4 `student_duplicate_cases`", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L290"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_292", "label": "Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L292"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_295", "label": "Table Definition Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L295"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_299", "label": "Field Specification", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L299"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_324", "label": "Constraints", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L324"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_333", "label": "Recommended Indexes", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L333"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_5_student_duplicate_case_items", "label": "4.5 `student_duplicate_case_items`", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L342"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_344", "label": "Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L344"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_347", "label": "Table Definition Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L347"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_351", "label": "Field Specification", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L351"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_372", "label": "Constraints", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L372"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_379", "label": "Recommended Indexes", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L379"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_6_student_merge_logs", "label": "4.6 `student_merge_logs`", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L386"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_388", "label": "Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L388"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_391", "label": "Table Definition Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L391"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_395", "label": "Field Specification", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L395"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_420", "label": "Constraints", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L420"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_427", "label": "Recommended Indexes", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L427"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "label": "4.7 `student_export_logs`", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L435"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_437", "label": "Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L437"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_440", "label": "Table Definition Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L440"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_444", "label": "Field Specification", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L444"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_468", "label": "Constraints", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L468"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_474", "label": "Recommended Indexes", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L474"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_5_relationship_model", "label": "5. Relationship Model", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L481"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_5_1_owned_internal_relationships", "label": "5.1 Owned Internal Relationships", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L483"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_5_2_external_reference_relationships", "label": "5.2 External Reference Relationships", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L499"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_5_3_cascading_and_restrict_policy_summary", "label": "5.3 Cascading and Restrict Policy Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L509"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_constraints_and_validation_rules_at_database_level", "label": "6. Constraints and Validation Rules at Database Level", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L521"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_1_student_identity_uniqueness", "label": "6.1 Student Identity Uniqueness", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L523"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_2_status_and_effective_date_integrity", "label": "6.2 Status and Effective-Date Integrity", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L529"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_3_duplicate_workflow_integrity", "label": "6.3 Duplicate Workflow Integrity", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L534"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_4_merge_integrity", "label": "6.4 Merge Integrity", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L539"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_5_export_audit_integrity", "label": "6.5 Export Audit Integrity", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L544"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_7_suggested_postgresql_ddl_notes", "label": "7. Suggested PostgreSQL DDL Notes", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L550"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_8_crud_matrix", "label": "8. CRUD Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L563"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_8_1_human_actor_crud_matrix", "label": "8.1 Human Actor CRUD Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L579"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_8_2_system_actor_crud_matrix", "label": "8.2 System Actor CRUD Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L597"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_9_actor_action_interpretation_notes", "label": "9. Actor Action Interpretation Notes", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L616"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_10_recommended_prisma_relation_summary", "label": "10. Recommended Prisma Relation Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L651"}, {"id": "module_05_student_management_part_4_database_entities_and_crud_matrix_11_final_modeling_decisions", "label": "11. Final Modeling Decisions", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L702"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_4_database_entities_and_crud_matrix_md", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_module_5_student_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L2", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L4", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_2_context_ownership_boundary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L18", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_2_1_entities_owned_by_student_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L20", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_2_2_referenced_but_not_owned_by_student_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L30", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_shared_database_conventions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L47", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_1_primary_key_convention", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L49", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_2_audit_column_convention", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L56", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_3_effective_dating_convention", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L69", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_4_soft_delete_rule", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L79", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_5_branch_scope_rule", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L85", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_entity_specifications", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L92", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_4_database_entities_and_crud_matrix_md", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_1_student_profiles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L94", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_1_student_profiles", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L96", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_1_student_profiles", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L99", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_1_student_profiles", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L103", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_1_student_profiles", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L131", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_1_student_profiles", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L146", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_1_student_profiles", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_prisma_model_sketch", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L156", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_4_database_entities_and_crud_matrix_md", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_2_student_status_history", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L193", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_2_student_status_history", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_195", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L195", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_2_student_status_history", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_198", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L198", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_2_student_status_history", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_202", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L202", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_2_student_status_history", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_224", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L224", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_2_student_status_history", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_240", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L240", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_4_database_entities_and_crud_matrix_md", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_3_student_id_card_history", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L246", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_3_student_id_card_history", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_248", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L248", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_3_student_id_card_history", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_251", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L251", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_3_student_id_card_history", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_255", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L255", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_3_student_id_card_history", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_276", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L276", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_3_student_id_card_history", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_284", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L284", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_4_database_entities_and_crud_matrix_md", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_4_student_duplicate_cases", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L290", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_4_student_duplicate_cases", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_292", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L292", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_4_student_duplicate_cases", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_295", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L295", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_4_student_duplicate_cases", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_299", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L299", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_4_student_duplicate_cases", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_324", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L324", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_4_student_duplicate_cases", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_333", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L333", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_4_database_entities_and_crud_matrix_md", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_5_student_duplicate_case_items", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L342", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_5_student_duplicate_case_items", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_344", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L344", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_5_student_duplicate_case_items", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_347", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L347", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_5_student_duplicate_case_items", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_351", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L351", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_5_student_duplicate_case_items", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_372", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L372", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_5_student_duplicate_case_items", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_379", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L379", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_4_database_entities_and_crud_matrix_md", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_6_student_merge_logs", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L386", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_6_student_merge_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_388", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L388", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_6_student_merge_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_391", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L391", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_6_student_merge_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_395", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L395", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_6_student_merge_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_420", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L420", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_6_student_merge_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_427", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L427", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_4_database_entities_and_crud_matrix_md", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L435", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_437", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L437", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_440", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L440", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_444", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L444", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_468", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L468", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_474", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L474", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_5_relationship_model", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L481", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_5_1_owned_internal_relationships", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L483", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_5_2_external_reference_relationships", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L499", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_5_3_cascading_and_restrict_policy_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L509", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_constraints_and_validation_rules_at_database_level", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L521", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_1_student_identity_uniqueness", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L523", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_2_status_and_effective_date_integrity", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L529", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_3_duplicate_workflow_integrity", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L534", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_4_merge_integrity", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L539", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_5_export_audit_integrity", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L544", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_7_suggested_postgresql_ddl_notes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L550", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_8_crud_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L563", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_8_crud_matrix", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_8_1_human_actor_crud_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L579", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_8_crud_matrix", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_8_2_system_actor_crud_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L597", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_9_actor_action_interpretation_notes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L616", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_10_recommended_prisma_relation_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L651", "weight": 1.0}, {"source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs", "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_11_final_modeling_decisions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L702", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_4_database_entities_and_crud_matrix_md",
+      "label": "Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "label": "Part 4 \u2013 Database Entities and CRUD Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_module_5_student_management",
+      "label": "Module 5 \u2013 Student Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L2"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_1_purpose",
+      "label": "1. Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L4"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_2_context_ownership_boundary",
+      "label": "2. Context Ownership Boundary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L18"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_2_1_entities_owned_by_student_management",
+      "label": "2.1 Entities Owned by Student Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L20"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_2_2_referenced_but_not_owned_by_student_management",
+      "label": "2.2 Referenced but Not Owned by Student Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L30"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_shared_database_conventions",
+      "label": "3. Shared Database Conventions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L47"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_1_primary_key_convention",
+      "label": "3.1 Primary Key Convention",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L49"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_2_audit_column_convention",
+      "label": "3.2 Audit Column Convention",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L56"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_3_effective_dating_convention",
+      "label": "3.3 Effective-Dating Convention",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L69"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_4_soft_delete_rule",
+      "label": "3.4 Soft Delete Rule",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L79"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_5_branch_scope_rule",
+      "label": "3.5 Branch Scope Rule",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L85"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_entity_specifications",
+      "label": "4. Entity Specifications",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L92"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_1_student_profiles",
+      "label": "4.1 `student_profiles`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L94"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L96"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary",
+      "label": "Table Definition Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L99"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification",
+      "label": "Field Specification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L103"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints",
+      "label": "Constraints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L131"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes",
+      "label": "Recommended Indexes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L146"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_prisma_model_sketch",
+      "label": "Prisma Model Sketch",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L156"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_2_student_status_history",
+      "label": "4.2 `student_status_history`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L193"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_195",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L195"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_198",
+      "label": "Table Definition Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L198"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_202",
+      "label": "Field Specification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L202"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_224",
+      "label": "Constraints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L224"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_240",
+      "label": "Recommended Indexes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L240"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_3_student_id_card_history",
+      "label": "4.3 `student_id_card_history`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L246"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_248",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L248"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_251",
+      "label": "Table Definition Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L251"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_255",
+      "label": "Field Specification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L255"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_276",
+      "label": "Constraints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L276"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_284",
+      "label": "Recommended Indexes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L284"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_4_student_duplicate_cases",
+      "label": "4.4 `student_duplicate_cases`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L290"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_292",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L292"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_295",
+      "label": "Table Definition Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L295"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_299",
+      "label": "Field Specification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L299"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_324",
+      "label": "Constraints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L324"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_333",
+      "label": "Recommended Indexes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L333"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_5_student_duplicate_case_items",
+      "label": "4.5 `student_duplicate_case_items`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L342"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_344",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L344"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_347",
+      "label": "Table Definition Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L347"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_351",
+      "label": "Field Specification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L351"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_372",
+      "label": "Constraints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L372"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_379",
+      "label": "Recommended Indexes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L379"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_6_student_merge_logs",
+      "label": "4.6 `student_merge_logs`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L386"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_388",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L388"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_391",
+      "label": "Table Definition Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L391"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_395",
+      "label": "Field Specification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L395"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_420",
+      "label": "Constraints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L420"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_427",
+      "label": "Recommended Indexes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L427"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "label": "4.7 `student_export_logs`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L435"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_437",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L437"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_440",
+      "label": "Table Definition Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L440"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_444",
+      "label": "Field Specification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L444"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_468",
+      "label": "Constraints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L468"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_474",
+      "label": "Recommended Indexes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L474"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_5_relationship_model",
+      "label": "5. Relationship Model",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L481"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_5_1_owned_internal_relationships",
+      "label": "5.1 Owned Internal Relationships",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L483"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_5_2_external_reference_relationships",
+      "label": "5.2 External Reference Relationships",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L499"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_5_3_cascading_and_restrict_policy_summary",
+      "label": "5.3 Cascading and Restrict Policy Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L509"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_constraints_and_validation_rules_at_database_level",
+      "label": "6. Constraints and Validation Rules at Database Level",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L521"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_1_student_identity_uniqueness",
+      "label": "6.1 Student Identity Uniqueness",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L523"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_2_status_and_effective_date_integrity",
+      "label": "6.2 Status and Effective-Date Integrity",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L529"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_3_duplicate_workflow_integrity",
+      "label": "6.3 Duplicate Workflow Integrity",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L534"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_4_merge_integrity",
+      "label": "6.4 Merge Integrity",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L539"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_5_export_audit_integrity",
+      "label": "6.5 Export Audit Integrity",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L544"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_7_suggested_postgresql_ddl_notes",
+      "label": "7. Suggested PostgreSQL DDL Notes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L550"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_8_crud_matrix",
+      "label": "8. CRUD Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L563"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_8_1_human_actor_crud_matrix",
+      "label": "8.1 Human Actor CRUD Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L579"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_8_2_system_actor_crud_matrix",
+      "label": "8.2 System Actor CRUD Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L597"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_9_actor_action_interpretation_notes",
+      "label": "9. Actor Action Interpretation Notes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L616"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_10_recommended_prisma_relation_summary",
+      "label": "10. Recommended Prisma Relation Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L651"
+    },
+    {
+      "id": "module_05_student_management_part_4_database_entities_and_crud_matrix_11_final_modeling_decisions",
+      "label": "11. Final Modeling Decisions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L702"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_module_5_student_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_2_context_ownership_boundary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_2_1_entities_owned_by_student_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_2_2_referenced_but_not_owned_by_student_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_shared_database_conventions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_1_primary_key_convention",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_2_audit_column_convention",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_3_effective_dating_convention",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_4_soft_delete_rule",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L79",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_3_5_branch_scope_rule",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L85",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_entity_specifications",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_1_student_profiles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L94",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_1_student_profiles",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L96",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_1_student_profiles",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L99",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_1_student_profiles",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L103",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_1_student_profiles",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L131",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_1_student_profiles",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L146",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_1_student_profiles",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_prisma_model_sketch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L156",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_2_student_status_history",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L193",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_2_student_status_history",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_195",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L195",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_2_student_status_history",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_198",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L198",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_2_student_status_history",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_202",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L202",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_2_student_status_history",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_224",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L224",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_2_student_status_history",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_240",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L240",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_3_student_id_card_history",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L246",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_3_student_id_card_history",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_248",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L248",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_3_student_id_card_history",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_251",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L251",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_3_student_id_card_history",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_255",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L255",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_3_student_id_card_history",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_276",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L276",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_3_student_id_card_history",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_284",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L284",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_4_student_duplicate_cases",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L290",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_4_student_duplicate_cases",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_292",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L292",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_4_student_duplicate_cases",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_295",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L295",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_4_student_duplicate_cases",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_299",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L299",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_4_student_duplicate_cases",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_324",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L324",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_4_student_duplicate_cases",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_333",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L333",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_5_student_duplicate_case_items",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L342",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_5_student_duplicate_case_items",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_344",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L344",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_5_student_duplicate_case_items",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_347",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L347",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_5_student_duplicate_case_items",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_351",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L351",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_5_student_duplicate_case_items",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_372",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L372",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_5_student_duplicate_case_items",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_379",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L379",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_6_student_merge_logs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L386",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_6_student_merge_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_388",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L388",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_6_student_merge_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_391",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L391",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_6_student_merge_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_395",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L395",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_6_student_merge_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_420",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L420",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_6_student_merge_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_427",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L427",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L435",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_purpose_437",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L437",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_table_definition_summary_440",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L440",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_field_specification_444",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L444",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_constraints_468",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L468",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_recommended_indexes_474",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L474",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_5_relationship_model",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L481",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_5_1_owned_internal_relationships",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L483",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_5_2_external_reference_relationships",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L499",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_5_3_cascading_and_restrict_policy_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L509",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_constraints_and_validation_rules_at_database_level",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L521",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_1_student_identity_uniqueness",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L523",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_2_status_and_effective_date_integrity",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L529",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_3_duplicate_workflow_integrity",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L534",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_4_merge_integrity",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L539",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_6_5_export_audit_integrity",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L544",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_7_suggested_postgresql_ddl_notes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L550",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_8_crud_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L563",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_8_crud_matrix",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_8_1_human_actor_crud_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L579",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_8_crud_matrix",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_8_2_system_actor_crud_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L597",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_9_actor_action_interpretation_notes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L616",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_10_recommended_prisma_relation_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L651",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_4_database_entities_and_crud_matrix_4_7_student_export_logs",
+      "target": "module_05_student_management_part_4_database_entities_and_crud_matrix_11_final_modeling_decisions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L702",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

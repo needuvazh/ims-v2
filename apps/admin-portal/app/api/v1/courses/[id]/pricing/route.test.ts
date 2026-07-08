@@ -21,7 +21,10 @@ vi.mock('../../../../../../lib/runtime', () => ({
 
 vi.mock('../../../../../../lib/observability', () => ({
   applyObservabilityResponseHeaders: vi.fn(),
-  withRouteObservability: async (_headers: Headers, handler: () => Promise<Response>) => handler(),
+  withRouteObservability: async (
+    _headers: Headers,
+    handler: () => Promise<Response>,
+  ) => handler(),
   createStructuredLogger: () => ({ info: vi.fn(), error: vi.fn() }),
   getCurrentRequestContext: () => ({}),
 }));
@@ -44,7 +47,10 @@ describe('Course pricing API routes', () => {
       });
     });
 
-    createPricingRuleMock.mockResolvedValue({ id: 'pricing-1', basePrice: 120 });
+    createPricingRuleMock.mockResolvedValue({
+      id: 'pricing-1',
+      basePrice: 120,
+    });
 
     const { POST } = await import('./route');
     const response = await POST(
@@ -58,7 +64,7 @@ describe('Course pricing API routes', () => {
           effectiveStartDate: '2026-07-10',
         }),
       }),
-      { params: Promise.resolve({ id: 'course-123' }) }
+      { params: Promise.resolve({ id: 'course-123' }) },
     );
 
     const body = await response.json();
@@ -69,7 +75,7 @@ describe('Course pricing API routes', () => {
         courseId: 'course-123',
         basePrice: 120,
       }),
-      'user-1'
+      'user-1',
     );
   });
 
@@ -84,7 +90,10 @@ describe('Course pricing API routes', () => {
       });
     });
 
-    createPricingRuleMock.mockResolvedValue({ id: 'pricing-2', basePrice: 140 });
+    createPricingRuleMock.mockResolvedValue({
+      id: 'pricing-2',
+      basePrice: 140,
+    });
 
     const { POST } = await import('./route');
     const response = await POST(
@@ -99,7 +108,7 @@ describe('Course pricing API routes', () => {
           effectiveStartDate: '2026-07-10',
         }),
       }),
-      { params: Promise.resolve({ id: 'course-123' }) }
+      { params: Promise.resolve({ id: 'course-123' }) },
     );
 
     const body = await response.json();

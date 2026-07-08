@@ -18,15 +18,34 @@ export default async function CreateDepartmentPage() {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Organization', href: '/organization', icon: <Building2 className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Departments', href: '/organization/departments', icon: <Layers className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Add Department', icon: <Plus className="h-3.5 w-3.5 text-slate-500" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Organization',
+                href: '/organization',
+                icon: <Building2 className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Departments',
+                href: '/organization/departments',
+                icon: <Layers className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Add Department',
+                icon: <Plus className="h-3.5 w-3.5 text-slate-500" />,
+              },
             ]}
           />
         }
       />
-      <DepartmentForm mode="create" branches={data.branches} users={data.users} />
+      <DepartmentForm
+        mode="create"
+        branches={data.branches}
+        users={data.users}
+      />
     </div>
   );
 }

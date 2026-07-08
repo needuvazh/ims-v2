@@ -11,7 +11,10 @@ describe('PrismaSchedulingRepository.resolveCalendar', () => {
           instituteId: '22222222-2222-2222-2222-222222222222',
           code: 'ASTI-2026',
           name: 'Academic Calendar 2026',
-          nameLocalized: { en: 'Academic Calendar 2026', ar: 'التقويم الأكاديمي 2026' },
+          nameLocalized: {
+            en: 'Academic Calendar 2026',
+            ar: 'التقويم الأكاديمي 2026',
+          },
           year: 2026,
           countryCode: 'OM',
           timezone: 'Asia/Muscat',
@@ -21,13 +24,83 @@ describe('PrismaSchedulingRepository.resolveCalendar', () => {
           isActive: true,
           version: 1,
           operatingDays: [
-            { id: 'day-1', businessCalendarId: '11111111-1111-1111-1111-111111111111', dayOfWeek: 'MONDAY', isOpen: true, workingHours: [{ id: 'wh-1', operatingDayId: 'day-1', startTime: '08:00', endTime: '12:00' }] },
-            { id: 'day-2', businessCalendarId: '11111111-1111-1111-1111-111111111111', dayOfWeek: 'TUESDAY', isOpen: true, workingHours: [{ id: 'wh-2', operatingDayId: 'day-2', startTime: '08:00', endTime: '12:00' }] },
-            { id: 'day-3', businessCalendarId: '11111111-1111-1111-1111-111111111111', dayOfWeek: 'WEDNESDAY', isOpen: true, workingHours: [{ id: 'wh-3', operatingDayId: 'day-3', startTime: '08:00', endTime: '12:00' }] },
-            { id: 'day-4', businessCalendarId: '11111111-1111-1111-1111-111111111111', dayOfWeek: 'THURSDAY', isOpen: true, workingHours: [{ id: 'wh-4', operatingDayId: 'day-4', startTime: '08:00', endTime: '12:00' }] },
-            { id: 'day-5', businessCalendarId: '11111111-1111-1111-1111-111111111111', dayOfWeek: 'FRIDAY', isOpen: false, workingHours: [] },
-            { id: 'day-6', businessCalendarId: '11111111-1111-1111-1111-111111111111', dayOfWeek: 'SATURDAY', isOpen: false, workingHours: [] },
-            { id: 'day-7', businessCalendarId: '11111111-1111-1111-1111-111111111111', dayOfWeek: 'SUNDAY', isOpen: false, workingHours: [] },
+            {
+              id: 'day-1',
+              businessCalendarId: '11111111-1111-1111-1111-111111111111',
+              dayOfWeek: 'MONDAY',
+              isOpen: true,
+              workingHours: [
+                {
+                  id: 'wh-1',
+                  operatingDayId: 'day-1',
+                  startTime: '08:00',
+                  endTime: '12:00',
+                },
+              ],
+            },
+            {
+              id: 'day-2',
+              businessCalendarId: '11111111-1111-1111-1111-111111111111',
+              dayOfWeek: 'TUESDAY',
+              isOpen: true,
+              workingHours: [
+                {
+                  id: 'wh-2',
+                  operatingDayId: 'day-2',
+                  startTime: '08:00',
+                  endTime: '12:00',
+                },
+              ],
+            },
+            {
+              id: 'day-3',
+              businessCalendarId: '11111111-1111-1111-1111-111111111111',
+              dayOfWeek: 'WEDNESDAY',
+              isOpen: true,
+              workingHours: [
+                {
+                  id: 'wh-3',
+                  operatingDayId: 'day-3',
+                  startTime: '08:00',
+                  endTime: '12:00',
+                },
+              ],
+            },
+            {
+              id: 'day-4',
+              businessCalendarId: '11111111-1111-1111-1111-111111111111',
+              dayOfWeek: 'THURSDAY',
+              isOpen: true,
+              workingHours: [
+                {
+                  id: 'wh-4',
+                  operatingDayId: 'day-4',
+                  startTime: '08:00',
+                  endTime: '12:00',
+                },
+              ],
+            },
+            {
+              id: 'day-5',
+              businessCalendarId: '11111111-1111-1111-1111-111111111111',
+              dayOfWeek: 'FRIDAY',
+              isOpen: false,
+              workingHours: [],
+            },
+            {
+              id: 'day-6',
+              businessCalendarId: '11111111-1111-1111-1111-111111111111',
+              dayOfWeek: 'SATURDAY',
+              isOpen: false,
+              workingHours: [],
+            },
+            {
+              id: 'day-7',
+              businessCalendarId: '11111111-1111-1111-1111-111111111111',
+              dayOfWeek: 'SUNDAY',
+              isOpen: false,
+              workingHours: [],
+            },
           ],
           createdAt: new Date('2025-12-01'),
           createdBy: null,
@@ -52,7 +125,20 @@ describe('PrismaSchedulingRepository.resolveCalendar', () => {
           notes: null,
           version: 1,
           operatingDays: [
-            { id: 'ov-1', branchCalendarOverrideId: '33333333-3333-3333-3333-333333333333', dayOfWeek: 'MONDAY', isOpen: true, workingHours: [{ id: 'ov-wh-1', operatingDayId: 'ov-1', startTime: '10:00', endTime: '14:00' }] },
+            {
+              id: 'ov-1',
+              branchCalendarOverrideId: '33333333-3333-3333-3333-333333333333',
+              dayOfWeek: 'MONDAY',
+              isOpen: true,
+              workingHours: [
+                {
+                  id: 'ov-wh-1',
+                  operatingDayId: 'ov-1',
+                  startTime: '10:00',
+                  endTime: '14:00',
+                },
+              ],
+            },
           ],
           createdAt: new Date('2025-12-02'),
           createdBy: null,
@@ -92,11 +178,21 @@ describe('PrismaSchedulingRepository.resolveCalendar', () => {
     } as unknown as PrismaClient;
 
     const repository = new PrismaSchedulingRepository(prisma);
-    const result = await repository.resolveCalendar('44444444-4444-4444-4444-444444444444', new Date('2026-01-01'), '22222222-2222-2222-2222-222222222222');
+    const result = await repository.resolveCalendar(
+      '44444444-4444-4444-4444-444444444444',
+      new Date('2026-01-01'),
+      '22222222-2222-2222-2222-222222222222',
+    );
 
     expect(result.source).toBe('branch-override');
     expect(result.holidays).toHaveLength(1);
-    expect(result.resolvedOperatingDays.find((day) => day.dayOfWeek === 'MONDAY')?.workingHours[0]?.startTime).toBe('10:00');
-    expect(result.resolvedOperatingDays.find((day) => day.dayOfWeek === 'TUESDAY')?.workingHours[0]?.startTime).toBe('08:00');
+    expect(
+      result.resolvedOperatingDays.find((day) => day.dayOfWeek === 'MONDAY')
+        ?.workingHours[0]?.startTime,
+    ).toBe('10:00');
+    expect(
+      result.resolvedOperatingDays.find((day) => day.dayOfWeek === 'TUESDAY')
+        ?.workingHours[0]?.startTime,
+    ).toBe('08:00');
   });
 });

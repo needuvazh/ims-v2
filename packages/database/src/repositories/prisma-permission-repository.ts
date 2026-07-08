@@ -1,5 +1,10 @@
 import type { PrismaClient } from '@prisma/client';
-import type { IPermissionRepository, Permission, PermissionType, PermissionStatus } from '@ims/identity-access';
+import type {
+  IPermissionRepository,
+  Permission,
+  PermissionType,
+  PermissionStatus,
+} from '@ims/identity-access';
 import type { Uuid } from '@ims/shared-kernel';
 
 export class PrismaPermissionRepository implements IPermissionRepository {

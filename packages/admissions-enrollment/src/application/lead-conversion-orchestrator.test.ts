@@ -29,7 +29,11 @@ test('LeadConversionOrchestrator should convert lead and create admission succes
     }),
   } as any;
 
-  const orchestrator = new LeadConversionOrchestrator(mockPrisma, mockLeadService, mockAdmissionService);
+  const orchestrator = new LeadConversionOrchestrator(
+    mockPrisma,
+    mockLeadService,
+    mockAdmissionService,
+  );
 
   const documents = [
     {
@@ -40,20 +44,33 @@ test('LeadConversionOrchestrator should convert lead and create admission succes
     },
   ];
 
-  const result = await orchestrator.convertLeadToAdmission('lead-1', documents, 'actor-1');
+  const result = await orchestrator.convertLeadToAdmission(
+    'lead-1',
+    documents,
+    'actor-1',
+  );
 
   expect(result.admissionId).toBe('admission-1');
-  expect(mockLeadService.convertLead).toHaveBeenCalledWith('lead-1', documents, mockPrisma, 'actor-1');
-  expect(mockAdmissionService.createStudentAdmission).toHaveBeenCalledWith({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john@example.com',
-    phone: '+96899999999',
-    branchId: 'branch-1',
-    leadId: 'lead-1',
-    courseId: 'course-1',
-    dateOfBirth: dob,
-  }, 'actor-1', mockPrisma);
+  expect(mockLeadService.convertLead).toHaveBeenCalledWith(
+    'lead-1',
+    documents,
+    mockPrisma,
+    'actor-1',
+  );
+  expect(mockAdmissionService.createStudentAdmission).toHaveBeenCalledWith(
+    {
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john@example.com',
+      phone: '+96899999999',
+      branchId: 'branch-1',
+      leadId: 'lead-1',
+      courseId: 'course-1',
+      dateOfBirth: dob,
+    },
+    'actor-1',
+    mockPrisma,
+  );
   expect(mockPrisma.auditLog.create).toHaveBeenCalled();
 });
 
@@ -85,7 +102,11 @@ test('LeadConversionOrchestrator should be idempotent and succeed when student p
     }),
   } as any;
 
-  const orchestrator = new LeadConversionOrchestrator(mockPrisma, mockLeadService, mockAdmissionService);
+  const orchestrator = new LeadConversionOrchestrator(
+    mockPrisma,
+    mockLeadService,
+    mockAdmissionService,
+  );
 
   const documents = [
     {
@@ -96,7 +117,11 @@ test('LeadConversionOrchestrator should be idempotent and succeed when student p
     },
   ];
 
-  const result = await orchestrator.convertLeadToAdmission('lead-1', documents, 'actor-1');
+  const result = await orchestrator.convertLeadToAdmission(
+    'lead-1',
+    documents,
+    'actor-1',
+  );
 
   expect(result.admissionId).toBe('admission-new');
   expect(result.studentProfileId).toBe('profile-existing');

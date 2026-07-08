@@ -1,9 +1,11 @@
 ## ADDED Requirements
 
 ### Requirement: Enrollment Creation & pricingResolution snapshotting
+
 The system SHALL support creating regular and corporate enrollments, resolving and snapshotting pricing to prevent pricing drift.
 
 #### Scenario: Resolve and snapshot pricing during draft creation
+
 - **GIVEN** an approved Admission exists for a student
 - **WHEN** the Registrar initiates an enrollment draft with `courseId`, `batchId`, `branchId`, `enrollmentType`, and `customerType`
 - **THEN** the system SHALL resolve pricing by calling the Course Catalog's `CoursePricingService` passing:
@@ -18,15 +20,18 @@ The system SHALL support creating regular and corporate enrollments, resolving a
 - **AND** initialize the status to "Draft".
 
 #### Scenario: Reject enrollment draft from unapproved admission
+
 - **WHEN** a regular enrollment creation is initiated
 - **AND** the linked admission status is not "Approved"
 - **THEN** the system SHALL reject the request with error code "ERR_ENR_MISSING_ADMISSION".
 
 #### Scenario: Walk-in fast-track registration bypass
+
 - **WHEN** a Walk-In enrollment is initialized for a course allowing walk-ins
 - **THEN** the system SHALL bypass the approved admission check, create the profile, and initialize the enrollment draft in a single decoupled transaction.
 
 #### Scenario: Corporate Participant enrollment and automatic profile conversion
+
 - **GIVEN** a corporate participant identified by `corporateParticipantId`
 - **WHEN** a corporate enrollment draft is created
 - **THEN** if no `StudentProfile` exists for the participant, the system SHALL automatically create a `StudentProfile` and Admission in the same database transaction.
@@ -35,10 +40,13 @@ The system SHALL support creating regular and corporate enrollments, resolving a
 ---
 
 ### Requirement: Enrollment Status Transitions & Validation Matrix
+
 The system SHALL strictly enforce the allowed state transitions and execute capacity, waitlist, credit, and document verification guards.
 
 #### Transition Matrix:
+
 The system SHALL only permit status transitions that follow this transition table. Any invalid transition SHALL throw `ERR_ENR_INVALID_STATE`:
+
 - `Draft` -> `Submitted` (via submit command)
 - `Draft` -> `Cancelled` (via cancel command)
 - `Submitted` -> `Approved` (via approve command)
@@ -50,6 +58,7 @@ The system SHALL only permit status transitions that follow this transition tabl
 - `Active` -> `Dropped` (via drop command)
 
 #### Scenario: Approve enrollment and check capacity limits
+
 - **GIVEN** the enrollment is in "Submitted" status
 - **WHEN** the Branch Manager approves the enrollment
 - **THEN** the system SHALL execute a serializable transaction to verify batch capacity
@@ -57,6 +66,7 @@ The system SHALL only permit status transitions that follow this transition tabl
 - **AND** publish the "EnrollmentApproved" outbox event to generate an invoice.
 
 #### Scenario: Route full batch to waitlist during approval
+
 - **GIVEN** the batch has reached its max capacity limit
 - **AND** waitlisting is enabled for the batch
 - **WHEN** the Branch Manager approves the enrollment
@@ -65,12 +75,14 @@ The system SHALL only permit status transitions that follow this transition tabl
 - **AND** publish the "StudentAddedToWaitingList" outbox event.
 
 #### Scenario: Block approval if batch is full and waitlist is disabled
+
 - **GIVEN** the batch has reached its max capacity limit
 - **AND** waitlisting is disabled for the batch
 - **WHEN** the Branch Manager approves the enrollment
 - **THEN** the system SHALL reject the approval with error code "ERR_ENR_BATCH_FULL".
 
 #### Scenario: Validate corporate credit limit during approval
+
 - **GIVEN** a corporate enrollment is in "Submitted" status
 - **WHEN** the Branch Manager approves the enrollment
 - **THEN** the system SHALL call the Corporate Sales context to check outstanding B2B balance + new enrollment cost against the corporate credit limit
@@ -78,6 +90,7 @@ The system SHALL only permit status transitions that follow this transition tabl
 - **AND** if `blockEnrollment` is false, proceed with approval and log a credit warning.
 
 #### Scenario: Idempotent event-driven confirmation with document gate
+
 - **GIVEN** an enrollment is in "Approved" status and has `paymentValidationRequired` as true
 - **WHEN** the Finance context publishes a `ReceiptGenerated` event with payload:
   ```json
@@ -95,11 +108,13 @@ The system SHALL only permit status transitions that follow this transition tabl
 - **AND** if document check fails, log a verification failure, keep the enrollment status as "Approved", and raise an administrative alert.
 
 #### Scenario: Reactive batch start activation
+
 - **WHEN** the Training Delivery context publishes a `BatchStarted` event containing `batchId`
 - **THEN** the system SHALL query all enrollments for that `batchId` that are in "Confirmed" status
 - **AND** transition their status to "Active".
 
 #### Scenario: Drop active enrollment and release seat
+
 - **GIVEN** the enrollment is in "Confirmed" or "Active" status
 - **WHEN** the Branch Manager processes a drop request with a mandatory reason code
 - **THEN** the system SHALL transition status to "Dropped"
@@ -108,9 +123,11 @@ The system SHALL only permit status transitions that follow this transition tabl
 ---
 
 ### Requirement: Critical Actions Audit Coverage
+
 The system SHALL automatically log all lifecycle mutations in the `AuditLog` table, capturing target entity, transition details, performer, timestamp, and optional remarks.
 
 #### Scenario: Audit log requirements for mutations
+
 - **WHEN** any of the following lifecycle mutations are executed:
   - Create Enrollment Draft (Draft)
   - Submit Enrollment (Submitted)
@@ -130,14 +147,17 @@ The system SHALL automatically log all lifecycle mutations in the `AuditLog` tab
 ---
 
 ### Requirement: Enrollment Screen Visibility & Branch Scoping
+
 The system SHALL show enrollment status, pricing snapshot fields, and enforce branch scoping server-side.
 
 #### Scenario: Render enrollment detail screen
+
 - **GIVEN** the user has "enrollment.read" permission
 - **WHEN** the user requests the details page of an enrollment in their active branch
 - **THEN** the system SHALL render the enrollment number, status, pricing snapshot summary (including resolvedPrice, resolvedDiscount, finalAmount, and priceEvaluationTimestamp), and linked references.
 
 #### Scenario: Reject unauthorized cross-branch enrollment access
+
 - **WHEN** a user requests details for an enrollment belonging to another branch
 - **AND** the user does not possess global Super Admin rights
 - **THEN** the system SHALL block the request with "ERR_AUTH_BRANCH_DENIED" (403 Forbidden).

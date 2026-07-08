@@ -1,1 +1,127 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_improve_responsive_ui_system_tasks_md", "label": "tasks.md", "file_type": "document", "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md", "source_location": "L1"}, {"id": "improve_responsive_ui_system_tasks_1_responsive_foundations", "label": "1. Responsive Foundations", "file_type": "document", "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md", "source_location": "L1"}, {"id": "improve_responsive_ui_system_tasks_2_shared_ui_primitives", "label": "2. Shared UI Primitives", "file_type": "document", "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md", "source_location": "L8"}, {"id": "improve_responsive_ui_system_tasks_3_app_shell_and_navigation", "label": "3. App Shell and Navigation", "file_type": "document", "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md", "source_location": "L14"}, {"id": "improve_responsive_ui_system_tasks_4_public_site_responsiveness", "label": "4. Public Site Responsiveness", "file_type": "document", "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md", "source_location": "L21"}, {"id": "improve_responsive_ui_system_tasks_5_admin_page_template_migration", "label": "5. Admin Page Template Migration", "file_type": "document", "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md", "source_location": "L27"}, {"id": "improve_responsive_ui_system_tasks_6_verification", "label": "6. Verification", "file_type": "document", "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md", "source_location": "L35"}, {"id": "improve_responsive_ui_system_tasks_implementation_status", "label": "Implementation Status", "file_type": "document", "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md", "source_location": "L43"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_improve_responsive_ui_system_tasks_md", "target": "improve_responsive_ui_system_tasks_1_responsive_foundations", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md", "source_location": "L1", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_improve_responsive_ui_system_tasks_md", "target": "improve_responsive_ui_system_tasks_2_shared_ui_primitives", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md", "source_location": "L8", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_improve_responsive_ui_system_tasks_md", "target": "improve_responsive_ui_system_tasks_3_app_shell_and_navigation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md", "source_location": "L14", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_improve_responsive_ui_system_tasks_md", "target": "improve_responsive_ui_system_tasks_4_public_site_responsiveness", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md", "source_location": "L21", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_improve_responsive_ui_system_tasks_md", "target": "improve_responsive_ui_system_tasks_5_admin_page_template_migration", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md", "source_location": "L27", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_improve_responsive_ui_system_tasks_md", "target": "improve_responsive_ui_system_tasks_6_verification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md", "source_location": "L35", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_improve_responsive_ui_system_tasks_md", "target": "improve_responsive_ui_system_tasks_implementation_status", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md", "source_location": "L43", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_improve_responsive_ui_system_tasks_md",
+      "label": "tasks.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "improve_responsive_ui_system_tasks_1_responsive_foundations",
+      "label": "1. Responsive Foundations",
+      "file_type": "document",
+      "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "improve_responsive_ui_system_tasks_2_shared_ui_primitives",
+      "label": "2. Shared UI Primitives",
+      "file_type": "document",
+      "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md",
+      "source_location": "L8"
+    },
+    {
+      "id": "improve_responsive_ui_system_tasks_3_app_shell_and_navigation",
+      "label": "3. App Shell and Navigation",
+      "file_type": "document",
+      "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md",
+      "source_location": "L14"
+    },
+    {
+      "id": "improve_responsive_ui_system_tasks_4_public_site_responsiveness",
+      "label": "4. Public Site Responsiveness",
+      "file_type": "document",
+      "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md",
+      "source_location": "L21"
+    },
+    {
+      "id": "improve_responsive_ui_system_tasks_5_admin_page_template_migration",
+      "label": "5. Admin Page Template Migration",
+      "file_type": "document",
+      "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md",
+      "source_location": "L27"
+    },
+    {
+      "id": "improve_responsive_ui_system_tasks_6_verification",
+      "label": "6. Verification",
+      "file_type": "document",
+      "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md",
+      "source_location": "L35"
+    },
+    {
+      "id": "improve_responsive_ui_system_tasks_implementation_status",
+      "label": "Implementation Status",
+      "file_type": "document",
+      "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md",
+      "source_location": "L43"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_improve_responsive_ui_system_tasks_md",
+      "target": "improve_responsive_ui_system_tasks_1_responsive_foundations",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_improve_responsive_ui_system_tasks_md",
+      "target": "improve_responsive_ui_system_tasks_2_shared_ui_primitives",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_improve_responsive_ui_system_tasks_md",
+      "target": "improve_responsive_ui_system_tasks_3_app_shell_and_navigation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_improve_responsive_ui_system_tasks_md",
+      "target": "improve_responsive_ui_system_tasks_4_public_site_responsiveness",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_improve_responsive_ui_system_tasks_md",
+      "target": "improve_responsive_ui_system_tasks_5_admin_page_template_migration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_improve_responsive_ui_system_tasks_md",
+      "target": "improve_responsive_ui_system_tasks_6_verification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_improve_responsive_ui_system_tasks_md",
+      "target": "improve_responsive_ui_system_tasks_implementation_status",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/improve-responsive-ui-system/tasks.md",
+      "source_location": "L43",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

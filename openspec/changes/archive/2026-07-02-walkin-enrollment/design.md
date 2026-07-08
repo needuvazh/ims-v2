@@ -5,6 +5,7 @@ Walk-in enrollment is a distinct administrative intake method designed for count
 ## Goals / Non-Goals
 
 **Goals:**
+
 - Provide a dedicated, isolated API namespace `/api/v1/enrollments/walk-in` and block walk-in creations on the generic route.
 - Implement the intake process as a multi-step sequence (`Draft` $\rightarrow$ `Submitted` $\rightarrow$ `Approved`) completed inside a single transaction.
 - Define a clear cutover point for waitlist routing during the approval step.
@@ -12,6 +13,7 @@ Walk-in enrollment is a distinct administrative intake method designed for count
 - Ensure 100% database model fields parity with the ER Model.
 
 **Non-Goals:**
+
 - External student portal self-service walk-in registrations.
 
 ## Detailed Design & State Machine Flow
@@ -49,11 +51,13 @@ Walk-in enrollment is a distinct administrative intake method designed for count
 ```
 
 ### 1. Waitlist Cutover Point
+
 - The check for batch capacity occurs during the auto-approve step (`approveEnrollment`) under a database `FOR UPDATE` pessimistic lock on the batch.
 - If capacity is exceeded and waitlisting is enabled, the system enqueues a waitlist record in the `Training Delivery` context. The transaction commits, leaving the enrollment in `Submitted` status. The UI is notified of the waitlist status, and **all payment buttons are blocked** (preventing payment recording for waitlisted students).
 - If capacity is exceeded and waitlisting is disabled, the transaction throws `ERR_ENR_BATCH_FULL` and rolls back all draft entities (avoiding orphan drafts or duplicate seat accounting).
 
 ### 2. Dedicated Endpoints
+
 - **Intake Route:** `POST /api/v1/enrollments/walk-in`
   - Required permission: `enrollment.create`
   - Rules: Scoped to registrar's authorized branch.
@@ -62,6 +66,7 @@ Walk-in enrollment is a distinct administrative intake method designed for count
   - Rules: Validates that enrollment state is `Approved`. Exposes reason remarks and cash/card collection.
 
 ### 3. Model Fields Parity
+
 - **`WalkInEnrollment` model:**
   - `id` (UUID, primary key)
   - `enrollmentId` (UUID, unique, foreign key to Enrollment)
@@ -81,4 +86,4 @@ Walk-in enrollment is a distinct administrative intake method designed for count
 ## Risks / Trade-offs
 
 - **[Risk] Generic API Leakage:** If the generic `POST /api/v1/enrollments` endpoint accepts walk-ins, it bypasses the orchestrator and causes relation crashes.
-  * *Mitigation:* Explicitly throw a validation error in the generic route handler if `enrollmentType === 'WalkIn'`.
+  - _Mitigation:_ Explicitly throw a validation error in the generic route handler if `enrollmentType === 'WalkIn'`.

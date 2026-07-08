@@ -25,4 +25,3 @@ export function attendanceForbidden(code: string, message: string) {
 export function attendancePrecondition(code: string, message: string) {
   return new AttendanceError(code, message, 412);
 }
-

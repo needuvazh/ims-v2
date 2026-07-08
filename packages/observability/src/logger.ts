@@ -1,4 +1,9 @@
-import { createRequestContext, type HeaderBag, type RequestContext, type RequestContextInput } from './request-context';
+import {
+  createRequestContext,
+  type HeaderBag,
+  type RequestContext,
+  type RequestContextInput,
+} from './request-context';
 
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
@@ -43,38 +48,42 @@ export type StructuredLogger = {
 
 export type ILogger = StructuredLogger;
 
-const allowedDetailKeys: ReadonlySet<keyof Omit<LogDetails, 'error'>> = new Set([
-  'action',
-  'branchId',
-  'code',
-  'count',
-  'digest',
-  'durationMs',
-  'entityId',
-  'entityType',
-  'auditId',
-  'exportJobId',
-  'dashboardType',
-  'reportType',
-  'permissionId',
-  'roleId',
-  'sessionId',
-  'page',
-  'pageSize',
-  'message',
-  'method',
-  'reason',
-  'requestId',
-  'route',
-  'routeType',
-  'routerKind',
-  'status',
-  'traceId',
-  'userId',
-  'assign',
-]);
+const allowedDetailKeys: ReadonlySet<keyof Omit<LogDetails, 'error'>> = new Set(
+  [
+    'action',
+    'branchId',
+    'code',
+    'count',
+    'digest',
+    'durationMs',
+    'entityId',
+    'entityType',
+    'auditId',
+    'exportJobId',
+    'dashboardType',
+    'reportType',
+    'permissionId',
+    'roleId',
+    'sessionId',
+    'page',
+    'pageSize',
+    'message',
+    'method',
+    'reason',
+    'requestId',
+    'route',
+    'routeType',
+    'routerKind',
+    'status',
+    'traceId',
+    'userId',
+    'assign',
+  ],
+);
 
-function serializeError(error: Error | null | undefined): Record<string, string> | null {
+function serializeError(
+  error: Error | null | undefined,
+): Record<string, string> | null {
   if (!error) {
     return null;
   }
@@ -102,7 +111,10 @@ function selectSink(level: LogLevel): (message: string) => void {
   return console.info.bind(console);
 }
 
-function mergeContext(baseContext: Partial<RequestContext>, details?: LogDetails): Record<string, unknown> {
+function mergeContext(
+  baseContext: Partial<RequestContext>,
+  details?: LogDetails,
+): Record<string, unknown> {
   const entry: Record<string, unknown> = {
     requestId: details?.requestId ?? baseContext.requestId,
     traceId: details?.traceId ?? baseContext.traceId ?? undefined,
@@ -115,7 +127,10 @@ function mergeContext(baseContext: Partial<RequestContext>, details?: LogDetails
   };
 
   for (const [key, value] of Object.entries(details ?? {})) {
-    if (key === 'error' || !allowedDetailKeys.has(key as keyof Omit<LogDetails, 'error'>)) {
+    if (
+      key === 'error' ||
+      !allowedDetailKeys.has(key as keyof Omit<LogDetails, 'error'>)
+    ) {
       continue;
     }
 
@@ -127,7 +142,12 @@ function mergeContext(baseContext: Partial<RequestContext>, details?: LogDetails
   return entry;
 }
 
-function writeLog(level: LogLevel, event: string, baseContext: Partial<RequestContext>, details?: LogDetails): void {
+function writeLog(
+  level: LogLevel,
+  event: string,
+  baseContext: Partial<RequestContext>,
+  details?: LogDetails,
+): void {
   const sink = selectSink(level);
   const entry = {
     level,
@@ -140,7 +160,9 @@ function writeLog(level: LogLevel, event: string, baseContext: Partial<RequestCo
   sink(JSON.stringify(entry));
 }
 
-export function createStructuredLogger(baseContext: Partial<RequestContext> = {}) : StructuredLogger {
+export function createStructuredLogger(
+  baseContext: Partial<RequestContext> = {},
+): StructuredLogger {
   return {
     debug(event: string, details?: LogDetails) {
       writeLog('debug', event, baseContext, details);
@@ -177,6 +199,9 @@ export class ConsoleStructuredLogger implements ILogger {
   }
 }
 
-export function createStructuredLoggerFromHeaders(source: HeaderBag, overrides: RequestContextInput = {}): StructuredLogger {
+export function createStructuredLoggerFromHeaders(
+  source: HeaderBag,
+  overrides: RequestContextInput = {},
+): StructuredLogger {
   return createStructuredLogger(createRequestContext(source, overrides));
 }

@@ -25,20 +25,20 @@ The security and NFR controls below apply to the Admin Portal, Student Portal, T
 
 # 2. Security Objectives
 
-| ID | Security Objective | Required Outcome |
-|---|---|---|
-| SEC-CERT-001 | Prevent unauthorized issuance | Only authenticated users with the required fine-grained permission and effective branch scope can generate or issue certificates. |
-| SEC-CERT-002 | Protect certificate integrity | Certificate number, verification code, artifact reference, lifecycle status, and reissue lineage cannot be altered outside approved application services and valid state transitions. |
-| SEC-CERT-003 | Prevent cross-branch leakage | Certificate records, artifacts, reissue requests, reports, and exports are constrained by server-resolved effective branch scope. |
-| SEC-CERT-004 | Prevent eligibility bypass | Certificate Management consumes authoritative completion and payment decisions and cannot accept client-supplied eligibility or payment flags as truth. |
-| SEC-CERT-005 | Protect public verification | Public verification reveals only approved, minimal verification information and resists enumeration, scraping, abuse, and timing-based record discovery. |
-| SEC-CERT-006 | Preserve non-repudiation | Generation, issuance, reissue approval/rejection, replacement generation, revocation, sensitive downloads/exports where configured, and permission-sensitive operations are attributable to a user/system identity and timestamp. |
-| SEC-CERT-007 | Preserve artifact confidentiality | Non-public certificate PDFs and generated artifacts are not exposed through permanent public object-storage URLs. |
-| SEC-CERT-008 | Preserve artifact authenticity | Artifact hashes, immutable object versions, or equivalent integrity controls must allow detection of post-generation artifact tampering. |
-| SEC-CERT-009 | Prevent replay and duplicate commands | Generate, issue, and replacement-generation commands are idempotent and protected against duplicate retries and concurrent conflicting updates. |
-| SEC-CERT-010 | Minimize personal data exposure | UI, logs, reports, exports, verification responses, and telemetry expose only data necessary for the actor and purpose. |
-| SEC-CERT-011 | Preserve history | Soft-deleted or superseded certificate records remain historically traceable and cannot be silently hard deleted. |
-| SEC-CERT-012 | Fail safely across contexts | Failures in Completion, Finance, IAM, Numbering, Audit, Communication, storage, or reporting side effects have defined fail-closed or recoverable behavior. |
+| ID           | Security Objective                    | Required Outcome                                                                                                                                                                                                                  |
+| ------------ | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| SEC-CERT-001 | Prevent unauthorized issuance         | Only authenticated users with the required fine-grained permission and effective branch scope can generate or issue certificates.                                                                                                 |
+| SEC-CERT-002 | Protect certificate integrity         | Certificate number, verification code, artifact reference, lifecycle status, and reissue lineage cannot be altered outside approved application services and valid state transitions.                                             |
+| SEC-CERT-003 | Prevent cross-branch leakage          | Certificate records, artifacts, reissue requests, reports, and exports are constrained by server-resolved effective branch scope.                                                                                                 |
+| SEC-CERT-004 | Prevent eligibility bypass            | Certificate Management consumes authoritative completion and payment decisions and cannot accept client-supplied eligibility or payment flags as truth.                                                                           |
+| SEC-CERT-005 | Protect public verification           | Public verification reveals only approved, minimal verification information and resists enumeration, scraping, abuse, and timing-based record discovery.                                                                          |
+| SEC-CERT-006 | Preserve non-repudiation              | Generation, issuance, reissue approval/rejection, replacement generation, revocation, sensitive downloads/exports where configured, and permission-sensitive operations are attributable to a user/system identity and timestamp. |
+| SEC-CERT-007 | Preserve artifact confidentiality     | Non-public certificate PDFs and generated artifacts are not exposed through permanent public object-storage URLs.                                                                                                                 |
+| SEC-CERT-008 | Preserve artifact authenticity        | Artifact hashes, immutable object versions, or equivalent integrity controls must allow detection of post-generation artifact tampering.                                                                                          |
+| SEC-CERT-009 | Prevent replay and duplicate commands | Generate, issue, and replacement-generation commands are idempotent and protected against duplicate retries and concurrent conflicting updates.                                                                                   |
+| SEC-CERT-010 | Minimize personal data exposure       | UI, logs, reports, exports, verification responses, and telemetry expose only data necessary for the actor and purpose.                                                                                                           |
+| SEC-CERT-011 | Preserve history                      | Soft-deleted or superseded certificate records remain historically traceable and cannot be silently hard deleted.                                                                                                                 |
+| SEC-CERT-012 | Fail safely across contexts           | Failures in Completion, Finance, IAM, Numbering, Audit, Communication, storage, or reporting side effects have defined fail-closed or recoverable behavior.                                                                       |
 
 ---
 
@@ -150,15 +150,15 @@ A permission check without scope enforcement is insufficient. A scoped query wit
 
 ## 5.2 Required Scope Modes
 
-| Scope Mode | Use | Enforcement |
-|---|---|---|
-| Branch | Normal administrative certificate operations | `certificate.branchId` is derived through Enrollment and constrained to IAM effective branch scope. |
-| Parent + Child | Authorized parent branch users | Child branches are included only if IAM returns that scope; hierarchy must not be inferred by the Certificate UI. |
-| Consolidated Report | Cross-branch reports/dashboard | Requires report permission plus `canViewConsolidated = true` or equivalent IAM decision. No transactional mutation is implied. |
-| Global | Compliance/audit use cases only where explicitly granted | Requires explicit global permission/scope; never inferred from a business role name. |
-| Student Self | Student certificate view/download/reissue request | Resource must resolve to the authenticated student's StudentProfile and Enrollment. |
-| Trainer Assigned | Trainer read-only certificate status | Enrollment must be connected to a batch/session assignment within trainer scope. No certificate mutation permission is implied. |
-| Public | Public verification only | Limited by verification code input and minimal response contract; no branch browsing capability. |
+| Scope Mode          | Use                                                      | Enforcement                                                                                                                     |
+| ------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Branch              | Normal administrative certificate operations             | `certificate.branchId` is derived through Enrollment and constrained to IAM effective branch scope.                             |
+| Parent + Child      | Authorized parent branch users                           | Child branches are included only if IAM returns that scope; hierarchy must not be inferred by the Certificate UI.               |
+| Consolidated Report | Cross-branch reports/dashboard                           | Requires report permission plus `canViewConsolidated = true` or equivalent IAM decision. No transactional mutation is implied.  |
+| Global              | Compliance/audit use cases only where explicitly granted | Requires explicit global permission/scope; never inferred from a business role name.                                            |
+| Student Self        | Student certificate view/download/reissue request        | Resource must resolve to the authenticated student's StudentProfile and Enrollment.                                             |
+| Trainer Assigned    | Trainer read-only certificate status                     | Enrollment must be connected to a batch/session assignment within trainer scope. No certificate mutation permission is implied. |
+| Public              | Public verification only                                 | Limited by verification code input and minimal response contract; no branch browsing capability.                                |
 
 ## 5.3 Server-Side Branch Isolation
 
@@ -302,17 +302,17 @@ All REST endpoints and Server Actions must implement:
 
 ## 9.1 Data Classification
 
-| Data | Classification | Controls |
-|---|---|---|
-| Certificate number | Internal/Public depending on use | Public only through approved certificate/verification flow. |
-| Verification code | Sensitive token | Never log in full; mask in telemetry; rate-limit verification attempts. |
-| Student name | Personal data | Minimum necessary display; protected in internal reports and public response policy. |
-| StudentProfile ID / Enrollment ID | Internal identifier | Never expose on public verification response. |
-| Certificate PDF | Personal/business record | Private storage; authenticated or short-lived access. |
-| Reissue reason | Potentially sensitive business data | Restricted to authorized workflow users and audit/compliance. |
-| Revocation reason | Sensitive lifecycle data | Restricted; public response shows only approved status information. |
-| IP address in verification log | Security/personal metadata | Restricted access and retention policy. |
-| Audit old/new values | Sensitive compliance data | Global/approved audit permissions only; not public or student-accessible by default. |
+| Data                              | Classification                      | Controls                                                                             |
+| --------------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------ |
+| Certificate number                | Internal/Public depending on use    | Public only through approved certificate/verification flow.                          |
+| Verification code                 | Sensitive token                     | Never log in full; mask in telemetry; rate-limit verification attempts.              |
+| Student name                      | Personal data                       | Minimum necessary display; protected in internal reports and public response policy. |
+| StudentProfile ID / Enrollment ID | Internal identifier                 | Never expose on public verification response.                                        |
+| Certificate PDF                   | Personal/business record            | Private storage; authenticated or short-lived access.                                |
+| Reissue reason                    | Potentially sensitive business data | Restricted to authorized workflow users and audit/compliance.                        |
+| Revocation reason                 | Sensitive lifecycle data            | Restricted; public response shows only approved status information.                  |
+| IP address in verification log    | Security/personal metadata          | Restricted access and retention policy.                                              |
+| Audit old/new values              | Sensitive compliance data           | Global/approved audit permissions only; not public or student-accessible by default. |
 
 ## 9.2 Logging Redaction
 
@@ -474,20 +474,20 @@ Security rules:
 
 The following actions require audit records:
 
-| Action | Audit Required | Minimum Old/New State | Reason Required | Cross-Context Side Effect Evidence |
-|---|---:|---|---:|---|
-| Certificate generated | Yes | null → Generated record summary | No | completion/payment decision references; numbering outcome |
-| Certificate issued | Yes | Generated → Issued | No | notification request correlation if configured |
-| Certificate download by privileged admin | Configurable/Recommended | access event | No | none |
-| Bulk export | Yes | export request metadata | business purpose recommended | report scope and row count |
-| Reissue requested | Yes | no request → PendingReview | Yes | notification request correlation |
-| Reissue approved | Yes | PendingReview → Approved | remarks per workflow policy | approval history correlation |
-| Reissue rejected | Yes | PendingReview → Rejected | Yes | approval history correlation |
-| Replacement generated | Yes | Approved → Completed plus new certificate link | No | new certificate ID and source certificate ID |
-| Certificate revoked | Yes | current status → Revoked | Yes | notification request correlation where configured |
-| Verification code regenerated | Prohibited unless formally approved | N/A | N/A | N/A |
-| Soft delete / deactivate certificate-owned record | Yes | active → deleted/inactive metadata | Yes for business record | downstream projection correction correlation |
-| Permission-sensitive global/consolidated export | Yes | access/export event | purpose may be required | IAM scope decision reference where supported |
+| Action                                            |                      Audit Required | Minimum Old/New State                          |              Reason Required | Cross-Context Side Effect Evidence                        |
+| ------------------------------------------------- | ----------------------------------: | ---------------------------------------------- | ---------------------------: | --------------------------------------------------------- |
+| Certificate generated                             |                                 Yes | null → Generated record summary                |                           No | completion/payment decision references; numbering outcome |
+| Certificate issued                                |                                 Yes | Generated → Issued                             |                           No | notification request correlation if configured            |
+| Certificate download by privileged admin          |            Configurable/Recommended | access event                                   |                           No | none                                                      |
+| Bulk export                                       |                                 Yes | export request metadata                        | business purpose recommended | report scope and row count                                |
+| Reissue requested                                 |                                 Yes | no request → PendingReview                     |                          Yes | notification request correlation                          |
+| Reissue approved                                  |                                 Yes | PendingReview → Approved                       |  remarks per workflow policy | approval history correlation                              |
+| Reissue rejected                                  |                                 Yes | PendingReview → Rejected                       |                          Yes | approval history correlation                              |
+| Replacement generated                             |                                 Yes | Approved → Completed plus new certificate link |                           No | new certificate ID and source certificate ID              |
+| Certificate revoked                               |                                 Yes | current status → Revoked                       |                          Yes | notification request correlation where configured         |
+| Verification code regenerated                     | Prohibited unless formally approved | N/A                                            |                          N/A | N/A                                                       |
+| Soft delete / deactivate certificate-owned record |                                 Yes | active → deleted/inactive metadata             |      Yes for business record | downstream projection correction correlation              |
+| Permission-sensitive global/consolidated export   |                                 Yes | access/export event                            |      purpose may be required | IAM scope decision reference where supported              |
 
 ## 12.2 Required Audit Attributes
 
@@ -530,40 +530,40 @@ Sensitive lifecycle commands require a defined audit-delivery guarantee.
 
 For each lifecycle mutation, correlate:
 
-| Business Action | Source Decision/Side Effect | Correlation Requirement |
-|---|---|---|
-| Generate | Completion eligibility read | `completionId` and approved decision/version where available |
-| Generate | Finance validation read | validation decision/reference when payment gate applies |
-| Generate | Number allocation | allocated certificate number and numbering request correlation |
-| Issue | Communication request | notification request correlation ID after commit |
-| Reissue approve/reject | ApprovalRequest/ApprovalHistory | approval request/history correlation IDs |
-| Replacement generation | source certificate + reissue request | source certificate ID, request ID, replacement certificate ID |
-| Revoke | Communication request | notification correlation where notification is configured |
-| Reports/exports | Reporting read model | actor, filters, scope, row count, export type |
+| Business Action        | Source Decision/Side Effect          | Correlation Requirement                                        |
+| ---------------------- | ------------------------------------ | -------------------------------------------------------------- |
+| Generate               | Completion eligibility read          | `completionId` and approved decision/version where available   |
+| Generate               | Finance validation read              | validation decision/reference when payment gate applies        |
+| Generate               | Number allocation                    | allocated certificate number and numbering request correlation |
+| Issue                  | Communication request                | notification request correlation ID after commit               |
+| Reissue approve/reject | ApprovalRequest/ApprovalHistory      | approval request/history correlation IDs                       |
+| Replacement generation | source certificate + reissue request | source certificate ID, request ID, replacement certificate ID  |
+| Revoke                 | Communication request                | notification correlation where notification is configured      |
+| Reports/exports        | Reporting read model                 | actor, filters, scope, row count, export type                  |
 
 ---
 
 # 13. Threat Model and Required Mitigations
 
-| Threat | Example | Required Mitigation |
-|---|---|---|
-| Broken object-level authorization | User changes certificate ID to another branch's record | Scoped repository query, effective IAM scope, non-enumerating not-found behavior. |
-| Broken function-level authorization | Read-only user calls revoke endpoint | Fine-grained permission checked server-side at command boundary. |
-| Eligibility bypass | Client posts `completionApproved=true` | Ignore/reject client flag; call authoritative Completion port. |
-| Payment bypass | Client posts `paymentCompleted=true` | Call Finance validation port where payment gate applies. |
-| Certificate number collision | Concurrent generation allocates same number | Numbering transaction/lock plus unique constraint and idempotency. |
-| Duplicate certificate generation | User double-clicks generate | Idempotency key, aggregate duplicate invariant, unique persistence constraint after cardinality decision. |
-| Verification enumeration | Attacker loops sequential codes | High-entropy codes, rate limits, uniform invalid result, no sequential tokens. |
-| QR data leakage | QR embeds learner personal details | QR contains opaque token/approved verification URL only. |
-| Artifact URL leakage | Permanent public PDF URL forwarded | Private storage and short-lived signed URLs. |
-| PDF injection/SSRF | Dynamic content makes renderer fetch arbitrary URL | sanitization, network restrictions, no user-supplied remote assets. |
-| CSV formula injection | Student name begins with `=` | spreadsheet-safe escaping. |
-| Audit tampering | Operator edits old audit record | Audit append-only permissions and no Certificate write access to Audit history. |
-| Cross-context mutation | Certificate code updates CourseCompletion | repository/package boundaries, integration tests, no foreign-context write APIs. |
-| Stale approval race | Reissue state changes while another approver acts | optimistic version validation and transactional transition. |
-| Notification replay | Same issue event sends multiple notices | event/request dedupe key. |
-| Report leakage | Consolidated export by branch-only user | separate consolidated report permission plus IAM consolidated scope. |
-| Log leakage | Full verification token appears in traces | redaction/masking policy and structured logger filters. |
+| Threat                              | Example                                                | Required Mitigation                                                                                       |
+| ----------------------------------- | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
+| Broken object-level authorization   | User changes certificate ID to another branch's record | Scoped repository query, effective IAM scope, non-enumerating not-found behavior.                         |
+| Broken function-level authorization | Read-only user calls revoke endpoint                   | Fine-grained permission checked server-side at command boundary.                                          |
+| Eligibility bypass                  | Client posts `completionApproved=true`                 | Ignore/reject client flag; call authoritative Completion port.                                            |
+| Payment bypass                      | Client posts `paymentCompleted=true`                   | Call Finance validation port where payment gate applies.                                                  |
+| Certificate number collision        | Concurrent generation allocates same number            | Numbering transaction/lock plus unique constraint and idempotency.                                        |
+| Duplicate certificate generation    | User double-clicks generate                            | Idempotency key, aggregate duplicate invariant, unique persistence constraint after cardinality decision. |
+| Verification enumeration            | Attacker loops sequential codes                        | High-entropy codes, rate limits, uniform invalid result, no sequential tokens.                            |
+| QR data leakage                     | QR embeds learner personal details                     | QR contains opaque token/approved verification URL only.                                                  |
+| Artifact URL leakage                | Permanent public PDF URL forwarded                     | Private storage and short-lived signed URLs.                                                              |
+| PDF injection/SSRF                  | Dynamic content makes renderer fetch arbitrary URL     | sanitization, network restrictions, no user-supplied remote assets.                                       |
+| CSV formula injection               | Student name begins with `=`                           | spreadsheet-safe escaping.                                                                                |
+| Audit tampering                     | Operator edits old audit record                        | Audit append-only permissions and no Certificate write access to Audit history.                           |
+| Cross-context mutation              | Certificate code updates CourseCompletion              | repository/package boundaries, integration tests, no foreign-context write APIs.                          |
+| Stale approval race                 | Reissue state changes while another approver acts      | optimistic version validation and transactional transition.                                               |
+| Notification replay                 | Same issue event sends multiple notices                | event/request dedupe key.                                                                                 |
+| Report leakage                      | Consolidated export by branch-only user                | separate consolidated report permission plus IAM consolidated scope.                                      |
+| Log leakage                         | Full verification token appears in traces              | redaction/masking policy and structured logger filters.                                                   |
 
 ---
 
@@ -573,20 +573,20 @@ For each lifecycle mutation, correlate:
 
 All latency targets are measured at the server boundary under normal operating load, excluding user network latency, unless stated otherwise.
 
-| ID | Operation | Target |
-|---|---|---|
-| NFR-CERT-PERF-001 | Certificate registry paginated list | P95 ≤ 500 ms, P99 ≤ 1,000 ms for page size ≤ 50. |
-| NFR-CERT-PERF-002 | Certificate detail query | P95 ≤ 350 ms, P99 ≤ 750 ms. |
-| NFR-CERT-PERF-003 | Readiness query | P95 ≤ 750 ms, P99 ≤ 1,500 ms for page size ≤ 50, including authoritative read-port calls in-process. |
-| NFR-CERT-PERF-004 | Public verification | P95 ≤ 400 ms, P99 ≤ 900 ms under normal load, excluding progressive abuse challenges. |
-| NFR-CERT-PERF-005 | Certificate generation API acknowledgement | P95 ≤ 3 seconds for normal single-certificate synchronous generation where the artifact renderer completes inline. |
-| NFR-CERT-PERF-006 | Certificate generation hard timeout | No request may execute unbounded; renderer/application timeout target ≤ 15 seconds per certificate before safe failure/retry semantics. |
-| NFR-CERT-PERF-007 | Issue/revoke/reissue decision commands | P95 ≤ 750 ms, P99 ≤ 1,500 ms excluding external notification delivery, which is post-commit. |
-| NFR-CERT-PERF-008 | Standard dashboard widgets | P95 ≤ 1.5 seconds using read models/snapshots. |
-| NFR-CERT-PERF-009 | Operational report preview | P95 ≤ 3 seconds for approved filter ranges and ≤ 10,000 returned rows. |
-| NFR-CERT-PERF-010 | Export request | Interactive request acknowledgement ≤ 2 seconds; file generation must follow approved in-process job pattern for large exports. |
-| NFR-CERT-PERF-011 | Student certificate list | P95 ≤ 500 ms. |
-| NFR-CERT-PERF-012 | Signed artifact download authorization | P95 ≤ 350 ms before storage transfer begins. |
+| ID                | Operation                                  | Target                                                                                                                                  |
+| ----------------- | ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
+| NFR-CERT-PERF-001 | Certificate registry paginated list        | P95 ≤ 500 ms, P99 ≤ 1,000 ms for page size ≤ 50.                                                                                        |
+| NFR-CERT-PERF-002 | Certificate detail query                   | P95 ≤ 350 ms, P99 ≤ 750 ms.                                                                                                             |
+| NFR-CERT-PERF-003 | Readiness query                            | P95 ≤ 750 ms, P99 ≤ 1,500 ms for page size ≤ 50, including authoritative read-port calls in-process.                                    |
+| NFR-CERT-PERF-004 | Public verification                        | P95 ≤ 400 ms, P99 ≤ 900 ms under normal load, excluding progressive abuse challenges.                                                   |
+| NFR-CERT-PERF-005 | Certificate generation API acknowledgement | P95 ≤ 3 seconds for normal single-certificate synchronous generation where the artifact renderer completes inline.                      |
+| NFR-CERT-PERF-006 | Certificate generation hard timeout        | No request may execute unbounded; renderer/application timeout target ≤ 15 seconds per certificate before safe failure/retry semantics. |
+| NFR-CERT-PERF-007 | Issue/revoke/reissue decision commands     | P95 ≤ 750 ms, P99 ≤ 1,500 ms excluding external notification delivery, which is post-commit.                                            |
+| NFR-CERT-PERF-008 | Standard dashboard widgets                 | P95 ≤ 1.5 seconds using read models/snapshots.                                                                                          |
+| NFR-CERT-PERF-009 | Operational report preview                 | P95 ≤ 3 seconds for approved filter ranges and ≤ 10,000 returned rows.                                                                  |
+| NFR-CERT-PERF-010 | Export request                             | Interactive request acknowledgement ≤ 2 seconds; file generation must follow approved in-process job pattern for large exports.         |
+| NFR-CERT-PERF-011 | Student certificate list                   | P95 ≤ 500 ms.                                                                                                                           |
+| NFR-CERT-PERF-012 | Signed artifact download authorization     | P95 ≤ 350 ms before storage transfer begins.                                                                                            |
 
 ### Performance Test Data Volumes
 
@@ -607,29 +607,29 @@ These are capacity-validation targets, not an assertion of current ASTI producti
 
 ## 14.2 Availability and Reliability Targets
 
-| ID | Capability | Target |
-|---|---|---|
-| NFR-CERT-AVL-001 | Authenticated Certificate module APIs | 99.9% monthly availability target, excluding approved maintenance windows. |
-| NFR-CERT-AVL-002 | Public certificate verification | 99.95% monthly availability target. |
-| NFR-CERT-AVL-003 | Certificate artifact download | 99.9% monthly availability target, dependent on approved private storage service. |
-| NFR-CERT-AVL-004 | No silent partial lifecycle transition | 100% of state-change commands must be atomic at Certificate-owned transaction boundary. |
-| NFR-CERT-AVL-005 | Mandatory audit durability | 100% of successful sensitive state transitions must have a durably accepted audit record/intent. |
-| NFR-CERT-AVL-006 | Duplicate prevention | Zero successful duplicate active-certificate creations caused by retries or concurrent commands for the same governed lifecycle slot. |
-| NFR-CERT-AVL-007 | Verification graceful degradation | When nonessential analytics/notification/reporting integrations fail, valid verification must continue if authoritative certificate storage is available. |
-| NFR-CERT-AVL-008 | Fail-closed generation | Generation must fail when required Completion, Finance, IAM, Numbering, or artifact-integrity validation cannot be completed. |
+| ID               | Capability                             | Target                                                                                                                                                    |
+| ---------------- | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| NFR-CERT-AVL-001 | Authenticated Certificate module APIs  | 99.9% monthly availability target, excluding approved maintenance windows.                                                                                |
+| NFR-CERT-AVL-002 | Public certificate verification        | 99.95% monthly availability target.                                                                                                                       |
+| NFR-CERT-AVL-003 | Certificate artifact download          | 99.9% monthly availability target, dependent on approved private storage service.                                                                         |
+| NFR-CERT-AVL-004 | No silent partial lifecycle transition | 100% of state-change commands must be atomic at Certificate-owned transaction boundary.                                                                   |
+| NFR-CERT-AVL-005 | Mandatory audit durability             | 100% of successful sensitive state transitions must have a durably accepted audit record/intent.                                                          |
+| NFR-CERT-AVL-006 | Duplicate prevention                   | Zero successful duplicate active-certificate creations caused by retries or concurrent commands for the same governed lifecycle slot.                     |
+| NFR-CERT-AVL-007 | Verification graceful degradation      | When nonessential analytics/notification/reporting integrations fail, valid verification must continue if authoritative certificate storage is available. |
+| NFR-CERT-AVL-008 | Fail-closed generation                 | Generation must fail when required Completion, Finance, IAM, Numbering, or artifact-integrity validation cannot be completed.                             |
 
 ### Dependency Failure Matrix
 
-| Dependency Failure | Required Certificate Behavior |
-|---|---|
-| IAM unavailable | Fail closed for protected operations. Public verification may continue because it does not require authenticated authorization. |
-| Completion decision unavailable | Do not generate certificate; return retryable dependency failure. |
-| Finance validation unavailable and payment validation required | Do not generate certificate; fail closed. |
-| Numbering unavailable | Do not create an unnumbered certificate; fail safely and preserve retryability. |
-| Artifact storage unavailable | Do not report generation as successful unless the approved state model explicitly supports a separate safe pending-artifact state. Current baseline assumes failure/rollback. |
-| Audit durability unavailable for mandatory audited mutation | Fail command or place it in an explicitly designed recoverable pending state; never silently succeed. |
-| Communication unavailable | Business transaction remains committed; queue/record notification request through approved durable in-process pattern and surface operational alert. |
-| Reporting projection unavailable | Transaction succeeds; reporting lag is monitored and reconciled. |
+| Dependency Failure                                             | Required Certificate Behavior                                                                                                                                                 |
+| -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| IAM unavailable                                                | Fail closed for protected operations. Public verification may continue because it does not require authenticated authorization.                                               |
+| Completion decision unavailable                                | Do not generate certificate; return retryable dependency failure.                                                                                                             |
+| Finance validation unavailable and payment validation required | Do not generate certificate; fail closed.                                                                                                                                     |
+| Numbering unavailable                                          | Do not create an unnumbered certificate; fail safely and preserve retryability.                                                                                               |
+| Artifact storage unavailable                                   | Do not report generation as successful unless the approved state model explicitly supports a separate safe pending-artifact state. Current baseline assumes failure/rollback. |
+| Audit durability unavailable for mandatory audited mutation    | Fail command or place it in an explicitly designed recoverable pending state; never silently succeed.                                                                         |
+| Communication unavailable                                      | Business transaction remains committed; queue/record notification request through approved durable in-process pattern and surface operational alert.                          |
+| Reporting projection unavailable                               | Transaction succeeds; reporting lag is monitored and reconciled.                                                                                                              |
 
 ---
 
@@ -652,49 +652,49 @@ Required controls:
 
 ### Capacity Objectives
 
-| ID | Objective |
-|---|---|
-| NFR-CERT-SCL-001 | Sustain 50 certificate lifecycle command requests per second for 5-minute controlled load test without violating duplicate/integrity guarantees. |
-| NFR-CERT-SCL-002 | Sustain 200 public verification requests per second for 5-minute test with rate-limit enforcement and P95 target adjusted only by documented abuse controls. |
+| ID               | Objective                                                                                                                                                            |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| NFR-CERT-SCL-001 | Sustain 50 certificate lifecycle command requests per second for 5-minute controlled load test without violating duplicate/integrity guarantees.                     |
+| NFR-CERT-SCL-002 | Sustain 200 public verification requests per second for 5-minute test with rate-limit enforcement and P95 target adjusted only by documented abuse controls.         |
 | NFR-CERT-SCL-003 | Support at least 20 concurrent certificate-rendering operations per application deployment unit or configured bounded pool, subject to infrastructure capacity test. |
-| NFR-CERT-SCL-004 | Support report reads over at least 1 million Certificate rows without transactional-table full scans for common filters. |
-| NFR-CERT-SCL-005 | Allow application horizontal scaling without duplicate certificate generation or loss of mandatory audit/notification intents. |
+| NFR-CERT-SCL-004 | Support report reads over at least 1 million Certificate rows without transactional-table full scans for common filters.                                             |
+| NFR-CERT-SCL-005 | Allow application horizontal scaling without duplicate certificate generation or loss of mandatory audit/notification intents.                                       |
 
 ---
 
 ## 14.4 Usability Targets
 
-| ID | Requirement | Target |
-|---|---|---|
-| NFR-CERT-USA-001 | Certificate generation feedback | User sees deterministic success, validation failure, or dependency failure outcome; no ambiguous spinner after server timeout. |
-| NFR-CERT-USA-002 | Validation localization | Validation messages available in English and Arabic using message keys, not hardcoded mixed-language server strings. |
-| NFR-CERT-USA-003 | RTL parity | Arabic UI provides feature parity with English; action order, icon direction, pagination arrows, breadcrumbs, and alignment follow RTL rules. |
-| NFR-CERT-USA-004 | Keyboard accessibility | All primary certificate operations are keyboard accessible. |
-| NFR-CERT-USA-005 | Screen-reader semantics | Tables, filters, dialogs, status badges, errors, and confirmation prompts expose accessible names and state. |
-| NFR-CERT-USA-006 | WCAG target | Conform to WCAG 2.2 AA for portal screens and public verification page, subject to organizational accessibility policy. |
-| NFR-CERT-USA-007 | Destructive action safety | Revocation and other irreversible/high-impact actions require explicit confirmation and display target certificate number and learner/course context. |
-| NFR-CERT-USA-008 | Stale-state handling | Version conflict UI explains that data changed and reloads current state instead of silently overwriting. |
-| NFR-CERT-USA-009 | Empty/loading/error states | Every list and detail screen implements loading skeleton, empty state, validation state, dependency error state, and permission-safe state. |
-| NFR-CERT-USA-010 | Public verification simplicity | A verifier can submit a code and receive the approved result in no more than one primary action after page load. |
-| NFR-CERT-USA-011 | Mobile verification | Public verification works at viewport width 320px and above without horizontal scrolling for primary content. |
-| NFR-CERT-USA-012 | Artifact language clarity | UI distinguishes interface language from certificate artifact language and does not silently regenerate certificate language. |
+| ID               | Requirement                     | Target                                                                                                                                                |
+| ---------------- | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| NFR-CERT-USA-001 | Certificate generation feedback | User sees deterministic success, validation failure, or dependency failure outcome; no ambiguous spinner after server timeout.                        |
+| NFR-CERT-USA-002 | Validation localization         | Validation messages available in English and Arabic using message keys, not hardcoded mixed-language server strings.                                  |
+| NFR-CERT-USA-003 | RTL parity                      | Arabic UI provides feature parity with English; action order, icon direction, pagination arrows, breadcrumbs, and alignment follow RTL rules.         |
+| NFR-CERT-USA-004 | Keyboard accessibility          | All primary certificate operations are keyboard accessible.                                                                                           |
+| NFR-CERT-USA-005 | Screen-reader semantics         | Tables, filters, dialogs, status badges, errors, and confirmation prompts expose accessible names and state.                                          |
+| NFR-CERT-USA-006 | WCAG target                     | Conform to WCAG 2.2 AA for portal screens and public verification page, subject to organizational accessibility policy.                               |
+| NFR-CERT-USA-007 | Destructive action safety       | Revocation and other irreversible/high-impact actions require explicit confirmation and display target certificate number and learner/course context. |
+| NFR-CERT-USA-008 | Stale-state handling            | Version conflict UI explains that data changed and reloads current state instead of silently overwriting.                                             |
+| NFR-CERT-USA-009 | Empty/loading/error states      | Every list and detail screen implements loading skeleton, empty state, validation state, dependency error state, and permission-safe state.           |
+| NFR-CERT-USA-010 | Public verification simplicity  | A verifier can submit a code and receive the approved result in no more than one primary action after page load.                                      |
+| NFR-CERT-USA-011 | Mobile verification             | Public verification works at viewport width 320px and above without horizontal scrolling for primary content.                                         |
+| NFR-CERT-USA-012 | Artifact language clarity       | UI distinguishes interface language from certificate artifact language and does not silently regenerate certificate language.                         |
 
 ---
 
 ## 14.5 Maintainability and Architecture Quality Targets
 
-| ID | Requirement |
-|---|---|
-| NFR-CERT-MNT-001 | Certificate domain code must not import Finance or Completion repositories directly; use explicit application ports/contracts. |
-| NFR-CERT-MNT-002 | No Certificate endpoint may write foreign-context tables. |
-| NFR-CERT-MNT-003 | Domain invariants are tested independently of UI components. |
-| NFR-CERT-MNT-004 | Permission checks use permission codes and IAM decisions, not hardcoded role names. |
-| NFR-CERT-MNT-005 | API DTOs are distinct from ORM/database models. |
-| NFR-CERT-MNT-006 | Public verification DTO is distinct from internal Certificate detail DTO. |
-| NFR-CERT-MNT-007 | Error codes are stable, documented, and test-covered. |
-| NFR-CERT-MNT-008 | Read models are physically/logically read-only to application mutation paths. |
+| ID               | Requirement                                                                                                                                                                  |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| NFR-CERT-MNT-001 | Certificate domain code must not import Finance or Completion repositories directly; use explicit application ports/contracts.                                               |
+| NFR-CERT-MNT-002 | No Certificate endpoint may write foreign-context tables.                                                                                                                    |
+| NFR-CERT-MNT-003 | Domain invariants are tested independently of UI components.                                                                                                                 |
+| NFR-CERT-MNT-004 | Permission checks use permission codes and IAM decisions, not hardcoded role names.                                                                                          |
+| NFR-CERT-MNT-005 | API DTOs are distinct from ORM/database models.                                                                                                                              |
+| NFR-CERT-MNT-006 | Public verification DTO is distinct from internal Certificate detail DTO.                                                                                                    |
+| NFR-CERT-MNT-007 | Error codes are stable, documented, and test-covered.                                                                                                                        |
+| NFR-CERT-MNT-008 | Read models are physically/logically read-only to application mutation paths.                                                                                                |
 | NFR-CERT-MNT-009 | At least 80% branch coverage is required for Certificate domain/application-service code, with 100% coverage of critical invariants and allowed/forbidden state transitions. |
-| NFR-CERT-MNT-010 | Contract tests cover every cross-context port used by generation, issuance, reissue, replacement, revocation side effects, and reporting publication. |
+| NFR-CERT-MNT-010 | Contract tests cover every cross-context port used by generation, issuance, reissue, replacement, revocation side effects, and reporting publication.                        |
 
 ---
 
@@ -732,14 +732,14 @@ The exact legal retention periods and Oman-specific privacy/records obligations 
 
 ## 15.2 Retention Categories
 
-| Record Category | Required Policy |
-|---|---|
-| Certificate | Long-lived business record; no hard delete through normal application flow. Retention period requires legal/business confirmation. |
-| Reissue request | Retain with lineage to source and replacement certificate. |
-| Verification attempt/log | Security and analytics retention period must be configured and approved; IP metadata should not be retained indefinitely without purpose. |
-| Audit record | Append-only retention under Audit & Compliance policy. |
-| Certificate artifact | Retain consistent with Certificate record and legal/business policy; superseded/revoked artifact handling must preserve historical evidence where required. |
-| Export file | Short-lived protected storage with automatic expiry; exact lifetime configurable and approved. |
+| Record Category          | Required Policy                                                                                                                                             |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Certificate              | Long-lived business record; no hard delete through normal application flow. Retention period requires legal/business confirmation.                          |
+| Reissue request          | Retain with lineage to source and replacement certificate.                                                                                                  |
+| Verification attempt/log | Security and analytics retention period must be configured and approved; IP metadata should not be retained indefinitely without purpose.                   |
+| Audit record             | Append-only retention under Audit & Compliance policy.                                                                                                      |
+| Certificate artifact     | Retain consistent with Certificate record and legal/business policy; superseded/revoked artifact handling must preserve historical evidence where required. |
+| Export file              | Short-lived protected storage with automatic expiry; exact lifetime configurable and approved.                                                              |
 
 ## 15.3 Data Subject/Privacy Operations
 
@@ -757,14 +757,14 @@ Where a lawful privacy request affects certificate data:
 
 Detailed backup and runbook procedures belong in Part 11. The following NFR targets apply:
 
-| ID | Objective | Target |
-|---|---|---|
-| NFR-CERT-DR-001 | Transactional certificate data RPO | ≤ 15 minutes target, subject to platform database backup/PITR capability. |
-| NFR-CERT-DR-002 | Transactional certificate data RTO | ≤ 4 hours target for module restoration within platform recovery plan. |
-| NFR-CERT-DR-003 | Certificate artifact RPO | ≤ 15 minutes or storage-native versioning durability equivalent. |
-| NFR-CERT-DR-004 | Certificate artifact RTO | ≤ 4 hours for authenticated download restoration; public verification should continue using metadata where artifact download is not necessary. |
-| NFR-CERT-DR-005 | Recovery consistency | Recovery procedures must reconcile Certificate rows, artifact references, reissue lineage, and mandatory audit correlation. |
-| NFR-CERT-DR-006 | Restore testing | Certificate-owned tables and artifact linkage restoration must be tested at least quarterly in a non-production recovery exercise or according to organization-wide DR cadence if stricter. |
+| ID              | Objective                          | Target                                                                                                                                                                                      |
+| --------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| NFR-CERT-DR-001 | Transactional certificate data RPO | ≤ 15 minutes target, subject to platform database backup/PITR capability.                                                                                                                   |
+| NFR-CERT-DR-002 | Transactional certificate data RTO | ≤ 4 hours target for module restoration within platform recovery plan.                                                                                                                      |
+| NFR-CERT-DR-003 | Certificate artifact RPO           | ≤ 15 minutes or storage-native versioning durability equivalent.                                                                                                                            |
+| NFR-CERT-DR-004 | Certificate artifact RTO           | ≤ 4 hours for authenticated download restoration; public verification should continue using metadata where artifact download is not necessary.                                              |
+| NFR-CERT-DR-005 | Recovery consistency               | Recovery procedures must reconcile Certificate rows, artifact references, reissue lineage, and mandatory audit correlation.                                                                 |
+| NFR-CERT-DR-006 | Restore testing                    | Certificate-owned tables and artifact linkage restoration must be tested at least quarterly in a non-production recovery exercise or according to organization-wide DR cadence if stricter. |
 
 These targets are architecture requirements for implementation planning; they require confirmation against the actual infrastructure platform and approved organizational DR standard.
 
@@ -819,59 +819,59 @@ Before production go-live or major verification redesign, security testing shoul
 
 # 18. Secure Defaults and Configuration
 
-| Configuration | Secure Default |
-|---|---|
-| Public artifact access | Disabled |
-| Anonymous certificate list/search | Disabled |
-| Public verification | Enabled only through exact opaque verification input |
-| Max page size | 100 or lower endpoint-specific limit |
-| Export access | Permission-controlled and scoped |
-| Global data access | Denied unless explicitly granted |
-| Consolidated reports | Denied unless permission + consolidated scope both pass |
-| Certificate hard delete | Disabled |
-| Reissue without approval | Disabled |
-| Generate without completion approval | Disabled |
-| Generate without payment validation when required | Disabled |
-| Revocation without reason | Disabled |
-| Client-controlled status field | Rejected/ignored according to request schema |
-| Renderer arbitrary network access | Disabled |
-| Full verification token logging | Disabled |
-| Audit mutation by Certificate module | Disabled |
-| Reporting write access to Certificate tables | Disabled |
+| Configuration                                     | Secure Default                                          |
+| ------------------------------------------------- | ------------------------------------------------------- |
+| Public artifact access                            | Disabled                                                |
+| Anonymous certificate list/search                 | Disabled                                                |
+| Public verification                               | Enabled only through exact opaque verification input    |
+| Max page size                                     | 100 or lower endpoint-specific limit                    |
+| Export access                                     | Permission-controlled and scoped                        |
+| Global data access                                | Denied unless explicitly granted                        |
+| Consolidated reports                              | Denied unless permission + consolidated scope both pass |
+| Certificate hard delete                           | Disabled                                                |
+| Reissue without approval                          | Disabled                                                |
+| Generate without completion approval              | Disabled                                                |
+| Generate without payment validation when required | Disabled                                                |
+| Revocation without reason                         | Disabled                                                |
+| Client-controlled status field                    | Rejected/ignored according to request schema            |
+| Renderer arbitrary network access                 | Disabled                                                |
+| Full verification token logging                   | Disabled                                                |
+| Audit mutation by Certificate module              | Disabled                                                |
+| Reporting write access to Certificate tables      | Disabled                                                |
 
 ---
 
 # 19. NFR Acceptance Matrix
 
-| Area | Acceptance Evidence |
-|---|---|
-| Performance | Load-test report with P50/P95/P99 latency, throughput, error rate, and tested data volume. |
-| Availability | Health monitoring, SLO dashboard, dependency failure tests, and monthly availability calculation. |
-| Reliability | concurrency tests, idempotency tests, transaction rollback tests, audit durability tests. |
-| Scalability | 1M-record query test, public verification load test, bounded renderer concurrency test. |
-| Security | automated authorization suite, branch isolation tests, SAST/dependency scan, penetration-test findings closure. |
-| Usability | English/Arabic UI acceptance, keyboard navigation checks, screen-reader checks, validation-state review. |
-| Accessibility | WCAG 2.2 AA audit for module screens and public verification surface. |
-| Compliance | audit sample trace from business action through source decision and side-effect correlations. |
-| Recovery | restore exercise demonstrating Certificate table, artifact, reissue lineage, and audit-correlation consistency. |
-| DDD Conformance | architecture test proving no foreign-context repository writes and no UI-driven eligibility/payment logic. |
+| Area            | Acceptance Evidence                                                                                             |
+| --------------- | --------------------------------------------------------------------------------------------------------------- |
+| Performance     | Load-test report with P50/P95/P99 latency, throughput, error rate, and tested data volume.                      |
+| Availability    | Health monitoring, SLO dashboard, dependency failure tests, and monthly availability calculation.               |
+| Reliability     | concurrency tests, idempotency tests, transaction rollback tests, audit durability tests.                       |
+| Scalability     | 1M-record query test, public verification load test, bounded renderer concurrency test.                         |
+| Security        | automated authorization suite, branch isolation tests, SAST/dependency scan, penetration-test findings closure. |
+| Usability       | English/Arabic UI acceptance, keyboard navigation checks, screen-reader checks, validation-state review.        |
+| Accessibility   | WCAG 2.2 AA audit for module screens and public verification surface.                                           |
+| Compliance      | audit sample trace from business action through source decision and side-effect correlations.                   |
+| Recovery        | restore exercise demonstrating Certificate table, artifact, reissue lineage, and audit-correlation consistency. |
+| DDD Conformance | architecture test proving no foreign-context repository writes and no UI-driven eligibility/payment logic.      |
 
 ---
 
 # 20. DDD Ownership and Security Fit Check
 
-| Concern | Authoritative Owner | Certificate Module Behavior | Security/NFR Conclusion |
-|---|---|---|---|
-| Certificate lifecycle | Certificate Management | Owns aggregate commands and invariants | Correct |
-| Completion eligibility | Exam, Result & Completion | Reads authoritative approval decision | Must fail closed; never recompute or mutate |
-| Payment validation | Finance & Receivables | Reads authoritative payment gate | Must fail closed when required and unavailable |
-| Enrollment linkage | Admission & Enrollment | Reads Enrollment reference and branch/course/batch linkage | Certificate must not create or alter Enrollment |
-| Permissions/branch scope | IAM | Enforces decision server-side | No role-name authorization |
-| Numbering | Configuration/Master Data | Requests certificate number | Cannot invent local numbering sequence |
-| Audit | Audit & Compliance | Supplies durable audit intent/command | Mandatory sensitive-action coverage |
-| Notification delivery | Communication | Sends NotificationRequest/intention | Delivery failure does not roll back certificate transaction |
-| Reporting | Reporting & Dashboards | Publishes facts/read dependencies | Read-only projections, no transactional writes |
-| Person identity | Party/Person owning context | Displays approved identity data | No duplicate identity master in Certificate context |
+| Concern                  | Authoritative Owner         | Certificate Module Behavior                                | Security/NFR Conclusion                                     |
+| ------------------------ | --------------------------- | ---------------------------------------------------------- | ----------------------------------------------------------- |
+| Certificate lifecycle    | Certificate Management      | Owns aggregate commands and invariants                     | Correct                                                     |
+| Completion eligibility   | Exam, Result & Completion   | Reads authoritative approval decision                      | Must fail closed; never recompute or mutate                 |
+| Payment validation       | Finance & Receivables       | Reads authoritative payment gate                           | Must fail closed when required and unavailable              |
+| Enrollment linkage       | Admission & Enrollment      | Reads Enrollment reference and branch/course/batch linkage | Certificate must not create or alter Enrollment             |
+| Permissions/branch scope | IAM                         | Enforces decision server-side                              | No role-name authorization                                  |
+| Numbering                | Configuration/Master Data   | Requests certificate number                                | Cannot invent local numbering sequence                      |
+| Audit                    | Audit & Compliance          | Supplies durable audit intent/command                      | Mandatory sensitive-action coverage                         |
+| Notification delivery    | Communication               | Sends NotificationRequest/intention                        | Delivery failure does not roll back certificate transaction |
+| Reporting                | Reporting & Dashboards      | Publishes facts/read dependencies                          | Read-only projections, no transactional writes              |
+| Person identity          | Party/Person owning context | Displays approved identity data                            | No duplicate identity master in Certificate context         |
 
 ### DDD Core Aggregate Security Rule
 
@@ -912,4 +912,3 @@ Module 11 – Certificate Management is considered security- and NFR-aligned onl
 - no hard delete path exists for certificate business history;
 - measurable performance, availability, scalability, usability, accessibility, recovery, and compliance targets are tested before production release;
 - unresolved ER/DDD/Prisma gaps are formally resolved rather than hidden through implementation assumptions.
-

@@ -25,8 +25,12 @@ describe('ConflictEngine (SchedulingService.validateSession)', () => {
     mockRepo.resolveCalendar = vi.fn().mockResolvedValue({
       holidays: [],
       resolvedOperatingDays: [
-        { dayOfWeek: 'MONDAY', isOpen: true, workingHours: [{ startTime: '08:00', endTime: '17:00' }] }
-      ]
+        {
+          dayOfWeek: 'MONDAY',
+          isOpen: true,
+          workingHours: [{ startTime: '08:00', endTime: '17:00' }],
+        },
+      ],
     });
     mockRepo.listVenueBlocks = vi.fn().mockResolvedValue([]);
 
@@ -43,8 +47,10 @@ describe('ConflictEngine (SchedulingService.validateSession)', () => {
 
   it('should detect Holiday conflict', async () => {
     mockRepo.resolveCalendar = vi.fn().mockResolvedValue({
-      holidays: [{ id: 'h1', status: 'Active', affectsScheduling: true, name: 'Eid' }],
-      resolvedOperatingDays: []
+      holidays: [
+        { id: 'h1', status: 'Active', affectsScheduling: true, name: 'Eid' },
+      ],
+      resolvedOperatingDays: [],
     });
 
     const result = await service.validateSession({
@@ -62,16 +68,24 @@ describe('ConflictEngine (SchedulingService.validateSession)', () => {
   it('should detect Venue Block conflict', async () => {
     mockRepo.resolveCalendar = vi.fn().mockResolvedValue({
       holidays: [],
-      resolvedOperatingDays: [{ dayOfWeek: 'MONDAY', isOpen: true, workingHours: [{ startTime: '08:00', endTime: '17:00' }] }]
+      resolvedOperatingDays: [
+        {
+          dayOfWeek: 'MONDAY',
+          isOpen: true,
+          workingHours: [{ startTime: '08:00', endTime: '17:00' }],
+        },
+      ],
     });
-    mockRepo.listVenueBlocks = vi.fn().mockResolvedValue([{
-      classroomId: 'r1',
-      blockStartDate: new Date('2026-07-06'),
-      blockEndDate: new Date('2026-07-08'),
-      isFullDay: true,
-      status: 'Active',
-      reasonCode: 'MAINTENANCE'
-    }]);
+    mockRepo.listVenueBlocks = vi.fn().mockResolvedValue([
+      {
+        classroomId: 'r1',
+        blockStartDate: new Date('2026-07-06'),
+        blockEndDate: new Date('2026-07-08'),
+        isFullDay: true,
+        status: 'Active',
+        reasonCode: 'MAINTENANCE',
+      },
+    ]);
 
     const result = await service.validateSession({
       branchId: 'b1',
@@ -79,7 +93,7 @@ describe('ConflictEngine (SchedulingService.validateSession)', () => {
       scheduledDate: new Date('2026-07-06'),
       startTime: '09:00',
       endTime: '11:00',
-      classroomId: 'r1'
+      classroomId: 'r1',
     });
 
     expect(result.isValid).toBe(false);
@@ -90,23 +104,53 @@ describe('ConflictEngine (SchedulingService.validateSession)', () => {
     mockRepo.resolveCalendar = vi.fn().mockResolvedValue({
       holidays: [],
       resolvedOperatingDays: [
-        { dayOfWeek: 'MONDAY', isOpen: true, workingHours: [{ startTime: '08:00', endTime: '17:00' }] },
-        { dayOfWeek: 'TUESDAY', isOpen: true, workingHours: [{ startTime: '08:00', endTime: '17:00' }] },
-        { dayOfWeek: 'WEDNESDAY', isOpen: true, workingHours: [{ startTime: '08:00', endTime: '17:00' }] },
-        { dayOfWeek: 'THURSDAY', isOpen: true, workingHours: [{ startTime: '08:00', endTime: '17:00' }] },
-        { dayOfWeek: 'FRIDAY', isOpen: true, workingHours: [{ startTime: '08:00', endTime: '17:00' }] },
-        { dayOfWeek: 'SATURDAY', isOpen: true, workingHours: [{ startTime: '08:00', endTime: '17:00' }] },
-        { dayOfWeek: 'SUNDAY', isOpen: true, workingHours: [{ startTime: '08:00', endTime: '17:00' }] },
+        {
+          dayOfWeek: 'MONDAY',
+          isOpen: true,
+          workingHours: [{ startTime: '08:00', endTime: '17:00' }],
+        },
+        {
+          dayOfWeek: 'TUESDAY',
+          isOpen: true,
+          workingHours: [{ startTime: '08:00', endTime: '17:00' }],
+        },
+        {
+          dayOfWeek: 'WEDNESDAY',
+          isOpen: true,
+          workingHours: [{ startTime: '08:00', endTime: '17:00' }],
+        },
+        {
+          dayOfWeek: 'THURSDAY',
+          isOpen: true,
+          workingHours: [{ startTime: '08:00', endTime: '17:00' }],
+        },
+        {
+          dayOfWeek: 'FRIDAY',
+          isOpen: true,
+          workingHours: [{ startTime: '08:00', endTime: '17:00' }],
+        },
+        {
+          dayOfWeek: 'SATURDAY',
+          isOpen: true,
+          workingHours: [{ startTime: '08:00', endTime: '17:00' }],
+        },
+        {
+          dayOfWeek: 'SUNDAY',
+          isOpen: true,
+          workingHours: [{ startTime: '08:00', endTime: '17:00' }],
+        },
       ],
     });
-    mockRepo.listVenueBlocks = vi.fn().mockResolvedValue([{
-      classroomId: null,
-      blockStartDate: new Date('2026-07-06'),
-      blockEndDate: new Date('2026-07-10'),
-      isFullDay: true,
-      status: 'Active',
-      reasonCode: 'EXAM_WEEK'
-    }]);
+    mockRepo.listVenueBlocks = vi.fn().mockResolvedValue([
+      {
+        classroomId: null,
+        blockStartDate: new Date('2026-07-06'),
+        blockEndDate: new Date('2026-07-10'),
+        isFullDay: true,
+        status: 'Active',
+        reasonCode: 'EXAM_WEEK',
+      },
+    ]);
 
     const result = await service.validateSession({
       branchId: 'b1',

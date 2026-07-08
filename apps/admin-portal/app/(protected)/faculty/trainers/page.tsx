@@ -1,6 +1,11 @@
 import { assertPermission } from '@/lib/auth-guard';
 import { prisma } from '@ims/database';
-import { AdminListPageLayout, LinkButton, PageHeader, StatCard } from '@ims/shared-ui';
+import {
+  AdminListPageLayout,
+  LinkButton,
+  PageHeader,
+  StatCard,
+} from '@ims/shared-ui';
 import { BadgeCheck, Clock3, Users, UserRound } from 'lucide-react';
 import { getFacultyTrainerContext } from '../_lib';
 import { TrainersClientList } from './_components/trainers-client-list';
@@ -41,32 +46,36 @@ export default async function TrainersPage(props: {
       filterBranchIds = ['00000000-0000-0000-0000-000000000000'];
     }
   }
-  const appliedBranchId = searchParams.branchId && filterBranchIds[0] !== '00000000-0000-0000-0000-000000000000'
-    ? filterBranchIds[0]
-    : undefined;
+  const appliedBranchId =
+    searchParams.branchId &&
+    filterBranchIds[0] !== '00000000-0000-0000-0000-000000000000'
+      ? filterBranchIds[0]
+      : undefined;
 
   const page = searchParams.page ? parseInt(searchParams.page, 10) : 1;
   const limit = 10;
   const sortBy = searchParams.sortBy || 'createdAt';
-  const sortOrder = (searchParams.sortOrder as 'asc' | 'desc' | undefined) || 'desc';
+  const sortOrder =
+    (searchParams.sortOrder as 'asc' | 'desc' | undefined) || 'desc';
 
-  const result = await import('../../../lib/runtime').then(({ trainerManagementService }) =>
-    trainerManagementService.listTrainers(
-      {
-        q: searchParams.q,
-        branchId: appliedBranchId,
-        status: searchParams.status as any,
-        trainerType: searchParams.trainerType as any,
-        specialization: searchParams.specialization,
-      },
-      {
-        page,
-        pageSize: limit,
-        sortBy,
-        sortDirection: sortOrder,
-      },
-      authContext,
-    ),
+  const result = await import('../../../lib/runtime').then(
+    ({ trainerManagementService }) =>
+      trainerManagementService.listTrainers(
+        {
+          q: searchParams.q,
+          branchId: appliedBranchId,
+          status: searchParams.status as any,
+          trainerType: searchParams.trainerType as any,
+          specialization: searchParams.specialization,
+        },
+        {
+          page,
+          pageSize: limit,
+          sortBy,
+          sortDirection: sortOrder,
+        },
+        authContext,
+      ),
   );
 
   const trainers = result.items.map((trainer) => ({
@@ -107,12 +116,19 @@ export default async function TrainersPage(props: {
     branchId: allowedBranchIds.length > 0 ? { in: filterBranchIds } : undefined,
   };
 
-  const [totalCount, activeCount, inactiveCount, suspendedCount] = await Promise.all([
-    prisma.trainerProfile.count({ where: whereBase }),
-    prisma.trainerProfile.count({ where: { ...whereBase, status: 'Active' } }),
-    prisma.trainerProfile.count({ where: { ...whereBase, status: 'Inactive' } }),
-    prisma.trainerProfile.count({ where: { ...whereBase, status: 'Suspended' } }),
-  ]);
+  const [totalCount, activeCount, inactiveCount, suspendedCount] =
+    await Promise.all([
+      prisma.trainerProfile.count({ where: whereBase }),
+      prisma.trainerProfile.count({
+        where: { ...whereBase, status: 'Active' },
+      }),
+      prisma.trainerProfile.count({
+        where: { ...whereBase, status: 'Inactive' },
+      }),
+      prisma.trainerProfile.count({
+        where: { ...whereBase, status: 'Suspended' },
+      }),
+    ]);
 
   return (
     <AdminListPageLayout className="pt-1 sm:pt-0">
@@ -120,7 +136,9 @@ export default async function TrainersPage(props: {
         eyebrow="Module 09"
         title="Trainer Registry"
         description="Search, sort, and maintain trainer profiles with branch-scoped access controls."
-        actions={<LinkButton href="/faculty/trainers/new">New trainer</LinkButton>}
+        actions={
+          <LinkButton href="/faculty/trainers/new">New trainer</LinkButton>
+        }
       />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 sm:gap-5">
@@ -156,7 +174,11 @@ export default async function TrainersPage(props: {
 
       <TrainersClientList
         trainers={trainers}
-        branches={branches.map((branch) => ({ id: branch.id, name: branch.branchName, code: branch.branchCode }))}
+        branches={branches.map((branch) => ({
+          id: branch.id,
+          name: branch.branchName,
+          code: branch.branchCode,
+        }))}
         total={result.total}
         currentPage={page}
         limit={limit}

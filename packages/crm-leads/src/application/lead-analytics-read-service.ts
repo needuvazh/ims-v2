@@ -41,7 +41,7 @@ export class LeadAnalyticsReadService {
 
   async getLeadConversionRate(userContext: UserContext) {
     const where = this.getScopedWhere(userContext);
-    
+
     const [total, converted] = await Promise.all([
       this.prisma.lead.count({ where }),
       this.prisma.lead.count({
@@ -52,7 +52,8 @@ export class LeadAnalyticsReadService {
       }),
     ]);
 
-    const rate = total > 0 ? parseFloat(((converted / total) * 100).toFixed(2)) : 0;
+    const rate =
+      total > 0 ? parseFloat(((converted / total) * 100).toFixed(2)) : 0;
 
     return {
       rate,
@@ -115,12 +116,18 @@ export class LeadAnalyticsReadService {
     });
 
     const counselorMap = new Map(
-      counselors.map((c) => [c.id, `${c.person?.firstName ?? ''} ${c.person?.lastName ?? ''}`.trim() || 'Unknown'])
+      counselors.map((c) => [
+        c.id,
+        `${c.person?.firstName ?? ''} ${c.person?.lastName ?? ''}`.trim() ||
+          'Unknown',
+      ]),
     );
 
     return groups.map((g) => ({
       counselorId: g.counselorId,
-      counselorName: g.counselorId ? (counselorMap.get(g.counselorId) ?? 'Unknown') : 'Unassigned',
+      counselorName: g.counselorId
+        ? (counselorMap.get(g.counselorId) ?? 'Unknown')
+        : 'Unassigned',
       convertedCount: g._count.id,
     }));
   }
@@ -132,7 +139,9 @@ export class LeadAnalyticsReadService {
     });
 
     // Default static targets based on scoping
-    const isManager = userContext.permissions.includes('LEAD_VIEW_ALL_IN_BRANCH');
+    const isManager = userContext.permissions.includes(
+      'LEAD_VIEW_ALL_IN_BRANCH',
+    );
     const target = isManager ? 150 : 30;
 
     return {

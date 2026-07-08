@@ -1,7 +1,10 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { sessionCookieName } from '@ims/shared-auth';
-import { applyObservabilityResponseHeaders, withRouteObservability } from '../lib/observability';
+import {
+  applyObservabilityResponseHeaders,
+  withRouteObservability,
+} from '../lib/observability';
 import nodeCrypto from 'crypto';
 
 export async function GET(request: Request) {
@@ -12,7 +15,10 @@ export async function GET(request: Request) {
     if (token) {
       try {
         const { sessionRepository } = await import('../lib/runtime');
-        const tokenHash = nodeCrypto.createHash('sha256').update(token).digest('hex');
+        const tokenHash = nodeCrypto
+          .createHash('sha256')
+          .update(token)
+          .digest('hex');
         await sessionRepository.revokeSessionByHash(tokenHash);
       } catch (err) {
         console.error('Failed to revoke database session during logout:', err);

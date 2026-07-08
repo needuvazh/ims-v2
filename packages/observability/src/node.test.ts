@@ -1,5 +1,10 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { createCurrentRequestContext, getCurrentRequestContext, reportRequestError, withRequestContextFromHeaders } from './node';
+import {
+  createCurrentRequestContext,
+  getCurrentRequestContext,
+  reportRequestError,
+  withRequestContextFromHeaders,
+} from './node';
 
 describe('node observability helpers', () => {
   afterEach(() => {
@@ -18,9 +23,11 @@ describe('node observability helpers', () => {
   });
 
   it('prefers an active trace id when building current context', () => {
-    const context = createCurrentRequestContext(new Headers({
-      'x-request-id': 'req-1',
-    }));
+    const context = createCurrentRequestContext(
+      new Headers({
+        'x-request-id': 'req-1',
+      }),
+    );
 
     expect(context.requestId).toBe('req-1');
   });

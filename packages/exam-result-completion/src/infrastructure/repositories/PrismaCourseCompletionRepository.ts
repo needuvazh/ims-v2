@@ -1,6 +1,12 @@
-import { PrismaClient, CourseCompletion as PrismaCourseCompletion } from '@prisma/client';
+import {
+  PrismaClient,
+  CourseCompletion as PrismaCourseCompletion,
+} from '@prisma/client';
 import { CourseCompletionRepository } from '../../domain/interfaces/CourseCompletionRepository';
-import { CourseCompletion, CompletionStatus } from '../../domain/aggregates/CourseCompletion';
+import {
+  CourseCompletion,
+  CompletionStatus,
+} from '../../domain/aggregates/CourseCompletion';
 
 export class PrismaCourseCompletionRepository implements CourseCompletionRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -13,7 +19,9 @@ export class PrismaCourseCompletionRepository implements CourseCompletionReposit
     return record ? this.toDomain(record) : null;
   }
 
-  async findByEnrollmentId(enrollmentId: string): Promise<CourseCompletion | null> {
+  async findByEnrollmentId(
+    enrollmentId: string,
+  ): Promise<CourseCompletion | null> {
     const record = await this.prisma.courseCompletion.findFirst({
       where: {
         enrollmentId,
@@ -35,7 +43,9 @@ export class PrismaCourseCompletionRepository implements CourseCompletionReposit
     return records.map(this.toDomain);
   }
 
-  async findByEnrollmentIds(enrollmentIds: string[]): Promise<CourseCompletion[]> {
+  async findByEnrollmentIds(
+    enrollmentIds: string[],
+  ): Promise<CourseCompletion[]> {
     const records = await this.prisma.courseCompletion.findMany({
       where: {
         enrollmentId: { in: enrollmentIds },
@@ -61,8 +71,8 @@ export class PrismaCourseCompletionRepository implements CourseCompletionReposit
           where: { id: completion.id },
           update: this.toPrismaUpdate(completion),
           create: this.toPrismaCreate(completion),
-        })
-      )
+        }),
+      ),
     );
   }
 

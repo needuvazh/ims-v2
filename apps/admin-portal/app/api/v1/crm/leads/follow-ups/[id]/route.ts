@@ -9,7 +9,13 @@ import {
 import { LogFollowUpOutcomeSchema } from '@ims/crm-leads';
 import type { Uuid } from '@ims/shared-kernel';
 
-function problemJson(status: number, title: string, detail: string, errorCode: string, invalidFields?: Array<{ field: string; message: string }>) {
+function problemJson(
+  status: number,
+  title: string,
+  detail: string,
+  errorCode: string,
+  invalidFields?: Array<{ field: string; message: string }>,
+) {
   return NextResponse.json(
     {
       success: false,
@@ -18,7 +24,7 @@ function problemJson(status: number, title: string, detail: string, errorCode: s
       statusCode: status,
       invalidFields,
     },
-    { status }
+    { status },
   );
 }
 
@@ -42,14 +48,19 @@ function crmErrorResponse(error: Error) {
   } else if (msg.includes('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION')) {
     status = 403;
     code = 'ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION';
-    messageEn = 'You are not authorized to access leads assigned to other counselors.';
+    messageEn =
+      'You are not authorized to access leads assigned to other counselors.';
     messageAr = 'غير مصرح لك بالوصول إلى المهتمين المسندين لموظفين آخرين.';
   } else if (msg.includes('ERR_CRM_PAST_FOLLOWUP_DATE')) {
     status = 422;
     code = 'ERR_CRM_PAST_FOLLOWUP_DATE';
-    messageEn = 'Next follow-up scheduled time must be set in the future (current time + 5 minutes).';
-    messageAr = 'تاريخ المتابعة التالية المجدولة يجب أن يكون في المستقبل (٥ دقائق كحد أدنى).';
-  } else if (msg.includes('Outcome notes must be at least 15 characters long')) {
+    messageEn =
+      'Next follow-up scheduled time must be set in the future (current time + 5 minutes).';
+    messageAr =
+      'تاريخ المتابعة التالية المجدولة يجب أن يكون في المستقبل (٥ دقائق كحد أدنى).';
+  } else if (
+    msg.includes('Outcome notes must be at least 15 characters long')
+  ) {
     status = 422;
     code = 'ERR_CRM_LOST_REASON_REQUIRED'; // mapping custom text errors
     messageEn = 'Outcome notes must be at least 15 characters long.';
@@ -57,8 +68,10 @@ function crmErrorResponse(error: Error) {
   } else if (msg.includes('ERR_CRM_CONCURRENCY_VIOLATION')) {
     status = 409;
     code = 'ERR_CRM_CONCURRENCY_VIOLATION';
-    messageEn = 'This lead has been updated by another user. Please refresh and try again.';
-    messageAr = 'تم تحديث بيانات هذا المهتم من قبل مستخدم آخر. يرجى التحديث والمحاولة مرة أخرى.';
+    messageEn =
+      'This lead has been updated by another user. Please refresh and try again.';
+    messageAr =
+      'تم تحديث بيانات هذا المهتم من قبل مستخدم آخر. يرجى التحديث والمحاولة مرة أخرى.';
   }
 
   return NextResponse.json(
@@ -69,85 +82,108 @@ function crmErrorResponse(error: Error) {
       messageArabic: messageAr,
       statusCode: status,
     },
-    { status }
+    { status },
   );
 }
 
-export async function PATCH(request: Request, props: { params: Promise<{ id: string }> }) {
+export async function PATCH(
+  request: Request,
+  props: { params: Promise<{ id: string }> },
+) {
   const { id: followUpId } = await props.params;
-  return withRouteObservability(request.headers, async () => withPermission(request, 'followup.update', async ({ session }) => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'followup.update', async ({ session }) => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    let payload: unknown;
-    try {
-      payload = await request.json();
-    } catch {
-      return problemJson(400, 'Invalid request body', 'Request body must be valid JSON.', 'CRM-VAL-OUTCOME-INVALID_JSON');
-    }
+        let payload: unknown;
+        try {
+          payload = await request.json();
+        } catch {
+          return problemJson(
+            400,
+            'Invalid request body',
+            'Request body must be valid JSON.',
+            'CRM-VAL-OUTCOME-INVALID_JSON',
+          );
+        }
 
-    const parsed = LogFollowUpOutcomeSchema.safeParse(payload);
-    if (!parsed.success) {
-      return problemJson(
-        400,
-        'Invalid request body',
-        'Outcome details are invalid.',
-        'CRM-VAL-OUTCOME-INVALID_BODY',
-        parsed.error.issues.map((issue) => ({
-          field: issue.path.join('.') || 'body',
-          message: issue.message,
-        }))
-      );
-    }
+        const parsed = LogFollowUpOutcomeSchema.safeParse(payload);
+        if (!parsed.success) {
+          return problemJson(
+            400,
+            'Invalid request body',
+            'Outcome details are invalid.',
+            'CRM-VAL-OUTCOME-INVALID_BODY',
+            parsed.error.issues.map((issue) => ({
+              field: issue.path.join('.') || 'body',
+              message: issue.message,
+            })),
+          );
+        }
 
-    try {
-      const { branchScopeResolver, followUpService, leadService } = await import('../../../../../../lib/runtime');
-      
-      const followUp = await followUpService.getFollowUpById(followUpId);
-      if (!followUp) {
-        throw new Error('ERR_CRM_LEAD_NOT_FOUND');
-      }
+        try {
+          const { branchScopeResolver, followUpService, leadService } =
+            await import('../../../../../../lib/runtime');
 
-      // Check lead branch scope
-      const lead = await leadService.getLeadById(followUp.leadId);
-      if (!lead) {
-        throw new Error('ERR_CRM_LEAD_NOT_FOUND');
-      }
+          const followUp = await followUpService.getFollowUpById(followUpId);
+          if (!followUp) {
+            throw new Error('ERR_CRM_LEAD_NOT_FOUND');
+          }
 
-      // Branch check
-      const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
-        session.userId,
-        session.activeBranchId ?? null
-      );
-      if (!allowedBranches.includes(lead.branchId as Uuid)) {
-        throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
-      }
+          // Check lead branch scope
+          const lead = await leadService.getLeadById(followUp.leadId);
+          if (!lead) {
+            throw new Error('ERR_CRM_LEAD_NOT_FOUND');
+          }
 
-      // Counselor check
-      const hasGlobalRead = session.permissions.includes('crm.leads.read.all');
-      if (!hasGlobalRead && lead.counselorId !== session.userId) {
-        throw new Error('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION');
-      }
+          // Branch check
+          const allowedBranches =
+            await branchScopeResolver.resolveAllowedBranches(
+              session.userId,
+              session.activeBranchId ?? null,
+            );
+          if (!allowedBranches.includes(lead.branchId as Uuid)) {
+            throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
+          }
 
-      const result = await followUpService.recordOutcome(followUpId, parsed.data, session.userId);
+          // Counselor check
+          const hasGlobalRead =
+            session.permissions.includes('crm.leads.read.all');
+          if (!hasGlobalRead && lead.counselorId !== session.userId) {
+            throw new Error('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION');
+          }
 
-      const response = NextResponse.json(
-        {
-          success: true,
-          data: result,
-        },
-        { status: 200 }
-      );
+          const result = await followUpService.recordOutcome(
+            followUpId,
+            parsed.data,
+            session.userId,
+          );
 
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/crm/leads/follow-ups/[id]',
-        method: request.method,
-        status: 'success',
-      });
+          const response = NextResponse.json(
+            {
+              success: true,
+              data: result,
+            },
+            { status: 200 },
+          );
 
-      return response;
-    } catch (error) {
-      logger.error('api.crm.leads.follow-ups.outcome.failed', { status: 'failed', error: error as Error });
-      return crmErrorResponse(error as Error);
-    }
-  }), { route: '/api/v1/crm/leads/follow-ups/[id]' });
+          applyObservabilityResponseHeaders(response.headers, request.headers, {
+            route: '/api/v1/crm/leads/follow-ups/[id]',
+            method: request.method,
+            status: 'success',
+          });
+
+          return response;
+        } catch (error) {
+          logger.error('api.crm.leads.follow-ups.outcome.failed', {
+            status: 'failed',
+            error: error as Error,
+          });
+          return crmErrorResponse(error as Error);
+        }
+      }),
+    { route: '/api/v1/crm/leads/follow-ups/[id]' },
+  );
 }

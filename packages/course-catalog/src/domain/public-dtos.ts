@@ -51,7 +51,7 @@ export const PublicCourseDetailSchema = z.object({
       code: z.string(),
       nameEnglish: z.string(),
       nameArabic: z.string(),
-    })
+    }),
   ),
   batches: z.array(
     z.object({
@@ -66,7 +66,7 @@ export const PublicCourseDetailSchema = z.object({
       status: z.string(),
       branchName: z.string().nullable(),
       trainerName: z.string().nullable(),
-    })
+    }),
   ),
 });
 

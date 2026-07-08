@@ -1,6 +1,10 @@
 import { CourseCompletionRepository } from '../../domain/interfaces/CourseCompletionRepository';
 import { CompletionApprovalRepository } from '../../domain/interfaces/CompletionApprovalRepository';
-import { CompletionApproval, ApprovalLevel, ApprovalStatus } from '../../domain/aggregates/CompletionApproval';
+import {
+  CompletionApproval,
+  ApprovalLevel,
+  ApprovalStatus,
+} from '../../domain/aggregates/CompletionApproval';
 
 export interface GetCompletionDetailInput {
   completionId: string;
@@ -35,13 +39,19 @@ export class GetCompletionDetailQueryHandler {
     private readonly approvalRepository: CompletionApprovalRepository,
   ) {}
 
-  async execute(input: GetCompletionDetailInput): Promise<CompletionDetail | null> {
-    const completion = await this.completionRepository.findById(input.completionId);
+  async execute(
+    input: GetCompletionDetailInput,
+  ): Promise<CompletionDetail | null> {
+    const completion = await this.completionRepository.findById(
+      input.completionId,
+    );
     if (!completion) {
       return null;
     }
 
-    const approvals = await this.approvalRepository.findByCompletionId(completion.id);
+    const approvals = await this.approvalRepository.findByCompletionId(
+      completion.id,
+    );
 
     return {
       id: completion.id,
@@ -53,7 +63,7 @@ export class GetCompletionDetailQueryHandler {
       manualApprovalRequired: completion.manualApprovalRequired,
       certificateAllowed: completion.certificateAllowed,
       evidenceStale: completion.evidenceStale,
-      approvalTimeline: approvals.map(a => ({
+      approvalTimeline: approvals.map((a) => ({
         id: a.id,
         approvalLevel: a.approvalLevel,
         status: a.status,

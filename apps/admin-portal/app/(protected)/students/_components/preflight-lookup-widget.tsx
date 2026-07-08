@@ -39,19 +39,27 @@ type Props = {
  *  - Match found → parent shows the OTP claim modal (onMatchFound)
  *  - Clear → reset to initial state (onClear)
  */
-export function PreflightLookupWidget({ onClear, onMatchFound, onNoMatch, branchId }: Props) {
+export function PreflightLookupWidget({
+  onClear,
+  onMatchFound,
+  onNoMatch,
+  branchId,
+}: Props) {
   const [value, setValue] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<PreflightResult | null>(null);
 
   const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
   const isMobile = (v: string) => /^\+?[\d\s\-]{7,20}$/.test(v.trim());
-  const isNationalId = (v: string) => /^[\dA-Za-z\-]{6,50}$/.test(v.trim()) && !isEmail(v) && !isMobile(v);
+  const isNationalId = (v: string) =>
+    /^[\dA-Za-z\-]{6,50}$/.test(v.trim()) && !isEmail(v) && !isMobile(v);
 
   const handleLookup = async () => {
     const trimmed = value.trim();
     if (!trimmed) {
-      toast.error('Enter an email address, mobile number, or national ID to search.');
+      toast.error(
+        'Enter an email address, mobile number, or national ID to search.',
+      );
       return;
     }
 
@@ -63,7 +71,9 @@ export function PreflightLookupWidget({ onClear, onMatchFound, onNoMatch, branch
     } else if (isNationalId(trimmed)) {
       body.nationalId = trimmed;
     } else {
-      toast.error('Please enter a valid email address, mobile number, or national ID.');
+      toast.error(
+        'Please enter a valid email address, mobile number, or national ID.',
+      );
       return;
     }
 
@@ -127,7 +137,11 @@ export function PreflightLookupWidget({ onClear, onMatchFound, onNoMatch, branch
             disabled={loading}
             className="h-10 px-4 rounded-lg bg-[color:var(--ims-brass)] text-white text-sm font-medium hover:opacity-90 disabled:opacity-50 flex items-center gap-1.5"
           >
-            {loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Search className="h-3.5 w-3.5" />}
+            {loading ? (
+              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+            ) : (
+              <Search className="h-3.5 w-3.5" />
+            )}
             {loading ? 'Checking…' : 'Check'}
           </button>
           {result && (
@@ -146,7 +160,9 @@ export function PreflightLookupWidget({ onClear, onMatchFound, onNoMatch, branch
       {result && !result.personFound && (
         <div className="flex items-center gap-2 rounded-lg bg-green-50 border border-green-200 px-3 py-2 text-sm text-green-700">
           <CheckCircle className="h-4 w-4 flex-shrink-0" />
-          <span>No existing profile found — you can proceed with a new registration.</span>
+          <span>
+            No existing profile found — you can proceed with a new registration.
+          </span>
         </div>
       )}
 
@@ -157,10 +173,30 @@ export function PreflightLookupWidget({ onClear, onMatchFound, onNoMatch, branch
             <span>Existing profile found — cross-branch claim required</span>
           </div>
           <div className="text-amber-700 space-y-0.5 pl-6 text-xs">
-            <div>Name: <span className="font-semibold">{result.firstNameMasked} {result.lastNameMasked}</span></div>
-            {result.maskedEmail && <div>Email: <span className="font-semibold">{result.maskedEmail}</span></div>}
-            {result.maskedMobile && <div>Mobile: <span className="font-semibold">{result.maskedMobile}</span></div>}
-            {result.studentNumber && <div>Student #: <span className="font-semibold">{result.studentNumber}</span></div>}
+            <div>
+              Name:{' '}
+              <span className="font-semibold">
+                {result.firstNameMasked} {result.lastNameMasked}
+              </span>
+            </div>
+            {result.maskedEmail && (
+              <div>
+                Email:{' '}
+                <span className="font-semibold">{result.maskedEmail}</span>
+              </div>
+            )}
+            {result.maskedMobile && (
+              <div>
+                Mobile:{' '}
+                <span className="font-semibold">{result.maskedMobile}</span>
+              </div>
+            )}
+            {result.studentNumber && (
+              <div>
+                Student #:{' '}
+                <span className="font-semibold">{result.studentNumber}</span>
+              </div>
+            )}
             {result.preflight?.hasActiveAdmission && (
               <div className="text-red-600 font-medium pt-1">
                 ⚠ Already has an active admission at this branch.

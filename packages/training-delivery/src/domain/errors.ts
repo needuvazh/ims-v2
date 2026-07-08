@@ -1,5 +1,8 @@
 export class DomainError extends Error {
-  constructor(message: string, public readonly code: string) {
+  constructor(
+    message: string,
+    public readonly code: string,
+  ) {
     super(message);
     this.name = 'DomainError';
   }
@@ -18,7 +21,9 @@ export class InvalidDateRange extends DomainError {
 }
 
 export class BatchNoTrainer extends DomainError {
-  constructor(message = 'An open batch requires at least one Primary Trainer.') {
+  constructor(
+    message = 'An open batch requires at least one Primary Trainer.',
+  ) {
     super(message, 'ERR_CRS_BATCH_NO_TRAINER');
   }
 }
@@ -30,7 +35,9 @@ export class BatchFull extends DomainError {
 }
 
 export class PrimaryTrainerAlreadyAssigned extends DomainError {
-  constructor(message = 'A primary trainer is already assigned for this range.') {
+  constructor(
+    message = 'A primary trainer is already assigned for this range.',
+  ) {
     super(message, 'ERR_CRS_PRIMARY_TRAINER_ALREADY_ASSIGNED');
   }
 }
@@ -45,7 +52,7 @@ export interface ScheduleConflict {
 export class TrainerScheduleConflict extends DomainError {
   constructor(
     message = 'Trainer has a schedule conflict.',
-    public readonly conflicts?: ScheduleConflict[]
+    public readonly conflicts?: ScheduleConflict[],
   ) {
     super(message, 'ERR_CRS_TRAINER_SCHEDULE_CONFLICT');
   }
@@ -64,7 +71,9 @@ export class WalkInCompletionNotAllowed extends DomainError {
 }
 
 export class CourseNotPublished extends DomainError {
-  constructor(message = 'A batch can only be created/updated for active published courses.') {
+  constructor(
+    message = 'A batch can only be created/updated for active published courses.',
+  ) {
     super(message, 'ERR_CRS_COURSE_NOT_PUBLISHED');
   }
 }
@@ -76,7 +85,9 @@ export class WaitlistDisabled extends DomainError {
 }
 
 export class BatchNotFull extends DomainError {
-  constructor(message = 'Cannot enqueue candidate because the batch has not reached capacity.') {
+  constructor(
+    message = 'Cannot enqueue candidate because the batch has not reached capacity.',
+  ) {
     super(message, 'ERR_CRS_BATCH_NOT_FULL');
   }
 }

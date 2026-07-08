@@ -65,4 +65,6 @@ export const updateSecurityPolicyCommandSchema = z.object({
   maxConcurrentSessions: z.number().int().positive(),
 });
 
-export type UpdateSecurityPolicyCommand = z.infer<typeof updateSecurityPolicyCommandSchema>;
+export type UpdateSecurityPolicyCommand = z.infer<
+  typeof updateSecurityPolicyCommandSchema
+>;

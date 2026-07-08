@@ -3,15 +3,13 @@
 import { useActionState, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ShieldPlus, Save } from 'lucide-react';
-import {
-  Alert,
-  Button,
-  Input,
-  Select,
-  Textarea,
-} from '@ims/shared-ui';
+import { Alert, Button, Input, Select, Textarea } from '@ims/shared-ui';
 import type { RoleRecord } from '@ims/identity-access';
-import { createRoleAction, updateRoleAction, type ActionResult } from '../actions';
+import {
+  createRoleAction,
+  updateRoleAction,
+  type ActionResult,
+} from '../actions';
 
 const initialState: ActionResult = { success: false };
 
@@ -30,9 +28,10 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [state, formAction, isPending] = useActionState(
     async (prev: ActionResult, formData: FormData) => {
-      const result = mode === 'edit' && initialData?.id
-        ? await updateRoleAction(initialData.id, prev, formData)
-        : await createRoleAction(prev, formData);
+      const result =
+        mode === 'edit' && initialData?.id
+          ? await updateRoleAction(initialData.id, prev, formData)
+          : await createRoleAction(prev, formData);
       if (result.success) {
         router.push('/iam/roles');
       }
@@ -56,35 +55,41 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
   const isView = mode === 'view';
 
   return (
-    <form action={formAction} noValidate className="space-y-6 bg-[color:var(--ims-surface)] p-6 rounded-2xl border border-[color:var(--ims-border)]">
+    <form
+      action={formAction}
+      noValidate
+      className="space-y-6 bg-[color:var(--ims-surface)] p-6 rounded-2xl border border-[color:var(--ims-border)]"
+    >
       {state.error && <Alert variant="error" description={state.error} />}
-      
+
       <div className="space-y-4">
-        <Input 
-          name="roleCode" 
-          label="Role Code" 
-          placeholder="SUPER_ADMIN" 
-          required 
+        <Input
+          name="roleCode"
+          label="Role Code"
+          placeholder="SUPER_ADMIN"
+          required
           defaultValue={state.values?.roleCode ?? initialData?.roleCode}
           disabled={isView || mode === 'edit'} // Usually code is immutable
-          data-testid="role-code-input" 
+          data-testid="role-code-input"
           errorText={fieldErrors.roleCode}
         />
-        <Input 
-          name="roleName" 
-          label="Role Name" 
-          placeholder="Super Administrator" 
-          required 
+        <Input
+          name="roleName"
+          label="Role Name"
+          placeholder="Super Administrator"
+          required
           defaultValue={state.values?.roleName ?? initialData?.roleName}
           disabled={isView}
-          data-testid="role-name-input" 
+          data-testid="role-name-input"
           errorText={fieldErrors.roleName}
         />
-        <Textarea 
-          name="description" 
-          label="Description" 
-          placeholder="Full administrative access." 
-          defaultValue={state.values?.description ?? initialData?.description ?? ''}
+        <Textarea
+          name="description"
+          label="Description"
+          placeholder="Full administrative access."
+          defaultValue={
+            state.values?.description ?? initialData?.description ?? ''
+          }
           disabled={isView}
           errorText={fieldErrors.description}
         />
@@ -106,7 +111,11 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
           name="effectiveStartDate"
           type="date"
           label="Effective Start Date"
-          defaultValue={state.values?.effectiveStartDate ? toDateInputValue(new Date(state.values.effectiveStartDate)) : toDateInputValue(initialData?.effectiveStartDate)}
+          defaultValue={
+            state.values?.effectiveStartDate
+              ? toDateInputValue(new Date(state.values.effectiveStartDate))
+              : toDateInputValue(initialData?.effectiveStartDate)
+          }
           disabled={isView}
           errorText={fieldErrors.effectiveStartDate}
         />
@@ -114,7 +123,11 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
           name="effectiveEndDate"
           type="date"
           label="Effective End Date"
-          defaultValue={state.values?.effectiveEndDate ? toDateInputValue(new Date(state.values.effectiveEndDate)) : toDateInputValue(initialData?.effectiveEndDate ?? null)}
+          defaultValue={
+            state.values?.effectiveEndDate
+              ? toDateInputValue(new Date(state.values.effectiveEndDate))
+              : toDateInputValue(initialData?.effectiveEndDate ?? null)
+          }
           disabled={isView}
           errorText={fieldErrors.effectiveEndDate}
         />
@@ -122,14 +135,26 @@ export function RoleForm({ mode, initialData }: RoleFormProps) {
 
       {!isView && (
         <div className="flex justify-end gap-3 pt-4">
-          <Button type="button" variant="secondary" onClick={() => router.push('/iam/roles')}>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => router.push('/iam/roles')}
+          >
             Cancel
           </Button>
-          <Button type="submit" loading={isPending} data-testid="role-submit-btn">
+          <Button
+            type="submit"
+            loading={isPending}
+            data-testid="role-submit-btn"
+          >
             {mode === 'create' ? (
-              <><ShieldPlus className="h-4 w-4 mr-2" /> Create Role</>
+              <>
+                <ShieldPlus className="h-4 w-4 mr-2" /> Create Role
+              </>
             ) : (
-              <><Save className="h-4 w-4 mr-2" /> Save Changes</>
+              <>
+                <Save className="h-4 w-4 mr-2" /> Save Changes
+              </>
             )}
           </Button>
         </div>

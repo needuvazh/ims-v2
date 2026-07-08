@@ -18,9 +18,20 @@ export default async function HierarchyPage() {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Organization', href: '/organization', icon: <Building2 className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Hierarchy View', icon: <FolderTree className="h-3.5 w-3.5 text-slate-500" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Organization',
+                href: '/organization',
+                icon: <Building2 className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Hierarchy View',
+                icon: <FolderTree className="h-3.5 w-3.5 text-slate-500" />,
+              },
             ]}
           />
         }
@@ -28,7 +39,8 @@ export default async function HierarchyPage() {
 
       <div className="rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-6 space-y-6">
         <h3 className="text-lg font-bold text-[color:var(--ims-ink)] flex items-center gap-2">
-          <Building2 className="h-5 w-5 text-[color:var(--ims-brass)]" /> Institute Hierarchy Tree
+          <Building2 className="h-5 w-5 text-[color:var(--ims-brass)]" />{' '}
+          Institute Hierarchy Tree
         </h3>
 
         {!data.hierarchies || data.hierarchies.length === 0 ? (
@@ -40,7 +52,10 @@ export default async function HierarchyPage() {
         ) : (
           <div className="space-y-8">
             {data.hierarchies.map((hierarchy) => (
-              <div key={hierarchy.id} className="pl-2 border-l border-dashed border-[color:var(--ims-border)] space-y-4">
+              <div
+                key={hierarchy.id}
+                className="pl-2 border-l border-dashed border-[color:var(--ims-border)] space-y-4"
+              >
                 <HierarchyNode node={hierarchy} />
               </div>
             ))}

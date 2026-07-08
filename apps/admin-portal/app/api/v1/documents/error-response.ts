@@ -23,11 +23,18 @@ export function documentErrorResponse(error: Error) {
   const msg = error.message;
 
   let status = 500;
-  if (msg === 'DOC_NOT_FOUND' || msg === 'DOC_OWNER_NOT_FOUND' || msg.includes('not found')) {
+  if (
+    msg === 'DOC_NOT_FOUND' ||
+    msg === 'DOC_OWNER_NOT_FOUND' ||
+    msg.includes('not found')
+  ) {
     status = 404;
   } else if (msg === 'DOC_BRANCH_SCOPE_DENIED') {
     status = 403;
-  } else if (msg === 'DOC_BRANCH_MISMATCH' || msg === 'DOC_REJECT_REMARKS_REQUIRED') {
+  } else if (
+    msg === 'DOC_BRANCH_MISMATCH' ||
+    msg === 'DOC_REJECT_REMARKS_REQUIRED'
+  ) {
     status = 400;
   }
 
@@ -35,6 +42,6 @@ export function documentErrorResponse(error: Error) {
     status,
     'Document Error',
     msg || 'An unexpected error occurred.',
-    msg || 'DOCUMENT_UNKNOWN'
+    msg || 'DOCUMENT_UNKNOWN',
   );
 }

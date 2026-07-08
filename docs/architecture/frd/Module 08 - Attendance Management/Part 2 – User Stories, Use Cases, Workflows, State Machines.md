@@ -2,18 +2,18 @@
 
 ## Module 08 – Attendance Management
 
-| Attribute | Value |
-|---|---|
-| Product | ASTI Integrated Institute Management System (IMS) |
-| Module | Module 08 – Attendance Management |
-| Module Code | M08-ATT |
-| Bounded Context | Attendance Management |
-| Application | Admin Portal |
-| Architecture | Next.js TypeScript modular monolith |
-| Primary Package | `packages/attendance` |
-| Primary Actors | Trainer, Academic Coordinator, Branch Manager, Registrar, Auditor |
-| Timezone | Oman GST, UTC+4 |
-| Version | 1.0 |
+| Attribute       | Value                                                             |
+| --------------- | ----------------------------------------------------------------- |
+| Product         | ASTI Integrated Institute Management System (IMS)                 |
+| Module          | Module 08 – Attendance Management                                 |
+| Module Code     | M08-ATT                                                           |
+| Bounded Context | Attendance Management                                             |
+| Application     | Admin Portal                                                      |
+| Architecture    | Next.js TypeScript modular monolith                               |
+| Primary Package | `packages/attendance`                                             |
+| Primary Actors  | Trainer, Academic Coordinator, Branch Manager, Registrar, Auditor |
+| Timezone        | Oman GST, UTC+4                                                   |
+| Version         | 1.0                                                               |
 
 ---
 
@@ -532,13 +532,13 @@ Feature: Attendance audit trail
 
 ### UC-M08-ATT-001 – Initialize Attendance Session
 
-| Field | Description |
-|---|---|
-| Primary Actor | Trainer or Academic Coordinator |
-| Supporting Actors | IAM, Training Delivery, Audit |
-| Trigger | User opens a scheduled session and starts attendance. |
-| Preconditions | User is authenticated; user has `attendance.session.create`; selected `Session` exists; session is not deleted or cancelled; session belongs to user’s authorized branch; batch and course references are valid. |
-| Postconditions | One active `AttendanceSession` exists for the selected session; status is `Draft`; audit log is created. |
+| Field             | Description                                                                                                                                                                                                      |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Primary Actor     | Trainer or Academic Coordinator                                                                                                                                                                                  |
+| Supporting Actors | IAM, Training Delivery, Audit                                                                                                                                                                                    |
+| Trigger           | User opens a scheduled session and starts attendance.                                                                                                                                                            |
+| Preconditions     | User is authenticated; user has `attendance.session.create`; selected `Session` exists; session is not deleted or cancelled; session belongs to user’s authorized branch; batch and course references are valid. |
+| Postconditions    | One active `AttendanceSession` exists for the selected session; status is `Draft`; audit log is created.                                                                                                         |
 
 **Main Success Scenario:**
 
@@ -564,13 +564,13 @@ Feature: Attendance audit trail
 
 ### UC-M08-ATT-002 – Generate Attendance Roster
 
-| Field | Description |
-|---|---|
-| Primary Actor | Trainer |
-| Supporting Actors | Admission & Enrollment, Training Delivery, Corporate Training |
-| Trigger | User opens the attendance marking screen for an attendance session. |
-| Preconditions | Attendance session exists in `Draft`, `ReturnedForCorrection`, `Submitted`, `CorrectionPending`, or `Corrected`; user has `attendance.record.read`; branch access is valid. |
-| Postconditions | User sees a roster generated from active enrollments and existing attendance records. |
+| Field             | Description                                                                                                                                                                 |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Primary Actor     | Trainer                                                                                                                                                                     |
+| Supporting Actors | Admission & Enrollment, Training Delivery, Corporate Training                                                                                                               |
+| Trigger           | User opens the attendance marking screen for an attendance session.                                                                                                         |
+| Preconditions     | Attendance session exists in `Draft`, `ReturnedForCorrection`, `Submitted`, `CorrectionPending`, or `Corrected`; user has `attendance.record.read`; branch access is valid. |
+| Postconditions    | User sees a roster generated from active enrollments and existing attendance records.                                                                                       |
 
 **Main Success Scenario:**
 
@@ -596,13 +596,13 @@ Feature: Attendance audit trail
 
 ### UC-M08-ATT-003 – Mark Individual Attendance Record
 
-| Field | Description |
-|---|---|
-| Primary Actor | Trainer |
-| Supporting Actors | Academic Coordinator, Audit |
-| Trigger | User selects an attendance status for a roster row. |
-| Preconditions | Attendance session is editable; user has `attendance.record.mark`; target enrollment belongs to attendance roster; record is not locked. |
-| Postconditions | Attendance record is saved in draft with status-specific fields validated. |
+| Field             | Description                                                                                                                              |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Primary Actor     | Trainer                                                                                                                                  |
+| Supporting Actors | Academic Coordinator, Audit                                                                                                              |
+| Trigger           | User selects an attendance status for a roster row.                                                                                      |
+| Preconditions     | Attendance session is editable; user has `attendance.record.mark`; target enrollment belongs to attendance roster; record is not locked. |
+| Postconditions    | Attendance record is saved in draft with status-specific fields validated.                                                               |
 
 **Main Success Scenario:**
 
@@ -629,13 +629,13 @@ Feature: Attendance audit trail
 
 ### UC-M08-ATT-004 – Bulk Mark Attendance Records
 
-| Field | Description |
-|---|---|
-| Primary Actor | Trainer |
-| Supporting Actors | Academic Coordinator |
-| Trigger | User selects multiple roster rows and applies a common attendance status. |
-| Preconditions | Attendance session is editable; user has `attendance.record.bulkMark`; selected learners are valid roster rows. |
-| Postconditions | Selected eligible rows are updated; summary of updated, skipped, and failed rows is returned. |
+| Field             | Description                                                                                                     |
+| ----------------- | --------------------------------------------------------------------------------------------------------------- |
+| Primary Actor     | Trainer                                                                                                         |
+| Supporting Actors | Academic Coordinator                                                                                            |
+| Trigger           | User selects multiple roster rows and applies a common attendance status.                                       |
+| Preconditions     | Attendance session is editable; user has `attendance.record.bulkMark`; selected learners are valid roster rows. |
+| Postconditions    | Selected eligible rows are updated; summary of updated, skipped, and failed rows is returned.                   |
 
 **Main Success Scenario:**
 
@@ -659,13 +659,13 @@ Feature: Attendance audit trail
 
 ### UC-M08-ATT-005 – Save Draft Attendance
 
-| Field | Description |
-|---|---|
-| Primary Actor | Trainer |
-| Supporting Actors | Academic Coordinator, Audit |
-| Trigger | User clicks `Save Draft` from attendance marking screen. |
-| Preconditions | Attendance session is in `Draft`; user has marking permission; branch access is valid. |
-| Postconditions | Draft attendance records are persisted; attendance session remains editable and not final. |
+| Field             | Description                                                                                |
+| ----------------- | ------------------------------------------------------------------------------------------ |
+| Primary Actor     | Trainer                                                                                    |
+| Supporting Actors | Academic Coordinator, Audit                                                                |
+| Trigger           | User clicks `Save Draft` from attendance marking screen.                                   |
+| Preconditions     | Attendance session is in `Draft`; user has marking permission; branch access is valid.     |
+| Postconditions    | Draft attendance records are persisted; attendance session remains editable and not final. |
 
 **Main Success Scenario:**
 
@@ -690,13 +690,13 @@ Feature: Attendance audit trail
 
 ### UC-M08-ATT-006 – Submit Final Attendance
 
-| Field | Description |
-|---|---|
-| Primary Actor | Trainer or Academic Coordinator |
-| Supporting Actors | Admission & Enrollment, Completion Management, Reporting, Audit |
-| Trigger | User clicks `Submit Attendance`. |
-| Preconditions | Attendance session is in `Draft`; user has `attendance.session.submit`; roster has required learners; all required learners have valid statuses. |
-| Postconditions | Attendance session is `Submitted`; records are locked from direct edit; completion/reporting can consume attendance evidence. |
+| Field             | Description                                                                                                                                      |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Primary Actor     | Trainer or Academic Coordinator                                                                                                                  |
+| Supporting Actors | Admission & Enrollment, Completion Management, Reporting, Audit                                                                                  |
+| Trigger           | User clicks `Submit Attendance`.                                                                                                                 |
+| Preconditions     | Attendance session is in `Draft`; user has `attendance.session.submit`; roster has required learners; all required learners have valid statuses. |
+| Postconditions    | Attendance session is `Submitted`; records are locked from direct edit; completion/reporting can consume attendance evidence.                    |
 
 **Main Success Scenario:**
 
@@ -726,13 +726,13 @@ Feature: Attendance audit trail
 
 ### UC-M08-ATT-007 – Request Attendance Correction
 
-| Field | Description |
-|---|---|
-| Primary Actor | Trainer or Academic Coordinator |
-| Supporting Actors | Branch Manager, Audit |
-| Trigger | User identifies an error in submitted attendance. |
-| Preconditions | Attendance session is `Submitted` or `Corrected`; user has `attendance.correction.request`; correction deadline has not expired or override permission is present. |
-| Postconditions | Attendance correction request is created in `PendingReview`; original attendance record remains unchanged. |
+| Field             | Description                                                                                                                                                        |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Primary Actor     | Trainer or Academic Coordinator                                                                                                                                    |
+| Supporting Actors | Branch Manager, Audit                                                                                                                                              |
+| Trigger           | User identifies an error in submitted attendance.                                                                                                                  |
+| Preconditions     | Attendance session is `Submitted` or `Corrected`; user has `attendance.correction.request`; correction deadline has not expired or override permission is present. |
+| Postconditions    | Attendance correction request is created in `PendingReview`; original attendance record remains unchanged.                                                         |
 
 **Main Success Scenario:**
 
@@ -760,13 +760,13 @@ Feature: Attendance audit trail
 
 ### UC-M08-ATT-008 – Approve Attendance Correction
 
-| Field | Description |
-|---|---|
-| Primary Actor | Branch Manager or authorized Academic Coordinator |
-| Supporting Actors | Audit, Completion Management, Reporting |
-| Trigger | Reviewer opens pending correction queue. |
-| Preconditions | Correction request is `PendingReview`; reviewer has `attendance.correction.approve`; reviewer has branch access; segregation of duties rule is satisfied. |
-| Postconditions | Attendance record is updated; correction is `Approved`; session state is updated; attendance percentages are recalculated or invalidated for recalculation. |
+| Field             | Description                                                                                                                                                 |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Primary Actor     | Branch Manager or authorized Academic Coordinator                                                                                                           |
+| Supporting Actors | Audit, Completion Management, Reporting                                                                                                                     |
+| Trigger           | Reviewer opens pending correction queue.                                                                                                                    |
+| Preconditions     | Correction request is `PendingReview`; reviewer has `attendance.correction.approve`; reviewer has branch access; segregation of duties rule is satisfied.   |
+| Postconditions    | Attendance record is updated; correction is `Approved`; session state is updated; attendance percentages are recalculated or invalidated for recalculation. |
 
 **Main Success Scenario:**
 
@@ -795,13 +795,13 @@ Feature: Attendance audit trail
 
 ### UC-M08-ATT-009 – Reject Attendance Correction
 
-| Field | Description |
-|---|---|
-| Primary Actor | Branch Manager or authorized Academic Coordinator |
-| Supporting Actors | Audit |
-| Trigger | Reviewer decides requested correction is invalid or unsupported. |
-| Preconditions | Correction request is `PendingReview`; reviewer has `attendance.correction.reject`; branch access is valid. |
-| Postconditions | Correction request is `Rejected`; attendance record remains unchanged. |
+| Field             | Description                                                                                                 |
+| ----------------- | ----------------------------------------------------------------------------------------------------------- |
+| Primary Actor     | Branch Manager or authorized Academic Coordinator                                                           |
+| Supporting Actors | Audit                                                                                                       |
+| Trigger           | Reviewer decides requested correction is invalid or unsupported.                                            |
+| Preconditions     | Correction request is `PendingReview`; reviewer has `attendance.correction.reject`; branch access is valid. |
+| Postconditions    | Correction request is `Rejected`; attendance record remains unchanged.                                      |
 
 **Main Success Scenario:**
 
@@ -826,13 +826,13 @@ Feature: Attendance audit trail
 
 ### UC-M08-ATT-010 – Calculate Attendance Percentage
 
-| Field | Description |
-|---|---|
-| Primary Actor | Academic Coordinator |
-| Supporting Actors | Completion Management, Course Catalog, Reporting |
-| Trigger | User views attendance summary or downstream module requests attendance summary for enrollment. |
-| Preconditions | Enrollment exists; user or requesting module has permission and branch access; attendance sessions exist or no sessions have occurred. |
-| Postconditions | Attendance percentage and low attendance indicator are returned. |
+| Field             | Description                                                                                                                            |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Primary Actor     | Academic Coordinator                                                                                                                   |
+| Supporting Actors | Completion Management, Course Catalog, Reporting                                                                                       |
+| Trigger           | User views attendance summary or downstream module requests attendance summary for enrollment.                                         |
+| Preconditions     | Enrollment exists; user or requesting module has permission and branch access; attendance sessions exist or no sessions have occurred. |
+| Postconditions    | Attendance percentage and low attendance indicator are returned.                                                                       |
 
 **Main Success Scenario:**
 
@@ -857,13 +857,13 @@ Feature: Attendance audit trail
 
 ### UC-M08-ATT-011 – Export Attendance Register
 
-| Field | Description |
-|---|---|
-| Primary Actor | Branch Manager, Academic Coordinator, Auditor |
-| Supporting Actors | Reporting, Corporate Training, Audit |
-| Trigger | User requests attendance export for batch, course, branch, student, enrollment, or corporate account. |
-| Preconditions | User has `attendance.export`; requested scope is within branch access; export size is within configured limit or async export is configured. |
-| Postconditions | Export file or export dataset is generated; export action is audited. |
+| Field             | Description                                                                                                                                  |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Primary Actor     | Branch Manager, Academic Coordinator, Auditor                                                                                                |
+| Supporting Actors | Reporting, Corporate Training, Audit                                                                                                         |
+| Trigger           | User requests attendance export for batch, course, branch, student, enrollment, or corporate account.                                        |
+| Preconditions     | User has `attendance.export`; requested scope is within branch access; export size is within configured limit or async export is configured. |
+| Postconditions    | Export file or export dataset is generated; export action is audited.                                                                        |
 
 **Main Success Scenario:**
 
@@ -886,13 +886,13 @@ Feature: Attendance audit trail
 
 ### UC-M08-ATT-012 – View Attendance Audit Trail
 
-| Field | Description |
-|---|---|
-| Primary Actor | Auditor |
-| Supporting Actors | Branch Manager, Audit & Compliance |
-| Trigger | Auditor opens audit view for attendance session, record, correction, export, or user action. |
-| Preconditions | User has `attendance.audit.read` or `audit.read`; branch access is valid; audit records exist. |
-| Postconditions | Audit trail is displayed without allowing modification. |
+| Field             | Description                                                                                    |
+| ----------------- | ---------------------------------------------------------------------------------------------- |
+| Primary Actor     | Auditor                                                                                        |
+| Supporting Actors | Branch Manager, Audit & Compliance                                                             |
+| Trigger           | Auditor opens audit view for attendance session, record, correction, export, or user action.   |
+| Preconditions     | User has `attendance.audit.read` or `audit.read`; branch access is valid; audit records exist. |
+| Postconditions    | Audit trail is displayed without allowing modification.                                        |
 
 **Main Success Scenario:**
 
@@ -1098,8 +1098,8 @@ attendancePercentage = (attendedCount / countableSessionCount) * 100
   "excusedCount": 1,
   "absentCount": 1,
   "attendedCount": 8,
-  "attendancePercentage": 80.00,
-  "minimumRequiredPercentage": 75.00,
+  "attendancePercentage": 80.0,
+  "minimumRequiredPercentage": 75.0,
   "isLowAttendance": false,
   "calculatedAt": "2026-07-04T10:00:00+04:00"
 }
@@ -1161,29 +1161,29 @@ User downloads export
 
 **Export Columns for Batch Attendance Register:**
 
-| Column | Description |
-|---|---|
-| Branch Code | Branch owning the batch/session. |
-| Course Code | Course identifier. |
-| Course Name English | English course name. |
-| Course Name Arabic | Arabic course name where configured. |
-| Batch Code | Batch identifier. |
-| Session Number | Session sequence number. |
-| Session Date | Oman local date. |
-| Start Time | Session start time. |
-| End Time | Session end time. |
-| Student Number | Student profile number. |
-| Enrollment Number | Enrollment identifier. |
-| Learner Name | Person full name. |
-| Corporate Account | Corporate account name/code where applicable. |
-| Attendance Status | Present, Absent, Late, or Excused. |
-| Late Minutes | Late duration when applicable. |
-| Excuse Reason | Reason when status is Excused. |
-| Marked By | User who marked the record. |
-| Marked At | Oman local timestamp. |
-| Submitted By | User who submitted attendance session. |
-| Submitted At | Oman local timestamp. |
-| Correction Status | Approved correction indicator where applicable. |
+| Column              | Description                                     |
+| ------------------- | ----------------------------------------------- |
+| Branch Code         | Branch owning the batch/session.                |
+| Course Code         | Course identifier.                              |
+| Course Name English | English course name.                            |
+| Course Name Arabic  | Arabic course name where configured.            |
+| Batch Code          | Batch identifier.                               |
+| Session Number      | Session sequence number.                        |
+| Session Date        | Oman local date.                                |
+| Start Time          | Session start time.                             |
+| End Time            | Session end time.                               |
+| Student Number      | Student profile number.                         |
+| Enrollment Number   | Enrollment identifier.                          |
+| Learner Name        | Person full name.                               |
+| Corporate Account   | Corporate account name/code where applicable.   |
+| Attendance Status   | Present, Absent, Late, or Excused.              |
+| Late Minutes        | Late duration when applicable.                  |
+| Excuse Reason       | Reason when status is Excused.                  |
+| Marked By           | User who marked the record.                     |
+| Marked At           | Oman local timestamp.                           |
+| Submitted By        | User who submitted attendance session.          |
+| Submitted At        | Oman local timestamp.                           |
+| Correction Status   | Approved correction indicator where applicable. |
 
 ---
 
@@ -1203,15 +1203,15 @@ The following entities undergo state transitions in Module 08:
 
 ### Status Definitions
 
-| Status | Meaning | Editable | Final Evidence | Notes |
-|---|---|---:|---:|---|
-| `NotInitialized` | No active attendance session exists for the scheduled training session. | No | No | Derived state, not necessarily persisted. |
-| `Draft` | Attendance session exists and records may be saved but not final. | Yes | No | Used for draft save and resume. |
-| `Submitted` | Attendance has been validated and finalized. | No | Yes | Direct edits are blocked. |
-| `CorrectionPending` | One or more correction requests are pending review. | No direct edits | Yes, using current approved record values | Original records remain effective until correction approval. |
-| `Corrected` | One or more corrections were approved and no correction remains pending. | No | Yes | Corrected values are official. |
-| `Cancelled` | Attendance session was cancelled due to valid business reason. | No | No | Requires elevated permission and audit reason. |
-| `Deleted` | Soft-deleted record. | No | No | Technical lifecycle state represented by `isDeleted = true`. |
+| Status              | Meaning                                                                  |        Editable |                            Final Evidence | Notes                                                        |
+| ------------------- | ------------------------------------------------------------------------ | --------------: | ----------------------------------------: | ------------------------------------------------------------ |
+| `NotInitialized`    | No active attendance session exists for the scheduled training session.  |              No |                                        No | Derived state, not necessarily persisted.                    |
+| `Draft`             | Attendance session exists and records may be saved but not final.        |             Yes |                                        No | Used for draft save and resume.                              |
+| `Submitted`         | Attendance has been validated and finalized.                             |              No |                                       Yes | Direct edits are blocked.                                    |
+| `CorrectionPending` | One or more correction requests are pending review.                      | No direct edits | Yes, using current approved record values | Original records remain effective until correction approval. |
+| `Corrected`         | One or more corrections were approved and no correction remains pending. |              No |                                       Yes | Corrected values are official.                               |
+| `Cancelled`         | Attendance session was cancelled due to valid business reason.           |              No |                                        No | Requires elevated permission and audit reason.               |
+| `Deleted`           | Soft-deleted record.                                                     |              No |                                        No | Technical lifecycle state represented by `isDeleted = true`. |
 
 ### Mermaid State Diagram
 
@@ -1235,20 +1235,20 @@ stateDiagram-v2
 
 ### Transition Rules Matrix – AttendanceSession
 
-| From Status | To Status | Trigger | Required Permission | Guard Conditions | Audit Action |
-|---|---|---|---|---|---|
-| `NotInitialized` | `Draft` | Initialize attendance | `attendance.session.create` | Session exists; session not cancelled; branch access valid; no active attendance session exists. | `AttendanceSessionCreated` |
-| `Draft` | `Draft` | Save draft | `attendance.record.mark` | Session version valid; roster rows valid; status-specific validations pass. | `AttendanceDraftSaved` |
-| `Draft` | `Submitted` | Submit final attendance | `attendance.session.submit` | Required roster rows marked; status-specific validations pass; roster unchanged; branch access valid. | `AttendanceSubmitted` |
-| `Draft` | `Cancelled` | Cancel draft attendance | `attendance.session.cancel` | Cancellation reason required; no submitted final evidence exists. | `AttendanceSessionCancelled` |
-| `Submitted` | `CorrectionPending` | Request correction | `attendance.correction.request` | Correction reason required; deadline valid or override permission present; no duplicate pending correction for same record. | `AttendanceCorrectionRequested` |
-| `CorrectionPending` | `Submitted` | Reject all pending corrections | `attendance.correction.reject` | No pending correction remains; no approved correction exists for session. | `AttendanceCorrectionRejected` |
-| `CorrectionPending` | `Corrected` | Approve at least one correction | `attendance.correction.approve` | Reviewer authorized; segregation-of-duty satisfied; old-value snapshot matches current record. | `AttendanceCorrectionApproved` |
-| `Corrected` | `CorrectionPending` | Request additional correction | `attendance.correction.request` | Correction reason required; deadline valid or override permission present. | `AttendanceCorrectionRequested` |
-| `Submitted` | `Cancelled` | Administrative cancellation | `attendance.session.cancelSubmitted` | Elevated permission; mandatory reason; cancellation does not violate completion/certificate lock rules. | `AttendanceSessionCancelled` |
-| `Corrected` | `Cancelled` | Administrative cancellation | `attendance.session.cancelSubmitted` | Elevated permission; mandatory reason; cancellation does not violate completion/certificate lock rules. | `AttendanceSessionCancelled` |
-| `Draft` | `Deleted` | Soft delete | `attendance.session.delete` | Record not submitted; reason required. | `AttendanceSessionSoftDeleted` |
-| `Cancelled` | `Deleted` | Soft delete cancelled session | `attendance.session.delete` | Record already cancelled; reason required. | `AttendanceSessionSoftDeleted` |
+| From Status         | To Status           | Trigger                         | Required Permission                  | Guard Conditions                                                                                                            | Audit Action                    |
+| ------------------- | ------------------- | ------------------------------- | ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| `NotInitialized`    | `Draft`             | Initialize attendance           | `attendance.session.create`          | Session exists; session not cancelled; branch access valid; no active attendance session exists.                            | `AttendanceSessionCreated`      |
+| `Draft`             | `Draft`             | Save draft                      | `attendance.record.mark`             | Session version valid; roster rows valid; status-specific validations pass.                                                 | `AttendanceDraftSaved`          |
+| `Draft`             | `Submitted`         | Submit final attendance         | `attendance.session.submit`          | Required roster rows marked; status-specific validations pass; roster unchanged; branch access valid.                       | `AttendanceSubmitted`           |
+| `Draft`             | `Cancelled`         | Cancel draft attendance         | `attendance.session.cancel`          | Cancellation reason required; no submitted final evidence exists.                                                           | `AttendanceSessionCancelled`    |
+| `Submitted`         | `CorrectionPending` | Request correction              | `attendance.correction.request`      | Correction reason required; deadline valid or override permission present; no duplicate pending correction for same record. | `AttendanceCorrectionRequested` |
+| `CorrectionPending` | `Submitted`         | Reject all pending corrections  | `attendance.correction.reject`       | No pending correction remains; no approved correction exists for session.                                                   | `AttendanceCorrectionRejected`  |
+| `CorrectionPending` | `Corrected`         | Approve at least one correction | `attendance.correction.approve`      | Reviewer authorized; segregation-of-duty satisfied; old-value snapshot matches current record.                              | `AttendanceCorrectionApproved`  |
+| `Corrected`         | `CorrectionPending` | Request additional correction   | `attendance.correction.request`      | Correction reason required; deadline valid or override permission present.                                                  | `AttendanceCorrectionRequested` |
+| `Submitted`         | `Cancelled`         | Administrative cancellation     | `attendance.session.cancelSubmitted` | Elevated permission; mandatory reason; cancellation does not violate completion/certificate lock rules.                     | `AttendanceSessionCancelled`    |
+| `Corrected`         | `Cancelled`         | Administrative cancellation     | `attendance.session.cancelSubmitted` | Elevated permission; mandatory reason; cancellation does not violate completion/certificate lock rules.                     | `AttendanceSessionCancelled`    |
+| `Draft`             | `Deleted`           | Soft delete                     | `attendance.session.delete`          | Record not submitted; reason required.                                                                                      | `AttendanceSessionSoftDeleted`  |
+| `Cancelled`         | `Deleted`           | Soft delete cancelled session   | `attendance.session.delete`          | Record already cancelled; reason required.                                                                                  | `AttendanceSessionSoftDeleted`  |
 
 ---
 
@@ -1256,16 +1256,16 @@ stateDiagram-v2
 
 ### Status Definitions
 
-| Status | Meaning | Counts Toward Attendance | Requires Additional Data |
-|---|---|---:|---|
-| `Unmarked` | No status selected yet. | No | None |
-| `Present` | Learner attended the session. | Yes | None |
-| `Absent` | Learner did not attend. | No | Optional remarks |
-| `Late` | Learner attended after start time. | Yes by default | `lateMinutes` required |
-| `Excused` | Learner absence or non-standard attendance has approved/recorded excuse. | Configurable; default not attended for percentage | `excuseReasonCode` required |
-| `Locked` | Submitted state for record-level editing. | Uses underlying attendance value | Derived from parent `AttendanceSession` status |
-| `Corrected` | Record value changed through approved correction. | Uses corrected value | Approved correction reference |
-| `SoftDeleted` | Record is soft-deleted. | No | Delete reason and audit |
+| Status        | Meaning                                                                  |                          Counts Toward Attendance | Requires Additional Data                       |
+| ------------- | ------------------------------------------------------------------------ | ------------------------------------------------: | ---------------------------------------------- |
+| `Unmarked`    | No status selected yet.                                                  |                                                No | None                                           |
+| `Present`     | Learner attended the session.                                            |                                               Yes | None                                           |
+| `Absent`      | Learner did not attend.                                                  |                                                No | Optional remarks                               |
+| `Late`        | Learner attended after start time.                                       |                                    Yes by default | `lateMinutes` required                         |
+| `Excused`     | Learner absence or non-standard attendance has approved/recorded excuse. | Configurable; default not attended for percentage | `excuseReasonCode` required                    |
+| `Locked`      | Submitted state for record-level editing.                                |                  Uses underlying attendance value | Derived from parent `AttendanceSession` status |
+| `Corrected`   | Record value changed through approved correction.                        |                              Uses corrected value | Approved correction reference                  |
+| `SoftDeleted` | Record is soft-deleted.                                                  |                                                No | Delete reason and audit                        |
 
 ### Mermaid State Diagram
 
@@ -1303,17 +1303,17 @@ stateDiagram-v2
 
 ### Transition Rules Matrix – AttendanceRecord
 
-| From Status | To Status | Trigger | Required Permission | Guard Conditions | Audit Action |
-|---|---|---|---|---|---|
-| `Unmarked` | `Present` | Mark individual or bulk present | `attendance.record.mark` or `attendance.record.bulkMark` | Parent session is `Draft`; enrollment belongs to roster. | Optional draft audit or `AttendanceRecordMarked` |
-| `Unmarked` | `Absent` | Mark individual or bulk absent | `attendance.record.mark` or `attendance.record.bulkMark` | Parent session is `Draft`; enrollment belongs to roster. | Optional draft audit or `AttendanceRecordMarked` |
-| `Unmarked` | `Late` | Mark late | `attendance.record.mark` | Parent session is `Draft`; late minutes between 1 and session duration. | Optional draft audit or `AttendanceRecordMarked` |
-| `Unmarked` | `Excused` | Mark excused | `attendance.record.mark` | Parent session is `Draft`; excuse reason required. | Optional draft audit or `AttendanceRecordMarked` |
-| `Present` / `Absent` / `Late` / `Excused` | Another attendance status | Edit draft row | `attendance.record.mark` | Parent session is `Draft`; optimistic lock valid; status-specific rules pass. | `AttendanceDraftRecordChanged` |
-| `Present` / `Absent` / `Late` / `Excused` | `Locked` | Parent session submitted | `attendance.session.submit` | All required roster rows valid. | `AttendanceSubmitted` |
-| `Locked` | `Corrected` | Approved correction | `attendance.correction.approve` | Correction is pending; reviewer authorized; old-value snapshot matches. | `AttendanceCorrectionApproved` |
-| `Corrected` | `Corrected` | Subsequent approved correction | `attendance.correction.approve` | New correction approved; old-value snapshot matches current corrected value. | `AttendanceCorrectionApproved` |
-| Draft statuses | `SoftDeleted` | Soft delete record | `attendance.record.delete` | Parent session is `Draft`; reason required. | `AttendanceRecordSoftDeleted` |
+| From Status                               | To Status                 | Trigger                         | Required Permission                                      | Guard Conditions                                                              | Audit Action                                     |
+| ----------------------------------------- | ------------------------- | ------------------------------- | -------------------------------------------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------ |
+| `Unmarked`                                | `Present`                 | Mark individual or bulk present | `attendance.record.mark` or `attendance.record.bulkMark` | Parent session is `Draft`; enrollment belongs to roster.                      | Optional draft audit or `AttendanceRecordMarked` |
+| `Unmarked`                                | `Absent`                  | Mark individual or bulk absent  | `attendance.record.mark` or `attendance.record.bulkMark` | Parent session is `Draft`; enrollment belongs to roster.                      | Optional draft audit or `AttendanceRecordMarked` |
+| `Unmarked`                                | `Late`                    | Mark late                       | `attendance.record.mark`                                 | Parent session is `Draft`; late minutes between 1 and session duration.       | Optional draft audit or `AttendanceRecordMarked` |
+| `Unmarked`                                | `Excused`                 | Mark excused                    | `attendance.record.mark`                                 | Parent session is `Draft`; excuse reason required.                            | Optional draft audit or `AttendanceRecordMarked` |
+| `Present` / `Absent` / `Late` / `Excused` | Another attendance status | Edit draft row                  | `attendance.record.mark`                                 | Parent session is `Draft`; optimistic lock valid; status-specific rules pass. | `AttendanceDraftRecordChanged`                   |
+| `Present` / `Absent` / `Late` / `Excused` | `Locked`                  | Parent session submitted        | `attendance.session.submit`                              | All required roster rows valid.                                               | `AttendanceSubmitted`                            |
+| `Locked`                                  | `Corrected`               | Approved correction             | `attendance.correction.approve`                          | Correction is pending; reviewer authorized; old-value snapshot matches.       | `AttendanceCorrectionApproved`                   |
+| `Corrected`                               | `Corrected`               | Subsequent approved correction  | `attendance.correction.approve`                          | New correction approved; old-value snapshot matches current corrected value.  | `AttendanceCorrectionApproved`                   |
+| Draft statuses                            | `SoftDeleted`             | Soft delete record              | `attendance.record.delete`                               | Parent session is `Draft`; reason required.                                   | `AttendanceRecordSoftDeleted`                    |
 
 ---
 
@@ -1321,13 +1321,13 @@ stateDiagram-v2
 
 ### Status Definitions
 
-| Status | Meaning | Editable | Terminal |
-|---|---|---:|---:|
-| `PendingReview` | Correction request submitted and waiting for approval/rejection. | Limited reviewer remarks only | No |
-| `Approved` | Correction accepted and applied to attendance record. | No | Yes |
-| `Rejected` | Correction denied and attendance record unchanged. | No | Yes |
-| `Cancelled` | Requester or authorized user cancelled request before review. | No | Yes |
-| `Expired` | Request was not reviewed within configured review window. | No | Yes |
+| Status          | Meaning                                                          |                      Editable | Terminal |
+| --------------- | ---------------------------------------------------------------- | ----------------------------: | -------: |
+| `PendingReview` | Correction request submitted and waiting for approval/rejection. | Limited reviewer remarks only |       No |
+| `Approved`      | Correction accepted and applied to attendance record.            |                            No |      Yes |
+| `Rejected`      | Correction denied and attendance record unchanged.               |                            No |      Yes |
+| `Cancelled`     | Requester or authorized user cancelled request before review.    |                            No |      Yes |
+| `Expired`       | Request was not reviewed within configured review window.        |                            No |      Yes |
 
 ### Mermaid State Diagram
 
@@ -1346,13 +1346,13 @@ stateDiagram-v2
 
 ### Transition Rules Matrix – AttendanceCorrection
 
-| From Status | To Status | Trigger | Required Permission | Guard Conditions | Audit Action |
-|---|---|---|---|---|---|
-| None | `PendingReview` | Request correction | `attendance.correction.request` | Parent session is submitted/corrected; reason required; deadline valid; branch access valid. | `AttendanceCorrectionRequested` |
-| `PendingReview` | `Approved` | Approve correction | `attendance.correction.approve` | Reviewer authorized; reviewer is not requester unless override; old-value snapshot matches current record. | `AttendanceCorrectionApproved` |
-| `PendingReview` | `Rejected` | Reject correction | `attendance.correction.reject` | Reviewer authorized; rejection remarks required. | `AttendanceCorrectionRejected` |
-| `PendingReview` | `Cancelled` | Cancel request | `attendance.correction.cancel` | Requester or authorized manager; correction not yet reviewed. | `AttendanceCorrectionCancelled` |
-| `PendingReview` | `Expired` | Expire pending request | `attendance.correction.expire` or system policy | Review window elapsed; no approval/rejection performed. | `AttendanceCorrectionExpired` |
+| From Status     | To Status       | Trigger                | Required Permission                             | Guard Conditions                                                                                           | Audit Action                    |
+| --------------- | --------------- | ---------------------- | ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| None            | `PendingReview` | Request correction     | `attendance.correction.request`                 | Parent session is submitted/corrected; reason required; deadline valid; branch access valid.               | `AttendanceCorrectionRequested` |
+| `PendingReview` | `Approved`      | Approve correction     | `attendance.correction.approve`                 | Reviewer authorized; reviewer is not requester unless override; old-value snapshot matches current record. | `AttendanceCorrectionApproved`  |
+| `PendingReview` | `Rejected`      | Reject correction      | `attendance.correction.reject`                  | Reviewer authorized; rejection remarks required.                                                           | `AttendanceCorrectionRejected`  |
+| `PendingReview` | `Cancelled`     | Cancel request         | `attendance.correction.cancel`                  | Requester or authorized manager; correction not yet reviewed.                                              | `AttendanceCorrectionCancelled` |
+| `PendingReview` | `Expired`       | Expire pending request | `attendance.correction.expire` or system policy | Review window elapsed; no approval/rejection performed.                                                    | `AttendanceCorrectionExpired`   |
 
 ---
 
@@ -1360,13 +1360,13 @@ stateDiagram-v2
 
 ### Status Definitions
 
-| Status | Meaning |
-|---|---|
-| `Open` | Low attendance condition detected and visible to authorized users. |
-| `Acknowledged` | Coordinator or manager has acknowledged the alert. |
-| `Resolved` | Attendance percentage recovered or issue is closed with valid reason. |
-| `Dismissed` | Alert intentionally dismissed by authorized user with reason. |
-| `Expired` | Alert no longer relevant because batch completed, enrollment cancelled, or rule changed. |
+| Status         | Meaning                                                                                  |
+| -------------- | ---------------------------------------------------------------------------------------- |
+| `Open`         | Low attendance condition detected and visible to authorized users.                       |
+| `Acknowledged` | Coordinator or manager has acknowledged the alert.                                       |
+| `Resolved`     | Attendance percentage recovered or issue is closed with valid reason.                    |
+| `Dismissed`    | Alert intentionally dismissed by authorized user with reason.                            |
+| `Expired`      | Alert no longer relevant because batch completed, enrollment cancelled, or rule changed. |
 
 ### Mermaid State Diagram
 
@@ -1387,15 +1387,15 @@ stateDiagram-v2
 
 ### Transition Rules Matrix – AttendanceAlert
 
-| From Status | To Status | Trigger | Required Permission | Guard Conditions | Audit Action |
-|---|---|---|---|---|---|
-| None | `Open` | Low attendance detected | System internal or `attendance.alert.generate` | Submitted/corrected attendance percentage below configured threshold. | `LowAttendanceDetected` |
-| `Open` | `Acknowledged` | Acknowledge alert | `attendance.alert.acknowledge` | User has branch access; alert is active. | `AttendanceAlertAcknowledged` |
-| `Open` | `Resolved` | Attendance recovered | System internal | Percentage meets threshold or completion decision supersedes alert. | `AttendanceAlertResolved` |
-| `Acknowledged` | `Resolved` | Resolve after intervention | `attendance.alert.resolve` | Resolution remarks required. | `AttendanceAlertResolved` |
-| `Open` | `Dismissed` | Dismiss alert | `attendance.alert.dismiss` | Dismissal reason required. | `AttendanceAlertDismissed` |
-| `Acknowledged` | `Dismissed` | Dismiss acknowledged alert | `attendance.alert.dismiss` | Dismissal reason required. | `AttendanceAlertDismissed` |
-| `Open` / `Acknowledged` | `Expired` | Enrollment or batch no longer active | System internal | Enrollment cancelled/dropped or batch closed and alert no longer actionable. | `AttendanceAlertExpired` |
+| From Status             | To Status      | Trigger                              | Required Permission                            | Guard Conditions                                                             | Audit Action                  |
+| ----------------------- | -------------- | ------------------------------------ | ---------------------------------------------- | ---------------------------------------------------------------------------- | ----------------------------- |
+| None                    | `Open`         | Low attendance detected              | System internal or `attendance.alert.generate` | Submitted/corrected attendance percentage below configured threshold.        | `LowAttendanceDetected`       |
+| `Open`                  | `Acknowledged` | Acknowledge alert                    | `attendance.alert.acknowledge`                 | User has branch access; alert is active.                                     | `AttendanceAlertAcknowledged` |
+| `Open`                  | `Resolved`     | Attendance recovered                 | System internal                                | Percentage meets threshold or completion decision supersedes alert.          | `AttendanceAlertResolved`     |
+| `Acknowledged`          | `Resolved`     | Resolve after intervention           | `attendance.alert.resolve`                     | Resolution remarks required.                                                 | `AttendanceAlertResolved`     |
+| `Open`                  | `Dismissed`    | Dismiss alert                        | `attendance.alert.dismiss`                     | Dismissal reason required.                                                   | `AttendanceAlertDismissed`    |
+| `Acknowledged`          | `Dismissed`    | Dismiss acknowledged alert           | `attendance.alert.dismiss`                     | Dismissal reason required.                                                   | `AttendanceAlertDismissed`    |
+| `Open` / `Acknowledged` | `Expired`      | Enrollment or batch no longer active | System internal                                | Enrollment cancelled/dropped or batch closed and alert no longer actionable. | `AttendanceAlertExpired`      |
 
 ---
 
@@ -1405,14 +1405,14 @@ This state machine applies only if export requests are persisted for audit and o
 
 ### Status Definitions
 
-| Status | Meaning |
-|---|---|
-| `Requested` | User requested an export and filters were accepted. |
-| `Generating` | Export file is being generated. |
-| `Completed` | Export file or dataset is ready. |
-| `Failed` | Export failed due to validation, system, or data issue. |
-| `Expired` | Generated export link has expired. |
-| `Cancelled` | Export was cancelled before completion. |
+| Status       | Meaning                                                 |
+| ------------ | ------------------------------------------------------- |
+| `Requested`  | User requested an export and filters were accepted.     |
+| `Generating` | Export file is being generated.                         |
+| `Completed`  | Export file or dataset is ready.                        |
+| `Failed`     | Export failed due to validation, system, or data issue. |
+| `Expired`    | Generated export link has expired.                      |
+| `Cancelled`  | Export was cancelled before completion.                 |
 
 ### Mermaid State Diagram
 
@@ -1431,119 +1431,119 @@ stateDiagram-v2
 
 ### Transition Rules Matrix – AttendanceExportRequest
 
-| From Status | To Status | Trigger | Required Permission | Guard Conditions | Audit Action |
-|---|---|---|---|---|---|
-| None | `Requested` | Request export | `attendance.export` | Branch scope valid; filters valid; export purpose accepted if required. | `AttendanceExportRequested` |
-| `Requested` | `Generating` | Start generation | System internal | Request accepted and user authorized. | `AttendanceExportGenerating` |
-| `Generating` | `Completed` | Export generated | System internal | File generated successfully; row count available. | `AttendanceExported` |
-| `Generating` | `Failed` | Generation failure | System internal | Validation, storage, or query error occurred. | `AttendanceExportFailed` |
-| `Requested` | `Cancelled` | Cancel request | `attendance.export.cancel` | Request not completed. | `AttendanceExportCancelled` |
-| `Completed` | `Expired` | Link expiry reached | System internal | Retention window elapsed. | `AttendanceExportExpired` |
+| From Status  | To Status    | Trigger             | Required Permission        | Guard Conditions                                                        | Audit Action                 |
+| ------------ | ------------ | ------------------- | -------------------------- | ----------------------------------------------------------------------- | ---------------------------- |
+| None         | `Requested`  | Request export      | `attendance.export`        | Branch scope valid; filters valid; export purpose accepted if required. | `AttendanceExportRequested`  |
+| `Requested`  | `Generating` | Start generation    | System internal            | Request accepted and user authorized.                                   | `AttendanceExportGenerating` |
+| `Generating` | `Completed`  | Export generated    | System internal            | File generated successfully; row count available.                       | `AttendanceExported`         |
+| `Generating` | `Failed`     | Generation failure  | System internal            | Validation, storage, or query error occurred.                           | `AttendanceExportFailed`     |
+| `Requested`  | `Cancelled`  | Cancel request      | `attendance.export.cancel` | Request not completed.                                                  | `AttendanceExportCancelled`  |
+| `Completed`  | `Expired`    | Link expiry reached | System internal            | Retention window elapsed.                                               | `AttendanceExportExpired`    |
 
 ---
 
 ## 6. Permission Summary for Workflows and State Transitions
 
-| Permission Code | Purpose | Typical Roles |
-|---|---|---|
-| `attendance.session.read` | View attendance sessions. | Trainer, Academic Coordinator, Branch Manager, Auditor |
-| `attendance.session.create` | Initialize attendance session. | Trainer, Academic Coordinator |
-| `attendance.session.submit` | Submit final attendance. | Trainer, Academic Coordinator |
-| `attendance.session.cancel` | Cancel draft attendance session. | Academic Coordinator, Branch Manager |
-| `attendance.session.cancelSubmitted` | Cancel submitted/corrected attendance with elevated control. | Branch Manager, System Admin |
-| `attendance.record.read` | View attendance roster and records. | Trainer, Academic Coordinator, Branch Manager, Auditor |
-| `attendance.record.mark` | Mark or edit draft attendance. | Trainer, Academic Coordinator |
-| `attendance.record.bulkMark` | Apply bulk present/absent marking. | Trainer, Academic Coordinator |
-| `attendance.record.delete` | Soft delete draft attendance record. | Academic Coordinator |
-| `attendance.correction.request` | Request correction after submission. | Trainer, Academic Coordinator |
-| `attendance.correction.approve` | Approve correction request. | Branch Manager, Academic Coordinator with approval authority |
-| `attendance.correction.reject` | Reject correction request. | Branch Manager, Academic Coordinator with approval authority |
-| `attendance.correction.cancel` | Cancel own or managed correction request before review. | Requester, Branch Manager |
-| `attendance.correction.overrideDeadline` | Request correction after configured deadline. | Branch Manager, System Admin |
-| `attendance.alert.read` | View low attendance alerts. | Academic Coordinator, Branch Manager |
-| `attendance.alert.acknowledge` | Acknowledge low attendance alert. | Academic Coordinator, Branch Manager |
-| `attendance.alert.resolve` | Resolve low attendance alert. | Academic Coordinator, Branch Manager |
-| `attendance.alert.dismiss` | Dismiss low attendance alert with reason. | Branch Manager |
-| `attendance.export` | Export attendance registers and summaries. | Academic Coordinator, Branch Manager, Auditor |
-| `attendance.export.cancel` | Cancel pending export request. | Requester, Branch Manager |
-| `attendance.audit.read` | View attendance audit trail. | Auditor, Branch Manager, System Admin |
-| `attendance.consolidated.read` | View attendance across multiple assigned branches. | CEO Dashboard User, Authorized Management, Auditor |
+| Permission Code                          | Purpose                                                      | Typical Roles                                                |
+| ---------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `attendance.session.read`                | View attendance sessions.                                    | Trainer, Academic Coordinator, Branch Manager, Auditor       |
+| `attendance.session.create`              | Initialize attendance session.                               | Trainer, Academic Coordinator                                |
+| `attendance.session.submit`              | Submit final attendance.                                     | Trainer, Academic Coordinator                                |
+| `attendance.session.cancel`              | Cancel draft attendance session.                             | Academic Coordinator, Branch Manager                         |
+| `attendance.session.cancelSubmitted`     | Cancel submitted/corrected attendance with elevated control. | Branch Manager, System Admin                                 |
+| `attendance.record.read`                 | View attendance roster and records.                          | Trainer, Academic Coordinator, Branch Manager, Auditor       |
+| `attendance.record.mark`                 | Mark or edit draft attendance.                               | Trainer, Academic Coordinator                                |
+| `attendance.record.bulkMark`             | Apply bulk present/absent marking.                           | Trainer, Academic Coordinator                                |
+| `attendance.record.delete`               | Soft delete draft attendance record.                         | Academic Coordinator                                         |
+| `attendance.correction.request`          | Request correction after submission.                         | Trainer, Academic Coordinator                                |
+| `attendance.correction.approve`          | Approve correction request.                                  | Branch Manager, Academic Coordinator with approval authority |
+| `attendance.correction.reject`           | Reject correction request.                                   | Branch Manager, Academic Coordinator with approval authority |
+| `attendance.correction.cancel`           | Cancel own or managed correction request before review.      | Requester, Branch Manager                                    |
+| `attendance.correction.overrideDeadline` | Request correction after configured deadline.                | Branch Manager, System Admin                                 |
+| `attendance.alert.read`                  | View low attendance alerts.                                  | Academic Coordinator, Branch Manager                         |
+| `attendance.alert.acknowledge`           | Acknowledge low attendance alert.                            | Academic Coordinator, Branch Manager                         |
+| `attendance.alert.resolve`               | Resolve low attendance alert.                                | Academic Coordinator, Branch Manager                         |
+| `attendance.alert.dismiss`               | Dismiss low attendance alert with reason.                    | Branch Manager                                               |
+| `attendance.export`                      | Export attendance registers and summaries.                   | Academic Coordinator, Branch Manager, Auditor                |
+| `attendance.export.cancel`               | Cancel pending export request.                               | Requester, Branch Manager                                    |
+| `attendance.audit.read`                  | View attendance audit trail.                                 | Auditor, Branch Manager, System Admin                        |
+| `attendance.consolidated.read`           | View attendance across multiple assigned branches.           | CEO Dashboard User, Authorized Management, Auditor           |
 
 ---
 
 ## 7. Cross-Workflow Validation Rules
 
-| Rule ID | Rule | Applies To |
-|---|---|---|
-| VW-M08-ATT-001 | All attendance reads and writes must validate server-side branch scope. | All workflows |
-| VW-M08-ATT-002 | Attendance roster must be generated from Enrollment records, not from manually typed learner names. | Roster, Marking, Submission |
-| VW-M08-ATT-003 | Attendance cannot be submitted until every required roster learner has valid status. | Submission |
-| VW-M08-ATT-004 | Submitted attendance cannot be directly edited. | Marking, Correction |
-| VW-M08-ATT-005 | Corrections must store old value, requested new value, reason, requester, reviewer, and timestamps. | Correction |
-| VW-M08-ATT-006 | Draft attendance must not be consumed by Completion Management. | Draft, Completion Summary |
-| VW-M08-ATT-007 | Attendance percentage must be calculated only from submitted or corrected sessions. | Summary, Completion |
-| VW-M08-ATT-008 | Correction approval must validate the old-value snapshot before applying change. | Correction Approval |
-| VW-M08-ATT-009 | Sensitive actions must write immutable audit records. | Submission, Correction, Export, Cancel, Delete |
-| VW-M08-ATT-010 | Soft delete must not physically remove attendance records. | Delete, Cancel |
-| VW-M08-ATT-011 | Oman timezone UTC+4 must be used for business dates and displayed timestamps. | All time-based workflows |
-| VW-M08-ATT-012 | Bilingual labels must be displayed where configured for course, branch, status, and export headers. | UI, Export |
+| Rule ID        | Rule                                                                                                | Applies To                                     |
+| -------------- | --------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| VW-M08-ATT-001 | All attendance reads and writes must validate server-side branch scope.                             | All workflows                                  |
+| VW-M08-ATT-002 | Attendance roster must be generated from Enrollment records, not from manually typed learner names. | Roster, Marking, Submission                    |
+| VW-M08-ATT-003 | Attendance cannot be submitted until every required roster learner has valid status.                | Submission                                     |
+| VW-M08-ATT-004 | Submitted attendance cannot be directly edited.                                                     | Marking, Correction                            |
+| VW-M08-ATT-005 | Corrections must store old value, requested new value, reason, requester, reviewer, and timestamps. | Correction                                     |
+| VW-M08-ATT-006 | Draft attendance must not be consumed by Completion Management.                                     | Draft, Completion Summary                      |
+| VW-M08-ATT-007 | Attendance percentage must be calculated only from submitted or corrected sessions.                 | Summary, Completion                            |
+| VW-M08-ATT-008 | Correction approval must validate the old-value snapshot before applying change.                    | Correction Approval                            |
+| VW-M08-ATT-009 | Sensitive actions must write immutable audit records.                                               | Submission, Correction, Export, Cancel, Delete |
+| VW-M08-ATT-010 | Soft delete must not physically remove attendance records.                                          | Delete, Cancel                                 |
+| VW-M08-ATT-011 | Oman timezone UTC+4 must be used for business dates and displayed timestamps.                       | All time-based workflows                       |
+| VW-M08-ATT-012 | Bilingual labels must be displayed where configured for course, branch, status, and export headers. | UI, Export                                     |
 
 ---
 
 ## 8. UI Workflow Screens Implied by This Part
 
-| Screen / View | Primary Users | Key Actions |
-|---|---|---|
-| Attendance Sessions List | Trainer, Academic Coordinator, Branch Manager | Filter sessions, see status, start attendance, open submitted records. |
-| Attendance Marking Screen | Trainer, Academic Coordinator | Generate roster, mark individual status, bulk mark, save draft, submit final. |
-| Attendance Session Detail | Trainer, Academic Coordinator, Branch Manager, Auditor | View submitted records, session metadata, correction history, audit summary. |
-| Correction Request Dialog | Trainer, Academic Coordinator | Select new status, enter reason, add evidence reference. |
-| Correction Approval Queue | Branch Manager, Academic Coordinator | Review pending corrections, approve, reject. |
-| Attendance Summary by Enrollment | Academic Coordinator, Branch Manager | View percentage, status counts, low attendance indicator. |
-| Low Attendance Dashboard | Academic Coordinator, Branch Manager | View alerts, acknowledge, resolve, dismiss. |
-| Attendance Export / Reports | Branch Manager, Auditor | Select filters, export register, audit export action. |
-| Attendance Audit Trail | Auditor, Branch Manager | View immutable action history. |
+| Screen / View                    | Primary Users                                          | Key Actions                                                                   |
+| -------------------------------- | ------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| Attendance Sessions List         | Trainer, Academic Coordinator, Branch Manager          | Filter sessions, see status, start attendance, open submitted records.        |
+| Attendance Marking Screen        | Trainer, Academic Coordinator                          | Generate roster, mark individual status, bulk mark, save draft, submit final. |
+| Attendance Session Detail        | Trainer, Academic Coordinator, Branch Manager, Auditor | View submitted records, session metadata, correction history, audit summary.  |
+| Correction Request Dialog        | Trainer, Academic Coordinator                          | Select new status, enter reason, add evidence reference.                      |
+| Correction Approval Queue        | Branch Manager, Academic Coordinator                   | Review pending corrections, approve, reject.                                  |
+| Attendance Summary by Enrollment | Academic Coordinator, Branch Manager                   | View percentage, status counts, low attendance indicator.                     |
+| Low Attendance Dashboard         | Academic Coordinator, Branch Manager                   | View alerts, acknowledge, resolve, dismiss.                                   |
+| Attendance Export / Reports      | Branch Manager, Auditor                                | Select filters, export register, audit export action.                         |
+| Attendance Audit Trail           | Auditor, Branch Manager                                | View immutable action history.                                                |
 
 ---
 
 ## 9. Traceability Matrix
 
-| User Story | Use Cases | Primary State Machines | Key Permissions |
-|---|---|---|---|
-| US-M08-ATT-001 | UC-M08-ATT-001, UC-M08-ATT-002 | AttendanceSession | `attendance.session.read` |
-| US-M08-ATT-002 | UC-M08-ATT-001 | AttendanceSession | `attendance.session.create` |
-| US-M08-ATT-003 | UC-M08-ATT-002 | AttendanceRecord | `attendance.record.read` |
-| US-M08-ATT-004 | UC-M08-ATT-003 | AttendanceRecord | `attendance.record.mark` |
-| US-M08-ATT-005 | UC-M08-ATT-004 | AttendanceRecord | `attendance.record.bulkMark` |
-| US-M08-ATT-006 | UC-M08-ATT-005 | AttendanceSession, AttendanceRecord | `attendance.record.mark` |
-| US-M08-ATT-007 | UC-M08-ATT-006 | AttendanceSession, AttendanceRecord | `attendance.session.submit` |
-| US-M08-ATT-008 | UC-M08-ATT-007 | AttendanceCorrection, AttendanceSession | `attendance.correction.request` |
-| US-M08-ATT-009 | UC-M08-ATT-008, UC-M08-ATT-009 | AttendanceCorrection, AttendanceRecord | `attendance.correction.approve`, `attendance.correction.reject` |
-| US-M08-ATT-010 | UC-M08-ATT-010 | AttendanceAlert | `attendance.alert.read` |
-| US-M08-ATT-011 | UC-M08-ATT-011 | AttendanceExportRequest | `attendance.export` |
-| US-M08-ATT-012 | UC-M08-ATT-012 | All attendance entities | `attendance.audit.read` |
+| User Story     | Use Cases                      | Primary State Machines                  | Key Permissions                                                 |
+| -------------- | ------------------------------ | --------------------------------------- | --------------------------------------------------------------- |
+| US-M08-ATT-001 | UC-M08-ATT-001, UC-M08-ATT-002 | AttendanceSession                       | `attendance.session.read`                                       |
+| US-M08-ATT-002 | UC-M08-ATT-001                 | AttendanceSession                       | `attendance.session.create`                                     |
+| US-M08-ATT-003 | UC-M08-ATT-002                 | AttendanceRecord                        | `attendance.record.read`                                        |
+| US-M08-ATT-004 | UC-M08-ATT-003                 | AttendanceRecord                        | `attendance.record.mark`                                        |
+| US-M08-ATT-005 | UC-M08-ATT-004                 | AttendanceRecord                        | `attendance.record.bulkMark`                                    |
+| US-M08-ATT-006 | UC-M08-ATT-005                 | AttendanceSession, AttendanceRecord     | `attendance.record.mark`                                        |
+| US-M08-ATT-007 | UC-M08-ATT-006                 | AttendanceSession, AttendanceRecord     | `attendance.session.submit`                                     |
+| US-M08-ATT-008 | UC-M08-ATT-007                 | AttendanceCorrection, AttendanceSession | `attendance.correction.request`                                 |
+| US-M08-ATT-009 | UC-M08-ATT-008, UC-M08-ATT-009 | AttendanceCorrection, AttendanceRecord  | `attendance.correction.approve`, `attendance.correction.reject` |
+| US-M08-ATT-010 | UC-M08-ATT-010                 | AttendanceAlert                         | `attendance.alert.read`                                         |
+| US-M08-ATT-011 | UC-M08-ATT-011                 | AttendanceExportRequest                 | `attendance.export`                                             |
+| US-M08-ATT-012 | UC-M08-ATT-012                 | All attendance entities                 | `attendance.audit.read`                                         |
 
 ---
 
 ## 10. Acceptance Readiness Checklist
 
-| Checklist ID | Validation Item | Expected Result |
-|---|---|---|
-| AR-M08-ATT-001 | Trainer with branch access can view assigned sessions. | Only permitted branch sessions are visible. |
-| AR-M08-ATT-002 | User without branch access requests another branch. | Request is denied server-side. |
-| AR-M08-ATT-003 | Attendance initialization is repeated for same session. | Existing attendance session is reused; no duplicate is created. |
-| AR-M08-ATT-004 | Roster is generated for a batch with active enrollments. | Active enrolled learners appear; cancelled/dropped learners do not. |
-| AR-M08-ATT-005 | Late status is saved without late minutes. | Validation error is returned. |
-| AR-M08-ATT-006 | Excused status is saved without reason. | Validation error is returned. |
-| AR-M08-ATT-007 | Draft attendance is saved and reopened. | Saved draft values are displayed and remain editable. |
-| AR-M08-ATT-008 | Final submission is attempted with unmarked roster row. | Submission is rejected with row-level message. |
-| AR-M08-ATT-009 | Submitted record is directly edited. | Direct edit is blocked; correction workflow is required. |
-| AR-M08-ATT-010 | Correction request is submitted with reason. | Correction becomes `PendingReview`; original record remains unchanged. |
-| AR-M08-ATT-011 | Correction is approved by authorized reviewer. | Attendance record is updated; audit log is created. |
-| AR-M08-ATT-012 | Requester attempts to approve own correction when segregation rule is enabled. | Approval is rejected. |
-| AR-M08-ATT-013 | Attendance percentage is calculated. | Only submitted/corrected records are counted. |
-| AR-M08-ATT-014 | Attendance export is generated. | Export includes branch-scoped rows and audit record. |
-| AR-M08-ATT-015 | Audit trail is viewed. | Immutable action history is displayed. |
+| Checklist ID   | Validation Item                                                                | Expected Result                                                        |
+| -------------- | ------------------------------------------------------------------------------ | ---------------------------------------------------------------------- |
+| AR-M08-ATT-001 | Trainer with branch access can view assigned sessions.                         | Only permitted branch sessions are visible.                            |
+| AR-M08-ATT-002 | User without branch access requests another branch.                            | Request is denied server-side.                                         |
+| AR-M08-ATT-003 | Attendance initialization is repeated for same session.                        | Existing attendance session is reused; no duplicate is created.        |
+| AR-M08-ATT-004 | Roster is generated for a batch with active enrollments.                       | Active enrolled learners appear; cancelled/dropped learners do not.    |
+| AR-M08-ATT-005 | Late status is saved without late minutes.                                     | Validation error is returned.                                          |
+| AR-M08-ATT-006 | Excused status is saved without reason.                                        | Validation error is returned.                                          |
+| AR-M08-ATT-007 | Draft attendance is saved and reopened.                                        | Saved draft values are displayed and remain editable.                  |
+| AR-M08-ATT-008 | Final submission is attempted with unmarked roster row.                        | Submission is rejected with row-level message.                         |
+| AR-M08-ATT-009 | Submitted record is directly edited.                                           | Direct edit is blocked; correction workflow is required.               |
+| AR-M08-ATT-010 | Correction request is submitted with reason.                                   | Correction becomes `PendingReview`; original record remains unchanged. |
+| AR-M08-ATT-011 | Correction is approved by authorized reviewer.                                 | Attendance record is updated; audit log is created.                    |
+| AR-M08-ATT-012 | Requester attempts to approve own correction when segregation rule is enabled. | Approval is rejected.                                                  |
+| AR-M08-ATT-013 | Attendance percentage is calculated.                                           | Only submitted/corrected records are counted.                          |
+| AR-M08-ATT-014 | Attendance export is generated.                                                | Export includes branch-scoped rows and audit record.                   |
+| AR-M08-ATT-015 | Audit trail is viewed.                                                         | Immutable action history is displayed.                                 |
 
 ---
 

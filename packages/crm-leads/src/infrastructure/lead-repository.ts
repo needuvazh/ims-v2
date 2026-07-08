@@ -1,14 +1,27 @@
 import { PrismaClient, Prisma } from '@prisma/client';
-import { ILeadRepository, LeadSortField, LeadSortOrder } from '../domain/repositories';
+import {
+  ILeadRepository,
+  LeadSortField,
+  LeadSortOrder,
+} from '../domain/repositories';
 import { CreateLeadInput, LeadStage, LeadSource } from '../domain/lead';
 
 export class LeadRepository implements ILeadRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
   async create(
-    data: CreateLeadInput & { personId: string; leadNumber: string; inquiryId?: string | null },
-    tx?: Prisma.TransactionClient
-  ): Promise<{ id: string; leadNumber: string; stage: LeadStage; createdAt: Date }> {
+    data: CreateLeadInput & {
+      personId: string;
+      leadNumber: string;
+      inquiryId?: string | null;
+    },
+    tx?: Prisma.TransactionClient,
+  ): Promise<{
+    id: string;
+    leadNumber: string;
+    stage: LeadStage;
+    createdAt: Date;
+  }> {
     const client = tx || this.prisma;
     const lead = await client.lead.create({
       data: {
@@ -41,7 +54,8 @@ export class LeadRepository implements ILeadRepository {
   }
 
   async findById(id: string, tx?: Prisma.TransactionClient): Promise<any> {
-    const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    const UUID_REGEX =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     if (!UUID_REGEX.test(id)) {
       return null;
     }
@@ -67,10 +81,10 @@ export class LeadRepository implements ILeadRepository {
     id: string,
     stage: LeadStage,
     version: number,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<{ version: number }> {
     const client = tx || this.prisma;
-    
+
     // Perform optimistic concurrency check
     const result = await client.lead.updateMany({
       where: { id, version, isDeleted: false },
@@ -87,7 +101,11 @@ export class LeadRepository implements ILeadRepository {
     return { version: version + 1 };
   }
 
-  async assignCounselor(id: string, counselorId: string, tx?: Prisma.TransactionClient): Promise<void> {
+  async assignCounselor(
+    id: string,
+    counselorId: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<void> {
     const client = tx || this.prisma;
     await client.lead.update({
       where: { id },
@@ -97,28 +115,44 @@ export class LeadRepository implements ILeadRepository {
 
   async updateLead(
     id: string,
-    data: Partial<CreateLeadInput> & { lostReasonCode?: string | null; lostReasonNotes?: string | null; version?: number; nextFollowUpDate?: Date | null },
-    tx?: Prisma.TransactionClient
+    data: Partial<CreateLeadInput> & {
+      lostReasonCode?: string | null;
+      lostReasonNotes?: string | null;
+      version?: number;
+      nextFollowUpDate?: Date | null;
+    },
+    tx?: Prisma.TransactionClient,
   ): Promise<void> {
     const client = tx || this.prisma;
     const { version, ...updateData } = data;
 
     const whereClause: Prisma.LeadWhereUniqueInput = { id };
-    
+
     const updatePayload: Prisma.LeadUncheckedUpdateInput = {};
 
-    if (updateData.firstName !== undefined) updatePayload.firstName = updateData.firstName;
-    if (updateData.lastName !== undefined) updatePayload.lastName = updateData.lastName;
-    if (updateData.email !== undefined) updatePayload.email = updateData.email || null;
+    if (updateData.firstName !== undefined)
+      updatePayload.firstName = updateData.firstName;
+    if (updateData.lastName !== undefined)
+      updatePayload.lastName = updateData.lastName;
+    if (updateData.email !== undefined)
+      updatePayload.email = updateData.email || null;
     if (updateData.phone !== undefined) updatePayload.phone = updateData.phone;
-    if (updateData.nationality !== undefined) updatePayload.nationality = updateData.nationality || null;
-    if (updateData.nationalId !== undefined) updatePayload.nationalId = updateData.nationalId || null;
-    if (updateData.notes !== undefined) updatePayload.notes = updateData.notes || null;
-    if (updateData.lostReasonCode !== undefined) updatePayload.lostReasonCode = updateData.lostReasonCode || null;
-    if (updateData.lostReasonNotes !== undefined) updatePayload.lostReasonNotes = updateData.lostReasonNotes || null;
-    if (updateData.branchId !== undefined) updatePayload.branchId = updateData.branchId;
-    if (updateData.source !== undefined) updatePayload.source = updateData.source;
-    if (updateData.nextFollowUpDate !== undefined) updatePayload.nextFollowUpDate = updateData.nextFollowUpDate;
+    if (updateData.nationality !== undefined)
+      updatePayload.nationality = updateData.nationality || null;
+    if (updateData.nationalId !== undefined)
+      updatePayload.nationalId = updateData.nationalId || null;
+    if (updateData.notes !== undefined)
+      updatePayload.notes = updateData.notes || null;
+    if (updateData.lostReasonCode !== undefined)
+      updatePayload.lostReasonCode = updateData.lostReasonCode || null;
+    if (updateData.lostReasonNotes !== undefined)
+      updatePayload.lostReasonNotes = updateData.lostReasonNotes || null;
+    if (updateData.branchId !== undefined)
+      updatePayload.branchId = updateData.branchId;
+    if (updateData.source !== undefined)
+      updatePayload.source = updateData.source;
+    if (updateData.nextFollowUpDate !== undefined)
+      updatePayload.nextFollowUpDate = updateData.nextFollowUpDate;
 
     // Sync Person details to prevent profile drift and unique constraint violations
     const currentLead = await client.lead.findUnique({
@@ -151,12 +185,17 @@ export class LeadRepository implements ILeadRepository {
 
       // Sync name, email, and DOB updates to the target Person record
       const personUpdateData: Prisma.PersonUpdateInput = {};
-      if (updateData.firstName) personUpdateData.firstName = updateData.firstName;
+      if (updateData.firstName)
+        personUpdateData.firstName = updateData.firstName;
       if (updateData.lastName) personUpdateData.lastName = updateData.lastName;
-      if (updateData.email !== undefined) personUpdateData.email = updateData.email || null;
-      if (updateData.dateOfBirth !== undefined) personUpdateData.dateOfBirth = updateData.dateOfBirth || null;
-      if (updateData.nationality !== undefined) personUpdateData.nationality = updateData.nationality || null;
-      if (updateData.nationalId !== undefined) personUpdateData.nationalId = updateData.nationalId || null;
+      if (updateData.email !== undefined)
+        personUpdateData.email = updateData.email || null;
+      if (updateData.dateOfBirth !== undefined)
+        personUpdateData.dateOfBirth = updateData.dateOfBirth || null;
+      if (updateData.nationality !== undefined)
+        personUpdateData.nationality = updateData.nationality || null;
+      if (updateData.nationalId !== undefined)
+        personUpdateData.nationalId = updateData.nationalId || null;
 
       if (Object.keys(personUpdateData).length > 0) {
         await client.person.update({
@@ -193,7 +232,11 @@ export class LeadRepository implements ILeadRepository {
     }
   }
 
-  async deleteLead(id: string, deletedBy: string, tx?: Prisma.TransactionClient): Promise<void> {
+  async deleteLead(
+    id: string,
+    deletedBy: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<void> {
     const client = tx || this.prisma;
     await client.lead.update({
       where: { id },
@@ -219,9 +262,19 @@ export class LeadRepository implements ILeadRepository {
   }
 
   async findAll(
-    filters: { branchId?: string; stage?: LeadStage; source?: LeadSource; counselorId?: string; search?: string; branchIds?: string[]; sortBy?: LeadSortField; sortOrder?: LeadSortOrder },
+    filters: {
+      branchId?: string;
+      stage?: LeadStage;
+      source?: LeadSource;
+      counselorId?: string;
+      search?: string;
+      branchIds?: string[];
+      sortBy?: LeadSortField;
+      sortOrder?: LeadSortOrder;
+      nationalId?: string;
+    },
     pagination: { page: number; limit: number },
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<{ items: any[]; total: number }> {
     const client = tx || this.prisma;
     const where: Prisma.LeadWhereInput = { isDeleted: false };
@@ -244,6 +297,10 @@ export class LeadRepository implements ILeadRepository {
       where.counselorId = filters.counselorId;
     }
 
+    if (filters.nationalId) {
+      where.nationalId = { contains: filters.nationalId.trim(), mode: 'insensitive' };
+    }
+
     if (filters.search) {
       const searchVal = filters.search.trim();
       where.OR = [
@@ -252,6 +309,7 @@ export class LeadRepository implements ILeadRepository {
         { phone: { contains: searchVal, mode: 'insensitive' } },
         { email: { contains: searchVal, mode: 'insensitive' } },
         { leadNumber: { contains: searchVal, mode: 'insensitive' } },
+        { nationalId: { contains: searchVal, mode: 'insensitive' } },
       ];
     }
 
@@ -260,19 +318,24 @@ export class LeadRepository implements ILeadRepository {
     const sortOrder = filters.sortOrder ?? 'desc';
     const orderBy =
       sortField === 'branch'
-        ? ([{ branch: { branchName: sortOrder } }, { createdAt: 'desc' as const }] as Prisma.LeadOrderByWithRelationInput[])
+        ? ([
+            { branch: { branchName: sortOrder } },
+            { createdAt: 'desc' as const },
+          ] as Prisma.LeadOrderByWithRelationInput[])
         : sortField === 'name'
           ? [
               { firstName: sortOrder } as Prisma.LeadOrderByWithRelationInput,
               { lastName: sortOrder } as Prisma.LeadOrderByWithRelationInput,
               { createdAt: 'desc' as const },
             ]
-        : sortField === 'createdAt'
-          ? [{ createdAt: sortOrder } as Prisma.LeadOrderByWithRelationInput]
-          : [
-              { [sortField]: sortOrder } as Prisma.LeadOrderByWithRelationInput,
-              { createdAt: 'desc' as const },
-            ];
+          : sortField === 'createdAt'
+            ? [{ createdAt: sortOrder } as Prisma.LeadOrderByWithRelationInput]
+            : [
+                {
+                  [sortField]: sortOrder,
+                } as Prisma.LeadOrderByWithRelationInput,
+                { createdAt: 'desc' as const },
+              ];
 
     const items = await client.lead.findMany({
       where,

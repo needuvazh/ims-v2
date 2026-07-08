@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { Breadcrumbs, PageHeader, AdminFormPageLayout } from '@ims/shared-ui';
 import { assertPermission } from '@/lib/auth-guard';
 import { LeadForm } from '../../_components/lead-form';
@@ -9,25 +9,35 @@ import { Home, ClipboardList, Pencil } from 'lucide-react';
 
 export const metadata = { title: 'Edit Lead - CRM | ASTI IMS' };
 
-export default async function EditLeadPage(props: { params: Promise<{ id: string }> }) {
+export default async function EditLeadPage(props: {
+  params: Promise<{ id: string }>;
+}) {
   const { id: leadId } = await props.params;
 
   // Enforce lead update permissions
   const session = await assertPermission('lead.update');
 
-  const { branchScopeResolver, leadService, organizationService, userService } = await import('@/lib/runtime');
+  const { branchScopeResolver, leadService, organizationService, userService } =
+    await import('@/lib/runtime');
 
   const lead = await leadService.getLeadById(leadId);
   if (!lead) {
     notFound();
   }
 
+  if (lead.stage === 'Converted') {
+    redirect(`/leads/${leadId}`);
+  }
+
   // Branch Scope Check
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
     session.userId as any,
-    session.activeBranchId as any
+    session.activeBranchId as any,
   );
-  if (allowedBranchIds.length > 0 && !allowedBranchIds.includes(lead.branchId as Uuid)) {
+  if (
+    allowedBranchIds.length > 0 &&
+    !allowedBranchIds.includes(lead.branchId as Uuid)
+  ) {
     throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
   }
 
@@ -39,7 +49,9 @@ export default async function EditLeadPage(props: { params: Promise<{ id: string
 
   const branches =
     allowedBranchIds.length === 0
-      ? (await organizationService.listBranches({ pageSize: 100 })).items.map((b: any) => ({ id: b.id, name: b.branchName }))
+      ? (await organizationService.listBranches({ pageSize: 100 })).items.map(
+          (b: any) => ({ id: b.id, name: b.branchName }),
+        )
       : (await organizationService.listBranches({ pageSize: 100 })).items
           .filter((b: any) => allowedBranchIds.includes(b.id as any))
           .map((b: any) => ({ id: b.id, name: b.branchName }));
@@ -48,16 +60,23 @@ export default async function EditLeadPage(props: { params: Promise<{ id: string
     where: { status: 'Published', isDeleted: false },
     select: { id: true, nameEnglish: true },
   });
-  const courses = coursesResult.length > 0
-    ? coursesResult.map((c: any) => ({ id: c.id, name: c.nameEnglish }))
-    : [
-        { id: 'CS-FSWD', name: 'Full Stack Web Development (Fallback)' },
-        { id: 'CS-MDEV', name: 'Mobile App Development (Fallback)' },
-        { id: 'CS-CSEC', name: 'Advanced Cyber Security & Ethical Hacking (Fallback)' },
-        { id: 'CS-DSAI', name: 'Data Science and Artificial Intelligence (Fallback)' },
-        { id: 'CS-CLAW', name: 'Cloud Solutions Architecture (Fallback)' },
-        { id: 'CS-UIUX', name: 'UI/UX Design & Product Strategy (Fallback)' },
-      ];
+  const courses =
+    coursesResult.length > 0
+      ? coursesResult.map((c: any) => ({ id: c.id, name: c.nameEnglish }))
+      : [
+          { id: 'CS-FSWD', name: 'Full Stack Web Development (Fallback)' },
+          { id: 'CS-MDEV', name: 'Mobile App Development (Fallback)' },
+          {
+            id: 'CS-CSEC',
+            name: 'Advanced Cyber Security & Ethical Hacking (Fallback)',
+          },
+          {
+            id: 'CS-DSAI',
+            name: 'Data Science and Artificial Intelligence (Fallback)',
+          },
+          { id: 'CS-CLAW', name: 'Cloud Solutions Architecture (Fallback)' },
+          { id: 'CS-UIUX', name: 'UI/UX Design & Product Strategy (Fallback)' },
+        ];
 
   const usersResult = (await userService.listUsers({
     actorId: session.userId,
@@ -65,7 +84,9 @@ export default async function EditLeadPage(props: { params: Promise<{ id: string
     activeBranchId: session.activeBranchId,
   })) as any[];
   const counselors = usersResult
-    .filter((u: any) => u.roleSummaries?.some((r: any) => r.roleCode === 'COUNSELOR'))
+    .filter((u: any) =>
+      u.roleSummaries?.some((r: any) => r.roleCode === 'COUNSELOR'),
+    )
     .map((u: any) => ({ id: u.id, name: u.username }));
 
   return (
@@ -76,8 +97,16 @@ export default async function EditLeadPage(props: { params: Promise<{ id: string
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5" /> },
-              { label: 'Leads', href: '/leads', icon: <ClipboardList className="h-3.5 w-3.5" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5" />,
+              },
+              {
+                label: 'Leads',
+                href: '/leads',
+                icon: <ClipboardList className="h-3.5 w-3.5" />,
+              },
               { label: 'Edit', icon: <Pencil className="h-3.5 w-3.5" /> },
             ]}
           />

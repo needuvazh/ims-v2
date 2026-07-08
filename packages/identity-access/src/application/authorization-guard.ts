@@ -13,7 +13,7 @@ export class EffectivePermissionsService {
   constructor(
     private readonly userRepository: IUserRepository,
     private readonly roleRepository: IRoleRepository,
-    private readonly permissionCache: IPermissionCachePort = new NoOpPermissionCache()
+    private readonly permissionCache: IPermissionCachePort = new NoOpPermissionCache(),
   ) {}
 
   /**
@@ -57,13 +57,19 @@ export class EffectivePermissionsService {
 }
 
 export class BranchScopeResolver {
-  constructor(private readonly userBranchAccessRepository: IUserBranchAccessRepository) {}
+  constructor(
+    private readonly userBranchAccessRepository: IUserBranchAccessRepository,
+  ) {}
 
   /**
    * Resolves all branch IDs accessible to the user given their active branch context.
    */
-  async resolveAllowedBranches(userId: Uuid, activeBranchId: Uuid | null): Promise<Uuid[]> {
-    const assignments = await this.userBranchAccessRepository.findByUser(userId);
+  async resolveAllowedBranches(
+    userId: Uuid,
+    activeBranchId: Uuid | null,
+  ): Promise<Uuid[]> {
+    const assignments =
+      await this.userBranchAccessRepository.findByUser(userId);
     const activeAssignments = assignments.filter((a) => a.status === 'Active');
 
     if (activeAssignments.length === 0) {
@@ -78,7 +84,10 @@ export class BranchScopeResolver {
           allowed.push(a.branchId);
         }
         if (a.includeChildBranches) {
-          const childIds = await this.userBranchAccessRepository.resolveChildBranchIds(a.branchId);
+          const childIds =
+            await this.userBranchAccessRepository.resolveChildBranchIds(
+              a.branchId,
+            );
           for (const cid of childIds) {
             if (!allowed.includes(cid)) {
               allowed.push(cid);
@@ -96,7 +105,10 @@ export class BranchScopeResolver {
     if (!match) {
       for (const a of activeAssignments) {
         if (a.includeChildBranches) {
-          const childIds = await this.userBranchAccessRepository.resolveChildBranchIds(a.branchId);
+          const childIds =
+            await this.userBranchAccessRepository.resolveChildBranchIds(
+              a.branchId,
+            );
           if (childIds.includes(activeBranchId)) {
             match = a;
             break;
@@ -113,7 +125,10 @@ export class BranchScopeResolver {
 
     // If the matched root assignment has child branch access enabled, resolve descendants for the active context
     if (match.includeChildBranches) {
-      const childIds = await this.userBranchAccessRepository.resolveChildBranchIds(activeBranchId);
+      const childIds =
+        await this.userBranchAccessRepository.resolveChildBranchIds(
+          activeBranchId,
+        );
       for (const cid of childIds) {
         if (!allowed.includes(cid)) {
           allowed.push(cid);
@@ -130,7 +145,7 @@ export class AuthorizationGuard {
     private readonly userRepository: IUserRepository,
     private readonly sessionRepository: ISessionRepository,
     private readonly effectivePermissionsService: EffectivePermissionsService,
-    private readonly branchScopeResolver: BranchScopeResolver
+    private readonly branchScopeResolver: BranchScopeResolver,
   ) {}
 
   /**
@@ -140,27 +155,33 @@ export class AuthorizationGuard {
   async verifyPermission(
     userId: Uuid,
     permissionCode: string,
-    activeBranchId: Uuid | null = null
+    activeBranchId: Uuid | null = null,
   ): Promise<boolean> {
     const user = await this.userRepository.findById(userId);
     if (!user || user.status !== 'Active') {
       throw createIamError('IAM-AUTH-003'); // suspended or inactive accounts fail auth
     }
 
-    const activeSessions = await this.sessionRepository.listActiveForUser(userId);
+    const activeSessions =
+      await this.sessionRepository.listActiveForUser(userId);
     if (activeSessions.length === 0) {
       throw createIamError('IAM-AUTH-002');
     }
 
     // 1. Verify permissions
-    const permissions = await this.effectivePermissionsService.getEffectivePermissions(userId);
+    const permissions =
+      await this.effectivePermissionsService.getEffectivePermissions(userId);
     if (!permissions.includes(permissionCode)) {
       throw createIamError('IAM-AUTHZ-001');
     }
 
     // 2. Verify branch scope if branch context is requested
     if (activeBranchId) {
-      const allowedBranches = await this.branchScopeResolver.resolveAllowedBranches(userId, activeBranchId);
+      const allowedBranches =
+        await this.branchScopeResolver.resolveAllowedBranches(
+          userId,
+          activeBranchId,
+        );
       if (!allowedBranches.includes(activeBranchId)) {
         throw createIamError('IAM-AUTHZ-002');
       }

@@ -6,7 +6,7 @@ export class PrismaExamEvidenceReader implements ExamEvidenceReader {
 
   async getExamSummaryForEnrollment(
     enrollmentId: string,
-    batchId: string
+    batchId: string,
   ): Promise<{
     outcome: 'Pass' | 'Fail' | 'Pending' | 'NotRequired';
     lastUpdated: Date | null;
@@ -55,7 +55,10 @@ export class PrismaExamEvidenceReader implements ExamEvidenceReader {
       }
 
       // Result must be finalized or corrected to count as a final outcome
-      if (result.resultStatus !== 'Finalized' && result.resultStatus !== 'Corrected') {
+      if (
+        result.resultStatus !== 'Finalized' &&
+        result.resultStatus !== 'Corrected'
+      ) {
         pendingCount++;
       } else {
         const passMarks = exam.passMarks.toNumber();

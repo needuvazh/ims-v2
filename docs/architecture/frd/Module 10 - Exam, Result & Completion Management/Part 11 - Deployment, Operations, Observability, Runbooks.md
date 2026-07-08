@@ -758,15 +758,15 @@ UNHEALTHY
 
 Examples:
 
-| Condition | Status |
-|---|---|
-| DB unavailable | UNHEALTHY |
-| IAM unavailable | UNHEALTHY for authenticated use |
-| Attendance unavailable | DEGRADED |
-| Finance unavailable | DEGRADED |
-| Communication unavailable | DEGRADED |
-| Read model stale | DEGRADED |
-| Certificate handoff unavailable | DEGRADED |
+| Condition                                       | Status                                |
+| ----------------------------------------------- | ------------------------------------- |
+| DB unavailable                                  | UNHEALTHY                             |
+| IAM unavailable                                 | UNHEALTHY for authenticated use       |
+| Attendance unavailable                          | DEGRADED                              |
+| Finance unavailable                             | DEGRADED                              |
+| Communication unavailable                       | DEGRADED                              |
+| Read model stale                                | DEGRADED                              |
+| Certificate handoff unavailable                 | DEGRADED                              |
 | Audit writer unavailable for sensitive mutation | UNHEALTHY for sensitive mutation path |
 
 ---
@@ -1032,23 +1032,23 @@ Do not modify transactional state to make the read model match.
 
 # 28. Operational Runbook Index
 
-| Runbook | Failure |
-|---|---|
+| Runbook    | Failure                                                         |
+| ---------- | --------------------------------------------------------------- |
 | RB-EXC-001 | Completion evaluation failing because Attendance is unavailable |
-| RB-EXC-002 | Completion evaluation failing because Finance is unavailable |
-| RB-EXC-003 | Bulk Result submission fails |
-| RB-EXC-004 | Result correction succeeded but reevaluation is pending |
-| RB-EXC-005 | Approval queue item stuck in incorrect stage |
-| RB-EXC-006 | Cross-branch authorization incident suspected |
-| RB-EXC-007 | Certificate eligibility handoff failed |
-| RB-EXC-008 | Enrollment completion synchronization failed |
-| RB-EXC-009 | Audit write failure on sensitive operation |
-| RB-EXC-010 | Read model stale or inconsistent |
-| RB-EXC-011 | Duplicate Result or CourseCompletion detected |
-| RB-EXC-012 | Notification event emitted but no notification delivered |
-| RB-EXC-013 | Approval command repeatedly returns concurrency conflicts |
-| RB-EXC-014 | Production rollback required after Module 10 deployment |
-| RB-EXC-015 | Database restore and Module 10 integrity validation |
+| RB-EXC-002 | Completion evaluation failing because Finance is unavailable    |
+| RB-EXC-003 | Bulk Result submission fails                                    |
+| RB-EXC-004 | Result correction succeeded but reevaluation is pending         |
+| RB-EXC-005 | Approval queue item stuck in incorrect stage                    |
+| RB-EXC-006 | Cross-branch authorization incident suspected                   |
+| RB-EXC-007 | Certificate eligibility handoff failed                          |
+| RB-EXC-008 | Enrollment completion synchronization failed                    |
+| RB-EXC-009 | Audit write failure on sensitive operation                      |
+| RB-EXC-010 | Read model stale or inconsistent                                |
+| RB-EXC-011 | Duplicate Result or CourseCompletion detected                   |
+| RB-EXC-012 | Notification event emitted but no notification delivered        |
+| RB-EXC-013 | Approval command repeatedly returns concurrency conflicts       |
+| RB-EXC-014 | Production rollback required after Module 10 deployment         |
+| RB-EXC-015 | Database restore and Module 10 integrity validation             |
 
 ---
 
@@ -1750,21 +1750,21 @@ FUTURE-SCOPE LEAKAGE
 
 # 49. Aggregate Ownership Consistency
 
-| Area | Final FRD Position | Status |
-|---|---|---|
-| Exam ownership | Module 10 owns Exam | ALIGNED |
-| Result ownership | Module 10 owns Result | ALIGNED |
-| CourseCompletion ownership | Module 10 owns CourseCompletion | ALIGNED |
-| CompletionApproval ownership | Module 10 owns transactional completion approval stages | ALIGNED |
-| CourseCompletionRule ownership | Course Catalog | ALIGNED |
-| Enrollment ownership | Admission & Enrollment | ALIGNED |
-| Attendance ownership | Attendance | ALIGNED |
-| Finance validation ownership | Finance & Receivables | ALIGNED |
-| Trainer assignment ownership | Training Delivery / Trainer context | ALIGNED |
-| Certificate issuance ownership | Certificate Management | ALIGNED |
-| Notification delivery ownership | Communication & Notification | ALIGNED |
-| Audit persistence ownership | Audit & Compliance | ALIGNED |
-| Reporting projection ownership | Query/reporting layer only; read-only | ALIGNED |
+| Area                            | Final FRD Position                                      | Status  |
+| ------------------------------- | ------------------------------------------------------- | ------- |
+| Exam ownership                  | Module 10 owns Exam                                     | ALIGNED |
+| Result ownership                | Module 10 owns Result                                   | ALIGNED |
+| CourseCompletion ownership      | Module 10 owns CourseCompletion                         | ALIGNED |
+| CompletionApproval ownership    | Module 10 owns transactional completion approval stages | ALIGNED |
+| CourseCompletionRule ownership  | Course Catalog                                          | ALIGNED |
+| Enrollment ownership            | Admission & Enrollment                                  | ALIGNED |
+| Attendance ownership            | Attendance                                              | ALIGNED |
+| Finance validation ownership    | Finance & Receivables                                   | ALIGNED |
+| Trainer assignment ownership    | Training Delivery / Trainer context                     | ALIGNED |
+| Certificate issuance ownership  | Certificate Management                                  | ALIGNED |
+| Notification delivery ownership | Communication & Notification                            | ALIGNED |
+| Audit persistence ownership     | Audit & Compliance                                      | ALIGNED |
+| Reporting projection ownership  | Query/reporting layer only; read-only                   | ALIGNED |
 
 No cross-context ownership violation was found in Parts 1–10.
 
@@ -1954,17 +1954,17 @@ ALIGNED
 
 # 56. Cross-Context Integration Consistency
 
-| Integration | Final Pattern | Status |
-|---|---|---|
-| Course rule | Read through Course Catalog boundary | ALIGNED |
-| Enrollment context | Read through Enrollment boundary | ALIGNED |
-| Attendance evidence | Read authoritative outcome | ALIGNED |
-| Finance validation | Read authoritative outcome | ALIGNED |
-| Trainer assignment | Read through Training Delivery/Trainer boundary | ALIGNED |
-| Enrollment completion sync | Application boundary/event | ALIGNED |
-| Certificate eligibility | Handoff/event | ALIGNED |
-| Notifications | Domain event/intention to Communication | ALIGNED |
-| Audit | Shared convention/boundary | ALIGNED |
+| Integration                | Final Pattern                                   | Status  |
+| -------------------------- | ----------------------------------------------- | ------- |
+| Course rule                | Read through Course Catalog boundary            | ALIGNED |
+| Enrollment context         | Read through Enrollment boundary                | ALIGNED |
+| Attendance evidence        | Read authoritative outcome                      | ALIGNED |
+| Finance validation         | Read authoritative outcome                      | ALIGNED |
+| Trainer assignment         | Read through Training Delivery/Trainer boundary | ALIGNED |
+| Enrollment completion sync | Application boundary/event                      | ALIGNED |
+| Certificate eligibility    | Handoff/event                                   | ALIGNED |
+| Notifications              | Domain event/intention to Communication         | ALIGNED |
+| Audit                      | Shared convention/boundary                      | ALIGNED |
 
 ---
 

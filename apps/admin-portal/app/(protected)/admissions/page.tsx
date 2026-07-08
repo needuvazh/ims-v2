@@ -22,10 +22,10 @@ export default async function AdmissionsPage(props: {
   const { branchScopeResolver } = await import('@/lib/runtime');
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
     session.userId as any,
-    session.activeBranchId as any
+    session.activeBranchId as any,
   );
 
-  let filterBranchIds = allowedBranchIds.map(id => id as string);
+  let filterBranchIds = allowedBranchIds.map((id) => id as string);
   if (filterBranchIds.length === 0) {
     filterBranchIds = ['00000000-0000-0000-0000-000000000000'];
   } else if (searchParams.branchId) {
@@ -56,8 +56,14 @@ export default async function AdmissionsPage(props: {
   if (searchParams.q) {
     whereClause.OR = [
       { admissionNumber: { contains: searchParams.q, mode: 'insensitive' } },
-      { person: { firstName: { contains: searchParams.q, mode: 'insensitive' } } },
-      { person: { lastName: { contains: searchParams.q, mode: 'insensitive' } } },
+      {
+        person: {
+          firstName: { contains: searchParams.q, mode: 'insensitive' },
+        },
+      },
+      {
+        person: { lastName: { contains: searchParams.q, mode: 'insensitive' } },
+      },
       { person: { email: { contains: searchParams.q, mode: 'insensitive' } } },
     ];
   }
@@ -124,21 +130,35 @@ export default async function AdmissionsPage(props: {
   const result = await studentQueryService.searchBranchScopedStudents(
     '',
     allowedBranchIds as string[],
-    { page: 1, limit: 100, studentStatus: 'Active' }
+    { page: 1, limit: 100, studentStatus: 'Active' },
   );
   const students = result.items;
 
   // Calculate high-level KPIs for Admissions
   const kpiWhere = {
     isDeleted: false,
-    branchId: allowedBranchIds.length > 0 ? { in: allowedBranchIds.map(id => id as string) } : undefined,
+    branchId:
+      allowedBranchIds.length > 0
+        ? { in: allowedBranchIds.map((id) => id as string) }
+        : undefined,
   };
 
-  const [allAdmissionsCount, approvedAdmissionsCount, submittedAdmissionsCount, draftAdmissionsCount] = await Promise.all([
+  const [
+    allAdmissionsCount,
+    approvedAdmissionsCount,
+    submittedAdmissionsCount,
+    draftAdmissionsCount,
+  ] = await Promise.all([
     prisma.admission.count({ where: kpiWhere }),
-    prisma.admission.count({ where: { ...kpiWhere, admissionStatus: 'Approved' } }),
-    prisma.admission.count({ where: { ...kpiWhere, admissionStatus: 'Submitted' } }),
-    prisma.admission.count({ where: { ...kpiWhere, admissionStatus: 'Draft' } }),
+    prisma.admission.count({
+      where: { ...kpiWhere, admissionStatus: 'Approved' },
+    }),
+    prisma.admission.count({
+      where: { ...kpiWhere, admissionStatus: 'Submitted' },
+    }),
+    prisma.admission.count({
+      where: { ...kpiWhere, admissionStatus: 'Draft' },
+    }),
   ]);
 
   const kpis = {

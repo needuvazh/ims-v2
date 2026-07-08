@@ -2,18 +2,18 @@
 
 ## Module 08 – Attendance Management
 
-| Attribute | Value |
-|---|---|
-| Product | ASTI Integrated Institute Management System (IMS) |
-| Module | Module 08 – Attendance Management |
-| Module Code | M08-ATT |
-| Bounded Context | Attendance Management |
-| Primary Package | `packages/attendance` |
-| Application | `apps/admin-portal`; trainer/student portal surfaces where enabled |
-| Architecture Style | TypeScript / Next.js modular monolith |
-| Database | PostgreSQL through Prisma |
-| Default Business Timezone | Oman GST, UTC+4 |
-| Operations Ownership | Application Engineering + Database Operations + Support/Admin Operations |
+| Attribute                 | Value                                                                    |
+| ------------------------- | ------------------------------------------------------------------------ |
+| Product                   | ASTI Integrated Institute Management System (IMS)                        |
+| Module                    | Module 08 – Attendance Management                                        |
+| Module Code               | M08-ATT                                                                  |
+| Bounded Context           | Attendance Management                                                    |
+| Primary Package           | `packages/attendance`                                                    |
+| Application               | `apps/admin-portal`; trainer/student portal surfaces where enabled       |
+| Architecture Style        | TypeScript / Next.js modular monolith                                    |
+| Database                  | PostgreSQL through Prisma                                                |
+| Default Business Timezone | Oman GST, UTC+4                                                          |
+| Operations Ownership      | Application Engineering + Database Operations + Support/Admin Operations |
 
 ---
 
@@ -29,50 +29,50 @@ Attendance operations are time-sensitive because trainers mark attendance during
 
 ### 2.1 Runtime Components
 
-| Component | Responsibility |
-|---|---|
-| `apps/admin-portal` | Admin UI screens for attendance sessions, corrections, dashboards, reports, rules, and audit views. |
-| Trainer portal attendance pages | Trainer-facing marking and assigned session views when enabled. |
-| Student portal attendance pages | Student self-service attendance summary view when enabled. |
-| `packages/attendance/domain` | Attendance entities, state transitions, business rules, summary calculations. |
-| `packages/attendance/application` | Use cases: generate session, mark attendance, submit session, request correction, approve correction, calculate summaries, generate reports. |
-| `packages/attendance/infrastructure` | Prisma repositories, query builders, reporting views, export adapters. |
-| `packages/attendance/ui` | Reusable components such as roster grid, status selectors, correction forms, KPI cards. |
-| `packages/shared` | Auth context, branch scope resolver, validation utilities, localized errors, audit client. |
-| PostgreSQL | Persistent storage for attendance-owned entities and reporting views. |
-| Object storage or secure file storage | Temporary storage for CSV/PDF/XLSX exports when configured. |
-| Communication module | Receives notification requests for low attendance, correction workflow, and submission reminders. |
-| Audit module | Stores audit records for sensitive attendance operations. |
+| Component                             | Responsibility                                                                                                                               |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `apps/admin-portal`                   | Admin UI screens for attendance sessions, corrections, dashboards, reports, rules, and audit views.                                          |
+| Trainer portal attendance pages       | Trainer-facing marking and assigned session views when enabled.                                                                              |
+| Student portal attendance pages       | Student self-service attendance summary view when enabled.                                                                                   |
+| `packages/attendance/domain`          | Attendance entities, state transitions, business rules, summary calculations.                                                                |
+| `packages/attendance/application`     | Use cases: generate session, mark attendance, submit session, request correction, approve correction, calculate summaries, generate reports. |
+| `packages/attendance/infrastructure`  | Prisma repositories, query builders, reporting views, export adapters.                                                                       |
+| `packages/attendance/ui`              | Reusable components such as roster grid, status selectors, correction forms, KPI cards.                                                      |
+| `packages/shared`                     | Auth context, branch scope resolver, validation utilities, localized errors, audit client.                                                   |
+| PostgreSQL                            | Persistent storage for attendance-owned entities and reporting views.                                                                        |
+| Object storage or secure file storage | Temporary storage for CSV/PDF/XLSX exports when configured.                                                                                  |
+| Communication module                  | Receives notification requests for low attendance, correction workflow, and submission reminders.                                            |
+| Audit module                          | Stores audit records for sensitive attendance operations.                                                                                    |
 
 ### 2.2 Owned Database Tables
 
 Attendance Management owns and must deploy migrations for these tables:
 
-| Table | Prisma Model | Operational Criticality |
-|---|---|---|
-| `attendance_sessions` | `AttendanceSession` | Critical |
-| `attendance_records` | `AttendanceRecord` | Critical |
-| `attendance_corrections` | `AttendanceCorrection` | Critical |
-| `attendance_alert_rules` | `AttendanceAlertRule` | Medium |
-| `attendance_alerts` | `AttendanceAlert` | Medium |
-| `enrollment_attendance_summaries` | `EnrollmentAttendanceSummary` | Critical for completion readiness |
-| `attendance_export_requests` | `AttendanceExportRequest` | Future-scope operational table for asynchronous export tracking. Not required for Phase 1 synchronous export. |
-| `attendance_idempotency_keys` | `AttendanceIdempotencyKey` | Future-scope operational table for retry safety on long-running actions. Phase 1 may use request-scoped idempotency in application memory or AuditLog correlation if the table is not present. |
+| Table                             | Prisma Model                  | Operational Criticality                                                                                                                                                                        |
+| --------------------------------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `attendance_sessions`             | `AttendanceSession`           | Critical                                                                                                                                                                                       |
+| `attendance_records`              | `AttendanceRecord`            | Critical                                                                                                                                                                                       |
+| `attendance_corrections`          | `AttendanceCorrection`        | Critical                                                                                                                                                                                       |
+| `attendance_alert_rules`          | `AttendanceAlertRule`         | Medium                                                                                                                                                                                         |
+| `attendance_alerts`               | `AttendanceAlert`             | Medium                                                                                                                                                                                         |
+| `enrollment_attendance_summaries` | `EnrollmentAttendanceSummary` | Critical for completion readiness                                                                                                                                                              |
+| `attendance_export_requests`      | `AttendanceExportRequest`     | Future-scope operational table for asynchronous export tracking. Not required for Phase 1 synchronous export.                                                                                  |
+| `attendance_idempotency_keys`     | `AttendanceIdempotencyKey`    | Future-scope operational table for retry safety on long-running actions. Phase 1 may use request-scoped idempotency in application memory or AuditLog correlation if the table is not present. |
 
 ### 2.3 Referenced Tables Not Owned by Attendance
 
-| Referenced Table | Owning Context | Attendance Usage |
-|---|---|---|
-| `branches` | Organization Management | Branch isolation and reports. |
-| `courses` | Course Catalog Management | Course filters and completion thresholds. |
-| `batches` | Training Delivery Management | Attendance grouping and roster source. |
-| `sessions` | Training Delivery / Scheduling | Source scheduled class/session. |
-| `enrollments` | Admission & Enrollment | Central learner lifecycle aggregate. |
-| `student_profiles` | Admission & Enrollment | Student display and reporting. |
-| `trainer_profiles` | Faculty / Trainer | Trainer assignment and marking access. |
-| `users` | Identity & Access | Actor and audit identity. |
-| `audit_logs` | Audit & Compliance | Sensitive action audit. |
-| `notification_requests` | Communication & Notification | Notification delivery requests. |
+| Referenced Table        | Owning Context                 | Attendance Usage                          |
+| ----------------------- | ------------------------------ | ----------------------------------------- |
+| `branches`              | Organization Management        | Branch isolation and reports.             |
+| `courses`               | Course Catalog Management      | Course filters and completion thresholds. |
+| `batches`               | Training Delivery Management   | Attendance grouping and roster source.    |
+| `sessions`              | Training Delivery / Scheduling | Source scheduled class/session.           |
+| `enrollments`           | Admission & Enrollment         | Central learner lifecycle aggregate.      |
+| `student_profiles`      | Admission & Enrollment         | Student display and reporting.            |
+| `trainer_profiles`      | Faculty / Trainer              | Trainer assignment and marking access.    |
+| `users`                 | Identity & Access              | Actor and audit identity.                 |
+| `audit_logs`            | Audit & Compliance             | Sensitive action audit.                   |
+| `notification_requests` | Communication & Notification   | Notification delivery requests.           |
 
 ---
 
@@ -94,14 +94,14 @@ Production
 
 ### 3.2 Release Types
 
-| Release Type | Examples | Approval Requirement |
-|---|---|---|
-| Schema-only compatible | Add nullable column, add index concurrently, create read view | Engineering review + migration dry run |
-| Application-only | UI validation change, report filter enhancement | QA regression |
-| Schema + application | New correction workflow field, new alert rule fields | QA + UAT validation |
-| Permission-sensitive | New permission or changed guard | Security/RBAC review |
-| Reporting-heavy | New views, large aggregation indexes | Database performance review |
-| Data correction release | Backfill summaries or fix attendance statuses | Principal engineer approval + audit plan |
+| Release Type            | Examples                                                      | Approval Requirement                     |
+| ----------------------- | ------------------------------------------------------------- | ---------------------------------------- |
+| Schema-only compatible  | Add nullable column, add index concurrently, create read view | Engineering review + migration dry run   |
+| Application-only        | UI validation change, report filter enhancement               | QA regression                            |
+| Schema + application    | New correction workflow field, new alert rule fields          | QA + UAT validation                      |
+| Permission-sensitive    | New permission or changed guard                               | Security/RBAC review                     |
+| Reporting-heavy         | New views, large aggregation indexes                          | Database performance review              |
+| Data correction release | Backfill summaries or fix attendance statuses                 | Principal engineer approval + audit plan |
 
 ### 3.3 Deployment Order
 
@@ -120,38 +120,38 @@ For Attendance changes that include database migrations, deploy in this order:
 
 ### 3.4 Backward-Compatible Migration Rules
 
-| Rule ID | Rule |
-|---|---|
-| DEP-M08-001 | Do not deploy a non-null column without default/backfill plan. |
+| Rule ID     | Rule                                                                                                                      |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------- |
+| DEP-M08-001 | Do not deploy a non-null column without default/backfill plan.                                                            |
 | DEP-M08-002 | Do not drop or rename attendance columns in the same release that removes application usage. Use expand-migrate-contract. |
-| DEP-M08-003 | Indexes on large attendance tables must be created using a low-locking strategy supported by the deployment environment. |
-| DEP-M08-004 | Data backfills must be idempotent and restartable. |
-| DEP-M08-005 | Summary recomputation scripts must write audit or operational maintenance logs. |
-| DEP-M08-006 | Permission seed changes must be deployed before UI exposes new action buttons. |
-| DEP-M08-007 | Rollback must not hard-delete attendance data created during the failed deployment. |
+| DEP-M08-003 | Indexes on large attendance tables must be created using a low-locking strategy supported by the deployment environment.  |
+| DEP-M08-004 | Data backfills must be idempotent and restartable.                                                                        |
+| DEP-M08-005 | Summary recomputation scripts must write audit or operational maintenance logs.                                           |
+| DEP-M08-006 | Permission seed changes must be deployed before UI exposes new action buttons.                                            |
+| DEP-M08-007 | Rollback must not hard-delete attendance data created during the failed deployment.                                       |
 
 ### 3.5 Feature Flags
 
-| Feature Flag | Purpose | Default |
-|---|---|---|
-| `attendance.trainerPortal.enabled` | Enables trainer attendance marking UI. | Enabled only after trainer auth mapping validation. |
-| `attendance.studentPortal.enabled` | Enables student self attendance view. | Enabled when student portal is available. |
-| `attendance.corrections.enabled` | Enables correction workflow. | Enabled. |
-| `attendance.lowAttendanceAlerts.enabled` | Enables alert generation. | Enabled after rule configuration. |
-| `attendance.bulkImport.enabled` | Enables bulk import, which is not part of Phase 1 attendance scope. | Disabled unless ASTI explicitly approves a later import rollout. |
-| `attendance.exports.async.enabled` | Uses async export job for large reports. | Enabled for large exports. |
-| `attendance.consolidatedReports.enabled` | Enables multi-branch reporting. | Disabled unless consolidated report permissions are configured. |
+| Feature Flag                             | Purpose                                                             | Default                                                          |
+| ---------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `attendance.trainerPortal.enabled`       | Enables trainer attendance marking UI.                              | Enabled only after trainer auth mapping validation.              |
+| `attendance.studentPortal.enabled`       | Enables student self attendance view.                               | Enabled when student portal is available.                        |
+| `attendance.corrections.enabled`         | Enables correction workflow.                                        | Enabled.                                                         |
+| `attendance.lowAttendanceAlerts.enabled` | Enables alert generation.                                           | Enabled after rule configuration.                                |
+| `attendance.bulkImport.enabled`          | Enables bulk import, which is not part of Phase 1 attendance scope. | Disabled unless ASTI explicitly approves a later import rollout. |
+| `attendance.exports.async.enabled`       | Uses async export job for large reports.                            | Enabled for large exports.                                       |
+| `attendance.consolidatedReports.enabled` | Enables multi-branch reporting.                                     | Disabled unless consolidated report permissions are configured.  |
 
 ### 3.6 Rollback Strategy
 
-| Scenario | Rollback Action |
-|---|---|
-| UI defect only | Revert application build; database remains unchanged. |
-| Permission seed issue | Disable related menu/action permission and redeploy corrected seed. |
-| Report query causes load | Disable report route/feature flag; keep marking endpoints active. |
-| Migration added compatible columns | Roll back application; leave columns in place for later cleanup. |
+| Scenario                             | Rollback Action                                                                                                                    |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| UI defect only                       | Revert application build; database remains unchanged.                                                                              |
+| Permission seed issue                | Disable related menu/action permission and redeploy corrected seed.                                                                |
+| Report query causes load             | Disable report route/feature flag; keep marking endpoints active.                                                                  |
+| Migration added compatible columns   | Roll back application; leave columns in place for later cleanup.                                                                   |
 | Migration corrupts derived summaries | Restore summaries from recomputation based on attendance records; do not restore full database unless primary records are corrupt. |
-| Primary attendance records corrupt | Stop writes, isolate affected time window, restore from PITR or backup into recovery database, reconcile manually with audit logs. |
+| Primary attendance records corrupt   | Stop writes, isolate affected time window, restore from PITR or backup into recovery database, reconcile manually with audit logs. |
 
 ---
 
@@ -159,18 +159,18 @@ For Attendance changes that include database migrations, deploy in this order:
 
 ### 4.1 Required Configuration
 
-| Key | Description | Example |
-|---|---|---|
-| `ATTENDANCE_DEFAULT_TIMEZONE` | Business timezone for date rendering. | `Asia/Muscat` |
-| `ATTENDANCE_MAX_ROSTER_SIZE` | Maximum roster rows allowed in UI marking screen. | `150` |
-| `ATTENDANCE_DRAFT_AUTOSAVE_SECONDS` | Client draft autosave interval where enabled. | `30` |
-| `ATTENDANCE_EXPORT_MAX_ROWS_SYNC` | Maximum rows for synchronous export. | `5000` |
-| `ATTENDANCE_EXPORT_RETENTION_HOURS` | Temporary export file retention. | `24` |
-| `ATTENDANCE_LOW_THRESHOLD_DEFAULT` | Default low attendance threshold. | `75` |
-| `ATTENDANCE_IDEMPOTENCY_TTL_HOURS` | Retention for idempotency keys. | `24` |
-| `ATTENDANCE_CORRECTION_IDEMPOTENCY_TTL_DAYS` | Retention for correction approval idempotency. | `7` |
-| `ATTENDANCE_RATE_LIMIT_SUBMIT_PER_5_MIN` | Submission rate limit. | `20` |
-| `ATTENDANCE_STRUCTURED_LOGS_ENABLED` | Enables JSON logs. | `true` |
+| Key                                          | Description                                       | Example       |
+| -------------------------------------------- | ------------------------------------------------- | ------------- |
+| `ATTENDANCE_DEFAULT_TIMEZONE`                | Business timezone for date rendering.             | `Asia/Muscat` |
+| `ATTENDANCE_MAX_ROSTER_SIZE`                 | Maximum roster rows allowed in UI marking screen. | `150`         |
+| `ATTENDANCE_DRAFT_AUTOSAVE_SECONDS`          | Client draft autosave interval where enabled.     | `30`          |
+| `ATTENDANCE_EXPORT_MAX_ROWS_SYNC`            | Maximum rows for synchronous export.              | `5000`        |
+| `ATTENDANCE_EXPORT_RETENTION_HOURS`          | Temporary export file retention.                  | `24`          |
+| `ATTENDANCE_LOW_THRESHOLD_DEFAULT`           | Default low attendance threshold.                 | `75`          |
+| `ATTENDANCE_IDEMPOTENCY_TTL_HOURS`           | Retention for idempotency keys.                   | `24`          |
+| `ATTENDANCE_CORRECTION_IDEMPOTENCY_TTL_DAYS` | Retention for correction approval idempotency.    | `7`           |
+| `ATTENDANCE_RATE_LIMIT_SUBMIT_PER_5_MIN`     | Submission rate limit.                            | `20`          |
+| `ATTENDANCE_STRUCTURED_LOGS_ENABLED`         | Enables JSON logs.                                | `true`        |
 
 ### 4.2 Configuration Validation at Startup
 
@@ -191,24 +191,24 @@ The application startup health check must validate:
 
 ### 5.1 Observability Goals
 
-| Goal | Description |
-|---|---|
-| Diagnose user failures quickly | Use correlation IDs to trace a failed marking or correction request. |
-| Detect operational degradation | Track slow roster loads, submission latency, export failures, and report query load. |
-| Prove audit coverage | Measure audit log write success for sensitive mutations. |
-| Protect privacy | Ensure logs contain internal IDs and counts, not raw PII. |
-| Support branch-level operations | Metrics and logs include branch ID where appropriate for operational isolation. |
+| Goal                            | Description                                                                          |
+| ------------------------------- | ------------------------------------------------------------------------------------ |
+| Diagnose user failures quickly  | Use correlation IDs to trace a failed marking or correction request.                 |
+| Detect operational degradation  | Track slow roster loads, submission latency, export failures, and report query load. |
+| Prove audit coverage            | Measure audit log write success for sensitive mutations.                             |
+| Protect privacy                 | Ensure logs contain internal IDs and counts, not raw PII.                            |
+| Support branch-level operations | Metrics and logs include branch ID where appropriate for operational isolation.      |
 
 ### 5.2 Signals to Capture
 
-| Signal | Required? | Examples |
-|---|---|---|
-| Structured logs | Mandatory | Request, validation failure, state transition, audit result, export completion. |
-| Metrics | Mandatory | Request latency, submission count, correction count, error count, export queue time. |
-| Traces | Mandatory for mutations and reports | Generate session, submit attendance, approve correction, export report. |
-| Audit logs | Mandatory for sensitive actions | Status changes, submissions, corrections, exports. |
-| Health checks | Mandatory | Database, migration readiness, audit readiness, export storage. |
-| Alerts | Mandatory in production | Error rate, latency, failed audit writes, branch access denials spike. |
+| Signal          | Required?                           | Examples                                                                             |
+| --------------- | ----------------------------------- | ------------------------------------------------------------------------------------ |
+| Structured logs | Mandatory                           | Request, validation failure, state transition, audit result, export completion.      |
+| Metrics         | Mandatory                           | Request latency, submission count, correction count, error count, export queue time. |
+| Traces          | Mandatory for mutations and reports | Generate session, submit attendance, approve correction, export report.              |
+| Audit logs      | Mandatory for sensitive actions     | Status changes, submissions, corrections, exports.                                   |
+| Health checks   | Mandatory                           | Database, migration readiness, audit readiness, export storage.                      |
+| Alerts          | Mandatory in production             | Error rate, latency, failed audit writes, branch access denials spike.               |
 
 ---
 
@@ -245,37 +245,37 @@ All Attendance logs must be JSON structured and follow this schema:
 
 ### 6.2 Required Log Events
 
-| Event Code | Level | Required Fields |
-|---|---|---|
-| `ATTENDANCE_SESSION_GENERATE_STARTED` | INFO | correlationId, actorUserId, branchId, sessionId |
-| `ATTENDANCE_SESSION_GENERATE_COMPLETED` | INFO | attendanceSessionId, recordCount, durationMs |
-| `ATTENDANCE_SESSION_GENERATE_FAILED` | ERROR | errorCode, sanitizedErrorMessage, durationMs |
-| `ATTENDANCE_ROSTER_LOADED` | INFO | attendanceSessionId, recordCount, durationMs |
-| `ATTENDANCE_DRAFT_SAVE_COMPLETED` | INFO | changedRecordCount, durationMs |
-| `ATTENDANCE_SESSION_SUBMIT_STARTED` | INFO | attendanceSessionId, expectedRecordCount |
-| `ATTENDANCE_SESSION_SUBMIT_COMPLETED` | INFO | presentCount, absentCount, lateCount, excusedCount, durationMs |
-| `ATTENDANCE_SESSION_SUBMIT_FAILED` | ERROR | errorCode, validationFailureCount, durationMs |
-| `ATTENDANCE_CORRECTION_REQUESTED` | INFO | attendanceRecordId, correctionId |
-| `ATTENDANCE_CORRECTION_APPROVED` | INFO | correctionId, oldStatus, newStatus |
-| `ATTENDANCE_CORRECTION_REJECTED` | INFO | correctionId, reasonCategory |
-| `ATTENDANCE_REPORT_QUERY_COMPLETED` | INFO | reportCode, rowCount, durationMs |
-| `ATTENDANCE_EXPORT_COMPLETED` | INFO | exportId, fileType, rowCount, durationMs |
-| `ATTENDANCE_BRANCH_ACCESS_DENIED` | WARN | requestedBranchId, actorUserId, permission |
-| `ATTENDANCE_AUDIT_WRITE_FAILED` | ERROR | entityType, entityId, action, errorCode |
+| Event Code                              | Level | Required Fields                                                |
+| --------------------------------------- | ----- | -------------------------------------------------------------- |
+| `ATTENDANCE_SESSION_GENERATE_STARTED`   | INFO  | correlationId, actorUserId, branchId, sessionId                |
+| `ATTENDANCE_SESSION_GENERATE_COMPLETED` | INFO  | attendanceSessionId, recordCount, durationMs                   |
+| `ATTENDANCE_SESSION_GENERATE_FAILED`    | ERROR | errorCode, sanitizedErrorMessage, durationMs                   |
+| `ATTENDANCE_ROSTER_LOADED`              | INFO  | attendanceSessionId, recordCount, durationMs                   |
+| `ATTENDANCE_DRAFT_SAVE_COMPLETED`       | INFO  | changedRecordCount, durationMs                                 |
+| `ATTENDANCE_SESSION_SUBMIT_STARTED`     | INFO  | attendanceSessionId, expectedRecordCount                       |
+| `ATTENDANCE_SESSION_SUBMIT_COMPLETED`   | INFO  | presentCount, absentCount, lateCount, excusedCount, durationMs |
+| `ATTENDANCE_SESSION_SUBMIT_FAILED`      | ERROR | errorCode, validationFailureCount, durationMs                  |
+| `ATTENDANCE_CORRECTION_REQUESTED`       | INFO  | attendanceRecordId, correctionId                               |
+| `ATTENDANCE_CORRECTION_APPROVED`        | INFO  | correctionId, oldStatus, newStatus                             |
+| `ATTENDANCE_CORRECTION_REJECTED`        | INFO  | correctionId, reasonCategory                                   |
+| `ATTENDANCE_REPORT_QUERY_COMPLETED`     | INFO  | reportCode, rowCount, durationMs                               |
+| `ATTENDANCE_EXPORT_COMPLETED`           | INFO  | exportId, fileType, rowCount, durationMs                       |
+| `ATTENDANCE_BRANCH_ACCESS_DENIED`       | WARN  | requestedBranchId, actorUserId, permission                     |
+| `ATTENDANCE_AUDIT_WRITE_FAILED`         | ERROR | entityType, entityId, action, errorCode                        |
 
 ### 6.3 Fields That Must Not Be Logged
 
-| Prohibited Field | Reason |
-|---|---|
-| Civil ID | High-risk PII. |
-| Passport number | High-risk PII. |
-| Visa number | High-risk PII. |
-| Student phone/email | PII; use studentProfileId/personId instead. |
-| Raw student full name | Avoid in infrastructure logs; use internal IDs. |
-| Authentication tokens | Secret exposure risk. |
-| Session cookies | Secret exposure risk. |
-| Raw SQL query with user values | Sensitive and injection diagnostics risk. |
-| Full correction reason text | May contain sensitive information; log reason length/category only. |
+| Prohibited Field               | Reason                                                              |
+| ------------------------------ | ------------------------------------------------------------------- |
+| Civil ID                       | High-risk PII.                                                      |
+| Passport number                | High-risk PII.                                                      |
+| Visa number                    | High-risk PII.                                                      |
+| Student phone/email            | PII; use studentProfileId/personId instead.                         |
+| Raw student full name          | Avoid in infrastructure logs; use internal IDs.                     |
+| Authentication tokens          | Secret exposure risk.                                               |
+| Session cookies                | Secret exposure risk.                                               |
+| Raw SQL query with user values | Sensitive and injection diagnostics risk.                           |
+| Full correction reason text    | May contain sensitive information; log reason length/category only. |
 
 ---
 
@@ -285,38 +285,38 @@ Even though the platform is a modular monolith, tracing must clearly mark module
 
 ### 7.1 Trace Naming
 
-| Use Case | Root Span | Child Spans |
-|---|---|---|
-| Generate attendance session | `attendance.generateSession` | `auth.resolveContext`, `branch.resolveScope`, `training.loadSession`, `enrollment.loadRoster`, `attendance.createRecords`, `audit.write` |
-| Load marking roster | `attendance.loadRoster` | `auth.checkPermission`, `branch.scopeQuery`, `attendance.queryRoster` |
-| Save draft | `attendance.saveDraft` | `validate.payload`, `attendance.lockSession`, `attendance.upsertRecords`, `audit.write` |
-| Submit attendance | `attendance.submitSession` | `validate.state`, `attendance.lockSession`, `attendance.updateRecords`, `attendance.calculateSummary`, `completion.publishEvidence`, `audit.write` |
-| Request correction | `attendance.requestCorrection` | `validate.correction`, `attendance.createCorrection`, `notification.request`, `audit.write` |
-| Approve correction | `attendance.approveCorrection` | `attendance.lockCorrection`, `attendance.updateRecord`, `attendance.recalculateSummary`, `audit.write` |
-| Generate report | `attendance.generateReport` | `branch.resolveReportScope`, `attendance.queryReadModel`, `export.createFile` |
+| Use Case                    | Root Span                      | Child Spans                                                                                                                                        |
+| --------------------------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Generate attendance session | `attendance.generateSession`   | `auth.resolveContext`, `branch.resolveScope`, `training.loadSession`, `enrollment.loadRoster`, `attendance.createRecords`, `audit.write`           |
+| Load marking roster         | `attendance.loadRoster`        | `auth.checkPermission`, `branch.scopeQuery`, `attendance.queryRoster`                                                                              |
+| Save draft                  | `attendance.saveDraft`         | `validate.payload`, `attendance.lockSession`, `attendance.upsertRecords`, `audit.write`                                                            |
+| Submit attendance           | `attendance.submitSession`     | `validate.state`, `attendance.lockSession`, `attendance.updateRecords`, `attendance.calculateSummary`, `completion.publishEvidence`, `audit.write` |
+| Request correction          | `attendance.requestCorrection` | `validate.correction`, `attendance.createCorrection`, `notification.request`, `audit.write`                                                        |
+| Approve correction          | `attendance.approveCorrection` | `attendance.lockCorrection`, `attendance.updateRecord`, `attendance.recalculateSummary`, `audit.write`                                             |
+| Generate report             | `attendance.generateReport`    | `branch.resolveReportScope`, `attendance.queryReadModel`, `export.createFile`                                                                      |
 
 ### 7.2 Trace Attributes
 
-| Attribute | Required For | Example |
-|---|---|---|
-| `module.code` | All spans | `M08-ATT` |
-| `branch.id` | Branch-scoped spans | `br_01HZX...` |
-| `actor.user_id` | Authenticated spans | `usr_01HZX...` |
-| `attendance.session_id` | Session operations | `atts_01HZX...` |
-| `training.session_id` | Schedule/session lookup | `ses_01HZX...` |
-| `batch.id` | Roster/report spans | `bat_01HZX...` |
-| `record.count` | Bulk operations | `32` |
-| `permission.code` | Guard spans | `attendance.record.submit` |
-| `error.code` | Failed spans | `ERR_ATT_SESSION_ALREADY_SUBMITTED` |
+| Attribute               | Required For            | Example                             |
+| ----------------------- | ----------------------- | ----------------------------------- |
+| `module.code`           | All spans               | `M08-ATT`                           |
+| `branch.id`             | Branch-scoped spans     | `br_01HZX...`                       |
+| `actor.user_id`         | Authenticated spans     | `usr_01HZX...`                      |
+| `attendance.session_id` | Session operations      | `atts_01HZX...`                     |
+| `training.session_id`   | Schedule/session lookup | `ses_01HZX...`                      |
+| `batch.id`              | Roster/report spans     | `bat_01HZX...`                      |
+| `record.count`          | Bulk operations         | `32`                                |
+| `permission.code`       | Guard spans             | `attendance.record.submit`          |
+| `error.code`            | Failed spans            | `ERR_ATT_SESSION_ALREADY_SUBMITTED` |
 
 ### 7.3 Trace Sampling
 
-| Environment | Sampling Rule |
-|---|---|
-| Local | 100% tracing. |
-| Development/QA | 100% for Attendance mutations, 25% for reads. |
-| UAT | 100% for mutations, 50% for reports, 10% for routine reads. |
-| Production | 100% for failures and sensitive mutations; baseline 10% for successful reads; configurable during incidents. |
+| Environment    | Sampling Rule                                                                                                |
+| -------------- | ------------------------------------------------------------------------------------------------------------ |
+| Local          | 100% tracing.                                                                                                |
+| Development/QA | 100% for Attendance mutations, 25% for reads.                                                                |
+| UAT            | 100% for mutations, 50% for reports, 10% for routine reads.                                                  |
+| Production     | 100% for failures and sensitive mutations; baseline 10% for successful reads; configurable during incidents. |
 
 ---
 
@@ -324,48 +324,48 @@ Even though the platform is a modular monolith, tracing must clearly mark module
 
 ### 8.1 Application Metrics
 
-| Metric Name | Type | Labels | Description |
-|---|---|---|---|
-| `attendance_api_requests_total` | Counter | route, method, status, branch_scope | Total Attendance API requests. |
-| `attendance_api_request_duration_ms` | Histogram | route, method, status | API latency. |
-| `attendance_roster_load_duration_ms` | Histogram | branch_id, roster_size_bucket | Roster load time. |
-| `attendance_session_generated_total` | Counter | branch_id, source | Generated attendance sessions. |
-| `attendance_records_marked_total` | Counter | branch_id, status | Attendance records marked by status. |
-| `attendance_sessions_submitted_total` | Counter | branch_id, actor_type | Submitted sessions. |
-| `attendance_submission_duration_ms` | Histogram | branch_id, roster_size_bucket | Submit transaction duration. |
-| `attendance_corrections_requested_total` | Counter | branch_id, requested_status | Correction requests created. |
-| `attendance_corrections_approved_total` | Counter | branch_id | Approved corrections. |
-| `attendance_corrections_rejected_total` | Counter | branch_id | Rejected corrections. |
-| `attendance_low_alerts_generated_total` | Counter | branch_id, severity | Low attendance alerts generated. |
-| `attendance_export_jobs_total` | Counter | report_code, file_type, status | Export job count. |
-| `attendance_export_duration_ms` | Histogram | report_code, file_type | Export generation duration. |
-| `attendance_audit_writes_total` | Counter | action, status | Audit write attempts and results. |
-| `attendance_branch_access_denied_total` | Counter | route, permission | Branch isolation denial count. |
-| `attendance_concurrency_conflicts_total` | Counter | operation | Version/lock conflicts. |
+| Metric Name                              | Type      | Labels                              | Description                          |
+| ---------------------------------------- | --------- | ----------------------------------- | ------------------------------------ |
+| `attendance_api_requests_total`          | Counter   | route, method, status, branch_scope | Total Attendance API requests.       |
+| `attendance_api_request_duration_ms`     | Histogram | route, method, status               | API latency.                         |
+| `attendance_roster_load_duration_ms`     | Histogram | branch_id, roster_size_bucket       | Roster load time.                    |
+| `attendance_session_generated_total`     | Counter   | branch_id, source                   | Generated attendance sessions.       |
+| `attendance_records_marked_total`        | Counter   | branch_id, status                   | Attendance records marked by status. |
+| `attendance_sessions_submitted_total`    | Counter   | branch_id, actor_type               | Submitted sessions.                  |
+| `attendance_submission_duration_ms`      | Histogram | branch_id, roster_size_bucket       | Submit transaction duration.         |
+| `attendance_corrections_requested_total` | Counter   | branch_id, requested_status         | Correction requests created.         |
+| `attendance_corrections_approved_total`  | Counter   | branch_id                           | Approved corrections.                |
+| `attendance_corrections_rejected_total`  | Counter   | branch_id                           | Rejected corrections.                |
+| `attendance_low_alerts_generated_total`  | Counter   | branch_id, severity                 | Low attendance alerts generated.     |
+| `attendance_export_jobs_total`           | Counter   | report_code, file_type, status      | Export job count.                    |
+| `attendance_export_duration_ms`          | Histogram | report_code, file_type              | Export generation duration.          |
+| `attendance_audit_writes_total`          | Counter   | action, status                      | Audit write attempts and results.    |
+| `attendance_branch_access_denied_total`  | Counter   | route, permission                   | Branch isolation denial count.       |
+| `attendance_concurrency_conflicts_total` | Counter   | operation                           | Version/lock conflicts.              |
 
 ### 8.2 Business Metrics
 
-| Metric Name | Type | Labels | Description |
-|---|---|---|---|
-| `attendance_average_percentage` | Gauge | branch_id, course_id, batch_id | Average attendance percentage. |
-| `attendance_low_students_count` | Gauge | branch_id, threshold | Students below configured threshold. |
-| `attendance_unmarked_sessions_count` | Gauge | branch_id, age_bucket | Sessions not marked after scheduled date/time. |
-| `attendance_late_submissions_count` | Gauge | branch_id | Submitted after allowed marking window. |
-| `attendance_correction_pending_count` | Gauge | branch_id | Pending corrections awaiting approval. |
-| `attendance_trainer_submission_compliance` | Gauge | branch_id, trainer_id | Percentage of assigned sessions submitted on time. |
+| Metric Name                                | Type  | Labels                         | Description                                        |
+| ------------------------------------------ | ----- | ------------------------------ | -------------------------------------------------- |
+| `attendance_average_percentage`            | Gauge | branch_id, course_id, batch_id | Average attendance percentage.                     |
+| `attendance_low_students_count`            | Gauge | branch_id, threshold           | Students below configured threshold.               |
+| `attendance_unmarked_sessions_count`       | Gauge | branch_id, age_bucket          | Sessions not marked after scheduled date/time.     |
+| `attendance_late_submissions_count`        | Gauge | branch_id                      | Submitted after allowed marking window.            |
+| `attendance_correction_pending_count`      | Gauge | branch_id                      | Pending corrections awaiting approval.             |
+| `attendance_trainer_submission_compliance` | Gauge | branch_id, trainer_id          | Percentage of assigned sessions submitted on time. |
 
 ### 8.3 Metric Threshold Alerts
 
-| Alert | Condition | Severity | Owner |
-|---|---|---|---|
-| Attendance Submit Error Spike | `submit_error_rate > 5% for 10 minutes` | Critical | Engineering On-call |
-| Roster Load Slow | `p95 roster load > 2s for 15 minutes` | Warning | Engineering |
-| Audit Write Failure | Any audit write failure for sensitive mutation | Critical | Engineering + Compliance |
-| Branch Denial Spike | `branch_access_denied_total > 50 in 10 minutes` | Warning | Security/Admin |
-| Export Failure Spike | `export_failure_rate > 10% for 30 minutes` | Warning | Engineering |
-| Pending Corrections High | `pending_corrections > configured branch threshold for 2 days` | Warning | Academic Admin |
-| Unmarked Sessions High | `unmarked_sessions > 20 for branch after business day close` | Warning | Branch Admin |
-| DB Lock Wait High | `attendance transaction lock wait > 2s p95 for 10 minutes` | Critical | Database Operations |
+| Alert                         | Condition                                                      | Severity | Owner                    |
+| ----------------------------- | -------------------------------------------------------------- | -------- | ------------------------ |
+| Attendance Submit Error Spike | `submit_error_rate > 5% for 10 minutes`                        | Critical | Engineering On-call      |
+| Roster Load Slow              | `p95 roster load > 2s for 15 minutes`                          | Warning  | Engineering              |
+| Audit Write Failure           | Any audit write failure for sensitive mutation                 | Critical | Engineering + Compliance |
+| Branch Denial Spike           | `branch_access_denied_total > 50 in 10 minutes`                | Warning  | Security/Admin           |
+| Export Failure Spike          | `export_failure_rate > 10% for 30 minutes`                     | Warning  | Engineering              |
+| Pending Corrections High      | `pending_corrections > configured branch threshold for 2 days` | Warning  | Academic Admin           |
+| Unmarked Sessions High        | `unmarked_sessions > 20 for branch after business day close`   | Warning  | Branch Admin             |
+| DB Lock Wait High             | `attendance transaction lock wait > 2s p95 for 10 minutes`     | Critical | Database Operations      |
 
 ---
 
@@ -373,16 +373,16 @@ Even though the platform is a modular monolith, tracing must clearly mark module
 
 ### 9.1 Startup Health Checks
 
-| Check | Pass Criteria | Failure Action |
-|---|---|---|
-| Database connectivity | Can open PostgreSQL connection and run lightweight query. | Fail startup. |
-| Migration readiness | Latest required Attendance migration is applied. | Fail startup or mark unhealthy. |
-| Attendance tables | Owned tables exist with required columns. | Fail startup. |
-| Required indexes | Critical unique and lookup indexes exist. | Warn in non-prod; fail in production for critical indexes. |
-| IAM permissions | Required Attendance permissions are seeded. | Mark degraded; hide actions if possible. |
-| Audit integration | Audit write interface is reachable. | Fail mutation health; production startup may fail depending on policy. |
-| Timezone configuration | `Asia/Muscat` or configured Oman timezone resolves. | Fail startup if invalid. |
-| Export storage | Temporary export storage writable if exports enabled. | Mark export capability degraded. |
+| Check                  | Pass Criteria                                             | Failure Action                                                         |
+| ---------------------- | --------------------------------------------------------- | ---------------------------------------------------------------------- |
+| Database connectivity  | Can open PostgreSQL connection and run lightweight query. | Fail startup.                                                          |
+| Migration readiness    | Latest required Attendance migration is applied.          | Fail startup or mark unhealthy.                                        |
+| Attendance tables      | Owned tables exist with required columns.                 | Fail startup.                                                          |
+| Required indexes       | Critical unique and lookup indexes exist.                 | Warn in non-prod; fail in production for critical indexes.             |
+| IAM permissions        | Required Attendance permissions are seeded.               | Mark degraded; hide actions if possible.                               |
+| Audit integration      | Audit write interface is reachable.                       | Fail mutation health; production startup may fail depending on policy. |
+| Timezone configuration | `Asia/Muscat` or configured Oman timezone resolves.       | Fail startup if invalid.                                               |
+| Export storage         | Temporary export storage writable if exports enabled.     | Mark export capability degraded.                                       |
 
 ### 9.2 Readiness Endpoint
 
@@ -409,25 +409,25 @@ Readiness must verify the module can safely receive traffic.
 
 Liveness must be lightweight and must not depend on heavy reporting queries.
 
-| Check | Description |
-|---|---|
-| Process alive | Application process is running. |
+| Check                 | Description                                 |
+| --------------------- | ------------------------------------------- |
+| Process alive         | Application process is running.             |
 | Event loop responsive | Event loop delay within platform threshold. |
-| Memory below limit | Process memory below configured limit. |
+| Memory below limit    | Process memory below configured limit.      |
 
 ### 9.4 Functional Smoke Tests After Deployment
 
-| Test | Expected Result |
-|---|---|
-| Login as Branch Admin and open attendance dashboard | Dashboard loads branch-scoped metrics. |
-| Login as Trainer and load assigned session roster | Only assigned session is visible. |
-| Save draft attendance for test session | Draft saves and audit log is created. |
-| Submit attendance for test session | Status becomes submitted; summary is updated. |
-| Request correction | Pending correction record is created. |
-| Approve correction as Academic Admin | Record status changes; summary recalculates. |
-| Attempt cross-branch session access | Request returns forbidden error. |
-| Generate branch report preview | Paginated report returns expected branch data only. |
-| Export report | File is generated, signed, audited, and downloadable by actor only. |
+| Test                                                | Expected Result                                                     |
+| --------------------------------------------------- | ------------------------------------------------------------------- |
+| Login as Branch Admin and open attendance dashboard | Dashboard loads branch-scoped metrics.                              |
+| Login as Trainer and load assigned session roster   | Only assigned session is visible.                                   |
+| Save draft attendance for test session              | Draft saves and audit log is created.                               |
+| Submit attendance for test session                  | Status becomes submitted; summary is updated.                       |
+| Request correction                                  | Pending correction record is created.                               |
+| Approve correction as Academic Admin                | Record status changes; summary recalculates.                        |
+| Attempt cross-branch session access                 | Request returns forbidden error.                                    |
+| Generate branch report preview                      | Paginated report returns expected branch data only.                 |
+| Export report                                       | File is generated, signed, audited, and downloadable by actor only. |
 
 ---
 
@@ -437,36 +437,36 @@ Liveness must be lightweight and must not depend on heavy reporting queries.
 
 Backups must cover Attendance-owned tables and the audit records required to interpret changes:
 
-| Data Group | Tables |
-|---|---|
-| Attendance primary data | `attendance_sessions`, `attendance_records` |
-| Correction workflow | `attendance_corrections` |
-| Alerting | `attendance_alert_rules`, `attendance_alerts` |
-| Summaries | `enrollment_attendance_summaries` |
-| Export metadata | `attendance_export_requests` if asynchronous export tracking is enabled |
-| Idempotency safety | `attendance_idempotency_keys` if retry-safety persistence is enabled |
-| Audit dependencies | `audit_logs` records where `moduleCode = 'M08-ATT'` |
+| Data Group                                     | Tables                                                                                            |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Attendance primary data                        | `attendance_sessions`, `attendance_records`                                                       |
+| Correction workflow                            | `attendance_corrections`                                                                          |
+| Alerting                                       | `attendance_alert_rules`, `attendance_alerts`                                                     |
+| Summaries                                      | `enrollment_attendance_summaries`                                                                 |
+| Export metadata                                | `attendance_export_requests` if asynchronous export tracking is enabled                           |
+| Idempotency safety                             | `attendance_idempotency_keys` if retry-safety persistence is enabled                              |
+| Audit dependencies                             | `audit_logs` records where `moduleCode = 'M08-ATT'`                                               |
 | Referenced context data for restore validation | `branches`, `batches`, `sessions`, `enrollments`, `student_profiles`, `trainer_profiles`, `users` |
 
 ### 10.2 Backup Frequency
 
-| Backup Type | Frequency | Purpose |
-|---|---|---|
-| Continuous PITR | As configured by platform database operations; target RPO <= 15 minutes | Recover from accidental updates or corruption. |
-| Daily full backup | Once per day outside peak marking windows | Disaster recovery. |
-| Pre-deployment backup marker | Before schema or data migration | Rollback/recovery anchor. |
-| Pre-backfill snapshot | Before summary recomputation/backfill | Recovery from bad script. |
-| Export storage cleanup snapshot | Not required for temporary files | Export files are reproducible from database if records remain. |
+| Backup Type                     | Frequency                                                               | Purpose                                                        |
+| ------------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------- |
+| Continuous PITR                 | As configured by platform database operations; target RPO <= 15 minutes | Recover from accidental updates or corruption.                 |
+| Daily full backup               | Once per day outside peak marking windows                               | Disaster recovery.                                             |
+| Pre-deployment backup marker    | Before schema or data migration                                         | Rollback/recovery anchor.                                      |
+| Pre-backfill snapshot           | Before summary recomputation/backfill                                   | Recovery from bad script.                                      |
+| Export storage cleanup snapshot | Not required for temporary files                                        | Export files are reproducible from database if records remain. |
 
 ### 10.3 Recovery Priorities
 
-| Priority | Data | Reason |
-|---|---|---|
-| P1 | `attendance_records` and `attendance_sessions` | Primary evidence of attendance. |
-| P2 | `attendance_corrections` and audit logs | Required to explain changes. |
-| P3 | `enrollment_attendance_summaries` | Recomputable but critical for completion flow. |
-| P4 | Alerts and export metadata | Operational support data. |
-| P5 | Temporary export files | Reproducible and short-lived. |
+| Priority | Data                                           | Reason                                         |
+| -------- | ---------------------------------------------- | ---------------------------------------------- |
+| P1       | `attendance_records` and `attendance_sessions` | Primary evidence of attendance.                |
+| P2       | `attendance_corrections` and audit logs        | Required to explain changes.                   |
+| P3       | `enrollment_attendance_summaries`              | Recomputable but critical for completion flow. |
+| P4       | Alerts and export metadata                     | Operational support data.                      |
+| P5       | Temporary export files                         | Reproducible and short-lived.                  |
 
 ### 10.4 Recovery Procedure for Attendance-Owned Tables
 
@@ -513,25 +513,25 @@ For each affected enrollmentId:
 
 ### 11.1 Scheduled Jobs
 
-| Job | Frequency | Purpose | Owner |
-|---|---|---|---|
-| `attendance.detectUnmarkedSessions` | Hourly during business hours | Detect sessions that should have attendance marked. | Attendance Application |
-| `attendance.generateLowAttendanceAlerts` | Daily after business day close | Generate low attendance alerts based on configured rules. | Attendance Application |
-| `attendance.recalculateSummaries` | On demand and nightly safety run | Recompute summaries for changed records. | Attendance Application |
-| `attendance.expireExportFiles` | Hourly | Delete expired temporary export files and mark metadata expired. | Operations |
-| `attendance.cleanupIdempotencyKeys` | Daily | Remove expired idempotency records. | Operations |
-| `attendance.pendingCorrectionReminder` | Daily | Notify approvers for pending correction backlog. | Attendance + Communication |
+| Job                                      | Frequency                        | Purpose                                                          | Owner                      |
+| ---------------------------------------- | -------------------------------- | ---------------------------------------------------------------- | -------------------------- |
+| `attendance.detectUnmarkedSessions`      | Hourly during business hours     | Detect sessions that should have attendance marked.              | Attendance Application     |
+| `attendance.generateLowAttendanceAlerts` | Daily after business day close   | Generate low attendance alerts based on configured rules.        | Attendance Application     |
+| `attendance.recalculateSummaries`        | On demand and nightly safety run | Recompute summaries for changed records.                         | Attendance Application     |
+| `attendance.expireExportFiles`           | Hourly                           | Delete expired temporary export files and mark metadata expired. | Operations                 |
+| `attendance.cleanupIdempotencyKeys`      | Daily                            | Remove expired idempotency records.                              | Operations                 |
+| `attendance.pendingCorrectionReminder`   | Daily                            | Notify approvers for pending correction backlog.                 | Attendance + Communication |
 
 ### 11.2 Job Safety Rules
 
-| Rule ID | Rule |
-|---|---|
-| JOB-M08-001 | Jobs must be idempotent and safe to retry. |
-| JOB-M08-002 | Jobs must be branch-aware and never process deleted branches unless explicitly configured. |
-| JOB-M08-003 | Jobs must log start, completion, counts, duration, and failure reason. |
-| JOB-M08-004 | Jobs must not hard-delete attendance records. |
+| Rule ID     | Rule                                                                                          |
+| ----------- | --------------------------------------------------------------------------------------------- |
+| JOB-M08-001 | Jobs must be idempotent and safe to retry.                                                    |
+| JOB-M08-002 | Jobs must be branch-aware and never process deleted branches unless explicitly configured.    |
+| JOB-M08-003 | Jobs must log start, completion, counts, duration, and failure reason.                        |
+| JOB-M08-004 | Jobs must not hard-delete attendance records.                                                 |
 | JOB-M08-005 | Jobs must not generate duplicate pending alerts for the same enrollment/rule/evaluation date. |
-| JOB-M08-006 | Long-running jobs must use paging/batching to avoid database lock pressure. |
+| JOB-M08-006 | Long-running jobs must use paging/batching to avoid database lock pressure.                   |
 
 ---
 
@@ -539,26 +539,26 @@ For each affected enrollmentId:
 
 ### 12.1 Engineering Dashboard Widgets
 
-| Widget | Metric | Threshold |
-|---|---|---|
-| API Error Rate | `attendance_api_requests_total{status=5xx}` / total | Critical above 2% for 10 minutes. |
-| Submit Latency p95 | `attendance_submission_duration_ms` | Warning above 2.5s; critical above 5s. |
-| Roster Load Latency p95 | `attendance_roster_load_duration_ms` | Warning above 1.5s; critical above 3s. |
-| Audit Failure Count | `attendance_audit_writes_total{status="failed"}` | Critical if > 0. |
-| DB Lock Wait | database lock metrics filtered by attendance tables | Critical if sustained > 2s p95. |
-| Export Failures | `attendance_export_jobs_total{status="failed"}` | Warning above 10% failure. |
-| Branch Access Denials | `attendance_branch_access_denied_total` | Investigate spikes. |
+| Widget                  | Metric                                              | Threshold                              |
+| ----------------------- | --------------------------------------------------- | -------------------------------------- |
+| API Error Rate          | `attendance_api_requests_total{status=5xx}` / total | Critical above 2% for 10 minutes.      |
+| Submit Latency p95      | `attendance_submission_duration_ms`                 | Warning above 2.5s; critical above 5s. |
+| Roster Load Latency p95 | `attendance_roster_load_duration_ms`                | Warning above 1.5s; critical above 3s. |
+| Audit Failure Count     | `attendance_audit_writes_total{status="failed"}`    | Critical if > 0.                       |
+| DB Lock Wait            | database lock metrics filtered by attendance tables | Critical if sustained > 2s p95.        |
+| Export Failures         | `attendance_export_jobs_total{status="failed"}`     | Warning above 10% failure.             |
+| Branch Access Denials   | `attendance_branch_access_denied_total`             | Investigate spikes.                    |
 
 ### 12.2 Operations Dashboard Widgets
 
-| Widget | Description |
-|---|---|
-| Unmarked Sessions by Branch | Count of sessions not marked after allowed window. |
-| Pending Corrections by Branch | Count and aging of correction requests. |
-| Low Attendance Students | Count below threshold by branch/course/batch. |
-| Trainer Submission Compliance | On-time submission rate by trainer. |
-| Export Job Queue | Pending/running/failed export jobs. |
-| Daily Attendance Volume | Records marked per day by branch. |
+| Widget                        | Description                                        |
+| ----------------------------- | -------------------------------------------------- |
+| Unmarked Sessions by Branch   | Count of sessions not marked after allowed window. |
+| Pending Corrections by Branch | Count and aging of correction requests.            |
+| Low Attendance Students       | Count below threshold by branch/course/batch.      |
+| Trainer Submission Compliance | On-time submission rate by trainer.                |
+| Export Job Queue              | Pending/running/failed export jobs.                |
+| Daily Attendance Volume       | Records marked per day by branch.                  |
 
 ---
 
@@ -1012,27 +1012,27 @@ Sensitive attendance mutations must not complete without audit. This is a critic
 
 ### 25.1 Critical Indexes
 
-| Table | Index | Purpose |
-|---|---|---|
-| `attendance_sessions` | `(branch_id, attendance_date, status)` | Dashboard/session list. |
-| `attendance_sessions` | `(session_id) WHERE is_deleted = false` unique | Prevent duplicate active attendance session. |
-| `attendance_records` | `(attendance_session_id, enrollment_id) WHERE is_deleted = false` unique | Prevent duplicate records. |
-| `attendance_records` | `(student_profile_id, marked_at)` | Student attendance view. |
-| `attendance_records` | `(enrollment_id, status)` | Summary calculation. |
-| `attendance_corrections` | `(branch_id, status, requested_at)` | Pending correction queue. |
-| `attendance_alerts` | `(branch_id, severity, status, generated_at)` | Alert dashboard. |
-| `enrollment_attendance_summaries` | `(branch_id, attendance_percentage)` | Low attendance report. |
-| `enrollment_attendance_summaries` | `(enrollment_id) WHERE is_deleted = false` unique | One active summary per enrollment. |
+| Table                             | Index                                                                    | Purpose                                      |
+| --------------------------------- | ------------------------------------------------------------------------ | -------------------------------------------- |
+| `attendance_sessions`             | `(branch_id, attendance_date, status)`                                   | Dashboard/session list.                      |
+| `attendance_sessions`             | `(session_id) WHERE is_deleted = false` unique                           | Prevent duplicate active attendance session. |
+| `attendance_records`              | `(attendance_session_id, enrollment_id) WHERE is_deleted = false` unique | Prevent duplicate records.                   |
+| `attendance_records`              | `(student_profile_id, marked_at)`                                        | Student attendance view.                     |
+| `attendance_records`              | `(enrollment_id, status)`                                                | Summary calculation.                         |
+| `attendance_corrections`          | `(branch_id, status, requested_at)`                                      | Pending correction queue.                    |
+| `attendance_alerts`               | `(branch_id, severity, status, generated_at)`                            | Alert dashboard.                             |
+| `enrollment_attendance_summaries` | `(branch_id, attendance_percentage)`                                     | Low attendance report.                       |
+| `enrollment_attendance_summaries` | `(enrollment_id) WHERE is_deleted = false` unique                        | One active summary per enrollment.           |
 
 ### 25.2 Query Safety Rules
 
-| Rule | Description |
-|---|---|
-| Always filter by branch first | Branch/date predicates must be applied before broad joins. |
-| Always paginate lists | UI tables must use page size limits. |
-| Avoid unbounded exports | Large exports must use asynchronous job. |
-| Avoid PII in indexes unless required | Prefer internal IDs for performance indexes. |
-| Monitor query plans | Report queries must be reviewed when data volume grows. |
+| Rule                                 | Description                                                |
+| ------------------------------------ | ---------------------------------------------------------- |
+| Always filter by branch first        | Branch/date predicates must be applied before broad joins. |
+| Always paginate lists                | UI tables must use page size limits.                       |
+| Avoid unbounded exports              | Large exports must use asynchronous job.                   |
+| Avoid PII in indexes unless required | Prefer internal IDs for performance indexes.               |
+| Monitor query plans                  | Report queries must be reviewed when data volume grows.    |
 
 ---
 
@@ -1081,12 +1081,12 @@ When student reports incorrect attendance:
 
 ## 27. Incident Severity Matrix
 
-| Severity | Condition | Response |
-|---|---|---|
-| SEV-1 | Cross-branch data leak, audit failure allowing mutation, primary attendance data corruption | Immediate incident response, disable affected mutation/report, engineering + compliance escalation. |
-| SEV-2 | Attendance submission unavailable for many trainers, database lock contention, correction approvals failing globally | Engineering on-call response; workaround through admin marking or delayed submission if safe. |
-| SEV-3 | Single branch report slow, export failures, low attendance alerts delayed | Triage during business hours; marking workflows remain available. |
-| SEV-4 | Minor UI issue, isolated validation message problem, non-critical dashboard mismatch | Backlog or next maintenance release. |
+| Severity | Condition                                                                                                            | Response                                                                                            |
+| -------- | -------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| SEV-1    | Cross-branch data leak, audit failure allowing mutation, primary attendance data corruption                          | Immediate incident response, disable affected mutation/report, engineering + compliance escalation. |
+| SEV-2    | Attendance submission unavailable for many trainers, database lock contention, correction approvals failing globally | Engineering on-call response; workaround through admin marking or delayed submission if safe.       |
+| SEV-3    | Single branch report slow, export failures, low attendance alerts delayed                                            | Triage during business hours; marking workflows remain available.                                   |
+| SEV-4    | Minor UI issue, isolated validation message problem, non-critical dashboard mismatch                                 | Backlog or next maintenance release.                                                                |
 
 ---
 
@@ -1146,20 +1146,20 @@ The Attendance module can be promoted to production only when all of the followi
 
 ## 30. Final Operations Checklist
 
-| Checklist Item | Required Status |
-|---|---|
-| Database migration applied | Complete |
-| Attendance tables verified | Complete |
-| Critical indexes verified | Complete |
-| Permissions seeded | Complete |
-| Branch scope resolver tested | Complete |
-| Audit integration tested | Complete |
-| Structured logs verified | Complete |
-| Metrics visible | Complete |
-| Traces visible | Complete |
-| Health checks passing | Complete |
-| Export storage verified | Complete |
-| Backup marker created | Complete |
-| Smoke tests passed | Complete |
-| UAT sign-off captured | Complete |
-| Rollback plan approved | Complete |
+| Checklist Item               | Required Status |
+| ---------------------------- | --------------- |
+| Database migration applied   | Complete        |
+| Attendance tables verified   | Complete        |
+| Critical indexes verified    | Complete        |
+| Permissions seeded           | Complete        |
+| Branch scope resolver tested | Complete        |
+| Audit integration tested     | Complete        |
+| Structured logs verified     | Complete        |
+| Metrics visible              | Complete        |
+| Traces visible               | Complete        |
+| Health checks passing        | Complete        |
+| Export storage verified      | Complete        |
+| Backup marker created        | Complete        |
+| Smoke tests passed           | Complete        |
+| UAT sign-off captured        | Complete        |
+| Rollback plan approved       | Complete        |

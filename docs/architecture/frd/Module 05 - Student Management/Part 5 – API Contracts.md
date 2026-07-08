@@ -1,4 +1,5 @@
 # Part 5 – API Contracts
+
 ## Module 5 – Student Management
 
 ## 1. Purpose
@@ -35,6 +36,7 @@ Portal-specific read-only surfaces:
 All endpoints require authenticated user context except internal trusted server actions invoked inside the modular monolith. Authentication is handled by the shared Identity & Access context.
 
 Every request resolves:
+
 - `userId`
 - `activeBranchId`
 - `assignedBranchIds`
@@ -44,6 +46,7 @@ Every request resolves:
 ## 2.3 Permission Naming Convention
 
 Action-level permissions use:
+
 - `student.read`
 - `student.create`
 - `student.update`
@@ -62,6 +65,7 @@ Action-level permissions use:
 Sensitive identity fields are masked by default in read responses. Returning unmasked identity values requires `student.identity.unmasked.read` in addition to the base read permission and branch scope.
 
 Menu-level permissions use:
+
 - `menu.studentManagement`
 - `menu.studentManagement.list`
 - `menu.studentManagement.duplicateWorkbench`
@@ -69,6 +73,7 @@ Menu-level permissions use:
 - `menu.studentManagement.export`
 
 Report-level permissions use:
+
 - `report.studentMaster`
 - `report.studentStatusHistory`
 - `report.studentDuplicateCases`
@@ -143,7 +148,7 @@ Report-level permissions use:
 ## 3. Shared Zod Schema Building Blocks
 
 ```ts
-import { z } from "zod";
+import { z } from 'zod';
 
 export const uuidSchema = z.string().uuid();
 export const dateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
@@ -206,54 +211,63 @@ export const visaSchema = z
 export const reason500Schema = z.string().trim().min(10).max(500);
 export const reason1000Schema = z.string().trim().min(20).max(1000);
 
-export const statusEnum = z.enum(["Pending", "Active", "Suspended", "Archived"]);
+export const statusEnum = z.enum([
+  'Pending',
+  'Active',
+  'Suspended',
+  'Archived',
+]);
 export const creationSourceEnum = z.enum([
-  "ApprovedAdmission",
-  "DirectRegistration",
-  "CorporateConversion",
-  "WalkInHandoff",
-  "OnlineHandoff",
-  "MergeSurvivor"
+  'ApprovedAdmission',
+  'DirectRegistration',
+  'CorporateConversion',
+  'WalkInHandoff',
+  'OnlineHandoff',
+  'MergeSurvivor',
 ]);
 
-export const exportFormatEnum = z.enum(["CSV", "XLSX"]);
-export const exportScopeEnum = z.enum(["CurrentPage", "AllFiltered", "SelectedRows"]);
+export const exportFormatEnum = z.enum(['CSV', 'XLSX']);
+export const exportScopeEnum = z.enum([
+  'CurrentPage',
+  'AllFiltered',
+  'SelectedRows',
+]);
 ```
 
 ---
 
 ## 4. Endpoint Inventory
 
-| Route | Method | Purpose |
-|---|---|---|
-| `/students` | GET | List students with branch-scoped search/filter/sort/paging |
-| `/students` | POST | Create student via direct registration |
-| `/students/from-admission` | POST | Create or reuse student from approved admission |
-| `/students/from-corporate-participant` | POST | Convert or reuse student from corporate participant |
-| `/students/lookup` | POST | Branch-scoped quick lookup for side drawer/selectors |
-| `/students/duplicate-check` | POST | Run duplicate screening before create/update |
-| `/students/preflight-lookup` | POST | Run global masked identity preflight search before form load |
-| `/students/request-profile-otp` | POST | Request OTP challenge to verify and claim an existing profile |
-| `/students/claim-profile` | POST | Associate an existing profile with a new branch via admission |
-| `/students/{studentId}` | GET | Read student detail summary |
-| `/students/{studentId}` | PATCH | Update student profile fields |
-| `/students/{studentId}/status` | POST | Change student lifecycle status |
-| `/students/{studentId}/archive` | POST | Archive student (soft delete) |
-| `/students/{studentId}/restore` | POST | Restore archived student |
-| `/students/{studentId}/id-card` | POST | Issue or update current ID card state |
-| `/students/{studentId}/id-card/reissue` | POST | Reissue ID card and log history |
-| `/students/{studentId}/timeline` | GET | Get student timeline events |
-| `/students/{studentId}/related-summary` | GET | Admission / enrollment / document summary |
-| `/students/{studentId}/audit` | GET | Get student audit trail |
-| `/duplicate-cases` | GET | List duplicate cases |
-| `/duplicate-cases/{caseId}` | GET | Read duplicate case detail |
-| `/duplicate-cases/{caseId}/resolve` | POST | Resolve duplicate case without merge |
-| `/merge` | POST | Merge duplicate student profiles |
-| `/exports` | POST | Export filtered student dataset |
-| `/exports/{exportLogId}` | GET | Read export job/result metadata |
-| `/student-portal/me/profile` | GET | Student self-view profile |
-| `/student-portal/me/related-summary` | GET | Student self-view related admissions/enrollments/documents summary |
-| `/trainer-portal/batches/{batchId}/students/{studentId}/quick-view` | GET | Trainer read-only student quick view from roster context |
+| Route                                                               | Method | Purpose                                                            |
+| ------------------------------------------------------------------- | ------ | ------------------------------------------------------------------ |
+| `/students`                                                         | GET    | List students with branch-scoped search/filter/sort/paging         |
+| `/students`                                                         | POST   | Create student via direct registration                             |
+| `/students/from-admission`                                          | POST   | Create or reuse student from approved admission                    |
+| `/students/from-corporate-participant`                              | POST   | Convert or reuse student from corporate participant                |
+| `/students/lookup`                                                  | POST   | Branch-scoped quick lookup for side drawer/selectors               |
+| `/students/duplicate-check`                                         | POST   | Run duplicate screening before create/update                       |
+| `/students/preflight-lookup`                                        | POST   | Run global masked identity preflight search before form load       |
+| `/students/request-profile-otp`                                     | POST   | Request OTP challenge to verify and claim an existing profile      |
+| `/students/claim-profile`                                           | POST   | Associate an existing profile with a new branch via admission      |
+| `/students/{studentId}`                                             | GET    | Read student detail summary                                        |
+| `/students/{studentId}`                                             | PATCH  | Update student profile fields                                      |
+| `/students/{studentId}/status`                                      | POST   | Change student lifecycle status                                    |
+| `/students/{studentId}/archive`                                     | POST   | Archive student (soft delete)                                      |
+| `/students/{studentId}/restore`                                     | POST   | Restore archived student                                           |
+| `/students/{studentId}/id-card`                                     | POST   | Issue or update current ID card state                              |
+| `/students/{studentId}/id-card/reissue`                             | POST   | Reissue ID card and log history                                    |
+| `/students/{studentId}/timeline`                                    | GET    | Get student timeline events                                        |
+| `/students/{studentId}/related-summary`                             | GET    | Admission / enrollment / document summary                          |
+| `/students/{studentId}/audit`                                       | GET    | Get student audit trail                                            |
+| `/duplicate-cases`                                                  | GET    | List duplicate cases                                               |
+| `/duplicate-cases/{caseId}`                                         | GET    | Read duplicate case detail                                         |
+| `/duplicate-cases/{caseId}/resolve`                                 | POST   | Resolve duplicate case without merge                               |
+| `/merge`                                                            | POST   | Merge duplicate student profiles                                   |
+| `/exports`                                                          | POST   | Export filtered student dataset                                    |
+| `/exports/{exportLogId}`                                            | GET    | Read export job/result metadata                                    |
+| `/student-portal/me/profile`                                        | GET    | Student self-view profile                                          |
+| `/student-portal/me/related-summary`                                | GET    | Student self-view related admissions/enrollments/documents summary |
+| `/trainer-portal/batches/{batchId}/students/{studentId}/quick-view` | GET    | Trainer read-only student quick view from roster context           |
 
 ---
 
@@ -262,15 +276,18 @@ export const exportScopeEnum = z.enum(["CurrentPage", "AllFiltered", "SelectedRo
 # 5.1 GET `/api/admin/student-management/students`
 
 ### Purpose
+
 List student profiles using server-side filter, sort, paging, and branch scoping.
 
 ### Authentication & Required Permission
+
 - Authenticated user required
 - Required permissions:
   - `student.read`
   - `menu.studentManagement.list`
 
 ### Branch-Scoping Behavior
+
 - If `branchId` is omitted:
   - use `activeBranchId`
 - If `branchId` is provided:
@@ -279,47 +296,64 @@ List student profiles using server-side filter, sort, paging, and branch scoping
 - `branchId` and `consolidated=true` cannot request branches outside the caller’s allowed set
 
 ### Query Schema (Zod)
+
 ```ts
-const listStudentsQuerySchema = z.object({
-  page: z.coerce.number().int().min(1).default(1),
-  pageSize: z.coerce.number().int().min(1).max(100).default(25),
-  branchId: uuidSchema.optional(),
-  consolidated: z.coerce.boolean().optional().default(false),
-  globalSearch: z.string().trim().max(150).optional(),
-  studentStatus: z.array(statusEnum).optional(),
-  studentNumber: z.string().trim().max(50).optional(),
-  primaryPhone: z.string().trim().regex(/^\+?[1-9]\d{0,14}$/).optional(),
-  primaryEmail: z.string().trim().max(254).optional(),
-  civilId: z.string().trim().max(30).optional(),
-  passportNumber: z.string().trim().max(20).optional(),
-  visaNumber: z.string().trim().max(30).optional(),
-  joinedAtFrom: dateSchema.optional(),
-  joinedAtTo: dateSchema.optional(),
-  hasIdCard: z.enum(["All", "Yes", "No"]).optional(),
-  hasAdmissionLink: z.enum(["All", "Yes", "No"]).optional(),
-  hasEnrollment: z.enum(["All", "Yes", "No"]).optional(),
-  isArchived: z.enum(["All", "ActiveOnly", "ArchivedOnly"]).optional().default("ActiveOnly"),
-  sortBy: z.enum([
-    "studentNumber",
-    "fullName",
-    "joinedAt",
-    "branchName",
-    "studentStatus",
-    "updatedAt"
-  ]).default("updatedAt"),
-  sortOrder: z.enum(["asc", "desc"]).default("desc")
-}).superRefine((data, ctx) => {
-  if (data.joinedAtFrom && data.joinedAtTo && data.joinedAtFrom > data.joinedAtTo) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      path: ["joinedAtTo"],
-      message: "joinedAtTo must be greater than or equal to joinedAtFrom"
-    });
-  }
-});
+const listStudentsQuerySchema = z
+  .object({
+    page: z.coerce.number().int().min(1).default(1),
+    pageSize: z.coerce.number().int().min(1).max(100).default(25),
+    branchId: uuidSchema.optional(),
+    consolidated: z.coerce.boolean().optional().default(false),
+    globalSearch: z.string().trim().max(150).optional(),
+    studentStatus: z.array(statusEnum).optional(),
+    studentNumber: z.string().trim().max(50).optional(),
+    primaryPhone: z
+      .string()
+      .trim()
+      .regex(/^\+?[1-9]\d{0,14}$/)
+      .optional(),
+    primaryEmail: z.string().trim().max(254).optional(),
+    civilId: z.string().trim().max(30).optional(),
+    passportNumber: z.string().trim().max(20).optional(),
+    visaNumber: z.string().trim().max(30).optional(),
+    joinedAtFrom: dateSchema.optional(),
+    joinedAtTo: dateSchema.optional(),
+    hasIdCard: z.enum(['All', 'Yes', 'No']).optional(),
+    hasAdmissionLink: z.enum(['All', 'Yes', 'No']).optional(),
+    hasEnrollment: z.enum(['All', 'Yes', 'No']).optional(),
+    isArchived: z
+      .enum(['All', 'ActiveOnly', 'ArchivedOnly'])
+      .optional()
+      .default('ActiveOnly'),
+    sortBy: z
+      .enum([
+        'studentNumber',
+        'fullName',
+        'joinedAt',
+        'branchName',
+        'studentStatus',
+        'updatedAt',
+      ])
+      .default('updatedAt'),
+    sortOrder: z.enum(['asc', 'desc']).default('desc'),
+  })
+  .superRefine((data, ctx) => {
+    if (
+      data.joinedAtFrom &&
+      data.joinedAtTo &&
+      data.joinedAtFrom > data.joinedAtTo
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['joinedAtTo'],
+        message: 'joinedAtTo must be greater than or equal to joinedAtFrom',
+      });
+    }
+  });
 ```
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -364,23 +398,26 @@ const listStudentsQuerySchema = z.object({
 ```
 
 ### Error Response Catalog
-| HTTP | App Error Code | Meaning |
-|---|---|---|
-| 400 | `ERR_STU_INVALID_QUERY` | Query schema invalid |
-| 401 | `ERR_AUTH_UNAUTHENTICATED` | No valid session |
-| 403 | `ERR_AUTH_PERMISSION_DENIED` | Missing `student.read` |
-| 403 | `ERR_AUTH_BRANCH_SCOPE_DENIED` | Requested branch is outside scope |
-| 422 | `ERR_STU_INVALID_DATE_RANGE` | Joined-at range invalid |
-| 500 | `ERR_SYS_INTERNAL` | Unexpected failure |
+
+| HTTP | App Error Code                 | Meaning                           |
+| ---- | ------------------------------ | --------------------------------- |
+| 400  | `ERR_STU_INVALID_QUERY`        | Query schema invalid              |
+| 401  | `ERR_AUTH_UNAUTHENTICATED`     | No valid session                  |
+| 403  | `ERR_AUTH_PERMISSION_DENIED`   | Missing `student.read`            |
+| 403  | `ERR_AUTH_BRANCH_SCOPE_DENIED` | Requested branch is outside scope |
+| 422  | `ERR_STU_INVALID_DATE_RANGE`   | Joined-at range invalid           |
+| 500  | `ERR_SYS_INTERNAL`             | Unexpected failure                |
 
 ---
 
 # 5.2 POST `/api/admin/student-management/students`
 
 ### Purpose
+
 Create student via authorized direct registration flow.
 
 ### Authentication & Required Permission
+
 - Authenticated
 - Required:
   - `student.create`
@@ -388,59 +425,68 @@ Create student via authorized direct registration flow.
   - `menu.studentManagement.list`
 
 ### Branch-Scoping Behavior
+
 - `branchId` in body must be writable by caller
 - If omitted, branch resolution fails; create requires explicit target branch
 
 ### Request Payload Schema (Zod)
+
 ```ts
-const createStudentDirectSchema = z.object({
-  branchId: uuidSchema,
-  creationSource: z.literal("DirectRegistration"),
-  firstNameEnglish: englishNameSchema,
-  middleNameEnglish: optionalEnglishNameSchema.optional(),
-  lastNameEnglish: englishNameSchema,
-  fullNameArabic: arabicNameSchema.optional(),
-  gender: z.enum(["Male", "Female", "Other", "PreferNotToSay"]).optional(),
-  dateOfBirth: dateSchema.optional(),
-  nationalityCode: z.string().trim().min(2).max(10),
-  civilId: civilIdSchema.optional(),
-  passportNumber: passportSchema.optional(),
-  visaNumber: visaSchema.optional(),
-  primaryEmail: emailSchema.optional(),
-  primaryPhone: phoneSchema,
-  joinedAt: dateSchema,
-  idCardIssued: z.boolean().default(false),
-  idCardNumber: z.string().trim().max(50).optional(),
-  remarks: z.string().trim().max(1000).optional()
-}).superRefine((data, ctx) => {
-  const hasIdentifier = !!(
-    data.civilId || data.passportNumber || data.visaNumber || data.primaryEmail || data.primaryPhone
-  );
-  if (!hasIdentifier) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      path: ["civilId"],
-      message: "At least one identifier/contact field is required"
-    });
-  }
-  if (data.idCardIssued && !data.idCardNumber) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      path: ["idCardNumber"],
-      message: "idCardNumber is required when idCardIssued is true"
-    });
-  }
-  if (!data.idCardIssued && data.idCardNumber) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      path: ["idCardNumber"],
-      message: "idCardNumber must be empty when idCardIssued is false"
-    });
-  }
-});
+const createStudentDirectSchema = z
+  .object({
+    branchId: uuidSchema,
+    creationSource: z.literal('DirectRegistration'),
+    firstNameEnglish: englishNameSchema,
+    middleNameEnglish: optionalEnglishNameSchema.optional(),
+    lastNameEnglish: englishNameSchema,
+    fullNameArabic: arabicNameSchema.optional(),
+    gender: z.enum(['Male', 'Female', 'Other', 'PreferNotToSay']).optional(),
+    dateOfBirth: dateSchema.optional(),
+    nationalityCode: z.string().trim().min(2).max(10),
+    civilId: civilIdSchema.optional(),
+    passportNumber: passportSchema.optional(),
+    visaNumber: visaSchema.optional(),
+    primaryEmail: emailSchema.optional(),
+    primaryPhone: phoneSchema,
+    joinedAt: dateSchema,
+    idCardIssued: z.boolean().default(false),
+    idCardNumber: z.string().trim().max(50).optional(),
+    remarks: z.string().trim().max(1000).optional(),
+  })
+  .superRefine((data, ctx) => {
+    const hasIdentifier = !!(
+      data.civilId ||
+      data.passportNumber ||
+      data.visaNumber ||
+      data.primaryEmail ||
+      data.primaryPhone
+    );
+    if (!hasIdentifier) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['civilId'],
+        message: 'At least one identifier/contact field is required',
+      });
+    }
+    if (data.idCardIssued && !data.idCardNumber) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['idCardNumber'],
+        message: 'idCardNumber is required when idCardIssued is true',
+      });
+    }
+    if (!data.idCardIssued && data.idCardNumber) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['idCardNumber'],
+        message: 'idCardNumber must be empty when idCardIssued is false',
+      });
+    }
+  });
 ```
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -465,58 +511,66 @@ const createStudentDirectSchema = z.object({
 ```
 
 ### Error Response Catalog
-| HTTP | App Error Code | Meaning |
-|---|---|---|
-| 400 | `ERR_STU_INVALID_PAYLOAD` | Schema validation failed |
-| 401 | `ERR_AUTH_UNAUTHENTICATED` | No valid session |
-| 403 | `ERR_AUTH_PERMISSION_DENIED` | Missing `student.create` |
-| 403 | `ERR_AUTH_BRANCH_SCOPE_DENIED` | Target branch not writable |
-| 404 | `ERR_CFG_NUMBERING_SERIES_NOT_FOUND` | Student numbering series missing |
-| 409 | `ERR_STU_DUPLICATE_BLOCKING_MATCH` | Blocking duplicate found |
-| 409 | `ERR_STU_PERSON_ALREADY_HAS_PROFILE` | Person already linked to student profile |
-| 409 | `ERR_STU_ID_CARD_NUMBER_EXISTS` | ID card number already in use |
-| 409 | `ERR_STU_IDENTITY_CONFLICT` | Civil ID / passport / visa / email / phone conflicts with existing person/student |
-| 422 | `ERR_STU_INVALID_JOINED_AT` | Joined date invalid |
-| 422 | `ERR_STU_INVALID_DOB` | Date of birth invalid |
-| 500 | `ERR_SYS_INTERNAL` | Unexpected failure |
+
+| HTTP | App Error Code                       | Meaning                                                                           |
+| ---- | ------------------------------------ | --------------------------------------------------------------------------------- |
+| 400  | `ERR_STU_INVALID_PAYLOAD`            | Schema validation failed                                                          |
+| 401  | `ERR_AUTH_UNAUTHENTICATED`           | No valid session                                                                  |
+| 403  | `ERR_AUTH_PERMISSION_DENIED`         | Missing `student.create`                                                          |
+| 403  | `ERR_AUTH_BRANCH_SCOPE_DENIED`       | Target branch not writable                                                        |
+| 404  | `ERR_CFG_NUMBERING_SERIES_NOT_FOUND` | Student numbering series missing                                                  |
+| 409  | `ERR_STU_DUPLICATE_BLOCKING_MATCH`   | Blocking duplicate found                                                          |
+| 409  | `ERR_STU_PERSON_ALREADY_HAS_PROFILE` | Person already linked to student profile                                          |
+| 409  | `ERR_STU_ID_CARD_NUMBER_EXISTS`      | ID card number already in use                                                     |
+| 409  | `ERR_STU_IDENTITY_CONFLICT`          | Civil ID / passport / visa / email / phone conflicts with existing person/student |
+| 422  | `ERR_STU_INVALID_JOINED_AT`          | Joined date invalid                                                               |
+| 422  | `ERR_STU_INVALID_DOB`                | Date of birth invalid                                                             |
+| 500  | `ERR_SYS_INTERNAL`                   | Unexpected failure                                                                |
 
 ---
 
 # 5.3 POST `/api/admin/student-management/students/from-admission`
 
 ### Purpose
+
 Create or reuse student profile from approved admission.
 
 ### Authentication & Required Permission
+
 - Authenticated
 - Required:
   - `student.create`
   - `student.read`
 
 ### Branch-Scoping Behavior
+
 - Admission branch must be writable by caller
 - Branch derived from admission unless explicitly overridden by policy-enabled branch handoff
 
 ### Request Payload Schema (Zod)
+
 ```ts
-const createFromAdmissionSchema = z.object({
-  admissionId: uuidSchema,
-  joinedAt: dateSchema,
-  remarks: z.string().trim().max(1000).optional(),
-  idCardIssued: z.boolean().default(false),
-  idCardNumber: z.string().trim().max(50).optional()
-}).superRefine((data, ctx) => {
-  if (data.idCardIssued && !data.idCardNumber) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      path: ["idCardNumber"],
-      message: "idCardNumber is required when idCardIssued is true"
-    });
-  }
-});
+const createFromAdmissionSchema = z
+  .object({
+    admissionId: uuidSchema,
+    joinedAt: dateSchema,
+    remarks: z.string().trim().max(1000).optional(),
+    idCardIssued: z.boolean().default(false),
+    idCardNumber: z.string().trim().max(50).optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.idCardIssued && !data.idCardNumber) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['idCardNumber'],
+        message: 'idCardNumber is required when idCardIssued is true',
+      });
+    }
+  });
 ```
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -534,6 +588,7 @@ const createFromAdmissionSchema = z.object({
 ```
 
 Possible alternate success:
+
 ```json
 {
   "success": true,
@@ -548,32 +603,37 @@ Possible alternate success:
 ```
 
 ### Error Response Catalog
-| HTTP | App Error Code | Meaning |
-|---|---|---|
-| 404 | `ERR_ADM_NOT_FOUND` | Admission not found or concealed by branch scope |
-| 409 | `ERR_ADM_NOT_APPROVED` | Admission not in Approved state |
-| 409 | `ERR_STU_DUPLICATE_BLOCKING_MATCH` | Blocking duplicate found |
-| 409 | `ERR_STU_PERSON_ALREADY_HAS_PROFILE` | Person already has student profile |
-| 422 | `ERR_STU_INVALID_JOINED_AT` | Joined date invalid |
+
+| HTTP | App Error Code                       | Meaning                                          |
+| ---- | ------------------------------------ | ------------------------------------------------ |
+| 404  | `ERR_ADM_NOT_FOUND`                  | Admission not found or concealed by branch scope |
+| 409  | `ERR_ADM_NOT_APPROVED`               | Admission not in Approved state                  |
+| 409  | `ERR_STU_DUPLICATE_BLOCKING_MATCH`   | Blocking duplicate found                         |
+| 409  | `ERR_STU_PERSON_ALREADY_HAS_PROFILE` | Person already has student profile               |
+| 422  | `ERR_STU_INVALID_JOINED_AT`          | Joined date invalid                              |
 
 ---
 
 # 5.4 POST `/api/admin/student-management/students/from-corporate-participant`
 
 ### Purpose
+
 Convert or reuse student from corporate participant.
 
 ### Authentication & Required Permission
+
 - Authenticated
 - Required:
   - `student.create`
   - `student.read`
 
 ### Branch-Scoping Behavior
+
 - `targetBranchId` must be writable by caller
 - Corporate participant must be readable through corporate workflow context
 
 ### Request Payload Schema (Zod)
+
 ```ts
 const createFromCorporateParticipantSchema = z.object({
   corporateParticipantId: uuidSchema,
@@ -582,11 +642,12 @@ const createFromCorporateParticipantSchema = z.object({
   nationalityCode: z.string().trim().min(2).max(10).optional(),
   primaryEmail: emailSchema.optional(),
   primaryPhone: phoneSchema.optional(),
-  remarks: z.string().trim().max(1000).optional()
+  remarks: z.string().trim().max(1000).optional(),
 });
 ```
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -607,30 +668,35 @@ const createFromCorporateParticipantSchema = z.object({
 ```
 
 ### Error Response Catalog
-| HTTP | App Error Code | Meaning |
-|---|---|---|
-| 404 | `ERR_CORP_PARTICIPANT_NOT_FOUND` | Corporate participant not found |
-| 409 | `ERR_CORP_PARTICIPANT_ALREADY_LINKED` | Already linked to a student |
-| 409 | `ERR_STU_DUPLICATE_BLOCKING_MATCH` | Blocking duplicate found |
-| 422 | `ERR_STU_MISSING_CORPORATE_IDENTITY_DATA` | Required conversion data missing |
+
+| HTTP | App Error Code                            | Meaning                          |
+| ---- | ----------------------------------------- | -------------------------------- |
+| 404  | `ERR_CORP_PARTICIPANT_NOT_FOUND`          | Corporate participant not found  |
+| 409  | `ERR_CORP_PARTICIPANT_ALREADY_LINKED`     | Already linked to a student      |
+| 409  | `ERR_STU_DUPLICATE_BLOCKING_MATCH`        | Blocking duplicate found         |
+| 422  | `ERR_STU_MISSING_CORPORATE_IDENTITY_DATA` | Required conversion data missing |
 
 ---
 
 # 5.5 POST `/api/admin/student-management/students/lookup`
 
 ### Purpose
+
 Quick branch-scoped lookup for selectors and drawers.
 
 ### Authentication & Required Permission
+
 - Authenticated
 - Required:
   - `student.read`
 
 ### Branch-Scoping Behavior
+
 - same as list endpoint
 - results capped at 25
 
 ### Request Payload Schema (Zod)
+
 ```ts
 const studentLookupSchema = z.object({
   branchId: uuidSchema.optional(),
@@ -638,11 +704,12 @@ const studentLookupSchema = z.object({
   globalSearch: z.string().trim().max(150).optional(),
   studentNumber: z.string().trim().max(50).optional(),
   primaryPhone: z.string().trim().max(15).optional(),
-  primaryEmail: z.string().trim().max(254).optional()
+  primaryEmail: z.string().trim().max(254).optional(),
 });
 ```
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -669,6 +736,7 @@ const studentLookupSchema = z.object({
 ```
 
 ### Error Response Catalog
+
 - `400 ERR_STU_INVALID_LOOKUP_PAYLOAD`
 - `403 ERR_AUTH_BRANCH_SCOPE_DENIED`
 - `500 ERR_SYS_INTERNAL`
@@ -678,19 +746,23 @@ const studentLookupSchema = z.object({
 # 5.6 POST `/api/admin/student-management/students/duplicate-check`
 
 ### Purpose
+
 Run duplicate screening before create or update.
 
 ### Authentication & Required Permission
+
 - Authenticated
 - Required:
   - `student.create` for pre-create screening, or
   - `student.update` for pre-update screening
 
 ### Branch-Scoping Behavior
+
 - input branch checked if provided
 - search may scan assigned branches; consolidated cross-branch scanning only if allowed
 
 ### Request Payload Schema (Zod)
+
 ```ts
 const duplicateCheckSchema = z.object({
   currentStudentId: uuidSchema.optional(),
@@ -706,12 +778,13 @@ const duplicateCheckSchema = z.object({
     passportNumber: passportSchema.optional(),
     visaNumber: visaSchema.optional(),
     primaryEmail: emailSchema.optional(),
-    primaryPhone: phoneSchema.optional()
-  })
+    primaryPhone: phoneSchema.optional(),
+  }),
 });
 ```
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -727,10 +800,7 @@ const duplicateCheckSchema = z.object({
       {
         "candidateStudentId": "331b6076-1e36-4b91-b8e6-c96ef1f0d701",
         "matchScore": 96.5,
-        "matchReasons": [
-          "primaryPhone exact match",
-          "civilId exact match"
-        ]
+        "matchReasons": ["primaryPhone exact match", "civilId exact match"]
       }
     ]
   }
@@ -738,6 +808,7 @@ const duplicateCheckSchema = z.object({
 ```
 
 Possible `result` values:
+
 - `NoMatch`
 - `ReviewRequired`
 - `BlockingMatch`
@@ -745,6 +816,7 @@ Possible `result` values:
 - `ExactPersonMatchWithoutStudent`
 
 ### Error Response Catalog
+
 - `400 ERR_STU_INVALID_DUPLICATE_CHECK_PAYLOAD`
 - `403 ERR_AUTH_PERMISSION_DENIED`
 - `403 ERR_AUTH_BRANCH_SCOPE_DENIED`
@@ -755,24 +827,29 @@ Possible `result` values:
 # 5.7 GET `/api/admin/student-management/students/{studentId}`
 
 ### Purpose
+
 Read student detail overview.
 
 ### Authentication & Required Permission
+
 - Required:
   - `student.read`
 
 ### Branch-Scoping Behavior
+
 - target student must be in scope
 - concealed as `404` when out of scope unless explicit denial policy configured
 
 ### Path Schema
+
 ```ts
 const studentIdPathSchema = z.object({
-  studentId: uuidSchema
+  studentId: uuidSchema,
 });
 ```
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -817,6 +894,7 @@ const studentIdPathSchema = z.object({
 ```
 
 ### Error Response Catalog
+
 - `401 ERR_AUTH_UNAUTHENTICATED`
 - `403 ERR_AUTH_PERMISSION_DENIED`
 - `404 ERR_STU_NOT_FOUND`
@@ -827,47 +905,61 @@ const studentIdPathSchema = z.object({
 # 5.8 PATCH `/api/admin/student-management/students/{studentId}`
 
 ### Purpose
+
 Update editable student profile and person-linked fields within this module boundary.
 
 ### Authentication & Required Permission
+
 - Required:
   - `student.update`
 
 ### Branch-Scoping Behavior
+
 - target record must be writable in caller scope
 
 ### Request Payload Schema (Zod)
+
 ```ts
-const updateStudentSchema = z.object({
-  firstNameEnglish: englishNameSchema,
-  middleNameEnglish: optionalEnglishNameSchema.optional(),
-  lastNameEnglish: englishNameSchema,
-  fullNameArabic: arabicNameSchema.optional().nullable(),
-  gender: z.enum(["Male", "Female", "Other", "PreferNotToSay"]).optional().nullable(),
-  dateOfBirth: dateSchema.optional().nullable(),
-  nationalityCode: z.string().trim().min(2).max(10),
-  civilId: civilIdSchema.optional().nullable(),
-  passportNumber: passportSchema.optional().nullable(),
-  visaNumber: visaSchema.optional().nullable(),
-  primaryEmail: emailSchema.optional().nullable(),
-  primaryPhone: phoneSchema,
-  remarks: z.string().trim().max(1000).optional().nullable(),
-  version: z.number().int().min(1)
-}).superRefine((data, ctx) => {
-  const hasIdentifier = !!(
-    data.civilId || data.passportNumber || data.visaNumber || data.primaryEmail || data.primaryPhone
-  );
-  if (!hasIdentifier) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      path: ["civilId"],
-      message: "At least one identifier/contact field is required"
-    });
-  }
-});
+const updateStudentSchema = z
+  .object({
+    firstNameEnglish: englishNameSchema,
+    middleNameEnglish: optionalEnglishNameSchema.optional(),
+    lastNameEnglish: englishNameSchema,
+    fullNameArabic: arabicNameSchema.optional().nullable(),
+    gender: z
+      .enum(['Male', 'Female', 'Other', 'PreferNotToSay'])
+      .optional()
+      .nullable(),
+    dateOfBirth: dateSchema.optional().nullable(),
+    nationalityCode: z.string().trim().min(2).max(10),
+    civilId: civilIdSchema.optional().nullable(),
+    passportNumber: passportSchema.optional().nullable(),
+    visaNumber: visaSchema.optional().nullable(),
+    primaryEmail: emailSchema.optional().nullable(),
+    primaryPhone: phoneSchema,
+    remarks: z.string().trim().max(1000).optional().nullable(),
+    version: z.number().int().min(1),
+  })
+  .superRefine((data, ctx) => {
+    const hasIdentifier = !!(
+      data.civilId ||
+      data.passportNumber ||
+      data.visaNumber ||
+      data.primaryEmail ||
+      data.primaryPhone
+    );
+    if (!hasIdentifier) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['civilId'],
+        message: 'At least one identifier/contact field is required',
+      });
+    }
+  });
 ```
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -882,49 +974,60 @@ const updateStudentSchema = z.object({
 ```
 
 ### Error Response Catalog
-| HTTP | App Error Code | Meaning |
-|---|---|---|
-| 404 | `ERR_STU_NOT_FOUND` | Student not found |
-| 409 | `ERR_STU_CONCURRENT_MODIFICATION` | Version mismatch |
-| 409 | `ERR_STU_DUPLICATE_BLOCKING_MATCH` | Duplicate check blocked update |
-| 409 | `ERR_STU_IDENTITY_CONFLICT` | Unique identity collision |
-| 422 | `ERR_STU_ARCHIVED_READ_ONLY` | Archived records cannot be updated |
+
+| HTTP | App Error Code                     | Meaning                            |
+| ---- | ---------------------------------- | ---------------------------------- |
+| 404  | `ERR_STU_NOT_FOUND`                | Student not found                  |
+| 409  | `ERR_STU_CONCURRENT_MODIFICATION`  | Version mismatch                   |
+| 409  | `ERR_STU_DUPLICATE_BLOCKING_MATCH` | Duplicate check blocked update     |
+| 409  | `ERR_STU_IDENTITY_CONFLICT`        | Unique identity collision          |
+| 422  | `ERR_STU_ARCHIVED_READ_ONLY`       | Archived records cannot be updated |
 
 ---
 
 # 5.9 POST `/api/admin/student-management/students/{studentId}/status`
 
 ### Purpose
+
 Change student lifecycle status and insert status history.
 
 ### Authentication & Required Permission
+
 - Required:
   - `student.status.change`
 
 ### Branch-Scoping Behavior
+
 - target record must be writable in caller scope
 
 ### Request Payload Schema (Zod)
+
 ```ts
-const changeStudentStatusSchema = z.object({
-   targetStatus: z.enum(["Active", "Suspended", "Archived"]),
-  effectiveStartDate: dateSchema,
-  effectiveEndDate: dateSchema.optional(),
-  reason: reason500Schema,
-  notifyRelatedUsers: z.boolean().default(false),
-  version: z.number().int().min(1)
-}).superRefine((data, ctx) => {
-  if (data.effectiveEndDate && data.effectiveEndDate < data.effectiveStartDate) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      path: ["effectiveEndDate"],
-      message: "effectiveEndDate cannot be earlier than effectiveStartDate"
-    });
-  }
-});
+const changeStudentStatusSchema = z
+  .object({
+    targetStatus: z.enum(['Active', 'Suspended', 'Archived']),
+    effectiveStartDate: dateSchema,
+    effectiveEndDate: dateSchema.optional(),
+    reason: reason500Schema,
+    notifyRelatedUsers: z.boolean().default(false),
+    version: z.number().int().min(1),
+  })
+  .superRefine((data, ctx) => {
+    if (
+      data.effectiveEndDate &&
+      data.effectiveEndDate < data.effectiveStartDate
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['effectiveEndDate'],
+        message: 'effectiveEndDate cannot be earlier than effectiveStartDate',
+      });
+    }
+  });
 ```
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -939,6 +1042,7 @@ const changeStudentStatusSchema = z.object({
 ```
 
 ### Error Response Catalog
+
 - `404 ERR_STU_NOT_FOUND`
 - `409 ERR_STU_INVALID_STATUS_TRANSITION`
 - `409 ERR_STU_CONCURRENT_MODIFICATION`
@@ -950,24 +1054,29 @@ const changeStudentStatusSchema = z.object({
 # 5.10 POST `/api/admin/student-management/students/{studentId}/archive`
 
 ### Purpose
+
 Archive student by soft delete semantics.
 
 ### Authentication & Required Permission
+
 - Required:
   - `student.archive`
 
 ### Branch-Scoping Behavior
+
 - target must be writable in caller scope
 
 ### Request Payload Schema (Zod)
+
 ```ts
 const archiveStudentSchema = z.object({
   reason: reason500Schema,
-  version: z.number().int().min(1)
+  version: z.number().int().min(1),
 });
 ```
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -981,6 +1090,7 @@ const archiveStudentSchema = z.object({
 ```
 
 ### Error Response Catalog
+
 - `404 ERR_STU_NOT_FOUND`
 - `409 ERR_STU_ALREADY_ARCHIVED`
 - `409 ERR_STU_ARCHIVE_BLOCKED_BY_ACTIVE_ENROLLMENT_POLICY`
@@ -991,26 +1101,31 @@ const archiveStudentSchema = z.object({
 # 5.11 POST `/api/admin/student-management/students/{studentId}/restore`
 
 ### Purpose
+
 Restore archived student.
 
 ### Authentication & Required Permission
+
 - Required:
   - `student.restore`
 
 ### Branch-Scoping Behavior
+
 - target must be writable in caller scope
 
 ### Request Payload Schema (Zod)
+
 ```ts
 const restoreStudentSchema = z.object({
-  restoreTargetStatus: z.enum(["Active", "Suspended"]),
+  restoreTargetStatus: z.enum(['Active', 'Suspended']),
   effectiveStartDate: dateSchema,
   reason: reason500Schema,
-  version: z.number().int().min(1)
+  version: z.number().int().min(1),
 });
 ```
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -1023,6 +1138,7 @@ const restoreStudentSchema = z.object({
 ```
 
 ### Error Response Catalog
+
 - `404 ERR_STU_NOT_FOUND`
 - `409 ERR_STU_NOT_ARCHIVED`
 - `409 ERR_STU_CONCURRENT_MODIFICATION`
@@ -1033,35 +1149,42 @@ const restoreStudentSchema = z.object({
 # 5.12 POST `/api/admin/student-management/students/{studentId}/id-card`
 
 ### Purpose
+
 Issue first ID card or correct current ID card state.
 
 ### Authentication & Required Permission
+
 - Required:
   - `student.idcard.manage`
 
 ### Branch-Scoping Behavior
+
 - target must be writable in caller scope
 
 ### Request Payload Schema (Zod)
+
 ```ts
-const issueOrUpdateIdCardSchema = z.object({
-  idCardIssued: z.boolean(),
-  idCardNumber: z.string().trim().max(50).optional(),
-  issueDate: dateSchema.optional(),
-  issueRemarks: reason500Schema.optional(),
-  version: z.number().int().min(1)
-}).superRefine((data, ctx) => {
-  if (data.idCardIssued && !data.idCardNumber) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      path: ["idCardNumber"],
-      message: "idCardNumber is required when idCardIssued is true"
-    });
-  }
-});
+const issueOrUpdateIdCardSchema = z
+  .object({
+    idCardIssued: z.boolean(),
+    idCardNumber: z.string().trim().max(50).optional(),
+    issueDate: dateSchema.optional(),
+    issueRemarks: reason500Schema.optional(),
+    version: z.number().int().min(1),
+  })
+  .superRefine((data, ctx) => {
+    if (data.idCardIssued && !data.idCardNumber) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['idCardNumber'],
+        message: 'idCardNumber is required when idCardIssued is true',
+      });
+    }
+  });
 ```
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -1075,6 +1198,7 @@ const issueOrUpdateIdCardSchema = z.object({
 ```
 
 ### Error Response Catalog
+
 - `404 ERR_STU_NOT_FOUND`
 - `409 ERR_STU_ID_CARD_NUMBER_EXISTS`
 - `409 ERR_STU_CONCURRENT_MODIFICATION`
@@ -1085,26 +1209,31 @@ const issueOrUpdateIdCardSchema = z.object({
 # 5.13 POST `/api/admin/student-management/students/{studentId}/id-card/reissue`
 
 ### Purpose
+
 Reissue an already-issued ID card and preserve history.
 
 ### Authentication & Required Permission
+
 - Required:
   - `student.idcard.manage`
 
 ### Branch-Scoping Behavior
+
 - target must be writable in caller scope
 
 ### Request Payload Schema (Zod)
+
 ```ts
 const reissueIdCardSchema = z.object({
   newIdCardNumber: z.string().trim().min(1).max(50),
   reissueDate: dateSchema,
   reissueReason: reason500Schema,
-  version: z.number().int().min(1)
+  version: z.number().int().min(1),
 });
 ```
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -1118,6 +1247,7 @@ const reissueIdCardSchema = z.object({
 ```
 
 ### Error Response Catalog
+
 - `404 ERR_STU_NOT_FOUND`
 - `409 ERR_STU_ID_CARD_NOT_ISSUED`
 - `409 ERR_STU_ID_CARD_NUMBER_EXISTS`
@@ -1129,33 +1259,41 @@ const reissueIdCardSchema = z.object({
 # 5.14 GET `/api/admin/student-management/students/{studentId}/timeline`
 
 ### Purpose
+
 Return chronological timeline of student module events.
 
 ### Authentication & Required Permission
+
 - Required:
   - `student.read`
 
 ### Query Schema
+
 ```ts
 const timelineQuerySchema = z.object({
-  eventTypes: z.array(z.enum([
-    "StudentCreated",
-    "StudentUpdated",
-    "StatusChanged",
-    "IdCardIssued",
-    "IdCardReissued",
-    "DuplicateFlagged",
-    "MergeCompleted",
-    "Archived",
-    "Restored"
-  ])).optional(),
+  eventTypes: z
+    .array(
+      z.enum([
+        'StudentCreated',
+        'StudentUpdated',
+        'StatusChanged',
+        'IdCardIssued',
+        'IdCardReissued',
+        'DuplicateFlagged',
+        'MergeCompleted',
+        'Archived',
+        'Restored',
+      ]),
+    )
+    .optional(),
   dateFrom: dateSchema.optional(),
   dateTo: dateSchema.optional(),
-  actorUserId: uuidSchema.optional()
+  actorUserId: uuidSchema.optional(),
 });
 ```
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -1180,6 +1318,7 @@ const timelineQuerySchema = z.object({
 ```
 
 ### Error Catalog
+
 - `404 ERR_STU_NOT_FOUND`
 - `422 ERR_STU_INVALID_DATE_RANGE`
 
@@ -1188,17 +1327,21 @@ const timelineQuerySchema = z.object({
 # 5.15 GET `/api/admin/student-management/students/{studentId}/related-summary`
 
 ### Purpose
+
 Read-only summary of admissions, enrollments, and documents linked to student.
 
 ### Authentication & Required Permission
+
 - Required:
   - `student.read`
 
 ### Branch-Scoping Behavior
+
 - student must be in scope
 - downstream summaries filtered to allowed scope and downstream permissions
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -1238,6 +1381,7 @@ Read-only summary of admissions, enrollments, and documents linked to student.
 ```
 
 ### Error Catalog
+
 - `404 ERR_STU_NOT_FOUND`
 - `403 ERR_AUTH_PERMISSION_DENIED`
 
@@ -1246,18 +1390,22 @@ Read-only summary of admissions, enrollments, and documents linked to student.
 # 5.16 GET `/api/admin/student-management/students/{studentId}/audit`
 
 ### Purpose
+
 View module-specific and central audit history for a student.
 
 ### Authentication & Required Permission
+
 - Required:
   - `student.audit.read`
   - or `audit.read`
 
 ### Branch-Scoping Behavior
+
 - read only within caller’s allowed branch scope
 - concealed as `404` where required
 
 ### Query Schema
+
 ```ts
 const auditQuerySchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
@@ -1265,11 +1413,12 @@ const auditQuerySchema = z.object({
   actionTypes: z.array(z.string().trim().max(50)).optional(),
   performedBy: uuidSchema.optional(),
   dateFrom: dateSchema.optional(),
-  dateTo: dateSchema.optional()
+  dateTo: dateSchema.optional(),
 });
 ```
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -1301,6 +1450,7 @@ const auditQuerySchema = z.object({
 ```
 
 ### Error Catalog
+
 - `403 ERR_AUTH_PERMISSION_DENIED`
 - `404 ERR_STU_NOT_FOUND`
 - `500 ERR_SYS_INTERNAL`
@@ -1310,35 +1460,60 @@ const auditQuerySchema = z.object({
 # 5.17 GET `/api/admin/student-management/duplicate-cases`
 
 ### Purpose
+
 List duplicate cases.
 
 ### Authentication & Required Permission
+
 - Required:
   - `student.duplicate.read`
   - `menu.studentManagement.duplicateWorkbench`
 
 ### Branch-Scoping Behavior
+
 - branch-scoped list
 - consolidated optional when allowed
 
 ### Query Schema
+
 ```ts
 const listDuplicateCasesQuerySchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
   pageSize: z.coerce.number().int().min(1).max(100).default(25),
   branchId: uuidSchema.optional(),
   consolidated: z.coerce.boolean().default(false),
-  caseStatus: z.array(z.enum(["Open", "UnderReview", "Merged", "ResolvedNoDuplicate", "Cancelled"])).optional(),
-  riskLevel: z.array(z.enum(["Low", "Medium", "High", "Blocking"])).optional(),
-  sourceType: z.array(z.enum(["Create", "Update", "BatchScan", "ManualReview", "CorporateConversion"])).optional(),
+  caseStatus: z
+    .array(
+      z.enum([
+        'Open',
+        'UnderReview',
+        'Merged',
+        'ResolvedNoDuplicate',
+        'Cancelled',
+      ]),
+    )
+    .optional(),
+  riskLevel: z.array(z.enum(['Low', 'Medium', 'High', 'Blocking'])).optional(),
+  sourceType: z
+    .array(
+      z.enum([
+        'Create',
+        'Update',
+        'BatchScan',
+        'ManualReview',
+        'CorporateConversion',
+      ]),
+    )
+    .optional(),
   createdFrom: dateSchema.optional(),
   createdTo: dateSchema.optional(),
-  sortBy: z.enum(["createdAt", "riskLevel", "caseNumber"]).default("createdAt"),
-  sortOrder: z.enum(["asc", "desc"]).default("desc")
+  sortBy: z.enum(['createdAt', 'riskLevel', 'caseNumber']).default('createdAt'),
+  sortOrder: z.enum(['asc', 'desc']).default('desc'),
 });
 ```
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -1367,6 +1542,7 @@ const listDuplicateCasesQuerySchema = z.object({
 ```
 
 ### Error Catalog
+
 - `403 ERR_AUTH_PERMISSION_DENIED`
 - `403 ERR_AUTH_BRANCH_SCOPE_DENIED`
 - `500 ERR_SYS_INTERNAL`
@@ -1376,13 +1552,16 @@ const listDuplicateCasesQuerySchema = z.object({
 # 5.18 GET `/api/admin/student-management/duplicate-cases/{caseId}`
 
 ### Purpose
+
 Read duplicate case detail including candidate items.
 
 ### Authentication & Required Permission
+
 - Required:
   - `student.duplicate.read`
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -1399,10 +1578,7 @@ Read duplicate case detail including candidate items.
         "candidatePersonId": "e3ef5d07-5d42-4ef1-9db6-632ad8e27e32",
         "candidateBranchId": "9b38949b-4c2f-4cd5-9cb4-8c6dba679101",
         "matchScore": 96.5,
-        "matchReasons": [
-          "civilId exact match",
-          "primaryPhone exact match"
-        ],
+        "matchReasons": ["civilId exact match", "primaryPhone exact match"],
         "isPrimaryCandidate": true
       }
     ]
@@ -1411,6 +1587,7 @@ Read duplicate case detail including candidate items.
 ```
 
 ### Error Catalog
+
 - `404 ERR_STU_DUPLICATE_CASE_NOT_FOUND`
 - `403 ERR_AUTH_PERMISSION_DENIED`
 
@@ -1419,30 +1596,44 @@ Read duplicate case detail including candidate items.
 # 5.19 POST `/api/admin/student-management/duplicate-cases/{caseId}/resolve`
 
 ### Purpose
+
 Resolve duplicate case without merge, such as keep existing, create new with exception, or mark not duplicate.
 
 ### Authentication & Required Permission
+
 - Required:
   - `student.duplicate.resolve`
 
 ### Request Payload Schema (Zod)
+
 ```ts
-const resolveDuplicateCaseSchema = z.object({
-  resolutionType: z.enum(["KeepExisting", "CreateNew", "NotDuplicate", "Cancelled"]),
-  resolutionReason: reason1000Schema,
-  chosenCandidateStudentId: uuidSchema.optional()
-}).superRefine((data, ctx) => {
-  if (data.resolutionType === "KeepExisting" && !data.chosenCandidateStudentId) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      path: ["chosenCandidateStudentId"],
-      message: "chosenCandidateStudentId is required for KeepExisting"
-    });
-  }
-});
+const resolveDuplicateCaseSchema = z
+  .object({
+    resolutionType: z.enum([
+      'KeepExisting',
+      'CreateNew',
+      'NotDuplicate',
+      'Cancelled',
+    ]),
+    resolutionReason: reason1000Schema,
+    chosenCandidateStudentId: uuidSchema.optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (
+      data.resolutionType === 'KeepExisting' &&
+      !data.chosenCandidateStudentId
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['chosenCandidateStudentId'],
+        message: 'chosenCandidateStudentId is required for KeepExisting',
+      });
+    }
+  });
 ```
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -1456,6 +1647,7 @@ const resolveDuplicateCaseSchema = z.object({
 ```
 
 ### Error Catalog
+
 - `404 ERR_STU_DUPLICATE_CASE_NOT_FOUND`
 - `409 ERR_STU_DUPLICATE_CASE_ALREADY_RESOLVED`
 - `422 ERR_STU_INVALID_DUPLICATE_RESOLUTION`
@@ -1465,52 +1657,59 @@ const resolveDuplicateCaseSchema = z.object({
 # 5.20 POST `/api/admin/student-management/merge`
 
 ### Purpose
+
 Merge duplicate student profiles.
 
 ### Authentication & Required Permission
+
 - Required:
   - `student.merge`
   - `student.duplicate.resolve`
 
 ### Branch-Scoping Behavior
+
 - both source and survivor students must be readable and mutable in caller scope
 - cross-branch merge allowed only for consolidated role with explicit permission
 
 ### Request Payload Schema (Zod)
+
 ```ts
-const mergeStudentsSchema = z.object({
-  duplicateCaseId: uuidSchema.optional(),
-  survivorStudentId: uuidSchema,
-  sourceStudentId: uuidSchema,
-  mergeReason: reason1000Schema,
-  fieldResolution: z.object({
-    firstNameEnglish: z.enum(["survivor", "source"]).optional(),
-    middleNameEnglish: z.enum(["survivor", "source"]).optional(),
-    lastNameEnglish: z.enum(["survivor", "source"]).optional(),
-    fullNameArabic: z.enum(["survivor", "source"]).optional(),
-    gender: z.enum(["survivor", "source"]).optional(),
-    dateOfBirth: z.enum(["survivor", "source"]).optional(),
-    nationalityCode: z.enum(["survivor", "source"]).optional(),
-    civilId: z.enum(["survivor", "source"]).optional(),
-    passportNumber: z.enum(["survivor", "source"]).optional(),
-    visaNumber: z.enum(["survivor", "source"]).optional(),
-    primaryEmail: z.enum(["survivor", "source"]).optional(),
-    primaryPhone: z.enum(["survivor", "source"]).optional(),
-    remarks: z.enum(["survivor", "source"]).optional()
-  }),
-  confirmationText: z.string().trim().min(1)
-}).superRefine((data, ctx) => {
-  if (data.survivorStudentId === data.sourceStudentId) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      path: ["sourceStudentId"],
-      message: "sourceStudentId must differ from survivorStudentId"
-    });
-  }
-});
+const mergeStudentsSchema = z
+  .object({
+    duplicateCaseId: uuidSchema.optional(),
+    survivorStudentId: uuidSchema,
+    sourceStudentId: uuidSchema,
+    mergeReason: reason1000Schema,
+    fieldResolution: z.object({
+      firstNameEnglish: z.enum(['survivor', 'source']).optional(),
+      middleNameEnglish: z.enum(['survivor', 'source']).optional(),
+      lastNameEnglish: z.enum(['survivor', 'source']).optional(),
+      fullNameArabic: z.enum(['survivor', 'source']).optional(),
+      gender: z.enum(['survivor', 'source']).optional(),
+      dateOfBirth: z.enum(['survivor', 'source']).optional(),
+      nationalityCode: z.enum(['survivor', 'source']).optional(),
+      civilId: z.enum(['survivor', 'source']).optional(),
+      passportNumber: z.enum(['survivor', 'source']).optional(),
+      visaNumber: z.enum(['survivor', 'source']).optional(),
+      primaryEmail: z.enum(['survivor', 'source']).optional(),
+      primaryPhone: z.enum(['survivor', 'source']).optional(),
+      remarks: z.enum(['survivor', 'source']).optional(),
+    }),
+    confirmationText: z.string().trim().min(1),
+  })
+  .superRefine((data, ctx) => {
+    if (data.survivorStudentId === data.sourceStudentId) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['sourceStudentId'],
+        message: 'sourceStudentId must differ from survivorStudentId',
+      });
+    }
+  });
 ```
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -1530,69 +1729,83 @@ const mergeStudentsSchema = z.object({
 ```
 
 ### Error Response Catalog
-| HTTP | App Error Code | Meaning |
-|---|---|---|
-| 404 | `ERR_STU_NOT_FOUND` | One or both students not found |
-| 409 | `ERR_STU_MERGE_SELF_FORBIDDEN` | Same source and survivor |
-| 409 | `ERR_STU_MERGE_SCOPE_DENIED` | Cross-branch merge not allowed |
-| 409 | `ERR_STU_MERGE_ALREADY_COMPLETED_FOR_SOURCE` | Source already merged previously |
-| 409 | `ERR_STU_CONCURRENT_MODIFICATION` | Source or survivor changed before merge commit |
-| 422 | `ERR_STU_INVALID_MERGE_PAYLOAD` | Confirmation or field resolution invalid |
-| 500 | `ERR_STU_MERGE_TRANSACTION_FAILED` | Merge transaction failed |
+
+| HTTP | App Error Code                               | Meaning                                        |
+| ---- | -------------------------------------------- | ---------------------------------------------- |
+| 404  | `ERR_STU_NOT_FOUND`                          | One or both students not found                 |
+| 409  | `ERR_STU_MERGE_SELF_FORBIDDEN`               | Same source and survivor                       |
+| 409  | `ERR_STU_MERGE_SCOPE_DENIED`                 | Cross-branch merge not allowed                 |
+| 409  | `ERR_STU_MERGE_ALREADY_COMPLETED_FOR_SOURCE` | Source already merged previously               |
+| 409  | `ERR_STU_CONCURRENT_MODIFICATION`            | Source or survivor changed before merge commit |
+| 422  | `ERR_STU_INVALID_MERGE_PAYLOAD`              | Confirmation or field resolution invalid       |
+| 500  | `ERR_STU_MERGE_TRANSACTION_FAILED`           | Merge transaction failed                       |
 
 ---
 
 # 5.21 POST `/api/admin/student-management/exports`
 
 ### Purpose
+
 Export filtered student data and create export audit log.
 
 ### Authentication & Required Permission
+
 - Required:
   - `student.export`
   - `report.studentMaster` or `menu.studentManagement.export`
 
 ### Branch-Scoping Behavior
+
 - filter branch scope enforced server-side
 - export cannot exceed caller’s readable branches
 - when identity-sensitive fields included, additional permission required:
   - `student.identity.unmasked.read` (internal extended permission)
 
 ### Request Payload Schema (Zod)
+
 ```ts
-const exportStudentsSchema = z.object({
-  branchId: uuidSchema.optional(),
-  consolidated: z.boolean().default(false),
-  exportScope: exportScopeEnum,
-  format: exportFormatEnum,
-  includeMaskedIdentity: z.boolean().default(false),
-  selectedStudentIds: z.array(uuidSchema).max(1000).optional(),
-  filters: z.object({
-    globalSearch: z.string().trim().max(150).optional(),
-    studentStatus: z.array(statusEnum).optional(),
-    isArchived: z.enum(["All", "ActiveOnly", "ArchivedOnly"]).optional()
-  }).default({}),
-  reason: z.string().trim().min(10).max(500).optional()
-}).superRefine((data, ctx) => {
-  if (data.includeMaskedIdentity && !data.reason) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      path: ["reason"],
-      message: "reason is required when includeMaskedIdentity is true"
-    });
-  }
-  if (data.exportScope === "SelectedRows" && (!data.selectedStudentIds || data.selectedStudentIds.length === 0)) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      path: ["selectedStudentIds"],
-      message: "selectedStudentIds are required for SelectedRows"
-    });
-  }
-});
+const exportStudentsSchema = z
+  .object({
+    branchId: uuidSchema.optional(),
+    consolidated: z.boolean().default(false),
+    exportScope: exportScopeEnum,
+    format: exportFormatEnum,
+    includeMaskedIdentity: z.boolean().default(false),
+    selectedStudentIds: z.array(uuidSchema).max(1000).optional(),
+    filters: z
+      .object({
+        globalSearch: z.string().trim().max(150).optional(),
+        studentStatus: z.array(statusEnum).optional(),
+        isArchived: z.enum(['All', 'ActiveOnly', 'ArchivedOnly']).optional(),
+      })
+      .default({}),
+    reason: z.string().trim().min(10).max(500).optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.includeMaskedIdentity && !data.reason) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['reason'],
+        message: 'reason is required when includeMaskedIdentity is true',
+      });
+    }
+    if (
+      data.exportScope === 'SelectedRows' &&
+      (!data.selectedStudentIds || data.selectedStudentIds.length === 0)
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['selectedStudentIds'],
+        message: 'selectedStudentIds are required for SelectedRows',
+      });
+    }
+  });
 ```
 
 ### Success Response DTO
+
 Immediate:
+
 ```json
 {
   "success": true,
@@ -1606,6 +1819,7 @@ Immediate:
 ```
 
 Queued large export:
+
 ```json
 {
   "success": true,
@@ -1618,6 +1832,7 @@ Queued large export:
 ```
 
 ### Error Response Catalog
+
 - `403 ERR_AUTH_PERMISSION_DENIED`
 - `403 ERR_AUTH_BRANCH_SCOPE_DENIED`
 - `403 ERR_STU_UNMASKED_IDENTITY_PERMISSION_REQUIRED`
@@ -1630,16 +1845,20 @@ Queued large export:
 # 5.22 GET `/api/admin/student-management/exports/{exportLogId}`
 
 ### Purpose
+
 Read export job/result metadata.
 
 ### Authentication & Required Permission
+
 - Required:
   - `student.export`
 
 ### Branch-Scoping Behavior
+
 - caller can only read logs for branches they are entitled to
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -1659,6 +1878,7 @@ Read export job/result metadata.
 ```
 
 ### Error Catalog
+
 - `404 ERR_STU_EXPORT_LOG_NOT_FOUND`
 - `403 ERR_AUTH_PERMISSION_DENIED`
 
@@ -1667,18 +1887,22 @@ Read export job/result metadata.
 # 5.23 GET `/api/student-portal/student-management/me/profile`
 
 ### Purpose
+
 Read-only student self profile.
 
 ### Authentication & Required Permission
+
 - Authenticated portal user
 - Required:
   - `student.portal.self.read`
 
 ### Branch-Scoping Behavior
+
 - not branch-browsable
 - resolved only through authenticated portal account’s linked student profile
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -1690,8 +1914,8 @@ Read-only student self profile.
       "ar": "أحمد خالد"
     },
     "nationalityCode": "OM",
-        "primaryEmailMasked": "a***@example.com",
-        "primaryPhoneMasked": "+968****4567",
+    "primaryEmailMasked": "a***@example.com",
+    "primaryPhoneMasked": "+968****4567",
     "joinedAt": "2026-06-01",
     "idCardIssued": true,
     "studentStatus": "Active"
@@ -1700,6 +1924,7 @@ Read-only student self profile.
 ```
 
 ### Error Catalog
+
 - `404 ERR_STU_PORTAL_PROFILE_NOT_LINKED`
 - `403 ERR_AUTH_PERMISSION_DENIED`
 
@@ -1708,13 +1933,16 @@ Read-only student self profile.
 # 5.24 GET `/api/student-portal/student-management/me/related-summary`
 
 ### Purpose
+
 Student self-view of admissions/enrollments/documents summary.
 
 ### Authentication & Required Permission
+
 - Required:
   - `student.portal.self.read`
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -1727,6 +1955,7 @@ Student self-view of admissions/enrollments/documents summary.
 ```
 
 ### Error Catalog
+
 - `404 ERR_STU_PORTAL_PROFILE_NOT_LINKED`
 - `500 ERR_SYS_INTERNAL`
 
@@ -1735,17 +1964,21 @@ Student self-view of admissions/enrollments/documents summary.
 # 5.25 GET `/api/trainer-portal/batches/{batchId}/students/{studentId}/quick-view`
 
 ### Purpose
+
 Provide trainer with read-only quick-view of student in roster context.
 
 ### Authentication & Required Permission
+
 - Required:
   - `student.trainer.roster.read`
 
 ### Branch-Scoping Behavior
+
 - trainer must be assigned to the batch or authorized via training-delivery permission
 - student must belong to the requested batch roster context
 
 ### Success Response DTO
+
 ```json
 {
   "success": true,
@@ -1756,12 +1989,10 @@ Provide trainer with read-only quick-view of student in roster context.
       "en": "Ahmed Khalid",
       "ar": "أحمد خالد"
     },
-        "primaryPhoneMasked": "+968****4567",
+    "primaryPhoneMasked": "+968****4567",
     "nationalityCode": "OM",
     "studentStatus": "Active",
-    "identityAlerts": [
-      "DuplicateReviewPending"
-    ],
+    "identityAlerts": ["DuplicateReviewPending"],
     "enrollmentContext": {
       "batchId": "d8a2fa5d-df6b-4ad5-9833-bf607dfec0e9",
       "enrollmentStatus": "Active"
@@ -1771,28 +2002,39 @@ Provide trainer with read-only quick-view of student in roster context.
 ```
 
 ### Error Catalog
+
 - `403 ERR_AUTH_PERMISSION_DENIED`
 - `404 ERR_TRN_BATCH_OR_STUDENT_NOT_FOUND_IN_CONTEXT`
 
 ### 5.22 Global Preflight Lookup
-* **Route:** `/api/v1/students/preflight-lookup`
-* **Method:** `POST`
-* **Purpose:** Runs a cross-branch search on identity keys before displaying the registration form to detect duplicates and enable cross-branch enrollment.
-* **Authentication & Required Permission:** `student.create`
-* **Branch-Scoping Behavior:** Bypasses branch-scoping limitations to perform a global look-up. Returns a masked summary if a duplicate profile exists in another branch, protecting student PII.
-* **Request Payload Schema (Zod):**
+
+- **Route:** `/api/v1/students/preflight-lookup`
+- **Method:** `POST`
+- **Purpose:** Runs a cross-branch search on identity keys before displaying the registration form to detect duplicates and enable cross-branch enrollment.
+- **Authentication & Required Permission:** `student.create`
+- **Branch-Scoping Behavior:** Bypasses branch-scoping limitations to perform a global look-up. Returns a masked summary if a duplicate profile exists in another branch, protecting student PII.
+- **Request Payload Schema (Zod):**
+
 ```typescript
-const preflightLookupSchema = z.object({
-  civilId: z.string().trim().min(3).optional(),
-  passportNumber: z.string().trim().min(3).optional(),
-  email: z.string().email().optional(),
-  mobile: z.string().trim().min(5).optional(),
-}).refine(data => data.civilId || data.passportNumber || data.email || data.mobile, {
-  message: "At least one lookup key (civilId, passportNumber, email, or mobile) must be provided.",
-  path: ["civilId"],
-});
+const preflightLookupSchema = z
+  .object({
+    civilId: z.string().trim().min(3).optional(),
+    passportNumber: z.string().trim().min(3).optional(),
+    email: z.string().email().optional(),
+    mobile: z.string().trim().min(5).optional(),
+  })
+  .refine(
+    (data) => data.civilId || data.passportNumber || data.email || data.mobile,
+    {
+      message:
+        'At least one lookup key (civilId, passportNumber, email, or mobile) must be provided.',
+      path: ['civilId'],
+    },
+  );
 ```
-* **Success Response DTO:**
+
+- **Success Response DTO:**
+
 ```json
 {
   "success": true,
@@ -1810,24 +2052,30 @@ const preflightLookupSchema = z.object({
   }
 }
 ```
-* **Error Catalog:**
-- `400 ERR_VAL_FAILED`
-- `500 ERR_STUDENT_INTERNAL_ERROR`
+
+- **Error Catalog:**
+
+* `400 ERR_VAL_FAILED`
+* `500 ERR_STUDENT_INTERNAL_ERROR`
 
 ### 5.23 Request Profile Verification OTP
-* **Route:** `/api/v1/students/request-profile-otp`
-* **Method:** `POST`
-* **Purpose:** Sends a verification code via SMS/Email to authorize profile linkage/transfer to the requesting branch.
-* **Authentication & Required Permission:** `student.create`
-* **Branch-Scoping Behavior:** Scoped to the target student profile context.
-* **Request Payload Schema (Zod):**
+
+- **Route:** `/api/v1/students/request-profile-otp`
+- **Method:** `POST`
+- **Purpose:** Sends a verification code via SMS/Email to authorize profile linkage/transfer to the requesting branch.
+- **Authentication & Required Permission:** `student.create`
+- **Branch-Scoping Behavior:** Scoped to the target student profile context.
+- **Request Payload Schema (Zod):**
+
 ```typescript
 const requestOtpSchema = z.object({
   personId: z.string().uuid(),
-  channel: z.enum(["SMS", "Email", "Both"]).default("Both"),
+  channel: z.enum(['SMS', 'Email', 'Both']).default('Both'),
 });
 ```
-* **Success Response DTO:**
+
+- **Success Response DTO:**
+
 ```json
 {
   "success": true,
@@ -1837,17 +2085,21 @@ const requestOtpSchema = z.object({
   }
 }
 ```
-* **Error Catalog:**
-- `400 ERR_VAL_FAILED`
-- `404 ERR_STU_NOT_FOUND`
+
+- **Error Catalog:**
+
+* `400 ERR_VAL_FAILED`
+* `404 ERR_STU_NOT_FOUND`
 
 ### 5.24 Claim Profile (Register in Requesting Branch)
-* **Route:** `/api/v1/students/claim-profile`
-* **Method:** `POST`
-* **Purpose:** Links an existing student profile in another branch to the requesting branch. It creates a new `Admission` record in the target branch, which dynamically authorizes the local staff to view the student profile.
-* **Authentication & Required Permission:** `student.create`
-* **Branch-Scoping Behavior:** The counselor must have branch access to the `branchId` they are registering the student in.
-* **Request Payload Schema (Zod):**
+
+- **Route:** `/api/v1/students/claim-profile`
+- **Method:** `POST`
+- **Purpose:** Links an existing student profile in another branch to the requesting branch. It creates a new `Admission` record in the target branch, which dynamically authorizes the local staff to view the student profile.
+- **Authentication & Required Permission:** `student.create`
+- **Branch-Scoping Behavior:** The counselor must have branch access to the `branchId` they are registering the student in.
+- **Request Payload Schema (Zod):**
+
 ```typescript
 const claimProfileSchema = z.object({
   personId: z.string().uuid(),
@@ -1857,7 +2109,9 @@ const claimProfileSchema = z.object({
   leadId: z.string().uuid().optional(),
 });
 ```
-* **Success Response DTO:**
+
+- **Success Response DTO:**
+
 ```json
 {
   "success": true,
@@ -1869,10 +2123,12 @@ const claimProfileSchema = z.object({
   }
 }
 ```
-* **Error Catalog:**
-- `400 ERR_VAL_FAILED`
-- `409 ERR_STU_OTP_INVALID`
-- `409 ERR_STU_ALREADY_LINKED`
+
+- **Error Catalog:**
+
+* `400 ERR_VAL_FAILED`
+* `409 ERR_STU_OTP_INVALID`
+* `409 ERR_STU_ALREADY_LINKED`
 
 ---
 
@@ -1880,14 +2136,14 @@ const claimProfileSchema = z.object({
 
 These server actions are not exposed as public HTTP endpoints but are part of the module boundary.
 
-| Server Action | Purpose | Invokers |
-|---|---|---|
-| `createStudentFromAdmissionAction` | Used by Admission module UI and workflow | Admission UI, internal orchestration |
-| `createStudentFromCorporateParticipantAction` | Used by Corporate Training workflow | Corporate module UI |
-| `duplicateScreeningAction` | Shared duplicate check | Student create/update forms |
-| `mergeStudentsAction` | Performs transactional merge orchestration | Duplicate workbench |
-| `exportStudentsAction` | Creates export logs and file payload | Admin export dialog |
-| `getStudentLookupAction` | Fast selector lookup | Enrollment, Finance, Walk-In flows |
+| Server Action                                 | Purpose                                    | Invokers                             |
+| --------------------------------------------- | ------------------------------------------ | ------------------------------------ |
+| `createStudentFromAdmissionAction`            | Used by Admission module UI and workflow   | Admission UI, internal orchestration |
+| `createStudentFromCorporateParticipantAction` | Used by Corporate Training workflow        | Corporate module UI                  |
+| `duplicateScreeningAction`                    | Shared duplicate check                     | Student create/update forms          |
+| `mergeStudentsAction`                         | Performs transactional merge orchestration | Duplicate workbench                  |
+| `exportStudentsAction`                        | Creates export logs and file payload       | Admin export dialog                  |
+| `getStudentLookupAction`                      | Fast selector lookup                       | Enrollment, Finance, Walk-In flows   |
 
 Each server action uses the same Zod schemas and permission checks as its equivalent route handler.
 
@@ -1895,33 +2151,33 @@ Each server action uses the same Zod schemas and permission checks as its equiva
 
 ## 7. Common Error Code Set for Module 5 APIs
 
-| Code | Default HTTP | Meaning |
-|---|---:|---|
-| `ERR_STU_NOT_FOUND` | 404 | Student profile not found |
-| `ERR_STU_INVALID_PAYLOAD` | 400 | Invalid request body |
-| `ERR_STU_INVALID_QUERY` | 400 | Invalid query string |
-| `ERR_STU_DUPLICATE_BLOCKING_MATCH` | 409 | Duplicate match blocks action |
-| `ERR_STU_PERSON_ALREADY_HAS_PROFILE` | 409 | Person already linked to student profile |
-| `ERR_STU_IDENTITY_CONFLICT` | 409 | Identity/contact collision |
-| `ERR_STU_ID_CARD_NUMBER_EXISTS` | 409 | ID card number already used |
-| `ERR_STU_INVALID_STATUS_TRANSITION` | 409 | Disallowed status change |
-| `ERR_STU_ARCHIVE_BLOCKED_BY_POLICY` | 409 | Archive not allowed under business policy |
-| `ERR_STU_NOT_ARCHIVED` | 409 | Restore attempted on non-archived record |
-| `ERR_STU_ALREADY_ARCHIVED` | 409 | Archive attempted on already archived record |
-| `ERR_STU_CONCURRENT_MODIFICATION` | 409 | Optimistic locking/version mismatch |
-| `ERR_STU_INVALID_EFFECTIVE_DATES` | 422 | Invalid effective date range |
-| `ERR_STU_INVALID_DOB` | 422 | Invalid date of birth |
-| `ERR_STU_INVALID_JOINED_AT` | 422 | Invalid joined date |
-| `ERR_STU_INVALID_EXPORT_REQUEST` | 422 | Invalid export configuration |
-| `ERR_STU_EXPORT_FAILED` | 500 | Export processing failed |
-| `ERR_STU_DUPLICATE_CASE_NOT_FOUND` | 404 | Duplicate case not found |
-| `ERR_STU_DUPLICATE_CASE_ALREADY_RESOLVED` | 409 | Duplicate case already resolved |
-| `ERR_STU_INVALID_DUPLICATE_RESOLUTION` | 422 | Resolution payload invalid |
-| `ERR_STU_MERGE_TRANSACTION_FAILED` | 500 | Merge execution failed |
-| `ERR_STU_MERGE_SCOPE_DENIED` | 409 | Merge not allowed across scope |
-| `ERR_STU_MERGE_SELF_FORBIDDEN` | 409 | Same record used as source and survivor |
-| `ERR_STU_UNMASKED_IDENTITY_PERMISSION_REQUIRED` | 403 | Sensitive export requested without permission |
-| `ERR_STU_PORTAL_PROFILE_NOT_LINKED` | 404 | Student portal account not linked to profile |
+| Code                                            | Default HTTP | Meaning                                       |
+| ----------------------------------------------- | -----------: | --------------------------------------------- |
+| `ERR_STU_NOT_FOUND`                             |          404 | Student profile not found                     |
+| `ERR_STU_INVALID_PAYLOAD`                       |          400 | Invalid request body                          |
+| `ERR_STU_INVALID_QUERY`                         |          400 | Invalid query string                          |
+| `ERR_STU_DUPLICATE_BLOCKING_MATCH`              |          409 | Duplicate match blocks action                 |
+| `ERR_STU_PERSON_ALREADY_HAS_PROFILE`            |          409 | Person already linked to student profile      |
+| `ERR_STU_IDENTITY_CONFLICT`                     |          409 | Identity/contact collision                    |
+| `ERR_STU_ID_CARD_NUMBER_EXISTS`                 |          409 | ID card number already used                   |
+| `ERR_STU_INVALID_STATUS_TRANSITION`             |          409 | Disallowed status change                      |
+| `ERR_STU_ARCHIVE_BLOCKED_BY_POLICY`             |          409 | Archive not allowed under business policy     |
+| `ERR_STU_NOT_ARCHIVED`                          |          409 | Restore attempted on non-archived record      |
+| `ERR_STU_ALREADY_ARCHIVED`                      |          409 | Archive attempted on already archived record  |
+| `ERR_STU_CONCURRENT_MODIFICATION`               |          409 | Optimistic locking/version mismatch           |
+| `ERR_STU_INVALID_EFFECTIVE_DATES`               |          422 | Invalid effective date range                  |
+| `ERR_STU_INVALID_DOB`                           |          422 | Invalid date of birth                         |
+| `ERR_STU_INVALID_JOINED_AT`                     |          422 | Invalid joined date                           |
+| `ERR_STU_INVALID_EXPORT_REQUEST`                |          422 | Invalid export configuration                  |
+| `ERR_STU_EXPORT_FAILED`                         |          500 | Export processing failed                      |
+| `ERR_STU_DUPLICATE_CASE_NOT_FOUND`              |          404 | Duplicate case not found                      |
+| `ERR_STU_DUPLICATE_CASE_ALREADY_RESOLVED`       |          409 | Duplicate case already resolved               |
+| `ERR_STU_INVALID_DUPLICATE_RESOLUTION`          |          422 | Resolution payload invalid                    |
+| `ERR_STU_MERGE_TRANSACTION_FAILED`              |          500 | Merge execution failed                        |
+| `ERR_STU_MERGE_SCOPE_DENIED`                    |          409 | Merge not allowed across scope                |
+| `ERR_STU_MERGE_SELF_FORBIDDEN`                  |          409 | Same record used as source and survivor       |
+| `ERR_STU_UNMASKED_IDENTITY_PERMISSION_REQUIRED` |          403 | Sensitive export requested without permission |
+| `ERR_STU_PORTAL_PROFILE_NOT_LINKED`             |          404 | Student portal account not linked to profile  |
 
 ---
 

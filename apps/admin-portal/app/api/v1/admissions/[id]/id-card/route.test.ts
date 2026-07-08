@@ -27,7 +27,10 @@ vi.mock('../../../../../../lib/runtime', () => ({
 
 vi.mock('../../../../../../lib/observability', () => ({
   applyObservabilityResponseHeaders: vi.fn(),
-  withRouteObservability: async (_headers: Headers, handler: () => Promise<Response>) => handler(),
+  withRouteObservability: async (
+    _headers: Headers,
+    handler: () => Promise<Response>,
+  ) => handler(),
   createStructuredLogger: () => ({ info: vi.fn(), error: vi.fn() }),
   getCurrentRequestContext: () => ({}),
 }));
@@ -50,7 +53,7 @@ describe('Admissions ID Card API routes', () => {
             permissions: ['admission.read'],
             activeBranchId: 'branch-1',
           },
-        })
+        }),
       );
 
       resolveAllowedBranchesMock.mockResolvedValue(['branch-1']);
@@ -79,13 +82,17 @@ describe('Admissions ID Card API routes', () => {
 
       const { GET } = await import('./download/route');
       const response = await GET(
-        new Request('http://localhost/api/v1/admissions/adm-123/id-card/download'),
-        { params: Promise.resolve({ id: 'adm-123' }) }
+        new Request(
+          'http://localhost/api/v1/admissions/adm-123/id-card/download',
+        ),
+        { params: Promise.resolve({ id: 'adm-123' }) },
       );
 
       expect(response.status).toBe(200);
       expect(response.headers.get('content-type')).toBe('application/pdf');
-      expect(response.headers.get('content-disposition')).toContain('id-card-STU-2026-00001.pdf');
+      expect(response.headers.get('content-disposition')).toContain(
+        'id-card-STU-2026-00001.pdf',
+      );
     });
 
     it('rejects if the admission is not approved', async () => {
@@ -96,7 +103,7 @@ describe('Admissions ID Card API routes', () => {
             permissions: ['admission.read'],
             activeBranchId: 'branch-1',
           },
-        })
+        }),
       );
 
       resolveAllowedBranchesMock.mockResolvedValue(['branch-1']);
@@ -110,8 +117,10 @@ describe('Admissions ID Card API routes', () => {
 
       const { GET } = await import('./download/route');
       const response = await GET(
-        new Request('http://localhost/api/v1/admissions/adm-123/id-card/download'),
-        { params: Promise.resolve({ id: 'adm-123' }) }
+        new Request(
+          'http://localhost/api/v1/admissions/adm-123/id-card/download',
+        ),
+        { params: Promise.resolve({ id: 'adm-123' }) },
       );
 
       const body = await response.json();
@@ -130,7 +139,7 @@ describe('Admissions ID Card API routes', () => {
             permissions: ['idcard.reissue'],
             activeBranchId: 'branch-1',
           },
-        })
+        }),
       );
 
       resolveAllowedBranchesMock.mockResolvedValue(['branch-1']);
@@ -150,10 +159,13 @@ describe('Admissions ID Card API routes', () => {
 
       const { POST } = await import('./reissue/route');
       const response = await POST(
-        new Request('http://localhost/api/v1/admissions/adm-123/id-card/reissue', {
-          method: 'POST',
-        }),
-        { params: Promise.resolve({ id: 'adm-123' }) }
+        new Request(
+          'http://localhost/api/v1/admissions/adm-123/id-card/reissue',
+          {
+            method: 'POST',
+          },
+        ),
+        { params: Promise.resolve({ id: 'adm-123' }) },
       );
 
       const body = await response.json();

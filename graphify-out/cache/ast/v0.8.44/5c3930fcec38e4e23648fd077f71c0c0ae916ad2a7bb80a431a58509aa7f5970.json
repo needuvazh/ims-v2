@@ -1,1 +1,207 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_identity_provisioning_spec_md", "label": "spec.md", "file_type": "document", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L1"}, {"id": "identity_provisioning_spec_identity_provisioning_specification", "label": "identity-provisioning Specification", "file_type": "document", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L1"}, {"id": "identity_provisioning_spec_purpose", "label": "Purpose", "file_type": "document", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L3"}, {"id": "identity_provisioning_spec_requirements", "label": "Requirements", "file_type": "document", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L6"}, {"id": "identity_provisioning_spec_requirement_admission_triggered_student_identity_provisioning", "label": "Requirement: Admission-Triggered Student Identity Provisioning", "file_type": "document", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L8"}, {"id": "identity_provisioning_spec_scenario_queue_identity_card_generation_on_approval", "label": "Scenario: Queue identity card generation on approval", "file_type": "document", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L11"}, {"id": "identity_provisioning_spec_scenario_generate_within_the_operational_sla", "label": "Scenario: Generate within the operational SLA", "file_type": "document", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L15"}, {"id": "identity_provisioning_spec_requirement_student_id_card_visibility_and_download", "label": "Requirement: Student ID Card Visibility and Download", "file_type": "document", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L21"}, {"id": "identity_provisioning_spec_scenario_show_id_card_status_on_student_profile", "label": "Scenario: Show ID card status on student profile", "file_type": "document", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L24"}, {"id": "identity_provisioning_spec_scenario_download_generated_id_card", "label": "Scenario: Download generated ID card", "file_type": "document", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L28"}, {"id": "identity_provisioning_spec_requirement_id_card_reissue_control", "label": "Requirement: ID Card Reissue Control", "file_type": "document", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L34"}, {"id": "identity_provisioning_spec_scenario_reject_reissue_without_permission", "label": "Scenario: Reject reissue without permission", "file_type": "document", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L37"}, {"id": "identity_provisioning_spec_scenario_record_reissue_with_audit_trail", "label": "Scenario: Record reissue with audit trail", "file_type": "document", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L41"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_identity_provisioning_spec_md", "target": "identity_provisioning_spec_identity_provisioning_specification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L1", "weight": 1.0}, {"source": "identity_provisioning_spec_identity_provisioning_specification", "target": "identity_provisioning_spec_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L3", "weight": 1.0}, {"source": "identity_provisioning_spec_identity_provisioning_specification", "target": "identity_provisioning_spec_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L6", "weight": 1.0}, {"source": "identity_provisioning_spec_requirements", "target": "identity_provisioning_spec_requirement_admission_triggered_student_identity_provisioning", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L8", "weight": 1.0}, {"source": "identity_provisioning_spec_requirement_admission_triggered_student_identity_provisioning", "target": "identity_provisioning_spec_scenario_queue_identity_card_generation_on_approval", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L11", "weight": 1.0}, {"source": "identity_provisioning_spec_requirement_admission_triggered_student_identity_provisioning", "target": "identity_provisioning_spec_scenario_generate_within_the_operational_sla", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L15", "weight": 1.0}, {"source": "identity_provisioning_spec_requirements", "target": "identity_provisioning_spec_requirement_student_id_card_visibility_and_download", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L21", "weight": 1.0}, {"source": "identity_provisioning_spec_requirement_student_id_card_visibility_and_download", "target": "identity_provisioning_spec_scenario_show_id_card_status_on_student_profile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L24", "weight": 1.0}, {"source": "identity_provisioning_spec_requirement_student_id_card_visibility_and_download", "target": "identity_provisioning_spec_scenario_download_generated_id_card", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L28", "weight": 1.0}, {"source": "identity_provisioning_spec_requirements", "target": "identity_provisioning_spec_requirement_id_card_reissue_control", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L34", "weight": 1.0}, {"source": "identity_provisioning_spec_requirement_id_card_reissue_control", "target": "identity_provisioning_spec_scenario_reject_reissue_without_permission", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L37", "weight": 1.0}, {"source": "identity_provisioning_spec_requirement_id_card_reissue_control", "target": "identity_provisioning_spec_scenario_record_reissue_with_audit_trail", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/identity-provisioning/spec.md", "source_location": "L41", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_identity_provisioning_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "identity_provisioning_spec_identity_provisioning_specification",
+      "label": "identity-provisioning Specification",
+      "file_type": "document",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "identity_provisioning_spec_purpose",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "identity_provisioning_spec_requirements",
+      "label": "Requirements",
+      "file_type": "document",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L6"
+    },
+    {
+      "id": "identity_provisioning_spec_requirement_admission_triggered_student_identity_provisioning",
+      "label": "Requirement: Admission-Triggered Student Identity Provisioning",
+      "file_type": "document",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L8"
+    },
+    {
+      "id": "identity_provisioning_spec_scenario_queue_identity_card_generation_on_approval",
+      "label": "Scenario: Queue identity card generation on approval",
+      "file_type": "document",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L11"
+    },
+    {
+      "id": "identity_provisioning_spec_scenario_generate_within_the_operational_sla",
+      "label": "Scenario: Generate within the operational SLA",
+      "file_type": "document",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L15"
+    },
+    {
+      "id": "identity_provisioning_spec_requirement_student_id_card_visibility_and_download",
+      "label": "Requirement: Student ID Card Visibility and Download",
+      "file_type": "document",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L21"
+    },
+    {
+      "id": "identity_provisioning_spec_scenario_show_id_card_status_on_student_profile",
+      "label": "Scenario: Show ID card status on student profile",
+      "file_type": "document",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L24"
+    },
+    {
+      "id": "identity_provisioning_spec_scenario_download_generated_id_card",
+      "label": "Scenario: Download generated ID card",
+      "file_type": "document",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L28"
+    },
+    {
+      "id": "identity_provisioning_spec_requirement_id_card_reissue_control",
+      "label": "Requirement: ID Card Reissue Control",
+      "file_type": "document",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L34"
+    },
+    {
+      "id": "identity_provisioning_spec_scenario_reject_reissue_without_permission",
+      "label": "Scenario: Reject reissue without permission",
+      "file_type": "document",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L37"
+    },
+    {
+      "id": "identity_provisioning_spec_scenario_record_reissue_with_audit_trail",
+      "label": "Scenario: Record reissue with audit trail",
+      "file_type": "document",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L41"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_identity_provisioning_spec_md",
+      "target": "identity_provisioning_spec_identity_provisioning_specification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "identity_provisioning_spec_identity_provisioning_specification",
+      "target": "identity_provisioning_spec_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "identity_provisioning_spec_identity_provisioning_specification",
+      "target": "identity_provisioning_spec_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "identity_provisioning_spec_requirements",
+      "target": "identity_provisioning_spec_requirement_admission_triggered_student_identity_provisioning",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "identity_provisioning_spec_requirement_admission_triggered_student_identity_provisioning",
+      "target": "identity_provisioning_spec_scenario_queue_identity_card_generation_on_approval",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "identity_provisioning_spec_requirement_admission_triggered_student_identity_provisioning",
+      "target": "identity_provisioning_spec_scenario_generate_within_the_operational_sla",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "identity_provisioning_spec_requirements",
+      "target": "identity_provisioning_spec_requirement_student_id_card_visibility_and_download",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "identity_provisioning_spec_requirement_student_id_card_visibility_and_download",
+      "target": "identity_provisioning_spec_scenario_show_id_card_status_on_student_profile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "identity_provisioning_spec_requirement_student_id_card_visibility_and_download",
+      "target": "identity_provisioning_spec_scenario_download_generated_id_card",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "identity_provisioning_spec_requirements",
+      "target": "identity_provisioning_spec_requirement_id_card_reissue_control",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "identity_provisioning_spec_requirement_id_card_reissue_control",
+      "target": "identity_provisioning_spec_scenario_reject_reissue_without_permission",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "identity_provisioning_spec_requirement_id_card_reissue_control",
+      "target": "identity_provisioning_spec_scenario_record_reissue_with_audit_trail",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/identity-provisioning/spec.md",
+      "source_location": "L41",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

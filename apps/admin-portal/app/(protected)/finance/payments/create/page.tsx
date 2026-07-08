@@ -10,43 +10,45 @@ export default async function RecordPaymentPage() {
   const { prisma, branchScopeResolver } = await import('@/lib/runtime');
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
     session.userId as any,
-    session.activeBranchId as any
+    session.activeBranchId as any,
   );
 
   const rawInvoices = await prisma.invoice.findMany({
     where: {
       branchId: { in: allowedBranchIds },
       status: { in: ['Issued', 'PartiallyPaid'] },
-      isDeleted: false
+      isDeleted: false,
     },
     include: {
       studentProfile: {
         include: {
-          person: true
-        }
+          person: true,
+        },
       },
-      corporateAccount: true
+      corporateAccount: true,
     },
-    orderBy: { invoiceNumber: 'desc' }
+    orderBy: { invoiceNumber: 'desc' },
   });
 
-  const invoices = rawInvoices.map((inv) => {
-    let payerName = 'Unknown Customer';
-    if (inv.studentProfile?.person) {
-      payerName = `${inv.studentProfile.person.firstName} ${inv.studentProfile.person.lastName}`;
-    } else if (inv.corporateAccount) {
-      payerName = inv.corporateAccount.accountName;
-    }
+  const invoices = rawInvoices
+    .map((inv) => {
+      let payerName = 'Unknown Customer';
+      if (inv.studentProfile?.person) {
+        payerName = `${inv.studentProfile.person.firstName} ${inv.studentProfile.person.lastName}`;
+      } else if (inv.corporateAccount) {
+        payerName = inv.corporateAccount.accountName;
+      }
 
-    return {
-      id: inv.id,
-      invoiceNumber: inv.invoiceNumber,
-      branchId: inv.branchId,
-      totalAmount: Number(inv.totalAmount),
-      outstandingAmount: Number(inv.outstandingAmount),
-      payerName
-    };
-  }).filter((inv) => inv.outstandingAmount > 0);
+      return {
+        id: inv.id,
+        invoiceNumber: inv.invoiceNumber,
+        branchId: inv.branchId,
+        totalAmount: Number(inv.totalAmount),
+        outstandingAmount: Number(inv.outstandingAmount),
+        payerName,
+      };
+    })
+    .filter((inv) => inv.outstandingAmount > 0);
 
   return (
     <AdminListPageLayout>

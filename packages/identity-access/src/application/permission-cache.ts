@@ -23,7 +23,10 @@ export class InMemoryPermissionCache implements IPermissionCachePort {
     return entry.perms;
   }
 
-  async setPermissionsForRole(roleCode: string, permissions: string[]): Promise<void> {
+  async setPermissionsForRole(
+    roleCode: string,
+    permissions: string[],
+  ): Promise<void> {
     this.cache.set(roleCode, {
       perms: permissions,
       expiresAt: Date.now() + this.TTL,
@@ -44,7 +47,10 @@ export class NoOpPermissionCache implements IPermissionCachePort {
     return null;
   }
 
-  async setPermissionsForRole(_roleCode: string, _permissions: string[]): Promise<void> {
+  async setPermissionsForRole(
+    _roleCode: string,
+    _permissions: string[],
+  ): Promise<void> {
     return;
   }
 

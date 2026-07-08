@@ -14,9 +14,11 @@ Module 02 – Organization Management establishes the core operational hierarchy
 ## Capabilities
 
 ### New Capabilities
+
 - `organization`: Complete organization management including Institute profile, Branch hierarchy, Department structures, Classroom management, dynamic active state checking, REST API route handlers, and audit logging.
 
 ### Modified Capabilities
+
 - None.
 
 ## Impact

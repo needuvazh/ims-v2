@@ -1,4 +1,11 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, PageHeader } from '@ims/shared-ui';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  PageHeader,
+} from '@ims/shared-ui';
 
 export default function StudentAttendancePage() {
   return (
@@ -13,23 +20,36 @@ export default function StudentAttendancePage() {
         <Card>
           <CardHeader>
             <CardTitle>Attendance Percentage</CardTitle>
-            <CardDescription>Shows official percentage from submitted or locked sessions only.</CardDescription>
+            <CardDescription>
+              Shows official percentage from submitted or locked sessions only.
+            </CardDescription>
           </CardHeader>
-          <CardContent className="text-3xl font-semibold text-[color:var(--ims-ink)]">--</CardContent>
+          <CardContent className="text-3xl font-semibold text-[color:var(--ims-ink)]">
+            --
+          </CardContent>
         </Card>
         <Card>
           <CardHeader>
             <CardTitle>Low Attendance Warning</CardTitle>
-            <CardDescription>Displays when the attendance threshold is approaching.</CardDescription>
+            <CardDescription>
+              Displays when the attendance threshold is approaching.
+            </CardDescription>
           </CardHeader>
-          <CardContent className="text-sm text-[color:var(--ims-muted)]">No active warning.</CardContent>
+          <CardContent className="text-sm text-[color:var(--ims-muted)]">
+            No active warning.
+          </CardContent>
         </Card>
         <Card>
           <CardHeader>
             <CardTitle>Visibility Rules</CardTitle>
-            <CardDescription>Branch-scoped access and only your own enrollment records are visible.</CardDescription>
+            <CardDescription>
+              Branch-scoped access and only your own enrollment records are
+              visible.
+            </CardDescription>
           </CardHeader>
-          <CardContent className="text-sm text-[color:var(--ims-muted)]">English and Arabic labels should render in the active UI language.</CardContent>
+          <CardContent className="text-sm text-[color:var(--ims-muted)]">
+            English and Arabic labels should render in the active UI language.
+          </CardContent>
         </Card>
       </div>
     </div>

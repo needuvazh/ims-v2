@@ -7,7 +7,7 @@ export const DocumentTypeEnum = z.enum([
   'PASSPORT_SCAN',
   'ACADEMIC_TRANSCRIPT',
   'SPONSORSHIP_LETTER',
-  'OTHER'
+  'OTHER',
 ]);
 
 export type DocumentType = z.infer<typeof DocumentTypeEnum>;
@@ -17,7 +17,7 @@ export const DocumentStatusEnum = z.enum([
   'Active',
   'Expired',
   'Replaced',
-  'Deleted'
+  'Deleted',
 ]);
 
 export type DocumentStatus = z.infer<typeof DocumentStatusEnum>;
@@ -26,7 +26,7 @@ export const OwnerTypeEnum = z.enum([
   'Person',
   'StudentProfile',
   'Admission',
-  'Enrollment'
+  'Enrollment',
 ]);
 
 export type OwnerType = z.infer<typeof OwnerTypeEnum>;
@@ -34,30 +34,38 @@ export type OwnerType = z.infer<typeof OwnerTypeEnum>;
 export const VerificationOutcomeEnum = z.enum([
   'Pending',
   'Verified',
-  'Rejected'
+  'Rejected',
 ]);
 
 export type VerificationOutcome = z.infer<typeof VerificationOutcomeEnum>;
 
-export const DocumentCaptureSchema = z.object({
-  fileName: z.string().min(1),
-  fileKey: z.string().min(1),
-  fileType: z.string().min(1),
-  documentType: DocumentTypeEnum,
-  issueDate: z.preprocess((val) => (typeof val === 'string' ? new Date(val) : val), z.date().optional().nullable()),
-  expiryDate: z.preprocess((val) => (typeof val === 'string' ? new Date(val) : val), z.date().optional().nullable()),
-}).refine(
-  (data) => {
-    if (data.issueDate && data.expiryDate) {
-      return data.expiryDate >= data.issueDate;
-    }
-    return true;
-  },
-  {
-    message: 'expiryDate must be on or after issueDate',
-    path: ['expiryDate'],
-  }
-);
+export const DocumentCaptureSchema = z
+  .object({
+    fileName: z.string().min(1),
+    fileKey: z.string().min(1),
+    fileType: z.string().min(1),
+    documentType: DocumentTypeEnum,
+    issueDate: z.preprocess(
+      (val) => (typeof val === 'string' ? new Date(val) : val),
+      z.date().optional().nullable(),
+    ),
+    expiryDate: z.preprocess(
+      (val) => (typeof val === 'string' ? new Date(val) : val),
+      z.date().optional().nullable(),
+    ),
+  })
+  .refine(
+    (data) => {
+      if (data.issueDate && data.expiryDate) {
+        return data.expiryDate >= data.issueDate;
+      }
+      return true;
+    },
+    {
+      message: 'expiryDate must be on or after issueDate',
+      path: ['expiryDate'],
+    },
+  );
 
 export type DocumentCaptureInput = z.infer<typeof DocumentCaptureSchema>;
 
@@ -72,30 +80,30 @@ export interface IDocumentsService {
     branchId: string,
     inputs: DocumentCaptureInput[],
     tx: Prisma.TransactionClient,
-    actorId?: string
+    actorId?: string,
   ): Promise<void>;
 
   verifyDocumentAccess(
     userId: string,
     documentId: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<boolean>;
 
   verifyBranchAccess(
     userId: string,
     branchId: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<boolean>;
 
   getDocumentsByOwner(
     ownerId: string,
     ownerType: OwnerType,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<DocumentWithLatestVerification[]>;
 
   getDocumentsByOwners(
     ownerRefs: { ownerId: string; ownerType: OwnerType }[],
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<DocumentWithLatestVerification[]>;
 
   applyVerificationDecision(
@@ -103,12 +111,12 @@ export interface IDocumentsService {
     outcome: VerificationOutcome,
     remarks?: string,
     actorId?: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<void>;
 
   retireDocument(
     documentId: string,
     actorId?: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<void>;
 }

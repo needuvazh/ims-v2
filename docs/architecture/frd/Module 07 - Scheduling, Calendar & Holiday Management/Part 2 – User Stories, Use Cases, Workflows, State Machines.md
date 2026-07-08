@@ -4,19 +4,19 @@
 
 ## Document Control
 
-| Field | Value |
-|---|---|
-| Product | Al Saud Training Institute Integrated Institute Management System |
-| Module | Module 07 – Scheduling, Calendar & Holiday Management |
-| Module Code | SCH |
-| Part | Part 2 – User Stories, Use Cases, Workflows, State Machines |
-| Version | 1.0 |
-| Architecture Style | Next.js modular monolith, single admin portal first |
-| Primary Owning Context | Scheduling, Calendar & Holiday Management |
-| Related Part | Part 1 – Business Overview, Functional Requirements, Business Rules |
-| Default Timezone | Oman GST, UTC+04:00 |
-| Localization | English and Arabic display support for calendar, holiday, venue block, schedule labels, messages, exports, and reports |
-| Security Baseline | Server-side branch isolation, dynamic permissions, soft delete, optimistic locking, and audit logging |
+| Field                  | Value                                                                                                                  |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Product                | Al Saud Training Institute Integrated Institute Management System                                                      |
+| Module                 | Module 07 – Scheduling, Calendar & Holiday Management                                                                  |
+| Module Code            | SCH                                                                                                                    |
+| Part                   | Part 2 – User Stories, Use Cases, Workflows, State Machines                                                            |
+| Version                | 1.0                                                                                                                    |
+| Architecture Style     | Next.js modular monolith, single admin portal first                                                                    |
+| Primary Owning Context | Scheduling, Calendar & Holiday Management                                                                              |
+| Related Part           | Part 1 – Business Overview, Functional Requirements, Business Rules                                                    |
+| Default Timezone       | Oman GST, UTC+04:00                                                                                                    |
+| Localization           | English and Arabic display support for calendar, holiday, venue block, schedule labels, messages, exports, and reports |
+| Security Baseline      | Server-side branch isolation, dynamic permissions, soft delete, optimistic locking, and audit logging                  |
 
 ---
 
@@ -39,14 +39,14 @@ The module follows the IMS project principles:
 
 ## US-SCH-001 – Create and Activate the Institute Business Calendar
 
-| Field | Specification |
-|---|---|
-| User Story | As a Super Admin, I want to create and activate the institute business calendar, and allow branch/year overrides where needed, so that scheduling users can create sessions only against a valid operational calendar. |
-| Priority | Must |
-| Primary Actors | Super Admin |
-| Supporting Actors | Branch Manager, Identity & Access Module, Organization Management Module, Audit & Compliance Module |
-| Related Requirements | FR-SCH-001, FR-SCH-002, FR-SCH-003, FR-SCH-004, FR-SCH-036, FR-SCH-037, FR-SCH-038, FR-SCH-039, FR-SCH-040 |
-| Business Value | Prevents schedule creation without an official institute calendar and enforces branch-specific exceptions in a controlled way. |
+| Field                | Specification                                                                                                                                                                                                          |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| User Story           | As a Super Admin, I want to create and activate the institute business calendar, and allow branch/year overrides where needed, so that scheduling users can create sessions only against a valid operational calendar. |
+| Priority             | Must                                                                                                                                                                                                                   |
+| Primary Actors       | Super Admin                                                                                                                                                                                                            |
+| Supporting Actors    | Branch Manager, Identity & Access Module, Organization Management Module, Audit & Compliance Module                                                                                                                    |
+| Related Requirements | FR-SCH-001, FR-SCH-002, FR-SCH-003, FR-SCH-004, FR-SCH-036, FR-SCH-037, FR-SCH-038, FR-SCH-039, FR-SCH-040                                                                                                             |
+| Business Value       | Prevents schedule creation without an official institute calendar and enforces branch-specific exceptions in a controlled way.                                                                                         |
 
 ```gherkin
 Feature: Institute business calendar setup
@@ -67,14 +67,14 @@ Feature: Institute business calendar setup
 
 ## US-SCH-002 – Configure Operating Days and Working Hours
 
-| Field | Specification |
-|---|---|
-| User Story | As a Branch Manager, I want to define branch/year working day and working hour overrides on top of the institute calendar, so that sessions are scheduled only during permitted training hours. |
-| Priority | Must |
-| Primary Actors | Branch Manager |
-| Supporting Actors | Academic Coordinator, Identity & Access Module, Audit & Compliance Module |
-| Related Requirements | FR-SCH-002, FR-SCH-003, FR-SCH-008, FR-SCH-013, FR-SCH-014, FR-SCH-039, FR-SCH-040 |
-| Business Value | Reduces accidental scheduling outside ASTI business hours and avoids branch-level operational confusion. |
+| Field                | Specification                                                                                                                                                                                   |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| User Story           | As a Branch Manager, I want to define branch/year working day and working hour overrides on top of the institute calendar, so that sessions are scheduled only during permitted training hours. |
+| Priority             | Must                                                                                                                                                                                            |
+| Primary Actors       | Branch Manager                                                                                                                                                                                  |
+| Supporting Actors    | Academic Coordinator, Identity & Access Module, Audit & Compliance Module                                                                                                                       |
+| Related Requirements | FR-SCH-002, FR-SCH-003, FR-SCH-008, FR-SCH-013, FR-SCH-014, FR-SCH-039, FR-SCH-040                                                                                                              |
+| Business Value       | Reduces accidental scheduling outside ASTI business hours and avoids branch-level operational confusion.                                                                                        |
 
 ```gherkin
 Feature: Calendar operating hours
@@ -100,14 +100,14 @@ Feature: Calendar operating hours
 
 ## US-SCH-003 – Maintain Official Holidays and Closure Days
 
-| Field | Specification |
-|---|---|
-| User Story | As a Branch Manager, I want to create institute holidays and branch-specific closure overrides, so that schedule publishing is blocked on non-training days unless a controlled override is approved. |
-| Priority | Must |
-| Primary Actors | Branch Manager |
-| Supporting Actors | Super Admin, Academic Coordinator, Audit & Compliance Module |
-| Related Requirements | FR-SCH-005, FR-SCH-006, FR-SCH-007, FR-SCH-008, FR-SCH-036, FR-SCH-037, FR-SCH-038 |
-| Business Value | Protects public holidays, branch closures, and special non-training days from accidental training activity. |
+| Field                | Specification                                                                                                                                                                                         |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| User Story           | As a Branch Manager, I want to create institute holidays and branch-specific closure overrides, so that schedule publishing is blocked on non-training days unless a controlled override is approved. |
+| Priority             | Must                                                                                                                                                                                                  |
+| Primary Actors       | Branch Manager                                                                                                                                                                                        |
+| Supporting Actors    | Super Admin, Academic Coordinator, Audit & Compliance Module                                                                                                                                          |
+| Related Requirements | FR-SCH-005, FR-SCH-006, FR-SCH-007, FR-SCH-008, FR-SCH-036, FR-SCH-037, FR-SCH-038                                                                                                                    |
+| Business Value       | Protects public holidays, branch closures, and special non-training days from accidental training activity.                                                                                           |
 
 ```gherkin
 Feature: Holiday management
@@ -127,14 +127,14 @@ Feature: Holiday management
 
 ## US-SCH-004 – Create Classroom or Branch Venue Blocks
 
-| Field | Specification |
-|---|---|
-| User Story | As an Academic Coordinator, I want to block a classroom or an entire branch for a date and time range, so that maintenance, exams, inspections, and special events are protected from scheduling conflicts. |
-| Priority | Must |
-| Primary Actors | Academic Coordinator |
-| Supporting Actors | Branch Manager, Training Coordinator, Organization Management Module, Audit & Compliance Module |
-| Related Requirements | FR-SCH-009, FR-SCH-010, FR-SCH-011, FR-SCH-012, FR-SCH-036, FR-SCH-037, FR-SCH-040 |
-| Business Value | Prevents classroom and branch facilities from being scheduled when they are unavailable. |
+| Field                | Specification                                                                                                                                                                                               |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| User Story           | As an Academic Coordinator, I want to block a classroom or an entire branch for a date and time range, so that maintenance, exams, inspections, and special events are protected from scheduling conflicts. |
+| Priority             | Must                                                                                                                                                                                                        |
+| Primary Actors       | Academic Coordinator                                                                                                                                                                                        |
+| Supporting Actors    | Branch Manager, Training Coordinator, Organization Management Module, Audit & Compliance Module                                                                                                             |
+| Related Requirements | FR-SCH-009, FR-SCH-010, FR-SCH-011, FR-SCH-012, FR-SCH-036, FR-SCH-037, FR-SCH-040                                                                                                                          |
+| Business Value       | Prevents classroom and branch facilities from being scheduled when they are unavailable.                                                                                                                    |
 
 ```gherkin
 Feature: Venue block management
@@ -159,14 +159,14 @@ Feature: Venue block management
 
 ## US-SCH-005 – Create a Draft Single Schedule Session
 
-| Field | Specification |
-|---|---|
-| User Story | As an Academic Coordinator, I want to create a draft schedule session for a batch with a trainer and classroom, so that the timetable can be reviewed before it becomes official. |
-| Priority | Must |
-| Primary Actors | Academic Coordinator |
-| Supporting Actors | Training Coordinator, Training Delivery Module, Trainer Management Module, Organization Management Module |
-| Related Requirements | FR-SCH-013, FR-SCH-019, FR-SCH-020, FR-SCH-021, FR-SCH-022, FR-SCH-023, FR-SCH-024, FR-SCH-036, FR-SCH-039, FR-SCH-040 |
-| Business Value | Enables safe timetable preparation without exposing unapproved schedules as official sessions. |
+| Field                | Specification                                                                                                                                                                     |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| User Story           | As an Academic Coordinator, I want to create a draft schedule session for a batch with a trainer and classroom, so that the timetable can be reviewed before it becomes official. |
+| Priority             | Must                                                                                                                                                                              |
+| Primary Actors       | Academic Coordinator                                                                                                                                                              |
+| Supporting Actors    | Training Coordinator, Training Delivery Module, Trainer Management Module, Organization Management Module                                                                         |
+| Related Requirements | FR-SCH-013, FR-SCH-019, FR-SCH-020, FR-SCH-021, FR-SCH-022, FR-SCH-023, FR-SCH-024, FR-SCH-036, FR-SCH-039, FR-SCH-040                                                            |
+| Business Value       | Enables safe timetable preparation without exposing unapproved schedules as official sessions.                                                                                    |
 
 ```gherkin
 Feature: Draft schedule session creation
@@ -186,14 +186,14 @@ Feature: Draft schedule session creation
 
 ## US-SCH-006 – Bulk Generate Recurring Batch Sessions
 
-| Field | Specification |
-|---|---|
-| User Story | As an Academic Coordinator, I want to bulk-generate recurring sessions for a batch, so that weekly or multi-day training schedules can be created quickly and consistently. |
-| Priority | Must |
-| Primary Actors | Academic Coordinator |
-| Supporting Actors | Training Coordinator, Trainer Management Module, Organization Management Module, Audit & Compliance Module |
-| Related Requirements | FR-SCH-015, FR-SCH-019, FR-SCH-020, FR-SCH-021, FR-SCH-022, FR-SCH-023, FR-SCH-024, FR-SCH-037, FR-SCH-039, FR-SCH-040 |
-| Business Value | Saves planning time and reduces manual session entry errors. |
+| Field                | Specification                                                                                                                                                               |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| User Story           | As an Academic Coordinator, I want to bulk-generate recurring sessions for a batch, so that weekly or multi-day training schedules can be created quickly and consistently. |
+| Priority             | Must                                                                                                                                                                        |
+| Primary Actors       | Academic Coordinator                                                                                                                                                        |
+| Supporting Actors    | Training Coordinator, Trainer Management Module, Organization Management Module, Audit & Compliance Module                                                                  |
+| Related Requirements | FR-SCH-015, FR-SCH-019, FR-SCH-020, FR-SCH-021, FR-SCH-022, FR-SCH-023, FR-SCH-024, FR-SCH-037, FR-SCH-039, FR-SCH-040                                                      |
+| Business Value       | Saves planning time and reduces manual session entry errors.                                                                                                                |
 
 ```gherkin
 Feature: Recurring schedule generation
@@ -221,14 +221,14 @@ Feature: Recurring schedule generation
 
 ## US-SCH-007 – Publish a Validated Schedule Session
 
-| Field | Specification |
-|---|---|
-| User Story | As an Academic Coordinator, I want to publish a validated draft schedule session, so that the session becomes part of the official timetable and can be consumed by attendance and reporting. |
-| Priority | Must |
-| Primary Actors | Academic Coordinator |
-| Supporting Actors | Branch Manager, Attendance Management Module, Reporting & Dashboards Module, Audit & Compliance Module |
-| Related Requirements | FR-SCH-014, FR-SCH-019, FR-SCH-020, FR-SCH-021, FR-SCH-022, FR-SCH-023, FR-SCH-024, FR-SCH-035, FR-SCH-036, FR-SCH-037, FR-SCH-040 |
-| Business Value | Creates the official source of schedule truth for daily operations and downstream attendance readiness. |
+| Field                | Specification                                                                                                                                                                                 |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| User Story           | As an Academic Coordinator, I want to publish a validated draft schedule session, so that the session becomes part of the official timetable and can be consumed by attendance and reporting. |
+| Priority             | Must                                                                                                                                                                                          |
+| Primary Actors       | Academic Coordinator                                                                                                                                                                          |
+| Supporting Actors    | Branch Manager, Attendance Management Module, Reporting & Dashboards Module, Audit & Compliance Module                                                                                        |
+| Related Requirements | FR-SCH-014, FR-SCH-019, FR-SCH-020, FR-SCH-021, FR-SCH-022, FR-SCH-023, FR-SCH-024, FR-SCH-035, FR-SCH-036, FR-SCH-037, FR-SCH-040                                                            |
+| Business Value       | Creates the official source of schedule truth for daily operations and downstream attendance readiness.                                                                                       |
 
 ```gherkin
 Feature: Schedule publishing
@@ -247,14 +247,14 @@ Feature: Schedule publishing
 
 ## US-SCH-008 – Reschedule a Published Session
 
-| Field | Specification |
-|---|---|
-| User Story | As a Branch Manager, I want to reschedule a published session with a mandatory reason, so that operational changes are controlled, validated, and auditable. |
-| Priority | Must |
-| Primary Actors | Branch Manager |
-| Supporting Actors | Academic Coordinator, Training Coordinator, Attendance Management Module, Communication Module, Audit & Compliance Module |
-| Related Requirements | FR-SCH-016, FR-SCH-019, FR-SCH-020, FR-SCH-021, FR-SCH-022, FR-SCH-023, FR-SCH-024, FR-SCH-035, FR-SCH-036, FR-SCH-037, FR-SCH-040 |
-| Business Value | Allows real-world operational changes while preserving schedule integrity and auditability. |
+| Field                | Specification                                                                                                                                                |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| User Story           | As a Branch Manager, I want to reschedule a published session with a mandatory reason, so that operational changes are controlled, validated, and auditable. |
+| Priority             | Must                                                                                                                                                         |
+| Primary Actors       | Branch Manager                                                                                                                                               |
+| Supporting Actors    | Academic Coordinator, Training Coordinator, Attendance Management Module, Communication Module, Audit & Compliance Module                                    |
+| Related Requirements | FR-SCH-016, FR-SCH-019, FR-SCH-020, FR-SCH-021, FR-SCH-022, FR-SCH-023, FR-SCH-024, FR-SCH-035, FR-SCH-036, FR-SCH-037, FR-SCH-040                           |
+| Business Value       | Allows real-world operational changes while preserving schedule integrity and auditability.                                                                  |
 
 ```gherkin
 Feature: Published session rescheduling
@@ -273,14 +273,14 @@ Feature: Published session rescheduling
 
 ## US-SCH-009 – Cancel a Published Session
 
-| Field | Specification |
-|---|---|
-| User Story | As an Academic Coordinator, I want to cancel a published session with a reason code and notes, so that learners and trainers are not expected to attend an unavailable session. |
-| Priority | Must |
-| Primary Actors | Academic Coordinator |
-| Supporting Actors | Branch Manager, Attendance Management Module, Communication Module, Audit & Compliance Module |
-| Related Requirements | FR-SCH-017, FR-SCH-035, FR-SCH-036, FR-SCH-037, FR-SCH-040 |
-| Business Value | Prevents cancelled sessions from being used for attendance while maintaining historical traceability. |
+| Field                | Specification                                                                                                                                                                   |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| User Story           | As an Academic Coordinator, I want to cancel a published session with a reason code and notes, so that learners and trainers are not expected to attend an unavailable session. |
+| Priority             | Must                                                                                                                                                                            |
+| Primary Actors       | Academic Coordinator                                                                                                                                                            |
+| Supporting Actors    | Branch Manager, Attendance Management Module, Communication Module, Audit & Compliance Module                                                                                   |
+| Related Requirements | FR-SCH-017, FR-SCH-035, FR-SCH-036, FR-SCH-037, FR-SCH-040                                                                                                                      |
+| Business Value       | Prevents cancelled sessions from being used for attendance while maintaining historical traceability.                                                                           |
 
 ```gherkin
 Feature: Published session cancellation
@@ -299,14 +299,14 @@ Feature: Published session cancellation
 
 ## US-SCH-010 – View Branch Timetable and Conflict Reports
 
-| Field | Specification |
-|---|---|
-| User Story | As a Training Coordinator, I want to view daily, weekly, classroom, trainer, batch, and conflict views, so that I can coordinate training operations for my branch. |
-| Priority | Must |
-| Primary Actors | Training Coordinator |
-| Supporting Actors | Reception User, Trainer, Branch Manager, Reporting User, Identity & Access Module |
-| Related Requirements | FR-SCH-025, FR-SCH-026, FR-SCH-027, FR-SCH-028, FR-SCH-029, FR-SCH-030, FR-SCH-031, FR-SCH-032, FR-SCH-033, FR-SCH-034, FR-SCH-036 |
-| Business Value | Improves visibility into classroom occupancy, trainer workload, and operational conflicts. |
+| Field                | Specification                                                                                                                                                       |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| User Story           | As a Training Coordinator, I want to view daily, weekly, classroom, trainer, batch, and conflict views, so that I can coordinate training operations for my branch. |
+| Priority             | Must                                                                                                                                                                |
+| Primary Actors       | Training Coordinator                                                                                                                                                |
+| Supporting Actors    | Reception User, Trainer, Branch Manager, Reporting User, Identity & Access Module                                                                                   |
+| Related Requirements | FR-SCH-025, FR-SCH-026, FR-SCH-027, FR-SCH-028, FR-SCH-029, FR-SCH-030, FR-SCH-031, FR-SCH-032, FR-SCH-033, FR-SCH-034, FR-SCH-036                                  |
+| Business Value       | Improves visibility into classroom occupancy, trainer workload, and operational conflicts.                                                                          |
 
 ```gherkin
 Feature: Schedule views and conflict reporting
@@ -333,13 +333,13 @@ Feature: Schedule views and conflict reporting
 
 ## UC-SCH-001 – Create and Activate Branch Business Calendar
 
-| Field | Specification |
-|---|---|
-| Primary Actor | Super Admin |
-| Supporting Actors | Branch Manager, Identity & Access Module, Organization Management Module, Audit & Compliance Module |
-| Trigger | A new calendar year or branch requires an official operational calendar. |
-| Preconditions | User is authenticated; user has `scheduling.calendar.create`; branch exists, is active, and is accessible; no active calendar exists for the same branch and year. |
-| Postconditions | A business calendar is saved in Draft or Active state; all operating days are defined; the action is audited; the calendar can be used by schedule validation once Active. |
+| Field             | Specification                                                                                                                                                              |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Primary Actor     | Super Admin                                                                                                                                                                |
+| Supporting Actors | Branch Manager, Identity & Access Module, Organization Management Module, Audit & Compliance Module                                                                        |
+| Trigger           | A new calendar year or branch requires an official operational calendar.                                                                                                   |
+| Preconditions     | User is authenticated; user has `scheduling.calendar.create`; branch exists, is active, and is accessible; no active calendar exists for the same branch and year.         |
+| Postconditions    | A business calendar is saved in Draft or Active state; all operating days are defined; the action is audited; the calendar can be used by schedule validation once Active. |
 
 ### Main Success Scenario
 
@@ -359,24 +359,24 @@ Feature: Schedule views and conflict reporting
 
 ### Alternative Flows
 
-| Flow ID | Condition | System Behavior |
-|---|---|---|
-| UC-SCH-001-A1 | User lacks calendar create permission | Reject request with authorization error and do not reveal calendar details. |
-| UC-SCH-001-A2 | Branch is outside user access scope | Return not found or access denied according to security policy; do not leak branch existence. |
-| UC-SCH-001-A3 | Active calendar already exists for branch and year | Reject activation and show existing active calendar reference if user can access it. |
-| UC-SCH-001-A4 | Weekday configuration is incomplete | Reject save and identify missing weekday rules. |
-| UC-SCH-001-A5 | Working hour windows overlap | Reject affected day configuration and preserve previous version. |
-| UC-SCH-001-A6 | Stale version is submitted during update | Reject with optimistic locking error and ask user to reload latest record. |
+| Flow ID       | Condition                                          | System Behavior                                                                               |
+| ------------- | -------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| UC-SCH-001-A1 | User lacks calendar create permission              | Reject request with authorization error and do not reveal calendar details.                   |
+| UC-SCH-001-A2 | Branch is outside user access scope                | Return not found or access denied according to security policy; do not leak branch existence. |
+| UC-SCH-001-A3 | Active calendar already exists for branch and year | Reject activation and show existing active calendar reference if user can access it.          |
+| UC-SCH-001-A4 | Weekday configuration is incomplete                | Reject save and identify missing weekday rules.                                               |
+| UC-SCH-001-A5 | Working hour windows overlap                       | Reject affected day configuration and preserve previous version.                              |
+| UC-SCH-001-A6 | Stale version is submitted during update           | Reject with optimistic locking error and ask user to reload latest record.                    |
 
 ## UC-SCH-002 – Create and Maintain Holiday
 
-| Field | Specification |
-|---|---|
-| Primary Actor | Branch Manager |
-| Supporting Actors | Super Admin, Academic Coordinator, Audit & Compliance Module |
-| Trigger | ASTI needs to mark a public holiday, branch closure, special event day, or non-training day. |
-| Preconditions | User is authenticated; user has `scheduling.holiday.create` or `scheduling.holiday.update`; a resolved calendar exists and is accessible; holiday date falls inside the calendar year. |
-| Postconditions | Holiday is saved, activated, deactivated, cancelled, or soft deleted; schedule conflict validation uses active holidays; impacted sessions are identified. |
+| Field             | Specification                                                                                                                                                                          |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Primary Actor     | Branch Manager                                                                                                                                                                         |
+| Supporting Actors | Super Admin, Academic Coordinator, Audit & Compliance Module                                                                                                                           |
+| Trigger           | ASTI needs to mark a public holiday, branch closure, special event day, or non-training day.                                                                                           |
+| Preconditions     | User is authenticated; user has `scheduling.holiday.create` or `scheduling.holiday.update`; a resolved calendar exists and is accessible; holiday date falls inside the calendar year. |
+| Postconditions    | Holiday is saved, activated, deactivated, cancelled, or soft deleted; schedule conflict validation uses active holidays; impacted sessions are identified.                             |
 
 ### Main Success Scenario
 
@@ -395,23 +395,23 @@ Feature: Schedule views and conflict reporting
 
 ### Alternative Flows
 
-| Flow ID | Condition | System Behavior |
-|---|---|---|
-| UC-SCH-002-A1 | Holiday date is outside calendar year | Reject the request and show date-range validation. |
-| UC-SCH-002-A2 | Duplicate active holiday exists | Reject activation and display duplicate holiday if branch access allows. |
-| UC-SCH-002-A3 | Holiday activation impacts published sessions | Require authorized decision to reschedule sessions or capture allowed holiday override. |
-| UC-SCH-002-A4 | User attempts hard delete | Reject operation because holidays must be soft deleted only. |
-| UC-SCH-002-A5 | User lacks `scheduling.holiday.delete` for soft delete | Reject soft delete and keep holiday unchanged. |
+| Flow ID       | Condition                                              | System Behavior                                                                         |
+| ------------- | ------------------------------------------------------ | --------------------------------------------------------------------------------------- |
+| UC-SCH-002-A1 | Holiday date is outside calendar year                  | Reject the request and show date-range validation.                                      |
+| UC-SCH-002-A2 | Duplicate active holiday exists                        | Reject activation and display duplicate holiday if branch access allows.                |
+| UC-SCH-002-A3 | Holiday activation impacts published sessions          | Require authorized decision to reschedule sessions or capture allowed holiday override. |
+| UC-SCH-002-A4 | User attempts hard delete                              | Reject operation because holidays must be soft deleted only.                            |
+| UC-SCH-002-A5 | User lacks `scheduling.holiday.delete` for soft delete | Reject soft delete and keep holiday unchanged.                                          |
 
 ## UC-SCH-003 – Create Venue Block
 
-| Field | Specification |
-|---|---|
-| Primary Actor | Academic Coordinator |
-| Supporting Actors | Branch Manager, Training Coordinator, Organization Management Module, Audit & Compliance Module |
-| Trigger | A classroom or branch is unavailable due to maintenance, inspection, internal event, exam, emergency closure, or administrative block. |
-| Preconditions | User is authenticated; user has `scheduling.venueBlock.create`; branch is accessible; classroom belongs to branch when classroom-specific block is selected. |
-| Postconditions | Venue block is created; future schedule validations consider the block; audit is written. |
+| Field             | Specification                                                                                                                                                |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Primary Actor     | Academic Coordinator                                                                                                                                         |
+| Supporting Actors | Branch Manager, Training Coordinator, Organization Management Module, Audit & Compliance Module                                                              |
+| Trigger           | A classroom or branch is unavailable due to maintenance, inspection, internal event, exam, emergency closure, or administrative block.                       |
+| Preconditions     | User is authenticated; user has `scheduling.venueBlock.create`; branch is accessible; classroom belongs to branch when classroom-specific block is selected. |
+| Postconditions    | Venue block is created; future schedule validations consider the block; audit is written.                                                                    |
 
 ### Main Success Scenario
 
@@ -431,23 +431,23 @@ Feature: Schedule views and conflict reporting
 
 ### Alternative Flows
 
-| Flow ID | Condition | System Behavior |
-|---|---|---|
-| UC-SCH-003-A1 | Partial-day block has missing start or end time | Reject request and require both times. |
-| UC-SCH-003-A2 | Start time is not earlier than end time | Reject request and show time validation. |
-| UC-SCH-003-A3 | Classroom belongs to another branch | Reject request and do not reveal unauthorized classroom details. |
+| Flow ID       | Condition                                         | System Behavior                                                               |
+| ------------- | ------------------------------------------------- | ----------------------------------------------------------------------------- |
+| UC-SCH-003-A1 | Partial-day block has missing start or end time   | Reject request and require both times.                                        |
+| UC-SCH-003-A2 | Start time is not earlier than end time           | Reject request and show time validation.                                      |
+| UC-SCH-003-A3 | Classroom belongs to another branch               | Reject request and do not reveal unauthorized classroom details.              |
 | UC-SCH-003-A4 | Block overlaps another active block in same scope | Reject or require status adjustment; duplicate active blocks are not allowed. |
-| UC-SCH-003-A5 | Block impacts published sessions | Show impacted sessions and require rescheduling or allowed override policy. |
+| UC-SCH-003-A5 | Block impacts published sessions                  | Show impacted sessions and require rescheduling or allowed override policy.   |
 
 ## UC-SCH-004 – Create Draft Single Schedule Session
 
-| Field | Specification |
-|---|---|
-| Primary Actor | Academic Coordinator |
-| Supporting Actors | Training Coordinator, Training Delivery Module, Organization Module, Trainer Management Module, Audit Module |
-| Trigger | A batch requires a planned session in the timetable. |
-| Preconditions | User is authenticated; user has `scheduling.session.create`; batch exists and is schedulable; active institute calendar or branch override exists; trainer and classroom are active. |
-| Postconditions | Draft or Conflict schedule session is created according to validation result and module policy; action is audited. |
+| Field             | Specification                                                                                                                                                                        |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Primary Actor     | Academic Coordinator                                                                                                                                                                 |
+| Supporting Actors | Training Coordinator, Training Delivery Module, Organization Module, Trainer Management Module, Audit Module                                                                         |
+| Trigger           | A batch requires a planned session in the timetable.                                                                                                                                 |
+| Preconditions     | User is authenticated; user has `scheduling.session.create`; batch exists and is schedulable; active institute calendar or branch override exists; trainer and classroom are active. |
+| Postconditions    | Draft or Conflict schedule session is created according to validation result and module policy; action is audited.                                                                   |
 
 ### Main Success Scenario
 
@@ -468,24 +468,24 @@ Feature: Schedule views and conflict reporting
 
 ### Alternative Flows
 
-| Flow ID | Condition | System Behavior |
-|---|---|---|
-| UC-SCH-004-A1 | Batch is Cancelled, Completed, or Archived | Reject scheduling because batch is not schedulable. |
-| UC-SCH-004-A2 | Trainer has overlapping Published session | Reject save or mark Conflict draft only if conflict draft policy includes trainer conflicts. Normal publish is blocked. |
-| UC-SCH-004-A3 | Classroom has overlapping Published session | Reject save or mark Conflict draft only if policy allows conflict drafts. Normal publish is blocked. |
-| UC-SCH-004-A4 | Date is active holiday | Save as Draft with warning or reject publish unless holiday override permission and reason are supplied. |
-| UC-SCH-004-A5 | Venue block exists | Save as Draft with warning or reject publish unless venue block override permission and reason are supplied. |
-| UC-SCH-004-A6 | User tries trainer or classroom from unauthorized branch | Reject request and do not reveal unauthorized entity details. |
+| Flow ID       | Condition                                                | System Behavior                                                                                                         |
+| ------------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| UC-SCH-004-A1 | Batch is Cancelled, Completed, or Archived               | Reject scheduling because batch is not schedulable.                                                                     |
+| UC-SCH-004-A2 | Trainer has overlapping Published session                | Reject save or mark Conflict draft only if conflict draft policy includes trainer conflicts. Normal publish is blocked. |
+| UC-SCH-004-A3 | Classroom has overlapping Published session              | Reject save or mark Conflict draft only if policy allows conflict drafts. Normal publish is blocked.                    |
+| UC-SCH-004-A4 | Date is active holiday                                   | Save as Draft with warning or reject publish unless holiday override permission and reason are supplied.                |
+| UC-SCH-004-A5 | Venue block exists                                       | Save as Draft with warning or reject publish unless venue block override permission and reason are supplied.            |
+| UC-SCH-004-A6 | User tries trainer or classroom from unauthorized branch | Reject request and do not reveal unauthorized entity details.                                                           |
 
 ## UC-SCH-005 – Bulk Generate Recurring Sessions
 
-| Field | Specification |
-|---|---|
-| Primary Actor | Academic Coordinator |
-| Supporting Actors | Training Coordinator, Trainer Management, Organization Management, Audit Module |
-| Trigger | A batch requires multiple repeated sessions across a date range. |
-| Preconditions | User has `scheduling.session.create`; selected batch, trainer, and classroom are accessible; recurrence range is valid; candidate count does not exceed 120. |
-| Postconditions | Selected valid draft sessions are created; conflicts, skipped holidays, and rejected candidates are reported; generation summary is audited. |
+| Field             | Specification                                                                                                                                                |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Primary Actor     | Academic Coordinator                                                                                                                                         |
+| Supporting Actors | Training Coordinator, Trainer Management, Organization Management, Audit Module                                                                              |
+| Trigger           | A batch requires multiple repeated sessions across a date range.                                                                                             |
+| Preconditions     | User has `scheduling.session.create`; selected batch, trainer, and classroom are accessible; recurrence range is valid; candidate count does not exceed 120. |
+| Postconditions    | Selected valid draft sessions are created; conflicts, skipped holidays, and rejected candidates are reported; generation summary is audited.                 |
 
 ### Main Success Scenario
 
@@ -508,24 +508,24 @@ Feature: Schedule views and conflict reporting
 
 ### Alternative Flows
 
-| Flow ID | Condition | System Behavior |
-|---|---|---|
-| UC-SCH-005-A1 | No weekdays selected | Reject request and require at least one day. |
-| UC-SCH-005-A2 | Recurrence end date precedes start date | Reject request and show range validation. |
-| UC-SCH-005-A3 | Candidate count exceeds 120 | Reject request before validation and persistence. |
-| UC-SCH-005-A4 | Session numbers duplicate existing batch sessions | Mark candidates Rejected and prevent persistence for duplicates. |
-| UC-SCH-005-A5 | Some dates are holidays and skipHolidays is true | Exclude those dates and record skipped output. |
-| UC-SCH-005-A6 | Transaction fails after validation | Roll back all created sessions and show failure without partial persistence. |
+| Flow ID       | Condition                                         | System Behavior                                                              |
+| ------------- | ------------------------------------------------- | ---------------------------------------------------------------------------- |
+| UC-SCH-005-A1 | No weekdays selected                              | Reject request and require at least one day.                                 |
+| UC-SCH-005-A2 | Recurrence end date precedes start date           | Reject request and show range validation.                                    |
+| UC-SCH-005-A3 | Candidate count exceeds 120                       | Reject request before validation and persistence.                            |
+| UC-SCH-005-A4 | Session numbers duplicate existing batch sessions | Mark candidates Rejected and prevent persistence for duplicates.             |
+| UC-SCH-005-A5 | Some dates are holidays and skipHolidays is true  | Exclude those dates and record skipped output.                               |
+| UC-SCH-005-A6 | Transaction fails after validation                | Roll back all created sessions and show failure without partial persistence. |
 
 ## UC-SCH-006 – Publish Schedule Session
 
-| Field | Specification |
-|---|---|
-| Primary Actor | Academic Coordinator |
-| Supporting Actors | Branch Manager, Attendance Module, Reporting Module, Communication Module, Audit Module |
-| Trigger | A draft or conflict-resolved session is ready to become official. |
-| Preconditions | User has `scheduling.session.publish`; session is Draft or Conflict-resolved; version matches; active calendar exists; no blocking conflicts remain. |
-| Postconditions | Session status becomes Published; official timetable is updated; downstream modules can consume the session; audit is written. |
+| Field             | Specification                                                                                                                                        |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Primary Actor     | Academic Coordinator                                                                                                                                 |
+| Supporting Actors | Branch Manager, Attendance Module, Reporting Module, Communication Module, Audit Module                                                              |
+| Trigger           | A draft or conflict-resolved session is ready to become official.                                                                                    |
+| Preconditions     | User has `scheduling.session.publish`; session is Draft or Conflict-resolved; version matches; active calendar exists; no blocking conflicts remain. |
+| Postconditions    | Session status becomes Published; official timetable is updated; downstream modules can consume the session; audit is written.                       |
 
 ### Main Success Scenario
 
@@ -543,23 +543,23 @@ Feature: Schedule views and conflict reporting
 
 ### Alternative Flows
 
-| Flow ID | Condition | System Behavior |
-|---|---|---|
-| UC-SCH-006-A1 | Draft became stale due to another update | Reject publish with optimistic locking error. |
-| UC-SCH-006-A2 | Trainer is now booked by another session | Reject publish and show conflict details if user has access. |
-| UC-SCH-006-A3 | Classroom is now blocked | Reject publish unless authorized venue block override is allowed and provided. |
-| UC-SCH-006-A4 | Holiday was added after draft creation | Reject publish unless authorized holiday override is allowed and provided. |
-| UC-SCH-006-A5 | Communication request fails | Keep session Published and log notification failure because schedule state is source of truth. |
+| Flow ID       | Condition                                | System Behavior                                                                                |
+| ------------- | ---------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| UC-SCH-006-A1 | Draft became stale due to another update | Reject publish with optimistic locking error.                                                  |
+| UC-SCH-006-A2 | Trainer is now booked by another session | Reject publish and show conflict details if user has access.                                   |
+| UC-SCH-006-A3 | Classroom is now blocked                 | Reject publish unless authorized venue block override is allowed and provided.                 |
+| UC-SCH-006-A4 | Holiday was added after draft creation   | Reject publish unless authorized holiday override is allowed and provided.                     |
+| UC-SCH-006-A5 | Communication request fails              | Keep session Published and log notification failure because schedule state is source of truth. |
 
 ## UC-SCH-007 – Reschedule Published Session
 
-| Field | Specification |
-|---|---|
-| Primary Actor | Branch Manager |
-| Supporting Actors | Academic Coordinator, Attendance Module, Communication Module, Audit Module |
-| Trigger | An official session requires a change in date, time, trainer, or classroom. |
-| Preconditions | User has `scheduling.session.reschedule`; session is Published or Rescheduled; attendance is not finalized; submitted version matches; reason is provided. |
-| Postconditions | Session reflects new schedule details or replacement linkage; old values are retained in audit; affected users can be notified. |
+| Field             | Specification                                                                                                                                              |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Primary Actor     | Branch Manager                                                                                                                                             |
+| Supporting Actors | Academic Coordinator, Attendance Module, Communication Module, Audit Module                                                                                |
+| Trigger           | An official session requires a change in date, time, trainer, or classroom.                                                                                |
+| Preconditions     | User has `scheduling.session.reschedule`; session is Published or Rescheduled; attendance is not finalized; submitted version matches; reason is provided. |
+| Postconditions    | Session reflects new schedule details or replacement linkage; old values are retained in audit; affected users can be notified.                            |
 
 ### Main Success Scenario
 
@@ -578,23 +578,23 @@ Feature: Schedule views and conflict reporting
 
 ### Alternative Flows
 
-| Flow ID | Condition | System Behavior |
-|---|---|---|
-| UC-SCH-007-A1 | Attendance is finalized | Reject normal reschedule and require higher governance outside normal scheduling workflow. |
-| UC-SCH-007-A2 | Reason is missing | Reject request and require a reason. |
-| UC-SCH-007-A3 | New trainer overlaps with another session | Reject request because trainer double booking cannot be overridden in normal policy. |
-| UC-SCH-007-A4 | New classroom overlaps with another session | Reject request because classroom double booking cannot be overridden in normal policy. |
-| UC-SCH-007-A5 | New date is outside batch date range | Reject unless explicit exception policy and permission are configured. |
+| Flow ID       | Condition                                   | System Behavior                                                                            |
+| ------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| UC-SCH-007-A1 | Attendance is finalized                     | Reject normal reschedule and require higher governance outside normal scheduling workflow. |
+| UC-SCH-007-A2 | Reason is missing                           | Reject request and require a reason.                                                       |
+| UC-SCH-007-A3 | New trainer overlaps with another session   | Reject request because trainer double booking cannot be overridden in normal policy.       |
+| UC-SCH-007-A4 | New classroom overlaps with another session | Reject request because classroom double booking cannot be overridden in normal policy.     |
+| UC-SCH-007-A5 | New date is outside batch date range        | Reject unless explicit exception policy and permission are configured.                     |
 
 ## UC-SCH-008 – Cancel Published Session
 
-| Field | Specification |
-|---|---|
-| Primary Actor | Academic Coordinator |
-| Supporting Actors | Branch Manager, Attendance Module, Communication Module, Audit Module |
-| Trigger | A session cannot be delivered and must be removed from active timetable. |
-| Preconditions | User has `scheduling.session.cancel`; session is Published or Rescheduled; attendance is not finalized unless manager exception is defined; cancellation reason code and notes are supplied. |
-| Postconditions | Session status becomes Cancelled; it remains historically visible; Attendance cannot create new records for it; audit is written. |
+| Field             | Specification                                                                                                                                                                                |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Primary Actor     | Academic Coordinator                                                                                                                                                                         |
+| Supporting Actors | Branch Manager, Attendance Module, Communication Module, Audit Module                                                                                                                        |
+| Trigger           | A session cannot be delivered and must be removed from active timetable.                                                                                                                     |
+| Preconditions     | User has `scheduling.session.cancel`; session is Published or Rescheduled; attendance is not finalized unless manager exception is defined; cancellation reason code and notes are supplied. |
+| Postconditions    | Session status becomes Cancelled; it remains historically visible; Attendance cannot create new records for it; audit is written.                                                            |
 
 ### Main Success Scenario
 
@@ -613,23 +613,23 @@ Feature: Schedule views and conflict reporting
 
 ### Alternative Flows
 
-| Flow ID | Condition | System Behavior |
-|---|---|---|
-| UC-SCH-008-A1 | Cancellation reason is missing | Reject request. |
-| UC-SCH-008-A2 | Session is already Completed | Reject cancellation through Scheduling. |
-| UC-SCH-008-A3 | User lacks cancel permission | Reject request. |
-| UC-SCH-008-A4 | Attendance is finalized | Reject normal cancellation and show governance message. |
-| UC-SCH-008-A5 | Notification request fails | Keep session Cancelled and log communication failure. |
+| Flow ID       | Condition                      | System Behavior                                         |
+| ------------- | ------------------------------ | ------------------------------------------------------- |
+| UC-SCH-008-A1 | Cancellation reason is missing | Reject request.                                         |
+| UC-SCH-008-A2 | Session is already Completed   | Reject cancellation through Scheduling.                 |
+| UC-SCH-008-A3 | User lacks cancel permission   | Reject request.                                         |
+| UC-SCH-008-A4 | Attendance is finalized        | Reject normal cancellation and show governance message. |
+| UC-SCH-008-A5 | Notification request fails     | Keep session Cancelled and log communication failure.   |
 
 ## UC-SCH-009 – View and Export Schedule Data
 
-| Field | Specification |
-|---|---|
-| Primary Actor | Branch Manager |
-| Supporting Actors | Training Coordinator, Reception User, Trainer, Reporting User, IAM, Audit Module |
-| Trigger | A user needs operational or reporting visibility into schedules. |
-| Preconditions | User is authenticated; user has appropriate read or export permission; branch access is valid; requested date range is valid. |
-| Postconditions | User sees only permitted data; exports are audited; unauthorized records are never disclosed. |
+| Field             | Specification                                                                                                                 |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Primary Actor     | Branch Manager                                                                                                                |
+| Supporting Actors | Training Coordinator, Reception User, Trainer, Reporting User, IAM, Audit Module                                              |
+| Trigger           | A user needs operational or reporting visibility into schedules.                                                              |
+| Preconditions     | User is authenticated; user has appropriate read or export permission; branch access is valid; requested date range is valid. |
+| Postconditions    | User sees only permitted data; exports are audited; unauthorized records are never disclosed.                                 |
 
 ### Main Success Scenario
 
@@ -644,12 +644,12 @@ Feature: Schedule views and conflict reporting
 
 ### Alternative Flows
 
-| Flow ID | Condition | System Behavior |
-|---|---|---|
-| UC-SCH-009-A1 | User requests unauthorized branch | Treat records as not found or deny access according to security policy. |
-| UC-SCH-009-A2 | User lacks export permission | Allow view if read permission exists but deny export. |
-| UC-SCH-009-A3 | Date range exceeds 366 days | Reject export and ask for narrower range. |
-| UC-SCH-009-A4 | User lacks consolidated permission | Restrict results to active assigned branch only. |
+| Flow ID       | Condition                          | System Behavior                                                         |
+| ------------- | ---------------------------------- | ----------------------------------------------------------------------- |
+| UC-SCH-009-A1 | User requests unauthorized branch  | Treat records as not found or deny access according to security policy. |
+| UC-SCH-009-A2 | User lacks export permission       | Allow view if read permission exists but deny export.                   |
+| UC-SCH-009-A3 | Date range exceeds 366 days        | Reject export and ask for narrower range.                               |
+| UC-SCH-009-A4 | User lacks consolidated permission | Restrict results to active assigned branch only.                        |
 
 ---
 
@@ -935,18 +935,18 @@ stateDiagram-v2
 
 ### BusinessCalendar Transition Matrix
 
-| From Status | To Status | Allowed | Required Permission | Required Validation | Required Reason | Audit Required |
-|---|---|---|---|---|---|---|
-| None | Draft | Yes | `scheduling.calendar.create` | Branch active; year valid; localized names valid; seven weekdays configured | No | Yes |
-| Draft | Active | Yes | `scheduling.calendar.update` | No other Active calendar for same branch and year; operating days valid | No | Yes |
-| Draft | SoftDeleted | Yes | `scheduling.calendar.archive` or administrative delete policy | No published sessions depend on the calendar | Yes | Yes |
-| Active | Closed | Yes | `scheduling.calendar.update` | No future published sessions require new scheduling against the calendar or manager confirms closure impact | Yes | Yes |
-| Active | SoftDeleted | Restricted | `scheduling.calendar.archive` plus administrative policy | Must not have active scheduling dependency unless legal archival process is approved | Yes | Yes |
-| Closed | Archived | Yes | `scheduling.calendar.archive` | Calendar is closed; no pending schedule mutations exist | Yes | Yes |
-| Closed | SoftDeleted | Restricted | `scheduling.calendar.archive` | Audit retention policy permits soft deletion | Yes | Yes |
-| Archived | Active | No | Not applicable | Archived calendar is terminal for normal workflow | Not applicable | No |
-| Archived | Closed | No | Not applicable | Archived calendar is terminal for normal workflow | Not applicable | No |
-| SoftDeleted | Any active state | No | Not applicable | Soft-deleted records cannot be restored through normal scheduling workflow | Not applicable | No |
+| From Status | To Status        | Allowed    | Required Permission                                           | Required Validation                                                                                         | Required Reason | Audit Required |
+| ----------- | ---------------- | ---------- | ------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | --------------- | -------------- |
+| None        | Draft            | Yes        | `scheduling.calendar.create`                                  | Branch active; year valid; localized names valid; seven weekdays configured                                 | No              | Yes            |
+| Draft       | Active           | Yes        | `scheduling.calendar.update`                                  | No other Active calendar for same branch and year; operating days valid                                     | No              | Yes            |
+| Draft       | SoftDeleted      | Yes        | `scheduling.calendar.archive` or administrative delete policy | No published sessions depend on the calendar                                                                | Yes             | Yes            |
+| Active      | Closed           | Yes        | `scheduling.calendar.update`                                  | No future published sessions require new scheduling against the calendar or manager confirms closure impact | Yes             | Yes            |
+| Active      | SoftDeleted      | Restricted | `scheduling.calendar.archive` plus administrative policy      | Must not have active scheduling dependency unless legal archival process is approved                        | Yes             | Yes            |
+| Closed      | Archived         | Yes        | `scheduling.calendar.archive`                                 | Calendar is closed; no pending schedule mutations exist                                                     | Yes             | Yes            |
+| Closed      | SoftDeleted      | Restricted | `scheduling.calendar.archive`                                 | Audit retention policy permits soft deletion                                                                | Yes             | Yes            |
+| Archived    | Active           | No         | Not applicable                                                | Archived calendar is terminal for normal workflow                                                           | Not applicable  | No             |
+| Archived    | Closed           | No         | Not applicable                                                | Archived calendar is terminal for normal workflow                                                           | Not applicable  | No             |
+| SoftDeleted | Any active state | No         | Not applicable                                                | Soft-deleted records cannot be restored through normal scheduling workflow                                  | Not applicable  | No             |
 
 ## 5.2 Holiday State Machine
 
@@ -967,20 +967,20 @@ stateDiagram-v2
 
 ### Holiday Transition Matrix
 
-| From Status | To Status | Allowed | Required Permission | Required Validation | Required Reason | Audit Required |
-|---|---|---|---|---|---|---|
-| None | Draft | Yes | `scheduling.holiday.create` | Calendar exists; date inside calendar year; localized name valid | No | Yes |
-| None | Active | Yes | `scheduling.holiday.create` | No duplicate active holiday for branch, calendar, date, and type; impact scan complete | No | Yes |
-| Draft | Active | Yes | `scheduling.holiday.update` | Duplicate active holiday check; future session impact scan | No | Yes |
-| Draft | Inactive | Yes | `scheduling.holiday.update` | Holiday is not soft deleted | No | Yes |
-| Draft | SoftDeleted | Yes | `scheduling.holiday.delete` | No required active override dependency | Yes | Yes |
-| Active | Inactive | Yes | `scheduling.holiday.update` | User confirms scheduling impact | Yes | Yes |
-| Active | Cancelled | Yes | `scheduling.holiday.update` | User confirms cancellation; affected sessions analyzed | Yes | Yes |
-| Active | SoftDeleted | Restricted | `scheduling.holiday.delete` | No unresolved published-session dependency or compliance hold | Yes | Yes |
-| Inactive | Active | Yes | `scheduling.holiday.update` | Duplicate active holiday check; future session impact scan | No | Yes |
-| Inactive | SoftDeleted | Yes | `scheduling.holiday.delete` | No active dependency | Yes | Yes |
-| Cancelled | SoftDeleted | Yes | `scheduling.holiday.delete` | No active dependency | Yes | Yes |
-| SoftDeleted | Active | No | Not applicable | Soft-deleted holiday cannot be reactivated through normal workflow | Not applicable | No |
+| From Status | To Status   | Allowed    | Required Permission         | Required Validation                                                                    | Required Reason | Audit Required |
+| ----------- | ----------- | ---------- | --------------------------- | -------------------------------------------------------------------------------------- | --------------- | -------------- |
+| None        | Draft       | Yes        | `scheduling.holiday.create` | Calendar exists; date inside calendar year; localized name valid                       | No              | Yes            |
+| None        | Active      | Yes        | `scheduling.holiday.create` | No duplicate active holiday for branch, calendar, date, and type; impact scan complete | No              | Yes            |
+| Draft       | Active      | Yes        | `scheduling.holiday.update` | Duplicate active holiday check; future session impact scan                             | No              | Yes            |
+| Draft       | Inactive    | Yes        | `scheduling.holiday.update` | Holiday is not soft deleted                                                            | No              | Yes            |
+| Draft       | SoftDeleted | Yes        | `scheduling.holiday.delete` | No required active override dependency                                                 | Yes             | Yes            |
+| Active      | Inactive    | Yes        | `scheduling.holiday.update` | User confirms scheduling impact                                                        | Yes             | Yes            |
+| Active      | Cancelled   | Yes        | `scheduling.holiday.update` | User confirms cancellation; affected sessions analyzed                                 | Yes             | Yes            |
+| Active      | SoftDeleted | Restricted | `scheduling.holiday.delete` | No unresolved published-session dependency or compliance hold                          | Yes             | Yes            |
+| Inactive    | Active      | Yes        | `scheduling.holiday.update` | Duplicate active holiday check; future session impact scan                             | No              | Yes            |
+| Inactive    | SoftDeleted | Yes        | `scheduling.holiday.delete` | No active dependency                                                                   | Yes             | Yes            |
+| Cancelled   | SoftDeleted | Yes        | `scheduling.holiday.delete` | No active dependency                                                                   | Yes             | Yes            |
+| SoftDeleted | Active      | No         | Not applicable              | Soft-deleted holiday cannot be reactivated through normal workflow                     | Not applicable  | No             |
 
 ## 5.3 VenueBlock State Machine
 
@@ -1000,19 +1000,19 @@ stateDiagram-v2
 
 ### VenueBlock Transition Matrix
 
-| From Status | To Status | Allowed | Required Permission | Required Validation | Required Reason | Audit Required |
-|---|---|---|---|---|---|---|
-| None | Draft | Yes | `scheduling.venueBlock.create` | Branch valid; classroom valid when supplied; date/time valid | No | Yes |
-| None | Active | Yes | `scheduling.venueBlock.create` | No overlapping active venue block in same scope; impact scan complete | Yes | Yes |
-| Draft | Active | Yes | `scheduling.venueBlock.update` | No overlapping active venue block in same scope; affected session scan complete | Yes | Yes |
-| Draft | Cancelled | Yes | `scheduling.venueBlock.cancel` | Block has not been used in active override record | Yes | Yes |
-| Draft | SoftDeleted | Yes | `scheduling.venueBlock.cancel` | No active dependency | Yes | Yes |
-| Active | Cancelled | Yes | `scheduling.venueBlock.cancel` | User confirms impact on future scheduling validation | Yes | Yes |
-| Active | Expired | Yes | System scheduled evaluation or read-time derived status | Current Oman date/time is later than block end | No | Optional system audit according to audit policy |
-| Active | SoftDeleted | Restricted | `scheduling.venueBlock.cancel` plus administrative policy | No unresolved published-session dependency or compliance hold | Yes | Yes |
-| Cancelled | SoftDeleted | Yes | `scheduling.venueBlock.cancel` | No active dependency | Yes | Yes |
-| Expired | SoftDeleted | Yes | `scheduling.venueBlock.cancel` | No active dependency | Yes | Yes |
-| SoftDeleted | Active | No | Not applicable | Soft-deleted block cannot be reactivated through normal workflow | Not applicable | No |
+| From Status | To Status   | Allowed    | Required Permission                                       | Required Validation                                                             | Required Reason | Audit Required                                  |
+| ----------- | ----------- | ---------- | --------------------------------------------------------- | ------------------------------------------------------------------------------- | --------------- | ----------------------------------------------- |
+| None        | Draft       | Yes        | `scheduling.venueBlock.create`                            | Branch valid; classroom valid when supplied; date/time valid                    | No              | Yes                                             |
+| None        | Active      | Yes        | `scheduling.venueBlock.create`                            | No overlapping active venue block in same scope; impact scan complete           | Yes             | Yes                                             |
+| Draft       | Active      | Yes        | `scheduling.venueBlock.update`                            | No overlapping active venue block in same scope; affected session scan complete | Yes             | Yes                                             |
+| Draft       | Cancelled   | Yes        | `scheduling.venueBlock.cancel`                            | Block has not been used in active override record                               | Yes             | Yes                                             |
+| Draft       | SoftDeleted | Yes        | `scheduling.venueBlock.cancel`                            | No active dependency                                                            | Yes             | Yes                                             |
+| Active      | Cancelled   | Yes        | `scheduling.venueBlock.cancel`                            | User confirms impact on future scheduling validation                            | Yes             | Yes                                             |
+| Active      | Expired     | Yes        | System scheduled evaluation or read-time derived status   | Current Oman date/time is later than block end                                  | No              | Optional system audit according to audit policy |
+| Active      | SoftDeleted | Restricted | `scheduling.venueBlock.cancel` plus administrative policy | No unresolved published-session dependency or compliance hold                   | Yes             | Yes                                             |
+| Cancelled   | SoftDeleted | Yes        | `scheduling.venueBlock.cancel`                            | No active dependency                                                            | Yes             | Yes                                             |
+| Expired     | SoftDeleted | Yes        | `scheduling.venueBlock.cancel`                            | No active dependency                                                            | Yes             | Yes                                             |
+| SoftDeleted | Active      | No         | Not applicable                                            | Soft-deleted block cannot be reactivated through normal workflow                | Not applicable  | No                                              |
 
 ## 5.4 ScheduleSession State Machine
 
@@ -1037,87 +1037,87 @@ stateDiagram-v2
 
 ### ScheduleSession Transition Matrix
 
-| From Status | To Status | Allowed | Required Permission | Required Validation | Required Reason | Audit Required |
-|---|---|---|---|---|---|---|
-| None | Draft | Yes | `scheduling.session.create` | Batch, course, branch, trainer, classroom, calendar, time, and session number valid | No | Yes |
-| None | Conflict | Conditional | `scheduling.session.create` | Conflict draft policy enabled; conflict details stored; branch scope valid | No for draft warning; Yes when saving known conflict by policy | Yes |
-| Draft | Conflict | Yes | `scheduling.session.update` | New values create warning or conflict and conflict draft policy permits retention | No | Yes |
-| Conflict | Draft | Yes | `scheduling.session.update` | Conflicting values are corrected and validation passes for draft level | No | Yes |
-| Draft | Published | Yes | `scheduling.session.publish` | Full revalidation passes; no blocking trainer/classroom/batch conflict; version matches | No | Yes |
-| Conflict | Published | Yes | `scheduling.session.publish` | Full revalidation passes and conflicts are resolved or allowed override is captured | Yes when override used | Yes |
-| Draft | SoftDeleted | Yes | `scheduling.session.deleteDraft` | Session is not Published, Rescheduled, Cancelled, or Completed; version matches | Yes | Yes |
-| Conflict | SoftDeleted | Yes | `scheduling.session.deleteDraft` | Session is not official; version matches | Yes | Yes |
-| Published | Rescheduled | Yes | `scheduling.session.reschedule` | Attendance not finalized; complete validation passes for new values; version matches | Yes | Yes |
-| Published | Cancelled | Yes | `scheduling.session.cancel` | Attendance not finalized; session not completed; version matches | Yes | Yes |
-| Published | Completed | Yes | Training Delivery or Attendance-owned completion integration | Delivery/attendance completion criteria satisfied | No | Yes |
-| Rescheduled | Cancelled | Yes | `scheduling.session.cancel` | Attendance not finalized; session not completed; version matches | Yes | Yes |
-| Rescheduled | Completed | Yes | Training Delivery or Attendance-owned completion integration | Delivery/attendance completion criteria satisfied | No | Yes |
-| Cancelled | Published | No | Not applicable | Cancelled is terminal for normal workflow; create replacement session if needed | Not applicable | No |
-| Cancelled | Rescheduled | No | Not applicable | Cancelled is terminal for normal workflow | Not applicable | No |
-| Completed | Rescheduled | No | Not applicable | Completed sessions cannot be changed by normal Scheduling workflow | Not applicable | No |
-| Completed | Cancelled | No | Not applicable | Completed sessions cannot be cancelled by normal Scheduling workflow | Not applicable | No |
-| SoftDeleted | Draft | No | Not applicable | Soft-deleted sessions cannot be restored through normal workflow | Not applicable | No |
+| From Status | To Status   | Allowed     | Required Permission                                          | Required Validation                                                                     | Required Reason                                                | Audit Required |
+| ----------- | ----------- | ----------- | ------------------------------------------------------------ | --------------------------------------------------------------------------------------- | -------------------------------------------------------------- | -------------- |
+| None        | Draft       | Yes         | `scheduling.session.create`                                  | Batch, course, branch, trainer, classroom, calendar, time, and session number valid     | No                                                             | Yes            |
+| None        | Conflict    | Conditional | `scheduling.session.create`                                  | Conflict draft policy enabled; conflict details stored; branch scope valid              | No for draft warning; Yes when saving known conflict by policy | Yes            |
+| Draft       | Conflict    | Yes         | `scheduling.session.update`                                  | New values create warning or conflict and conflict draft policy permits retention       | No                                                             | Yes            |
+| Conflict    | Draft       | Yes         | `scheduling.session.update`                                  | Conflicting values are corrected and validation passes for draft level                  | No                                                             | Yes            |
+| Draft       | Published   | Yes         | `scheduling.session.publish`                                 | Full revalidation passes; no blocking trainer/classroom/batch conflict; version matches | No                                                             | Yes            |
+| Conflict    | Published   | Yes         | `scheduling.session.publish`                                 | Full revalidation passes and conflicts are resolved or allowed override is captured     | Yes when override used                                         | Yes            |
+| Draft       | SoftDeleted | Yes         | `scheduling.session.deleteDraft`                             | Session is not Published, Rescheduled, Cancelled, or Completed; version matches         | Yes                                                            | Yes            |
+| Conflict    | SoftDeleted | Yes         | `scheduling.session.deleteDraft`                             | Session is not official; version matches                                                | Yes                                                            | Yes            |
+| Published   | Rescheduled | Yes         | `scheduling.session.reschedule`                              | Attendance not finalized; complete validation passes for new values; version matches    | Yes                                                            | Yes            |
+| Published   | Cancelled   | Yes         | `scheduling.session.cancel`                                  | Attendance not finalized; session not completed; version matches                        | Yes                                                            | Yes            |
+| Published   | Completed   | Yes         | Training Delivery or Attendance-owned completion integration | Delivery/attendance completion criteria satisfied                                       | No                                                             | Yes            |
+| Rescheduled | Cancelled   | Yes         | `scheduling.session.cancel`                                  | Attendance not finalized; session not completed; version matches                        | Yes                                                            | Yes            |
+| Rescheduled | Completed   | Yes         | Training Delivery or Attendance-owned completion integration | Delivery/attendance completion criteria satisfied                                       | No                                                             | Yes            |
+| Cancelled   | Published   | No          | Not applicable                                               | Cancelled is terminal for normal workflow; create replacement session if needed         | Not applicable                                                 | No             |
+| Cancelled   | Rescheduled | No          | Not applicable                                               | Cancelled is terminal for normal workflow                                               | Not applicable                                                 | No             |
+| Completed   | Rescheduled | No          | Not applicable                                               | Completed sessions cannot be changed by normal Scheduling workflow                      | Not applicable                                                 | No             |
+| Completed   | Cancelled   | No          | Not applicable                                               | Completed sessions cannot be cancelled by normal Scheduling workflow                    | Not applicable                                                 | No             |
+| SoftDeleted | Draft       | No          | Not applicable                                               | Soft-deleted sessions cannot be restored through normal workflow                        | Not applicable                                                 | No             |
 
 ## 5.5 Referenced External State Awareness
 
-| External Entity | Owning Module | Scheduling Dependency | Scheduling Rule |
-|---|---|---|---|
-| Batch | Training Delivery Management | Batch status, date range, branch, course, capacity display | Scheduling can create sessions only for schedulable batches and must not own enrollment capacity rules. |
-| TrainerProfile | Faculty / Trainer Management | Trainer status, branch, effective dates, availability, course authorization | Scheduling validates trainer eligibility before save, publish, and reschedule. |
-| Classroom | Organization Management | Classroom branch, capacity, status, effective dates | Scheduling validates classroom branch ownership and active availability before save, publish, and reschedule. |
-| AttendanceSession | Attendance Management | Attendance finalization status | Scheduling cannot normally reschedule or cancel a session with finalized attendance. |
-| Enrollment | Admission & Enrollment Management | Batch enrollment visibility only | Scheduling does not create, update, complete, cancel, or duplicate enrollment lifecycle. |
+| External Entity   | Owning Module                     | Scheduling Dependency                                                       | Scheduling Rule                                                                                               |
+| ----------------- | --------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Batch             | Training Delivery Management      | Batch status, date range, branch, course, capacity display                  | Scheduling can create sessions only for schedulable batches and must not own enrollment capacity rules.       |
+| TrainerProfile    | Faculty / Trainer Management      | Trainer status, branch, effective dates, availability, course authorization | Scheduling validates trainer eligibility before save, publish, and reschedule.                                |
+| Classroom         | Organization Management           | Classroom branch, capacity, status, effective dates                         | Scheduling validates classroom branch ownership and active availability before save, publish, and reschedule. |
+| AttendanceSession | Attendance Management             | Attendance finalization status                                              | Scheduling cannot normally reschedule or cancel a session with finalized attendance.                          |
+| Enrollment        | Admission & Enrollment Management | Batch enrollment visibility only                                            | Scheduling does not create, update, complete, cancel, or duplicate enrollment lifecycle.                      |
 
 ---
 
 # 6. Cross-Workflow Validation Matrix
 
-| Validation ID | Validation | Create Draft | Publish | Recurring Generate | Reschedule | Cancel | View/Export |
-|---|---:|---:|---:|---:|---:|---:|
-| VAL-SCH-001 | Authenticated user required | Required | Required | Required | Required | Required | Required |
-| VAL-SCH-002 | Permission check | `scheduling.session.create` | `scheduling.session.publish` | `scheduling.session.create` | `scheduling.session.reschedule` | `scheduling.session.cancel` | `scheduling.session.read` / `scheduling.export` |
-| VAL-SCH-003 | Branch access | Required | Required | Required | Required | Required | Required |
-| VAL-SCH-004 | Optimistic locking | Not applicable for new record | Required | Not applicable for new records | Required | Required | Not applicable |
-| VAL-SCH-005 | Active resolved calendar | Required | Required | Required | Required | Not applicable | Optional filter context |
-| VAL-SCH-006 | Working day and working hours | Warning or required by policy | Required | Required per candidate | Required | Not applicable | Not applicable |
-| VAL-SCH-007 | Batch date range | Required | Required | Required per candidate | Required | Not applicable | Not applicable |
-| VAL-SCH-008 | Trainer eligibility | Required | Required | Required per candidate | Required | Not applicable | Filter only |
-| VAL-SCH-009 | Classroom eligibility | Required | Required | Required per candidate | Required | Not applicable | Filter only |
-| VAL-SCH-010 | Trainer overlap | Required | Blocking | Required per candidate | Blocking | Not applicable | Not applicable |
-| VAL-SCH-011 | Classroom overlap | Required | Blocking | Required per candidate | Blocking | Not applicable | Not applicable |
-| VAL-SCH-012 | Batch overlap | Required | Blocking | Required per candidate | Blocking | Not applicable | Not applicable |
-| VAL-SCH-013 | Holiday conflict | Warning or blocking by policy | Blocking unless override | Skip or validate per option | Blocking unless override | Not applicable | Display only |
-| VAL-SCH-014 | Venue block conflict | Warning or blocking by policy | Blocking unless override | Validate per candidate | Blocking unless override | Not applicable | Display only |
-| VAL-SCH-015 | Attendance finalized check | Not applicable | Optional check | Not applicable | Required | Required | Display only |
-| VAL-SCH-016 | Mandatory reason | Conditional | Conditional for override | Conditional for conflict draft save | Required | Required | Export audit only |
-| VAL-SCH-017 | AuditLog | Required | Required | Required | Required | Required | Required for export |
+| Validation ID |                    Validation |                  Create Draft |                      Publish |                  Recurring Generate |                      Reschedule |                      Cancel | View/Export                                     |
+| ------------- | ----------------------------: | ----------------------------: | ---------------------------: | ----------------------------------: | ------------------------------: | --------------------------: | ----------------------------------------------- |
+| VAL-SCH-001   |   Authenticated user required |                      Required |                     Required |                            Required |                        Required |                    Required | Required                                        |
+| VAL-SCH-002   |              Permission check |   `scheduling.session.create` | `scheduling.session.publish` |         `scheduling.session.create` | `scheduling.session.reschedule` | `scheduling.session.cancel` | `scheduling.session.read` / `scheduling.export` |
+| VAL-SCH-003   |                 Branch access |                      Required |                     Required |                            Required |                        Required |                    Required | Required                                        |
+| VAL-SCH-004   |            Optimistic locking | Not applicable for new record |                     Required |      Not applicable for new records |                        Required |                    Required | Not applicable                                  |
+| VAL-SCH-005   |      Active resolved calendar |                      Required |                     Required |                            Required |                        Required |              Not applicable | Optional filter context                         |
+| VAL-SCH-006   | Working day and working hours | Warning or required by policy |                     Required |              Required per candidate |                        Required |              Not applicable | Not applicable                                  |
+| VAL-SCH-007   |              Batch date range |                      Required |                     Required |              Required per candidate |                        Required |              Not applicable | Not applicable                                  |
+| VAL-SCH-008   |           Trainer eligibility |                      Required |                     Required |              Required per candidate |                        Required |              Not applicable | Filter only                                     |
+| VAL-SCH-009   |         Classroom eligibility |                      Required |                     Required |              Required per candidate |                        Required |              Not applicable | Filter only                                     |
+| VAL-SCH-010   |               Trainer overlap |                      Required |                     Blocking |              Required per candidate |                        Blocking |              Not applicable | Not applicable                                  |
+| VAL-SCH-011   |             Classroom overlap |                      Required |                     Blocking |              Required per candidate |                        Blocking |              Not applicable | Not applicable                                  |
+| VAL-SCH-012   |                 Batch overlap |                      Required |                     Blocking |              Required per candidate |                        Blocking |              Not applicable | Not applicable                                  |
+| VAL-SCH-013   |              Holiday conflict | Warning or blocking by policy |     Blocking unless override |         Skip or validate per option |        Blocking unless override |              Not applicable | Display only                                    |
+| VAL-SCH-014   |          Venue block conflict | Warning or blocking by policy |     Blocking unless override |              Validate per candidate |        Blocking unless override |              Not applicable | Display only                                    |
+| VAL-SCH-015   |    Attendance finalized check |                Not applicable |               Optional check |                      Not applicable |                        Required |                    Required | Display only                                    |
+| VAL-SCH-016   |              Mandatory reason |                   Conditional |     Conditional for override | Conditional for conflict draft save |                        Required |                    Required | Export audit only                               |
+| VAL-SCH-017   |                      AuditLog |                      Required |                     Required |                            Required |                        Required |                    Required | Required for export                             |
 
 ---
 
 # 7. Permission-to-Workflow Mapping
 
-| Workflow | Permission Codes Required | Branch Scope Required | Consolidated Permission Accepted | Audit Required |
-|---|---|---:|---:|---:|
-| Create calendar | `scheduling.calendar.create` | Yes | No | Yes |
-| Update calendar | `scheduling.calendar.update` | Yes | No | Yes |
-| Archive calendar | `scheduling.calendar.archive` | Yes | No | Yes |
-| Create holiday | `scheduling.holiday.create` | Yes | No | Yes |
-| Update holiday | `scheduling.holiday.update` | Yes | No | Yes |
-| Soft delete holiday | `scheduling.holiday.delete` | Yes | No | Yes |
-| Create venue block | `scheduling.venueBlock.create` | Yes | No | Yes |
-| Update venue block | `scheduling.venueBlock.update` | Yes | No | Yes |
-| Cancel venue block | `scheduling.venueBlock.cancel` | Yes | No | Yes |
-| Create draft session | `scheduling.session.create` | Yes | No | Yes |
-| Publish session | `scheduling.session.publish` | Yes | No | Yes |
-| Update draft session | `scheduling.session.update` | Yes | No | Yes |
-| Reschedule published session | `scheduling.session.reschedule` | Yes | No | Yes |
-| Cancel published session | `scheduling.session.cancel` | Yes | No | Yes |
-| Soft delete draft session | `scheduling.session.deleteDraft` | Yes | No | Yes |
-| View timetable | `scheduling.session.read` | Yes | Yes, with `scheduling.consolidated.read` | No unless export |
-| View conflict report | `scheduling.conflict.read` | Yes | Yes, with `scheduling.consolidated.read` | No unless export |
-| Override holiday conflict | `scheduling.override.holiday` | Yes | No | Yes |
-| Override venue block conflict | `scheduling.override.venueBlock` | Yes | No | Yes |
-| Export schedule data | `scheduling.export` | Yes | Yes, with `scheduling.consolidated.read` | Yes |
+| Workflow                      | Permission Codes Required        | Branch Scope Required |         Consolidated Permission Accepted |   Audit Required |
+| ----------------------------- | -------------------------------- | --------------------: | ---------------------------------------: | ---------------: |
+| Create calendar               | `scheduling.calendar.create`     |                   Yes |                                       No |              Yes |
+| Update calendar               | `scheduling.calendar.update`     |                   Yes |                                       No |              Yes |
+| Archive calendar              | `scheduling.calendar.archive`    |                   Yes |                                       No |              Yes |
+| Create holiday                | `scheduling.holiday.create`      |                   Yes |                                       No |              Yes |
+| Update holiday                | `scheduling.holiday.update`      |                   Yes |                                       No |              Yes |
+| Soft delete holiday           | `scheduling.holiday.delete`      |                   Yes |                                       No |              Yes |
+| Create venue block            | `scheduling.venueBlock.create`   |                   Yes |                                       No |              Yes |
+| Update venue block            | `scheduling.venueBlock.update`   |                   Yes |                                       No |              Yes |
+| Cancel venue block            | `scheduling.venueBlock.cancel`   |                   Yes |                                       No |              Yes |
+| Create draft session          | `scheduling.session.create`      |                   Yes |                                       No |              Yes |
+| Publish session               | `scheduling.session.publish`     |                   Yes |                                       No |              Yes |
+| Update draft session          | `scheduling.session.update`      |                   Yes |                                       No |              Yes |
+| Reschedule published session  | `scheduling.session.reschedule`  |                   Yes |                                       No |              Yes |
+| Cancel published session      | `scheduling.session.cancel`      |                   Yes |                                       No |              Yes |
+| Soft delete draft session     | `scheduling.session.deleteDraft` |                   Yes |                                       No |              Yes |
+| View timetable                | `scheduling.session.read`        |                   Yes | Yes, with `scheduling.consolidated.read` | No unless export |
+| View conflict report          | `scheduling.conflict.read`       |                   Yes | Yes, with `scheduling.consolidated.read` | No unless export |
+| Override holiday conflict     | `scheduling.override.holiday`    |                   Yes |                                       No |              Yes |
+| Override venue block conflict | `scheduling.override.venueBlock` |                   Yes |                                       No |              Yes |
+| Export schedule data          | `scheduling.export`              |                   Yes | Yes, with `scheduling.consolidated.read` |              Yes |
 
 ---
 

@@ -50,24 +50,29 @@ export interface ISchedulingService {
     trainerId: string,
     start: Date,
     end: Date,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
+  ): Promise<
+    {
+      sessionDate: Date;
+      startTime: string;
+      endTime: string;
+      batchCode: string;
+    }[]
+  >;
+  validateSession(
+    input: {
+      branchId: string;
+      instituteId: string;
+      scheduledDate: Date;
+      startTime: string;
+      endTime: string;
+      trainerId?: string | null;
+      classroomId?: string | null;
+      batchId?: string | null;
+      sessionId?: string | null;
+    },
+    tx?: Prisma.TransactionClient,
   ): Promise<{
-    sessionDate: Date;
-    startTime: string;
-    endTime: string;
-    batchCode: string;
-  }[]>;
-  validateSession(input: {
-    branchId: string;
-    instituteId: string;
-    scheduledDate: Date;
-    startTime: string;
-    endTime: string;
-    trainerId?: string | null;
-    classroomId?: string | null;
-    batchId?: string | null;
-    sessionId?: string | null;
-  }, tx?: Prisma.TransactionClient): Promise<{
     isValid: boolean;
     conflicts: { type: string; message: string; severity: string }[];
   }>;
@@ -87,10 +92,13 @@ export class BatchService {
   constructor(
     private readonly prisma: PrismaClient,
     public readonly batchRepository: IBatchRepository,
-    private readonly schedulingService?: ISchedulingService
+    private readonly schedulingService?: ISchedulingService,
   ) {}
 
-  private async resolveInstituteId(branchId: string, client: Prisma.TransactionClient): Promise<string> {
+  private async resolveInstituteId(
+    branchId: string,
+    client: Prisma.TransactionClient,
+  ): Promise<string> {
     const branch = await client.branch.findUnique({
       where: { id: branchId, isDeleted: false },
       select: { instituteId: true },
@@ -103,7 +111,11 @@ export class BatchService {
     return (branch as BatchBranchRow).instituteId;
   }
 
-  async createBatch(input: CreateBatchInput, actorId?: string, tx?: Prisma.TransactionClient) {
+  async createBatch(
+    input: CreateBatchInput,
+    actorId?: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const execute = async (client: Prisma.TransactionClient) => {
       // Validate code format
       if (!CODE_REGEX.test(input.batchCode)) {
@@ -111,7 +123,10 @@ export class BatchService {
       }
 
       // Check unique code
-      const existing = await this.batchRepository.findByCode(input.batchCode, client);
+      const existing = await this.batchRepository.findByCode(
+        input.batchCode,
+        client,
+      );
       if (existing) {
         throw new DuplicateBatchCode();
       }
@@ -130,7 +145,11 @@ export class BatchService {
       // Check user branch access scoping
       if (actorId) {
         const hasAccess = await client.userBranchAccess.findFirst({
-          where: { userId: actorId, branchId: input.branchId, status: 'Active' },
+          where: {
+            userId: actorId,
+            branchId: input.branchId,
+            status: 'Active',
+          },
         });
         if (!hasAccess) {
           // If not directly scoped, verify if they have global consolidated visibility
@@ -139,7 +158,9 @@ export class BatchService {
             include: { role: true },
           });
           const isSuperAdmin = userRoles.some(
-            (ur) => ur.role.roleCode === 'SUPER_ADMIN' || ur.role.roleCode === 'OWNER'
+            (ur) =>
+              ur.role.roleCode === 'SUPER_ADMIN' ||
+              ur.role.roleCode === 'OWNER',
           );
           if (!isSuperAdmin) {
             throw new Error('ERR_IAM_INSUFFICIENT_PERMISSIONS');
@@ -157,17 +178,22 @@ export class BatchService {
       // Check dates within parent course effective range
       const courseStart = new Date(course.effectiveStartDate);
       if (startDate < courseStart) {
-        throw new InvalidDateRange('Batch start date cannot be before course effective start date.');
+        throw new InvalidDateRange(
+          'Batch start date cannot be before course effective start date.',
+        );
       }
       if (course.effectiveEndDate) {
         const courseEnd = new Date(course.effectiveEndDate);
         if (endDate > courseEnd) {
-          throw new InvalidDateRange('Batch end date cannot exceed course effective end date.');
+          throw new InvalidDateRange(
+            'Batch end date cannot exceed course effective end date.',
+          );
         }
       }
 
       // Classroom validation
-      const classroomId = typeof input.classroomId === 'string' ? input.classroomId : null;
+      const classroomId =
+        typeof input.classroomId === 'string' ? input.classroomId : null;
       if (classroomId) {
         const classroom = await client.classroom.findFirst({
           where: { id: classroomId, isDeleted: false, status: 'Active' },
@@ -178,9 +204,13 @@ export class BatchService {
       }
 
       // Corporate client validation
-      const corporateAccountId = typeof input.corporateAccountId === 'string' ? input.corporateAccountId : null;
+      const corporateAccountId =
+        typeof input.corporateAccountId === 'string'
+          ? input.corporateAccountId
+          : null;
       if (corporateAccountId) {
-        const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+        const UUID_REGEX =
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
         if (!UUID_REGEX.test(corporateAccountId)) {
           throw new Error('ERR_CRS_INVALID_CORPORATE_ACCOUNT');
         }
@@ -196,7 +226,7 @@ export class BatchService {
           currentEnrollmentCount: 0,
           createdBy: actorId,
         },
-        client
+        client,
       );
 
       if (primaryTrainerId) {
@@ -210,7 +240,7 @@ export class BatchService {
             assignedTo: batch.endDate,
           },
           actorId,
-          client
+          client,
         );
       }
 
@@ -252,7 +282,13 @@ export class BatchService {
     return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
 
-  async updateBatch(id: string, input: UpdateBatchInput, version: number, actorId?: string, tx?: Prisma.TransactionClient) {
+  async updateBatch(
+    id: string,
+    input: UpdateBatchInput,
+    version: number,
+    actorId?: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const execute = async (client: Prisma.TransactionClient) => {
       const existing = await this.batchRepository.findById(id, client);
       if (!existing) {
@@ -266,7 +302,11 @@ export class BatchService {
       // Scoping check
       if (actorId) {
         const hasAccess = await client.userBranchAccess.findFirst({
-          where: { userId: actorId, branchId: existing.branchId, status: 'Active' },
+          where: {
+            userId: actorId,
+            branchId: existing.branchId,
+            status: 'Active',
+          },
         });
         if (!hasAccess) {
           const userRoles = await client.userRole.findMany({
@@ -274,7 +314,9 @@ export class BatchService {
             include: { role: true },
           });
           const isSuperAdmin = userRoles.some(
-            (ur) => ur.role.roleCode === 'SUPER_ADMIN' || ur.role.roleCode === 'OWNER'
+            (ur) =>
+              ur.role.roleCode === 'SUPER_ADMIN' ||
+              ur.role.roleCode === 'OWNER',
           );
           if (!isSuperAdmin) {
             throw new Error('ERR_IAM_INSUFFICIENT_PERMISSIONS');
@@ -285,7 +327,10 @@ export class BatchService {
       // Check capacity bounds
       if (input.capacity !== undefined) {
         const newCapacity = Number(input.capacity);
-        if (newCapacity < existing.currentEnrollmentCount && !(input.allowOverbooking || existing.allowOverbooking)) {
+        if (
+          newCapacity < existing.currentEnrollmentCount &&
+          !(input.allowOverbooking || existing.allowOverbooking)
+        ) {
           throw new Error('ERR_CRS_CAPACITY_UNDER_ENROLLMENT');
         }
       }
@@ -303,14 +348,19 @@ export class BatchService {
       }
 
       // Verify date range chronologically
-      const startDate = input.startDate ? new Date(input.startDate) : new Date(existing.startDate);
-      const endDate = input.endDate ? new Date(input.endDate) : new Date(existing.endDate);
+      const startDate = input.startDate
+        ? new Date(input.startDate)
+        : new Date(existing.startDate);
+      const endDate = input.endDate
+        ? new Date(input.endDate)
+        : new Date(existing.endDate);
       if (endDate <= startDate) {
         throw new InvalidDateRange('Batch end date must be after start date.');
       }
 
       // Classroom validation
-      const classroomId = typeof input.classroomId === 'string' ? input.classroomId : null;
+      const classroomId =
+        typeof input.classroomId === 'string' ? input.classroomId : null;
       if (classroomId) {
         const classroom = await client.classroom.findFirst({
           where: { id: classroomId, isDeleted: false, status: 'Active' },
@@ -322,14 +372,23 @@ export class BatchService {
 
       // Corporate client validation
       if (input.corporateAccountId) {
-        const corporateAccountId = typeof input.corporateAccountId === 'string' ? input.corporateAccountId : null;
-        const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+        const corporateAccountId =
+          typeof input.corporateAccountId === 'string'
+            ? input.corporateAccountId
+            : null;
+        const UUID_REGEX =
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
         if (!UUID_REGEX.test(corporateAccountId || '')) {
           throw new Error('ERR_CRS_INVALID_CORPORATE_ACCOUNT');
         }
       }
 
-      const updated = await this.batchRepository.update(id, input, version, client);
+      const updated = await this.batchRepository.update(
+        id,
+        input,
+        version,
+        client,
+      );
 
       // Capacity increase hook
       if (input.capacity !== undefined && existing.waitingListEnabled) {
@@ -337,19 +396,26 @@ export class BatchService {
         const newCapacity = Number(input.capacity);
         if (newCapacity > oldCapacity) {
           const addedSeats = newCapacity - oldCapacity;
-          const activeWaitlist = await this.batchRepository.findActiveWaitlist(id, client);
+          const activeWaitlist = await this.batchRepository.findActiveWaitlist(
+            id,
+            client,
+          );
           if (activeWaitlist.length > 0) {
             const promoteCount = Math.min(addedSeats, activeWaitlist.length);
-            
+
             // Promote candidates FIFO
             for (let i = 0; i < promoteCount; i++) {
               const candidate = activeWaitlist[i];
               const promoCorrelationId = createUuid(randomUUID());
-              await this.batchRepository.updateWaitlistEntry(candidate.id, {
-                status: 'Promoted',
-                promotionCorrelationId: promoCorrelationId,
-                queuePosition: 0,
-              }, client);
+              await this.batchRepository.updateWaitlistEntry(
+                candidate.id,
+                {
+                  status: 'Promoted',
+                  promotionCorrelationId: promoCorrelationId,
+                  queuePosition: 0,
+                },
+                client,
+              );
 
               // Emit event
               await client.outboxEvent.create({
@@ -374,17 +440,24 @@ export class BatchService {
             // Shift remaining candidate positions
             for (let i = promoteCount; i < activeWaitlist.length; i++) {
               const remaining = activeWaitlist[i];
-              await this.batchRepository.updateWaitlistEntry(remaining.id, {
-                queuePosition: remaining.queuePosition - promoteCount,
-              }, client);
+              await this.batchRepository.updateWaitlistEntry(
+                remaining.id,
+                {
+                  queuePosition: remaining.queuePosition - promoteCount,
+                },
+                client,
+              );
             }
 
             // Update batch enrollment count with latest version
             await this.batchRepository.update(
               id,
-              { currentEnrollmentCount: updated.currentEnrollmentCount + promoteCount },
+              {
+                currentEnrollmentCount:
+                  updated.currentEnrollmentCount + promoteCount,
+              },
               updated.version,
-              client
+              client,
             );
           }
         }
@@ -411,7 +484,13 @@ export class BatchService {
     return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
 
-  async transitionBatchStatus(id: string, targetStatus: string, version: number, actorId?: string, tx?: Prisma.TransactionClient) {
+  async transitionBatchStatus(
+    id: string,
+    targetStatus: string,
+    version: number,
+    actorId?: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const execute = async (client: Prisma.TransactionClient) => {
       const batch = await this.batchRepository.findById(id, client);
       if (!batch) {
@@ -425,7 +504,11 @@ export class BatchService {
       // Scoping Check
       if (actorId) {
         const hasAccess = await client.userBranchAccess.findFirst({
-          where: { userId: actorId, branchId: batch.branchId, status: 'Active' },
+          where: {
+            userId: actorId,
+            branchId: batch.branchId,
+            status: 'Active',
+          },
         });
         if (!hasAccess) {
           const userRoles = await client.userRole.findMany({
@@ -433,7 +516,9 @@ export class BatchService {
             include: { role: true },
           });
           const isSuperAdmin = userRoles.some(
-            (ur) => ur.role.roleCode === 'SUPER_ADMIN' || ur.role.roleCode === 'OWNER'
+            (ur) =>
+              ur.role.roleCode === 'SUPER_ADMIN' ||
+              ur.role.roleCode === 'OWNER',
           );
           if (!isSuperAdmin) {
             throw new Error('ERR_IAM_INSUFFICIENT_PERMISSIONS');
@@ -442,11 +527,14 @@ export class BatchService {
       }
 
       const aggregate = new BatchAggregate(batch);
-      
+
       // Fetch context info
-      const primaryTrainer = await this.batchRepository.findPrimaryTrainer(id, client);
+      const primaryTrainer = await this.batchRepository.findPrimaryTrainer(
+        id,
+        client,
+      );
       const sessions = await this.batchRepository.findSessions(id, client);
-      
+
       const now = new Date();
       const allSessionsPast = sessions.every((s) => {
         // Simple past checks
@@ -459,7 +547,12 @@ export class BatchService {
         currentDate: now,
       });
 
-      const updated = await this.batchRepository.update(id, { status: targetStatus }, version, client);
+      const updated = await this.batchRepository.update(
+        id,
+        { status: targetStatus },
+        version,
+        client,
+      );
 
       // Cascades and Event publish
       if (targetStatus === BATCH_STATUSES.CANCELLED) {
@@ -531,7 +624,12 @@ export class BatchService {
     return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
 
-  async assignTrainer(batchId: string, input: Prisma.BatchTrainerUncheckedCreateInput, actorId?: string, tx?: Prisma.TransactionClient) {
+  async assignTrainer(
+    batchId: string,
+    input: Prisma.BatchTrainerUncheckedCreateInput,
+    actorId?: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const execute = async (client: Prisma.TransactionClient) => {
       const batch = await this.batchRepository.findById(batchId, client);
       if (!batch) {
@@ -560,7 +658,9 @@ export class BatchService {
         throw new Error('ERR_CRS_TRAINER_NOT_ACTIVE');
       }
 
-      const hasTrainerRole = trainer.roles.some((ur) => ur.role.roleCode === 'TRAINER');
+      const hasTrainerRole = trainer.roles.some(
+        (ur) => ur.role.roleCode === 'TRAINER',
+      );
       if (!hasTrainerRole) {
         throw new Error('ERR_CRS_INVALID_TRAINER_PROFILE');
       }
@@ -568,7 +668,11 @@ export class BatchService {
       // Enforce batch.delivery.assign permission and active branch authorization
       if (actorId) {
         const hasAccess = await client.userBranchAccess.findFirst({
-          where: { userId: actorId, branchId: batch.branchId, status: 'Active' },
+          where: {
+            userId: actorId,
+            branchId: batch.branchId,
+            status: 'Active',
+          },
         });
         const isAuthorized = !!hasAccess;
 
@@ -588,12 +692,13 @@ export class BatchService {
         });
 
         const isSuperAdmin = userRoles.some(
-          (ur) => ur.role.roleCode === 'SUPER_ADMIN' || ur.role.roleCode === 'OWNER'
+          (ur) =>
+            ur.role.roleCode === 'SUPER_ADMIN' || ur.role.roleCode === 'OWNER',
         );
 
         if (!isSuperAdmin) {
           const permissions = userRoles.flatMap((ur) =>
-            ur.role.permissions.map((rp) => rp.permission.permissionCode)
+            ur.role.permissions.map((rp) => rp.permission.permissionCode),
           );
           const hasPermission = permissions.includes('batch.delivery.assign');
           if (!isAuthorized || !hasPermission) {
@@ -603,8 +708,13 @@ export class BatchService {
       }
 
       // Reject trainer assignment if batch is closed
-      if (batch.status === BATCH_STATUSES.COMPLETED || batch.status === BATCH_STATUSES.CANCELLED) {
-        throw new InvalidStateTransition('Cannot assign trainer to a completed or cancelled batch.');
+      if (
+        batch.status === BATCH_STATUSES.COMPLETED ||
+        batch.status === BATCH_STATUSES.CANCELLED
+      ) {
+        throw new InvalidStateTransition(
+          'Cannot assign trainer to a completed or cancelled batch.',
+        );
       }
 
       // Verify date ranges
@@ -613,13 +723,21 @@ export class BatchService {
       if (assignedTo <= assignedFrom) {
         throw new InvalidDateRange();
       }
-      if (assignedFrom < new Date(batch.startDate) || assignedTo > new Date(batch.endDate)) {
-        throw new InvalidDateRange('Assignment date range falls outside the batch bounds.');
+      if (
+        assignedFrom < new Date(batch.startDate) ||
+        assignedTo > new Date(batch.endDate)
+      ) {
+        throw new InvalidDateRange(
+          'Assignment date range falls outside the batch bounds.',
+        );
       }
 
       // Role check for existing primary trainer
       if (input.role === 'Primary') {
-        const trainers = await this.batchRepository.findTrainers(batchId, client);
+        const trainers = await this.batchRepository.findTrainers(
+          batchId,
+          client,
+        );
         const hasPrimaryOverlap = trainers.some((t) => {
           return (
             t.role === 'Primary' &&
@@ -635,26 +753,39 @@ export class BatchService {
 
       // Intercept schedule conflicts
       if (this.schedulingService) {
-        const batchSessions = await this.batchRepository.findSessions(batchId, client);
-        const instituteId = await this.resolveInstituteId(batch.branchId, client);
+        const batchSessions = await this.batchRepository.findSessions(
+          batchId,
+          client,
+        );
+        const instituteId = await this.resolveInstituteId(
+          batch.branchId,
+          client,
+        );
         const conflicts: ScheduleConflict[] = [];
 
         for (const bs of batchSessions) {
-          const result = await this.schedulingService.validateSession({
-            branchId: batch.branchId,
-            instituteId,
-            scheduledDate: bs.sessionDate,
-            startTime: bs.startTime,
-            endTime: bs.endTime,
-            trainerId: input.trainerId,
-            classroomId: bs.classroomId,
-            batchId: batch.id,
-            sessionId: bs.id
-          }, client);
+          const result = await this.schedulingService.validateSession(
+            {
+              branchId: batch.branchId,
+              instituteId,
+              scheduledDate: bs.sessionDate,
+              startTime: bs.startTime,
+              endTime: bs.endTime,
+              trainerId: input.trainerId,
+              classroomId: bs.classroomId,
+              batchId: batch.id,
+              sessionId: bs.id,
+            },
+            client,
+          );
 
           if (!result.isValid) {
             for (const conflict of result.conflicts) {
-              if (conflict.type === 'TRAINER_OVERLAP' || conflict.type === 'HOLIDAY' || conflict.type === 'OPERATING_HOURS') {
+              if (
+                conflict.type === 'TRAINER_OVERLAP' ||
+                conflict.type === 'HOLIDAY' ||
+                conflict.type === 'OPERATING_HOURS'
+              ) {
                 conflicts.push({
                   batchCode: 'Conflict', // The engine should ideally return the conflicting batch code
                   sessionDate: bs.sessionDate,
@@ -669,7 +800,7 @@ export class BatchService {
         if (conflicts.length > 0) {
           throw new TrainerScheduleConflict(
             `Trainer schedule conflict detected by Scheduling Engine`,
-            conflicts
+            conflicts,
           );
         }
       }
@@ -682,7 +813,7 @@ export class BatchService {
           batchId,
           createdBy: actorId,
         },
-        client
+        client,
       );
 
       // Record outbox event to notify calendar
@@ -730,7 +861,7 @@ export class BatchService {
     assignedFrom: Date,
     assignedTo: Date,
     actorId?: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<ScheduleConflict[]> {
     const execute = async (client: Prisma.TransactionClient) => {
       const batch = await this.batchRepository.findById(batchId, client);
@@ -741,7 +872,11 @@ export class BatchService {
       // Enforce batch branch authorization for non-superadmins
       if (actorId) {
         const hasAccess = await client.userBranchAccess.findFirst({
-          where: { userId: actorId, branchId: batch.branchId, status: 'Active' },
+          where: {
+            userId: actorId,
+            branchId: batch.branchId,
+            status: 'Active',
+          },
         });
         const isAuthorized = !!hasAccess;
 
@@ -761,12 +896,13 @@ export class BatchService {
         });
 
         const isSuperAdmin = userRoles.some(
-          (ur) => ur.role.roleCode === 'SUPER_ADMIN' || ur.role.roleCode === 'OWNER'
+          (ur) =>
+            ur.role.roleCode === 'SUPER_ADMIN' || ur.role.roleCode === 'OWNER',
         );
 
         if (!isSuperAdmin) {
           const permissions = userRoles.flatMap((ur) =>
-            ur.role.permissions.map((rp) => rp.permission.permissionCode)
+            ur.role.permissions.map((rp) => rp.permission.permissionCode),
           );
           const hasPermission = permissions.includes('batch.delivery.assign');
           if (!isAuthorized || !hasPermission) {
@@ -779,22 +915,28 @@ export class BatchService {
         return [];
       }
 
-      const batchSessions = await this.batchRepository.findSessions(batchId, client);
+      const batchSessions = await this.batchRepository.findSessions(
+        batchId,
+        client,
+      );
       const instituteId = await this.resolveInstituteId(batch.branchId, client);
       const conflicts: ScheduleConflict[] = [];
 
       for (const bs of batchSessions) {
-        const result = await this.schedulingService.validateSession({
-          branchId: batch.branchId,
-          instituteId,
-          scheduledDate: bs.sessionDate,
-          startTime: bs.startTime,
-          endTime: bs.endTime,
-          trainerId: trainerId,
-          classroomId: bs.classroomId,
-          batchId: batch.id,
-          sessionId: bs.id
-        }, client);
+        const result = await this.schedulingService.validateSession(
+          {
+            branchId: batch.branchId,
+            instituteId,
+            scheduledDate: bs.sessionDate,
+            startTime: bs.startTime,
+            endTime: bs.endTime,
+            trainerId: trainerId,
+            classroomId: bs.classroomId,
+            batchId: batch.id,
+            sessionId: bs.id,
+          },
+          client,
+        );
 
         if (!result.isValid) {
           conflicts.push({
@@ -812,12 +954,17 @@ export class BatchService {
     return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
 
-  async allocateSeat(batchId: string, requestedSeats: number, forceOverbook: boolean, tx?: Prisma.TransactionClient) {
+  async allocateSeat(
+    batchId: string,
+    requestedSeats: number,
+    forceOverbook: boolean,
+    tx?: Prisma.TransactionClient,
+  ) {
     const execute = async (client: Prisma.TransactionClient) => {
       // Pessimistic write lock
       const batches = await client.$queryRawUnsafe<BatchLockRow[]>(
         'SELECT * FROM "batches" WHERE "id" = $1::uuid AND "isDeleted" = false FOR UPDATE',
-        batchId
+        batchId,
       );
       if (batches.length === 0) {
         throw new Error('ERR_CRS_BATCH_NOT_FOUND');
@@ -834,8 +981,13 @@ export class BatchService {
       const allocation = aggregate.allocateSeat(requestedSeats, forceOverbook);
 
       if (allocation.status !== 'WAITLIST_REDIRECT') {
-        await this.batchRepository.update(batchId, { currentEnrollmentCount: allocation.updatedCount }, batch.version, client);
-        
+        await this.batchRepository.update(
+          batchId,
+          { currentEnrollmentCount: allocation.updatedCount },
+          batch.version,
+          client,
+        );
+
         // Check Capacity limit alerts
         if (allocation.updatedCount === batch.capacity) {
           await client.outboxEvent.create({
@@ -858,11 +1010,15 @@ export class BatchService {
     return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
 
-  async releaseSeatAndPromote(batchId: string, releasedSeats: number = 1, tx?: Prisma.TransactionClient) {
+  async releaseSeatAndPromote(
+    batchId: string,
+    releasedSeats: number = 1,
+    tx?: Prisma.TransactionClient,
+  ) {
     const execute = async (client: Prisma.TransactionClient) => {
       const batches = await client.$queryRawUnsafe<BatchLockRow[]>(
         'SELECT * FROM "batches" WHERE "id" = $1::uuid AND "isDeleted" = false FOR UPDATE',
-        batchId
+        batchId,
       );
       if (batches.length === 0) {
         throw new Error('ERR_CRS_BATCH_NOT_FOUND');
@@ -879,21 +1035,32 @@ export class BatchService {
       const newCount = aggregate.releaseSeat(releasedSeats);
 
       if (batch.waitingListEnabled) {
-        const activeWaitlist = await this.batchRepository.findActiveWaitlist(batchId, client);
+        const activeWaitlist = await this.batchRepository.findActiveWaitlist(
+          batchId,
+          client,
+        );
         if (activeWaitlist.length > 0) {
           // Promote first candidate FIFO
           const candidate = activeWaitlist[0];
           const promoCorrelationId = createUuid(randomUUID());
-          await this.batchRepository.updateWaitlistEntry(candidate.id, {
-            status: 'Promoted',
-            promotionCorrelationId: promoCorrelationId,
-            queuePosition: 0,
-          }, client);
+          await this.batchRepository.updateWaitlistEntry(
+            candidate.id,
+            {
+              status: 'Promoted',
+              promotionCorrelationId: promoCorrelationId,
+              queuePosition: 0,
+            },
+            client,
+          );
 
           // Shift subsequent candidate positions
           for (let i = 1; i < activeWaitlist.length; i++) {
             const next = activeWaitlist[i];
-            await this.batchRepository.updateWaitlistEntry(next.id, { queuePosition: next.queuePosition - 1 }, client);
+            await this.batchRepository.updateWaitlistEntry(
+              next.id,
+              { queuePosition: next.queuePosition - 1 },
+              client,
+            );
           }
 
           // Emit event for Admissions context to create Student Enrollment
@@ -921,7 +1088,12 @@ export class BatchService {
       }
 
       // No waitlist promo occurred, simply decrement the count
-      await this.batchRepository.update(batchId, { currentEnrollmentCount: newCount }, batch.version, client);
+      await this.batchRepository.update(
+        batchId,
+        { currentEnrollmentCount: newCount },
+        batch.version,
+        client,
+      );
     };
 
     return tx ? execute(tx) : this.prisma.$transaction(execute);
@@ -929,12 +1101,12 @@ export class BatchService {
 
   async enqueueWaitlist(
     input: EnqueueWaitlistInput,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
     const { batchId, studentProfileId, leadId, enrollmentId, actorId } = input;
     const execute = async (client: Prisma.TransactionClient) => {
       const batch = await this.acquireBatchLock(batchId, client);
-      
+
       if (!studentProfileId && !leadId) {
         throw new Error('ERR_CRS_CANDIDATE_REQUIRED');
       }
@@ -949,7 +1121,7 @@ export class BatchService {
       // Enforce Candidate Validations & Branch Scoping Checks transactionally
       if (studentProfileId) {
         const studentProfile = await client.studentProfile.findFirst({
-          where: { id: studentProfileId, isDeleted: false }
+          where: { id: studentProfileId, isDeleted: false },
         });
         if (!studentProfile) {
           throw new Error('ERR_STU_PROFILE_NOT_FOUND');
@@ -964,8 +1136,8 @@ export class BatchService {
             studentProfileId,
             branchId: batch.branchId,
             admissionStatus: { in: ['Submitted', 'Approved'] },
-            isDeleted: false
-          }
+            isDeleted: false,
+          },
         });
         if (!hasAdmissionInBranch) {
           throw new Error('ERR_AUTH_BRANCH_DENIED');
@@ -974,7 +1146,7 @@ export class BatchService {
 
       if (leadId) {
         const lead = await client.lead.findFirst({
-          where: { id: leadId, isDeleted: false }
+          where: { id: leadId, isDeleted: false },
         });
         if (!lead) {
           throw new Error('ERR_CRS_LEAD_NOT_FOUND');
@@ -991,28 +1163,34 @@ export class BatchService {
       }
 
       // Check duplicates
-      const active = await this.batchRepository.findActiveWaitlist(batchId, client);
+      const active = await this.batchRepository.findActiveWaitlist(
+        batchId,
+        client,
+      );
       const isDuplicate = active.some(
         (entry) =>
           (studentProfileId && entry.studentProfileId === studentProfileId) ||
-          (leadId && entry.leadId === leadId)
+          (leadId && entry.leadId === leadId),
       );
       if (isDuplicate) {
         throw new Error('ERR_CRS_DUPLICATE_WAITLIST');
       }
 
       const queuePosition = active.length + 1;
-      const wl = await this.batchRepository.addWaitlistEntry({
-        id: createUuid(randomUUID()),
-        courseId: batch.courseId,
-        batchId,
-        studentProfileId,
-        leadId,
-        enrollmentId: enrollmentId || null,
-        queuePosition,
-        status: 'Waiting',
-        createdBy: actorId,
-      }, client);
+      const wl = await this.batchRepository.addWaitlistEntry(
+        {
+          id: createUuid(randomUUID()),
+          courseId: batch.courseId,
+          batchId,
+          studentProfileId,
+          leadId,
+          enrollmentId: enrollmentId || null,
+          queuePosition,
+          status: 'Waiting',
+          createdBy: actorId,
+        },
+        client,
+      );
 
       // Audit Log
       await client.auditLog.create({
@@ -1024,7 +1202,13 @@ export class BatchService {
           entityType: 'WaitingList',
           entityId: wl.id,
           action: 'ENQUEUE_WAITLIST',
-          newValue: { batchId, studentProfileId, leadId, enrollmentId, queuePosition },
+          newValue: {
+            batchId,
+            studentProfileId,
+            leadId,
+            enrollmentId,
+            queuePosition,
+          },
         },
       });
 
@@ -1038,16 +1222,22 @@ export class BatchService {
     batchId: string,
     waitlistIds: string[],
     actorId?: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
     const execute = async (client: Prisma.TransactionClient) => {
       const batch = await this.acquireBatchLock(batchId, client);
-      const active = await this.batchRepository.findActiveWaitlist(batchId, client);
+      const active = await this.batchRepository.findActiveWaitlist(
+        batchId,
+        client,
+      );
 
       // Ensure all waitlistIds are active and correct count without duplicates
       const activeIds = active.map((x) => x.id);
       const hasDuplicates = new Set(waitlistIds).size !== waitlistIds.length;
-      const isValid = !hasDuplicates && waitlistIds.length === activeIds.length && waitlistIds.every((id) => activeIds.includes(id));
+      const isValid =
+        !hasDuplicates &&
+        waitlistIds.length === activeIds.length &&
+        waitlistIds.every((id) => activeIds.includes(id));
       if (!isValid) {
         throw new Error('ERR_CRS_INVALID_REORDER_PAYLOAD');
       }
@@ -1055,7 +1245,11 @@ export class BatchService {
       // Update positions
       for (let i = 0; i < waitlistIds.length; i++) {
         const id = waitlistIds[i];
-        await this.batchRepository.updateWaitlistEntry(id, { queuePosition: i + 1 }, client);
+        await this.batchRepository.updateWaitlistEntry(
+          id,
+          { queuePosition: i + 1 },
+          client,
+        );
       }
 
       // Audit Log
@@ -1080,7 +1274,7 @@ export class BatchService {
     batchId: string,
     waitlistId: string,
     actorId?: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
     const execute = async (client: Prisma.TransactionClient) => {
       const batch = await this.acquireBatchLock(batchId, client);
@@ -1092,23 +1286,43 @@ export class BatchService {
 
       const correlationId = createUuid(randomUUID());
       const aggregate = new BatchAggregate(batch);
-      const { updatedEntry, updatedCount } = aggregate.promoteWaitlistEntry(entry, correlationId, { force: false });
+      const { updatedEntry, updatedCount } = aggregate.promoteWaitlistEntry(
+        entry,
+        correlationId,
+        { force: false },
+      );
 
       // Update waitlist entry status
-      await this.batchRepository.updateWaitlistEntry(waitlistId, {
-        status: updatedEntry.status,
-        promotionCorrelationId: updatedEntry.promotionCorrelationId,
-        queuePosition: 0,
-      }, client);
+      await this.batchRepository.updateWaitlistEntry(
+        waitlistId,
+        {
+          status: updatedEntry.status,
+          promotionCorrelationId: updatedEntry.promotionCorrelationId,
+          queuePosition: 0,
+        },
+        client,
+      );
 
       // Update batch enrollment count
-      await this.batchRepository.update(batchId, { currentEnrollmentCount: updatedCount }, batch.version, client);
+      await this.batchRepository.update(
+        batchId,
+        { currentEnrollmentCount: updatedCount },
+        batch.version,
+        client,
+      );
 
       // Shift subsequent active entries
-      const active = await this.batchRepository.findActiveWaitlist(batchId, client);
+      const active = await this.batchRepository.findActiveWaitlist(
+        batchId,
+        client,
+      );
       const remaining = active.filter((x) => x.id !== waitlistId);
       for (let i = 0; i < remaining.length; i++) {
-        await this.batchRepository.updateWaitlistEntry(remaining[i].id, { queuePosition: i + 1 }, client);
+        await this.batchRepository.updateWaitlistEntry(
+          remaining[i].id,
+          { queuePosition: i + 1 },
+          client,
+        );
       }
 
       // Emit event
@@ -1155,7 +1369,7 @@ export class BatchService {
     waitlistId: string,
     reason: string,
     actorId?: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
     const execute = async (client: Prisma.TransactionClient) => {
       const batch = await this.acquireBatchLock(batchId, client);
@@ -1168,17 +1382,28 @@ export class BatchService {
       const aggregate = new BatchAggregate(batch);
       const updatedEntry = aggregate.skipWaitlistEntry(entry, reason);
 
-      await this.batchRepository.updateWaitlistEntry(waitlistId, {
-        status: updatedEntry.status,
-        statusReason: updatedEntry.statusReason,
-        queuePosition: 0,
-      }, client);
+      await this.batchRepository.updateWaitlistEntry(
+        waitlistId,
+        {
+          status: updatedEntry.status,
+          statusReason: updatedEntry.statusReason,
+          queuePosition: 0,
+        },
+        client,
+      );
 
       // Shift subsequent active entries
-      const active = await this.batchRepository.findActiveWaitlist(batchId, client);
+      const active = await this.batchRepository.findActiveWaitlist(
+        batchId,
+        client,
+      );
       const remaining = active.filter((x) => x.id !== waitlistId);
       for (let i = 0; i < remaining.length; i++) {
-        await this.batchRepository.updateWaitlistEntry(remaining[i].id, { queuePosition: i + 1 }, client);
+        await this.batchRepository.updateWaitlistEntry(
+          remaining[i].id,
+          { queuePosition: i + 1 },
+          client,
+        );
       }
 
       // Audit Log
@@ -1205,7 +1430,7 @@ export class BatchService {
     batchId: string,
     waitlistId: string,
     actorId?: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
     const execute = async (client: Prisma.TransactionClient) => {
       const batch = await this.acquireBatchLock(batchId, client);
@@ -1218,14 +1443,21 @@ export class BatchService {
       const aggregate = new BatchAggregate(batch);
       const updatedEntry = aggregate.reactivateWaitlistEntry(entry);
 
-      const active = await this.batchRepository.findActiveWaitlist(batchId, client);
+      const active = await this.batchRepository.findActiveWaitlist(
+        batchId,
+        client,
+      );
       const queuePosition = active.length + 1;
 
-      const updated = await this.batchRepository.updateWaitlistEntry(waitlistId, {
-        status: updatedEntry.status,
-        statusReason: null,
-        queuePosition,
-      }, client);
+      const updated = await this.batchRepository.updateWaitlistEntry(
+        waitlistId,
+        {
+          status: updatedEntry.status,
+          statusReason: null,
+          queuePosition,
+        },
+        client,
+      );
 
       // Audit Log
       await client.auditLog.create({
@@ -1251,7 +1483,7 @@ export class BatchService {
     batchId: string,
     waitlistId: string,
     actorId?: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
     const execute = async (client: Prisma.TransactionClient) => {
       const batch = await this.acquireBatchLock(batchId, client);
@@ -1261,22 +1493,35 @@ export class BatchService {
         throw new Error('ERR_CRS_WAITLIST_ENTRY_NOT_FOUND');
       }
       if (entry.status === 'Removed' || entry.status === 'Promoted') {
-        throw new InvalidStateTransition('Cannot remove a waitlist entry that has already been removed or promoted.');
+        throw new InvalidStateTransition(
+          'Cannot remove a waitlist entry that has already been removed or promoted.',
+        );
       }
 
       const isWaiting = entry.status === 'Waiting';
 
-      await this.batchRepository.updateWaitlistEntry(waitlistId, {
-        status: 'Removed',
-        queuePosition: 0,
-      }, client);
+      await this.batchRepository.updateWaitlistEntry(
+        waitlistId,
+        {
+          status: 'Removed',
+          queuePosition: 0,
+        },
+        client,
+      );
 
       if (isWaiting) {
         // Shift subsequent active entries
-        const active = await this.batchRepository.findActiveWaitlist(batchId, client);
+        const active = await this.batchRepository.findActiveWaitlist(
+          batchId,
+          client,
+        );
         const remaining = active.filter((x) => x.id !== waitlistId);
         for (let i = 0; i < remaining.length; i++) {
-          await this.batchRepository.updateWaitlistEntry(remaining[i].id, { queuePosition: i + 1 }, client);
+          await this.batchRepository.updateWaitlistEntry(
+            remaining[i].id,
+            { queuePosition: i + 1 },
+            client,
+          );
         }
       }
 
@@ -1305,7 +1550,7 @@ export class BatchService {
     correlationId?: string | null,
     reason?: string | null,
     actorId?: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
     const execute = async (client: Prisma.TransactionClient) => {
       const batch = await this.acquireBatchLock(batchId, client);
@@ -1313,7 +1558,8 @@ export class BatchService {
       const entry = list.find(
         (x) =>
           x.status === 'Promoted' &&
-          ((studentProfileId && x.studentProfileId === studentProfileId) || (leadId && x.leadId === leadId))
+          ((studentProfileId && x.studentProfileId === studentProfileId) ||
+            (leadId && x.leadId === leadId)),
       );
 
       if (!entry) {
@@ -1321,16 +1567,29 @@ export class BatchService {
       }
 
       const aggregate = new BatchAggregate(batch);
-      const { updatedEntry, updatedCount } = aggregate.revertPromotion(entry, correlationId, reason);
+      const { updatedEntry, updatedCount } = aggregate.revertPromotion(
+        entry,
+        correlationId,
+        reason,
+      );
 
-      await this.batchRepository.updateWaitlistEntry(entry.id, {
-        status: updatedEntry.status,
-        statusReason: updatedEntry.statusReason,
-        promotionCorrelationId: null,
-      }, client);
+      await this.batchRepository.updateWaitlistEntry(
+        entry.id,
+        {
+          status: updatedEntry.status,
+          statusReason: updatedEntry.statusReason,
+          promotionCorrelationId: null,
+        },
+        client,
+      );
 
       // Decrement enrollment count
-      const updatedBatch = await this.batchRepository.update(batchId, { currentEnrollmentCount: updatedCount }, batch.version, client);
+      const updatedBatch = await this.batchRepository.update(
+        batchId,
+        { currentEnrollmentCount: updatedCount },
+        batch.version,
+        client,
+      );
 
       // Audit Log
       await client.auditLog.create({
@@ -1348,20 +1607,31 @@ export class BatchService {
 
       // Promote next candidate FIFO if waitlist enabled
       if (updatedBatch.waitingListEnabled) {
-        const activeWaitlist = await this.batchRepository.findActiveWaitlist(batchId, client);
+        const activeWaitlist = await this.batchRepository.findActiveWaitlist(
+          batchId,
+          client,
+        );
         if (activeWaitlist.length > 0) {
           const nextCandidate = activeWaitlist[0];
           const promoCorrelationId = createUuid(randomUUID());
-          await this.batchRepository.updateWaitlistEntry(nextCandidate.id, {
-            status: 'Promoted',
-            promotionCorrelationId: promoCorrelationId,
-            queuePosition: 0,
-          }, client);
+          await this.batchRepository.updateWaitlistEntry(
+            nextCandidate.id,
+            {
+              status: 'Promoted',
+              promotionCorrelationId: promoCorrelationId,
+              queuePosition: 0,
+            },
+            client,
+          );
 
           // Shift subsequent positions
           for (let i = 1; i < activeWaitlist.length; i++) {
             const next = activeWaitlist[i];
-            await this.batchRepository.updateWaitlistEntry(next.id, { queuePosition: next.queuePosition - 1 }, client);
+            await this.batchRepository.updateWaitlistEntry(
+              next.id,
+              { queuePosition: next.queuePosition - 1 },
+              client,
+            );
           }
 
           // Emit outbox event
@@ -1393,33 +1663,41 @@ export class BatchService {
     studentProfileId: string | null,
     batchId: string,
     tx?: Prisma.TransactionClient,
-    leadId?: string | null
+    leadId?: string | null,
   ) {
     const execute = async (client: Prisma.TransactionClient) => {
       const list = await this.batchRepository.findWaitlist(batchId, client);
       const entry = list.find(
         (x) =>
           x.status === 'Promoted' &&
-          ((studentProfileId && x.studentProfileId === studentProfileId) || (leadId && x.leadId === leadId))
+          ((studentProfileId && x.studentProfileId === studentProfileId) ||
+            (leadId && x.leadId === leadId)),
       );
 
       if (entry) {
-        await this.batchRepository.updateWaitlistEntry(entry.id, {
-          status: 'Removed',
-          statusReason: 'ConsumedByEnrollment',
-          promotionCorrelationId: null,
-          isDeleted: true,
-        }, client);
+        await this.batchRepository.updateWaitlistEntry(
+          entry.id,
+          {
+            status: 'Removed',
+            statusReason: 'ConsumedByEnrollment',
+            promotionCorrelationId: null,
+            isDeleted: true,
+          },
+          client,
+        );
       }
     };
 
     return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
 
-  private async acquireBatchLock(batchId: string, client: Prisma.TransactionClient): Promise<Batch> {
+  private async acquireBatchLock(
+    batchId: string,
+    client: Prisma.TransactionClient,
+  ): Promise<Batch> {
     const batches = await client.$queryRawUnsafe<BatchLockRow[]>(
       'SELECT * FROM "batches" WHERE "id" = $1::uuid AND "isDeleted" = false FOR UPDATE',
-      batchId
+      batchId,
     );
     if (batches.length === 0) {
       throw new Error('ERR_CRS_BATCH_NOT_FOUND');

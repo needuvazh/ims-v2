@@ -1,8 +1,14 @@
 import { OwnerType } from './document';
 
 export interface StorageProvider {
-  generateUploadUrl(fileName: string, mimeType: string): Promise<{ url: string; fileKey: string }>;
-  generateSignedDownloadUrl(fileKey: string, expirySeconds: number): Promise<string>;
+  generateUploadUrl(
+    fileName: string,
+    mimeType: string,
+  ): Promise<{ url: string; fileKey: string }>;
+  generateSignedDownloadUrl(
+    fileKey: string,
+    expirySeconds: number,
+  ): Promise<string>;
   deleteFile(fileKey: string): Promise<void>;
 }
 

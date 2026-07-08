@@ -75,10 +75,15 @@ export function isPathActive(pathname: string, href: string, exact = false) {
 
 function hasActiveDescendant(item: NavItem, pathname: string): boolean {
   if (isPathActive(pathname, item.href, Boolean(item.current))) return true;
-  return item.items?.some((child) => hasActiveDescendant(child, pathname)) ?? false;
+  return (
+    item.items?.some((child) => hasActiveDescendant(child, pathname)) ?? false
+  );
 }
 
-export function getNavigationTrail(items: NavItem[], pathname: string): NavItem[] {
+export function getNavigationTrail(
+  items: NavItem[],
+  pathname: string,
+): NavItem[] {
   for (const item of items) {
     if (item.items?.length) {
       const childTrail = getNavigationTrail(item.items, pathname);
@@ -192,9 +197,17 @@ export interface AppShellProps {
   className?: string;
 }
 
-function BrandLogo({ appName, collapsed }: { appName: string; collapsed?: boolean }) {
+function BrandLogo({
+  appName,
+  collapsed,
+}: {
+  appName: string;
+  collapsed?: boolean;
+}) {
   return (
-    <div className={cn('flex items-center gap-3', collapsed && 'justify-center')}>
+    <div
+      className={cn('flex items-center gap-3', collapsed && 'justify-center')}
+    >
       <div
         className={cn(
           'relative shrink-0 overflow-hidden rounded-xl border border-slate-100 bg-white shadow-lg flex items-center justify-center',
@@ -228,7 +241,11 @@ export function SidebarCollapseButton({
       className="flex items-center justify-center p-2 rounded-lg text-slate-400 hover:bg-indigo-50 hover:text-indigo-600 border border-slate-100/60 shadow-sm transition-all outline-none"
       aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
     >
-      {collapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
+      {collapsed ? (
+        <ChevronRight className="w-5 h-5" />
+      ) : (
+        <ChevronLeft className="w-5 h-5" />
+      )}
     </button>
   );
 }
@@ -255,7 +272,9 @@ export function SidebarItem({
   onNavigate?: () => void;
 }) {
   const hasChildren = Boolean(item.items?.length);
-  const isActive = active ?? isPathActive(pathname, item.href, depth > 0 || Boolean(item.current));
+  const isActive =
+    active ??
+    isPathActive(pathname, item.href, depth > 0 || Boolean(item.current));
   const labelId = `sidebar-item-${normalizePath(item.href).replace(/\//g, '-')}`;
 
   const base = cn(
@@ -271,17 +290,21 @@ export function SidebarItem({
   const resolvedIcon = item.icon || getIconForHref(item.href);
 
   const iconMarkup = resolvedIcon ? (
-    <div className={cn(
-      'rounded-lg flex items-center justify-center transition-all duration-300 shrink-0 border shadow-[0_1px_2px_rgba(0,0,0,0.02)]',
-      depth > 0 ? 'w-6 h-6 rounded-md' : 'w-8 h-8 rounded-lg',
-      isActive 
-        ? 'bg-[var(--ims-brass)] text-white border-transparent shadow-[0_3px_8px_rgba(99,102,241,0.22)]' 
-        : 'bg-white text-slate-400 border-[var(--ims-border)] group-hover:text-[var(--ims-brass)] group-hover:border-[var(--ims-brass-soft)] group-hover:shadow-sm'
-    )}>
-      <div className={cn(
-        'shrink-0 transition-all duration-300 flex items-center justify-center',
-        depth > 0 ? 'w-3 h-3' : 'w-4 h-4'
-      )}>
+    <div
+      className={cn(
+        'rounded-lg flex items-center justify-center transition-all duration-300 shrink-0 border shadow-[0_1px_2px_rgba(0,0,0,0.02)]',
+        depth > 0 ? 'w-6 h-6 rounded-md' : 'w-8 h-8 rounded-lg',
+        isActive
+          ? 'bg-[var(--ims-brass)] text-white border-transparent shadow-[0_3px_8px_rgba(99,102,241,0.22)]'
+          : 'bg-white text-slate-400 border-[var(--ims-border)] group-hover:text-[var(--ims-brass)] group-hover:border-[var(--ims-brass-soft)] group-hover:shadow-sm',
+      )}
+    >
+      <div
+        className={cn(
+          'shrink-0 transition-all duration-300 flex items-center justify-center',
+          depth > 0 ? 'w-3 h-3' : 'w-4 h-4',
+        )}
+      >
         {resolvedIcon}
       </div>
     </div>
@@ -310,9 +333,17 @@ export function SidebarItem({
         )}
       />
       {iconMarkup}
-      {!collapsed ? <span className="min-w-0 truncate">{item.label}</span> : null}
       {!collapsed ? (
-        <ChevronDown className={cn('ml-auto h-4 w-4 shrink-0 transition-transform', expanded && 'rotate-180')} aria-hidden="true" />
+        <span className="min-w-0 truncate">{item.label}</span>
+      ) : null}
+      {!collapsed ? (
+        <ChevronDown
+          className={cn(
+            'ml-auto h-4 w-4 shrink-0 transition-transform',
+            expanded && 'rotate-180',
+          )}
+          aria-hidden="true"
+        />
       ) : null}
     </button>
   ) : (
@@ -331,12 +362,16 @@ export function SidebarItem({
         )}
       />
       {iconMarkup}
-      {!collapsed ? <span className="min-w-0 truncate">{item.label}</span> : null}
+      {!collapsed ? (
+        <span className="min-w-0 truncate">{item.label}</span>
+      ) : null}
       {!collapsed && item.badge !== undefined ? (
         <span
           className={cn(
             'ml-auto inline-flex min-w-6 items-center justify-center rounded-full px-2 py-0.5 text-[10px] font-semibold',
-            isActive ? 'bg-[color:var(--ims-brass)] text-white shadow-sm' : 'bg-slate-50 text-slate-500 border border-slate-100',
+            isActive
+              ? 'bg-[color:var(--ims-brass)] text-white shadow-sm'
+              : 'bg-slate-50 text-slate-500 border border-slate-100',
           )}
         >
           {item.badge}
@@ -370,16 +405,23 @@ export function SidebarGroup({
   return (
     <section className="space-y-2">
       {!collapsed ? (
-          <h3 className="px-3 text-[9px] font-black text-slate-500 uppercase tracking-[0.3em] opacity-60">{section.label}</h3>
-        ) : (
-          <div className="mx-3 border-t border-[var(--ims-sidebar-border)]" aria-hidden="true" />
-        )}
+        <h3 className="px-3 text-[9px] font-black text-slate-500 uppercase tracking-[0.3em] opacity-60">
+          {section.label}
+        </h3>
+      ) : (
+        <div
+          className="mx-3 border-t border-[var(--ims-sidebar-border)]"
+          aria-hidden="true"
+        />
+      )}
 
       <ul className="space-y-1">
         {section.items.map((item) => {
           const hasChildren = Boolean(item.items?.length);
           const expanded = Boolean(openMap[item.href]);
-          const active = hasChildren ? hasActiveDescendant(item, pathname) : isPathActive(pathname, item.href, Boolean(item.current));
+          const active = hasChildren
+            ? hasActiveDescendant(item, pathname)
+            : isPathActive(pathname, item.href, Boolean(item.current));
 
           return (
             <li key={item.href} className="space-y-1">
@@ -389,16 +431,32 @@ export function SidebarGroup({
                 collapsed={collapsed}
                 active={active}
                 expanded={expanded}
-                onToggle={hasChildren ? () => setOpenMap((prev) => ({ ...prev, [item.href]: !prev[item.href] })) : undefined}
+                onToggle={
+                  hasChildren
+                    ? () =>
+                        setOpenMap((prev) => ({
+                          ...prev,
+                          [item.href]: !prev[item.href],
+                        }))
+                    : undefined
+                }
                 onExpandRequest={onExpandRequest}
                 onNavigate={onNavigate}
               />
 
               {hasChildren && !collapsed && expanded ? (
-                <ul id={`sidebar-item-${normalizePath(item.href).replace(/\//g, '-')}`} className="space-y-1 border-l border-slate-200 pl-3 pt-1.5">
+                <ul
+                  id={`sidebar-item-${normalizePath(item.href).replace(/\//g, '-')}`}
+                  className="space-y-1 border-l border-slate-200 pl-3 pt-1.5"
+                >
                   {item.items!.map((child) => (
                     <li key={child.href}>
-                      <SidebarItem item={child} pathname={pathname} depth={1} onNavigate={onNavigate} />
+                      <SidebarItem
+                        item={child}
+                        pathname={pathname}
+                        depth={1}
+                        onNavigate={onNavigate}
+                      />
                     </li>
                   ))}
                 </ul>
@@ -428,8 +486,12 @@ export function SidebarUserProfile({
         </div>
       )}
       <div className="min-w-0">
-        <p className="truncate text-sm font-semibold text-[color:var(--ims-ink)]">{userName ?? 'Administrator'}</p>
-        <p className="truncate text-xs text-[color:var(--ims-muted)]">{branchName ?? 'HQ Branch'}</p>
+        <p className="truncate text-sm font-semibold text-[color:var(--ims-ink)]">
+          {userName ?? 'Administrator'}
+        </p>
+        <p className="truncate text-xs text-[color:var(--ims-muted)]">
+          {branchName ?? 'HQ Branch'}
+        </p>
       </div>
     </div>
   );
@@ -449,7 +511,11 @@ export function SidebarFooter({
   return (
     <div className="border-t border-[color:var(--ims-border)] p-4">
       <div className="space-y-3 rounded-xl border border-[color:var(--ims-border)] bg-slate-50/50 p-3">
-        <SidebarUserProfile userName={userName} branchName={branchName} userAvatar={userAvatar} />
+        <SidebarUserProfile
+          userName={userName}
+          branchName={branchName}
+          userAvatar={userAvatar}
+        />
         {children ? <div className="space-y-3">{children}</div> : null}
       </div>
     </div>
@@ -477,7 +543,10 @@ export function AdminSidebar({
 }) {
   const pathname = usePathname();
   const [openMap, setOpenMap] = useState<Record<string, boolean>>(() =>
-    getInitialExpandedItems(sections.flatMap((section) => section.items), pathname),
+    getInitialExpandedItems(
+      sections.flatMap((section) => section.items),
+      pathname,
+    ),
   );
 
   return (
@@ -491,10 +560,16 @@ export function AdminSidebar({
         <div className={cn('min-w-0', collapsed && 'mx-auto')}>
           <BrandLogo appName={appName} collapsed={collapsed} />
         </div>
-        <SidebarCollapseButton collapsed={collapsed} onToggle={() => onCollapsedChange(!collapsed)} />
+        <SidebarCollapseButton
+          collapsed={collapsed}
+          onToggle={() => onCollapsedChange(!collapsed)}
+        />
       </div>
 
-      <nav aria-label="Primary navigation" className="flex-1 overflow-y-auto custom-sidebar-scrollbar px-3 py-4">
+      <nav
+        aria-label="Primary navigation"
+        className="flex-1 overflow-y-auto custom-sidebar-scrollbar px-3 py-4"
+      >
         <div className="space-y-6">
           {sections.length > 0 ? (
             sections.map((section) => (
@@ -511,7 +586,9 @@ export function AdminSidebar({
             ))
           ) : (
             <div className="px-4 py-8 text-center">
-              <p className="text-xs font-semibold text-slate-400">No navigation items available.</p>
+              <p className="text-xs font-semibold text-slate-400">
+                No navigation items available.
+              </p>
             </div>
           )}
         </div>
@@ -536,14 +613,20 @@ export function MobileSidebar({
 }) {
   const pathname = usePathname();
   const [openMap, setOpenMap] = useState<Record<string, boolean>>(() =>
-    getInitialExpandedItems(sections.flatMap((section) => section.items), pathname),
+    getInitialExpandedItems(
+      sections.flatMap((section) => section.items),
+      pathname,
+    ),
   );
 
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 lg:hidden" />
-        <DialogPrimitive.Content aria-label="Primary navigation" className="fixed inset-y-0 left-0 z-50 flex h-full w-[min(20rem,calc(100vw-1.5rem))] flex-col border-r border-[var(--ims-sidebar-border)] bg-[var(--ims-sidebar)] backdrop-blur-xl shadow-2xl outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-left-4 data-[state=open]:slide-in-from-left-4 lg:hidden">
+        <DialogPrimitive.Content
+          aria-label="Primary navigation"
+          className="fixed inset-y-0 left-0 z-50 flex h-full w-[min(20rem,calc(100vw-1.5rem))] flex-col border-r border-[var(--ims-sidebar-border)] bg-[var(--ims-sidebar)] backdrop-blur-xl shadow-2xl outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-left-4 data-[state=open]:slide-in-from-left-4 lg:hidden"
+        >
           <div className="flex h-header-h shrink-0 items-center justify-between gap-3 border-b border-[var(--ims-sidebar-border)] px-4">
             <BrandLogo appName={appName} />
             <DialogPrimitive.Close
@@ -554,7 +637,10 @@ export function MobileSidebar({
             </DialogPrimitive.Close>
           </div>
 
-          <nav aria-label="Primary navigation" className="flex-1 overflow-y-auto custom-sidebar-scrollbar px-3 py-4">
+          <nav
+            aria-label="Primary navigation"
+            className="flex-1 overflow-y-auto custom-sidebar-scrollbar px-3 py-4"
+          >
             <div className="space-y-6">
               {sections.length > 0 ? (
                 sections.map((section) => (
@@ -570,7 +656,9 @@ export function MobileSidebar({
                 ))
               ) : (
                 <div className="px-4 py-8 text-center">
-                  <p className="text-xs font-semibold text-slate-400">No navigation items available.</p>
+                  <p className="text-xs font-semibold text-slate-400">
+                    No navigation items available.
+                  </p>
                 </div>
               )}
             </div>
@@ -598,10 +686,16 @@ export function AppShell({
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const activeTrail = getNavigationTrail(items, pathname);
   const activeLabel = activeTrail.at(-1)?.label;
-  const activeParentLabel = activeTrail.length > 1 ? activeTrail[0]?.label : undefined;
+  const activeParentLabel =
+    activeTrail.length > 1 ? activeTrail[0]?.label : undefined;
 
   return (
-    <div className={cn('min-h-screen overflow-x-clip bg-[#fbf9f5] text-[var(--ims-ink)]', className)}>
+    <div
+      className={cn(
+        'min-h-screen overflow-x-clip bg-[#fbf9f5] text-[var(--ims-ink)]',
+        className,
+      )}
+    >
       <AdminSidebar
         key={`desktop-${pathname}`}
         appName={appName}
@@ -622,7 +716,12 @@ export function AppShell({
         onNavigate={() => setMobileSidebarOpen(false)}
       />
 
-      <div className={cn('flex min-h-screen min-w-0 flex-col transition-[padding] duration-300 lg:pl-sidebar-w', sidebarCollapsed && 'lg:pl-20')}>
+      <div
+        className={cn(
+          'flex min-h-screen min-w-0 flex-col transition-[padding] duration-300 lg:pl-sidebar-w',
+          sidebarCollapsed && 'lg:pl-20',
+        )}
+      >
         <header className="sticky top-0 z-20 flex h-header-h shrink-0 items-center justify-between gap-3 border-b border-[var(--ims-sidebar-border)] bg-white/70 px-page-px shadow-[0_2px_20px_rgba(0,0,0,0.02)] backdrop-blur-xl">
           {/* Left section: Hamburger (mobile), Breadcrumbs (desktop), and active branch badge */}
           <div className="flex min-w-0 flex-1 items-center gap-3 sm:gap-4">
@@ -714,12 +813,19 @@ export function AppShell({
                   </div>
                 )}
                 <div className="hidden flex-col text-left 2xl:flex">
-                  <span className="text-xs font-semibold text-[color:var(--ims-ink)] leading-tight">{userName ?? 'Administrator'}</span>
+                  <span className="text-xs font-semibold text-[color:var(--ims-ink)] leading-tight">
+                    {userName ?? 'Administrator'}
+                  </span>
                   <span className="max-w-[120px] truncate text-[9px] font-bold text-[color:var(--ims-muted)] uppercase tracking-wider">
                     {branchName ?? 'HQ Branch'}
                   </span>
                 </div>
-                <ChevronDown className={cn('h-4 w-4 text-[color:var(--ims-muted)] transition-transform duration-200', profileMenuOpen && 'rotate-180')} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-[color:var(--ims-muted)] transition-transform duration-200',
+                    profileMenuOpen && 'rotate-180',
+                  )}
+                />
               </button>
 
               {profileMenuOpen ? (
@@ -738,8 +844,12 @@ export function AppShell({
                         </div>
                       )}
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-semibold text-[var(--ims-ink)]">{userName ?? 'Administrator'}</p>
-                        <p className="truncate text-xs text-slate-500">{branchName ?? 'HQ Branch'}</p>
+                        <p className="truncate text-sm font-semibold text-[var(--ims-ink)]">
+                          {userName ?? 'Administrator'}
+                        </p>
+                        <p className="truncate text-xs text-slate-500">
+                          {branchName ?? 'HQ Branch'}
+                        </p>
                       </div>
                     </div>
                     {aside ? <div>{aside}</div> : null}
@@ -750,7 +860,9 @@ export function AppShell({
           </div>
         </header>
 
-        <main className="flex-1 min-w-0 px-page-px py-section-gap sm:py-5 lg:py-6">{children}</main>
+        <main className="flex-1 min-w-0 px-page-px py-section-gap sm:py-5 lg:py-6">
+          {children}
+        </main>
       </div>
     </div>
   );

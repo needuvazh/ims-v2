@@ -10,13 +10,19 @@ vi.mock('../../../../lib/api-middleware', () => ({
 }));
 
 vi.mock('../../../../lib/runtime', () => ({
-  inquiryService: { captureInquiry: captureInquiryMock, findAll: findAllInquiriesMock },
+  inquiryService: {
+    captureInquiry: captureInquiryMock,
+    findAll: findAllInquiriesMock,
+  },
   branchScopeResolver: { resolveAllowedBranches: resolveAllowedBranchesMock },
 }));
 
 vi.mock('../../../../lib/observability', () => ({
   applyObservabilityResponseHeaders: vi.fn(),
-  withRouteObservability: async (_headers: Headers, handler: () => Promise<Response>) => handler(),
+  withRouteObservability: async (
+    _headers: Headers,
+    handler: () => Promise<Response>,
+  ) => handler(),
   createStructuredLogger: () => ({ info: vi.fn(), error: vi.fn() }),
   getCurrentRequestContext: () => ({}),
 }));
@@ -37,10 +43,12 @@ describe('CRM inquiries API routes', () => {
           permissions: ['lead.read', 'crm.leads.read.all'],
           activeBranchId: '11111111-1111-1111-1111-111111111111',
         },
-      })
+      }),
     );
 
-    resolveAllowedBranchesMock.mockResolvedValue(['11111111-1111-1111-1111-111111111111']);
+    resolveAllowedBranchesMock.mockResolvedValue([
+      '11111111-1111-1111-1111-111111111111',
+    ]);
 
     findAllInquiriesMock.mockResolvedValue({
       items: [
@@ -58,7 +66,9 @@ describe('CRM inquiries API routes', () => {
     });
 
     const { GET } = await import('./route');
-    const response = await GET(new Request('http://localhost/api/v1/crm/inquiries'));
+    const response = await GET(
+      new Request('http://localhost/api/v1/crm/inquiries'),
+    );
     const body = await response.json();
 
     expect(response.status).toBe(200);
@@ -77,10 +87,12 @@ describe('CRM inquiries API routes', () => {
           permissions: ['lead.create'],
           activeBranchId: '11111111-1111-1111-1111-111111111111',
         },
-      })
+      }),
     );
 
-    resolveAllowedBranchesMock.mockResolvedValue(['11111111-1111-1111-1111-111111111111']);
+    resolveAllowedBranchesMock.mockResolvedValue([
+      '11111111-1111-1111-1111-111111111111',
+    ]);
 
     const { POST } = await import('./route');
     const response = await POST(
@@ -95,7 +107,7 @@ describe('CRM inquiries API routes', () => {
           email: 'ali@example.com',
           source: 'Web',
         }),
-      })
+      }),
     );
 
     const body = await response.json();

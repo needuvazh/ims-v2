@@ -1,1 +1,287 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_10_exam_result_completion_specs_completion_approval_spec_md", "label": "spec.md", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L1"}, {"id": "completion_approval_spec_added_requirements", "label": "ADDED Requirements", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L1"}, {"id": "completion_approval_spec_requirement_three_stage_approval_workflow_fr_exc_025", "label": "Requirement: Three-Stage Approval Workflow (FR-EXC-025)", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L3"}, {"id": "completion_approval_spec_scenario_trainer_recommends_completion", "label": "Scenario: Trainer recommends completion", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L6"}, {"id": "completion_approval_spec_scenario_trainer_rejects_recommendation_with_reason", "label": "Scenario: Trainer rejects recommendation with reason", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L12"}, {"id": "completion_approval_spec_scenario_reject_trainer_recommendation_from_unassigned_trainer", "label": "Scenario: Reject Trainer recommendation from unassigned Trainer", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L18"}, {"id": "completion_approval_spec_scenario_coordinator_approves_after_trainer_recommendation", "label": "Scenario: Coordinator approves after Trainer Recommendation", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L22"}, {"id": "completion_approval_spec_scenario_reject_coordinator_approval_before_trainer_recommendation", "label": "Scenario: Reject Coordinator approval before Trainer Recommendation", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L27"}, {"id": "completion_approval_spec_scenario_branch_manager_final_approves_valid_completion", "label": "Scenario: Branch Manager final approves valid completion", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L31"}, {"id": "completion_approval_spec_scenario_reject_final_approval_before_coordinator_approval", "label": "Scenario: Reject final approval before Coordinator approval", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L39"}, {"id": "completion_approval_spec_scenario_reject_final_approval_with_stale_evidence", "label": "Scenario: Reject final approval with stale evidence", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L43"}, {"id": "completion_approval_spec_requirement_approval_stage_authorization_fr_exc_026", "label": "Requirement: Approval Stage Authorization (FR-EXC-026)", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L48"}, {"id": "completion_approval_spec_scenario_menu_permission_alone_does_not_authorize_mutation", "label": "Scenario: Menu permission alone does not authorize mutation", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L51"}, {"id": "completion_approval_spec_scenario_report_permission_does_not_authorize_transactional_update", "label": "Scenario: Report permission does not authorize transactional update", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L56"}, {"id": "completion_approval_spec_requirement_approval_concurrency_control_fr_exc_027", "label": "Requirement: Approval Concurrency Control (FR-EXC-027)", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L61"}, {"id": "completion_approval_spec_scenario_approval_race_condition", "label": "Scenario: Approval race condition", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L64"}, {"id": "completion_approval_spec_requirement_approval_history_preservation_fr_exc_028", "label": "Requirement: Approval History Preservation (FR-EXC-028)", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L70"}, {"id": "completion_approval_spec_scenario_preserve_prior_approval_history_during_reevaluation", "label": "Scenario: Preserve prior approval history during reevaluation", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L73"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_10_exam_result_completion_specs_completion_approval_spec_md", "target": "completion_approval_spec_added_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L1", "weight": 1.0}, {"source": "completion_approval_spec_added_requirements", "target": "completion_approval_spec_requirement_three_stage_approval_workflow_fr_exc_025", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L3", "weight": 1.0}, {"source": "completion_approval_spec_requirement_three_stage_approval_workflow_fr_exc_025", "target": "completion_approval_spec_scenario_trainer_recommends_completion", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L6", "weight": 1.0}, {"source": "completion_approval_spec_requirement_three_stage_approval_workflow_fr_exc_025", "target": "completion_approval_spec_scenario_trainer_rejects_recommendation_with_reason", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L12", "weight": 1.0}, {"source": "completion_approval_spec_requirement_three_stage_approval_workflow_fr_exc_025", "target": "completion_approval_spec_scenario_reject_trainer_recommendation_from_unassigned_trainer", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L18", "weight": 1.0}, {"source": "completion_approval_spec_requirement_three_stage_approval_workflow_fr_exc_025", "target": "completion_approval_spec_scenario_coordinator_approves_after_trainer_recommendation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L22", "weight": 1.0}, {"source": "completion_approval_spec_requirement_three_stage_approval_workflow_fr_exc_025", "target": "completion_approval_spec_scenario_reject_coordinator_approval_before_trainer_recommendation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L27", "weight": 1.0}, {"source": "completion_approval_spec_requirement_three_stage_approval_workflow_fr_exc_025", "target": "completion_approval_spec_scenario_branch_manager_final_approves_valid_completion", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L31", "weight": 1.0}, {"source": "completion_approval_spec_requirement_three_stage_approval_workflow_fr_exc_025", "target": "completion_approval_spec_scenario_reject_final_approval_before_coordinator_approval", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L39", "weight": 1.0}, {"source": "completion_approval_spec_requirement_three_stage_approval_workflow_fr_exc_025", "target": "completion_approval_spec_scenario_reject_final_approval_with_stale_evidence", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L43", "weight": 1.0}, {"source": "completion_approval_spec_added_requirements", "target": "completion_approval_spec_requirement_approval_stage_authorization_fr_exc_026", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L48", "weight": 1.0}, {"source": "completion_approval_spec_requirement_approval_stage_authorization_fr_exc_026", "target": "completion_approval_spec_scenario_menu_permission_alone_does_not_authorize_mutation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L51", "weight": 1.0}, {"source": "completion_approval_spec_requirement_approval_stage_authorization_fr_exc_026", "target": "completion_approval_spec_scenario_report_permission_does_not_authorize_transactional_update", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L56", "weight": 1.0}, {"source": "completion_approval_spec_added_requirements", "target": "completion_approval_spec_requirement_approval_concurrency_control_fr_exc_027", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L61", "weight": 1.0}, {"source": "completion_approval_spec_requirement_approval_concurrency_control_fr_exc_027", "target": "completion_approval_spec_scenario_approval_race_condition", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L64", "weight": 1.0}, {"source": "completion_approval_spec_added_requirements", "target": "completion_approval_spec_requirement_approval_history_preservation_fr_exc_028", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L70", "weight": 1.0}, {"source": "completion_approval_spec_requirement_approval_history_preservation_fr_exc_028", "target": "completion_approval_spec_scenario_preserve_prior_approval_history_during_reevaluation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md", "source_location": "L73", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_10_exam_result_completion_specs_completion_approval_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "completion_approval_spec_added_requirements",
+      "label": "ADDED Requirements",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "completion_approval_spec_requirement_three_stage_approval_workflow_fr_exc_025",
+      "label": "Requirement: Three-Stage Approval Workflow (FR-EXC-025)",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "completion_approval_spec_scenario_trainer_recommends_completion",
+      "label": "Scenario: Trainer recommends completion",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L6"
+    },
+    {
+      "id": "completion_approval_spec_scenario_trainer_rejects_recommendation_with_reason",
+      "label": "Scenario: Trainer rejects recommendation with reason",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L12"
+    },
+    {
+      "id": "completion_approval_spec_scenario_reject_trainer_recommendation_from_unassigned_trainer",
+      "label": "Scenario: Reject Trainer recommendation from unassigned Trainer",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L18"
+    },
+    {
+      "id": "completion_approval_spec_scenario_coordinator_approves_after_trainer_recommendation",
+      "label": "Scenario: Coordinator approves after Trainer Recommendation",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L22"
+    },
+    {
+      "id": "completion_approval_spec_scenario_reject_coordinator_approval_before_trainer_recommendation",
+      "label": "Scenario: Reject Coordinator approval before Trainer Recommendation",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L27"
+    },
+    {
+      "id": "completion_approval_spec_scenario_branch_manager_final_approves_valid_completion",
+      "label": "Scenario: Branch Manager final approves valid completion",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L31"
+    },
+    {
+      "id": "completion_approval_spec_scenario_reject_final_approval_before_coordinator_approval",
+      "label": "Scenario: Reject final approval before Coordinator approval",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L39"
+    },
+    {
+      "id": "completion_approval_spec_scenario_reject_final_approval_with_stale_evidence",
+      "label": "Scenario: Reject final approval with stale evidence",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L43"
+    },
+    {
+      "id": "completion_approval_spec_requirement_approval_stage_authorization_fr_exc_026",
+      "label": "Requirement: Approval Stage Authorization (FR-EXC-026)",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L48"
+    },
+    {
+      "id": "completion_approval_spec_scenario_menu_permission_alone_does_not_authorize_mutation",
+      "label": "Scenario: Menu permission alone does not authorize mutation",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L51"
+    },
+    {
+      "id": "completion_approval_spec_scenario_report_permission_does_not_authorize_transactional_update",
+      "label": "Scenario: Report permission does not authorize transactional update",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L56"
+    },
+    {
+      "id": "completion_approval_spec_requirement_approval_concurrency_control_fr_exc_027",
+      "label": "Requirement: Approval Concurrency Control (FR-EXC-027)",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L61"
+    },
+    {
+      "id": "completion_approval_spec_scenario_approval_race_condition",
+      "label": "Scenario: Approval race condition",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L64"
+    },
+    {
+      "id": "completion_approval_spec_requirement_approval_history_preservation_fr_exc_028",
+      "label": "Requirement: Approval History Preservation (FR-EXC-028)",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L70"
+    },
+    {
+      "id": "completion_approval_spec_scenario_preserve_prior_approval_history_during_reevaluation",
+      "label": "Scenario: Preserve prior approval history during reevaluation",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L73"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_10_exam_result_completion_specs_completion_approval_spec_md",
+      "target": "completion_approval_spec_added_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_approval_spec_added_requirements",
+      "target": "completion_approval_spec_requirement_three_stage_approval_workflow_fr_exc_025",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_approval_spec_requirement_three_stage_approval_workflow_fr_exc_025",
+      "target": "completion_approval_spec_scenario_trainer_recommends_completion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_approval_spec_requirement_three_stage_approval_workflow_fr_exc_025",
+      "target": "completion_approval_spec_scenario_trainer_rejects_recommendation_with_reason",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_approval_spec_requirement_three_stage_approval_workflow_fr_exc_025",
+      "target": "completion_approval_spec_scenario_reject_trainer_recommendation_from_unassigned_trainer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_approval_spec_requirement_three_stage_approval_workflow_fr_exc_025",
+      "target": "completion_approval_spec_scenario_coordinator_approves_after_trainer_recommendation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_approval_spec_requirement_three_stage_approval_workflow_fr_exc_025",
+      "target": "completion_approval_spec_scenario_reject_coordinator_approval_before_trainer_recommendation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_approval_spec_requirement_three_stage_approval_workflow_fr_exc_025",
+      "target": "completion_approval_spec_scenario_branch_manager_final_approves_valid_completion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_approval_spec_requirement_three_stage_approval_workflow_fr_exc_025",
+      "target": "completion_approval_spec_scenario_reject_final_approval_before_coordinator_approval",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_approval_spec_requirement_three_stage_approval_workflow_fr_exc_025",
+      "target": "completion_approval_spec_scenario_reject_final_approval_with_stale_evidence",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_approval_spec_added_requirements",
+      "target": "completion_approval_spec_requirement_approval_stage_authorization_fr_exc_026",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_approval_spec_requirement_approval_stage_authorization_fr_exc_026",
+      "target": "completion_approval_spec_scenario_menu_permission_alone_does_not_authorize_mutation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_approval_spec_requirement_approval_stage_authorization_fr_exc_026",
+      "target": "completion_approval_spec_scenario_report_permission_does_not_authorize_transactional_update",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_approval_spec_added_requirements",
+      "target": "completion_approval_spec_requirement_approval_concurrency_control_fr_exc_027",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_approval_spec_requirement_approval_concurrency_control_fr_exc_027",
+      "target": "completion_approval_spec_scenario_approval_race_condition",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L64",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_approval_spec_added_requirements",
+      "target": "completion_approval_spec_requirement_approval_history_preservation_fr_exc_028",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_approval_spec_requirement_approval_history_preservation_fr_exc_028",
+      "target": "completion_approval_spec_scenario_preserve_prior_approval_history_during_reevaluation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/completion-approval/spec.md",
+      "source_location": "L73",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

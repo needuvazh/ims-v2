@@ -37,7 +37,11 @@ const mockCourseQueries = {
 
 const mockPrisma = {
   department: { findUnique: vi.fn() },
-  courseCategory: { findFirst: vi.fn(), findUnique: vi.fn(), findMany: vi.fn() },
+  courseCategory: {
+    findFirst: vi.fn(),
+    findUnique: vi.fn(),
+    findMany: vi.fn(),
+  },
   coursePricing: { findFirst: vi.fn() },
   courseCompletionRule: { findFirst: vi.fn() },
   auditLog: { create: vi.fn() },
@@ -79,7 +83,9 @@ test('CourseService.createCourse should throw invalid code format error if forma
     await courseService.createCourse(input, 'actor-1');
     expect.fail('Should have thrown an error');
   } catch (error: unknown) {
-    expect((error as { code?: string }).code).toBe('ERR_CRS_INVALID_CODE_FORMAT');
+    expect((error as { code?: string }).code).toBe(
+      'ERR_CRS_INVALID_CODE_FORMAT',
+    );
   }
 });
 
@@ -97,14 +103,18 @@ test('CourseService.createCourse should throw invalid Arabic script error if nam
     await courseService.createCourse(input, 'actor-1');
     expect.fail('Should have thrown an error');
   } catch (error: unknown) {
-    expect((error as { message?: string }).message).toBe('ERR_CRS_INVALID_ARABIC_SCRIPT');
+    expect((error as { message?: string }).message).toBe(
+      'ERR_CRS_INVALID_ARABIC_SCRIPT',
+    );
   }
 });
 
 test('CourseService.createCourse should throw duplicate name error if name already exists in department', async () => {
   mockCourseRepository.findByCode.mockResolvedValueOnce(null);
   mockPrisma.department.findUnique.mockResolvedValueOnce({ id: 'dept-id' });
-  mockCourseRepository.findByNameInDepartment.mockResolvedValueOnce({ id: 'dup-id' });
+  mockCourseRepository.findByNameInDepartment.mockResolvedValueOnce({
+    id: 'dup-id',
+  });
 
   const input = {
     courseCode: 'CS-FSWD',
@@ -139,13 +149,20 @@ test('CourseService.createCourse should throw invalid date range error if end da
     await courseService.createCourse(input, 'actor-1');
     expect.fail('Should have thrown an error');
   } catch (error: unknown) {
-    expect((error as { code?: string }).code).toBe('ERR_CRS_INVALID_DATE_RANGE');
+    expect((error as { code?: string }).code).toBe(
+      'ERR_CRS_INVALID_DATE_RANGE',
+    );
   }
 });
 
 test('CategoryService.updateCategory should prevent cyclic parent category mappings', async () => {
-  mockCategoryRepository.findById.mockResolvedValueOnce({ id: 'cat-a', parentCategoryId: null });
-  mockPrisma.courseCategory.findUnique.mockResolvedValueOnce({ parentCategoryId: 'cat-a' });
+  mockCategoryRepository.findById.mockResolvedValueOnce({
+    id: 'cat-a',
+    parentCategoryId: null,
+  });
+  mockPrisma.courseCategory.findUnique.mockResolvedValueOnce({
+    parentCategoryId: 'cat-a',
+  });
 
   const input = {
     parentCategoryId: 'cat-b', // cat-a updated to point to cat-b
@@ -160,27 +177,51 @@ test('CategoryService.updateCategory should prevent cyclic parent category mappi
 });
 
 test('CourseService.transitionCourseStatus to Published should fail if pricing or completion rules are missing', async () => {
-  mockCourseRepository.findById.mockResolvedValueOnce({ id: 'course-1', status: 'Draft', version: 1 });
+  mockCourseRepository.findById.mockResolvedValueOnce({
+    id: 'course-1',
+    status: 'Draft',
+    version: 1,
+  });
   mockPrisma.coursePricing.findFirst.mockResolvedValueOnce(null); // missing pricing rule
-  mockPrisma.courseCompletionRule.findFirst.mockResolvedValueOnce({ id: 'rule-1' });
+  mockPrisma.courseCompletionRule.findFirst.mockResolvedValueOnce({
+    id: 'rule-1',
+  });
 
   try {
-    await courseService.transitionCourseStatus('course-1', 'Published', 1, 'actor-1');
+    await courseService.transitionCourseStatus(
+      'course-1',
+      'Published',
+      1,
+      'actor-1',
+    );
     expect.fail('Should have thrown an error');
   } catch (error: unknown) {
-    expect((error as { code?: string }).code).toBe('ERR_CRS_MISSING_PRICING_OR_RULES');
+    expect((error as { code?: string }).code).toBe(
+      'ERR_CRS_MISSING_PRICING_OR_RULES',
+    );
   }
 });
 
 test('CourseService.transitionCourseStatus to Archived should fail if active batches exist', async () => {
-  mockCourseRepository.findById.mockResolvedValueOnce({ id: 'course-1', status: 'Published', version: 1 });
+  mockCourseRepository.findById.mockResolvedValueOnce({
+    id: 'course-1',
+    status: 'Published',
+    version: 1,
+  });
   mockCourseRepository.hasActiveBatches.mockResolvedValueOnce(true); // active batches exist
 
   try {
-    await courseService.transitionCourseStatus('course-1', 'Archived', 1, 'actor-1');
+    await courseService.transitionCourseStatus(
+      'course-1',
+      'Archived',
+      1,
+      'actor-1',
+    );
     expect.fail('Should have thrown an error');
   } catch (error: unknown) {
-    expect((error as { code?: string }).code).toBe('ERR_CRS_ACTIVE_BATCHES_EXIST');
+    expect((error as { code?: string }).code).toBe(
+      'ERR_CRS_ACTIVE_BATCHES_EXIST',
+    );
   }
 });
 

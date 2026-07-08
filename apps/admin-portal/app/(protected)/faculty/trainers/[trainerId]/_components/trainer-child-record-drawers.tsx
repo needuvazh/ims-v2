@@ -127,14 +127,22 @@ function DrawerShell({
   );
 }
 
-export function TrainerQualificationDrawerAction({ trainerId, trainerName }: { trainerId: string; trainerName: string }) {
+export function TrainerQualificationDrawerAction({
+  trainerId,
+  trainerName,
+}: {
+  trainerId: string;
+  trainerName: string;
+}) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [qualificationName, setQualificationName] = useState('');
   const [institution, setInstitution] = useState('');
-  const [yearCompleted, setYearCompleted] = useState(String(new Date().getFullYear()));
+  const [yearCompleted, setYearCompleted] = useState(
+    String(new Date().getFullYear()),
+  );
   const [status, setStatus] = useState<'Active' | 'Inactive'>('Active');
   const [effectiveStartDate, setEffectiveStartDate] = useState(todayValue());
   const [effectiveEndDate, setEffectiveEndDate] = useState('');
@@ -143,25 +151,33 @@ export function TrainerQualificationDrawerAction({ trainerId, trainerName }: { t
     event.preventDefault();
     setError(null);
 
-    if (!qualificationName.trim() || !institution.trim() || !yearCompleted.trim() || !effectiveStartDate) {
+    if (
+      !qualificationName.trim() ||
+      !institution.trim() ||
+      !yearCompleted.trim() ||
+      !effectiveStartDate
+    ) {
       setError('Complete all required qualification fields.');
       return;
     }
 
     setIsSaving(true);
     try {
-      const response = await fetch(`/api/v1/faculty/trainers/${trainerId}/qualifications`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          qualificationName: qualificationName.trim(),
-          institution: institution.trim(),
-          yearCompleted: Number(yearCompleted),
-          status,
-          effectiveStartDate,
-          effectiveEndDate: effectiveEndDate || null,
-        }),
-      });
+      const response = await fetch(
+        `/api/v1/faculty/trainers/${trainerId}/qualifications`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            qualificationName: qualificationName.trim(),
+            institution: institution.trim(),
+            yearCompleted: Number(yearCompleted),
+            status,
+            effectiveStartDate,
+            effectiveEndDate: effectiveEndDate || null,
+          }),
+        },
+      );
       const body = await response.json();
       if (!response.ok) {
         throw new Error(body.messageEnglish || 'Unable to save qualification.');
@@ -175,7 +191,9 @@ export function TrainerQualificationDrawerAction({ trainerId, trainerName }: { t
       setEffectiveStartDate(todayValue());
       setEffectiveEndDate('');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to save qualification.');
+      setError(
+        err instanceof Error ? err.message : 'Unable to save qualification.',
+      );
     } finally {
       setIsSaving(false);
     }
@@ -188,7 +206,12 @@ export function TrainerQualificationDrawerAction({ trainerId, trainerName }: { t
       title="Add Qualification"
       description={`Record education and credential evidence for ${trainerName}.`}
       trigger={
-        <Button type="button" variant="secondary" size="sm" onClick={() => setOpen(true)}>
+        <Button
+          type="button"
+          variant="secondary"
+          size="sm"
+          onClick={() => setOpen(true)}
+        >
           <Award className="mr-2 h-4 w-4" />
           Add Qualification
         </Button>
@@ -228,7 +251,9 @@ export function TrainerQualificationDrawerAction({ trainerId, trainerName }: { t
                 { value: 'Inactive', label: 'Inactive' },
               ]}
               value={status}
-              onValueChange={(value) => setStatus(value as 'Active' | 'Inactive')}
+              onValueChange={(value) =>
+                setStatus(value as 'Active' | 'Inactive')
+              }
             />
             <Input
               label="Effective start date"
@@ -247,7 +272,11 @@ export function TrainerQualificationDrawerAction({ trainerId, trainerName }: { t
           </div>
         </div>
         <DialogFooter className="border-t border-slate-100 bg-slate-50/50 px-5 py-4">
-          <Button type="button" variant="secondary" onClick={() => setOpen(false)}>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => setOpen(false)}
+          >
             Cancel
           </Button>
           <Button type="submit" loading={isSaving}>
@@ -276,10 +305,16 @@ export function TrainerProfileEditDrawerAction({
   const [trainerCode, setTrainerCode] = useState(trainer.trainerCode);
   const [trainerType, setTrainerType] = useState(trainer.trainerType);
   const [specialization, setSpecialization] = useState(trainer.specialization);
-  const [qualificationSummary, setQualificationSummary] = useState(trainer.qualificationSummary ?? '');
+  const [qualificationSummary, setQualificationSummary] = useState(
+    trainer.qualificationSummary ?? '',
+  );
   const [status, setStatus] = useState(trainer.status);
-  const [effectiveStartDate, setEffectiveStartDate] = useState(dateValue(trainer.effectiveStartDate));
-  const [effectiveEndDate, setEffectiveEndDate] = useState(dateValue(trainer.effectiveEndDate));
+  const [effectiveStartDate, setEffectiveStartDate] = useState(
+    dateValue(trainer.effectiveStartDate),
+  );
+  const [effectiveEndDate, setEffectiveEndDate] = useState(
+    dateValue(trainer.effectiveEndDate),
+  );
 
   const branchOptionsList = branchOptions.map((branch) => ({
     value: branch.id,
@@ -290,7 +325,13 @@ export function TrainerProfileEditDrawerAction({
     event.preventDefault();
     setError(null);
 
-    if (!branchId || !trainerCode.trim() || !trainerType || !specialization.trim() || !effectiveStartDate) {
+    if (
+      !branchId ||
+      !trainerCode.trim() ||
+      !trainerType ||
+      !specialization.trim() ||
+      !effectiveStartDate
+    ) {
       setError('Complete all required trainer fields.');
       return;
     }
@@ -314,12 +355,18 @@ export function TrainerProfileEditDrawerAction({
       });
       const body = await response.json();
       if (!response.ok) {
-        throw new Error(body.messageEnglish || 'Unable to update trainer information.');
+        throw new Error(
+          body.messageEnglish || 'Unable to update trainer information.',
+        );
       }
       setOpen(false);
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to update trainer information.');
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'Unable to update trainer information.',
+      );
     } finally {
       setIsSaving(false);
     }
@@ -332,7 +379,12 @@ export function TrainerProfileEditDrawerAction({
       title="Edit Trainer Information"
       description={`Update trainer profile fields for ${trainerName}. Personal IAM details remain read-only.`}
       trigger={
-        <Button type="button" variant="outline" size="sm" onClick={() => setOpen(true)}>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => setOpen(true)}
+        >
           <Pencil className="mr-2 h-4 w-4" />
           Edit Trainer
         </Button>
@@ -342,9 +394,15 @@ export function TrainerProfileEditDrawerAction({
         <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
           {error ? <Alert variant="error" description={error} /> : null}
           <div className="rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-background)] p-4 text-sm">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[color:var(--ims-muted)]">IAM person</p>
-            <p className="mt-1 font-medium text-[color:var(--ims-ink)]">{trainerName}</p>
-            <p className="text-xs text-[color:var(--ims-muted)]">Personal identity is managed in IAM and is not editable here.</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-[color:var(--ims-muted)]">
+              IAM person
+            </p>
+            <p className="mt-1 font-medium text-[color:var(--ims-ink)]">
+              {trainerName}
+            </p>
+            <p className="text-xs text-[color:var(--ims-muted)]">
+              Personal identity is managed in IAM and is not editable here.
+            </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <Select
@@ -370,7 +428,9 @@ export function TrainerProfileEditDrawerAction({
                 { value: 'Freelance', label: 'Freelance' },
               ]}
               value={trainerType}
-              onValueChange={(value) => setTrainerType(value as TrainerProfileRecord['trainerType'])}
+              onValueChange={(value) =>
+                setTrainerType(value as TrainerProfileRecord['trainerType'])
+              }
             />
             <Select
               label="Status"
@@ -380,7 +440,9 @@ export function TrainerProfileEditDrawerAction({
                 { value: 'Suspended', label: 'Suspended' },
               ]}
               value={status}
-              onValueChange={(value) => setStatus(value as TrainerProfileRecord['status'])}
+              onValueChange={(value) =>
+                setStatus(value as TrainerProfileRecord['status'])
+              }
             />
             <Input
               label="Specialization"
@@ -413,7 +475,11 @@ export function TrainerProfileEditDrawerAction({
           </div>
         </div>
         <DialogFooter className="border-t border-slate-100 bg-slate-50/50 px-5 py-4">
-          <Button type="button" variant="secondary" onClick={() => setOpen(false)}>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => setOpen(false)}
+          >
             Cancel
           </Button>
           <Button type="submit" loading={isSaving}>
@@ -438,45 +504,67 @@ export function TrainerQualificationEditDrawerAction({
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
-  const [qualificationName, setQualificationName] = useState(qualification.qualificationName);
+  const [qualificationName, setQualificationName] = useState(
+    qualification.qualificationName,
+  );
   const [institution, setInstitution] = useState(qualification.institution);
-  const [yearCompleted, setYearCompleted] = useState(String(qualification.yearCompleted));
-  const [status, setStatus] = useState<'Active' | 'Inactive'>(qualification.status);
-  const [effectiveStartDate, setEffectiveStartDate] = useState(dateValue(qualification.effectiveStartDate));
-  const [effectiveEndDate, setEffectiveEndDate] = useState(dateValue(qualification.effectiveEndDate));
+  const [yearCompleted, setYearCompleted] = useState(
+    String(qualification.yearCompleted),
+  );
+  const [status, setStatus] = useState<'Active' | 'Inactive'>(
+    qualification.status,
+  );
+  const [effectiveStartDate, setEffectiveStartDate] = useState(
+    dateValue(qualification.effectiveStartDate),
+  );
+  const [effectiveEndDate, setEffectiveEndDate] = useState(
+    dateValue(qualification.effectiveEndDate),
+  );
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
 
-    if (!qualificationName.trim() || !institution.trim() || !yearCompleted.trim() || !effectiveStartDate) {
+    if (
+      !qualificationName.trim() ||
+      !institution.trim() ||
+      !yearCompleted.trim() ||
+      !effectiveStartDate
+    ) {
       setError('Complete all required qualification fields.');
       return;
     }
 
     setIsSaving(true);
     try {
-      const response = await fetch(`/api/v1/faculty/trainers/${trainerId}/qualifications/${qualification.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          qualificationName: qualificationName.trim(),
-          institution: institution.trim(),
-          yearCompleted: Number(yearCompleted),
-          status,
-          effectiveStartDate,
-          effectiveEndDate: effectiveEndDate || null,
-          version: qualification.version,
-        }),
-      });
+      const response = await fetch(
+        `/api/v1/faculty/trainers/${trainerId}/qualifications/${qualification.id}`,
+        {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            qualificationName: qualificationName.trim(),
+            institution: institution.trim(),
+            yearCompleted: Number(yearCompleted),
+            status,
+            effectiveStartDate,
+            effectiveEndDate: effectiveEndDate || null,
+            version: qualification.version,
+          }),
+        },
+      );
       const body = await response.json();
       if (!response.ok) {
-        throw new Error(body.messageEnglish || 'Unable to update qualification.');
+        throw new Error(
+          body.messageEnglish || 'Unable to update qualification.',
+        );
       }
       setOpen(false);
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to update qualification.');
+      setError(
+        err instanceof Error ? err.message : 'Unable to update qualification.',
+      );
     } finally {
       setIsSaving(false);
     }
@@ -489,7 +577,12 @@ export function TrainerQualificationEditDrawerAction({
       title="Edit Qualification"
       description={`Update credential details for ${trainerName}.`}
       trigger={
-        <Button type="button" variant="outline" size="sm" onClick={() => setOpen(true)}>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => setOpen(true)}
+        >
           <Pencil className="mr-2 h-4 w-4" />
           Edit
         </Button>
@@ -498,10 +591,28 @@ export function TrainerQualificationEditDrawerAction({
       <form onSubmit={submit} className="flex h-full flex-col" noValidate>
         <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
           {error ? <Alert variant="error" description={error} /> : null}
-          <Input label="Qualification name" required value={qualificationName} onChange={(event) => setQualificationName(event.target.value)} />
-          <Input label="Institution" required value={institution} onChange={(event) => setInstitution(event.target.value)} />
+          <Input
+            label="Qualification name"
+            required
+            value={qualificationName}
+            onChange={(event) => setQualificationName(event.target.value)}
+          />
+          <Input
+            label="Institution"
+            required
+            value={institution}
+            onChange={(event) => setInstitution(event.target.value)}
+          />
           <div className="grid gap-4 sm:grid-cols-2">
-            <Input label="Year completed" type="number" min={1900} max={new Date().getFullYear() + 1} required value={yearCompleted} onChange={(event) => setYearCompleted(event.target.value)} />
+            <Input
+              label="Year completed"
+              type="number"
+              min={1900}
+              max={new Date().getFullYear() + 1}
+              required
+              value={yearCompleted}
+              onChange={(event) => setYearCompleted(event.target.value)}
+            />
             <Select
               label="Status"
               options={[
@@ -509,14 +620,31 @@ export function TrainerQualificationEditDrawerAction({
                 { value: 'Inactive', label: 'Inactive' },
               ]}
               value={status}
-              onValueChange={(value) => setStatus(value as 'Active' | 'Inactive')}
+              onValueChange={(value) =>
+                setStatus(value as 'Active' | 'Inactive')
+              }
             />
-            <Input label="Effective start date" type="date" required value={effectiveStartDate} onChange={(event) => setEffectiveStartDate(event.target.value)} />
-            <Input label="Effective end date" type="date" value={effectiveEndDate} onChange={(event) => setEffectiveEndDate(event.target.value)} />
+            <Input
+              label="Effective start date"
+              type="date"
+              required
+              value={effectiveStartDate}
+              onChange={(event) => setEffectiveStartDate(event.target.value)}
+            />
+            <Input
+              label="Effective end date"
+              type="date"
+              value={effectiveEndDate}
+              onChange={(event) => setEffectiveEndDate(event.target.value)}
+            />
           </div>
         </div>
         <DialogFooter className="border-t border-slate-100 bg-slate-50/50 px-5 py-4">
-          <Button type="button" variant="secondary" onClick={() => setOpen(false)}>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => setOpen(false)}
+          >
             Cancel
           </Button>
           <Button type="submit" loading={isSaving}>
@@ -544,7 +672,10 @@ export function TrainerAvailabilityDrawerAction({
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const initialBranchId = useMemo(
-    () => branchOptions.find((branch) => branch.id === defaultBranchId)?.id ?? branchOptions[0]?.id ?? '',
+    () =>
+      branchOptions.find((branch) => branch.id === defaultBranchId)?.id ??
+      branchOptions[0]?.id ??
+      '',
     [branchOptions, defaultBranchId],
   );
   const [branchId, setBranchId] = useState(initialBranchId);
@@ -564,26 +695,35 @@ export function TrainerAvailabilityDrawerAction({
     event.preventDefault();
     setError(null);
 
-    if (!branchId || !dayOfWeek || !startTime || !endTime || !effectiveStartDate) {
+    if (
+      !branchId ||
+      !dayOfWeek ||
+      !startTime ||
+      !endTime ||
+      !effectiveStartDate
+    ) {
       setError('Complete all required availability fields.');
       return;
     }
 
     setIsSaving(true);
     try {
-      const response = await fetch(`/api/v1/faculty/trainers/${trainerId}/availability`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          branchId,
-          dayOfWeek,
-          startTime,
-          endTime,
-          status,
-          effectiveStartDate,
-          effectiveEndDate: effectiveEndDate || null,
-        }),
-      });
+      const response = await fetch(
+        `/api/v1/faculty/trainers/${trainerId}/availability`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            branchId,
+            dayOfWeek,
+            startTime,
+            endTime,
+            status,
+            effectiveStartDate,
+            effectiveEndDate: effectiveEndDate || null,
+          }),
+        },
+      );
       const body = await response.json();
       if (!response.ok) {
         throw new Error(body.messageEnglish || 'Unable to save availability.');
@@ -591,7 +731,9 @@ export function TrainerAvailabilityDrawerAction({
       setOpen(false);
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to save availability.');
+      setError(
+        err instanceof Error ? err.message : 'Unable to save availability.',
+      );
     } finally {
       setIsSaving(false);
     }
@@ -604,7 +746,12 @@ export function TrainerAvailabilityDrawerAction({
       title="Add Availability"
       description={`Define weekly availability windows for ${trainerName}.`}
       trigger={
-        <Button type="button" variant="secondary" size="sm" onClick={() => setOpen(true)}>
+        <Button
+          type="button"
+          variant="secondary"
+          size="sm"
+          onClick={() => setOpen(true)}
+        >
           <Clock className="mr-2 h-4 w-4" />
           Add Availability
         </Button>
@@ -645,7 +792,9 @@ export function TrainerAvailabilityDrawerAction({
                 { value: 'Inactive', label: 'Inactive' },
               ]}
               value={status}
-              onValueChange={(value) => setStatus(value as 'Active' | 'Inactive')}
+              onValueChange={(value) =>
+                setStatus(value as 'Active' | 'Inactive')
+              }
             />
             <Input
               label="Start time"
@@ -678,7 +827,11 @@ export function TrainerAvailabilityDrawerAction({
           </div>
         </div>
         <DialogFooter className="border-t border-slate-100 bg-slate-50/50 px-5 py-4">
-          <Button type="button" variant="secondary" onClick={() => setOpen(false)}>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => setOpen(false)}
+          >
             Cancel
           </Button>
           <Button type="submit" loading={isSaving}>
@@ -709,9 +862,15 @@ export function TrainerAvailabilityEditDrawerAction({
   const [dayOfWeek, setDayOfWeek] = useState(availability.dayOfWeek);
   const [startTime, setStartTime] = useState(availability.startTime);
   const [endTime, setEndTime] = useState(availability.endTime);
-  const [status, setStatus] = useState<'Active' | 'Inactive'>(availability.status);
-  const [effectiveStartDate, setEffectiveStartDate] = useState(dateValue(availability.effectiveStartDate));
-  const [effectiveEndDate, setEffectiveEndDate] = useState(dateValue(availability.effectiveEndDate));
+  const [status, setStatus] = useState<'Active' | 'Inactive'>(
+    availability.status,
+  );
+  const [effectiveStartDate, setEffectiveStartDate] = useState(
+    dateValue(availability.effectiveStartDate),
+  );
+  const [effectiveEndDate, setEffectiveEndDate] = useState(
+    dateValue(availability.effectiveEndDate),
+  );
 
   const branchOptionsList = branchOptions.map((branch) => ({
     value: branch.id,
@@ -722,35 +881,48 @@ export function TrainerAvailabilityEditDrawerAction({
     event.preventDefault();
     setError(null);
 
-    if (!branchId || !dayOfWeek || !startTime || !endTime || !effectiveStartDate) {
+    if (
+      !branchId ||
+      !dayOfWeek ||
+      !startTime ||
+      !endTime ||
+      !effectiveStartDate
+    ) {
       setError('Complete all required availability fields.');
       return;
     }
 
     setIsSaving(true);
     try {
-      const response = await fetch(`/api/v1/faculty/trainers/${trainerId}/availability/${availability.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          branchId,
-          dayOfWeek,
-          startTime,
-          endTime,
-          status,
-          effectiveStartDate,
-          effectiveEndDate: effectiveEndDate || null,
-          version: availability.version,
-        }),
-      });
+      const response = await fetch(
+        `/api/v1/faculty/trainers/${trainerId}/availability/${availability.id}`,
+        {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            branchId,
+            dayOfWeek,
+            startTime,
+            endTime,
+            status,
+            effectiveStartDate,
+            effectiveEndDate: effectiveEndDate || null,
+            version: availability.version,
+          }),
+        },
+      );
       const body = await response.json();
       if (!response.ok) {
-        throw new Error(body.messageEnglish || 'Unable to update availability.');
+        throw new Error(
+          body.messageEnglish || 'Unable to update availability.',
+        );
       }
       setOpen(false);
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to update availability.');
+      setError(
+        err instanceof Error ? err.message : 'Unable to update availability.',
+      );
     } finally {
       setIsSaving(false);
     }
@@ -763,7 +935,12 @@ export function TrainerAvailabilityEditDrawerAction({
       title="Edit Availability"
       description={`Update availability windows for ${trainerName}.`}
       trigger={
-        <Button type="button" variant="outline" size="sm" onClick={() => setOpen(true)}>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => setOpen(true)}
+        >
           <Pencil className="mr-2 h-4 w-4" />
           Edit
         </Button>
@@ -772,7 +949,13 @@ export function TrainerAvailabilityEditDrawerAction({
       <form onSubmit={submit} className="flex h-full flex-col" noValidate>
         <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
           {error ? <Alert variant="error" description={error} /> : null}
-          <Select label="Branch" required options={branchOptionsList} value={branchId} onValueChange={setBranchId} />
+          <Select
+            label="Branch"
+            required
+            options={branchOptionsList}
+            value={branchId}
+            onValueChange={setBranchId}
+          />
           <div className="grid gap-4 sm:grid-cols-2">
             <Select
               label="Day of week"
@@ -796,16 +979,45 @@ export function TrainerAvailabilityEditDrawerAction({
                 { value: 'Inactive', label: 'Inactive' },
               ]}
               value={status}
-              onValueChange={(value) => setStatus(value as 'Active' | 'Inactive')}
+              onValueChange={(value) =>
+                setStatus(value as 'Active' | 'Inactive')
+              }
             />
-            <Input label="Start time" type="time" required value={startTime} onChange={(event) => setStartTime(event.target.value)} />
-            <Input label="End time" type="time" required value={endTime} onChange={(event) => setEndTime(event.target.value)} />
-            <Input label="Effective start date" type="date" required value={effectiveStartDate} onChange={(event) => setEffectiveStartDate(event.target.value)} />
-            <Input label="Effective end date" type="date" value={effectiveEndDate} onChange={(event) => setEffectiveEndDate(event.target.value)} />
+            <Input
+              label="Start time"
+              type="time"
+              required
+              value={startTime}
+              onChange={(event) => setStartTime(event.target.value)}
+            />
+            <Input
+              label="End time"
+              type="time"
+              required
+              value={endTime}
+              onChange={(event) => setEndTime(event.target.value)}
+            />
+            <Input
+              label="Effective start date"
+              type="date"
+              required
+              value={effectiveStartDate}
+              onChange={(event) => setEffectiveStartDate(event.target.value)}
+            />
+            <Input
+              label="Effective end date"
+              type="date"
+              value={effectiveEndDate}
+              onChange={(event) => setEffectiveEndDate(event.target.value)}
+            />
           </div>
         </div>
         <DialogFooter className="border-t border-slate-100 bg-slate-50/50 px-5 py-4">
-          <Button type="button" variant="secondary" onClick={() => setOpen(false)}>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => setOpen(false)}
+          >
             Cancel
           </Button>
           <Button type="submit" loading={isSaving}>
@@ -830,9 +1042,14 @@ export function TrainerAuthorizationDrawerAction({
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
-  const initialCourseId = useMemo(() => courseOptions[0]?.id ?? '', [courseOptions]);
+  const initialCourseId = useMemo(
+    () => courseOptions[0]?.id ?? '',
+    [courseOptions],
+  );
   const [courseId, setCourseId] = useState(initialCourseId);
-  const [status, setStatus] = useState<'Active' | 'Inactive' | 'Suspended' | 'Expired'>('Active');
+  const [status, setStatus] = useState<
+    'Active' | 'Inactive' | 'Suspended' | 'Expired'
+  >('Active');
   const [effectiveStartDate, setEffectiveStartDate] = useState(todayValue());
   const [effectiveEndDate, setEffectiveEndDate] = useState('');
   const [reason, setReason] = useState('');
@@ -853,17 +1070,20 @@ export function TrainerAuthorizationDrawerAction({
 
     setIsSaving(true);
     try {
-      const response = await fetch(`/api/v1/faculty/trainers/${trainerId}/authorizations`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          courseId,
-          status,
-          effectiveStartDate,
-          effectiveEndDate: effectiveEndDate || null,
-          reason: reason.trim() || null,
-        }),
-      });
+      const response = await fetch(
+        `/api/v1/faculty/trainers/${trainerId}/authorizations`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            courseId,
+            status,
+            effectiveStartDate,
+            effectiveEndDate: effectiveEndDate || null,
+            reason: reason.trim() || null,
+          }),
+        },
+      );
       const body = await response.json();
       if (!response.ok) {
         throw new Error(body.messageEnglish || 'Unable to save authorization.');
@@ -876,7 +1096,9 @@ export function TrainerAuthorizationDrawerAction({
       setEffectiveEndDate('');
       setReason('');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to save authorization.');
+      setError(
+        err instanceof Error ? err.message : 'Unable to save authorization.',
+      );
     } finally {
       setIsSaving(false);
     }
@@ -889,7 +1111,12 @@ export function TrainerAuthorizationDrawerAction({
       title="Assign Course"
       description={`Authorize a course that ${trainerName} can teach.`}
       trigger={
-        <Button type="button" variant="secondary" size="sm" onClick={() => setOpen(true)}>
+        <Button
+          type="button"
+          variant="secondary"
+          size="sm"
+          onClick={() => setOpen(true)}
+        >
           <BookOpen className="mr-2 h-4 w-4" />
           Assign Course
         </Button>
@@ -916,7 +1143,11 @@ export function TrainerAuthorizationDrawerAction({
                 { value: 'Expired', label: 'Expired' },
               ]}
               value={status}
-              onValueChange={(value) => setStatus(value as 'Active' | 'Inactive' | 'Suspended' | 'Expired')}
+              onValueChange={(value) =>
+                setStatus(
+                  value as 'Active' | 'Inactive' | 'Suspended' | 'Expired',
+                )
+              }
             />
             <Input
               label="Effective start date"
@@ -943,7 +1174,11 @@ export function TrainerAuthorizationDrawerAction({
           </div>
         </div>
         <DialogFooter className="border-t border-slate-100 bg-slate-50/50 px-5 py-4">
-          <Button type="button" variant="secondary" onClick={() => setOpen(false)}>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => setOpen(false)}
+          >
             Cancel
           </Button>
           <Button type="submit" loading={isSaving}>
@@ -968,9 +1203,15 @@ export function TrainerAuthorizationEditDrawerAction({
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
-  const [status, setStatus] = useState<'Active' | 'Inactive' | 'Suspended' | 'Expired'>(authorization.status);
-  const [effectiveStartDate, setEffectiveStartDate] = useState(dateValue(authorization.effectiveStartDate));
-  const [effectiveEndDate, setEffectiveEndDate] = useState(dateValue(authorization.effectiveEndDate));
+  const [status, setStatus] = useState<
+    'Active' | 'Inactive' | 'Suspended' | 'Expired'
+  >(authorization.status);
+  const [effectiveStartDate, setEffectiveStartDate] = useState(
+    dateValue(authorization.effectiveStartDate),
+  );
+  const [effectiveEndDate, setEffectiveEndDate] = useState(
+    dateValue(authorization.effectiveEndDate),
+  );
   const [reason, setReason] = useState(authorization.reason ?? '');
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
@@ -984,25 +1225,32 @@ export function TrainerAuthorizationEditDrawerAction({
 
     setIsSaving(true);
     try {
-      const response = await fetch(`/api/v1/faculty/trainers/${trainerId}/authorizations/${authorization.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          status,
-          effectiveStartDate,
-          effectiveEndDate: effectiveEndDate || null,
-          reason: reason.trim() || null,
-          version: authorization.version,
-        }),
-      });
+      const response = await fetch(
+        `/api/v1/faculty/trainers/${trainerId}/authorizations/${authorization.id}`,
+        {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            status,
+            effectiveStartDate,
+            effectiveEndDate: effectiveEndDate || null,
+            reason: reason.trim() || null,
+            version: authorization.version,
+          }),
+        },
+      );
       const body = await response.json();
       if (!response.ok) {
-        throw new Error(body.messageEnglish || 'Unable to update authorization.');
+        throw new Error(
+          body.messageEnglish || 'Unable to update authorization.',
+        );
       }
       setOpen(false);
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to update authorization.');
+      setError(
+        err instanceof Error ? err.message : 'Unable to update authorization.',
+      );
     } finally {
       setIsSaving(false);
     }
@@ -1015,7 +1263,12 @@ export function TrainerAuthorizationEditDrawerAction({
       title="Edit Authorization"
       description={`Update course authorization for ${trainerName}.`}
       trigger={
-        <Button type="button" variant="outline" size="sm" onClick={() => setOpen(true)}>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => setOpen(true)}
+        >
           <Pencil className="mr-2 h-4 w-4" />
           Edit
         </Button>
@@ -1025,9 +1278,17 @@ export function TrainerAuthorizationEditDrawerAction({
         <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
           {error ? <Alert variant="error" description={error} /> : null}
           <div className="rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-background)] p-4 text-sm text-[color:var(--ims-ink)]">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[color:var(--ims-muted)]">Course</p>
-            <p className="mt-1 font-medium">{authorization.course?.courseCode ?? authorization.courseId}</p>
-            {authorization.course?.nameEnglish ? <p className="text-xs text-[color:var(--ims-muted)]">{authorization.course.nameEnglish}</p> : null}
+            <p className="text-xs font-semibold uppercase tracking-widest text-[color:var(--ims-muted)]">
+              Course
+            </p>
+            <p className="mt-1 font-medium">
+              {authorization.course?.courseCode ?? authorization.courseId}
+            </p>
+            {authorization.course?.nameEnglish ? (
+              <p className="text-xs text-[color:var(--ims-muted)]">
+                {authorization.course.nameEnglish}
+              </p>
+            ) : null}
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <Select
@@ -1039,15 +1300,39 @@ export function TrainerAuthorizationEditDrawerAction({
                 { value: 'Expired', label: 'Expired' },
               ]}
               value={status}
-              onValueChange={(value) => setStatus(value as 'Active' | 'Inactive' | 'Suspended' | 'Expired')}
+              onValueChange={(value) =>
+                setStatus(
+                  value as 'Active' | 'Inactive' | 'Suspended' | 'Expired',
+                )
+              }
             />
-            <Input label="Effective start date" type="date" required value={effectiveStartDate} onChange={(event) => setEffectiveStartDate(event.target.value)} />
-            <Input label="Effective end date" type="date" value={effectiveEndDate} onChange={(event) => setEffectiveEndDate(event.target.value)} />
-            <Textarea label="Reason" value={reason} onChange={(event) => setReason(event.target.value)} className="sm:col-span-2" />
+            <Input
+              label="Effective start date"
+              type="date"
+              required
+              value={effectiveStartDate}
+              onChange={(event) => setEffectiveStartDate(event.target.value)}
+            />
+            <Input
+              label="Effective end date"
+              type="date"
+              value={effectiveEndDate}
+              onChange={(event) => setEffectiveEndDate(event.target.value)}
+            />
+            <Textarea
+              label="Reason"
+              value={reason}
+              onChange={(event) => setReason(event.target.value)}
+              className="sm:col-span-2"
+            />
           </div>
         </div>
         <DialogFooter className="border-t border-slate-100 bg-slate-50/50 px-5 py-4">
-          <Button type="button" variant="secondary" onClick={() => setOpen(false)}>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => setOpen(false)}
+          >
             Cancel
           </Button>
           <Button type="submit" loading={isSaving}>

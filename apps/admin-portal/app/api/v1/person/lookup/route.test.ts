@@ -13,13 +13,17 @@ vi.mock('../../../../lib/runtime', () => ({
     globalPersonLookup: (...args: any[]) => globalPersonLookupMock(...args),
   },
   branchScopeResolver: {
-    resolveAllowedBranches: (...args: any[]) => resolveAllowedBranchesMock(...args),
+    resolveAllowedBranches: (...args: any[]) =>
+      resolveAllowedBranchesMock(...args),
   },
 }));
 
 vi.mock('../../../../lib/observability', () => ({
   applyObservabilityResponseHeaders: vi.fn(),
-  withRouteObservability: async (_headers: Headers, handler: () => Promise<Response>) => handler(),
+  withRouteObservability: async (
+    _headers: Headers,
+    handler: () => Promise<Response>,
+  ) => handler(),
   createStructuredLogger: () => ({ info: vi.fn(), error: vi.fn() }),
   getCurrentRequestContext: () => ({}),
 }));
@@ -35,14 +39,17 @@ describe('Person Lookup API route', () => {
     withPermissionMock.mockImplementation((req, perm, cb) =>
       cb({
         session: { userId: 'user-1', permissions: ['admission.create'] },
-      })
+      }),
     );
 
     const { GET } = await import('./route');
     const response = await GET(
-      new Request('http://localhost/api/v1/person/lookup?query=fatima@example.om', {
-        method: 'GET',
-      })
+      new Request(
+        'http://localhost/api/v1/person/lookup?query=fatima@example.om',
+        {
+          method: 'GET',
+        },
+      ),
     );
 
     const body = await response.json();
@@ -55,17 +62,26 @@ describe('Person Lookup API route', () => {
     const targetBranchId = '22222222-2222-2222-2222-222222222222';
     withPermissionMock.mockImplementation((req, perm, cb) =>
       cb({
-        session: { userId: 'user-1', permissions: ['admission.create'], activeBranchId: '11111111-1111-1111-1111-111111111111' },
-      })
+        session: {
+          userId: 'user-1',
+          permissions: ['admission.create'],
+          activeBranchId: '11111111-1111-1111-1111-111111111111',
+        },
+      }),
     );
 
-    resolveAllowedBranchesMock.mockResolvedValue(['11111111-1111-1111-1111-111111111111']);
+    resolveAllowedBranchesMock.mockResolvedValue([
+      '11111111-1111-1111-1111-111111111111',
+    ]);
 
     const { GET } = await import('./route');
     const response = await GET(
-      new Request(`http://localhost/api/v1/person/lookup?query=fatima@example.om&branchId=${targetBranchId}`, {
-        method: 'GET',
-      })
+      new Request(
+        `http://localhost/api/v1/person/lookup?query=fatima@example.om&branchId=${targetBranchId}`,
+        {
+          method: 'GET',
+        },
+      ),
     );
 
     const body = await response.json();
@@ -79,8 +95,12 @@ describe('Person Lookup API route', () => {
     const targetBranchId = '11111111-1111-1111-1111-111111111111';
     withPermissionMock.mockImplementation((req, perm, cb) =>
       cb({
-        session: { userId: 'user-1', permissions: ['admission.create'], activeBranchId: targetBranchId },
-      })
+        session: {
+          userId: 'user-1',
+          permissions: ['admission.create'],
+          activeBranchId: targetBranchId,
+        },
+      }),
     );
 
     resolveAllowedBranchesMock.mockResolvedValue([targetBranchId]);
@@ -93,16 +113,23 @@ describe('Person Lookup API route', () => {
 
     const { GET } = await import('./route');
     const response = await GET(
-      new Request(`http://localhost/api/v1/person/lookup?query=fatima@example.om&branchId=${targetBranchId}`, {
-        method: 'GET',
-      })
+      new Request(
+        `http://localhost/api/v1/person/lookup?query=fatima@example.om&branchId=${targetBranchId}`,
+        {
+          method: 'GET',
+        },
+      ),
     );
 
     const body = await response.json();
     expect(response.status).toBe(200);
     expect(body.success).toBe(true);
     expect(body.data.personFound).toBe(true);
-    expect(globalPersonLookupMock).toHaveBeenCalledWith('fatima@example.om', targetBranchId, { revealSensitive: false });
+    expect(globalPersonLookupMock).toHaveBeenCalledWith(
+      'fatima@example.om',
+      targetBranchId,
+      { revealSensitive: false },
+    );
   });
 
   it('GET /api/v1/person/lookup reveals contact values when caller has permission', async () => {
@@ -114,7 +141,7 @@ describe('Person Lookup API route', () => {
           permissions: ['admission.create', 'student.reveal_pii'],
           activeBranchId: targetBranchId,
         },
-      })
+      }),
     );
 
     resolveAllowedBranchesMock.mockResolvedValue([targetBranchId]);
@@ -130,14 +157,21 @@ describe('Person Lookup API route', () => {
 
     const { GET } = await import('./route');
     const response = await GET(
-      new Request(`http://localhost/api/v1/person/lookup?query=fatima@example.om&branchId=${targetBranchId}`, {
-        method: 'GET',
-      })
+      new Request(
+        `http://localhost/api/v1/person/lookup?query=fatima@example.om&branchId=${targetBranchId}`,
+        {
+          method: 'GET',
+        },
+      ),
     );
 
     const body = await response.json();
     expect(response.status).toBe(200);
     expect(body.success).toBe(true);
-    expect(globalPersonLookupMock).toHaveBeenCalledWith('fatima@example.om', targetBranchId, { revealSensitive: true });
+    expect(globalPersonLookupMock).toHaveBeenCalledWith(
+      'fatima@example.om',
+      targetBranchId,
+      { revealSensitive: true },
+    );
   });
 });

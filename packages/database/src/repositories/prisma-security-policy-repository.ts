@@ -1,5 +1,8 @@
 import type { PrismaClient } from '@prisma/client';
-import type { ISecurityPolicyRepository, SecurityPolicy } from '@ims/identity-access';
+import type {
+  ISecurityPolicyRepository,
+  SecurityPolicy,
+} from '@ims/identity-access';
 import { createDefaultSecurityPolicy } from '@ims/identity-access';
 import type { Uuid } from '@ims/shared-kernel';
 

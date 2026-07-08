@@ -31,23 +31,23 @@ All financial dates and reporting period boundaries use Oman business timezone `
 
 The following dimensions are supported where applicable and authorized:
 
-| Dimension | Source | Reporting Use | Scope Rule |
-|---|---|---|---|
-| Business date | Invoice, Payment, Refund, Receivable dates | Period filtering and trend bucketing | GST date boundaries |
-| Branch | Invoice.branchId and authorized branch hierarchy | Branch comparison and isolation | Server-enforced authorized branch set |
-| Course | InvoiceLineItem.courseId | Revenue, billing, collection, and outstanding by course | Only lines in authorized invoice scope |
-| Batch | Enrollment/line source reference | Cohort billing and collection analysis | Inherited from enrollment branch and invoice scope |
-| Enrollment type | Enrollment | Regular, Corporate, WalkIn, Online segmentation | Read-only cross-context projection |
-| Customer type | Student or Corporate | Segmentation of billing and collections | Source customer reference |
-| Corporate account | Invoice.corporateAccountId | Corporate exposure and receivables | Managed-account plus branch intersection where applicable |
-| Invoice type | Invoice.invoiceType | Student, Corporate, Advance, Milestone, Final, Refund analysis | Authorized invoice scope |
-| Invoice status | Invoice.status | Operational pipeline and exposure analysis | Authorized invoice scope |
-| Payment method | Payment.paymentMethod | Method mix and collection trends | Authorized payment scope |
-| Refund status | Refund.status | Workflow and refund analysis | Authorized refund scope |
-| Aging bucket | Receivable.agingBucket | Outstanding distribution | Current, 30 Days, 60 Days, 90 Days, terminal compatibility bucket |
-| Currency | Invoice.currency | Currency-separated reporting | Never aggregate unlike currencies without configured conversion process |
-| Counselor | Enrollment/Admission/Lead read projection | Optional collection follow-up accountability | Counselor sees only mediated enrollment-linked summary, not unrestricted Finance data |
-| Corporate account manager | Corporate Training relationship | Managed portfolio reporting | Managed account intersection with branch scope |
+| Dimension                 | Source                                           | Reporting Use                                                  | Scope Rule                                                                            |
+| ------------------------- | ------------------------------------------------ | -------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| Business date             | Invoice, Payment, Refund, Receivable dates       | Period filtering and trend bucketing                           | GST date boundaries                                                                   |
+| Branch                    | Invoice.branchId and authorized branch hierarchy | Branch comparison and isolation                                | Server-enforced authorized branch set                                                 |
+| Course                    | InvoiceLineItem.courseId                         | Revenue, billing, collection, and outstanding by course        | Only lines in authorized invoice scope                                                |
+| Batch                     | Enrollment/line source reference                 | Cohort billing and collection analysis                         | Inherited from enrollment branch and invoice scope                                    |
+| Enrollment type           | Enrollment                                       | Regular, Corporate, WalkIn, Online segmentation                | Read-only cross-context projection                                                    |
+| Customer type             | Student or Corporate                             | Segmentation of billing and collections                        | Source customer reference                                                             |
+| Corporate account         | Invoice.corporateAccountId                       | Corporate exposure and receivables                             | Managed-account plus branch intersection where applicable                             |
+| Invoice type              | Invoice.invoiceType                              | Student, Corporate, Advance, Milestone, Final, Refund analysis | Authorized invoice scope                                                              |
+| Invoice status            | Invoice.status                                   | Operational pipeline and exposure analysis                     | Authorized invoice scope                                                              |
+| Payment method            | Payment.paymentMethod                            | Method mix and collection trends                               | Authorized payment scope                                                              |
+| Refund status             | Refund.status                                    | Workflow and refund analysis                                   | Authorized refund scope                                                               |
+| Aging bucket              | Receivable.agingBucket                           | Outstanding distribution                                       | Current, 30 Days, 60 Days, 90 Days, terminal compatibility bucket                     |
+| Currency                  | Invoice.currency                                 | Currency-separated reporting                                   | Never aggregate unlike currencies without configured conversion process               |
+| Counselor                 | Enrollment/Admission/Lead read projection        | Optional collection follow-up accountability                   | Counselor sees only mediated enrollment-linked summary, not unrestricted Finance data |
+| Corporate account manager | Corporate Training relationship                  | Managed portfolio reporting                                    | Managed account intersection with branch scope                                        |
 
 ## 4. KPI Catalog
 
@@ -64,38 +64,38 @@ For a reporting period `[periodStart, periodEnd]`, date inclusion is inclusive u
 
 ### 4.2 Core Financial KPIs
 
-| KPI ID | KPI Name | Exact Formula / Definition | Unit | Default Grain | Permission |
-|---|---|---|---|---|---|
-| KPI-FBR-001 | Gross Billed Value | Sum of `Invoice.totalAmount` for invoices issued in period excluding Cancelled invoices | Currency | Period, branch | `finance.report.branch` + dataset report permission |
-| KPI-FBR-002 | Gross Collections | Sum of posted `Payment.amount` with paymentDate in period | Currency | Period, branch | `report.finance.payment-trends` |
-| KPI-FBR-003 | Executed Refund Value | Sum of executed Refund.amount with execution date in period | Currency | Period, branch | `report.finance.refund-analysis` |
-| KPI-FBR-004 | Net Collections | `GrossCollections - ExecutedRefunds` | Currency | Period, branch | `report.finance.collection-efficiency` |
-| KPI-FBR-005 | Collection Efficiency | `(NetCollections / CollectibleAmount) × 100`, where CollectibleAmount is the sum of opening collectible outstanding plus invoices becoming collectible during period, excluding Cancelled invoices and amounts reversed by executed refunds | Percentage | Period, branch | `report.finance.collection-efficiency` |
-| KPI-FBR-006 | Current Outstanding | Sum of active Receivable.outstandingAmount as of asOfDate | Currency | As-of date, branch | `report.finance.receivables-aging` |
-| KPI-FBR-007 | Overdue Outstanding | Sum of outstandingAmount where dueDate < asOfDate and outstandingAmount > 0 | Currency | As-of date, branch | `report.finance.overdue-invoices` |
-| KPI-FBR-008 | Overdue Ratio | `(OverdueOutstanding / CurrentOutstanding) × 100`; return 0 when CurrentOutstanding is 0 | Percentage | As-of date, branch | `report.finance.receivables-aging` |
-| KPI-FBR-009 | Aging 30-Day Exposure | Sum outstanding in `30 Days` bucket | Currency | As-of date, branch | `report.finance.receivables-aging` |
-| KPI-FBR-010 | Aging 60-Day Exposure | Sum outstanding in `60 Days` bucket | Currency | As-of date, branch | `report.finance.receivables-aging` |
-| KPI-FBR-011 | Aging 90-Day Exposure | Sum outstanding in `90 Days` bucket | Currency | As-of date, branch | `report.finance.receivables-aging` |
-| KPI-FBR-012 | Terminal Aging Exposure | Sum outstanding in existing ER terminal bucket `120+ Days`, including compatibility-mapped balances from day 91 onward until enum correction | Currency | As-of date, branch | `report.finance.receivables-aging` |
-| KPI-FBR-013 | Average Days to Collect | Average whole and fractional calendar days between invoice issue date and weighted payment allocation dates for fully settled invoices; allocation-weighted for partial payment schedules | Days | Period, branch | `report.finance.collection-efficiency` |
-| KPI-FBR-014 | On-Time Collection Rate | `(Count invoices fully settled on or before dueDate / Count invoices fully settled in period) × 100`; 0 when denominator is 0 | Percentage | Period, branch | `report.finance.collection-efficiency` |
-| KPI-FBR-015 | Invoice Settlement Rate | `(Count fully paid invoices / Count issued payable invoices)` for selected cohort | Percentage | Cohort period, branch | `report.finance.collection-efficiency` |
-| KPI-FBR-016 | Average Invoice Value | `GrossBilledValue / count of issued non-cancelled invoices`; 0 when count is 0 | Currency | Period, branch | `report.finance.branch-performance` |
-| KPI-FBR-017 | Payment Transaction Count | Count of successfully posted payments in period | Count | Period, branch | `report.finance.payment-trends` |
-| KPI-FBR-018 | Average Payment Value | `GrossCollections / PaymentTransactionCount`; 0 when count is 0 | Currency | Period, branch | `report.finance.payment-trends` |
-| KPI-FBR-019 | Refund Rate by Value | `(ExecutedRefundValue / GrossCollections) × 100`; 0 when GrossCollections is 0 | Percentage | Period, branch | `report.finance.refund-analysis` |
-| KPI-FBR-020 | Refund Approval Rate | `(Approved + Executed refund decisions / total decided refund requests) × 100`; open requests excluded | Percentage | Period, branch | `report.finance.refund-analysis` |
-| KPI-FBR-021 | Refund Turnaround Time | Average duration from refund requestedAt to final approvedAt/rejectedAt for decided requests | Hours | Period, branch | `report.finance.refund-analysis` |
-| KPI-FBR-022 | Installment Delinquency Rate | `(Count active installments overdue with balance / Count active installments due as of date) × 100`; 0 when denominator is 0 | Percentage | As-of date, branch | `report.finance.overdue-invoices` |
-| KPI-FBR-023 | Corporate Credit Utilization | `((currentOutstanding + committedAmount) / creditLimit) × 100`; undefined/non-applicable where creditLimit=0 and shown as N/A | Percentage | As-of date, corporate account | `report.finance.corporate-exposure` |
-| KPI-FBR-024 | Available Corporate Credit | `creditLimit - currentOutstanding - committedAmount` | Currency | As-of date, corporate account | `report.finance.corporate-exposure` |
-| KPI-FBR-025 | Credit Block Count | Count of `CorporateCreditValidationFailed` decisions with Block result in period | Count | Period, branch, corporate account | `report.finance.corporate-exposure` |
-| KPI-FBR-026 | Credit Warning Count | Count of `AllowWithWarning` decisions in period | Count | Period, branch, corporate account | `report.finance.corporate-exposure` |
-| KPI-FBR-027 | Receivable Concentration | `(Top N customer outstanding / total outstanding) × 100`, N defaults to 10 and is configurable 1–100 | Percentage | As-of date, branch | `report.finance.receivables-aging` |
-| KPI-FBR-028 | Branch Collection Variance | Branch collection efficiency minus consolidated authorized-scope collection efficiency | Percentage points | Period, branch | `report.finance.branch-performance` and consolidated entitlement |
-| KPI-FBR-029 | Payment Method Share | `(Collections by payment method / GrossCollections) × 100` | Percentage | Period, method, branch | `report.finance.payment-trends` |
-| KPI-FBR-030 | Receivable Reconciliation Health | `(Count receivables matching invoice outstanding / total active receivables) × 100`; expected 100% | Percentage | As-of timestamp | Finance Manager/Auditor operational monitoring |
+| KPI ID      | KPI Name                         | Exact Formula / Definition                                                                                                                                                                                                                  | Unit              | Default Grain                     | Permission                                                       |
+| ----------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- | --------------------------------- | ---------------------------------------------------------------- |
+| KPI-FBR-001 | Gross Billed Value               | Sum of `Invoice.totalAmount` for invoices issued in period excluding Cancelled invoices                                                                                                                                                     | Currency          | Period, branch                    | `finance.report.branch` + dataset report permission              |
+| KPI-FBR-002 | Gross Collections                | Sum of posted `Payment.amount` with paymentDate in period                                                                                                                                                                                   | Currency          | Period, branch                    | `report.finance.payment-trends`                                  |
+| KPI-FBR-003 | Executed Refund Value            | Sum of executed Refund.amount with execution date in period                                                                                                                                                                                 | Currency          | Period, branch                    | `report.finance.refund-analysis`                                 |
+| KPI-FBR-004 | Net Collections                  | `GrossCollections - ExecutedRefunds`                                                                                                                                                                                                        | Currency          | Period, branch                    | `report.finance.collection-efficiency`                           |
+| KPI-FBR-005 | Collection Efficiency            | `(NetCollections / CollectibleAmount) × 100`, where CollectibleAmount is the sum of opening collectible outstanding plus invoices becoming collectible during period, excluding Cancelled invoices and amounts reversed by executed refunds | Percentage        | Period, branch                    | `report.finance.collection-efficiency`                           |
+| KPI-FBR-006 | Current Outstanding              | Sum of active Receivable.outstandingAmount as of asOfDate                                                                                                                                                                                   | Currency          | As-of date, branch                | `report.finance.receivables-aging`                               |
+| KPI-FBR-007 | Overdue Outstanding              | Sum of outstandingAmount where dueDate < asOfDate and outstandingAmount > 0                                                                                                                                                                 | Currency          | As-of date, branch                | `report.finance.overdue-invoices`                                |
+| KPI-FBR-008 | Overdue Ratio                    | `(OverdueOutstanding / CurrentOutstanding) × 100`; return 0 when CurrentOutstanding is 0                                                                                                                                                    | Percentage        | As-of date, branch                | `report.finance.receivables-aging`                               |
+| KPI-FBR-009 | Aging 30-Day Exposure            | Sum outstanding in `30 Days` bucket                                                                                                                                                                                                         | Currency          | As-of date, branch                | `report.finance.receivables-aging`                               |
+| KPI-FBR-010 | Aging 60-Day Exposure            | Sum outstanding in `60 Days` bucket                                                                                                                                                                                                         | Currency          | As-of date, branch                | `report.finance.receivables-aging`                               |
+| KPI-FBR-011 | Aging 90-Day Exposure            | Sum outstanding in `90 Days` bucket                                                                                                                                                                                                         | Currency          | As-of date, branch                | `report.finance.receivables-aging`                               |
+| KPI-FBR-012 | Terminal Aging Exposure          | Sum outstanding in existing ER terminal bucket `120+ Days`, including compatibility-mapped balances from day 91 onward until enum correction                                                                                                | Currency          | As-of date, branch                | `report.finance.receivables-aging`                               |
+| KPI-FBR-013 | Average Days to Collect          | Average whole and fractional calendar days between invoice issue date and weighted payment allocation dates for fully settled invoices; allocation-weighted for partial payment schedules                                                   | Days              | Period, branch                    | `report.finance.collection-efficiency`                           |
+| KPI-FBR-014 | On-Time Collection Rate          | `(Count invoices fully settled on or before dueDate / Count invoices fully settled in period) × 100`; 0 when denominator is 0                                                                                                               | Percentage        | Period, branch                    | `report.finance.collection-efficiency`                           |
+| KPI-FBR-015 | Invoice Settlement Rate          | `(Count fully paid invoices / Count issued payable invoices)` for selected cohort                                                                                                                                                           | Percentage        | Cohort period, branch             | `report.finance.collection-efficiency`                           |
+| KPI-FBR-016 | Average Invoice Value            | `GrossBilledValue / count of issued non-cancelled invoices`; 0 when count is 0                                                                                                                                                              | Currency          | Period, branch                    | `report.finance.branch-performance`                              |
+| KPI-FBR-017 | Payment Transaction Count        | Count of successfully posted payments in period                                                                                                                                                                                             | Count             | Period, branch                    | `report.finance.payment-trends`                                  |
+| KPI-FBR-018 | Average Payment Value            | `GrossCollections / PaymentTransactionCount`; 0 when count is 0                                                                                                                                                                             | Currency          | Period, branch                    | `report.finance.payment-trends`                                  |
+| KPI-FBR-019 | Refund Rate by Value             | `(ExecutedRefundValue / GrossCollections) × 100`; 0 when GrossCollections is 0                                                                                                                                                              | Percentage        | Period, branch                    | `report.finance.refund-analysis`                                 |
+| KPI-FBR-020 | Refund Approval Rate             | `(Approved + Executed refund decisions / total decided refund requests) × 100`; open requests excluded                                                                                                                                      | Percentage        | Period, branch                    | `report.finance.refund-analysis`                                 |
+| KPI-FBR-021 | Refund Turnaround Time           | Average duration from refund requestedAt to final approvedAt/rejectedAt for decided requests                                                                                                                                                | Hours             | Period, branch                    | `report.finance.refund-analysis`                                 |
+| KPI-FBR-022 | Installment Delinquency Rate     | `(Count active installments overdue with balance / Count active installments due as of date) × 100`; 0 when denominator is 0                                                                                                                | Percentage        | As-of date, branch                | `report.finance.overdue-invoices`                                |
+| KPI-FBR-023 | Corporate Credit Utilization     | `((currentOutstanding + committedAmount) / creditLimit) × 100`; undefined/non-applicable where creditLimit=0 and shown as N/A                                                                                                               | Percentage        | As-of date, corporate account     | `report.finance.corporate-exposure`                              |
+| KPI-FBR-024 | Available Corporate Credit       | `creditLimit - currentOutstanding - committedAmount`                                                                                                                                                                                        | Currency          | As-of date, corporate account     | `report.finance.corporate-exposure`                              |
+| KPI-FBR-025 | Credit Block Count               | Count of `CorporateCreditValidationFailed` decisions with Block result in period                                                                                                                                                            | Count             | Period, branch, corporate account | `report.finance.corporate-exposure`                              |
+| KPI-FBR-026 | Credit Warning Count             | Count of `AllowWithWarning` decisions in period                                                                                                                                                                                             | Count             | Period, branch, corporate account | `report.finance.corporate-exposure`                              |
+| KPI-FBR-027 | Receivable Concentration         | `(Top N customer outstanding / total outstanding) × 100`, N defaults to 10 and is configurable 1–100                                                                                                                                        | Percentage        | As-of date, branch                | `report.finance.receivables-aging`                               |
+| KPI-FBR-028 | Branch Collection Variance       | Branch collection efficiency minus consolidated authorized-scope collection efficiency                                                                                                                                                      | Percentage points | Period, branch                    | `report.finance.branch-performance` and consolidated entitlement |
+| KPI-FBR-029 | Payment Method Share             | `(Collections by payment method / GrossCollections) × 100`                                                                                                                                                                                  | Percentage        | Period, method, branch            | `report.finance.payment-trends`                                  |
+| KPI-FBR-030 | Receivable Reconciliation Health | `(Count receivables matching invoice outstanding / total active receivables) × 100`; expected 100%                                                                                                                                          | Percentage        | As-of timestamp                   | Finance Manager/Auditor operational monitoring                   |
 
 ### 4.3 KPI Exclusions and Non-Applicable Examples
 
@@ -113,25 +113,25 @@ Module 12 may consume those measures in an executive composite dashboard only th
 
 ### 5.1 Admin Portal Dashboard Inventory
 
-| Dashboard ID | Dashboard | Primary Roles | Permission Requirements | Scope |
-|---|---|---|---|---|
-| DB-FBR-001 | Finance Operations Dashboard | Finance Manager, Accountant, Branch Admin | `menu.finance.dashboard`, `finance.report.branch` | Authorized branch set |
-| DB-FBR-002 | Receivables & Aging Dashboard | Finance Manager, Accountant, Branch Admin, Auditor | `report.finance.receivables-aging` | Authorized branch set |
-| DB-FBR-003 | Collections Dashboard | Finance Manager, Accountant, Executive, Auditor | `report.finance.collection-efficiency`, `report.finance.payment-trends` | Branch or consolidated when entitled |
-| DB-FBR-004 | Refund Control Dashboard | Finance Manager, delegated Branch Admin, Auditor | `report.finance.refund-analysis` | Authorized branch set |
-| DB-FBR-005 | Corporate Credit Dashboard | Finance Manager, Accountant, Corporate Account Manager, Executive, Auditor | `report.finance.corporate-exposure` | Branch and managed-account intersection where applicable |
-| DB-FBR-006 | Branch Finance Performance Dashboard | Finance Manager, Branch Admin, Executive | `report.finance.branch-performance` | Authorized branches; comparisons only over authorized set |
-| DB-FBR-007 | Consolidated Finance Dashboard | Executive and explicitly entitled roles | `finance.report.consolidated`, `report.finance.consolidated-summary`, IAM consolidated entitlement | Authorized consolidated branch set |
-| DB-FBR-008 | Finance Data Quality Dashboard | Finance Manager, Auditor | `finance.audit.read` or delegated monitoring permission | Authorized branch set |
+| Dashboard ID | Dashboard                            | Primary Roles                                                              | Permission Requirements                                                                            | Scope                                                     |
+| ------------ | ------------------------------------ | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| DB-FBR-001   | Finance Operations Dashboard         | Finance Manager, Accountant, Branch Admin                                  | `menu.finance.dashboard`, `finance.report.branch`                                                  | Authorized branch set                                     |
+| DB-FBR-002   | Receivables & Aging Dashboard        | Finance Manager, Accountant, Branch Admin, Auditor                         | `report.finance.receivables-aging`                                                                 | Authorized branch set                                     |
+| DB-FBR-003   | Collections Dashboard                | Finance Manager, Accountant, Executive, Auditor                            | `report.finance.collection-efficiency`, `report.finance.payment-trends`                            | Branch or consolidated when entitled                      |
+| DB-FBR-004   | Refund Control Dashboard             | Finance Manager, delegated Branch Admin, Auditor                           | `report.finance.refund-analysis`                                                                   | Authorized branch set                                     |
+| DB-FBR-005   | Corporate Credit Dashboard           | Finance Manager, Accountant, Corporate Account Manager, Executive, Auditor | `report.finance.corporate-exposure`                                                                | Branch and managed-account intersection where applicable  |
+| DB-FBR-006   | Branch Finance Performance Dashboard | Finance Manager, Branch Admin, Executive                                   | `report.finance.branch-performance`                                                                | Authorized branches; comparisons only over authorized set |
+| DB-FBR-007   | Consolidated Finance Dashboard       | Executive and explicitly entitled roles                                    | `finance.report.consolidated`, `report.finance.consolidated-summary`, IAM consolidated entitlement | Authorized consolidated branch set                        |
+| DB-FBR-008   | Finance Data Quality Dashboard       | Finance Manager, Auditor                                                   | `finance.audit.read` or delegated monitoring permission                                            | Authorized branch set                                     |
 
 ### 5.2 Student Portal Dashboard Inventory
 
-| Dashboard ID | Dashboard | Permission | Data Boundary |
-|---|---|---|---|
-| DB-FBR-S01 | My Billing Summary | `finance.self.invoice.read` | Authenticated StudentProfile only |
-| DB-FBR-S02 | My Payment & Receipt Summary | `finance.self.payment.read`, `finance.self.receipt.read` | Authenticated StudentProfile only |
-| DB-FBR-S03 | My Installment Schedule | `finance.self.installment.read` | Authenticated StudentProfile only |
-| DB-FBR-S04 | My Refund Status | `finance.self.refund.read` | Authenticated StudentProfile only |
+| Dashboard ID | Dashboard                    | Permission                                               | Data Boundary                     |
+| ------------ | ---------------------------- | -------------------------------------------------------- | --------------------------------- |
+| DB-FBR-S01   | My Billing Summary           | `finance.self.invoice.read`                              | Authenticated StudentProfile only |
+| DB-FBR-S02   | My Payment & Receipt Summary | `finance.self.payment.read`, `finance.self.receipt.read` | Authenticated StudentProfile only |
+| DB-FBR-S03   | My Installment Schedule      | `finance.self.installment.read`                          | Authenticated StudentProfile only |
+| DB-FBR-S04   | My Refund Status             | `finance.self.refund.read`                               | Authenticated StudentProfile only |
 
 ### 5.3 Trainer Portal Applicability
 
@@ -141,94 +141,94 @@ Module 12 provides no financial dashboard to Trainer users. Trainer Portal may r
 
 ### 6.1 Finance Operations Dashboard Widgets
 
-| Widget ID | Widget Type | Content | Interaction | Permission |
-|---|---|---|---|---|
-| W-FBR-001 | Metric card | Gross Billed Value | Period comparison tooltip and drill to invoice report | `finance.report.branch` |
-| W-FBR-002 | Metric card | Net Collections | Drill to payment trend report | `report.finance.payment-trends` |
-| W-FBR-003 | Metric card | Current Outstanding | Drill to receivables report | `finance.receivable.read` |
-| W-FBR-004 | Metric card | Overdue Outstanding | Drill to overdue report | `report.finance.overdue-invoices` |
-| W-FBR-005 | Metric card | Collection Efficiency | Compare previous equivalent period | `report.finance.collection-efficiency` |
-| W-FBR-006 | Metric card | Refunds Pending Decision | Drill to refund queue filtered Requested/UnderReview | `finance.refund.read` |
-| W-FBR-007 | Line chart | Daily/weekly/monthly billed value vs gross and net collections | Granularity selector; branch, course, customer type filters | Relevant report permissions |
-| W-FBR-008 | Stacked bar chart | Outstanding by aging bucket | Click bucket to filter receivable table | `report.finance.receivables-aging` |
-| W-FBR-009 | Donut chart | Collections by payment method | Click method to open filtered payment report | `report.finance.payment-trends` |
-| W-FBR-010 | Table | Top overdue invoices | Invoice number, customer, due date, days past due, outstanding | `report.finance.overdue-invoices` |
-| W-FBR-011 | Table | Upcoming installment dues | Due in next 7/14/30 days | `finance.installment.read` |
-| W-FBR-012 | Alert list | Reconciliation exceptions | Invoice/receivable mismatch, projection stale, duplicate-risk flags | Finance Manager/Auditor monitoring access |
+| Widget ID | Widget Type       | Content                                                        | Interaction                                                         | Permission                                |
+| --------- | ----------------- | -------------------------------------------------------------- | ------------------------------------------------------------------- | ----------------------------------------- |
+| W-FBR-001 | Metric card       | Gross Billed Value                                             | Period comparison tooltip and drill to invoice report               | `finance.report.branch`                   |
+| W-FBR-002 | Metric card       | Net Collections                                                | Drill to payment trend report                                       | `report.finance.payment-trends`           |
+| W-FBR-003 | Metric card       | Current Outstanding                                            | Drill to receivables report                                         | `finance.receivable.read`                 |
+| W-FBR-004 | Metric card       | Overdue Outstanding                                            | Drill to overdue report                                             | `report.finance.overdue-invoices`         |
+| W-FBR-005 | Metric card       | Collection Efficiency                                          | Compare previous equivalent period                                  | `report.finance.collection-efficiency`    |
+| W-FBR-006 | Metric card       | Refunds Pending Decision                                       | Drill to refund queue filtered Requested/UnderReview                | `finance.refund.read`                     |
+| W-FBR-007 | Line chart        | Daily/weekly/monthly billed value vs gross and net collections | Granularity selector; branch, course, customer type filters         | Relevant report permissions               |
+| W-FBR-008 | Stacked bar chart | Outstanding by aging bucket                                    | Click bucket to filter receivable table                             | `report.finance.receivables-aging`        |
+| W-FBR-009 | Donut chart       | Collections by payment method                                  | Click method to open filtered payment report                        | `report.finance.payment-trends`           |
+| W-FBR-010 | Table             | Top overdue invoices                                           | Invoice number, customer, due date, days past due, outstanding      | `report.finance.overdue-invoices`         |
+| W-FBR-011 | Table             | Upcoming installment dues                                      | Due in next 7/14/30 days                                            | `finance.installment.read`                |
+| W-FBR-012 | Alert list        | Reconciliation exceptions                                      | Invoice/receivable mismatch, projection stale, duplicate-risk flags | Finance Manager/Auditor monitoring access |
 
 ### 6.2 Receivables & Aging Dashboard Widgets
 
-| Widget ID | Widget Type | Definition | Drill Behavior |
-|---|---|---|---|
-| W-FBR-020 | Metric card | Total active outstanding | Opens receivables report with current scope |
-| W-FBR-021 | Metric card | Overdue ratio | Opens overdue subset |
-| W-FBR-022 | Horizontal stacked bar | Aging distribution by amount | Click bucket to filter detail |
-| W-FBR-023 | Column chart | Aging by branch | Only authorized branches appear |
-| W-FBR-024 | Bar chart | Top 10 customers by outstanding | Student display is masked unless operational permission allows person detail |
-| W-FBR-025 | Trend chart | Month-end outstanding trend | Uses daily/month-end snapshot read model |
-| W-FBR-026 | Table | Highest-risk overdue accounts | Sort by days past due desc, outstanding desc |
-| W-FBR-027 | Table | Installment delinquency | Invoice, installment sequence, due date, remaining amount, days late |
+| Widget ID | Widget Type            | Definition                      | Drill Behavior                                                               |
+| --------- | ---------------------- | ------------------------------- | ---------------------------------------------------------------------------- |
+| W-FBR-020 | Metric card            | Total active outstanding        | Opens receivables report with current scope                                  |
+| W-FBR-021 | Metric card            | Overdue ratio                   | Opens overdue subset                                                         |
+| W-FBR-022 | Horizontal stacked bar | Aging distribution by amount    | Click bucket to filter detail                                                |
+| W-FBR-023 | Column chart           | Aging by branch                 | Only authorized branches appear                                              |
+| W-FBR-024 | Bar chart              | Top 10 customers by outstanding | Student display is masked unless operational permission allows person detail |
+| W-FBR-025 | Trend chart            | Month-end outstanding trend     | Uses daily/month-end snapshot read model                                     |
+| W-FBR-026 | Table                  | Highest-risk overdue accounts   | Sort by days past due desc, outstanding desc                                 |
+| W-FBR-027 | Table                  | Installment delinquency         | Invoice, installment sequence, due date, remaining amount, days late         |
 
 ### 6.3 Collections Dashboard Widgets
 
-| Widget ID | Widget Type | Definition | Drill Behavior |
-|---|---|---|---|
-| W-FBR-030 | Metric card | Gross collections | Payment detail report |
-| W-FBR-031 | Metric card | Net collections | Payment/refund reconciliation view |
-| W-FBR-032 | Metric card | Collection efficiency | Cohort breakdown |
-| W-FBR-033 | Metric card | On-time collection rate | Fully settled invoice cohort |
-| W-FBR-034 | Dual-line chart | Billed vs net collected by period | Daily/weekly/monthly granularity |
-| W-FBR-035 | Stacked column | Collection by payment method and branch | Authorized branch set only |
-| W-FBR-036 | Heatmap | Day-of-week and hour-of-day payment posting count | GST timezone labels |
-| W-FBR-037 | Table | Largest collections | Payment number, invoice number, customer, amount, method, date |
+| Widget ID | Widget Type     | Definition                                        | Drill Behavior                                                 |
+| --------- | --------------- | ------------------------------------------------- | -------------------------------------------------------------- |
+| W-FBR-030 | Metric card     | Gross collections                                 | Payment detail report                                          |
+| W-FBR-031 | Metric card     | Net collections                                   | Payment/refund reconciliation view                             |
+| W-FBR-032 | Metric card     | Collection efficiency                             | Cohort breakdown                                               |
+| W-FBR-033 | Metric card     | On-time collection rate                           | Fully settled invoice cohort                                   |
+| W-FBR-034 | Dual-line chart | Billed vs net collected by period                 | Daily/weekly/monthly granularity                               |
+| W-FBR-035 | Stacked column  | Collection by payment method and branch           | Authorized branch set only                                     |
+| W-FBR-036 | Heatmap         | Day-of-week and hour-of-day payment posting count | GST timezone labels                                            |
+| W-FBR-037 | Table           | Largest collections                               | Payment number, invoice number, customer, amount, method, date |
 
 ### 6.4 Refund Dashboard Widgets
 
-| Widget ID | Widget Type | Definition | Permission |
-|---|---|---|---|
-| W-FBR-040 | Metric card | Requested refund count/value | `report.finance.refund-analysis` |
-| W-FBR-041 | Metric card | Approved awaiting execution count/value | `report.finance.refund-analysis` |
-| W-FBR-042 | Metric card | Executed refund count/value | `report.finance.refund-analysis` |
-| W-FBR-043 | Metric card | Refund approval rate | `report.finance.refund-analysis` |
-| W-FBR-044 | Funnel chart | Requested → Approved/Rejected → Executed | `report.finance.refund-analysis` |
-| W-FBR-045 | Trend chart | Executed refund value by period | `report.finance.refund-analysis` |
-| W-FBR-046 | Table | Pending approval queue | `finance.refund.read`; action buttons require separate approve permission |
-| W-FBR-047 | Table | SLA aging of open refund requests | `report.finance.refund-analysis` |
+| Widget ID | Widget Type  | Definition                               | Permission                                                                |
+| --------- | ------------ | ---------------------------------------- | ------------------------------------------------------------------------- |
+| W-FBR-040 | Metric card  | Requested refund count/value             | `report.finance.refund-analysis`                                          |
+| W-FBR-041 | Metric card  | Approved awaiting execution count/value  | `report.finance.refund-analysis`                                          |
+| W-FBR-042 | Metric card  | Executed refund count/value              | `report.finance.refund-analysis`                                          |
+| W-FBR-043 | Metric card  | Refund approval rate                     | `report.finance.refund-analysis`                                          |
+| W-FBR-044 | Funnel chart | Requested → Approved/Rejected → Executed | `report.finance.refund-analysis`                                          |
+| W-FBR-045 | Trend chart  | Executed refund value by period          | `report.finance.refund-analysis`                                          |
+| W-FBR-046 | Table        | Pending approval queue                   | `finance.refund.read`; action buttons require separate approve permission |
+| W-FBR-047 | Table        | SLA aging of open refund requests        | `report.finance.refund-analysis`                                          |
 
 ### 6.5 Corporate Credit Dashboard Widgets
 
-| Widget ID | Widget Type | Definition | Scope |
-|---|---|---|---|
-| W-FBR-050 | Metric card | Total credit limit | Sum by currency; no cross-currency addition |
-| W-FBR-051 | Metric card | Total utilized exposure | Outstanding + committed |
-| W-FBR-052 | Metric card | Available credit | Limit minus exposure |
-| W-FBR-053 | Metric card | Accounts above 90% utilization | Count |
-| W-FBR-054 | Gauge/table | Utilization by corporate account | Managed-account restriction for Corporate Account Manager |
-| W-FBR-055 | Table | Blocked credit validations | Event date, account, proposed value, projected exposure, limit |
-| W-FBR-056 | Trend chart | Credit blocks and warnings over time | Branch/account filter |
-| W-FBR-057 | Table | Credit rules nearing effectiveEndDate | Configurable horizon 7/30/60 days |
+| Widget ID | Widget Type | Definition                            | Scope                                                          |
+| --------- | ----------- | ------------------------------------- | -------------------------------------------------------------- |
+| W-FBR-050 | Metric card | Total credit limit                    | Sum by currency; no cross-currency addition                    |
+| W-FBR-051 | Metric card | Total utilized exposure               | Outstanding + committed                                        |
+| W-FBR-052 | Metric card | Available credit                      | Limit minus exposure                                           |
+| W-FBR-053 | Metric card | Accounts above 90% utilization        | Count                                                          |
+| W-FBR-054 | Gauge/table | Utilization by corporate account      | Managed-account restriction for Corporate Account Manager      |
+| W-FBR-055 | Table       | Blocked credit validations            | Event date, account, proposed value, projected exposure, limit |
+| W-FBR-056 | Trend chart | Credit blocks and warnings over time  | Branch/account filter                                          |
+| W-FBR-057 | Table       | Credit rules nearing effectiveEndDate | Configurable horizon 7/30/60 days                              |
 
 ### 6.6 Branch Performance Dashboard Widgets
 
-| Widget ID | Widget Type | Definition | Rule |
-|---|---|---|---|
-| W-FBR-060 | Ranked table | Branches by net collection | Only authorized branch set |
-| W-FBR-061 | Ranked table | Branches by collection efficiency | Minimum denominator displayed |
-| W-FBR-062 | Grouped bar | Billed, net collected, outstanding by branch | Currency-separated |
-| W-FBR-063 | Scatter plot | Collection efficiency vs overdue ratio | Authorized branches only |
-| W-FBR-064 | Heat table | Aging bucket distribution by branch | Amount and percentage toggle |
-| W-FBR-065 | Metric card | Best-performing branch | Based on selected KPI; exact KPI displayed |
+| Widget ID | Widget Type  | Definition                                   | Rule                                       |
+| --------- | ------------ | -------------------------------------------- | ------------------------------------------ |
+| W-FBR-060 | Ranked table | Branches by net collection                   | Only authorized branch set                 |
+| W-FBR-061 | Ranked table | Branches by collection efficiency            | Minimum denominator displayed              |
+| W-FBR-062 | Grouped bar  | Billed, net collected, outstanding by branch | Currency-separated                         |
+| W-FBR-063 | Scatter plot | Collection efficiency vs overdue ratio       | Authorized branches only                   |
+| W-FBR-064 | Heat table   | Aging bucket distribution by branch          | Amount and percentage toggle               |
+| W-FBR-065 | Metric card  | Best-performing branch                       | Based on selected KPI; exact KPI displayed |
 
 ## 7. Student Portal Widget Specifications
 
-| Widget ID | Widget | Display | Permission |
-|---|---|---|---|
-| W-FBR-S01 | Total outstanding | Sum of own active invoice outstanding | `finance.self.invoice.read` |
+| Widget ID | Widget               | Display                                                 | Permission                      |
+| --------- | -------------------- | ------------------------------------------------------- | ------------------------------- |
+| W-FBR-S01 | Total outstanding    | Sum of own active invoice outstanding                   | `finance.self.invoice.read`     |
 | W-FBR-S02 | Next installment due | Due date and amount for earliest unpaid own installment | `finance.self.installment.read` |
-| W-FBR-S03 | Recent payment | Last successful own payment date, amount, method label | `finance.self.payment.read` |
-| W-FBR-S04 | Receipt shortcut | Latest own receipt reference and download action | `finance.self.receipt.read` |
-| W-FBR-S05 | Invoice status list | Own invoices only | `finance.self.invoice.read` |
-| W-FBR-S06 | Refund status list | Own refund requests only | `finance.self.refund.read` |
+| W-FBR-S03 | Recent payment       | Last successful own payment date, amount, method label  | `finance.self.payment.read`     |
+| W-FBR-S04 | Receipt shortcut     | Latest own receipt reference and download action        | `finance.self.receipt.read`     |
+| W-FBR-S05 | Invoice status list  | Own invoices only                                       | `finance.self.invoice.read`     |
+| W-FBR-S06 | Refund status list   | Own refund requests only                                | `finance.self.refund.read`      |
 
 Student widgets must not expose branch comparisons, other students, corporate account exposure, collection efficiency, revenue metrics, or audit data.
 
@@ -236,20 +236,20 @@ Student widgets must not expose branch comparisons, other students, corporate ac
 
 ### 8.1 Common Filters
 
-| Filter | Type | Validation | Default |
-|---|---|---|---|
-| dateFrom | Date | ISO `YYYY-MM-DD`; <= dateTo | First day of current month |
-| dateTo | Date | ISO `YYYY-MM-DD`; >= dateFrom | Current GST business date |
-| asOfDate | Date | ISO date; <= current GST business date unless forecast-specific widget | Current GST business date |
-| branchIds | Multi-select UUID | Each ID must belong to effective authorized branch set | Active branch context |
-| currency | Select | ISO 4217 uppercase 3-letter code | OMR |
-| courseId | UUID selector | Must resolve to course visible through scoped finance lines | All |
-| batchId | UUID selector | Must belong to selected/authorized branch context | All |
-| customerType | Enum | Student, Corporate | All |
-| corporateAccountId | UUID selector | Managed account and branch authorization required | All authorized accounts |
-| invoiceStatus | Multi-select enum | Valid Finance invoice states only | Operationally active states |
-| paymentMethod | Multi-select enum | Cash, BankTransfer, Card, Online, Cheque, CorporateBilling | All |
-| agingBucket | Multi-select enum | Current, 30 Days, 60 Days, 90 Days, terminal compatibility bucket | All |
+| Filter             | Type              | Validation                                                             | Default                     |
+| ------------------ | ----------------- | ---------------------------------------------------------------------- | --------------------------- |
+| dateFrom           | Date              | ISO `YYYY-MM-DD`; <= dateTo                                            | First day of current month  |
+| dateTo             | Date              | ISO `YYYY-MM-DD`; >= dateFrom                                          | Current GST business date   |
+| asOfDate           | Date              | ISO date; <= current GST business date unless forecast-specific widget | Current GST business date   |
+| branchIds          | Multi-select UUID | Each ID must belong to effective authorized branch set                 | Active branch context       |
+| currency           | Select            | ISO 4217 uppercase 3-letter code                                       | OMR                         |
+| courseId           | UUID selector     | Must resolve to course visible through scoped finance lines            | All                         |
+| batchId            | UUID selector     | Must belong to selected/authorized branch context                      | All                         |
+| customerType       | Enum              | Student, Corporate                                                     | All                         |
+| corporateAccountId | UUID selector     | Managed account and branch authorization required                      | All authorized accounts     |
+| invoiceStatus      | Multi-select enum | Valid Finance invoice states only                                      | Operationally active states |
+| paymentMethod      | Multi-select enum | Cash, BankTransfer, Card, Online, Cheque, CorporateBilling             | All                         |
+| agingBucket        | Multi-select enum | Current, 30 Days, 60 Days, 90 Days, terminal compatibility bucket      | All                         |
 
 ### 8.2 Interaction Rules
 
@@ -263,28 +263,28 @@ Student widgets must not expose branch comparisons, other students, corporate ac
 
 ## 9. Operational Report Inventory
 
-| Report ID | Report Name | Permission | Purpose |
-|---|---|---|---|
-| RPT-FBR-001 | Invoice Register | `finance.invoice.read` | Full invoice operational register |
-| RPT-FBR-002 | Invoice Line Detail | `finance.invoice.read` | Line-level billing traceability by enrollment/course |
-| RPT-FBR-003 | Collection Efficiency Report | `report.finance.collection-efficiency` | Compare collectible value and net collections |
-| RPT-FBR-004 | Payment Transaction Register | `finance.payment.read` | Payment and allocation reconciliation |
-| RPT-FBR-005 | Payment Method Trend | `report.finance.payment-trends` | Collection mix and trends |
-| RPT-FBR-006 | Receipt Register | `finance.receipt.read` | Receipt control and traceability |
-| RPT-FBR-007 | Installment Schedule & Delinquency | `finance.installment.read` | Due schedule, paid amount, arrears |
-| RPT-FBR-008 | Receivables Aging Detail | `report.finance.receivables-aging` | Outstanding detail and aging classification |
-| RPT-FBR-009 | Receivables Aging Summary | `report.finance.receivables-aging` | Bucket totals by branch/customer type |
-| RPT-FBR-010 | Overdue Invoice Report | `report.finance.overdue-invoices` | Collection follow-up prioritization |
-| RPT-FBR-011 | Refund Register | `finance.refund.read` | Refund lifecycle traceability |
-| RPT-FBR-012 | Refund Analysis | `report.finance.refund-analysis` | Refund rate, value, approval, turnaround |
-| RPT-FBR-013 | Corporate Exposure Report | `report.finance.corporate-exposure` | Credit limit, exposure, availability, utilization |
-| RPT-FBR-014 | Corporate Credit Decision Log | `report.finance.corporate-exposure` | Allow/warn/block decision audit analysis |
-| RPT-FBR-015 | Branch Finance Performance | `report.finance.branch-performance` | Branch KPI comparison |
-| RPT-FBR-016 | Consolidated Finance Summary | `report.finance.consolidated-summary` plus consolidated permission and IAM entitlement | Multi-branch finance summary |
-| RPT-FBR-017 | Finance Audit Trail | `finance.audit.read` | Sensitive action history |
-| RPT-FBR-018 | Finance Audit Export | `report.finance.audit-export` + `finance.export` | Compliance extraction |
-| RPT-FBR-019 | Receivable Reconciliation Exceptions | Finance Manager/Auditor monitoring access | Invoice vs receivable mismatch control |
-| RPT-FBR-020 | Payment Allocation Reconciliation | `finance.payment.read` | Payment amount vs allocation sum and installment effects |
+| Report ID   | Report Name                          | Permission                                                                             | Purpose                                                  |
+| ----------- | ------------------------------------ | -------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| RPT-FBR-001 | Invoice Register                     | `finance.invoice.read`                                                                 | Full invoice operational register                        |
+| RPT-FBR-002 | Invoice Line Detail                  | `finance.invoice.read`                                                                 | Line-level billing traceability by enrollment/course     |
+| RPT-FBR-003 | Collection Efficiency Report         | `report.finance.collection-efficiency`                                                 | Compare collectible value and net collections            |
+| RPT-FBR-004 | Payment Transaction Register         | `finance.payment.read`                                                                 | Payment and allocation reconciliation                    |
+| RPT-FBR-005 | Payment Method Trend                 | `report.finance.payment-trends`                                                        | Collection mix and trends                                |
+| RPT-FBR-006 | Receipt Register                     | `finance.receipt.read`                                                                 | Receipt control and traceability                         |
+| RPT-FBR-007 | Installment Schedule & Delinquency   | `finance.installment.read`                                                             | Due schedule, paid amount, arrears                       |
+| RPT-FBR-008 | Receivables Aging Detail             | `report.finance.receivables-aging`                                                     | Outstanding detail and aging classification              |
+| RPT-FBR-009 | Receivables Aging Summary            | `report.finance.receivables-aging`                                                     | Bucket totals by branch/customer type                    |
+| RPT-FBR-010 | Overdue Invoice Report               | `report.finance.overdue-invoices`                                                      | Collection follow-up prioritization                      |
+| RPT-FBR-011 | Refund Register                      | `finance.refund.read`                                                                  | Refund lifecycle traceability                            |
+| RPT-FBR-012 | Refund Analysis                      | `report.finance.refund-analysis`                                                       | Refund rate, value, approval, turnaround                 |
+| RPT-FBR-013 | Corporate Exposure Report            | `report.finance.corporate-exposure`                                                    | Credit limit, exposure, availability, utilization        |
+| RPT-FBR-014 | Corporate Credit Decision Log        | `report.finance.corporate-exposure`                                                    | Allow/warn/block decision audit analysis                 |
+| RPT-FBR-015 | Branch Finance Performance           | `report.finance.branch-performance`                                                    | Branch KPI comparison                                    |
+| RPT-FBR-016 | Consolidated Finance Summary         | `report.finance.consolidated-summary` plus consolidated permission and IAM entitlement | Multi-branch finance summary                             |
+| RPT-FBR-017 | Finance Audit Trail                  | `finance.audit.read`                                                                   | Sensitive action history                                 |
+| RPT-FBR-018 | Finance Audit Export                 | `report.finance.audit-export` + `finance.export`                                       | Compliance extraction                                    |
+| RPT-FBR-019 | Receivable Reconciliation Exceptions | Finance Manager/Auditor monitoring access                                              | Invoice vs receivable mismatch control                   |
+| RPT-FBR-020 | Payment Allocation Reconciliation    | `finance.payment.read`                                                                 | Payment amount vs allocation sum and installment effects |
 
 ## 10. Operational Report Specifications
 
@@ -624,14 +624,14 @@ Selection rules:
 
 ## 13. Read Model Refresh and Consistency Requirements
 
-| Read Model | Target Freshness | Refresh Strategy | Dashboard Staleness Behavior |
-|---|---|---|---|
-| Standard views | Transactionally current | Query-time | No projection lag |
-| `mv_fin_daily_branch_kpi` | <= 5 minutes during business hours | Incremental job plus periodic reconciliation | Show stale badge after 5 minutes |
-| `mv_fin_monthly_collection_efficiency` | <= 30 minutes | Incremental period recomputation | Show dataAsOf |
-| `fin_receivable_snapshot_daily` | Daily by 00:30 GST for prior date | Idempotent daily snapshot | Historical chart marks missing snapshot |
-| Credit exposure view | <= 1 minute or request-time calculation for enrollment guard | View/query service | Enrollment credit guard must use authoritative application service, not stale dashboard materialization |
-| Reconciliation exceptions | <= 15 minutes | Scheduled control query | Alert if last successful run > 30 minutes |
+| Read Model                             | Target Freshness                                             | Refresh Strategy                             | Dashboard Staleness Behavior                                                                            |
+| -------------------------------------- | ------------------------------------------------------------ | -------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Standard views                         | Transactionally current                                      | Query-time                                   | No projection lag                                                                                       |
+| `mv_fin_daily_branch_kpi`              | <= 5 minutes during business hours                           | Incremental job plus periodic reconciliation | Show stale badge after 5 minutes                                                                        |
+| `mv_fin_monthly_collection_efficiency` | <= 30 minutes                                                | Incremental period recomputation             | Show dataAsOf                                                                                           |
+| `fin_receivable_snapshot_daily`        | Daily by 00:30 GST for prior date                            | Idempotent daily snapshot                    | Historical chart marks missing snapshot                                                                 |
+| Credit exposure view                   | <= 1 minute or request-time calculation for enrollment guard | View/query service                           | Enrollment credit guard must use authoritative application service, not stale dashboard materialization |
+| Reconciliation exceptions              | <= 15 minutes                                                | Scheduled control query                      | Alert if last successful run > 30 minutes                                                               |
 
 Enrollment blocking, payment validation for completion/certificate, payment posting, refund execution, and invoice issuance must never rely solely on stale materialized reporting views.
 
@@ -678,37 +678,37 @@ All denominators and comparison groups are calculated from the authorized datase
 
 ## 16. Data Quality and Reconciliation Controls
 
-| Control ID | Control | Expected Result |
-|---|---|---|
-| DQ-FBR-001 | Invoice header equals canonical line sums | Zero mismatches |
-| DQ-FBR-002 | Payment amount equals active allocation sum | Zero mismatches |
-| DQ-FBR-003 | Exactly one active receipt per posted payment | 100% coverage, no duplicates |
-| DQ-FBR-004 | Receivable outstanding equals invoice outstanding | Zero variance |
-| DQ-FBR-005 | Installment paid amount equals allocation aggregate | Zero variance |
-| DQ-FBR-006 | Aging bucket matches daysPastDue compatibility mapping | Zero misclassifications |
-| DQ-FBR-007 | Effective CorporateCreditRule periods do not overlap | Zero overlaps |
+| Control ID | Control                                                                 | Expected Result                   |
+| ---------- | ----------------------------------------------------------------------- | --------------------------------- |
+| DQ-FBR-001 | Invoice header equals canonical line sums                               | Zero mismatches                   |
+| DQ-FBR-002 | Payment amount equals active allocation sum                             | Zero mismatches                   |
+| DQ-FBR-003 | Exactly one active receipt per posted payment                           | 100% coverage, no duplicates      |
+| DQ-FBR-004 | Receivable outstanding equals invoice outstanding                       | Zero variance                     |
+| DQ-FBR-005 | Installment paid amount equals allocation aggregate                     | Zero variance                     |
+| DQ-FBR-006 | Aging bucket matches daysPastDue compatibility mapping                  | Zero misclassifications           |
+| DQ-FBR-007 | Effective CorporateCreditRule periods do not overlap                    | Zero overlaps                     |
 | DQ-FBR-008 | Dashboard metric equals detail report aggregate under identical filters | Exact currency-precision equality |
-| DQ-FBR-009 | Unauthorized branch IDs absent from read models returned to user | Zero leaks |
-| DQ-FBR-010 | Export filters and row counts match audited request | Exact match |
+| DQ-FBR-009 | Unauthorized branch IDs absent from read models returned to user        | Zero leaks                        |
+| DQ-FBR-010 | Export filters and row counts match audited request                     | Exact match                       |
 
 ## 17. FR Traceability
 
-| FR | Reporting / Analytics Coverage |
-|---|---|
-| FR-FBR-005 | Invoice register, search read model, paging and filtering |
-| FR-FBR-007 | Installment delinquency report and widget |
-| FR-FBR-010 | Receipt register and Student receipt summary |
-| FR-FBR-012 | Receivable detail and projection views |
-| FR-FBR-013 | Aging KPIs, reports, snapshots, and charts |
-| FR-FBR-018 | Credit decision log and Corporate Credit Dashboard |
-| FR-FBR-019 | Exposure formulas and credit exposure view |
+| FR         | Reporting / Analytics Coverage                                                      |
+| ---------- | ----------------------------------------------------------------------------------- |
+| FR-FBR-005 | Invoice register, search read model, paging and filtering                           |
+| FR-FBR-007 | Installment delinquency report and widget                                           |
+| FR-FBR-010 | Receipt register and Student receipt summary                                        |
+| FR-FBR-012 | Receivable detail and projection views                                              |
+| FR-FBR-013 | Aging KPIs, reports, snapshots, and charts                                          |
+| FR-FBR-018 | Credit decision log and Corporate Credit Dashboard                                  |
+| FR-FBR-019 | Exposure formulas and credit exposure view                                          |
 | FR-FBR-020 | Data-quality reporting only; authoritative validation remains command/query service |
-| FR-FBR-021 | Branch finance dashboards and operational reports |
-| FR-FBR-022 | Consolidated dashboard, report, and two-key authorization |
-| FR-FBR-023 | CSV, XLSX, PDF export controls and audit |
-| FR-FBR-025 | Audit Trail and Audit Export reports |
-| FR-FBR-027 | Bilingual report and dashboard rendering |
-| FR-FBR-028 | GST timezone period and aging semantics |
+| FR-FBR-021 | Branch finance dashboards and operational reports                                   |
+| FR-FBR-022 | Consolidated dashboard, report, and two-key authorization                           |
+| FR-FBR-023 | CSV, XLSX, PDF export controls and audit                                            |
+| FR-FBR-025 | Audit Trail and Audit Export reports                                                |
+| FR-FBR-027 | Bilingual report and dashboard rendering                                            |
+| FR-FBR-028 | GST timezone period and aging semantics                                             |
 
 ## 18. Reporting Acceptance Criteria
 

@@ -1,4 +1,5 @@
 # Part 8 - Reports, Dashboards, KPIs, Analytics
+
 ## Module 5 – Student Management
 
 ## 1. Purpose
@@ -6,6 +7,7 @@
 This document defines the reporting, dashboard, KPI, and analytics requirements for **Module 5 – Student Management**.
 
 The purpose of this part is to ensure that ASTI can monitor:
+
 - student master growth,
 - branch-wise student activity,
 - duplicate and merge quality,
@@ -16,6 +18,7 @@ The purpose of this part is to ensure that ASTI can monitor:
 - security-scoped reporting across Admin, Student, and Trainer portal surfaces where applicable.
 
 This document stays aligned to the Student Management context boundary:
+
 - **Student Management owns student master analytics**.
 - It may consume downstream counts and summaries from Admission, Enrollment, Document Management, and Audit contexts.
 - It does **not** own financial KPIs, seat utilization KPIs, attendance KPIs, completion KPIs, or certificate KPIs.
@@ -50,11 +53,13 @@ This document stays aligned to the Student Management context boundary:
 ## 3.1 KPI Design Notes
 
 KPI formulas below use:
+
 - **business date** in Oman timezone,
 - **branch-scoped population** by default,
 - **assigned-branch consolidated population** only when caller has consolidated reporting permission.
 
 ### Common Time Windows
+
 - Today
 - Yesterday
 - Last 7 days
@@ -68,33 +73,33 @@ KPI formulas below use:
 
 ## 3.2 Core Student Master KPIs
 
-| KPI Code | KPI Name | Definition | Formula / Logic | Owner | Scope |
-|---|---|---|---|---|---|
-| KPI-SM-001 | Total Active Students | Current count of non-deleted student profiles in active state | Count of `student_profiles` where `student_status='Active'` and `is_deleted=false` | Student Management | Branch / consolidated |
-| KPI-SM-002 | Total Suspended Students | Current suspended student count | Count where `student_status='Suspended'` and `is_deleted=false` | Student Management | Branch / consolidated |
-| KPI-SM-003 | Total Archived Students | Archived student count | Count where `student_status='Archived'` and `is_deleted=true` | Student Management | Branch / consolidated |
-| KPI-SM-004 | New Students Created Today | Student profiles created in current business day | Count where `created_at` is within today | Student Management | Branch / consolidated |
-| KPI-SM-005 | New Students Created MTD | New student profiles created month-to-date | Count where `created_at` in month-to-date window | Student Management | Branch / consolidated |
-| KPI-SM-006 | Student Growth Rate | Percentage change in new student creation between current and previous equivalent period | `((current_period_new - previous_period_new) / previous_period_new) * 100` with zero-safe handling | Student Management | Branch / consolidated |
-| KPI-SM-007 | Duplicate Review Pending Count | Open student records flagged for duplicate review | Count where `duplicate_review_required=true` and `is_deleted=false` | Student Management | Branch / consolidated |
-| KPI-SM-008 | Open Duplicate Cases | Number of unresolved duplicate cases | Count of `student_duplicate_cases` where `case_status in ('Open','UnderReview')` | Student Management | Branch / consolidated |
-| KPI-SM-009 | Duplicate Blocking Case Rate | Share of duplicate cases marked blocking | `blocking_cases / all_open_cases * 100` | Student Management | Branch / consolidated |
-| KPI-SM-010 | Merge Count in Period | Number of merge actions completed in period | Count of `student_merge_logs` in time window | Student Management | Branch / consolidated |
-| KPI-SM-011 | Archive Count in Period | Number of students archived in period | Count of archive events from status history or audit | Student Management | Branch / consolidated |
-| KPI-SM-012 | Restore Count in Period | Number of students restored in period | Count of restore events from status history or audit | Student Management | Branch / consolidated |
-| KPI-SM-013 | ID Card Issuance Coverage | Percentage of active students with issued ID cards | `active_students_with_id_card / total_active_students * 100` | Student Management | Branch / consolidated |
-| KPI-SM-014 | ID Card Reissue Count | Number of ID card reissue actions in period | Count of `student_id_card_history` where `event_type='Reissued'` in period | Student Management | Branch / consolidated |
-| KPI-SM-015 | Admission-Origin Student Share | Share of student creation by approved admission | `students_created_from_admission / students_created_total * 100` | Student Management | Branch / consolidated |
-| KPI-SM-016 | Direct Registration Share | Share of student creation by direct registration | `students_created_direct / students_created_total * 100` | Student Management | Branch / consolidated |
-| KPI-SM-017 | Corporate-Origin Student Share | Share of student creation from corporate participant conversion | `students_created_from_corporate / students_created_total * 100` | Student Management | Branch / consolidated |
-| KPI-SM-018 | Average Duplicate Resolution Time | Mean elapsed time from duplicate case creation to resolution | Average of `resolved_at - created_at` across resolved duplicate cases | Student Management | Branch / consolidated |
-| KPI-SM-019 | Export Activity Count | Number of export requests in period | Count of `student_export_logs` in period | Student Management | Branch / consolidated |
-| KPI-SM-020 | Sensitive Export Count | Number of exports including masked identity fields | Count where `included_masked_identity=true` | Student Management | Branch / consolidated |
-| KPI-SM-021 | Data Completeness Score | Percent of active students with required minimum contact and identity quality fields completed | `(students meeting completeness rule / total active students) * 100` | Student Management | Branch / consolidated |
-| KPI-SM-022 | Students Missing Contact Readiness | Count of active students missing email or phone policy minimums | Count by defined completeness rule failure | Student Management | Branch / consolidated |
-| KPI-SM-023 | Students Missing ID Documentation Link | Count of active students with no linked identity document summaries where policy requires them | Derived from document summary join | Student Management / Document reference | Branch / consolidated |
-| KPI-SM-024 | Students Linked to At Least One Enrollment | Active students who have at least one enrollment reference | Count distinct students with enrollment count > 0 | Student Management with Enrollment reference | Branch / consolidated |
-| KPI-SM-025 | Student Reuse Rate from Admission | Percentage of approved admission handoffs that reused existing students rather than creating new records | `reused_existing_from_admission / total_admission_to_student_actions * 100` | Student Management | Branch / consolidated |
+| KPI Code   | KPI Name                                   | Definition                                                                                               | Formula / Logic                                                                                    | Owner                                        | Scope                 |
+| ---------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------- | --------------------- |
+| KPI-SM-001 | Total Active Students                      | Current count of non-deleted student profiles in active state                                            | Count of `student_profiles` where `student_status='Active'` and `is_deleted=false`                 | Student Management                           | Branch / consolidated |
+| KPI-SM-002 | Total Suspended Students                   | Current suspended student count                                                                          | Count where `student_status='Suspended'` and `is_deleted=false`                                    | Student Management                           | Branch / consolidated |
+| KPI-SM-003 | Total Archived Students                    | Archived student count                                                                                   | Count where `student_status='Archived'` and `is_deleted=true`                                      | Student Management                           | Branch / consolidated |
+| KPI-SM-004 | New Students Created Today                 | Student profiles created in current business day                                                         | Count where `created_at` is within today                                                           | Student Management                           | Branch / consolidated |
+| KPI-SM-005 | New Students Created MTD                   | New student profiles created month-to-date                                                               | Count where `created_at` in month-to-date window                                                   | Student Management                           | Branch / consolidated |
+| KPI-SM-006 | Student Growth Rate                        | Percentage change in new student creation between current and previous equivalent period                 | `((current_period_new - previous_period_new) / previous_period_new) * 100` with zero-safe handling | Student Management                           | Branch / consolidated |
+| KPI-SM-007 | Duplicate Review Pending Count             | Open student records flagged for duplicate review                                                        | Count where `duplicate_review_required=true` and `is_deleted=false`                                | Student Management                           | Branch / consolidated |
+| KPI-SM-008 | Open Duplicate Cases                       | Number of unresolved duplicate cases                                                                     | Count of `student_duplicate_cases` where `case_status in ('Open','UnderReview')`                   | Student Management                           | Branch / consolidated |
+| KPI-SM-009 | Duplicate Blocking Case Rate               | Share of duplicate cases marked blocking                                                                 | `blocking_cases / all_open_cases * 100`                                                            | Student Management                           | Branch / consolidated |
+| KPI-SM-010 | Merge Count in Period                      | Number of merge actions completed in period                                                              | Count of `student_merge_logs` in time window                                                       | Student Management                           | Branch / consolidated |
+| KPI-SM-011 | Archive Count in Period                    | Number of students archived in period                                                                    | Count of archive events from status history or audit                                               | Student Management                           | Branch / consolidated |
+| KPI-SM-012 | Restore Count in Period                    | Number of students restored in period                                                                    | Count of restore events from status history or audit                                               | Student Management                           | Branch / consolidated |
+| KPI-SM-013 | ID Card Issuance Coverage                  | Percentage of active students with issued ID cards                                                       | `active_students_with_id_card / total_active_students * 100`                                       | Student Management                           | Branch / consolidated |
+| KPI-SM-014 | ID Card Reissue Count                      | Number of ID card reissue actions in period                                                              | Count of `student_id_card_history` where `event_type='Reissued'` in period                         | Student Management                           | Branch / consolidated |
+| KPI-SM-015 | Admission-Origin Student Share             | Share of student creation by approved admission                                                          | `students_created_from_admission / students_created_total * 100`                                   | Student Management                           | Branch / consolidated |
+| KPI-SM-016 | Direct Registration Share                  | Share of student creation by direct registration                                                         | `students_created_direct / students_created_total * 100`                                           | Student Management                           | Branch / consolidated |
+| KPI-SM-017 | Corporate-Origin Student Share             | Share of student creation from corporate participant conversion                                          | `students_created_from_corporate / students_created_total * 100`                                   | Student Management                           | Branch / consolidated |
+| KPI-SM-018 | Average Duplicate Resolution Time          | Mean elapsed time from duplicate case creation to resolution                                             | Average of `resolved_at - created_at` across resolved duplicate cases                              | Student Management                           | Branch / consolidated |
+| KPI-SM-019 | Export Activity Count                      | Number of export requests in period                                                                      | Count of `student_export_logs` in period                                                           | Student Management                           | Branch / consolidated |
+| KPI-SM-020 | Sensitive Export Count                     | Number of exports including masked identity fields                                                       | Count where `included_masked_identity=true`                                                        | Student Management                           | Branch / consolidated |
+| KPI-SM-021 | Data Completeness Score                    | Percent of active students with required minimum contact and identity quality fields completed           | `(students meeting completeness rule / total active students) * 100`                               | Student Management                           | Branch / consolidated |
+| KPI-SM-022 | Students Missing Contact Readiness         | Count of active students missing email or phone policy minimums                                          | Count by defined completeness rule failure                                                         | Student Management                           | Branch / consolidated |
+| KPI-SM-023 | Students Missing ID Documentation Link     | Count of active students with no linked identity document summaries where policy requires them           | Derived from document summary join                                                                 | Student Management / Document reference      | Branch / consolidated |
+| KPI-SM-024 | Students Linked to At Least One Enrollment | Active students who have at least one enrollment reference                                               | Count distinct students with enrollment count > 0                                                  | Student Management with Enrollment reference | Branch / consolidated |
+| KPI-SM-025 | Student Reuse Rate from Admission          | Percentage of approved admission handoffs that reused existing students rather than creating new records | `reused_existing_from_admission / total_admission_to_student_actions * 100`                        | Student Management                           | Branch / consolidated |
 
 ---
 
@@ -102,12 +107,12 @@ KPI formulas below use:
 
 These indicators may appear in student summary widgets but are **not owned by Student Management**.
 
-| KPI Code | KPI Name | Source Context | Definition |
-|---|---|---|---|
-| KPI-SM-R-001 | Active Enrollment Count | Admission & Enrollment | Current number of active enrollments linked to a student |
-| KPI-SM-R-002 | Pending Document Verification Count | Document Management | Student-linked documents pending verification |
+| KPI Code     | KPI Name                                    | Source Context                              | Definition                                                                 |
+| ------------ | ------------------------------------------- | ------------------------------------------- | -------------------------------------------------------------------------- |
+| KPI-SM-R-001 | Active Enrollment Count                     | Admission & Enrollment                      | Current number of active enrollments linked to a student                   |
+| KPI-SM-R-002 | Pending Document Verification Count         | Document Management                         | Student-linked documents pending verification                              |
 | KPI-SM-R-003 | Admission-to-Student Conversion Reuse Count | Admission & Enrollment + Student Management | Count of admissions handed to student module that reused existing profiles |
-| KPI-SM-R-004 | Student with Completion Records Count | Exam & Completion | Distinct student profiles linked to completion evaluation history |
+| KPI-SM-R-004 | Student with Completion Records Count       | Exam & Completion                           | Distinct student profiles linked to completion evaluation history          |
 
 Student Management must not compute finance KPIs such as collection efficiency and must not compute seat utilization KPIs because those belong to Finance and Training Delivery contexts respectively.
 
@@ -118,19 +123,23 @@ Student Management must not compute finance KPIs such as collection efficiency a
 ## 4.1 Admin Dashboard – Student Management Home
 
 ### Dashboard Code
+
 `dashboard.studentManagement`
 
 ### Required Permission
+
 - Menu: `menu.studentManagement`
 - Dashboard read: use module read/report permissions
 - Widget visibility further gated by specific report/action permissions
 
 ### Layout Style
+
 Dense 12-column grid, card-based, data-rich operations dashboard.
 
 ---
 
 ### Widget W-SM-001 — Active Students Summary Card
+
 - **Type:** metric summary
 - **Size:** 3 columns wide
 - **KPI:** `KPI-SM-001`
@@ -138,12 +147,14 @@ Dense 12-column grid, card-based, data-rich operations dashboard.
 - **Drilldown:** opens Student Master List filtered to `student_status=Active`
 
 ### Widget W-SM-002 — New Students Today
+
 - **Type:** metric summary
 - **Size:** 3 columns
 - **KPI:** `KPI-SM-004`
 - **Visible To:** `student.read`
 
 ### Widget W-SM-003 — Duplicate Review Pending
+
 - **Type:** metric summary with alert styling
 - **Size:** 3 columns
 - **KPI:** `KPI-SM-007`
@@ -151,12 +162,14 @@ Dense 12-column grid, card-based, data-rich operations dashboard.
 - **Drilldown:** Duplicate Workbench filtered to open cases
 
 ### Widget W-SM-004 — ID Card Coverage
+
 - **Type:** metric summary with percentage
 - **Size:** 3 columns
 - **KPI:** `KPI-SM-013`
 - **Visible To:** `student.read`
 
 ### Widget W-SM-005 — Student Creation Trend
+
 - **Type:** time-series line chart
 - **Size:** 6 columns
 - **Measures:** daily/weekly student creation counts
@@ -165,6 +178,7 @@ Dense 12-column grid, card-based, data-rich operations dashboard.
 - **Filters:** time window, branch, creation source
 
 ### Widget W-SM-006 — Creation Source Distribution
+
 - **Type:** donut / stacked bar chart
 - **Size:** 6 columns
 - **Measures:** student count by `creation_source`
@@ -172,6 +186,7 @@ Dense 12-column grid, card-based, data-rich operations dashboard.
 - **Categories:** ApprovedAdmission, DirectRegistration, CorporateConversion, WalkInHandoff, OnlineHandoff
 
 ### Widget W-SM-007 — Branch-wise Active Students
+
 - **Type:** horizontal bar chart
 - **Size:** 6 columns
 - **KPI:** active students by branch
@@ -179,12 +194,14 @@ Dense 12-column grid, card-based, data-rich operations dashboard.
 - **Note:** visible only when caller can see multiple branches
 
 ### Widget W-SM-008 — Duplicate Case Backlog
+
 - **Type:** stacked bar chart
 - **Size:** 6 columns
 - **Measures:** open cases by risk level and branch
 - **Visible To:** `student.duplicate.read`
 
 ### Widget W-SM-009 — Recent Student Activity Feed
+
 - **Type:** event table widget
 - **Size:** 12 columns
 - **Rows:** latest student create, update, archive, restore, merge, ID card events
@@ -192,18 +209,21 @@ Dense 12-column grid, card-based, data-rich operations dashboard.
 - **Columns:** event timestamp, event type, student number, student name, branch, actor, summary
 
 ### Widget W-SM-010 — Duplicate Resolution SLA Widget
+
 - **Type:** metric + trend
 - **Size:** 4 columns
 - **KPI:** average duplicate resolution time
 - **Visible To:** `student.duplicate.read`
 
 ### Widget W-SM-011 — Merge History Snapshot
+
 - **Type:** compact table widget
 - **Size:** 4 columns
 - **Visible To:** `report.studentMergeHistory`
 - **Columns:** merged at, survivor student, source student, merged by
 
 ### Widget W-SM-012 — Data Completeness Heatmap
+
 - **Type:** matrix / progress table
 - **Size:** 4 columns
 - **Visible To:** `report.studentMaster`
@@ -219,13 +239,13 @@ Dense 12-column grid, card-based, data-rich operations dashboard.
 
 These widgets can be embedded on a Branch Admin or Branch Manager dashboard.
 
-| Widget Code | Widget Name | Type | Permission | Scope |
-|---|---|---|---|---|
-| W-SM-BR-001 | Branch Active Students | Metric | `student.read` | Active branch only |
-| W-SM-BR-002 | Branch New Students MTD | Metric | `student.read` | Active branch only |
-| W-SM-BR-003 | Branch Duplicate Backlog | Metric | `student.duplicate.read` | Active branch only |
-| W-SM-BR-004 | Branch ID Card Issuance Pending | Metric | `student.read` | Active branch only |
-| W-SM-BR-005 | Branch Student Activity Trend | Line chart | `report.studentMaster` | Active branch only |
+| Widget Code | Widget Name                            | Type         | Permission                    | Scope              |
+| ----------- | -------------------------------------- | ------------ | ----------------------------- | ------------------ |
+| W-SM-BR-001 | Branch Active Students                 | Metric       | `student.read`                | Active branch only |
+| W-SM-BR-002 | Branch New Students MTD                | Metric       | `student.read`                | Active branch only |
+| W-SM-BR-003 | Branch Duplicate Backlog               | Metric       | `student.duplicate.read`      | Active branch only |
+| W-SM-BR-004 | Branch ID Card Issuance Pending        | Metric       | `student.read`                | Active branch only |
+| W-SM-BR-005 | Branch Student Activity Trend          | Line chart   | `report.studentMaster`        | Active branch only |
 | W-SM-BR-006 | Branch Student Archive / Restore Trend | Column chart | `report.studentStatusHistory` | Active branch only |
 
 ---
@@ -235,17 +255,20 @@ These widgets can be embedded on a Branch Admin or Branch Manager dashboard.
 Student portal analytics are intentionally minimal and self-scoped.
 
 ### Widget W-SM-STU-001 — My Profile Summary
+
 - **Type:** summary card
 - **Permission:** `student.portal.self.read`
 - **Fields:** student number, status, joined date, ID card issued flag
 
 ### Widget W-SM-STU-002 — My Linked Enrollments Count
+
 - **Type:** metric card
 - **Permission:** `student.portal.self.read`
 - **Source:** referenced from Enrollment context
 - **Scope:** self only
 
 ### Widget W-SM-STU-003 — My Documents Summary
+
 - **Type:** table summary
 - **Permission:** `student.portal.self.read`
 - **Source:** Document Management
@@ -260,11 +283,13 @@ Student portal must not display branch-wide or institute-wide student analytics.
 Trainer views are roster-context only.
 
 ### Widget W-SM-TRN-001 — Batch Student Snapshot
+
 - **Type:** compact summary
 - **Permission:** `student.trainer.roster.read`
 - **Data:** number of students in current roster, suspended records in roster, duplicate-review-pending alerts in roster
 
 ### Widget W-SM-TRN-002 — Student Quick View Drawer
+
 - **Type:** read-only detail widget
 - **Permission:** `student.trainer.roster.read`
 - **Scope:** only students in the current trainer-visible batch roster
@@ -275,23 +300,23 @@ Trainer views are roster-context only.
 
 ## 5.1 Report Inventory
 
-| Report Code | Report Name | Purpose | Primary Users |
-|---|---|---|---|
-| RPT-SM-001 | Student Master Register | Full student listing with branch-safe filters | Student Ops, Branch Admin, Reporting User |
-| RPT-SM-002 | New Student Creation Report | Track creation volume over time | Branch Manager, Reporting User |
-| RPT-SM-003 | Student Status History Report | Status changes and lifecycle actions | Branch Manager, Compliance Officer |
-| RPT-SM-004 | Duplicate Case Backlog Report | Monitor unresolved duplicate workload | Student Ops, Compliance Officer |
-| RPT-SM-005 | Duplicate Resolution Performance Report | Measure duplicate case handling efficiency | Compliance Officer, Reporting User |
-| RPT-SM-006 | Student Merge History Report | Review all merge actions and reassignments | Compliance Officer, Branch Manager |
-| RPT-SM-007 | ID Card Issuance Status Report | Track issued, pending, and reissued cards | Student Ops, Branch Admin |
-| RPT-SM-008 | Creation Source Distribution Report | Understand student source mix | Branch Manager, Reporting User |
-| RPT-SM-009 | Student Data Completeness Report | Identify incomplete student master records | Student Ops, Compliance Officer |
-| RPT-SM-010 | Student Export Audit Report | Review export activity and sensitive export usage | Compliance Officer, Reporting User |
-| RPT-SM-011 | Corporate-Origin Student Register | List students created from corporate participants | Corporate Coordinator, Reporting User |
-| RPT-SM-012 | Admission Handoff to Student Reuse Report | Measure student reuse vs new create from admissions | Counselor Lead, Reporting User |
-| RPT-SM-013 | Archived and Restored Students Report | Review archival and restoration actions | Compliance Officer, Branch Manager |
-| RPT-SM-014 | Students Missing Contact Readiness Report | Find students missing required communication/contact readiness | Student Ops |
-| RPT-SM-015 | Students Without ID Card Report | Find active students without issued ID cards | Student Ops, Branch Admin |
+| Report Code | Report Name                               | Purpose                                                        | Primary Users                             |
+| ----------- | ----------------------------------------- | -------------------------------------------------------------- | ----------------------------------------- |
+| RPT-SM-001  | Student Master Register                   | Full student listing with branch-safe filters                  | Student Ops, Branch Admin, Reporting User |
+| RPT-SM-002  | New Student Creation Report               | Track creation volume over time                                | Branch Manager, Reporting User            |
+| RPT-SM-003  | Student Status History Report             | Status changes and lifecycle actions                           | Branch Manager, Compliance Officer        |
+| RPT-SM-004  | Duplicate Case Backlog Report             | Monitor unresolved duplicate workload                          | Student Ops, Compliance Officer           |
+| RPT-SM-005  | Duplicate Resolution Performance Report   | Measure duplicate case handling efficiency                     | Compliance Officer, Reporting User        |
+| RPT-SM-006  | Student Merge History Report              | Review all merge actions and reassignments                     | Compliance Officer, Branch Manager        |
+| RPT-SM-007  | ID Card Issuance Status Report            | Track issued, pending, and reissued cards                      | Student Ops, Branch Admin                 |
+| RPT-SM-008  | Creation Source Distribution Report       | Understand student source mix                                  | Branch Manager, Reporting User            |
+| RPT-SM-009  | Student Data Completeness Report          | Identify incomplete student master records                     | Student Ops, Compliance Officer           |
+| RPT-SM-010  | Student Export Audit Report               | Review export activity and sensitive export usage              | Compliance Officer, Reporting User        |
+| RPT-SM-011  | Corporate-Origin Student Register         | List students created from corporate participants              | Corporate Coordinator, Reporting User     |
+| RPT-SM-012  | Admission Handoff to Student Reuse Report | Measure student reuse vs new create from admissions            | Counselor Lead, Reporting User            |
+| RPT-SM-013  | Archived and Restored Students Report     | Review archival and restoration actions                        | Compliance Officer, Branch Manager        |
+| RPT-SM-014  | Students Missing Contact Readiness Report | Find students missing required communication/contact readiness | Student Ops                               |
+| RPT-SM-015  | Students Without ID Card Report           | Find active students without issued ID cards                   | Student Ops, Branch Admin                 |
 
 ---
 
@@ -303,10 +328,12 @@ Trainer views are roster-context only.
 Master operational report of students in scope.
 
 **Permissions**
+
 - `report.studentMaster`
 - `student.read`
 
 **Filters**
+
 - branch
 - consolidated view toggle
 - student status
@@ -321,6 +348,7 @@ Master operational report of students in scope.
 - global search
 
 **Columns**
+
 1. Student Number
 2. Full Name (localized)
 3. Primary Phone
@@ -337,10 +365,12 @@ Master operational report of students in scope.
 14. Updated At
 
 **Sorting**
+
 - default: `updatedAt desc`
 - supported: student number, name, branch, status, joined date, updated at
 
 **Exports**
+
 - CSV, XLSX, PDF
 - PDF should be formatted as paginated register only for manageable result sizes
 
@@ -352,6 +382,7 @@ Master operational report of students in scope.
 Track new students created across time windows.
 
 **Filters**
+
 - date range
 - branch
 - creation source
@@ -360,6 +391,7 @@ Track new students created across time windows.
 - direct vs admission vs corporate origin
 
 **Columns**
+
 1. Creation Date
 2. Student Number
 3. Student Name
@@ -369,11 +401,13 @@ Track new students created across time windows.
 7. Created By
 
 **Chart Companion**
+
 - line chart: daily new students
 - bar chart: new students by branch
 - donut: source mix
 
 **Exports**
+
 - CSV, XLSX, PDF
 
 ---
@@ -384,10 +418,12 @@ Track new students created across time windows.
 Audit-friendly record of status changes.
 
 **Permissions**
+
 - `report.studentStatusHistory`
 - `student.audit.read`
 
 **Filters**
+
 - date range
 - branch
 - old status
@@ -397,6 +433,7 @@ Audit-friendly record of status changes.
 - student name
 
 **Columns**
+
 1. Event Timestamp
 2. Student Number
 3. Student Name
@@ -409,9 +446,11 @@ Audit-friendly record of status changes.
 10. Branch
 
 **Sorting**
+
 - default: event timestamp desc
 
 **Exports**
+
 - CSV, XLSX, PDF
 
 ---
@@ -422,10 +461,12 @@ Audit-friendly record of status changes.
 Identify unresolved duplicate workload.
 
 **Permissions**
+
 - `report.studentDuplicateCases`
 - `student.duplicate.read`
 
 **Filters**
+
 - branch
 - consolidated
 - case status
@@ -436,6 +477,7 @@ Identify unresolved duplicate workload.
 - age bucket
 
 **Columns**
+
 1. Duplicate Case Number
 2. Branch
 3. Source Type
@@ -448,9 +490,11 @@ Identify unresolved duplicate workload.
 10. Assigned / Resolved By
 
 **Sorting**
+
 - default: risk desc, createdAt asc
 
 **Exports**
+
 - CSV, XLSX, PDF
 
 ---
@@ -461,9 +505,11 @@ Identify unresolved duplicate workload.
 Measure resolution performance and SLA.
 
 **Permissions**
+
 - `report.studentDuplicateCases`
 
 **Filters**
+
 - branch
 - date range
 - risk level
@@ -471,6 +517,7 @@ Measure resolution performance and SLA.
 - source type
 
 **Columns**
+
 1. Duplicate Case Number
 2. Risk Level
 3. Created At
@@ -481,12 +528,14 @@ Measure resolution performance and SLA.
 8. Branch
 
 **KPIs Embedded**
+
 - average resolution time
 - median resolution time
 - oldest open case
 - blocking case count
 
 **Exports**
+
 - CSV, XLSX, PDF
 
 ---
@@ -497,10 +546,12 @@ Measure resolution performance and SLA.
 Review merge operations and data lineage impact.
 
 **Permissions**
+
 - `report.studentMergeHistory`
 - `student.merge` or `student.audit.read`
 
 **Filters**
+
 - branch
 - date range
 - merged by
@@ -509,6 +560,7 @@ Review merge operations and data lineage impact.
 - duplicate case number
 
 **Columns**
+
 1. Merge Timestamp
 2. Merge Log ID
 3. Survivor Student Number
@@ -522,6 +574,7 @@ Review merge operations and data lineage impact.
 11. Merge Reason
 
 **Exports**
+
 - CSV, XLSX, PDF
 
 ---
@@ -532,10 +585,12 @@ Review merge operations and data lineage impact.
 Track current ID card issuance and reissue actions.
 
 **Permissions**
+
 - `student.read`
 - `student.idcard.manage` or reporting equivalent
 
 **Filters**
+
 - branch
 - issued state
 - issue date range
@@ -544,6 +599,7 @@ Track current ID card issuance and reissue actions.
 - creation source
 
 **Columns**
+
 1. Student Number
 2. Student Name
 3. Branch
@@ -555,6 +611,7 @@ Track current ID card issuance and reissue actions.
 9. Last Updated By
 
 **Exports**
+
 - CSV, XLSX, PDF
 
 ---
@@ -565,21 +622,25 @@ Track current ID card issuance and reissue actions.
 Understand the operational origin of students.
 
 **Filters**
+
 - date range
 - branch
 - nationality
 - student status
 
 **Columns**
+
 1. Creation Source
 2. Student Count
 3. Percentage Share
 
 **Charts**
+
 - donut chart
 - branch comparison stacked bar
 
 **Exports**
+
 - CSV, XLSX, PDF
 
 ---
@@ -591,6 +652,7 @@ Identify records needing cleanup.
 
 **Completeness Rules**
 A record is considered complete if:
+
 - English name present
 - nationality present
 - primary phone present
@@ -600,6 +662,7 @@ A record is considered complete if:
 - optional extended rule: ID card issued for active students where policy requires it
 
 **Filters**
+
 - branch
 - completeness status
 - missing field type
@@ -607,6 +670,7 @@ A record is considered complete if:
 - student status
 
 **Columns**
+
 1. Student Number
 2. Student Name
 3. Branch
@@ -619,6 +683,7 @@ A record is considered complete if:
 10. Updated At
 
 **Exports**
+
 - CSV, XLSX, PDF
 
 ---
@@ -629,10 +694,12 @@ A record is considered complete if:
 Track exports for compliance and privacy monitoring.
 
 **Permissions**
+
 - `report.studentExportHistory`
 - `student.audit.read`
 
 **Filters**
+
 - date range
 - branch
 - requested by
@@ -641,6 +708,7 @@ Track exports for compliance and privacy monitoring.
 - format
 
 **Columns**
+
 1. Export Log ID
 2. Requested At
 3. Requested By
@@ -653,6 +721,7 @@ Track exports for compliance and privacy monitoring.
 10. Export Status
 
 **Exports**
+
 - CSV, XLSX, PDF
 
 ---
@@ -663,10 +732,12 @@ Track exports for compliance and privacy monitoring.
 List students created from corporate participants.
 
 **Permissions**
+
 - `report.studentCorporateOriginSummary`
 - `student.read`
 
 **Filters**
+
 - branch
 - date range
 - corporate account
@@ -674,6 +745,7 @@ List students created from corporate participants.
 - student status
 
 **Columns**
+
 1. Student Number
 2. Student Name
 3. Branch
@@ -684,6 +756,7 @@ List students created from corporate participants.
 8. Linked Enrollment Count
 
 **Exports**
+
 - CSV, XLSX, PDF
 
 ---
@@ -694,16 +767,19 @@ List students created from corporate participants.
 Measure reuse of existing student profiles when admissions are handed off.
 
 **Permissions**
+
 - `report.studentMaster`
 - `student.read`
 
 **Filters**
+
 - date range
 - branch
 - admission status
 - reused existing vs created new
 
 **Columns**
+
 1. Admission Number
 2. Admission Branch
 3. Person Name
@@ -713,6 +789,7 @@ Measure reuse of existing student profiles when admissions are handed off.
 7. Performed By
 
 **Exports**
+
 - CSV, XLSX, PDF
 
 ---
@@ -723,6 +800,7 @@ Measure reuse of existing student profiles when admissions are handed off.
 Review archival and restore actions.
 
 **Filters**
+
 - action type
 - date range
 - branch
@@ -730,6 +808,7 @@ Review archival and restore actions.
 - student status before/after
 
 **Columns**
+
 1. Event Type
 2. Event Timestamp
 3. Student Number
@@ -741,6 +820,7 @@ Review archival and restore actions.
 9. Performed By
 
 **Exports**
+
 - CSV, XLSX, PDF
 
 ---
@@ -751,6 +831,7 @@ Review archival and restore actions.
 Surface records not ready for communication or operational follow-up.
 
 **Filters**
+
 - branch
 - student status
 - creation source
@@ -758,6 +839,7 @@ Surface records not ready for communication or operational follow-up.
 - missing email
 
 **Columns**
+
 1. Student Number
 2. Student Name
 3. Branch
@@ -767,6 +849,7 @@ Surface records not ready for communication or operational follow-up.
 7. Updated At
 
 **Exports**
+
 - CSV, XLSX, PDF
 
 ---
@@ -777,12 +860,14 @@ Surface records not ready for communication or operational follow-up.
 Support ID card issuance follow-up.
 
 **Filters**
+
 - branch
 - student status
 - joined date range
 - creation source
 
 **Columns**
+
 1. Student Number
 2. Student Name
 3. Branch
@@ -792,6 +877,7 @@ Support ID card issuance follow-up.
 7. Last Updated At
 
 **Exports**
+
 - CSV, XLSX, PDF
 
 ---
@@ -799,14 +885,18 @@ Support ID card issuance follow-up.
 ## 6. Portal-Specific Reporting Surfaces
 
 ## 6.1 Admin Portal
+
 Admin portal exposes:
+
 - dashboard widgets
 - all operational reports
 - export actions
 - drilldowns to filtered student list and duplicate workbench
 
 ## 6.2 Student Portal
+
 Student portal exposes only:
+
 - self summary cards
 - self linked-enrollment count
 - self document status summary
@@ -815,7 +905,9 @@ Student portal exposes only:
 - no branch comparisons
 
 ## 6.3 Trainer Portal
+
 Trainer portal exposes only:
+
 - batch roster student quick insights
 - no branch-wide reporting
 - no student master exports
@@ -825,17 +917,17 @@ Trainer portal exposes only:
 
 ## 7. Permission Scope by Dashboard / Report
 
-| Artifact | Required Permissions | Branch Scope |
-|---|---|---|
-| Student Management Home Dashboard | `menu.studentManagement`, `student.read` | Active / assigned / consolidated by policy |
-| Duplicate Backlog Widgets | `student.duplicate.read` | Assigned / consolidated by policy |
-| Merge Snapshot Widget | `report.studentMergeHistory` | Assigned / consolidated by policy |
-| Student Master Register | `report.studentMaster`, `student.read` | Assigned / consolidated by policy |
-| Status History Report | `report.studentStatusHistory`, `student.audit.read` | Assigned / consolidated by policy |
-| Duplicate Reports | `report.studentDuplicateCases`, `student.duplicate.read` | Assigned / consolidated by policy |
-| Export Audit Report | `report.studentExportHistory`, `student.audit.read` | Assigned / consolidated by policy |
-| Student Portal Self Widgets | `student.portal.self.read` | Self only |
-| Trainer Roster Snapshot | `student.trainer.roster.read` | Roster context only |
+| Artifact                          | Required Permissions                                     | Branch Scope                               |
+| --------------------------------- | -------------------------------------------------------- | ------------------------------------------ |
+| Student Management Home Dashboard | `menu.studentManagement`, `student.read`                 | Active / assigned / consolidated by policy |
+| Duplicate Backlog Widgets         | `student.duplicate.read`                                 | Assigned / consolidated by policy          |
+| Merge Snapshot Widget             | `report.studentMergeHistory`                             | Assigned / consolidated by policy          |
+| Student Master Register           | `report.studentMaster`, `student.read`                   | Assigned / consolidated by policy          |
+| Status History Report             | `report.studentStatusHistory`, `student.audit.read`      | Assigned / consolidated by policy          |
+| Duplicate Reports                 | `report.studentDuplicateCases`, `student.duplicate.read` | Assigned / consolidated by policy          |
+| Export Audit Report               | `report.studentExportHistory`, `student.audit.read`      | Assigned / consolidated by policy          |
+| Student Portal Self Widgets       | `student.portal.self.read`                               | Self only                                  |
+| Trainer Roster Snapshot           | `student.trainer.roster.read`                            | Roster context only                        |
 
 ---
 
@@ -847,6 +939,7 @@ Operational list pages can query transactional tables directly with indexed pred
 Heavy dashboards and analytical reports should use **read models** or **database views/materialized views** to avoid repeated expensive joins across contexts.
 
 Recommended approach:
+
 - Near-real-time SQL views for simple counts and joined summaries.
 - Materialized views refreshed on schedule or event-driven for heavier branch/date aggregations.
 - Dedicated reporting schemas permitted inside the same modular monolith database if governance prefers separation.
@@ -861,12 +954,14 @@ Recommended approach:
 Fast list/detail/report projection of student master data.
 
 **Source Tables**
+
 - `student_profiles`
 - shared person projection
 - branch projection
 - optional admission/enrollment/document summary projections
 
 **Suggested Columns**
+
 - student_id
 - student_number
 - person_id
@@ -895,6 +990,7 @@ Fast list/detail/report projection of student master data.
 - is_deleted
 
 **Use Cases**
+
 - student list page
 - student master register
 - quick lookup
@@ -908,9 +1004,11 @@ Fast list/detail/report projection of student master data.
 Daily student creation reporting.
 
 **Grain**
+
 - one row per branch, date, creation source
 
 **Columns**
+
 - business_date
 - branch_id
 - creation_source
@@ -920,6 +1018,7 @@ Daily student creation reporting.
 - direct_registration_count
 
 **Use Cases**
+
 - creation trend widget
 - new student report
 - creation source charts
@@ -933,9 +1032,11 @@ Daily student creation reporting.
 Status movement reporting.
 
 **Grain**
+
 - one row per branch, date, action/status movement
 
 **Columns**
+
 - business_date
 - branch_id
 - new_active_count
@@ -946,6 +1047,7 @@ Status movement reporting.
 - status_change_total
 
 **Use Cases**
+
 - status history widgets
 - archive/restore trend report
 - branch summary dashboard
@@ -958,6 +1060,7 @@ Status movement reporting.
 Fast duplicate backlog and SLA reporting.
 
 **Columns**
+
 - duplicate_case_id
 - duplicate_case_number
 - branch_id
@@ -973,6 +1076,7 @@ Fast duplicate backlog and SLA reporting.
 - blocking_flag
 
 **Use Cases**
+
 - duplicate backlog widget
 - duplicate performance report
 - compliance dashboards
@@ -985,6 +1089,7 @@ Fast duplicate backlog and SLA reporting.
 Merge audit and analytics projection.
 
 **Columns**
+
 - merge_log_id
 - branch_id
 - merged_at
@@ -1000,6 +1105,7 @@ Merge audit and analytics projection.
 - reassigned_documents_count
 
 **Use Cases**
+
 - merge history report
 - merge snapshot widget
 - compliance audit review
@@ -1012,6 +1118,7 @@ Merge audit and analytics projection.
 ID card status and reissue analytics.
 
 **Columns**
+
 - student_id
 - student_number
 - branch_id
@@ -1024,6 +1131,7 @@ ID card status and reissue analytics.
 - issue_count_lifetime
 
 **Use Cases**
+
 - ID card issuance report
 - ID card coverage KPI
 - reissue count KPI
@@ -1036,6 +1144,7 @@ ID card status and reissue analytics.
 Support data quality reporting.
 
 **Columns**
+
 - student_id
 - branch_id
 - student_status
@@ -1048,6 +1157,7 @@ Support data quality reporting.
 - missing_field_count
 
 **Use Cases**
+
 - completeness dashboard
 - missing contact readiness report
 - students without ID card report
@@ -1060,6 +1170,7 @@ Support data quality reporting.
 Track export behavior and compliance.
 
 **Columns**
+
 - export_log_id
 - branch_id
 - requested_by
@@ -1071,6 +1182,7 @@ Track export behavior and compliance.
 - exported_at
 
 **Use Cases**
+
 - export audit report
 - sensitive export KPI
 - compliance monitoring
@@ -1080,6 +1192,7 @@ Track export behavior and compliance.
 ## 8.3 Materialized View Refresh Guidance
 
 Where materialized views are used:
+
 - `vw_student_creation_daily_fact_mv` refresh every 15 minutes
 - `vw_student_status_daily_fact_mv` refresh every 15 minutes
 - `vw_student_duplicate_case_fact_mv` refresh every 5 minutes
@@ -1088,6 +1201,7 @@ Where materialized views are used:
 - `vw_student_export_audit_fact_mv` refresh every 15 minutes
 
 If event-driven projection refresh is implemented, refresh should be triggered by:
+
 - `StudentProfileCreated`
 - `StudentStatusChanged`
 - `StudentArchived`
@@ -1118,6 +1232,7 @@ If event-driven projection refresh is implemented, refresh should be triggered b
 ## 10. Analytics Use Cases
 
 ## 10.1 Operational Analytics
+
 - Which branch is creating the most new students?
 - Which creation source is growing fastest?
 - Which branch has the highest duplicate backlog?
@@ -1125,12 +1240,14 @@ If event-driven projection refresh is implemented, refresh should be triggered b
 - Which operators create the most duplicate-review cases?
 
 ## 10.2 Compliance Analytics
+
 - How many sensitive exports were generated this month?
 - How many merges occurred by branch and by actor?
 - What is the average time to resolve blocking duplicate cases?
 - How many archived students were later restored?
 
 ## 10.3 Data Quality Analytics
+
 - What percentage of active students meet minimum completeness standards?
 - Which branches have the highest missing-phone or missing-email rates?
 - How many active students remain without ID cards?

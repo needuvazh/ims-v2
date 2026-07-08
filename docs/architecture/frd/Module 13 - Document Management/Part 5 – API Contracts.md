@@ -75,9 +75,7 @@ For collection endpoints:
     "code": "DOCUMENT_INVALID_STATE_TRANSITION",
     "message": "The document cannot be approved from its current state.",
     "fieldErrors": {
-      "verificationStatus": [
-        "Expected PendingVerification but found Uploaded."
-      ]
+      "verificationStatus": ["Expected PendingVerification but found Uploaded."]
     },
     "details": {
       "currentStatus": "Uploaded",
@@ -146,19 +144,19 @@ rather than treating the Person record as globally visible.
 
 Unless the actual Prisma schema or approved configuration is stricter:
 
-| Field | Contract rule |
-|---|---|
-| UUID identifiers | Valid repository-standard UUID/CUID format; examples use UUID |
-| `fileName` | 1–255 characters after normalization |
-| `documentType` | Required active configured value or schema-valid scalar |
-| `issueDate` | Optional `YYYY-MM-DD` |
-| `expiryDate` | Optional `YYYY-MM-DD`; must be on/after `issueDate` when both supplied |
-| `remarks` | Trimmed; maximum 2,000 characters for verification remarks |
-| `page` | Integer, minimum 1, default 1 |
-| `pageSize` | Integer 1–100, default 25 |
-| sort | Allow-list only |
-| date ranges | `from <= to` |
-| file | Allowed MIME type and size limits from server configuration; client metadata is not authoritative |
+| Field            | Contract rule                                                                                     |
+| ---------------- | ------------------------------------------------------------------------------------------------- |
+| UUID identifiers | Valid repository-standard UUID/CUID format; examples use UUID                                     |
+| `fileName`       | 1–255 characters after normalization                                                              |
+| `documentType`   | Required active configured value or schema-valid scalar                                           |
+| `issueDate`      | Optional `YYYY-MM-DD`                                                                             |
+| `expiryDate`     | Optional `YYYY-MM-DD`; must be on/after `issueDate` when both supplied                            |
+| `remarks`        | Trimmed; maximum 2,000 characters for verification remarks                                        |
+| `page`           | Integer, minimum 1, default 1                                                                     |
+| `pageSize`       | Integer 1–100, default 25                                                                         |
+| sort             | Allow-list only                                                                                   |
+| date ranges      | `from <= to`                                                                                      |
+| file             | Allowed MIME type and size limits from server configuration; client metadata is not authoritative |
 
 ---
 
@@ -166,25 +164,25 @@ Unless the actual Prisma schema or approved configuration is stricter:
 
 ## 3.1 Current Admin/API surface
 
-| ID | Method | Route / Action | Purpose | Primary Permission |
-|---|---|---|---|---|
-| API-DOC-001 | POST | `/api/documents/upload-intent` | Validate owner/type/scope and prepare controlled Blob upload | `document.create` |
-| API-DOC-002 | POST | `/api/documents` | Register completed Blob upload and create Document metadata | `document.create` |
-| API-DOC-003 | GET | `/api/documents` | List/search/filter accessible documents | `document.read` |
-| API-DOC-004 | GET | `/api/documents/{documentId}` | Read accessible document detail | `document.read` |
-| API-DOC-005 | PATCH | `/api/documents/{documentId}` | Update permitted metadata | `document.update` |
-| API-DOC-006 | POST | `/api/documents/{documentId}/submit-verification` | Transition Uploaded to PendingVerification | `document.verify.submit` |
-| API-DOC-007 | GET | `/api/documents/verification-queue` | List accessible PendingVerification items | `document.verify.read` |
-| API-DOC-008 | POST | `/api/documents/{documentId}/approve` | Approve pending document and append verification history | `document.verify.approve` |
-| API-DOC-009 | POST | `/api/documents/{documentId}/reject` | Reject pending document and append verification history | `document.verify.reject` |
-| API-DOC-010 | GET | `/api/documents/{documentId}/history` | Read immutable verification history and permitted audit references | `document.history.read` |
-| API-DOC-011 | POST | `/api/documents/{documentId}/file-access` | Issue controlled short-lived file access response | `document.file.read` |
-| API-DOC-012 | GET | `/api/documents/expiry` | List expired/expiring documents in scope | `document.expiry.read` |
-| API-DOC-013 | DELETE | `/api/documents/{documentId}` | Soft-retire document; never hard delete | `document.retire` |
-| API-DOC-014 | GET | `/api/documents/operations/reconciliation` | List operational Blob/database inconsistencies | `document.operations.reconcile` |
-| API-DOC-015 | POST | `/api/documents/operations/reconciliation/{itemId}/retry` | Retry approved reconciliation action | `document.operations.reconcile` |
-| API-DOC-016 | GET | `/api/document-types` | Resolve active document types for UI selection | permission inherited from calling use case; Configuration-owned read boundary |
-| API-DOC-017 | GET | `/api/document-owners/search` | Search valid owners for association using cross-context read adapters | `document.create` or `document.update` |
+| ID          | Method | Route / Action                                            | Purpose                                                               | Primary Permission                                                            |
+| ----------- | ------ | --------------------------------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| API-DOC-001 | POST   | `/api/documents/upload-intent`                            | Validate owner/type/scope and prepare controlled Blob upload          | `document.create`                                                             |
+| API-DOC-002 | POST   | `/api/documents`                                          | Register completed Blob upload and create Document metadata           | `document.create`                                                             |
+| API-DOC-003 | GET    | `/api/documents`                                          | List/search/filter accessible documents                               | `document.read`                                                               |
+| API-DOC-004 | GET    | `/api/documents/{documentId}`                             | Read accessible document detail                                       | `document.read`                                                               |
+| API-DOC-005 | PATCH  | `/api/documents/{documentId}`                             | Update permitted metadata                                             | `document.update`                                                             |
+| API-DOC-006 | POST   | `/api/documents/{documentId}/submit-verification`         | Transition Uploaded to PendingVerification                            | `document.verify.submit`                                                      |
+| API-DOC-007 | GET    | `/api/documents/verification-queue`                       | List accessible PendingVerification items                             | `document.verify.read`                                                        |
+| API-DOC-008 | POST   | `/api/documents/{documentId}/approve`                     | Approve pending document and append verification history              | `document.verify.approve`                                                     |
+| API-DOC-009 | POST   | `/api/documents/{documentId}/reject`                      | Reject pending document and append verification history               | `document.verify.reject`                                                      |
+| API-DOC-010 | GET    | `/api/documents/{documentId}/history`                     | Read immutable verification history and permitted audit references    | `document.history.read`                                                       |
+| API-DOC-011 | POST   | `/api/documents/{documentId}/file-access`                 | Issue controlled short-lived file access response                     | `document.file.read`                                                          |
+| API-DOC-012 | GET    | `/api/documents/expiry`                                   | List expired/expiring documents in scope                              | `document.expiry.read`                                                        |
+| API-DOC-013 | DELETE | `/api/documents/{documentId}`                             | Soft-retire document; never hard delete                               | `document.retire`                                                             |
+| API-DOC-014 | GET    | `/api/documents/operations/reconciliation`                | List operational Blob/database inconsistencies                        | `document.operations.reconcile`                                               |
+| API-DOC-015 | POST   | `/api/documents/operations/reconciliation/{itemId}/retry` | Retry approved reconciliation action                                  | `document.operations.reconcile`                                               |
+| API-DOC-016 | GET    | `/api/document-types`                                     | Resolve active document types for UI selection                        | permission inherited from calling use case; Configuration-owned read boundary |
+| API-DOC-017 | GET    | `/api/document-owners/search`                             | Search valid owners for association using cross-context read adapters | `document.create` or `document.update`                                        |
 
 ### 3.1.1 Server Action mapping
 
@@ -210,18 +208,14 @@ The Server Action contract must preserve the same authentication, permission, br
 ## 4.1 Enumerations
 
 ```ts
-type DocumentOwnerType =
-  | "Student"
-  | "Trainer"
-  | "Corporate"
-  | "Person";
+type DocumentOwnerType = 'Student' | 'Trainer' | 'Corporate' | 'Person';
 
 type DocumentVerificationStatus =
-  | "Uploaded"
-  | "PendingVerification"
-  | "Approved"
-  | "Rejected"
-  | "Expired";
+  | 'Uploaded'
+  | 'PendingVerification'
+  | 'Approved'
+  | 'Rejected'
+  | 'Expired';
 ```
 
 `Employee` is not accepted in current scope because HRMS is future phase.
@@ -250,7 +244,7 @@ interface DocumentSummaryDto {
   expiryDate: string | null;
   verificationStatus: DocumentVerificationStatus;
   expiry: {
-    state: "NoExpiry" | "Valid" | "ExpiringSoon" | "Expired";
+    state: 'NoExpiry' | 'Valid' | 'ExpiringSoon' | 'Expired';
     daysRemaining: number | null;
   };
   uploadedBy: {
@@ -297,7 +291,7 @@ UI action booleans are convenience hints only. They do not replace server author
 interface DocumentVerificationDto {
   id: string;
   documentId: string;
-  status: "Approved" | "Rejected";
+  status: 'Approved' | 'Rejected';
   remarks: string | null;
   verifiedBy: {
     userId: string;
@@ -393,7 +387,7 @@ interface UploadIntentDto {
   uploadId: string;
   expiresAt: string;
   upload: {
-    mode: "vercel-blob-client-upload" | "server-proxy";
+    mode: 'vercel-blob-client-upload' | 'server-proxy';
     token?: string;
     endpoint?: string;
     maxSizeBytes: number;
@@ -406,19 +400,19 @@ Security note: return only the minimal short-lived upload credential required by
 
 ### Error responses
 
-| HTTP | Code | Condition |
-|---|---|---|
-| 400 | `DOCUMENT_REQUEST_INVALID` | Invalid body or file metadata |
-| 400 | `DOCUMENT_OWNER_TYPE_UNSUPPORTED` | Owner type outside current ER scope |
-| 400 | `DOCUMENT_FILE_TYPE_NOT_ALLOWED` | MIME/extension policy violation |
-| 413 | `DOCUMENT_FILE_TOO_LARGE` | Size exceeds configured limit |
-| 401 | `AUTHENTICATION_REQUIRED` | No valid session |
-| 403 | `DOCUMENT_PERMISSION_DENIED` | Missing permission |
-| 403 | `DOCUMENT_BRANCH_ACCESS_DENIED` | Owner outside branch scope |
-| 403 | `DOCUMENT_SCOPE_UNRESOLVED` | Owner branch scope cannot be securely resolved |
-| 404 | `DOCUMENT_OWNER_NOT_FOUND` | Owner does not exist/is not available to operation |
-| 409 | `DOCUMENT_TYPE_INACTIVE` | Selected type is no longer active |
-| 503 | `DOCUMENT_STORAGE_UNAVAILABLE` | Vercel Blob/storage adapter unavailable |
+| HTTP | Code                              | Condition                                          |
+| ---- | --------------------------------- | -------------------------------------------------- |
+| 400  | `DOCUMENT_REQUEST_INVALID`        | Invalid body or file metadata                      |
+| 400  | `DOCUMENT_OWNER_TYPE_UNSUPPORTED` | Owner type outside current ER scope                |
+| 400  | `DOCUMENT_FILE_TYPE_NOT_ALLOWED`  | MIME/extension policy violation                    |
+| 413  | `DOCUMENT_FILE_TOO_LARGE`         | Size exceeds configured limit                      |
+| 401  | `AUTHENTICATION_REQUIRED`         | No valid session                                   |
+| 403  | `DOCUMENT_PERMISSION_DENIED`      | Missing permission                                 |
+| 403  | `DOCUMENT_BRANCH_ACCESS_DENIED`   | Owner outside branch scope                         |
+| 403  | `DOCUMENT_SCOPE_UNRESOLVED`       | Owner branch scope cannot be securely resolved     |
+| 404  | `DOCUMENT_OWNER_NOT_FOUND`        | Owner does not exist/is not available to operation |
+| 409  | `DOCUMENT_TYPE_INACTIVE`          | Selected type is no longer active                  |
+| 503  | `DOCUMENT_STORAGE_UNAVAILABLE`    | Vercel Blob/storage adapter unavailable            |
 
 ---
 
@@ -491,19 +485,19 @@ interface RegisterDocumentResponse {
 
 ### Error responses
 
-| HTTP | Code | Condition |
-|---|---|---|
-| 400 | `DOCUMENT_REQUEST_INVALID` | Invalid fields |
-| 400 | `DOCUMENT_DATE_RANGE_INVALID` | expiry before issue date |
-| 401 | `AUTHENTICATION_REQUIRED` | Missing session |
-| 403 | `DOCUMENT_PERMISSION_DENIED` | Missing create permission |
-| 403 | `DOCUMENT_BRANCH_ACCESS_DENIED` | Scope denied |
-| 404 | `DOCUMENT_OWNER_NOT_FOUND` | Owner invalid |
-| 404 | `DOCUMENT_UPLOAD_NOT_FOUND` | Unknown/expired upload intent |
-| 409 | `DOCUMENT_UPLOAD_ALREADY_CONSUMED` | Duplicate registration attempt |
-| 409 | `DOCUMENT_TYPE_INACTIVE` | Type disabled before registration |
-| 422 | `DOCUMENT_STORAGE_OBJECT_INVALID` | Blob missing or metadata mismatch |
-| 503 | `DOCUMENT_STORAGE_UNAVAILABLE` | Blob validation unavailable |
+| HTTP | Code                               | Condition                         |
+| ---- | ---------------------------------- | --------------------------------- |
+| 400  | `DOCUMENT_REQUEST_INVALID`         | Invalid fields                    |
+| 400  | `DOCUMENT_DATE_RANGE_INVALID`      | expiry before issue date          |
+| 401  | `AUTHENTICATION_REQUIRED`          | Missing session                   |
+| 403  | `DOCUMENT_PERMISSION_DENIED`       | Missing create permission         |
+| 403  | `DOCUMENT_BRANCH_ACCESS_DENIED`    | Scope denied                      |
+| 404  | `DOCUMENT_OWNER_NOT_FOUND`         | Owner invalid                     |
+| 404  | `DOCUMENT_UPLOAD_NOT_FOUND`        | Unknown/expired upload intent     |
+| 409  | `DOCUMENT_UPLOAD_ALREADY_CONSUMED` | Duplicate registration attempt    |
+| 409  | `DOCUMENT_TYPE_INACTIVE`           | Type disabled before registration |
+| 422  | `DOCUMENT_STORAGE_OBJECT_INVALID`  | Blob missing or metadata mismatch |
+| 503  | `DOCUMENT_STORAGE_UNAVAILABLE`     | Blob validation unavailable       |
 
 ### Idempotency
 
@@ -549,16 +543,20 @@ interface ListDocumentsQuery {
   issueDateTo?: string;
   expiryDateFrom?: string;
   expiryDateTo?: string;
-  expiryState?: "NoExpiry" | "Valid" | "ExpiringSoon" | "Expired";
+  expiryState?: 'NoExpiry' | 'Valid' | 'ExpiringSoon' | 'Expired';
   expiringWithinDays?: number;
   search?: string;
   page?: number;
   pageSize?: number;
   sort?:
-    | "createdAt:asc" | "createdAt:desc"
-    | "updatedAt:asc" | "updatedAt:desc"
-    | "expiryDate:asc" | "expiryDate:desc"
-    | "fileName:asc" | "fileName:desc";
+    | 'createdAt:asc'
+    | 'createdAt:desc'
+    | 'updatedAt:asc'
+    | 'updatedAt:desc'
+    | 'expiryDate:asc'
+    | 'expiryDate:desc'
+    | 'fileName:asc'
+    | 'fileName:desc';
 }
 ```
 
@@ -593,12 +591,12 @@ interface ListDocumentsResponse {
 
 ### Error responses
 
-| HTTP | Code | Condition |
-|---|---|---|
-| 400 | `DOCUMENT_FILTER_INVALID` | Invalid filter/date range/sort |
-| 401 | `AUTHENTICATION_REQUIRED` | No session |
-| 403 | `DOCUMENT_PERMISSION_DENIED` | Missing read permission |
-| 422 | `DOCUMENT_SCOPE_QUERY_UNSUPPORTED` | Requested owner scope cannot be securely resolved with current model |
+| HTTP | Code                               | Condition                                                            |
+| ---- | ---------------------------------- | -------------------------------------------------------------------- |
+| 400  | `DOCUMENT_FILTER_INVALID`          | Invalid filter/date range/sort                                       |
+| 401  | `AUTHENTICATION_REQUIRED`          | No session                                                           |
+| 403  | `DOCUMENT_PERMISSION_DENIED`       | Missing read permission                                              |
+| 422  | `DOCUMENT_SCOPE_QUERY_UNSUPPORTED` | Requested owner scope cannot be securely resolved with current model |
 
 ### Security behavior
 
@@ -637,7 +635,9 @@ Direct-ID lookup must resolve owner-derived branch scope before returning data.
 Path:
 
 ```ts
-{ documentId: string }
+{
+  documentId: string;
+}
 ```
 
 ### Success DTO – `200 OK`
@@ -651,13 +651,13 @@ interface GetDocumentResponse {
 
 ### Error responses
 
-| HTTP | Code | Condition |
-|---|---|---|
-| 400 | `DOCUMENT_ID_INVALID` | Malformed identifier |
-| 401 | `AUTHENTICATION_REQUIRED` | No session |
-| 403 | `DOCUMENT_PERMISSION_DENIED` | Missing permission |
-| 403 | `DOCUMENT_BRANCH_ACCESS_DENIED` | Document outside scope |
-| 404 | `DOCUMENT_NOT_FOUND` | Missing/soft-deleted document under normal route |
+| HTTP | Code                            | Condition                                        |
+| ---- | ------------------------------- | ------------------------------------------------ |
+| 400  | `DOCUMENT_ID_INVALID`           | Malformed identifier                             |
+| 401  | `AUTHENTICATION_REQUIRED`       | No session                                       |
+| 403  | `DOCUMENT_PERMISSION_DENIED`    | Missing permission                               |
+| 403  | `DOCUMENT_BRANCH_ACCESS_DENIED` | Document outside scope                           |
+| 404  | `DOCUMENT_NOT_FOUND`            | Missing/soft-deleted document under normal route |
 
 Implementations may deliberately normalize inaccessible IDs to `404 DOCUMENT_NOT_FOUND` to reduce resource enumeration. The chosen policy must be consistent application-wide.
 
@@ -741,18 +741,18 @@ interface UpdateDocumentResponse {
 
 ### Error responses
 
-| HTTP | Code | Condition |
-|---|---|---|
-| 400 | `DOCUMENT_REQUEST_INVALID` | Invalid body |
-| 400 | `DOCUMENT_DATE_RANGE_INVALID` | Invalid date ordering |
-| 401 | `AUTHENTICATION_REQUIRED` | Missing session |
-| 403 | `DOCUMENT_PERMISSION_DENIED` | Missing update permission |
-| 403 | `DOCUMENT_BRANCH_ACCESS_DENIED` | Outside scope |
-| 404 | `DOCUMENT_NOT_FOUND` | Missing/inactive as applicable |
-| 409 | `DOCUMENT_VERSION_CONFLICT` | Optimistic lock failure |
-| 409 | `DOCUMENT_FIELD_IMMUTABLE` | Attempt to change protected field |
-| 409 | `DOCUMENT_UPDATE_NOT_ALLOWED_IN_STATE` | State prevents requested metadata change |
-| 409 | `DOCUMENT_TYPE_INACTIVE` | Type invalid/inactive |
+| HTTP | Code                                   | Condition                                |
+| ---- | -------------------------------------- | ---------------------------------------- |
+| 400  | `DOCUMENT_REQUEST_INVALID`             | Invalid body                             |
+| 400  | `DOCUMENT_DATE_RANGE_INVALID`          | Invalid date ordering                    |
+| 401  | `AUTHENTICATION_REQUIRED`              | Missing session                          |
+| 403  | `DOCUMENT_PERMISSION_DENIED`           | Missing update permission                |
+| 403  | `DOCUMENT_BRANCH_ACCESS_DENIED`        | Outside scope                            |
+| 404  | `DOCUMENT_NOT_FOUND`                   | Missing/inactive as applicable           |
+| 409  | `DOCUMENT_VERSION_CONFLICT`            | Optimistic lock failure                  |
+| 409  | `DOCUMENT_FIELD_IMMUTABLE`             | Attempt to change protected field        |
+| 409  | `DOCUMENT_UPDATE_NOT_ALLOWED_IN_STATE` | State prevents requested metadata change |
+| 409  | `DOCUMENT_TYPE_INACTIVE`               | Type invalid/inactive                    |
 
 ---
 
@@ -812,7 +812,7 @@ interface SubmitVerificationRequest {
 interface SubmitVerificationResponse {
   data: {
     documentId: string;
-    verificationStatus: "PendingVerification";
+    verificationStatus: 'PendingVerification';
     version: number;
     updatedAt: string;
   };
@@ -822,16 +822,16 @@ interface SubmitVerificationResponse {
 
 ### Error responses
 
-| HTTP | Code | Condition |
-|---|---|---|
-| 401 | `AUTHENTICATION_REQUIRED` | No session |
-| 403 | `DOCUMENT_PERMISSION_DENIED` | Missing submit permission |
-| 403 | `DOCUMENT_BRANCH_ACCESS_DENIED` | Outside scope |
-| 404 | `DOCUMENT_NOT_FOUND` | Missing |
-| 409 | `DOCUMENT_VERSION_CONFLICT` | Stale version |
-| 409 | `DOCUMENT_INVALID_STATE_TRANSITION` | Current status is not Uploaded |
-| 422 | `DOCUMENT_NOT_READY_FOR_VERIFICATION` | Required metadata/file integrity check fails |
-| 503 | `DOCUMENT_STORAGE_UNAVAILABLE` | Required storage integrity check unavailable |
+| HTTP | Code                                  | Condition                                    |
+| ---- | ------------------------------------- | -------------------------------------------- |
+| 401  | `AUTHENTICATION_REQUIRED`             | No session                                   |
+| 403  | `DOCUMENT_PERMISSION_DENIED`          | Missing submit permission                    |
+| 403  | `DOCUMENT_BRANCH_ACCESS_DENIED`       | Outside scope                                |
+| 404  | `DOCUMENT_NOT_FOUND`                  | Missing                                      |
+| 409  | `DOCUMENT_VERSION_CONFLICT`           | Stale version                                |
+| 409  | `DOCUMENT_INVALID_STATE_TRANSITION`   | Current status is not Uploaded               |
+| 422  | `DOCUMENT_NOT_READY_FOR_VERIFICATION` | Required metadata/file integrity check fails |
+| 503  | `DOCUMENT_STORAGE_UNAVAILABLE`        | Required storage integrity check unavailable |
 
 ---
 
@@ -871,7 +871,7 @@ interface VerificationQueueQuery {
   submittedTo?: string;
   page?: number;
   pageSize?: number;
-  sort?: "updatedAt:asc" | "updatedAt:desc" | "expiryDate:asc";
+  sort?: 'updatedAt:asc' | 'updatedAt:desc' | 'expiryDate:asc';
 }
 ```
 
@@ -891,11 +891,11 @@ Collection envelope as standard paginated response.
 
 ### Error responses
 
-| HTTP | Code | Condition |
-|---|---|---|
-| 400 | `DOCUMENT_FILTER_INVALID` | Invalid queue filter |
-| 401 | `AUTHENTICATION_REQUIRED` | No session |
-| 403 | `DOCUMENT_PERMISSION_DENIED` | Missing permission |
+| HTTP | Code                         | Condition            |
+| ---- | ---------------------------- | -------------------- |
+| 400  | `DOCUMENT_FILTER_INVALID`    | Invalid queue filter |
+| 401  | `AUTHENTICATION_REQUIRED`    | No session           |
+| 403  | `DOCUMENT_PERMISSION_DENIED` | Missing permission   |
 
 ---
 
@@ -966,18 +966,18 @@ interface ApproveDocumentResponse {
 
 ### Error responses
 
-| HTTP | Code | Condition |
-|---|---|---|
-| 400 | `DOCUMENT_REQUEST_INVALID` | Invalid remarks/version |
-| 401 | `AUTHENTICATION_REQUIRED` | No session |
-| 403 | `DOCUMENT_PERMISSION_DENIED` | Missing approval permission |
-| 403 | `DOCUMENT_BRANCH_ACCESS_DENIED` | Outside scope |
-| 404 | `DOCUMENT_NOT_FOUND` | Missing |
-| 409 | `DOCUMENT_VERSION_CONFLICT` | Concurrent update |
-| 409 | `DOCUMENT_INVALID_STATE_TRANSITION` | Not PendingVerification |
-| 409 | `DOCUMENT_ALREADY_DECIDED` | Concurrent verifier already completed decision |
-| 422 | `DOCUMENT_VERIFICATION_GUARD_FAILED` | File/evidence precondition invalid |
-| 503 | `AUDIT_WRITE_UNAVAILABLE` | Only if architecture requires audit atomicity and cannot persist required audit record |
+| HTTP | Code                                 | Condition                                                                              |
+| ---- | ------------------------------------ | -------------------------------------------------------------------------------------- |
+| 400  | `DOCUMENT_REQUEST_INVALID`           | Invalid remarks/version                                                                |
+| 401  | `AUTHENTICATION_REQUIRED`            | No session                                                                             |
+| 403  | `DOCUMENT_PERMISSION_DENIED`         | Missing approval permission                                                            |
+| 403  | `DOCUMENT_BRANCH_ACCESS_DENIED`      | Outside scope                                                                          |
+| 404  | `DOCUMENT_NOT_FOUND`                 | Missing                                                                                |
+| 409  | `DOCUMENT_VERSION_CONFLICT`          | Concurrent update                                                                      |
+| 409  | `DOCUMENT_INVALID_STATE_TRANSITION`  | Not PendingVerification                                                                |
+| 409  | `DOCUMENT_ALREADY_DECIDED`           | Concurrent verifier already completed decision                                         |
+| 422  | `DOCUMENT_VERIFICATION_GUARD_FAILED` | File/evidence precondition invalid                                                     |
+| 503  | `AUDIT_WRITE_UNAVAILABLE`            | Only if architecture requires audit atomicity and cannot persist required audit record |
 
 ---
 
@@ -1042,10 +1042,10 @@ interface RejectDocumentResponse {
 
 Same authorization, scope, version, and state errors as approval, plus:
 
-| HTTP | Code | Condition |
-|---|---|---|
-| 400 | `DOCUMENT_REJECTION_REASON_REQUIRED` | Missing/blank reason |
-| 400 | `DOCUMENT_REJECTION_REASON_TOO_LONG` | Over contract limit |
+| HTTP | Code                                 | Condition            |
+| ---- | ------------------------------------ | -------------------- |
+| 400  | `DOCUMENT_REJECTION_REASON_REQUIRED` | Missing/blank reason |
+| 400  | `DOCUMENT_REJECTION_REASON_TOO_LONG` | Over contract limit  |
 
 ### Important unresolved workflow note
 
@@ -1087,7 +1087,7 @@ Document owner-derived scope required before any history disclosure.
 interface DocumentHistoryQuery {
   page?: number;
   pageSize?: number;
-  sort?: "verifiedAt:asc" | "verifiedAt:desc";
+  sort?: 'verifiedAt:asc' | 'verifiedAt:desc';
 }
 ```
 
@@ -1116,13 +1116,13 @@ interface DocumentHistoryResponse {
 
 ### Error responses
 
-| HTTP | Code | Condition |
-|---|---|---|
-| 401 | `AUTHENTICATION_REQUIRED` | No session |
-| 403 | `DOCUMENT_PERMISSION_DENIED` | No document history permission |
-| 403 | `DOCUMENT_BRANCH_ACCESS_DENIED` | Outside scope |
-| 404 | `DOCUMENT_NOT_FOUND` | Missing/inaccessible according to global enumeration policy |
-| 502 | `AUDIT_CONTEXT_UNAVAILABLE` | Only when audit enrichment was explicitly requested and unavailable; document verification history may still be returned if contract chooses partial response semantics |
+| HTTP | Code                            | Condition                                                                                                                                                               |
+| ---- | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 401  | `AUTHENTICATION_REQUIRED`       | No session                                                                                                                                                              |
+| 403  | `DOCUMENT_PERMISSION_DENIED`    | No document history permission                                                                                                                                          |
+| 403  | `DOCUMENT_BRANCH_ACCESS_DENIED` | Outside scope                                                                                                                                                           |
+| 404  | `DOCUMENT_NOT_FOUND`            | Missing/inaccessible according to global enumeration policy                                                                                                             |
+| 502  | `AUDIT_CONTEXT_UNAVAILABLE`     | Only when audit enrichment was explicitly requested and unavailable; document verification history may still be returned if contract chooses partial response semantics |
 
 ---
 
@@ -1158,7 +1158,7 @@ Mandatory owner-derived scope check every time access is requested.
 
 ```ts
 interface FileAccessRequest {
-  disposition: "inline" | "attachment";
+  disposition: 'inline' | 'attachment';
 }
 ```
 
@@ -1179,10 +1179,10 @@ Option A – short-lived URL:
 
 ```ts
 interface FileAccessDto {
-  mode: "signed-url";
+  mode: 'signed-url';
   url: string;
   expiresAt: string;
-  disposition: "inline" | "attachment";
+  disposition: 'inline' | 'attachment';
   fileName: string;
   contentType: string;
 }
@@ -1192,10 +1192,10 @@ Option B – proxy stream:
 
 ```ts
 interface FileAccessDto {
-  mode: "proxy";
+  mode: 'proxy';
   streamUrl: string;
   expiresAt: string;
-  disposition: "inline" | "attachment";
+  disposition: 'inline' | 'attachment';
   fileName: string;
 }
 ```
@@ -1204,14 +1204,14 @@ The exact Vercel Blob access pattern must follow the selected storage implementa
 
 ### Error responses
 
-| HTTP | Code | Condition |
-|---|---|---|
-| 401 | `AUTHENTICATION_REQUIRED` | No session |
-| 403 | `DOCUMENT_FILE_ACCESS_DENIED` | Missing file permission |
-| 403 | `DOCUMENT_BRANCH_ACCESS_DENIED` | Outside scope |
-| 404 | `DOCUMENT_NOT_FOUND` | No active Document |
-| 410 | `DOCUMENT_FILE_MISSING` | Metadata exists but Blob object is missing |
-| 503 | `DOCUMENT_STORAGE_UNAVAILABLE` | Storage unavailable |
+| HTTP | Code                            | Condition                                  |
+| ---- | ------------------------------- | ------------------------------------------ |
+| 401  | `AUTHENTICATION_REQUIRED`       | No session                                 |
+| 403  | `DOCUMENT_FILE_ACCESS_DENIED`   | Missing file permission                    |
+| 403  | `DOCUMENT_BRANCH_ACCESS_DENIED` | Outside scope                              |
+| 404  | `DOCUMENT_NOT_FOUND`            | No active Document                         |
+| 410  | `DOCUMENT_FILE_MISSING`         | Metadata exists but Blob object is missing |
+| 503  | `DOCUMENT_STORAGE_UNAVAILABLE`  | Storage unavailable                        |
 
 ---
 
@@ -1245,7 +1245,7 @@ Mandatory owner-derived filtering.
 
 ```ts
 interface ExpiryWorkbenchQuery {
-  state?: "ExpiringSoon" | "Expired" | "Valid" | "NoExpiry";
+  state?: 'ExpiringSoon' | 'Expired' | 'Valid' | 'NoExpiry';
   withinDays?: number;
   ownerType?: DocumentOwnerType;
   documentType?: string;
@@ -1253,7 +1253,7 @@ interface ExpiryWorkbenchQuery {
   expiryDateTo?: string;
   page?: number;
   pageSize?: number;
-  sort?: "expiryDate:asc" | "expiryDate:desc";
+  sort?: 'expiryDate:asc' | 'expiryDate:desc';
 }
 ```
 
@@ -1264,7 +1264,7 @@ interface ExpiryWorkbenchQuery {
 ```ts
 interface ExpiryDocumentDto extends DocumentSummaryDto {
   expiry: {
-    state: "NoExpiry" | "Valid" | "ExpiringSoon" | "Expired";
+    state: 'NoExpiry' | 'Valid' | 'ExpiringSoon' | 'Expired';
     daysRemaining: number | null;
     evaluationDate: string;
   };
@@ -1273,11 +1273,11 @@ interface ExpiryDocumentDto extends DocumentSummaryDto {
 
 ### Error responses
 
-| HTTP | Code | Condition |
-|---|---|---|
-| 400 | `DOCUMENT_EXPIRY_FILTER_INVALID` | Invalid window or date range |
-| 401 | `AUTHENTICATION_REQUIRED` | No session |
-| 403 | `DOCUMENT_PERMISSION_DENIED` | Missing expiry permission |
+| HTTP | Code                             | Condition                    |
+| ---- | -------------------------------- | ---------------------------- |
+| 400  | `DOCUMENT_EXPIRY_FILTER_INVALID` | Invalid window or date range |
+| 401  | `AUTHENTICATION_REQUIRED`        | No session                   |
+| 403  | `DOCUMENT_PERMISSION_DENIED`     | Missing expiry permission    |
 
 ### DDD note
 
@@ -1358,15 +1358,15 @@ interface RetireDocumentResponse {
 
 ### Error responses
 
-| HTTP | Code | Condition |
-|---|---|---|
-| 400 | `DOCUMENT_RETIRE_REASON_REQUIRED` | Missing reason |
-| 401 | `AUTHENTICATION_REQUIRED` | No session |
-| 403 | `DOCUMENT_PERMISSION_DENIED` | Missing retire permission |
-| 403 | `DOCUMENT_BRANCH_ACCESS_DENIED` | Outside scope |
-| 404 | `DOCUMENT_NOT_FOUND` | Missing |
-| 409 | `DOCUMENT_ALREADY_RETIRED` | Already soft-deleted |
-| 409 | `DOCUMENT_VERSION_CONFLICT` | Stale version |
+| HTTP | Code                              | Condition                 |
+| ---- | --------------------------------- | ------------------------- |
+| 400  | `DOCUMENT_RETIRE_REASON_REQUIRED` | Missing reason            |
+| 401  | `AUTHENTICATION_REQUIRED`         | No session                |
+| 403  | `DOCUMENT_PERMISSION_DENIED`      | Missing retire permission |
+| 403  | `DOCUMENT_BRANCH_ACCESS_DENIED`   | Outside scope             |
+| 404  | `DOCUMENT_NOT_FOUND`              | Missing                   |
+| 409  | `DOCUMENT_ALREADY_RETIRED`        | Already soft-deleted      |
+| 409  | `DOCUMENT_VERSION_CONFLICT`       | Stale version             |
 
 There is no restore endpoint because restore behavior is not approved in Parts 1–4.
 
@@ -1403,11 +1403,11 @@ Operational access still applies branch scope unless the authenticated principal
 ```ts
 interface ReconciliationQuery {
   issueType?:
-    | "BLOB_EXISTS_DOCUMENT_MISSING"
-    | "DOCUMENT_EXISTS_BLOB_MISSING"
-    | "UPLOAD_INTENT_EXPIRED"
-    | "REGISTRATION_INCOMPLETE";
-  status?: "Open" | "Retrying" | "Resolved" | "Ignored";
+    | 'BLOB_EXISTS_DOCUMENT_MISSING'
+    | 'DOCUMENT_EXISTS_BLOB_MISSING'
+    | 'UPLOAD_INTENT_EXPIRED'
+    | 'REGISTRATION_INCOMPLETE';
+  status?: 'Open' | 'Retrying' | 'Resolved' | 'Ignored';
   page?: number;
   pageSize?: number;
 }
@@ -1430,12 +1430,12 @@ interface ReconciliationIssueDto {
 
 ### Error responses
 
-| HTTP | Code | Condition |
-|---|---|---|
-| 401 | `AUTHENTICATION_REQUIRED` | No session |
-| 403 | `DOCUMENT_PERMISSION_DENIED` | No operational permission |
-| 501 | `DOCUMENT_RECONCILIATION_LEDGER_NOT_IMPLEMENTED` | Architecture has not approved durable issue persistence/query mechanism |
-| 503 | `DOCUMENT_STORAGE_UNAVAILABLE` | Live storage comparison cannot execute |
+| HTTP | Code                                             | Condition                                                               |
+| ---- | ------------------------------------------------ | ----------------------------------------------------------------------- |
+| 401  | `AUTHENTICATION_REQUIRED`                        | No session                                                              |
+| 403  | `DOCUMENT_PERMISSION_DENIED`                     | No operational permission                                               |
+| 501  | `DOCUMENT_RECONCILIATION_LEDGER_NOT_IMPLEMENTED` | Architecture has not approved durable issue persistence/query mechanism |
+| 503  | `DOCUMENT_STORAGE_UNAVAILABLE`                   | Live storage comparison cannot execute                                  |
 
 ### Architecture gap note
 
@@ -1486,7 +1486,7 @@ For synchronous modular-monolith execution:
 interface ReconciliationRetryResponse {
   data: {
     itemId: string;
-    outcome: "Resolved" | "StillOpen";
+    outcome: 'Resolved' | 'StillOpen';
     resolvedDocumentId?: string | null;
   };
   meta: { requestId: string };
@@ -1497,15 +1497,15 @@ Do not return `202 Accepted` unless the application actually schedules durable a
 
 ### Error responses
 
-| HTTP | Code | Condition |
-|---|---|---|
-| 400 | `DOCUMENT_RECONCILIATION_REASON_REQUIRED` | Missing reason |
-| 401 | `AUTHENTICATION_REQUIRED` | No session |
-| 403 | `DOCUMENT_PERMISSION_DENIED` | Missing permission |
-| 404 | `DOCUMENT_RECONCILIATION_ITEM_NOT_FOUND` | Unknown issue |
-| 409 | `DOCUMENT_RECONCILIATION_NOT_RETRYABLE` | Issue cannot be safely retried |
-| 409 | `DOCUMENT_RECONCILIATION_ALREADY_RESOLVED` | Issue already resolved |
-| 503 | `DOCUMENT_STORAGE_UNAVAILABLE` | Storage unavailable |
+| HTTP | Code                                       | Condition                      |
+| ---- | ------------------------------------------ | ------------------------------ |
+| 400  | `DOCUMENT_RECONCILIATION_REASON_REQUIRED`  | Missing reason                 |
+| 401  | `AUTHENTICATION_REQUIRED`                  | No session                     |
+| 403  | `DOCUMENT_PERMISSION_DENIED`               | Missing permission             |
+| 404  | `DOCUMENT_RECONCILIATION_ITEM_NOT_FOUND`   | Unknown issue                  |
+| 409  | `DOCUMENT_RECONCILIATION_NOT_RETRYABLE`    | Issue cannot be safely retried |
+| 409  | `DOCUMENT_RECONCILIATION_ALREADY_RESOLVED` | Issue already resolved         |
+| 503  | `DOCUMENT_STORAGE_UNAVAILABLE`             | Storage unavailable            |
 
 ---
 
@@ -1548,7 +1548,7 @@ If types are global, no row branch filter is required. If future configuration s
 interface DocumentTypeQuery {
   ownerType?: DocumentOwnerType;
   activeOnly?: boolean; // forced true for normal UI
-  locale?: "en" | "ar";
+  locale?: 'en' | 'ar';
 }
 ```
 
@@ -1633,13 +1633,13 @@ Only minimal display data required for selection is returned.
 
 ### Error responses
 
-| HTTP | Code | Condition |
-|---|---|---|
-| 400 | `DOCUMENT_OWNER_SEARCH_INVALID` | Missing type/query |
-| 401 | `AUTHENTICATION_REQUIRED` | No session |
-| 403 | `DOCUMENT_PERMISSION_DENIED` | Missing capability |
-| 422 | `DOCUMENT_SCOPE_QUERY_UNSUPPORTED` | Secure branch resolver unavailable for owner type |
-| 503 | `DOCUMENT_OWNER_CONTEXT_UNAVAILABLE` | Required source context/read model unavailable |
+| HTTP | Code                                 | Condition                                         |
+| ---- | ------------------------------------ | ------------------------------------------------- |
+| 400  | `DOCUMENT_OWNER_SEARCH_INVALID`      | Missing type/query                                |
+| 401  | `AUTHENTICATION_REQUIRED`            | No session                                        |
+| 403  | `DOCUMENT_PERMISSION_DENIED`         | Missing capability                                |
+| 422  | `DOCUMENT_SCOPE_QUERY_UNSUPPORTED`   | Secure branch resolver unavailable for owner type |
+| 503  | `DOCUMENT_OWNER_CONTEXT_UNAVAILABLE` | Required source context/read model unavailable    |
 
 ---
 
@@ -1649,13 +1649,13 @@ The DDD application structure places Student Portal in future scope. These contr
 
 When the Student Portal is approved, prefer identity-bound endpoints that do not accept arbitrary owner IDs:
 
-| Method | Route | Purpose | Authorization model |
-|---|---|---|---|
-| GET | `/api/me/documents` | List documents for authenticated student's linked StudentProfile/Person identity | self-service policy + identity binding |
-| POST | `/api/me/documents/upload-intent` | Prepare permitted self-upload | self-service create policy + type allow-list |
-| POST | `/api/me/documents` | Register self-upload | self-service create policy |
-| GET | `/api/me/documents/{id}` | Read own document | identity binding |
-| POST | `/api/me/documents/{id}/file-access` | Access own file | identity binding + file policy |
+| Method | Route                                | Purpose                                                                          | Authorization model                          |
+| ------ | ------------------------------------ | -------------------------------------------------------------------------------- | -------------------------------------------- |
+| GET    | `/api/me/documents`                  | List documents for authenticated student's linked StudentProfile/Person identity | self-service policy + identity binding       |
+| POST   | `/api/me/documents/upload-intent`    | Prepare permitted self-upload                                                    | self-service create policy + type allow-list |
+| POST   | `/api/me/documents`                  | Register self-upload                                                             | self-service create policy                   |
+| GET    | `/api/me/documents/{id}`             | Read own document                                                                | identity binding                             |
+| POST   | `/api/me/documents/{id}/file-access` | Access own file                                                                  | identity binding + file policy               |
 
 Rules:
 
@@ -1673,13 +1673,13 @@ Trainer Portal is also future/conditional.
 
 Recommended identity-bound surface:
 
-| Method | Route | Purpose | Authorization model |
-|---|---|---|---|
-| GET | `/api/trainer/me/documents` | List authenticated trainer documents | linked TrainerProfile identity |
-| POST | `/api/trainer/me/documents/upload-intent` | Prepare permitted trainer evidence upload | self-service policy |
-| POST | `/api/trainer/me/documents` | Register trainer upload | self-service policy |
-| GET | `/api/trainer/me/documents/{id}` | Read own document | identity binding |
-| POST | `/api/trainer/me/documents/{id}/file-access` | Access own file | identity binding + file policy |
+| Method | Route                                        | Purpose                                   | Authorization model            |
+| ------ | -------------------------------------------- | ----------------------------------------- | ------------------------------ |
+| GET    | `/api/trainer/me/documents`                  | List authenticated trainer documents      | linked TrainerProfile identity |
+| POST   | `/api/trainer/me/documents/upload-intent`    | Prepare permitted trainer evidence upload | self-service policy            |
+| POST   | `/api/trainer/me/documents`                  | Register trainer upload                   | self-service policy            |
+| GET    | `/api/trainer/me/documents/{id}`             | Read own document                         | identity binding               |
+| POST   | `/api/trainer/me/documents/{id}/file-access` | Access own file                           | identity binding + file policy |
 
 Trainer portal identity does not grant document verification permission by implication.
 
@@ -1687,20 +1687,20 @@ Trainer portal identity does not grant document verification permission by impli
 
 # 8. Permission-to-Endpoint Matrix
 
-| Permission | Endpoints | Scope |
-|---|---|---|
-| `document.create` | API-DOC-001, 002, 017 | Owner-derived branch scope |
-| `document.read` | API-DOC-003, 004 | Owner-derived branch scope |
-| `document.update` | API-DOC-005 | Owner-derived branch scope + state guard |
-| `document.verify.submit` | API-DOC-006 | Owner-derived branch scope + Uploaded state |
-| `document.verify.read` | API-DOC-007 | Owner-derived branch scope + pending-state filter |
-| `document.verify.approve` | API-DOC-008 | Owner-derived branch scope + PendingVerification guard |
-| `document.verify.reject` | API-DOC-009 | Owner-derived branch scope + PendingVerification guard |
-| `document.history.read` | API-DOC-010 | Owner-derived branch scope |
-| `document.file.read` | API-DOC-011 | Owner-derived branch scope + active record |
-| `document.expiry.read` | API-DOC-012 | Owner-derived branch scope |
-| `document.retire` | API-DOC-013 | Owner-derived branch scope + active/version guards |
-| `document.operations.reconcile` | API-DOC-014, 015 | Restricted operational scope; global scope only if explicitly granted |
+| Permission                      | Endpoints             | Scope                                                                 |
+| ------------------------------- | --------------------- | --------------------------------------------------------------------- |
+| `document.create`               | API-DOC-001, 002, 017 | Owner-derived branch scope                                            |
+| `document.read`                 | API-DOC-003, 004      | Owner-derived branch scope                                            |
+| `document.update`               | API-DOC-005           | Owner-derived branch scope + state guard                              |
+| `document.verify.submit`        | API-DOC-006           | Owner-derived branch scope + Uploaded state                           |
+| `document.verify.read`          | API-DOC-007           | Owner-derived branch scope + pending-state filter                     |
+| `document.verify.approve`       | API-DOC-008           | Owner-derived branch scope + PendingVerification guard                |
+| `document.verify.reject`        | API-DOC-009           | Owner-derived branch scope + PendingVerification guard                |
+| `document.history.read`         | API-DOC-010           | Owner-derived branch scope                                            |
+| `document.file.read`            | API-DOC-011           | Owner-derived branch scope + active record                            |
+| `document.expiry.read`          | API-DOC-012           | Owner-derived branch scope                                            |
+| `document.retire`               | API-DOC-013           | Owner-derived branch scope + active/version guards                    |
+| `document.operations.reconcile` | API-DOC-014, 015      | Restricted operational scope; global scope only if explicitly granted |
 
 ### Permission normalization issue
 
@@ -1729,60 +1729,60 @@ because they align with the rest of the hierarchical permission vocabulary and a
 
 ## 9.1 Authentication and authorization
 
-| Code | HTTP | Meaning |
-|---|---:|---|
-| `AUTHENTICATION_REQUIRED` | 401 | Valid login session absent |
-| `DOCUMENT_PERMISSION_DENIED` | 403 | Principal lacks capability permission |
-| `DOCUMENT_BRANCH_ACCESS_DENIED` | 403 | Resource owner outside effective branch scope |
-| `DOCUMENT_FILE_ACCESS_DENIED` | 403 | File capability denied |
-| `DOCUMENT_SCOPE_UNRESOLVED` | 403 | Secure branch scope cannot be determined |
+| Code                            | HTTP | Meaning                                       |
+| ------------------------------- | ---: | --------------------------------------------- |
+| `AUTHENTICATION_REQUIRED`       |  401 | Valid login session absent                    |
+| `DOCUMENT_PERMISSION_DENIED`    |  403 | Principal lacks capability permission         |
+| `DOCUMENT_BRANCH_ACCESS_DENIED` |  403 | Resource owner outside effective branch scope |
+| `DOCUMENT_FILE_ACCESS_DENIED`   |  403 | File capability denied                        |
+| `DOCUMENT_SCOPE_UNRESOLVED`     |  403 | Secure branch scope cannot be determined      |
 
 ## 9.2 Resource errors
 
-| Code | HTTP | Meaning |
-|---|---:|---|
-| `DOCUMENT_NOT_FOUND` | 404 | Document unavailable/missing according to enumeration policy |
-| `DOCUMENT_OWNER_NOT_FOUND` | 404 | Requested owner does not exist/is unavailable |
-| `DOCUMENT_UPLOAD_NOT_FOUND` | 404 | Upload intent unknown or expired |
-| `DOCUMENT_RECONCILIATION_ITEM_NOT_FOUND` | 404 | Operational item does not exist |
+| Code                                     | HTTP | Meaning                                                      |
+| ---------------------------------------- | ---: | ------------------------------------------------------------ |
+| `DOCUMENT_NOT_FOUND`                     |  404 | Document unavailable/missing according to enumeration policy |
+| `DOCUMENT_OWNER_NOT_FOUND`               |  404 | Requested owner does not exist/is unavailable                |
+| `DOCUMENT_UPLOAD_NOT_FOUND`              |  404 | Upload intent unknown or expired                             |
+| `DOCUMENT_RECONCILIATION_ITEM_NOT_FOUND` |  404 | Operational item does not exist                              |
 
 ## 9.3 Validation errors
 
-| Code | HTTP | Meaning |
-|---|---:|---|
-| `DOCUMENT_REQUEST_INVALID` | 400 | General schema validation failure |
-| `DOCUMENT_ID_INVALID` | 400 | Malformed identifier |
-| `DOCUMENT_DATE_RANGE_INVALID` | 400 | Date ordering invalid |
-| `DOCUMENT_FILTER_INVALID` | 400 | Unsupported filter/sort |
-| `DOCUMENT_OWNER_TYPE_UNSUPPORTED` | 400 | Unsupported owner type |
-| `DOCUMENT_FILE_TYPE_NOT_ALLOWED` | 400 | File policy violation |
-| `DOCUMENT_REJECTION_REASON_REQUIRED` | 400 | Rejection reason missing |
-| `DOCUMENT_RETIRE_REASON_REQUIRED` | 400 | Retirement reason missing |
-| `DOCUMENT_FILE_TOO_LARGE` | 413 | Upload exceeds configured limit |
+| Code                                 | HTTP | Meaning                           |
+| ------------------------------------ | ---: | --------------------------------- |
+| `DOCUMENT_REQUEST_INVALID`           |  400 | General schema validation failure |
+| `DOCUMENT_ID_INVALID`                |  400 | Malformed identifier              |
+| `DOCUMENT_DATE_RANGE_INVALID`        |  400 | Date ordering invalid             |
+| `DOCUMENT_FILTER_INVALID`            |  400 | Unsupported filter/sort           |
+| `DOCUMENT_OWNER_TYPE_UNSUPPORTED`    |  400 | Unsupported owner type            |
+| `DOCUMENT_FILE_TYPE_NOT_ALLOWED`     |  400 | File policy violation             |
+| `DOCUMENT_REJECTION_REASON_REQUIRED` |  400 | Rejection reason missing          |
+| `DOCUMENT_RETIRE_REASON_REQUIRED`    |  400 | Retirement reason missing         |
+| `DOCUMENT_FILE_TOO_LARGE`            |  413 | Upload exceeds configured limit   |
 
 ## 9.4 Conflict/state errors
 
-| Code | HTTP | Meaning |
-|---|---:|---|
-| `DOCUMENT_VERSION_CONFLICT` | 409 | Optimistic concurrency failure |
-| `DOCUMENT_INVALID_STATE_TRANSITION` | 409 | Transition not permitted from current state |
-| `DOCUMENT_ALREADY_DECIDED` | 409 | Concurrent verification decision already committed |
-| `DOCUMENT_ALREADY_RETIRED` | 409 | Soft-delete already applied |
-| `DOCUMENT_UPLOAD_ALREADY_CONSUMED` | 409 | Duplicate registration |
-| `DOCUMENT_FIELD_IMMUTABLE` | 409 | Protected field update attempted |
-| `DOCUMENT_UPDATE_NOT_ALLOWED_IN_STATE` | 409 | State-specific edit restriction |
-| `DOCUMENT_TYPE_INACTIVE` | 409 | Type no longer valid |
+| Code                                   | HTTP | Meaning                                            |
+| -------------------------------------- | ---: | -------------------------------------------------- |
+| `DOCUMENT_VERSION_CONFLICT`            |  409 | Optimistic concurrency failure                     |
+| `DOCUMENT_INVALID_STATE_TRANSITION`    |  409 | Transition not permitted from current state        |
+| `DOCUMENT_ALREADY_DECIDED`             |  409 | Concurrent verification decision already committed |
+| `DOCUMENT_ALREADY_RETIRED`             |  409 | Soft-delete already applied                        |
+| `DOCUMENT_UPLOAD_ALREADY_CONSUMED`     |  409 | Duplicate registration                             |
+| `DOCUMENT_FIELD_IMMUTABLE`             |  409 | Protected field update attempted                   |
+| `DOCUMENT_UPDATE_NOT_ALLOWED_IN_STATE` |  409 | State-specific edit restriction                    |
+| `DOCUMENT_TYPE_INACTIVE`               |  409 | Type no longer valid                               |
 
 ## 9.5 Dependency/operational errors
 
-| Code | HTTP | Meaning |
-|---|---:|---|
-| `DOCUMENT_STORAGE_UNAVAILABLE` | 503 | Vercel Blob adapter unavailable |
-| `DOCUMENT_FILE_MISSING` | 410 | Document metadata exists but binary is missing |
-| `DOCUMENT_STORAGE_OBJECT_INVALID` | 422 | Blob object does not match registration expectation |
-| `DOCUMENT_OWNER_CONTEXT_UNAVAILABLE` | 503 | Owner lookup dependency unavailable |
-| `CONFIGURATION_UNAVAILABLE` | 503 | Document type/configuration dependency unavailable |
-| `DOCUMENT_RECONCILIATION_LEDGER_NOT_IMPLEMENTED` | 501 | Conditional operations capability not architecturally implemented |
+| Code                                             | HTTP | Meaning                                                           |
+| ------------------------------------------------ | ---: | ----------------------------------------------------------------- |
+| `DOCUMENT_STORAGE_UNAVAILABLE`                   |  503 | Vercel Blob adapter unavailable                                   |
+| `DOCUMENT_FILE_MISSING`                          |  410 | Document metadata exists but binary is missing                    |
+| `DOCUMENT_STORAGE_OBJECT_INVALID`                |  422 | Blob object does not match registration expectation               |
+| `DOCUMENT_OWNER_CONTEXT_UNAVAILABLE`             |  503 | Owner lookup dependency unavailable                               |
+| `CONFIGURATION_UNAVAILABLE`                      |  503 | Document type/configuration dependency unavailable                |
+| `DOCUMENT_RECONCILIATION_LEDGER_NOT_IMPLEMENTED` |  501 | Conditional operations capability not architecturally implemented |
 
 ---
 
@@ -1853,79 +1853,79 @@ Expiry notifications, when activated, must use Communication & Notification cont
 
 # 11. API-Level Business Guards
 
-| Guard | Applied endpoints | Rule |
-|---|---|---|
-| Authentication | All current endpoints | No anonymous Admin API access |
-| Permission | All endpoints | Dynamic permission check server-side |
-| Branch scope | All owner/document operations | Derive from owner and IAM scope |
-| Soft-delete | List/detail/mutations/file | Normal routes exclude retired records |
-| Owner existence | Create/register | Validate through owning context |
-| Active document type | Create/update | Validate Configuration/schema mapping |
-| Date ordering | Create/update | expiry must not precede issue date |
-| Initial status | Create | server sets Uploaded |
-| State transition | Submit/approve/reject | Only Part 2-approved transitions |
-| Version | Update/state transitions/retire | Optimistic concurrency |
-| Immutable history | Approve/reject | Insert only, never update prior verification row |
-| Blob integrity | Registration/file access/submission as configured | Server validates object reference |
-| No hard delete | Retirement | Soft-delete only |
-| No owner mutation | Update | ownerType/ownerId immutable in baseline |
-| No client audit identity | Mutations | actor/time derived from server auth/clock |
+| Guard                    | Applied endpoints                                 | Rule                                             |
+| ------------------------ | ------------------------------------------------- | ------------------------------------------------ |
+| Authentication           | All current endpoints                             | No anonymous Admin API access                    |
+| Permission               | All endpoints                                     | Dynamic permission check server-side             |
+| Branch scope             | All owner/document operations                     | Derive from owner and IAM scope                  |
+| Soft-delete              | List/detail/mutations/file                        | Normal routes exclude retired records            |
+| Owner existence          | Create/register                                   | Validate through owning context                  |
+| Active document type     | Create/update                                     | Validate Configuration/schema mapping            |
+| Date ordering            | Create/update                                     | expiry must not precede issue date               |
+| Initial status           | Create                                            | server sets Uploaded                             |
+| State transition         | Submit/approve/reject                             | Only Part 2-approved transitions                 |
+| Version                  | Update/state transitions/retire                   | Optimistic concurrency                           |
+| Immutable history        | Approve/reject                                    | Insert only, never update prior verification row |
+| Blob integrity           | Registration/file access/submission as configured | Server validates object reference                |
+| No hard delete           | Retirement                                        | Soft-delete only                                 |
+| No owner mutation        | Update                                            | ownerType/ownerId immutable in baseline          |
+| No client audit identity | Mutations                                         | actor/time derived from server auth/clock        |
 
 ---
 
 # 12. Screen-to-API Mapping
 
-| Screen | Primary endpoints |
-|---|---|
-| Document Registry | API-DOC-003, API-DOC-004 |
-| Upload Document | API-DOC-001, API-DOC-002, API-DOC-016, API-DOC-017 |
-| Document Detail | API-DOC-004, API-DOC-010, API-DOC-011, API-DOC-006, API-DOC-013 |
-| Edit Metadata | API-DOC-004, API-DOC-005, API-DOC-016 |
-| Verification Queue | API-DOC-007 |
-| Verification Review | API-DOC-004, API-DOC-011, API-DOC-008, API-DOC-009 |
-| Expiry Workbench | API-DOC-012 |
-| Audit and Verification History | API-DOC-010 |
-| Blob Reconciliation Operations | Conditional API-DOC-014, API-DOC-015 |
-| Embedded Owner Document Tab | API-DOC-003 with owner filters; authorization still server-side |
+| Screen                         | Primary endpoints                                               |
+| ------------------------------ | --------------------------------------------------------------- |
+| Document Registry              | API-DOC-003, API-DOC-004                                        |
+| Upload Document                | API-DOC-001, API-DOC-002, API-DOC-016, API-DOC-017              |
+| Document Detail                | API-DOC-004, API-DOC-010, API-DOC-011, API-DOC-006, API-DOC-013 |
+| Edit Metadata                  | API-DOC-004, API-DOC-005, API-DOC-016                           |
+| Verification Queue             | API-DOC-007                                                     |
+| Verification Review            | API-DOC-004, API-DOC-011, API-DOC-008, API-DOC-009              |
+| Expiry Workbench               | API-DOC-012                                                     |
+| Audit and Verification History | API-DOC-010                                                     |
+| Blob Reconciliation Operations | Conditional API-DOC-014, API-DOC-015                            |
+| Embedded Owner Document Tab    | API-DOC-003 with owner filters; authorization still server-side |
 
 ---
 
 # 13. Use-Case-to-API Traceability
 
-| Use Case | API mapping |
-|---|---|
-| UC-DOC-001 Register and Upload a Document | API-DOC-001, 002, 016, 017 |
-| UC-DOC-002 Search and List Documents | API-DOC-003 |
-| UC-DOC-003 View Document Detail and File | API-DOC-004, 010, 011 |
-| UC-DOC-004 Submit Document for Verification | API-DOC-006 |
-| UC-DOC-005 Approve Pending Document | API-DOC-007, 008 |
-| UC-DOC-006 Reject Pending Document | API-DOC-007, 009 |
-| UC-DOC-007 Monitor Expiry | API-DOC-012 |
-| UC-DOC-008 Update Document Metadata | API-DOC-005 |
-| UC-DOC-009 Retire a Document | API-DOC-013 |
+| Use Case                                         | API mapping                  |
+| ------------------------------------------------ | ---------------------------- |
+| UC-DOC-001 Register and Upload a Document        | API-DOC-001, 002, 016, 017   |
+| UC-DOC-002 Search and List Documents             | API-DOC-003                  |
+| UC-DOC-003 View Document Detail and File         | API-DOC-004, 010, 011        |
+| UC-DOC-004 Submit Document for Verification      | API-DOC-006                  |
+| UC-DOC-005 Approve Pending Document              | API-DOC-007, 008             |
+| UC-DOC-006 Reject Pending Document               | API-DOC-007, 009             |
+| UC-DOC-007 Monitor Expiry                        | API-DOC-012                  |
+| UC-DOC-008 Update Document Metadata              | API-DOC-005                  |
+| UC-DOC-009 Retire a Document                     | API-DOC-013                  |
 | UC-DOC-010 Reconcile Blob/Database Inconsistency | Conditional API-DOC-014, 015 |
 
 ---
 
 # 14. DDD Ownership and Cross-Context Contract Check
 
-| API concern | Owning context | Document API behavior | Fit |
-|---|---|---|---|
-| Document metadata | Document Management | Create/read/update/retire Document | Aligned |
-| Verification decision history | Document Management | Append/read DocumentVerification | Aligned |
-| Student identity/status | Admission & Enrollment | Read/validate only | Aligned |
-| Trainer identity/status | Faculty / Trainer | Read/validate only | Aligned |
-| Corporate account identity | Corporate Training | Read/validate only | Aligned |
-| Person master | Shared Party/Person | Read reference only | Aligned; branch resolver gap remains |
-| User permissions | IAM | Consume authenticated permission context | Aligned |
-| Branch access | IAM + Organization | Resolve server-side; do not persist local ACL | Aligned |
-| Document type config | Configuration / Master Data if lookup-backed | Read/validate only | Aligned; physical representation unresolved |
-| AuditLog | Audit & Compliance | Submit audit fact/read through authorized boundary | Aligned |
-| Notifications | Communication | Request delivery when approved workflow exists | Aligned |
-| Reports | Reporting | Read consumer; no transaction ownership | Aligned |
-| Certificate | Certificate Management | No certificate issuance in document API | Aligned |
-| Finance artifacts | Finance | May be represented as files/links but finance transaction remains Finance-owned | Aligned |
-| Vercel Blob binary | Infrastructure | Storage adapter only | Aligned |
+| API concern                   | Owning context                               | Document API behavior                                                           | Fit                                         |
+| ----------------------------- | -------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------- |
+| Document metadata             | Document Management                          | Create/read/update/retire Document                                              | Aligned                                     |
+| Verification decision history | Document Management                          | Append/read DocumentVerification                                                | Aligned                                     |
+| Student identity/status       | Admission & Enrollment                       | Read/validate only                                                              | Aligned                                     |
+| Trainer identity/status       | Faculty / Trainer                            | Read/validate only                                                              | Aligned                                     |
+| Corporate account identity    | Corporate Training                           | Read/validate only                                                              | Aligned                                     |
+| Person master                 | Shared Party/Person                          | Read reference only                                                             | Aligned; branch resolver gap remains        |
+| User permissions              | IAM                                          | Consume authenticated permission context                                        | Aligned                                     |
+| Branch access                 | IAM + Organization                           | Resolve server-side; do not persist local ACL                                   | Aligned                                     |
+| Document type config          | Configuration / Master Data if lookup-backed | Read/validate only                                                              | Aligned; physical representation unresolved |
+| AuditLog                      | Audit & Compliance                           | Submit audit fact/read through authorized boundary                              | Aligned                                     |
+| Notifications                 | Communication                                | Request delivery when approved workflow exists                                  | Aligned                                     |
+| Reports                       | Reporting                                    | Read consumer; no transaction ownership                                         | Aligned                                     |
+| Certificate                   | Certificate Management                       | No certificate issuance in document API                                         | Aligned                                     |
+| Finance artifacts             | Finance                                      | May be represented as files/links but finance transaction remains Finance-owned | Aligned                                     |
+| Vercel Blob binary            | Infrastructure                               | Storage adapter only                                                            | Aligned                                     |
 
 ---
 

@@ -13,7 +13,11 @@ describe('CRM Dashboard Database Integration', () => {
     const context = {
       userId: '00000000-0000-0000-0000-000000000000',
       activeBranchId: null,
-      permissions: ['REPORTING_VIEW_CRM_DASHBOARD', 'REPORTING_VIEW_COUNSELOR_METRICS', 'LEAD_VIEW_ALL_IN_BRANCH'],
+      permissions: [
+        'REPORTING_VIEW_CRM_DASHBOARD',
+        'REPORTING_VIEW_COUNSELOR_METRICS',
+        'LEAD_VIEW_ALL_IN_BRANCH',
+      ],
     };
 
     const widgets = await queryService.getCrmDashboardData(context);

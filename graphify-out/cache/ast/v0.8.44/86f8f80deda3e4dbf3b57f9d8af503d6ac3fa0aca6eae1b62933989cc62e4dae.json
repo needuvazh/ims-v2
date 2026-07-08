@@ -1,1 +1,687 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_md", "label": "Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "label": "Part 7 \u2013 Validation Rules, Error Catalog, Notifications", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_module_07_scheduling_calendar_holiday_management", "label": "Module 07 \u2013 Scheduling, Calendar & Holiday Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L3"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_1_document_control", "label": "1. Document Control", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L5"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_2_validation_strategy", "label": "2. Validation Strategy", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L20"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_3_common_field_validation_rules", "label": "3. Common Field Validation Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L35"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_4_date_time_and_timezone_validation_rules", "label": "4. Date, Time, and Timezone Validation Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L52"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_5_business_calendar_validation_rules", "label": "5. Business Calendar Validation Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L71"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_6_holiday_validation_rules", "label": "6. Holiday Validation Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L92"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_7_venue_block_validation_rules", "label": "7. Venue Block Validation Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L107"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_8_schedule_session_validation_rules", "label": "8. Schedule Session Validation Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L124"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_conflict_detection_algorithm", "label": "9. Conflict Detection Algorithm", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L153"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_1_time_overlap_formula", "label": "9.1 Time Overlap Formula", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L155"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_2_trainer_conflict_check", "label": "9.2 Trainer Conflict Check", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L166"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_3_classroom_conflict_check", "label": "9.3 Classroom Conflict Check", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L181"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_4_batch_conflict_check", "label": "9.4 Batch Conflict Check", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L191"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_5_holiday_conflict_check", "label": "9.5 Holiday Conflict Check", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L201"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_6_venue_block_conflict_check", "label": "9.6 Venue Block Conflict Check", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L211"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_state_transition_validation_rules", "label": "10. State Transition Validation Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L224"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_1_schedulesession_status_transitions", "label": "10.1 ScheduleSession Status Transitions", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L226"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_2_calendar_status_transitions", "label": "10.2 Calendar Status Transitions", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L244"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_3_holiday_status_transitions", "label": "10.3 Holiday Status Transitions", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L255"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_4_venueblock_status_transitions", "label": "10.4 VenueBlock Status Transitions", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L267"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_11_structured_error_code_catalog", "label": "11. Structured Error Code Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L281"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_11_1_common_and_authorization_errors", "label": "11.1 Common and Authorization Errors", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L283"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_11_2_scheduling_domain_errors", "label": "11.2 Scheduling Domain Errors", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L296"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_12_notification_principles", "label": "12. Notification Principles", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L344"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_13_notification_event_catalog", "label": "13. Notification Event Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L359"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_template_variable_catalog", "label": "14. Template Variable Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L379"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_1_shared_variables", "label": "14.1 Shared Variables", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L381"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_2_reschedule_variables", "label": "14.2 Reschedule Variables", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L404"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_3_cancellation_variables", "label": "14.3 Cancellation Variables", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L421"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_4_conflict_and_override_variables", "label": "14.4 Conflict and Override Variables", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L431"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_notification_template_specifications", "label": "15. Notification Template Specifications", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L447"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_1_sch_session_published_v1", "label": "15.1 `SCH_SESSION_PUBLISHED_V1`", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L449"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_2_sch_session_rescheduled_v1", "label": "15.2 `SCH_SESSION_RESCHEDULED_V1`", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L498"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_3_sch_session_cancelled_v1", "label": "15.3 `SCH_SESSION_CANCELLED_V1`", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L549"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_4_sch_override_used_v1", "label": "15.4 `SCH_OVERRIDE_USED_V1`", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L591"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_5_sch_bulk_generation_completed_v1", "label": "15.5 `SCH_BULK_GENERATION_COMPLETED_V1`", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L625"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_16_notification_recipient_resolution_rules", "label": "16. Notification Recipient Resolution Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L658"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_17_notification_suppression_rules", "label": "17. Notification Suppression Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L673"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_18_cross_module_validation_dependencies", "label": "18. Cross-Module Validation Dependencies", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L689"}, {"id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_19_validation_test_scenarios", "label": "19. Validation Test Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L709"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_module_07_scheduling_calendar_holiday_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L3", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_1_document_control", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L5", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_2_validation_strategy", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L20", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_3_common_field_validation_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L35", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_4_date_time_and_timezone_validation_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L52", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_5_business_calendar_validation_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L71", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_6_holiday_validation_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L92", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_7_venue_block_validation_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L107", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_8_schedule_session_validation_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L124", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_conflict_detection_algorithm", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L153", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_conflict_detection_algorithm", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_1_time_overlap_formula", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L155", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_conflict_detection_algorithm", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_2_trainer_conflict_check", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L166", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_conflict_detection_algorithm", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_3_classroom_conflict_check", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L181", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_conflict_detection_algorithm", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_4_batch_conflict_check", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L191", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_conflict_detection_algorithm", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_5_holiday_conflict_check", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L201", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_conflict_detection_algorithm", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_6_venue_block_conflict_check", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L211", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_state_transition_validation_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L224", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_state_transition_validation_rules", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_1_schedulesession_status_transitions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L226", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_state_transition_validation_rules", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_2_calendar_status_transitions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L244", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_state_transition_validation_rules", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_3_holiday_status_transitions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L255", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_state_transition_validation_rules", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_4_venueblock_status_transitions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L267", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_11_structured_error_code_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L281", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_11_structured_error_code_catalog", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_11_1_common_and_authorization_errors", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L283", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_11_structured_error_code_catalog", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_11_2_scheduling_domain_errors", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L296", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_12_notification_principles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L344", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_13_notification_event_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L359", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_template_variable_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L379", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_template_variable_catalog", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_1_shared_variables", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L381", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_template_variable_catalog", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_2_reschedule_variables", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L404", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_template_variable_catalog", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_3_cancellation_variables", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L421", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_template_variable_catalog", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_4_conflict_and_override_variables", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L431", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_notification_template_specifications", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L447", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_notification_template_specifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_1_sch_session_published_v1", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L449", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_notification_template_specifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_2_sch_session_rescheduled_v1", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L498", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_notification_template_specifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_3_sch_session_cancelled_v1", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L549", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_notification_template_specifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_4_sch_override_used_v1", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L591", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_notification_template_specifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_5_sch_bulk_generation_completed_v1", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L625", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_16_notification_recipient_resolution_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L658", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_17_notification_suppression_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L673", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_18_cross_module_validation_dependencies", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L689", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_19_validation_test_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L709", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_md",
+      "label": "Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "label": "Part 7 \u2013 Validation Rules, Error Catalog, Notifications",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_module_07_scheduling_calendar_holiday_management",
+      "label": "Module 07 \u2013 Scheduling, Calendar & Holiday Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_1_document_control",
+      "label": "1. Document Control",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_2_validation_strategy",
+      "label": "2. Validation Strategy",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L20"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_3_common_field_validation_rules",
+      "label": "3. Common Field Validation Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L35"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_4_date_time_and_timezone_validation_rules",
+      "label": "4. Date, Time, and Timezone Validation Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L52"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_5_business_calendar_validation_rules",
+      "label": "5. Business Calendar Validation Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L71"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_6_holiday_validation_rules",
+      "label": "6. Holiday Validation Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L92"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_7_venue_block_validation_rules",
+      "label": "7. Venue Block Validation Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L107"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_8_schedule_session_validation_rules",
+      "label": "8. Schedule Session Validation Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L124"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_conflict_detection_algorithm",
+      "label": "9. Conflict Detection Algorithm",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L153"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_1_time_overlap_formula",
+      "label": "9.1 Time Overlap Formula",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L155"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_2_trainer_conflict_check",
+      "label": "9.2 Trainer Conflict Check",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L166"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_3_classroom_conflict_check",
+      "label": "9.3 Classroom Conflict Check",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L181"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_4_batch_conflict_check",
+      "label": "9.4 Batch Conflict Check",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L191"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_5_holiday_conflict_check",
+      "label": "9.5 Holiday Conflict Check",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L201"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_6_venue_block_conflict_check",
+      "label": "9.6 Venue Block Conflict Check",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L211"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_state_transition_validation_rules",
+      "label": "10. State Transition Validation Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L224"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_1_schedulesession_status_transitions",
+      "label": "10.1 ScheduleSession Status Transitions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L226"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_2_calendar_status_transitions",
+      "label": "10.2 Calendar Status Transitions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L244"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_3_holiday_status_transitions",
+      "label": "10.3 Holiday Status Transitions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L255"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_4_venueblock_status_transitions",
+      "label": "10.4 VenueBlock Status Transitions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L267"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_11_structured_error_code_catalog",
+      "label": "11. Structured Error Code Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L281"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_11_1_common_and_authorization_errors",
+      "label": "11.1 Common and Authorization Errors",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L283"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_11_2_scheduling_domain_errors",
+      "label": "11.2 Scheduling Domain Errors",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L296"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_12_notification_principles",
+      "label": "12. Notification Principles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L344"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_13_notification_event_catalog",
+      "label": "13. Notification Event Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L359"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_template_variable_catalog",
+      "label": "14. Template Variable Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L379"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_1_shared_variables",
+      "label": "14.1 Shared Variables",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L381"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_2_reschedule_variables",
+      "label": "14.2 Reschedule Variables",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L404"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_3_cancellation_variables",
+      "label": "14.3 Cancellation Variables",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L421"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_4_conflict_and_override_variables",
+      "label": "14.4 Conflict and Override Variables",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L431"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_notification_template_specifications",
+      "label": "15. Notification Template Specifications",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L447"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_1_sch_session_published_v1",
+      "label": "15.1 `SCH_SESSION_PUBLISHED_V1`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L449"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_2_sch_session_rescheduled_v1",
+      "label": "15.2 `SCH_SESSION_RESCHEDULED_V1`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L498"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_3_sch_session_cancelled_v1",
+      "label": "15.3 `SCH_SESSION_CANCELLED_V1`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L549"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_4_sch_override_used_v1",
+      "label": "15.4 `SCH_OVERRIDE_USED_V1`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L591"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_5_sch_bulk_generation_completed_v1",
+      "label": "15.5 `SCH_BULK_GENERATION_COMPLETED_V1`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L625"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_16_notification_recipient_resolution_rules",
+      "label": "16. Notification Recipient Resolution Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L658"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_17_notification_suppression_rules",
+      "label": "17. Notification Suppression Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L673"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_18_cross_module_validation_dependencies",
+      "label": "18. Cross-Module Validation Dependencies",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L689"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_19_validation_test_scenarios",
+      "label": "19. Validation Test Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L709"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_module_07_scheduling_calendar_holiday_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_1_document_control",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_2_validation_strategy",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_3_common_field_validation_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_4_date_time_and_timezone_validation_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_5_business_calendar_validation_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_6_holiday_validation_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_7_venue_block_validation_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_8_schedule_session_validation_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L124",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_conflict_detection_algorithm",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L153",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_conflict_detection_algorithm",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_1_time_overlap_formula",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_conflict_detection_algorithm",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_2_trainer_conflict_check",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L166",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_conflict_detection_algorithm",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_3_classroom_conflict_check",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L181",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_conflict_detection_algorithm",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_4_batch_conflict_check",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L191",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_conflict_detection_algorithm",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_5_holiday_conflict_check",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L201",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_conflict_detection_algorithm",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_9_6_venue_block_conflict_check",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L211",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_state_transition_validation_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L224",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_state_transition_validation_rules",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_1_schedulesession_status_transitions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L226",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_state_transition_validation_rules",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_2_calendar_status_transitions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L244",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_state_transition_validation_rules",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_3_holiday_status_transitions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L255",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_state_transition_validation_rules",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_10_4_venueblock_status_transitions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L267",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_11_structured_error_code_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L281",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_11_structured_error_code_catalog",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_11_1_common_and_authorization_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L283",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_11_structured_error_code_catalog",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_11_2_scheduling_domain_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L296",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_12_notification_principles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L344",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_13_notification_event_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L359",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_template_variable_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L379",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_template_variable_catalog",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_1_shared_variables",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L381",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_template_variable_catalog",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_2_reschedule_variables",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L404",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_template_variable_catalog",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_3_cancellation_variables",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L421",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_template_variable_catalog",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_14_4_conflict_and_override_variables",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L431",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_notification_template_specifications",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L447",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_notification_template_specifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_1_sch_session_published_v1",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L449",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_notification_template_specifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_2_sch_session_rescheduled_v1",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L498",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_notification_template_specifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_3_sch_session_cancelled_v1",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L549",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_notification_template_specifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_4_sch_override_used_v1",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L591",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_notification_template_specifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_15_5_sch_bulk_generation_completed_v1",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L625",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_16_notification_recipient_resolution_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L658",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_17_notification_suppression_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L673",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_18_cross_module_validation_dependencies",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L689",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_7_validation_rules_error_catalog_notifications_19_validation_test_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L709",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

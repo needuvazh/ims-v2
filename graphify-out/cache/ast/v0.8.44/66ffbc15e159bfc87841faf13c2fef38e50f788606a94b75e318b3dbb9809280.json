@@ -1,1 +1,63 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_student_profile_lookup_tasks_md", "label": "tasks.md", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/tasks.md", "source_location": "L1"}, {"id": "student_profile_lookup_tasks_1_domain_and_application_services", "label": "1. Domain and Application Services", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/tasks.md", "source_location": "L1"}, {"id": "student_profile_lookup_tasks_2_api_routes_and_ui_refactoring", "label": "2. API Routes and UI Refactoring", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/tasks.md", "source_location": "L9"}, {"id": "student_profile_lookup_tasks_3_verification_tests", "label": "3. Verification & Tests", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/tasks.md", "source_location": "L19"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_student_profile_lookup_tasks_md", "target": "student_profile_lookup_tasks_1_domain_and_application_services", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/student-profile-lookup/tasks.md", "source_location": "L1", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_student_profile_lookup_tasks_md", "target": "student_profile_lookup_tasks_2_api_routes_and_ui_refactoring", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/student-profile-lookup/tasks.md", "source_location": "L9", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_student_profile_lookup_tasks_md", "target": "student_profile_lookup_tasks_3_verification_tests", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/student-profile-lookup/tasks.md", "source_location": "L19", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_student_profile_lookup_tasks_md",
+      "label": "tasks.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/tasks.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "student_profile_lookup_tasks_1_domain_and_application_services",
+      "label": "1. Domain and Application Services",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/tasks.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "student_profile_lookup_tasks_2_api_routes_and_ui_refactoring",
+      "label": "2. API Routes and UI Refactoring",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/tasks.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "student_profile_lookup_tasks_3_verification_tests",
+      "label": "3. Verification & Tests",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/tasks.md",
+      "source_location": "L19"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_student_profile_lookup_tasks_md",
+      "target": "student_profile_lookup_tasks_1_domain_and_application_services",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/student-profile-lookup/tasks.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_student_profile_lookup_tasks_md",
+      "target": "student_profile_lookup_tasks_2_api_routes_and_ui_refactoring",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/student-profile-lookup/tasks.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_student_profile_lookup_tasks_md",
+      "target": "student_profile_lookup_tasks_3_verification_tests",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/student-profile-lookup/tasks.md",
+      "source_location": "L19",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

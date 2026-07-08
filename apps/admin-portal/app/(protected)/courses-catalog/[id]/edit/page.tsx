@@ -7,7 +7,9 @@ import { Home, BookOpen, Pencil } from 'lucide-react';
 
 export const metadata = { title: 'Edit Course - Admin Portal | ASTI IMS' };
 
-export default async function EditCoursePage(props: { params: Promise<{ id: string }> }) {
+export default async function EditCoursePage(props: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await props.params;
 
   // Enforce lead update permissions
@@ -45,8 +47,16 @@ export default async function EditCoursePage(props: { params: Promise<{ id: stri
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5" /> },
-              { label: 'Courses', href: '/courses-catalog', icon: <BookOpen className="h-3.5 w-3.5" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5" />,
+              },
+              {
+                label: 'Courses',
+                href: '/courses-catalog',
+                icon: <BookOpen className="h-3.5 w-3.5" />,
+              },
               { label: 'Edit', icon: <Pencil className="h-3.5 w-3.5" /> },
             ]}
           />

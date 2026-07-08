@@ -1,6 +1,9 @@
 import { ResultRepository } from '../../domain/interfaces/ResultRepository';
 import { ExamRepository } from '../../domain/interfaces/ExamRepository';
-import { ResultAggregate, RESULT_STATUSES } from '../../domain/aggregates/Result';
+import {
+  ResultAggregate,
+  RESULT_STATUSES,
+} from '../../domain/aggregates/Result';
 import { ResultInvalidStateError } from '../../domain/errors';
 
 export interface CorrectResultInput {
@@ -24,7 +27,9 @@ export class CorrectResultCommandHandler {
     }
 
     if (result.resultStatus !== RESULT_STATUSES.FINALIZED) {
-      throw new ResultInvalidStateError(`Result ${input.resultId} must be finalized before correction (status: ${result.resultStatus})`);
+      throw new ResultInvalidStateError(
+        `Result ${input.resultId} must be finalized before correction (status: ${result.resultStatus})`,
+      );
     }
 
     const exam = await this.examRepository.findById(result.examId);
@@ -33,7 +38,12 @@ export class CorrectResultCommandHandler {
     }
 
     const aggregate = new ResultAggregate(result);
-    const updated = aggregate.correct(input.marksObtained, exam.maxMarks, input.grade, input.userId);
+    const updated = aggregate.correct(
+      input.marksObtained,
+      exam.maxMarks,
+      input.grade,
+      input.userId,
+    );
 
     await this.resultRepository.save(updated);
   }

@@ -1,1 +1,143 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_expose_public_courses_design_md", "label": "design.md", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md", "source_location": "L1"}, {"id": "2026_07_06_expose_public_courses_design_context", "label": "Context", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md", "source_location": "L1"}, {"id": "2026_07_06_expose_public_courses_design_goals_non_goals", "label": "Goals / Non-Goals", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md", "source_location": "L5"}, {"id": "2026_07_06_expose_public_courses_design_decisions", "label": "Decisions", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md", "source_location": "L19"}, {"id": "2026_07_06_expose_public_courses_design_1_database_model_changes", "label": "1. Database Model Changes", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md", "source_location": "L21"}, {"id": "2026_07_06_expose_public_courses_design_2_category_hierarchy_traversal", "label": "2. Category Hierarchy Traversal", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md", "source_location": "L33"}, {"id": "2026_07_06_expose_public_courses_design_3_exposing_fields_in_public_apis", "label": "3. Exposing Fields in Public APIs", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md", "source_location": "L36"}, {"id": "2026_07_06_expose_public_courses_design_4_admin_ui_changes", "label": "4. Admin UI Changes", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md", "source_location": "L41"}, {"id": "2026_07_06_expose_public_courses_design_risks_trade_offs", "label": "Risks / Trade-offs", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md", "source_location": "L44"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_expose_public_courses_design_md", "target": "2026_07_06_expose_public_courses_design_context", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md", "source_location": "L1", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_expose_public_courses_design_md", "target": "2026_07_06_expose_public_courses_design_goals_non_goals", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md", "source_location": "L5", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_expose_public_courses_design_md", "target": "2026_07_06_expose_public_courses_design_decisions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md", "source_location": "L19", "weight": 1.0}, {"source": "2026_07_06_expose_public_courses_design_decisions", "target": "2026_07_06_expose_public_courses_design_1_database_model_changes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md", "source_location": "L21", "weight": 1.0}, {"source": "2026_07_06_expose_public_courses_design_decisions", "target": "2026_07_06_expose_public_courses_design_2_category_hierarchy_traversal", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md", "source_location": "L33", "weight": 1.0}, {"source": "2026_07_06_expose_public_courses_design_decisions", "target": "2026_07_06_expose_public_courses_design_3_exposing_fields_in_public_apis", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md", "source_location": "L36", "weight": 1.0}, {"source": "2026_07_06_expose_public_courses_design_decisions", "target": "2026_07_06_expose_public_courses_design_4_admin_ui_changes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md", "source_location": "L41", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_expose_public_courses_design_md", "target": "2026_07_06_expose_public_courses_design_risks_trade_offs", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md", "source_location": "L44", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_expose_public_courses_design_md",
+      "label": "design.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "2026_07_06_expose_public_courses_design_context",
+      "label": "Context",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "2026_07_06_expose_public_courses_design_goals_non_goals",
+      "label": "Goals / Non-Goals",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "2026_07_06_expose_public_courses_design_decisions",
+      "label": "Decisions",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md",
+      "source_location": "L19"
+    },
+    {
+      "id": "2026_07_06_expose_public_courses_design_1_database_model_changes",
+      "label": "1. Database Model Changes",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md",
+      "source_location": "L21"
+    },
+    {
+      "id": "2026_07_06_expose_public_courses_design_2_category_hierarchy_traversal",
+      "label": "2. Category Hierarchy Traversal",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md",
+      "source_location": "L33"
+    },
+    {
+      "id": "2026_07_06_expose_public_courses_design_3_exposing_fields_in_public_apis",
+      "label": "3. Exposing Fields in Public APIs",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md",
+      "source_location": "L36"
+    },
+    {
+      "id": "2026_07_06_expose_public_courses_design_4_admin_ui_changes",
+      "label": "4. Admin UI Changes",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md",
+      "source_location": "L41"
+    },
+    {
+      "id": "2026_07_06_expose_public_courses_design_risks_trade_offs",
+      "label": "Risks / Trade-offs",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md",
+      "source_location": "L44"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_expose_public_courses_design_md",
+      "target": "2026_07_06_expose_public_courses_design_context",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_expose_public_courses_design_md",
+      "target": "2026_07_06_expose_public_courses_design_goals_non_goals",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_expose_public_courses_design_md",
+      "target": "2026_07_06_expose_public_courses_design_decisions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "2026_07_06_expose_public_courses_design_decisions",
+      "target": "2026_07_06_expose_public_courses_design_1_database_model_changes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "2026_07_06_expose_public_courses_design_decisions",
+      "target": "2026_07_06_expose_public_courses_design_2_category_hierarchy_traversal",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "2026_07_06_expose_public_courses_design_decisions",
+      "target": "2026_07_06_expose_public_courses_design_3_exposing_fields_in_public_apis",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "2026_07_06_expose_public_courses_design_decisions",
+      "target": "2026_07_06_expose_public_courses_design_4_admin_ui_changes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_expose_public_courses_design_md",
+      "target": "2026_07_06_expose_public_courses_design_risks_trade_offs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-expose-public-courses/design.md",
+      "source_location": "L44",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

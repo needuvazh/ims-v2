@@ -31,7 +31,9 @@ export class PrismaTrainerAssignmentReader implements TrainerAssignmentReader {
 
     return {
       trainerId: batchTrainer.trainerId,
-      trainerName: trainerProfile?.person ? `${trainerProfile.person.firstName} ${trainerProfile.person.lastName}` : '',
+      trainerName: trainerProfile?.person
+        ? `${trainerProfile.person.firstName} ${trainerProfile.person.lastName}`
+        : '',
       role: batchTrainer.role,
     };
   }

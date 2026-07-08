@@ -1,20 +1,46 @@
 import { z } from 'zod';
 
-export const attendanceSessionStatuses = ['Draft', 'Open', 'Submitted', 'Locked', 'Reopened', 'Cancelled'] as const;
-export type AttendanceSessionStatus = (typeof attendanceSessionStatuses)[number];
+export const attendanceSessionStatuses = [
+  'Draft',
+  'Open',
+  'Submitted',
+  'Locked',
+  'Reopened',
+  'Cancelled',
+] as const;
+export type AttendanceSessionStatus =
+  (typeof attendanceSessionStatuses)[number];
 
-export const attendanceRecordStatuses = ['Present', 'Absent', 'Late', 'Excused', 'Unmarked'] as const;
+export const attendanceRecordStatuses = [
+  'Present',
+  'Absent',
+  'Late',
+  'Excused',
+  'Unmarked',
+] as const;
 export type AttendanceRecordStatus = (typeof attendanceRecordStatuses)[number];
 
-export const attendanceCorrectionStatuses = ['Pending', 'Approved', 'Rejected', 'Cancelled'] as const;
-export type AttendanceCorrectionStatus = (typeof attendanceCorrectionStatuses)[number];
+export const attendanceCorrectionStatuses = [
+  'Pending',
+  'Approved',
+  'Rejected',
+  'Cancelled',
+] as const;
+export type AttendanceCorrectionStatus =
+  (typeof attendanceCorrectionStatuses)[number];
 
-export const attendanceAlertStatuses = ['Active', 'Acknowledged', 'Resolved'] as const;
+export const attendanceAlertStatuses = [
+  'Active',
+  'Acknowledged',
+  'Resolved',
+] as const;
 export type AttendanceAlertStatus = (typeof attendanceAlertStatuses)[number];
 
 export const attendanceSessionStatusSchema = z.enum(attendanceSessionStatuses);
 export const attendanceRecordStatusSchema = z.enum(attendanceRecordStatuses);
-export const attendanceCorrectionStatusSchema = z.enum(attendanceCorrectionStatuses);
+export const attendanceCorrectionStatusSchema = z.enum(
+  attendanceCorrectionStatuses,
+);
 export const attendanceAlertStatusSchema = z.enum(attendanceAlertStatuses);
 
 export const dateOnlySchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
@@ -205,4 +231,3 @@ export interface PaginatedResult<T> {
   page: number;
   pageSize: number;
 }
-

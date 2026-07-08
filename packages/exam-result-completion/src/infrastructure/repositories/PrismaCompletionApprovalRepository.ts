@@ -1,6 +1,13 @@
-import { PrismaClient, CompletionApproval as PrismaCompletionApproval } from '@prisma/client';
+import {
+  PrismaClient,
+  CompletionApproval as PrismaCompletionApproval,
+} from '@prisma/client';
 import { CompletionApprovalRepository } from '../../domain/interfaces/CompletionApprovalRepository';
-import { CompletionApproval, ApprovalLevel, ApprovalStatus } from '../../domain/aggregates/CompletionApproval';
+import {
+  CompletionApproval,
+  ApprovalLevel,
+  ApprovalStatus,
+} from '../../domain/aggregates/CompletionApproval';
 
 export class PrismaCompletionApprovalRepository implements CompletionApprovalRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -13,7 +20,9 @@ export class PrismaCompletionApprovalRepository implements CompletionApprovalRep
     return record ? this.toDomain(record) : null;
   }
 
-  async findByCompletionId(completionId: string): Promise<CompletionApproval[]> {
+  async findByCompletionId(
+    completionId: string,
+  ): Promise<CompletionApproval[]> {
     const records = await this.prisma.completionApproval.findMany({
       where: {
         courseCompletionId: completionId,
@@ -25,7 +34,10 @@ export class PrismaCompletionApprovalRepository implements CompletionApprovalRep
     return records.map(this.toDomain);
   }
 
-  async findByCompletionAndLevel(completionId: string, level: ApprovalLevel): Promise<CompletionApproval | null> {
+  async findByCompletionAndLevel(
+    completionId: string,
+    level: ApprovalLevel,
+  ): Promise<CompletionApproval | null> {
     const record = await this.prisma.completionApproval.findFirst({
       where: {
         courseCompletionId: completionId,
@@ -37,7 +49,10 @@ export class PrismaCompletionApprovalRepository implements CompletionApprovalRep
     return record ? this.toDomain(record) : null;
   }
 
-  async findByActorAndStatus(actorId: string, status: ApprovalStatus): Promise<CompletionApproval[]> {
+  async findByActorAndStatus(
+    actorId: string,
+    status: ApprovalStatus,
+  ): Promise<CompletionApproval[]> {
     const records = await this.prisma.completionApproval.findMany({
       where: {
         actorId,
@@ -65,8 +80,8 @@ export class PrismaCompletionApprovalRepository implements CompletionApprovalRep
           where: { id: approval.id },
           update: this.toPrismaUpdate(approval),
           create: this.toPrismaCreate(approval),
-        })
-      )
+        }),
+      ),
     );
   }
 

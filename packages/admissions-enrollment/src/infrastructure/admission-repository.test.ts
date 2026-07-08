@@ -10,14 +10,18 @@ test('AdmissionRepository should exclude soft-deleted persons from duplicate loo
 
   const repository = new AdmissionRepository(prisma);
 
-  await repository.findPersonByUniqueKeys('salim@example.com', '+96899998888', null);
-
-  expect(findFirstMock).toHaveBeenCalledWith({
-    where: {
-      OR: [{ email: 'salim@example.com' }, { mobile: '+96899998888' }],
-      isDeleted: false,
-    },
-  });
+  await repository.findPersonByUniqueKeys(
+    null,
+    null,
+    'NID-123',
+  );
+ 
+   expect(findFirstMock).toHaveBeenCalledWith({
+     where: {
+       nationalId: 'NID-123',
+       isDeleted: false,
+     },
+   });
 });
 
 test('AdmissionRepository should exclude soft-deleted student profiles when reusing by person', async () => {

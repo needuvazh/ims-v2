@@ -3,35 +3,78 @@
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { buildCrmActionFailure } from './form-errors';
-import { assertPermission, assertBranchScope, getSession } from '../../lib/auth-guard';
-import { CreateLeadSchema, LeadSourceEnum } from '@ims/crm-leads';
+import {
+  assertPermission,
+  assertBranchScope,
+  getSession,
+} from '../../lib/auth-guard';
+import { CreateLeadSchema, LeadSourceEnum, LeadStageEnum } from '@ims/crm-leads';
 import { prisma } from '@ims/database';
 
-const FormDateOfBirthSchema = z.preprocess((val) => {
-  if (typeof val === 'string') {
-    if (!val.trim()) return undefined;
-    const d = new Date(val);
-    return isNaN(d.getTime()) ? val : d;
-  }
-  return val;
-}, z.date({ required_error: 'Date of birth is required', invalid_type_error: 'Invalid date of birth' }));
+const FormDateOfBirthSchema = z.preprocess(
+  (val) => {
+    if (typeof val === 'string') {
+      if (!val.trim()) return undefined;
+      const d = new Date(val);
+      return isNaN(d.getTime()) ? val : d;
+    }
+    return val;
+  },
+  z.date({
+    required_error: 'Date of birth is required',
+    invalid_type_error: 'Invalid date of birth',
+  }),
+);
 
 const createLeadSchema = CreateLeadSchema.extend({
   email: z.string().min(1, 'Email address is required').email('Invalid email'),
   dateOfBirth: FormDateOfBirthSchema,
   nationality: z.string().min(1, 'Nationality is required'),
   nationalId: z.string().min(1, 'ID Number is required'),
-  counselorId: z.string().min(1, 'Assigned staff is required').uuid('Invalid staff reference'),
+  counselorId: z
+    .string()
+    .min(1, 'Assigned staff is required')
+    .uuid('Invalid staff reference'),
   source: LeadSourceEnum,
   bypassDuplicateBlock: z.boolean().optional(),
 });
 
 const updateLeadSchema = createLeadSchema.extend({
   id: z.string().uuid(),
-  version: z.preprocess((val) => (val ? Number(val) : undefined), z.number().int({ message: 'Version is required for concurrency control' })),
+  version: z.preprocess(
+    (val) => (val ? Number(val) : undefined),
+    z.number().int({ message: 'Version is required for concurrency control' }),
+  ),
+  stage: LeadStageEnum,
   lostReasonCode: z.string().optional().nullable().or(z.literal('')),
   lostReasonNotes: z.string().optional().nullable().or(z.literal('')),
-});
+})
+  .refine(
+    (data) => {
+      if (data.stage === 'Lost') {
+        return !!data.lostReasonCode && data.lostReasonCode.trim() !== '';
+      }
+      return true;
+    },
+    {
+      message: 'Lost reason code is required when stage is Lost',
+      path: ['lostReasonCode'],
+    },
+  )
+  .refine(
+    (data) => {
+      if (data.stage === 'Lost') {
+        return (
+          !!data.lostReasonNotes && data.lostReasonNotes.trim().length >= 15
+        );
+      }
+      return true;
+    },
+    {
+      message: 'Lost reason notes must be at least 15 characters',
+      path: ['lostReasonNotes'],
+    },
+  );
 
 async function getActorId(): Promise<string> {
   const session = await getSession();
@@ -86,7 +129,7 @@ export async function createLeadAction(data: any) {
         notes: parsed.notes,
         bypassDuplicateBlock: parsed.bypassDuplicateBlock || false,
       },
-      actorId
+      actorId,
     );
 
     revalidatePath('/leads');
@@ -105,7 +148,8 @@ export async function updateLeadAction(data: any) {
       counselorId: data.counselorId,
       notes: data.notes === '' ? null : data.notes,
       lostReasonCode: data.lostReasonCode === '' ? null : data.lostReasonCode,
-      lostReasonNotes: data.lostReasonNotes === '' ? null : data.lostReasonNotes,
+      lostReasonNotes:
+        data.lostReasonNotes === '' ? null : data.lostReasonNotes,
       bypassDuplicateBlock: !!data.bypassDuplicateBlock,
     };
     const parsed = updateLeadSchema.parse(preparedData);
@@ -113,17 +157,25 @@ export async function updateLeadAction(data: any) {
     // Enforce permissions
     const session = await assertPermission('lead.update');
 
-    const { branchScopeResolver, leadService } = await import('../../lib/runtime');
+    const { branchScopeResolver, leadService } =
+      await import('../../lib/runtime');
 
     // Fetch original lead to verify scoping
     const lead = await assertCounselorLeadScope(parsed.id, session);
 
+    if (lead.stage === 'Converted') {
+      throw new Error('ERR_CRM_LEAD_ALREADY_CONVERTED');
+    }
+
     // Branch scoping on original branch
     const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
       session.userId as any,
-      session.activeBranchId as any
+      session.activeBranchId as any,
     );
-    if (allowedBranchIds.length > 0 && !allowedBranchIds.includes(lead.branchId as any)) {
+    if (
+      allowedBranchIds.length > 0 &&
+      !allowedBranchIds.includes(lead.branchId as any)
+    ) {
       throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
     }
 
@@ -149,7 +201,35 @@ export async function updateLeadAction(data: any) {
       bypassDuplicateBlock: parsed.bypassDuplicateBlock || false,
     };
 
-    await leadService.updateLead(parsed.id, updatePayload, undefined, session.userId);
+    await leadService.updateLead(
+      parsed.id,
+      updatePayload,
+      undefined,
+      session.userId,
+    );
+
+    // If stage changed, apply stage transition
+    if (parsed.stage !== lead.stage) {
+      if (parsed.stage === 'Lost') {
+        await leadService.closeLeadLost(
+          parsed.id,
+          {
+            lostReasonCode: parsed.lostReasonCode || '',
+            lostReasonNotes: parsed.lostReasonNotes || '',
+          },
+          session.userId,
+        );
+      } else {
+        await leadService.updateStage(
+          parsed.id,
+          {
+            newStage: parsed.stage,
+            version: lead.version + 1, // updateLead incremented database version by 1
+          },
+          session.userId,
+        );
+      }
+    }
 
     revalidatePath('/leads');
     return { success: true, data: { id: parsed.id } };
@@ -180,7 +260,9 @@ export async function convertLeadAction(leadId: string, documents: any[]) {
       }
       const url = String(docOrUrl);
       const isFirst = index === 0;
-      const fileName = url.split('/').pop() || (isFirst ? 'civil_id_scan' : 'secondary_document');
+      const fileName =
+        url.split('/').pop() ||
+        (isFirst ? 'civil_id_scan' : 'secondary_document');
       const ext = fileName.split('.').pop() || 'pdf';
       const fileType = ext === 'pdf' ? 'application/pdf' : `image/${ext}`;
       return {
@@ -192,7 +274,11 @@ export async function convertLeadAction(leadId: string, documents: any[]) {
       };
     });
 
-    const result = await leadConversionOrchestrator.convertLeadToAdmission(leadId, mappedDocs, actorId);
+    const result = await leadConversionOrchestrator.convertLeadToAdmission(
+      leadId,
+      mappedDocs,
+      actorId,
+    );
     revalidatePath('/leads');
     return { success: true, data: result };
   } catch (error: any) {
@@ -212,6 +298,10 @@ export async function addLeadNoteAction(leadId: string, content: string) {
     const lead = await leadService.getLeadById(leadId);
     if (!lead) {
       throw new Error('Lead not found');
+    }
+
+    if (lead.stage === 'Converted') {
+      throw new Error('ERR_CRM_LEAD_ALREADY_CONVERTED');
     }
 
     await prisma.leadNote.create({
@@ -234,13 +324,17 @@ export async function updateLeadStageAction(
   stage: string,
   lostReasonCode?: string,
   lostReasonNotes?: string,
-  version?: number
+  version?: number,
 ) {
   try {
     const session = await assertPermission('lead.update');
 
     // Counselor & Branch Scope Check
-    await assertCounselorLeadScope(leadId, session);
+    const lead = await assertCounselorLeadScope(leadId, session);
+
+    if (lead.stage === 'Converted') {
+      throw new Error('ERR_CRM_LEAD_ALREADY_CONVERTED');
+    }
 
     const { leadService } = await import('../../lib/runtime');
 
@@ -258,7 +352,7 @@ export async function updateLeadStageAction(
           lostReasonCode,
           lostReasonNotes,
         },
-        session.userId
+        session.userId,
       );
     } else {
       await leadService.updateStage(
@@ -267,7 +361,7 @@ export async function updateLeadStageAction(
           newStage: stage as any,
           version: version || 1,
         },
-        session.userId
+        session.userId,
       );
     }
 

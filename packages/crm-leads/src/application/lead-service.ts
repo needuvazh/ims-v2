@@ -2,21 +2,32 @@ import { PrismaClient, Prisma } from '@prisma/client';
 import { createUuid } from '@ims/shared-kernel';
 import { DocumentCaptureInput, DocumentsService } from '@ims/documents';
 import { randomUUID } from 'crypto';
-import { ILeadRepository, IFollowUpRepository, LeadSortField, LeadSortOrder } from '../domain/repositories';
-import { CreateLeadInput, TransitionLeadStageInput, CloseLeadLostInput, LeadStage, LeadSource } from '../domain/lead';
+import {
+  ILeadRepository,
+  IFollowUpRepository,
+  LeadSortField,
+  LeadSortOrder,
+} from '../domain/repositories';
+import {
+  CreateLeadInput,
+  TransitionLeadStageInput,
+  CloseLeadLostInput,
+  LeadStage,
+  LeadSource,
+} from '../domain/lead';
 
 export class LeadService {
   constructor(
     private readonly prisma: PrismaClient,
     private readonly leadRepository: ILeadRepository,
-    private readonly followUpRepository: IFollowUpRepository
+    private readonly followUpRepository: IFollowUpRepository,
   ) {}
 
   // 1. Manual Lead Creation
   async createLead(
     input: CreateLeadInput & { bypassDuplicateBlock?: boolean },
     actorId?: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
     const client = tx || this.prisma;
 
@@ -35,10 +46,19 @@ export class LeadService {
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
     const dupConditions: Prisma.LeadWhereInput[] = [
-      { phone: input.phone, interestedCourseId: input.interestedCourseId }
+      { phone: input.phone, interestedCourseId: input.interestedCourseId },
     ];
     if (input.email) {
-      dupConditions.push({ email: input.email, interestedCourseId: input.interestedCourseId });
+      dupConditions.push({
+        email: input.email,
+        interestedCourseId: input.interestedCourseId,
+      });
+    }
+    if (input.nationalId) {
+      dupConditions.push({
+        nationalId: input.nationalId,
+        interestedCourseId: input.interestedCourseId,
+      });
     }
 
     const existingLead = await client.lead.findFirst({
@@ -58,10 +78,15 @@ export class LeadService {
       }
     }
 
-    // Person Resolution & Reuse logic (prevent duplicate key violation on Person.mobile or email)
-    const personConditions: Prisma.PersonWhereInput[] = [{ mobile: input.phone }];
+    // Person Resolution & Reuse logic (prevent duplicate key violation on Person.mobile, email, or nationalId)
+    const personConditions: Prisma.PersonWhereInput[] = [
+      { mobile: input.phone },
+    ];
     if (input.email) {
       personConditions.push({ email: input.email });
+    }
+    if (input.nationalId) {
+      personConditions.push({ nationalId: input.nationalId });
     }
 
     let person = await client.person.findFirst({
@@ -88,9 +113,12 @@ export class LeadService {
     } else {
       const personUpdateData: Prisma.PersonUpdateInput = {};
       if (input.email && !person.email) personUpdateData.email = input.email;
-      if (input.dateOfBirth && !person.dateOfBirth) personUpdateData.dateOfBirth = input.dateOfBirth;
-      if (input.nationality && !person.nationality) personUpdateData.nationality = input.nationality;
-      if (input.nationalId && !person.nationalId) personUpdateData.nationalId = input.nationalId;
+      if (input.dateOfBirth && !person.dateOfBirth)
+        personUpdateData.dateOfBirth = input.dateOfBirth;
+      if (input.nationality && !person.nationality)
+        personUpdateData.nationality = input.nationality;
+      if (input.nationalId && !person.nationalId)
+        personUpdateData.nationalId = input.nationalId;
 
       if (Object.keys(personUpdateData).length > 0) {
         person = await client.person.update({
@@ -119,7 +147,7 @@ export class LeadService {
         personId: person.id,
         leadNumber,
       },
-      client
+      client,
     );
 
     // Outbox Event
@@ -191,7 +219,7 @@ export class LeadService {
       // Reassign all pending follow-ups to the new counselor
       await tx.leadFollowUp.updateMany({
         where: { leadId, status: 'Scheduled' },
-        data: { counselorId }
+        data: { counselorId },
       });
 
       // Appends an assignment log to FollowUp (Type: SystemAssignment, Outcome: Reassigned, Notes: "Lead reassigned")
@@ -240,7 +268,11 @@ export class LeadService {
   }
 
   // 3. Stage Transitions with Optimistic Concurrency and State Machine Validation
-  async updateStage(leadId: string, input: TransitionLeadStageInput, actorId?: string) {
+  async updateStage(
+    leadId: string,
+    input: TransitionLeadStageInput,
+    actorId?: string,
+  ) {
     return this.prisma.$transaction(async (tx) => {
       const lead = await this.leadRepository.findById(leadId, tx);
       if (!lead) {
@@ -254,7 +286,11 @@ export class LeadService {
       if (currentStage === 'Converted') {
         throw new Error('ERR_CRM_INVALID_STAGE_TRANSITION');
       }
-      if (currentStage === 'Lost' && (targetStage !== 'New' && targetStage !== 'FollowUp')) {
+      if (
+        currentStage === 'Lost' &&
+        targetStage !== 'New' &&
+        targetStage !== 'FollowUp'
+      ) {
         throw new Error('ERR_CRM_INVALID_STAGE_TRANSITION');
       }
       if (currentStage === 'Won' && targetStage === 'Lost') {
@@ -262,7 +298,12 @@ export class LeadService {
       }
 
       // Update lead stage in repository (which enforces version-matching checks)
-      await this.leadRepository.updateStage(leadId, targetStage, input.version, tx);
+      await this.leadRepository.updateStage(
+        leadId,
+        targetStage,
+        input.version,
+        tx,
+      );
 
       // Write LeadStageHistory
       await tx.leadStageHistory.create({
@@ -282,7 +323,12 @@ export class LeadService {
           eventType: 'LeadStageUpdated',
           aggregateType: 'Lead',
           aggregateId: leadId,
-          payload: { leadId, oldStage: currentStage, newStage: targetStage, leadNumber: lead.leadNumber },
+          payload: {
+            leadId,
+            oldStage: currentStage,
+            newStage: targetStage,
+            leadNumber: lead.leadNumber,
+          },
           status: 'Pending',
           availableAt: new Date(),
         },
@@ -307,7 +353,11 @@ export class LeadService {
   }
 
   // 4. Close Lead as Lost
-  async closeLeadLost(leadId: string, input: CloseLeadLostInput, actorId?: string) {
+  async closeLeadLost(
+    leadId: string,
+    input: CloseLeadLostInput,
+    actorId?: string,
+  ) {
     return this.prisma.$transaction(async (tx) => {
       const lead = await this.leadRepository.findById(leadId, tx);
       if (!lead) {
@@ -332,11 +382,16 @@ export class LeadService {
           nextFollowUpDate: null,
           version: lead.version, // optimistic lock
         },
-        tx
+        tx,
       );
 
       // Change Stage to Lost
-      await this.leadRepository.updateStage(leadId, 'Lost', lead.version + 1, tx);
+      await this.leadRepository.updateStage(
+        leadId,
+        'Lost',
+        lead.version + 1,
+        tx,
+      );
 
       // Write LeadStageHistory
       await tx.leadStageHistory.create({
@@ -352,7 +407,10 @@ export class LeadService {
       });
 
       // Cancel all outstanding Scheduled follow-ups
-      const cancelledCount = await this.followUpRepository.cancelAllScheduled(leadId, tx);
+      const cancelledCount = await this.followUpRepository.cancelAllScheduled(
+        leadId,
+        tx,
+      );
 
       // Outbox Event
       await tx.outboxEvent.create({
@@ -361,7 +419,11 @@ export class LeadService {
           eventType: 'LeadLost',
           aggregateType: 'Lead',
           aggregateId: leadId,
-          payload: { leadId, lostReasonCode: input.lostReasonCode, leadNumber: lead.leadNumber },
+          payload: {
+            leadId,
+            lostReasonCode: input.lostReasonCode,
+            leadNumber: lead.leadNumber,
+          },
           status: 'Pending',
           availableAt: new Date(),
         },
@@ -377,7 +439,11 @@ export class LeadService {
           entityType: 'Lead',
           entityId: leadId,
           action: 'CloseLost',
-          newValue: { stage: 'Lost', lostReasonCode: input.lostReasonCode, cancelledFollowUpsCount: cancelledCount },
+          newValue: {
+            stage: 'Lost',
+            lostReasonCode: input.lostReasonCode,
+            cancelledFollowUpsCount: cancelledCount,
+          },
           branchId: lead.branchId,
         },
       });
@@ -394,7 +460,12 @@ export class LeadService {
 
   // 5. Decoupled Admissions Handoff (Convert Lead)
   // This verifies Won preconditions inside CRM context boundary and transitions stage to Converted.
-  async convertLead(leadId: string, documents: DocumentCaptureInput[], tx: Prisma.TransactionClient, actorId?: string) {
+  async convertLead(
+    leadId: string,
+    documents: DocumentCaptureInput[],
+    tx: Prisma.TransactionClient,
+    actorId?: string,
+  ) {
     const lead = await this.leadRepository.findById(leadId, tx);
     if (!lead) {
       throw new Error('ERR_CRM_LEAD_NOT_FOUND');
@@ -424,7 +495,10 @@ export class LeadService {
           { branchId: null, courseId: null },
           { branchId: lead.branchId, courseId: null },
           { branchId: null, courseId: lead.interestedCourseId || undefined },
-          { branchId: lead.branchId, courseId: lead.interestedCourseId || undefined },
+          {
+            branchId: lead.branchId,
+            courseId: lead.interestedCourseId || undefined,
+          },
         ],
       },
     });
@@ -450,10 +524,14 @@ export class LeadService {
         ...(documents || []).map((d) => d.documentType),
       ];
 
-      const missingTypes = mandatoryTypes.filter((t) => !allDocTypes.includes(t));
+      const missingTypes = mandatoryTypes.filter(
+        (t) => !allDocTypes.includes(t),
+      );
 
       if (missingTypes.length > 0) {
-        throw new Error(`ERR_CRM_WON_PRECONDITIONS_MISSED: Missing required documents: ${missingTypes.join(', ')}`);
+        throw new Error(
+          `ERR_CRM_WON_PRECONDITIONS_MISSED: Missing required documents: ${missingTypes.join(', ')}`,
+        );
       }
     }
 
@@ -472,7 +550,11 @@ export class LeadService {
     });
 
     const newDocsToRegister = documents.filter(
-      (doc) => !existingDocs.some((e) => e.fileKey === doc.fileKey || e.documentType === doc.documentType)
+      (doc) =>
+        !existingDocs.some(
+          (e) =>
+            e.fileKey === doc.fileKey || e.documentType === doc.documentType,
+        ),
     );
 
     if (newDocsToRegister.length > 0) {
@@ -483,7 +565,7 @@ export class LeadService {
         lead.branchId,
         newDocsToRegister,
         tx,
-        actorId
+        actorId,
       );
     }
 
@@ -501,7 +583,12 @@ export class LeadService {
     });
 
     // 2. Perform conversion / handoff transition to Converted
-    await this.leadRepository.updateStage(leadId, 'Converted', lead.version + 1, tx);
+    await this.leadRepository.updateStage(
+      leadId,
+      'Converted',
+      lead.version + 1,
+      tx,
+    );
 
     await tx.leadStageHistory.create({
       data: {
@@ -520,7 +607,7 @@ export class LeadService {
         nextFollowUpDate: null,
         version: lead.version + 2,
       },
-      tx
+      tx,
     );
 
     // Cancel all outstanding Scheduled follow-ups
@@ -543,7 +630,11 @@ export class LeadService {
           eventType: 'LeadConverted',
           aggregateType: 'Lead',
           aggregateId: leadId,
-          payload: { leadId, leadNumber: lead.leadNumber, studentEmail: lead.email },
+          payload: {
+            leadId,
+            leadNumber: lead.leadNumber,
+            studentEmail: lead.email,
+          },
           status: 'Pending',
           availableAt: new Date(),
         },
@@ -559,13 +650,28 @@ export class LeadService {
   }
 
   async findAll(
-    filters: { branchId?: string; branchIds?: string[]; stage?: LeadStage; source?: LeadSource; counselorId?: string; search?: string; sortBy?: LeadSortField; sortOrder?: LeadSortOrder },
-    pagination: { page: number; limit: number }
+    filters: {
+      branchId?: string;
+      branchIds?: string[];
+      stage?: LeadStage;
+      source?: LeadSource;
+      counselorId?: string;
+      search?: string;
+      sortBy?: LeadSortField;
+      sortOrder?: LeadSortOrder;
+      nationalId?: string;
+    },
+    pagination: { page: number; limit: number },
   ) {
     return this.leadRepository.findAll(filters, pagination, this.prisma);
   }
 
-  async updateLead(leadId: string, data: any, tx?: Prisma.TransactionClient, actorId?: string) {
+  async updateLead(
+    leadId: string,
+    data: any,
+    tx?: Prisma.TransactionClient,
+    actorId?: string,
+  ) {
     const client = tx || this.prisma;
     const execute = async (client: Prisma.TransactionClient) => {
       const originalLead = await this.leadRepository.findById(leadId, client);
@@ -573,29 +679,68 @@ export class LeadService {
         throw new Error('ERR_CRM_LEAD_NOT_FOUND');
       }
 
+      if (originalLead.stage === 'Converted') {
+        throw new Error('ERR_CRM_LEAD_ALREADY_CONVERTED');
+      }
+
       // Resolve original lead state to perform robust duplicate check on partial updates
-      if (data.phone || data.email || data.branchId || data.interestedCourseId) {
-        const checkPhone = data.phone !== undefined ? data.phone : originalLead.phone;
-        const checkEmail = data.email !== undefined ? data.email : originalLead.email;
-        const checkBranch = data.branchId !== undefined ? data.branchId : originalLead.branchId;
-        const checkCourse = data.interestedCourseId !== undefined ? data.interestedCourseId : originalLead.interestedCourseId;
+      if (
+        data.phone ||
+        data.email ||
+        data.nationalId ||
+        data.branchId ||
+        data.interestedCourseId
+      ) {
+        const checkPhone =
+          data.phone !== undefined ? data.phone : originalLead.phone;
+        const checkEmail =
+          data.email !== undefined ? data.email : originalLead.email;
+        const checkNationalId =
+          data.nationalId !== undefined ? data.nationalId : originalLead.nationalId;
+        const checkBranch =
+          data.branchId !== undefined ? data.branchId : originalLead.branchId;
+        const checkCourse =
+          data.interestedCourseId !== undefined
+            ? data.interestedCourseId
+            : originalLead.interestedCourseId;
 
         // Only check if fields actually changed to avoid false warnings on unchanged values
-        const phoneChanged = data.phone !== undefined && data.phone !== originalLead.phone;
-        const emailChanged = data.email !== undefined && data.email !== originalLead.email;
-        const branchChanged = data.branchId !== undefined && data.branchId !== originalLead.branchId;
-        const courseChanged = data.interestedCourseId !== undefined && data.interestedCourseId !== originalLead.interestedCourseId;
+        const phoneChanged =
+          data.phone !== undefined && data.phone !== originalLead.phone;
+        const emailChanged =
+          data.email !== undefined && data.email !== originalLead.email;
+        const nationalIdChanged =
+          data.nationalId !== undefined &&
+          data.nationalId !== originalLead.nationalId;
+        const branchChanged =
+          data.branchId !== undefined &&
+          data.branchId !== originalLead.branchId;
+        const courseChanged =
+          data.interestedCourseId !== undefined &&
+          data.interestedCourseId !== originalLead.interestedCourseId;
 
-        if (phoneChanged || emailChanged || branchChanged || courseChanged) {
+        if (phoneChanged || emailChanged || nationalIdChanged || branchChanged || courseChanged) {
           const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
-          
+
           // Build duplicate check conditions
           const dupConditions: Prisma.LeadWhereInput[] = [];
           if (checkPhone) {
-            dupConditions.push({ phone: checkPhone, interestedCourseId: checkCourse });
+            dupConditions.push({
+              phone: checkPhone,
+              interestedCourseId: checkCourse,
+            });
           }
           if (checkEmail) {
-            dupConditions.push({ email: checkEmail, interestedCourseId: checkCourse });
+            dupConditions.push({
+              email: checkEmail,
+              interestedCourseId: checkCourse,
+            });
+          }
+          if (checkNationalId) {
+            dupConditions.push({
+              nationalId: checkNationalId,
+              interestedCourseId: checkCourse,
+            });
           }
 
           if (dupConditions.length > 0) {
@@ -642,15 +787,33 @@ export class LeadService {
             interestedCourseId: originalLead.interestedCourseId,
           },
           newValue: {
-            firstName: data.firstName !== undefined ? data.firstName : originalLead.firstName,
-            lastName: data.lastName !== undefined ? data.lastName : originalLead.lastName,
+            firstName:
+              data.firstName !== undefined
+                ? data.firstName
+                : originalLead.firstName,
+            lastName:
+              data.lastName !== undefined
+                ? data.lastName
+                : originalLead.lastName,
             email: data.email !== undefined ? data.email : originalLead.email,
             phone: data.phone !== undefined ? data.phone : originalLead.phone,
-            nationality: data.nationality !== undefined ? data.nationality : originalLead.nationality,
-            nationalId: data.nationalId !== undefined ? data.nationalId : originalLead.nationalId,
+            nationality:
+              data.nationality !== undefined
+                ? data.nationality
+                : originalLead.nationality,
+            nationalId:
+              data.nationalId !== undefined
+                ? data.nationalId
+                : originalLead.nationalId,
             notes: data.notes !== undefined ? data.notes : originalLead.notes,
-            branchId: data.branchId !== undefined ? data.branchId : originalLead.branchId,
-            interestedCourseId: data.interestedCourseId !== undefined ? data.interestedCourseId : originalLead.interestedCourseId,
+            branchId:
+              data.branchId !== undefined
+                ? data.branchId
+                : originalLead.branchId,
+            interestedCourseId:
+              data.interestedCourseId !== undefined
+                ? data.interestedCourseId
+                : originalLead.interestedCourseId,
           },
           branchId: originalLead.branchId,
         },
@@ -666,12 +829,24 @@ export class LeadService {
           payload: {
             leadId,
             leadNumber: originalLead.leadNumber,
-            firstName: data.firstName !== undefined ? data.firstName : originalLead.firstName,
-            lastName: data.lastName !== undefined ? data.lastName : originalLead.lastName,
+            firstName:
+              data.firstName !== undefined
+                ? data.firstName
+                : originalLead.firstName,
+            lastName:
+              data.lastName !== undefined
+                ? data.lastName
+                : originalLead.lastName,
             phone: data.phone !== undefined ? data.phone : originalLead.phone,
             email: data.email !== undefined ? data.email : originalLead.email,
-            nationality: data.nationality !== undefined ? data.nationality : originalLead.nationality,
-            nationalId: data.nationalId !== undefined ? data.nationalId : originalLead.nationalId,
+            nationality:
+              data.nationality !== undefined
+                ? data.nationality
+                : originalLead.nationality,
+            nationalId:
+              data.nationalId !== undefined
+                ? data.nationalId
+                : originalLead.nationalId,
           },
           status: 'Pending',
           availableAt: new Date(),
@@ -682,12 +857,20 @@ export class LeadService {
     return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
 
-  async deleteLead(leadId: string, actorId: string, tx?: Prisma.TransactionClient) {
+  async deleteLead(
+    leadId: string,
+    actorId: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const client = tx || this.prisma;
     const execute = async (client: Prisma.TransactionClient) => {
       const lead = await this.leadRepository.findById(leadId, client);
       if (!lead) {
         throw new Error('ERR_CRM_LEAD_NOT_FOUND');
+      }
+
+      if (lead.stage === 'Converted') {
+        throw new Error('ERR_CRM_LEAD_ALREADY_CONVERTED');
       }
 
       await this.leadRepository.deleteLead(leadId, actorId, client);

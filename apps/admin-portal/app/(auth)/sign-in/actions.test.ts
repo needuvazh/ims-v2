@@ -40,7 +40,7 @@ class MockIamError extends Error {
   name = 'IamError';
   constructor(
     public readonly errorCode: string,
-    public readonly messageEn: string
+    public readonly messageEn: string,
   ) {
     super(messageEn);
   }
@@ -66,7 +66,9 @@ describe('signInAction', () => {
     formData.append('password', 'wrong-pass');
     formData.append('rememberMe', 'on');
 
-    loginMock.mockRejectedValue(new MockIamError('IAM-AUTH-001', 'Invalid credentials.'));
+    loginMock.mockRejectedValue(
+      new MockIamError('IAM-AUTH-001', 'Invalid credentials.'),
+    );
 
     const result = await signInAction({}, formData);
     expect(result.error).toBe('Invalid credentials.');
@@ -80,7 +82,12 @@ describe('signInAction', () => {
     formData.append('email', 'omrpravin1@gmail.com');
     formData.append('password', 'wrong-pass');
 
-    loginMock.mockRejectedValue(new DomainError('inactive_user_cannot_login', 'User account is inactive.'));
+    loginMock.mockRejectedValue(
+      new DomainError(
+        'inactive_user_cannot_login',
+        'User account is inactive.',
+      ),
+    );
 
     const result = await signInAction({}, formData);
     expect(result.error).toBe('User account is inactive.');
@@ -94,7 +101,9 @@ describe('signInAction', () => {
     formData.append('email', 'omrpravin1@gmail.com');
     formData.append('password', 'wrong-pass');
 
-    loginMock.mockRejectedValue(new Error('Internal database connection failed.'));
+    loginMock.mockRejectedValue(
+      new Error('Internal database connection failed.'),
+    );
 
     const result = await signInAction({}, formData);
     expect(result.error).toBe('Something went wrong. Please try again.');
@@ -109,7 +118,9 @@ describe('signInAction', () => {
     formData.append('password', 'valid-pass');
     formData.append('rememberMe', 'on');
 
-    loginMock.mockRejectedValue(new MockIamError('IAM-AUTH-008', 'Maximum concurrent sessions reached.'));
+    loginMock.mockRejectedValue(
+      new MockIamError('IAM-AUTH-008', 'Maximum concurrent sessions reached.'),
+    );
 
     const result = await signInAction({}, formData);
     expect(result.error).toBe('Maximum concurrent sessions reached.');

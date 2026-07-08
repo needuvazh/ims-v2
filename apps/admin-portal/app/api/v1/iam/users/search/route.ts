@@ -30,7 +30,8 @@ export async function GET(request: Request) {
             {
               success: false,
               errorCode: 'IAM-VAL-USER-SEARCH-INVALID_QUERY',
-              messageEnglish: parsed.error.issues[0]?.message ?? 'Invalid search query.',
+              messageEnglish:
+                parsed.error.issues[0]?.message ?? 'Invalid search query.',
               statusCode: 400,
             },
             { status: 400 },
@@ -92,7 +93,10 @@ export async function GET(request: Request) {
         logger.info('api.iam.users.search.succeeded', { status: 'success' });
         return response;
       } catch (error) {
-        logger.error('api.iam.users.search.failed', { status: 'failed', error: error as Error });
+        logger.error('api.iam.users.search.failed', {
+          status: 'failed',
+          error: error as Error,
+        });
         return NextResponse.json(
           {
             success: false,

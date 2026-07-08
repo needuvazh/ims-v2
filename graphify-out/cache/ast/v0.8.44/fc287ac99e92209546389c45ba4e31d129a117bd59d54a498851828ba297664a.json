@@ -1,1 +1,975 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_08_attendance_management_part_10_security_architecture_and_nfr_md", "label": "Part 10 - Security Architecture and NFR.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "label": "Part 10 - Security Architecture and NFR", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_module_08_attendance_management", "label": "Module 08 \u2013 Attendance Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L3"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_1_purpose", "label": "1. Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L20"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_2_security_scope", "label": "2. Security Scope", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L28"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_2_1_in_scope", "label": "2.1 In Scope", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L30"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_2_2_out_of_scope", "label": "2.2 Out of Scope", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L49"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_3_security_architecture_principles", "label": "3. Security Architecture Principles", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L64"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_identity_authentication_and_session_controls", "label": "4. Identity, Authentication, and Session Controls", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L81"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_1_authentication_requirements", "label": "4.1 Authentication Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L83"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_2_session_context_required_by_attendance_apis", "label": "4.2 Session Context Required by Attendance APIs", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L93"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_3_session_security_rules", "label": "4.3 Session Security Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L112"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_authorization_and_permission_enforcement", "label": "5. Authorization and Permission Enforcement", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L124"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_1_permission_categories", "label": "5.1 Permission Categories", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L126"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_2_authorization_guard_pattern", "label": "5.2 Authorization Guard Pattern", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L135"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_3_required_guard_matrix", "label": "5.3 Required Guard Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L152"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_branch_isolation_security", "label": "6. Branch Isolation Security", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L172"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_1_server_side_scoping_rule", "label": "6.1 Server-Side Scoping Rule", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L174"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_2_branch_scope_resolution_algorithm", "label": "6.2 Branch Scope Resolution Algorithm", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L191"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_3_branch_isolation_test_targets", "label": "6.3 Branch Isolation Test Targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L220"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_data_classification_and_protection", "label": "7. Data Classification and Protection", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L233"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_1_data_classification", "label": "7.1 Data Classification", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L235"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_2_encryption_requirements", "label": "7.2 Encryption Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L250"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_3_pii_redaction_rules", "label": "7.3 PII Redaction Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L260"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_input_security_and_validation", "label": "8. Input Security and Validation", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L272"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_1_general_input_controls", "label": "8.1 General Input Controls", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L274"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_2_text_field_security_rules", "label": "8.2 Text Field Security Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L287"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_3_bulk_attendance_idempotency", "label": "8.3 Bulk Attendance Idempotency", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L297"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_audit_architecture", "label": "9. Audit Architecture", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L316"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_1_audited_actions", "label": "9.1 Audited Actions", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L318"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_2_audit_log_minimum_payload", "label": "9.2 Audit Log Minimum Payload", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L337"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_3_audit_integrity_rules", "label": "9.3 Audit Integrity Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L363"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_data_integrity_and_transaction_security", "label": "10. Data Integrity and Transaction Security", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L376"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_1_transaction_boundaries", "label": "10.1 Transaction Boundaries", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L378"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_2_concurrency_controls", "label": "10.2 Concurrency Controls", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L390"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_3_database_constraints", "label": "10.3 Database Constraints", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L400"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_11_secure_export_architecture", "label": "11. Secure Export Architecture", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L412"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_11_1_export_types", "label": "11.1 Export Types", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L414"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_11_2_export_security_rules", "label": "11.2 Export Security Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L424"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_non_functional_requirements_summary", "label": "12. Non-Functional Requirements Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L439"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_1_performance_targets", "label": "12.1 Performance Targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L441"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_2_capacity_and_scalability_targets", "label": "12.2 Capacity and Scalability Targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L456"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_3_availability_and_resilience_targets", "label": "12.3 Availability and Resilience Targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L469"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_4_usability_targets", "label": "12.4 Usability Targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L481"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_5_compliance_and_audit_targets", "label": "12.5 Compliance and Audit Targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L494"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_6_maintainability_targets", "label": "12.6 Maintainability Targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L506"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_api_security_requirements", "label": "13. API Security Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L519"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_1_api_request_protections", "label": "13.1 API Request Protections", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L521"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_2_rate_limit_targets", "label": "13.2 Rate Limit Targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L533"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_3_error_response_security", "label": "13.3 Error Response Security", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L546"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_14_secure_ui_requirements", "label": "14. Secure UI Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L575"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_14_1_permission_based_rendering", "label": "14.1 Permission-Based Rendering", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L577"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_14_2_secure_client_behavior", "label": "14.2 Secure Client Behavior", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L591"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_15_privacy_and_data_retention", "label": "15. Privacy and Data Retention", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L604"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_15_1_retention_policy", "label": "15.1 Retention Policy", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L606"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_15_2_data_minimization", "label": "15.2 Data Minimization", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L618"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_16_threat_model", "label": "16. Threat Model", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L630"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_16_1_key_threats_and_controls", "label": "16.1 Key Threats and Controls", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L632"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_17_nfr_validation_checklist", "label": "17. NFR Validation Checklist", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L650"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_18_implementation_guardrails", "label": "18. Implementation Guardrails", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L667"}, {"id": "module_08_attendance_management_part_10_security_architecture_and_nfr_19_production_readiness_criteria", "label": "19. Production Readiness Criteria", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L682"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_08_attendance_management_part_10_security_architecture_and_nfr_md", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_module_08_attendance_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L3", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L20", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_2_security_scope", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L28", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_2_security_scope", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_2_1_in_scope", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L30", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_2_security_scope", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_2_2_out_of_scope", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L49", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_3_security_architecture_principles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L64", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_identity_authentication_and_session_controls", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L81", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_identity_authentication_and_session_controls", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_1_authentication_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L83", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_identity_authentication_and_session_controls", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_2_session_context_required_by_attendance_apis", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L93", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_identity_authentication_and_session_controls", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_3_session_security_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L112", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_authorization_and_permission_enforcement", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L124", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_authorization_and_permission_enforcement", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_1_permission_categories", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L126", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_authorization_and_permission_enforcement", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_2_authorization_guard_pattern", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L135", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_authorization_and_permission_enforcement", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_3_required_guard_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L152", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_branch_isolation_security", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L172", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_branch_isolation_security", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_1_server_side_scoping_rule", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L174", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_branch_isolation_security", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_2_branch_scope_resolution_algorithm", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L191", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_branch_isolation_security", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_3_branch_isolation_test_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L220", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_data_classification_and_protection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L233", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_data_classification_and_protection", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_1_data_classification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L235", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_data_classification_and_protection", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_2_encryption_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L250", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_data_classification_and_protection", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_3_pii_redaction_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L260", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_input_security_and_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L272", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_input_security_and_validation", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_1_general_input_controls", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L274", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_input_security_and_validation", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_2_text_field_security_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L287", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_input_security_and_validation", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_3_bulk_attendance_idempotency", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L297", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_audit_architecture", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L316", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_audit_architecture", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_1_audited_actions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L318", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_audit_architecture", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_2_audit_log_minimum_payload", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L337", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_audit_architecture", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_3_audit_integrity_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L363", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_data_integrity_and_transaction_security", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L376", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_data_integrity_and_transaction_security", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_1_transaction_boundaries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L378", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_data_integrity_and_transaction_security", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_2_concurrency_controls", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L390", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_data_integrity_and_transaction_security", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_3_database_constraints", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L400", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_11_secure_export_architecture", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L412", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_11_secure_export_architecture", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_11_1_export_types", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L414", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_11_secure_export_architecture", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_11_2_export_security_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L424", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_non_functional_requirements_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L439", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_non_functional_requirements_summary", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_1_performance_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L441", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_non_functional_requirements_summary", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_2_capacity_and_scalability_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L456", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_non_functional_requirements_summary", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_3_availability_and_resilience_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L469", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_non_functional_requirements_summary", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_4_usability_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L481", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_non_functional_requirements_summary", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_5_compliance_and_audit_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L494", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_non_functional_requirements_summary", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_6_maintainability_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L506", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_api_security_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L519", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_api_security_requirements", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_1_api_request_protections", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L521", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_api_security_requirements", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_2_rate_limit_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L533", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_api_security_requirements", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_3_error_response_security", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L546", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_14_secure_ui_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L575", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_14_secure_ui_requirements", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_14_1_permission_based_rendering", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L577", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_14_secure_ui_requirements", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_14_2_secure_client_behavior", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L591", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_15_privacy_and_data_retention", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L604", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_15_privacy_and_data_retention", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_15_1_retention_policy", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L606", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_15_privacy_and_data_retention", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_15_2_data_minimization", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L618", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_16_threat_model", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L630", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_16_threat_model", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_16_1_key_threats_and_controls", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L632", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_17_nfr_validation_checklist", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L650", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_18_implementation_guardrails", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L667", "weight": 1.0}, {"source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_19_production_readiness_criteria", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md", "source_location": "L682", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_08_attendance_management_part_10_security_architecture_and_nfr_md",
+      "label": "Part 10 - Security Architecture and NFR.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "label": "Part 10 - Security Architecture and NFR",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_module_08_attendance_management",
+      "label": "Module 08 \u2013 Attendance Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_1_purpose",
+      "label": "1. Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L20"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_2_security_scope",
+      "label": "2. Security Scope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L28"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_2_1_in_scope",
+      "label": "2.1 In Scope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L30"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_2_2_out_of_scope",
+      "label": "2.2 Out of Scope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L49"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_3_security_architecture_principles",
+      "label": "3. Security Architecture Principles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L64"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_identity_authentication_and_session_controls",
+      "label": "4. Identity, Authentication, and Session Controls",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L81"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_1_authentication_requirements",
+      "label": "4.1 Authentication Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L83"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_2_session_context_required_by_attendance_apis",
+      "label": "4.2 Session Context Required by Attendance APIs",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L93"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_3_session_security_rules",
+      "label": "4.3 Session Security Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L112"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_authorization_and_permission_enforcement",
+      "label": "5. Authorization and Permission Enforcement",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L124"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_1_permission_categories",
+      "label": "5.1 Permission Categories",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L126"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_2_authorization_guard_pattern",
+      "label": "5.2 Authorization Guard Pattern",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L135"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_3_required_guard_matrix",
+      "label": "5.3 Required Guard Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L152"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_branch_isolation_security",
+      "label": "6. Branch Isolation Security",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L172"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_1_server_side_scoping_rule",
+      "label": "6.1 Server-Side Scoping Rule",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L174"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_2_branch_scope_resolution_algorithm",
+      "label": "6.2 Branch Scope Resolution Algorithm",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L191"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_3_branch_isolation_test_targets",
+      "label": "6.3 Branch Isolation Test Targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L220"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_data_classification_and_protection",
+      "label": "7. Data Classification and Protection",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L233"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_1_data_classification",
+      "label": "7.1 Data Classification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L235"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_2_encryption_requirements",
+      "label": "7.2 Encryption Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L250"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_3_pii_redaction_rules",
+      "label": "7.3 PII Redaction Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L260"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_input_security_and_validation",
+      "label": "8. Input Security and Validation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L272"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_1_general_input_controls",
+      "label": "8.1 General Input Controls",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L274"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_2_text_field_security_rules",
+      "label": "8.2 Text Field Security Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L287"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_3_bulk_attendance_idempotency",
+      "label": "8.3 Bulk Attendance Idempotency",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L297"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_audit_architecture",
+      "label": "9. Audit Architecture",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L316"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_1_audited_actions",
+      "label": "9.1 Audited Actions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L318"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_2_audit_log_minimum_payload",
+      "label": "9.2 Audit Log Minimum Payload",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L337"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_3_audit_integrity_rules",
+      "label": "9.3 Audit Integrity Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L363"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_data_integrity_and_transaction_security",
+      "label": "10. Data Integrity and Transaction Security",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L376"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_1_transaction_boundaries",
+      "label": "10.1 Transaction Boundaries",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L378"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_2_concurrency_controls",
+      "label": "10.2 Concurrency Controls",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L390"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_3_database_constraints",
+      "label": "10.3 Database Constraints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L400"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_11_secure_export_architecture",
+      "label": "11. Secure Export Architecture",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L412"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_11_1_export_types",
+      "label": "11.1 Export Types",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L414"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_11_2_export_security_rules",
+      "label": "11.2 Export Security Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L424"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_non_functional_requirements_summary",
+      "label": "12. Non-Functional Requirements Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L439"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_1_performance_targets",
+      "label": "12.1 Performance Targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L441"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_2_capacity_and_scalability_targets",
+      "label": "12.2 Capacity and Scalability Targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L456"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_3_availability_and_resilience_targets",
+      "label": "12.3 Availability and Resilience Targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L469"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_4_usability_targets",
+      "label": "12.4 Usability Targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L481"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_5_compliance_and_audit_targets",
+      "label": "12.5 Compliance and Audit Targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L494"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_6_maintainability_targets",
+      "label": "12.6 Maintainability Targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L506"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_api_security_requirements",
+      "label": "13. API Security Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L519"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_1_api_request_protections",
+      "label": "13.1 API Request Protections",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L521"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_2_rate_limit_targets",
+      "label": "13.2 Rate Limit Targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L533"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_3_error_response_security",
+      "label": "13.3 Error Response Security",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L546"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_14_secure_ui_requirements",
+      "label": "14. Secure UI Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L575"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_14_1_permission_based_rendering",
+      "label": "14.1 Permission-Based Rendering",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L577"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_14_2_secure_client_behavior",
+      "label": "14.2 Secure Client Behavior",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L591"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_15_privacy_and_data_retention",
+      "label": "15. Privacy and Data Retention",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L604"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_15_1_retention_policy",
+      "label": "15.1 Retention Policy",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L606"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_15_2_data_minimization",
+      "label": "15.2 Data Minimization",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L618"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_16_threat_model",
+      "label": "16. Threat Model",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L630"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_16_1_key_threats_and_controls",
+      "label": "16.1 Key Threats and Controls",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L632"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_17_nfr_validation_checklist",
+      "label": "17. NFR Validation Checklist",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L650"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_18_implementation_guardrails",
+      "label": "18. Implementation Guardrails",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L667"
+    },
+    {
+      "id": "module_08_attendance_management_part_10_security_architecture_and_nfr_19_production_readiness_criteria",
+      "label": "19. Production Readiness Criteria",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L682"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_08_attendance_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_module_08_attendance_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_2_security_scope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_2_security_scope",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_2_1_in_scope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_2_security_scope",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_2_2_out_of_scope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_3_security_architecture_principles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L64",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_identity_authentication_and_session_controls",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L81",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_identity_authentication_and_session_controls",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_1_authentication_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_identity_authentication_and_session_controls",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_2_session_context_required_by_attendance_apis",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L93",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_identity_authentication_and_session_controls",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_4_3_session_security_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L112",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_authorization_and_permission_enforcement",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L124",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_authorization_and_permission_enforcement",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_1_permission_categories",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L126",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_authorization_and_permission_enforcement",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_2_authorization_guard_pattern",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L135",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_authorization_and_permission_enforcement",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_5_3_required_guard_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L152",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_branch_isolation_security",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L172",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_branch_isolation_security",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_1_server_side_scoping_rule",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L174",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_branch_isolation_security",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_2_branch_scope_resolution_algorithm",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L191",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_branch_isolation_security",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_6_3_branch_isolation_test_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L220",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_data_classification_and_protection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L233",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_data_classification_and_protection",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_1_data_classification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L235",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_data_classification_and_protection",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_2_encryption_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L250",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_data_classification_and_protection",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_7_3_pii_redaction_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L260",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_input_security_and_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L272",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_input_security_and_validation",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_1_general_input_controls",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L274",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_input_security_and_validation",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_2_text_field_security_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L287",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_input_security_and_validation",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_8_3_bulk_attendance_idempotency",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L297",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_audit_architecture",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L316",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_audit_architecture",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_1_audited_actions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L318",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_audit_architecture",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_2_audit_log_minimum_payload",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L337",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_audit_architecture",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_9_3_audit_integrity_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L363",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_data_integrity_and_transaction_security",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L376",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_data_integrity_and_transaction_security",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_1_transaction_boundaries",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L378",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_data_integrity_and_transaction_security",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_2_concurrency_controls",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L390",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_data_integrity_and_transaction_security",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_10_3_database_constraints",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L400",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_11_secure_export_architecture",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L412",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_11_secure_export_architecture",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_11_1_export_types",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L414",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_11_secure_export_architecture",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_11_2_export_security_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L424",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_non_functional_requirements_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L439",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_non_functional_requirements_summary",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_1_performance_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L441",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_non_functional_requirements_summary",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_2_capacity_and_scalability_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L456",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_non_functional_requirements_summary",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_3_availability_and_resilience_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L469",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_non_functional_requirements_summary",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_4_usability_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L481",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_non_functional_requirements_summary",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_5_compliance_and_audit_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L494",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_non_functional_requirements_summary",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_12_6_maintainability_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L506",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_api_security_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L519",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_api_security_requirements",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_1_api_request_protections",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L521",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_api_security_requirements",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_2_rate_limit_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L533",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_api_security_requirements",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_13_3_error_response_security",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L546",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_14_secure_ui_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L575",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_14_secure_ui_requirements",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_14_1_permission_based_rendering",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L577",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_14_secure_ui_requirements",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_14_2_secure_client_behavior",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L591",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_15_privacy_and_data_retention",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L604",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_15_privacy_and_data_retention",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_15_1_retention_policy",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L606",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_15_privacy_and_data_retention",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_15_2_data_minimization",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L618",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_16_threat_model",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L630",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_16_threat_model",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_16_1_key_threats_and_controls",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L632",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_17_nfr_validation_checklist",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L650",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_18_implementation_guardrails",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L667",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_08_attendance_management_part_10_security_architecture_and_nfr_19_production_readiness_criteria",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L682",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

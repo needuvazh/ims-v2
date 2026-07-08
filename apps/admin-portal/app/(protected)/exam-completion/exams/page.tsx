@@ -30,7 +30,8 @@ export default async function ExamsPage(props: {
 
   const session = await assertPermission('exam.view');
 
-  const isSuperAdmin = session.roles.includes('SUPER_ADMIN') || session.roles.includes('OWNER');
+  const isSuperAdmin =
+    session.roles.includes('SUPER_ADMIN') || session.roles.includes('OWNER');
 
   let branches;
   if (isSuperAdmin) {
@@ -52,9 +53,11 @@ export default async function ExamsPage(props: {
   let finalBranchId: string | undefined;
   if (!isSuperAdmin) {
     const allowedBranchIds = branches.map((b) => b.id);
-    finalBranchId = session.activeBranchId && allowedBranchIds.includes(session.activeBranchId)
-      ? session.activeBranchId
-      : allowedBranchIds[0] || 'none';
+    finalBranchId =
+      session.activeBranchId &&
+      allowedBranchIds.includes(session.activeBranchId)
+        ? session.activeBranchId
+        : allowedBranchIds[0] || 'none';
   }
 
   const courses = await prisma.course.findMany({
@@ -65,7 +68,9 @@ export default async function ExamsPage(props: {
   const batches = await prisma.batch.findMany({
     where: {
       isDeleted: false,
-      ...(finalBranchId && finalBranchId !== 'none' ? { branchId: finalBranchId } : {}),
+      ...(finalBranchId && finalBranchId !== 'none'
+        ? { branchId: finalBranchId }
+        : {}),
     },
     select: { id: true, batchNameEnglish: true, courseId: true },
   });
@@ -80,7 +85,9 @@ export default async function ExamsPage(props: {
     where.batchId = searchParams.batchId;
   }
   if (searchParams.courseId) {
-    const batchIds = batches.filter(b => b.courseId === searchParams.courseId).map(b => b.id);
+    const batchIds = batches
+      .filter((b) => b.courseId === searchParams.courseId)
+      .map((b) => b.id);
     where.batchId = { in: batchIds };
   }
   if (searchParams.status) {
@@ -107,7 +114,9 @@ export default async function ExamsPage(props: {
     _count: { status: true },
   });
 
-  const hasCreatePermission = session.permissions.includes('exam.create') || session.roles.includes('SUPER_ADMIN');
+  const hasCreatePermission =
+    session.permissions.includes('exam.create') ||
+    session.roles.includes('SUPER_ADMIN');
 
   return (
     <AdminListPageLayout className="pt-1 sm:pt-0">
@@ -118,14 +127,22 @@ export default async function ExamsPage(props: {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5" />,
+              },
               { label: 'Exams', icon: <Layers className="h-3.5 w-3.5" /> },
             ]}
           />
         }
         actions={
           hasCreatePermission && (
-            <LinkButton href="/exam-completion/exams/new" variant="primary" className="gap-2">
+            <LinkButton
+              href="/exam-completion/exams/new"
+              variant="primary"
+              className="gap-2"
+            >
               Create Exam
             </LinkButton>
           )
@@ -134,11 +151,18 @@ export default async function ExamsPage(props: {
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6 animate-fade-in-up">
         {statusCounts.map((s) => (
-          <Link key={s.status} href={`/exam-completion/exams?status=${s.status}`}>
+          <Link
+            key={s.status}
+            href={`/exam-completion/exams?status=${s.status}`}
+          >
             <Card className="text-center transition-colors hover:border-[color:var(--ims-brass)] bg-white/50 backdrop-blur-sm">
               <CardHeader className="pb-2 p-4">
-                <CardDescription className="text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider">{s.status}</CardDescription>
-                <CardTitle className="text-2xl font-bold mt-1 text-[color:var(--ims-ink)]">{s._count.status}</CardTitle>
+                <CardDescription className="text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider">
+                  {s.status}
+                </CardDescription>
+                <CardTitle className="text-2xl font-bold mt-1 text-[color:var(--ims-ink)]">
+                  {s._count.status}
+                </CardTitle>
               </CardHeader>
             </Card>
           </Link>
@@ -148,11 +172,13 @@ export default async function ExamsPage(props: {
       <Card className="animate-fade-in-up delay-100">
         <CardHeader className="pb-0">
           <CardTitle>Exam Schedules</CardTitle>
-          <CardDescription>View, activate, and manage results for registered exams.</CardDescription>
+          <CardDescription>
+            View, activate, and manage results for registered exams.
+          </CardDescription>
         </CardHeader>
         <CardContent className="pt-6">
           <ExamsClientList
-            exams={exams.map(e => ({
+            exams={exams.map((e) => ({
               ...e,
               examDate: e.examDate.toISOString(),
               maxMarks: e.maxMarks.toNumber(),

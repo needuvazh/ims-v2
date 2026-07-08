@@ -29,11 +29,21 @@ export default async function DepartmentsPage(props: {
           branchId: dept.branchId,
           departmentHeadId: dept.departmentHeadId,
           status: dept.status,
-          effectiveStartDate: dept.effectiveStartDate ? new Date(dept.effectiveStartDate).toISOString() : null,
-          effectiveEndDate: dept.effectiveEndDate ? new Date(dept.effectiveEndDate).toISOString() : null,
+          effectiveStartDate: dept.effectiveStartDate
+            ? new Date(dept.effectiveStartDate).toISOString()
+            : null,
+          effectiveEndDate: dept.effectiveEndDate
+            ? new Date(dept.effectiveEndDate).toISOString()
+            : null,
         }))}
-        branches={data.branches.map((branch) => ({ id: branch.id, name: branch.branchName }))}
-        users={data.users.map((user) => ({ id: user.id, fullName: user.fullName }))}
+        branches={data.branches.map((branch) => ({
+          id: branch.id,
+          name: branch.branchName,
+        }))}
+        users={data.users.map((user) => ({
+          id: user.id,
+          fullName: user.fullName,
+        }))}
         initialSearch={searchParams.q || ''}
         initialStatus={searchParams.status || ''}
         initialBranchId={searchParams.branchId || ''}

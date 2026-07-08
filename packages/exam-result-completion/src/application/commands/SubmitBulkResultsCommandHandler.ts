@@ -1,6 +1,10 @@
 import { ResultRepository } from '../../domain/interfaces/ResultRepository';
 import { ExamRepository } from '../../domain/interfaces/ExamRepository';
-import { ResultAggregate, RecordResultCommand, RESULT_STATUSES } from '../../domain/aggregates/Result';
+import {
+  ResultAggregate,
+  RecordResultCommand,
+  RESULT_STATUSES,
+} from '../../domain/aggregates/Result';
 import { ResultInvalidStateError } from '../../domain/errors';
 
 export interface SubmitBulkResultsInput {
@@ -27,18 +31,27 @@ export class SubmitBulkResultsCommandHandler {
     }
 
     if (exam.status !== 'OpenForResultEntry') {
-      throw new ResultInvalidStateError(`Exam ${input.examId} is not open for result entry (status: ${exam.status})`);
+      throw new ResultInvalidStateError(
+        `Exam ${input.examId} is not open for result entry (status: ${exam.status})`,
+      );
     }
 
     const newResults: ResultAggregate[] = [];
     const updatedResults: ResultAggregate[] = [];
 
     for (const row of input.results) {
-      const existing = await this.resultRepository.findByExamAndEnrollment(input.examId, row.enrollmentId);
+      const existing = await this.resultRepository.findByExamAndEnrollment(
+        input.examId,
+        row.enrollmentId,
+      );
 
       if (existing && existing.resultStatus === RESULT_STATUSES.PENDING) {
         const aggregate = new ResultAggregate(existing);
-        const updated = aggregate.record(row.marksObtained, exam.maxMarks, row.grade);
+        const updated = aggregate.record(
+          row.marksObtained,
+          exam.maxMarks,
+          row.grade,
+        );
         updated.updatedBy = input.userId;
         updatedResults.push(new ResultAggregate(updated));
       } else if (!existing) {
@@ -54,8 +67,8 @@ export class SubmitBulkResultsCommandHandler {
     }
 
     await this.resultRepository.saveMany([
-      ...newResults.map(r => r.state),
-      ...updatedResults.map(r => r.state),
+      ...newResults.map((r) => r.state),
+      ...updatedResults.map((r) => r.state),
     ]);
 
     return newResults.length + updatedResults.length;

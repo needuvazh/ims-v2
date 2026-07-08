@@ -7,10 +7,15 @@ const listRolesMock = vi.fn();
 vi.mock('../../../../lib/api-middleware', () => ({
   withPermission: withPermissionMock,
 }));
-vi.mock('../../../../lib/runtime', () => ({ roleService: { listRoles: listRolesMock } }));
+vi.mock('../../../../lib/runtime', () => ({
+  roleService: { listRoles: listRolesMock },
+}));
 vi.mock('../../../../lib/observability', () => ({
   applyObservabilityResponseHeaders: vi.fn(),
-  withRouteObservability: async (_headers: Headers, handler: () => Promise<Response>) => handler(),
+  withRouteObservability: async (
+    _headers: Headers,
+    handler: () => Promise<Response>,
+  ) => handler(),
   createStructuredLogger: () => ({ info: vi.fn(), error: vi.fn() }),
   getCurrentRequestContext: () => ({}),
 }));
@@ -23,7 +28,9 @@ describe('roles route', () => {
 
   it('returns forbidden when read permission is missing', async () => {
     const { NextResponse } = await import('next/server');
-    withPermissionMock.mockResolvedValue(NextResponse.json({ errorCode: 'FORBIDDEN' }, { status: 400 }));
+    withPermissionMock.mockResolvedValue(
+      NextResponse.json({ errorCode: 'FORBIDDEN' }, { status: 400 }),
+    );
 
     const { GET } = await import('./route');
     const response = await GET(new Request('http://localhost/api/v1/roles'));

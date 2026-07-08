@@ -109,10 +109,10 @@ finance.invoice.create
 
 Validation
 
-* lowercase
-* no spaces
-* unique
-* maximum 200 characters
+- lowercase
+- no spaces
+- unique
+- maximum 200 characters
 
 ---
 
@@ -148,9 +148,9 @@ Validation
 
 Reject if
 
-* branch inactive
-* user not assigned
-* branch archived
+- branch inactive
+- user not assigned
+- branch archived
 
 ---
 
@@ -589,22 +589,22 @@ And audit log is created
 
 ## Accessibility Tests
 
-* Keyboard navigation
-* Screen reader compatibility
-* Color contrast
-* Focus management
-* Responsive layout
-* RTL layout verification (Arabic)
+- Keyboard navigation
+- Screen reader compatibility
+- Color contrast
+- Focus management
+- Responsive layout
+- RTL layout verification (Arabic)
 
 ---
 
 ## Integration Tests
 
-* Email service
-* Audit service
-* Notification service
-* JWT generation
-* Refresh token flow
+- Email service
+- Audit service
+- Notification service
+- JWT generation
+- Refresh token flow
 
 ---
 
@@ -614,23 +614,23 @@ And audit log is created
 
 Track:
 
-* Login success rate
-* Login failure rate
-* Password reset requests
-* Account lockouts
-* Active sessions
-* Authorization failures
-* Average authentication latency
+- Login success rate
+- Login failure rate
+- Password reset requests
+- Account lockouts
+- Active sessions
+- Authorization failures
+- Average authentication latency
 
 ## Alerting
 
 Generate alerts for:
 
-* Multiple failed logins from the same IP
-* Excessive account lockouts
-* Unusual login locations (future)
-* High authentication error rates
-* Audit logging failures
+- Multiple failed logins from the same IP
+- Excessive account lockouts
+- Unusual login locations (future)
+- High authentication error rates
+- Audit logging failures
 
 ---
 
@@ -638,16 +638,16 @@ Generate alerts for:
 
 Before the IAM module is considered production-ready:
 
-* All validation rules implemented
-* Error codes documented
-* Notifications localized
-* English and Arabic translations complete
-* BDD scenarios automated
-* Security tests passed
-* Accessibility validated
-* Performance targets achieved
-* Audit logging verified
-* Monitoring dashboards configured
+- All validation rules implemented
+- Error codes documented
+- Notifications localized
+- English and Arabic translations complete
+- BDD scenarios automated
+- Security tests passed
+- Accessibility validated
+- Performance targets achieved
+- Audit logging verified
+- Monitoring dashboards configured
 
 ---
 
@@ -655,15 +655,15 @@ Before the IAM module is considered production-ready:
 
 The IAM specification now includes:
 
-* Comprehensive validation catalogue
-* Business validation rules
-* Standardized error catalogue
-* Notification templates
-* Localization strategy
-* Business message catalogue
-* BDD acceptance scenarios
-* QA test catalogue
-* Operational monitoring requirements
-* Production readiness checklist
+- Comprehensive validation catalogue
+- Business validation rules
+- Standardized error catalogue
+- Notification templates
+- Localization strategy
+- Business message catalogue
+- BDD acceptance scenarios
+- QA test catalogue
+- Operational monitoring requirements
+- Production readiness checklist
 
 ---

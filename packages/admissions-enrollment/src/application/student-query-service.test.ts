@@ -1,5 +1,10 @@
 import { describe, expect, test, vi } from 'vitest';
-import { StudentQueryService, maskEmail, maskPhone, maskNationalId } from './student-query-service';
+import {
+  StudentQueryService,
+  maskEmail,
+  maskPhone,
+  maskNationalId,
+} from './student-query-service';
 
 describe('PII Masking Helpers', () => {
   test('maskEmail should mask local part of email', () => {
@@ -30,7 +35,10 @@ describe('StudentQueryService', () => {
     } as any;
 
     const service = new StudentQueryService(mockPrisma);
-    const result = await service.globalPersonLookup('notfound@example.com', null);
+    const result = await service.globalPersonLookup(
+      'notfound@example.com',
+      null,
+    );
 
     expect(result.personFound).toBe(false);
     expect(result.personId).toBeNull();
@@ -99,8 +107,16 @@ describe('StudentQueryService', () => {
     expect(result.studentNumber).toBe('STU-123');
     expect(result.branchInfo).toEqual([
       { branchId: 'branch-home', branchName: 'Muscat Main', relation: 'Home' },
-      { branchId: 'branch-admission', branchName: 'Seeb Center', relation: 'Admission' },
-      { branchId: 'branch-enrollment', branchName: 'Nizwa Campus', relation: 'Enrollment' },
+      {
+        branchId: 'branch-admission',
+        branchName: 'Seeb Center',
+        relation: 'Admission',
+      },
+      {
+        branchId: 'branch-enrollment',
+        branchName: 'Nizwa Campus',
+        relation: 'Enrollment',
+      },
     ]);
     expect(result.preflight).toEqual({
       hasActiveAdmission: false,
@@ -126,13 +142,14 @@ describe('StudentQueryService', () => {
     } as any;
 
     const service = new StudentQueryService(mockPrisma);
-    const result = await service.globalPersonLookup('987654321', null, { revealSensitive: true });
+    const result = await service.globalPersonLookup('987654321', null, {
+      revealSensitive: true,
+    });
 
     expect(result.maskedEmail).toBe('mariam@example.com');
     expect(result.maskedMobile).toBe('+96899119911');
     expect(result.maskedNationalId).toBe('987654321');
   });
-
 
   test('searchBranchScopedStudents query includes draft and cancelled states and filters query parameters', async () => {
     const mockProfiles = [
@@ -160,7 +177,9 @@ describe('StudentQueryService', () => {
     } as any;
 
     const service = new StudentQueryService(mockPrisma);
-    const result = await service.searchBranchScopedStudents('Fatima', ['branch-1']);
+    const result = await service.searchBranchScopedStudents('Fatima', [
+      'branch-1',
+    ]);
 
     expect(mockPrisma.studentProfile.findMany).toHaveBeenCalled();
     expect(result.total).toBe(1);
@@ -178,11 +197,15 @@ describe('StudentQueryService', () => {
     } as any;
 
     const service = new StudentQueryService(mockPrisma);
-    await service.searchBranchScopedStudents('Fatima', ['branch-1', 'branch-2'], {
-      branchId: 'branch-1',
-      studentStatus: 'Active',
-      admissionStatus: 'Draft',
-    });
+    await service.searchBranchScopedStudents(
+      'Fatima',
+      ['branch-1', 'branch-2'],
+      {
+        branchId: 'branch-1',
+        studentStatus: 'Active',
+        admissionStatus: 'Draft',
+      },
+    );
 
     expect(mockPrisma.studentProfile.findMany).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -196,7 +219,7 @@ describe('StudentQueryService', () => {
             },
           },
         }),
-      })
+      }),
     );
   });
 
@@ -220,11 +243,9 @@ describe('StudentQueryService', () => {
           { person: { firstName: 'asc' } },
           { person: { lastName: 'asc' } },
         ],
-      })
+      }),
     );
   });
-
-
 
   test('verifyBranchScope throws on deleted or missing studentProfile', async () => {
     const mockPrisma = {
@@ -234,7 +255,9 @@ describe('StudentQueryService', () => {
     } as any;
 
     const service = new StudentQueryService(mockPrisma);
-    await expect(service.verifyBranchScope('missing-profile', 'branch-1')).rejects.toThrow('ERR_STUDENT_PROFILE_NOT_FOUND');
+    await expect(
+      service.verifyBranchScope('missing-profile', 'branch-1'),
+    ).rejects.toThrow('ERR_STUDENT_PROFILE_NOT_FOUND');
   });
 
   test('verifyBranchScope throws on inactive profile status', async () => {
@@ -250,7 +273,9 @@ describe('StudentQueryService', () => {
     } as any;
 
     const service = new StudentQueryService(mockPrisma);
-    await expect(service.verifyBranchScope('profile-1', 'branch-1')).rejects.toThrow('ERR_STU_PROFILE_INACTIVE');
+    await expect(
+      service.verifyBranchScope('profile-1', 'branch-1'),
+    ).rejects.toThrow('ERR_STU_PROFILE_INACTIVE');
   });
 
   test('verifyBranchScope throws on branch scope violation', async () => {
@@ -259,7 +284,7 @@ describe('StudentQueryService', () => {
         findUnique: vi.fn().mockResolvedValue({
           id: 'profile-1',
           personId: 'person-1',
-          branchId: 'branch-2',      // NOT the queried branch
+          branchId: 'branch-2', // NOT the queried branch
           status: 'Active',
           isDeleted: false,
           person: { isDeleted: false },
@@ -273,7 +298,9 @@ describe('StudentQueryService', () => {
     } as any;
 
     const service = new StudentQueryService(mockPrisma);
-    await expect(service.verifyBranchScope('profile-1', 'branch-1')).rejects.toThrow('ERR_AUTH_BRANCH_DENIED');
+    await expect(
+      service.verifyBranchScope('profile-1', 'branch-1'),
+    ).rejects.toThrow('ERR_AUTH_BRANCH_DENIED');
   });
 
   test('verifyBranchScope succeeds on valid branch scope association', async () => {
@@ -282,7 +309,7 @@ describe('StudentQueryService', () => {
         findUnique: vi.fn().mockResolvedValue({
           id: 'profile-1',
           personId: 'person-1',
-          branchId: 'branch-1',      // home branch matches — no lead.count needed
+          branchId: 'branch-1', // home branch matches — no lead.count needed
           status: 'Active',
           isDeleted: false,
           person: { isDeleted: false },
@@ -296,7 +323,9 @@ describe('StudentQueryService', () => {
     } as any;
 
     const service = new StudentQueryService(mockPrisma);
-    await expect(service.verifyBranchScope('profile-1', 'branch-1')).resolves.toBeUndefined();
+    await expect(
+      service.verifyBranchScope('profile-1', 'branch-1'),
+    ).resolves.toBeUndefined();
   });
 
   test('verifyBranchScope succeeds when an admission exists in the requested branch', async () => {
@@ -319,7 +348,9 @@ describe('StudentQueryService', () => {
     } as any;
 
     const service = new StudentQueryService(mockPrisma);
-    await expect(service.verifyBranchScope('profile-2', 'branch-2')).resolves.toBeUndefined();
+    await expect(
+      service.verifyBranchScope('profile-2', 'branch-2'),
+    ).resolves.toBeUndefined();
   });
 
   test('verifyBranchScope succeeds when an enrollment exists in the requested branch', async () => {
@@ -342,7 +373,9 @@ describe('StudentQueryService', () => {
     } as any;
 
     const service = new StudentQueryService(mockPrisma);
-    await expect(service.verifyBranchScope('profile-3', 'branch-3')).resolves.toBeUndefined();
+    await expect(
+      service.verifyBranchScope('profile-3', 'branch-3'),
+    ).resolves.toBeUndefined();
   });
 
   test('verifyBranchScope succeeds when a lead exists in the requested branch', async () => {
@@ -365,6 +398,8 @@ describe('StudentQueryService', () => {
     } as any;
 
     const service = new StudentQueryService(mockPrisma);
-    await expect(service.verifyBranchScope('profile-4', 'branch-4')).resolves.toBeUndefined();
+    await expect(
+      service.verifyBranchScope('profile-4', 'branch-4'),
+    ).resolves.toBeUndefined();
   });
 });

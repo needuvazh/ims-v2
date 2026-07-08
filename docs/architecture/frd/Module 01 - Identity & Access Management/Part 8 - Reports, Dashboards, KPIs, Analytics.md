@@ -18,12 +18,12 @@ The Reporting & Analytics capabilities of the IAM module provide operational vis
 
 The objectives are to:
 
-* Monitor user lifecycle and account health
-* Detect authentication and authorization issues
-* Support security audits and compliance
-* Measure operational efficiency
-* Provide executive security dashboards
-* Enable export and scheduled reporting
+- Monitor user lifecycle and account health
+- Detect authentication and authorization issues
+- Support security audits and compliance
+- Measure operational efficiency
+- Provide executive security dashboards
+- Enable export and scheduled reporting
 
 ---
 
@@ -72,12 +72,12 @@ Displays all users with organizational and account information.
 
 ### Filters
 
-* Branch
-* Department
-* Role
-* Status
-* Created Date
-* Last Login Date
+- Branch
+- Department
+- Role
+- Status
+- Created Date
+- Last Login Date
 
 ### Columns
 
@@ -96,10 +96,10 @@ Displays all users with organizational and account information.
 
 ### Actions
 
-* Export Excel
-* Export PDF
-* Print
-* Schedule
+- Export Excel
+- Export PDF
+- Print
+- Schedule
 
 ---
 
@@ -107,16 +107,16 @@ Displays all users with organizational and account information.
 
 Shows:
 
-* Active users
-* Inactive users
-* Suspended users
-* Archived users
+- Active users
+- Inactive users
+- Suspended users
+- Archived users
 
 Filters
 
-* Branch
-* Department
-* Status
+- Branch
+- Department
+- Status
 
 ---
 
@@ -124,11 +124,11 @@ Filters
 
 Shows:
 
-* Assigned Roles
-* Branch Access
-* Permissions Count
-* Default Branch
-* Last Login
+- Assigned Roles
+- Branch Access
+- Permissions Count
+- Default Branch
+- Last Login
 
 Useful during security audits.
 
@@ -142,12 +142,12 @@ Useful during security audits.
 
 ### Filters
 
-* User
-* Branch
-* Date Range
-* Result
-* Browser
-* Device
+- User
+- Branch
+- Date Range
+- Result
+- Browser
+- Device
 
 ### Columns
 
@@ -187,9 +187,9 @@ Failure Reason
 
 Charts
 
-* Failed Logins by Day
-* Failed Logins by Branch
-* Top Failed Accounts
+- Failed Logins by Day
+- Failed Logins by Branch
+- Top Failed Accounts
 
 ---
 
@@ -197,11 +197,11 @@ Charts
 
 Shows
 
-* Locked Users
-* Lock Time
-* Failed Attempts
-* Unlock Time
-* Unlock By
+- Locked Users
+- Lock Time
+- Failed Attempts
+- Unlock Time
+- Unlock By
 
 ---
 
@@ -209,12 +209,12 @@ Shows
 
 Displays
 
-* User
-* Requested At
-* Completed At
-* Method
-* Expired
-* Failed
+- User
+- Requested At
+- Completed At
+- Method
+- Expired
+- Failed
 
 ---
 
@@ -280,11 +280,11 @@ Consolidated Access
 
 Shows users with high-risk permissions such as:
 
-* User Administration
-* Role Administration
-* Finance Approval
-* Payroll Approval
-* Security Administration
+- User Administration
+- Role Administration
+- Finance Approval
+- Payroll Approval
+- Security Administration
 
 Used for periodic access reviews.
 
@@ -298,12 +298,12 @@ Used for periodic access reviews.
 
 Displays
 
-* Login Failures
-* Password Changes
-* Account Locks
-* Permission Changes
-* Role Changes
-* Session Terminations
+- Login Failures
+- Password Changes
+- Account Locks
+- Permission Changes
+- Role Changes
+- Session Terminations
 
 ---
 
@@ -331,10 +331,10 @@ Reason
 
 Displays
 
-* Active Sessions
-* Expired Sessions
-* Multiple Concurrent Sessions
-* Long Running Sessions
+- Active Sessions
+- Expired Sessions
+- Multiple Concurrent Sessions
+- Long Running Sessions
 
 ---
 
@@ -342,11 +342,11 @@ Displays
 
 Examples
 
-* Excessive failed logins
-* Multiple geographic logins (future)
-* Login outside business hours
-* Repeated permission denials
-* Multiple password resets
+- Excessive failed logins
+- Multiple geographic logins (future)
+- Login outside business hours
+- Repeated permission denials
+- Multiple password resets
 
 ---
 
@@ -360,11 +360,11 @@ Complete immutable audit trail.
 
 Filters
 
-* Entity
-* User
-* Action
-* Date
-* Module
+- Entity
+- User
+- Action
+- Date
+- Module
 
 Columns
 
@@ -392,11 +392,11 @@ Correlation ID
 
 Tracks changes to:
 
-* Password Policy
-* Session Policy
-* Roles
-* Permissions
-* Security Settings
+- Password Policy
+- Session Policy
+- Roles
+- Permissions
+- Security Settings
 
 ---
 
@@ -422,10 +422,10 @@ Widgets
 
 Charts
 
-* Login Trend (30 Days)
-* Failed Login Trend
-* Login by Branch
-* Browser Distribution
+- Login Trend (30 Days)
+- Failed Login Trend
+- Login by Branch
+- Browser Distribution
 
 ---
 
@@ -449,10 +449,10 @@ Branches
 
 Charts
 
-* User Growth
-* Department Distribution
-* Role Distribution
-* Branch Distribution
+- User Growth
+- Department Distribution
+- Role Distribution
+- Branch Distribution
 
 ---
 
@@ -474,9 +474,9 @@ System Availability
 
 Charts
 
-* Monthly User Growth
-* Security Trend
-* Access Trend
+- Monthly User Growth
+- Security Trend
+- Access Trend
 
 ---
 
@@ -519,9 +519,9 @@ Inactive Users
 
 Track
 
-* Monthly users
-* Department growth
-* Branch growth
+- Monthly users
+- Department growth
+- Branch growth
 
 ---
 
@@ -529,11 +529,11 @@ Track
 
 Track
 
-* Login trend
-* Peak login hours
-* Login by weekday
-* Login by device
-* Login by browser
+- Login trend
+- Peak login hours
+- Login by weekday
+- Login by device
+- Login by browser
 
 ---
 
@@ -541,10 +541,10 @@ Track
 
 Track
 
-* Failed login trend
-* Permission denied trend
-* Locked account trend
-* Password reset trend
+- Failed login trend
+- Permission denied trend
+- Locked account trend
+- Password reset trend
 
 ---
 
@@ -552,10 +552,10 @@ Track
 
 Track
 
-* Most active users
-* Most active branches
-* Most frequently used roles
-* Most frequently accessed modules
+- Most active users
+- Most active branches
+- Most frequently used roles
+- Most frequently accessed modules
 
 ---
 
@@ -617,18 +617,18 @@ View Audit Trail
 
 Supported schedules:
 
-* Daily
-* Weekly
-* Monthly
-* Quarterly
-* Yearly
+- Daily
+- Weekly
+- Monthly
+- Quarterly
+- Yearly
 
 Delivery channels:
 
-* Email
-* Download Center
-* Shared Network Folder (Future)
-* SFTP (Future)
+- Email
+- Download Center
+- Shared Network Folder (Future)
+- SFTP (Future)
 
 ---
 
@@ -636,15 +636,15 @@ Delivery channels:
 
 Supported formats:
 
-* Excel (.xlsx)
-* CSV
-* PDF
+- Excel (.xlsx)
+- CSV
+- PDF
 
 Future:
 
-* Power BI Dataset
-* Microsoft Excel Live Connection
-* REST Reporting API
+- Power BI Dataset
+- Microsoft Excel Live Connection
+- REST Reporting API
 
 ---
 
@@ -694,15 +694,15 @@ Reports must respect the user's branch visibility and permission scope. For exam
 
 # 19. Future Enhancements
 
-* AI-based anomaly detection for suspicious login behavior
-* Predictive account lockout risk
-* Login forecasting by branch
-* Role optimization recommendations
-* Automated compliance report generation
-* Power BI and Tableau connectors
-* Executive scorecards
-* Scheduled KPI alerts
-* Natural language reporting (e.g., "Show failed logins in Muscat last week")
+- AI-based anomaly detection for suspicious login behavior
+- Predictive account lockout risk
+- Login forecasting by branch
+- Role optimization recommendations
+- Automated compliance report generation
+- Power BI and Tableau connectors
+- Executive scorecards
+- Scheduled KPI alerts
+- Natural language reporting (e.g., "Show failed logins in Muscat last week")
 
 ---
 
@@ -730,14 +730,14 @@ This creates a unified reporting experience across ASTI IMS with consistent filt
 
 The IAM module now includes:
 
-* Comprehensive report catalogue
-* Executive, administrative, security, and compliance dashboards
-* KPI definitions and formulas
-* Analytics requirements
-* Chart catalogue
-* Drill-down behavior
-* Scheduling and export capabilities
-* Report security model
-* Performance targets
-* Data retention policy
-* Enterprise reporting standards reusable across all ASTI IMS modules
+- Comprehensive report catalogue
+- Executive, administrative, security, and compliance dashboards
+- KPI definitions and formulas
+- Analytics requirements
+- Chart catalogue
+- Drill-down behavior
+- Scheduling and export capabilities
+- Report security model
+- Performance targets
+- Data retention policy
+- Enterprise reporting standards reusable across all ASTI IMS modules

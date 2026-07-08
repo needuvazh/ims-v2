@@ -85,7 +85,7 @@ describe('StudentStatusService', () => {
             create: vi.fn().mockResolvedValue({}),
           },
           ...overrides,
-        })
+        }),
       ),
     } as any;
   }
@@ -99,7 +99,7 @@ describe('StudentStatusService', () => {
         studentProfileId: 'stu-1',
         actorId: 'user-1',
         branchId: 'branch-1',
-      })
+      }),
     ).resolves.toBeUndefined();
   });
 
@@ -114,7 +114,7 @@ describe('StudentStatusService', () => {
         changeReason: 'bad transition test',
         actorId: 'user-1',
         branchId: 'branch-1',
-      })
+      }),
     ).rejects.toThrow('ERR_STU_STATUS_INVALID_TRANSITION');
   });
 
@@ -140,7 +140,7 @@ describe('StudentStatusService', () => {
           auditLog: {
             create: vi.fn().mockResolvedValue({}),
           },
-        })
+        }),
       ),
     } as any;
 
@@ -152,18 +152,18 @@ describe('StudentStatusService', () => {
         changeReason: 'Restore after correction',
         actorId: 'user-1',
         branchId: 'branch-1',
-      })
+      }),
     ).resolves.toBeUndefined();
   });
 
   test('transition throws ERR_STU_STATUS_PROFILE_NOT_FOUND for missing profile', async () => {
     const prisma = {
       $transaction: vi.fn().mockImplementation((fn: any) =>
-      fn({
-        studentProfile: { findUnique: vi.fn().mockResolvedValue(null) },
+        fn({
+          studentProfile: { findUnique: vi.fn().mockResolvedValue(null) },
           studentStatusHistory: {},
           auditLog: {},
-        })
+        }),
       ),
     } as any;
 
@@ -173,7 +173,7 @@ describe('StudentStatusService', () => {
         studentProfileId: 'missing-id',
         actorId: 'user-1',
         branchId: 'branch-1',
-      })
+      }),
     ).rejects.toThrow('ERR_STU_STATUS_PROFILE_NOT_FOUND');
   });
 
@@ -192,7 +192,7 @@ describe('StudentStatusService', () => {
           },
           studentStatusHistory: {},
           auditLog: {},
-        })
+        }),
       ),
     } as any;
 
@@ -203,7 +203,7 @@ describe('StudentStatusService', () => {
         actorId: 'user-1',
         branchId: 'branch-1',
         reason: 'test',
-      })
+      }),
     ).rejects.toThrow('ERR_STU_STATUS_PROFILE_NOT_FOUND');
   });
 
@@ -230,7 +230,7 @@ describe('StudentStatusService', () => {
           auditLog: {
             create: vi.fn().mockResolvedValue({}),
           },
-        })
+        }),
       ),
     } as any;
 
@@ -249,7 +249,7 @@ describe('StudentStatusService', () => {
           status: 'Archived',
           deletedBy: 'user-1',
         }),
-      })
+      }),
     );
   });
 });
@@ -279,8 +279,8 @@ describe('StudentMergeService', () => {
       studentProfile: {
         findUnique: vi
           .fn()
-          .mockResolvedValueOnce(baseSurvivor)  // survivor
-          .mockResolvedValueOnce(baseSource),   // source
+          .mockResolvedValueOnce(baseSurvivor) // survivor
+          .mockResolvedValueOnce(baseSource), // source
         update: vi.fn().mockResolvedValue({}),
       },
       user: {
@@ -366,7 +366,7 @@ describe('StudentMergeService', () => {
           status: 'Archived',
           deletedBy: 'user-1',
         }),
-      })
+      }),
     );
     expect(sourcePersonUpdate).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -375,7 +375,7 @@ describe('StudentMergeService', () => {
           isDeleted: true,
           deletedBy: 'user-1',
         }),
-      })
+      }),
     );
   });
 
@@ -388,7 +388,7 @@ describe('StudentMergeService', () => {
         sourceStudentProfileId: 'same-id',
         mergeReason: 'self-merge test',
         mergedBy: 'user-1',
-      })
+      }),
     ).rejects.toThrow('ERR_STU_MERGE_SELF_FORBIDDEN');
   });
 
@@ -413,7 +413,7 @@ describe('StudentMergeService', () => {
         sourceStudentProfileId: 'stu-source',
         mergeReason: 'conflict test - both have portal accounts',
         mergedBy: 'user-1',
-      })
+      }),
     ).rejects.toThrow('ERR_STU_MERGE_USER_CONFLICT');
   });
 
@@ -423,7 +423,7 @@ describe('StudentMergeService', () => {
       user: {
         findUnique: vi
           .fn()
-          .mockResolvedValueOnce(null)                           // survivor has no portal
+          .mockResolvedValueOnce(null) // survivor has no portal
           .mockResolvedValueOnce({ id: 'user-source-portal' }), // source has portal
         update: updateUserMock,
       },
@@ -447,7 +447,7 @@ describe('StudentMergeService', () => {
           personId: 'person-survivor',
           updatedBy: 'user-1',
         }),
-      })
+      }),
     );
   });
 
@@ -472,7 +472,7 @@ describe('StudentMergeService', () => {
         sourceStudentProfileId: 'stu-source',
         mergeReason: 'deleted survivor test',
         mergedBy: 'user-1',
-      })
+      }),
     ).rejects.toThrow('ERR_STU_MERGE_SURVIVOR_NOT_FOUND');
   });
 });

@@ -30,12 +30,17 @@ export default async function IamLoginHistoryPage(props: {
   let userNotFound = false;
 
   if (userId) {
-    const isUuid = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(userId);
+    const isUuid =
+      /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(
+        userId,
+      );
     if (isUuid) {
       resolvedUserId = userId;
     } else if (session.permissions.includes('iam.user.read')) {
       const { userRepository } = await import('../../../lib/runtime');
-      const user = await userRepository.findByEmail(userId.toLowerCase()) || await userRepository.findByUsername(userId);
+      const user =
+        (await userRepository.findByEmail(userId.toLowerCase())) ||
+        (await userRepository.findByUsername(userId));
       if (user) {
         resolvedUserId = user.id;
       } else {
@@ -49,21 +54,26 @@ export default async function IamLoginHistoryPage(props: {
   const result = userNotFound
     ? { items: [], total: 0 }
     : resolvedUserId
-    ? await loginHistoryQueryService.listUserLoginHistory(resolvedUserId as never, page, pageSize, {
-        actorId: session.userId as never,
-        actorPermissions: session.permissions,
-        activeBranchId: session.activeBranchId as never,
-      })
-    : await loginHistoryQueryService.listSecurityLoginHistory(
-        { status: status || undefined },
-        page,
-        pageSize,
-        {
-          actorId: session.userId as never,
-          actorPermissions: session.permissions,
-          activeBranchId: session.activeBranchId as never,
-        },
-      );
+      ? await loginHistoryQueryService.listUserLoginHistory(
+          resolvedUserId as never,
+          page,
+          pageSize,
+          {
+            actorId: session.userId as never,
+            actorPermissions: session.permissions,
+            activeBranchId: session.activeBranchId as never,
+          },
+        )
+      : await loginHistoryQueryService.listSecurityLoginHistory(
+          { status: status || undefined },
+          page,
+          pageSize,
+          {
+            actorId: session.userId as never,
+            actorPermissions: session.permissions,
+            activeBranchId: session.activeBranchId as never,
+          },
+        );
 
   const rows = result.items.map((item) => ({
     id: item.id,

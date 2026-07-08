@@ -17,7 +17,7 @@ export class RequirementsResolver {
   async getRequiredDocuments(
     courseId: string | null,
     branchId: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<DocumentType[]> {
     const client = tx || this.prisma;
 
@@ -37,7 +37,7 @@ export class RequirementsResolver {
     });
 
     const resolved = new Set<DocumentType>(
-      requirements.map((r) => r.documentType as DocumentType)
+      requirements.map((r) => r.documentType as DocumentType),
     );
 
     return Array.from(resolved);

@@ -1,5 +1,14 @@
 import Link from 'next/link';
-import { Card, Table, TableHeader, TableRow, TableHead, TableBody, TableCell, Badge } from '@ims/shared-ui';
+import {
+  Card,
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+  Badge,
+} from '@ims/shared-ui';
 
 interface UserItem {
   userId: string;
@@ -43,9 +52,15 @@ export function RoleUsersList({ users }: Props) {
               <TableCell className="font-medium">
                 {user.fullName || 'Unknown'}
               </TableCell>
-              <TableCell className="text-[color:var(--ims-muted)]">{user.username}</TableCell>
+              <TableCell className="text-[color:var(--ims-muted)]">
+                {user.username}
+              </TableCell>
               <TableCell>
-                <Badge variant={user.status === 'Active' ? 'success' : 'default'}>{user.status}</Badge>
+                <Badge
+                  variant={user.status === 'Active' ? 'success' : 'default'}
+                >
+                  {user.status}
+                </Badge>
               </TableCell>
               <TableCell className="text-right">
                 <Link

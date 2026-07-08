@@ -7,6 +7,7 @@ Identity & Access Management is the owning bounded context. Organization supplie
 ## Goals / Non-Goals
 
 **Goals:**
+
 - Implement the backend/API/security foundation for IAM Module 01.
 - Align database schema, seed data, application services, API contracts, validation, audit, notifications, reports, exports, and observability with the approved SDS and conflict decisions.
 - Enforce permission-based access and branch-scoped access server-side for every protected operation.
@@ -14,6 +15,7 @@ Identity & Access Management is the owning bounded context. Organization supplie
 - Automate the BDD, negative, security, and API scenarios from Part 9 that apply to backend/API/security foundation.
 
 **Non-Goals:**
+
 - Full admin portal UI implementation in this delivery.
 - SSO, MFA, OAuth provider integration, biometric login, SMS/WhatsApp delivery, AI anomaly detection, SaaS tenancy, microservices, CQRS, event sourcing, external brokers, Redis, or any distributed cache.
 - In-memory permission cache. Permission evaluation reads directly from the database for Phase 1. `IPermissionCachePort` is defined as a passthrough/no-op interface only. Cache infrastructure is deferred pending an explicit Redis infrastructure decision.
@@ -80,7 +82,6 @@ Identity & Access Management is the owning bounded context. Organization supplie
 
 16. Use `HttpOnly` cookies for token delivery and client-side storage.
     - Rationale: Returning JWTs in JSON payloads for the client to store in LocalStorage introduces severe XSS risks. Returning access and refresh tokens in Secure, HttpOnly, SameSite=Strict cookies mitigates XSS.
-    
 17. Enforce Node.js Streams for all export formats.
     - Rationale: Generating CSV, XLSX, and PDF exports in-memory blocks the event loop and causes OOM crashes under load. Using streaming APIs ensures stable resource usage.
 
@@ -107,6 +108,7 @@ Identity & Access Management is the owning bounded context. Organization supplie
 7. Run graphify update after code changes during implementation.
 
 Rollback/mitigation:
+
 - Schema migration rollback must be documented per migration.
 - If production migration risk is high, use additive migrations first, backfill, then remove obsolete structures in a later approved change.
 - If login or permission evaluation fails after deployment, Part 11 rollback triggers route traffic to the previous stable version and clear permission cache.

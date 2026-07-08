@@ -6,7 +6,7 @@ import {
   ReviewReissueRequest,
   ReviewReissueRequestSchema,
   GenerateReplacementCertificate,
-  GenerateReplacementCertificateSchema
+  GenerateReplacementCertificateSchema,
 } from '../domain/validators';
 import { AuditPort, NumberingPort, EnrollmentReadPort } from '../ports';
 import { saveLocalMockPdf } from '../infrastructure/PdfHelper';
@@ -15,26 +15,32 @@ export class ReissueService {
   constructor(
     private readonly auditPort: AuditPort,
     private readonly numberingPort: NumberingPort,
-    private readonly enrollmentReadPort: EnrollmentReadPort
+    private readonly enrollmentReadPort: EnrollmentReadPort,
   ) {}
 
   // 1. Submit reissue request
-  async submitRequest(command: SubmitReissueRequest, actorUserId: string): Promise<string> {
+  async submitRequest(
+    command: SubmitReissueRequest,
+    actorUserId: string,
+  ): Promise<string> {
     const validated = SubmitReissueRequestSchema.parse(command);
 
     // Verify certificate exists and is issued
     const certificate = await prisma.certificate.findUnique({
-      where: { id: validated.certificateId }
+      where: { id: validated.certificateId },
     });
 
     if (!certificate) {
-      throw new DomainError(ErrorCodes.CERTIFICATE_NOT_FOUND, 'Certificate not found');
+      throw new DomainError(
+        ErrorCodes.CERTIFICATE_NOT_FOUND,
+        'Certificate not found',
+      );
     }
 
     if (certificate.certificateStatus !== 'Issued') {
       throw new DomainError(
         ErrorCodes.INVALID_STATE_TRANSITION,
-        `Cannot request reissue for certificate in status: ${certificate.certificateStatus}`
+        `Cannot request reissue for certificate in status: ${certificate.certificateStatus}`,
       );
     }
 
@@ -42,14 +48,14 @@ export class ReissueService {
     const openRequest = await prisma.certificateReissueRequest.findFirst({
       where: {
         certificateId: validated.certificateId,
-        status: { in: ['PendingReview', 'Approved'] }
-      }
+        status: { in: ['PendingReview', 'Approved'] },
+      },
     });
 
     if (openRequest) {
       throw new DomainError(
         ErrorCodes.REISSUE_REQUEST_ALREADY_OPEN,
-        'Another reissue request is already open for this certificate'
+        'Another reissue request is already open for this certificate',
       );
     }
 
@@ -60,39 +66,51 @@ export class ReissueService {
         requestedBy: actorUserId,
         reason: validated.reason,
         status: 'PendingReview',
-        createdBy: actorUserId
-      }
+        createdBy: actorUserId,
+      },
     });
 
     // Audit action
-    await this.auditPort.logAction('CERTIFICATE_REISSUE_SUBMITTED', actorUserId, certificate.id, {
-      requestId: request.id,
-      reason: validated.reason
-    });
+    await this.auditPort.logAction(
+      'CERTIFICATE_REISSUE_SUBMITTED',
+      actorUserId,
+      certificate.id,
+      {
+        requestId: request.id,
+        reason: validated.reason,
+      },
+    );
 
     return request.id;
   }
 
   // 2. Review and approve/reject reissue request
-  async reviewRequest(command: ReviewReissueRequest, actorUserId: string): Promise<void> {
+  async reviewRequest(
+    command: ReviewReissueRequest,
+    actorUserId: string,
+  ): Promise<void> {
     const validated = ReviewReissueRequestSchema.parse(command);
 
     const request = await prisma.certificateReissueRequest.findUnique({
-      where: { id: validated.requestId }
+      where: { id: validated.requestId },
     });
 
     if (!request) {
-      throw new DomainError(ErrorCodes.INVALID_OR_NOT_FOUND, 'Reissue request not found');
+      throw new DomainError(
+        ErrorCodes.INVALID_OR_NOT_FOUND,
+        'Reissue request not found',
+      );
     }
 
     if (request.status !== 'PendingReview') {
       throw new DomainError(
         ErrorCodes.INVALID_STATE_TRANSITION,
-        `Cannot review request in status: ${request.status}`
+        `Cannot review request in status: ${request.status}`,
       );
     }
 
-    const nextStatus = validated.decision === 'APPROVE' ? 'Approved' : 'Rejected';
+    const nextStatus =
+      validated.decision === 'APPROVE' ? 'Approved' : 'Rejected';
 
     await prisma.certificateReissueRequest.update({
       where: { id: validated.requestId },
@@ -100,51 +118,73 @@ export class ReissueService {
         status: nextStatus,
         approvedBy: actorUserId,
         approvedAt: new Date(),
-        version: { increment: 1 }
-      }
+        version: { increment: 1 },
+      },
     });
 
     // Audit decision
-    await this.auditPort.logAction(`CERTIFICATE_REISSUE_${validated.decision}D`, actorUserId, request.certificateId, {
-      requestId: request.id,
-      remarks: validated.remarks
-    });
+    await this.auditPort.logAction(
+      `CERTIFICATE_REISSUE_${validated.decision}D`,
+      actorUserId,
+      request.certificateId,
+      {
+        requestId: request.id,
+        remarks: validated.remarks,
+      },
+    );
   }
 
   // 3. Generate replacement certificate
-  async generateReplacement(command: GenerateReplacementCertificate, actorUserId: string): Promise<string> {
+  async generateReplacement(
+    command: GenerateReplacementCertificate,
+    actorUserId: string,
+  ): Promise<string> {
     const validated = GenerateReplacementCertificateSchema.parse(command);
 
     const request = await prisma.certificateReissueRequest.findUnique({
       where: { id: validated.reissueRequestId },
-      include: { certificate: true }
+      include: { certificate: true },
     });
 
     if (!request) {
-      throw new DomainError(ErrorCodes.INVALID_OR_NOT_FOUND, 'Reissue request not found');
+      throw new DomainError(
+        ErrorCodes.INVALID_OR_NOT_FOUND,
+        'Reissue request not found',
+      );
     }
 
     if (request.status !== 'Approved') {
       throw new DomainError(
         ErrorCodes.REISSUE_NOT_APPROVED,
-        `Cannot generate replacement for request status: ${request.status}`
+        `Cannot generate replacement for request status: ${request.status}`,
       );
     }
 
     const originalCert = request.certificate;
 
     // Fetch enrollment context
-    const context = await this.enrollmentReadPort.getEnrollmentContext(originalCert.enrollmentId);
+    const context = await this.enrollmentReadPort.getEnrollmentContext(
+      originalCert.enrollmentId,
+    );
     if (!context) {
-      throw new DomainError(ErrorCodes.ENROLLMENT_NOT_FOUND, 'Enrollment not found');
+      throw new DomainError(
+        ErrorCodes.ENROLLMENT_NOT_FOUND,
+        'Enrollment not found',
+      );
     }
 
     // Allocate new certificate number & verification code
-    const certNumber = await this.numberingPort.allocateCertificateNumber(context.branchId);
+    const certNumber = await this.numberingPort.allocateCertificateNumber(
+      context.branchId,
+    );
     const verificationCode = `VER-${context.courseCode}-${Date.now().toString().slice(-4)}-REP`;
 
     // Render local replacement PDF and set public URL
-    const certificateUrl = saveLocalMockPdf(certNumber, context.studentProfileId, verificationCode);
+    const certificateUrl = saveLocalMockPdf(
+      certNumber,
+      context.studentProfileId,
+      verificationCode,
+    );
     const qrCodeUrl = `https://asti-ims.local/verify/${verificationCode}`;
 
     // Execute database operations in a transaction to guarantee atomicity
@@ -164,8 +204,8 @@ export class ReissueService {
           language: validated.language ?? originalCert.language,
           issuedDate: new Date(),
           issuedBy: actorUserId,
-          createdBy: actorUserId
-        }
+          createdBy: actorUserId,
+        },
       });
 
       // Update original certificate status to Replaced
@@ -173,8 +213,8 @@ export class ReissueService {
         where: { id: originalCert.id },
         data: {
           certificateStatus: 'Replaced',
-          version: { increment: 1 }
-        }
+          version: { increment: 1 },
+        },
       });
 
       // Complete the reissue request
@@ -183,19 +223,24 @@ export class ReissueService {
         data: {
           status: 'Completed',
           newCertificateId: newCert.id,
-          version: { increment: 1 }
-        }
+          version: { increment: 1 },
+        },
       });
 
       return newCert;
     });
 
     // Audit the replacement
-    await this.auditPort.logAction('CERTIFICATE_REPLACED', actorUserId, originalCert.id, {
-      requestId: request.id,
-      newCertificateId: result.id,
-      newCertificateNumber: certNumber
-    });
+    await this.auditPort.logAction(
+      'CERTIFICATE_REPLACED',
+      actorUserId,
+      originalCert.id,
+      {
+        requestId: request.id,
+        newCertificateId: result.id,
+        newCertificateNumber: certNumber,
+      },
+    );
 
     return result.id;
   }

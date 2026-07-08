@@ -79,7 +79,7 @@ export function AssignCounselorModal({
       });
 
       const result = await res.json();
-      
+
       if (!res.ok) {
         throw new Error(result.messageEnglish || 'Failed to assign counselor');
       }
@@ -95,10 +95,13 @@ export function AssignCounselorModal({
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => {
-      if (!open) reset();
-      onOpenChange(open);
-    }}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) reset();
+        onOpenChange(open);
+      }}
+    >
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
@@ -106,7 +109,8 @@ export function AssignCounselorModal({
             Assign Counselor
           </DialogTitle>
           <DialogDescription>
-            Assign this lead to a counselor. Any pending follow-ups will be automatically reassigned.
+            Assign this lead to a counselor. Any pending follow-ups will be
+            automatically reassigned.
           </DialogDescription>
         </DialogHeader>
 

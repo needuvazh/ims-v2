@@ -1,18 +1,72 @@
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, BarChart3, FileText, ShieldCheck, Users, Clock3, LayoutDashboard, Download, Home, FileSpreadsheet } from 'lucide-react';
-import { Breadcrumbs, Card, CardContent, CardDescription, CardHeader, CardTitle, PageHeader } from '@ims/shared-ui';
+import {
+  ArrowRight,
+  BarChart3,
+  FileText,
+  ShieldCheck,
+  Users,
+  Clock3,
+  LayoutDashboard,
+  Download,
+  Home,
+  FileSpreadsheet,
+} from 'lucide-react';
+import {
+  Breadcrumbs,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  PageHeader,
+} from '@ims/shared-ui';
 
 export const metadata = { title: 'Reports | IMS Admin' };
 
 const reports = [
-  { href: '/iam/reports/user-directory', label: 'User Directory', desc: 'Browse branch-scoped user data.', icon: Users },
-  { href: '/iam/reports/login-history', label: 'Login History', desc: 'Review successful and failed logins.', icon: Clock3 },
-  { href: '/iam/reports/security-events', label: 'Security Events', desc: 'Audit-oriented IAM activity.', icon: ShieldCheck },
-  { href: '/iam/reports/roles', label: 'Roles', desc: 'Report on role assignments.', icon: FileText },
-  { href: '/iam/reports/sessions', label: 'Sessions', desc: 'Inspect active session usage.', icon: BarChart3 },
-  { href: '/iam/reports/audit-trail', label: 'Audit Trail', desc: 'Immutable audit report view.', icon: LayoutDashboard },
-  { href: '/iam/reports/export-jobs', label: 'Export Jobs', desc: 'Review job status and download links.', icon: Download },
+  {
+    href: '/iam/reports/user-directory',
+    label: 'User Directory',
+    desc: 'Browse branch-scoped user data.',
+    icon: Users,
+  },
+  {
+    href: '/iam/reports/login-history',
+    label: 'Login History',
+    desc: 'Review successful and failed logins.',
+    icon: Clock3,
+  },
+  {
+    href: '/iam/reports/security-events',
+    label: 'Security Events',
+    desc: 'Audit-oriented IAM activity.',
+    icon: ShieldCheck,
+  },
+  {
+    href: '/iam/reports/roles',
+    label: 'Roles',
+    desc: 'Report on role assignments.',
+    icon: FileText,
+  },
+  {
+    href: '/iam/reports/sessions',
+    label: 'Sessions',
+    desc: 'Inspect active session usage.',
+    icon: BarChart3,
+  },
+  {
+    href: '/iam/reports/audit-trail',
+    label: 'Audit Trail',
+    desc: 'Immutable audit report view.',
+    icon: LayoutDashboard,
+  },
+  {
+    href: '/iam/reports/export-jobs',
+    label: 'Export Jobs',
+    desc: 'Review job status and download links.',
+    icon: Download,
+  },
 ];
 
 export default function IamReportsPage() {
@@ -23,9 +77,22 @@ export default function IamReportsPage() {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Reports', icon: <FileSpreadsheet className="h-3.5 w-3.5 text-slate-500" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'IAM',
+                href: '/iam',
+                icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Reports',
+                icon: (
+                  <FileSpreadsheet className="h-3.5 w-3.5 text-slate-500" />
+                ),
+              },
             ]}
           />
         }
@@ -45,7 +112,10 @@ export default function IamReportsPage() {
                   <CardDescription>{report.desc}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <span className="inline-flex items-center gap-2 text-sm font-semibold">Open report <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold">
+                    Open report{' '}
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </span>
                 </CardContent>
               </Card>
             </Link>

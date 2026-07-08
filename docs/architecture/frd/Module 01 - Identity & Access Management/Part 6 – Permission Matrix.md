@@ -711,13 +711,13 @@ Execute
 
 To improve performance:
 
-* Cache effective permissions per user.
-* Invalidate cache immediately when:
+- Cache effective permissions per user.
+- Invalidate cache immediately when:
 
-  * Roles change
-  * Direct permissions change
-  * Branch assignments change
-  * User is suspended or archived
+  - Roles change
+  - Direct permissions change
+  - Branch assignments change
+  - User is suspended or archived
 
 Cache key example:
 
@@ -733,22 +733,22 @@ Every authorization change must generate an audit event.
 
 Examples:
 
-* Role created
-* Role updated
-* Permission added to role
-* Permission removed from role
-* User assigned role
-* User removed from role
-* Branch assignment changed
-* Security policy modified
+- Role created
+- Role updated
+- Permission added to role
+- Permission removed from role
+- User assigned role
+- User removed from role
+- Branch assignment changed
+- Security policy modified
 
 Each event should capture:
 
-* Who performed the change
-* Timestamp
-* Before/after values
-* IP address
-* Correlation ID
+- Who performed the change
+- Timestamp
+- Before/after values
+- IP address
+- Correlation ID
 
 ---
 
@@ -756,14 +756,14 @@ Each event should capture:
 
 The authorization model is designed to evolve without redesign:
 
-* Attribute-Based Access Control (ABAC) conditions (e.g., course, department, contract)
-* Time-based permissions
-* Delegated administration
-* Temporary access grants
-* Approval workflows for privileged access
-* External Identity Providers (OIDC/SAML)
-* Fine-grained API scopes
-* Policy-as-Code integration (e.g., Open Policy Agent)
+- Attribute-Based Access Control (ABAC) conditions (e.g., course, department, contract)
+- Time-based permissions
+- Delegated administration
+- Temporary access grants
+- Approval workflows for privileged access
+- External Identity Providers (OIDC/SAML)
+- Fine-grained API scopes
+- Policy-as-Code integration (e.g., Open Policy Agent)
 
 ---
 
@@ -771,16 +771,16 @@ The authorization model is designed to evolve without redesign:
 
 The IAM specification now defines:
 
-* Enterprise authorization architecture
-* Permission naming standards
-* Permission catalogue
-* Role templates
-* Menu, screen, and button authorization
-* Data-level security
-* Branch visibility rules
-* Permission inheritance model
-* Resource ownership rules
-* Authorization decision flow
-* Permission caching strategy
-* Audit requirements for security changes
-* Roadmap for future authorization capabilities
+- Enterprise authorization architecture
+- Permission naming standards
+- Permission catalogue
+- Role templates
+- Menu, screen, and button authorization
+- Data-level security
+- Branch visibility rules
+- Permission inheritance model
+- Resource ownership rules
+- Authorization decision flow
+- Permission caching strategy
+- Audit requirements for security changes
+- Roadmap for future authorization capabilities

@@ -16,8 +16,7 @@ const linkButtonVariants = cva(
           'border border-[color:var(--ims-brass)] bg-transparent text-[color:var(--ims-brass)] hover:bg-[color:var(--ims-brass-soft)]',
         ghost:
           'bg-transparent text-[color:var(--ims-ink)] hover:bg-[color:var(--ims-accent-soft)] hover:text-[color:var(--ims-brass)]',
-        link:
-          'underline-offset-4 text-[color:var(--ims-brass)] hover:underline rounded-none',
+        link: 'underline-offset-4 text-[color:var(--ims-brass)] hover:underline rounded-none',
       },
       size: {
         sm: 'h-8 px-3 text-xs',
@@ -34,15 +33,25 @@ const linkButtonVariants = cva(
 );
 
 export interface LinkButtonProps
-  extends Omit<ComponentProps<typeof Link>, 'className'>,
+  extends
+    Omit<ComponentProps<typeof Link>, 'className'>,
     VariantProps<typeof linkButtonVariants> {
   className?: string;
 }
 
 /** Server-compatible button-style link using Next.js Link. */
-export function LinkButton({ className, variant, size, children, ...props }: LinkButtonProps) {
+export function LinkButton({
+  className,
+  variant,
+  size,
+  children,
+  ...props
+}: LinkButtonProps) {
   return (
-    <Link className={cn(linkButtonVariants({ variant, size }), className)} {...props}>
+    <Link
+      className={cn(linkButtonVariants({ variant, size }), className)}
+      {...props}
+    >
       {children}
     </Link>
   );

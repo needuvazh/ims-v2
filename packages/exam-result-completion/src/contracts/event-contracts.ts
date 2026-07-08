@@ -155,4 +155,5 @@ export const EXAM_RESULT_COMPLETION_EVENTS = {
   ENROLLMENT_COMPLETION_SYNCED: 'EnrollmentCompletionSynced',
 } as const;
 
-export type ExamResultCompletionEventType = typeof EXAM_RESULT_COMPLETION_EVENTS[keyof typeof EXAM_RESULT_COMPLETION_EVENTS];
+export type ExamResultCompletionEventType =
+  (typeof EXAM_RESULT_COMPLETION_EVENTS)[keyof typeof EXAM_RESULT_COMPLETION_EVENTS];

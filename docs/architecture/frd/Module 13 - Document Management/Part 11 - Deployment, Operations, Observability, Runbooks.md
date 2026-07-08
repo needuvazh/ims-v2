@@ -41,18 +41,18 @@ The application remains a modular monolith. This document does not propose micro
 
 # 2. Operational Objectives
 
-| ID | Objective |
-|---|---|
-| OPS-DOC-001 | Detect failures in document metadata operations, verification transitions, file access, Blob registration, expiry evaluation, and reporting projections. |
+| ID          | Objective                                                                                                                                                     |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| OPS-DOC-001 | Detect failures in document metadata operations, verification transitions, file access, Blob registration, expiry evaluation, and reporting projections.      |
 | OPS-DOC-002 | Preserve correlation from inbound request through application service, database transaction, Blob operation, audit side effect, and notification side effect. |
-| OPS-DOC-003 | Ensure branch-scope failures fail closed and are observable without leaking protected data. |
-| OPS-DOC-004 | Protect the integrity of `Document` and `DocumentVerification` during deployment, backup, restore, and recovery. |
-| OPS-DOC-005 | Detect Blob/database divergence and provide safe operator runbooks without inventing a new domain owner. |
-| OPS-DOC-006 | Provide measurable service health using logs, traces, metrics, SLO indicators, and synthetic checks. |
-| OPS-DOC-007 | Support reproducible diagnosis of authorization, lifecycle, concurrency, storage, notification, and reporting failures. |
-| OPS-DOC-008 | Prevent operational tools from bypassing application-service ownership or directly mutating immutable verification history. |
-| OPS-DOC-009 | Keep reporting/read-model failures isolated from transactional document commands. |
-| OPS-DOC-010 | Preserve DDD and ER alignment after deployment and through operational changes. |
+| OPS-DOC-003 | Ensure branch-scope failures fail closed and are observable without leaking protected data.                                                                   |
+| OPS-DOC-004 | Protect the integrity of `Document` and `DocumentVerification` during deployment, backup, restore, and recovery.                                              |
+| OPS-DOC-005 | Detect Blob/database divergence and provide safe operator runbooks without inventing a new domain owner.                                                      |
+| OPS-DOC-006 | Provide measurable service health using logs, traces, metrics, SLO indicators, and synthetic checks.                                                          |
+| OPS-DOC-007 | Support reproducible diagnosis of authorization, lifecycle, concurrency, storage, notification, and reporting failures.                                       |
+| OPS-DOC-008 | Prevent operational tools from bypassing application-service ownership or directly mutating immutable verification history.                                   |
+| OPS-DOC-009 | Keep reporting/read-model failures isolated from transactional document commands.                                                                             |
+| OPS-DOC-010 | Preserve DDD and ER alignment after deployment and through operational changes.                                                                               |
 
 ---
 
@@ -178,20 +178,20 @@ Verification history must never be rewritten or truncated as part of an ordinary
 
 A production deployment must not proceed when any mandatory gate fails.
 
-| Gate | Requirement | Blocking? |
-|---|---|---:|
-| Database migration validation | Migration applies successfully to production-like schema copy | Yes |
-| Rollback/forward-fix plan | Documented for schema and application changes | Yes |
-| Unit tests | Domain and validation tests pass | Yes |
-| Integration tests | Repository, transaction, IAM adapter, owner adapter and Blob adapter tests pass | Yes |
-| BDD regression | Minimum suite from Part 9 passes | Yes |
-| Authorization tests | Direct-ID and branch-isolation cases pass | Yes |
-| Concurrency tests | Simultaneous approve/reject race tests pass | Yes |
-| Security checks | No high/critical unresolved release-blocking findings | Yes |
-| Blob smoke test | Upload intent, upload, registration and controlled file access pass | Yes |
-| Telemetry validation | Logs, traces and metrics visible with release version | Yes |
-| Scheduled-job validation | Expiry evaluator can execute in target environment | Yes |
-| Reporting isolation check | Reporting outage does not break command path | Yes |
+| Gate                          | Requirement                                                                     | Blocking? |
+| ----------------------------- | ------------------------------------------------------------------------------- | --------: |
+| Database migration validation | Migration applies successfully to production-like schema copy                   |       Yes |
+| Rollback/forward-fix plan     | Documented for schema and application changes                                   |       Yes |
+| Unit tests                    | Domain and validation tests pass                                                |       Yes |
+| Integration tests             | Repository, transaction, IAM adapter, owner adapter and Blob adapter tests pass |       Yes |
+| BDD regression                | Minimum suite from Part 9 passes                                                |       Yes |
+| Authorization tests           | Direct-ID and branch-isolation cases pass                                       |       Yes |
+| Concurrency tests             | Simultaneous approve/reject race tests pass                                     |       Yes |
+| Security checks               | No high/critical unresolved release-blocking findings                           |       Yes |
+| Blob smoke test               | Upload intent, upload, registration and controlled file access pass             |       Yes |
+| Telemetry validation          | Logs, traces and metrics visible with release version                           |       Yes |
+| Scheduled-job validation      | Expiry evaluator can execute in target environment                              |       Yes |
+| Reporting isolation check     | Reporting outage does not break command path                                    |       Yes |
 
 ---
 
@@ -289,24 +289,24 @@ Recommended shape:
 
 ## 6.2 Mandatory log fields
 
-| Field | Required | Notes |
-|---|---:|---|
-| `timestamp` | Yes | UTC timestamp in telemetry; business dates rendered in `Asia/Muscat` where required |
-| `level` | Yes | DEBUG/INFO/WARN/ERROR/FATAL or platform equivalent |
-| `service` | Yes | ASTI IMS service/application identifier |
-| `module` | Yes | `document-management` |
-| `environment` | Yes | dev/test/staging/production |
-| `applicationVersion` | Yes | Release or commit identifier |
-| `operation` | Yes | Stable operation name |
-| `requestId` | Request paths | Unique per inbound request |
-| `correlationId` | Yes | Propagated across side effects |
-| `traceId` | When tracing enabled | Trace linkage |
-| `actorId` | Human commands | Server-derived user ID |
-| `actorType` | Jobs/system operations | HUMAN or SYSTEM |
-| `documentId` | Document operations | Where known |
-| `result` | Yes | SUCCESS/FAILURE/DENIED/CONFLICT/DEGRADED |
-| `errorCode` | Failure | Part 7 canonical code where applicable |
-| `durationMs` | Timed operation | End-to-end operation duration |
+| Field                |               Required | Notes                                                                               |
+| -------------------- | ---------------------: | ----------------------------------------------------------------------------------- |
+| `timestamp`          |                    Yes | UTC timestamp in telemetry; business dates rendered in `Asia/Muscat` where required |
+| `level`              |                    Yes | DEBUG/INFO/WARN/ERROR/FATAL or platform equivalent                                  |
+| `service`            |                    Yes | ASTI IMS service/application identifier                                             |
+| `module`             |                    Yes | `document-management`                                                               |
+| `environment`        |                    Yes | dev/test/staging/production                                                         |
+| `applicationVersion` |                    Yes | Release or commit identifier                                                        |
+| `operation`          |                    Yes | Stable operation name                                                               |
+| `requestId`          |          Request paths | Unique per inbound request                                                          |
+| `correlationId`      |                    Yes | Propagated across side effects                                                      |
+| `traceId`            |   When tracing enabled | Trace linkage                                                                       |
+| `actorId`            |         Human commands | Server-derived user ID                                                              |
+| `actorType`          | Jobs/system operations | HUMAN or SYSTEM                                                                     |
+| `documentId`         |    Document operations | Where known                                                                         |
+| `result`             |                    Yes | SUCCESS/FAILURE/DENIED/CONFLICT/DEGRADED                                            |
+| `errorCode`          |                Failure | Part 7 canonical code where applicable                                              |
+| `durationMs`         |        Timed operation | End-to-end operation duration                                                       |
 
 ## 6.3 Operation naming
 
@@ -336,18 +336,18 @@ document.report.export
 
 ## 6.4 Log levels
 
-| Condition | Level |
-|---|---|
-| Normal successful request | INFO |
-| Expected validation failure | INFO or WARN according to platform policy |
-| Authorization denial | WARN with security telemetry classification |
-| Optimistic concurrency conflict | WARN |
-| Blob/database divergence | ERROR |
-| Database transaction failure | ERROR |
-| Audit side-effect loss risk | ERROR/FATAL according to architecture severity |
-| Repeated reconciliation failure | ERROR |
-| Health dependency unavailable | WARN or ERROR depending on impact |
-| Security control bypass suspicion | ERROR with security alert route |
+| Condition                         | Level                                          |
+| --------------------------------- | ---------------------------------------------- |
+| Normal successful request         | INFO                                           |
+| Expected validation failure       | INFO or WARN according to platform policy      |
+| Authorization denial              | WARN with security telemetry classification    |
+| Optimistic concurrency conflict   | WARN                                           |
+| Blob/database divergence          | ERROR                                          |
+| Database transaction failure      | ERROR                                          |
+| Audit side-effect loss risk       | ERROR/FATAL according to architecture severity |
+| Repeated reconciliation failure   | ERROR                                          |
+| Health dependency unavailable     | WARN or ERROR depending on impact              |
+| Security control bypass suspicion | ERROR with security alert route                |
 
 ## 6.5 Forbidden log content
 
@@ -482,48 +482,48 @@ asti_document_*
 
 ## 8.2 Request and command metrics
 
-| Metric | Type | Suggested Labels | Purpose |
-|---|---|---|---|
-| `asti_document_requests_total` | Counter | operation, result, error_code_class | Request volume and failures |
-| `asti_document_request_duration_ms` | Histogram | operation, result | Latency SLO measurement |
-| `asti_document_verification_transitions_total` | Counter | from_status, to_status, result | Lifecycle health |
-| `asti_document_concurrency_conflicts_total` | Counter | operation | Detect approval/update races |
-| `asti_document_authorization_denied_total` | Counter | operation, reason_class | Security monitoring |
-| `asti_document_branch_scope_failure_total` | Counter | operation, failure_class | Scope resolution reliability/security |
+| Metric                                         | Type      | Suggested Labels                    | Purpose                               |
+| ---------------------------------------------- | --------- | ----------------------------------- | ------------------------------------- |
+| `asti_document_requests_total`                 | Counter   | operation, result, error_code_class | Request volume and failures           |
+| `asti_document_request_duration_ms`            | Histogram | operation, result                   | Latency SLO measurement               |
+| `asti_document_verification_transitions_total` | Counter   | from_status, to_status, result      | Lifecycle health                      |
+| `asti_document_concurrency_conflicts_total`    | Counter   | operation                           | Detect approval/update races          |
+| `asti_document_authorization_denied_total`     | Counter   | operation, reason_class             | Security monitoring                   |
+| `asti_document_branch_scope_failure_total`     | Counter   | operation, failure_class            | Scope resolution reliability/security |
 
 ## 8.3 Blob/storage metrics
 
-| Metric | Type | Labels | Purpose |
-|---|---|---|---|
-| `asti_document_blob_operation_total` | Counter | operation, result | Upload/access/reference-validation behavior |
-| `asti_document_blob_operation_duration_ms` | Histogram | operation, result | Storage latency |
-| `asti_document_blob_reference_missing_total` | Counter | detection_source | DB points to missing Blob |
-| `asti_document_orphan_blob_detected_total` | Counter | detection_source | Blob exists with failed/no registration |
-| `asti_document_reconciliation_attempt_total` | Counter | action, result | Reconciliation execution |
-| `asti_document_reconciliation_pending` | Gauge | issue_type | Outstanding unresolved inconsistencies |
+| Metric                                       | Type      | Labels            | Purpose                                     |
+| -------------------------------------------- | --------- | ----------------- | ------------------------------------------- |
+| `asti_document_blob_operation_total`         | Counter   | operation, result | Upload/access/reference-validation behavior |
+| `asti_document_blob_operation_duration_ms`   | Histogram | operation, result | Storage latency                             |
+| `asti_document_blob_reference_missing_total` | Counter   | detection_source  | DB points to missing Blob                   |
+| `asti_document_orphan_blob_detected_total`   | Counter   | detection_source  | Blob exists with failed/no registration     |
+| `asti_document_reconciliation_attempt_total` | Counter   | action, result    | Reconciliation execution                    |
+| `asti_document_reconciliation_pending`       | Gauge     | issue_type        | Outstanding unresolved inconsistencies      |
 
 ## 8.4 Verification and expiry metrics
 
-| Metric | Type | Labels | Purpose |
-|---|---|---|---|
-| `asti_document_verification_queue_depth` | Gauge | branch_scope_class | Pending verification backlog |
-| `asti_document_verification_oldest_age_seconds` | Gauge | branch_scope_class | Backlog aging |
-| `asti_document_verification_turnaround_seconds` | Histogram | decision | Verification performance |
-| `asti_document_expiring_soon_count` | Gauge | warning_window_days | Upcoming expiry volume |
-| `asti_document_expired_count` | Gauge | scope_class | Expired volume according to approved semantics |
-| `asti_document_expiry_job_runs_total` | Counter | result | Scheduled evaluation health |
-| `asti_document_expiry_job_duration_seconds` | Histogram | result | Job performance |
-| `asti_document_expiry_job_last_success_timestamp` | Gauge | none | Freshness monitor |
+| Metric                                            | Type      | Labels              | Purpose                                        |
+| ------------------------------------------------- | --------- | ------------------- | ---------------------------------------------- |
+| `asti_document_verification_queue_depth`          | Gauge     | branch_scope_class  | Pending verification backlog                   |
+| `asti_document_verification_oldest_age_seconds`   | Gauge     | branch_scope_class  | Backlog aging                                  |
+| `asti_document_verification_turnaround_seconds`   | Histogram | decision            | Verification performance                       |
+| `asti_document_expiring_soon_count`               | Gauge     | warning_window_days | Upcoming expiry volume                         |
+| `asti_document_expired_count`                     | Gauge     | scope_class         | Expired volume according to approved semantics |
+| `asti_document_expiry_job_runs_total`             | Counter   | result              | Scheduled evaluation health                    |
+| `asti_document_expiry_job_duration_seconds`       | Histogram | result              | Job performance                                |
+| `asti_document_expiry_job_last_success_timestamp` | Gauge     | none                | Freshness monitor                              |
 
 ## 8.5 Side-effect and reporting metrics
 
-| Metric | Type | Labels | Purpose |
-|---|---|---|---|
-| `asti_document_audit_side_effect_total` | Counter | event_type, result | Detect audit integration failures |
-| `asti_document_notification_trigger_total` | Counter | event_type, result | Trigger reliability; not delivery status |
-| `asti_document_reporting_projection_lag_seconds` | Gauge | projection | Read-model freshness |
-| `asti_document_report_query_duration_ms` | Histogram | report_code, scope_class | Report performance |
-| `asti_document_report_export_total` | Counter | report_code, format, result | Export operations |
+| Metric                                           | Type      | Labels                      | Purpose                                  |
+| ------------------------------------------------ | --------- | --------------------------- | ---------------------------------------- |
+| `asti_document_audit_side_effect_total`          | Counter   | event_type, result          | Detect audit integration failures        |
+| `asti_document_notification_trigger_total`       | Counter   | event_type, result          | Trigger reliability; not delivery status |
+| `asti_document_reporting_projection_lag_seconds` | Gauge     | projection                  | Read-model freshness                     |
+| `asti_document_report_query_duration_ms`         | Histogram | report_code, scope_class    | Report performance                       |
+| `asti_document_report_export_total`              | Counter   | report_code, format, result | Export operations                        |
 
 ## 8.6 Availability indicators
 
@@ -547,21 +547,21 @@ report projection freshness
 
 Alert thresholds should be tuned from production baselines. Initial rules should include:
 
-| Alert | Initial Trigger | Severity | First Response |
-|---|---|---|---|
-| Document API high error rate | >5% server errors for 10 min | High | Check DB, auth, owner adapters and release health |
-| Verification command failure spike | >2% system failures for 10 min | High | Inspect transaction, concurrency and audit integration |
-| Database unavailable | Health check fail >2 consecutive probes | Critical | Activate DB incident runbook |
-| Blob operations unavailable | High error rate or dependency probe fail | High | Degrade upload/file access; preserve metadata reads |
-| Missing Blob references detected | >0 new confirmed missing references | High | Run missing Blob runbook |
-| Orphan Blob backlog increasing | Growth over 2 consecutive scans | Medium/High | Run orphan Blob runbook |
-| Expiry job stale | No successful run within 26 hours | High | Run expiry job runbook |
-| Verification backlog oldest age breached | Above approved SLA threshold | Medium/High | Operational workload escalation |
-| Branch-scope resolver failures spike | > agreed threshold | High | Fail closed and investigate owner adapter/IAM |
-| Audit side-effect failure | Any unrecovered mandatory failure | Critical | Run audit side-effect runbook |
-| Reporting projection lag | Above approved freshness SLA | Medium | Run projection lag runbook |
-| Concurrency conflict spike | Sudden sustained increase | Medium | Investigate client retry behavior or operational contention |
-| Authorization denial anomaly | Significant baseline deviation | Security | Security investigation |
+| Alert                                    | Initial Trigger                          | Severity    | First Response                                              |
+| ---------------------------------------- | ---------------------------------------- | ----------- | ----------------------------------------------------------- |
+| Document API high error rate             | >5% server errors for 10 min             | High        | Check DB, auth, owner adapters and release health           |
+| Verification command failure spike       | >2% system failures for 10 min           | High        | Inspect transaction, concurrency and audit integration      |
+| Database unavailable                     | Health check fail >2 consecutive probes  | Critical    | Activate DB incident runbook                                |
+| Blob operations unavailable              | High error rate or dependency probe fail | High        | Degrade upload/file access; preserve metadata reads         |
+| Missing Blob references detected         | >0 new confirmed missing references      | High        | Run missing Blob runbook                                    |
+| Orphan Blob backlog increasing           | Growth over 2 consecutive scans          | Medium/High | Run orphan Blob runbook                                     |
+| Expiry job stale                         | No successful run within 26 hours        | High        | Run expiry job runbook                                      |
+| Verification backlog oldest age breached | Above approved SLA threshold             | Medium/High | Operational workload escalation                             |
+| Branch-scope resolver failures spike     | > agreed threshold                       | High        | Fail closed and investigate owner adapter/IAM               |
+| Audit side-effect failure                | Any unrecovered mandatory failure        | Critical    | Run audit side-effect runbook                               |
+| Reporting projection lag                 | Above approved freshness SLA             | Medium      | Run projection lag runbook                                  |
+| Concurrency conflict spike               | Sudden sustained increase                | Medium      | Investigate client retry behavior or operational contention |
+| Authorization denial anomaly             | Significant baseline deviation           | Security    | Security investigation                                      |
 
 Alert notifications must not include sensitive document metadata or file URLs.
 
@@ -591,15 +591,15 @@ It should not fail merely because Vercel Blob or Reporting is unavailable; other
 
 Readiness for Document Management command traffic should verify critical dependencies:
 
-| Dependency | Readiness Critical? | Failure Behavior |
-|---|---:|---|
-| Primary database | Yes | Not ready |
-| Authentication/IAM core path | Yes for authenticated functionality | Fail closed / not ready according to platform boundary |
-| Owner-scope resolver path | Yes for scoped document commands | Fail closed; document commands unavailable |
-| Vercel Blob | Conditional | Upload/file-access degraded; metadata operations may remain ready |
-| Audit durable capture path | Yes for operations requiring mandatory audit | Sensitive mutation path unavailable if durability cannot be guaranteed |
-| Communication delivery provider | No | Commands remain available; trigger/delivery recovery handled by Communication |
-| Reporting projection store | No | Transaction paths remain available; reporting degraded |
+| Dependency                      |                          Readiness Critical? | Failure Behavior                                                              |
+| ------------------------------- | -------------------------------------------: | ----------------------------------------------------------------------------- |
+| Primary database                |                                          Yes | Not ready                                                                     |
+| Authentication/IAM core path    |          Yes for authenticated functionality | Fail closed / not ready according to platform boundary                        |
+| Owner-scope resolver path       |             Yes for scoped document commands | Fail closed; document commands unavailable                                    |
+| Vercel Blob                     |                                  Conditional | Upload/file-access degraded; metadata operations may remain ready             |
+| Audit durable capture path      | Yes for operations requiring mandatory audit | Sensitive mutation path unavailable if durability cannot be guaranteed        |
+| Communication delivery provider |                                           No | Commands remain available; trigger/delivery recovery handled by Communication |
+| Reporting projection store      |                                           No | Transaction paths remain available; reporting degraded                        |
 
 ## 10.4 Deep health checks
 
@@ -932,24 +932,24 @@ If the project supports break-glass access, it must:
 
 # 16. Troubleshooting Runbook Index
 
-| Runbook | Failure |
-|---|---|
-| RB-DOC-001 | Upload intent creation fails |
-| RB-DOC-002 | Blob upload succeeds but document registration fails |
+| Runbook    | Failure                                                         |
+| ---------- | --------------------------------------------------------------- |
+| RB-DOC-001 | Upload intent creation fails                                    |
+| RB-DOC-002 | Blob upload succeeds but document registration fails            |
 | RB-DOC-003 | Document metadata exists but Blob object is missing/unavailable |
-| RB-DOC-004 | User receives unexpected authorization or branch-scope denial |
-| RB-DOC-005 | Suspected cross-branch data leakage |
-| RB-DOC-006 | Approval/rejection transaction fails |
-| RB-DOC-007 | Optimistic concurrency conflict spike |
-| RB-DOC-008 | Verification history/current-state mismatch |
-| RB-DOC-009 | Expiry evaluation job did not run or is stale |
-| RB-DOC-010 | Expiry notifications not delivered |
-| RB-DOC-011 | Mandatory audit side effect failed or cannot be confirmed |
-| RB-DOC-012 | Reporting dashboard/report is stale or unavailable |
-| RB-DOC-013 | Reconciliation backlog grows or retry repeatedly fails |
-| RB-DOC-014 | High latency or database query degradation |
-| RB-DOC-015 | Deployment regression after release |
-| RB-DOC-016 | Database restore integrity validation |
+| RB-DOC-004 | User receives unexpected authorization or branch-scope denial   |
+| RB-DOC-005 | Suspected cross-branch data leakage                             |
+| RB-DOC-006 | Approval/rejection transaction fails                            |
+| RB-DOC-007 | Optimistic concurrency conflict spike                           |
+| RB-DOC-008 | Verification history/current-state mismatch                     |
+| RB-DOC-009 | Expiry evaluation job did not run or is stale                   |
+| RB-DOC-010 | Expiry notifications not delivered                              |
+| RB-DOC-011 | Mandatory audit side effect failed or cannot be confirmed       |
+| RB-DOC-012 | Reporting dashboard/report is stale or unavailable              |
+| RB-DOC-013 | Reconciliation backlog grows or retry repeatedly fails          |
+| RB-DOC-014 | High latency or database query degradation                      |
+| RB-DOC-015 | Deployment regression after release                             |
+| RB-DOC-016 | Database restore integrity validation                           |
 
 ---
 
@@ -1474,12 +1474,12 @@ Use after any restore or PITR operation.
 
 # 33. Incident Severity Guidance
 
-| Severity | Examples |
-|---|---|
-| Critical | Cross-branch data exposure, mandatory audit evidence loss, database unavailable, widespread irreversible evidence loss |
-| High | Verification commands unavailable, Blob file access broadly unavailable, missing Blob references, expiry job stale beyond SLA |
-| Medium | Reporting projection stale, reconciliation backlog rising, elevated concurrency conflicts |
-| Low | Isolated validation/configuration issue with no data integrity or access impact |
+| Severity | Examples                                                                                                                      |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Critical | Cross-branch data exposure, mandatory audit evidence loss, database unavailable, widespread irreversible evidence loss        |
+| High     | Verification commands unavailable, Blob file access broadly unavailable, missing Blob references, expiry job stale beyond SLA |
+| Medium   | Reporting projection stale, reconciliation backlog rising, elevated concurrency conflicts                                     |
+| Low      | Isolated validation/configuration issue with no data integrity or access impact                                               |
 
 Actual incident severity must follow the platform-wide incident management policy where it differs.
 
@@ -1610,20 +1610,20 @@ Security telemetry must not reveal protected file content.
 
 # 38. Cross-Context Operational Responsibility Matrix
 
-| Operational Concern | Primary Owner | Document Management Responsibility |
-|---|---|---|
-| User authentication outage | IAM / Platform | Fail authenticated operations safely; expose dependency health |
-| Permission resolution failure | IAM | Fail closed and log correlation |
-| Branch access calculation | IAM + owner branch source | Request authoritative resolution; never broaden scope |
-| Student owner issue | Admission & Enrollment | Consume read contract; do not repair StudentProfile locally |
-| Trainer owner issue | Faculty / Trainer | Consume read contract; do not repair TrainerProfile locally |
-| Corporate owner issue | Corporate Training | Consume read contract; do not repair CorporateAccount locally |
-| Person owner scope gap | Architecture/shared Party + consuming policy | Block unsupported unsafe operation until resolver approved |
-| Blob outage | Infrastructure/storage adapter | Degrade upload/file access while preserving safe metadata operations |
-| Audit evidence pipeline issue | Audit & Compliance / Platform | Produce correlated fact and participate in recovery |
-| Notification provider failure | Communication | Confirm trigger; do not own delivery retries |
-| Report projection outage | Reporting | Keep transaction path independent; expose freshness/degraded state |
-| Branch hierarchy issue | Organization | Consume hierarchy reference; do not maintain local hierarchy |
+| Operational Concern           | Primary Owner                                | Document Management Responsibility                                   |
+| ----------------------------- | -------------------------------------------- | -------------------------------------------------------------------- |
+| User authentication outage    | IAM / Platform                               | Fail authenticated operations safely; expose dependency health       |
+| Permission resolution failure | IAM                                          | Fail closed and log correlation                                      |
+| Branch access calculation     | IAM + owner branch source                    | Request authoritative resolution; never broaden scope                |
+| Student owner issue           | Admission & Enrollment                       | Consume read contract; do not repair StudentProfile locally          |
+| Trainer owner issue           | Faculty / Trainer                            | Consume read contract; do not repair TrainerProfile locally          |
+| Corporate owner issue         | Corporate Training                           | Consume read contract; do not repair CorporateAccount locally        |
+| Person owner scope gap        | Architecture/shared Party + consuming policy | Block unsupported unsafe operation until resolver approved           |
+| Blob outage                   | Infrastructure/storage adapter               | Degrade upload/file access while preserving safe metadata operations |
+| Audit evidence pipeline issue | Audit & Compliance / Platform                | Produce correlated fact and participate in recovery                  |
+| Notification provider failure | Communication                                | Confirm trigger; do not own delivery retries                         |
+| Report projection outage      | Reporting                                    | Keep transaction path independent; expose freshness/degraded state   |
+| Branch hierarchy issue        | Organization                                 | Consume hierarchy reference; do not maintain local hierarchy         |
 
 ---
 
@@ -1631,17 +1631,17 @@ Security telemetry must not reveal protected file content.
 
 ## 39.1 Aggregate ownership
 
-| Check | Result | Notes |
-|---|---|---|
-| `Document` remains owned by Document Management | PASS | No other context is allowed to mutate document lifecycle directly. |
-| `DocumentVerification` remains Document Management-owned immutable history | PASS | No ordinary update/delete operations introduced. |
-| Student/Trainer/Corporate/Person are only referenced | PASS | No duplicate owner tables introduced. |
-| IAM remains owner of users, roles, permissions and branch access | PASS | Module consumes authorization and scope decisions. |
-| Audit remains owner of authoritative audit evidence | PASS | No local `DocumentAuditLog` introduced. |
-| Communication remains owner of delivery/retry/logging | PASS | Module emits source facts/triggers only. |
-| Reporting remains owner of dashboards/read projections | PASS | Operational read models remain read-only and rebuildable. |
-| Configuration remains owner of configurable reference data | PASS | No local document-type master invented. |
-| Vercel Blob remains infrastructure storage | PASS | Blob object is not treated as an aggregate or lifecycle owner. |
+| Check                                                                      | Result | Notes                                                              |
+| -------------------------------------------------------------------------- | ------ | ------------------------------------------------------------------ |
+| `Document` remains owned by Document Management                            | PASS   | No other context is allowed to mutate document lifecycle directly. |
+| `DocumentVerification` remains Document Management-owned immutable history | PASS   | No ordinary update/delete operations introduced.                   |
+| Student/Trainer/Corporate/Person are only referenced                       | PASS   | No duplicate owner tables introduced.                              |
+| IAM remains owner of users, roles, permissions and branch access           | PASS   | Module consumes authorization and scope decisions.                 |
+| Audit remains owner of authoritative audit evidence                        | PASS   | No local `DocumentAuditLog` introduced.                            |
+| Communication remains owner of delivery/retry/logging                      | PASS   | Module emits source facts/triggers only.                           |
+| Reporting remains owner of dashboards/read projections                     | PASS   | Operational read models remain read-only and rebuildable.          |
+| Configuration remains owner of configurable reference data                 | PASS   | No local document-type master invented.                            |
+| Vercel Blob remains infrastructure storage                                 | PASS   | Blob object is not treated as an aggregate or lifecycle owner.     |
 
 ## 39.2 Core DDD rule confirmation
 
@@ -1673,18 +1673,18 @@ No operational runbook authorizes bypassing this ownership.
 
 ## 40.1 Entity alignment
 
-| ER Entity | Module Treatment | Result |
-|---|---|---|
-| `Document` | Authoritative owned table | PASS |
-| `DocumentVerification` | Authoritative immutable owned history | PASS |
-| `AuditLog` | Cross-context audit target | PASS |
-| `User` | Referenced for actor identity | PASS |
-| `StudentProfile` | Logical owner reference | PASS |
-| `TrainerProfile` | Logical owner reference | PASS |
-| `CorporateAccount` | Logical owner reference | PASS |
-| `Person` | Logical owner reference with unresolved branch resolver gap | PASS WITH GAP |
-| `NotificationRequest` / `NotificationLog` | Communication-owned | PASS |
-| Reporting entities | Reporting-owned, read-only consumer | PASS |
+| ER Entity                                 | Module Treatment                                            | Result        |
+| ----------------------------------------- | ----------------------------------------------------------- | ------------- |
+| `Document`                                | Authoritative owned table                                   | PASS          |
+| `DocumentVerification`                    | Authoritative immutable owned history                       | PASS          |
+| `AuditLog`                                | Cross-context audit target                                  | PASS          |
+| `User`                                    | Referenced for actor identity                               | PASS          |
+| `StudentProfile`                          | Logical owner reference                                     | PASS          |
+| `TrainerProfile`                          | Logical owner reference                                     | PASS          |
+| `CorporateAccount`                        | Logical owner reference                                     | PASS          |
+| `Person`                                  | Logical owner reference with unresolved branch resolver gap | PASS WITH GAP |
+| `NotificationRequest` / `NotificationLog` | Communication-owned                                         | PASS          |
+| Reporting entities                        | Reporting-owned, read-only consumer                         | PASS          |
 
 ## 40.2 ER field alignment confirmation
 
@@ -1720,19 +1720,19 @@ No operational procedure introduces direct mutation of immutable verification hi
 
 # 41. Cross-Part Consistency Check
 
-| Earlier Part | Consistency Result |
-|---|---|
-| Module Overview | Operational design supports approved scope only. |
-| Part 1 | All operations trace to FR-DOC requirements and BR-DOC rules; no new business capability introduced. |
-| Part 2 | Runbooks preserve approved lifecycle and do not add transitions. |
-| Part 3 | Operational behavior supports loading, error, degraded, permission and bilingual UI states. |
-| Part 4 | Backup/recovery covers only Module 13-owned transactional tables as owned data. |
-| Part 5 | Telemetry and runbooks map to the defined API and Server Action surface. |
-| Part 6 | Operations respect canonical permissions and branch/global/consolidated scopes. |
-| Part 7 | Runbooks use structured error and notification boundaries; no delivery ownership leakage. |
-| Part 8 | Reporting projections remain read-only, rebuildable and non-authoritative. |
-| Part 9 | Operational checks support the BDD regression, authorization and branch-isolation tests. |
-| Part 10 | Observability, availability, performance, audit and security behavior match defined NFRs. |
+| Earlier Part    | Consistency Result                                                                                   |
+| --------------- | ---------------------------------------------------------------------------------------------------- |
+| Module Overview | Operational design supports approved scope only.                                                     |
+| Part 1          | All operations trace to FR-DOC requirements and BR-DOC rules; no new business capability introduced. |
+| Part 2          | Runbooks preserve approved lifecycle and do not add transitions.                                     |
+| Part 3          | Operational behavior supports loading, error, degraded, permission and bilingual UI states.          |
+| Part 4          | Backup/recovery covers only Module 13-owned transactional tables as owned data.                      |
+| Part 5          | Telemetry and runbooks map to the defined API and Server Action surface.                             |
+| Part 6          | Operations respect canonical permissions and branch/global/consolidated scopes.                      |
+| Part 7          | Runbooks use structured error and notification boundaries; no delivery ownership leakage.            |
+| Part 8          | Reporting projections remain read-only, rebuildable and non-authoritative.                           |
+| Part 9          | Operational checks support the BDD regression, authorization and branch-isolation tests.             |
+| Part 10         | Observability, availability, performance, audit and security behavior match defined NFRs.            |
 
 ---
 
@@ -1740,21 +1740,21 @@ No operational procedure introduces direct mutation of immutable verification hi
 
 The following gaps remain intentionally unresolved and require architecture/business/compliance decisions. This document does not invent solutions for them.
 
-| Gap | Operational Impact |
-|---|---|
-| Prisma schema validation pending | Migration and physical table procedures must be checked against actual schema before implementation. |
-| Document type scalar vs FK representation | Validation/cache/health procedures depend on final representation. |
-| Generic Person branch-scope resolution | Person-owned document access must fail closed until a safe resolver is approved. |
-| Persisted vs derived `Expired` semantics | Expiry job and consistency-check behavior must follow final decision. |
-| Rejected-document resubmission | No runbook may reactivate/recycle Rejected state without approved workflow. |
-| Approved evidence replacement/version chain | Missing binary or updated evidence cannot be silently replaced under existing record. |
-| Reconciliation persistence ownership | Durable reconciliation ledger/table must not be created without architecture decision. |
-| Additional Blob operational metadata | Storage metadata persistence needs explicit ownership/schema approval. |
-| Blob retention/destruction policy | Automated purge is prohibited until approved. |
-| Malware scanning/quarantine architecture | Upload operational flow must adopt project-wide approved design before implementation. |
-| Verification SLA configuration owner | Alert thresholds must be configured only after ownership is approved. |
-| Final RPO/RTO | Backup/recovery targets must inherit approved project-wide values. |
-| Student/Trainer self-service identity binding | Future portal health and support procedures depend on final IAM policy. |
+| Gap                                           | Operational Impact                                                                                   |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Prisma schema validation pending              | Migration and physical table procedures must be checked against actual schema before implementation. |
+| Document type scalar vs FK representation     | Validation/cache/health procedures depend on final representation.                                   |
+| Generic Person branch-scope resolution        | Person-owned document access must fail closed until a safe resolver is approved.                     |
+| Persisted vs derived `Expired` semantics      | Expiry job and consistency-check behavior must follow final decision.                                |
+| Rejected-document resubmission                | No runbook may reactivate/recycle Rejected state without approved workflow.                          |
+| Approved evidence replacement/version chain   | Missing binary or updated evidence cannot be silently replaced under existing record.                |
+| Reconciliation persistence ownership          | Durable reconciliation ledger/table must not be created without architecture decision.               |
+| Additional Blob operational metadata          | Storage metadata persistence needs explicit ownership/schema approval.                               |
+| Blob retention/destruction policy             | Automated purge is prohibited until approved.                                                        |
+| Malware scanning/quarantine architecture      | Upload operational flow must adopt project-wide approved design before implementation.               |
+| Verification SLA configuration owner          | Alert thresholds must be configured only after ownership is approved.                                |
+| Final RPO/RTO                                 | Backup/recovery targets must inherit approved project-wide values.                                   |
+| Student/Trainer self-service identity binding | Future portal health and support procedures depend on final IAM policy.                              |
 
 ---
 

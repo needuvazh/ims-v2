@@ -17,20 +17,30 @@ export type UpdateCategoryInput = Partial<CreateCategoryInput>;
 export class CategoryService {
   constructor(
     private readonly prisma: PrismaClient,
-    private readonly categoryRepository: ICourseCategoryRepository
+    private readonly categoryRepository: ICourseCategoryRepository,
   ) {}
 
-  async createCategory(input: CreateCategoryInput, actorId?: string, tx?: Prisma.TransactionClient) {
+  async createCategory(
+    input: CreateCategoryInput,
+    actorId?: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const execute = async (activeClient: Prisma.TransactionClient) => {
       // Check duplicate code
-      const existing = await this.categoryRepository.findByCode(input.code, activeClient);
+      const existing = await this.categoryRepository.findByCode(
+        input.code,
+        activeClient,
+      );
       if (existing) {
         throw new Error('ERR_CRS_DUPLICATE_CATEGORY_CODE');
       }
 
       // Cyclic parent check
       if (input.parentCategoryId) {
-        const parent = await this.categoryRepository.findById(input.parentCategoryId, activeClient);
+        const parent = await this.categoryRepository.findById(
+          input.parentCategoryId,
+          activeClient,
+        );
         if (!parent) {
           throw new Error('ERR_CRS_PARENT_CATEGORY_NOT_FOUND');
         }
@@ -43,7 +53,7 @@ export class CategoryService {
           id: categoryId,
           createdBy: actorId,
         },
-        activeClient
+        activeClient,
       );
 
       // Audit Log
@@ -75,7 +85,13 @@ export class CategoryService {
     return this.categoryRepository.findAll(client);
   }
 
-  async updateCategory(id: string, input: UpdateCategoryInput, version: number, actorId?: string, tx?: Prisma.TransactionClient) {
+  async updateCategory(
+    id: string,
+    input: UpdateCategoryInput,
+    version: number,
+    actorId?: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const execute = async (activeClient: Prisma.TransactionClient) => {
       const category = await this.categoryRepository.findById(id, activeClient);
       if (!category) {
@@ -84,13 +100,22 @@ export class CategoryService {
 
       // Check cyclic category loop
       if (input.parentCategoryId) {
-        const hasCycleResult = await this.hasCycle(id, input.parentCategoryId, activeClient);
+        const hasCycleResult = await this.hasCycle(
+          id,
+          input.parentCategoryId,
+          activeClient,
+        );
         if (hasCycleResult) {
           throw new InvalidCategoryHierarchy();
         }
       }
 
-      const updated = await this.categoryRepository.update(id, input, version, activeClient);
+      const updated = await this.categoryRepository.update(
+        id,
+        input,
+        version,
+        activeClient,
+      );
 
       // Audit Log
       await activeClient.auditLog.create({
@@ -122,7 +147,7 @@ export class CategoryService {
   private async hasCycle(
     categoryId: string,
     targetParentId: string,
-    client: Prisma.TransactionClient
+    client: Prisma.TransactionClient,
   ): Promise<boolean> {
     if (categoryId === targetParentId) {
       return true;
@@ -140,10 +165,11 @@ export class CategoryService {
         return true;
       }
 
-      const parent: { parentCategoryId: string | null } | null = await client.courseCategory.findUnique({
-        where: { id: currentParentId },
-        select: { parentCategoryId: true },
-      });
+      const parent: { parentCategoryId: string | null } | null =
+        await client.courseCategory.findUnique({
+          where: { id: currentParentId },
+          select: { parentCategoryId: true },
+        });
 
       if (!parent) {
         break;

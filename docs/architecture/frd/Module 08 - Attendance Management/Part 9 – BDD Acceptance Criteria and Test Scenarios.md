@@ -14,32 +14,32 @@
 
 The following named fixtures are used consistently across scenarios. Automated tests may create equivalent records with generated IDs.
 
-| Fixture Code | Description |
-|---|---|
-| BR-MCT | Muscat Main Branch, active branch accessible to Branch Admin and Academic Coordinator. |
-| BR-SOH | Sohar Branch, active branch not accessible to Muscat-only users. |
-| COURSE-HSE | Health and Safety Training course with minimum attendance percentage 80.00. |
-| COURSE-FA | First Aid course with minimum attendance percentage 75.00. |
-| BATCH-HSE-001 | Active batch for COURSE-HSE in BR-MCT. |
-| BATCH-HSE-002 | Active batch for COURSE-HSE in BR-SOH. |
-| SESSION-HSE-001 | Conducted session for BATCH-HSE-001 scheduled today from 09:00 to 11:00 Oman time. |
-| SESSION-HSE-002 | Future session for BATCH-HSE-001 scheduled tomorrow. |
-| SESSION-SOH-001 | Conducted session for BATCH-HSE-002 in BR-SOH. |
-| TRAINER-A | Trainer assigned to BATCH-HSE-001 and SESSION-HSE-001. |
-| TRAINER-B | Trainer not assigned to BATCH-HSE-001. |
-| STUDENT-A | Active student profile enrolled in BATCH-HSE-001. |
-| STUDENT-B | Active student profile enrolled in BATCH-HSE-001. |
-| STUDENT-C | Cancelled enrollment in BATCH-HSE-001. |
-| STUDENT-SOH | Active student profile enrolled in BATCH-HSE-002. |
-| USER-SUPER | Super Admin with consolidated attendance permissions. |
-| USER-BRANCH-MCT | Branch Admin assigned to BR-MCT only. |
-| USER-ACADEMIC-MCT | Academic Coordinator assigned to BR-MCT. |
-| USER-TRAINER-A | Trainer user linked to TRAINER-A. |
-| USER-TRAINER-B | Trainer user linked to TRAINER-B. |
-| USER-STUDENT-A | Student portal user linked to STUDENT-A. |
-| USER-COUNSELOR | Counselor with read-only low attendance access for assigned students. |
-| USER-ACCOUNTANT | Accountant with read-only eligibility visibility. |
-| USER-AUDITOR | Auditor with branch audit access. |
+| Fixture Code      | Description                                                                            |
+| ----------------- | -------------------------------------------------------------------------------------- |
+| BR-MCT            | Muscat Main Branch, active branch accessible to Branch Admin and Academic Coordinator. |
+| BR-SOH            | Sohar Branch, active branch not accessible to Muscat-only users.                       |
+| COURSE-HSE        | Health and Safety Training course with minimum attendance percentage 80.00.            |
+| COURSE-FA         | First Aid course with minimum attendance percentage 75.00.                             |
+| BATCH-HSE-001     | Active batch for COURSE-HSE in BR-MCT.                                                 |
+| BATCH-HSE-002     | Active batch for COURSE-HSE in BR-SOH.                                                 |
+| SESSION-HSE-001   | Conducted session for BATCH-HSE-001 scheduled today from 09:00 to 11:00 Oman time.     |
+| SESSION-HSE-002   | Future session for BATCH-HSE-001 scheduled tomorrow.                                   |
+| SESSION-SOH-001   | Conducted session for BATCH-HSE-002 in BR-SOH.                                         |
+| TRAINER-A         | Trainer assigned to BATCH-HSE-001 and SESSION-HSE-001.                                 |
+| TRAINER-B         | Trainer not assigned to BATCH-HSE-001.                                                 |
+| STUDENT-A         | Active student profile enrolled in BATCH-HSE-001.                                      |
+| STUDENT-B         | Active student profile enrolled in BATCH-HSE-001.                                      |
+| STUDENT-C         | Cancelled enrollment in BATCH-HSE-001.                                                 |
+| STUDENT-SOH       | Active student profile enrolled in BATCH-HSE-002.                                      |
+| USER-SUPER        | Super Admin with consolidated attendance permissions.                                  |
+| USER-BRANCH-MCT   | Branch Admin assigned to BR-MCT only.                                                  |
+| USER-ACADEMIC-MCT | Academic Coordinator assigned to BR-MCT.                                               |
+| USER-TRAINER-A    | Trainer user linked to TRAINER-A.                                                      |
+| USER-TRAINER-B    | Trainer user linked to TRAINER-B.                                                      |
+| USER-STUDENT-A    | Student portal user linked to STUDENT-A.                                               |
+| USER-COUNSELOR    | Counselor with read-only low attendance access for assigned students.                  |
+| USER-ACCOUNTANT   | Accountant with read-only eligibility visibility.                                      |
+| USER-AUDITOR      | Auditor with branch audit access.                                                      |
 
 ---
 
@@ -1323,20 +1323,20 @@ Feature: Attendance dashboard freshness
 
 ## 27. Regression Test Matrix
 
-| Test Area | Positive Coverage | Negative Coverage | Boundary Coverage | Security Coverage |
-|---|---|---|---|---|
-| Session initialization | Eligible conducted session creates AttendanceSession | Duplicate, cancelled, inaccessible branch rejected | Source status boundary | Permission and branch guard |
-| Roster generation | Active enrollments generate records | Locked session rejected | New enrollment added after initial sync | Branch guard |
-| Marking | Present, Absent, Late, Excused accepted | Invalid status, unassigned trainer, locked session rejected | Late minutes min/max, remarks length | Trainer assignment guard |
-| Bulk marking | Unmarked records updated | Overwrite without permission rejected | Large roster page sizes | Permission guard |
-| Submission | Fully marked roster submitted | Unmarked records rejected | Unmarked override with reason | Submit permission |
-| Correction | Request, approve, reject | Duplicate pending, missing reason, self approval rejected | Locked override behavior | Approver permission and branch guard |
-| Percentage | Weighted calculation | No official records | Rounding and zero denominator | Student scope |
-| Alerts | Warning and critical generated | Duplicate alert prevented | Threshold boundary equal to required percentage | Notification payload scope |
-| Reports | Export PDF/XLSX/CSV | Unauthorized format rejected | Date range max | Export audit and branch scope |
-| Student portal | Own summary visible | Other student denied | No attendance not started | Self-scope guard |
-| Corporate portal | Own participants visible | Other account hidden | Empty corporate data | Corporate scope guard |
-| Audit | Sensitive actions logged | Audit report access denied without permission | Large audit export | PII masking and export reason |
+| Test Area              | Positive Coverage                                    | Negative Coverage                                           | Boundary Coverage                               | Security Coverage                    |
+| ---------------------- | ---------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------- | ------------------------------------ |
+| Session initialization | Eligible conducted session creates AttendanceSession | Duplicate, cancelled, inaccessible branch rejected          | Source status boundary                          | Permission and branch guard          |
+| Roster generation      | Active enrollments generate records                  | Locked session rejected                                     | New enrollment added after initial sync         | Branch guard                         |
+| Marking                | Present, Absent, Late, Excused accepted              | Invalid status, unassigned trainer, locked session rejected | Late minutes min/max, remarks length            | Trainer assignment guard             |
+| Bulk marking           | Unmarked records updated                             | Overwrite without permission rejected                       | Large roster page sizes                         | Permission guard                     |
+| Submission             | Fully marked roster submitted                        | Unmarked records rejected                                   | Unmarked override with reason                   | Submit permission                    |
+| Correction             | Request, approve, reject                             | Duplicate pending, missing reason, self approval rejected   | Locked override behavior                        | Approver permission and branch guard |
+| Percentage             | Weighted calculation                                 | No official records                                         | Rounding and zero denominator                   | Student scope                        |
+| Alerts                 | Warning and critical generated                       | Duplicate alert prevented                                   | Threshold boundary equal to required percentage | Notification payload scope           |
+| Reports                | Export PDF/XLSX/CSV                                  | Unauthorized format rejected                                | Date range max                                  | Export audit and branch scope        |
+| Student portal         | Own summary visible                                  | Other student denied                                        | No attendance not started                       | Self-scope guard                     |
+| Corporate portal       | Own participants visible                             | Other account hidden                                        | Empty corporate data                            | Corporate scope guard                |
+| Audit                  | Sensitive actions logged                             | Audit report access denied without permission               | Large audit export                              | PII masking and export reason        |
 
 ---
 
@@ -1344,39 +1344,39 @@ Feature: Attendance dashboard freshness
 
 ### 28.1 Unit Tests
 
-| Test ID | Unit Under Test | Expected Coverage |
-|---|---|---|
-| UT-M08-001 | Attendance percentage calculator | Present, Absent, Late, Excused, zero denominator, rounding |
-| UT-M08-002 | Low attendance severity resolver | Warning, Critical, None, equal threshold boundary |
-| UT-M08-003 | Branch scope resolver | Single branch, child branches, consolidated denied, consolidated allowed |
-| UT-M08-004 | Trainer assignment guard | Assigned session, assigned batch, unassigned denial, admin override |
-| UT-M08-005 | Attendance status transition validator | Draft, Submitted, Locked, Returned, Cancelled transitions |
-| UT-M08-006 | Correction approval validator | Duplicate pending, self approval, locked override |
-| UT-M08-007 | Report filter validator | Date bounds, UUIDs, enum values, page size |
-| UT-M08-008 | Export audit payload builder | Filter summary, checksum, branch scope, user metadata |
+| Test ID    | Unit Under Test                        | Expected Coverage                                                        |
+| ---------- | -------------------------------------- | ------------------------------------------------------------------------ |
+| UT-M08-001 | Attendance percentage calculator       | Present, Absent, Late, Excused, zero denominator, rounding               |
+| UT-M08-002 | Low attendance severity resolver       | Warning, Critical, None, equal threshold boundary                        |
+| UT-M08-003 | Branch scope resolver                  | Single branch, child branches, consolidated denied, consolidated allowed |
+| UT-M08-004 | Trainer assignment guard               | Assigned session, assigned batch, unassigned denial, admin override      |
+| UT-M08-005 | Attendance status transition validator | Draft, Submitted, Locked, Returned, Cancelled transitions                |
+| UT-M08-006 | Correction approval validator          | Duplicate pending, self approval, locked override                        |
+| UT-M08-007 | Report filter validator                | Date bounds, UUIDs, enum values, page size                               |
+| UT-M08-008 | Export audit payload builder           | Filter summary, checksum, branch scope, user metadata                    |
 
 ### 28.2 Integration Tests
 
-| Test ID | Flow | Expected Coverage |
-|---|---|---|
-| IT-M08-001 | Session initialization to roster generation | Session creation, records creation, audit log |
-| IT-M08-002 | Mark attendance to final submission | Record updates, submission, summary refresh |
-| IT-M08-003 | Correction approval | Correction status, record update, summary refresh, audit |
+| Test ID    | Flow                                              | Expected Coverage                                          |
+| ---------- | ------------------------------------------------- | ---------------------------------------------------------- |
+| IT-M08-001 | Session initialization to roster generation       | Session creation, records creation, audit log              |
+| IT-M08-002 | Mark attendance to final submission               | Record updates, submission, summary refresh                |
+| IT-M08-003 | Correction approval                               | Correction status, record update, summary refresh, audit   |
 | IT-M08-004 | Low attendance detection and notification request | Alert creation, duplicate prevention, notification payload |
-| IT-M08-005 | Completion evidence read | Correct DTO and no certificate side effect |
-| IT-M08-006 | Branch isolated reports | SQL filter prevents cross-branch rows |
-| IT-M08-007 | Student self-service | Authenticated student scope only |
-| IT-M08-008 | Corporate attendance report | Corporate account scope only |
+| IT-M08-005 | Completion evidence read                          | Correct DTO and no certificate side effect                 |
+| IT-M08-006 | Branch isolated reports                           | SQL filter prevents cross-branch rows                      |
+| IT-M08-007 | Student self-service                              | Authenticated student scope only                           |
+| IT-M08-008 | Corporate attendance report                       | Corporate account scope only                               |
 
 ### 28.3 End-to-End Tests
 
-| Test ID | User Journey | Expected Coverage |
-|---|---|---|
-| E2E-M08-001 | Trainer marks and submits attendance | UI roster, validation, save draft, submit, read-only submitted state |
-| E2E-M08-002 | Academic coordinator approves correction | Correction queue, approve dialog, recalculated summary |
-| E2E-M08-003 | Student views own attendance | Student portal summary and history, no mutation controls |
-| E2E-M08-004 | Branch admin exports report | Dashboard drilldown, report filters, export, audit log |
-| E2E-M08-005 | Arabic attendance UI | RTL layout, Arabic labels, Arabic PDF headers |
+| Test ID     | User Journey                             | Expected Coverage                                                    |
+| ----------- | ---------------------------------------- | -------------------------------------------------------------------- |
+| E2E-M08-001 | Trainer marks and submits attendance     | UI roster, validation, save draft, submit, read-only submitted state |
+| E2E-M08-002 | Academic coordinator approves correction | Correction queue, approve dialog, recalculated summary               |
+| E2E-M08-003 | Student views own attendance             | Student portal summary and history, no mutation controls             |
+| E2E-M08-004 | Branch admin exports report              | Dashboard drilldown, report filters, export, audit log               |
+| E2E-M08-005 | Arabic attendance UI                     | RTL layout, Arabic labels, Arabic PDF headers                        |
 
 ---
 

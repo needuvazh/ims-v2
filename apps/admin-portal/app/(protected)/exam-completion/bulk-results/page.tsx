@@ -4,7 +4,9 @@ import { Home, Layers, Upload } from 'lucide-react';
 import { prisma } from '@ims/database';
 import { BulkResultsForm } from './_components/bulk-results-form';
 
-export const metadata = { title: 'Bulk Result Entry - Admin Portal | ASTI IMS' };
+export const metadata = {
+  title: 'Bulk Result Entry - Admin Portal | ASTI IMS',
+};
 
 export default async function BulkResultsPage() {
   await assertPermission('result.create');
@@ -32,7 +34,7 @@ export default async function BulkResultsPage() {
     },
   });
 
-  const formattedExams = exams.map(e => ({
+  const formattedExams = exams.map((e) => ({
     id: e.id,
     examName: e.examName,
     courseName: e.course.nameEnglish,
@@ -41,7 +43,7 @@ export default async function BulkResultsPage() {
     passMarks: e.passMarks.toNumber(),
   }));
 
-  const formattedEnrollments = enrollments.map(e => ({
+  const formattedEnrollments = enrollments.map((e) => ({
     id: e.id,
     enrollmentNumber: e.enrollmentNumber,
     studentName: e.studentProfile?.person
@@ -58,15 +60,26 @@ export default async function BulkResultsPage() {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5" /> },
-              { label: 'Results', href: '/exam-completion/results', icon: <Layers className="h-3.5 w-3.5" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5" />,
+              },
+              {
+                label: 'Results',
+                href: '/exam-completion/results',
+                icon: <Layers className="h-3.5 w-3.5" />,
+              },
               { label: 'Bulk Entry', icon: <Upload className="h-3.5 w-3.5" /> },
             ]}
           />
         }
       />
       <div>
-        <BulkResultsForm exams={formattedExams} enrollments={formattedEnrollments} />
+        <BulkResultsForm
+          exams={formattedExams}
+          enrollments={formattedEnrollments}
+        />
       </div>
     </AdminFormPageLayout>
   );

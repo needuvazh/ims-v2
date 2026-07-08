@@ -7,6 +7,7 @@ The main constraint is validation quality. A single broad OpenSpec would hide wh
 ## Goals / Non-Goals
 
 **Goals:**
+
 - Split Module 04 into screen- and function-scoped capabilities that can be validated independently.
 - Keep `StudentProfile` as the canonical student entity for admissions, enrollment, waitlist selection, and lookup.
 - Keep lead conversion as a CRM handoff into Admission & Enrollment, not a CRM-owned lifecycle mutation.
@@ -14,6 +15,7 @@ The main constraint is validation quality. A single broad OpenSpec would hide wh
 - Preserve branch-scoped authorization, audit logging, and transactional handoff for sensitive admission/enrollment actions.
 
 **Non-Goals:**
+
 - Redesigning CRM, course catalog, finance, attendance, or certificate workflows beyond the handoff points they require.
 - Introducing new portal types or changing the future student portal roadmap.
 - Reworking unrelated batch delivery behavior except where it depends on student selection or waitlist identity resolution.

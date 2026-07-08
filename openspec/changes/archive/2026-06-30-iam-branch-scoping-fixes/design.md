@@ -1,14 +1,17 @@
 ## Context
 
 The system has a defined branch scoping security model where:
+
 - Users with global scope (`scopeType === 'All'`) can access all branches.
 - Branch managers and counselors can only see and manage records for their assigned branch(es) and child branches (if hierarchy resolution is enabled).
 
 Currently, this is partially implemented:
+
 - In `UserService.searchUsers`, `context.activeBranchId` is mapped to filter users.
 - In `AuditQueryService` and `LoginHistoryQueryService.listSecurityLoginHistory`, branch filters are overridden.
 
 However, major gaps exist:
+
 - The UI helper `loadIdentityData` fetches all users via `userService.listUsers()`, all roles, and all branches globally without utilizing the session's active branch.
 - Detail/Edit pages (e.g. `ViewUserPage`, `EditUserPage`) fetch user details by loading all users in-memory and finding them, which lets anyone bypass branch restrictions via URL direct access.
 - Service mutating methods (`updateUser`, `activateUser`, `suspendUser`, etc.) check permission strings but do not perform branch-scoped validation on the target user or on the branchIds being assigned.
@@ -20,6 +23,7 @@ However, major gaps exist:
 ## Goals / Non-Goals
 
 **Goals:**
+
 - Enforce strict server-side branch scope authorization in all mutating user actions.
 - Ensure the user directory list in the admin portal only returns users within the current user's branch scope.
 - Prevent URL direct access bypasses on user details and edit pages by validating target user branch ownership on the server side.
@@ -29,6 +33,7 @@ However, major gaps exist:
 - Support parent-child branch hierarchical access: if an operator has access to branch A, and `includeChildBranches` is active, resolve allowed branches as `[A, B, C, D]` (where B, C, D are nested descendants). An operator of child branch D cannot access ancestor branches A, B, or C.
 
 **Non-Goals:**
+
 - Introducing multi-tenancy or database partitioning.
 
 ## Decisions

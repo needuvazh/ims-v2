@@ -7,8 +7,13 @@ export async function GET(request: Request) {
     const { session } = await withAuth(request);
     if (!hasPermission(session, 'student.portal.self.read')) {
       return NextResponse.json(
-        { success: false, errorCode: 'ERR_AUTH_FORBIDDEN', messageEnglish: 'Access denied.', statusCode: 403 },
-        { status: 403 }
+        {
+          success: false,
+          errorCode: 'ERR_AUTH_FORBIDDEN',
+          messageEnglish: 'Access denied.',
+          statusCode: 403,
+        },
+        { status: 403 },
       );
     }
 
@@ -20,8 +25,13 @@ export async function GET(request: Request) {
 
     if (!user) {
       return NextResponse.json(
-        { success: false, errorCode: 'ERR_STU_PROFILE_NOT_FOUND', messageEnglish: 'Student profile not found.', statusCode: 404 },
-        { status: 404 }
+        {
+          success: false,
+          errorCode: 'ERR_STU_PROFILE_NOT_FOUND',
+          messageEnglish: 'Student profile not found.',
+          statusCode: 404,
+        },
+        { status: 404 },
       );
     }
 
@@ -40,8 +50,13 @@ export async function GET(request: Request) {
 
     if (!profile) {
       return NextResponse.json(
-        { success: false, errorCode: 'ERR_STU_PROFILE_NOT_FOUND', messageEnglish: 'Student profile not found.', statusCode: 404 },
-        { status: 404 }
+        {
+          success: false,
+          errorCode: 'ERR_STU_PROFILE_NOT_FOUND',
+          messageEnglish: 'Student profile not found.',
+          statusCode: 404,
+        },
+        { status: 404 },
       );
     }
 
@@ -68,15 +83,25 @@ export async function GET(request: Request) {
     });
   } catch (error) {
     return NextResponse.json(
-      { success: false, errorCode: 'ERR_STUDENT_INTERNAL_ERROR', messageEnglish: (error as Error).message, statusCode: 500 },
-      { status: 500 }
+      {
+        success: false,
+        errorCode: 'ERR_STUDENT_INTERNAL_ERROR',
+        messageEnglish: (error as Error).message,
+        statusCode: 500,
+      },
+      { status: 500 },
     );
   }
 }
 
 export async function PATCH() {
   return NextResponse.json(
-    { success: false, errorCode: 'ERR_AUTH_FORBIDDEN', messageEnglish: 'Student portal profile is read-only.', statusCode: 403 },
-    { status: 403 }
+    {
+      success: false,
+      errorCode: 'ERR_AUTH_FORBIDDEN',
+      messageEnglish: 'Student portal profile is read-only.',
+      statusCode: 403,
+    },
+    { status: 403 },
   );
 }

@@ -1,10 +1,21 @@
 import { Prisma } from '@prisma/client';
-import { IngestInquiryInput, CreateLeadInput, LeadStage, LeadSource, ScheduleFollowUpInput } from './lead';
+import {
+  IngestInquiryInput,
+  CreateLeadInput,
+  LeadStage,
+  LeadSource,
+  ScheduleFollowUpInput,
+} from './lead';
 
 export interface IInquiryRepository {
   create(
-    data: IngestInquiryInput & { inquiryNumber: string; isDuplicate?: boolean; duplicateRefId?: string | null; counselorId?: string | null },
-    tx?: Prisma.TransactionClient
+    data: IngestInquiryInput & {
+      inquiryNumber: string;
+      isDuplicate?: boolean;
+      duplicateRefId?: string | null;
+      counselorId?: string | null;
+    },
+    tx?: Prisma.TransactionClient,
   ): Promise<{
     id: string;
     inquiryNumber: string;
@@ -21,23 +32,42 @@ export interface IInquiryRepository {
     mobile: string,
     email: string | null | undefined,
     since: Date,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<any>;
 
-  updateStatus(id: string, status: string, tx?: Prisma.TransactionClient): Promise<void>;
+  updateStatus(
+    id: string,
+    status: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<void>;
 
   findAll(
-    filters: { branchId?: string; status?: string; search?: string; counselorId?: string; branchIds?: string[] },
+    filters: {
+      branchId?: string;
+      status?: string;
+      search?: string;
+      counselorId?: string;
+      branchIds?: string[];
+    },
     pagination: { page: number; limit: number },
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<{ items: any[]; total: number }>;
 }
 
 export interface ILeadRepository {
   create(
-    data: CreateLeadInput & { personId: string; leadNumber: string; inquiryId?: string | null },
-    tx?: Prisma.TransactionClient
-  ): Promise<{ id: string; leadNumber: string; stage: LeadStage; createdAt: Date }>;
+    data: CreateLeadInput & {
+      personId: string;
+      leadNumber: string;
+      inquiryId?: string | null;
+    },
+    tx?: Prisma.TransactionClient,
+  ): Promise<{
+    id: string;
+    leadNumber: string;
+    stage: LeadStage;
+    createdAt: Date;
+  }>;
 
   findById(id: string, tx?: Prisma.TransactionClient): Promise<any>;
 
@@ -45,23 +75,46 @@ export interface ILeadRepository {
     id: string,
     stage: LeadStage,
     version: number,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<{ version: number }>;
 
-  assignCounselor(id: string, counselorId: string, tx?: Prisma.TransactionClient): Promise<void>;
+  assignCounselor(
+    id: string,
+    counselorId: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<void>;
 
   updateLead(
     id: string,
-    data: Partial<CreateLeadInput> & { lostReasonCode?: string | null; lostReasonNotes?: string | null; version?: number; nextFollowUpDate?: Date | null },
-    tx?: Prisma.TransactionClient
+    data: Partial<CreateLeadInput> & {
+      lostReasonCode?: string | null;
+      lostReasonNotes?: string | null;
+      version?: number;
+      nextFollowUpDate?: Date | null;
+    },
+    tx?: Prisma.TransactionClient,
   ): Promise<void>;
 
-  deleteLead(id: string, deletedBy: string, tx?: Prisma.TransactionClient): Promise<void>;
+  deleteLead(
+    id: string,
+    deletedBy: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<void>;
 
   findAll(
-    filters: { branchId?: string; stage?: LeadStage; source?: LeadSource; counselorId?: string; search?: string; branchIds?: string[]; sortBy?: LeadSortField; sortOrder?: LeadSortOrder },
+    filters: {
+      branchId?: string;
+      stage?: LeadStage;
+      source?: LeadSource;
+      counselorId?: string;
+      search?: string;
+      branchIds?: string[];
+      sortBy?: LeadSortField;
+      sortOrder?: LeadSortOrder;
+      nationalId?: string;
+    },
     pagination: { page: number; limit: number },
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<{ items: any[]; total: number }>;
 }
 
@@ -80,8 +133,13 @@ export type LeadSortOrder = 'asc' | 'desc';
 export interface IFollowUpRepository {
   create(
     data: ScheduleFollowUpInput & { leadId: string; counselorId: string },
-    tx?: Prisma.TransactionClient
-  ): Promise<{ id: string; followUpDate: Date; followUpType: string; status: string }>;
+    tx?: Prisma.TransactionClient,
+  ): Promise<{
+    id: string;
+    followUpDate: Date;
+    followUpType: string;
+    status: string;
+  }>;
 
   findById(id: string, tx?: Prisma.TransactionClient): Promise<any>;
 
@@ -89,12 +147,18 @@ export interface IFollowUpRepository {
     id: string,
     outcome: string,
     notes: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<void>;
 
-  cancelAllScheduled(leadId: string, tx?: Prisma.TransactionClient): Promise<number>;
+  cancelAllScheduled(
+    leadId: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<number>;
 
-  findAllScheduledOverdue(since: Date, tx?: Prisma.TransactionClient): Promise<any[]>;
+  findAllScheduledOverdue(
+    since: Date,
+    tx?: Prisma.TransactionClient,
+  ): Promise<any[]>;
 
   findAllForLead(leadId: string, tx?: Prisma.TransactionClient): Promise<any[]>;
 }

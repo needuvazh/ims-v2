@@ -3,7 +3,14 @@
 import { useCallback, useState, useTransition } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { Activity, Clock3, ExternalLink, Search, ShieldCheck, X } from 'lucide-react';
+import {
+  Activity,
+  Clock3,
+  ExternalLink,
+  Search,
+  ShieldCheck,
+  X,
+} from 'lucide-react';
 import {
   Badge,
   Button,
@@ -41,9 +48,15 @@ interface SessionsClientListProps {
   initialSortOrder: SortOrder;
 }
 
-const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+const collator = new Intl.Collator(undefined, {
+  numeric: true,
+  sensitivity: 'base',
+});
 
-function compareText(a: string | null | undefined, b: string | null | undefined) {
+function compareText(
+  a: string | null | undefined,
+  b: string | null | undefined,
+) {
   return collator.compare(a ?? '', b ?? '');
 }
 
@@ -65,22 +78,27 @@ export function SessionsClientList({
   const [searchValue, setSearchValue] = useState(initialQuery);
   const [isPending, startTransition] = useTransition();
 
-  const currentSortBy = searchParams.get('sortBy') ?? initialSortBy ?? 'lastActivityAt';
-  const currentSortOrder = (searchParams.get('sortOrder') as SortOrder | null) ?? initialSortOrder;
+  const currentSortBy =
+    searchParams.get('sortBy') ?? initialSortBy ?? 'lastActivityAt';
+  const currentSortOrder =
+    (searchParams.get('sortOrder') as SortOrder | null) ?? initialSortOrder;
 
-  const updateParams = useCallback((updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
+  const updateParams = useCallback(
+    (updates: Record<string, string | null>) => {
+      const params = new URLSearchParams(searchParams.toString());
 
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === '') {
-        params.delete(key);
-      } else {
-        params.set(key, value);
-      }
-    });
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value === null || value === '') {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      });
 
-    router.push(`${pathname}?${params.toString()}`);
-  }, [pathname, router, searchParams]);
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [pathname, router, searchParams],
+  );
 
   const handleSearch = () => {
     startTransition(() => {
@@ -95,7 +113,8 @@ export function SessionsClientList({
   };
 
   const handleSort = (field: string) => {
-    const nextOrder: SortOrder = currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
+    const nextOrder: SortOrder =
+      currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
     updateParams({ sortBy: field, sortOrder: nextOrder, page: '1' });
   };
 
@@ -108,51 +127,78 @@ export function SessionsClientList({
       case 'ipAddress':
         return compareText(left.ipAddress, right.ipAddress) * direction;
       case 'expiresAt':
-        return (new Date(left.expiresAt).getTime() - new Date(right.expiresAt).getTime()) * direction;
+        return (
+          (new Date(left.expiresAt).getTime() -
+            new Date(right.expiresAt).getTime()) *
+          direction
+        );
       case 'lastActivityAt':
       default:
-        return (new Date(left.lastActivityAt).getTime() - new Date(right.lastActivityAt).getTime()) * direction;
+        return (
+          (new Date(left.lastActivityAt).getTime() -
+            new Date(right.lastActivityAt).getTime()) *
+          direction
+        );
     }
   });
 
   const columns = [
     {
       header: 'Session',
-      render: (item: SessionItem) => <span className="font-mono text-xs text-slate-600">{item.id}</span>,
+      render: (item: SessionItem) => (
+        <span className="font-mono text-xs text-slate-600">{item.id}</span>
+      ),
       headerClassName: 'w-[180px]',
     },
     {
       header: 'Branch',
-      render: (item: SessionItem) => <span className="text-sm text-slate-700">{item.activeBranchId ?? 'All Branches'}</span>,
+      render: (item: SessionItem) => (
+        <span className="text-sm text-slate-700">
+          {item.activeBranchId ?? 'All Branches'}
+        </span>
+      ),
     },
     {
       header: 'Status',
       sortable: true,
       sortDirection: currentSortBy === 'status' ? currentSortOrder : null,
       onSort: () => handleSort('status'),
-      render: (item: SessionItem) => <Badge variant={getStatusVariant(item.status)}>{item.status}</Badge>,
+      render: (item: SessionItem) => (
+        <Badge variant={getStatusVariant(item.status)}>{item.status}</Badge>
+      ),
       headerClassName: 'w-[110px]',
     },
     {
       header: 'Last Activity',
       sortable: true,
-      sortDirection: currentSortBy === 'lastActivityAt' ? currentSortOrder : null,
+      sortDirection:
+        currentSortBy === 'lastActivityAt' ? currentSortOrder : null,
       onSort: () => handleSort('lastActivityAt'),
-      render: (item: SessionItem) => <span className="text-sm text-slate-600">{new Date(item.lastActivityAt).toLocaleString()}</span>,
+      render: (item: SessionItem) => (
+        <span className="text-sm text-slate-600">
+          {new Date(item.lastActivityAt).toLocaleString()}
+        </span>
+      ),
     },
     {
       header: 'Expires',
       sortable: true,
       sortDirection: currentSortBy === 'expiresAt' ? currentSortOrder : null,
       onSort: () => handleSort('expiresAt'),
-      render: (item: SessionItem) => <span className="text-sm text-slate-600">{new Date(item.expiresAt).toLocaleString()}</span>,
+      render: (item: SessionItem) => (
+        <span className="text-sm text-slate-600">
+          {new Date(item.expiresAt).toLocaleString()}
+        </span>
+      ),
     },
     {
       header: 'IP Address',
       sortable: true,
       sortDirection: currentSortBy === 'ipAddress' ? currentSortOrder : null,
       onSort: () => handleSort('ipAddress'),
-      render: (item: SessionItem) => <span className="text-sm text-slate-600">{item.ipAddress ?? '—'}</span>,
+      render: (item: SessionItem) => (
+        <span className="text-sm text-slate-600">{item.ipAddress ?? '—'}</span>
+      ),
     },
     {
       header: 'Actions',
@@ -161,10 +207,16 @@ export function SessionsClientList({
         <div className="flex items-center justify-end gap-2">
           <form action={terminateSessionAction}>
             <input type="hidden" name="sessionId" value={item.id} />
-            <Button type="submit" size="sm" variant="ghost">Terminate</Button>
+            <Button type="submit" size="sm" variant="ghost">
+              Terminate
+            </Button>
           </form>
           <Link href={`/iam/users/${item.userId}`}>
-            <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]"
+            >
               <ExternalLink className="h-4 w-4" />
             </Button>
           </Link>
@@ -179,8 +231,12 @@ export function SessionsClientList({
       <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 space-y-1">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">{item.id}</p>
-            <p className="text-sm font-bold text-[var(--ims-ink)]">{item.activeBranchId ?? 'All Branches'}</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">
+              {item.id}
+            </p>
+            <p className="text-sm font-bold text-[var(--ims-ink)]">
+              {item.activeBranchId ?? 'All Branches'}
+            </p>
           </div>
           <Badge variant={getStatusVariant(item.status)}>{item.status}</Badge>
         </div>
@@ -188,12 +244,18 @@ export function SessionsClientList({
       <CardContent className="space-y-3 p-card-p text-xs">
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <p className="font-semibold text-[var(--ims-muted)]">Last Activity</p>
-            <p className="truncate">{new Date(item.lastActivityAt).toLocaleString()}</p>
+            <p className="font-semibold text-[var(--ims-muted)]">
+              Last Activity
+            </p>
+            <p className="truncate">
+              {new Date(item.lastActivityAt).toLocaleString()}
+            </p>
           </div>
           <div>
             <p className="font-semibold text-[var(--ims-muted)]">Expires</p>
-            <p className="truncate">{new Date(item.expiresAt).toLocaleString()}</p>
+            <p className="truncate">
+              {new Date(item.expiresAt).toLocaleString()}
+            </p>
           </div>
           <div>
             <p className="font-semibold text-[var(--ims-muted)]">IP Address</p>
@@ -201,7 +263,9 @@ export function SessionsClientList({
           </div>
           <div className="col-span-2">
             <p className="font-semibold text-[var(--ims-muted)]">User Agent</p>
-            <p className="line-clamp-2 text-slate-600">{item.userAgent ?? '—'}</p>
+            <p className="line-clamp-2 text-slate-600">
+              {item.userAgent ?? '—'}
+            </p>
           </div>
         </div>
       </CardContent>
@@ -209,10 +273,19 @@ export function SessionsClientList({
         <div className="flex w-full gap-2">
           <form action={terminateSessionAction} className="flex-1">
             <input type="hidden" name="sessionId" value={item.id} />
-            <Button type="submit" size="sm" variant="outline" className="w-full">Terminate</Button>
+            <Button
+              type="submit"
+              size="sm"
+              variant="outline"
+              className="w-full"
+            >
+              Terminate
+            </Button>
           </form>
           <Link href={`/iam/users/${item.userId}`} className="flex-1">
-            <Button size="sm" variant="ghost" className="w-full">Open user</Button>
+            <Button size="sm" variant="ghost" className="w-full">
+              Open user
+            </Button>
           </Link>
         </div>
       </CardFooter>

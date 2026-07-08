@@ -12,12 +12,17 @@ vi.mock('../../../../../../lib/api-middleware', () => ({
 vi.mock('../../../../../../lib/runtime', () => ({
   leadService: { getLeadById: getLeadByIdMock },
   branchScopeResolver: { resolveAllowedBranches: resolveAllowedBranchesMock },
-  leadConversionOrchestrator: { convertLeadToAdmission: convertLeadToAdmissionMock },
+  leadConversionOrchestrator: {
+    convertLeadToAdmission: convertLeadToAdmissionMock,
+  },
 }));
 
 vi.mock('../../../../../../lib/observability', () => ({
   applyObservabilityResponseHeaders: vi.fn(),
-  withRouteObservability: async (_headers: Headers, handler: () => Promise<Response>) => handler(),
+  withRouteObservability: async (
+    _headers: Headers,
+    handler: () => Promise<Response>,
+  ) => handler(),
   createStructuredLogger: () => ({ info: vi.fn(), error: vi.fn() }),
   getCurrentRequestContext: () => ({}),
 }));
@@ -38,10 +43,12 @@ describe('CRM lead convert API route', () => {
           permissions: ['lead.convert'],
           activeBranchId: '11111111-1111-1111-1111-111111111111',
         },
-      })
+      }),
     );
 
-    resolveAllowedBranchesMock.mockResolvedValue(['11111111-1111-1111-1111-111111111111']);
+    resolveAllowedBranchesMock.mockResolvedValue([
+      '11111111-1111-1111-1111-111111111111',
+    ]);
 
     getLeadByIdMock.mockResolvedValue({
       id: 'lead-123',
@@ -55,20 +62,23 @@ describe('CRM lead convert API route', () => {
     });
 
     const { POST } = await import('./route');
-    const req = new Request('http://localhost/api/v1/crm/leads/lead-123/convert', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        documents: [
-          {
-            fileName: 'civil.pdf',
-            fileKey: 'uploads/civil.pdf',
-            fileType: 'application/pdf',
-            documentType: 'CIVIL_ID_FRONT',
-          },
-        ],
-      }),
-    });
+    const req = new Request(
+      'http://localhost/api/v1/crm/leads/lead-123/convert',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          documents: [
+            {
+              fileName: 'civil.pdf',
+              fileKey: 'uploads/civil.pdf',
+              fileType: 'application/pdf',
+              documentType: 'CIVIL_ID_FRONT',
+            },
+          ],
+        }),
+      },
+    );
 
     const response = await POST(req, {
       params: Promise.resolve({ id: 'lead-123' }),
@@ -88,7 +98,7 @@ describe('CRM lead convert API route', () => {
           documentType: 'CIVIL_ID_FRONT',
         },
       ],
-      'user-1'
+      'user-1',
     );
   });
 
@@ -100,10 +110,12 @@ describe('CRM lead convert API route', () => {
           permissions: ['lead.convert'],
           activeBranchId: '11111111-1111-1111-1111-111111111111',
         },
-      })
+      }),
     );
 
-    resolveAllowedBranchesMock.mockResolvedValue(['11111111-1111-1111-1111-111111111111']);
+    resolveAllowedBranchesMock.mockResolvedValue([
+      '11111111-1111-1111-1111-111111111111',
+    ]);
 
     getLeadByIdMock.mockResolvedValue({
       id: 'lead-123',
@@ -111,23 +123,28 @@ describe('CRM lead convert API route', () => {
       counselorId: 'user-1',
     });
 
-    convertLeadToAdmissionMock.mockRejectedValue(new Error('ERR_ADM_AGE_LIMIT'));
+    convertLeadToAdmissionMock.mockRejectedValue(
+      new Error('ERR_ADM_AGE_LIMIT'),
+    );
 
     const { POST } = await import('./route');
-    const req = new Request('http://localhost/api/v1/crm/leads/lead-123/convert', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        documents: [
-          {
-            fileName: 'civil.pdf',
-            fileKey: 'uploads/civil.pdf',
-            fileType: 'application/pdf',
-            documentType: 'CIVIL_ID_FRONT',
-          },
-        ],
-      }),
-    });
+    const req = new Request(
+      'http://localhost/api/v1/crm/leads/lead-123/convert',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          documents: [
+            {
+              fileName: 'civil.pdf',
+              fileKey: 'uploads/civil.pdf',
+              fileType: 'application/pdf',
+              documentType: 'CIVIL_ID_FRONT',
+            },
+          ],
+        }),
+      },
+    );
 
     const response = await POST(req, {
       params: Promise.resolve({ id: 'lead-123' }),
@@ -147,10 +164,12 @@ describe('CRM lead convert API route', () => {
           permissions: ['lead.convert'],
           activeBranchId: '11111111-1111-1111-1111-111111111111',
         },
-      })
+      }),
     );
 
-    resolveAllowedBranchesMock.mockResolvedValue(['11111111-1111-1111-1111-111111111111']);
+    resolveAllowedBranchesMock.mockResolvedValue([
+      '11111111-1111-1111-1111-111111111111',
+    ]);
 
     getLeadByIdMock.mockResolvedValue({
       id: 'lead-123',
@@ -158,23 +177,28 @@ describe('CRM lead convert API route', () => {
       counselorId: 'user-1',
     });
 
-    convertLeadToAdmissionMock.mockRejectedValue(new Error('ERR_ADM_ACTIVE_ADMISSION_EXISTS'));
+    convertLeadToAdmissionMock.mockRejectedValue(
+      new Error('ERR_ADM_ACTIVE_ADMISSION_EXISTS'),
+    );
 
     const { POST } = await import('./route');
-    const req = new Request('http://localhost/api/v1/crm/leads/lead-123/convert', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        documents: [
-          {
-            fileName: 'civil.pdf',
-            fileKey: 'uploads/civil.pdf',
-            fileType: 'application/pdf',
-            documentType: 'CIVIL_ID_FRONT',
-          },
-        ],
-      }),
-    });
+    const req = new Request(
+      'http://localhost/api/v1/crm/leads/lead-123/convert',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          documents: [
+            {
+              fileName: 'civil.pdf',
+              fileKey: 'uploads/civil.pdf',
+              fileType: 'application/pdf',
+              documentType: 'CIVIL_ID_FRONT',
+            },
+          ],
+        }),
+      },
+    );
 
     const response = await POST(req, {
       params: Promise.resolve({ id: 'lead-123' }),
@@ -194,10 +218,12 @@ describe('CRM lead convert API route', () => {
           permissions: ['lead.convert'],
           activeBranchId: '11111111-1111-1111-1111-111111111111',
         },
-      })
+      }),
     );
 
-    resolveAllowedBranchesMock.mockResolvedValue(['11111111-1111-1111-1111-111111111111']);
+    resolveAllowedBranchesMock.mockResolvedValue([
+      '11111111-1111-1111-1111-111111111111',
+    ]);
 
     getLeadByIdMock.mockResolvedValue({
       id: 'lead-123',
@@ -205,23 +231,28 @@ describe('CRM lead convert API route', () => {
       counselorId: 'user-1',
     });
 
-    convertLeadToAdmissionMock.mockRejectedValue(new Error('ERR_CRM_INVALID_STAGE_TRANSITION'));
+    convertLeadToAdmissionMock.mockRejectedValue(
+      new Error('ERR_CRM_INVALID_STAGE_TRANSITION'),
+    );
 
     const { POST } = await import('./route');
-    const req = new Request('http://localhost/api/v1/crm/leads/lead-123/convert', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        documents: [
-          {
-            fileName: 'civil.pdf',
-            fileKey: 'uploads/civil.pdf',
-            fileType: 'application/pdf',
-            documentType: 'CIVIL_ID_FRONT',
-          },
-        ],
-      }),
-    });
+    const req = new Request(
+      'http://localhost/api/v1/crm/leads/lead-123/convert',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          documents: [
+            {
+              fileName: 'civil.pdf',
+              fileKey: 'uploads/civil.pdf',
+              fileType: 'application/pdf',
+              documentType: 'CIVIL_ID_FRONT',
+            },
+          ],
+        }),
+      },
+    );
 
     const response = await POST(req, {
       params: Promise.resolve({ id: 'lead-123' }),
@@ -231,7 +262,11 @@ describe('CRM lead convert API route', () => {
     expect(response.status).toBe(422);
     expect(body.success).toBe(false);
     expect(body.errorCode).toBe('ERR_CRM_INVALID_STAGE_TRANSITION');
-    expect(body.messageEnglish).toBe("Only leads in the 'Qualified' stage can be converted to an admission.");
-    expect(body.messageArabic).toBe('يمكن فقط تحويل المهتمين في مرحلة "مؤهل" إلى قبول.');
+    expect(body.messageEnglish).toBe(
+      "Only leads in the 'Qualified' stage can be converted to an admission.",
+    );
+    expect(body.messageArabic).toBe(
+      'يمكن فقط تحويل المهتمين في مرحلة "مؤهل" إلى قبول.',
+    );
   });
 });

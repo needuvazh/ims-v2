@@ -49,12 +49,12 @@ Certificate Management
 
 ## 2.1 Portal Applicability Summary
 
-| Surface | Applicability | Purpose |
-|---|---:|---|
-| Admin Portal | Required | Operational generation, issuance, registry access, reissue processing, revocation, and lifecycle visibility |
-| Student Portal | Applicable when Student Portal is delivered | Learner access to own issued certificates, download, verification link, and reissue submission/status |
-| Trainer Portal | Applicable when Trainer Portal is delivered | Read-only completion-to-certificate visibility and trainer recommendation handoff; no certificate issuance authority |
-| Public Verification | Required independently of authentication | Verify certificate authenticity/status using verification code or QR link |
+| Surface             |                               Applicability | Purpose                                                                                                              |
+| ------------------- | ------------------------------------------: | -------------------------------------------------------------------------------------------------------------------- |
+| Admin Portal        |                                    Required | Operational generation, issuance, registry access, reissue processing, revocation, and lifecycle visibility          |
+| Student Portal      | Applicable when Student Portal is delivered | Learner access to own issued certificates, download, verification link, and reissue submission/status                |
+| Trainer Portal      | Applicable when Trainer Portal is delivered | Read-only completion-to-certificate visibility and trainer recommendation handoff; no certificate issuance authority |
+| Public Verification |    Required independently of authentication | Verify certificate authenticity/status using verification code or QR link                                            |
 
 The current DDD application structure identifies the Admin Portal as the initial application and Student/Trainer portals as future application surfaces. Therefore, Admin and Public Verification screens are implementation-critical for the current module, while Student and Trainer screens are contract-ready specifications that must reuse the same application services and ownership boundaries when those portals are introduced.
 
@@ -62,44 +62,44 @@ The current DDD application structure identifies the Admin Portal as the initial
 
 ### 2.2.1 Admin Portal Screens
 
-| Screen ID | Screen Name | Primary Purpose | Primary Use Case / Service |
-|---|---|---|---|
-| SCR-CERT-A01 | Certificate Management Dashboard | Operational summary and work queues | CertificateDashboardQuery / reporting projections |
-| SCR-CERT-A02 | Certificate-Ready Enrollments | Review candidates and blockers | UC-CERT-001 / ListCertificateReadyEnrollmentsQuery |
-| SCR-CERT-A03 | Certificate Readiness Detail | Inspect source context and gates | UC-CERT-001 / GetCertificateReadinessQuery |
-| SCR-CERT-A04 | Generate Certificate | Submit language and generation intent | UC-CERT-002 / GenerateCertificateCommand |
-| SCR-CERT-A05 | Certificate Generation Result | Confirm generated record/artifact and next action | GetCertificateDetailQuery |
-| SCR-CERT-A06 | Certificate Registry | Search and operate on certificates | CertificateRegistryQuery |
-| SCR-CERT-A07 | Certificate Detail | View certificate lifecycle, artifact, lineage, and audit summary | GetCertificateDetailQuery |
-| SCR-CERT-A08 | Certificate Preview / Download Viewer | Preview artifact and request authorized download | GetCertificateArtifactQuery |
-| SCR-CERT-A09 | Issue Certificate Confirmation | Confirm controlled issue command | UC-CERT-003 / IssueCertificateCommand |
-| SCR-CERT-A10 | Reissue Request Queue | Review branch-scoped reissue requests | ListReissueRequestsQuery |
-| SCR-CERT-A11 | Reissue Request Detail | Decide reissue request | UC-CERT-006 / ApproveReissueRequestCommand / RejectReissueRequestCommand |
-| SCR-CERT-A12 | Generate Replacement Certificate | Generate from approved reissue | UC-CERT-007 / GenerateReplacementCertificateCommand |
-| SCR-CERT-A13 | Revoke Certificate | Capture reason and submit revocation | UC-CERT-008 / RevokeCertificateCommand |
-| SCR-CERT-A14 | Verification Activity | View verification history and status outcomes | ListCertificateVerificationActivityQuery |
-| SCR-CERT-A15 | Certificate Lifecycle / Audit View | Read lifecycle transitions and audit references | CertificateLifecycleQuery + Audit read projection |
+| Screen ID    | Screen Name                           | Primary Purpose                                                  | Primary Use Case / Service                                               |
+| ------------ | ------------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| SCR-CERT-A01 | Certificate Management Dashboard      | Operational summary and work queues                              | CertificateDashboardQuery / reporting projections                        |
+| SCR-CERT-A02 | Certificate-Ready Enrollments         | Review candidates and blockers                                   | UC-CERT-001 / ListCertificateReadyEnrollmentsQuery                       |
+| SCR-CERT-A03 | Certificate Readiness Detail          | Inspect source context and gates                                 | UC-CERT-001 / GetCertificateReadinessQuery                               |
+| SCR-CERT-A04 | Generate Certificate                  | Submit language and generation intent                            | UC-CERT-002 / GenerateCertificateCommand                                 |
+| SCR-CERT-A05 | Certificate Generation Result         | Confirm generated record/artifact and next action                | GetCertificateDetailQuery                                                |
+| SCR-CERT-A06 | Certificate Registry                  | Search and operate on certificates                               | CertificateRegistryQuery                                                 |
+| SCR-CERT-A07 | Certificate Detail                    | View certificate lifecycle, artifact, lineage, and audit summary | GetCertificateDetailQuery                                                |
+| SCR-CERT-A08 | Certificate Preview / Download Viewer | Preview artifact and request authorized download                 | GetCertificateArtifactQuery                                              |
+| SCR-CERT-A09 | Issue Certificate Confirmation        | Confirm controlled issue command                                 | UC-CERT-003 / IssueCertificateCommand                                    |
+| SCR-CERT-A10 | Reissue Request Queue                 | Review branch-scoped reissue requests                            | ListReissueRequestsQuery                                                 |
+| SCR-CERT-A11 | Reissue Request Detail                | Decide reissue request                                           | UC-CERT-006 / ApproveReissueRequestCommand / RejectReissueRequestCommand |
+| SCR-CERT-A12 | Generate Replacement Certificate      | Generate from approved reissue                                   | UC-CERT-007 / GenerateReplacementCertificateCommand                      |
+| SCR-CERT-A13 | Revoke Certificate                    | Capture reason and submit revocation                             | UC-CERT-008 / RevokeCertificateCommand                                   |
+| SCR-CERT-A14 | Verification Activity                 | View verification history and status outcomes                    | ListCertificateVerificationActivityQuery                                 |
+| SCR-CERT-A15 | Certificate Lifecycle / Audit View    | Read lifecycle transitions and audit references                  | CertificateLifecycleQuery + Audit read projection                        |
 
 ### 2.2.2 Student Portal Screens
 
-| Screen ID | Screen Name | Primary Purpose | Application Service / Use Case |
-|---|---|---|---|
-| SCR-CERT-S01 | My Certificates | List certificates belonging to authenticated learner | ListMyCertificatesQuery |
-| SCR-CERT-S02 | My Certificate Detail | View/download own certificate and verification link | GetMyCertificateDetailQuery |
-| SCR-CERT-S03 | Request Certificate Reissue | Submit reason for own eligible certificate | UC-CERT-005 / SubmitReissueRequestCommand |
-| SCR-CERT-S04 | My Reissue Requests | View own request status and replacement result | ListMyReissueRequestsQuery |
+| Screen ID    | Screen Name                 | Primary Purpose                                      | Application Service / Use Case            |
+| ------------ | --------------------------- | ---------------------------------------------------- | ----------------------------------------- |
+| SCR-CERT-S01 | My Certificates             | List certificates belonging to authenticated learner | ListMyCertificatesQuery                   |
+| SCR-CERT-S02 | My Certificate Detail       | View/download own certificate and verification link  | GetMyCertificateDetailQuery               |
+| SCR-CERT-S03 | Request Certificate Reissue | Submit reason for own eligible certificate           | UC-CERT-005 / SubmitReissueRequestCommand |
+| SCR-CERT-S04 | My Reissue Requests         | View own request status and replacement result       | ListMyReissueRequestsQuery                |
 
 ### 2.2.3 Trainer Portal Screens
 
-| Screen ID | Screen Name | Primary Purpose | Application Service / Use Case |
-|---|---|---|---|
-| SCR-CERT-T01 | Completion-to-Certificate Status | Show certificate outcome for enrollments the trainer is authorized to view | TrainerCertificateStatusQuery |
-| SCR-CERT-T02 | Completion Recommendation Handoff | Submit recommendation in Completion context and view downstream status | Completion-context application service, not Certificate command |
+| Screen ID    | Screen Name                       | Primary Purpose                                                            | Application Service / Use Case                                  |
+| ------------ | --------------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| SCR-CERT-T01 | Completion-to-Certificate Status  | Show certificate outcome for enrollments the trainer is authorized to view | TrainerCertificateStatusQuery                                   |
+| SCR-CERT-T02 | Completion Recommendation Handoff | Submit recommendation in Completion context and view downstream status     | Completion-context application service, not Certificate command |
 
 ### 2.2.4 Public Screen
 
-| Screen ID | Screen Name | Primary Purpose | Application Service / Use Case |
-|---|---|---|---|
+| Screen ID    | Screen Name                     | Primary Purpose                              | Application Service / Use Case       |
+| ------------ | ------------------------------- | -------------------------------------------- | ------------------------------------ |
 | SCR-CERT-P01 | Public Certificate Verification | Verify by opaque verification code or QR URL | UC-CERT-004 / VerifyCertificateQuery |
 
 ---
@@ -108,23 +108,23 @@ The current DDD application structure identifies the Admin Portal as the initial
 
 The following components shall be reusable across Certificate Management screens. Components are presentation constructs and must not own domain rules.
 
-| Component ID | Component | Purpose | Behavior |
-|---|---|---|---|
-| CMP-CERT-001 | `CertificateStatusBadge` | Render certificate lifecycle status | Uses server-returned status; no status derivation in UI |
-| CMP-CERT-002 | `ReadinessGatePanel` | Display completion and payment gate outcomes | Shows authoritative gate result and blocker text; no calculation |
-| CMP-CERT-003 | `CertificateIdentityCard` | Show certificate number, learner, course, batch, branch | Read-only projection |
-| CMP-CERT-004 | `LanguageBadge` | Show EN/AR certificate language | Localized label; stable enum value |
-| CMP-CERT-005 | `ArtifactPreviewFrame` | Preview generated certificate artifact | Access controlled; fallback when preview unsupported |
-| CMP-CERT-006 | `QrVerificationBlock` | Display QR code and verification link | Displays server-generated QR/URL; does not create verification code |
-| CMP-CERT-007 | `ReissueLineagePanel` | Show original and replacement linkage | Based on `certificateId` and `newCertificateId` projections |
-| CMP-CERT-008 | `AuditTimeline` | Show lifecycle audit events | Read-only Audit projection |
-| CMP-CERT-009 | `BranchScopeFilter` | Narrow results within effective branches | Options come from effective access; cannot broaden server scope |
-| CMP-CERT-010 | `PermissionGuardedAction` | Hide/disable actions based on effective UI capability set | UI convenience only; server remains authoritative |
-| CMP-CERT-011 | `ReasonInput` | Capture reissue/revocation/decision reason | Required where business rule demands; length and whitespace validation |
-| CMP-CERT-012 | `AsyncCommandDialog` | Confirm sensitive commands | Displays impact, command progress, success, stale-state and concurrency errors |
-| CMP-CERT-013 | `PaginatedDataTable` | Registry/work queue tables | Server-side pagination, sorting and filtering |
-| CMP-CERT-014 | `VerificationResultCard` | Show public result with minimal disclosure | Valid, revoked, replaced, or not-found-safe outcome |
-| CMP-CERT-015 | `SourceContextSummary` | Show Enrollment/Student/Course/Batch source references | Read-only authoritative projection |
+| Component ID | Component                 | Purpose                                                   | Behavior                                                                       |
+| ------------ | ------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| CMP-CERT-001 | `CertificateStatusBadge`  | Render certificate lifecycle status                       | Uses server-returned status; no status derivation in UI                        |
+| CMP-CERT-002 | `ReadinessGatePanel`      | Display completion and payment gate outcomes              | Shows authoritative gate result and blocker text; no calculation               |
+| CMP-CERT-003 | `CertificateIdentityCard` | Show certificate number, learner, course, batch, branch   | Read-only projection                                                           |
+| CMP-CERT-004 | `LanguageBadge`           | Show EN/AR certificate language                           | Localized label; stable enum value                                             |
+| CMP-CERT-005 | `ArtifactPreviewFrame`    | Preview generated certificate artifact                    | Access controlled; fallback when preview unsupported                           |
+| CMP-CERT-006 | `QrVerificationBlock`     | Display QR code and verification link                     | Displays server-generated QR/URL; does not create verification code            |
+| CMP-CERT-007 | `ReissueLineagePanel`     | Show original and replacement linkage                     | Based on `certificateId` and `newCertificateId` projections                    |
+| CMP-CERT-008 | `AuditTimeline`           | Show lifecycle audit events                               | Read-only Audit projection                                                     |
+| CMP-CERT-009 | `BranchScopeFilter`       | Narrow results within effective branches                  | Options come from effective access; cannot broaden server scope                |
+| CMP-CERT-010 | `PermissionGuardedAction` | Hide/disable actions based on effective UI capability set | UI convenience only; server remains authoritative                              |
+| CMP-CERT-011 | `ReasonInput`             | Capture reissue/revocation/decision reason                | Required where business rule demands; length and whitespace validation         |
+| CMP-CERT-012 | `AsyncCommandDialog`      | Confirm sensitive commands                                | Displays impact, command progress, success, stale-state and concurrency errors |
+| CMP-CERT-013 | `PaginatedDataTable`      | Registry/work queue tables                                | Server-side pagination, sorting and filtering                                  |
+| CMP-CERT-014 | `VerificationResultCard`  | Show public result with minimal disclosure                | Valid, revoked, replaced, or not-found-safe outcome                            |
+| CMP-CERT-015 | `SourceContextSummary`    | Show Enrollment/Student/Course/Batch source references    | Read-only authoritative projection                                             |
 
 ---
 
@@ -369,11 +369,11 @@ Actions
 
 ### Inputs
 
-| Field | Required | Validation |
-|---|---:|---|
-| `language` | Yes | Must be a server-supported certificate language enum; current UI supports English and Arabic |
-| `enrollmentId` | Yes, route/context | Must be valid, branch-authorized, and command-time eligible |
-| Concurrency/idempotency token | System | Generated by client/app framework and validated server-side according to command contract |
+| Field                         |           Required | Validation                                                                                   |
+| ----------------------------- | -----------------: | -------------------------------------------------------------------------------------------- |
+| `language`                    |                Yes | Must be a server-supported certificate language enum; current UI supports English and Arabic |
+| `enrollmentId`                | Yes, route/context | Must be valid, branch-authorized, and command-time eligible                                  |
+| Concurrency/idempotency token |             System | Generated by client/app framework and validated server-side according to command contract    |
 
 ### Processing UI
 
@@ -1126,13 +1126,13 @@ Privacy / Authenticity Notice
 
 ### Verification Result States
 
-| Result | UI Presentation | Disclosure Rule |
-|---|---|---|
-| Valid / Issued | Positive authenticity result | Minimal approved certificate facts only |
-| Revoked | Clear revoked result | Do not present as valid; show minimal identity facts as policy permits |
-| Replaced | Show that certificate was replaced | Do not expose replacement internals unless public policy permits verification of replacement reference |
-| Not Found / Invalid | Generic unable-to-verify result | Avoid account, learner, or enrollment enumeration |
-| Temporarily Unavailable | Neutral service-unavailable message | Do not misclassify as invalid |
+| Result                  | UI Presentation                     | Disclosure Rule                                                                                        |
+| ----------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Valid / Issued          | Positive authenticity result        | Minimal approved certificate facts only                                                                |
+| Revoked                 | Clear revoked result                | Do not present as valid; show minimal identity facts as policy permits                                 |
+| Replaced                | Show that certificate was replaced  | Do not expose replacement internals unless public policy permits verification of replacement reference |
+| Not Found / Invalid     | Generic unable-to-verify result     | Avoid account, learner, or enrollment enumeration                                                      |
+| Temporarily Unavailable | Neutral service-unavailable message | Do not misclassify as invalid                                                                          |
 
 ### Loading and Error States
 
@@ -1180,16 +1180,16 @@ Do not expose stack traces, database identifiers, storage credentials, or intern
 
 ### Recommended Error Mapping
 
-| Error Category | UI Behavior |
-|---|---|
-| Validation | Inline field error; no command submitted or server returns safe validation problem |
-| Unauthorized unauthenticated | Redirect to sign-in where appropriate |
-| Forbidden | Access-denied view; do not convert to empty state |
-| Not found within authorized scope | Safe not-found view; avoid leaking existence outside scope |
-| Conflict / stale state | Show refresh-required banner |
-| Concurrency conflict | Reload current resource before retry |
-| Dependency unavailable | Preserve form state and allow safe retry where idempotent |
-| Duplicate deterministic command | Navigate/display existing result when contract permits |
+| Error Category                    | UI Behavior                                                                        |
+| --------------------------------- | ---------------------------------------------------------------------------------- |
+| Validation                        | Inline field error; no command submitted or server returns safe validation problem |
+| Unauthorized unauthenticated      | Redirect to sign-in where appropriate                                              |
+| Forbidden                         | Access-denied view; do not convert to empty state                                  |
+| Not found within authorized scope | Safe not-found view; avoid leaking existence outside scope                         |
+| Conflict / stale state            | Show refresh-required banner                                                       |
+| Concurrency conflict              | Reload current resource before retry                                               |
+| Dependency unavailable            | Preserve form state and allow safe retry where idempotent                          |
+| Duplicate deterministic command   | Navigate/display existing result when contract permits                             |
 
 ## 8.2 Loading Skeletons
 
@@ -1283,16 +1283,16 @@ Do not optimistically display successful Generate, Issue, Approve, Reject, Gener
 
 ## 10.1 Directionality
 
-| Aspect | English | Arabic |
-|---|---|---|
-| Page direction | `ltr` | `rtl` |
-| Primary navigation flow | Left to right | Right to left |
-| Breadcrumb order | LTR | Mirrored RTL |
-| Form label alignment | Start/left according to design system | Start/right according to design system |
-| Drawer origin | Default LTR side | Mirrored RTL side |
-| Table action alignment | End/right | End/left |
-| Stepper progression | Left → Right | Right → Left |
-| Chevron/navigation icons | Standard | Mirrored when directional |
+| Aspect                   | English                               | Arabic                                 |
+| ------------------------ | ------------------------------------- | -------------------------------------- |
+| Page direction           | `ltr`                                 | `rtl`                                  |
+| Primary navigation flow  | Left to right                         | Right to left                          |
+| Breadcrumb order         | LTR                                   | Mirrored RTL                           |
+| Form label alignment     | Start/left according to design system | Start/right according to design system |
+| Drawer origin            | Default LTR side                      | Mirrored RTL side                      |
+| Table action alignment   | End/right                             | End/left                               |
+| Stepper progression      | Left → Right                          | Right → Left                           |
+| Chevron/navigation icons | Standard                              | Mirrored when directional              |
 
 ## 10.2 Values That Must Not Be Mirrored Semantically
 
@@ -1337,19 +1337,19 @@ Use directional isolation (`bdi` or equivalent design-system support) for mixed 
 
 The exact permission codes must remain aligned with the project's dynamic IAM configuration. The following is the FRD-level capability mapping.
 
-| Capability | Screens / Actions |
-|---|---|
-| `certificate.read` | Dashboard summaries, readiness list/detail, registry, certificate detail |
-| `certificate.generate` | Generate Certificate, Generate Replacement where additionally authorized by reissue state |
-| `certificate.issue` | Issue Certificate confirmation/action |
-| `certificate.download` | Artifact preview/download |
-| `certificate.verify.read` | Internal verification activity |
-| `certificate.reissue.submit` | Submit reissue request |
-| `certificate.reissue.read` | Reissue queue/detail |
-| `certificate.reissue.approve` | Approve reissue request |
-| `certificate.reissue.reject` | Reject reissue request |
-| `certificate.revoke` | Revoke Certificate |
-| `audit.read` or equivalent | Lifecycle/Audit detail tab |
+| Capability                    | Screens / Actions                                                                         |
+| ----------------------------- | ----------------------------------------------------------------------------------------- |
+| `certificate.read`            | Dashboard summaries, readiness list/detail, registry, certificate detail                  |
+| `certificate.generate`        | Generate Certificate, Generate Replacement where additionally authorized by reissue state |
+| `certificate.issue`           | Issue Certificate confirmation/action                                                     |
+| `certificate.download`        | Artifact preview/download                                                                 |
+| `certificate.verify.read`     | Internal verification activity                                                            |
+| `certificate.reissue.submit`  | Submit reissue request                                                                    |
+| `certificate.reissue.read`    | Reissue queue/detail                                                                      |
+| `certificate.reissue.approve` | Approve reissue request                                                                   |
+| `certificate.reissue.reject`  | Reject reissue request                                                                    |
+| `certificate.revoke`          | Revoke Certificate                                                                        |
+| `audit.read` or equivalent    | Lifecycle/Audit detail tab                                                                |
 
 ### Mandatory Authorization Behavior
 
@@ -1365,30 +1365,30 @@ The exact permission codes must remain aligned with the project's dynamic IAM co
 
 # 12. Screen-to-Use-Case and Application-Service Traceability Matrix
 
-| Screen | Use Case / Requirement | Application Service / Query | Owning Context | Cross-Context Reads | Forbidden UI Logic |
-|---|---|---|---|---|---|
-| SCR-CERT-A01 | FR-CERT-032, FR-CERT-036 | CertificateDashboardQuery | Certificate / Reporting projection | Reporting projections | Browser KPI computation from raw transactions |
-| SCR-CERT-A02 | UC-CERT-001 | ListCertificateReadyEnrollmentsQuery | Certificate application read layer | Enrollment, Completion, Finance gate | Recalculate eligibility/payment |
-| SCR-CERT-A03 | UC-CERT-001 | GetCertificateReadinessQuery | Certificate application read layer | Enrollment, Completion, Finance | Mutate upstream records |
-| SCR-CERT-A04 | UC-CERT-002 | GenerateCertificateCommand | Certificate | Completion/payment gates, NumberingSeries | Allocate numbers/codes locally |
-| SCR-CERT-A05 | UC-CERT-002 | GetCertificateDetailQuery | Certificate | None required beyond projection | Treat preview as authoritative lifecycle change |
-| SCR-CERT-A06 | FR-CERT-014 | CertificateRegistryQuery | Certificate | Display references | Inline status edits |
-| SCR-CERT-A07 | FR-CERT-015 | GetCertificateDetailQuery | Certificate | Audit read projection | Direct Audit mutation |
-| SCR-CERT-A08 | FR-CERT-016 | GetCertificateArtifactQuery | Certificate | Storage infrastructure through application boundary | Public storage bypass |
-| SCR-CERT-A09 | UC-CERT-003 | IssueCertificateCommand | Certificate | Completion/payment gates | UI-set issue date/issuer |
-| SCR-CERT-A10 | FR-CERT-022 | ListReissueRequestsQuery | Certificate | Identity display refs | Approve from table without controlled use case |
-| SCR-CERT-A11 | UC-CERT-006 | Approve/RejectReissueRequestCommand | Certificate | Audit approval projection | Write approval history directly |
-| SCR-CERT-A12 | UC-CERT-007 | GenerateReplacementCertificateCommand | Certificate | Numbering/config source | Client-supplied replacement ID |
-| SCR-CERT-A13 | UC-CERT-008 | RevokeCertificateCommand | Certificate | Audit side effect | Hard delete or local status edit |
-| SCR-CERT-A14 | FR-CERT-020 | ListCertificateVerificationActivityQuery | Certificate | Certificate branch projection | Change lifecycle from verification activity |
-| SCR-CERT-A15 | FR-CERT-030 | CertificateLifecycleQuery | Certificate + Audit read composition | Audit | Manufacture history in browser |
-| SCR-CERT-S01 | Self-service extension of FR-CERT-014 | ListMyCertificatesQuery | Certificate | Identity ownership mapping | Client-selected student scope |
-| SCR-CERT-S02 | FR-CERT-015/016 | GetMyCertificateDetailQuery | Certificate | Identity ownership mapping | Cross-user access |
-| SCR-CERT-S03 | UC-CERT-005 | SubmitReissueRequestCommand | Certificate | Identity ownership mapping | Auto-approve or auto-generate |
-| SCR-CERT-S04 | UC-CERT-005/006/007 read side | ListMyReissueRequestsQuery | Certificate | Identity ownership mapping | Expose internal decision data unnecessarily |
-| SCR-CERT-T01 | Read composition | TrainerCertificateStatusQuery | Read composition; Certificate data owned by Certificate | Trainer, Training Delivery, Completion | Issue/revoke controls |
-| SCR-CERT-T02 | Completion workflow | Completion-context recommendation service | Exam, Result & Completion | Certificate status read-only | Certificate-owned completion recommendation |
-| SCR-CERT-P01 | UC-CERT-004 | VerifyCertificateQuery | Certificate | None beyond certificate projection | Expose internal IDs or mutate status |
+| Screen       | Use Case / Requirement                | Application Service / Query               | Owning Context                                          | Cross-Context Reads                                 | Forbidden UI Logic                              |
+| ------------ | ------------------------------------- | ----------------------------------------- | ------------------------------------------------------- | --------------------------------------------------- | ----------------------------------------------- |
+| SCR-CERT-A01 | FR-CERT-032, FR-CERT-036              | CertificateDashboardQuery                 | Certificate / Reporting projection                      | Reporting projections                               | Browser KPI computation from raw transactions   |
+| SCR-CERT-A02 | UC-CERT-001                           | ListCertificateReadyEnrollmentsQuery      | Certificate application read layer                      | Enrollment, Completion, Finance gate                | Recalculate eligibility/payment                 |
+| SCR-CERT-A03 | UC-CERT-001                           | GetCertificateReadinessQuery              | Certificate application read layer                      | Enrollment, Completion, Finance                     | Mutate upstream records                         |
+| SCR-CERT-A04 | UC-CERT-002                           | GenerateCertificateCommand                | Certificate                                             | Completion/payment gates, NumberingSeries           | Allocate numbers/codes locally                  |
+| SCR-CERT-A05 | UC-CERT-002                           | GetCertificateDetailQuery                 | Certificate                                             | None required beyond projection                     | Treat preview as authoritative lifecycle change |
+| SCR-CERT-A06 | FR-CERT-014                           | CertificateRegistryQuery                  | Certificate                                             | Display references                                  | Inline status edits                             |
+| SCR-CERT-A07 | FR-CERT-015                           | GetCertificateDetailQuery                 | Certificate                                             | Audit read projection                               | Direct Audit mutation                           |
+| SCR-CERT-A08 | FR-CERT-016                           | GetCertificateArtifactQuery               | Certificate                                             | Storage infrastructure through application boundary | Public storage bypass                           |
+| SCR-CERT-A09 | UC-CERT-003                           | IssueCertificateCommand                   | Certificate                                             | Completion/payment gates                            | UI-set issue date/issuer                        |
+| SCR-CERT-A10 | FR-CERT-022                           | ListReissueRequestsQuery                  | Certificate                                             | Identity display refs                               | Approve from table without controlled use case  |
+| SCR-CERT-A11 | UC-CERT-006                           | Approve/RejectReissueRequestCommand       | Certificate                                             | Audit approval projection                           | Write approval history directly                 |
+| SCR-CERT-A12 | UC-CERT-007                           | GenerateReplacementCertificateCommand     | Certificate                                             | Numbering/config source                             | Client-supplied replacement ID                  |
+| SCR-CERT-A13 | UC-CERT-008                           | RevokeCertificateCommand                  | Certificate                                             | Audit side effect                                   | Hard delete or local status edit                |
+| SCR-CERT-A14 | FR-CERT-020                           | ListCertificateVerificationActivityQuery  | Certificate                                             | Certificate branch projection                       | Change lifecycle from verification activity     |
+| SCR-CERT-A15 | FR-CERT-030                           | CertificateLifecycleQuery                 | Certificate + Audit read composition                    | Audit                                               | Manufacture history in browser                  |
+| SCR-CERT-S01 | Self-service extension of FR-CERT-014 | ListMyCertificatesQuery                   | Certificate                                             | Identity ownership mapping                          | Client-selected student scope                   |
+| SCR-CERT-S02 | FR-CERT-015/016                       | GetMyCertificateDetailQuery               | Certificate                                             | Identity ownership mapping                          | Cross-user access                               |
+| SCR-CERT-S03 | UC-CERT-005                           | SubmitReissueRequestCommand               | Certificate                                             | Identity ownership mapping                          | Auto-approve or auto-generate                   |
+| SCR-CERT-S04 | UC-CERT-005/006/007 read side         | ListMyReissueRequestsQuery                | Certificate                                             | Identity ownership mapping                          | Expose internal decision data unnecessarily     |
+| SCR-CERT-T01 | Read composition                      | TrainerCertificateStatusQuery             | Read composition; Certificate data owned by Certificate | Trainer, Training Delivery, Completion              | Issue/revoke controls                           |
+| SCR-CERT-T02 | Completion workflow                   | Completion-context recommendation service | Exam, Result & Completion                               | Certificate status read-only                        | Certificate-owned completion recommendation     |
+| SCR-CERT-P01 | UC-CERT-004                           | VerifyCertificateQuery                    | Certificate                                             | None beyond certificate projection                  | Expose internal IDs or mutate status            |
 
 ---
 
@@ -1485,19 +1485,19 @@ Dashboard and reports consume Certificate facts. Reporting does not own Certific
 
 ## 14.1 Direct Screen-to-Entity Mapping
 
-| ER Entity | UI Usage |
-|---|---|
-| `Certificate` | Registry, detail, preview, issue, revoke, student certificate views, trainer status projection, public verification result |
-| `CertificateVerification` | Verification attempt recording and internal verification activity screen |
-| `CertificateReissueRequest` | Reissue submission, queue, detail, approval/rejection outcome, replacement linkage |
-| `Enrollment` | Source context and branch relationship; read only from Certificate UI |
-| `StudentProfile` / `Person` | Learner display data; read only |
-| `Course` | Course display/localized content; read only |
-| `Batch` | Batch display reference; read only |
-| `CourseCompletion` / `CompletionApproval` | Eligibility/approval projection; read only |
-| `NumberingSeries` | Generation dependency; no direct Certificate UI editing |
-| `UserBranchAccess` | Effective scope input from IAM; no Certificate UI editing |
-| `AuditLog`, `ApprovalRequest`, `ApprovalHistory` | Read-only audit/approval projections where authorized |
+| ER Entity                                        | UI Usage                                                                                                                   |
+| ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| `Certificate`                                    | Registry, detail, preview, issue, revoke, student certificate views, trainer status projection, public verification result |
+| `CertificateVerification`                        | Verification attempt recording and internal verification activity screen                                                   |
+| `CertificateReissueRequest`                      | Reissue submission, queue, detail, approval/rejection outcome, replacement linkage                                         |
+| `Enrollment`                                     | Source context and branch relationship; read only from Certificate UI                                                      |
+| `StudentProfile` / `Person`                      | Learner display data; read only                                                                                            |
+| `Course`                                         | Course display/localized content; read only                                                                                |
+| `Batch`                                          | Batch display reference; read only                                                                                         |
+| `CourseCompletion` / `CompletionApproval`        | Eligibility/approval projection; read only                                                                                 |
+| `NumberingSeries`                                | Generation dependency; no direct Certificate UI editing                                                                    |
+| `UserBranchAccess`                               | Effective scope input from IAM; no Certificate UI editing                                                                  |
+| `AuditLog`, `ApprovalRequest`, `ApprovalHistory` | Read-only audit/approval projections where authorized                                                                      |
 
 ## 14.2 Known Source-Model Gaps Affecting UI
 
@@ -1587,20 +1587,20 @@ The trainer navigation placement should avoid implying that trainers own Certifi
 
 Illustrative route names are implementation guidance and must follow repository routing conventions.
 
-| Screen | Suggested Route Shape | Route Guard |
-|---|---|---|
-| A01 | `/certificates` | certificate dashboard/read capability |
-| A02 | `/certificates/ready` | certificate.read |
-| A03 | `/certificates/ready/[enrollmentId]` | certificate.read + branch scope |
-| A04 | `/certificates/ready/[enrollmentId]/generate` | certificate.generate + branch scope |
-| A06 | `/certificates/registry` | certificate.read |
-| A07 | `/certificates/[certificateId]` | certificate.read + branch scope |
-| A10 | `/certificates/reissues` | certificate.reissue.read |
-| A11 | `/certificates/reissues/[requestId]` | reissue read/decision capability + branch scope |
-| A14 | `/certificates/verifications` | certificate verification activity read permission |
-| S01 | `/student/certificates` | authenticated learner identity ownership |
-| S02 | `/student/certificates/[certificateId]` | self-ownership guard |
-| P01 | `/verify-certificate` or opaque QR route | public rate-limited query |
+| Screen | Suggested Route Shape                         | Route Guard                                       |
+| ------ | --------------------------------------------- | ------------------------------------------------- |
+| A01    | `/certificates`                               | certificate dashboard/read capability             |
+| A02    | `/certificates/ready`                         | certificate.read                                  |
+| A03    | `/certificates/ready/[enrollmentId]`          | certificate.read + branch scope                   |
+| A04    | `/certificates/ready/[enrollmentId]/generate` | certificate.generate + branch scope               |
+| A06    | `/certificates/registry`                      | certificate.read                                  |
+| A07    | `/certificates/[certificateId]`               | certificate.read + branch scope                   |
+| A10    | `/certificates/reissues`                      | certificate.reissue.read                          |
+| A11    | `/certificates/reissues/[requestId]`          | reissue read/decision capability + branch scope   |
+| A14    | `/certificates/verifications`                 | certificate verification activity read permission |
+| S01    | `/student/certificates`                       | authenticated learner identity ownership          |
+| S02    | `/student/certificates/[certificateId]`       | self-ownership guard                              |
+| P01    | `/verify-certificate` or opaque QR route      | public rate-limited query                         |
 
 Route guards are not substitutes for application-layer authorization.
 
@@ -1608,22 +1608,22 @@ Route guards are not substitutes for application-layer authorization.
 
 # 18. UI Event and Command Boundary Summary
 
-| UI Event | Application Operation | Mutation Owner |
-|---|---|---|
-| Open Ready List | Query ready projection | None |
-| Refresh Readiness | Query authoritative readiness projection | None |
-| Generate | GenerateCertificateCommand | Certificate |
-| Issue | IssueCertificateCommand | Certificate |
-| Download | Authorized artifact query | None |
-| Verify | VerifyCertificateQuery + verification-attempt recording | Certificate |
-| Submit Reissue | SubmitReissueRequestCommand | Certificate |
-| Approve Reissue | ApproveReissueRequestCommand | Certificate transaction; Audit owns approval history |
-| Reject Reissue | RejectReissueRequestCommand | Certificate transaction; Audit owns approval history |
-| Generate Replacement | GenerateReplacementCertificateCommand | Certificate |
-| Revoke | RevokeCertificateCommand | Certificate; Audit owns sensitive action history |
-| Send Certificate Notification | Triggered by application workflow, not direct UI provider call | Communication owns delivery transaction |
-| Recommend Completion | Completion-context command | Exam, Result & Completion |
-| Mark Payment Complete | Not available in Certificate UI | Finance |
+| UI Event                      | Application Operation                                          | Mutation Owner                                       |
+| ----------------------------- | -------------------------------------------------------------- | ---------------------------------------------------- |
+| Open Ready List               | Query ready projection                                         | None                                                 |
+| Refresh Readiness             | Query authoritative readiness projection                       | None                                                 |
+| Generate                      | GenerateCertificateCommand                                     | Certificate                                          |
+| Issue                         | IssueCertificateCommand                                        | Certificate                                          |
+| Download                      | Authorized artifact query                                      | None                                                 |
+| Verify                        | VerifyCertificateQuery + verification-attempt recording        | Certificate                                          |
+| Submit Reissue                | SubmitReissueRequestCommand                                    | Certificate                                          |
+| Approve Reissue               | ApproveReissueRequestCommand                                   | Certificate transaction; Audit owns approval history |
+| Reject Reissue                | RejectReissueRequestCommand                                    | Certificate transaction; Audit owns approval history |
+| Generate Replacement          | GenerateReplacementCertificateCommand                          | Certificate                                          |
+| Revoke                        | RevokeCertificateCommand                                       | Certificate; Audit owns sensitive action history     |
+| Send Certificate Notification | Triggered by application workflow, not direct UI provider call | Communication owns delivery transaction              |
+| Recommend Completion          | Completion-context command                                     | Exam, Result & Completion                            |
+| Mark Payment Complete         | Not available in Certificate UI                                | Finance                                              |
 
 ---
 
@@ -1648,19 +1648,18 @@ The screen model in this Part 3 remains aligned with the module architecture und
 
 # 20. Part 3 Validation Checklist
 
-| Check | Result |
-|---|---|
-| Admin screens cover generation, issue, registry, reissue, revocation, verification activity, and lifecycle visibility | Pass |
-| Student screens are self-service and identity-scoped | Pass |
-| Trainer screens do not grant Certificate lifecycle mutation authority | Pass |
-| Public verification exposes minimal data | Pass |
-| All lifecycle actions map to explicit application commands | Pass |
-| Completion evaluation remains outside Certificate UI | Pass |
-| Finance payment calculation remains outside Certificate UI | Pass |
-| Branch filtering does not broaden effective scope | Pass |
-| Permission hiding is not treated as security enforcement | Pass |
-| Loading, empty, validation, stale-state, conflict, and dependency-error states are defined | Pass |
-| English LTR and Arabic RTL behavior is specified | Pass |
-| ER gaps are explicitly documented rather than patched through UI assumptions | Pass |
-| Prisma-level validation | Pending – schema not supplied in current source set |
-
+| Check                                                                                                                 | Result                                              |
+| --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Admin screens cover generation, issue, registry, reissue, revocation, verification activity, and lifecycle visibility | Pass                                                |
+| Student screens are self-service and identity-scoped                                                                  | Pass                                                |
+| Trainer screens do not grant Certificate lifecycle mutation authority                                                 | Pass                                                |
+| Public verification exposes minimal data                                                                              | Pass                                                |
+| All lifecycle actions map to explicit application commands                                                            | Pass                                                |
+| Completion evaluation remains outside Certificate UI                                                                  | Pass                                                |
+| Finance payment calculation remains outside Certificate UI                                                            | Pass                                                |
+| Branch filtering does not broaden effective scope                                                                     | Pass                                                |
+| Permission hiding is not treated as security enforcement                                                              | Pass                                                |
+| Loading, empty, validation, stale-state, conflict, and dependency-error states are defined                            | Pass                                                |
+| English LTR and Arabic RTL behavior is specified                                                                      | Pass                                                |
+| ER gaps are explicitly documented rather than patched through UI assumptions                                          | Pass                                                |
+| Prisma-level validation                                                                                               | Pending – schema not supplied in current source set |

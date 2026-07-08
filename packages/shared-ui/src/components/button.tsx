@@ -21,8 +21,7 @@ const buttonVariants = cva(
           'border border-[color:var(--ims-brass)] bg-transparent text-[color:var(--ims-brass)] hover:bg-[color:var(--ims-brass-soft)]',
         ghost:
           'bg-transparent text-[color:var(--ims-ink)] hover:bg-[color:var(--ims-accent-soft)] hover:text-[color:var(--ims-brass)]',
-        link:
-          'underline-offset-4 text-[color:var(--ims-brass)] hover:underline rounded-none',
+        link: 'underline-offset-4 text-[color:var(--ims-brass)] hover:underline rounded-none',
       },
       size: {
         sm: 'h-8 px-3 text-xs',
@@ -39,13 +38,17 @@ const buttonVariants = cva(
 );
 
 export interface ButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   loading?: boolean;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, loading, disabled, children, ...props }, ref) => {
+  (
+    { className, variant, size, loading, disabled, children, ...props },
+    ref,
+  ) => {
     return (
       <button
         ref={ref}
@@ -53,7 +56,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(buttonVariants({ variant, size }), className)}
         {...props}
       >
-        {loading && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
+        {loading && (
+          <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+        )}
         {children}
       </button>
     );

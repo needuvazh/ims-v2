@@ -47,7 +47,9 @@ describe('IAM Role form validation schema', () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.error.issues[0].path[0]).toBe('effectiveEndDate');
-      expect(result.error.issues[0].message).toBe('Effective End Date must be after or equal to Start Date.');
+      expect(result.error.issues[0].message).toBe(
+        'Effective End Date must be after or equal to Start Date.',
+      );
     }
   });
 

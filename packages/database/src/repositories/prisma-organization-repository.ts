@@ -127,14 +127,16 @@ function toBranch(row: BranchRowWithRelations): Branch {
       longitude: a.longitude,
       mapUrl: a.mapUrl,
     })),
-    settings: row.settings ? {
-      id: row.settings.id as Uuid,
-      branchId: row.settings.branchId as BranchId,
-      currency: row.settings.currency,
-      timezone: row.settings.timezone,
-      weekStartDay: row.settings.weekStartDay,
-      workingCalendar: row.settings.workingCalendar,
-    } : undefined,
+    settings: row.settings
+      ? {
+          id: row.settings.id as Uuid,
+          branchId: row.settings.branchId as BranchId,
+          currency: row.settings.currency,
+          timezone: row.settings.timezone,
+          weekStartDay: row.settings.weekStartDay,
+          workingCalendar: row.settings.workingCalendar,
+        }
+      : undefined,
     policies: row.policies?.map((p) => ({
       id: p.id as Uuid,
       branchId: p.branchId as BranchId,
@@ -203,29 +205,56 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
   }
 
   async findInstituteByCode(instituteCode: string): Promise<Institute | null> {
-    const row = await this.prisma.institute.findFirst({ where: { instituteCode, isDeleted: false } });
+    const row = await this.prisma.institute.findFirst({
+      where: { instituteCode, isDeleted: false },
+    });
     return row ? toInstitute(row) : null;
   }
 
-  async updateInstitute(id: string, updates: Partial<Institute>): Promise<Institute> {
+  async updateInstitute(
+    id: string,
+    updates: Partial<Institute>,
+  ): Promise<Institute> {
     const row = await this.prisma.institute.update({
       where: { id },
       data: {
-        ...(updates.instituteName !== undefined && { instituteName: updates.instituteName }),
-        ...(updates.registrationNumber !== undefined && { registrationNumber: updates.registrationNumber }),
-        ...(updates.taxNumber !== undefined && { taxNumber: updates.taxNumber }),
-        ...(updates.primaryEmail !== undefined && { primaryEmail: updates.primaryEmail }),
-        ...(updates.primaryPhone !== undefined && { primaryPhone: updates.primaryPhone }),
+        ...(updates.instituteName !== undefined && {
+          instituteName: updates.instituteName,
+        }),
+        ...(updates.registrationNumber !== undefined && {
+          registrationNumber: updates.registrationNumber,
+        }),
+        ...(updates.taxNumber !== undefined && {
+          taxNumber: updates.taxNumber,
+        }),
+        ...(updates.primaryEmail !== undefined && {
+          primaryEmail: updates.primaryEmail,
+        }),
+        ...(updates.primaryPhone !== undefined && {
+          primaryPhone: updates.primaryPhone,
+        }),
         ...(updates.website !== undefined && { website: updates.website }),
         ...(updates.address !== undefined && { address: updates.address }),
         ...(updates.country !== undefined && { country: updates.country }),
         ...(updates.status !== undefined && { status: updates.status }),
-        ...(updates.legalNameEnglish !== undefined && { legalNameEnglish: updates.legalNameEnglish }),
-        ...(updates.legalNameArabic !== undefined && { legalNameArabic: updates.legalNameArabic }),
-        ...(updates.tradeName !== undefined && { tradeName: updates.tradeName }),
-        ...(updates.shortName !== undefined && { shortName: updates.shortName }),
-        ...(updates.effectiveStartDate !== undefined && { effectiveStartDate: updates.effectiveStartDate }),
-        ...(updates.effectiveEndDate !== undefined && { effectiveEndDate: updates.effectiveEndDate }),
+        ...(updates.legalNameEnglish !== undefined && {
+          legalNameEnglish: updates.legalNameEnglish,
+        }),
+        ...(updates.legalNameArabic !== undefined && {
+          legalNameArabic: updates.legalNameArabic,
+        }),
+        ...(updates.tradeName !== undefined && {
+          tradeName: updates.tradeName,
+        }),
+        ...(updates.shortName !== undefined && {
+          shortName: updates.shortName,
+        }),
+        ...(updates.effectiveStartDate !== undefined && {
+          effectiveStartDate: updates.effectiveStartDate,
+        }),
+        ...(updates.effectiveEndDate !== undefined && {
+          effectiveEndDate: updates.effectiveEndDate,
+        }),
         ...(updates.currency !== undefined && { currency: updates.currency }),
         ...(updates.timezone !== undefined && { timezone: updates.timezone }),
         ...(updates.language !== undefined && { language: updates.language }),
@@ -235,26 +264,51 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
     return toInstitute(row);
   }
 
-  async listInstitutes(filters?: ListFilters): Promise<PaginatedResult<Institute>> {
+  async listInstitutes(
+    filters?: ListFilters,
+  ): Promise<PaginatedResult<Institute>> {
     const page = filters?.page ?? 1;
     const pageSize = filters?.pageSize ?? PAGE_SIZE;
     const where = {
       isDeleted: false,
       ...(filters?.status ? { status: filters.status } : {}),
-      ...(filters?.search ? {
-        OR: [
-          { instituteName: { contains: filters.search, mode: 'insensitive' as const } },
-          { instituteCode: { contains: filters.search, mode: 'insensitive' as const } },
-        ],
-      } : {}),
+      ...(filters?.search
+        ? {
+            OR: [
+              {
+                instituteName: {
+                  contains: filters.search,
+                  mode: 'insensitive' as const,
+                },
+              },
+              {
+                instituteCode: {
+                  contains: filters.search,
+                  mode: 'insensitive' as const,
+                },
+              },
+            ],
+          }
+        : {}),
     };
 
     const [total, rows] = await Promise.all([
       this.prisma.institute.count({ where }),
-      this.prisma.institute.findMany({ where, skip: (page - 1) * pageSize, take: pageSize, orderBy: { instituteName: 'asc' } }),
+      this.prisma.institute.findMany({
+        where,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        orderBy: { instituteName: 'asc' },
+      }),
     ]);
 
-    return { items: rows.map(toInstitute), total, page, pageSize, totalPages: Math.ceil(total / pageSize) };
+    return {
+      items: rows.map(toInstitute),
+      total,
+      page,
+      pageSize,
+      totalPages: Math.ceil(total / pageSize),
+    };
   }
 
   // ─── Branch ────────────────────────────────────────────────────────────────
@@ -276,44 +330,55 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
         status: input.status,
         effectiveStartDate: input.effectiveStartDate,
         effectiveEndDate: input.effectiveEndDate,
-        contacts: input.contacts && input.contacts.length > 0 ? {
-          create: input.contacts.map((c) => ({
-            id: c.id,
-            contactType: c.contactType,
-            contactValue: c.contactValue,
-            isPrimary: c.isPrimary,
-          })),
-        } : undefined,
-        addresses: input.addresses && input.addresses.length > 0 ? {
-          create: input.addresses.map((a) => ({
-            id: a.id,
-            building: a.building,
-            street: a.street,
-            city: a.city,
-            governorate: a.governorate,
-            country: a.country,
-            postalCode: a.postalCode,
-            latitude: a.latitude,
-            longitude: a.longitude,
-            mapUrl: a.mapUrl,
-          })),
-        } : undefined,
-        settings: input.settings ? {
-          create: {
-            id: input.settings.id,
-            currency: input.settings.currency,
-            timezone: input.settings.timezone,
-            weekStartDay: input.settings.weekStartDay,
-            workingCalendar: input.settings.workingCalendar,
-          },
-        } : undefined,
-        policies: input.policies && input.policies.length > 0 ? {
-          create: input.policies.map((p) => ({
-            id: p.id,
-            policyType: p.policyType,
-            policyContent: p.policyContent,
-          })),
-        } : undefined,
+        contacts:
+          input.contacts && input.contacts.length > 0
+            ? {
+                create: input.contacts.map((c) => ({
+                  id: c.id,
+                  contactType: c.contactType,
+                  contactValue: c.contactValue,
+                  isPrimary: c.isPrimary,
+                })),
+              }
+            : undefined,
+        addresses:
+          input.addresses && input.addresses.length > 0
+            ? {
+                create: input.addresses.map((a) => ({
+                  id: a.id,
+                  building: a.building,
+                  street: a.street,
+                  city: a.city,
+                  governorate: a.governorate,
+                  country: a.country,
+                  postalCode: a.postalCode,
+                  latitude: a.latitude,
+                  longitude: a.longitude,
+                  mapUrl: a.mapUrl,
+                })),
+              }
+            : undefined,
+        settings: input.settings
+          ? {
+              create: {
+                id: input.settings.id,
+                currency: input.settings.currency,
+                timezone: input.settings.timezone,
+                weekStartDay: input.settings.weekStartDay,
+                workingCalendar: input.settings.workingCalendar,
+              },
+            }
+          : undefined,
+        policies:
+          input.policies && input.policies.length > 0
+            ? {
+                create: input.policies.map((p) => ({
+                  id: p.id,
+                  policyType: p.policyType,
+                  policyContent: p.policyContent,
+                })),
+              }
+            : undefined,
       },
     });
     return toBranch(row);
@@ -424,17 +489,27 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
       const branch = await tx.branch.update({
         where: { id },
         data: {
-          ...(updates.branchName !== undefined && { branchName: updates.branchName }),
+          ...(updates.branchName !== undefined && {
+            branchName: updates.branchName,
+          }),
           ...(updates.address !== undefined && { address: updates.address }),
           ...(updates.city !== undefined && { city: updates.city }),
           ...(updates.country !== undefined && { country: updates.country }),
           ...(updates.phone !== undefined && { phone: updates.phone }),
           ...(updates.email !== undefined && { email: updates.email }),
-          ...(updates.branchManagerId !== undefined && { branchManagerId: updates.branchManagerId }),
-          ...(updates.parentBranchId !== undefined && { parentBranchId: updates.parentBranchId }),
+          ...(updates.branchManagerId !== undefined && {
+            branchManagerId: updates.branchManagerId,
+          }),
+          ...(updates.parentBranchId !== undefined && {
+            parentBranchId: updates.parentBranchId,
+          }),
           ...(updates.status !== undefined && { status: updates.status }),
-          ...(updates.effectiveStartDate !== undefined && { effectiveStartDate: updates.effectiveStartDate }),
-          ...(updates.effectiveEndDate !== undefined && { effectiveEndDate: updates.effectiveEndDate }),
+          ...(updates.effectiveStartDate !== undefined && {
+            effectiveStartDate: updates.effectiveStartDate,
+          }),
+          ...(updates.effectiveEndDate !== undefined && {
+            effectiveEndDate: updates.effectiveEndDate,
+          }),
           updatedAt: new Date(),
         },
         include: {
@@ -450,27 +525,55 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
     return toBranch(row);
   }
 
-  async listBranches(filters?: Omit<ListFilters, 'status'> & { status?: Branch['status']; instituteId?: string }): Promise<PaginatedResult<Branch>> {
+  async listBranches(
+    filters?: Omit<ListFilters, 'status'> & {
+      status?: Branch['status'];
+      instituteId?: string;
+    },
+  ): Promise<PaginatedResult<Branch>> {
     const page = filters?.page ?? 1;
     const pageSize = filters?.pageSize ?? PAGE_SIZE;
     const where = {
       isDeleted: false,
       ...(filters?.instituteId ? { instituteId: filters.instituteId } : {}),
       ...(filters?.status ? { status: filters.status } : {}),
-      ...(filters?.search ? {
-        OR: [
-          { branchName: { contains: filters.search, mode: 'insensitive' as const } },
-          { branchCode: { contains: filters.search, mode: 'insensitive' as const } },
-        ],
-      } : {}),
+      ...(filters?.search
+        ? {
+            OR: [
+              {
+                branchName: {
+                  contains: filters.search,
+                  mode: 'insensitive' as const,
+                },
+              },
+              {
+                branchCode: {
+                  contains: filters.search,
+                  mode: 'insensitive' as const,
+                },
+              },
+            ],
+          }
+        : {}),
     };
 
     const [total, rows] = await Promise.all([
       this.prisma.branch.count({ where }),
-      this.prisma.branch.findMany({ where, skip: (page - 1) * pageSize, take: pageSize, orderBy: { branchName: 'asc' } }),
+      this.prisma.branch.findMany({
+        where,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        orderBy: { branchName: 'asc' },
+      }),
     ]);
 
-    return { items: rows.map(toBranch), total, page, pageSize, totalPages: Math.ceil(total / pageSize) };
+    return {
+      items: rows.map(toBranch),
+      total,
+      page,
+      pageSize,
+      totalPages: Math.ceil(total / pageSize),
+    };
   }
 
   // ─── Department ────────────────────────────────────────────────────────────
@@ -497,30 +600,49 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
     return row && !row.isDeleted ? toDepartment(row) : null;
   }
 
-  async findDepartmentByCode(branchId: string, departmentCode: string): Promise<Department | null> {
+  async findDepartmentByCode(
+    branchId: string,
+    departmentCode: string,
+  ): Promise<Department | null> {
     const row = await this.prisma.department.findFirst({
       where: { branchId, departmentCode, isDeleted: false },
     });
     return row ? toDepartment(row) : null;
   }
 
-  async updateDepartment(id: string, updates: Partial<Department>): Promise<Department> {
+  async updateDepartment(
+    id: string,
+    updates: Partial<Department>,
+  ): Promise<Department> {
     const row = await this.prisma.department.update({
       where: { id },
       data: {
-        ...(updates.departmentName !== undefined && { departmentName: updates.departmentName }),
-        ...(updates.departmentHeadId !== undefined && { departmentHeadId: updates.departmentHeadId }),
-        ...(updates.description !== undefined && { description: updates.description }),
+        ...(updates.departmentName !== undefined && {
+          departmentName: updates.departmentName,
+        }),
+        ...(updates.departmentHeadId !== undefined && {
+          departmentHeadId: updates.departmentHeadId,
+        }),
+        ...(updates.description !== undefined && {
+          description: updates.description,
+        }),
         ...(updates.status !== undefined && { status: updates.status }),
-        ...(updates.effectiveStartDate !== undefined && { effectiveStartDate: updates.effectiveStartDate }),
-        ...(updates.effectiveEndDate !== undefined && { effectiveEndDate: updates.effectiveEndDate }),
+        ...(updates.effectiveStartDate !== undefined && {
+          effectiveStartDate: updates.effectiveStartDate,
+        }),
+        ...(updates.effectiveEndDate !== undefined && {
+          effectiveEndDate: updates.effectiveEndDate,
+        }),
         updatedAt: new Date(),
       },
     });
     return toDepartment(row);
   }
 
-  async listDepartments(branchId: string, filters?: { status?: RecordStatus }): Promise<Department[]> {
+  async listDepartments(
+    branchId: string,
+    filters?: { status?: RecordStatus },
+  ): Promise<Department[]> {
     const rows = await this.prisma.department.findMany({
       where: {
         branchId,
@@ -555,52 +677,84 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
     return row && !row.isDeleted ? toClassroom(row) : null;
   }
 
-  async findClassroomByName(branchId: string, classroomName: string): Promise<Classroom | null> {
+  async findClassroomByName(
+    branchId: string,
+    classroomName: string,
+  ): Promise<Classroom | null> {
     const row = await this.prisma.classroom.findFirst({
       where: { branchId, classroomName, isDeleted: false },
     });
     return row ? toClassroom(row) : null;
   }
 
-  async updateClassroom(id: string, updates: Partial<Classroom>): Promise<Classroom> {
+  async updateClassroom(
+    id: string,
+    updates: Partial<Classroom>,
+  ): Promise<Classroom> {
     const row = await this.prisma.classroom.update({
       where: { id },
       data: {
-        ...(updates.classroomName !== undefined && { classroomName: updates.classroomName }),
+        ...(updates.classroomName !== undefined && {
+          classroomName: updates.classroomName,
+        }),
         ...(updates.capacity !== undefined && { capacity: updates.capacity }),
         ...(updates.location !== undefined && { location: updates.location }),
         ...(updates.status !== undefined && { status: updates.status }),
-        ...(updates.effectiveStartDate !== undefined && { effectiveStartDate: updates.effectiveStartDate }),
-        ...(updates.effectiveEndDate !== undefined && { effectiveEndDate: updates.effectiveEndDate }),
+        ...(updates.effectiveStartDate !== undefined && {
+          effectiveStartDate: updates.effectiveStartDate,
+        }),
+        ...(updates.effectiveEndDate !== undefined && {
+          effectiveEndDate: updates.effectiveEndDate,
+        }),
         updatedAt: new Date(),
       },
     });
     return toClassroom(row);
   }
 
-  async listClassrooms(filters?: ListFilters & { branchId?: string }): Promise<PaginatedResult<Classroom>> {
+  async listClassrooms(
+    filters?: ListFilters & { branchId?: string },
+  ): Promise<PaginatedResult<Classroom>> {
     const page = filters?.page ?? 1;
     const pageSize = filters?.pageSize ?? PAGE_SIZE;
     const where = {
       isDeleted: false,
       ...(filters?.branchId ? { branchId: filters.branchId } : {}),
       ...(filters?.status ? { status: filters.status } : {}),
-      ...(filters?.search ? {
-        classroomName: { contains: filters.search, mode: 'insensitive' as const },
-      } : {}),
+      ...(filters?.search
+        ? {
+            classroomName: {
+              contains: filters.search,
+              mode: 'insensitive' as const,
+            },
+          }
+        : {}),
     };
 
     const [total, rows] = await Promise.all([
       this.prisma.classroom.count({ where }),
-      this.prisma.classroom.findMany({ where, skip: (page - 1) * pageSize, take: pageSize, orderBy: { classroomName: 'asc' } }),
+      this.prisma.classroom.findMany({
+        where,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        orderBy: { classroomName: 'asc' },
+      }),
     ]);
 
-    return { items: rows.map(toClassroom), total, page, pageSize, totalPages: Math.ceil(total / pageSize) };
+    return {
+      items: rows.map(toClassroom),
+      total,
+      page,
+      pageSize,
+      totalPages: Math.ceil(total / pageSize),
+    };
   }
 
   // ─── Hierarchy Tree ────────────────────────────────────────────────────────
 
-  async getOrganizationHierarchy(instituteId: string): Promise<OrganizationHierarchyNode> {
+  async getOrganizationHierarchy(
+    instituteId: string,
+  ): Promise<OrganizationHierarchyNode> {
     const inst = await this.prisma.institute.findFirst({
       where: { id: instituteId, isDeleted: false },
       include: {
@@ -615,7 +769,10 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
     });
 
     if (!inst) {
-      throw new DomainError('not_found', `Institute ${instituteId} not found for hierarchy.`);
+      throw new DomainError(
+        'not_found',
+        `Institute ${instituteId} not found for hierarchy.`,
+      );
     }
 
     const branchNodes: OrganizationHierarchyNode[] = inst.branches.map((b) => {
@@ -655,4 +812,3 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
     };
   }
 }
-

@@ -1,4 +1,8 @@
-import { ResultInvalidStateError, ResultMarksValidationError, ResultDuplicateError } from '../errors';
+import {
+  ResultInvalidStateError,
+  ResultMarksValidationError,
+  ResultDuplicateError,
+} from '../errors';
 
 export type ResultStatus = 'Pending' | 'Recorded' | 'Finalized' | 'Corrected';
 
@@ -46,7 +50,11 @@ export interface CorrectResultCommand {
 export class ResultAggregate {
   constructor(public readonly state: Result) {}
 
-  static create(command: RecordResultCommand, examMaxMarks: number, id?: string): ResultAggregate {
+  static create(
+    command: RecordResultCommand,
+    examMaxMarks: number,
+    id?: string,
+  ): ResultAggregate {
     ResultAggregate.validateMarks(command.marksObtained, examMaxMarks);
 
     const result: Result = {
@@ -76,7 +84,9 @@ export class ResultAggregate {
 
   record(marksObtained: number, examMaxMarks: number, grade?: string): Result {
     if (this.state.resultStatus !== RESULT_STATUSES.PENDING) {
-      throw new ResultInvalidStateError(`Cannot record result in status: ${this.state.resultStatus}`);
+      throw new ResultInvalidStateError(
+        `Cannot record result in status: ${this.state.resultStatus}`,
+      );
     }
 
     ResultAggregate.validateMarks(marksObtained, examMaxMarks);
@@ -94,8 +104,13 @@ export class ResultAggregate {
   }
 
   finalize(finalizedBy?: string): Result {
-    if (this.state.resultStatus !== RESULT_STATUSES.RECORDED && this.state.resultStatus !== RESULT_STATUSES.CORRECTED) {
-      throw new ResultInvalidStateError(`Cannot finalize result in status: ${this.state.resultStatus}`);
+    if (
+      this.state.resultStatus !== RESULT_STATUSES.RECORDED &&
+      this.state.resultStatus !== RESULT_STATUSES.CORRECTED
+    ) {
+      throw new ResultInvalidStateError(
+        `Cannot finalize result in status: ${this.state.resultStatus}`,
+      );
     }
 
     const updated: Result = {
@@ -110,9 +125,16 @@ export class ResultAggregate {
     return updated;
   }
 
-  correct(marksObtained: number, examMaxMarks: number, grade?: string, correctedBy?: string): Result {
+  correct(
+    marksObtained: number,
+    examMaxMarks: number,
+    grade?: string,
+    correctedBy?: string,
+  ): Result {
     if (this.state.resultStatus !== RESULT_STATUSES.FINALIZED) {
-      throw new ResultInvalidStateError(`Cannot correct result in status: ${this.state.resultStatus}`);
+      throw new ResultInvalidStateError(
+        `Cannot correct result in status: ${this.state.resultStatus}`,
+      );
     }
 
     ResultAggregate.validateMarks(marksObtained, examMaxMarks);

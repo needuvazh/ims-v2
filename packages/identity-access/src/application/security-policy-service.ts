@@ -1,7 +1,14 @@
 import crypto from 'crypto';
 import type { Uuid } from '@ims/shared-kernel';
-import { updateSecurityPolicyCommandSchema, type SecurityPolicy, type UpdateSecurityPolicyCommand } from '../domain/security-policy';
-import type { ISecurityPolicyRepository, IAuditLogRepository } from '../domain/repositories';
+import {
+  updateSecurityPolicyCommandSchema,
+  type SecurityPolicy,
+  type UpdateSecurityPolicyCommand,
+} from '../domain/security-policy';
+import type {
+  ISecurityPolicyRepository,
+  IAuditLogRepository,
+} from '../domain/repositories';
 import { createIamError } from '../errors/iam-errors';
 
 export interface SecurityPolicyCommandContext {
@@ -13,23 +20,28 @@ export interface SecurityPolicyCommandContext {
 export class SecurityPolicyService {
   constructor(
     private readonly securityPolicyRepository: ISecurityPolicyRepository,
-    private readonly auditLogRepository: IAuditLogRepository
+    private readonly auditLogRepository: IAuditLogRepository,
   ) {}
 
-  private checkPermission(context: SecurityPolicyCommandContext, permission: string): void {
+  private checkPermission(
+    context: SecurityPolicyCommandContext,
+    permission: string,
+  ): void {
     if (!context.actorPermissions.includes(permission)) {
       throw createIamError('IAM-AUTHZ-001');
     }
   }
 
-  async getSecurityPolicy(context: SecurityPolicyCommandContext): Promise<SecurityPolicy> {
+  async getSecurityPolicy(
+    context: SecurityPolicyCommandContext,
+  ): Promise<SecurityPolicy> {
     this.checkPermission(context, 'iam.security-policy.read');
     return this.securityPolicyRepository.get();
   }
 
   async updateSecurityPolicy(
     command: UpdateSecurityPolicyCommand,
-    context: SecurityPolicyCommandContext
+    context: SecurityPolicyCommandContext,
   ): Promise<SecurityPolicy> {
     this.checkPermission(context, 'iam.security-policy.update');
     const validated = updateSecurityPolicyCommandSchema.parse(command);

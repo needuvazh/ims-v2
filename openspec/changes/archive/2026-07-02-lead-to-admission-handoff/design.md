@@ -5,12 +5,14 @@ Lead conversion hands a qualified prospect from CRM into Admission & Enrollment.
 ## Goals / Non-Goals
 
 **Goals:**
+
 - Convert qualified leads into admissions.
 - Reuse existing person and student profile records when possible.
 - Enforce core admissions validation invariants (minimum learner age).
 - Maintain robust tenant isolation (branch scoping) on both REST APIs and Server Actions.
 
 **Non-Goals:**
+
 - Reworking CRM lead lifecycle rules beyond the handoff.
 
 ## Decisions
@@ -25,4 +27,3 @@ Lead conversion hands a qualified prospect from CRM into Admission & Enrollment.
 
 - [Risk] Duplicate person or profile creation. → Mitigation: match by contact identity before creating new records.
 - [Risk] Mismatched validation states on reuse. → Mitigation: if reusing a person, retrieve their existing `dateOfBirth` to perform age checks; if the person was created via lead ingestion, ensure birthdate is captured.
-

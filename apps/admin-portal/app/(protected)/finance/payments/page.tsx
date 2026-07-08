@@ -1,9 +1,30 @@
 import { assertPermission } from '@/lib/auth-guard';
-import { Card, CardHeader, CardContent, PageHeader, ResponsiveDataTable, Badge, Button, StatCard, AdminListPageLayout, EmptyState, DataTableFilter } from '@ims/shared-ui';
-import { Search, Landmark, Eye, Plus, CheckCircle2, Clock3 } from 'lucide-react';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  PageHeader,
+  ResponsiveDataTable,
+  Badge,
+  Button,
+  StatCard,
+  AdminListPageLayout,
+  EmptyState,
+  DataTableFilter,
+} from '@ims/shared-ui';
+import {
+  Search,
+  Landmark,
+  Eye,
+  Plus,
+  CheckCircle2,
+  Clock3,
+} from 'lucide-react';
 import Link from 'next/link';
 
-export const metadata = { title: 'Payments & Receipts - Admin Portal | ASTI IMS' };
+export const metadata = {
+  title: 'Payments & Receipts - Admin Portal | ASTI IMS',
+};
 
 export default async function PaymentsListPage(props: {
   searchParams: Promise<{
@@ -22,7 +43,7 @@ export default async function PaymentsListPage(props: {
   const { prisma, branchScopeResolver } = await import('@/lib/runtime');
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
     session.userId as any,
-    session.activeBranchId as any
+    session.activeBranchId as any,
   );
 
   // Fetch branches for filter selection
@@ -36,15 +57,17 @@ export default async function PaymentsListPage(props: {
     where: {
       branchId: branchFilter ? branchFilter : { in: allowedBranchIds },
       ...(methodFilter ? { paymentMethod: methodFilter as any } : {}),
-      OR: query ? [
-        { referenceNumber: { contains: query, mode: 'insensitive' } },
-        { paymentNumber: { contains: query, mode: 'insensitive' } },
-      ] : undefined
+      OR: query
+        ? [
+            { referenceNumber: { contains: query, mode: 'insensitive' } },
+            { paymentNumber: { contains: query, mode: 'insensitive' } },
+          ]
+        : undefined,
     },
     orderBy: { createdAt: 'desc' },
     include: {
-      receipt: true
-    }
+      receipt: true,
+    },
   });
 
   const totals = payments.reduce(
@@ -52,7 +75,7 @@ export default async function PaymentsListPage(props: {
       acc.total = acc.total + Number(pay.amount);
       return acc;
     },
-    { total: 0 }
+    { total: 0 },
   );
 
   const columns = [
@@ -62,23 +85,31 @@ export default async function PaymentsListPage(props: {
         <span className="font-mono font-bold text-slate-600 text-xs">
           {pay.referenceNumber || pay.id.slice(0, 8)}
         </span>
-      )
+      ),
     },
     {
       header: 'Payment Date',
-      render: (pay: any) => <span className="text-xs text-slate-500">{new Date(pay.paymentDate).toLocaleDateString()}</span>
+      render: (pay: any) => (
+        <span className="text-xs text-slate-500">
+          {new Date(pay.paymentDate).toLocaleDateString()}
+        </span>
+      ),
     },
     {
       header: 'Method',
-      render: (pay: any) => <Badge variant="outline">{pay.paymentMethod}</Badge>
+      render: (pay: any) => (
+        <Badge variant="outline">{pay.paymentMethod}</Badge>
+      ),
     },
     {
       header: 'Bank / Cheque Details',
       render: (pay: any) => (
         <span className="text-xs text-slate-600">
-          {pay.bankName ? `${pay.bankName} (${pay.chequeNumber || 'Transfer'})` : 'Cash / Direct'}
+          {pay.bankName
+            ? `${pay.bankName} (${pay.chequeNumber || 'Transfer'})`
+            : 'Cash / Direct'}
         </span>
-      )
+      ),
     },
     {
       header: 'Amount Paid',
@@ -86,7 +117,7 @@ export default async function PaymentsListPage(props: {
         <span className="font-semibold text-emerald-600 font-mono text-xs">
           {Number(pay.amount).toFixed(3)} {pay.currency}
         </span>
-      )
+      ),
     },
     {
       header: 'Receipt #',
@@ -94,12 +125,16 @@ export default async function PaymentsListPage(props: {
         <span className="font-mono font-bold text-indigo-600 text-xs">
           {pay.receipt?.receiptNumber || 'No receipt'}
         </span>
-      )
+      ),
     },
     {
       header: 'Status',
-      render: (pay: any) => <Badge variant={pay.status === 'Posted' ? 'success' : 'outline'}>{pay.status}</Badge>
-    }
+      render: (pay: any) => (
+        <Badge variant={pay.status === 'Posted' ? 'success' : 'outline'}>
+          {pay.status}
+        </Badge>
+      ),
+    },
   ];
 
   const renderCard = (pay: any) => (
@@ -112,9 +147,7 @@ export default async function PaymentsListPage(props: {
           {pay.status}
         </Badge>
       </div>
-      <div className="text-xs text-slate-500">
-        Method: {pay.paymentMethod}
-      </div>
+      <div className="text-xs text-slate-500">Method: {pay.paymentMethod}</div>
       <div className="flex justify-between items-center text-xs pt-2 border-t">
         <span className="text-slate-400">Paid:</span>
         <span className="font-mono font-semibold text-emerald-600">
@@ -155,7 +188,10 @@ export default async function PaymentsListPage(props: {
             {
               key: 'branchId',
               label: 'Branch',
-              options: branches.map(b => ({ label: b.branchName, value: b.id }))
+              options: branches.map((b) => ({
+                label: b.branchName,
+                value: b.id,
+              })),
             },
             {
               key: 'method',
@@ -166,8 +202,8 @@ export default async function PaymentsListPage(props: {
                 { label: 'Cheque', value: 'Cheque' },
                 { label: 'Card', value: 'Card' },
                 { label: 'Online', value: 'Online' },
-              ]
-            }
+              ],
+            },
           ]}
         />
 

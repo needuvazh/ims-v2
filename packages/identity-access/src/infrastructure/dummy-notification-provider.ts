@@ -3,9 +3,16 @@ import type { INotificationPort } from '../domain/notification-port';
 export class DummyNotificationProvider implements INotificationPort {
   async sendActivationEmail(
     recipientEmail: string,
-    activationData: { firstName: string; activationLink: string; expiresAt: Date }
+    activationData: {
+      firstName: string;
+      activationLink: string;
+      expiresAt: Date;
+    },
   ): Promise<void> {
-    const redactedLink = activationData.activationLink.replace(/token=[^&]+/g, 'token=[REDACTED]');
+    const redactedLink = activationData.activationLink.replace(
+      /token=[^&]+/g,
+      'token=[REDACTED]',
+    );
     console.log(`
 =========================================
 [EMAIL NOTIFICATION: ACTIVATION]
@@ -21,9 +28,11 @@ This link will expire at: ${activationData.expiresAt.toISOString()}
 
   async sendPasswordResetEmail(
     recipientEmail: string,
-    resetData: { firstName: string; resetLink: string; expiresAt: Date }
+    resetData: { firstName: string; resetLink: string; expiresAt: Date },
   ): Promise<void> {
-    const redactedLink = resetData.resetLink ? resetData.resetLink.replace(/token=[^&]+/g, 'token=[REDACTED]') : '';
+    const redactedLink = resetData.resetLink
+      ? resetData.resetLink.replace(/token=[^&]+/g, 'token=[REDACTED]')
+      : '';
     console.log(`
 =========================================
 [EMAIL NOTIFICATION: PASSWORD RESET]
@@ -39,7 +48,11 @@ This link will expire at: ${resetData.expiresAt.toISOString()}
 
   async sendAccountLockedNotification(
     adminEmails: string[],
-    userData: { displayName: string; failedAttempts: number; lockedUntil: Date }
+    userData: {
+      displayName: string;
+      failedAttempts: number;
+      lockedUntil: Date;
+    },
   ): Promise<void> {
     console.warn(`
 =========================================
@@ -54,7 +67,7 @@ Lockout expires at: ${userData.lockedUntil.toISOString()}
 
   async sendRoleAssignedNotification(
     recipientEmail: string,
-    roleData: { roleName: string }
+    roleData: { roleName: string },
   ): Promise<void> {
     console.log(`
 =========================================
@@ -68,7 +81,7 @@ You have been assigned the role: ${roleData.roleName}
 
   async sendBranchAssignedNotification(
     recipientEmail: string,
-    branchData: { branchName: string }
+    branchData: { branchName: string },
   ): Promise<void> {
     console.log(`
 =========================================

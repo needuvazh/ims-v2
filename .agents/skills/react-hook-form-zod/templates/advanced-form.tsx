@@ -9,9 +9,9 @@
  * - Type-safe nested error handling
  */
 
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
 // Define nested schemas
 const addressSchema = z.object({
@@ -20,70 +20,82 @@ const addressSchema = z.object({
   state: z.string().min(2, 'State must be at least 2 characters'),
   zipCode: z.string().regex(/^\d{5}(-\d{4})?$/, 'Invalid ZIP code format'),
   country: z.string().min(1, 'Country is required'),
-})
+});
 
 // Complex schema with nested objects and arrays
-const profileSchema = z.object({
-  // Basic fields
-  firstName: z.string().min(2, 'First name must be at least 2 characters'),
-  lastName: z.string().min(2, 'Last name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
-  phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, 'Invalid phone number').optional(),
+const profileSchema = z
+  .object({
+    // Basic fields
+    firstName: z.string().min(2, 'First name must be at least 2 characters'),
+    lastName: z.string().min(2, 'Last name must be at least 2 characters'),
+    email: z.string().email('Invalid email address'),
+    phone: z
+      .string()
+      .regex(/^\+?[1-9]\d{1,14}$/, 'Invalid phone number')
+      .optional(),
 
-  // Nested object
-  address: addressSchema,
+    // Nested object
+    address: addressSchema,
 
-  // Array of strings
-  skills: z.array(z.string().min(1, 'Skill cannot be empty'))
-    .min(1, 'At least one skill is required')
-    .max(10, 'Maximum 10 skills allowed'),
+    // Array of strings
+    skills: z
+      .array(z.string().min(1, 'Skill cannot be empty'))
+      .min(1, 'At least one skill is required')
+      .max(10, 'Maximum 10 skills allowed'),
 
-  // Conditional fields
-  isStudent: z.boolean(),
-  school: z.string().optional(),
-  graduationYear: z.number().int().min(1900).max(2100).optional(),
+    // Conditional fields
+    isStudent: z.boolean(),
+    school: z.string().optional(),
+    graduationYear: z.number().int().min(1900).max(2100).optional(),
 
-  // Enum
-  experience: z.enum(['junior', 'mid', 'senior', 'lead'], {
-    errorMap: () => ({ message: 'Please select experience level' }),
-  }),
+    // Enum
+    experience: z.enum(['junior', 'mid', 'senior', 'lead'], {
+      errorMap: () => ({ message: 'Please select experience level' }),
+    }),
 
-  // Number with constraints
-  yearsOfExperience: z.number()
-    .int('Must be a whole number')
-    .min(0, 'Cannot be negative')
-    .max(50, 'Must be 50 or less'),
+    // Number with constraints
+    yearsOfExperience: z
+      .number()
+      .int('Must be a whole number')
+      .min(0, 'Cannot be negative')
+      .max(50, 'Must be 50 or less'),
 
-  // Date
-  availableFrom: z.date().optional(),
+    // Date
+    availableFrom: z.date().optional(),
 
-  // Boolean
-  agreedToTerms: z.boolean().refine((val) => val === true, {
-    message: 'You must agree to the terms and conditions',
-  }),
-})
-  .refine((data) => {
-    // Conditional validation: if isStudent is true, school is required
-    if (data.isStudent && !data.school) {
-      return false
-    }
-    return true
-  }, {
-    message: 'School is required for students',
-    path: ['school'],
+    // Boolean
+    agreedToTerms: z.boolean().refine((val) => val === true, {
+      message: 'You must agree to the terms and conditions',
+    }),
   })
-  .refine((data) => {
-    // Experience level should match years of experience
-    if (data.experience === 'senior' && data.yearsOfExperience < 5) {
-      return false
-    }
-    return true
-  }, {
-    message: 'Senior level requires at least 5 years of experience',
-    path: ['yearsOfExperience'],
-  })
+  .refine(
+    (data) => {
+      // Conditional validation: if isStudent is true, school is required
+      if (data.isStudent && !data.school) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: 'School is required for students',
+      path: ['school'],
+    },
+  )
+  .refine(
+    (data) => {
+      // Experience level should match years of experience
+      if (data.experience === 'senior' && data.yearsOfExperience < 5) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: 'Senior level requires at least 5 years of experience',
+      path: ['yearsOfExperience'],
+    },
+  );
 
-type ProfileFormData = z.infer<typeof profileSchema>
+type ProfileFormData = z.infer<typeof profileSchema>;
 
 export function AdvancedProfileForm() {
   const {
@@ -113,18 +125,21 @@ export function AdvancedProfileForm() {
       yearsOfExperience: 0,
       agreedToTerms: false,
     },
-  })
+  });
 
   // Watch isStudent to conditionally show school field
-  const isStudent = watch('isStudent')
+  const isStudent = watch('isStudent');
 
   const onSubmit = async (data: ProfileFormData) => {
-    console.log('Profile data:', data)
+    console.log('Profile data:', data);
     // API call
-  }
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-2xl mx-auto">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-6 max-w-2xl mx-auto"
+    >
       <h2 className="text-3xl font-bold">User Profile</h2>
 
       {/* Basic Information */}
@@ -133,7 +148,10 @@ export function AdvancedProfileForm() {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label htmlFor="firstName" className="block text-sm font-medium mb-1">
+            <label
+              htmlFor="firstName"
+              className="block text-sm font-medium mb-1"
+            >
               First Name *
             </label>
             <input
@@ -149,7 +167,10 @@ export function AdvancedProfileForm() {
           </div>
 
           <div>
-            <label htmlFor="lastName" className="block text-sm font-medium mb-1">
+            <label
+              htmlFor="lastName"
+              className="block text-sm font-medium mb-1"
+            >
               Last Name *
             </label>
             <input
@@ -295,7 +316,8 @@ export function AdvancedProfileForm() {
       <section className="space-y-4">
         <h3 className="text-xl font-semibold">Skills</h3>
         <p className="text-sm text-gray-600">
-          Enter skills separated by commas (handled as string for simplicity in this example)
+          Enter skills separated by commas (handled as string for simplicity in
+          this example)
         </p>
         <div>
           <label htmlFor="skills" className="block text-sm font-medium mb-1">
@@ -320,7 +342,10 @@ export function AdvancedProfileForm() {
         <h3 className="text-xl font-semibold">Experience</h3>
 
         <div>
-          <label htmlFor="experience" className="block text-sm font-medium mb-1">
+          <label
+            htmlFor="experience"
+            className="block text-sm font-medium mb-1"
+          >
             Experience Level *
           </label>
           <select
@@ -341,7 +366,10 @@ export function AdvancedProfileForm() {
         </div>
 
         <div>
-          <label htmlFor="yearsOfExperience" className="block text-sm font-medium mb-1">
+          <label
+            htmlFor="yearsOfExperience"
+            className="block text-sm font-medium mb-1"
+          >
             Years of Experience *
           </label>
           <input
@@ -423,5 +451,5 @@ export function AdvancedProfileForm() {
         {isSubmitting ? 'Saving...' : 'Save Profile'}
       </button>
     </form>
-  )
+  );
 }

@@ -8,7 +8,10 @@ import { EnrollmentService } from '@ims/admissions-enrollment';
 import { SchedulingService, PrismaSchedulingRepository } from '@ims/scheduling';
 
 const logger = createStructuredLogger({});
-const POLL_INTERVAL_MS = parseInt(process.env.OUTBOX_POLL_INTERVAL_MS || '5000', 10);
+const POLL_INTERVAL_MS = parseInt(
+  process.env.OUTBOX_POLL_INTERVAL_MS || '5000',
+  10,
+);
 const BATCH_SIZE = parseInt(process.env.OUTBOX_BATCH_SIZE || '50', 10);
 const MAX_ATTEMPTS = 5;
 const exportService = new ExportService();
@@ -43,7 +46,10 @@ function getDatabaseErrorMessage(error: unknown) {
   if (error && typeof error === 'object') {
     const candidate = error as { message?: string };
     if (typeof candidate.message === 'string' && candidate.message.trim()) {
-      return candidate.message.trim().split('\n').slice(-1)[0] ?? candidate.message.trim();
+      return (
+        candidate.message.trim().split('\n').slice(-1)[0] ??
+        candidate.message.trim()
+      );
     }
   }
 
@@ -66,11 +72,17 @@ function getDatabaseErrorCode(error: unknown) {
 
 function reportDatabaseWarning(scope: string, error: unknown) {
   const now = Date.now();
-  if (!databaseUnavailable || now - lastDatabaseWarningAt >= DATABASE_RETRY_BACKOFF_MS) {
-    logger.warn(`Database unavailable while ${scope}; retrying in ${DATABASE_RETRY_BACKOFF_MS / 1000}s`, {
-      code: getDatabaseErrorCode(error),
-      message: getDatabaseErrorMessage(error)
-    });
+  if (
+    !databaseUnavailable ||
+    now - lastDatabaseWarningAt >= DATABASE_RETRY_BACKOFF_MS
+  ) {
+    logger.warn(
+      `Database unavailable while ${scope}; retrying in ${DATABASE_RETRY_BACKOFF_MS / 1000}s`,
+      {
+        code: getDatabaseErrorCode(error),
+        message: getDatabaseErrorMessage(error),
+      },
+    );
     lastDatabaseWarningAt = now;
   }
 
@@ -94,9 +106,15 @@ async function handleWebsiteInquirySubmitted(payload: Record<string, unknown>) {
   }
 
   // 1. Fetch active counselors in the branch via IamQueryService
-  const counselors = await iamQueryService.getActiveUsersByRoleAndBranch('Counselor', branchId);
+  const counselors = await iamQueryService.getActiveUsersByRoleAndBranch(
+    'Counselor',
+    branchId,
+  );
   if (counselors.length === 0) {
-    logger.warn(`No active counselors found for branch: ${branchId}. Auto-assignment skipped.`, { entityId: inquiryId, entityType: 'Inquiry' });
+    logger.warn(
+      `No active counselors found for branch: ${branchId}. Auto-assignment skipped.`,
+      { entityId: inquiryId, entityType: 'Inquiry' },
+    );
     return;
   }
 
@@ -113,7 +131,7 @@ async function handleWebsiteInquirySubmitted(payload: Record<string, unknown>) {
         },
       });
       return { counselorId: counselor.id, count: activeLeadsCount };
-    })
+    }),
   );
 
   // 3. Find the lowest workload
@@ -121,7 +139,8 @@ async function handleWebsiteInquirySubmitted(payload: Record<string, unknown>) {
   const candidateCounselors = workloads.filter((w) => w.count === minCount);
 
   // 4. Random tie-breaker
-  const selected = candidateCounselors[Math.floor(Math.random() * candidateCounselors.length)];
+  const selected =
+    candidateCounselors[Math.floor(Math.random() * candidateCounselors.length)];
   const assignedCounselorId = selected.counselorId;
 
   // 5. Persist counselorId on Inquiry and emit LeadAssigned event in transaction
@@ -171,7 +190,9 @@ async function handleWebsiteInquirySubmitted(payload: Record<string, unknown>) {
     });
   });
 
-  logger.info(`Auto-assigned website inquiry ${inquiryId} to counselor ${assignedCounselorId}`);
+  logger.info(
+    `Auto-assigned website inquiry ${inquiryId} to counselor ${assignedCounselorId}`,
+  );
 }
 
 async function handleReceiptGenerated(payload: Record<string, unknown>) {
@@ -180,7 +201,9 @@ async function handleReceiptGenerated(payload: Record<string, unknown>) {
     logger.warn('ReceiptGenerated event payload missing enrollmentId');
     return;
   }
-  logger.info(`Processing ReceiptGenerated confirmation gate for enrollment ${enrollmentId}`);
+  logger.info(
+    `Processing ReceiptGenerated confirmation gate for enrollment ${enrollmentId}`,
+  );
   // confirmEnrollment is already idempotent and checks document verification gates internally
   await enrollmentService.confirmEnrollment(enrollmentId, 'System');
 }
@@ -226,7 +249,9 @@ async function sweepOverdueFollowUps() {
       return;
     }
 
-    logger.info(`Found ${overdueFollowUps.length} overdue follow-ups. Processing...`);
+    logger.info(
+      `Found ${overdueFollowUps.length} overdue follow-ups. Processing...`,
+    );
 
     for (const followUp of overdueFollowUps) {
       await prisma.$transaction(async (tx) => {
@@ -289,7 +314,9 @@ async function sweepOverdueFollowUps() {
           },
         });
       });
-      logger.info(`Marked follow-up ${followUp.id} as Missed and emitted FollowUpOverdue event.`);
+      logger.info(
+        `Marked follow-up ${followUp.id} as Missed and emitted FollowUpOverdue event.`,
+      );
     }
 
     logger.info('Finished overdue follow-ups sweep.');
@@ -306,11 +333,15 @@ async function sweepOverdueFollowUps() {
 
 async function handleWaitlistEntryPromoted(payload: Record<string, unknown>) {
   const enrollmentId = payload.enrollmentId as string | undefined;
-  const promotionCorrelationId = payload.promotionCorrelationId as string | undefined;
+  const promotionCorrelationId = payload.promotionCorrelationId as
+    | string
+    | undefined;
   const studentProfileId = payload.studentProfileId as string | undefined;
   const batchId = payload.batchId as string | undefined;
 
-  logger.info(`Handling WaitlistEntryPromoted - enrollmentId: ${enrollmentId}, promotionCorrelationId: ${promotionCorrelationId}, studentProfileId: ${studentProfileId}, batchId: ${batchId}`);
+  logger.info(
+    `Handling WaitlistEntryPromoted - enrollmentId: ${enrollmentId}, promotionCorrelationId: ${promotionCorrelationId}, studentProfileId: ${studentProfileId}, batchId: ${batchId}`,
+  );
 
   if (enrollmentId) {
     await enrollmentService.approveEnrollment(enrollmentId, 'system-worker');
@@ -327,17 +358,26 @@ async function handleWaitlistEntryPromoted(payload: Record<string, unknown>) {
       },
     });
     if (enrollments.length === 1) {
-      await enrollmentService.approveEnrollment(enrollments[0].id, 'system-worker');
+      await enrollmentService.approveEnrollment(
+        enrollments[0].id,
+        'system-worker',
+      );
     } else if (enrollments.length === 0) {
-      logger.info(`Manual waitlist entry promoted with no pending enrollment - studentProfileId: ${studentProfileId}, batchId: ${batchId}. Awaiting manual resolution.`);
+      logger.info(
+        `Manual waitlist entry promoted with no pending enrollment - studentProfileId: ${studentProfileId}, batchId: ${batchId}. Awaiting manual resolution.`,
+      );
     } else {
-      throw new Error(`Could not uniquely resolve pending enrollment for waitlist candidate - studentProfileId: ${studentProfileId}, batchId: ${batchId}, foundCount: ${enrollments.length}`);
+      throw new Error(
+        `Could not uniquely resolve pending enrollment for waitlist candidate - studentProfileId: ${studentProfileId}, batchId: ${batchId}, foundCount: ${enrollments.length}`,
+      );
     }
     return;
   }
 
   // Lead or other manual enqueue without student profile
-  logger.info(`Manual waitlist entry promoted with no student profile - payload: ${JSON.stringify(payload)}. Awaiting manual resolution.`);
+  logger.info(
+    `Manual waitlist entry promoted with no student profile - payload: ${JSON.stringify(payload)}. Awaiting manual resolution.`,
+  );
 }
 
 async function processOutboxEvents() {
@@ -364,34 +404,74 @@ async function processOutboxEvents() {
       if (isShuttingDown) break;
 
       try {
-        logger.info('Processing outbox event', { entityId: event.id, entityType: event.eventType });
-        
+        logger.info('Processing outbox event', {
+          entityId: event.id,
+          entityType: event.eventType,
+        });
+
         if (event.eventType === 'WebsiteInquirySubmitted') {
-          await handleWebsiteInquirySubmitted(event.payload as Record<string, unknown>);
+          await handleWebsiteInquirySubmitted(
+            event.payload as Record<string, unknown>,
+          );
         } else if (event.eventType === 'ReceiptGenerated') {
-          await handleReceiptGenerated(event.payload as Record<string, unknown>);
+          await handleReceiptGenerated(
+            event.payload as Record<string, unknown>,
+          );
         } else if (event.eventType === 'BatchStarted') {
           await handleBatchStarted(event.payload as Record<string, unknown>);
         } else if (event.eventType === 'EnrollmentCancelled') {
-          const payload = event.payload as { batchId: string; releasedSeats?: number };
-          logger.info(`Handling EnrollmentCancelled for batch ${payload.batchId}`);
-          await batchService.releaseSeatAndPromote(payload.batchId, payload.releasedSeats || 1);
+          const payload = event.payload as {
+            batchId: string;
+            releasedSeats?: number;
+          };
+          logger.info(
+            `Handling EnrollmentCancelled for batch ${payload.batchId}`,
+          );
+          await batchService.releaseSeatAndPromote(
+            payload.batchId,
+            payload.releasedSeats || 1,
+          );
         } else if (event.eventType === 'WaitlistEntryPromoted') {
-          await handleWaitlistEntryPromoted(event.payload as Record<string, unknown>);
+          await handleWaitlistEntryPromoted(
+            event.payload as Record<string, unknown>,
+          );
         } else if (event.eventType === 'BusinessCalendarCreated') {
           // Future: may want to re-validate whole year?
         } else if (event.eventType === 'HolidayCreated') {
-          const payload = event.payload as { branchId: string; date: string; instituteId: string };
-          logger.info(`Handling HolidayCreated for branch ${payload.branchId} on ${payload.date}`);
-          await schedulingService.processExternalCalendarChange(payload.branchId, new Date(payload.date), payload.instituteId);
+          const payload = event.payload as {
+            branchId: string;
+            date: string;
+            instituteId: string;
+          };
+          logger.info(
+            `Handling HolidayCreated for branch ${payload.branchId} on ${payload.date}`,
+          );
+          await schedulingService.processExternalCalendarChange(
+            payload.branchId,
+            new Date(payload.date),
+            payload.instituteId,
+          );
         } else if (event.eventType === 'VenueBlockCreated') {
-          const payload = event.payload as { branchId: string; blockDate: string; instituteId?: string };
-          logger.info(`Handling VenueBlockCreated for branch ${payload.branchId} on ${payload.blockDate}`);
+          const payload = event.payload as {
+            branchId: string;
+            blockDate: string;
+            instituteId?: string;
+          };
+          logger.info(
+            `Handling VenueBlockCreated for branch ${payload.branchId} on ${payload.blockDate}`,
+          );
           // Note: VenueBlock payload might miss instituteId, need to fetch it or pass it.
           // For now assume single institute or resolve from branch.
-          const branch = await prisma.branch.findUnique({ where: { id: payload.branchId }, select: { instituteId: true } });
+          const branch = await prisma.branch.findUnique({
+            where: { id: payload.branchId },
+            select: { instituteId: true },
+          });
           if (branch) {
-            await schedulingService.processExternalCalendarChange(payload.branchId, new Date(payload.blockDate), branch.instituteId);
+            await schedulingService.processExternalCalendarChange(
+              payload.branchId,
+              new Date(payload.blockDate),
+              branch.instituteId,
+            );
           }
         } else if (event.eventType === 'EnrollmentCreationFailed') {
           const payload = event.payload as {
@@ -403,21 +483,23 @@ async function processOutboxEvents() {
             correlationId?: string | null;
             reason?: string | null;
           };
-          logger.info(`Handling EnrollmentCreationFailed for batch ${payload.batchId}`);
+          logger.info(
+            `Handling EnrollmentCreationFailed for batch ${payload.batchId}`,
+          );
           await batchService.revertPromotion(
             payload.batchId,
             payload.studentProfileId || payload.studentId || null,
             payload.leadId || null,
             payload.promotionCorrelationId || payload.correlationId || null,
             payload.reason || null,
-            'system-worker'
+            'system-worker',
           );
         } else {
           // TODO: In Phase 2, route event.payload to the actual domain handlers.
           // For Phase 1, we just simulate processing to ensure the loop works.
-          await new Promise((resolve) => setTimeout(resolve, 50)); 
+          await new Promise((resolve) => setTimeout(resolve, 50));
         }
-        
+
         await prisma.outboxEvent.update({
           where: { id: event.id },
           data: {
@@ -426,15 +508,20 @@ async function processOutboxEvents() {
             attempts: { increment: 1 },
           },
         });
-        
-        logger.info('Successfully processed outbox event', { entityId: event.id });
+
+        logger.info('Successfully processed outbox event', {
+          entityId: event.id,
+        });
       } catch (err) {
         const errorMsg = err instanceof Error ? err.message : String(err);
-        logger.error('Failed to process outbox event', { entityId: event.id, error: err as Error });
-        
+        logger.error('Failed to process outbox event', {
+          entityId: event.id,
+          error: err as Error,
+        });
+
         const newAttempts = event.attempts + 1;
         const newStatus = newAttempts >= MAX_ATTEMPTS ? 'Failed' : 'Pending';
-        
+
         await prisma.outboxEvent.update({
           where: { id: event.id },
           data: {
@@ -504,10 +591,16 @@ async function processExportJobs() {
           },
         });
 
-        logger.info('Successfully processed export job', { entityId: job.id, entityType: job.reportType });
+        logger.info('Successfully processed export job', {
+          entityId: job.id,
+          entityType: job.reportType,
+        });
       } catch (err) {
         const errorMsg = err instanceof Error ? err.message : String(err);
-        logger.error('Failed to process export job', { entityId: job.id, error: err as Error });
+        logger.error('Failed to process export job', {
+          entityId: job.id,
+          error: err as Error,
+        });
 
         await prisma.exportJob.update({
           where: { id: job.id },
@@ -533,24 +626,26 @@ async function processExportJobs() {
 
 async function startWorker() {
   logger.info('Starting Outbox Worker', { count: BATCH_SIZE });
-  
+
   while (!isShuttingDown) {
     await processOutboxEvents();
     await processExportJobs();
-    
+
     const now = Date.now();
     if (now - lastOverdueSweepTime >= OVERDUE_SWEEP_INTERVAL_MS) {
       await sweepOverdueFollowUps();
       lastOverdueSweepTime = now;
     }
 
-    const waitMs = databaseUnavailable ? Math.max(POLL_INTERVAL_MS, DATABASE_RETRY_BACKOFF_MS) : POLL_INTERVAL_MS;
+    const waitMs = databaseUnavailable
+      ? Math.max(POLL_INTERVAL_MS, DATABASE_RETRY_BACKOFF_MS)
+      : POLL_INTERVAL_MS;
     for (let i = 0; i < waitMs; i += 100) {
       if (isShuttingDown) break;
       await sleep(100);
     }
   }
-  
+
   logger.info('Outbox Worker stopped.');
   await prisma.$disconnect();
 }

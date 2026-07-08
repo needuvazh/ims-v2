@@ -1,1 +1,63 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_course_catalog_configurations_overrides_specs_course_pricing_discounts_spec_md", "label": "spec.md", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/specs/course-pricing-discounts/spec.md", "source_location": "L1"}, {"id": "course_pricing_discounts_spec_added_requirements", "label": "ADDED Requirements", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/specs/course-pricing-discounts/spec.md", "source_location": "L1"}, {"id": "course_pricing_discounts_spec_requirement_course_overrides_branch_selection_fr_prc_003", "label": "Requirement: Course Overrides Branch Selection (FR-PRC-003)", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/specs/course-pricing-discounts/spec.md", "source_location": "L3"}, {"id": "course_pricing_discounts_spec_scenario_bulk_create_pricing_overrides_for_multiple_branches", "label": "Scenario: Bulk create pricing overrides for multiple branches", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/specs/course-pricing-discounts/spec.md", "source_location": "L6"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_course_catalog_configurations_overrides_specs_course_pricing_discounts_spec_md", "target": "course_pricing_discounts_spec_added_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/specs/course-pricing-discounts/spec.md", "source_location": "L1", "weight": 1.0}, {"source": "course_pricing_discounts_spec_added_requirements", "target": "course_pricing_discounts_spec_requirement_course_overrides_branch_selection_fr_prc_003", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/specs/course-pricing-discounts/spec.md", "source_location": "L3", "weight": 1.0}, {"source": "course_pricing_discounts_spec_requirement_course_overrides_branch_selection_fr_prc_003", "target": "course_pricing_discounts_spec_scenario_bulk_create_pricing_overrides_for_multiple_branches", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/specs/course-pricing-discounts/spec.md", "source_location": "L6", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_course_catalog_configurations_overrides_specs_course_pricing_discounts_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/specs/course-pricing-discounts/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "course_pricing_discounts_spec_added_requirements",
+      "label": "ADDED Requirements",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/specs/course-pricing-discounts/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "course_pricing_discounts_spec_requirement_course_overrides_branch_selection_fr_prc_003",
+      "label": "Requirement: Course Overrides Branch Selection (FR-PRC-003)",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/specs/course-pricing-discounts/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "course_pricing_discounts_spec_scenario_bulk_create_pricing_overrides_for_multiple_branches",
+      "label": "Scenario: Bulk create pricing overrides for multiple branches",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/specs/course-pricing-discounts/spec.md",
+      "source_location": "L6"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_course_catalog_configurations_overrides_specs_course_pricing_discounts_spec_md",
+      "target": "course_pricing_discounts_spec_added_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/specs/course-pricing-discounts/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "course_pricing_discounts_spec_added_requirements",
+      "target": "course_pricing_discounts_spec_requirement_course_overrides_branch_selection_fr_prc_003",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/specs/course-pricing-discounts/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "course_pricing_discounts_spec_requirement_course_overrides_branch_selection_fr_prc_003",
+      "target": "course_pricing_discounts_spec_scenario_bulk_create_pricing_overrides_for_multiple_branches",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/specs/course-pricing-discounts/spec.md",
+      "source_location": "L6",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

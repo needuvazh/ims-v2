@@ -35,7 +35,7 @@ export class SearchResultsQueryHandler {
         : [];
 
     if (input.status) {
-      results = results.filter(r => r.resultStatus === input.status);
+      results = results.filter((r) => r.resultStatus === input.status);
     }
 
     const total = results.length;
@@ -45,7 +45,7 @@ export class SearchResultsQueryHandler {
     const pagedResults = results.slice(start, start + pageSize);
 
     return {
-      results: pagedResults.map(r => ({
+      results: pagedResults.map((r) => ({
         id: r.id,
         examId: r.examId,
         enrollmentId: r.enrollmentId,

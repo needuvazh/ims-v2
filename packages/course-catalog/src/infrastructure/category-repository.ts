@@ -5,7 +5,10 @@ import { CourseCategory } from '../domain/course';
 export class CourseCategoryRepository implements ICourseCategoryRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create(data: Prisma.CourseCategoryUncheckedCreateInput, tx?: Prisma.TransactionClient): Promise<CourseCategory> {
+  async create(
+    data: Prisma.CourseCategoryUncheckedCreateInput,
+    tx?: Prisma.TransactionClient,
+  ): Promise<CourseCategory> {
     const client = tx || this.prisma;
     const category = await client.courseCategory.create({
       data: {
@@ -23,7 +26,12 @@ export class CourseCategoryRepository implements ICourseCategoryRepository {
     return category as CourseCategory;
   }
 
-  async update(id: string, data: Prisma.CourseCategoryUncheckedUpdateInput, version: number, tx?: Prisma.TransactionClient): Promise<CourseCategory> {
+  async update(
+    id: string,
+    data: Prisma.CourseCategoryUncheckedUpdateInput,
+    version: number,
+    tx?: Prisma.TransactionClient,
+  ): Promise<CourseCategory> {
     const client = tx || this.prisma;
     const result = await client.courseCategory.updateMany({
       where: { id, version, isDeleted: false },
@@ -46,8 +54,12 @@ export class CourseCategoryRepository implements ICourseCategoryRepository {
     return updated as CourseCategory;
   }
 
-  async findById(id: string, tx?: Prisma.TransactionClient): Promise<CourseCategory | null> {
-    const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  async findById(
+    id: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<CourseCategory | null> {
+    const UUID_REGEX =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     if (!UUID_REGEX.test(id)) {
       return null;
     }
@@ -58,7 +70,10 @@ export class CourseCategoryRepository implements ICourseCategoryRepository {
     return category as CourseCategory | null;
   }
 
-  async findByCode(code: string, tx?: Prisma.TransactionClient): Promise<CourseCategory | null> {
+  async findByCode(
+    code: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<CourseCategory | null> {
     const client = tx || this.prisma;
     const category = await client.courseCategory.findFirst({
       where: { code: { equals: code, mode: 'insensitive' }, isDeleted: false },

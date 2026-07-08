@@ -1,5 +1,8 @@
 import type { PrismaClient } from '@prisma/client';
-import type { IOutboxEventRepository, OutboxEventDto } from '@ims/identity-access';
+import type {
+  IOutboxEventRepository,
+  OutboxEventDto,
+} from '@ims/identity-access';
 import type { Uuid } from '@ims/shared-kernel';
 
 export class PrismaOutboxEventRepository implements IOutboxEventRepository {
@@ -66,7 +69,10 @@ export class PrismaOutboxEventRepository implements IOutboxEventRepository {
     return this.mapEvent(row);
   }
 
-  async markFailed(id: Uuid, lastError?: string | null): Promise<OutboxEventDto> {
+  async markFailed(
+    id: Uuid,
+    lastError?: string | null,
+  ): Promise<OutboxEventDto> {
     const row = await this.prisma.outboxEvent.update({
       where: { id },
       data: {

@@ -1173,13 +1173,13 @@ flowchart TD
 
 ### Aging Mapping
 
-| Days Past Due | Aging Bucket |
-|---:|---|
-| `<= 0` | `Current` |
-| `1–30` | `30 Days` |
-| `31–60` | `60 Days` |
-| `61–90` | `90 Days` |
-| `>= 91` | `120+ Days` compatibility bucket until approved domain-model revision |
+| Days Past Due | Aging Bucket                                                          |
+| ------------: | --------------------------------------------------------------------- |
+|        `<= 0` | `Current`                                                             |
+|        `1–30` | `30 Days`                                                             |
+|       `31–60` | `60 Days`                                                             |
+|       `61–90` | `90 Days`                                                             |
+|       `>= 91` | `120+ Days` compatibility bucket until approved domain-model revision |
 
 ---
 
@@ -1286,20 +1286,20 @@ stateDiagram-v2
 
 ### Invoice Transition Rules Matrix
 
-| From | To | Trigger | Required Human Permission | System Conditions | Audit Required |
-|---|---|---|---|---|---|
-| Draft | Issued | Issue command | `finance.invoice.issue` | Balanced totals; 1–500 valid lines; valid source; numbering series available; optimistic version matches | Yes |
-| Draft | Cancelled | Cancel command | `finance.invoice.cancel` | Valid cancellation reason; branch scope valid | Yes |
-| Issued | PartiallyPaid | Successful payment commit | `finance.payment.record` for initiating command | `0 < effectivePaidAmount < totalAmount`; atomic payment transaction | Yes |
-| Issued | Paid | Successful payment commit | `finance.payment.record` | `outstandingAmount = 0` | Yes |
-| Issued | Overdue | Aging/status derivation | Internal Finance job/service | Oman GST business date is after dueDate and outstandingAmount > 0 | System audit/operational evidence |
-| Issued | Cancelled | Cancel command | `finance.invoice.cancel` | No effective payment exists; authorized reason | Yes |
-| PartiallyPaid | Paid | Successful payment commit | `finance.payment.record` | outstandingAmount becomes zero | Yes |
-| PartiallyPaid | Overdue | Status derivation | Internal Finance job/service | due date passed; positive balance remains | System evidence |
-| Overdue | PartiallyPaid | Successful partial payment | `finance.payment.record` | positive balance remains after payment | Yes |
-| Overdue | Paid | Successful full settlement | `finance.payment.record` | outstandingAmount becomes zero | Yes |
-| Paid | PartiallyPaid | Executed refund | `finance.refund.execute` for initiating command | refund creates positive balance and due date is not passed | Yes |
-| Paid | Overdue | Executed refund | `finance.refund.execute` | refund creates positive balance and due date has passed | Yes |
+| From          | To            | Trigger                    | Required Human Permission                       | System Conditions                                                                                        | Audit Required                    |
+| ------------- | ------------- | -------------------------- | ----------------------------------------------- | -------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| Draft         | Issued        | Issue command              | `finance.invoice.issue`                         | Balanced totals; 1–500 valid lines; valid source; numbering series available; optimistic version matches | Yes                               |
+| Draft         | Cancelled     | Cancel command             | `finance.invoice.cancel`                        | Valid cancellation reason; branch scope valid                                                            | Yes                               |
+| Issued        | PartiallyPaid | Successful payment commit  | `finance.payment.record` for initiating command | `0 < effectivePaidAmount < totalAmount`; atomic payment transaction                                      | Yes                               |
+| Issued        | Paid          | Successful payment commit  | `finance.payment.record`                        | `outstandingAmount = 0`                                                                                  | Yes                               |
+| Issued        | Overdue       | Aging/status derivation    | Internal Finance job/service                    | Oman GST business date is after dueDate and outstandingAmount > 0                                        | System audit/operational evidence |
+| Issued        | Cancelled     | Cancel command             | `finance.invoice.cancel`                        | No effective payment exists; authorized reason                                                           | Yes                               |
+| PartiallyPaid | Paid          | Successful payment commit  | `finance.payment.record`                        | outstandingAmount becomes zero                                                                           | Yes                               |
+| PartiallyPaid | Overdue       | Status derivation          | Internal Finance job/service                    | due date passed; positive balance remains                                                                | System evidence                   |
+| Overdue       | PartiallyPaid | Successful partial payment | `finance.payment.record`                        | positive balance remains after payment                                                                   | Yes                               |
+| Overdue       | Paid          | Successful full settlement | `finance.payment.record`                        | outstandingAmount becomes zero                                                                           | Yes                               |
+| Paid          | PartiallyPaid | Executed refund            | `finance.refund.execute` for initiating command | refund creates positive balance and due date is not passed                                               | Yes                               |
+| Paid          | Overdue       | Executed refund            | `finance.refund.execute`                        | refund creates positive balance and due date has passed                                                  | Yes                               |
 
 ### Invoice Transition Prohibitions
 
@@ -1347,17 +1347,17 @@ stateDiagram-v2
 
 ### Installment Transition Rules Matrix
 
-| From | To | Trigger | Required Permission | Conditions | Audit Required |
-|---|---|---|---|---|---|
-| Pending | PartiallyPaid | Payment allocation | `finance.payment.record` | `0 < paidAmount < amount`; allocation within bounds | Via Payment audit |
-| Pending | Paid | Payment allocation | `finance.payment.record` | `paidAmount = amount` | Via Payment audit |
-| Pending | Overdue | Time/status derivation | Internal job/service | business date > dueDate and remaining balance > 0 | Operational evidence |
-| PartiallyPaid | Paid | Payment allocation | `finance.payment.record` | `paidAmount = amount` | Via Payment audit |
-| PartiallyPaid | Overdue | Time/status derivation | Internal job/service | business date > dueDate and remaining balance > 0 | Operational evidence |
-| Overdue | PartiallyPaid | Partial payment allocation | `finance.payment.record` | payment applied; positive balance remains | Via Payment audit |
-| Overdue | Paid | Full settlement allocation | `finance.payment.record` | remaining balance becomes zero | Via Payment audit |
-| Paid | PartiallyPaid | Executed refund effect | `finance.refund.execute` | reopened positive balance; due date not passed | Via Refund audit |
-| Paid | Overdue | Executed refund effect | `finance.refund.execute` | reopened positive balance; due date passed | Via Refund audit |
+| From          | To            | Trigger                    | Required Permission      | Conditions                                          | Audit Required       |
+| ------------- | ------------- | -------------------------- | ------------------------ | --------------------------------------------------- | -------------------- |
+| Pending       | PartiallyPaid | Payment allocation         | `finance.payment.record` | `0 < paidAmount < amount`; allocation within bounds | Via Payment audit    |
+| Pending       | Paid          | Payment allocation         | `finance.payment.record` | `paidAmount = amount`                               | Via Payment audit    |
+| Pending       | Overdue       | Time/status derivation     | Internal job/service     | business date > dueDate and remaining balance > 0   | Operational evidence |
+| PartiallyPaid | Paid          | Payment allocation         | `finance.payment.record` | `paidAmount = amount`                               | Via Payment audit    |
+| PartiallyPaid | Overdue       | Time/status derivation     | Internal job/service     | business date > dueDate and remaining balance > 0   | Operational evidence |
+| Overdue       | PartiallyPaid | Partial payment allocation | `finance.payment.record` | payment applied; positive balance remains           | Via Payment audit    |
+| Overdue       | Paid          | Full settlement allocation | `finance.payment.record` | remaining balance becomes zero                      | Via Payment audit    |
+| Paid          | PartiallyPaid | Executed refund effect     | `finance.refund.execute` | reopened positive balance; due date not passed      | Via Refund audit     |
+| Paid          | Overdue       | Executed refund effect     | `finance.refund.execute` | reopened positive balance; due date passed          | Via Refund audit     |
 
 ### Installment Invariants
 
@@ -1396,15 +1396,15 @@ stateDiagram-v2
 
 ### Refund Transition Rules Matrix
 
-| From | To | Trigger | Required Permission | Additional Rules | Audit Required |
-|---|---|---|---|---|---|
-| New request | Requested | Submit refund | `finance.refund.request` | Valid invoice/payment linkage; amount > 0; amount <= refundable balance; valid reason | Yes |
-| Requested | UnderReview | Claim/start review | `finance.refund.approve` | Approver must be authorized and cannot violate maker-checker rule | Yes |
-| Requested | Approved | Approve directly | `finance.refund.approve` | Approver != requester; remaining refundable balance still valid | Yes |
-| Requested | Rejected | Reject | `finance.refund.approve` | Approver != requester; decision remarks required where configured | Yes |
-| UnderReview | Approved | Approve | `finance.refund.approve` | Approver != requester; revalidate refundable balance | Yes |
-| UnderReview | Rejected | Reject | `finance.refund.approve` | Approver != requester | Yes |
-| Approved | Executed | Record successful execution | `finance.refund.execute` | Revalidate approved state and refundable balance; atomic balance recalculation | Yes |
+| From        | To          | Trigger                     | Required Permission      | Additional Rules                                                                      | Audit Required |
+| ----------- | ----------- | --------------------------- | ------------------------ | ------------------------------------------------------------------------------------- | -------------- |
+| New request | Requested   | Submit refund               | `finance.refund.request` | Valid invoice/payment linkage; amount > 0; amount <= refundable balance; valid reason | Yes            |
+| Requested   | UnderReview | Claim/start review          | `finance.refund.approve` | Approver must be authorized and cannot violate maker-checker rule                     | Yes            |
+| Requested   | Approved    | Approve directly            | `finance.refund.approve` | Approver != requester; remaining refundable balance still valid                       | Yes            |
+| Requested   | Rejected    | Reject                      | `finance.refund.approve` | Approver != requester; decision remarks required where configured                     | Yes            |
+| UnderReview | Approved    | Approve                     | `finance.refund.approve` | Approver != requester; revalidate refundable balance                                  | Yes            |
+| UnderReview | Rejected    | Reject                      | `finance.refund.approve` | Approver != requester                                                                 | Yes            |
+| Approved    | Executed    | Record successful execution | `finance.refund.execute` | Revalidate approved state and refundable balance; atomic balance recalculation        | Yes            |
 
 ### Refund Transition Prohibitions
 
@@ -1445,13 +1445,13 @@ stateDiagram-v2
 
 ### Receivable Transition Rules Matrix
 
-| From | To | Trigger | Required Permission | Conditions | Audit/Operational Evidence |
-|---|---|---|---|---|---|
-| Open | Overdue | Aging reconciliation | Internal Finance job/service | business date > dueDate; outstandingAmount > 0 | Job evidence and metrics |
-| Open | Settled | Successful payment | `finance.payment.record` initiating command | outstandingAmount becomes zero | Payment audit |
-| Overdue | Settled | Successful payment | `finance.payment.record` | outstandingAmount becomes zero | Payment audit |
-| Settled | Open | Executed refund | `finance.refund.execute` | positive balance created; due date not passed | Refund audit |
-| Settled | Overdue | Executed refund | `finance.refund.execute` | positive balance created; due date passed | Refund audit |
+| From    | To      | Trigger              | Required Permission                         | Conditions                                     | Audit/Operational Evidence |
+| ------- | ------- | -------------------- | ------------------------------------------- | ---------------------------------------------- | -------------------------- |
+| Open    | Overdue | Aging reconciliation | Internal Finance job/service                | business date > dueDate; outstandingAmount > 0 | Job evidence and metrics   |
+| Open    | Settled | Successful payment   | `finance.payment.record` initiating command | outstandingAmount becomes zero                 | Payment audit              |
+| Overdue | Settled | Successful payment   | `finance.payment.record`                    | outstandingAmount becomes zero                 | Payment audit              |
+| Settled | Open    | Executed refund      | `finance.refund.execute`                    | positive balance created; due date not passed  | Refund audit               |
+| Settled | Overdue | Executed refund      | `finance.refund.execute`                    | positive balance created; due date passed      | Refund audit               |
 
 ### Receivable Invariants
 
@@ -1466,47 +1466,47 @@ stateDiagram-v2
 
 # 6. State Transition and Permission Summary
 
-| Entity | Human-Commanded Transitions | System-Derived Transitions | Primary Permissions |
-|---|---|---|---|
-| Invoice | Draft → Issued; Draft/eligible Issued → Cancelled | Issued/PartiallyPaid/Overdue → payment-derived states; Paid → refund-derived open state; due-date → Overdue | `finance.invoice.issue`, `finance.invoice.cancel`, `finance.payment.record`, `finance.refund.execute` |
-| Installment | None by direct status edit | Payment allocation, refund financial effect, and due-date derivation | `finance.payment.record`, `finance.refund.execute` |
-| Refund | Requested → UnderReview/Approved/Rejected; Approved → Executed | None except transaction completion outcome | `finance.refund.request`, `finance.refund.approve`, `finance.refund.execute` |
-| Receivable | None by direct status edit | Payment, refund, due-date, and reconciliation derivation | Initiating permissions plus internal Finance job authorization |
+| Entity      | Human-Commanded Transitions                                    | System-Derived Transitions                                                                                  | Primary Permissions                                                                                   |
+| ----------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Invoice     | Draft → Issued; Draft/eligible Issued → Cancelled              | Issued/PartiallyPaid/Overdue → payment-derived states; Paid → refund-derived open state; due-date → Overdue | `finance.invoice.issue`, `finance.invoice.cancel`, `finance.payment.record`, `finance.refund.execute` |
+| Installment | None by direct status edit                                     | Payment allocation, refund financial effect, and due-date derivation                                        | `finance.payment.record`, `finance.refund.execute`                                                    |
+| Refund      | Requested → UnderReview/Approved/Rejected; Approved → Executed | None except transaction completion outcome                                                                  | `finance.refund.request`, `finance.refund.approve`, `finance.refund.execute`                          |
+| Receivable  | None by direct status edit                                     | Payment, refund, due-date, and reconciliation derivation                                                    | Initiating permissions plus internal Finance job authorization                                        |
 
 ---
 
 # 7. Cross-Module Workflow Boundaries
 
-| Source Context | Finance Interaction | Finance Responsibility | Source Context Responsibility |
-|---|---|---|---|
-| Admission & Enrollment | Billing request; corporate credit validation | Create invoice obligation, maintain balance, return credit decision | Own enrollment lifecycle and enrollment status |
-| Course Catalog | Resolved pricing/discount inputs | Apply trusted resolved values and validate arithmetic | Own pricing, discount hierarchy, completion rule definitions |
-| Organization | Branch reference and hierarchy | Enforce branch predicate in Finance queries | Own branch structure |
-| IAM | User permissions and branch entitlements | Enforce action/report permission and effective branch scope | Own Role, Permission, UserBranchAccess |
-| Audit & Compliance | Sensitive action evidence and approval workflow | Emit complete Finance change context | Own centralized audit and approval history where implemented |
-| Communication & Notification | Domain event/notification request | Publish minimum necessary event payload after commit | Render templates, deliver channels, retry, track delivery status |
-| Exam & Completion | Payment validation query | Return NotRequired, Passed, or Failed from transactional state | Own completion evaluation and approval |
-| Certificate | Payment validation query | Return authoritative payment decision | Own issue, verification, reissue, and revocation |
-| Reporting & Dashboards | Finance reporting projections | Supply authorized finance read models | Present cross-context dashboards without owning transactions |
+| Source Context               | Finance Interaction                             | Finance Responsibility                                              | Source Context Responsibility                                    |
+| ---------------------------- | ----------------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Admission & Enrollment       | Billing request; corporate credit validation    | Create invoice obligation, maintain balance, return credit decision | Own enrollment lifecycle and enrollment status                   |
+| Course Catalog               | Resolved pricing/discount inputs                | Apply trusted resolved values and validate arithmetic               | Own pricing, discount hierarchy, completion rule definitions     |
+| Organization                 | Branch reference and hierarchy                  | Enforce branch predicate in Finance queries                         | Own branch structure                                             |
+| IAM                          | User permissions and branch entitlements        | Enforce action/report permission and effective branch scope         | Own Role, Permission, UserBranchAccess                           |
+| Audit & Compliance           | Sensitive action evidence and approval workflow | Emit complete Finance change context                                | Own centralized audit and approval history where implemented     |
+| Communication & Notification | Domain event/notification request               | Publish minimum necessary event payload after commit                | Render templates, deliver channels, retry, track delivery status |
+| Exam & Completion            | Payment validation query                        | Return NotRequired, Passed, or Failed from transactional state      | Own completion evaluation and approval                           |
+| Certificate                  | Payment validation query                        | Return authoritative payment decision                               | Own issue, verification, reissue, and revocation                 |
+| Reporting & Dashboards       | Finance reporting projections                   | Supply authorized finance read models                               | Present cross-context dashboards without owning transactions     |
 
 ---
 
 # 8. Traceability to Functional Requirements
 
-| User Story / Use Case | Primary Functional Requirements |
-|---|---|
+| User Story / Use Case   | Primary Functional Requirements                                                                |
+| ----------------------- | ---------------------------------------------------------------------------------------------- |
 | US-FBR-001 / UC-FBR-001 | FR-FBR-001, FR-FBR-003, FR-FBR-004, FR-FBR-012, FR-FBR-024, FR-FBR-025, FR-FBR-029, FR-FBR-030 |
-| US-FBR-002 / UC-FBR-002 | FR-FBR-002, FR-FBR-003, FR-FBR-004, FR-FBR-012, FR-FBR-025 |
-| US-FBR-003 / UC-FBR-003 | FR-FBR-006, FR-FBR-007, FR-FBR-025 |
+| US-FBR-002 / UC-FBR-002 | FR-FBR-002, FR-FBR-003, FR-FBR-004, FR-FBR-012, FR-FBR-025                                     |
+| US-FBR-003 / UC-FBR-003 | FR-FBR-006, FR-FBR-007, FR-FBR-025                                                             |
 | US-FBR-004 / UC-FBR-004 | FR-FBR-008, FR-FBR-009, FR-FBR-010, FR-FBR-011, FR-FBR-012, FR-FBR-024, FR-FBR-025, FR-FBR-029 |
-| US-FBR-005 / UC-FBR-004 | FR-FBR-006, FR-FBR-007, FR-FBR-008, FR-FBR-011, FR-FBR-012 |
-| US-FBR-006 / UC-FBR-005 | FR-FBR-014, FR-FBR-015, FR-FBR-016, FR-FBR-024, FR-FBR-025, FR-FBR-026, FR-FBR-029 |
-| US-FBR-007 / UC-FBR-006 | FR-FBR-012, FR-FBR-013, FR-FBR-021, FR-FBR-023 |
-| US-FBR-008 / UC-FBR-007 | FR-FBR-017, FR-FBR-018, FR-FBR-019, FR-FBR-024, FR-FBR-025, FR-FBR-029 |
-| US-FBR-009 / UC-FBR-008 | FR-FBR-020, FR-FBR-024, FR-FBR-025 |
-| US-FBR-010 / UC-FBR-009 | FR-FBR-021, FR-FBR-022, FR-FBR-023, FR-FBR-025, FR-FBR-028 |
-| US-FBR-011 / UC-FBR-010 | FR-FBR-005, FR-FBR-010, FR-FBR-027, FR-FBR-028 |
-| US-FBR-012 | FR-FBR-023, FR-FBR-025, FR-FBR-026, FR-FBR-029 |
+| US-FBR-005 / UC-FBR-004 | FR-FBR-006, FR-FBR-007, FR-FBR-008, FR-FBR-011, FR-FBR-012                                     |
+| US-FBR-006 / UC-FBR-005 | FR-FBR-014, FR-FBR-015, FR-FBR-016, FR-FBR-024, FR-FBR-025, FR-FBR-026, FR-FBR-029             |
+| US-FBR-007 / UC-FBR-006 | FR-FBR-012, FR-FBR-013, FR-FBR-021, FR-FBR-023                                                 |
+| US-FBR-008 / UC-FBR-007 | FR-FBR-017, FR-FBR-018, FR-FBR-019, FR-FBR-024, FR-FBR-025, FR-FBR-029                         |
+| US-FBR-009 / UC-FBR-008 | FR-FBR-020, FR-FBR-024, FR-FBR-025                                                             |
+| US-FBR-010 / UC-FBR-009 | FR-FBR-021, FR-FBR-022, FR-FBR-023, FR-FBR-025, FR-FBR-028                                     |
+| US-FBR-011 / UC-FBR-010 | FR-FBR-005, FR-FBR-010, FR-FBR-027, FR-FBR-028                                                 |
+| US-FBR-012              | FR-FBR-023, FR-FBR-025, FR-FBR-026, FR-FBR-029                                                 |
 
 ---
 

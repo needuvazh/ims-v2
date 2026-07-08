@@ -41,14 +41,14 @@ export class GetExamDetailQueryHandler {
 
     const resultStats = {
       total: results.length,
-      recorded: results.filter(r => r.resultStatus === 'Recorded').length,
-      finalized: results.filter(r => r.resultStatus === 'Finalized').length,
-      pending: results.filter(r => r.resultStatus === 'Pending').length,
+      recorded: results.filter((r) => r.resultStatus === 'Recorded').length,
+      finalized: results.filter((r) => r.resultStatus === 'Finalized').length,
+      pending: results.filter((r) => r.resultStatus === 'Pending').length,
     };
 
     return {
       exam,
-      results: results.map(r => ({
+      results: results.map((r) => ({
         id: r.id,
         enrollmentId: r.enrollmentId,
         marksObtained: r.marksObtained,

@@ -63,26 +63,26 @@ All Module 09 Admin Portal screens shall use the following visual structure unle
 
 ## 3.1 Admin Portal Screens
 
-| Screen ID | Screen Name | Route Pattern | Primary Permission | Purpose |
-|---|---|---|---|---|
-| FTM-UI-001 | Trainer Directory | `/faculty/trainers` | `trainer.read` | Search, filter, sort, and inspect branch-scoped trainers. |
-| FTM-UI-002 | Create Trainer Profile | `/faculty/trainers/new` | `trainer.create` | Link an existing Person or create/link canonical Person data and create TrainerProfile. |
-| FTM-UI-003 | Trainer Profile Overview | `/faculty/trainers/{trainerId}` | `trainer.read` | Consolidated trainer operational summary and navigation hub. |
-| FTM-UI-004 | Edit Trainer Profile | `/faculty/trainers/{trainerId}/edit` | `trainer.update` | Edit TrainerProfile-owned attributes with optimistic concurrency. |
-| FTM-UI-005 | Trainer Status Management | Modal/drawer from profile | `trainer.status.manage` | Perform controlled status transitions with reason and impact awareness. |
-| FTM-UI-006 | Qualifications Tab | `/faculty/trainers/{trainerId}?tab=qualifications` | `trainer.qualification.read` | View and manage structured qualifications and document evidence references. |
-| FTM-UI-007 | Qualification Create/Edit Drawer | Context drawer | `trainer.qualification.manage` | Add or update qualification details and link evidence document. |
-| FTM-UI-008 | Availability Tab | `/faculty/trainers/{trainerId}?tab=availability` | `trainer.availability.read` | View recurring branch-aware availability and effective periods. |
-| FTM-UI-009 | Availability Create/Edit Drawer | Context drawer | `trainer.availability.manage` | Add or update an availability window with overlap validation. |
-| FTM-UI-010 | Course Authorizations Tab | `/faculty/trainers/{trainerId}?tab=authorizations` | `trainer.authorization.read` | View and manage trainer-course authorization periods and statuses. |
-| FTM-UI-011 | Course Authorization Create/Edit Drawer | Context drawer | `trainer.authorization.manage` | Create authorization and perform valid lifecycle changes. |
-| FTM-UI-012 | Compensation Rates Tab | `/faculty/trainers/{trainerId}?tab=compensation` | `trainer.compensation.read` | View sensitive compensation rate structures. |
-| FTM-UI-013 | Compensation Rate Create/Edit Drawer | Context drawer | `trainer.compensation.manage` | Configure effective-dated rate structures and specificity. |
-| FTM-UI-014 | Eligible Trainer Finder | `/faculty/eligible-trainers` | `trainer.eligibility.read` | Find eligible trainers by course, branch, date, and time window. |
-| FTM-UI-015 | Assignment References Tab | `/faculty/trainers/{trainerId}?tab=assignments` | `trainer.read` | Read-only batch/session assignment references from Training Delivery. |
-| FTM-UI-016 | Trainer Reports | `/faculty/reports` | `trainer.report.view` | Operational trainer reports for authorized branch scope. |
-| FTM-UI-017 | Trainer Audit History | `/faculty/trainers/{trainerId}?tab=audit` | `trainer.audit.read` | Review immutable sensitive change history. |
-| FTM-UI-018 | Admin Portal Dashboard | `/faculty/dashboard` | `menu.faculty`, `trainer.report.view` | Trainer operational KPI landing page with drill-down access to directory, reports, and diagnostics. |
+| Screen ID  | Screen Name                             | Route Pattern                                      | Primary Permission                    | Purpose                                                                                             |
+| ---------- | --------------------------------------- | -------------------------------------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| FTM-UI-001 | Trainer Directory                       | `/faculty/trainers`                                | `trainer.read`                        | Search, filter, sort, and inspect branch-scoped trainers.                                           |
+| FTM-UI-002 | Create Trainer Profile                  | `/faculty/trainers/new`                            | `trainer.create`                      | Link an existing Person or create/link canonical Person data and create TrainerProfile.             |
+| FTM-UI-003 | Trainer Profile Overview                | `/faculty/trainers/{trainerId}`                    | `trainer.read`                        | Consolidated trainer operational summary and navigation hub.                                        |
+| FTM-UI-004 | Edit Trainer Profile                    | `/faculty/trainers/{trainerId}/edit`               | `trainer.update`                      | Edit TrainerProfile-owned attributes with optimistic concurrency.                                   |
+| FTM-UI-005 | Trainer Status Management               | Modal/drawer from profile                          | `trainer.status.manage`               | Perform controlled status transitions with reason and impact awareness.                             |
+| FTM-UI-006 | Qualifications Tab                      | `/faculty/trainers/{trainerId}?tab=qualifications` | `trainer.qualification.read`          | View and manage structured qualifications and document evidence references.                         |
+| FTM-UI-007 | Qualification Create/Edit Drawer        | Context drawer                                     | `trainer.qualification.manage`        | Add or update qualification details and link evidence document.                                     |
+| FTM-UI-008 | Availability Tab                        | `/faculty/trainers/{trainerId}?tab=availability`   | `trainer.availability.read`           | View recurring branch-aware availability and effective periods.                                     |
+| FTM-UI-009 | Availability Create/Edit Drawer         | Context drawer                                     | `trainer.availability.manage`         | Add or update an availability window with overlap validation.                                       |
+| FTM-UI-010 | Course Authorizations Tab               | `/faculty/trainers/{trainerId}?tab=authorizations` | `trainer.authorization.read`          | View and manage trainer-course authorization periods and statuses.                                  |
+| FTM-UI-011 | Course Authorization Create/Edit Drawer | Context drawer                                     | `trainer.authorization.manage`        | Create authorization and perform valid lifecycle changes.                                           |
+| FTM-UI-012 | Compensation Rates Tab                  | `/faculty/trainers/{trainerId}?tab=compensation`   | `trainer.compensation.read`           | View sensitive compensation rate structures.                                                        |
+| FTM-UI-013 | Compensation Rate Create/Edit Drawer    | Context drawer                                     | `trainer.compensation.manage`         | Configure effective-dated rate structures and specificity.                                          |
+| FTM-UI-014 | Eligible Trainer Finder                 | `/faculty/eligible-trainers`                       | `trainer.eligibility.read`            | Find eligible trainers by course, branch, date, and time window.                                    |
+| FTM-UI-015 | Assignment References Tab               | `/faculty/trainers/{trainerId}?tab=assignments`    | `trainer.read`                        | Read-only batch/session assignment references from Training Delivery.                               |
+| FTM-UI-016 | Trainer Reports                         | `/faculty/reports`                                 | `trainer.report.view`                 | Operational trainer reports for authorized branch scope.                                            |
+| FTM-UI-017 | Trainer Audit History                   | `/faculty/trainers/{trainerId}?tab=audit`          | `trainer.audit.read`                  | Review immutable sensitive change history.                                                          |
+| FTM-UI-018 | Admin Portal Dashboard                  | `/faculty/dashboard`                               | `menu.faculty`, `trainer.report.view` | Trainer operational KPI landing page with drill-down access to directory, reports, and diagnostics. |
 
 ## 3.2 Trainer Portal Screens
 
@@ -100,22 +100,22 @@ Students do not create, update, authorize, schedule, or financially configure tr
 
 # 4. Shared UI Components
 
-| Component ID | Component | Behavior |
-|---|---|---|
-| FTM-CMP-001 | `TrainerStatusBadge` | Displays Inactive, Active, Suspended using localized labels and semantic icons. |
-| FTM-CMP-002 | `TrainerTypeBadge` | Displays FullTime, PartTime, Freelance with localized labels. |
-| FTM-CMP-003 | `BranchScopeSelector` | Shows only server-authorized branch choices; consolidated option appears only with valid visibility and `trainer.report.consolidated.view`. |
-| FTM-CMP-004 | `EffectiveDateRangeFields` | Start/end date pair with cross-field validation and open-ended end date support. |
-| FTM-CMP-005 | `PersonSearchSelector` | Server search against canonical Person data; does not copy protected identity fields into TrainerProfile payload. |
-| FTM-CMP-006 | `CourseSearchSelector` | Server-side searchable Course Catalog reference selector. |
-| FTM-CMP-007 | `AvailabilityWeekGrid` | Seven-row weekday grid showing effective recurring windows; supports compact edit actions. |
-| FTM-CMP-008 | `PermissionGuard` | Hides or disables controls for usability; server still independently enforces authorization. |
-| FTM-CMP-009 | `SensitiveValueGuard` | Prevents compensation content render and request when `trainer.compensation.read` is absent. |
-| FTM-CMP-010 | `AuditDiffViewer` | Displays old/new values field-by-field without exposing protected Person values not present in trainer-owned records. |
-| FTM-CMP-011 | `AssignmentImpactPanel` | Read-only future batch/session reference summary before sensitive status or deletion actions. |
-| FTM-CMP-012 | `EligibilityResultPanel` | Displays eligibility outcome, decision codes, matched availability, authorization state, and non-sensitive trainer summary. |
-| FTM-CMP-013 | `DataTableToolbar` | Search, filters, active filter chips, reset, column visibility, and export when allowed. |
-| FTM-CMP-014 | `VersionConflictDialog` | Handles optimistic concurrency conflict by offering reload and comparison; never overwrites silently. |
+| Component ID | Component                  | Behavior                                                                                                                                    |
+| ------------ | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| FTM-CMP-001  | `TrainerStatusBadge`       | Displays Inactive, Active, Suspended using localized labels and semantic icons.                                                             |
+| FTM-CMP-002  | `TrainerTypeBadge`         | Displays FullTime, PartTime, Freelance with localized labels.                                                                               |
+| FTM-CMP-003  | `BranchScopeSelector`      | Shows only server-authorized branch choices; consolidated option appears only with valid visibility and `trainer.report.consolidated.view`. |
+| FTM-CMP-004  | `EffectiveDateRangeFields` | Start/end date pair with cross-field validation and open-ended end date support.                                                            |
+| FTM-CMP-005  | `PersonSearchSelector`     | Server search against canonical Person data; does not copy protected identity fields into TrainerProfile payload.                           |
+| FTM-CMP-006  | `CourseSearchSelector`     | Server-side searchable Course Catalog reference selector.                                                                                   |
+| FTM-CMP-007  | `AvailabilityWeekGrid`     | Seven-row weekday grid showing effective recurring windows; supports compact edit actions.                                                  |
+| FTM-CMP-008  | `PermissionGuard`          | Hides or disables controls for usability; server still independently enforces authorization.                                                |
+| FTM-CMP-009  | `SensitiveValueGuard`      | Prevents compensation content render and request when `trainer.compensation.read` is absent.                                                |
+| FTM-CMP-010  | `AuditDiffViewer`          | Displays old/new values field-by-field without exposing protected Person values not present in trainer-owned records.                       |
+| FTM-CMP-011  | `AssignmentImpactPanel`    | Read-only future batch/session reference summary before sensitive status or deletion actions.                                               |
+| FTM-CMP-012  | `EligibilityResultPanel`   | Displays eligibility outcome, decision codes, matched availability, authorization state, and non-sensitive trainer summary.                 |
+| FTM-CMP-013  | `DataTableToolbar`         | Search, filters, active filter chips, reset, column visibility, and export when allowed.                                                    |
+| FTM-CMP-014  | `VersionConflictDialog`    | Handles optimistic concurrency conflict by offering reload and comparison; never overwrites silently.                                       |
 
 ---
 
@@ -156,30 +156,30 @@ The KPI strip may be omitted for users without report permission; the table rema
 
 ### Search and Filter Inputs
 
-| Field | Type | Required | Validation |
-|---|---|---:|---|
-| Search | string | No | Trim whitespace; 2–100 characters when provided; search trainer code and allowed Person display name/contact projections. |
-| Branch | UUID selector | No | Must be within server-authorized branch scope; client value cannot expand scope. |
-| Trainer Type | enum[] | No | Values limited to `FullTime`, `PartTime`, `Freelance`. |
-| Status | enum[] | No | Values limited to `Inactive`, `Active`, `Suspended`. |
-| Course | UUID selector | No | Must resolve to an existing non-deleted Course reference. |
-| Effective On | date | No | ISO date input; interpreted using Oman business calendar. |
+| Field        | Type          | Required | Validation                                                                                                                |
+| ------------ | ------------- | -------: | ------------------------------------------------------------------------------------------------------------------------- |
+| Search       | string        |       No | Trim whitespace; 2–100 characters when provided; search trainer code and allowed Person display name/contact projections. |
+| Branch       | UUID selector |       No | Must be within server-authorized branch scope; client value cannot expand scope.                                          |
+| Trainer Type | enum[]        |       No | Values limited to `FullTime`, `PartTime`, `Freelance`.                                                                    |
+| Status       | enum[]        |       No | Values limited to `Inactive`, `Active`, `Suspended`.                                                                      |
+| Course       | UUID selector |       No | Must resolve to an existing non-deleted Course reference.                                                                 |
+| Effective On | date          |       No | ISO date input; interpreted using Oman business calendar.                                                                 |
 
 ### Table Columns
 
-| Column | Sortable | Filterable | Notes |
-|---|---:|---:|---|
-| Trainer Code | Yes | Search | Sticky first data column on narrow widths. |
-| Trainer Name | Yes | Search | Localized Person display name; English/Arabic based on locale with fallback. |
-| Trainer Type | Yes | Yes | Badge. |
-| Primary Branch | Yes | Yes | Display name from Organization context. |
-| Specialization | Yes | Search | Truncated to two lines with tooltip. |
-| Status | Yes | Yes | Status badge. |
-| Effective Start | Yes | Date | `DD MMM YYYY`. |
-| Effective End | Yes | Date | Blank rendered as `Open-ended` / localized equivalent. |
-| Authorization Count | Yes | Course filter | Count of currently effective active course authorizations. |
-| Next Assignment | Yes | No | Read-only nearest future assignment reference when available. |
-| Actions | No | No | Permission-filtered row menu. |
+| Column              | Sortable |    Filterable | Notes                                                                        |
+| ------------------- | -------: | ------------: | ---------------------------------------------------------------------------- |
+| Trainer Code        |      Yes |        Search | Sticky first data column on narrow widths.                                   |
+| Trainer Name        |      Yes |        Search | Localized Person display name; English/Arabic based on locale with fallback. |
+| Trainer Type        |      Yes |           Yes | Badge.                                                                       |
+| Primary Branch      |      Yes |           Yes | Display name from Organization context.                                      |
+| Specialization      |      Yes |        Search | Truncated to two lines with tooltip.                                         |
+| Status              |      Yes |           Yes | Status badge.                                                                |
+| Effective Start     |      Yes |          Date | `DD MMM YYYY`.                                                               |
+| Effective End       |      Yes |          Date | Blank rendered as `Open-ended` / localized equivalent.                       |
+| Authorization Count |      Yes | Course filter | Count of currently effective active course authorizations.                   |
+| Next Assignment     |      Yes |            No | Read-only nearest future assignment reference when available.                |
+| Actions             |       No |            No | Permission-filtered row menu.                                                |
 
 ### Sorting, Filtering, and Paging
 
@@ -230,17 +230,17 @@ Sticky Footer: Cancel | Save as Inactive | Create and Activate
 
 ### Form Fields and Exact Validations
 
-| Field | Type | Required | Validation |
-|---|---|---:|---|
-| Person | UUID reference | Yes | Must exist, be accessible through shared capability, not be soft-deleted, and not already be linked to a non-deleted TrainerProfile. |
-| Trainer Code | string | System/conditional | When manually allowed: `^[A-Z0-9][A-Z0-9\-]{2,19}$`; 3–20 chars; uppercase normalization; unique among non-deleted trainer profiles. Prefer NumberingSeries generation when configured. |
-| Trainer Type | enum | Yes | `FullTime`, `PartTime`, `Freelance`. |
-| Primary Branch | UUID reference | Yes | Must be in actor's authorized write scope and resolve to active branch. |
-| Specialization | string | Yes | Trimmed; 2–500 chars; must contain at least one letter in English or Arabic; reject control characters. |
-| Qualification Summary | textarea string | No | Maximum 1000 chars; trim leading/trailing whitespace; preserve internal line breaks; reject HTML markup. |
-| Effective Start Date | date | Yes | Valid ISO calendar date. |
-| Effective End Date | date | No | Must be greater than or equal to Effective Start Date. |
-| Initial Status | enum | Yes | Only `Inactive` or `Active`; `Suspended` is forbidden as initial state. |
+| Field                 | Type            |           Required | Validation                                                                                                                                                                              |
+| --------------------- | --------------- | -----------------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Person                | UUID reference  |                Yes | Must exist, be accessible through shared capability, not be soft-deleted, and not already be linked to a non-deleted TrainerProfile.                                                    |
+| Trainer Code          | string          | System/conditional | When manually allowed: `^[A-Z0-9][A-Z0-9\-]{2,19}$`; 3–20 chars; uppercase normalization; unique among non-deleted trainer profiles. Prefer NumberingSeries generation when configured. |
+| Trainer Type          | enum            |                Yes | `FullTime`, `PartTime`, `Freelance`.                                                                                                                                                    |
+| Primary Branch        | UUID reference  |                Yes | Must be in actor's authorized write scope and resolve to active branch.                                                                                                                 |
+| Specialization        | string          |                Yes | Trimmed; 2–500 chars; must contain at least one letter in English or Arabic; reject control characters.                                                                                 |
+| Qualification Summary | textarea string |                 No | Maximum 1000 chars; trim leading/trailing whitespace; preserve internal line breaks; reject HTML markup.                                                                                |
+| Effective Start Date  | date            |                Yes | Valid ISO calendar date.                                                                                                                                                                |
+| Effective End Date    | date            |                 No | Must be greater than or equal to Effective Start Date.                                                                                                                                  |
+| Initial Status        | enum            |                Yes | Only `Inactive` or `Active`; `Suspended` is forbidden as initial state.                                                                                                                 |
 
 ### Processing UI Behavior
 
@@ -320,15 +320,15 @@ Update TrainerProfile-owned fields while protecting Person ownership and concurr
 
 Editable fields:
 
-| Field | Validation |
-|---|---|
-| Trainer Type | Enum: FullTime, PartTime, Freelance. |
-| Primary Branch | Active branch within actor write scope. |
-| Specialization | Required, trimmed, 2–500 chars, at least one English/Arabic letter, no control characters. |
-| Qualification Summary | Optional, maximum 1000 chars, plain text only. |
-| Effective Start Date | Required valid date. |
-| Effective End Date | Optional; on or after start. |
-| Version | Hidden integer concurrency token; must equal current server version on update. |
+| Field                 | Validation                                                                                 |
+| --------------------- | ------------------------------------------------------------------------------------------ |
+| Trainer Type          | Enum: FullTime, PartTime, Freelance.                                                       |
+| Primary Branch        | Active branch within actor write scope.                                                    |
+| Specialization        | Required, trimmed, 2–500 chars, at least one English/Arabic letter, no control characters. |
+| Qualification Summary | Optional, maximum 1000 chars, plain text only.                                             |
+| Effective Start Date  | Required valid date.                                                                       |
+| Effective End Date    | Optional; on or after start.                                                               |
+| Version               | Hidden integer concurrency token; must equal current server version on update.             |
 
 Person-owned name, Civil ID, passport, visa, email, phone, nationality, and date-of-birth fields are not editable here. Provide a contextual link to the Person-owning workflow when the user has appropriate access.
 
@@ -352,21 +352,21 @@ Right-side drawer, 480–560 px on desktop; full-screen sheet on mobile.
 
 ### Fields
 
-| Field | Type | Required | Validation |
-|---|---|---:|---|
-| Current Status | readonly enum | Yes | Server value. |
-| Target Status | enum selector | Yes | Options derived from allowed transition matrix only. |
-| Effective Date | date | Yes | Valid date; must respect profile effective period. |
-| Reason | textarea | Conditional | Required for Active→Inactive, Active→Suspended, Suspended→Inactive; 10–1000 chars; plain text. |
-| Acknowledgement | checkbox | Conditional | Required when active/future assignment references are detected. |
+| Field           | Type          |    Required | Validation                                                                                     |
+| --------------- | ------------- | ----------: | ---------------------------------------------------------------------------------------------- |
+| Current Status  | readonly enum |         Yes | Server value.                                                                                  |
+| Target Status   | enum selector |         Yes | Options derived from allowed transition matrix only.                                           |
+| Effective Date  | date          |         Yes | Valid date; must respect profile effective period.                                             |
+| Reason          | textarea      | Conditional | Required for Active→Inactive, Active→Suspended, Suspended→Inactive; 10–1000 chars; plain text. |
+| Acknowledgement | checkbox      | Conditional | Required when active/future assignment references are detected.                                |
 
 ### Allowed UI Transitions
 
-| From | Visible Target Options |
-|---|---|
-| Inactive | Active |
-| Active | Inactive, Suspended |
-| Suspended | Active, Inactive |
+| From      | Visible Target Options |
+| --------- | ---------------------- |
+| Inactive  | Active                 |
+| Active    | Inactive, Suspended    |
+| Suspended | Active, Inactive       |
 
 ### Dynamic States
 
@@ -387,15 +387,15 @@ Right-side drawer, 480–560 px on desktop; full-screen sheet on mobile.
 
 ### Table Columns
 
-| Column | Sortable | Filterable |
-|---|---:|---:|
-| Qualification Name | Yes | Search |
-| Institution | Yes | Search |
-| Year Completed | Yes | Range |
-| Evidence Document | No | Present/Missing |
-| Verification Status | Yes | Status from Document Management |
-| Updated At | Yes | Date |
-| Actions | No | No |
+| Column              | Sortable |                      Filterable |
+| ------------------- | -------: | ------------------------------: |
+| Qualification Name  |      Yes |                          Search |
+| Institution         |      Yes |                          Search |
+| Year Completed      |      Yes |                           Range |
+| Evidence Document   |       No |                 Present/Missing |
+| Verification Status |      Yes | Status from Document Management |
+| Updated At          |      Yes |                            Date |
+| Actions             |       No |                              No |
 
 ### Behaviors
 
@@ -410,12 +410,12 @@ Right-side drawer, 480–560 px on desktop; full-screen sheet on mobile.
 
 ### Fields and Validation
 
-| Field | Type | Required | Validation |
-|---|---|---:|---|
-| Qualification Name | string | Yes | 2–200 chars; trimmed; at least one English or Arabic letter; no HTML. |
-| Institution | string | Yes | 2–200 chars; trimmed; no control characters. |
-| Year Completed | integer | Yes | Four-digit year; minimum 1900; maximum current Oman business calendar year. Regex for raw text input: `^(19\d{2}|20\d{2}|21\d{2})$`, followed by business maximum-year check. |
-| Evidence Document | UUID selector | No | Must reference an accessible Document record linked appropriately to the trainer/person according to Document Management rules. |
+| Field              | Type          | Required | Validation                                                                                                                      |
+| ------------------ | ------------- | -------: | ------------------------------------------------------------------------------------------------------------------------------- | ------- | ---------------------------------------------------- |
+| Qualification Name | string        |      Yes | 2–200 chars; trimmed; at least one English or Arabic letter; no HTML.                                                           |
+| Institution        | string        |      Yes | 2–200 chars; trimmed; no control characters.                                                                                    |
+| Year Completed     | integer       |      Yes | Four-digit year; minimum 1900; maximum current Oman business calendar year. Regex for raw text input: `^(19\d{2}                | 20\d{2} | 21\d{2})$`, followed by business maximum-year check. |
+| Evidence Document  | UUID selector |       No | Must reference an accessible Document record linked appropriately to the trainer/person according to Document Management rules. |
 
 ### Validation States
 
@@ -465,15 +465,15 @@ Below: Historical/Future availability table with date-range records
 
 ### Fields and Exact Validation
 
-| Field | Type | Required | Validation |
-|---|---|---:|---|
-| Branch | UUID selector | Yes | Active branch in authorized write scope. |
-| Day of Week | enum | Yes | Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday. |
-| Start Time | time | Yes | `HH:mm`, 24-hour normalized input; must be earlier than End Time. |
-| End Time | time | Yes | `HH:mm`; must be later than Start Time. |
-| Effective Start Date | date | Yes | Valid date. |
-| Effective End Date | date | No | Must be on or after Effective Start Date. |
-| Status / Active Control | boolean or enum | Yes | Active/Inactive control according to persistence model. |
+| Field                   | Type            | Required | Validation                                                        |
+| ----------------------- | --------------- | -------: | ----------------------------------------------------------------- |
+| Branch                  | UUID selector   |      Yes | Active branch in authorized write scope.                          |
+| Day of Week             | enum            |      Yes | Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday.   |
+| Start Time              | time            |      Yes | `HH:mm`, 24-hour normalized input; must be earlier than End Time. |
+| End Time                | time            |      Yes | `HH:mm`; must be later than Start Time.                           |
+| Effective Start Date    | date            |      Yes | Valid date.                                                       |
+| Effective End Date      | date            |       No | Must be on or after Effective Start Date.                         |
+| Status / Active Control | boolean or enum |      Yes | Active/Inactive control according to persistence model.           |
 
 ### UI Algorithm Before Submit
 
@@ -498,17 +498,17 @@ Toolbar with Course search, Status multi-select, Effective-on date, and `Authori
 
 ### Table Columns
 
-| Column | Sortable | Filterable |
-|---|---:|---:|
-| Course Code | Yes | Search |
-| Course Name | Yes | Search |
-| Status | Yes | Yes |
-| Effective Start | Yes | Date |
-| Effective End | Yes | Date |
-| Effective Now | Yes | Yes |
-| Last Changed By | Yes | No |
-| Last Changed At | Yes | Date |
-| Actions | No | No |
+| Column          | Sortable | Filterable |
+| --------------- | -------: | ---------: |
+| Course Code     |      Yes |     Search |
+| Course Name     |      Yes |     Search |
+| Status          |      Yes |        Yes |
+| Effective Start |      Yes |       Date |
+| Effective End   |      Yes |       Date |
+| Effective Now   |      Yes |        Yes |
+| Last Changed By |      Yes |         No |
+| Last Changed At |      Yes |       Date |
+| Actions         |       No |         No |
 
 ### State-Aware Actions
 
@@ -523,13 +523,13 @@ Toolbar with Course search, Status multi-select, Effective-on date, and `Authori
 
 ### Fields and Validation
 
-| Field | Type | Required | Validation |
-|---|---|---:|---|
-| Course | UUID selector | Yes | Must resolve to existing Course Catalog course. |
-| Effective Start Date | date | Yes | Valid date. |
-| Effective End Date | date | No | On or after start. |
-| Initial Status | enum | Yes | Inactive or Active for new authorization; transition actions govern existing records. |
-| Transition Reason | textarea | Conditional | Required for suspension and other rule-governed transitions; 10–1000 chars. |
+| Field                | Type          |    Required | Validation                                                                            |
+| -------------------- | ------------- | ----------: | ------------------------------------------------------------------------------------- |
+| Course               | UUID selector |         Yes | Must resolve to existing Course Catalog course.                                       |
+| Effective Start Date | date          |         Yes | Valid date.                                                                           |
+| Effective End Date   | date          |          No | On or after start.                                                                    |
+| Initial Status       | enum          |         Yes | Inactive or Active for new authorization; transition actions govern existing records. |
+| Transition Reason    | textarea      | Conditional | Required for suspension and other rule-governed transitions; 10–1000 chars.           |
 
 ### Processing Behavior
 
@@ -554,17 +554,17 @@ This tab is absent from navigation and no compensation API request is made unles
 
 ### Table Columns
 
-| Column | Sortable | Filterable | Notes |
-|---|---:|---:|---|
-| Payment Basis | Yes | Yes | Per Hour, Per Session, Per Student, Fixed. |
-| Amount | Yes | Range | Currency formatting; currency sourced from institute/finance configuration. |
-| Specificity | Yes | Yes | Session, Batch, Trainer. |
-| Batch Reference | Yes | Search | Optional. |
-| Session Reference | Yes | Search | Optional. |
-| Effective Start | Yes | Date | Required. |
-| Effective End | Yes | Date | Optional. |
-| Status | Yes | Yes | Effective/Inactive indicator. |
-| Actions | No | No | Manage permission required. |
+| Column            | Sortable | Filterable | Notes                                                                       |
+| ----------------- | -------: | ---------: | --------------------------------------------------------------------------- |
+| Payment Basis     |      Yes |        Yes | Per Hour, Per Session, Per Student, Fixed.                                  |
+| Amount            |      Yes |      Range | Currency formatting; currency sourced from institute/finance configuration. |
+| Specificity       |      Yes |        Yes | Session, Batch, Trainer.                                                    |
+| Batch Reference   |      Yes |     Search | Optional.                                                                   |
+| Session Reference |      Yes |     Search | Optional.                                                                   |
+| Effective Start   |      Yes |       Date | Required.                                                                   |
+| Effective End     |      Yes |       Date | Optional.                                                                   |
+| Status            |      Yes |        Yes | Effective/Inactive indicator.                                               |
+| Actions           |       No |         No | Manage permission required.                                                 |
 
 ### Dynamic States
 
@@ -578,16 +578,16 @@ This tab is absent from navigation and no compensation API request is made unles
 
 ### Fields and Exact Validation
 
-| Field | Type | Required | Validation |
-|---|---|---:|---|
-| Payment Basis | enum | Yes | `PerHour`, `PerSession`, `PerStudent`, `Fixed`. |
-| Amount | decimal | Yes | Greater than 0; maximum 999999999.999; precision and display rounding follow configured financial precision; reject scientific notation. Regex precheck: `^(?:0|[1-9]\d{0,8})(?:\.\d{1,3})?$`, followed by `amount > 0`. |
-| Specificity | enum | Yes | Trainer, Batch, Session. |
-| Batch | UUID reference | Conditional | Required for Batch specificity; must reference a valid relevant batch. |
-| Session | UUID reference | Conditional | Required for Session specificity; must reference valid session; session's batch context must be consistent. |
-| Effective Start Date | date | Yes | Valid date. |
-| Effective End Date | date | No | On or after start. |
-| Remarks | textarea | No | Maximum 1000 chars; plain text. |
+| Field                | Type           |    Required | Validation                                                                                                                                                      |
+| -------------------- | -------------- | ----------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| Payment Basis        | enum           |         Yes | `PerHour`, `PerSession`, `PerStudent`, `Fixed`.                                                                                                                 |
+| Amount               | decimal        |         Yes | Greater than 0; maximum 999999999.999; precision and display rounding follow configured financial precision; reject scientific notation. Regex precheck: `^(?:0 | [1-9]\d{0,8})(?:\.\d{1,3})?$`, followed by `amount > 0`. |
+| Specificity          | enum           |         Yes | Trainer, Batch, Session.                                                                                                                                        |
+| Batch                | UUID reference | Conditional | Required for Batch specificity; must reference a valid relevant batch.                                                                                          |
+| Session              | UUID reference | Conditional | Required for Session specificity; must reference valid session; session's batch context must be consistent.                                                     |
+| Effective Start Date | date           |         Yes | Valid date.                                                                                                                                                     |
+| Effective End Date   | date           |          No | On or after start.                                                                                                                                              |
+| Remarks              | textarea       |          No | Maximum 1000 chars; plain text.                                                                                                                                 |
 
 ### Specificity UI Rules
 
@@ -621,13 +621,13 @@ Optional Eligibility Detail Drawer
 
 ### Inputs and Exact Validation
 
-| Field | Type | Required | Validation |
-|---|---|---:|---|
-| Course | UUID selector | Yes | Existing Course reference. |
-| Branch | UUID selector | Yes | Within authorized operational branch scope. |
-| Date | date | Yes | Valid date. |
-| Start Time | time | Yes | Earlier than End Time. |
-| End Time | time | Yes | Later than Start Time; same-day interval only. |
+| Field      | Type          | Required | Validation                                     |
+| ---------- | ------------- | -------: | ---------------------------------------------- |
+| Course     | UUID selector |      Yes | Existing Course reference.                     |
+| Branch     | UUID selector |      Yes | Within authorized operational branch scope.    |
+| Date       | date          |      Yes | Valid date.                                    |
+| Start Time | time          |      Yes | Earlier than End Time.                         |
+| End Time   | time          |      Yes | Later than Start Time; same-day interval only. |
 
 ### Eligibility Result Columns
 
@@ -677,28 +677,28 @@ Two subtabs:
 
 ### Batch Assignment Table
 
-| Column | Sort | Filter |
-|---|---:|---:|
-| Batch Code | Yes | Search |
-| Course | Yes | Search |
-| Branch | Yes | Yes |
-| Role | Yes | Yes |
-| Assigned From | Yes | Date |
-| Assigned To | Yes | Date |
-| Status | Yes | Yes |
+| Column        | Sort | Filter |
+| ------------- | ---: | -----: |
+| Batch Code    |  Yes | Search |
+| Course        |  Yes | Search |
+| Branch        |  Yes |    Yes |
+| Role          |  Yes |    Yes |
+| Assigned From |  Yes |   Date |
+| Assigned To   |  Yes |   Date |
+| Status        |  Yes |    Yes |
 
 ### Session Assignment Table
 
-| Column | Sort | Filter |
-|---|---:|---:|
-| Session Number | Yes | Search |
-| Batch Code | Yes | Search |
-| Course | Yes | Search |
-| Session Date | Yes | Date |
-| Start Time | Yes | No |
-| End Time | Yes | No |
-| Classroom | Yes | Search |
-| Status | Yes | Yes |
+| Column         | Sort | Filter |
+| -------------- | ---: | -----: |
+| Session Number |  Yes | Search |
+| Batch Code     |  Yes | Search |
+| Course         |  Yes | Search |
+| Session Date   |  Yes |   Date |
+| Start Time     |  Yes |     No |
+| End Time       |  Yes |     No |
+| Classroom      |  Yes | Search |
+| Status         |  Yes |    Yes |
 
 No create, edit, reassignment, or delete control is available in this tab. Deep links to owning Training Delivery/Scheduling screens may be shown only when the actor has access to those modules.
 
@@ -762,13 +762,13 @@ Provide immutable audit visibility for authorized auditors and administrators.
 
 ### Filters
 
-| Field | Type | Validation |
-|---|---|---|
-| Action | enum/multi-select | Values supplied by audit projection. |
-| Entity Type | enum | TrainerProfile, TrainerQualification, TrainerAvailability, TrainerCourseAuthorization, TrainerCompensationRate. |
-| Actor | user reference selector | Accessible IAM user projection. |
-| Date From | datetime/date | Must be on or before Date To. |
-| Date To | datetime/date | Must be on or after Date From. |
+| Field       | Type                    | Validation                                                                                                      |
+| ----------- | ----------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Action      | enum/multi-select       | Values supplied by audit projection.                                                                            |
+| Entity Type | enum                    | TrainerProfile, TrainerQualification, TrainerAvailability, TrainerCourseAuthorization, TrainerCompensationRate. |
+| Actor       | user reference selector | Accessible IAM user projection.                                                                                 |
+| Date From   | datetime/date           | Must be on or before Date To.                                                                                   |
+| Date To     | datetime/date           | Must be on or after Date From.                                                                                  |
 
 ### Table Columns
 
@@ -902,14 +902,14 @@ Each summary entry focuses the failing control.
 
 ## 6.2 Loading Skeletons
 
-| UI Type | Skeleton Requirement |
-|---|---|
-| Directory/Report Table | Preserve header and render 10 skeleton rows. |
-| Profile Overview | Preserve profile header, 3 summary blocks, sidebar blocks, and tab strip. |
-| Drawer Form | Preserve label and input geometry; do not show fake values. |
-| Search Selector | 5 option-row skeletons with consistent dropdown height. |
-| Audit Diff | 6 field comparison rows. |
-| Eligibility Results | Criteria card remains interactive-disabled; 8 result rows. |
+| UI Type                | Skeleton Requirement                                                      |
+| ---------------------- | ------------------------------------------------------------------------- |
+| Directory/Report Table | Preserve header and render 10 skeleton rows.                              |
+| Profile Overview       | Preserve profile header, 3 summary blocks, sidebar blocks, and tab strip. |
+| Drawer Form            | Preserve label and input geometry; do not show fake values.               |
+| Search Selector        | 5 option-row skeletons with consistent dropdown height.                   |
+| Audit Diff             | 6 field comparison rows.                                                  |
+| Eligibility Results    | Criteria card remains interactive-disabled; 8 result rows.                |
 
 Skeletons shall not animate indefinitely after an error. Transition to explicit retry/error state.
 
@@ -925,25 +925,25 @@ Empty states shall distinguish:
 
 ## 6.4 Permission-Based Element Hiding
 
-| Permission | UI Behavior When Missing |
-|---|---|
-| `trainer.read` | Trainer directory and profile routes inaccessible. |
-| `trainer.create` | Create Trainer button and route hidden/inaccessible. |
-| `trainer.update` | Edit Profile button hidden; fields remain read-only. |
-| `trainer.status.manage` | Change Status action hidden. |
-| `trainer.qualification.read` | Qualifications tab hidden. |
-| `trainer.qualification.manage` | Add/Edit/Delete qualification controls hidden; read-only tab remains with read permission. |
-| `trainer.availability.read` | Availability tab hidden. |
-| `trainer.availability.manage` | Availability mutation controls hidden. |
-| `trainer.authorization.read` | Authorizations tab hidden. |
-| `trainer.authorization.manage` | Authorization mutation controls hidden. |
-| `trainer.compensation.read` | Compensation tab, amounts, filters, and network requests omitted. |
-| `trainer.compensation.manage` | Rate mutation controls hidden while read remains available. |
-| `trainer.eligibility.read` | Eligible Trainer Finder navigation and route inaccessible. |
-| `trainer.report.view` | Reports and dashboard navigation hidden. |
-| `trainer.report.export` | Export controls hidden. |
-| `trainer.audit.read` | Audit tab hidden and route inaccessible. |
-| `trainer.report.consolidated.view` | Consolidated scope option hidden; branch-level reporting remains constrained. |
+| Permission                         | UI Behavior When Missing                                                                   |
+| ---------------------------------- | ------------------------------------------------------------------------------------------ |
+| `trainer.read`                     | Trainer directory and profile routes inaccessible.                                         |
+| `trainer.create`                   | Create Trainer button and route hidden/inaccessible.                                       |
+| `trainer.update`                   | Edit Profile button hidden; fields remain read-only.                                       |
+| `trainer.status.manage`            | Change Status action hidden.                                                               |
+| `trainer.qualification.read`       | Qualifications tab hidden.                                                                 |
+| `trainer.qualification.manage`     | Add/Edit/Delete qualification controls hidden; read-only tab remains with read permission. |
+| `trainer.availability.read`        | Availability tab hidden.                                                                   |
+| `trainer.availability.manage`      | Availability mutation controls hidden.                                                     |
+| `trainer.authorization.read`       | Authorizations tab hidden.                                                                 |
+| `trainer.authorization.manage`     | Authorization mutation controls hidden.                                                    |
+| `trainer.compensation.read`        | Compensation tab, amounts, filters, and network requests omitted.                          |
+| `trainer.compensation.manage`      | Rate mutation controls hidden while read remains available.                                |
+| `trainer.eligibility.read`         | Eligible Trainer Finder navigation and route inaccessible.                                 |
+| `trainer.report.view`              | Reports and dashboard navigation hidden.                                                   |
+| `trainer.report.export`            | Export controls hidden.                                                                    |
+| `trainer.audit.read`               | Audit tab hidden and route inaccessible.                                                   |
+| `trainer.report.consolidated.view` | Consolidated scope option hidden; branch-level reporting remains constrained.              |
 
 ### Security Note
 
@@ -1087,56 +1087,56 @@ DOM/tab order shall follow the locale's logical reading order and remain keyboar
 
 # 9. Screen-to-Requirement Traceability
 
-| Screen | Functional Requirements Covered |
-|---|---|
-| FTM-UI-001 Trainer Directory | FR-FTM-001, FR-FTM-019 |
-| FTM-UI-002 Create Trainer Profile | FR-FTM-002, FR-FTM-018, FR-FTM-019, FR-FTM-020 |
-| FTM-UI-003 Trainer Profile Overview | FR-FTM-003, FR-FTM-015, FR-FTM-019 |
-| FTM-UI-004 Edit Trainer Profile | FR-FTM-004, FR-FTM-018, FR-FTM-020 |
-| FTM-UI-005 Status Management | FR-FTM-005, FR-FTM-015, FR-FTM-018, FR-FTM-020 |
-| FTM-UI-006/007 Qualifications | FR-FTM-006, FR-FTM-016, FR-FTM-018 |
-| FTM-UI-008/009 Availability | FR-FTM-007, FR-FTM-008, FR-FTM-014, FR-FTM-016, FR-FTM-018 |
-| FTM-UI-010/011 Authorizations | FR-FTM-009, FR-FTM-016, FR-FTM-018, FR-FTM-020 |
-| FTM-UI-012/013 Compensation | FR-FTM-011, FR-FTM-012, FR-FTM-016, FR-FTM-018 |
-| FTM-UI-014 Eligible Trainer Finder | FR-FTM-010, FR-FTM-013, FR-FTM-014, FR-FTM-019 |
-| FTM-UI-015 Assignment References | FR-FTM-015, FR-FTM-019 |
-| FTM-UI-016 Trainer Reports | FR-FTM-017, FR-FTM-019 |
-| FTM-UI-017 Audit History | FR-FTM-018, FR-FTM-019 |
-| FTM-UI-018 Admin Portal Dashboard | FR-FTM-017, FR-FTM-019 |
+| Screen                              | Functional Requirements Covered                            |
+| ----------------------------------- | ---------------------------------------------------------- |
+| FTM-UI-001 Trainer Directory        | FR-FTM-001, FR-FTM-019                                     |
+| FTM-UI-002 Create Trainer Profile   | FR-FTM-002, FR-FTM-018, FR-FTM-019, FR-FTM-020             |
+| FTM-UI-003 Trainer Profile Overview | FR-FTM-003, FR-FTM-015, FR-FTM-019                         |
+| FTM-UI-004 Edit Trainer Profile     | FR-FTM-004, FR-FTM-018, FR-FTM-020                         |
+| FTM-UI-005 Status Management        | FR-FTM-005, FR-FTM-015, FR-FTM-018, FR-FTM-020             |
+| FTM-UI-006/007 Qualifications       | FR-FTM-006, FR-FTM-016, FR-FTM-018                         |
+| FTM-UI-008/009 Availability         | FR-FTM-007, FR-FTM-008, FR-FTM-014, FR-FTM-016, FR-FTM-018 |
+| FTM-UI-010/011 Authorizations       | FR-FTM-009, FR-FTM-016, FR-FTM-018, FR-FTM-020             |
+| FTM-UI-012/013 Compensation         | FR-FTM-011, FR-FTM-012, FR-FTM-016, FR-FTM-018             |
+| FTM-UI-014 Eligible Trainer Finder  | FR-FTM-010, FR-FTM-013, FR-FTM-014, FR-FTM-019             |
+| FTM-UI-015 Assignment References    | FR-FTM-015, FR-FTM-019                                     |
+| FTM-UI-016 Trainer Reports          | FR-FTM-017, FR-FTM-019                                     |
+| FTM-UI-017 Audit History            | FR-FTM-018, FR-FTM-019                                     |
+| FTM-UI-018 Admin Portal Dashboard   | FR-FTM-017, FR-FTM-019                                     |
 
 ---
 
 # 10. UI Business Rule Enforcement Matrix
 
-| Rule | UI Enforcement |
-|---|---|
-| BR-FTM-001 | Person selector flags already-linked Person; server remains authoritative. |
-| BR-FTM-003 | Trainer Code format and duplicate conflict are surfaced during creation. |
-| BR-FTM-004 | Trainer Type selectors expose only supported values. |
-| BR-FTM-006 | Status drawer exposes only allowed target states. |
-| BR-FTM-007 | Create form excludes Suspended initial state. |
-| BR-FTM-009 | Shared effective date component validates end ≥ start. |
-| BR-FTM-011 | Qualification year maximum follows current Oman business year. |
-| BR-FTM-014 | Availability drawer rejects same-time, reverse-time, and cross-midnight single records. |
-| BR-FTM-015 | Overlap conflict displays conflicting availability record. |
-| BR-FTM-020 | Authorization create/edit displays overlapping effective authorization error. |
-| BR-FTM-021 | Expired authorization is shown ineffective and cannot be reactivated. |
-| BR-FTM-024 | Compensation basis exposes exactly four supported values. |
-| BR-FTM-025 | Amount requires positive configured-precision decimal value. |
-| BR-FTM-026 | Compensation tab and API access are separately permission guarded. |
-| BR-FTM-027 | Ambiguous same-specificity rate overlap is blocked with conflict message. |
+| Rule       | UI Enforcement                                                                                    |
+| ---------- | ------------------------------------------------------------------------------------------------- |
+| BR-FTM-001 | Person selector flags already-linked Person; server remains authoritative.                        |
+| BR-FTM-003 | Trainer Code format and duplicate conflict are surfaced during creation.                          |
+| BR-FTM-004 | Trainer Type selectors expose only supported values.                                              |
+| BR-FTM-006 | Status drawer exposes only allowed target states.                                                 |
+| BR-FTM-007 | Create form excludes Suspended initial state.                                                     |
+| BR-FTM-009 | Shared effective date component validates end ≥ start.                                            |
+| BR-FTM-011 | Qualification year maximum follows current Oman business year.                                    |
+| BR-FTM-014 | Availability drawer rejects same-time, reverse-time, and cross-midnight single records.           |
+| BR-FTM-015 | Overlap conflict displays conflicting availability record.                                        |
+| BR-FTM-020 | Authorization create/edit displays overlapping effective authorization error.                     |
+| BR-FTM-021 | Expired authorization is shown ineffective and cannot be reactivated.                             |
+| BR-FTM-024 | Compensation basis exposes exactly four supported values.                                         |
+| BR-FTM-025 | Amount requires positive configured-precision decimal value.                                      |
+| BR-FTM-026 | Compensation tab and API access are separately permission guarded.                                |
+| BR-FTM-027 | Ambiguous same-specificity rate overlap is blocked with conflict message.                         |
 | BR-FTM-028 | Rate resolution detail, when shown, labels selected specificity order: Session → Batch → Trainer. |
-| BR-FTM-030 | Trainer deletion attempt with active/future references is blocked with impact panel. |
-| BR-FTM-031 | UI uses soft remove/deactivate language and provides no hard-delete path. |
-| BR-FTM-034 | Branch selector options are authorization-scoped and server queries remain scoped. |
-| BR-FTM-035 | Manually altered branch parameters do not grant access; server denial is rendered safely. |
-| BR-FTM-036 | Consolidated reporting option appears only with combined permission and branch visibility. |
-| BR-FTM-037 | Edit screen carries version token and handles conflict explicitly. |
-| BR-FTM-038 | Person-owned fields are read-only in TrainerProfile edit UI. |
-| BR-FTM-039 | Assignment tab is read-only with links to owning context. |
-| BR-FTM-041 | Document verification status is read-only in qualification UI. |
-| BR-FTM-044 | Person localized display values come from shared Person projection. |
-| BR-FTM-045 | Dates and times display in Oman GST by default. |
+| BR-FTM-030 | Trainer deletion attempt with active/future references is blocked with impact panel.              |
+| BR-FTM-031 | UI uses soft remove/deactivate language and provides no hard-delete path.                         |
+| BR-FTM-034 | Branch selector options are authorization-scoped and server queries remain scoped.                |
+| BR-FTM-035 | Manually altered branch parameters do not grant access; server denial is rendered safely.         |
+| BR-FTM-036 | Consolidated reporting option appears only with combined permission and branch visibility.        |
+| BR-FTM-037 | Edit screen carries version token and handles conflict explicitly.                                |
+| BR-FTM-038 | Person-owned fields are read-only in TrainerProfile edit UI.                                      |
+| BR-FTM-039 | Assignment tab is read-only with links to owning context.                                         |
+| BR-FTM-041 | Document verification status is read-only in qualification UI.                                    |
+| BR-FTM-044 | Person localized display values come from shared Person projection.                               |
+| BR-FTM-045 | Dates and times display in Oman GST by default.                                                   |
 
 ---
 

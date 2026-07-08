@@ -20,8 +20,13 @@ export class UpdateExamCommandHandler {
       throw new ExamInvalidStateError(`Exam ${input.examId} not found`);
     }
 
-    if (exam.status !== EXAM_STATUSES.DRAFT && exam.status !== EXAM_STATUSES.SCHEDULED) {
-      throw new ExamInvalidStateError(`Cannot update exam in status: ${exam.status}`);
+    if (
+      exam.status !== EXAM_STATUSES.DRAFT &&
+      exam.status !== EXAM_STATUSES.SCHEDULED
+    ) {
+      throw new ExamInvalidStateError(
+        `Cannot update exam in status: ${exam.status}`,
+      );
     }
 
     const aggregate = new ExamAggregate(exam);

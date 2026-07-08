@@ -4,7 +4,9 @@ import { Home, Layers, PlayCircle } from 'lucide-react';
 import { prisma } from '@ims/database';
 import { EvaluateForm } from './_components/evaluate-form';
 
-export const metadata = { title: 'Evaluate Course Completion - Admin Portal | ASTI IMS' };
+export const metadata = {
+  title: 'Evaluate Course Completion - Admin Portal | ASTI IMS',
+};
 
 export default async function EvaluateCompletionPage() {
   await assertPermission('completion.evaluate');
@@ -26,10 +28,10 @@ export default async function EvaluateCompletionPage() {
     orderBy: { createdAt: 'desc' },
   });
 
-  const formattedEnrollments = enrollments.map(e => ({
+  const formattedEnrollments = enrollments.map((e) => ({
     id: e.id,
     enrollmentNumber: e.enrollmentNumber,
-    studentName: e.studentProfile?.person 
+    studentName: e.studentProfile?.person
       ? `${e.studentProfile.person.firstName} ${e.studentProfile.person.lastName}`
       : 'Unknown Student',
     courseName: e.course?.nameEnglish || 'Unknown Course',
@@ -44,9 +46,20 @@ export default async function EvaluateCompletionPage() {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5" /> },
-              { label: 'Completions', href: '/exam-completion/completions', icon: <Layers className="h-3.5 w-3.5" /> },
-              { label: 'Evaluate', icon: <PlayCircle className="h-3.5 w-3.5" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5" />,
+              },
+              {
+                label: 'Completions',
+                href: '/exam-completion/completions',
+                icon: <Layers className="h-3.5 w-3.5" />,
+              },
+              {
+                label: 'Evaluate',
+                icon: <PlayCircle className="h-3.5 w-3.5" />,
+              },
             ]}
           />
         }

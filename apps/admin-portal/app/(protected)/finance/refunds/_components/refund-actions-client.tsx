@@ -5,7 +5,11 @@ import { createPortal } from 'react-dom';
 import { Button, Input } from '@ims/shared-ui';
 import { CheckCircle2, XCircle, Play, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
-import { approveRefundAction, rejectRefundAction, executeRefundAction } from '../actions';
+import {
+  approveRefundAction,
+  rejectRefundAction,
+  executeRefundAction,
+} from '../actions';
 
 interface RefundActionsClientProps {
   refundId: string;
@@ -13,9 +17,15 @@ interface RefundActionsClientProps {
   refundNumber: string;
 }
 
-export function RefundActionsClient({ refundId, status, refundNumber }: RefundActionsClientProps) {
+export function RefundActionsClient({
+  refundId,
+  status,
+  refundNumber,
+}: RefundActionsClientProps) {
   const [loading, setLoading] = useState(false);
-  const [showReasonModal, setShowReasonModal] = useState<'approve' | 'reject' | 'execute' | null>(null);
+  const [showReasonModal, setShowReasonModal] = useState<
+    'approve' | 'reject' | 'execute' | null
+  >(null);
   const [inputValue, setInputValue] = useState('');
 
   const handleAction = async () => {
@@ -25,7 +35,10 @@ export function RefundActionsClient({ refundId, status, refundNumber }: RefundAc
     try {
       let res;
       if (showReasonModal === 'approve') {
-        res = await approveRefundAction(refundId, inputValue || 'Approved by administrator');
+        res = await approveRefundAction(
+          refundId,
+          inputValue || 'Approved by administrator',
+        );
       } else if (showReasonModal === 'reject') {
         if (!inputValue.trim()) {
           toast.error('Please enter a reason for rejection');
@@ -35,7 +48,9 @@ export function RefundActionsClient({ refundId, status, refundNumber }: RefundAc
         res = await rejectRefundAction(refundId, inputValue);
       } else if (showReasonModal === 'execute') {
         if (!inputValue.trim()) {
-          toast.error('Please enter an execution reference (e.g., bank transfer reference)');
+          toast.error(
+            'Please enter an execution reference (e.g., bank transfer reference)',
+          );
           setLoading(false);
           return;
         }
@@ -64,7 +79,10 @@ export function RefundActionsClient({ refundId, status, refundNumber }: RefundAc
           size="sm"
           variant="outline"
           className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 border-emerald-200"
-          onClick={() => { setInputValue(''); setShowReasonModal('approve'); }}
+          onClick={() => {
+            setInputValue('');
+            setShowReasonModal('approve');
+          }}
         >
           <CheckCircle2 className="h-3.5 w-3.5 mr-1" /> Approve
         </Button>
@@ -72,13 +90,20 @@ export function RefundActionsClient({ refundId, status, refundNumber }: RefundAc
           size="sm"
           variant="outline"
           className="text-rose-600 hover:text-rose-700 hover:bg-rose-50 border-rose-200"
-          onClick={() => { setInputValue(''); setShowReasonModal('reject'); }}
+          onClick={() => {
+            setInputValue('');
+            setShowReasonModal('reject');
+          }}
         >
           <XCircle className="h-3.5 w-3.5 mr-1" /> Reject
         </Button>
 
         <Modal
-          title={showReasonModal === 'approve' ? 'Approve Refund Request' : 'Reject Refund Request'}
+          title={
+            showReasonModal === 'approve'
+              ? 'Approve Refund Request'
+              : 'Reject Refund Request'
+          }
           isOpen={showReasonModal === 'approve' || showReasonModal === 'reject'}
           onClose={() => setShowReasonModal(null)}
         >
@@ -89,20 +114,33 @@ export function RefundActionsClient({ refundId, status, refundNumber }: RefundAc
                 : 'Please enter the reason for rejecting this refund request:'}
             </p>
             <Input
-              placeholder={showReasonModal === 'approve' ? 'Approval remarks...' : 'Reason for rejection (required)...'}
+              placeholder={
+                showReasonModal === 'approve'
+                  ? 'Approval remarks...'
+                  : 'Reason for rejection (required)...'
+              }
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               className="w-full"
             />
             <div className="flex justify-end gap-2 pt-2">
-              <Button variant="outline" size="sm" onClick={() => setShowReasonModal(null)} disabled={loading}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowReasonModal(null)}
+                disabled={loading}
+              >
                 Cancel
               </Button>
               <Button
                 size="sm"
                 onClick={handleAction}
                 disabled={loading}
-                className={showReasonModal === 'approve' ? 'bg-emerald-600 hover:bg-emerald-700 text-white' : 'bg-rose-600 hover:bg-rose-700 text-white'}
+                className={
+                  showReasonModal === 'approve'
+                    ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                    : 'bg-rose-600 hover:bg-rose-700 text-white'
+                }
               >
                 {loading ? 'Processing...' : 'Confirm'}
               </Button>
@@ -119,7 +157,10 @@ export function RefundActionsClient({ refundId, status, refundNumber }: RefundAc
         <Button
           size="sm"
           className="bg-indigo-600 hover:bg-indigo-700 text-white"
-          onClick={() => { setInputValue(''); setShowReasonModal('execute'); }}
+          onClick={() => {
+            setInputValue('');
+            setShowReasonModal('execute');
+          }}
         >
           <Play className="h-3.5 w-3.5 mr-1" /> Execute
         </Button>
@@ -131,7 +172,8 @@ export function RefundActionsClient({ refundId, status, refundNumber }: RefundAc
         >
           <div className="space-y-4 py-2">
             <p className="text-xs text-slate-500">
-              Enter the bank transaction or cheque execution reference to mark the refund as executed:
+              Enter the bank transaction or cheque execution reference to mark
+              the refund as executed:
             </p>
             <Input
               placeholder="Execution reference number (required)..."
@@ -140,10 +182,20 @@ export function RefundActionsClient({ refundId, status, refundNumber }: RefundAc
               className="w-full"
             />
             <div className="flex justify-end gap-2 pt-2">
-              <Button variant="outline" size="sm" onClick={() => setShowReasonModal(null)} disabled={loading}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowReasonModal(null)}
+                disabled={loading}
+              >
                 Cancel
               </Button>
-              <Button size="sm" onClick={handleAction} disabled={loading} className="bg-indigo-600 hover:bg-indigo-700 text-white">
+              <Button
+                size="sm"
+                onClick={handleAction}
+                disabled={loading}
+                className="bg-indigo-600 hover:bg-indigo-700 text-white"
+              >
                 {loading ? 'Processing...' : 'Confirm Execution'}
               </Button>
             </div>
@@ -216,6 +268,6 @@ function Modal({
         <div className="p-4">{children}</div>
       </div>
     </div>,
-    document.body
+    document.body,
   );
 }

@@ -11,7 +11,7 @@ export type ForgotPasswordState = {
 
 export async function requestPasswordResetAction(
   prevState: ForgotPasswordState,
-  formData: FormData
+  formData: FormData,
 ): Promise<ForgotPasswordState> {
   const email = formData.get('email') as string;
 
@@ -28,7 +28,10 @@ export async function requestPasswordResetAction(
       success: true,
     };
   } catch (error: unknown) {
-    if (error instanceof Error && (error.name === 'IamError' || 'errorCode' in error)) {
+    if (
+      error instanceof Error &&
+      (error.name === 'IamError' || 'errorCode' in error)
+    ) {
       return {
         error: (error as any).messageEn || error.message,
       };

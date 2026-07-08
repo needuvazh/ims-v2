@@ -16,7 +16,10 @@ vi.mock('../../../../../lib/runtime', () => ({
 
 vi.mock('../../../../../lib/observability', () => ({
   applyObservabilityResponseHeaders: vi.fn(),
-  withRouteObservability: async (_headers: Headers, handler: () => Promise<Response>) => handler(),
+  withRouteObservability: async (
+    _headers: Headers,
+    handler: () => Promise<Response>,
+  ) => handler(),
   createStructuredLogger: () => ({ info: vi.fn(), error: vi.fn() }),
   getCurrentRequestContext: () => ({}),
 }));
@@ -37,10 +40,12 @@ describe('CRM lead detail API routes', () => {
           permissions: ['lead.read', 'crm.leads.read.all'],
           activeBranchId: '11111111-1111-1111-1111-111111111111',
         },
-      })
+      }),
     );
 
-    resolveAllowedBranchesMock.mockResolvedValue(['11111111-1111-1111-1111-111111111111']);
+    resolveAllowedBranchesMock.mockResolvedValue([
+      '11111111-1111-1111-1111-111111111111',
+    ]);
 
     getLeadByIdMock.mockResolvedValue({
       id: 'lead-123',
@@ -60,9 +65,12 @@ describe('CRM lead detail API routes', () => {
     });
 
     const { GET } = await import('./route');
-    const response = await GET(new Request('http://localhost/api/v1/crm/leads/lead-123'), {
-      params: Promise.resolve({ id: 'lead-123' }),
-    });
+    const response = await GET(
+      new Request('http://localhost/api/v1/crm/leads/lead-123'),
+      {
+        params: Promise.resolve({ id: 'lead-123' }),
+      },
+    );
 
     const body = await response.json();
     expect(response.status).toBe(200);
@@ -80,10 +88,12 @@ describe('CRM lead detail API routes', () => {
           permissions: ['lead.delete'],
           activeBranchId: '11111111-1111-1111-1111-111111111111',
         },
-      })
+      }),
     );
 
-    resolveAllowedBranchesMock.mockResolvedValue(['11111111-1111-1111-1111-111111111111']);
+    resolveAllowedBranchesMock.mockResolvedValue([
+      '11111111-1111-1111-1111-111111111111',
+    ]);
 
     getLeadByIdMock.mockResolvedValue({
       id: 'lead-123',
@@ -92,9 +102,14 @@ describe('CRM lead detail API routes', () => {
     });
 
     const { DELETE } = await import('./route');
-    const response = await DELETE(new Request('http://localhost/api/v1/crm/leads/lead-123', { method: 'DELETE' }), {
-      params: Promise.resolve({ id: 'lead-123' }),
-    });
+    const response = await DELETE(
+      new Request('http://localhost/api/v1/crm/leads/lead-123', {
+        method: 'DELETE',
+      }),
+      {
+        params: Promise.resolve({ id: 'lead-123' }),
+      },
+    );
 
     const body = await response.json();
     expect(response.status).toBe(403);
@@ -111,10 +126,12 @@ describe('CRM lead detail API routes', () => {
           permissions: ['lead.delete', 'crm.leads.read.all'],
           activeBranchId: '11111111-1111-1111-1111-111111111111',
         },
-      })
+      }),
     );
 
-    resolveAllowedBranchesMock.mockResolvedValue(['11111111-1111-1111-1111-111111111111']);
+    resolveAllowedBranchesMock.mockResolvedValue([
+      '11111111-1111-1111-1111-111111111111',
+    ]);
 
     getLeadByIdMock.mockResolvedValue({
       id: 'lead-123',
@@ -125,9 +142,14 @@ describe('CRM lead detail API routes', () => {
     deleteLeadMock.mockResolvedValue({ success: true });
 
     const { DELETE } = await import('./route');
-    const response = await DELETE(new Request('http://localhost/api/v1/crm/leads/lead-123', { method: 'DELETE' }), {
-      params: Promise.resolve({ id: 'lead-123' }),
-    });
+    const response = await DELETE(
+      new Request('http://localhost/api/v1/crm/leads/lead-123', {
+        method: 'DELETE',
+      }),
+      {
+        params: Promise.resolve({ id: 'lead-123' }),
+      },
+    );
 
     const body = await response.json();
     expect(response.status).toBe(200);

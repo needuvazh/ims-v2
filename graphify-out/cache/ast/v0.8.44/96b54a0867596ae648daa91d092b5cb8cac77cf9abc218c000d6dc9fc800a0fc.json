@@ -1,1 +1,159 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_student_profile_lookup_specs_student_profile_lookup_spec_md", "label": "spec.md", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md", "source_location": "L1"}, {"id": "student_profile_lookup_spec_added_requirements", "label": "ADDED Requirements", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md", "source_location": "L1"}, {"id": "student_profile_lookup_spec_requirement_student_profile_search_lookup_modes", "label": "Requirement: Student Profile Search (Lookup Modes)", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md", "source_location": "L3"}, {"id": "student_profile_lookup_spec_scenario_search_within_active_branch_scope", "label": "Scenario: Search within active branch scope", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md", "source_location": "L8"}, {"id": "student_profile_lookup_spec_scenario_global_deduplication_check", "label": "Scenario: Global deduplication check", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md", "source_location": "L12"}, {"id": "student_profile_lookup_spec_requirement_student_profile_selection_invariants", "label": "Requirement: Student Profile Selection Invariants", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md", "source_location": "L19"}, {"id": "student_profile_lookup_spec_scenario_reject_inactive_suspended_or_deleted_profile_selection", "label": "Scenario: Reject inactive, suspended, or deleted profile selection", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md", "source_location": "L22"}, {"id": "student_profile_lookup_spec_requirement_student_lookup_security_audited_reveal", "label": "Requirement: Student Lookup Security & Audited Reveal", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md", "source_location": "L28"}, {"id": "student_profile_lookup_spec_scenario_mask_sensitive_contact_details_by_default", "label": "Scenario: Mask sensitive contact details by default", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md", "source_location": "L31"}, {"id": "student_profile_lookup_spec_scenario_audited_reveal_of_sensitive_contact_details", "label": "Scenario: Audited reveal of sensitive contact details", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md", "source_location": "L35"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_student_profile_lookup_specs_student_profile_lookup_spec_md", "target": "student_profile_lookup_spec_added_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md", "source_location": "L1", "weight": 1.0}, {"source": "student_profile_lookup_spec_added_requirements", "target": "student_profile_lookup_spec_requirement_student_profile_search_lookup_modes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md", "source_location": "L3", "weight": 1.0}, {"source": "student_profile_lookup_spec_requirement_student_profile_search_lookup_modes", "target": "student_profile_lookup_spec_scenario_search_within_active_branch_scope", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md", "source_location": "L8", "weight": 1.0}, {"source": "student_profile_lookup_spec_requirement_student_profile_search_lookup_modes", "target": "student_profile_lookup_spec_scenario_global_deduplication_check", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md", "source_location": "L12", "weight": 1.0}, {"source": "student_profile_lookup_spec_added_requirements", "target": "student_profile_lookup_spec_requirement_student_profile_selection_invariants", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md", "source_location": "L19", "weight": 1.0}, {"source": "student_profile_lookup_spec_requirement_student_profile_selection_invariants", "target": "student_profile_lookup_spec_scenario_reject_inactive_suspended_or_deleted_profile_selection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md", "source_location": "L22", "weight": 1.0}, {"source": "student_profile_lookup_spec_added_requirements", "target": "student_profile_lookup_spec_requirement_student_lookup_security_audited_reveal", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md", "source_location": "L28", "weight": 1.0}, {"source": "student_profile_lookup_spec_requirement_student_lookup_security_audited_reveal", "target": "student_profile_lookup_spec_scenario_mask_sensitive_contact_details_by_default", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md", "source_location": "L31", "weight": 1.0}, {"source": "student_profile_lookup_spec_requirement_student_lookup_security_audited_reveal", "target": "student_profile_lookup_spec_scenario_audited_reveal_of_sensitive_contact_details", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md", "source_location": "L35", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_student_profile_lookup_specs_student_profile_lookup_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "student_profile_lookup_spec_added_requirements",
+      "label": "ADDED Requirements",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "student_profile_lookup_spec_requirement_student_profile_search_lookup_modes",
+      "label": "Requirement: Student Profile Search (Lookup Modes)",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "student_profile_lookup_spec_scenario_search_within_active_branch_scope",
+      "label": "Scenario: Search within active branch scope",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md",
+      "source_location": "L8"
+    },
+    {
+      "id": "student_profile_lookup_spec_scenario_global_deduplication_check",
+      "label": "Scenario: Global deduplication check",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md",
+      "source_location": "L12"
+    },
+    {
+      "id": "student_profile_lookup_spec_requirement_student_profile_selection_invariants",
+      "label": "Requirement: Student Profile Selection Invariants",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md",
+      "source_location": "L19"
+    },
+    {
+      "id": "student_profile_lookup_spec_scenario_reject_inactive_suspended_or_deleted_profile_selection",
+      "label": "Scenario: Reject inactive, suspended, or deleted profile selection",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md",
+      "source_location": "L22"
+    },
+    {
+      "id": "student_profile_lookup_spec_requirement_student_lookup_security_audited_reveal",
+      "label": "Requirement: Student Lookup Security & Audited Reveal",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md",
+      "source_location": "L28"
+    },
+    {
+      "id": "student_profile_lookup_spec_scenario_mask_sensitive_contact_details_by_default",
+      "label": "Scenario: Mask sensitive contact details by default",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md",
+      "source_location": "L31"
+    },
+    {
+      "id": "student_profile_lookup_spec_scenario_audited_reveal_of_sensitive_contact_details",
+      "label": "Scenario: Audited reveal of sensitive contact details",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md",
+      "source_location": "L35"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_student_profile_lookup_specs_student_profile_lookup_spec_md",
+      "target": "student_profile_lookup_spec_added_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "student_profile_lookup_spec_added_requirements",
+      "target": "student_profile_lookup_spec_requirement_student_profile_search_lookup_modes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "student_profile_lookup_spec_requirement_student_profile_search_lookup_modes",
+      "target": "student_profile_lookup_spec_scenario_search_within_active_branch_scope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "student_profile_lookup_spec_requirement_student_profile_search_lookup_modes",
+      "target": "student_profile_lookup_spec_scenario_global_deduplication_check",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "student_profile_lookup_spec_added_requirements",
+      "target": "student_profile_lookup_spec_requirement_student_profile_selection_invariants",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "student_profile_lookup_spec_requirement_student_profile_selection_invariants",
+      "target": "student_profile_lookup_spec_scenario_reject_inactive_suspended_or_deleted_profile_selection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "student_profile_lookup_spec_added_requirements",
+      "target": "student_profile_lookup_spec_requirement_student_lookup_security_audited_reveal",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "student_profile_lookup_spec_requirement_student_lookup_security_audited_reveal",
+      "target": "student_profile_lookup_spec_scenario_mask_sensitive_contact_details_by_default",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "student_profile_lookup_spec_requirement_student_lookup_security_audited_reveal",
+      "target": "student_profile_lookup_spec_scenario_audited_reveal_of_sensitive_contact_details",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/student-profile-lookup/specs/student-profile-lookup/spec.md",
+      "source_location": "L35",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

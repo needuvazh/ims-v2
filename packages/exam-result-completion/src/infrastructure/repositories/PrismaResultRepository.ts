@@ -35,7 +35,10 @@ export class PrismaResultRepository implements ResultRepository {
     return records.map(this.toDomain);
   }
 
-  async findByExamAndEnrollment(examId: string, enrollmentId: string): Promise<Result | null> {
+  async findByExamAndEnrollment(
+    examId: string,
+    enrollmentId: string,
+  ): Promise<Result | null> {
     const record = await this.prisma.result.findFirst({
       where: {
         examId,
@@ -62,8 +65,8 @@ export class PrismaResultRepository implements ResultRepository {
           where: { id: result.id },
           update: this.toPrismaUpdate(result),
           create: this.toPrismaCreate(result),
-        })
-      )
+        }),
+      ),
     );
   }
 

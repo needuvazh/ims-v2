@@ -20,7 +20,9 @@ vi.mock('../../../lib/runtime', () => ({
 vi.mock('./crm-dashboard-charts', () => ({
   LeadsByStageChart: () => <div data-testid="leads-by-stage-chart" />,
   LeadsBySourceChart: () => <div data-testid="leads-by-source-chart" />,
-  CounselorPerformanceChart: () => <div data-testid="counselor-performance-chart" />,
+  CounselorPerformanceChart: () => (
+    <div data-testid="counselor-performance-chart" />
+  ),
 }));
 
 describe('CrmDashboardPage', () => {

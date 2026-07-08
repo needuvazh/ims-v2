@@ -15,9 +15,11 @@ IMS currently has no shared observability layer, so request tracing, structured 
 ## Capabilities
 
 ### New Capabilities
+
 - `observability`: shared tracing, structured logging, metrics, request correlation, and response trace headers for IMS portals and API routes.
 
 ### Modified Capabilities
+
 - None.
 
 ## Impact

@@ -1182,68 +1182,68 @@ Document Management shall not assume ownership of certificates, invoices, receip
 
 ## 4. Business Rules
 
-| Rule ID | Business Rule |
-|---|---|
-| BR-DOC-001 | Every Document must reference exactly one owner using `ownerType` and `ownerId`. |
-| BR-DOC-002 | Supported current owner types are Student, Trainer, Corporate, and Person. Employee is enabled only after HRMS provides an owned employee reference. |
-| BR-DOC-003 | A Document must not duplicate source owner identity fields as a new source of truth. |
-| BR-DOC-004 | A document owner must exist and must not be soft deleted at the time a new document is registered. |
-| BR-DOC-005 | User must have permission for the requested document action. |
-| BR-DOC-006 | User must have branch access to the document owner; knowing documentId is not sufficient access. |
-| BR-DOC-007 | Parent/child/consolidated branch access follows IAM rules; Document Management must not implement separate branch-role logic. |
-| BR-DOC-008 | Document type must be valid and active according to Configuration/Master Data or the actual schema relation. |
-| BR-DOC-009 | File binary is stored in Vercel Blob; document lifecycle metadata remains in the IMS database. |
-| BR-DOC-010 | A successful Blob upload must not be treated as a successfully registered business Document until metadata persistence succeeds. |
-| BR-DOC-011 | A failed Blob upload must not create an active Document with a broken file reference. |
-| BR-DOC-012 | Blob/database dual-write inconsistencies must be compensatable or reconcilable. |
-| BR-DOC-013 | `uploadedBy` is derived from the authenticated user, not accepted as trusted client input. |
-| BR-DOC-014 | Where issueDate and expiryDate are both present, expiryDate must not be earlier than issueDate. |
-| BR-DOC-015 | Documents without a natural expiry may have null expiryDate. |
-| BR-DOC-016 | Current ER-aligned verification statuses are Uploaded, PendingVerification, Approved, Rejected, and Expired. |
-| BR-DOC-017 | A newly registered document starts as Uploaded unless an explicitly approved workflow rule says otherwise. |
-| BR-DOC-018 | Only an allowed state may be submitted to PendingVerification. |
-| BR-DOC-019 | Only PendingVerification documents may be approved. |
-| BR-DOC-020 | Only PendingVerification documents may be rejected. |
-| BR-DOC-021 | Rejection remarks are mandatory and must be preserved. |
-| BR-DOC-022 | Every approve/reject decision creates a new DocumentVerification history record. |
-| BR-DOC-023 | Existing DocumentVerification history must not be overwritten to represent later decisions. |
-| BR-DOC-024 | Document.verificationStatus represents current lifecycle state; DocumentVerification represents decision history. Both must be synchronized transactionally. |
-| BR-DOC-025 | Verification decisions must capture verifier and verification time. |
-| BR-DOC-026 | Expired documents are those with a non-null expiryDate before the effective business date according to platform time policy. |
-| BR-DOC-027 | Expiry detection must not delete or overwrite prior verification history. |
-| BR-DOC-028 | Expiry alert delivery state belongs to Communication & Notification, not Document. |
-| BR-DOC-029 | Reporting may read document data but may not mutate Document or DocumentVerification state. |
-| BR-DOC-030 | Audit & Compliance owns AuditLog; Document Management supplies critical action facts. |
-| BR-DOC-031 | Critical actions include create, metadata update, submit for verification, approve, reject, expiry state change when persisted, and retirement/soft delete. |
-| BR-DOC-032 | Hard deletion of Document metadata is prohibited. |
-| BR-DOC-033 | Soft-deleted documents are excluded from normal operational queries. |
-| BR-DOC-034 | Retirement of metadata must not automatically destroy Blob evidence unless retention policy explicitly permits it. |
-| BR-DOC-035 | File retrieval requires authentication, permission, and branch-scope validation. |
-| BR-DOC-036 | Possession of a Blob URL is not sufficient authorization to access a private business document. |
-| BR-DOC-037 | Storage credentials and tokens must remain server-side or follow an approved secure client-upload mechanism. |
-| BR-DOC-038 | User-provided file names must not be used as trusted globally unique storage keys. |
-| BR-DOC-039 | File binary content, credentials, and access tokens must not be written to application logs. |
-| BR-DOC-040 | The module must not create a local Student, Trainer, CorporateAccount, Person, or Employee substitute aggregate. |
-| BR-DOC-041 | Certificate generation and public QR verification remain Certificate Management responsibilities. |
-| BR-DOC-042 | Invoice, payment, receipt, refund, and receivable lifecycle remain Finance responsibilities. |
-| BR-DOC-043 | Course completion approval remains Exam, Result & Completion responsibility. |
-| BR-DOC-044 | Permission names are capability based and role names must not be hardcoded into business rules. |
-| BR-DOC-045 | Menu visibility does not replace API/server-action authorization. |
-| BR-DOC-046 | Consolidated reporting requires both the relevant report permission and IAM consolidated access capability. |
-| BR-DOC-047 | Owner display data must be resolved from the owning context or approved read model rather than copied into Document. |
-| BR-DOC-048 | Document metadata changes must preserve verification history. |
+| Rule ID    | Business Rule                                                                                                                                                    |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| BR-DOC-001 | Every Document must reference exactly one owner using `ownerType` and `ownerId`.                                                                                 |
+| BR-DOC-002 | Supported current owner types are Student, Trainer, Corporate, and Person. Employee is enabled only after HRMS provides an owned employee reference.             |
+| BR-DOC-003 | A Document must not duplicate source owner identity fields as a new source of truth.                                                                             |
+| BR-DOC-004 | A document owner must exist and must not be soft deleted at the time a new document is registered.                                                               |
+| BR-DOC-005 | User must have permission for the requested document action.                                                                                                     |
+| BR-DOC-006 | User must have branch access to the document owner; knowing documentId is not sufficient access.                                                                 |
+| BR-DOC-007 | Parent/child/consolidated branch access follows IAM rules; Document Management must not implement separate branch-role logic.                                    |
+| BR-DOC-008 | Document type must be valid and active according to Configuration/Master Data or the actual schema relation.                                                     |
+| BR-DOC-009 | File binary is stored in Vercel Blob; document lifecycle metadata remains in the IMS database.                                                                   |
+| BR-DOC-010 | A successful Blob upload must not be treated as a successfully registered business Document until metadata persistence succeeds.                                 |
+| BR-DOC-011 | A failed Blob upload must not create an active Document with a broken file reference.                                                                            |
+| BR-DOC-012 | Blob/database dual-write inconsistencies must be compensatable or reconcilable.                                                                                  |
+| BR-DOC-013 | `uploadedBy` is derived from the authenticated user, not accepted as trusted client input.                                                                       |
+| BR-DOC-014 | Where issueDate and expiryDate are both present, expiryDate must not be earlier than issueDate.                                                                  |
+| BR-DOC-015 | Documents without a natural expiry may have null expiryDate.                                                                                                     |
+| BR-DOC-016 | Current ER-aligned verification statuses are Uploaded, PendingVerification, Approved, Rejected, and Expired.                                                     |
+| BR-DOC-017 | A newly registered document starts as Uploaded unless an explicitly approved workflow rule says otherwise.                                                       |
+| BR-DOC-018 | Only an allowed state may be submitted to PendingVerification.                                                                                                   |
+| BR-DOC-019 | Only PendingVerification documents may be approved.                                                                                                              |
+| BR-DOC-020 | Only PendingVerification documents may be rejected.                                                                                                              |
+| BR-DOC-021 | Rejection remarks are mandatory and must be preserved.                                                                                                           |
+| BR-DOC-022 | Every approve/reject decision creates a new DocumentVerification history record.                                                                                 |
+| BR-DOC-023 | Existing DocumentVerification history must not be overwritten to represent later decisions.                                                                      |
+| BR-DOC-024 | Document.verificationStatus represents current lifecycle state; DocumentVerification represents decision history. Both must be synchronized transactionally.     |
+| BR-DOC-025 | Verification decisions must capture verifier and verification time.                                                                                              |
+| BR-DOC-026 | Expired documents are those with a non-null expiryDate before the effective business date according to platform time policy.                                     |
+| BR-DOC-027 | Expiry detection must not delete or overwrite prior verification history.                                                                                        |
+| BR-DOC-028 | Expiry alert delivery state belongs to Communication & Notification, not Document.                                                                               |
+| BR-DOC-029 | Reporting may read document data but may not mutate Document or DocumentVerification state.                                                                      |
+| BR-DOC-030 | Audit & Compliance owns AuditLog; Document Management supplies critical action facts.                                                                            |
+| BR-DOC-031 | Critical actions include create, metadata update, submit for verification, approve, reject, expiry state change when persisted, and retirement/soft delete.      |
+| BR-DOC-032 | Hard deletion of Document metadata is prohibited.                                                                                                                |
+| BR-DOC-033 | Soft-deleted documents are excluded from normal operational queries.                                                                                             |
+| BR-DOC-034 | Retirement of metadata must not automatically destroy Blob evidence unless retention policy explicitly permits it.                                               |
+| BR-DOC-035 | File retrieval requires authentication, permission, and branch-scope validation.                                                                                 |
+| BR-DOC-036 | Possession of a Blob URL is not sufficient authorization to access a private business document.                                                                  |
+| BR-DOC-037 | Storage credentials and tokens must remain server-side or follow an approved secure client-upload mechanism.                                                     |
+| BR-DOC-038 | User-provided file names must not be used as trusted globally unique storage keys.                                                                               |
+| BR-DOC-039 | File binary content, credentials, and access tokens must not be written to application logs.                                                                     |
+| BR-DOC-040 | The module must not create a local Student, Trainer, CorporateAccount, Person, or Employee substitute aggregate.                                                 |
+| BR-DOC-041 | Certificate generation and public QR verification remain Certificate Management responsibilities.                                                                |
+| BR-DOC-042 | Invoice, payment, receipt, refund, and receivable lifecycle remain Finance responsibilities.                                                                     |
+| BR-DOC-043 | Course completion approval remains Exam, Result & Completion responsibility.                                                                                     |
+| BR-DOC-044 | Permission names are capability based and role names must not be hardcoded into business rules.                                                                  |
+| BR-DOC-045 | Menu visibility does not replace API/server-action authorization.                                                                                                |
+| BR-DOC-046 | Consolidated reporting requires both the relevant report permission and IAM consolidated access capability.                                                      |
+| BR-DOC-047 | Owner display data must be resolved from the owning context or approved read model rather than copied into Document.                                             |
+| BR-DOC-048 | Document metadata changes must preserve verification history.                                                                                                    |
 | BR-DOC-049 | A change to file evidence after rejection/approval must follow an explicit resubmission policy and may not silently preserve an approval for different evidence. |
-| BR-DOC-050 | Business timestamps are stored according to shared platform convention and displayed using Oman business timezone defaults. |
-| BR-DOC-051 | Date-only issue and expiry values must not shift calendar date through timezone conversion. |
-| BR-DOC-052 | Employee document workflows remain disabled until HRMS ownership is available. |
-| BR-DOC-053 | Unknown owner types are rejected rather than mapped to a generic unowned record. |
-| BR-DOC-054 | Document type semantics must follow Configuration/Master Data unless a dedicated schema relation is already present. |
-| BR-DOC-055 | Expiry scheduling cadence and retry behavior are architecture/NFR concerns and must not be invented as Document aggregate rules. |
-| BR-DOC-056 | No microservice, external broker, CQRS, or Event Sourcing architecture is required for this module. |
-| BR-DOC-057 | Blob integration must be encapsulated behind infrastructure/service boundaries so domain rules do not depend directly on provider-specific APIs. |
-| BR-DOC-058 | Any provider-specific fields beyond the ER-defined fileUrl/fileName require schema review and explicit approval. |
-| BR-DOC-059 | Sensitive concurrent decisions should use version/concurrency checks where supported by repository conventions. |
-| BR-DOC-060 | Any requirement that cannot map to DDD ownership or ER entities must be reported as a gap, not implemented by inventing a new aggregate. |
+| BR-DOC-050 | Business timestamps are stored according to shared platform convention and displayed using Oman business timezone defaults.                                      |
+| BR-DOC-051 | Date-only issue and expiry values must not shift calendar date through timezone conversion.                                                                      |
+| BR-DOC-052 | Employee document workflows remain disabled until HRMS ownership is available.                                                                                   |
+| BR-DOC-053 | Unknown owner types are rejected rather than mapped to a generic unowned record.                                                                                 |
+| BR-DOC-054 | Document type semantics must follow Configuration/Master Data unless a dedicated schema relation is already present.                                             |
+| BR-DOC-055 | Expiry scheduling cadence and retry behavior are architecture/NFR concerns and must not be invented as Document aggregate rules.                                 |
+| BR-DOC-056 | No microservice, external broker, CQRS, or Event Sourcing architecture is required for this module.                                                              |
+| BR-DOC-057 | Blob integration must be encapsulated behind infrastructure/service boundaries so domain rules do not depend directly on provider-specific APIs.                 |
+| BR-DOC-058 | Any provider-specific fields beyond the ER-defined fileUrl/fileName require schema review and explicit approval.                                                 |
+| BR-DOC-059 | Sensitive concurrent decisions should use version/concurrency checks where supported by repository conventions.                                                  |
+| BR-DOC-060 | Any requirement that cannot map to DDD ownership or ER entities must be reported as a gap, not implemented by inventing a new aggregate.                         |
 
 ---
 
@@ -1272,35 +1272,35 @@ is surfaced as Expired according to the chosen persisted/derived-state implement
 
 ### 5.2 Transition Matrix
 
-| From | Action | To | Required Permission | Notes |
-|---|---|---|---|---|
-| Uploaded | Submit | PendingVerification | `document.verify.submit` | File and metadata must be valid. |
-| PendingVerification | Approve | Approved | `document.verify.approve` | Creates history and audit. |
-| PendingVerification | Reject | Rejected | `document.verify.reject` | Remarks mandatory. |
-| Rejected | Resubmit after permitted correction | PendingVerification | `document.verify.submit` | Historical rejection remains. Exact file-replacement behavior must be finalized in later parts/schema design. |
-| Uploaded / PendingVerification / Approved / Rejected | Expiry evaluation | Expired or derived-expired visibility | System operation | ER includes Expired status; persistence semantics must remain consistent with verification history. |
-| Any active state | Retire | Soft deleted | `document.retire` | Not a verification status; uses repo soft-delete convention. |
+| From                                                 | Action                              | To                                    | Required Permission       | Notes                                                                                                         |
+| ---------------------------------------------------- | ----------------------------------- | ------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Uploaded                                             | Submit                              | PendingVerification                   | `document.verify.submit`  | File and metadata must be valid.                                                                              |
+| PendingVerification                                  | Approve                             | Approved                              | `document.verify.approve` | Creates history and audit.                                                                                    |
+| PendingVerification                                  | Reject                              | Rejected                              | `document.verify.reject`  | Remarks mandatory.                                                                                            |
+| Rejected                                             | Resubmit after permitted correction | PendingVerification                   | `document.verify.submit`  | Historical rejection remains. Exact file-replacement behavior must be finalized in later parts/schema design. |
+| Uploaded / PendingVerification / Approved / Rejected | Expiry evaluation                   | Expired or derived-expired visibility | System operation          | ER includes Expired status; persistence semantics must remain consistent with verification history.           |
+| Any active state                                     | Retire                              | Soft deleted                          | `document.retire`         | Not a verification status; uses repo soft-delete convention.                                                  |
 
 ---
 
 ## 6. Cross-Module Dependency Mapping
 
-| Source Context | Target Context | Dependency | Direction and Ownership Rule |
-|---|---|---|---|
-| Document Management | Identity & Access | Authentication, permissions, branch scope | DOC consumes IAM; IAM owns User/Role/Permission/BranchAccess. |
-| Document Management | Configuration / Master Data | Document type validation and display labels | DOC consumes config; Configuration owns lookup values. |
-| Document Management | Admission & Enrollment | Student owner validation/display | Admission & Enrollment owns StudentProfile and Enrollment. |
-| Document Management | Faculty / Trainer Management | Trainer owner validation/display | Trainer Management owns TrainerProfile. |
-| Document Management | Corporate Training | Corporate owner validation/display | Corporate Training owns CorporateAccount and related business identity. |
-| Document Management | Party / Person | Person owner validation/display | Shared Party/Person remains canonical identity source. |
-| Document Management | Vercel Blob | Binary storage/retrieval | Infrastructure only; DOC owns metadata and lifecycle. |
-| Document Management | Audit & Compliance | Critical action audit | Audit owns AuditLog and approval history. |
-| Document Management | Communication & Notification | Expiry alert request | Communication owns send/delivery history; DOC owns expiry facts. |
-| Reporting & Dashboards | Document Management | Read status/expiry summaries | Reporting consumes read data and does not own transactions. |
-| Future HRMS | Document Management | Employee owner references | HRMS owns employee lifecycle; DOC may reference only after HRMS exists. |
-| Certificate Management | Document Management | No ownership transfer | Certificate remains its own aggregate; DOC must not replace certificate lifecycle. |
-| Finance & Receivables | Document Management | No ownership transfer | Finance-generated artifacts remain finance business records. |
-| Exam & Completion | Document Management | No ownership transfer | Completion evidence does not move completion decision ownership. |
+| Source Context         | Target Context               | Dependency                                  | Direction and Ownership Rule                                                       |
+| ---------------------- | ---------------------------- | ------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Document Management    | Identity & Access            | Authentication, permissions, branch scope   | DOC consumes IAM; IAM owns User/Role/Permission/BranchAccess.                      |
+| Document Management    | Configuration / Master Data  | Document type validation and display labels | DOC consumes config; Configuration owns lookup values.                             |
+| Document Management    | Admission & Enrollment       | Student owner validation/display            | Admission & Enrollment owns StudentProfile and Enrollment.                         |
+| Document Management    | Faculty / Trainer Management | Trainer owner validation/display            | Trainer Management owns TrainerProfile.                                            |
+| Document Management    | Corporate Training           | Corporate owner validation/display          | Corporate Training owns CorporateAccount and related business identity.            |
+| Document Management    | Party / Person               | Person owner validation/display             | Shared Party/Person remains canonical identity source.                             |
+| Document Management    | Vercel Blob                  | Binary storage/retrieval                    | Infrastructure only; DOC owns metadata and lifecycle.                              |
+| Document Management    | Audit & Compliance           | Critical action audit                       | Audit owns AuditLog and approval history.                                          |
+| Document Management    | Communication & Notification | Expiry alert request                        | Communication owns send/delivery history; DOC owns expiry facts.                   |
+| Reporting & Dashboards | Document Management          | Read status/expiry summaries                | Reporting consumes read data and does not own transactions.                        |
+| Future HRMS            | Document Management          | Employee owner references                   | HRMS owns employee lifecycle; DOC may reference only after HRMS exists.            |
+| Certificate Management | Document Management          | No ownership transfer                       | Certificate remains its own aggregate; DOC must not replace certificate lifecycle. |
+| Finance & Receivables  | Document Management          | No ownership transfer                       | Finance-generated artifacts remain finance business records.                       |
+| Exam & Completion      | Document Management          | No ownership transfer                       | Completion evidence does not move completion decision ownership.                   |
 
 ---
 
@@ -1405,66 +1405,74 @@ The ER AuditLog model includes entityType, entityId, action, oldValue, newValue,
 ## 9. Identified Gaps and Conflict Analysis
 
 ### GAP-DOC-001 - No Explicit `branchId` on Document
+
 **Status: Resolved in Prisma.** The database schema contains a direct `branchId` column on `Document`. Branch isolation checks will directly utilize this column. At upload time, `branchId` is derived from the owner and persisted on the `Document` record.
 
 ---
 
 ### GAP-DOC-002 - DDD Conceptual DocumentType vs ER Scalar Field
+
 **Status: Align Gap.** Prisma hardcodes document types as the enum `DocumentType`. Restricting inputs to enum values is required until a database migration introduces a Configuration lookups relation.
 
 ---
 
 ### GAP-DOC-003 - Blob Operational Metadata Not Defined
+
 **Status: Align Gap.** Prisma uses `fileKey` (VarChar 255) for the Blob path and has added `fileType` (VarChar 100) for the MIME type. If size, checksum, or ETag reconciliation is needed later, additional fields must be migrated.
 
 ---
 
 ### GAP-DOC-004 - Current Status vs History Synchronization
+
 **Status: Align Gap.** Conceptual lifecycle states are separated in Prisma into `Document.status` (`Draft`, `Active`, `Expired`, `Replaced`, `Deleted`) and `DocumentVerification.outcome` (`Pending`, `Verified`, `Rejected`). Transactions must map transitions across these fields consistently.
 
 ---
 
 ### GAP-DOC-005 - Employee Owner Is Future Phase
+
 **Status: Open.** Keep Employee owner type disabled until an HRMS-owned identity is implemented; do not create employee records locally.
 
 ---
 
 ### GAP-DOC-006 - Expired as Verification Status
+
 **Status: Align Gap.** Prisma includes `Expired` in `DocumentStatus`. A background cron job must be scheduled to evaluate document expiration dates and transition `status` to `Expired`.
 
 ---
 
 ### GAP-DOC-007 - Prisma Validation
+
 **Status: Resolved.** The codebase's actual `packages/database/prisma/schema.prisma` has been validated. Polymorphic owner mapping is resolved via a separate `DocumentOwner` table, and branch scoping uses direct `branchId`.
 
 ---
 
 ### GAP-DOC-008 - Missing Date and Version fields in Prisma (CRITICAL IMPLEMENTATION GAP)
+
 **Status: Open.** The actual `Document` model in `schema.prisma` is currently missing the `issueDate`, `expiryDate`, and `version` (optimistic locking) fields. These must be added via a database migration before implementation.
 
 ---
 
 ## 10. Part 1 Consistency Check
 
-| Check | Result |
-|---|---|
-| Document Management ownership preserved | Pass |
-| Enrollment aggregate ownership affected | No; no learning lifecycle is moved into Document Management |
-| Person/Party duplication introduced | No |
-| Student ownership duplicated | No |
-| Trainer ownership duplicated | No |
-| CorporateAccount ownership duplicated | No |
-| Certificate ownership duplicated | No |
-| Finance ownership duplicated | No |
-| AuditLog ownership preserved | Pass |
-| Communication ownership preserved | Pass |
-| Branch isolation addressed | Pass (using direct `branchId` column on `Document`) |
-| Soft-delete convention respected | Pass |
-| Vercel Blob treated as infrastructure | Pass |
-| Unsupported microservice/broker/CQRS introduced | No |
-| DDD workflow statuses preserved | Pass |
-| ER entities mapped | Pass |
-| Prisma alignment completed | Pass (schema validated and mismatches reconciled) |
+| Check                                           | Result                                                      |
+| ----------------------------------------------- | ----------------------------------------------------------- |
+| Document Management ownership preserved         | Pass                                                        |
+| Enrollment aggregate ownership affected         | No; no learning lifecycle is moved into Document Management |
+| Person/Party duplication introduced             | No                                                          |
+| Student ownership duplicated                    | No                                                          |
+| Trainer ownership duplicated                    | No                                                          |
+| CorporateAccount ownership duplicated           | No                                                          |
+| Certificate ownership duplicated                | No                                                          |
+| Finance ownership duplicated                    | No                                                          |
+| AuditLog ownership preserved                    | Pass                                                        |
+| Communication ownership preserved               | Pass                                                        |
+| Branch isolation addressed                      | Pass (using direct `branchId` column on `Document`)         |
+| Soft-delete convention respected                | Pass                                                        |
+| Vercel Blob treated as infrastructure           | Pass                                                        |
+| Unsupported microservice/broker/CQRS introduced | No                                                          |
+| DDD workflow statuses preserved                 | Pass                                                        |
+| ER entities mapped                              | Pass                                                        |
+| Prisma alignment completed                      | Pass (schema validated and mismatches reconciled)           |
 
 ---
 
@@ -1475,5 +1483,3 @@ Module 13 is defined as a focused Document Management bounded context responsibl
 The module does not own the people or organizations whose documents it stores. It does not absorb Certificate, Finance, Completion, IAM, Audit, Notification, or Reporting transaction ownership. Vercel Blob is used for binary storage only, with secure access and failure reconciliation requirements separated from domain state.
 
 The most significant design items requiring resolution are applying database migrations to add the missing date and version columns, and setting up the background scheduler for expiry evaluations.
-
-

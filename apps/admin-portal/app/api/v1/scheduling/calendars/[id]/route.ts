@@ -12,7 +12,9 @@ import { problemJson, zodInvalidFields } from '../../_shared';
 
 const updateSchema = z.object({
   name: z.string().trim().min(1).optional(),
-  nameLocalized: z.object({ en: z.string().trim().min(1), ar: z.string().trim().min(1) }).optional(),
+  nameLocalized: z
+    .object({ en: z.string().trim().min(1), ar: z.string().trim().min(1) })
+    .optional(),
   year: z.number().int().min(2000).max(2100).optional(),
   countryCode: z.string().trim().min(2).max(2).optional(),
   timezone: z.literal('Asia/Muscat').optional(),
@@ -32,68 +34,122 @@ function mapNotFound(error: Error) {
   );
 }
 
-export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
   const { id } = await params;
 
-  return withRouteObservability(request.headers, async () => withPermission(request, 'scheduling.calendar.read', async () => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'scheduling.calendar.read', async () => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    try {
-      const calendar = await schedulingCalendarService.getCalendar(id);
-      const response = NextResponse.json({ success: true, data: calendar }, { status: 200 });
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/scheduling/calendars/[id]',
-        method: request.method,
-        status: 'success',
-      });
-      return response;
-    } catch (error) {
-      logger.error('api.scheduling.calendars.get.failed', { status: 'failed', error: error as Error, entityId: id, entityType: 'BusinessCalendar' });
-      return mapNotFound(error as Error);
-    }
-  }), { route: '/api/v1/scheduling/calendars/[id]' });
+        try {
+          const calendar = await schedulingCalendarService.getCalendar(id);
+          const response = NextResponse.json(
+            { success: true, data: calendar },
+            { status: 200 },
+          );
+          applyObservabilityResponseHeaders(response.headers, request.headers, {
+            route: '/api/v1/scheduling/calendars/[id]',
+            method: request.method,
+            status: 'success',
+          });
+          return response;
+        } catch (error) {
+          logger.error('api.scheduling.calendars.get.failed', {
+            status: 'failed',
+            error: error as Error,
+            entityId: id,
+            entityType: 'BusinessCalendar',
+          });
+          return mapNotFound(error as Error);
+        }
+      }),
+    { route: '/api/v1/scheduling/calendars/[id]' },
+  );
 }
 
-export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function PATCH(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
   const { id } = await params;
 
-  return withRouteObservability(request.headers, async () => withPermission(request, 'scheduling.calendar.update', async ({ session }) => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(
+        request,
+        'scheduling.calendar.update',
+        async ({ session }) => {
+          const logger = createStructuredLogger(
+            getCurrentRequestContext() ?? {},
+          );
 
-    let payload: unknown;
-    try {
-      payload = await request.json();
-    } catch {
-      return problemJson('https://ims.local/problems/scheduling-calendar-update', 400, 'Calendar update failed', 'Request body must be valid JSON.', 'SCH-CAL-INVALID-JSON');
-    }
+          let payload: unknown;
+          try {
+            payload = await request.json();
+          } catch {
+            return problemJson(
+              'https://ims.local/problems/scheduling-calendar-update',
+              400,
+              'Calendar update failed',
+              'Request body must be valid JSON.',
+              'SCH-CAL-INVALID-JSON',
+            );
+          }
 
-    const parsed = updateSchema.safeParse(payload);
-    if (!parsed.success) {
-      return problemJson(
-        'https://ims.local/problems/scheduling-calendar-update',
-        400,
-        'Calendar update failed',
-        'Calendar details are invalid.',
-        'SCH-CAL-INVALID-BODY',
-        zodInvalidFields(parsed.error.issues),
-      );
-    }
+          const parsed = updateSchema.safeParse(payload);
+          if (!parsed.success) {
+            return problemJson(
+              'https://ims.local/problems/scheduling-calendar-update',
+              400,
+              'Calendar update failed',
+              'Calendar details are invalid.',
+              'SCH-CAL-INVALID-BODY',
+              zodInvalidFields(parsed.error.issues),
+            );
+          }
 
-    try {
-      const updated = await schedulingCalendarService.updateBusinessCalendar(id, parsed.data, parsed.data.version, {
-        actorId: session.userId,
-      });
+          try {
+            const updated =
+              await schedulingCalendarService.updateBusinessCalendar(
+                id,
+                parsed.data,
+                parsed.data.version,
+                {
+                  actorId: session.userId,
+                },
+              );
 
-      const response = NextResponse.json({ success: true, data: updated }, { status: 200 });
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/scheduling/calendars/[id]',
-        method: request.method,
-        status: 'success',
-      });
-      return response;
-    } catch (error) {
-      logger.error('api.scheduling.calendars.update.failed', { status: 'failed', error: error as Error, entityId: id, entityType: 'BusinessCalendar' });
-      return mapNotFound(error as Error);
-    }
-  }), { route: '/api/v1/scheduling/calendars/[id]' });
+            const response = NextResponse.json(
+              { success: true, data: updated },
+              { status: 200 },
+            );
+            applyObservabilityResponseHeaders(
+              response.headers,
+              request.headers,
+              {
+                route: '/api/v1/scheduling/calendars/[id]',
+                method: request.method,
+                status: 'success',
+              },
+            );
+            return response;
+          } catch (error) {
+            logger.error('api.scheduling.calendars.update.failed', {
+              status: 'failed',
+              error: error as Error,
+              entityId: id,
+              entityType: 'BusinessCalendar',
+            });
+            return mapNotFound(error as Error);
+          }
+        },
+      ),
+    { route: '/api/v1/scheduling/calendars/[id]' },
+  );
 }

@@ -23,12 +23,14 @@ test.describe('Batch Waitlist Management UI Flow', () => {
     const branch = await prisma.branch.findFirst({
       where: { isDeleted: false },
     });
-    if (!branch) throw new Error('E2E prerequisites missing: no branches found.');
+    if (!branch)
+      throw new Error('E2E prerequisites missing: no branches found.');
 
     const course = await prisma.course.findFirst({
       where: { status: 'Published', isDeleted: false },
     });
-    if (!course) throw new Error('E2E prerequisites missing: no published courses found.');
+    if (!course)
+      throw new Error('E2E prerequisites missing: no published courses found.');
 
     // Create transient student profile & person
     personId = randomUUID();
@@ -77,7 +79,7 @@ test.describe('Batch Waitlist Management UI Flow', () => {
     // Cleanup waitlist, batch, student profile, and person
     await prisma.waitingList.deleteMany({ where: { batchId } });
     await prisma.batch.deleteMany({ where: { id: batchId } });
-    
+
     try {
       await prisma.studentProfile.delete({ where: { id: studentProfileId } });
       await prisma.person.delete({ where: { id: personId } });
@@ -86,10 +88,11 @@ test.describe('Batch Waitlist Management UI Flow', () => {
     }
   });
 
-  test('Should support complete waitlist lifecycle: enqueue, skip, reactivate, remove', async ({ page }) => {
+  test('Should support complete waitlist lifecycle: enqueue, skip, reactivate, remove', async ({
+    page,
+  }) => {
     // 1. Log in as Riyadh manager
     await login(page, 'manager.riyadh@ims.com');
-
 
     // 2. Go to the batch details page
     await page.goto(`/batches/${batchId}`);
@@ -101,7 +104,9 @@ test.describe('Batch Waitlist Management UI Flow', () => {
     await page.getByRole('button', { name: 'Select Student' }).first().click();
     await page.locator('span').filter({ hasText: studentName }).first().click();
 
-    await page.getByRole('button', { name: 'Queue Candidate', exact: true }).click();
+    await page
+      .getByRole('button', { name: 'Queue Candidate', exact: true })
+      .click();
 
     // Verify successfully enqueued candidate name is displayed
     const nameCell = page.locator('table').getByText(studentName).first();
@@ -123,7 +128,10 @@ test.describe('Batch Waitlist Management UI Flow', () => {
     await expect(heldBadge).toBeVisible();
 
     // Verify status reason is displayed
-    const reasonCell = page.locator('table').getByText('E2E Hold Reason').first();
+    const reasonCell = page
+      .locator('table')
+      .getByText('E2E Hold Reason')
+      .first();
     await expect(reasonCell).toBeVisible();
 
     // 6. Reactivate candidate (sets back to Waiting)
@@ -137,7 +145,10 @@ test.describe('Batch Waitlist Management UI Flow', () => {
     page.once('dialog', async (dialog) => {
       await dialog.accept();
     });
-    await page.getByRole('button', { name: 'Remove Candidate' }).first().click();
+    await page
+      .getByRole('button', { name: 'Remove Candidate' })
+      .first()
+      .click();
 
     // Verify table is empty
     const emptyText = page.getByText('Waiting list queue is currently empty.');

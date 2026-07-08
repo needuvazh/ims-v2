@@ -5,6 +5,7 @@ The ASTI Integrated Institute Management System (IMS) requires a secure, auditab
 ## What Changes
 
 We will implement the complete Certificate Management module:
+
 1. **Prisma Schema Update**: Add new database entities `Certificate`, `CertificateVerification`, and `CertificateReissueRequest` with their associated relations and indexes. Update `Enrollment` to have a `1:N` relation to `Certificate`, and edit `User` to track certificate operations.
 2. **Domain Package**: Build `packages/certificates` to encapsulate the business logic, validators (Zod), DTOs, repository interfaces, and application services (`GenerateCertificate`, `IssueCertificate`, `VerifyCertificate`, `ApproveReissue`, `RevokeCertificate`).
 3. **Admin Portal UI**: Add dashboard widgets, a certificate readiness queue, a certificate registry search and detail viewer, a reissue request queue, and a revocation interface.
@@ -14,12 +15,14 @@ We will implement the complete Certificate Management module:
 ## Capabilities
 
 ### New Capabilities
+
 - `certificate-issuance`: View eligible enrollments, generate, and issue certificates using the single hardcoded ASTI template.
 - `certificate-reissue`: Request, review, approve/reject, and generate replacement certificates with parent-child linkage.
 - `certificate-verification`: Publicly verify certificate authenticity using an opaque code or QR scan with rate-limiting and privacy minimization.
 - `certificate-revocation`: Revoke certificates with a mandatory reason, updating the status and preserving history.
 
 ### Modified Capabilities
+
 - `admission-enrollment`: Enrollment aggregate will include references to the newly created certificates, and its summary status will react to certificate issuance.
 
 ## Impact

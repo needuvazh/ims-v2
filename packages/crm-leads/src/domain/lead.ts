@@ -71,7 +71,10 @@ export const preprocessPhone = (val: unknown) => {
     cleaned = '+' + cleaned.slice(2);
   }
   // Convert 9687XXXXXXX or 9689XXXXXXX to +968...
-  if (cleaned.length === 11 && (cleaned.startsWith('9687') || cleaned.startsWith('9689'))) {
+  if (
+    cleaned.length === 11 &&
+    (cleaned.startsWith('9687') || cleaned.startsWith('9689'))
+  ) {
     cleaned = '+' + cleaned;
   }
   return cleaned;
@@ -79,25 +82,48 @@ export const preprocessPhone = (val: unknown) => {
 
 export const PhoneSchema = z.preprocess(
   preprocessPhone,
-  z.string().refine((val) => {
-    const omaniMobileRegex = /^(?:\+968)?[79]\d{7}$/;
-    const internationalRegex = /^\+[1-9]\d{1,14}$/;
-    return omaniMobileRegex.test(val) || internationalRegex.test(val);
-  }, {
-    message: 'Must be a valid Omani mobile number starting with 7 or 9, or a standard E.164 international phone number'
-  })
+  z.string().refine(
+    (val) => {
+      const omaniMobileRegex = /^(?:\+968)?[79]\d{7}$/;
+      const internationalRegex = /^\+[1-9]\d{1,14}$/;
+      return omaniMobileRegex.test(val) || internationalRegex.test(val);
+    },
+    {
+      message:
+        'Must be a valid Omani mobile number starting with 7 or 9, or a standard E.164 international phone number',
+    },
+  ),
 );
 
 export const IngestInquirySchema = z.object({
   branchId: z.string().uuid('Invalid branch ID format'),
-  firstName: z.string().min(2, 'First name must be at least 2 characters').max(100),
-  lastName: z.string().min(2, 'Last name must be at least 2 characters').max(100),
+  firstName: z
+    .string()
+    .min(2, 'First name must be at least 2 characters')
+    .max(100),
+  lastName: z
+    .string()
+    .min(2, 'Last name must be at least 2 characters')
+    .max(100),
   mobile: PhoneSchema,
-  email: z.string().email('Invalid email format').optional().nullable().or(z.literal('')),
+  email: z
+    .string()
+    .email('Invalid email format')
+    .optional()
+    .nullable()
+    .or(z.literal('')),
   source: LeadSourceEnum,
-  interestedCourseId: z.string().uuid('Invalid course reference').optional().nullable(),
+  interestedCourseId: z
+    .string()
+    .uuid('Invalid course reference')
+    .optional()
+    .nullable(),
   priority: z.enum(['Low', 'Medium', 'High', 'Critical']).default('Medium'),
-  notes: z.string().max(500, 'Notes cannot exceed 500 characters').optional().nullable(),
+  notes: z
+    .string()
+    .max(500, 'Notes cannot exceed 500 characters')
+    .optional()
+    .nullable(),
   utmSource: z.string().max(100).optional().nullable(),
   utmMedium: z.string().max(100).optional().nullable(),
   utmCampaign: z.string().max(100).optional().nullable(),
@@ -108,26 +134,41 @@ export type IngestInquiryInput = z.infer<typeof IngestInquirySchema>;
 
 export const QualifyInquirySchema = z.object({
   interestedCourseId: z.string().uuid('Interested course ID is required'),
-  counselorId: z.string().uuid('Counselor assignment is required').optional().nullable(),
-  qualificationNotes: z.string().min(5, 'Qualification notes must specify reasoning').max(1000),
+  counselorId: z
+    .string()
+    .uuid('Counselor assignment is required')
+    .optional()
+    .nullable(),
+  qualificationNotes: z
+    .string()
+    .min(5, 'Qualification notes must specify reasoning')
+    .max(1000),
 });
 
 export type QualifyInquiryInput = z.infer<typeof QualifyInquirySchema>;
 
-export const DateOfBirthSchema = z.preprocess((val) => {
-  if (typeof val === 'string') {
-    if (!val.trim()) return null;
-    const d = new Date(val);
-    return isNaN(d.getTime()) ? val : d;
-  }
-  return val;
-}, z.date({ invalid_type_error: 'Invalid date of birth' }).nullable().optional());
+export const DateOfBirthSchema = z.preprocess(
+  (val) => {
+    if (typeof val === 'string') {
+      if (!val.trim()) return null;
+      const d = new Date(val);
+      return isNaN(d.getTime()) ? val : d;
+    }
+    return val;
+  },
+  z.date({ invalid_type_error: 'Invalid date of birth' }).nullable().optional(),
+);
 
 export const CreateLeadSchema = z.object({
   branchId: z.string().uuid('Invalid branch reference'),
   firstName: z.string().min(2, 'First name is required').max(100),
   lastName: z.string().min(2, 'Last name is required').max(100),
-  email: z.string().email('Invalid email').optional().nullable().or(z.literal('')),
+  email: z
+    .string()
+    .email('Invalid email')
+    .optional()
+    .nullable()
+    .or(z.literal('')),
   phone: PhoneSchema,
   dateOfBirth: DateOfBirthSchema,
   nationality: z.string().max(50).optional().nullable().or(z.literal('')),
@@ -146,45 +187,82 @@ export const TransitionLeadStageSchema = z.object({
   version: z.number().int('Optimistic concurrency version required'),
 });
 
-export type TransitionLeadStageInput = z.infer<typeof TransitionLeadStageSchema>;
+export type TransitionLeadStageInput = z.infer<
+  typeof TransitionLeadStageSchema
+>;
 
 export const CloseLeadLostSchema = z.object({
   lostReasonCode: z.string().min(1, 'Select a valid lost reason category'),
-  lostReasonNotes: z.string().min(15, 'Explanatory notes must be at least 15 characters').max(1000),
+  lostReasonNotes: z
+    .string()
+    .min(15, 'Explanatory notes must be at least 15 characters')
+    .max(1000),
 });
 
 export type CloseLeadLostInput = z.infer<typeof CloseLeadLostSchema>;
 
 export const ScheduleFollowUpSchema = z.object({
-  followUpDate: z.string().datetime('Invalid date-time format').refine((val) => {
-    return new Date(val).getTime() > Date.now() + 300000; // Future date check (+5 min)
-  }, { message: 'Schedule date-time must be set in the future' }),
+  followUpDate: z
+    .string()
+    .datetime('Invalid date-time format')
+    .refine(
+      (val) => {
+        return new Date(val).getTime() > Date.now() + 300000; // Future date check (+5 min)
+      },
+      { message: 'Schedule date-time must be set in the future' },
+    ),
   followUpType: z.enum(['Call', 'WhatsApp', 'Email', 'Visit']),
-  agenda: z.string().min(5, 'Agenda must specify communication details').max(250),
+  agenda: z
+    .string()
+    .min(5, 'Agenda must specify communication details')
+    .max(250),
 });
 
 export type ScheduleFollowUpInput = z.infer<typeof ScheduleFollowUpSchema>;
 
-export const LogFollowUpOutcomeSchema = z.object({
-  outcome: z.enum(['Answered', 'Busy', 'SwitchedOff', 'NoResponse', 'NotInterested', 'Interested', 'VisitScheduled']),
-  outcomeNotes: z.string().min(15, 'Outcome notes must contain conversation detail'),
-  scheduleNext: z.boolean(),
-  version: z.number().int('Optimistic concurrency version required'),
-  nextFollowUpDate: z.string().datetime().optional().nullable(),
-  nextFollowUpType: z.enum(['Call', 'WhatsApp', 'Email', 'Visit']).optional().nullable(),
-  nextFollowUpAgenda: z.string().max(250).optional().nullable(),
-}).refine((data) => {
-  if (data.scheduleNext) {
-    if (!data.nextFollowUpDate || !data.nextFollowUpType || !data.nextFollowUpAgenda) {
-      return false;
-    }
-    return new Date(data.nextFollowUpDate).getTime() > Date.now() + 300000;
-  }
-  return true;
-}, {
-  message: 'Next follow-up details are mandatory and must be scheduled at least 5 minutes in the future',
-  path: ['nextFollowUpDate'],
-});
+export const LogFollowUpOutcomeSchema = z
+  .object({
+    outcome: z.enum([
+      'Answered',
+      'Busy',
+      'SwitchedOff',
+      'NoResponse',
+      'NotInterested',
+      'Interested',
+      'VisitScheduled',
+    ]),
+    outcomeNotes: z
+      .string()
+      .min(15, 'Outcome notes must contain conversation detail'),
+    scheduleNext: z.boolean(),
+    version: z.number().int('Optimistic concurrency version required'),
+    nextFollowUpDate: z.string().datetime().optional().nullable(),
+    nextFollowUpType: z
+      .enum(['Call', 'WhatsApp', 'Email', 'Visit'])
+      .optional()
+      .nullable(),
+    nextFollowUpAgenda: z.string().max(250).optional().nullable(),
+  })
+  .refine(
+    (data) => {
+      if (data.scheduleNext) {
+        if (
+          !data.nextFollowUpDate ||
+          !data.nextFollowUpType ||
+          !data.nextFollowUpAgenda
+        ) {
+          return false;
+        }
+        return new Date(data.nextFollowUpDate).getTime() > Date.now() + 300000;
+      }
+      return true;
+    },
+    {
+      message:
+        'Next follow-up details are mandatory and must be scheduled at least 5 minutes in the future',
+      path: ['nextFollowUpDate'],
+    },
+  );
 
 export type LogFollowUpOutcomeInput = z.infer<typeof LogFollowUpOutcomeSchema>;
 
@@ -224,23 +302,29 @@ export const maskPhone = (phone: string | null | undefined): string | null => {
   return `${first}***${last}`;
 };
 
-export const maskNationalId = (nationalId: string | null | undefined): string | null => {
+export const maskNationalId = (
+  nationalId: string | null | undefined,
+): string | null => {
   if (!nationalId) return null;
   if (nationalId.length < 4) return '****';
   return `${nationalId.substring(0, 2)}******${nationalId.substring(nationalId.length - 2)}`;
 };
 
 export const ConvertLeadSchema = z.object({
-  documents: z.array(
-    z.object({
-      fileName: z.string().min(1, "File name is required"),
-      fileKey: z.string().min(1, "File key is required"),
-      fileType: z.string().min(1, "File type is required"),
-      documentType: DocumentTypeEnum,
-      expiryDate: z.preprocess((val) => (typeof val === 'string' && val ? new Date(val) : val), z.date().optional().nullable()),
-    })
-  ).min(1, "At least one identity document is required for conversion"),
+  documents: z
+    .array(
+      z.object({
+        fileName: z.string().min(1, 'File name is required'),
+        fileKey: z.string().min(1, 'File key is required'),
+        fileType: z.string().min(1, 'File type is required'),
+        documentType: DocumentTypeEnum,
+        expiryDate: z.preprocess(
+          (val) => (typeof val === 'string' && val ? new Date(val) : val),
+          z.date().optional().nullable(),
+        ),
+      }),
+    )
+    .min(1, 'At least one identity document is required for conversion'),
 });
 
 export type ConvertLeadInput = z.infer<typeof ConvertLeadSchema>;
-

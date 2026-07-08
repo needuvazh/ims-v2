@@ -14,7 +14,9 @@ import {
 import { ClipboardList, Layers } from 'lucide-react';
 import { AttendanceCorrectionsQueue } from '../_components/attendance-corrections-queue';
 
-export const metadata = { title: 'Attendance Corrections - Admin Portal | ASTI IMS' };
+export const metadata = {
+  title: 'Attendance Corrections - Admin Portal | ASTI IMS',
+};
 
 export default async function AttendanceCorrectionsPage() {
   const session = await assertPermission('attendance.correction.review');
@@ -59,9 +61,13 @@ export default async function AttendanceCorrectionsPage() {
       <PageHeader
         eyebrow="Attendance"
         title="Attendance Corrections"
-      description="Review correction requests, approval outcomes, rejection reasons, and aging by branch."
-      actions={
-          <LinkButton href="/attendance/sessions" variant="outline" className="gap-2">
+        description="Review correction requests, approval outcomes, rejection reasons, and aging by branch."
+        actions={
+          <LinkButton
+            href="/attendance/sessions"
+            variant="outline"
+            className="gap-2"
+          >
             <Layers className="h-4 w-4" />
             Sessions
           </LinkButton>
@@ -71,15 +77,21 @@ export default async function AttendanceCorrectionsPage() {
       <Card>
         <CardHeader>
           <CardTitle>Correction Queue</CardTitle>
-          <CardDescription>Pending and historical correction requests for the authorized branch scope.</CardDescription>
+          <CardDescription>
+            Pending and historical correction requests for the authorized branch
+            scope.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {corrections.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-8 text-center">
               <ClipboardList className="mx-auto mb-3 h-10 w-10 text-[color:var(--ims-muted)]" />
-              <p className="text-sm font-semibold text-[color:var(--ims-ink)]">No corrections found.</p>
+              <p className="text-sm font-semibold text-[color:var(--ims-ink)]">
+                No corrections found.
+              </p>
               <p className="mt-1 text-sm text-[color:var(--ims-muted)]">
-                Mark attendance first, then request a correction from the record workflow.
+                Mark attendance first, then request a correction from the record
+                workflow.
               </p>
             </div>
           ) : (
@@ -94,12 +106,19 @@ export default async function AttendanceCorrectionsPage() {
                 reason: correction.reason,
                 status: correction.status,
                 requestedAt: correction.requestedAt,
-                requestedByLabel: correction.requestedByUser?.email ?? correction.requestedBy,
+                requestedByLabel:
+                  correction.requestedByUser?.email ?? correction.requestedBy,
                 studentName: `${correction.attendanceRecord.studentProfile.person.firstName} ${correction.attendanceRecord.studentProfile.person.lastName}`,
-                studentNumber: correction.attendanceRecord.studentProfile.studentNumber,
-                batchCode: correction.attendanceRecord.attendanceSession.batch.batchCode,
-                sessionTitle: correction.attendanceRecord.attendanceSession.session.titleEnglish,
-                sessionNumber: correction.attendanceRecord.attendanceSession.session.sessionNumber,
+                studentNumber:
+                  correction.attendanceRecord.studentProfile.studentNumber,
+                batchCode:
+                  correction.attendanceRecord.attendanceSession.batch.batchCode,
+                sessionTitle:
+                  correction.attendanceRecord.attendanceSession.session
+                    .titleEnglish,
+                sessionNumber:
+                  correction.attendanceRecord.attendanceSession.session
+                    .sessionNumber,
               }))}
             />
           )}

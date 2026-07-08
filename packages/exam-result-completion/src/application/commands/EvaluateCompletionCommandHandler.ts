@@ -4,8 +4,15 @@ import { AttendanceEvidenceReader } from '../../domain/interfaces/AttendanceEvid
 import { FinanceValidationReader } from '../../domain/interfaces/FinanceValidationReader';
 import { EnrollmentReader } from '../../domain/interfaces/EnrollmentReader';
 import { ExamEvidenceReader } from '../../domain/interfaces/ExamEvidenceReader';
-import { CourseCompletionAggregate, EvaluateCompletionCommand, COMPLETION_STATUSES } from '../../domain/aggregates/CourseCompletion';
-import { CompletionInvalidStateError, CompletionDuplicateError } from '../../domain/errors';
+import {
+  CourseCompletionAggregate,
+  EvaluateCompletionCommand,
+  COMPLETION_STATUSES,
+} from '../../domain/aggregates/CourseCompletion';
+import {
+  CompletionInvalidStateError,
+  CompletionDuplicateError,
+} from '../../domain/errors';
 
 export interface EvaluateCompletionInput {
   enrollmentId: string;
@@ -23,36 +30,62 @@ export class EvaluateCompletionCommandHandler {
   ) {}
 
   async execute(input: EvaluateCompletionInput): Promise<string> {
-    const enrollment = await this.enrollmentReader.getEnrollmentById(input.enrollmentId);
+    const enrollment = await this.enrollmentReader.getEnrollmentById(
+      input.enrollmentId,
+    );
     if (!enrollment) {
-      throw new CompletionInvalidStateError(`Enrollment ${input.enrollmentId} not found`);
+      throw new CompletionInvalidStateError(
+        `Enrollment ${input.enrollmentId} not found`,
+      );
     }
 
-    const existing = await this.completionRepository.findByEnrollmentId(input.enrollmentId);
-    if (existing && existing.completionStatus !== COMPLETION_STATUSES.PENDING && existing.completionStatus !== COMPLETION_STATUSES.EVIDENCE_INCOMPLETE && existing.completionStatus !== COMPLETION_STATUSES.REEVALUATION_REQUIRED) {
-      throw new CompletionDuplicateError(`Completion already exists for enrollment ${input.enrollmentId} with status: ${existing.completionStatus}`);
+    const existing = await this.completionRepository.findByEnrollmentId(
+      input.enrollmentId,
+    );
+    if (
+      existing &&
+      existing.completionStatus !== COMPLETION_STATUSES.PENDING &&
+      existing.completionStatus !== COMPLETION_STATUSES.EVIDENCE_INCOMPLETE &&
+      existing.completionStatus !== COMPLETION_STATUSES.REEVALUATION_REQUIRED
+    ) {
+      throw new CompletionDuplicateError(
+        `Completion already exists for enrollment ${input.enrollmentId} with status: ${existing.completionStatus}`,
+      );
     }
 
-    const rule = await this.ruleReader.getCompletionRuleForCourse(enrollment.courseId);
+    const rule = await this.ruleReader.getCompletionRuleForCourse(
+      enrollment.courseId,
+    );
     if (!rule) {
-      throw new CompletionInvalidStateError(`No completion rule found for course ${enrollment.courseId}`);
+      throw new CompletionInvalidStateError(
+        `No completion rule found for course ${enrollment.courseId}`,
+      );
     }
 
-    const attendance = await this.attendanceReader.getAttendanceSummaryForEnrollment(input.enrollmentId);
-    const finance = await this.financeReader.getPaymentStatusForEnrollment(input.enrollmentId);
+    const attendance =
+      await this.attendanceReader.getAttendanceSummaryForEnrollment(
+        input.enrollmentId,
+      );
+    const finance = await this.financeReader.getPaymentStatusForEnrollment(
+      input.enrollmentId,
+    );
 
     const attendancePercentage = attendance?.attendancePercentage ?? 0;
     const attendanceOutcome = attendance?.outcome === 'Met' ? 'Met' : 'NotMet';
     const examRequired = rule.examRequired;
 
     const examEvidence = examRequired
-      ? await this.examEvidenceReader.getExamSummaryForEnrollment(input.enrollmentId, enrollment.batchId)
+      ? await this.examEvidenceReader.getExamSummaryForEnrollment(
+          input.enrollmentId,
+          enrollment.batchId,
+        )
       : null;
     const examOutcome = examRequired
       ? (examEvidence?.outcome ?? 'Pending')
       : 'NotRequired';
     const paymentRequired = rule.feeClearanceRequired;
-    const paymentOutcome = finance?.outcome === 'Cleared' ? 'Cleared' : 'Outstanding';
+    const paymentOutcome =
+      finance?.outcome === 'Cleared' ? 'Cleared' : 'Outstanding';
     const manualApprovalRequired = rule.manualApprovalRequired;
 
     if (existing) {
@@ -67,7 +100,9 @@ export class EvaluateCompletionCommandHandler {
         paymentUpdatedAt: finance?.lastPaymentDate ?? undefined,
       });
 
-      const evaluated = updated.evidenceStale ? updated : new CourseCompletionAggregate(updated).evaluate();
+      const evaluated = updated.evidenceStale
+        ? updated
+        : new CourseCompletionAggregate(updated).evaluate();
 
       evaluated.updatedBy = input.userId;
       await this.completionRepository.save(evaluated);

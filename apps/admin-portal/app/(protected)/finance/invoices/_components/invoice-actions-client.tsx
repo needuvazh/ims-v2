@@ -47,9 +47,13 @@ export function InvoiceActionsClient({ invoice }: InvoiceActionsClientProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   // Form states for record payment
-  const [paymentDate, setPaymentDate] = useState(new Date().toISOString().split('T')[0]);
+  const [paymentDate, setPaymentDate] = useState(
+    new Date().toISOString().split('T')[0],
+  );
   const [paymentMethod, setPaymentMethod] = useState('Cash');
-  const [amount, setAmount] = useState(Number(invoice.outstandingAmount).toString());
+  const [amount, setAmount] = useState(
+    Number(invoice.outstandingAmount).toString(),
+  );
   const [referenceNumber, setReferenceNumber] = useState('');
   const [remarks, setRemarks] = useState('');
 
@@ -58,8 +62,12 @@ export function InvoiceActionsClient({ invoice }: InvoiceActionsClientProps) {
     : invoice.corporateAccount?.accountName || 'N/A';
 
   // Outstanding caused entirely by refund reversals — don't show Pay
-  const totalRefunded = (invoice.refunds || []).reduce((s, r) => s + Number(r.amount), 0);
-  const outstandingDueToRefund = totalRefunded >= Number(invoice.outstandingAmount) && totalRefunded > 0;
+  const totalRefunded = (invoice.refunds || []).reduce(
+    (s, r) => s + Number(r.amount),
+    0,
+  );
+  const outstandingDueToRefund =
+    totalRefunded >= Number(invoice.outstandingAmount) && totalRefunded > 0;
   const canPay = !outstandingDueToRefund;
 
   const handleIssue = async () => {
@@ -105,7 +113,9 @@ export function InvoiceActionsClient({ invoice }: InvoiceActionsClientProps) {
       });
 
       if (res.success) {
-        toast.success(`Payment recorded successfully! Receipt: ${res.data?.receiptNumber}`);
+        toast.success(
+          `Payment recorded successfully! Receipt: ${res.data?.receiptNumber}`,
+        );
         setIsDialogOpen(false);
       } else {
         toast.error(res.error || 'Failed to record payment');
@@ -147,129 +157,155 @@ export function InvoiceActionsClient({ invoice }: InvoiceActionsClientProps) {
         </a>
       )}
 
-      {(invoice.status === 'Issued' || invoice.status === 'PartiallyPaid') && canPay && (
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <Button
-            size="sm"
-            variant="outline"
-            className="gap-1.5 h-8 text-xs text-emerald-600 hover:bg-emerald-50 border-emerald-200"
-            onClick={() => {
-              setAmount(Number(invoice.outstandingAmount).toString());
-              setIsDialogOpen(true);
-            }}
-          >
-            <Landmark className="h-3.5 w-3.5" />
-            Pay
-          </Button>
+      {(invoice.status === 'Issued' || invoice.status === 'PartiallyPaid') &&
+        canPay && (
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <Button
+              size="sm"
+              variant="outline"
+              className="gap-1.5 h-8 text-xs text-emerald-600 hover:bg-emerald-50 border-emerald-200"
+              onClick={() => {
+                setAmount(Number(invoice.outstandingAmount).toString());
+                setIsDialogOpen(true);
+              }}
+            >
+              <Landmark className="h-3.5 w-3.5" />
+              Pay
+            </Button>
 
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Record Manual Payment</DialogTitle>
-              <DialogDescription>
-                Record a collection receipt against Invoice <span className="font-mono font-bold">{invoice.invoiceNumber}</span>.
-              </DialogDescription>
-            </DialogHeader>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Record Manual Payment</DialogTitle>
+                <DialogDescription>
+                  Record a collection receipt against Invoice{' '}
+                  <span className="font-mono font-bold">
+                    {invoice.invoiceNumber}
+                  </span>
+                  .
+                </DialogDescription>
+              </DialogHeader>
 
-            <form onSubmit={handlePostPayment} className="space-y-4 pt-2">
-              <div className="bg-slate-50 p-3 rounded-lg border text-xs space-y-1.5">
-                <div className="flex justify-between">
-                  <span className="text-slate-400">Payer:</span>
-                  <span className="font-semibold text-slate-800">{payerName}</span>
+              <form onSubmit={handlePostPayment} className="space-y-4 pt-2">
+                <div className="bg-slate-50 p-3 rounded-lg border text-xs space-y-1.5">
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Payer:</span>
+                    <span className="font-semibold text-slate-800">
+                      {payerName}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Total Billed:</span>
+                    <span className="font-mono text-slate-800">
+                      {Number(invoice.totalAmount).toFixed(3)}{' '}
+                      {invoice.currency}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400 font-medium">
+                      Outstanding Balance:
+                    </span>
+                    <span className="font-mono font-bold text-rose-600">
+                      {Number(invoice.outstandingAmount).toFixed(3)}{' '}
+                      {invoice.currency}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-slate-400">Total Billed:</span>
-                  <span className="font-mono text-slate-800">{Number(invoice.totalAmount).toFixed(3)} {invoice.currency}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-slate-400 font-medium">Outstanding Balance:</span>
-                  <span className="font-mono font-bold text-rose-600">{Number(invoice.outstandingAmount).toFixed(3)} {invoice.currency}</span>
-                </div>
-              </div>
 
-              <FormField>
-                <FormLabel>Payment Date</FormLabel>
-                <FormControl>
-                  <Input
-                    type="date"
-                    value={paymentDate}
-                    onChange={(e) => setPaymentDate(e.target.value)}
-                    required
-                  />
-                </FormControl>
-              </FormField>
+                <FormField>
+                  <FormLabel>Payment Date</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="date"
+                      value={paymentDate}
+                      onChange={(e) => setPaymentDate(e.target.value)}
+                      required
+                    />
+                  </FormControl>
+                </FormField>
 
-              <FormField>
-                <FormLabel>Payment Method</FormLabel>
-                <FormControl>
-                  <Select
-                    value={paymentMethod}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                    options={[
-                      { value: 'Cash', label: 'Cash' },
-                      { value: 'BankTransfer', label: 'Bank Transfer' },
-                      { value: 'Card', label: 'Credit/Debit Card' },
-                      { value: 'Online', label: 'Online Payment' },
-                      { value: 'Cheque', label: 'Cheque' },
-                      { value: 'CorporateBilling', label: 'Corporate Billing' },
-                    ]}
-                  />
-                </FormControl>
-              </FormField>
+                <FormField>
+                  <FormLabel>Payment Method</FormLabel>
+                  <FormControl>
+                    <Select
+                      value={paymentMethod}
+                      onChange={(e) => setPaymentMethod(e.target.value)}
+                      options={[
+                        { value: 'Cash', label: 'Cash' },
+                        { value: 'BankTransfer', label: 'Bank Transfer' },
+                        { value: 'Card', label: 'Credit/Debit Card' },
+                        { value: 'Online', label: 'Online Payment' },
+                        { value: 'Cheque', label: 'Cheque' },
+                        {
+                          value: 'CorporateBilling',
+                          label: 'Corporate Billing',
+                        },
+                      ]}
+                    />
+                  </FormControl>
+                </FormField>
 
-              <FormField>
-                <FormLabel>Amount to Pay ({invoice.currency})</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    step="0.001"
-                    min="0.001"
-                    max={Number(invoice.outstandingAmount)}
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    required
-                  />
-                </FormControl>
-              </FormField>
+                <FormField>
+                  <FormLabel>Amount to Pay ({invoice.currency})</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      step="0.001"
+                      min="0.001"
+                      max={Number(invoice.outstandingAmount)}
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      required
+                    />
+                  </FormControl>
+                </FormField>
 
-              <FormField>
-                <FormLabel>Reference Number (Optional)</FormLabel>
-                <FormControl>
-                  <Input
-                    type="text"
-                    placeholder="e.g. Transaction ID, Cheque #"
-                    value={referenceNumber}
-                    onChange={(e) => setReferenceNumber(e.target.value)}
-                  />
-                </FormControl>
-              </FormField>
+                <FormField>
+                  <FormLabel>Reference Number (Optional)</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="e.g. Transaction ID, Cheque #"
+                      value={referenceNumber}
+                      onChange={(e) => setReferenceNumber(e.target.value)}
+                    />
+                  </FormControl>
+                </FormField>
 
-              <FormField>
-                <FormLabel>Remarks (Optional)</FormLabel>
-                <FormControl>
-                  <Input
-                    type="text"
-                    placeholder="Payment notes..."
-                    value={remarks}
-                    onChange={(e) => setRemarks(e.target.value)}
-                  />
-                </FormControl>
-              </FormField>
+                <FormField>
+                  <FormLabel>Remarks (Optional)</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Payment notes..."
+                      value={remarks}
+                      onChange={(e) => setRemarks(e.target.value)}
+                    />
+                  </FormControl>
+                </FormField>
 
-              <DialogFooter className="pt-2">
-                <DialogClose asChild>
-                  <Button variant="outline" type="button" disabled={isPending}>
-                    Cancel
+                <DialogFooter className="pt-2">
+                  <DialogClose asChild>
+                    <Button
+                      variant="outline"
+                      type="button"
+                      disabled={isPending}
+                    >
+                      Cancel
+                    </Button>
+                  </DialogClose>
+                  <Button
+                    type="submit"
+                    disabled={isPending}
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white gap-1.5"
+                  >
+                    {isPending && <Loader2 className="h-3 w-3 animate-spin" />}
+                    Post Payment
                   </Button>
-                </DialogClose>
-                <Button type="submit" disabled={isPending} className="bg-emerald-600 hover:bg-emerald-700 text-white gap-1.5">
-                  {isPending && <Loader2 className="h-3 w-3 animate-spin" />}
-                  Post Payment
-                </Button>
-              </DialogFooter>
-            </form>
-          </DialogContent>
-        </Dialog>
-      )}
+                </DialogFooter>
+              </form>
+            </DialogContent>
+          </Dialog>
+        )}
     </div>
   );
 }

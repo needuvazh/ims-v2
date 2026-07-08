@@ -61,4 +61,3 @@
 
 - [x] 12.1 Update `UserService.updateUser` to log distinct status transition audit logs (`identity.user_activated`, `identity.user_deactivated`, `identity.user_locked`).
 - [x] 12.2 Update `RoleService.updateRole` to log `identity.role_deactivated` when a role's status transitions to inactive.
-

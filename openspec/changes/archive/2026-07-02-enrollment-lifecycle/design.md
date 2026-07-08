@@ -5,6 +5,7 @@ Enrollment is the shared lifecycle for regular, corporate, and walk-in learners.
 ## Goals / Non-Goals
 
 **Goals:**
+
 - Implement state transitions: Draft -> Submitted -> Approved -> Confirmed -> Active -> Dropped / Cancelled.
 - Enforce that completion validation remains owned by Exam, Result & Completion, and certificate issuance is owned by Certificate Management. Enrollment lifecycle context emits events to hand off control and does not govern those downstream states directly.
 - Preserve document verification gates during event-driven confirmation.
@@ -15,6 +16,7 @@ Enrollment is the shared lifecycle for regular, corporate, and walk-in learners.
 - Handle B2B corporate enrollment automatic profile conversion (creating `StudentProfile` and `Admission` atomically in one transaction) and B2B corporate credit limit validation.
 
 **Non-Goals:**
+
 - Redesigning course catalog pricing logic.
 - Redesigning Finance billing or credit card gateway transactions.
 - Owning completed/certificate transitions within this module.

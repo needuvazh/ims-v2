@@ -1,17 +1,32 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronDown, ChevronRight, Building2, MapPin, Layers, Home } from 'lucide-react';
+import {
+  ChevronDown,
+  ChevronRight,
+  Building2,
+  MapPin,
+  Layers,
+  Home,
+} from 'lucide-react';
 import { Badge } from '@ims/shared-ui';
 import type { OrganizationHierarchyNode } from '@ims/organization';
 
-export function HierarchyNode({ node, depth = 0 }: { node: OrganizationHierarchyNode; depth?: number }) {
+export function HierarchyNode({
+  node,
+  depth = 0,
+}: {
+  node: OrganizationHierarchyNode;
+  depth?: number;
+}) {
   const [collapsed, setCollapsed] = useState(false);
 
   const getIcon = () => {
     switch (node.type) {
       case 'Institute':
-        return <Building2 className="h-4.5 w-4.5 text-[color:var(--ims-brass)]" />;
+        return (
+          <Building2 className="h-4.5 w-4.5 text-[color:var(--ims-brass)]" />
+        );
       case 'Branch':
         return <MapPin className="h-4 w-4 text-emerald-600" />;
       case 'Department':
@@ -31,7 +46,11 @@ export function HierarchyNode({ node, depth = 0 }: { node: OrganizationHierarchy
             onClick={() => setCollapsed(!collapsed)}
             className="p-0.5 rounded hover:bg-[color:var(--ims-border)] text-[color:var(--ims-muted)]"
           >
-            {collapsed ? <ChevronRight className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
+            {collapsed ? (
+              <ChevronRight className="h-3.5 w-3.5" />
+            ) : (
+              <ChevronDown className="h-3.5 w-3.5" />
+            )}
           </button>
         ) : (
           <span className="w-4.5" />
@@ -41,7 +60,9 @@ export function HierarchyNode({ node, depth = 0 }: { node: OrganizationHierarchy
           {getIcon()}
         </span>
 
-        <span className="text-sm font-semibold text-[color:var(--ims-ink)]">{node.name}</span>
+        <span className="text-sm font-semibold text-[color:var(--ims-ink)]">
+          {node.name}
+        </span>
 
         {node.code && (
           <span className="text-xs font-mono bg-[color:var(--ims-accent-soft)] px-1.5 py-0.5 rounded text-[color:var(--ims-muted)] border border-[color:var(--ims-border)]">

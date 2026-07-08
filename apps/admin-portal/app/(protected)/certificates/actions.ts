@@ -54,7 +54,7 @@ export async function generateCertificateAction(data: any) {
       completionReadPort,
       financeValidationPort,
       numberingPort,
-      auditPort
+      auditPort,
     );
 
     const certificateId = await service.execute(validated, session.userId);
@@ -97,7 +97,11 @@ export async function submitReissueRequestAction(data: any) {
     const numberingPort = new PrismaNumberingAdapter();
     const enrollmentReadPort = new PrismaEnrollmentReadAdapter();
 
-    const service = new ReissueService(auditPort, numberingPort, enrollmentReadPort);
+    const service = new ReissueService(
+      auditPort,
+      numberingPort,
+      enrollmentReadPort,
+    );
     const requestId = await service.submitRequest(validated, session.userId);
 
     revalidatePath('/certificates/reissue');
@@ -118,7 +122,11 @@ export async function reviewReissueRequestAction(data: any) {
     const numberingPort = new PrismaNumberingAdapter();
     const enrollmentReadPort = new PrismaEnrollmentReadAdapter();
 
-    const service = new ReissueService(auditPort, numberingPort, enrollmentReadPort);
+    const service = new ReissueService(
+      auditPort,
+      numberingPort,
+      enrollmentReadPort,
+    );
     await service.reviewRequest(validated, session.userId);
 
     revalidatePath('/certificates/reissue');
@@ -139,8 +147,15 @@ export async function generateReplacementCertificateAction(data: any) {
     const numberingPort = new PrismaNumberingAdapter();
     const enrollmentReadPort = new PrismaEnrollmentReadAdapter();
 
-    const service = new ReissueService(auditPort, numberingPort, enrollmentReadPort);
-    const certificateId = await service.generateReplacement(validated, session.userId);
+    const service = new ReissueService(
+      auditPort,
+      numberingPort,
+      enrollmentReadPort,
+    );
+    const certificateId = await service.generateReplacement(
+      validated,
+      session.userId,
+    );
 
     revalidatePath('/certificates');
     revalidatePath('/certificates/reissue');

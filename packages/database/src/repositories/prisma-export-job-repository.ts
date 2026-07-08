@@ -52,7 +52,7 @@ export class PrismaExportJobRepository implements IExportJobRepository {
     id: Uuid,
     status: ExportJobDto['status'],
     fileUrl?: string | null,
-    errorMessage?: string | null
+    errorMessage?: string | null,
   ): Promise<ExportJobDto> {
     const row = await this.prisma.exportJob.update({
       where: { id },

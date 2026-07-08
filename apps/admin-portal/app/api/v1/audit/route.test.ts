@@ -4,11 +4,18 @@ import { DomainError } from '@ims/shared-kernel';
 const assertPermissionMock = vi.fn();
 const listAuditLogsMock = vi.fn();
 
-vi.mock('../../../../lib/auth-guard', () => ({ assertPermission: assertPermissionMock }));
-vi.mock('../../../../lib/runtime', () => ({ auditQueryService: { listAuditLogs: listAuditLogsMock } }));
+vi.mock('../../../../lib/auth-guard', () => ({
+  assertPermission: assertPermissionMock,
+}));
+vi.mock('../../../../lib/runtime', () => ({
+  auditQueryService: { listAuditLogs: listAuditLogsMock },
+}));
 vi.mock('../../../../lib/observability', () => ({
   applyObservabilityResponseHeaders: vi.fn(),
-  withRouteObservability: async (_headers: Headers, handler: () => Promise<Response>) => handler(),
+  withRouteObservability: async (
+    _headers: Headers,
+    handler: () => Promise<Response>,
+  ) => handler(),
   createStructuredLogger: () => ({ info: vi.fn(), error: vi.fn() }),
   getCurrentRequestContext: () => ({}),
 }));
@@ -25,7 +32,9 @@ describe('audit route', () => {
   });
 
   it('returns forbidden when audit permission is missing', async () => {
-    assertPermissionMock.mockRejectedValue(new DomainError('forbidden', 'Access denied.'));
+    assertPermissionMock.mockRejectedValue(
+      new DomainError('forbidden', 'Access denied.'),
+    );
 
     const { GET } = await import('./route');
     const response = await GET(new Request('http://localhost/api/v1/audit'));

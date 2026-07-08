@@ -11,11 +11,12 @@ vi.mock('../../../lib/runtime', () => ({
 }));
 
 vi.mock('../../../lib/auth-guard', () => ({
-  getSession: () => Promise.resolve({
-    userId: 'actor-id',
-    permissions: ['iam.policy.read', 'iam.policy.write'],
-    activeBranchId: 'branch-id',
-  }),
+  getSession: () =>
+    Promise.resolve({
+      userId: 'actor-id',
+      permissions: ['iam.policy.read', 'iam.policy.write'],
+      activeBranchId: 'branch-id',
+    }),
 }));
 
 describe('IamSecurityPolicyPage', () => {

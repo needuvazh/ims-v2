@@ -5,7 +5,15 @@ import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, CheckCircle2, Clock, Search, SlidersHorizontal, Users, X } from 'lucide-react';
+import {
+  ArrowRight,
+  CheckCircle2,
+  Clock,
+  Search,
+  SlidersHorizontal,
+  Users,
+  X,
+} from 'lucide-react';
 import { CourseCardSkeleton } from './public-site';
 
 type PublicCourseListItem = {
@@ -122,7 +130,10 @@ export function CoursesClient() {
     <div>
       {/* Filter Bar */}
       <div className="mb-8 space-y-4">
-        <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3">
+        <form
+          onSubmit={handleSearch}
+          className="flex flex-col sm:flex-row gap-3"
+        >
           <div className="relative flex-1">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" />
             <input
@@ -135,7 +146,10 @@ export function CoursesClient() {
             {search && (
               <button
                 type="button"
-                onClick={() => { setSearch(''); updateParams({ search: null }); }}
+                onClick={() => {
+                  setSearch('');
+                  updateParams({ search: null });
+                }}
                 className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-surface-100"
               >
                 <X className="h-4 w-4 text-neutral-400" />
@@ -174,7 +188,9 @@ export function CoursesClient() {
             {categories.map((cat) => (
               <button
                 key={cat.id}
-                onClick={() => handleCategoryChange(cat.id === categoryId ? null : cat.id)}
+                onClick={() =>
+                  handleCategoryChange(cat.id === categoryId ? null : cat.id)
+                }
                 className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-[0.15em] transition-all ${
                   categoryId === cat.id
                     ? 'bg-accent-600 text-white shadow-md shadow-accent-600/20'
@@ -192,7 +208,10 @@ export function CoursesClient() {
             <span>Filtered by:</span>
             <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-accent-50 text-accent-700 font-bold">
               {activeCategory.nameEnglish}
-              <button onClick={() => handleCategoryChange(null)} className="ml-1 hover:text-accent-900">
+              <button
+                onClick={() => handleCategoryChange(null)}
+                className="ml-1 hover:text-accent-900"
+              >
                 <X className="h-3 w-3" />
               </button>
             </span>
@@ -213,9 +232,14 @@ export function CoursesClient() {
       {!loading && !courses?.courses.length && (
         <div className="text-center py-16">
           <p className="text-lg font-bold text-neutral-900">No courses found</p>
-          <p className="mt-2 text-sm text-neutral-500">Try adjusting your search or filter criteria.</p>
+          <p className="mt-2 text-sm text-neutral-500">
+            Try adjusting your search or filter criteria.
+          </p>
           <button
-            onClick={() => { setSearch(''); handleCategoryChange(null); }}
+            onClick={() => {
+              setSearch('');
+              handleCategoryChange(null);
+            }}
             className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-accent-600 hover:text-accent-700"
           >
             Clear all filters <ArrowRight className="h-4 w-4" />
@@ -242,7 +266,10 @@ export function CoursesClient() {
               >
                 Previous
               </button>
-              {Array.from({ length: courses.pagination.pages }, (_, i) => i + 1).map((p) => (
+              {Array.from(
+                { length: courses.pagination.pages },
+                (_, i) => i + 1,
+              ).map((p) => (
                 <button
                   key={p}
                   onClick={() => handlePageChange(p)}
@@ -270,7 +297,13 @@ export function CoursesClient() {
   );
 }
 
-function CourseCard({ course, index }: { course: PublicCourseListItem; index: number }) {
+function CourseCard({
+  course,
+  index,
+}: {
+  course: PublicCourseListItem;
+  index: number;
+}) {
   const durationLabel = course.durationValue
     ? `${course.durationValue} ${course.durationType.toLowerCase()}${course.durationValue > 1 ? 's' : ''}`
     : 'Flexible';
@@ -290,7 +323,12 @@ function CourseCard({ course, index }: { course: PublicCourseListItem; index: nu
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-surface-100">
         {course.imageUrl ? (
-          <Image src={course.imageUrl} alt={course.nameEnglish} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+          <Image
+            src={course.imageUrl}
+            alt={course.nameEnglish}
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+          />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-primary-100 to-accent-50 flex items-center justify-center">
             <Clock className="h-12 w-12 text-primary-300" />
@@ -298,7 +336,10 @@ function CourseCard({ course, index }: { course: PublicCourseListItem; index: nu
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-primary-950/70 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         <div className="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-          <Link href={`/courses/${course.slug}`} className="flex w-full items-center justify-center gap-2 rounded-xl bg-white/20 px-4 py-3 text-xs font-bold uppercase tracking-[0.2em] text-white backdrop-blur-md hover:bg-white/30">
+          <Link
+            href={`/courses/${course.slug}`}
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-white/20 px-4 py-3 text-xs font-bold uppercase tracking-[0.2em] text-white backdrop-blur-md hover:bg-white/30"
+          >
             View Details <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
@@ -320,15 +361,27 @@ function CourseCard({ course, index }: { course: PublicCourseListItem; index: nu
             {priceLabel}
           </span>
         </div>
-        <h3 className="mt-4 font-display text-xl font-bold tracking-tight text-neutral-900 line-clamp-2">{course.nameEnglish}</h3>
+        <h3 className="mt-4 font-display text-xl font-bold tracking-tight text-neutral-900 line-clamp-2">
+          {course.nameEnglish}
+        </h3>
         {course.descriptionEnglish && (
-          <p className="mt-2 text-sm leading-relaxed text-neutral-600 line-clamp-2">{course.descriptionEnglish}</p>
+          <p className="mt-2 text-sm leading-relaxed text-neutral-600 line-clamp-2">
+            {course.descriptionEnglish}
+          </p>
         )}
         <div className="mt-auto pt-5 space-y-3">
           {course.nextBatchDate && (
             <div className="flex items-center gap-2 text-xs text-neutral-600">
               <CalendarIcon className="h-4 w-4 text-primary-600" />
-              <span>Next batch: <strong>{new Date(course.nextBatchDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</strong></span>
+              <span>
+                Next batch:{' '}
+                <strong>
+                  {new Date(course.nextBatchDate).toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'short',
+                  })}
+                </strong>
+              </span>
             </div>
           )}
           {course.availableSeats !== null && course.availableSeats > 0 && (
@@ -344,7 +397,9 @@ function CourseCard({ course, index }: { course: PublicCourseListItem; index: nu
             </li>
             <li className="flex gap-2">
               <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent-400" />
-              <span className="line-clamp-1">Industry-recognized certification</span>
+              <span className="line-clamp-1">
+                Industry-recognized certification
+              </span>
             </li>
           </ul>
         </div>
@@ -355,8 +410,22 @@ function CourseCard({ course, index }: { course: PublicCourseListItem; index: nu
 
 function CalendarIcon(props: React.ComponentProps<'svg'>) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <path d="M8 2v4" /><path d="M16 2v4" /><rect width="18" height="18" x="3" y="4" rx="2" /><path d="M3 10h18" />
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M8 2v4" />
+      <path d="M16 2v4" />
+      <rect width="18" height="18" x="3" y="4" rx="2" />
+      <path d="M3 10h18" />
     </svg>
   );
 }

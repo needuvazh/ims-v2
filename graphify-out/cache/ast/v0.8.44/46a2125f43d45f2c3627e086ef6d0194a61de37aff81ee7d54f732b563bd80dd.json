@@ -1,1 +1,127 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_enroll_student_ui_v2_specs_enrollment_lifecycle_md", "label": "enrollment-lifecycle.md", "file_type": "document", "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md", "source_location": "L1"}, {"id": "specs_enrollment_lifecycle_added_requirements", "label": "ADDED Requirements", "file_type": "document", "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md", "source_location": "L1"}, {"id": "specs_enrollment_lifecycle_requirement_batch_selection_drawer_view", "label": "Requirement: batch-selection-drawer-view", "file_type": "document", "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md", "source_location": "L3"}, {"id": "specs_enrollment_lifecycle_scenario_slide_out_batch_selector_drawer", "label": "Scenario: Slide Out Batch Selector Drawer", "file_type": "document", "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md", "source_location": "L6"}, {"id": "specs_enrollment_lifecycle_scenario_server_side_date_and_parameter_filtering", "label": "Scenario: Server-Side Date and Parameter Filtering", "file_type": "document", "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md", "source_location": "L11"}, {"id": "specs_enrollment_lifecycle_scenario_batch_grid_card_layout", "label": "Scenario: Batch Grid Card Layout", "file_type": "document", "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md", "source_location": "L21"}, {"id": "specs_enrollment_lifecycle_scenario_batch_details_inside_card", "label": "Scenario: Batch Details Inside Card", "file_type": "document", "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md", "source_location": "L31"}, {"id": "specs_enrollment_lifecycle_scenario_server_side_pagination", "label": "Scenario: Server-Side Pagination", "file_type": "document", "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md", "source_location": "L39"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_enroll_student_ui_v2_specs_enrollment_lifecycle_md", "target": "specs_enrollment_lifecycle_added_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md", "source_location": "L1", "weight": 1.0}, {"source": "specs_enrollment_lifecycle_added_requirements", "target": "specs_enrollment_lifecycle_requirement_batch_selection_drawer_view", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md", "source_location": "L3", "weight": 1.0}, {"source": "specs_enrollment_lifecycle_requirement_batch_selection_drawer_view", "target": "specs_enrollment_lifecycle_scenario_slide_out_batch_selector_drawer", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md", "source_location": "L6", "weight": 1.0}, {"source": "specs_enrollment_lifecycle_requirement_batch_selection_drawer_view", "target": "specs_enrollment_lifecycle_scenario_server_side_date_and_parameter_filtering", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md", "source_location": "L11", "weight": 1.0}, {"source": "specs_enrollment_lifecycle_requirement_batch_selection_drawer_view", "target": "specs_enrollment_lifecycle_scenario_batch_grid_card_layout", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md", "source_location": "L21", "weight": 1.0}, {"source": "specs_enrollment_lifecycle_requirement_batch_selection_drawer_view", "target": "specs_enrollment_lifecycle_scenario_batch_details_inside_card", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md", "source_location": "L31", "weight": 1.0}, {"source": "specs_enrollment_lifecycle_requirement_batch_selection_drawer_view", "target": "specs_enrollment_lifecycle_scenario_server_side_pagination", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md", "source_location": "L39", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_enroll_student_ui_v2_specs_enrollment_lifecycle_md",
+      "label": "enrollment-lifecycle.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "specs_enrollment_lifecycle_added_requirements",
+      "label": "ADDED Requirements",
+      "file_type": "document",
+      "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "specs_enrollment_lifecycle_requirement_batch_selection_drawer_view",
+      "label": "Requirement: batch-selection-drawer-view",
+      "file_type": "document",
+      "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "specs_enrollment_lifecycle_scenario_slide_out_batch_selector_drawer",
+      "label": "Scenario: Slide Out Batch Selector Drawer",
+      "file_type": "document",
+      "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md",
+      "source_location": "L6"
+    },
+    {
+      "id": "specs_enrollment_lifecycle_scenario_server_side_date_and_parameter_filtering",
+      "label": "Scenario: Server-Side Date and Parameter Filtering",
+      "file_type": "document",
+      "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md",
+      "source_location": "L11"
+    },
+    {
+      "id": "specs_enrollment_lifecycle_scenario_batch_grid_card_layout",
+      "label": "Scenario: Batch Grid Card Layout",
+      "file_type": "document",
+      "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md",
+      "source_location": "L21"
+    },
+    {
+      "id": "specs_enrollment_lifecycle_scenario_batch_details_inside_card",
+      "label": "Scenario: Batch Details Inside Card",
+      "file_type": "document",
+      "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md",
+      "source_location": "L31"
+    },
+    {
+      "id": "specs_enrollment_lifecycle_scenario_server_side_pagination",
+      "label": "Scenario: Server-Side Pagination",
+      "file_type": "document",
+      "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md",
+      "source_location": "L39"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_enroll_student_ui_v2_specs_enrollment_lifecycle_md",
+      "target": "specs_enrollment_lifecycle_added_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "specs_enrollment_lifecycle_added_requirements",
+      "target": "specs_enrollment_lifecycle_requirement_batch_selection_drawer_view",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "specs_enrollment_lifecycle_requirement_batch_selection_drawer_view",
+      "target": "specs_enrollment_lifecycle_scenario_slide_out_batch_selector_drawer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "specs_enrollment_lifecycle_requirement_batch_selection_drawer_view",
+      "target": "specs_enrollment_lifecycle_scenario_server_side_date_and_parameter_filtering",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "specs_enrollment_lifecycle_requirement_batch_selection_drawer_view",
+      "target": "specs_enrollment_lifecycle_scenario_batch_grid_card_layout",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "specs_enrollment_lifecycle_requirement_batch_selection_drawer_view",
+      "target": "specs_enrollment_lifecycle_scenario_batch_details_inside_card",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "specs_enrollment_lifecycle_requirement_batch_selection_drawer_view",
+      "target": "specs_enrollment_lifecycle_scenario_server_side_pagination",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/enroll-student-ui-v2/specs/enrollment-lifecycle.md",
+      "source_location": "L39",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

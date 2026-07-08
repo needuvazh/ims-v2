@@ -1,1 +1,271 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_12_fee_billing_receivables_management_part_6_permission_matrix_md", "label": "Part 6 \u2013 Permission Matrix.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L1"}, {"id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix", "label": "Part 6 \u2013 Permission Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L1"}, {"id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_module_12_fee_billing_receivables_management", "label": "Module 12 \u2013 Fee, Billing & Receivables Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L3"}, {"id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_1_permission_model_principles", "label": "1. Permission Model Principles", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L5"}, {"id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_2_business_roles", "label": "2. Business Roles", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L20"}, {"id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_3_action_level_permission_catalog", "label": "3. Action-Level Permission Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L38"}, {"id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_4_action_level_role_matrix", "label": "4. Action-Level Role Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L69"}, {"id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_4_1_conditional_assignment_rules", "label": "4.1 Conditional Assignment Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L102"}, {"id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_menu_level_permissions", "label": "5. Menu-Level Permissions", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L111"}, {"id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_1_menu_permission_catalog", "label": "5.1 Menu Permission Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L113"}, {"id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_2_menu_level_role_matrix", "label": "5.2 Menu-Level Role Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L134"}, {"id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_3_menu_rendering_rules", "label": "5.3 Menu Rendering Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L155"}, {"id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_6_report_level_permission_catalog", "label": "6. Report-Level Permission Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L164"}, {"id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_7_report_level_role_matrix", "label": "7. Report-Level Role Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L178"}, {"id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_8_branch_scope_matrix", "label": "8. Branch Scope Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L192"}, {"id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_9_separation_of_duties", "label": "9. Separation of Duties", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L208"}, {"id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_10_permission_enforcement_acceptance_criteria", "label": "10. Permission Enforcement Acceptance Criteria", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L220"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_12_fee_billing_receivables_management_part_6_permission_matrix_md", "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L1", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_module_12_fee_billing_receivables_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L3", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_1_permission_model_principles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L5", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_2_business_roles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L20", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_3_action_level_permission_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L38", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_4_action_level_role_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L69", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_4_action_level_role_matrix", "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_4_1_conditional_assignment_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L102", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_menu_level_permissions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L111", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_menu_level_permissions", "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_1_menu_permission_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L113", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_menu_level_permissions", "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_2_menu_level_role_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L134", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_menu_level_permissions", "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_3_menu_rendering_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L155", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_6_report_level_permission_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L164", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_7_report_level_role_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L178", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_8_branch_scope_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L192", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_9_separation_of_duties", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L208", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_10_permission_enforcement_acceptance_criteria", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L220", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_12_fee_billing_receivables_management_part_6_permission_matrix_md",
+      "label": "Part 6 \u2013 Permission Matrix.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix",
+      "label": "Part 6 \u2013 Permission Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_module_12_fee_billing_receivables_management",
+      "label": "Module 12 \u2013 Fee, Billing & Receivables Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_1_permission_model_principles",
+      "label": "1. Permission Model Principles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_2_business_roles",
+      "label": "2. Business Roles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L20"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_3_action_level_permission_catalog",
+      "label": "3. Action-Level Permission Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L38"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_4_action_level_role_matrix",
+      "label": "4. Action-Level Role Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L69"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_4_1_conditional_assignment_rules",
+      "label": "4.1 Conditional Assignment Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L102"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_menu_level_permissions",
+      "label": "5. Menu-Level Permissions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L111"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_1_menu_permission_catalog",
+      "label": "5.1 Menu Permission Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L113"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_2_menu_level_role_matrix",
+      "label": "5.2 Menu-Level Role Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L134"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_3_menu_rendering_rules",
+      "label": "5.3 Menu Rendering Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L155"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_6_report_level_permission_catalog",
+      "label": "6. Report-Level Permission Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L164"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_7_report_level_role_matrix",
+      "label": "7. Report-Level Role Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L178"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_8_branch_scope_matrix",
+      "label": "8. Branch Scope Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L192"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_9_separation_of_duties",
+      "label": "9. Separation of Duties",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L208"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_6_permission_matrix_10_permission_enforcement_acceptance_criteria",
+      "label": "10. Permission Enforcement Acceptance Criteria",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L220"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_12_fee_billing_receivables_management_part_6_permission_matrix_md",
+      "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_module_12_fee_billing_receivables_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_1_permission_model_principles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_2_business_roles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_3_action_level_permission_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_4_action_level_role_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_4_action_level_role_matrix",
+      "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_4_1_conditional_assignment_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L102",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_menu_level_permissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L111",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_menu_level_permissions",
+      "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_1_menu_permission_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L113",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_menu_level_permissions",
+      "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_2_menu_level_role_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L134",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_menu_level_permissions",
+      "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_5_3_menu_rendering_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_6_report_level_permission_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L164",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_7_report_level_role_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L178",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_8_branch_scope_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L192",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_9_separation_of_duties",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L208",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_12_fee_billing_receivables_management_part_6_permission_matrix_10_permission_enforcement_acceptance_criteria",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L220",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

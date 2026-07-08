@@ -1,1 +1,1535 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "label": "Part 10 - Security Architecture and NFR.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "label": "Part 10 - Security Architecture and NFR", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_module_13_document_management", "label": "Module 13 \u2013 Document Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L3"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_1_purpose", "label": "1. Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L5"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_2_security_objectives", "label": "2. Security Objectives", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L32"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_3_security_trust_boundaries", "label": "3. Security Trust Boundaries", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L51"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_3_1_logical_trust_boundaries", "label": "3.1 Logical trust boundaries", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L53"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_3_2_trust_assumptions", "label": "3.2 Trust assumptions", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L85"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_4_authentication_architecture", "label": "4. Authentication Architecture", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L98"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_4_1_authentication_requirements", "label": "4.1 Authentication requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L100"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_4_2_service_system_authentication", "label": "4.2 Service/system authentication", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L114"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_5_authorization_architecture", "label": "5. Authorization Architecture", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L130"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_5_1_authorization_composition", "label": "5.1 Authorization composition", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L132"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_5_2_canonical_action_permissions", "label": "5.2 Canonical action permissions", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L150"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_5_3_direct_object_authorization", "label": "5.3 Direct-object authorization", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L173"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_5_4_non_disclosure_behavior", "label": "5.4 Non-disclosure behavior", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L188"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_6_branch_isolation_security", "label": "6. Branch Isolation Security", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L203"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_6_1_server_side_scope_derivation", "label": "6.1 Server-side scope derivation", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L205"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_6_2_mandatory_branch_isolation_controls", "label": "6.2 Mandatory branch isolation controls", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L226"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_6_3_consolidated_access", "label": "6.3 Consolidated access", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L245"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_6_4_branch_scope_failure_behavior", "label": "6.4 Branch-scope failure behavior", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L270"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_7_vercel_blob_security_architecture", "label": "7. Vercel Blob Security Architecture", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L282"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_7_1_storage_role", "label": "7.1 Storage role", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L284"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_7_2_upload_security", "label": "7.2 Upload security", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L298"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_7_3_file_access_security", "label": "7.3 File access security", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L326"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_7_4_file_type_and_content_controls", "label": "7.4 File type and content controls", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L350"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_7_5_blob_pathname_privacy", "label": "7.5 Blob pathname privacy", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L356"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_7_6_blob_database_consistency", "label": "7.6 Blob/database consistency", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L373"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_8_data_protection_and_privacy_controls", "label": "8. Data Protection and Privacy Controls", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L389"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_8_1_data_classification", "label": "8.1 Data classification", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L391"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_8_2_encryption", "label": "8.2 Encryption", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L403"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_8_3_sensitive_data_minimization", "label": "8.3 Sensitive data minimization", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L413"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_8_4_logging_redaction", "label": "8.4 Logging redaction", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L424"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_9_input_output_and_web_security_controls", "label": "9. Input, Output, and Web Security Controls", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L454"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_9_1_input_validation", "label": "9.1 Input validation", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L456"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_9_2_injection_and_unsafe_rendering", "label": "9.2 Injection and unsafe rendering", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L468"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_9_3_csrf_and_request_origin_controls", "label": "9.3 CSRF and request origin controls", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L478"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_9_4_security_headers", "label": "9.4 Security headers", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L482"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_10_lifecycle_integrity_controls", "label": "10. Lifecycle Integrity Controls", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L490"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_10_1_allowed_lifecycle", "label": "10.1 Allowed lifecycle", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L492"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_10_2_state_transition_security", "label": "10.2 State-transition security", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L508"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_10_3_approval_rejection_transaction_integrity", "label": "10.3 Approval/rejection transaction integrity", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L520"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_10_4_verification_history_immutability", "label": "10.4 Verification history immutability", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L539"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_11_soft_delete_retention_and_destruction", "label": "11. Soft Delete, Retention, and Destruction", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L555"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_11_1_soft_retirement", "label": "11.1 Soft retirement", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L557"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_11_2_binary_retention_gap", "label": "11.2 Binary retention gap", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L571"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_12_segregation_of_duties", "label": "12. Segregation of Duties", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L584"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_12_1_recommended_separation", "label": "12.1 Recommended separation", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L586"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_12_2_minimum_control_rules", "label": "12.2 Minimum control rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L596"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_13_audit_architecture", "label": "13. Audit Architecture", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L609"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_13_1_authoritative_audit_ownership", "label": "13.1 Authoritative audit ownership", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L611"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_13_2_mandatory_audit_events", "label": "13.2 Mandatory audit events", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L617"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_13_3_audit_minimum_fields", "label": "13.3 Audit minimum fields", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L635"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_13_4_audit_integrity_requirements", "label": "13.4 Audit integrity requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L654"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_14_cross_context_side_effect_audit_requirements", "label": "14. Cross-Context Side-Effect Audit Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L664"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_14_1_side_effect_ownership_model", "label": "14.1 Side-effect ownership model", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L666"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_14_2_rules", "label": "14.2 Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L680"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_15_threat_model_summary", "label": "15. Threat Model Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L695"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_16_non_functional_requirements_overview", "label": "16. Non-Functional Requirements Overview", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L718"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_17_performance_requirements", "label": "17. Performance Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L724"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_17_1_api_latency_targets", "label": "17.1 API latency targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L726"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_17_2_upload_download_performance", "label": "17.2 Upload/download performance", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L739"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_17_3_query_efficiency_requirements", "label": "17.3 Query efficiency requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L749"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_18_availability_and_reliability_requirements", "label": "18. Availability and Reliability Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L762"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_18_1_degraded_mode_behavior", "label": "18.1 Degraded-mode behavior", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L775"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_blob_service_unavailable", "label": "Blob service unavailable", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L777"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_reporting_projection_unavailable", "label": "Reporting projection unavailable", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L784"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_owner_adapter_unavailable", "label": "Owner adapter unavailable", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L790"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_19_scalability_requirements", "label": "19. Scalability Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L798"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_19_1_horizontal_scalability", "label": "19.1 Horizontal scalability", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L800"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_19_2_database_scalability", "label": "19.2 Database scalability", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L811"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_19_3_volume_targets", "label": "19.3 Volume targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L821"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_19_4_concurrency", "label": "19.4 Concurrency", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L836"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_20_usability_and_accessibility_requirements", "label": "20. Usability and Accessibility Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L845"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_20_1_usability_targets", "label": "20.1 Usability targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L847"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_20_2_accessibility", "label": "20.2 Accessibility", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L859"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_21_localization_and_oman_time_requirements", "label": "21. Localization and Oman Time Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L876"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_21_1_language_layout", "label": "21.1 Language layout", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L878"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_21_2_time_and_business_date_basis", "label": "21.2 Time and business-date basis", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L887"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_22_compliance_requirements", "label": "22. Compliance Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L900"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_22_1_general_compliance_controls", "label": "22.1 General compliance controls", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L902"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_22_2_retention_policy_requirement", "label": "22.2 Retention policy requirement", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L916"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_22_3_audit_retention", "label": "22.3 Audit retention", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L922"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_23_observability_requirements_relevant_to_security_and_nfr", "label": "23. Observability Requirements Relevant to Security and NFR", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L928"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_23_1_security_metrics", "label": "23.1 Security metrics", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L932"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_23_2_required_tracing_boundaries", "label": "23.2 Required tracing boundaries", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L952"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_24_rate_limiting_and_abuse_protection", "label": "24. Rate Limiting and Abuse Protection", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L972"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_25_backup_recovery_and_data_integrity_nfr", "label": "25. Backup, Recovery, and Data Integrity NFR", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L991"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_26_security_testing_requirements", "label": "26. Security Testing Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1012"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_26_1_mandatory_automated_tests", "label": "26.1 Mandatory automated tests", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1014"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_26_2_security_verification_activities", "label": "26.2 Security verification activities", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1036"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_27_nfr_acceptance_matrix", "label": "27. NFR Acceptance Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1052"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_28_cross_context_security_responsibility_matrix", "label": "28. Cross-Context Security Responsibility Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1074"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_29_ddd_and_er_consistency_check", "label": "29. DDD and ER Consistency Check", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1095"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_30_open_security_and_nfr_gaps", "label": "30. Open Security and NFR Gaps", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1112"}, {"id": "module_13_document_management_part_10_security_architecture_and_nfr_31_final_security_architecture_statement", "label": "31. Final Security Architecture Statement", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1131"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_13_document_management_part_10_security_architecture_and_nfr_module_13_document_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L3", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_13_document_management_part_10_security_architecture_and_nfr_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L5", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_2_security_objectives", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L32", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_3_security_trust_boundaries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L51", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_3_security_trust_boundaries", "target": "module_13_document_management_part_10_security_architecture_and_nfr_3_1_logical_trust_boundaries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L53", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_3_security_trust_boundaries", "target": "module_13_document_management_part_10_security_architecture_and_nfr_3_2_trust_assumptions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L85", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_4_authentication_architecture", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L98", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_4_authentication_architecture", "target": "module_13_document_management_part_10_security_architecture_and_nfr_4_1_authentication_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L100", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_4_authentication_architecture", "target": "module_13_document_management_part_10_security_architecture_and_nfr_4_2_service_system_authentication", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L114", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_5_authorization_architecture", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L130", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_5_authorization_architecture", "target": "module_13_document_management_part_10_security_architecture_and_nfr_5_1_authorization_composition", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L132", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_5_authorization_architecture", "target": "module_13_document_management_part_10_security_architecture_and_nfr_5_2_canonical_action_permissions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L150", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_5_authorization_architecture", "target": "module_13_document_management_part_10_security_architecture_and_nfr_5_3_direct_object_authorization", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L173", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_5_authorization_architecture", "target": "module_13_document_management_part_10_security_architecture_and_nfr_5_4_non_disclosure_behavior", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L188", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_6_branch_isolation_security", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L203", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_6_branch_isolation_security", "target": "module_13_document_management_part_10_security_architecture_and_nfr_6_1_server_side_scope_derivation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L205", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_6_branch_isolation_security", "target": "module_13_document_management_part_10_security_architecture_and_nfr_6_2_mandatory_branch_isolation_controls", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L226", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_6_branch_isolation_security", "target": "module_13_document_management_part_10_security_architecture_and_nfr_6_3_consolidated_access", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L245", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_6_branch_isolation_security", "target": "module_13_document_management_part_10_security_architecture_and_nfr_6_4_branch_scope_failure_behavior", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L270", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_7_vercel_blob_security_architecture", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L282", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_7_vercel_blob_security_architecture", "target": "module_13_document_management_part_10_security_architecture_and_nfr_7_1_storage_role", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L284", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_7_vercel_blob_security_architecture", "target": "module_13_document_management_part_10_security_architecture_and_nfr_7_2_upload_security", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L298", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_7_vercel_blob_security_architecture", "target": "module_13_document_management_part_10_security_architecture_and_nfr_7_3_file_access_security", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L326", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_7_vercel_blob_security_architecture", "target": "module_13_document_management_part_10_security_architecture_and_nfr_7_4_file_type_and_content_controls", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L350", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_7_vercel_blob_security_architecture", "target": "module_13_document_management_part_10_security_architecture_and_nfr_7_5_blob_pathname_privacy", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L356", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_7_vercel_blob_security_architecture", "target": "module_13_document_management_part_10_security_architecture_and_nfr_7_6_blob_database_consistency", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L373", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_8_data_protection_and_privacy_controls", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L389", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_8_data_protection_and_privacy_controls", "target": "module_13_document_management_part_10_security_architecture_and_nfr_8_1_data_classification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L391", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_8_data_protection_and_privacy_controls", "target": "module_13_document_management_part_10_security_architecture_and_nfr_8_2_encryption", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L403", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_8_data_protection_and_privacy_controls", "target": "module_13_document_management_part_10_security_architecture_and_nfr_8_3_sensitive_data_minimization", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L413", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_8_data_protection_and_privacy_controls", "target": "module_13_document_management_part_10_security_architecture_and_nfr_8_4_logging_redaction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L424", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_9_input_output_and_web_security_controls", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L454", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_9_input_output_and_web_security_controls", "target": "module_13_document_management_part_10_security_architecture_and_nfr_9_1_input_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L456", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_9_input_output_and_web_security_controls", "target": "module_13_document_management_part_10_security_architecture_and_nfr_9_2_injection_and_unsafe_rendering", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L468", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_9_input_output_and_web_security_controls", "target": "module_13_document_management_part_10_security_architecture_and_nfr_9_3_csrf_and_request_origin_controls", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L478", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_9_input_output_and_web_security_controls", "target": "module_13_document_management_part_10_security_architecture_and_nfr_9_4_security_headers", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L482", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_10_lifecycle_integrity_controls", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L490", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_10_lifecycle_integrity_controls", "target": "module_13_document_management_part_10_security_architecture_and_nfr_10_1_allowed_lifecycle", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L492", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_10_lifecycle_integrity_controls", "target": "module_13_document_management_part_10_security_architecture_and_nfr_10_2_state_transition_security", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L508", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_10_lifecycle_integrity_controls", "target": "module_13_document_management_part_10_security_architecture_and_nfr_10_3_approval_rejection_transaction_integrity", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L520", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_10_lifecycle_integrity_controls", "target": "module_13_document_management_part_10_security_architecture_and_nfr_10_4_verification_history_immutability", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L539", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_11_soft_delete_retention_and_destruction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L555", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_11_soft_delete_retention_and_destruction", "target": "module_13_document_management_part_10_security_architecture_and_nfr_11_1_soft_retirement", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L557", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_11_soft_delete_retention_and_destruction", "target": "module_13_document_management_part_10_security_architecture_and_nfr_11_2_binary_retention_gap", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L571", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_12_segregation_of_duties", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L584", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_12_segregation_of_duties", "target": "module_13_document_management_part_10_security_architecture_and_nfr_12_1_recommended_separation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L586", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_12_segregation_of_duties", "target": "module_13_document_management_part_10_security_architecture_and_nfr_12_2_minimum_control_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L596", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_13_audit_architecture", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L609", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_13_audit_architecture", "target": "module_13_document_management_part_10_security_architecture_and_nfr_13_1_authoritative_audit_ownership", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L611", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_13_audit_architecture", "target": "module_13_document_management_part_10_security_architecture_and_nfr_13_2_mandatory_audit_events", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L617", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_13_audit_architecture", "target": "module_13_document_management_part_10_security_architecture_and_nfr_13_3_audit_minimum_fields", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L635", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_13_audit_architecture", "target": "module_13_document_management_part_10_security_architecture_and_nfr_13_4_audit_integrity_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L654", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_14_cross_context_side_effect_audit_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L664", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_14_cross_context_side_effect_audit_requirements", "target": "module_13_document_management_part_10_security_architecture_and_nfr_14_1_side_effect_ownership_model", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L666", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_14_cross_context_side_effect_audit_requirements", "target": "module_13_document_management_part_10_security_architecture_and_nfr_14_2_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L680", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_15_threat_model_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L695", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_16_non_functional_requirements_overview", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L718", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_17_performance_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L724", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_17_performance_requirements", "target": "module_13_document_management_part_10_security_architecture_and_nfr_17_1_api_latency_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L726", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_17_performance_requirements", "target": "module_13_document_management_part_10_security_architecture_and_nfr_17_2_upload_download_performance", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L739", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_17_performance_requirements", "target": "module_13_document_management_part_10_security_architecture_and_nfr_17_3_query_efficiency_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L749", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_18_availability_and_reliability_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L762", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_18_availability_and_reliability_requirements", "target": "module_13_document_management_part_10_security_architecture_and_nfr_18_1_degraded_mode_behavior", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L775", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_18_1_degraded_mode_behavior", "target": "module_13_document_management_part_10_security_architecture_and_nfr_blob_service_unavailable", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L777", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_18_1_degraded_mode_behavior", "target": "module_13_document_management_part_10_security_architecture_and_nfr_reporting_projection_unavailable", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L784", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_18_1_degraded_mode_behavior", "target": "module_13_document_management_part_10_security_architecture_and_nfr_owner_adapter_unavailable", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L790", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_19_scalability_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L798", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_19_scalability_requirements", "target": "module_13_document_management_part_10_security_architecture_and_nfr_19_1_horizontal_scalability", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L800", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_19_scalability_requirements", "target": "module_13_document_management_part_10_security_architecture_and_nfr_19_2_database_scalability", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L811", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_19_scalability_requirements", "target": "module_13_document_management_part_10_security_architecture_and_nfr_19_3_volume_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L821", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_19_scalability_requirements", "target": "module_13_document_management_part_10_security_architecture_and_nfr_19_4_concurrency", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L836", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_20_usability_and_accessibility_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L845", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_20_usability_and_accessibility_requirements", "target": "module_13_document_management_part_10_security_architecture_and_nfr_20_1_usability_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L847", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_20_usability_and_accessibility_requirements", "target": "module_13_document_management_part_10_security_architecture_and_nfr_20_2_accessibility", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L859", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_21_localization_and_oman_time_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L876", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_21_localization_and_oman_time_requirements", "target": "module_13_document_management_part_10_security_architecture_and_nfr_21_1_language_layout", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L878", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_21_localization_and_oman_time_requirements", "target": "module_13_document_management_part_10_security_architecture_and_nfr_21_2_time_and_business_date_basis", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L887", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_22_compliance_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L900", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_22_compliance_requirements", "target": "module_13_document_management_part_10_security_architecture_and_nfr_22_1_general_compliance_controls", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L902", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_22_compliance_requirements", "target": "module_13_document_management_part_10_security_architecture_and_nfr_22_2_retention_policy_requirement", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L916", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_22_compliance_requirements", "target": "module_13_document_management_part_10_security_architecture_and_nfr_22_3_audit_retention", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L922", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_23_observability_requirements_relevant_to_security_and_nfr", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L928", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_23_observability_requirements_relevant_to_security_and_nfr", "target": "module_13_document_management_part_10_security_architecture_and_nfr_23_1_security_metrics", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L932", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_23_observability_requirements_relevant_to_security_and_nfr", "target": "module_13_document_management_part_10_security_architecture_and_nfr_23_2_required_tracing_boundaries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L952", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_24_rate_limiting_and_abuse_protection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L972", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_25_backup_recovery_and_data_integrity_nfr", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L991", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_26_security_testing_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1012", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_26_security_testing_requirements", "target": "module_13_document_management_part_10_security_architecture_and_nfr_26_1_mandatory_automated_tests", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1014", "weight": 1.0}, {"source": "module_13_document_management_part_10_security_architecture_and_nfr_26_security_testing_requirements", "target": "module_13_document_management_part_10_security_architecture_and_nfr_26_2_security_verification_activities", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1036", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_27_nfr_acceptance_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1052", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_28_cross_context_security_responsibility_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1074", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_29_ddd_and_er_consistency_check", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1095", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_30_open_security_and_nfr_gaps", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1112", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md", "target": "module_13_document_management_part_10_security_architecture_and_nfr_31_final_security_architecture_statement", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1131", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "label": "Part 10 - Security Architecture and NFR.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "label": "Part 10 - Security Architecture and NFR",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_module_13_document_management",
+      "label": "Module 13 \u2013 Document Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_1_purpose",
+      "label": "1. Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_2_security_objectives",
+      "label": "2. Security Objectives",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L32"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_3_security_trust_boundaries",
+      "label": "3. Security Trust Boundaries",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L51"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_3_1_logical_trust_boundaries",
+      "label": "3.1 Logical trust boundaries",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L53"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_3_2_trust_assumptions",
+      "label": "3.2 Trust assumptions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L85"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_4_authentication_architecture",
+      "label": "4. Authentication Architecture",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L98"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_4_1_authentication_requirements",
+      "label": "4.1 Authentication requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L100"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_4_2_service_system_authentication",
+      "label": "4.2 Service/system authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L114"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_5_authorization_architecture",
+      "label": "5. Authorization Architecture",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L130"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_5_1_authorization_composition",
+      "label": "5.1 Authorization composition",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L132"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_5_2_canonical_action_permissions",
+      "label": "5.2 Canonical action permissions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L150"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_5_3_direct_object_authorization",
+      "label": "5.3 Direct-object authorization",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L173"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_5_4_non_disclosure_behavior",
+      "label": "5.4 Non-disclosure behavior",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L188"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_6_branch_isolation_security",
+      "label": "6. Branch Isolation Security",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L203"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_6_1_server_side_scope_derivation",
+      "label": "6.1 Server-side scope derivation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L205"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_6_2_mandatory_branch_isolation_controls",
+      "label": "6.2 Mandatory branch isolation controls",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L226"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_6_3_consolidated_access",
+      "label": "6.3 Consolidated access",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L245"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_6_4_branch_scope_failure_behavior",
+      "label": "6.4 Branch-scope failure behavior",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L270"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_7_vercel_blob_security_architecture",
+      "label": "7. Vercel Blob Security Architecture",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L282"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_7_1_storage_role",
+      "label": "7.1 Storage role",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L284"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_7_2_upload_security",
+      "label": "7.2 Upload security",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L298"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_7_3_file_access_security",
+      "label": "7.3 File access security",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L326"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_7_4_file_type_and_content_controls",
+      "label": "7.4 File type and content controls",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L350"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_7_5_blob_pathname_privacy",
+      "label": "7.5 Blob pathname privacy",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L356"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_7_6_blob_database_consistency",
+      "label": "7.6 Blob/database consistency",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L373"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_8_data_protection_and_privacy_controls",
+      "label": "8. Data Protection and Privacy Controls",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L389"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_8_1_data_classification",
+      "label": "8.1 Data classification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L391"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_8_2_encryption",
+      "label": "8.2 Encryption",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L403"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_8_3_sensitive_data_minimization",
+      "label": "8.3 Sensitive data minimization",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L413"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_8_4_logging_redaction",
+      "label": "8.4 Logging redaction",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L424"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_9_input_output_and_web_security_controls",
+      "label": "9. Input, Output, and Web Security Controls",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L454"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_9_1_input_validation",
+      "label": "9.1 Input validation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L456"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_9_2_injection_and_unsafe_rendering",
+      "label": "9.2 Injection and unsafe rendering",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L468"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_9_3_csrf_and_request_origin_controls",
+      "label": "9.3 CSRF and request origin controls",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L478"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_9_4_security_headers",
+      "label": "9.4 Security headers",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L482"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_10_lifecycle_integrity_controls",
+      "label": "10. Lifecycle Integrity Controls",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L490"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_10_1_allowed_lifecycle",
+      "label": "10.1 Allowed lifecycle",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L492"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_10_2_state_transition_security",
+      "label": "10.2 State-transition security",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L508"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_10_3_approval_rejection_transaction_integrity",
+      "label": "10.3 Approval/rejection transaction integrity",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L520"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_10_4_verification_history_immutability",
+      "label": "10.4 Verification history immutability",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L539"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_11_soft_delete_retention_and_destruction",
+      "label": "11. Soft Delete, Retention, and Destruction",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L555"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_11_1_soft_retirement",
+      "label": "11.1 Soft retirement",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L557"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_11_2_binary_retention_gap",
+      "label": "11.2 Binary retention gap",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L571"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_12_segregation_of_duties",
+      "label": "12. Segregation of Duties",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L584"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_12_1_recommended_separation",
+      "label": "12.1 Recommended separation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L586"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_12_2_minimum_control_rules",
+      "label": "12.2 Minimum control rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L596"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_13_audit_architecture",
+      "label": "13. Audit Architecture",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L609"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_13_1_authoritative_audit_ownership",
+      "label": "13.1 Authoritative audit ownership",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L611"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_13_2_mandatory_audit_events",
+      "label": "13.2 Mandatory audit events",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L617"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_13_3_audit_minimum_fields",
+      "label": "13.3 Audit minimum fields",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L635"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_13_4_audit_integrity_requirements",
+      "label": "13.4 Audit integrity requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L654"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_14_cross_context_side_effect_audit_requirements",
+      "label": "14. Cross-Context Side-Effect Audit Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L664"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_14_1_side_effect_ownership_model",
+      "label": "14.1 Side-effect ownership model",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L666"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_14_2_rules",
+      "label": "14.2 Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L680"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_15_threat_model_summary",
+      "label": "15. Threat Model Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L695"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_16_non_functional_requirements_overview",
+      "label": "16. Non-Functional Requirements Overview",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L718"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_17_performance_requirements",
+      "label": "17. Performance Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L724"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_17_1_api_latency_targets",
+      "label": "17.1 API latency targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L726"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_17_2_upload_download_performance",
+      "label": "17.2 Upload/download performance",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L739"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_17_3_query_efficiency_requirements",
+      "label": "17.3 Query efficiency requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L749"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_18_availability_and_reliability_requirements",
+      "label": "18. Availability and Reliability Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L762"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_18_1_degraded_mode_behavior",
+      "label": "18.1 Degraded-mode behavior",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L775"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_blob_service_unavailable",
+      "label": "Blob service unavailable",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L777"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_reporting_projection_unavailable",
+      "label": "Reporting projection unavailable",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L784"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_owner_adapter_unavailable",
+      "label": "Owner adapter unavailable",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L790"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_19_scalability_requirements",
+      "label": "19. Scalability Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L798"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_19_1_horizontal_scalability",
+      "label": "19.1 Horizontal scalability",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L800"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_19_2_database_scalability",
+      "label": "19.2 Database scalability",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L811"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_19_3_volume_targets",
+      "label": "19.3 Volume targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L821"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_19_4_concurrency",
+      "label": "19.4 Concurrency",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L836"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_20_usability_and_accessibility_requirements",
+      "label": "20. Usability and Accessibility Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L845"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_20_1_usability_targets",
+      "label": "20.1 Usability targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L847"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_20_2_accessibility",
+      "label": "20.2 Accessibility",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L859"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_21_localization_and_oman_time_requirements",
+      "label": "21. Localization and Oman Time Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L876"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_21_1_language_layout",
+      "label": "21.1 Language layout",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L878"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_21_2_time_and_business_date_basis",
+      "label": "21.2 Time and business-date basis",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L887"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_22_compliance_requirements",
+      "label": "22. Compliance Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L900"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_22_1_general_compliance_controls",
+      "label": "22.1 General compliance controls",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L902"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_22_2_retention_policy_requirement",
+      "label": "22.2 Retention policy requirement",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L916"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_22_3_audit_retention",
+      "label": "22.3 Audit retention",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L922"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_23_observability_requirements_relevant_to_security_and_nfr",
+      "label": "23. Observability Requirements Relevant to Security and NFR",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L928"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_23_1_security_metrics",
+      "label": "23.1 Security metrics",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L932"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_23_2_required_tracing_boundaries",
+      "label": "23.2 Required tracing boundaries",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L952"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_24_rate_limiting_and_abuse_protection",
+      "label": "24. Rate Limiting and Abuse Protection",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L972"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_25_backup_recovery_and_data_integrity_nfr",
+      "label": "25. Backup, Recovery, and Data Integrity NFR",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L991"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_26_security_testing_requirements",
+      "label": "26. Security Testing Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1012"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_26_1_mandatory_automated_tests",
+      "label": "26.1 Mandatory automated tests",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1014"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_26_2_security_verification_activities",
+      "label": "26.2 Security verification activities",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1036"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_27_nfr_acceptance_matrix",
+      "label": "27. NFR Acceptance Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1052"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_28_cross_context_security_responsibility_matrix",
+      "label": "28. Cross-Context Security Responsibility Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1074"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_29_ddd_and_er_consistency_check",
+      "label": "29. DDD and ER Consistency Check",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1095"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_30_open_security_and_nfr_gaps",
+      "label": "30. Open Security and NFR Gaps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1112"
+    },
+    {
+      "id": "module_13_document_management_part_10_security_architecture_and_nfr_31_final_security_architecture_statement",
+      "label": "31. Final Security Architecture Statement",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1131"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_module_13_document_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_2_security_objectives",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_3_security_trust_boundaries",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_3_security_trust_boundaries",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_3_1_logical_trust_boundaries",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L53",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_3_security_trust_boundaries",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_3_2_trust_assumptions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L85",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_4_authentication_architecture",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_4_authentication_architecture",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_4_1_authentication_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L100",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_4_authentication_architecture",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_4_2_service_system_authentication",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L114",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_5_authorization_architecture",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L130",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_5_authorization_architecture",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_5_1_authorization_composition",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L132",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_5_authorization_architecture",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_5_2_canonical_action_permissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L150",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_5_authorization_architecture",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_5_3_direct_object_authorization",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L173",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_5_authorization_architecture",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_5_4_non_disclosure_behavior",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L188",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_6_branch_isolation_security",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L203",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_6_branch_isolation_security",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_6_1_server_side_scope_derivation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L205",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_6_branch_isolation_security",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_6_2_mandatory_branch_isolation_controls",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L226",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_6_branch_isolation_security",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_6_3_consolidated_access",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L245",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_6_branch_isolation_security",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_6_4_branch_scope_failure_behavior",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L270",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_7_vercel_blob_security_architecture",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L282",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_7_vercel_blob_security_architecture",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_7_1_storage_role",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L284",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_7_vercel_blob_security_architecture",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_7_2_upload_security",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L298",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_7_vercel_blob_security_architecture",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_7_3_file_access_security",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L326",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_7_vercel_blob_security_architecture",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_7_4_file_type_and_content_controls",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L350",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_7_vercel_blob_security_architecture",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_7_5_blob_pathname_privacy",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L356",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_7_vercel_blob_security_architecture",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_7_6_blob_database_consistency",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L373",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_8_data_protection_and_privacy_controls",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L389",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_8_data_protection_and_privacy_controls",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_8_1_data_classification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L391",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_8_data_protection_and_privacy_controls",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_8_2_encryption",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L403",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_8_data_protection_and_privacy_controls",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_8_3_sensitive_data_minimization",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L413",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_8_data_protection_and_privacy_controls",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_8_4_logging_redaction",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L424",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_9_input_output_and_web_security_controls",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L454",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_9_input_output_and_web_security_controls",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_9_1_input_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L456",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_9_input_output_and_web_security_controls",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_9_2_injection_and_unsafe_rendering",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L468",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_9_input_output_and_web_security_controls",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_9_3_csrf_and_request_origin_controls",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L478",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_9_input_output_and_web_security_controls",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_9_4_security_headers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L482",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_10_lifecycle_integrity_controls",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L490",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_10_lifecycle_integrity_controls",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_10_1_allowed_lifecycle",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L492",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_10_lifecycle_integrity_controls",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_10_2_state_transition_security",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L508",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_10_lifecycle_integrity_controls",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_10_3_approval_rejection_transaction_integrity",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L520",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_10_lifecycle_integrity_controls",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_10_4_verification_history_immutability",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L539",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_11_soft_delete_retention_and_destruction",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L555",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_11_soft_delete_retention_and_destruction",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_11_1_soft_retirement",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L557",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_11_soft_delete_retention_and_destruction",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_11_2_binary_retention_gap",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L571",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_12_segregation_of_duties",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L584",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_12_segregation_of_duties",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_12_1_recommended_separation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L586",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_12_segregation_of_duties",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_12_2_minimum_control_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L596",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_13_audit_architecture",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L609",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_13_audit_architecture",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_13_1_authoritative_audit_ownership",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L611",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_13_audit_architecture",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_13_2_mandatory_audit_events",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L617",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_13_audit_architecture",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_13_3_audit_minimum_fields",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L635",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_13_audit_architecture",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_13_4_audit_integrity_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L654",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_14_cross_context_side_effect_audit_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L664",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_14_cross_context_side_effect_audit_requirements",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_14_1_side_effect_ownership_model",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L666",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_14_cross_context_side_effect_audit_requirements",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_14_2_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L680",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_15_threat_model_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L695",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_16_non_functional_requirements_overview",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L718",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_17_performance_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L724",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_17_performance_requirements",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_17_1_api_latency_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L726",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_17_performance_requirements",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_17_2_upload_download_performance",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L739",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_17_performance_requirements",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_17_3_query_efficiency_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L749",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_18_availability_and_reliability_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L762",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_18_availability_and_reliability_requirements",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_18_1_degraded_mode_behavior",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L775",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_18_1_degraded_mode_behavior",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_blob_service_unavailable",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L777",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_18_1_degraded_mode_behavior",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_reporting_projection_unavailable",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L784",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_18_1_degraded_mode_behavior",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_owner_adapter_unavailable",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L790",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_19_scalability_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L798",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_19_scalability_requirements",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_19_1_horizontal_scalability",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L800",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_19_scalability_requirements",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_19_2_database_scalability",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L811",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_19_scalability_requirements",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_19_3_volume_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L821",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_19_scalability_requirements",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_19_4_concurrency",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L836",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_20_usability_and_accessibility_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L845",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_20_usability_and_accessibility_requirements",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_20_1_usability_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L847",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_20_usability_and_accessibility_requirements",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_20_2_accessibility",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L859",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_21_localization_and_oman_time_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L876",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_21_localization_and_oman_time_requirements",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_21_1_language_layout",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L878",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_21_localization_and_oman_time_requirements",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_21_2_time_and_business_date_basis",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L887",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_22_compliance_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L900",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_22_compliance_requirements",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_22_1_general_compliance_controls",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L902",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_22_compliance_requirements",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_22_2_retention_policy_requirement",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L916",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_22_compliance_requirements",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_22_3_audit_retention",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L922",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_23_observability_requirements_relevant_to_security_and_nfr",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L928",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_23_observability_requirements_relevant_to_security_and_nfr",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_23_1_security_metrics",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L932",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_23_observability_requirements_relevant_to_security_and_nfr",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_23_2_required_tracing_boundaries",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L952",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_24_rate_limiting_and_abuse_protection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L972",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_25_backup_recovery_and_data_integrity_nfr",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L991",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_26_security_testing_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1012",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_26_security_testing_requirements",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_26_1_mandatory_automated_tests",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1014",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_10_security_architecture_and_nfr_26_security_testing_requirements",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_26_2_security_verification_activities",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1036",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_27_nfr_acceptance_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1052",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_28_cross_context_security_responsibility_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1074",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_29_ddd_and_er_consistency_check",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1095",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_30_open_security_and_nfr_gaps",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1112",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_13_document_management_part_10_security_architecture_and_nfr_31_final_security_architecture_statement",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1131",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

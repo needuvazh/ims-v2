@@ -8,7 +8,7 @@ export const CorporateCreditRuleStatusSchema = z.enum([
   'Active',
   'Superseded',
   'Expired',
-  'Suspended'
+  'Suspended',
 ]);
 
 export const CorporateCreditCheckSchema = z.object({
@@ -16,7 +16,7 @@ export const CorporateCreditCheckSchema = z.object({
   currentOutstanding: z.number().nonnegative(),
   committedAmount: z.number().nonnegative(),
   blockOnCreditLimit: z.boolean(),
-  requestedAmount: z.number().positive()
+  requestedAmount: z.number().positive(),
 });
 
 export type CorporateCreditCheck = z.infer<typeof CorporateCreditCheckSchema>;
@@ -27,7 +27,9 @@ export interface CorporateCreditCheckResult {
   availableCredit: Decimal;
 }
 
-export function checkCorporateCredit(input: CorporateCreditCheck): CorporateCreditCheckResult {
+export function checkCorporateCredit(
+  input: CorporateCreditCheck,
+): CorporateCreditCheckResult {
   const limit = new Decimal(input.creditLimit);
   const outstanding = new Decimal(input.currentOutstanding);
   const committed = new Decimal(input.committedAmount);
@@ -43,15 +45,15 @@ export function checkCorporateCredit(input: CorporateCreditCheck): CorporateCred
     return {
       passed: false,
       message: `Corporate credit limit exceeded. Available credit is ${availableCredit.toFixed(3)} OMR but requested ${requested.toFixed(3)} OMR.`,
-      availableCredit
+      availableCredit,
     };
   }
 
   return {
     passed: true,
-    message: meetsLimit 
+    message: meetsLimit
       ? `Credit check passed. Available credit is ${availableCredit.toFixed(3)} OMR.`
       : `Credit check warning: limit exceeded, but block flag is false. Available credit is ${availableCredit.toFixed(3)} OMR but requested ${requested.toFixed(3)} OMR.`,
-    availableCredit
+    availableCredit,
   };
 }

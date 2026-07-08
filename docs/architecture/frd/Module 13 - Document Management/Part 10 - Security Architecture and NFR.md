@@ -31,20 +31,20 @@ IAM owns identity, permissions, roles, and branch access. Audit & Compliance own
 
 # 2. Security Objectives
 
-| ID | Security Objective |
-|---|---|
-| SEC-DOC-001 | Prevent unauthorized access to document metadata and file binaries. |
-| SEC-DOC-002 | Enforce branch isolation server-side for every list, detail, history, file-access, mutation, report, and export request. |
-| SEC-DOC-003 | Prevent privilege escalation through client-supplied owner IDs, branch IDs, lifecycle status values, or Blob references. |
-| SEC-DOC-004 | Preserve integrity and immutability of verification decision history. |
-| SEC-DOC-005 | Prevent public or permanent exposure of sensitive Blob URLs. |
+| ID          | Security Objective                                                                                                           |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| SEC-DOC-001 | Prevent unauthorized access to document metadata and file binaries.                                                          |
+| SEC-DOC-002 | Enforce branch isolation server-side for every list, detail, history, file-access, mutation, report, and export request.     |
+| SEC-DOC-003 | Prevent privilege escalation through client-supplied owner IDs, branch IDs, lifecycle status values, or Blob references.     |
+| SEC-DOC-004 | Preserve integrity and immutability of verification decision history.                                                        |
+| SEC-DOC-005 | Prevent public or permanent exposure of sensitive Blob URLs.                                                                 |
 | SEC-DOC-006 | Ensure every sensitive lifecycle change is attributable to an authenticated actor and produces authoritative audit evidence. |
-| SEC-DOC-007 | Protect Document Management from cross-context ownership violations. |
-| SEC-DOC-008 | Prevent hard deletion of authoritative document metadata and verification evidence. |
-| SEC-DOC-009 | Detect and recover from Blob/database consistency failures without silently losing business records. |
+| SEC-DOC-007 | Protect Document Management from cross-context ownership violations.                                                         |
+| SEC-DOC-008 | Prevent hard deletion of authoritative document metadata and verification evidence.                                          |
+| SEC-DOC-009 | Detect and recover from Blob/database consistency failures without silently losing business records.                         |
 | SEC-DOC-010 | Limit the impact of compromised accounts through least privilege, capability-based authorization, and segregation of duties. |
-| SEC-DOC-011 | Ensure report and consolidated-report access cannot be converted into transactional or file access. |
-| SEC-DOC-012 | Prevent sensitive information leakage through errors, logs, traces, analytics, exports, caches, or client-side state. |
+| SEC-DOC-011 | Ensure report and consolidated-report access cannot be converted into transactional or file access.                          |
+| SEC-DOC-012 | Prevent sensitive information leakage through errors, logs, traces, analytics, exports, caches, or client-side state.        |
 
 ---
 
@@ -390,15 +390,15 @@ Reconciliation operations must be restricted to `document.operations.reconcile` 
 
 ## 8.1 Data classification
 
-| Data | Classification | Protection Requirement |
-|---|---|---|
-| Document binary | Sensitive/Restricted depending on type | Private access, least privilege, no public indexing |
-| Civil ID/Passport/Visa evidence | Restricted PII | Strong access control, audit access where policy requires, no log exposure |
-| Document metadata | Confidential business/personal data | Branch scope, permission scope, encrypted transport |
-| Verification decision | Sensitive business record | Integrity protection, immutable history, audit |
-| Verification remarks | Confidential | Permission restricted, sanitized display, no analytics leakage |
-| Blob operational metadata | Internal operational data | Restricted operations access |
-| KPI aggregates | Internal/confidential | Report permission and branch/consolidated scope |
+| Data                            | Classification                         | Protection Requirement                                                     |
+| ------------------------------- | -------------------------------------- | -------------------------------------------------------------------------- |
+| Document binary                 | Sensitive/Restricted depending on type | Private access, least privilege, no public indexing                        |
+| Civil ID/Passport/Visa evidence | Restricted PII                         | Strong access control, audit access where policy requires, no log exposure |
+| Document metadata               | Confidential business/personal data    | Branch scope, permission scope, encrypted transport                        |
+| Verification decision           | Sensitive business record              | Integrity protection, immutable history, audit                             |
+| Verification remarks            | Confidential                           | Permission restricted, sanitized display, no analytics leakage             |
+| Blob operational metadata       | Internal operational data              | Restricted operations access                                               |
+| KPI aggregates                  | Internal/confidential                  | Report permission and branch/consolidated scope                            |
 
 ## 8.2 Encryption
 
@@ -618,19 +618,19 @@ Document Management must produce sufficient audit facts for sensitive operations
 
 The following operations require audit evidence:
 
-| Operation | Audit Required | Minimum Audit Content |
-|---|---:|---|
-| Document registered | Yes | document ID, owner reference, document type, actor, timestamp, branch scope result |
-| Metadata changed | Yes | entity ID, changed fields, old values, new values, actor, timestamp, version |
-| Submitted for verification | Yes | old/new state, actor, timestamp |
-| Approved | Yes | old/new state, verification decision ID, actor, timestamp |
-| Rejected | Yes | old/new state, decision ID, actor, timestamp, reason/remarks according to secure audit policy |
-| File access issued | Security audit/telemetry required | document ID, actor, purpose/mode, timestamp, result; never access token/URL |
-| Document retired | Yes | actor, reason where policy requires, old/new soft-delete state, timestamp |
-| Reconciliation retry | Yes | item/reference, actor/system identity, action, attempt result, timestamp |
-| Reconciliation override/manual resolution | Yes, high sensitivity | before/after state, reason, actor, timestamp |
-| Bulk/report export | Access audit required where platform policy requires | report code, scope, actor, row count, format, timestamp |
-| Cross-context notification trigger emitted | Correlation evidence required | source event ID, document ID, event type, correlation ID |
+| Operation                                  |                                       Audit Required | Minimum Audit Content                                                                         |
+| ------------------------------------------ | ---------------------------------------------------: | --------------------------------------------------------------------------------------------- |
+| Document registered                        |                                                  Yes | document ID, owner reference, document type, actor, timestamp, branch scope result            |
+| Metadata changed                           |                                                  Yes | entity ID, changed fields, old values, new values, actor, timestamp, version                  |
+| Submitted for verification                 |                                                  Yes | old/new state, actor, timestamp                                                               |
+| Approved                                   |                                                  Yes | old/new state, verification decision ID, actor, timestamp                                     |
+| Rejected                                   |                                                  Yes | old/new state, decision ID, actor, timestamp, reason/remarks according to secure audit policy |
+| File access issued                         |                    Security audit/telemetry required | document ID, actor, purpose/mode, timestamp, result; never access token/URL                   |
+| Document retired                           |                                                  Yes | actor, reason where policy requires, old/new soft-delete state, timestamp                     |
+| Reconciliation retry                       |                                                  Yes | item/reference, actor/system identity, action, attempt result, timestamp                      |
+| Reconciliation override/manual resolution  |                                Yes, high sensitivity | before/after state, reason, actor, timestamp                                                  |
+| Bulk/report export                         | Access audit required where platform policy requires | report code, scope, actor, row count, format, timestamp                                       |
+| Cross-context notification trigger emitted |                        Correlation evidence required | source event ID, document ID, event type, correlation ID                                      |
 
 ## 13.3 Audit minimum fields
 
@@ -694,24 +694,24 @@ Document Management command succeeds
 
 # 15. Threat Model Summary
 
-| Threat | Example | Required Mitigation |
-|---|---|---|
-| Broken object-level authorization | Guess another branch's document ID | Direct-ID branch scope and permission checks |
-| Broken function-level authorization | User calls approve endpoint without capability | Fine-grained server permission guard |
-| Branch data leakage | BR-A user sees BR-B totals | Scope filters applied before rows/counts/aggregates |
-| Malicious upload | Executable or malformed file | Media allow-list, size limit, scanning strategy, safe preview |
-| Public file exposure | Permanent Blob URL exposed | Controlled short-lived access/proxy |
-| Token leakage | Signed access URL in logs | Redaction, no token logging, short TTL |
-| Metadata tampering | PATCH sets status to Approved | Command-specific state transitions; reject protected fields |
-| Race condition | Two verifiers approve simultaneously | Optimistic locking plus atomic transaction |
-| History tampering | Edit prior rejection decision | Append-only verification history |
-| Orphan object | Upload succeeds, DB write fails | Registration idempotency and reconciliation |
-| Missing object | DB references missing Blob | Runtime detection and reconciliation workflow |
-| CSV injection | File name starts with formula character | Export escaping/sanitization |
-| XSS | Malicious file name or remarks | Contextual escaping and safe rendering |
-| Excessive export | Large consolidated extraction | Export authorization, limits, audit, asynchronous execution if architecture permits |
-| Report privilege escalation | Consolidated permission used to access file | Separate report and file permissions |
-| Cross-context write leakage | Admission code updates Document table directly | Application service boundary and repository ownership controls |
+| Threat                              | Example                                        | Required Mitigation                                                                 |
+| ----------------------------------- | ---------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Broken object-level authorization   | Guess another branch's document ID             | Direct-ID branch scope and permission checks                                        |
+| Broken function-level authorization | User calls approve endpoint without capability | Fine-grained server permission guard                                                |
+| Branch data leakage                 | BR-A user sees BR-B totals                     | Scope filters applied before rows/counts/aggregates                                 |
+| Malicious upload                    | Executable or malformed file                   | Media allow-list, size limit, scanning strategy, safe preview                       |
+| Public file exposure                | Permanent Blob URL exposed                     | Controlled short-lived access/proxy                                                 |
+| Token leakage                       | Signed access URL in logs                      | Redaction, no token logging, short TTL                                              |
+| Metadata tampering                  | PATCH sets status to Approved                  | Command-specific state transitions; reject protected fields                         |
+| Race condition                      | Two verifiers approve simultaneously           | Optimistic locking plus atomic transaction                                          |
+| History tampering                   | Edit prior rejection decision                  | Append-only verification history                                                    |
+| Orphan object                       | Upload succeeds, DB write fails                | Registration idempotency and reconciliation                                         |
+| Missing object                      | DB references missing Blob                     | Runtime detection and reconciliation workflow                                       |
+| CSV injection                       | File name starts with formula character        | Export escaping/sanitization                                                        |
+| XSS                                 | Malicious file name or remarks                 | Contextual escaping and safe rendering                                              |
+| Excessive export                    | Large consolidated extraction                  | Export authorization, limits, audit, asynchronous execution if architecture permits |
+| Report privilege escalation         | Consolidated permission used to access file    | Separate report and file permissions                                                |
+| Cross-context write leakage         | Admission code updates Document table directly | Application service boundary and repository ownership controls                      |
 
 ---
 
@@ -725,16 +725,16 @@ The targets below are production requirements for normal operating conditions un
 
 ## 17.1 API latency targets
 
-| NFR ID | Operation | Target |
-|---|---|---|
-| NFR-DOC-PERF-001 | Metadata list/detail APIs | p95 <= 500 ms, p99 <= 1,200 ms for normal branch-scoped queries |
-| NFR-DOC-PERF-002 | Metadata mutation APIs excluding Blob transfer | p95 <= 750 ms, p99 <= 1,500 ms |
-| NFR-DOC-PERF-003 | Submit/approve/reject commands | p95 <= 1,000 ms, p99 <= 2,000 ms, excluding external notification delivery |
-| NFR-DOC-PERF-004 | Verification queue and expiry workbench | p95 <= 800 ms for standard filtered pages of <= 100 rows |
-| NFR-DOC-PERF-005 | Secure file-access authorization | p95 <= 500 ms excluding binary transfer time |
-| NFR-DOC-PERF-006 | Branch operational report query | p95 <= 3 s for standard filters over 12 months of retained operational data |
-| NFR-DOC-PERF-007 | Consolidated dashboard initial data load | p95 <= 5 s using approved read models/snapshots |
-| NFR-DOC-PERF-008 | Typeahead owner search | p95 <= 500 ms after debounce for bounded result sets |
+| NFR ID           | Operation                                      | Target                                                                      |
+| ---------------- | ---------------------------------------------- | --------------------------------------------------------------------------- |
+| NFR-DOC-PERF-001 | Metadata list/detail APIs                      | p95 <= 500 ms, p99 <= 1,200 ms for normal branch-scoped queries             |
+| NFR-DOC-PERF-002 | Metadata mutation APIs excluding Blob transfer | p95 <= 750 ms, p99 <= 1,500 ms                                              |
+| NFR-DOC-PERF-003 | Submit/approve/reject commands                 | p95 <= 1,000 ms, p99 <= 2,000 ms, excluding external notification delivery  |
+| NFR-DOC-PERF-004 | Verification queue and expiry workbench        | p95 <= 800 ms for standard filtered pages of <= 100 rows                    |
+| NFR-DOC-PERF-005 | Secure file-access authorization               | p95 <= 500 ms excluding binary transfer time                                |
+| NFR-DOC-PERF-006 | Branch operational report query                | p95 <= 3 s for standard filters over 12 months of retained operational data |
+| NFR-DOC-PERF-007 | Consolidated dashboard initial data load       | p95 <= 5 s using approved read models/snapshots                             |
+| NFR-DOC-PERF-008 | Typeahead owner search                         | p95 <= 500 ms after debounce for bounded result sets                        |
 
 ## 17.2 Upload/download performance
 
@@ -761,16 +761,16 @@ Binary transfer time is primarily dependent on file size, client bandwidth, regi
 
 # 18. Availability and Reliability Requirements
 
-| NFR ID | Requirement | Target |
-|---|---|---|
-| NFR-DOC-AVL-001 | Document metadata read/write application availability | >= 99.9% monthly, excluding approved maintenance windows |
-| NFR-DOC-AVL-002 | No acknowledged lost verification decisions | 0 tolerated |
-| NFR-DOC-AVL-003 | No acknowledged hard deletion through normal application paths | 0 tolerated |
-| NFR-DOC-AVL-004 | Verification transaction atomicity | 100%: current state and history either both commit or both roll back |
-| NFR-DOC-AVL-005 | Blob/database inconsistency detection | Detect operationally observable inconsistency within 15 minutes of scheduled reconciliation or immediately on failed access/registration path |
-| NFR-DOC-AVL-006 | Background expiry evaluation | Complete at least once per business day using Oman business date/time basis |
-| NFR-DOC-AVL-007 | Failed notification delivery | Must not roll back committed document state; failure remains recoverable in Communication context |
-| NFR-DOC-AVL-008 | Reporting projection outage | Must not block core document commands or authoritative reads needed for business operations |
+| NFR ID          | Requirement                                                    | Target                                                                                                                                        |
+| --------------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| NFR-DOC-AVL-001 | Document metadata read/write application availability          | >= 99.9% monthly, excluding approved maintenance windows                                                                                      |
+| NFR-DOC-AVL-002 | No acknowledged lost verification decisions                    | 0 tolerated                                                                                                                                   |
+| NFR-DOC-AVL-003 | No acknowledged hard deletion through normal application paths | 0 tolerated                                                                                                                                   |
+| NFR-DOC-AVL-004 | Verification transaction atomicity                             | 100%: current state and history either both commit or both roll back                                                                          |
+| NFR-DOC-AVL-005 | Blob/database inconsistency detection                          | Detect operationally observable inconsistency within 15 minutes of scheduled reconciliation or immediately on failed access/registration path |
+| NFR-DOC-AVL-006 | Background expiry evaluation                                   | Complete at least once per business day using Oman business date/time basis                                                                   |
+| NFR-DOC-AVL-007 | Failed notification delivery                                   | Must not roll back committed document state; failure remains recoverable in Communication context                                             |
+| NFR-DOC-AVL-008 | Reporting projection outage                                    | Must not block core document commands or authoritative reads needed for business operations                                                   |
 
 ## 18.1 Degraded-mode behavior
 
@@ -846,15 +846,15 @@ These are engineering validation targets, not predictions of ASTI business volum
 
 ## 20.1 Usability targets
 
-| NFR ID | Requirement |
-|---|---|
+| NFR ID          | Requirement                                                                                                                                            |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | NFR-DOC-USA-001 | Core upload, view, submit, approve/reject, and expiry workflows must be usable without exposing technical Blob terminology to ordinary business users. |
-| NFR-DOC-USA-002 | Validation failures must identify the affected field and provide actionable guidance without exposing internal stack traces. |
-| NFR-DOC-USA-003 | Long-running upload and export operations must show progress or clear processing state where supported. |
-| NFR-DOC-USA-004 | Destructive retirement action must require explicit confirmation and clearly state that the record is retained as soft-deleted. |
-| NFR-DOC-USA-005 | Verification screens must show document metadata, owner summary, file preview/download action, and verification history relevant to the decision. |
-| NFR-DOC-USA-006 | Permission-hidden actions must not leave dead controls or imply that the user can complete an unavailable operation. |
-| NFR-DOC-USA-007 | Empty states must distinguish no data from no matching filters and from unauthorized content. |
+| NFR-DOC-USA-002 | Validation failures must identify the affected field and provide actionable guidance without exposing internal stack traces.                           |
+| NFR-DOC-USA-003 | Long-running upload and export operations must show progress or clear processing state where supported.                                                |
+| NFR-DOC-USA-004 | Destructive retirement action must require explicit confirmation and clearly state that the record is retained as soft-deleted.                        |
+| NFR-DOC-USA-005 | Verification screens must show document metadata, owner summary, file preview/download action, and verification history relevant to the decision.      |
+| NFR-DOC-USA-006 | Permission-hidden actions must not leave dead controls or imply that the user can complete an unavailable operation.                                   |
+| NFR-DOC-USA-007 | Empty states must distinguish no data from no matching filters and from unauthorized content.                                                          |
 
 ## 20.2 Accessibility
 
@@ -975,14 +975,14 @@ Rate limits must be centrally configurable and may be stricter than the baseline
 
 Recommended baseline protections:
 
-| Operation | Baseline Protection |
-|---|---|
-| Upload intent | Per-user and per-IP throttling; burst controls |
-| Owner search | Debounce plus per-user rate limit |
-| File access issuance | Per-user throttling and security telemetry |
-| Approve/reject | Per-user mutation rate protection; do not rely on rate limit instead of authorization |
-| Consolidated export | Concurrent-job limit and export size controls |
-| Reconciliation retry | Restricted permission plus low operational rate limit and idempotency |
+| Operation            | Baseline Protection                                                                   |
+| -------------------- | ------------------------------------------------------------------------------------- |
+| Upload intent        | Per-user and per-IP throttling; burst controls                                        |
+| Owner search         | Debounce plus per-user rate limit                                                     |
+| File access issuance | Per-user throttling and security telemetry                                            |
+| Approve/reject       | Per-user mutation rate protection; do not rely on rate limit instead of authorization |
+| Consolidated export  | Concurrent-job limit and export size controls                                         |
+| Reconciliation retry | Restricted permission plus low operational rate limit and idempotency                 |
 
 Rate-limit responses must use structured `429` errors and must not expose infrastructure internals.
 
@@ -1051,61 +1051,61 @@ Before production release, perform:
 
 # 27. NFR Acceptance Matrix
 
-| Category | Target | Verification Method |
-|---|---|---|
-| Metadata API latency | p95 <= 500 ms reads; p95 <= 750 ms ordinary mutations | APM/load test |
-| Verification command latency | p95 <= 1 s excluding notification delivery | APM/load test |
-| Operational queue latency | p95 <= 800 ms for <=100-row page | Load test |
-| Branch report latency | p95 <= 3 s standard 12-month filter | Report performance test |
-| Consolidated dashboard | p95 <= 5 s initial data | Dashboard load test |
-| Availability | >=99.9% monthly | Availability monitoring |
-| Verification atomicity | 100% all-or-nothing | Transaction integration tests |
-| Lost acknowledged decisions | 0 tolerated | Audit/reconciliation test |
-| Hard delete through app | 0 tolerated | API and DB policy tests |
-| Accessibility | WCAG 2.2 AA target | Automated + manual accessibility audit |
-| Branch leakage | 0 tolerated | BDD/API/penetration tests |
-| Audit coverage | 100% of mandatory sensitive actions | Audit integration test |
-| Expiry evaluation | At least daily | Scheduled job telemetry |
-| RPO | <=15 minutes recommended | Restore drill |
-| RTO | <=4 hours recommended | Recovery drill |
+| Category                     | Target                                                | Verification Method                    |
+| ---------------------------- | ----------------------------------------------------- | -------------------------------------- |
+| Metadata API latency         | p95 <= 500 ms reads; p95 <= 750 ms ordinary mutations | APM/load test                          |
+| Verification command latency | p95 <= 1 s excluding notification delivery            | APM/load test                          |
+| Operational queue latency    | p95 <= 800 ms for <=100-row page                      | Load test                              |
+| Branch report latency        | p95 <= 3 s standard 12-month filter                   | Report performance test                |
+| Consolidated dashboard       | p95 <= 5 s initial data                               | Dashboard load test                    |
+| Availability                 | >=99.9% monthly                                       | Availability monitoring                |
+| Verification atomicity       | 100% all-or-nothing                                   | Transaction integration tests          |
+| Lost acknowledged decisions  | 0 tolerated                                           | Audit/reconciliation test              |
+| Hard delete through app      | 0 tolerated                                           | API and DB policy tests                |
+| Accessibility                | WCAG 2.2 AA target                                    | Automated + manual accessibility audit |
+| Branch leakage               | 0 tolerated                                           | BDD/API/penetration tests              |
+| Audit coverage               | 100% of mandatory sensitive actions                   | Audit integration test                 |
+| Expiry evaluation            | At least daily                                        | Scheduled job telemetry                |
+| RPO                          | <=15 minutes recommended                              | Restore drill                          |
+| RTO                          | <=4 hours recommended                                 | Recovery drill                         |
 
 ---
 
 # 28. Cross-Context Security Responsibility Matrix
 
-| Security Concern | Document Management Responsibility | Owning/Collaborating Context |
-|---|---|---|
-| Authentication | Require authenticated identity; never trust client actor fields | IAM |
-| Permission evaluation | Declare/check document permissions | IAM owns grants/roles |
-| Branch scope | Enforce scope on document operations | IAM provides access; owner contexts resolve owner scope |
-| Owner validity | Request authoritative validation | Admission & Enrollment, Trainer, Corporate, Person/Party |
-| Document type validity | Consume active type semantics | Configuration / Master Data |
-| Verification lifecycle | Own and enforce | Document Management |
-| Verification history | Own immutable business history | Document Management |
-| Audit evidence infrastructure | Emit/provide audit facts | Audit & Compliance |
-| Notifications | Emit trigger facts only | Communication & Notification |
-| Reports/dashboards | Provide source facts/read projection support | Reporting & Dashboards |
-| Binary storage | Access through approved adapter | Vercel Blob infrastructure |
-| Certificate issuance eligibility | Do not decide | Certificate + Completion/Finance rules |
-| Enrollment/admission decision | Do not decide | Admission & Enrollment |
-| Trainer assignability | Do not decide | Trainer/Scheduling contexts |
+| Security Concern                 | Document Management Responsibility                              | Owning/Collaborating Context                             |
+| -------------------------------- | --------------------------------------------------------------- | -------------------------------------------------------- |
+| Authentication                   | Require authenticated identity; never trust client actor fields | IAM                                                      |
+| Permission evaluation            | Declare/check document permissions                              | IAM owns grants/roles                                    |
+| Branch scope                     | Enforce scope on document operations                            | IAM provides access; owner contexts resolve owner scope  |
+| Owner validity                   | Request authoritative validation                                | Admission & Enrollment, Trainer, Corporate, Person/Party |
+| Document type validity           | Consume active type semantics                                   | Configuration / Master Data                              |
+| Verification lifecycle           | Own and enforce                                                 | Document Management                                      |
+| Verification history             | Own immutable business history                                  | Document Management                                      |
+| Audit evidence infrastructure    | Emit/provide audit facts                                        | Audit & Compliance                                       |
+| Notifications                    | Emit trigger facts only                                         | Communication & Notification                             |
+| Reports/dashboards               | Provide source facts/read projection support                    | Reporting & Dashboards                                   |
+| Binary storage                   | Access through approved adapter                                 | Vercel Blob infrastructure                               |
+| Certificate issuance eligibility | Do not decide                                                   | Certificate + Completion/Finance rules                   |
+| Enrollment/admission decision    | Do not decide                                                   | Admission & Enrollment                                   |
+| Trainer assignability            | Do not decide                                                   | Trainer/Scheduling contexts                              |
 
 ---
 
 # 29. DDD and ER Consistency Check
 
-| Check | Result | Notes |
-|---|---|---|
-| Document metadata ownership | Aligned | Document Management owns Document. |
-| Verification history ownership | Aligned | DocumentVerification remains module-owned and append-only. |
-| IAM ownership | Aligned | No local role, permission, or branch ACL tables introduced. |
-| Owner context ownership | Aligned | Owner existence/status and branch derivation are delegated. |
-| Audit ownership | Aligned | No local duplicate AuditLog introduced. |
-| Communication ownership | Aligned | Module emits trigger facts; Communication owns delivery. |
-| Reporting ownership | Aligned | Read models are read-only and non-authoritative. |
-| Soft-delete convention | Aligned | No hard delete application behavior. |
-| Blob storage architecture | Aligned with project decision | Binary storage separated from domain ownership. |
-| Certificate/Finance/Completion boundaries | Aligned | Document approval does not itself authorize certificate issuance or completion. |
+| Check                                     | Result                        | Notes                                                                           |
+| ----------------------------------------- | ----------------------------- | ------------------------------------------------------------------------------- |
+| Document metadata ownership               | Aligned                       | Document Management owns Document.                                              |
+| Verification history ownership            | Aligned                       | DocumentVerification remains module-owned and append-only.                      |
+| IAM ownership                             | Aligned                       | No local role, permission, or branch ACL tables introduced.                     |
+| Owner context ownership                   | Aligned                       | Owner existence/status and branch derivation are delegated.                     |
+| Audit ownership                           | Aligned                       | No local duplicate AuditLog introduced.                                         |
+| Communication ownership                   | Aligned                       | Module emits trigger facts; Communication owns delivery.                        |
+| Reporting ownership                       | Aligned                       | Read models are read-only and non-authoritative.                                |
+| Soft-delete convention                    | Aligned                       | No hard delete application behavior.                                            |
+| Blob storage architecture                 | Aligned with project decision | Binary storage separated from domain ownership.                                 |
+| Certificate/Finance/Completion boundaries | Aligned                       | Document approval does not itself authorize certificate issuance or completion. |
 
 ---
 

@@ -7,7 +7,10 @@ type ConfigStatus = 'Draft' | 'Active' | 'Inactive' | 'Superseded';
 export class CourseCompletionRuleRepository implements ICourseCompletionRuleRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create(data: Prisma.CourseCompletionRuleUncheckedCreateInput, tx?: Prisma.TransactionClient): Promise<CourseCompletionRule> {
+  async create(
+    data: Prisma.CourseCompletionRuleUncheckedCreateInput,
+    tx?: Prisma.TransactionClient,
+  ): Promise<CourseCompletionRule> {
     const client = tx || this.prisma;
     const record = await client.courseCompletionRule.create({
       data: {
@@ -27,7 +30,11 @@ export class CourseCompletionRuleRepository implements ICourseCompletionRuleRepo
     return record as CourseCompletionRule;
   }
 
-  async update(id: string, data: Prisma.CourseCompletionRuleUncheckedUpdateInput, tx?: Prisma.TransactionClient): Promise<CourseCompletionRule> {
+  async update(
+    id: string,
+    data: Prisma.CourseCompletionRuleUncheckedUpdateInput,
+    tx?: Prisma.TransactionClient,
+  ): Promise<CourseCompletionRule> {
     const client = tx || this.prisma;
     const record = await client.courseCompletionRule.update({
       where: { id },
@@ -36,7 +43,10 @@ export class CourseCompletionRuleRepository implements ICourseCompletionRuleRepo
     return record as CourseCompletionRule;
   }
 
-  async findById(id: string, tx?: Prisma.TransactionClient): Promise<CourseCompletionRule | null> {
+  async findById(
+    id: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<CourseCompletionRule | null> {
     const client = tx || this.prisma;
     const record = await client.courseCompletionRule.findFirst({
       where: { id, isDeleted: false },
@@ -50,7 +60,7 @@ export class CourseCompletionRuleRepository implements ICourseCompletionRuleRepo
       startDate: Date;
       endDate?: Date | null;
     },
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<CourseCompletionRule[]> {
     const client = tx || this.prisma;
     const whereClause: Prisma.CourseCompletionRuleWhereInput = {
@@ -59,13 +69,13 @@ export class CourseCompletionRuleRepository implements ICourseCompletionRuleRepo
       isDeleted: false,
       OR: [
         { effectiveEndDate: null },
-        { effectiveEndDate: { gte: filters.startDate } }
-      ]
+        { effectiveEndDate: { gte: filters.startDate } },
+      ],
     };
 
     if (filters.endDate) {
       whereClause.effectiveStartDate = {
-        lte: filters.endDate
+        lte: filters.endDate,
       };
     }
 
@@ -81,10 +91,12 @@ export class CourseCompletionRuleRepository implements ICourseCompletionRuleRepo
       status?: string;
       activeAt?: Date;
     },
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<CourseCompletionRule[]> {
     const client = tx || this.prisma;
-    const whereClause: Prisma.CourseCompletionRuleWhereInput = { isDeleted: false };
+    const whereClause: Prisma.CourseCompletionRuleWhereInput = {
+      isDeleted: false,
+    };
 
     if (filters.courseId) {
       whereClause.courseId = filters.courseId;
@@ -96,7 +108,7 @@ export class CourseCompletionRuleRepository implements ICourseCompletionRuleRepo
       whereClause.effectiveStartDate = { lte: filters.activeAt };
       whereClause.OR = [
         { effectiveEndDate: null },
-        { effectiveEndDate: { gte: filters.activeAt } }
+        { effectiveEndDate: { gte: filters.activeAt } },
       ];
     }
 

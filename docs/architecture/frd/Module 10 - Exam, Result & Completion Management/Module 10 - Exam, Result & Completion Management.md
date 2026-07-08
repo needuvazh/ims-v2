@@ -20,18 +20,18 @@ The module is bounded by the following ownership rules:
 
 ## 2. Business Goals
 
-| ID | Business Goal | Success Intent |
-|---|---|---|
-| BO-EXC-001 | Standardize academic evaluation | Every exam and result follows consistent validation, ownership, and audit rules. |
-| BO-EXC-002 | Protect completion integrity | No enrollment reaches approved completion until applicable attendance, exam, payment, and manual approval rules are satisfied. |
-| BO-EXC-003 | Maintain enrollment-centric traceability | Every result and completion decision is traceable to one valid enrollment, course, and batch. |
-| BO-EXC-004 | Reduce manual ambiguity | Completion decisions are produced from explicit course rules and authoritative evidence instead of undocumented judgment. |
-| BO-EXC-005 | Enforce segregation of duties | Trainer recommendation, coordinator review, and branch manager approval remain distinct approval stages when manual approval is required. |
-| BO-EXC-006 | Enable certificate readiness | Publish a reliable completion-approved outcome that Certificate Management can consume without recalculating academic eligibility. |
-| BO-EXC-007 | Preserve evidence and accountability | Result changes, completion decisions, approval actions, and exceptional overrides are auditable with actor, time, old value, new value, and reason. |
-| BO-EXC-008 | Enforce branch isolation | Users can view or act only within branches granted by IAM branch access policy. |
-| BO-EXC-009 | Support bilingual operations | User-facing exam names, status labels, validation messages, and exports support English and Arabic presentation where required, without duplicating core records. |
-| BO-EXC-010 | Provide operational visibility | Authorized academic users can identify pending results, failed learners, completion bottlenecks, and approvals awaiting action. |
+| ID         | Business Goal                            | Success Intent                                                                                                                                                    |
+| ---------- | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| BO-EXC-001 | Standardize academic evaluation          | Every exam and result follows consistent validation, ownership, and audit rules.                                                                                  |
+| BO-EXC-002 | Protect completion integrity             | No enrollment reaches approved completion until applicable attendance, exam, payment, and manual approval rules are satisfied.                                    |
+| BO-EXC-003 | Maintain enrollment-centric traceability | Every result and completion decision is traceable to one valid enrollment, course, and batch.                                                                     |
+| BO-EXC-004 | Reduce manual ambiguity                  | Completion decisions are produced from explicit course rules and authoritative evidence instead of undocumented judgment.                                         |
+| BO-EXC-005 | Enforce segregation of duties            | Trainer recommendation, coordinator review, and branch manager approval remain distinct approval stages when manual approval is required.                         |
+| BO-EXC-006 | Enable certificate readiness             | Publish a reliable completion-approved outcome that Certificate Management can consume without recalculating academic eligibility.                                |
+| BO-EXC-007 | Preserve evidence and accountability     | Result changes, completion decisions, approval actions, and exceptional overrides are auditable with actor, time, old value, new value, and reason.               |
+| BO-EXC-008 | Enforce branch isolation                 | Users can view or act only within branches granted by IAM branch access policy.                                                                                   |
+| BO-EXC-009 | Support bilingual operations             | User-facing exam names, status labels, validation messages, and exports support English and Arabic presentation where required, without duplicating core records. |
+| BO-EXC-010 | Provide operational visibility           | Authorized academic users can identify pending results, failed learners, completion bottlenecks, and approvals awaiting action.                                   |
 
 ## 3. Scope
 
@@ -76,31 +76,31 @@ The module is bounded by the following ownership rules:
 
 ### 4.1 Human Actors
 
-| Actor | Responsibilities in Module 10 |
-|---|---|
-| Trainer / Instructor | View assigned batch exams, record permitted results, recommend learner completion, review own submitted work. |
-| Academic Coordinator | Plan exams where authorized, monitor missing results, review completion recommendations, approve/reject the coordinator stage. |
-| Branch Manager | Final branch-level completion approval or rejection where manual approval applies; monitor branch completion backlog. |
-| Academic Administrator | Create and manage exam definitions, perform authorized result corrections, run completion evaluations, resolve operational exceptions. |
-| Finance User | No academic mutation rights; provides authoritative payment status through Finance-owned data or contracts. |
-| Auditor / Compliance User | Read audit history and approval evidence subject to permission and branch policy; no academic mutation by default. |
-| System Administrator | Assigns IAM permissions and branch access but does not receive academic rights merely by role name. |
+| Actor                     | Responsibilities in Module 10                                                                                                          |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Trainer / Instructor      | View assigned batch exams, record permitted results, recommend learner completion, review own submitted work.                          |
+| Academic Coordinator      | Plan exams where authorized, monitor missing results, review completion recommendations, approve/reject the coordinator stage.         |
+| Branch Manager            | Final branch-level completion approval or rejection where manual approval applies; monitor branch completion backlog.                  |
+| Academic Administrator    | Create and manage exam definitions, perform authorized result corrections, run completion evaluations, resolve operational exceptions. |
+| Finance User              | No academic mutation rights; provides authoritative payment status through Finance-owned data or contracts.                            |
+| Auditor / Compliance User | Read audit history and approval evidence subject to permission and branch policy; no academic mutation by default.                     |
+| System Administrator      | Assigns IAM permissions and branch access but does not receive academic rights merely by role name.                                    |
 
 ### 4.2 System Actors
 
-| System Context | Interaction |
-|---|---|
-| Course Catalog Management | Supplies active course completion rule: minimum attendance, exam requirement, payment requirement, manual approval requirement, and certificate allowance. |
-| Admission & Enrollment Management | Supplies Enrollment identity, student, course, batch, branch, type, and lifecycle state; receives completion outcome through defined boundary. |
-| Training Delivery Management | Supplies batch and session identity and batch-course relationship. |
-| Attendance Management | Supplies authoritative attendance percentage/evidence for the enrollment. |
-| Finance & Receivables | Supplies authoritative payment-validation outcome when required. |
-| Faculty / Trainer Management | Supplies trainer identity and assignment/authorization reference used for recommendation eligibility. |
-| Certificate Management | Consumes completion-approved/certificate-eligible outcome and performs certificate issuance independently. |
-| Identity & Access Management | Supplies authentication, permissions, and branch-access scope. |
-| Audit & Compliance | Records critical changes, approval actions, and reasons. |
-| Reporting & Dashboards | Consumes read-only academic outcomes and aggregates; does not mutate exam/result/completion transactions. |
-| Communication & Notification | May notify actors about scheduled exams, pending results, approval tasks, or final outcomes; delivery ownership remains outside this module. |
+| System Context                    | Interaction                                                                                                                                                |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Course Catalog Management         | Supplies active course completion rule: minimum attendance, exam requirement, payment requirement, manual approval requirement, and certificate allowance. |
+| Admission & Enrollment Management | Supplies Enrollment identity, student, course, batch, branch, type, and lifecycle state; receives completion outcome through defined boundary.             |
+| Training Delivery Management      | Supplies batch and session identity and batch-course relationship.                                                                                         |
+| Attendance Management             | Supplies authoritative attendance percentage/evidence for the enrollment.                                                                                  |
+| Finance & Receivables             | Supplies authoritative payment-validation outcome when required.                                                                                           |
+| Faculty / Trainer Management      | Supplies trainer identity and assignment/authorization reference used for recommendation eligibility.                                                      |
+| Certificate Management            | Consumes completion-approved/certificate-eligible outcome and performs certificate issuance independently.                                                 |
+| Identity & Access Management      | Supplies authentication, permissions, and branch-access scope.                                                                                             |
+| Audit & Compliance                | Records critical changes, approval actions, and reasons.                                                                                                   |
+| Reporting & Dashboards            | Consumes read-only academic outcomes and aggregates; does not mutate exam/result/completion transactions.                                                  |
+| Communication & Notification      | May notify actors about scheduled exams, pending results, approval tasks, or final outcomes; delivery ownership remains outside this module.               |
 
 ## 5. Functional Overview
 
@@ -151,19 +151,19 @@ Exam, Result & Completion Management
 
 ### 6.1 Internal User Capabilities
 
-| Capability | Trainer | Academic Coordinator | Branch Manager | Academic Admin | Auditor |
-|---|---:|---:|---:|---:|---:|
-| View branch-scoped exams | Assigned scope | Yes | Yes | Yes | Read-only |
-| Create/manage exam | No by default | Permitted | Optional by permission | Permitted | No |
-| Record result | Assigned batch by permission | By permission | No by default | By permission | No |
-| Bulk result entry | Assigned batch by permission | By permission | No by default | By permission | No |
-| Correct finalized result | No by default | Restricted | Restricted | Restricted permission | No |
-| Run completion evaluation | Limited/assigned | Yes | View | Yes | No |
-| Recommend completion | Yes, assigned batch | Optional fallback by permission | No | Restricted | No |
-| Coordinator review | No | Yes | No | Delegated only if explicitly permitted | No |
-| Final branch approval | No | No | Yes | Delegated only if explicitly permitted | No |
-| View approval history | Own/assigned | Yes | Yes | Yes | Yes |
-| View audit history | No by default | Restricted | Restricted | Restricted | Yes |
+| Capability                |                      Trainer |            Academic Coordinator |         Branch Manager |                         Academic Admin |   Auditor |
+| ------------------------- | ---------------------------: | ------------------------------: | ---------------------: | -------------------------------------: | --------: |
+| View branch-scoped exams  |               Assigned scope |                             Yes |                    Yes |                                    Yes | Read-only |
+| Create/manage exam        |                No by default |                       Permitted | Optional by permission |                              Permitted |        No |
+| Record result             | Assigned batch by permission |                   By permission |          No by default |                          By permission |        No |
+| Bulk result entry         | Assigned batch by permission |                   By permission |          No by default |                          By permission |        No |
+| Correct finalized result  |                No by default |                      Restricted |             Restricted |                  Restricted permission |        No |
+| Run completion evaluation |             Limited/assigned |                             Yes |                   View |                                    Yes |        No |
+| Recommend completion      |          Yes, assigned batch | Optional fallback by permission |                     No |                             Restricted |        No |
+| Coordinator review        |                           No |                             Yes |                     No | Delegated only if explicitly permitted |        No |
+| Final branch approval     |                           No |                              No |                    Yes | Delegated only if explicitly permitted |        No |
+| View approval history     |                 Own/assigned |                             Yes |                    Yes |                                    Yes |       Yes |
+| View audit history        |                No by default |                      Restricted |             Restricted |                             Restricted |       Yes |
 
 ### 6.2 External User Capabilities
 
@@ -171,32 +171,32 @@ No external actor directly mutates Module 10 in the current single-admin-portal 
 
 ## 7. Functional Requirements Checklist
 
-| ID | Requirement | Priority |
-|---|---|---|
-| FR-EXC-001 | Create a branch-scoped exam linked to a valid course and batch. | Must |
-| FR-EXC-002 | Update, reschedule, activate, cancel, and close an exam under state and permission controls. | Must |
-| FR-EXC-003 | Search, filter, and view exams by branch, course, batch, date, and status. | Must |
-| FR-EXC-004 | Load eligible enrollment roster for an exam from the exam batch. | Must |
-| FR-EXC-005 | Record an individual result with marks, derived grade representation where configured, and pass/fail status. | Must |
-| FR-EXC-006 | Record results in bulk with per-row validation and atomicity policy clearly surfaced to the user. | Must |
-| FR-EXC-007 | Finalize results and prevent unauthorized silent modification. | Must |
-| FR-EXC-008 | Correct a finalized result through restricted permission, mandatory reason, concurrency protection, and audit trail. | Must |
-| FR-EXC-009 | Identify missing results for exam-required completion evaluation. | Must |
-| FR-EXC-010 | Evaluate completion eligibility using the active course completion rule and authoritative evidence. | Must |
-| FR-EXC-011 | Persist one course-completion outcome per enrollment. | Must |
-| FR-EXC-012 | Support trainer recommendation for completion. | Must |
-| FR-EXC-013 | Support academic coordinator review and decision. | Must |
-| FR-EXC-014 | Support branch manager final approval and rejection with remarks. | Must |
-| FR-EXC-015 | Re-evaluate completion after authorized evidence changes while preserving audit history. | Must |
-| FR-EXC-016 | Expose completion-approved and certificate-eligible outcome to Certificate Management without issuing certificates. | Must |
-| FR-EXC-017 | Synchronize completion outcome with Enrollment through a defined application boundary without direct cross-context table mutation. | Must |
-| FR-EXC-018 | Enforce server-side branch scope on all commands and queries. | Must |
-| FR-EXC-019 | Enforce permission-based authorization independent of hardcoded role names. | Must |
-| FR-EXC-020 | Provide pending-result, pending-evaluation, and pending-approval work queues. | Should |
-| FR-EXC-021 | Provide branch-scoped exports for exams, results, and completion decisions. | Should |
-| FR-EXC-022 | Produce audit evidence for result corrections, completion decisions, and approval actions. | Must |
-| FR-EXC-023 | Use soft-delete/deactivation conventions and optimistic concurrency for mutable operational records. | Must |
-| FR-EXC-024 | Support English/Arabic display labels and localized operational output where required. | Should |
+| ID         | Requirement                                                                                                                        | Priority |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| FR-EXC-001 | Create a branch-scoped exam linked to a valid course and batch.                                                                    | Must     |
+| FR-EXC-002 | Update, reschedule, activate, cancel, and close an exam under state and permission controls.                                       | Must     |
+| FR-EXC-003 | Search, filter, and view exams by branch, course, batch, date, and status.                                                         | Must     |
+| FR-EXC-004 | Load eligible enrollment roster for an exam from the exam batch.                                                                   | Must     |
+| FR-EXC-005 | Record an individual result with marks, derived grade representation where configured, and pass/fail status.                       | Must     |
+| FR-EXC-006 | Record results in bulk with per-row validation and atomicity policy clearly surfaced to the user.                                  | Must     |
+| FR-EXC-007 | Finalize results and prevent unauthorized silent modification.                                                                     | Must     |
+| FR-EXC-008 | Correct a finalized result through restricted permission, mandatory reason, concurrency protection, and audit trail.               | Must     |
+| FR-EXC-009 | Identify missing results for exam-required completion evaluation.                                                                  | Must     |
+| FR-EXC-010 | Evaluate completion eligibility using the active course completion rule and authoritative evidence.                                | Must     |
+| FR-EXC-011 | Persist one course-completion outcome per enrollment.                                                                              | Must     |
+| FR-EXC-012 | Support trainer recommendation for completion.                                                                                     | Must     |
+| FR-EXC-013 | Support academic coordinator review and decision.                                                                                  | Must     |
+| FR-EXC-014 | Support branch manager final approval and rejection with remarks.                                                                  | Must     |
+| FR-EXC-015 | Re-evaluate completion after authorized evidence changes while preserving audit history.                                           | Must     |
+| FR-EXC-016 | Expose completion-approved and certificate-eligible outcome to Certificate Management without issuing certificates.                | Must     |
+| FR-EXC-017 | Synchronize completion outcome with Enrollment through a defined application boundary without direct cross-context table mutation. | Must     |
+| FR-EXC-018 | Enforce server-side branch scope on all commands and queries.                                                                      | Must     |
+| FR-EXC-019 | Enforce permission-based authorization independent of hardcoded role names.                                                        | Must     |
+| FR-EXC-020 | Provide pending-result, pending-evaluation, and pending-approval work queues.                                                      | Should   |
+| FR-EXC-021 | Provide branch-scoped exports for exams, results, and completion decisions.                                                        | Should   |
+| FR-EXC-022 | Produce audit evidence for result corrections, completion decisions, and approval actions.                                         | Must     |
+| FR-EXC-023 | Use soft-delete/deactivation conventions and optimistic concurrency for mutable operational records.                               | Must     |
+| FR-EXC-024 | Support English/Arabic display labels and localized operational output where required.                                             | Should   |
 
 ## 8. Permission Model Overview
 
@@ -258,34 +258,34 @@ Consolidated views are allowed only where IAM branch policy permits `canViewCons
 
 ## 10. Non-Functional Requirements Summary
 
-| Area | Requirement Summary |
-|---|---|
-| Performance | Standard list/detail reads should target p95 under 2 seconds under normal production load; single-record commands should target p95 under 2 seconds excluding external integration latency. |
-| Bulk Processing | A branch-scoped result batch should support at least the configured batch capacity without requiring per-student page submissions. Validation feedback must identify row-level failures. |
-| Availability | Academic records and completion decisions must remain available during normal institute operating hours with graceful failure when a dependency is unavailable. |
-| Consistency | Result finalization and completion approval require transactional integrity within this bounded context. Cross-context updates must use explicit application boundaries and idempotent handling where events are used. |
-| Concurrency | Mutable exam, result, and completion records must reject stale writes rather than silently overwrite newer data. |
-| Scalability | Queries must be branch-filterable and indexed by common dimensions such as batch, course, enrollment, exam date, and status. |
-| Usability | Result entry supports keyboard-efficient bulk workflows, clear validation, unsaved-change warning, and bilingual labels where required. |
-| Accessibility | Admin UI controls should meet WCAG 2.1 AA expectations for keyboard access, labels, error association, and status presentation. |
-| Auditability | Sensitive mutations are reconstructable from audit evidence and approval history. |
-| Recoverability | Owned transactional tables are included in repository backup and recovery procedures; restored data must preserve relational consistency among Exam, Result, CourseCompletion, and CompletionApproval. |
-| Observability | Commands must produce structured logs and metrics for failures, pending queues, evaluation failures, correction frequency, and approval latency without logging sensitive PII. |
+| Area            | Requirement Summary                                                                                                                                                                                                    |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Performance     | Standard list/detail reads should target p95 under 2 seconds under normal production load; single-record commands should target p95 under 2 seconds excluding external integration latency.                            |
+| Bulk Processing | A branch-scoped result batch should support at least the configured batch capacity without requiring per-student page submissions. Validation feedback must identify row-level failures.                               |
+| Availability    | Academic records and completion decisions must remain available during normal institute operating hours with graceful failure when a dependency is unavailable.                                                        |
+| Consistency     | Result finalization and completion approval require transactional integrity within this bounded context. Cross-context updates must use explicit application boundaries and idempotent handling where events are used. |
+| Concurrency     | Mutable exam, result, and completion records must reject stale writes rather than silently overwrite newer data.                                                                                                       |
+| Scalability     | Queries must be branch-filterable and indexed by common dimensions such as batch, course, enrollment, exam date, and status.                                                                                           |
+| Usability       | Result entry supports keyboard-efficient bulk workflows, clear validation, unsaved-change warning, and bilingual labels where required.                                                                                |
+| Accessibility   | Admin UI controls should meet WCAG 2.1 AA expectations for keyboard access, labels, error association, and status presentation.                                                                                        |
+| Auditability    | Sensitive mutations are reconstructable from audit evidence and approval history.                                                                                                                                      |
+| Recoverability  | Owned transactional tables are included in repository backup and recovery procedures; restored data must preserve relational consistency among Exam, Result, CourseCompletion, and CompletionApproval.                 |
+| Observability   | Commands must produce structured logs and metrics for failures, pending queues, evaluation failures, correction frequency, and approval latency without logging sensitive PII.                                         |
 
 ## 11. DDD Ownership Notes and Known Cross-Context Dependencies
 
-| Concern | Owner | Module 10 Responsibility | Boundary Rule |
-|---|---|---|---|
-| Course completion rule | Course Catalog | Read and evaluate | Do not duplicate rule ownership in completion records. |
-| Enrollment identity and lifecycle | Admission & Enrollment | Anchor result/completion to Enrollment and publish outcome | Do not create a parallel learner-course lifecycle. |
-| Batch and session delivery | Training Delivery | Validate exam course/batch relationship and roster scope | Do not mutate Batch or Session directly. |
-| Attendance | Attendance | Consume attendance percentage/evidence | Do not calculate from direct attendance table ownership assumptions in domain layer. |
-| Payment truth | Finance & Receivables | Consume payment validation only when rule requires it | Do not derive payment truth from copied invoice/payment data. |
-| Trainer identity/assignment | Faculty / Trainer | Validate recommendation actor eligibility | Do not duplicate trainer profiles. |
-| Certificate | Certificate Management | Produce eligibility outcome | Never generate, number, or issue certificate here. |
-| User/permission/branch access | IAM | Enforce permission and branch policy | No hardcoded role checks. |
-| Audit/approval history | Audit & Compliance conventions | Produce auditable business actions and preserve approval evidence | No unaudited override path. |
-| Reporting | Reporting & Dashboards | Expose read models / data contracts | Reporting remains read-only consumer. |
+| Concern                           | Owner                          | Module 10 Responsibility                                          | Boundary Rule                                                                        |
+| --------------------------------- | ------------------------------ | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Course completion rule            | Course Catalog                 | Read and evaluate                                                 | Do not duplicate rule ownership in completion records.                               |
+| Enrollment identity and lifecycle | Admission & Enrollment         | Anchor result/completion to Enrollment and publish outcome        | Do not create a parallel learner-course lifecycle.                                   |
+| Batch and session delivery        | Training Delivery              | Validate exam course/batch relationship and roster scope          | Do not mutate Batch or Session directly.                                             |
+| Attendance                        | Attendance                     | Consume attendance percentage/evidence                            | Do not calculate from direct attendance table ownership assumptions in domain layer. |
+| Payment truth                     | Finance & Receivables          | Consume payment validation only when rule requires it             | Do not derive payment truth from copied invoice/payment data.                        |
+| Trainer identity/assignment       | Faculty / Trainer              | Validate recommendation actor eligibility                         | Do not duplicate trainer profiles.                                                   |
+| Certificate                       | Certificate Management         | Produce eligibility outcome                                       | Never generate, number, or issue certificate here.                                   |
+| User/permission/branch access     | IAM                            | Enforce permission and branch policy                              | No hardcoded role checks.                                                            |
+| Audit/approval history            | Audit & Compliance conventions | Produce auditable business actions and preserve approval evidence | No unaudited override path.                                                          |
+| Reporting                         | Reporting & Dashboards         | Expose read models / data contracts                               | Reporting remains read-only consumer.                                                |
 
 ### Known Model Alignment Notes
 

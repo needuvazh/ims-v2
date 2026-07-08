@@ -10,7 +10,9 @@ import {
 describe('sidebar navigation helpers', () => {
   it('treats child routes as active for their parent menu', () => {
     expect(isPathActive('/organization/branches', '/organization')).toBe(true);
-    expect(isPathActive('/organization/branches/123', '/organization/branches')).toBe(true);
+    expect(
+      isPathActive('/organization/branches/123', '/organization/branches'),
+    ).toBe(true);
   });
 
   it('does not mark unrelated routes active', () => {
@@ -43,7 +45,9 @@ describe('sidebar navigation helpers', () => {
       },
     ];
 
-    expect(getInitialExpandedItems(items, '/organization/branches')).toEqual({ '/organization': true });
+    expect(getInitialExpandedItems(items, '/organization/branches')).toEqual({
+      '/organization': true,
+    });
   });
 
   it('builds the active navigation trail for nested routes', () => {

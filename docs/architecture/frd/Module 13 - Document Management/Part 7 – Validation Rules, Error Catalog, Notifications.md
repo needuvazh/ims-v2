@@ -27,13 +27,13 @@ This Part is consistent with Parts 1–6 and must not create new lifecycle trans
 
 Validation is applied in five layers. A request may pass syntax validation and still fail authorization or domain validation.
 
-| Layer | Purpose | Examples | Primary Owner |
-|---|---|---|---|
-| L1 – Transport/schema validation | Reject malformed request shape and primitive type violations. | Invalid UUID, invalid date literal, oversized string, unsupported enum. | API/application boundary; shared schema primitives where reusable. |
-| L2 – Authentication and authorization | Establish actor identity and capability. | Missing session, missing `document.create`, missing `document.verify.approve`. | IAM, enforced by Document application service. |
-| L3 – Scope and reference validation | Resolve owner and verify access scope. | Owner exists, owner not deleted, branch scope is authorized, document type active. | Delegated to owning contexts/IAM/Configuration through approved adapters. |
-| L4 – Domain validation | Enforce Document aggregate invariants and lifecycle rules. | Valid state transition, rejection remarks required, expiry date not before issue date. | Document Management. |
-| L5 – Infrastructure consistency validation | Protect Blob/database consistency and concurrency. | Upload token valid, Blob exists, registration idempotency, optimistic version match. | Document application service plus infrastructure adapter/repository conventions. |
+| Layer                                      | Purpose                                                       | Examples                                                                               | Primary Owner                                                                    |
+| ------------------------------------------ | ------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| L1 – Transport/schema validation           | Reject malformed request shape and primitive type violations. | Invalid UUID, invalid date literal, oversized string, unsupported enum.                | API/application boundary; shared schema primitives where reusable.               |
+| L2 – Authentication and authorization      | Establish actor identity and capability.                      | Missing session, missing `document.create`, missing `document.verify.approve`.         | IAM, enforced by Document application service.                                   |
+| L3 – Scope and reference validation        | Resolve owner and verify access scope.                        | Owner exists, owner not deleted, branch scope is authorized, document type active.     | Delegated to owning contexts/IAM/Configuration through approved adapters.        |
+| L4 – Domain validation                     | Enforce Document aggregate invariants and lifecycle rules.    | Valid state transition, rejection remarks required, expiry date not before issue date. | Document Management.                                                             |
+| L5 – Infrastructure consistency validation | Protect Blob/database consistency and concurrency.            | Upload token valid, Blob exists, registration idempotency, optimistic version match.   | Document application service plus infrastructure adapter/repository conventions. |
 
 ## 2.2 Fail-fast ordering
 
@@ -90,12 +90,7 @@ Rule:
 ### `OwnerTypeSchema`
 
 ```ts
-const OwnerTypeSchema = z.enum([
-  "Student",
-  "Trainer",
-  "Corporate",
-  "Person",
-]);
+const OwnerTypeSchema = z.enum(['Student', 'Trainer', 'Corporate', 'Person']);
 ```
 
 `Employee` must not be enabled until HRMS ownership and integration are available.
@@ -152,11 +147,7 @@ The original display file name is metadata only. It must not be trusted as a glo
 ### `VerificationRemarksSchema`
 
 ```ts
-const VerificationRemarksSchema = z
-  .string()
-  .trim()
-  .min(3)
-  .max(2000);
+const VerificationRemarksSchema = z.string().trim().min(3).max(2000);
 ```
 
 Rules:
@@ -169,11 +160,7 @@ Rules:
 ### `RetirementReasonSchema`
 
 ```ts
-const RetirementReasonSchema = z
-  .string()
-  .trim()
-  .min(5)
-  .max(1000);
+const RetirementReasonSchema = z.string().trim().min(5).max(1000);
 ```
 
 A retirement reason is required for sensitive soft-retirement operations if the repository's audit convention requires a reason. Hard delete is prohibited.
@@ -192,7 +179,7 @@ Validates whether an authenticated actor may initiate a controlled Blob upload f
 
 ```ts
 type CreateUploadIntentInput = {
-  ownerType: "Student" | "Trainer" | "Corporate" | "Person";
+  ownerType: 'Student' | 'Trainer' | 'Corporate' | 'Person';
   ownerId: string;
   documentType: string;
   fileName: string;
@@ -203,18 +190,18 @@ type CreateUploadIntentInput = {
 
 ### Validation rules
 
-| Rule | Validation | Failure Code | Ownership |
-|---|---|---|---|
-| VAL-DOC-001-A | Actor is authenticated. | `AUTH_REQUIRED` | IAM |
-| VAL-DOC-001-B | Actor has `document.create`. | `DOC_PERMISSION_DENIED` | IAM capability; enforced locally. |
-| VAL-DOC-001-C | ownerType is supported. | `DOC_OWNER_TYPE_UNSUPPORTED` | Document Management. |
-| VAL-DOC-001-D | Owner exists. | `DOC_OWNER_NOT_FOUND` | Delegated to owner context. |
-| VAL-DOC-001-E | Owner is not soft deleted/ineligible for attachment. | `DOC_OWNER_INACTIVE` | Delegated to owner context. |
-| VAL-DOC-001-F | Actor can access resolved owner branch scope. | `DOC_BRANCH_SCOPE_DENIED` | IAM + owner-context scope resolver. |
-| VAL-DOC-001-G | Document type is valid and active. | `DOC_TYPE_INVALID` / `DOC_TYPE_INACTIVE` | Configuration or approved schema relation. |
-| VAL-DOC-001-H | File name passes metadata validation. | `DOC_FILE_NAME_INVALID` | Document Management/application boundary. |
-| VAL-DOC-001-I | Media type is allowed by approved upload policy. | `DOC_FILE_TYPE_NOT_ALLOWED` | Shared security/upload policy. |
-| VAL-DOC-001-J | File size is within approved environment limit. | `DOC_FILE_TOO_LARGE` | Shared infrastructure/NFR configuration. |
+| Rule          | Validation                                           | Failure Code                             | Ownership                                  |
+| ------------- | ---------------------------------------------------- | ---------------------------------------- | ------------------------------------------ |
+| VAL-DOC-001-A | Actor is authenticated.                              | `AUTH_REQUIRED`                          | IAM                                        |
+| VAL-DOC-001-B | Actor has `document.create`.                         | `DOC_PERMISSION_DENIED`                  | IAM capability; enforced locally.          |
+| VAL-DOC-001-C | ownerType is supported.                              | `DOC_OWNER_TYPE_UNSUPPORTED`             | Document Management.                       |
+| VAL-DOC-001-D | Owner exists.                                        | `DOC_OWNER_NOT_FOUND`                    | Delegated to owner context.                |
+| VAL-DOC-001-E | Owner is not soft deleted/ineligible for attachment. | `DOC_OWNER_INACTIVE`                     | Delegated to owner context.                |
+| VAL-DOC-001-F | Actor can access resolved owner branch scope.        | `DOC_BRANCH_SCOPE_DENIED`                | IAM + owner-context scope resolver.        |
+| VAL-DOC-001-G | Document type is valid and active.                   | `DOC_TYPE_INVALID` / `DOC_TYPE_INACTIVE` | Configuration or approved schema relation. |
+| VAL-DOC-001-H | File name passes metadata validation.                | `DOC_FILE_NAME_INVALID`                  | Document Management/application boundary.  |
+| VAL-DOC-001-I | Media type is allowed by approved upload policy.     | `DOC_FILE_TYPE_NOT_ALLOWED`              | Shared security/upload policy.             |
+| VAL-DOC-001-J | File size is within approved environment limit.      | `DOC_FILE_TOO_LARGE`                     | Shared infrastructure/NFR configuration.   |
 
 ### Result
 
@@ -233,7 +220,7 @@ Validates creation of the authoritative Document metadata record after successfu
 ```ts
 type RegisterDocumentInput = {
   uploadReference: string;
-  ownerType: "Student" | "Trainer" | "Corporate" | "Person";
+  ownerType: 'Student' | 'Trainer' | 'Corporate' | 'Person';
   ownerId: string;
   documentType: string;
   fileName: string;
@@ -563,19 +550,19 @@ Errors:
 
 # 5. Lifecycle Validation Matrix
 
-| From | To | Trigger | Validation Result | Required Permission / Actor |
-|---|---|---|---|---|
-| None | Uploaded | Successful registration | Allowed after owner, type, scope, Blob, date, and idempotency validation. | `document.create` |
-| Uploaded | PendingVerification | Submit | Allowed. | `document.verify.submit` |
-| PendingVerification | Approved | Approve | Allowed. | `document.verify.approve` |
-| PendingVerification | Rejected | Reject with valid remarks | Allowed. | `document.verify.reject` |
-| Uploaded | Approved | Direct approve | Forbidden. | None can override baseline transition. |
-| Uploaded | Rejected | Direct reject | Forbidden. | None can override baseline transition. |
-| Approved | PendingVerification | Resubmit | Undefined gap; reject until policy exists. | Not defined. |
-| Rejected | PendingVerification | Resubmit | Undefined gap; reject until policy exists. | Not defined. |
-| Any active lifecycle state | Expired | Expiry condition | Conditional only if approved policy persists Expired. Otherwise derive read-time condition. | System operation. |
-| Expired | Uploaded | Reset | Forbidden/undefined. | Not defined. |
-| Expired | PendingVerification | Renewal | Undefined gap. | Not defined. |
+| From                       | To                  | Trigger                   | Validation Result                                                                           | Required Permission / Actor            |
+| -------------------------- | ------------------- | ------------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------- |
+| None                       | Uploaded            | Successful registration   | Allowed after owner, type, scope, Blob, date, and idempotency validation.                   | `document.create`                      |
+| Uploaded                   | PendingVerification | Submit                    | Allowed.                                                                                    | `document.verify.submit`               |
+| PendingVerification        | Approved            | Approve                   | Allowed.                                                                                    | `document.verify.approve`              |
+| PendingVerification        | Rejected            | Reject with valid remarks | Allowed.                                                                                    | `document.verify.reject`               |
+| Uploaded                   | Approved            | Direct approve            | Forbidden.                                                                                  | None can override baseline transition. |
+| Uploaded                   | Rejected            | Direct reject             | Forbidden.                                                                                  | None can override baseline transition. |
+| Approved                   | PendingVerification | Resubmit                  | Undefined gap; reject until policy exists.                                                  | Not defined.                           |
+| Rejected                   | PendingVerification | Resubmit                  | Undefined gap; reject until policy exists.                                                  | Not defined.                           |
+| Any active lifecycle state | Expired             | Expiry condition          | Conditional only if approved policy persists Expired. Otherwise derive read-time condition. | System operation.                      |
+| Expired                    | Uploaded            | Reset                     | Forbidden/undefined.                                                                        | Not defined.                           |
+| Expired                    | PendingVerification | Renewal                   | Undefined gap.                                                                              | Not defined.                           |
 
 ---
 
@@ -612,77 +599,77 @@ Rules:
 
 ## 7.1 Authentication, authorization, and scope
 
-| Code | HTTP | Meaning | Retryable | UI Handling |
-|---|---:|---|---|---|
-| `AUTH_REQUIRED` | 401 | Authentication session is missing or invalid. | After re-authentication | Redirect/sign-in flow. |
-| `DOC_PERMISSION_DENIED` | 403 | Actor lacks required capability permission. | No | Hide action where possible; show access denied for direct request. |
-| `DOC_BRANCH_SCOPE_DENIED` | 403/404 | Actor cannot access the authoritative owner branch scope. | No | Access denied or non-disclosing not-found behavior. |
-| `DOC_SELF_SCOPE_DENIED` | 403/404 | Self-service actor attempted to access another person's document. | No | Show access denied/not found. |
-| `DOC_CONSOLIDATED_SCOPE_REQUIRED` | 403 | Consolidated report request lacks IAM consolidated capability. | No | Remove consolidated option. |
+| Code                              |    HTTP | Meaning                                                           | Retryable               | UI Handling                                                        |
+| --------------------------------- | ------: | ----------------------------------------------------------------- | ----------------------- | ------------------------------------------------------------------ |
+| `AUTH_REQUIRED`                   |     401 | Authentication session is missing or invalid.                     | After re-authentication | Redirect/sign-in flow.                                             |
+| `DOC_PERMISSION_DENIED`           |     403 | Actor lacks required capability permission.                       | No                      | Hide action where possible; show access denied for direct request. |
+| `DOC_BRANCH_SCOPE_DENIED`         | 403/404 | Actor cannot access the authoritative owner branch scope.         | No                      | Access denied or non-disclosing not-found behavior.                |
+| `DOC_SELF_SCOPE_DENIED`           | 403/404 | Self-service actor attempted to access another person's document. | No                      | Show access denied/not found.                                      |
+| `DOC_CONSOLIDATED_SCOPE_REQUIRED` |     403 | Consolidated report request lacks IAM consolidated capability.    | No                      | Remove consolidated option.                                        |
 
 ## 7.2 Resource and reference errors
 
-| Code | HTTP | Meaning | Retryable | UI Handling |
-|---|---:|---|---|---|
-| `DOC_NOT_FOUND` | 404 | Document absent, retired, or intentionally undisclosed by scope policy. | No | Not-found state. |
-| `DOC_OWNER_NOT_FOUND` | 422 | Supplied owner does not exist in authoritative context. | After correcting input | Owner field error. |
-| `DOC_OWNER_INACTIVE` | 422 | Owner is deleted/ineligible for new attachment. | After owner-state correction | Owner field error. |
-| `DOC_OWNER_TYPE_UNSUPPORTED` | 422 | Owner type is not enabled. | No until supported | Owner type error. |
-| `DOC_TYPE_INVALID` | 422 | Document type is unknown. | After correcting input | Document type field error. |
-| `DOC_TYPE_INACTIVE` | 422 | Document type exists but is not active for new use. | After selecting active type | Document type field error. |
-| `DOC_OWNER_LOOKUP_UNAVAILABLE` | 503 | Owner-context lookup adapter is unavailable. | Yes | Temporary failure; retry action. |
+| Code                           | HTTP | Meaning                                                                 | Retryable                    | UI Handling                      |
+| ------------------------------ | ---: | ----------------------------------------------------------------------- | ---------------------------- | -------------------------------- |
+| `DOC_NOT_FOUND`                |  404 | Document absent, retired, or intentionally undisclosed by scope policy. | No                           | Not-found state.                 |
+| `DOC_OWNER_NOT_FOUND`          |  422 | Supplied owner does not exist in authoritative context.                 | After correcting input       | Owner field error.               |
+| `DOC_OWNER_INACTIVE`           |  422 | Owner is deleted/ineligible for new attachment.                         | After owner-state correction | Owner field error.               |
+| `DOC_OWNER_TYPE_UNSUPPORTED`   |  422 | Owner type is not enabled.                                              | No until supported           | Owner type error.                |
+| `DOC_TYPE_INVALID`             |  422 | Document type is unknown.                                               | After correcting input       | Document type field error.       |
+| `DOC_TYPE_INACTIVE`            |  422 | Document type exists but is not active for new use.                     | After selecting active type  | Document type field error.       |
+| `DOC_OWNER_LOOKUP_UNAVAILABLE` |  503 | Owner-context lookup adapter is unavailable.                            | Yes                          | Temporary failure; retry action. |
 
 ## 7.3 Request and field validation errors
 
-| Code | HTTP | Meaning | Retryable | UI Handling |
-|---|---:|---|---|---|
-| `DOC_REQUEST_INVALID` | 400 | Request shape failed schema validation. | After correcting input | Form summary + field errors. |
-| `DOC_FILE_NAME_INVALID` | 422 | File name metadata violates policy. | After correction | File field error. |
-| `DOC_FILE_TYPE_NOT_ALLOWED` | 415 | Media type not allowed by upload policy. | With allowed file | File field error. |
-| `DOC_FILE_TOO_LARGE` | 413 | File exceeds configured upload limit. | With smaller file | File field error. |
-| `DOC_DATE_INVALID` | 422 | Issue/expiry date is not a valid date-only value. | After correction | Date field error. |
-| `DOC_DATE_RANGE_INVALID` | 422 | Query date range is invalid. | After correction | Filter validation. |
-| `DOC_EXPIRY_BEFORE_ISSUE` | 422 | expiryDate is earlier than issueDate. | After correction | Highlight both date fields. |
-| `DOC_REJECTION_REMARKS_REQUIRED` | 422 | Rejection remarks missing. | After correction | Remarks field required. |
-| `DOC_REJECTION_REMARKS_INVALID` | 422 | Rejection remarks fail length/content validation. | After correction | Remarks field error. |
-| `DOC_RETIRE_REASON_REQUIRED` | 422 | Retirement reason is required. | After correction | Reason field error. |
-| `DOC_OWNER_SEARCH_QUERY_INVALID` | 400 | Owner search query or paging parameters invalid. | After correction | Search/filter error. |
-| `DOC_EXPIRY_QUERY_INVALID` | 400 | Expiry workbench filter combination invalid. | After correction | Filter error. |
+| Code                             | HTTP | Meaning                                           | Retryable              | UI Handling                  |
+| -------------------------------- | ---: | ------------------------------------------------- | ---------------------- | ---------------------------- |
+| `DOC_REQUEST_INVALID`            |  400 | Request shape failed schema validation.           | After correcting input | Form summary + field errors. |
+| `DOC_FILE_NAME_INVALID`          |  422 | File name metadata violates policy.               | After correction       | File field error.            |
+| `DOC_FILE_TYPE_NOT_ALLOWED`      |  415 | Media type not allowed by upload policy.          | With allowed file      | File field error.            |
+| `DOC_FILE_TOO_LARGE`             |  413 | File exceeds configured upload limit.             | With smaller file      | File field error.            |
+| `DOC_DATE_INVALID`               |  422 | Issue/expiry date is not a valid date-only value. | After correction       | Date field error.            |
+| `DOC_DATE_RANGE_INVALID`         |  422 | Query date range is invalid.                      | After correction       | Filter validation.           |
+| `DOC_EXPIRY_BEFORE_ISSUE`        |  422 | expiryDate is earlier than issueDate.             | After correction       | Highlight both date fields.  |
+| `DOC_REJECTION_REMARKS_REQUIRED` |  422 | Rejection remarks missing.                        | After correction       | Remarks field required.      |
+| `DOC_REJECTION_REMARKS_INVALID`  |  422 | Rejection remarks fail length/content validation. | After correction       | Remarks field error.         |
+| `DOC_RETIRE_REASON_REQUIRED`     |  422 | Retirement reason is required.                    | After correction       | Reason field error.          |
+| `DOC_OWNER_SEARCH_QUERY_INVALID` |  400 | Owner search query or paging parameters invalid.  | After correction       | Search/filter error.         |
+| `DOC_EXPIRY_QUERY_INVALID`       |  400 | Expiry workbench filter combination invalid.      | After correction       | Filter error.                |
 
 ## 7.4 Lifecycle and concurrency errors
 
-| Code | HTTP | Meaning | Retryable | UI Handling |
-|---|---:|---|---|---|
-| `DOC_INVALID_STATE_TRANSITION` | 409 | Requested transition is not allowed from current state. | After refresh/change | Refresh latest state. |
-| `DOC_VERIFICATION_NOT_PENDING` | 409 | Approve/reject attempted on non-pending document. | After refresh | Close stale decision UI and refresh. |
-| `DOC_VERSION_CONFLICT` | 409 | Optimistic version does not match current record. | Yes after refresh | Conflict banner; reload current data. |
-| `DOC_ALREADY_RETIRED` | 409 | Document already soft-retired. | No | Refresh/remove from active list. |
-| `DOC_FIELD_IMMUTABLE` | 422 | Command attempted to modify protected field. | After request correction | Developer-safe validation message. |
-| `DOC_EVIDENCE_REPLACEMENT_POLICY_UNDEFINED` | 409 | Evidence replacement requested where lifecycle policy is unresolved. | No until policy defined | Explain operation unavailable. |
-| `DOC_RESUBMISSION_POLICY_UNDEFINED` | 409 | Resubmission requested but no approved lifecycle exists. | No until policy defined | Explain operation unavailable. |
+| Code                                        | HTTP | Meaning                                                              | Retryable                | UI Handling                           |
+| ------------------------------------------- | ---: | -------------------------------------------------------------------- | ------------------------ | ------------------------------------- |
+| `DOC_INVALID_STATE_TRANSITION`              |  409 | Requested transition is not allowed from current state.              | After refresh/change     | Refresh latest state.                 |
+| `DOC_VERIFICATION_NOT_PENDING`              |  409 | Approve/reject attempted on non-pending document.                    | After refresh            | Close stale decision UI and refresh.  |
+| `DOC_VERSION_CONFLICT`                      |  409 | Optimistic version does not match current record.                    | Yes after refresh        | Conflict banner; reload current data. |
+| `DOC_ALREADY_RETIRED`                       |  409 | Document already soft-retired.                                       | No                       | Refresh/remove from active list.      |
+| `DOC_FIELD_IMMUTABLE`                       |  422 | Command attempted to modify protected field.                         | After request correction | Developer-safe validation message.    |
+| `DOC_EVIDENCE_REPLACEMENT_POLICY_UNDEFINED` |  409 | Evidence replacement requested where lifecycle policy is unresolved. | No until policy defined  | Explain operation unavailable.        |
+| `DOC_RESUBMISSION_POLICY_UNDEFINED`         |  409 | Resubmission requested but no approved lifecycle exists.             | No until policy defined  | Explain operation unavailable.        |
 
 ## 7.5 Blob and infrastructure consistency errors
 
-| Code | HTTP | Meaning | Retryable | UI Handling |
-|---|---:|---|---|---|
-| `DOC_UPLOAD_REFERENCE_INVALID` | 422 | Upload reference is invalid or not tied to controlled flow. | Restart upload | Restart upload flow. |
-| `DOC_BLOB_OBJECT_NOT_FOUND` | 422/409 | Expected uploaded Blob object cannot be confirmed. | Sometimes | Re-upload or retry verification. |
-| `DOC_FILE_REFERENCE_BROKEN` | 409 | Document metadata points to unavailable evidence. | Operationally retryable | Disable normal preview; show support/retry state. |
-| `DOC_FILE_ACCESS_FAILED` | 502/503 | Authorized storage retrieval failed. | Yes | Retry action. |
-| `DOC_IDEMPOTENCY_CONFLICT` | 409 | Same key reused for incompatible registration request. | No with same key | Restart operation with correct request semantics. |
-| `DOC_REGISTRATION_FAILED` | 500 | Metadata registration failed after validation. | Conditional | Show failure; reconciliation/compensation path handles orphan risk. |
-| `DOC_VERIFICATION_COMMIT_FAILED` | 500 | Decision history/current-state transaction failed. | Yes after refresh | Do not show success; refresh and retry safely. |
-| `DOC_RECONCILIATION_NOT_CONFIGURED` | 501/409 | Reconciliation operation requested before approved design exists. | No | Operations-only message. |
-| `DOC_RECONCILIATION_ITEM_NOT_FOUND` | 404 | Reconciliation item absent. | No | Refresh operations list. |
-| `DOC_RECONCILIATION_STATE_INVALID` | 409 | Retry requested from invalid reconciliation condition. | No | Refresh current state. |
-| `DOC_RECONCILIATION_RETRY_FAILED` | 500/503 | Reconciliation retry failed. | Yes per runbook | Keep item unresolved; surface correlation ID. |
+| Code                                |    HTTP | Meaning                                                           | Retryable               | UI Handling                                                         |
+| ----------------------------------- | ------: | ----------------------------------------------------------------- | ----------------------- | ------------------------------------------------------------------- |
+| `DOC_UPLOAD_REFERENCE_INVALID`      |     422 | Upload reference is invalid or not tied to controlled flow.       | Restart upload          | Restart upload flow.                                                |
+| `DOC_BLOB_OBJECT_NOT_FOUND`         | 422/409 | Expected uploaded Blob object cannot be confirmed.                | Sometimes               | Re-upload or retry verification.                                    |
+| `DOC_FILE_REFERENCE_BROKEN`         |     409 | Document metadata points to unavailable evidence.                 | Operationally retryable | Disable normal preview; show support/retry state.                   |
+| `DOC_FILE_ACCESS_FAILED`            | 502/503 | Authorized storage retrieval failed.                              | Yes                     | Retry action.                                                       |
+| `DOC_IDEMPOTENCY_CONFLICT`          |     409 | Same key reused for incompatible registration request.            | No with same key        | Restart operation with correct request semantics.                   |
+| `DOC_REGISTRATION_FAILED`           |     500 | Metadata registration failed after validation.                    | Conditional             | Show failure; reconciliation/compensation path handles orphan risk. |
+| `DOC_VERIFICATION_COMMIT_FAILED`    |     500 | Decision history/current-state transaction failed.                | Yes after refresh       | Do not show success; refresh and retry safely.                      |
+| `DOC_RECONCILIATION_NOT_CONFIGURED` | 501/409 | Reconciliation operation requested before approved design exists. | No                      | Operations-only message.                                            |
+| `DOC_RECONCILIATION_ITEM_NOT_FOUND` |     404 | Reconciliation item absent.                                       | No                      | Refresh operations list.                                            |
+| `DOC_RECONCILIATION_STATE_INVALID`  |     409 | Retry requested from invalid reconciliation condition.            | No                      | Refresh current state.                                              |
+| `DOC_RECONCILIATION_RETRY_FAILED`   | 500/503 | Reconciliation retry failed.                                      | Yes per runbook         | Keep item unresolved; surface correlation ID.                       |
 
 ## 7.6 Generic operational errors
 
-| Code | HTTP | Meaning | Retryable | UI Handling |
-|---|---:|---|---|---|
-| `DOC_DEPENDENCY_UNAVAILABLE` | 503 | Required internal context adapter/read model unavailable. | Yes | Temporary failure state. |
-| `DOC_INTERNAL_ERROR` | 500 | Unexpected internal failure. | Possibly | Generic error with correlation ID. |
+| Code                         | HTTP | Meaning                                                   | Retryable | UI Handling                        |
+| ---------------------------- | ---: | --------------------------------------------------------- | --------- | ---------------------------------- |
+| `DOC_DEPENDENCY_UNAVAILABLE` |  503 | Required internal context adapter/read model unavailable. | Yes       | Temporary failure state.           |
+| `DOC_INTERNAL_ERROR`         |  500 | Unexpected internal failure.                              | Possibly  | Generic error with correlation ID. |
 
 ---
 
@@ -710,17 +697,17 @@ Document Management must not store delivery state such as `notificationSent`, `e
 
 ## 8.2 Notification-trigger event catalog
 
-| Event | Triggering Action | Producer | Typical Recipient Intent | Notification Owner | Mandatory? |
-|---|---|---|---|---|---|
-| `DocumentUploaded` | Document metadata successfully registered as Uploaded. | Document Management | Optional acknowledgement to uploader/owner according to channel policy. | Communication & Notification | Configurable |
-| `DocumentSubmittedForVerification` | Uploaded -> PendingVerification committed. | Document Management | Alert verifier queue/role recipients where configured. | Communication & Notification | Configurable |
-| `DocumentApproved` | PendingVerification -> Approved committed with immutable history. | Document Management | Inform owner/uploader and relevant operational staff. | Communication & Notification | Configurable |
-| `DocumentRejected` | PendingVerification -> Rejected committed with remarks history. | Document Management | Inform owner/uploader with safe rejection guidance, subject to channel policy. | Communication & Notification | Configurable |
-| `DocumentExpiringSoonDetected` | Expiry evaluation identifies document within configured warning window. | Document Management expiry evaluator/application job | Reminder to owner and/or responsible internal staff. | Communication & Notification | Configurable |
-| `DocumentExpiredDetected` | Expiry condition becomes true. | Document Management expiry evaluator/application job | Expiry notice/escalation where policy requires. | Communication & Notification | Configurable |
-| `DocumentMetadataUpdated` | Material metadata update committed. | Document Management | Usually audit-only; notification only if policy config says material change requires notice. | Communication & Notification | Optional |
-| `DocumentRetired` | Soft retirement committed. | Document Management | Notify responsible operational/compliance staff where policy requires. | Communication & Notification | Configurable |
-| `DocumentFileConsistencyIssueDetected` | Blob/database inconsistency detected. | Document operations/application service | Operational alert to support/reconciliation operators. | Communication & Notification / observability boundary | Operational policy |
+| Event                                  | Triggering Action                                                       | Producer                                             | Typical Recipient Intent                                                                     | Notification Owner                                    | Mandatory?         |
+| -------------------------------------- | ----------------------------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------------------------------------------------- | ----------------------------------------------------- | ------------------ |
+| `DocumentUploaded`                     | Document metadata successfully registered as Uploaded.                  | Document Management                                  | Optional acknowledgement to uploader/owner according to channel policy.                      | Communication & Notification                          | Configurable       |
+| `DocumentSubmittedForVerification`     | Uploaded -> PendingVerification committed.                              | Document Management                                  | Alert verifier queue/role recipients where configured.                                       | Communication & Notification                          | Configurable       |
+| `DocumentApproved`                     | PendingVerification -> Approved committed with immutable history.       | Document Management                                  | Inform owner/uploader and relevant operational staff.                                        | Communication & Notification                          | Configurable       |
+| `DocumentRejected`                     | PendingVerification -> Rejected committed with remarks history.         | Document Management                                  | Inform owner/uploader with safe rejection guidance, subject to channel policy.               | Communication & Notification                          | Configurable       |
+| `DocumentExpiringSoonDetected`         | Expiry evaluation identifies document within configured warning window. | Document Management expiry evaluator/application job | Reminder to owner and/or responsible internal staff.                                         | Communication & Notification                          | Configurable       |
+| `DocumentExpiredDetected`              | Expiry condition becomes true.                                          | Document Management expiry evaluator/application job | Expiry notice/escalation where policy requires.                                              | Communication & Notification                          | Configurable       |
+| `DocumentMetadataUpdated`              | Material metadata update committed.                                     | Document Management                                  | Usually audit-only; notification only if policy config says material change requires notice. | Communication & Notification                          | Optional           |
+| `DocumentRetired`                      | Soft retirement committed.                                              | Document Management                                  | Notify responsible operational/compliance staff where policy requires.                       | Communication & Notification                          | Configurable       |
+| `DocumentFileConsistencyIssueDetected` | Blob/database inconsistency detected.                                   | Document operations/application service              | Operational alert to support/reconciliation operators.                                       | Communication & Notification / observability boundary | Operational policy |
 
 ---
 
@@ -735,7 +722,7 @@ type DocumentUploadedEvent = {
   eventId: string;
   occurredAt: string;
   documentId: string;
-  ownerType: "Student" | "Trainer" | "Corporate" | "Person";
+  ownerType: 'Student' | 'Trainer' | 'Corporate' | 'Person';
   ownerId: string;
   documentType: string;
   uploadedByUserId: string;
@@ -844,96 +831,96 @@ Legend:
 - **SHARED** – common platform/shared-kernel primitive, not Document-specific domain ownership.
 - **GAP** – policy/schema decision is not yet defined and must not be invented.
 
-| ID | Validation Rule | Classification | Authoritative Owner | Document Module Responsibility |
-|---|---|---|---|---|
-| VO-DOC-001 | ownerType must be one of enabled Document owner categories. | OWNED | Document Management | Reject unsupported owner types. |
-| VO-DOC-002 | Student owner exists. | DELEGATED | Admission & Enrollment | Query authoritative owner adapter; do not copy Student. |
-| VO-DOC-003 | Trainer owner exists. | DELEGATED | Faculty / Trainer Management | Query authoritative owner adapter. |
-| VO-DOC-004 | Corporate owner exists. | DELEGATED | Corporate Training Management | Query authoritative owner adapter. |
-| VO-DOC-005 | Person owner exists. | DELEGATED | Shared Party/Person ownership boundary | Query approved Person service/read adapter. |
-| VO-DOC-006 | Employee owner workflow enabled. | GAP/DELEGATED | Future HRMS | Keep disabled until HRMS exists. |
-| VO-DOC-007 | Owner is not soft deleted/ineligible. | DELEGATED | Owner context | Enforce returned eligibility result. |
-| VO-DOC-008 | User is authenticated. | DELEGATED | IAM | Reject unauthenticated request. |
-| VO-DOC-009 | User has capability permission. | DELEGATED | IAM | Enforce required permission on application command/query. |
-| VO-DOC-010 | User may access owner branch. | DELEGATED | IAM + owner context branch resolver | Server-side scope enforcement. |
-| VO-DOC-011 | Parent/child branch visibility. | DELEGATED | IAM/Organization rules | Consume authoritative resolved scope. |
-| VO-DOC-012 | Consolidated access allowed. | DELEGATED | IAM | Require permission plus `canViewConsolidated`. |
-| VO-DOC-013 | Document type syntax is present. | SHARED | API schema layer | Reject malformed value. |
-| VO-DOC-014 | Document type exists and is active. | DELEGATED | Configuration / Master Data or approved schema owner | Query authoritative source. |
-| VO-DOC-015 | fileName non-empty/length/control character checks. | OWNED/SHARED | Document application boundary + shared text primitive | Validate metadata. |
-| VO-DOC-016 | Original file name is not a globally unique Blob key. | OWNED | Document application/infrastructure boundary | Generate safe server-side storage key/path strategy. |
-| VO-DOC-017 | Allowed content type. | SHARED | Security/upload policy | Apply configured allowlist. |
-| VO-DOC-018 | Maximum upload size. | SHARED | NFR/infrastructure configuration | Apply configured limit. |
-| VO-DOC-019 | Blob object exists after controlled upload. | OWNED via infrastructure adapter | Document application service + Blob adapter | Confirm before registration. |
-| VO-DOC-020 | Blob credentials/tokens are not accepted as ordinary domain metadata. | OWNED/SHARED security | Security architecture | Keep secret/server-controlled. |
-| VO-DOC-021 | issueDate/expiryDate are valid date-only values. | SHARED | Platform date primitive | Validate syntax/calendar correctness. |
-| VO-DOC-022 | expiryDate is not earlier than issueDate. | OWNED | Document Management | Enforce cross-field invariant. |
-| VO-DOC-023 | null expiryDate is allowed for non-expiring evidence. | OWNED | Document Management | Accept null. |
-| VO-DOC-024 | New Document begins Uploaded. | OWNED | Document Management | Set server-side. |
-| VO-DOC-025 | Only Uploaded may submit to PendingVerification under baseline flow. | OWNED | Document Management | Reject other states. |
-| VO-DOC-026 | Only PendingVerification may be approved. | OWNED | Document Management | Reject other states. |
-| VO-DOC-027 | Only PendingVerification may be rejected. | OWNED | Document Management | Reject other states. |
-| VO-DOC-028 | Rejection remarks mandatory. | OWNED | Document Management | Enforce schema/domain rule. |
-| VO-DOC-029 | Approve/reject creates immutable history. | OWNED | Document Management | Insert new DocumentVerification row. |
-| VO-DOC-030 | Prior verification history cannot be overwritten. | OWNED | Document Management | Append-only behavior. |
-| VO-DOC-031 | Current status and decision history remain consistent. | OWNED | Document Management | Transactional consistency. |
-| VO-DOC-032 | Verifier identity/time are server-derived. | OWNED + IAM identity source | Document Management/IAM | Derive authenticated actor and server time. |
-| VO-DOC-033 | optimistic version matches current entity. | SHARED repository convention, applied locally | Shared persistence convention | Reject stale mutation. |
-| VO-DOC-034 | expired condition is expiryDate < effective business date. | OWNED | Document Management | Evaluate condition. |
-| VO-DOC-035 | effective business date/timezone convention. | SHARED | Platform date/time policy | Use Oman default policy. |
-| VO-DOC-036 | whether Expired is persisted or derived. | GAP | Architecture/data model decision | Do not invent state persistence behavior. |
-| VO-DOC-037 | rejected document resubmission policy. | GAP | Domain decision required | Reject unsupported resubmit command. |
-| VO-DOC-038 | approved evidence replacement/reset semantics. | GAP | Domain decision required | Block silent file replacement. |
-| VO-DOC-039 | file access requires authentication, permission, and scope. | OWNED enforcement + IAM facts | Document Management/IAM | Enforce every access request. |
-| VO-DOC-040 | Blob URL possession alone authorizes access. | OWNED rejection rule | Document Management/security | Never treat URL possession as authority. |
-| VO-DOC-041 | hard delete prohibited. | OWNED/shared repository policy | Document Management + platform convention | Expose only soft retirement. |
-| VO-DOC-042 | retired documents excluded from normal reads. | OWNED | Document Management | Repository query filter. |
-| VO-DOC-043 | Blob retention/destruction policy after retirement. | GAP/DELEGATED | Retention/compliance architecture | Preserve evidence until approved policy permits deletion. |
-| VO-DOC-044 | notification recipient channel preference. | DELEGATED | Communication & Notification | Emit safe event facts only. |
-| VO-DOC-045 | notification retry and provider delivery. | DELEGATED | Communication & Notification | Do not mutate Document for delivery failure. |
-| VO-DOC-046 | audit event persistence and audit query policy. | DELEGATED | Audit & Compliance | Supply critical action facts. |
-| VO-DOC-047 | reports may mutate Document state. | OWNED prohibition / Reporting boundary | Reporting & Dashboards is read-only consumer | Reject any write-through reporting path. |
-| VO-DOC-048 | certificate eligibility or issuance. | DELEGATED | Exam & Completion / Certificate Management | Document module may expose evidence but must not decide eligibility. |
-| VO-DOC-049 | finance receipt/invoice validity. | DELEGATED | Finance & Receivables | Document module stores/serves attached evidence only where modeled. |
-| VO-DOC-050 | reconciliation persistence entity. | GAP | Architecture decision | Do not invent table without ownership decision. |
+| ID         | Validation Rule                                                       | Classification                                | Authoritative Owner                                   | Document Module Responsibility                                       |
+| ---------- | --------------------------------------------------------------------- | --------------------------------------------- | ----------------------------------------------------- | -------------------------------------------------------------------- |
+| VO-DOC-001 | ownerType must be one of enabled Document owner categories.           | OWNED                                         | Document Management                                   | Reject unsupported owner types.                                      |
+| VO-DOC-002 | Student owner exists.                                                 | DELEGATED                                     | Admission & Enrollment                                | Query authoritative owner adapter; do not copy Student.              |
+| VO-DOC-003 | Trainer owner exists.                                                 | DELEGATED                                     | Faculty / Trainer Management                          | Query authoritative owner adapter.                                   |
+| VO-DOC-004 | Corporate owner exists.                                               | DELEGATED                                     | Corporate Training Management                         | Query authoritative owner adapter.                                   |
+| VO-DOC-005 | Person owner exists.                                                  | DELEGATED                                     | Shared Party/Person ownership boundary                | Query approved Person service/read adapter.                          |
+| VO-DOC-006 | Employee owner workflow enabled.                                      | GAP/DELEGATED                                 | Future HRMS                                           | Keep disabled until HRMS exists.                                     |
+| VO-DOC-007 | Owner is not soft deleted/ineligible.                                 | DELEGATED                                     | Owner context                                         | Enforce returned eligibility result.                                 |
+| VO-DOC-008 | User is authenticated.                                                | DELEGATED                                     | IAM                                                   | Reject unauthenticated request.                                      |
+| VO-DOC-009 | User has capability permission.                                       | DELEGATED                                     | IAM                                                   | Enforce required permission on application command/query.            |
+| VO-DOC-010 | User may access owner branch.                                         | DELEGATED                                     | IAM + owner context branch resolver                   | Server-side scope enforcement.                                       |
+| VO-DOC-011 | Parent/child branch visibility.                                       | DELEGATED                                     | IAM/Organization rules                                | Consume authoritative resolved scope.                                |
+| VO-DOC-012 | Consolidated access allowed.                                          | DELEGATED                                     | IAM                                                   | Require permission plus `canViewConsolidated`.                       |
+| VO-DOC-013 | Document type syntax is present.                                      | SHARED                                        | API schema layer                                      | Reject malformed value.                                              |
+| VO-DOC-014 | Document type exists and is active.                                   | DELEGATED                                     | Configuration / Master Data or approved schema owner  | Query authoritative source.                                          |
+| VO-DOC-015 | fileName non-empty/length/control character checks.                   | OWNED/SHARED                                  | Document application boundary + shared text primitive | Validate metadata.                                                   |
+| VO-DOC-016 | Original file name is not a globally unique Blob key.                 | OWNED                                         | Document application/infrastructure boundary          | Generate safe server-side storage key/path strategy.                 |
+| VO-DOC-017 | Allowed content type.                                                 | SHARED                                        | Security/upload policy                                | Apply configured allowlist.                                          |
+| VO-DOC-018 | Maximum upload size.                                                  | SHARED                                        | NFR/infrastructure configuration                      | Apply configured limit.                                              |
+| VO-DOC-019 | Blob object exists after controlled upload.                           | OWNED via infrastructure adapter              | Document application service + Blob adapter           | Confirm before registration.                                         |
+| VO-DOC-020 | Blob credentials/tokens are not accepted as ordinary domain metadata. | OWNED/SHARED security                         | Security architecture                                 | Keep secret/server-controlled.                                       |
+| VO-DOC-021 | issueDate/expiryDate are valid date-only values.                      | SHARED                                        | Platform date primitive                               | Validate syntax/calendar correctness.                                |
+| VO-DOC-022 | expiryDate is not earlier than issueDate.                             | OWNED                                         | Document Management                                   | Enforce cross-field invariant.                                       |
+| VO-DOC-023 | null expiryDate is allowed for non-expiring evidence.                 | OWNED                                         | Document Management                                   | Accept null.                                                         |
+| VO-DOC-024 | New Document begins Uploaded.                                         | OWNED                                         | Document Management                                   | Set server-side.                                                     |
+| VO-DOC-025 | Only Uploaded may submit to PendingVerification under baseline flow.  | OWNED                                         | Document Management                                   | Reject other states.                                                 |
+| VO-DOC-026 | Only PendingVerification may be approved.                             | OWNED                                         | Document Management                                   | Reject other states.                                                 |
+| VO-DOC-027 | Only PendingVerification may be rejected.                             | OWNED                                         | Document Management                                   | Reject other states.                                                 |
+| VO-DOC-028 | Rejection remarks mandatory.                                          | OWNED                                         | Document Management                                   | Enforce schema/domain rule.                                          |
+| VO-DOC-029 | Approve/reject creates immutable history.                             | OWNED                                         | Document Management                                   | Insert new DocumentVerification row.                                 |
+| VO-DOC-030 | Prior verification history cannot be overwritten.                     | OWNED                                         | Document Management                                   | Append-only behavior.                                                |
+| VO-DOC-031 | Current status and decision history remain consistent.                | OWNED                                         | Document Management                                   | Transactional consistency.                                           |
+| VO-DOC-032 | Verifier identity/time are server-derived.                            | OWNED + IAM identity source                   | Document Management/IAM                               | Derive authenticated actor and server time.                          |
+| VO-DOC-033 | optimistic version matches current entity.                            | SHARED repository convention, applied locally | Shared persistence convention                         | Reject stale mutation.                                               |
+| VO-DOC-034 | expired condition is expiryDate < effective business date.            | OWNED                                         | Document Management                                   | Evaluate condition.                                                  |
+| VO-DOC-035 | effective business date/timezone convention.                          | SHARED                                        | Platform date/time policy                             | Use Oman default policy.                                             |
+| VO-DOC-036 | whether Expired is persisted or derived.                              | GAP                                           | Architecture/data model decision                      | Do not invent state persistence behavior.                            |
+| VO-DOC-037 | rejected document resubmission policy.                                | GAP                                           | Domain decision required                              | Reject unsupported resubmit command.                                 |
+| VO-DOC-038 | approved evidence replacement/reset semantics.                        | GAP                                           | Domain decision required                              | Block silent file replacement.                                       |
+| VO-DOC-039 | file access requires authentication, permission, and scope.           | OWNED enforcement + IAM facts                 | Document Management/IAM                               | Enforce every access request.                                        |
+| VO-DOC-040 | Blob URL possession alone authorizes access.                          | OWNED rejection rule                          | Document Management/security                          | Never treat URL possession as authority.                             |
+| VO-DOC-041 | hard delete prohibited.                                               | OWNED/shared repository policy                | Document Management + platform convention             | Expose only soft retirement.                                         |
+| VO-DOC-042 | retired documents excluded from normal reads.                         | OWNED                                         | Document Management                                   | Repository query filter.                                             |
+| VO-DOC-043 | Blob retention/destruction policy after retirement.                   | GAP/DELEGATED                                 | Retention/compliance architecture                     | Preserve evidence until approved policy permits deletion.            |
+| VO-DOC-044 | notification recipient channel preference.                            | DELEGATED                                     | Communication & Notification                          | Emit safe event facts only.                                          |
+| VO-DOC-045 | notification retry and provider delivery.                             | DELEGATED                                     | Communication & Notification                          | Do not mutate Document for delivery failure.                         |
+| VO-DOC-046 | audit event persistence and audit query policy.                       | DELEGATED                                     | Audit & Compliance                                    | Supply critical action facts.                                        |
+| VO-DOC-047 | reports may mutate Document state.                                    | OWNED prohibition / Reporting boundary        | Reporting & Dashboards is read-only consumer          | Reject any write-through reporting path.                             |
+| VO-DOC-048 | certificate eligibility or issuance.                                  | DELEGATED                                     | Exam & Completion / Certificate Management            | Document module may expose evidence but must not decide eligibility. |
+| VO-DOC-049 | finance receipt/invoice validity.                                     | DELEGATED                                     | Finance & Receivables                                 | Document module stores/serves attached evidence only where modeled.  |
+| VO-DOC-050 | reconciliation persistence entity.                                    | GAP                                           | Architecture decision                                 | Do not invent table without ownership decision.                      |
 
 ---
 
 # 12. Validation-to-Business-Rule Traceability
 
-| Validation Area | Part 1 Business Rules |
-|---|---|
-| Owner association and owner validation | BR-DOC-001 to BR-DOC-008, BR-DOC-040, BR-DOC-047, BR-DOC-052, BR-DOC-053 |
-| Blob upload and registration consistency | BR-DOC-009 to BR-DOC-013, BR-DOC-036 to BR-DOC-039, BR-DOC-057, BR-DOC-058 |
-| Date and expiry validation | BR-DOC-014 to BR-DOC-016, BR-DOC-026 to BR-DOC-028, BR-DOC-050, BR-DOC-051, BR-DOC-055 |
-| Lifecycle and verification | BR-DOC-017 to BR-DOC-025, BR-DOC-048, BR-DOC-049, BR-DOC-059 |
-| Audit and deletion | BR-DOC-030 to BR-DOC-034 |
-| File access security | BR-DOC-035 to BR-DOC-039 |
-| Cross-context ownership | BR-DOC-040 to BR-DOC-047, BR-DOC-060 |
-| Permissions and reporting | BR-DOC-044 to BR-DOC-046 |
+| Validation Area                          | Part 1 Business Rules                                                                  |
+| ---------------------------------------- | -------------------------------------------------------------------------------------- |
+| Owner association and owner validation   | BR-DOC-001 to BR-DOC-008, BR-DOC-040, BR-DOC-047, BR-DOC-052, BR-DOC-053               |
+| Blob upload and registration consistency | BR-DOC-009 to BR-DOC-013, BR-DOC-036 to BR-DOC-039, BR-DOC-057, BR-DOC-058             |
+| Date and expiry validation               | BR-DOC-014 to BR-DOC-016, BR-DOC-026 to BR-DOC-028, BR-DOC-050, BR-DOC-051, BR-DOC-055 |
+| Lifecycle and verification               | BR-DOC-017 to BR-DOC-025, BR-DOC-048, BR-DOC-049, BR-DOC-059                           |
+| Audit and deletion                       | BR-DOC-030 to BR-DOC-034                                                               |
+| File access security                     | BR-DOC-035 to BR-DOC-039                                                               |
+| Cross-context ownership                  | BR-DOC-040 to BR-DOC-047, BR-DOC-060                                                   |
+| Permissions and reporting                | BR-DOC-044 to BR-DOC-046                                                               |
 
 ---
 
 # 13. API-to-Validation Mapping
 
-| API Contract | Core Validation Schemas |
-|---|---|
-| API-DOC-001 Create Upload Intent | VAL-DOC-001 |
-| API-DOC-002 Register Uploaded Document | VAL-DOC-002 |
-| API-DOC-003 List/Search Documents | auth, permission, branch scope, query schema primitives |
-| API-DOC-004 Get Document Detail | auth, `document.read`, owner-derived scope |
-| API-DOC-005 Update Metadata | VAL-DOC-003 |
-| API-DOC-006 Submit for Verification | VAL-DOC-004 |
-| Verification Queue query | permission, owner-derived branch scope, status filter validation |
-| Approve Verification | VAL-DOC-005 |
-| Reject Verification | VAL-DOC-006 |
-| Verification History query | auth, `document.history.read`, scope validation |
-| Secure File Access | VAL-DOC-007 |
-| Expiry Workbench | VAL-DOC-008 + filter schemas |
-| Soft Retirement | VAL-DOC-009 |
-| Document Type Lookup | Configuration delegated validation and branch-neutral lookup policy as approved |
-| Owner Search | VAL-DOC-010 |
-| Reconciliation Operations | VAL-DOC-011 |
+| API Contract                           | Core Validation Schemas                                                         |
+| -------------------------------------- | ------------------------------------------------------------------------------- |
+| API-DOC-001 Create Upload Intent       | VAL-DOC-001                                                                     |
+| API-DOC-002 Register Uploaded Document | VAL-DOC-002                                                                     |
+| API-DOC-003 List/Search Documents      | auth, permission, branch scope, query schema primitives                         |
+| API-DOC-004 Get Document Detail        | auth, `document.read`, owner-derived scope                                      |
+| API-DOC-005 Update Metadata            | VAL-DOC-003                                                                     |
+| API-DOC-006 Submit for Verification    | VAL-DOC-004                                                                     |
+| Verification Queue query               | permission, owner-derived branch scope, status filter validation                |
+| Approve Verification                   | VAL-DOC-005                                                                     |
+| Reject Verification                    | VAL-DOC-006                                                                     |
+| Verification History query             | auth, `document.history.read`, scope validation                                 |
+| Secure File Access                     | VAL-DOC-007                                                                     |
+| Expiry Workbench                       | VAL-DOC-008 + filter schemas                                                    |
+| Soft Retirement                        | VAL-DOC-009                                                                     |
+| Document Type Lookup                   | Configuration delegated validation and branch-neutral lookup policy as approved |
+| Owner Search                           | VAL-DOC-010                                                                     |
+| Reconciliation Operations              | VAL-DOC-011                                                                     |
 
 ---
 
@@ -956,16 +943,16 @@ Client validation must not be treated as security enforcement.
 
 ## 14.2 Dynamic error states
 
-| Error Type | UI State |
-|---|---|
-| Schema/field error | Inline field error plus form summary. |
-| Permission denied | Hide unavailable actions where known; direct access shows access-denied state. |
-| Branch scope denial | Non-disclosing access-denied/not-found handling. |
-| Version conflict | Preserve unsaved user input where safe, show conflict banner, reload current server state. |
-| Invalid lifecycle state | Refresh status/action bar and explain that the document changed. |
-| Blob retrieval failure | Show evidence temporarily unavailable; do not expose raw provider error. |
-| Dependency unavailable | Retryable service-unavailable state. |
-| Unknown server error | Correlation ID and safe support message. |
+| Error Type              | UI State                                                                                   |
+| ----------------------- | ------------------------------------------------------------------------------------------ |
+| Schema/field error      | Inline field error plus form summary.                                                      |
+| Permission denied       | Hide unavailable actions where known; direct access shows access-denied state.             |
+| Branch scope denial     | Non-disclosing access-denied/not-found handling.                                           |
+| Version conflict        | Preserve unsaved user input where safe, show conflict banner, reload current server state. |
+| Invalid lifecycle state | Refresh status/action bar and explain that the document changed.                           |
+| Blob retrieval failure  | Show evidence temporarily unavailable; do not expose raw provider error.                   |
+| Dependency unavailable  | Retryable service-unavailable state.                                                       |
+| Unknown server error    | Correlation ID and safe support message.                                                   |
 
 ---
 
@@ -1077,4 +1064,3 @@ This Part 7 is consistent with Parts 1–6:
 - it keeps notification delivery state outside Document Management;
 - it introduces no microservices, external broker, CQRS, or Event Sourcing architecture;
 - it keeps Vercel Blob behind an infrastructure boundary and does not make Blob the owner of document lifecycle state.
-

@@ -10,15 +10,27 @@ test.describe('Batch Creation Wizard E2E', () => {
     await expect(page).toHaveURL('/dashboard');
   });
 
-  test('should step through batch wizard form and validate timezone GST offsets', async ({ page }) => {
+  test('should step through batch wizard form and validate timezone GST offsets', async ({
+    page,
+  }) => {
     await page.goto('/batches/new');
 
     // Step 1: Details
     await page.fill('input[placeholder="e.g. B-OSHA-01"]', 'B-QA-E2E-01');
-    await page.selectOption('select:has-text("Choose Course")', { label: 'OSHA Safety Certification (OSHA-101)' });
-    await page.selectOption('select:has-text("Choose Branch")', { label: 'ASTI Muscat Branch' });
-    await page.fill('input[placeholder="English Name"]', 'QA E2E Batch English');
-    await page.fill('input[placeholder="الاسم العربي"]', 'دفعة اختبار نهاية لنهاية');
+    await page.selectOption('select:has-text("Choose Course")', {
+      label: 'OSHA Safety Certification (OSHA-101)',
+    });
+    await page.selectOption('select:has-text("Choose Branch")', {
+      label: 'ASTI Muscat Branch',
+    });
+    await page.fill(
+      'input[placeholder="English Name"]',
+      'QA E2E Batch English',
+    );
+    await page.fill(
+      'input[placeholder="الاسم العربي"]',
+      'دفعة اختبار نهاية لنهاية',
+    );
 
     // Input dates (represented local, which browser maps to UTC+4)
     await page.fill('input[type="date"] >> nth=0', '2026-10-15');
@@ -30,10 +42,10 @@ test.describe('Batch Creation Wizard E2E', () => {
     // Step 2: Capacity & Waitlist
     await expect(page.locator('text=Capacity & Waitlist')).toBeVisible();
     await page.fill('input[type="number"]', '15');
-    
+
     // Toggle checkboxes
     await page.check('input[id="waitingListEnabled"]');
-    
+
     // Submit Batch
     await page.click('button:has-text("Create Batch")');
 

@@ -10,7 +10,9 @@ test.describe('Course Pricing & Rules E2E', () => {
     await expect(page).toHaveURL('/dashboard');
   });
 
-  test('should navigate to course edit page, switch to configurations tab, and add pricing override', async ({ page }) => {
+  test('should navigate to course edit page, switch to configurations tab, and add pricing override', async ({
+    page,
+  }) => {
     // Go to course catalog list
     await page.goto('/courses-catalog');
     await expect(page.locator('text=Course Catalog')).toBeVisible();
@@ -29,8 +31,12 @@ test.describe('Course Pricing & Rules E2E', () => {
     await expect(page.locator('text=Configure Pricing & Taxes')).toBeVisible();
 
     // Fill in Pricing form
-    await page.selectOption('select[id="customerType"]', { label: 'Individual Student' });
-    await page.selectOption('select[id="batchType"]', { label: 'Regular Sessions' });
+    await page.selectOption('select[id="customerType"]', {
+      label: 'Individual Student',
+    });
+    await page.selectOption('select[id="batchType"]', {
+      label: 'Regular Sessions',
+    });
     await page.fill('input[id="basePrice"]', '250.500');
 
     // Fill start date
@@ -40,7 +46,11 @@ test.describe('Course Pricing & Rules E2E', () => {
     await page.click('button:has-text("Submit Override")');
 
     // Verify success toast/closed modal
-    await expect(page.locator('text=Configure Pricing & Taxes')).not.toBeVisible();
-    await expect(page.locator('text=Pricing rule saved successfully')).toBeVisible();
+    await expect(
+      page.locator('text=Configure Pricing & Taxes'),
+    ).not.toBeVisible();
+    await expect(
+      page.locator('text=Pricing rule saved successfully'),
+    ).toBeVisible();
   });
 });

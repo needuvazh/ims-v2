@@ -31,62 +31,83 @@ function errorResponse(error: Error) {
   }
 
   return NextResponse.json(
-    { success: false, errorCode: code, messageEnglish: msg, statusCode: status },
-    { status }
+    {
+      success: false,
+      errorCode: code,
+      messageEnglish: msg,
+      statusCode: status,
+    },
+    { status },
   );
 }
 
-export async function POST(request: Request, props: { params: Promise<{ id: string }> }) {
+export async function POST(
+  request: Request,
+  props: { params: Promise<{ id: string }> },
+) {
   const { id: enrollmentId } = await props.params;
-  return withRouteObservability(request.headers, async () => withPermission(request, 'enrollment.approve', async ({ session }) => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'enrollment.approve', async ({ session }) => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    try {
-      const { enrollmentService, branchScopeResolver } = await import('../../../../../../lib/runtime');
+        try {
+          const { enrollmentService, branchScopeResolver } =
+            await import('../../../../../../lib/runtime');
 
-      const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
-        session.userId,
-        session.activeBranchId ?? null
-      );
+          const allowedBranches =
+            await branchScopeResolver.resolveAllowedBranches(
+              session.userId,
+              session.activeBranchId ?? null,
+            );
 
-      const prisma = (await import('../../../../../../lib/runtime')).prisma;
-      const enrollment = await prisma.enrollment.findUnique({
-        where: { id: enrollmentId },
-      });
+          const prisma = (await import('../../../../../../lib/runtime')).prisma;
+          const enrollment = await prisma.enrollment.findUnique({
+            where: { id: enrollmentId },
+          });
 
-      if (!enrollment) {
-        throw new Error('ERR_ENROLLMENT_NOT_FOUND');
-      }
+          if (!enrollment) {
+            throw new Error('ERR_ENROLLMENT_NOT_FOUND');
+          }
 
-      if (!allowedBranches.includes(enrollment.branchId as Uuid)) {
-        throw new Error('ERR_AUTH_BRANCH_DENIED');
-      }
+          if (!allowedBranches.includes(enrollment.branchId as Uuid)) {
+            throw new Error('ERR_AUTH_BRANCH_DENIED');
+          }
 
-      await enrollmentService.approveEnrollment(enrollmentId, session.userId);
+          await enrollmentService.approveEnrollment(
+            enrollmentId,
+            session.userId,
+          );
 
-      const updated = await prisma.enrollment.findUnique({
-        where: { id: enrollmentId },
-      });
+          const updated = await prisma.enrollment.findUnique({
+            where: { id: enrollmentId },
+          });
 
-      const response = NextResponse.json(
-        {
-          success: true,
-          enrollmentStatus: updated?.enrollmentStatus || 'Submitted',
-          message: 'Enrollment processed successfully.',
-        },
-        { status: 200 }
-      );
+          const response = NextResponse.json(
+            {
+              success: true,
+              enrollmentStatus: updated?.enrollmentStatus || 'Submitted',
+              message: 'Enrollment processed successfully.',
+            },
+            { status: 200 },
+          );
 
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/enrollments/[id]/approve',
-        method: request.method,
-        status: 'success',
-      });
+          applyObservabilityResponseHeaders(response.headers, request.headers, {
+            route: '/api/v1/enrollments/[id]/approve',
+            method: request.method,
+            status: 'success',
+          });
 
-      return response;
-    } catch (error) {
-      logger.error('api.enrollments.approve.failed', { status: 'failed', error: error as Error });
-      return errorResponse(error as Error);
-    }
-  }), { route: '/api/v1/enrollments/[id]/approve' });
+          return response;
+        } catch (error) {
+          logger.error('api.enrollments.approve.failed', {
+            status: 'failed',
+            error: error as Error,
+          });
+          return errorResponse(error as Error);
+        }
+      }),
+    { route: '/api/v1/enrollments/[id]/approve' },
+  );
 }

@@ -20,7 +20,9 @@ describe('buildCrmActionFailure', () => {
     const failure = buildCrmActionFailure(error);
     expect(failure.success).toBe(false);
     expect(failure.status).toBe('DUPLICATE_LEAD_DETECTED');
-    expect(failure.error).toContain('A lead or inquiry with this contact information already exists');
+    expect(failure.error).toContain(
+      'A lead or inquiry with this contact information already exists',
+    );
   });
 
   it('should handle ERR_CRM_INVALID_STAGE_TRANSITION in convert context', () => {
@@ -28,7 +30,9 @@ describe('buildCrmActionFailure', () => {
     const failure = buildCrmActionFailure(error, 'convert');
     expect(failure.success).toBe(false);
     expect(failure.status).toBe('DOMAIN_ERROR');
-    expect(failure.error).toBe("Only leads in the 'Qualified' stage can be converted to an admission.");
+    expect(failure.error).toBe(
+      "Only leads in the 'Qualified' stage can be converted to an admission.",
+    );
   });
 
   it('should handle ERR_CRM_INVALID_STAGE_TRANSITION in stage context', () => {
@@ -36,7 +40,9 @@ describe('buildCrmActionFailure', () => {
     const failure = buildCrmActionFailure(error, 'stage');
     expect(failure.success).toBe(false);
     expect(failure.status).toBe('DOMAIN_ERROR');
-    expect(failure.error).toBe('Forbidden stage transition. Pipeline rules violated.');
+    expect(failure.error).toBe(
+      'Forbidden stage transition. Pipeline rules violated.',
+    );
   });
 
   it('should handle general errors as SYSTEM_ERROR', () => {

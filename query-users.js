@@ -13,16 +13,16 @@ async function main() {
         select: {
           firstName: true,
           lastName: true,
-        }
-      }
-    }
+        },
+      },
+    },
   });
   console.log('--- ALL USERS IN DB ---');
   console.log(JSON.stringify(users, null, 2));
   await prisma.$disconnect();
 }
 
-main().catch(err => {
+main().catch((err) => {
   console.error(err);
   process.exit(1);
 });

@@ -32,7 +32,9 @@ export function validateRequiredInput(
   return true;
 }
 
-export function clearInputValidation(input: HTMLInputElement | null | undefined) {
+export function clearInputValidation(
+  input: HTMLInputElement | null | undefined,
+) {
   input?.setCustomValidity('');
 }
 

@@ -1,1 +1,223 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_08_attendance_management_design_md", "label": "design.md", "file_type": "document", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L1"}, {"id": "implement_module_08_attendance_management_design_context", "label": "Context", "file_type": "document", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L1"}, {"id": "implement_module_08_attendance_management_design_goals_non_goals", "label": "Goals / Non-Goals", "file_type": "document", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L7"}, {"id": "implement_module_08_attendance_management_design_decisions", "label": "Decisions", "file_type": "document", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L24"}, {"id": "implement_module_08_attendance_management_design_1_create_a_dedicated_packages_attendance_bounded_context_package", "label": "1. Create a dedicated `packages/attendance` bounded-context package", "file_type": "document", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L26"}, {"id": "implement_module_08_attendance_management_design_2_persist_attendance_as_first_class_prisma_models_with_soft_delete_and_versioning", "label": "2. Persist Attendance as first-class Prisma models with soft delete and versioning", "file_type": "document", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L33"}, {"id": "implement_module_08_attendance_management_design_3_enforce_branch_scope_in_application_services_and_route_handlers", "label": "3. Enforce branch scope in application services and route handlers", "file_type": "document", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L40"}, {"id": "implement_module_08_attendance_management_design_4_use_route_handlers_for_core_http_operations_and_server_actions_only_where_the_ux_benefits", "label": "4. Use route handlers for core HTTP operations and server actions only where the UX benefits", "file_type": "document", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L47"}, {"id": "implement_module_08_attendance_management_design_5_implement_reporting_as_attendance_owned_read_services_not_cqrs_infrastructure", "label": "5. Implement reporting as Attendance-owned read services, not CQRS infrastructure", "file_type": "document", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L54"}, {"id": "implement_module_08_attendance_management_design_6_reuse_existing_audit_communication_and_scheduling_boundaries", "label": "6. Reuse existing audit, communication, and scheduling boundaries", "file_type": "document", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L61"}, {"id": "implement_module_08_attendance_management_design_7_keep_localization_aligned_with_adjacent_modules", "label": "7. Keep localization aligned with adjacent modules", "file_type": "document", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L68"}, {"id": "implement_module_08_attendance_management_design_risks_trade_offs", "label": "Risks / Trade-offs", "file_type": "document", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L71"}, {"id": "implement_module_08_attendance_management_design_migration_plan", "label": "Migration Plan", "file_type": "document", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L79"}, {"id": "implement_module_08_attendance_management_design_open_questions", "label": "Open Questions", "file_type": "document", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L92"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_08_attendance_management_design_md", "target": "implement_module_08_attendance_management_design_context", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L1", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_08_attendance_management_design_md", "target": "implement_module_08_attendance_management_design_goals_non_goals", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L7", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_08_attendance_management_design_md", "target": "implement_module_08_attendance_management_design_decisions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L24", "weight": 1.0}, {"source": "implement_module_08_attendance_management_design_decisions", "target": "implement_module_08_attendance_management_design_1_create_a_dedicated_packages_attendance_bounded_context_package", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L26", "weight": 1.0}, {"source": "implement_module_08_attendance_management_design_decisions", "target": "implement_module_08_attendance_management_design_2_persist_attendance_as_first_class_prisma_models_with_soft_delete_and_versioning", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L33", "weight": 1.0}, {"source": "implement_module_08_attendance_management_design_decisions", "target": "implement_module_08_attendance_management_design_3_enforce_branch_scope_in_application_services_and_route_handlers", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L40", "weight": 1.0}, {"source": "implement_module_08_attendance_management_design_decisions", "target": "implement_module_08_attendance_management_design_4_use_route_handlers_for_core_http_operations_and_server_actions_only_where_the_ux_benefits", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L47", "weight": 1.0}, {"source": "implement_module_08_attendance_management_design_decisions", "target": "implement_module_08_attendance_management_design_5_implement_reporting_as_attendance_owned_read_services_not_cqrs_infrastructure", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L54", "weight": 1.0}, {"source": "implement_module_08_attendance_management_design_decisions", "target": "implement_module_08_attendance_management_design_6_reuse_existing_audit_communication_and_scheduling_boundaries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L61", "weight": 1.0}, {"source": "implement_module_08_attendance_management_design_decisions", "target": "implement_module_08_attendance_management_design_7_keep_localization_aligned_with_adjacent_modules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L68", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_08_attendance_management_design_md", "target": "implement_module_08_attendance_management_design_risks_trade_offs", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L71", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_08_attendance_management_design_md", "target": "implement_module_08_attendance_management_design_migration_plan", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L79", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_08_attendance_management_design_md", "target": "implement_module_08_attendance_management_design_open_questions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-08-attendance-management/design.md", "source_location": "L92", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_08_attendance_management_design_md",
+      "label": "design.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "implement_module_08_attendance_management_design_context",
+      "label": "Context",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "implement_module_08_attendance_management_design_goals_non_goals",
+      "label": "Goals / Non-Goals",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "implement_module_08_attendance_management_design_decisions",
+      "label": "Decisions",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L24"
+    },
+    {
+      "id": "implement_module_08_attendance_management_design_1_create_a_dedicated_packages_attendance_bounded_context_package",
+      "label": "1. Create a dedicated `packages/attendance` bounded-context package",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L26"
+    },
+    {
+      "id": "implement_module_08_attendance_management_design_2_persist_attendance_as_first_class_prisma_models_with_soft_delete_and_versioning",
+      "label": "2. Persist Attendance as first-class Prisma models with soft delete and versioning",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L33"
+    },
+    {
+      "id": "implement_module_08_attendance_management_design_3_enforce_branch_scope_in_application_services_and_route_handlers",
+      "label": "3. Enforce branch scope in application services and route handlers",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L40"
+    },
+    {
+      "id": "implement_module_08_attendance_management_design_4_use_route_handlers_for_core_http_operations_and_server_actions_only_where_the_ux_benefits",
+      "label": "4. Use route handlers for core HTTP operations and server actions only where the UX benefits",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L47"
+    },
+    {
+      "id": "implement_module_08_attendance_management_design_5_implement_reporting_as_attendance_owned_read_services_not_cqrs_infrastructure",
+      "label": "5. Implement reporting as Attendance-owned read services, not CQRS infrastructure",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L54"
+    },
+    {
+      "id": "implement_module_08_attendance_management_design_6_reuse_existing_audit_communication_and_scheduling_boundaries",
+      "label": "6. Reuse existing audit, communication, and scheduling boundaries",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L61"
+    },
+    {
+      "id": "implement_module_08_attendance_management_design_7_keep_localization_aligned_with_adjacent_modules",
+      "label": "7. Keep localization aligned with adjacent modules",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L68"
+    },
+    {
+      "id": "implement_module_08_attendance_management_design_risks_trade_offs",
+      "label": "Risks / Trade-offs",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L71"
+    },
+    {
+      "id": "implement_module_08_attendance_management_design_migration_plan",
+      "label": "Migration Plan",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L79"
+    },
+    {
+      "id": "implement_module_08_attendance_management_design_open_questions",
+      "label": "Open Questions",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L92"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_08_attendance_management_design_md",
+      "target": "implement_module_08_attendance_management_design_context",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_08_attendance_management_design_md",
+      "target": "implement_module_08_attendance_management_design_goals_non_goals",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_08_attendance_management_design_md",
+      "target": "implement_module_08_attendance_management_design_decisions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "implement_module_08_attendance_management_design_decisions",
+      "target": "implement_module_08_attendance_management_design_1_create_a_dedicated_packages_attendance_bounded_context_package",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "implement_module_08_attendance_management_design_decisions",
+      "target": "implement_module_08_attendance_management_design_2_persist_attendance_as_first_class_prisma_models_with_soft_delete_and_versioning",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "implement_module_08_attendance_management_design_decisions",
+      "target": "implement_module_08_attendance_management_design_3_enforce_branch_scope_in_application_services_and_route_handlers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "implement_module_08_attendance_management_design_decisions",
+      "target": "implement_module_08_attendance_management_design_4_use_route_handlers_for_core_http_operations_and_server_actions_only_where_the_ux_benefits",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "implement_module_08_attendance_management_design_decisions",
+      "target": "implement_module_08_attendance_management_design_5_implement_reporting_as_attendance_owned_read_services_not_cqrs_infrastructure",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "implement_module_08_attendance_management_design_decisions",
+      "target": "implement_module_08_attendance_management_design_6_reuse_existing_audit_communication_and_scheduling_boundaries",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "implement_module_08_attendance_management_design_decisions",
+      "target": "implement_module_08_attendance_management_design_7_keep_localization_aligned_with_adjacent_modules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_08_attendance_management_design_md",
+      "target": "implement_module_08_attendance_management_design_risks_trade_offs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_08_attendance_management_design_md",
+      "target": "implement_module_08_attendance_management_design_migration_plan",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L79",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_08_attendance_management_design_md",
+      "target": "implement_module_08_attendance_management_design_open_questions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-08-attendance-management/design.md",
+      "source_location": "L92",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

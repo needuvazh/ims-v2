@@ -1,1 +1,207 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_09_faculty_trainer_management_specs_permissions_and_branch_scope_spec_md", "label": "spec.md", "file_type": "document", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L1"}, {"id": "permissions_and_branch_scope_spec_permissions_and_branch_scope_specification", "label": "permissions-and-branch-scope Specification", "file_type": "document", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L1"}, {"id": "permissions_and_branch_scope_spec_purpose", "label": "Purpose", "file_type": "document", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L3"}, {"id": "permissions_and_branch_scope_spec_requirements", "label": "Requirements", "file_type": "document", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L6"}, {"id": "permissions_and_branch_scope_spec_added_requirements", "label": "ADDED Requirements", "file_type": "document", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L8"}, {"id": "permissions_and_branch_scope_spec_requirement_module_09_trainer_branch_isolation", "label": "Requirement: Module 09 trainer branch isolation", "file_type": "document", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L10"}, {"id": "permissions_and_branch_scope_spec_scenario_trainer_list_is_branch_scoped", "label": "Scenario: Trainer list is branch scoped", "file_type": "document", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L13"}, {"id": "permissions_and_branch_scope_spec_scenario_direct_access_to_an_out_of_scope_trainer_is_denied", "label": "Scenario: Direct access to an out-of-scope trainer is denied", "file_type": "document", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L17"}, {"id": "permissions_and_branch_scope_spec_requirement_module_09_compensation_confidentiality", "label": "Requirement: Module 09 compensation confidentiality", "file_type": "document", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L21"}, {"id": "permissions_and_branch_scope_spec_scenario_compensation_is_hidden_without_permission", "label": "Scenario: Compensation is hidden without permission", "file_type": "document", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L24"}, {"id": "permissions_and_branch_scope_spec_scenario_compensation_export_obeys_scope_and_permission", "label": "Scenario: Compensation export obeys scope and permission", "file_type": "document", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L28"}, {"id": "permissions_and_branch_scope_spec_requirement_module_09_consolidated_reporting_scope", "label": "Requirement: Module 09 consolidated reporting scope", "file_type": "document", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L32"}, {"id": "permissions_and_branch_scope_spec_scenario_cross_branch_trainer_report_is_denied_without_consolidated_permission", "label": "Scenario: Cross-branch trainer report is denied without consolidated permission", "file_type": "document", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L35"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_09_faculty_trainer_management_specs_permissions_and_branch_scope_spec_md", "target": "permissions_and_branch_scope_spec_permissions_and_branch_scope_specification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L1", "weight": 1.0}, {"source": "permissions_and_branch_scope_spec_permissions_and_branch_scope_specification", "target": "permissions_and_branch_scope_spec_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L3", "weight": 1.0}, {"source": "permissions_and_branch_scope_spec_permissions_and_branch_scope_specification", "target": "permissions_and_branch_scope_spec_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L6", "weight": 1.0}, {"source": "permissions_and_branch_scope_spec_permissions_and_branch_scope_specification", "target": "permissions_and_branch_scope_spec_added_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L8", "weight": 1.0}, {"source": "permissions_and_branch_scope_spec_added_requirements", "target": "permissions_and_branch_scope_spec_requirement_module_09_trainer_branch_isolation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L10", "weight": 1.0}, {"source": "permissions_and_branch_scope_spec_requirement_module_09_trainer_branch_isolation", "target": "permissions_and_branch_scope_spec_scenario_trainer_list_is_branch_scoped", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L13", "weight": 1.0}, {"source": "permissions_and_branch_scope_spec_requirement_module_09_trainer_branch_isolation", "target": "permissions_and_branch_scope_spec_scenario_direct_access_to_an_out_of_scope_trainer_is_denied", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L17", "weight": 1.0}, {"source": "permissions_and_branch_scope_spec_added_requirements", "target": "permissions_and_branch_scope_spec_requirement_module_09_compensation_confidentiality", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L21", "weight": 1.0}, {"source": "permissions_and_branch_scope_spec_requirement_module_09_compensation_confidentiality", "target": "permissions_and_branch_scope_spec_scenario_compensation_is_hidden_without_permission", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L24", "weight": 1.0}, {"source": "permissions_and_branch_scope_spec_requirement_module_09_compensation_confidentiality", "target": "permissions_and_branch_scope_spec_scenario_compensation_export_obeys_scope_and_permission", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L28", "weight": 1.0}, {"source": "permissions_and_branch_scope_spec_added_requirements", "target": "permissions_and_branch_scope_spec_requirement_module_09_consolidated_reporting_scope", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L32", "weight": 1.0}, {"source": "permissions_and_branch_scope_spec_requirement_module_09_consolidated_reporting_scope", "target": "permissions_and_branch_scope_spec_scenario_cross_branch_trainer_report_is_denied_without_consolidated_permission", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md", "source_location": "L35", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_09_faculty_trainer_management_specs_permissions_and_branch_scope_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "permissions_and_branch_scope_spec_permissions_and_branch_scope_specification",
+      "label": "permissions-and-branch-scope Specification",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "permissions_and_branch_scope_spec_purpose",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "permissions_and_branch_scope_spec_requirements",
+      "label": "Requirements",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L6"
+    },
+    {
+      "id": "permissions_and_branch_scope_spec_added_requirements",
+      "label": "ADDED Requirements",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L8"
+    },
+    {
+      "id": "permissions_and_branch_scope_spec_requirement_module_09_trainer_branch_isolation",
+      "label": "Requirement: Module 09 trainer branch isolation",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L10"
+    },
+    {
+      "id": "permissions_and_branch_scope_spec_scenario_trainer_list_is_branch_scoped",
+      "label": "Scenario: Trainer list is branch scoped",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L13"
+    },
+    {
+      "id": "permissions_and_branch_scope_spec_scenario_direct_access_to_an_out_of_scope_trainer_is_denied",
+      "label": "Scenario: Direct access to an out-of-scope trainer is denied",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L17"
+    },
+    {
+      "id": "permissions_and_branch_scope_spec_requirement_module_09_compensation_confidentiality",
+      "label": "Requirement: Module 09 compensation confidentiality",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L21"
+    },
+    {
+      "id": "permissions_and_branch_scope_spec_scenario_compensation_is_hidden_without_permission",
+      "label": "Scenario: Compensation is hidden without permission",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L24"
+    },
+    {
+      "id": "permissions_and_branch_scope_spec_scenario_compensation_export_obeys_scope_and_permission",
+      "label": "Scenario: Compensation export obeys scope and permission",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L28"
+    },
+    {
+      "id": "permissions_and_branch_scope_spec_requirement_module_09_consolidated_reporting_scope",
+      "label": "Requirement: Module 09 consolidated reporting scope",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L32"
+    },
+    {
+      "id": "permissions_and_branch_scope_spec_scenario_cross_branch_trainer_report_is_denied_without_consolidated_permission",
+      "label": "Scenario: Cross-branch trainer report is denied without consolidated permission",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L35"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_09_faculty_trainer_management_specs_permissions_and_branch_scope_spec_md",
+      "target": "permissions_and_branch_scope_spec_permissions_and_branch_scope_specification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "permissions_and_branch_scope_spec_permissions_and_branch_scope_specification",
+      "target": "permissions_and_branch_scope_spec_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "permissions_and_branch_scope_spec_permissions_and_branch_scope_specification",
+      "target": "permissions_and_branch_scope_spec_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "permissions_and_branch_scope_spec_permissions_and_branch_scope_specification",
+      "target": "permissions_and_branch_scope_spec_added_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "permissions_and_branch_scope_spec_added_requirements",
+      "target": "permissions_and_branch_scope_spec_requirement_module_09_trainer_branch_isolation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "permissions_and_branch_scope_spec_requirement_module_09_trainer_branch_isolation",
+      "target": "permissions_and_branch_scope_spec_scenario_trainer_list_is_branch_scoped",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "permissions_and_branch_scope_spec_requirement_module_09_trainer_branch_isolation",
+      "target": "permissions_and_branch_scope_spec_scenario_direct_access_to_an_out_of_scope_trainer_is_denied",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "permissions_and_branch_scope_spec_added_requirements",
+      "target": "permissions_and_branch_scope_spec_requirement_module_09_compensation_confidentiality",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "permissions_and_branch_scope_spec_requirement_module_09_compensation_confidentiality",
+      "target": "permissions_and_branch_scope_spec_scenario_compensation_is_hidden_without_permission",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "permissions_and_branch_scope_spec_requirement_module_09_compensation_confidentiality",
+      "target": "permissions_and_branch_scope_spec_scenario_compensation_export_obeys_scope_and_permission",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "permissions_and_branch_scope_spec_added_requirements",
+      "target": "permissions_and_branch_scope_spec_requirement_module_09_consolidated_reporting_scope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "permissions_and_branch_scope_spec_requirement_module_09_consolidated_reporting_scope",
+      "target": "permissions_and_branch_scope_spec_scenario_cross_branch_trainer_report_is_denied_without_consolidated_permission",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-09-faculty-trainer-management/specs/permissions-and-branch-scope/spec.md",
+      "source_location": "L35",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

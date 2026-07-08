@@ -1,6 +1,13 @@
-import { ApprovalInvalidStateError, ApprovalStageSequenceError, ApprovalActorIneligibleError } from '../errors';
+import {
+  ApprovalInvalidStateError,
+  ApprovalStageSequenceError,
+  ApprovalActorIneligibleError,
+} from '../errors';
 
-export type ApprovalLevel = 'TrainerRecommendation' | 'CoordinatorReview' | 'FinalApproval';
+export type ApprovalLevel =
+  | 'TrainerRecommendation'
+  | 'CoordinatorReview'
+  | 'FinalApproval';
 export type ApprovalStatus = 'Pending' | 'Approved' | 'Rejected';
 
 export const APPROVAL_LEVELS = {
@@ -56,7 +63,10 @@ export interface ActOnApprovalCommand {
 export class CompletionApprovalAggregate {
   constructor(public readonly state: CompletionApproval) {}
 
-  static create(command: CreateApprovalCommand, id?: string): CompletionApprovalAggregate {
+  static create(
+    command: CreateApprovalCommand,
+    id?: string,
+  ): CompletionApprovalAggregate {
     const approval: CompletionApproval = {
       id: id || crypto.randomUUID(),
       courseCompletionId: command.courseCompletionId,
@@ -75,7 +85,9 @@ export class CompletionApprovalAggregate {
   validateSequence(previousLevel: ApprovalLevel | null): void {
     if (previousLevel === null) {
       if (this.state.approvalLevel !== APPROVAL_LEVELS.TRAINER_RECOMMENDATION) {
-        throw new ApprovalStageSequenceError('First approval must be TrainerRecommendation');
+        throw new ApprovalStageSequenceError(
+          'First approval must be TrainerRecommendation',
+        );
       }
       return;
     }
@@ -85,7 +97,7 @@ export class CompletionApprovalAggregate {
 
     if (currentOrder !== previousOrder + 1) {
       throw new ApprovalStageSequenceError(
-        `Approval level ${this.state.approvalLevel} cannot follow ${previousLevel}`
+        `Approval level ${this.state.approvalLevel} cannot follow ${previousLevel}`,
       );
     }
   }
@@ -93,22 +105,31 @@ export class CompletionApprovalAggregate {
   validateActor(eligibleActorIds: string[]): void {
     if (!eligibleActorIds.includes(this.state.actorId)) {
       throw new ApprovalActorIneligibleError(
-        `Actor ${this.state.actorId} is not eligible for ${this.state.approvalLevel}`
+        `Actor ${this.state.actorId} is not eligible for ${this.state.approvalLevel}`,
       );
     }
   }
 
   act(command: ActOnApprovalCommand): CompletionApproval {
     if (this.state.status !== APPROVAL_STATUSES.PENDING) {
-      throw new ApprovalInvalidStateError(`Cannot act on approval in status: ${this.state.status}`);
+      throw new ApprovalInvalidStateError(
+        `Cannot act on approval in status: ${this.state.status}`,
+      );
     }
 
     if (command.actorId !== this.state.actorId) {
-      throw new ApprovalActorIneligibleError('Only the assigned actor can act on this approval');
+      throw new ApprovalActorIneligibleError(
+        'Only the assigned actor can act on this approval',
+      );
     }
 
-    if (command.status !== APPROVAL_STATUSES.APPROVED && command.status !== APPROVAL_STATUSES.REJECTED) {
-      throw new ApprovalInvalidStateError('Approval status must be Approved or Rejected');
+    if (
+      command.status !== APPROVAL_STATUSES.APPROVED &&
+      command.status !== APPROVAL_STATUSES.REJECTED
+    ) {
+      throw new ApprovalInvalidStateError(
+        'Approval status must be Approved or Rejected',
+      );
     }
 
     const updated: CompletionApproval = {

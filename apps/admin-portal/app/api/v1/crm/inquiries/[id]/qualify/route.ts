@@ -8,7 +8,13 @@ import {
 } from '../../../../../../lib/observability';
 import { QualifyInquirySchema } from '@ims/crm-leads';
 
-function problemJson(status: number, title: string, detail: string, errorCode: string, invalidFields?: Array<{ field: string; message: string }>) {
+function problemJson(
+  status: number,
+  title: string,
+  detail: string,
+  errorCode: string,
+  invalidFields?: Array<{ field: string; message: string }>,
+) {
   return NextResponse.json(
     {
       success: false,
@@ -17,7 +23,7 @@ function problemJson(status: number, title: string, detail: string, errorCode: s
       statusCode: status,
       invalidFields,
     },
-    { status }
+    { status },
   );
 }
 
@@ -41,7 +47,8 @@ function crmErrorResponse(error: Error) {
   } else if (msg.includes('ERR_CRM_COUNSELOR_INACTIVE')) {
     status = 422;
     code = 'ERR_CRM_COUNSELOR_INACTIVE';
-    messageEn = 'Assigned counselor is inactive or unauthorized for this branch.';
+    messageEn =
+      'Assigned counselor is inactive or unauthorized for this branch.';
     messageAr = 'الموظف المسؤول غير نشط أو غير مصرح له بالعمل في هذا الفرع.';
   } else if (msg.includes('ERR_CRM_BRANCH_SCOPE_VIOLATION')) {
     status = 403;
@@ -58,73 +65,95 @@ function crmErrorResponse(error: Error) {
       messageArabic: messageAr,
       statusCode: status,
     },
-    { status }
+    { status },
   );
 }
 
-export async function POST(request: Request, props: { params: Promise<{ id: string }> }) {
+export async function POST(
+  request: Request,
+  props: { params: Promise<{ id: string }> },
+) {
   const { id: inquiryId } = await props.params;
-  return withRouteObservability(request.headers, async () => withPermission(request, 'lead.qualify', async ({ session }) => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'lead.qualify', async ({ session }) => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    let payload: unknown;
-    try {
-      payload = await request.json();
-    } catch {
-      return problemJson(400, 'Invalid request body', 'Request body must be valid JSON.', 'CRM-VAL-QUALIFY-INVALID_JSON');
-    }
+        let payload: unknown;
+        try {
+          payload = await request.json();
+        } catch {
+          return problemJson(
+            400,
+            'Invalid request body',
+            'Request body must be valid JSON.',
+            'CRM-VAL-QUALIFY-INVALID_JSON',
+          );
+        }
 
-    const parsed = QualifyInquirySchema.safeParse(payload);
-    if (!parsed.success) {
-      return problemJson(
-        400,
-        'Invalid request body',
-        'Qualification details are invalid.',
-        'CRM-VAL-QUALIFY-INVALID_BODY',
-        parsed.error.issues.map((issue) => ({
-          field: issue.path.join('.') || 'body',
-          message: issue.message,
-        }))
-      );
-    }
+        const parsed = QualifyInquirySchema.safeParse(payload);
+        if (!parsed.success) {
+          return problemJson(
+            400,
+            'Invalid request body',
+            'Qualification details are invalid.',
+            'CRM-VAL-QUALIFY-INVALID_BODY',
+            parsed.error.issues.map((issue) => ({
+              field: issue.path.join('.') || 'body',
+              message: issue.message,
+            })),
+          );
+        }
 
-    try {
-      const { branchScopeResolver, inquiryService } = await import('../../../../../../lib/runtime');
-      
-      const inquiry = await inquiryService.getInquiryById(inquiryId);
-      if (!inquiry) {
-        throw new Error('ERR_CRM_INQUIRY_NOT_FOUND');
-      }
+        try {
+          const { branchScopeResolver, inquiryService } =
+            await import('../../../../../../lib/runtime');
 
-      // Enforce branch scope checking
-      const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
-        session.userId,
-        session.activeBranchId ?? null
-      );
-      if (!allowedBranches.includes(inquiry.branchId as any)) {
-        throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
-      }
+          const inquiry = await inquiryService.getInquiryById(inquiryId);
+          if (!inquiry) {
+            throw new Error('ERR_CRM_INQUIRY_NOT_FOUND');
+          }
 
-      const result = await inquiryService.promoteToLead(inquiryId, parsed.data, session.userId);
+          // Enforce branch scope checking
+          const allowedBranches =
+            await branchScopeResolver.resolveAllowedBranches(
+              session.userId,
+              session.activeBranchId ?? null,
+            );
+          if (!allowedBranches.includes(inquiry.branchId as any)) {
+            throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
+          }
 
-      const response = NextResponse.json(
-        {
-          success: true,
-          data: result,
-        },
-        { status: 200 }
-      );
+          const result = await inquiryService.promoteToLead(
+            inquiryId,
+            parsed.data,
+            session.userId,
+          );
 
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/crm/inquiries/[id]/qualify',
-        method: request.method,
-        status: 'success',
-      });
+          const response = NextResponse.json(
+            {
+              success: true,
+              data: result,
+            },
+            { status: 200 },
+          );
 
-      return response;
-    } catch (error) {
-      logger.error('api.crm.inquiries.qualify.failed', { status: 'failed', error: error as Error });
-      return crmErrorResponse(error as Error);
-    }
-  }), { route: '/api/v1/crm/inquiries/[id]/qualify' });
+          applyObservabilityResponseHeaders(response.headers, request.headers, {
+            route: '/api/v1/crm/inquiries/[id]/qualify',
+            method: request.method,
+            status: 'success',
+          });
+
+          return response;
+        } catch (error) {
+          logger.error('api.crm.inquiries.qualify.failed', {
+            status: 'failed',
+            error: error as Error,
+          });
+          return crmErrorResponse(error as Error);
+        }
+      }),
+    { route: '/api/v1/crm/inquiries/[id]/qualify' },
+  );
 }

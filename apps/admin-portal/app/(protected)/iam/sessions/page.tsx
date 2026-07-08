@@ -6,19 +6,39 @@ import { SessionsClientList } from './_components/sessions-client-list';
 export const metadata = { title: 'Sessions | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
-type SearchParams = Promise<{ query?: string; sortBy?: string; sortOrder?: string }>;
+type SearchParams = Promise<{
+  query?: string;
+  sortBy?: string;
+  sortOrder?: string;
+}>;
 
-export default async function IamSessionsPage({ searchParams }: { searchParams: SearchParams }) {
+export default async function IamSessionsPage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
   const resolved = await searchParams;
   const query = resolved.query?.trim() ?? '';
   const session = await getSession();
   const { sessionService, userService } = await import('../../../lib/runtime');
 
   let user: any = null;
-  let sessions: Array<{ id: string; userId: string; activeBranchId: string | null; status: string; expiresAt: Date; lastActivityAt: Date; userAgent: string | null; ipAddress: string | null }> = [];
+  let sessions: Array<{
+    id: string;
+    userId: string;
+    activeBranchId: string | null;
+    status: string;
+    expiresAt: Date;
+    lastActivityAt: Date;
+    userAgent: string | null;
+    ipAddress: string | null;
+  }> = [];
 
   if (query) {
-    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(query);
+    const isUuid =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+        query,
+      );
     try {
       if (isUuid) {
         user = await userService.getUserById(query, {

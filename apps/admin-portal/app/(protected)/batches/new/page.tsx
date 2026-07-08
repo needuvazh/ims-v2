@@ -17,7 +17,8 @@ export default async function CreateBatchPage() {
   });
 
   // Fetch Branches the user has access to
-  const isSuperAdmin = session.roles.includes('SUPER_ADMIN') || session.roles.includes('OWNER');
+  const isSuperAdmin =
+    session.roles.includes('SUPER_ADMIN') || session.roles.includes('OWNER');
   let branches;
   if (isSuperAdmin) {
     branches = await prisma.branch.findMany({
@@ -62,7 +63,9 @@ export default async function CreateBatchPage() {
 
   const trainersList = trainersListRaw.map((t) => ({
     id: t.id,
-    displayName: t.person ? `${t.person.firstName} ${t.person.lastName}` : t.email,
+    displayName: t.person
+      ? `${t.person.firstName} ${t.person.lastName}`
+      : t.email,
     email: t.email,
   }));
 
@@ -75,8 +78,16 @@ export default async function CreateBatchPage() {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5" /> },
-              { label: 'Batches', href: '/batches', icon: <Layers className="h-3.5 w-3.5" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5" />,
+              },
+              {
+                label: 'Batches',
+                href: '/batches',
+                icon: <Layers className="h-3.5 w-3.5" />,
+              },
               { label: 'Create', icon: <PlusCircle className="h-3.5 w-3.5" /> },
             ]}
           />

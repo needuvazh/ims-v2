@@ -1,5 +1,11 @@
 import { notFound } from 'next/navigation';
-import { Badge, AdminDetailPageLayout, Breadcrumbs, PageHeader, LinkButton } from '@ims/shared-ui';
+import {
+  Badge,
+  AdminDetailPageLayout,
+  Breadcrumbs,
+  PageHeader,
+  LinkButton,
+} from '@ims/shared-ui';
 import { getFacultyTrainerContext } from '../../_lib';
 import {
   Home,
@@ -34,31 +40,79 @@ function formatDate(date: Date | string | null | undefined): string {
   if (!date) return 'N/A';
   const d = typeof date === 'string' ? new Date(date) : date;
   if (Number.isNaN(d.getTime())) return 'N/A';
-  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  return d.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
 }
 
 function formatDateTime(date: Date | string | null | undefined): string {
   if (!date) return 'N/A';
   const d = typeof date === 'string' ? new Date(date) : date;
   if (Number.isNaN(d.getTime())) return 'N/A';
-  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  return d.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 }
 
-export default async function TrainerDetailPage(props: { params: Promise<{ trainerId: string }> }) {
+export default async function TrainerDetailPage(props: {
+  params: Promise<{ trainerId: string }>;
+}) {
   const { trainerId } = await props.params;
   const { authContext } = await getFacultyTrainerContext();
-  const { trainerManagementService, organizationService } = await import('../../../../lib/runtime');
+  const { trainerManagementService, organizationService } =
+    await import('../../../../lib/runtime');
 
-  const trainer = await trainerManagementService.getTrainer(trainerId, authContext).catch(() => null);
+  const trainer = await trainerManagementService
+    .getTrainer(trainerId, authContext)
+    .catch(() => null);
   if (!trainer) notFound();
 
-  const [qualifications, availability, authorizations, compensation, assignments, audit, branchResult, courses] = await Promise.all([
-    trainerManagementService.listQualifications(trainerId, { page: 1, pageSize: 20 }, authContext),
-    trainerManagementService.listAvailability(trainerId, { page: 1, pageSize: 20 }, authContext),
-    trainerManagementService.listAuthorizations(trainerId, { page: 1, pageSize: 20 }, authContext),
-    trainerManagementService.listCompensationRates(trainerId, { page: 1, pageSize: 20 }, authContext),
-    trainerManagementService.listAssignmentReferences(trainerId, { page: 1, pageSize: 20, kind: 'All' }, authContext),
-    trainerManagementService.listAuditHistory(trainerId, { page: 1, pageSize: 20 }, authContext),
+  const [
+    qualifications,
+    availability,
+    authorizations,
+    compensation,
+    assignments,
+    audit,
+    branchResult,
+    courses,
+  ] = await Promise.all([
+    trainerManagementService.listQualifications(
+      trainerId,
+      { page: 1, pageSize: 20 },
+      authContext,
+    ),
+    trainerManagementService.listAvailability(
+      trainerId,
+      { page: 1, pageSize: 20 },
+      authContext,
+    ),
+    trainerManagementService.listAuthorizations(
+      trainerId,
+      { page: 1, pageSize: 20 },
+      authContext,
+    ),
+    trainerManagementService.listCompensationRates(
+      trainerId,
+      { page: 1, pageSize: 20 },
+      authContext,
+    ),
+    trainerManagementService.listAssignmentReferences(
+      trainerId,
+      { page: 1, pageSize: 20, kind: 'All' },
+      authContext,
+    ),
+    trainerManagementService.listAuditHistory(
+      trainerId,
+      { page: 1, pageSize: 20 },
+      authContext,
+    ),
     organizationService.listBranches({ pageSize: 1000, status: 'Active' }),
     prisma.course.findMany({
       where: { isDeleted: false, status: { not: 'Archived' } },
@@ -66,10 +120,15 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
       orderBy: [{ courseCode: 'asc' }],
     }),
   ]);
-  const allowedBranchIds = new Set((authContext.allowedBranchIds ?? []).map(String));
+  const allowedBranchIds = new Set(
+    (authContext.allowedBranchIds ?? []).map(String),
+  );
   const canEditTrainer = authContext.permissions.includes('trainer.update');
   const branchOptions = branchResult.items
-    .filter((branch) => allowedBranchIds.size === 0 || allowedBranchIds.has(String(branch.id)))
+    .filter(
+      (branch) =>
+        allowedBranchIds.size === 0 || allowedBranchIds.has(String(branch.id)),
+    )
     .map((branch) => ({
       id: String(branch.id),
       branchName: branch.branchName,
@@ -82,9 +141,10 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
     status: course.status,
   }));
 
-  const fullName = trainer.person?.firstName && trainer.person?.lastName
-    ? `${trainer.person.firstName} ${trainer.person.lastName}`
-    : trainer.trainerCode;
+  const fullName =
+    trainer.person?.firstName && trainer.person?.lastName
+      ? `${trainer.person.firstName} ${trainer.person.lastName}`
+      : trainer.trainerCode;
 
   return (
     <AdminDetailPageLayout>
@@ -95,8 +155,16 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5" /> },
-              { label: 'Faculty', href: '/faculty/trainers', icon: <Users className="h-3.5 w-3.5" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5" />,
+              },
+              {
+                label: 'Faculty',
+                href: '/faculty/trainers',
+                icon: <Users className="h-3.5 w-3.5" />,
+              },
               { label: 'Trainers', href: '/faculty/trainers' },
               { label: fullName, icon: <User className="h-3.5 w-3.5" /> },
             ]}
@@ -131,11 +199,23 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
       />
 
       <div className="flex flex-wrap gap-2">
-        <Badge variant={trainer.status === 'Active' ? 'success' : trainer.status === 'Suspended' ? 'warning' : 'muted'}>
+        <Badge
+          variant={
+            trainer.status === 'Active'
+              ? 'success'
+              : trainer.status === 'Suspended'
+                ? 'warning'
+                : 'muted'
+          }
+        >
           {trainer.status}
         </Badge>
-        <Badge variant="outline" className="font-mono">{trainer.trainerCode}</Badge>
-        <Badge variant="outline">{trainer.branch?.branchName ?? trainer.branchId}</Badge>
+        <Badge variant="outline" className="font-mono">
+          {trainer.trainerCode}
+        </Badge>
+        <Badge variant="outline">
+          {trainer.branch?.branchName ?? trainer.branchId}
+        </Badge>
       </div>
 
       {/* Summary Card */}
@@ -149,8 +229,12 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
             </div>
             <div className="space-y-2">
               <div>
-                <h2 className="text-xl font-semibold text-slate-800">{fullName}</h2>
-                <p className="text-sm text-slate-500">{trainer.trainerType} Trainer</p>
+                <h2 className="text-xl font-semibold text-slate-800">
+                  {fullName}
+                </h2>
+                <p className="text-sm text-slate-500">
+                  {trainer.trainerType} Trainer
+                </p>
               </div>
               <div className="flex flex-wrap gap-2">
                 {trainer.person?.email && (
@@ -177,21 +261,42 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
 
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-2">
             <div className="rounded-xl bg-slate-50 border border-slate-100 p-3">
-              <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Trainer Code</p>
-              <p className="mt-1 text-sm font-mono font-semibold text-slate-800">{trainer.trainerCode}</p>
+              <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">
+                Trainer Code
+              </p>
+              <p className="mt-1 text-sm font-mono font-semibold text-slate-800">
+                {trainer.trainerCode}
+              </p>
             </div>
             <div className="rounded-xl bg-slate-50 border border-slate-100 p-3">
-              <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Start Date</p>
-              <p className="mt-1 text-sm font-semibold text-slate-800">{formatDate(trainer.effectiveStartDate)}</p>
+              <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">
+                Start Date
+              </p>
+              <p className="mt-1 text-sm font-semibold text-slate-800">
+                {formatDate(trainer.effectiveStartDate)}
+              </p>
             </div>
             <div className="rounded-xl bg-slate-50 border border-slate-100 p-3">
-              <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">End Date</p>
-              <p className="mt-1 text-sm font-semibold text-slate-800">{trainer.effectiveEndDate ? formatDate(trainer.effectiveEndDate) : 'Indefinite'}</p>
+              <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">
+                End Date
+              </p>
+              <p className="mt-1 text-sm font-semibold text-slate-800">
+                {trainer.effectiveEndDate
+                  ? formatDate(trainer.effectiveEndDate)
+                  : 'Indefinite'}
+              </p>
             </div>
             <div className="rounded-xl bg-slate-50 border border-slate-100 p-3">
-              <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Specialization</p>
-              <p className="mt-1 text-sm font-semibold text-slate-800 truncate max-w-32" title={trainer.specialization}>
-                {trainer.specialization.length > 20 ? `${trainer.specialization.slice(0, 20)}...` : trainer.specialization}
+              <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">
+                Specialization
+              </p>
+              <p
+                className="mt-1 text-sm font-semibold text-slate-800 truncate max-w-32"
+                title={trainer.specialization}
+              >
+                {trainer.specialization.length > 20
+                  ? `${trainer.specialization.slice(0, 20)}...`
+                  : trainer.specialization}
               </p>
             </div>
           </div>
@@ -199,8 +304,12 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
 
         {trainer.qualificationSummary && (
           <div className="mt-5 pt-5 border-t border-slate-100">
-            <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-2">Qualification Summary</p>
-            <p className="text-sm text-slate-700">{trainer.qualificationSummary}</p>
+            <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-2">
+              Qualification Summary
+            </p>
+            <p className="text-sm text-slate-700">
+              {trainer.qualificationSummary}
+            </p>
           </div>
         )}
       </div>
@@ -216,26 +325,49 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
               </div>
               <div>
                 <h3 className="font-semibold text-slate-800">Qualifications</h3>
-                <p className="text-xs text-slate-500">Education and credential evidence</p>
+                <p className="text-xs text-slate-500">
+                  Education and credential evidence
+                </p>
               </div>
             </div>
-            <TrainerQualificationDrawerAction trainerId={trainerId} trainerName={fullName} />
+            <TrainerQualificationDrawerAction
+              trainerId={trainerId}
+              trainerName={fullName}
+            />
           </div>
           <div className="p-5">
             {qualifications.items.length > 0 ? (
               <div className="space-y-3">
                 {qualifications.items.map((item) => (
-                  <div key={item.id} className="rounded-xl border border-slate-100 bg-slate-50/50 p-4">
+                  <div
+                    key={item.id}
+                    className="rounded-xl border border-slate-100 bg-slate-50/50 p-4"
+                  >
                     <div className="flex items-start justify-between gap-3">
                       <div className="space-y-1">
-                        <p className="font-semibold text-slate-800 text-sm">{item.qualificationName}</p>
-                        <p className="text-xs text-slate-500">{item.institution} · {item.yearCompleted}</p>
+                        <p className="font-semibold text-slate-800 text-sm">
+                          {item.qualificationName}
+                        </p>
+                        <p className="text-xs text-slate-500">
+                          {item.institution} · {item.yearCompleted}
+                        </p>
                       </div>
                       <div className="flex items-start gap-2">
                         {item.status && (
-                          <Badge variant={item.status === 'Active' ? 'success' : 'muted'} className="text-xs">{item.status}</Badge>
+                          <Badge
+                            variant={
+                              item.status === 'Active' ? 'success' : 'muted'
+                            }
+                            className="text-xs"
+                          >
+                            {item.status}
+                          </Badge>
                         )}
-                        <TrainerQualificationEditDrawerAction trainerId={trainerId} trainerName={fullName} qualification={item} />
+                        <TrainerQualificationEditDrawerAction
+                          trainerId={trainerId}
+                          trainerName={fullName}
+                          qualification={item}
+                        />
                       </div>
                     </div>
                   </div>
@@ -244,8 +376,12 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
             ) : (
               <div className="flex flex-col items-center justify-center py-8 text-center">
                 <Award className="h-10 w-10 text-slate-300 mb-3" />
-                <p className="text-sm font-medium text-slate-500">No qualifications recorded</p>
-                <p className="text-xs text-slate-400 mt-1">Add education and credential details</p>
+                <p className="text-sm font-medium text-slate-500">
+                  No qualifications recorded
+                </p>
+                <p className="text-xs text-slate-400 mt-1">
+                  Add education and credential details
+                </p>
               </div>
             )}
           </div>
@@ -260,7 +396,9 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
               </div>
               <div>
                 <h3 className="font-semibold text-slate-800">Availability</h3>
-                <p className="text-xs text-slate-500">Trusted availability windows used by scheduling</p>
+                <p className="text-xs text-slate-500">
+                  Trusted availability windows used by scheduling
+                </p>
               </div>
             </div>
             <TrainerAvailabilityDrawerAction
@@ -274,19 +412,33 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
             {availability.items.length > 0 ? (
               <div className="space-y-2">
                 {availability.items.map((item) => (
-                  <div key={item.id} className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50/50 px-4 py-3">
+                  <div
+                    key={item.id}
+                    className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50/50 px-4 py-3"
+                  >
                     <div className="flex items-center gap-3">
                       <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-100 text-xs font-semibold text-indigo-600">
                         {item.dayOfWeek.slice(0, 3)}
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-slate-800">{item.dayOfWeek}</p>
-                        <p className="text-xs text-slate-500">{item.startTime} - {item.endTime}</p>
+                        <p className="text-sm font-medium text-slate-800">
+                          {item.dayOfWeek}
+                        </p>
+                        <p className="text-xs text-slate-500">
+                          {item.startTime} - {item.endTime}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
                       {item.status && (
-                        <Badge variant={item.status === 'Active' ? 'success' : 'muted'} className="text-xs">{item.status}</Badge>
+                        <Badge
+                          variant={
+                            item.status === 'Active' ? 'success' : 'muted'
+                          }
+                          className="text-xs"
+                        >
+                          {item.status}
+                        </Badge>
                       )}
                       <TrainerAvailabilityEditDrawerAction
                         trainerId={trainerId}
@@ -301,8 +453,12 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
             ) : (
               <div className="flex flex-col items-center justify-center py-8 text-center">
                 <Clock className="h-10 w-10 text-slate-300 mb-3" />
-                <p className="text-sm font-medium text-slate-500">No availability set</p>
-                <p className="text-xs text-slate-400 mt-1">Define weekly availability windows</p>
+                <p className="text-sm font-medium text-slate-500">
+                  No availability set
+                </p>
+                <p className="text-xs text-slate-400 mt-1">
+                  Define weekly availability windows
+                </p>
               </div>
             )}
           </div>
@@ -316,30 +472,56 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
                 <BookOpen className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-800">Course Authorizations</h3>
-                <p className="text-xs text-slate-500">Approved course coverage for this trainer</p>
+                <h3 className="font-semibold text-slate-800">
+                  Course Authorizations
+                </h3>
+                <p className="text-xs text-slate-500">
+                  Approved course coverage for this trainer
+                </p>
               </div>
             </div>
-            <TrainerAuthorizationDrawerAction trainerId={trainerId} trainerName={fullName} courseOptions={courseOptions} />
+            <TrainerAuthorizationDrawerAction
+              trainerId={trainerId}
+              trainerName={fullName}
+              courseOptions={courseOptions}
+            />
           </div>
           <div className="p-5">
             {authorizations.items.length > 0 ? (
               <div className="space-y-2">
                 {authorizations.items.map((item) => (
-                  <div key={item.id} className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50/50 px-4 py-3">
+                  <div
+                    key={item.id}
+                    className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50/50 px-4 py-3"
+                  >
                     <div>
                       <p className="text-sm font-semibold text-slate-800">
                         {item.course?.courseCode ?? item.courseId}
                       </p>
                       {item.course?.nameEnglish && (
-                        <p className="text-xs text-slate-500">{item.course.nameEnglish}</p>
+                        <p className="text-xs text-slate-500">
+                          {item.course.nameEnglish}
+                        </p>
                       )}
                     </div>
                     <div className="flex items-center gap-2">
-                      <Badge variant={item.status === 'Active' ? 'success' : item.status === 'Expired' ? 'warning' : 'muted'} className="text-xs">
+                      <Badge
+                        variant={
+                          item.status === 'Active'
+                            ? 'success'
+                            : item.status === 'Expired'
+                              ? 'warning'
+                              : 'muted'
+                        }
+                        className="text-xs"
+                      >
                         {item.status}
                       </Badge>
-                      <TrainerAuthorizationEditDrawerAction trainerId={trainerId} trainerName={fullName} authorization={item} />
+                      <TrainerAuthorizationEditDrawerAction
+                        trainerId={trainerId}
+                        trainerName={fullName}
+                        authorization={item}
+                      />
                     </div>
                   </div>
                 ))}
@@ -347,8 +529,12 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
             ) : (
               <div className="flex flex-col items-center justify-center py-8 text-center">
                 <BookOpen className="h-10 w-10 text-slate-300 mb-3" />
-                <p className="text-sm font-medium text-slate-500">No course authorizations</p>
-                <p className="text-xs text-slate-400 mt-1">Authorize courses this trainer can teach</p>
+                <p className="text-sm font-medium text-slate-500">
+                  No course authorizations
+                </p>
+                <p className="text-xs text-slate-400 mt-1">
+                  Authorize courses this trainer can teach
+                </p>
               </div>
             )}
           </div>
@@ -361,23 +547,37 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
               <DollarSign className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="font-semibold text-slate-800">Compensation Rates</h3>
-              <p className="text-xs text-slate-500">Resolved compensation rates and payment basis</p>
+              <h3 className="font-semibold text-slate-800">
+                Compensation Rates
+              </h3>
+              <p className="text-xs text-slate-500">
+                Resolved compensation rates and payment basis
+              </p>
             </div>
           </div>
           <div className="p-5">
             {compensation.items.length > 0 ? (
               <div className="space-y-2">
                 {compensation.items.map((item) => (
-                  <div key={item.id} className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50/50 px-4 py-3">
+                  <div
+                    key={item.id}
+                    className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50/50 px-4 py-3"
+                  >
                     <div>
                       <p className="text-sm font-semibold text-slate-800">
                         {item.amount} {item.currency}
                       </p>
-                      <p className="text-xs text-slate-500">{item.paymentBasis}</p>
+                      <p className="text-xs text-slate-500">
+                        {item.paymentBasis}
+                      </p>
                     </div>
                     {item.status && (
-                      <Badge variant={item.status === 'Active' ? 'success' : 'muted'} className="text-xs">{item.status}</Badge>
+                      <Badge
+                        variant={item.status === 'Active' ? 'success' : 'muted'}
+                        className="text-xs"
+                      >
+                        {item.status}
+                      </Badge>
                     )}
                   </div>
                 ))}
@@ -385,8 +585,12 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
             ) : (
               <div className="flex flex-col items-center justify-center py-8 text-center">
                 <DollarSign className="h-10 w-10 text-slate-300 mb-3" />
-                <p className="text-sm font-medium text-slate-500">No compensation configured</p>
-                <p className="text-xs text-slate-400 mt-1">Set up payment rates for this trainer</p>
+                <p className="text-sm font-medium text-slate-500">
+                  No compensation configured
+                </p>
+                <p className="text-xs text-slate-400 mt-1">
+                  Set up payment rates for this trainer
+                </p>
               </div>
             )}
           </div>
@@ -400,7 +604,9 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
             </div>
             <div>
               <h3 className="font-semibold text-slate-800">Assignments</h3>
-              <p className="text-xs text-slate-500">Batch and session references linked to this trainer</p>
+              <p className="text-xs text-slate-500">
+                Batch and session references linked to this trainer
+              </p>
             </div>
           </div>
           <div className="p-5">
@@ -419,17 +625,38 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
                   </thead>
                   <tbody className="divide-y divide-slate-100">
                     {assignments.items.map((item, index) => (
-                      <tr key={`${item.kind}-${item.referenceId}-${index}`} className="text-slate-700">
+                      <tr
+                        key={`${item.kind}-${item.referenceId}-${index}`}
+                        className="text-slate-700"
+                      >
                         <td className="py-3 pr-4">
-                          <Badge variant="outline" className="text-xs">{item.kind}</Badge>
+                          <Badge variant="outline" className="text-xs">
+                            {item.kind}
+                          </Badge>
                         </td>
-                        <td className="py-3 pr-4 font-mono font-medium text-slate-800">{item.code}</td>
-                        <td className="py-3 pr-4 text-slate-600">{item.courseCode ?? 'N/A'}</td>
-                        <td className="py-3 pr-4 text-slate-600">{formatDate(item.startDate)}</td>
-                        <td className="py-3 pr-4 text-slate-600">{formatDate(item.endDate)}</td>
+                        <td className="py-3 pr-4 font-mono font-medium text-slate-800">
+                          {item.code}
+                        </td>
+                        <td className="py-3 pr-4 text-slate-600">
+                          {item.courseCode ?? 'N/A'}
+                        </td>
+                        <td className="py-3 pr-4 text-slate-600">
+                          {formatDate(item.startDate)}
+                        </td>
+                        <td className="py-3 pr-4 text-slate-600">
+                          {formatDate(item.endDate)}
+                        </td>
                         <td className="py-3">
                           {item.status ? (
-                            <Badge variant={item.status === 'Active' || item.status === 'Open' ? 'success' : 'muted'} className="text-xs">
+                            <Badge
+                              variant={
+                                item.status === 'Active' ||
+                                item.status === 'Open'
+                                  ? 'success'
+                                  : 'muted'
+                              }
+                              className="text-xs"
+                            >
                               {item.status}
                             </Badge>
                           ) : (
@@ -444,8 +671,12 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
             ) : (
               <div className="flex flex-col items-center justify-center py-8 text-center">
                 <Layers className="h-10 w-10 text-slate-300 mb-3" />
-                <p className="text-sm font-medium text-slate-500">No assignments</p>
-                <p className="text-xs text-slate-400 mt-1">This trainer is not assigned to any batches or sessions</p>
+                <p className="text-sm font-medium text-slate-500">
+                  No assignments
+                </p>
+                <p className="text-xs text-slate-400 mt-1">
+                  This trainer is not assigned to any batches or sessions
+                </p>
               </div>
             )}
           </div>
@@ -459,14 +690,19 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
             </div>
             <div>
               <h3 className="font-semibold text-slate-800">Audit History</h3>
-              <p className="text-xs text-slate-500">Immutable activity trail for sensitive trainer changes</p>
+              <p className="text-xs text-slate-500">
+                Immutable activity trail for sensitive trainer changes
+              </p>
             </div>
           </div>
           <div className="p-5">
             {audit.items.length > 0 ? (
               <div className="space-y-3">
                 {audit.items.map((item: Record<string, unknown>, index) => (
-                  <div key={String(item.id ?? index)} className="flex items-start gap-4">
+                  <div
+                    key={String(item.id ?? index)}
+                    className="flex items-start gap-4"
+                  >
                     <div className="flex flex-col items-center">
                       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-xs font-medium text-slate-600">
                         {index + 1}
@@ -476,8 +712,14 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
                       )}
                     </div>
                     <div className="flex-1 pb-4">
-                      <p className="text-sm font-medium text-slate-800">{String(item.action ?? '')}</p>
-                      <p className="text-xs text-slate-500 mt-0.5">{formatDateTime(item.performedAt as Date | string | null | undefined)}</p>
+                      <p className="text-sm font-medium text-slate-800">
+                        {String(item.action ?? '')}
+                      </p>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        {formatDateTime(
+                          item.performedAt as Date | string | null | undefined,
+                        )}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -485,8 +727,12 @@ export default async function TrainerDetailPage(props: { params: Promise<{ train
             ) : (
               <div className="flex flex-col items-center justify-center py-8 text-center">
                 <FileText className="h-10 w-10 text-slate-300 mb-3" />
-                <p className="text-sm font-medium text-slate-500">No audit history</p>
-                <p className="text-xs text-slate-400 mt-1">Activity will be recorded as changes are made</p>
+                <p className="text-sm font-medium text-slate-500">
+                  No audit history
+                </p>
+                <p className="text-xs text-slate-400 mt-1">
+                  Activity will be recorded as changes are made
+                </p>
               </div>
             )}
           </div>

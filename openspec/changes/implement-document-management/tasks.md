@@ -11,14 +11,14 @@
 
 - [x] 2.1 Create the ports interfaces in `packages/documents/src/domain/ports.ts` (e.g. `StorageProvider` for Vercel Blob abstraction, `OwnerResolver` for resolving cross-context owner existence/branch).
 - [x] 2.2 Update Zod schemas in `packages/documents/src/domain/document.ts` to validate:
-  * `issueDate` and `expiryDate` (asserting `expiryDate >= issueDate`).
-  * `DocumentStatus` and `VerificationOutcome` values.
-  * Correct `DocumentOwner` properties mapping.
+  - `issueDate` and `expiryDate` (asserting `expiryDate >= issueDate`).
+  - `DocumentStatus` and `VerificationOutcome` values.
+  - Correct `DocumentOwner` properties mapping.
 - [x] 2.3 Update `packages/documents/src/application/documents-service.ts`:
-  * Implement the upload intent capability mapping to `StorageProvider.generateUploadUrl`.
-  * Update `registerDocument` usecase to transactionally write to `Document` and `DocumentOwner` join tables while resolving `branchId` using `OwnerResolver`.
-  * Implement verification decision usecase transactionally writing to `DocumentVerification` and updating verifier summary fields.
-  * Implement the soft delete usecase (`retireDocument`) updating `isDeleted = true` and `status = Deleted`.
+  - Implement the upload intent capability mapping to `StorageProvider.generateUploadUrl`.
+  - Update `registerDocument` usecase to transactionally write to `Document` and `DocumentOwner` join tables while resolving `branchId` using `OwnerResolver`.
+  - Implement verification decision usecase transactionally writing to `DocumentVerification` and updating verifier summary fields.
+  - Implement the soft delete usecase (`retireDocument`) updating `isDeleted = true` and `status = Deleted`.
 
 ## 3. Delivery Layer & API Endpoints
 
@@ -40,9 +40,9 @@
 ## 6. Verification & Quality Gates
 
 - [x] 6.1 Write unit tests for `DocumentsService` validating:
-  * Overlapping branch verification failures.
-  * Rejection remarks mandatory check.
-  * Soft-delete state mapping.
+  - Overlapping branch verification failures.
+  - Rejection remarks mandatory check.
+  - Soft-delete state mapping.
 - [x] 6.2 Execute integration tests for the API endpoints verifying RBAC constraints.
 - [x] 6.3 Run full workspace typecheck and lint checks:
   ```bash

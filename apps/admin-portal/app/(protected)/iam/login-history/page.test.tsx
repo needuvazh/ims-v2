@@ -9,7 +9,8 @@ const mockFindByUsername = vi.fn();
 
 vi.mock('../../../lib/runtime', () => ({
   loginHistoryQueryService: {
-    listSecurityLoginHistory: (...args: any[]) => mockListSecurityLoginHistory(...args),
+    listSecurityLoginHistory: (...args: any[]) =>
+      mockListSecurityLoginHistory(...args),
     listUserLoginHistory: (...args: any[]) => mockListUserLoginHistory(...args),
   },
   userRepository: {
@@ -19,11 +20,12 @@ vi.mock('../../../lib/runtime', () => ({
 }));
 
 vi.mock('../../../lib/auth-guard', () => ({
-  getSession: () => Promise.resolve({
-    userId: 'actor-id',
-    permissions: ['iam.user.read', 'iam.security.read'],
-    activeBranchId: 'branch-id',
-  }),
+  getSession: () =>
+    Promise.resolve({
+      userId: 'actor-id',
+      permissions: ['iam.user.read', 'iam.security.read'],
+      activeBranchId: 'branch-id',
+    }),
 }));
 
 describe('IamLoginHistoryPage', () => {
@@ -47,7 +49,9 @@ describe('IamLoginHistoryPage', () => {
       ],
     });
 
-    const page = await IamLoginHistoryPage({ searchParams: Promise.resolve({}) });
+    const page = await IamLoginHistoryPage({
+      searchParams: Promise.resolve({}),
+    });
     const html = renderToStaticMarkup(page);
     expect(html).toContain('Login History');
     expect(html).toContain('test@example.com');

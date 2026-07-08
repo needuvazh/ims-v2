@@ -5,7 +5,10 @@ import { Batch, BatchTrainer, WaitingList, Session } from '../domain/batch';
 export class BatchRepository implements IBatchRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create(data: Prisma.BatchUncheckedCreateInput, tx?: Prisma.TransactionClient): Promise<Batch> {
+  async create(
+    data: Prisma.BatchUncheckedCreateInput,
+    tx?: Prisma.TransactionClient,
+  ): Promise<Batch> {
     const client = tx || this.prisma;
     const batch = await client.batch.create({
       data: {
@@ -34,9 +37,14 @@ export class BatchRepository implements IBatchRepository {
     return batch as Batch;
   }
 
-  async update(id: string, data: Prisma.BatchUncheckedUpdateInput, version: number, tx?: Prisma.TransactionClient): Promise<Batch> {
+  async update(
+    id: string,
+    data: Prisma.BatchUncheckedUpdateInput,
+    version: number,
+    tx?: Prisma.TransactionClient,
+  ): Promise<Batch> {
     const client = tx || this.prisma;
-    
+
     // Concurrency check
     const result = await client.batch.updateMany({
       where: { id, version, isDeleted: false },
@@ -60,8 +68,12 @@ export class BatchRepository implements IBatchRepository {
     return updated as Batch;
   }
 
-  async findById(id: string, tx?: Prisma.TransactionClient): Promise<Batch | null> {
-    const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  async findById(
+    id: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<Batch | null> {
+    const UUID_REGEX =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     if (!UUID_REGEX.test(id)) {
       return null;
     }
@@ -72,18 +84,27 @@ export class BatchRepository implements IBatchRepository {
     return batch as Batch | null;
   }
 
-  async findByCode(code: string, tx?: Prisma.TransactionClient): Promise<Batch | null> {
+  async findByCode(
+    code: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<Batch | null> {
     const client = tx || this.prisma;
     const batch = await client.batch.findFirst({
-      where: { batchCode: { equals: code, mode: 'insensitive' }, isDeleted: false },
+      where: {
+        batchCode: { equals: code, mode: 'insensitive' },
+        isDeleted: false,
+      },
     });
     return batch as Batch | null;
   }
 
-  async findAll(filters: { branchId?: string; courseId?: string; status?: string }, tx?: Prisma.TransactionClient): Promise<Batch[]> {
+  async findAll(
+    filters: { branchId?: string; courseId?: string; status?: string },
+    tx?: Prisma.TransactionClient,
+  ): Promise<Batch[]> {
     const client = tx || this.prisma;
     const where: Prisma.BatchWhereInput = { isDeleted: false };
-    
+
     if (filters.branchId) {
       where.branchId = filters.branchId;
     }
@@ -101,7 +122,11 @@ export class BatchRepository implements IBatchRepository {
     return batches as Batch[];
   }
 
-  async delete(id: string, deletedBy: string, tx?: Prisma.TransactionClient): Promise<void> {
+  async delete(
+    id: string,
+    deletedBy: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<void> {
     const client = tx || this.prisma;
     await client.batch.update({
       where: { id },
@@ -115,7 +140,10 @@ export class BatchRepository implements IBatchRepository {
   }
 
   // BatchTrainer Mappings
-  async assignTrainer(data: Prisma.BatchTrainerUncheckedCreateInput, tx?: Prisma.TransactionClient): Promise<BatchTrainer> {
+  async assignTrainer(
+    data: Prisma.BatchTrainerUncheckedCreateInput,
+    tx?: Prisma.TransactionClient,
+  ): Promise<BatchTrainer> {
     const client = tx || this.prisma;
     const bt = await client.batchTrainer.create({
       data: {
@@ -133,7 +161,11 @@ export class BatchRepository implements IBatchRepository {
     return bt as BatchTrainer;
   }
 
-  async removeTrainer(id: string, deletedBy: string, tx?: Prisma.TransactionClient): Promise<void> {
+  async removeTrainer(
+    id: string,
+    deletedBy: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<void> {
     const client = tx || this.prisma;
     await client.batchTrainer.update({
       where: { id },
@@ -146,7 +178,10 @@ export class BatchRepository implements IBatchRepository {
     });
   }
 
-  async findTrainers(batchId: string, tx?: Prisma.TransactionClient): Promise<BatchTrainer[]> {
+  async findTrainers(
+    batchId: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<BatchTrainer[]> {
     const client = tx || this.prisma;
     const trainers = await client.batchTrainer.findMany({
       where: { batchId, isDeleted: false },
@@ -154,7 +189,10 @@ export class BatchRepository implements IBatchRepository {
     return trainers as BatchTrainer[];
   }
 
-  async findPrimaryTrainer(batchId: string, tx?: Prisma.TransactionClient): Promise<BatchTrainer | null> {
+  async findPrimaryTrainer(
+    batchId: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<BatchTrainer | null> {
     const client = tx || this.prisma;
     const trainer = await client.batchTrainer.findFirst({
       where: { batchId, role: 'Primary', isDeleted: false, status: 'Active' },
@@ -162,7 +200,10 @@ export class BatchRepository implements IBatchRepository {
     return trainer as BatchTrainer | null;
   }
 
-  async addWaitlistEntry(data: Prisma.WaitingListUncheckedCreateInput, tx?: Prisma.TransactionClient): Promise<WaitingList> {
+  async addWaitlistEntry(
+    data: Prisma.WaitingListUncheckedCreateInput,
+    tx?: Prisma.TransactionClient,
+  ): Promise<WaitingList> {
     const client = tx || this.prisma;
     const wl = await client.waitingList.create({
       data: {
@@ -183,7 +224,11 @@ export class BatchRepository implements IBatchRepository {
     return wl as WaitingList;
   }
 
-  async updateWaitlistEntry(id: string, data: Prisma.WaitingListUncheckedUpdateInput, tx?: Prisma.TransactionClient): Promise<WaitingList> {
+  async updateWaitlistEntry(
+    id: string,
+    data: Prisma.WaitingListUncheckedUpdateInput,
+    tx?: Prisma.TransactionClient,
+  ): Promise<WaitingList> {
     const client = tx || this.prisma;
     const wl = await client.waitingList.update({
       where: { id },
@@ -192,7 +237,10 @@ export class BatchRepository implements IBatchRepository {
     return wl as WaitingList;
   }
 
-  async findWaitlist(batchId: string, tx?: Prisma.TransactionClient): Promise<WaitingList[]> {
+  async findWaitlist(
+    batchId: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<WaitingList[]> {
     const client = tx || this.prisma;
     const list = await client.waitingList.findMany({
       where: { batchId, isDeleted: false },
@@ -201,17 +249,27 @@ export class BatchRepository implements IBatchRepository {
     return list as WaitingList[];
   }
 
-  async findActiveWaitlist(batchId: string, tx?: Prisma.TransactionClient): Promise<WaitingList[]> {
+  async findActiveWaitlist(
+    batchId: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<WaitingList[]> {
     const client = tx || this.prisma;
     const list = await client.waitingList.findMany({
-      where: { batchId, status: { in: ['Waiting', 'Promoted'] }, isDeleted: false },
+      where: {
+        batchId,
+        status: { in: ['Waiting', 'Promoted'] },
+        isDeleted: false,
+      },
       orderBy: { queuePosition: 'asc' },
     });
     return list as WaitingList[];
   }
 
   // Sessions
-  async createSession(data: Prisma.SessionUncheckedCreateInput, tx?: Prisma.TransactionClient): Promise<Session> {
+  async createSession(
+    data: Prisma.SessionUncheckedCreateInput,
+    tx?: Prisma.TransactionClient,
+  ): Promise<Session> {
     const client = tx || this.prisma;
     const session = await client.session.create({
       data: {
@@ -234,7 +292,10 @@ export class BatchRepository implements IBatchRepository {
     return session as Session;
   }
 
-  async findSessions(batchId: string, tx?: Prisma.TransactionClient): Promise<Session[]> {
+  async findSessions(
+    batchId: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<Session[]> {
     const client = tx || this.prisma;
     const sessions = await client.session.findMany({
       where: { batchId, isDeleted: false },
@@ -243,7 +304,11 @@ export class BatchRepository implements IBatchRepository {
     return sessions as Session[];
   }
 
-  async updateSession(id: string, data: Prisma.SessionUncheckedUpdateInput, tx?: Prisma.TransactionClient): Promise<Session> {
+  async updateSession(
+    id: string,
+    data: Prisma.SessionUncheckedUpdateInput,
+    tx?: Prisma.TransactionClient,
+  ): Promise<Session> {
     const client = tx || this.prisma;
     const session = await client.session.update({
       where: { id },

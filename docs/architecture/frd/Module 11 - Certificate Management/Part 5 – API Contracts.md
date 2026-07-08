@@ -58,14 +58,14 @@ Trainer scoped query API:     /api/v1/trainer/certificates
 
 ### 2.2 Common Headers
 
-| Header | Required | Applies To | Rule |
-|---|---:|---|---|
-| `Content-Type: application/json` | Yes for JSON bodies | Commands/JSON requests | Reject unsupported media type with 415 |
-| Session cookie / bearer credential | Yes | Internal endpoints | Resolved by platform authentication layer |
-| `Idempotency-Key` | Yes where stated | Generate, issue, replacement generation | 8–128 chars; stable per logical command |
-| `Accept-Language` | Optional | All | `en` or `ar`; defaults to authenticated preference or platform default |
-| `If-None-Match` | Optional | Artifact/query GETs where cacheable | May return 304 |
-| `X-Request-Id` | Optional | All | Server generates when absent; echoed in error envelope |
+| Header                             |            Required | Applies To                              | Rule                                                                   |
+| ---------------------------------- | ------------------: | --------------------------------------- | ---------------------------------------------------------------------- |
+| `Content-Type: application/json`   | Yes for JSON bodies | Commands/JSON requests                  | Reject unsupported media type with 415                                 |
+| Session cookie / bearer credential |                 Yes | Internal endpoints                      | Resolved by platform authentication layer                              |
+| `Idempotency-Key`                  |    Yes where stated | Generate, issue, replacement generation | 8–128 chars; stable per logical command                                |
+| `Accept-Language`                  |            Optional | All                                     | `en` or `ar`; defaults to authenticated preference or platform default |
+| `If-None-Match`                    |            Optional | Artifact/query GETs where cacheable     | May return 304                                                         |
+| `X-Request-Id`                     |            Optional | All                                     | Server generates when absent; echoed in error envelope                 |
 
 ### 2.3 Standard Success Envelope
 
@@ -102,33 +102,33 @@ interface ApiError {
 
 ### 2.5 Standard Error Codes
 
-| HTTP | Code | Meaning |
-|---:|---|---|
-| 400 | `VALIDATION_ERROR` | Request shape or field rule failed |
-| 401 | `UNAUTHENTICATED` | Internal endpoint without valid authentication |
-| 403 | `PERMISSION_DENIED` | Required permission absent |
-| 403 | `BRANCH_SCOPE_DENIED` | Target resource is outside effective branch scope |
-| 404 | `NOT_FOUND` | Resource absent or intentionally concealed due to self/scope rules |
-| 409 | `INVALID_STATE_TRANSITION` | Lifecycle command not allowed from current status |
-| 409 | `VERSION_CONFLICT` | `expectedVersion` does not match current aggregate version |
-| 409 | `DUPLICATE_ACTIVE_CERTIFICATE` | Normal generation would create duplicate active certificate |
-| 409 | `REISSUE_REQUEST_ALREADY_OPEN` | A non-terminal request already exists for same certificate |
-| 409 | `IDEMPOTENCY_KEY_CONFLICT` | Same key reused with different command payload |
-| 422 | `COMPLETION_NOT_APPROVED` | Completion context has not approved completion |
-| 422 | `PAYMENT_VALIDATION_FAILED` | Required Finance payment gate has not passed |
-| 422 | `CERTIFICATE_NOT_ELIGIBLE` | One or more authoritative gates block generation |
-| 422 | `REISSUE_NOT_APPROVED` | Replacement requested before reissue approval |
-| 429 | `RATE_LIMITED` | Public verification or abuse-sensitive route throttled |
-| 500 | `INTERNAL_ERROR` | Unexpected failure; no sensitive detail returned |
-| 502 | `DEPENDENCY_UNAVAILABLE` | Required authoritative dependency unavailable |
-| 503 | `SERVICE_UNAVAILABLE` | Certificate service temporarily unavailable |
+| HTTP | Code                           | Meaning                                                            |
+| ---: | ------------------------------ | ------------------------------------------------------------------ |
+|  400 | `VALIDATION_ERROR`             | Request shape or field rule failed                                 |
+|  401 | `UNAUTHENTICATED`              | Internal endpoint without valid authentication                     |
+|  403 | `PERMISSION_DENIED`            | Required permission absent                                         |
+|  403 | `BRANCH_SCOPE_DENIED`          | Target resource is outside effective branch scope                  |
+|  404 | `NOT_FOUND`                    | Resource absent or intentionally concealed due to self/scope rules |
+|  409 | `INVALID_STATE_TRANSITION`     | Lifecycle command not allowed from current status                  |
+|  409 | `VERSION_CONFLICT`             | `expectedVersion` does not match current aggregate version         |
+|  409 | `DUPLICATE_ACTIVE_CERTIFICATE` | Normal generation would create duplicate active certificate        |
+|  409 | `REISSUE_REQUEST_ALREADY_OPEN` | A non-terminal request already exists for same certificate         |
+|  409 | `IDEMPOTENCY_KEY_CONFLICT`     | Same key reused with different command payload                     |
+|  422 | `COMPLETION_NOT_APPROVED`      | Completion context has not approved completion                     |
+|  422 | `PAYMENT_VALIDATION_FAILED`    | Required Finance payment gate has not passed                       |
+|  422 | `CERTIFICATE_NOT_ELIGIBLE`     | One or more authoritative gates block generation                   |
+|  422 | `REISSUE_NOT_APPROVED`         | Replacement requested before reissue approval                      |
+|  429 | `RATE_LIMITED`                 | Public verification or abuse-sensitive route throttled             |
+|  500 | `INTERNAL_ERROR`               | Unexpected failure; no sensitive detail returned                   |
+|  502 | `DEPENDENCY_UNAVAILABLE`       | Required authoritative dependency unavailable                      |
+|  503 | `SERVICE_UNAVAILABLE`          | Certificate service temporarily unavailable                        |
 
 ### 2.6 Pagination Contract
 
 ```ts
 interface PageMeta {
-  page: number;       // 1-based
-  pageSize: number;   // default 25, max 100
+  page: number; // 1-based
+  pageSize: number; // default 25, max 100
   totalItems: number;
   totalPages: number;
 }
@@ -140,52 +140,52 @@ All pageable list routes return deterministic ordering. When client sort fields 
 
 ## 3. Endpoint Inventory
 
-| API ID | Route | Method | Purpose | Primary Permission |
-|---|---|---:|---|---|
-| API-CERT-001 | `/api/v1/certificates/readiness` | GET | List certificate-ready/blocked enrollments | `certificate.read` |
-| API-CERT-002 | `/api/v1/certificates/readiness/{enrollmentId}` | GET | Get readiness detail for enrollment | `certificate.read` |
-| API-CERT-003 | `/api/v1/certificates` | POST | Generate certificate | `certificate.generate` |
-| API-CERT-004 | `/api/v1/certificates` | GET | Search certificate registry | `certificate.read` |
-| API-CERT-005 | `/api/v1/certificates/{certificateId}` | GET | Get certificate detail | `certificate.read` |
-| API-CERT-006 | `/api/v1/certificates/{certificateId}/artifact` | GET | Download/stream artifact | `certificate.download` |
-| API-CERT-007 | `/api/v1/certificates/{certificateId}/issue` | POST | Issue generated certificate | `certificate.issue` |
-| API-CERT-008 | `/api/v1/certificates/{certificateId}/revoke` | POST | Revoke certificate | `certificate.revoke` |
-| API-CERT-009 | `/api/v1/certificates/{certificateId}/verification-activity` | GET | View verification history | `certificate.verify.internal` |
-| API-CERT-010 | `/api/v1/certificates/{certificateId}/lifecycle` | GET | View lifecycle and audit projection | `certificate.audit.read` |
-| API-CERT-011 | `/api/v1/certificate-reissue-requests` | POST | Submit reissue request | `certificate.reissue.request` |
-| API-CERT-012 | `/api/v1/certificate-reissue-requests` | GET | List reissue requests | `certificate.reissue.read` |
-| API-CERT-013 | `/api/v1/certificate-reissue-requests/{requestId}` | GET | Get reissue request detail | `certificate.reissue.read` |
-| API-CERT-014 | `/api/v1/certificate-reissue-requests/{requestId}/approve` | POST | Approve reissue request | `certificate.reissue.approve` |
-| API-CERT-015 | `/api/v1/certificate-reissue-requests/{requestId}/reject` | POST | Reject reissue request | `certificate.reissue.approve` |
-| API-CERT-016 | `/api/v1/certificate-reissue-requests/{requestId}/replacement` | POST | Generate replacement certificate | `certificate.reissue.generate` |
-| API-CERT-017 | `/api/public/v1/certificates/verify` | POST | Verify certificate by code | Public |
-| API-CERT-018 | `/api/public/v1/certificates/verify/{verificationCode}` | GET | QR/deep-link verification | Public |
-| API-CERT-019 | `/api/v1/me/certificates` | GET | List authenticated student's certificates | Authenticated self-service |
-| API-CERT-020 | `/api/v1/me/certificates/{certificateId}` | GET | Get own certificate detail | Authenticated self-service |
-| API-CERT-021 | `/api/v1/me/certificates/{certificateId}/artifact` | GET | Download own artifact | Authenticated self-service |
-| API-CERT-022 | `/api/v1/me/certificate-reissue-requests` | POST | Submit own reissue request | `certificate.reissue.request` or portal entitlement |
-| API-CERT-023 | `/api/v1/me/certificate-reissue-requests` | GET | List own reissue requests | Authenticated self-service |
-| API-CERT-024 | `/api/v1/trainer/certificates/status` | GET | Trainer-scoped downstream certificate status | Authenticated trainer scope |
-| API-CERT-025 | `/api/v1/certificates/dashboard` | GET | Certificate operational dashboard projection | `certificate.read` |
-| API-CERT-026 | `/api/v1/certificates/reports/registry` | GET | Report-ready certificate registry query | `certificate.report.read` |
-| API-CERT-027 | `/api/v1/certificates/reports/registry/export` | POST | Export permitted registry report | `certificate.report.export` |
-| API-CERT-028 | `/api/v1/certificates/{certificateId}/notifications` | POST | Request certificate notification delivery | Operational notification permission policy |
+| API ID       | Route                                                          | Method | Purpose                                      | Primary Permission                                  |
+| ------------ | -------------------------------------------------------------- | -----: | -------------------------------------------- | --------------------------------------------------- |
+| API-CERT-001 | `/api/v1/certificates/readiness`                               |    GET | List certificate-ready/blocked enrollments   | `certificate.read`                                  |
+| API-CERT-002 | `/api/v1/certificates/readiness/{enrollmentId}`                |    GET | Get readiness detail for enrollment          | `certificate.read`                                  |
+| API-CERT-003 | `/api/v1/certificates`                                         |   POST | Generate certificate                         | `certificate.generate`                              |
+| API-CERT-004 | `/api/v1/certificates`                                         |    GET | Search certificate registry                  | `certificate.read`                                  |
+| API-CERT-005 | `/api/v1/certificates/{certificateId}`                         |    GET | Get certificate detail                       | `certificate.read`                                  |
+| API-CERT-006 | `/api/v1/certificates/{certificateId}/artifact`                |    GET | Download/stream artifact                     | `certificate.download`                              |
+| API-CERT-007 | `/api/v1/certificates/{certificateId}/issue`                   |   POST | Issue generated certificate                  | `certificate.issue`                                 |
+| API-CERT-008 | `/api/v1/certificates/{certificateId}/revoke`                  |   POST | Revoke certificate                           | `certificate.revoke`                                |
+| API-CERT-009 | `/api/v1/certificates/{certificateId}/verification-activity`   |    GET | View verification history                    | `certificate.verify.internal`                       |
+| API-CERT-010 | `/api/v1/certificates/{certificateId}/lifecycle`               |    GET | View lifecycle and audit projection          | `certificate.audit.read`                            |
+| API-CERT-011 | `/api/v1/certificate-reissue-requests`                         |   POST | Submit reissue request                       | `certificate.reissue.request`                       |
+| API-CERT-012 | `/api/v1/certificate-reissue-requests`                         |    GET | List reissue requests                        | `certificate.reissue.read`                          |
+| API-CERT-013 | `/api/v1/certificate-reissue-requests/{requestId}`             |    GET | Get reissue request detail                   | `certificate.reissue.read`                          |
+| API-CERT-014 | `/api/v1/certificate-reissue-requests/{requestId}/approve`     |   POST | Approve reissue request                      | `certificate.reissue.approve`                       |
+| API-CERT-015 | `/api/v1/certificate-reissue-requests/{requestId}/reject`      |   POST | Reject reissue request                       | `certificate.reissue.approve`                       |
+| API-CERT-016 | `/api/v1/certificate-reissue-requests/{requestId}/replacement` |   POST | Generate replacement certificate             | `certificate.reissue.generate`                      |
+| API-CERT-017 | `/api/public/v1/certificates/verify`                           |   POST | Verify certificate by code                   | Public                                              |
+| API-CERT-018 | `/api/public/v1/certificates/verify/{verificationCode}`        |    GET | QR/deep-link verification                    | Public                                              |
+| API-CERT-019 | `/api/v1/me/certificates`                                      |    GET | List authenticated student's certificates    | Authenticated self-service                          |
+| API-CERT-020 | `/api/v1/me/certificates/{certificateId}`                      |    GET | Get own certificate detail                   | Authenticated self-service                          |
+| API-CERT-021 | `/api/v1/me/certificates/{certificateId}/artifact`             |    GET | Download own artifact                        | Authenticated self-service                          |
+| API-CERT-022 | `/api/v1/me/certificate-reissue-requests`                      |   POST | Submit own reissue request                   | `certificate.reissue.request` or portal entitlement |
+| API-CERT-023 | `/api/v1/me/certificate-reissue-requests`                      |    GET | List own reissue requests                    | Authenticated self-service                          |
+| API-CERT-024 | `/api/v1/trainer/certificates/status`                          |    GET | Trainer-scoped downstream certificate status | Authenticated trainer scope                         |
+| API-CERT-025 | `/api/v1/certificates/dashboard`                               |    GET | Certificate operational dashboard projection | `certificate.read`                                  |
+| API-CERT-026 | `/api/v1/certificates/reports/registry`                        |    GET | Report-ready certificate registry query      | `certificate.report.read`                           |
+| API-CERT-027 | `/api/v1/certificates/reports/registry/export`                 |   POST | Export permitted registry report             | `certificate.report.export`                         |
+| API-CERT-028 | `/api/v1/certificates/{certificateId}/notifications`           |   POST | Request certificate notification delivery    | Operational notification permission policy          |
 
 ### 3.1 Server Action Mapping
 
 The Next.js Admin Portal may expose typed Server Actions instead of calling REST directly from client components. Server Actions must invoke the same application services and authorization policies as route handlers.
 
-| Server Action | Application Command/Query | REST Equivalent |
-|---|---|---|
-| `getCertificateReadinessAction` | `GetCertificateReadinessQuery` | API-CERT-002 |
-| `generateCertificateAction` | `GenerateCertificateCommand` | API-CERT-003 |
-| `issueCertificateAction` | `IssueCertificateCommand` | API-CERT-007 |
-| `submitReissueRequestAction` | `SubmitReissueRequestCommand` | API-CERT-011 / 022 |
-| `approveReissueRequestAction` | `ApproveReissueRequestCommand` | API-CERT-014 |
-| `rejectReissueRequestAction` | `RejectReissueRequestCommand` | API-CERT-015 |
-| `generateReplacementCertificateAction` | `GenerateReplacementCertificateCommand` | API-CERT-016 |
-| `revokeCertificateAction` | `RevokeCertificateCommand` | API-CERT-008 |
-| `requestCertificateNotificationAction` | `RequestCertificateNotificationCommand` | API-CERT-028 |
+| Server Action                          | Application Command/Query               | REST Equivalent    |
+| -------------------------------------- | --------------------------------------- | ------------------ |
+| `getCertificateReadinessAction`        | `GetCertificateReadinessQuery`          | API-CERT-002       |
+| `generateCertificateAction`            | `GenerateCertificateCommand`            | API-CERT-003       |
+| `issueCertificateAction`               | `IssueCertificateCommand`               | API-CERT-007       |
+| `submitReissueRequestAction`           | `SubmitReissueRequestCommand`           | API-CERT-011 / 022 |
+| `approveReissueRequestAction`          | `ApproveReissueRequestCommand`          | API-CERT-014       |
+| `rejectReissueRequestAction`           | `RejectReissueRequestCommand`           | API-CERT-015       |
+| `generateReplacementCertificateAction` | `GenerateReplacementCertificateCommand` | API-CERT-016       |
+| `revokeCertificateAction`              | `RevokeCertificateCommand`              | API-CERT-008       |
+| `requestCertificateNotificationAction` | `RequestCertificateNotificationCommand` | API-CERT-028       |
 
 Server Actions must not trust hidden form fields for branch access, current status, eligibility, payment validation, certificate number, verification code, or lifecycle version.
 
@@ -209,15 +209,24 @@ Query parameters:
 
 ```ts
 interface ListCertificateReadinessRequest {
-  readiness?: 'READY' | 'BLOCKED_COMPLETION' | 'BLOCKED_PAYMENT' | 'ALREADY_CERTIFIED';
+  readiness?:
+    | 'READY'
+    | 'BLOCKED_COMPLETION'
+    | 'BLOCKED_PAYMENT'
+    | 'ALREADY_CERTIFIED';
   branchId?: string;
   courseId?: string;
   batchId?: string;
-  studentSearch?: string;       // 1..100 chars after trim
-  enrollmentNumber?: string;   // exact or configured prefix search
-  page?: number;               // >= 1
-  pageSize?: number;           // 1..100
-  sortBy?: 'studentName' | 'courseName' | 'batchName' | 'completionApprovedAt' | 'enrollmentNumber';
+  studentSearch?: string; // 1..100 chars after trim
+  enrollmentNumber?: string; // exact or configured prefix search
+  page?: number; // >= 1
+  pageSize?: number; // 1..100
+  sortBy?:
+    | 'studentName'
+    | 'courseName'
+    | 'batchName'
+    | 'completionApprovedAt'
+    | 'enrollmentNumber';
   sortDirection?: 'asc' | 'desc';
 }
 ```
@@ -229,14 +238,29 @@ interface CertificateReadinessPageDto {
   items: Array<{
     enrollmentId: string;
     enrollmentNumber: string;
-    student: { studentProfileId: string; studentNumber: string; displayName: string };
+    student: {
+      studentProfileId: string;
+      studentNumber: string;
+      displayName: string;
+    };
     course: { courseId: string; courseCode: string; name: string };
     batch: { batchId: string; batchCode: string; name: string };
     branch: { branchId: string; branchCode: string; name: string };
-    completion: { status: string; approved: boolean; approvedAt: string | null };
+    completion: {
+      status: string;
+      approved: boolean;
+      approvedAt: string | null;
+    };
     paymentGate: { required: boolean; passed: boolean | null };
-    certificate: { existingCertificateId: string | null; status: string | null };
-    readiness: 'READY' | 'BLOCKED_COMPLETION' | 'BLOCKED_PAYMENT' | 'ALREADY_CERTIFIED';
+    certificate: {
+      existingCertificateId: string | null;
+      status: string | null;
+    };
+    readiness:
+      | 'READY'
+      | 'BLOCKED_COMPLETION'
+      | 'BLOCKED_PAYMENT'
+      | 'ALREADY_CERTIFIED';
     blockers: Array<{ code: string; message: string }>;
   }>;
   page: PageMeta;
@@ -278,8 +302,17 @@ interface CertificateReadinessDetailDto {
     courseId: string;
     batchId: string;
   };
-  learner: { studentNumber: string; displayName: string; displayNameLocalized?: { en?: string; ar?: string } };
-  course: { courseCode: string; name: string; nameEnglish: string; nameArabic: string | null };
+  learner: {
+    studentNumber: string;
+    displayName: string;
+    displayNameLocalized?: { en?: string; ar?: string };
+  };
+  course: {
+    courseCode: string;
+    name: string;
+    nameEnglish: string;
+    nameArabic: string | null;
+  };
   batch: { batchCode: string; name: string };
   completionGate: {
     approved: boolean;
@@ -298,7 +331,11 @@ interface CertificateReadinessDetailDto {
     certificateId: string | null;
     status: string | null;
   };
-  readiness: 'READY' | 'BLOCKED_COMPLETION' | 'BLOCKED_PAYMENT' | 'ALREADY_CERTIFIED';
+  readiness:
+    | 'READY'
+    | 'BLOCKED_COMPLETION'
+    | 'BLOCKED_PAYMENT'
+    | 'ALREADY_CERTIFIED';
   blockers: Array<{ code: string; message: string }>;
 }
 ```
@@ -330,6 +367,7 @@ interface GenerateCertificateRequest {
 ```
 
 Validation:
+
 - `enrollmentId` required.
 - `language` strictly `en` or `ar`.
 - Client cannot provide certificate number, verification code, QR URL, issue date, student/course/batch IDs, template ID, or status.
@@ -360,7 +398,11 @@ interface GeneratedCertificateDto {
   language: 'en' | 'ar';
   certificateStatus: string;
   artifact: { available: boolean; artifactUrl?: string };
-  verification: { verificationCode: string; verificationUrl: string; qrCodeUrl: string | null };
+  verification: {
+    verificationCode: string;
+    verificationUrl: string;
+    qrCodeUrl: string | null;
+  };
   issuedDate: string | null;
   version: number;
 }
@@ -384,19 +426,25 @@ interface GeneratedCertificateDto {
 
 ```ts
 interface SearchCertificatesRequest {
-  q?: string;                   // certificate no, enrollment no, student no/name; 1..100 chars
+  q?: string; // certificate no, enrollment no, student no/name; 1..100 chars
   certificateNumber?: string;
-  verificationCode?: string;    // internal search permission only
+  verificationCode?: string; // internal search permission only
   status?: string[];
   language?: Array<'en' | 'ar'>;
   branchId?: string;
   courseId?: string;
   batchId?: string;
-  issuedFrom?: string;          // YYYY-MM-DD
-  issuedTo?: string;            // YYYY-MM-DD; >= issuedFrom
+  issuedFrom?: string; // YYYY-MM-DD
+  issuedTo?: string; // YYYY-MM-DD; >= issuedFrom
   page?: number;
   pageSize?: number;
-  sortBy?: 'certificateNumber' | 'studentName' | 'courseName' | 'issuedDate' | 'certificateStatus' | 'createdAt';
+  sortBy?:
+    | 'certificateNumber'
+    | 'studentName'
+    | 'courseName'
+    | 'issuedDate'
+    | 'certificateStatus'
+    | 'createdAt';
   sortDirection?: 'asc' | 'desc';
 }
 ```
@@ -454,9 +502,17 @@ interface CertificateDetailDto {
   issuedDate: string | null;
   issuedBy: { userId: string; displayName: string } | null;
   artifact: { available: boolean; previewSupported: boolean };
-  verification: { verificationCode: string; verificationUrl: string; qrCodeUrl: string | null };
+  verification: {
+    verificationCode: string;
+    verificationUrl: string;
+    qrCodeUrl: string | null;
+  };
   enrollment: { id: string; enrollmentNumber: string; branchId: string };
-  student: { studentProfileId: string; studentNumber: string; displayName: string };
+  student: {
+    studentProfileId: string;
+    studentNumber: string;
+    displayName: string;
+  };
   course: { courseId: string; courseCode: string; name: string };
   batch: { batchId: string; batchCode: string; name: string };
   lineage: {
@@ -499,6 +555,7 @@ interface CertificateArtifactRequest {
 ### Success – `200 OK` or `302/307`
 
 Either:
+
 - binary `application/pdf` response with safe `Content-Disposition`, or
 - short-lived signed storage redirect generated server-side.
 
@@ -563,7 +620,7 @@ interface IssueCertificateResultDto {
 
 ```ts
 interface RevokeCertificateRequest {
-  reason: string;          // trim; 10..1000 chars
+  reason: string; // trim; 10..1000 chars
   expectedVersion: number; // integer >= 0
 }
 ```
@@ -655,7 +712,11 @@ interface CertificateLifecycleDto {
   events: Array<{
     eventType: string;
     occurredAt: string;
-    actor: { userId: string | null; displayName: string | null; actorType: 'USER' | 'SYSTEM' };
+    actor: {
+      userId: string | null;
+      displayName: string | null;
+      actorType: 'USER' | 'SYSTEM';
+    };
     summary: string;
     oldStatus?: string | null;
     newStatus?: string | null;
@@ -821,7 +882,7 @@ interface ReissueRequestDetailDto extends ReissueRequestDto {
 
 ```ts
 interface ApproveReissueRequestRequest {
-  remarks?: string;        // max 1000 chars
+  remarks?: string; // max 1000 chars
   expectedVersion: number;
 }
 ```
@@ -859,7 +920,7 @@ interface ReissueDecisionResultDto {
 
 ```ts
 interface RejectReissueRequestRequest {
-  remarks: string;         // trim; 5..1000 chars
+  remarks: string; // trim; 5..1000 chars
   expectedVersion: number;
 }
 ```
@@ -898,8 +959,8 @@ interface RejectReissueResultDto {
 
 ```ts
 interface GenerateReplacementRequest {
-  language?: 'en' | 'ar';   // default to original certificate language
-  expectedVersion: number;  // reissue request version
+  language?: 'en' | 'ar'; // default to original certificate language
+  expectedVersion: number; // reissue request version
 }
 ```
 
@@ -920,7 +981,11 @@ interface GenerateReplacementRequest {
 interface ReplacementCertificateResultDto {
   requestId: string;
   requestStatus: string;
-  originalCertificate: { certificateId: string; certificateNumber: string; status: string };
+  originalCertificate: {
+    certificateId: string;
+    certificateNumber: string;
+    status: string;
+  };
   replacementCertificate: {
     certificateId: string;
     certificateNumber: string;
@@ -1502,24 +1567,24 @@ interface CertificateCommunicationPort {
 
 ## 33. Authentication, Authorization, and Branch Scope Matrix
 
-| API Group | Authentication | Permission/Entitlement | Scope Derivation |
-|---|---|---|---|
-| Readiness | Internal session | `certificate.read` | Enrollment branch ∩ effective IAM branches |
-| Generate | Internal session | `certificate.generate` | Target enrollment branch ∩ mutation scope |
-| Registry/detail | Internal session | `certificate.read` | Certificate→Enrollment→Branch |
-| Artifact internal | Internal session | `certificate.download` | Certificate→Enrollment→Branch |
-| Issue | Internal session | `certificate.issue` | Certificate→Enrollment→Branch |
-| Revoke | Internal session | `certificate.revoke` | Certificate→Enrollment→Branch |
-| Verification activity | Internal session | `certificate.verify.internal` | Certificate→Enrollment→Branch |
-| Lifecycle audit | Internal session | `certificate.audit.read` | Certificate scope checked before audit read |
-| Reissue request submit | Internal session | `certificate.reissue.request` | Certificate→Enrollment→Branch |
-| Reissue queue/detail | Internal session | `certificate.reissue.read` | Associated certificate branch |
-| Reissue decision | Internal session | `certificate.reissue.approve` | Associated certificate branch mutation scope |
-| Replacement generation | Internal session | `certificate.reissue.generate` | Original certificate branch mutation scope |
-| Public verify | Anonymous | Public | Exact verification code only; no branch dimension |
-| Student self-service | Student session | Portal entitlement | Person→StudentProfile→Enrollment ownership |
-| Trainer status | Trainer session | Portal entitlement/query permission | Person→TrainerProfile→BatchTrainer/Session assignment |
-| Reporting | Internal session | `certificate.report.read/export` | Effective IAM branch scope |
+| API Group              | Authentication   | Permission/Entitlement              | Scope Derivation                                      |
+| ---------------------- | ---------------- | ----------------------------------- | ----------------------------------------------------- |
+| Readiness              | Internal session | `certificate.read`                  | Enrollment branch ∩ effective IAM branches            |
+| Generate               | Internal session | `certificate.generate`              | Target enrollment branch ∩ mutation scope             |
+| Registry/detail        | Internal session | `certificate.read`                  | Certificate→Enrollment→Branch                         |
+| Artifact internal      | Internal session | `certificate.download`              | Certificate→Enrollment→Branch                         |
+| Issue                  | Internal session | `certificate.issue`                 | Certificate→Enrollment→Branch                         |
+| Revoke                 | Internal session | `certificate.revoke`                | Certificate→Enrollment→Branch                         |
+| Verification activity  | Internal session | `certificate.verify.internal`       | Certificate→Enrollment→Branch                         |
+| Lifecycle audit        | Internal session | `certificate.audit.read`            | Certificate scope checked before audit read           |
+| Reissue request submit | Internal session | `certificate.reissue.request`       | Certificate→Enrollment→Branch                         |
+| Reissue queue/detail   | Internal session | `certificate.reissue.read`          | Associated certificate branch                         |
+| Reissue decision       | Internal session | `certificate.reissue.approve`       | Associated certificate branch mutation scope          |
+| Replacement generation | Internal session | `certificate.reissue.generate`      | Original certificate branch mutation scope            |
+| Public verify          | Anonymous        | Public                              | Exact verification code only; no branch dimension     |
+| Student self-service   | Student session  | Portal entitlement                  | Person→StudentProfile→Enrollment ownership            |
+| Trainer status         | Trainer session  | Portal entitlement/query permission | Person→TrainerProfile→BatchTrainer/Session assignment |
+| Reporting              | Internal session | `certificate.report.read/export`    | Effective IAM branch scope                            |
 
 ### 33.1 Branch Scope Algorithm
 
@@ -1579,21 +1644,21 @@ Rules:
 
 ## 35. Validation Rules Summary
 
-| Field | Rule |
-|---|---|
-| `language` | `en` or `ar` only |
-| `reason` for reissue | Trimmed 10–1000 characters |
-| `reason` for revocation | Trimmed 10–1000 characters |
-| rejection `remarks` | Trimmed 5–1000 characters |
-| optional approval remarks | Max 1000 characters |
-| `expectedVersion` | Integer ≥ 0 |
-| page | Integer ≥ 1 |
-| pageSize internal | 1–100 |
-| pageSize self-service | 1–50 |
-| date ranges | ISO date; `to >= from` |
-| verification code | Required, trimmed, max 128 chars; exact opaque match |
-| search text | Trimmed, max 100 chars |
-| Idempotency-Key | 8–128 characters; server-normalized per platform policy |
+| Field                     | Rule                                                    |
+| ------------------------- | ------------------------------------------------------- |
+| `language`                | `en` or `ar` only                                       |
+| `reason` for reissue      | Trimmed 10–1000 characters                              |
+| `reason` for revocation   | Trimmed 10–1000 characters                              |
+| rejection `remarks`       | Trimmed 5–1000 characters                               |
+| optional approval remarks | Max 1000 characters                                     |
+| `expectedVersion`         | Integer ≥ 0                                             |
+| page                      | Integer ≥ 1                                             |
+| pageSize internal         | 1–100                                                   |
+| pageSize self-service     | 1–50                                                    |
+| date ranges               | ISO date; `to >= from`                                  |
+| verification code         | Required, trimmed, max 128 chars; exact opaque match    |
+| search text               | Trimmed, max 100 chars                                  |
+| Idempotency-Key           | 8–128 characters; server-normalized per platform policy |
 
 Validation at API boundary does not replace domain validation inside application services.
 
@@ -1656,22 +1721,22 @@ The API must not leak invoice line items, card data, bank references, or unrelat
 
 ## 37. DDD Ownership Fit Check by API Surface
 
-| API Capability | Owner | Contract Rule |
-|---|---|---|
-| Certificate readiness composition | Certificate application layer consuming upstream truth | May compose; must not own completion/payment facts |
-| Completion approval | Exam, Result & Completion | No Certificate mutation endpoint exists for completion |
-| Payment validation | Finance & Receivables | Certificate consumes gate decision only |
-| Course completion rule | Course Catalog | Read dependency; Certificate does not edit rule |
-| Certificate generation | Certificate | Owned command |
-| Certificate issue | Certificate | Owned command |
-| Public verification | Certificate | Owned query + verification-attempt record |
-| Reissue request | Certificate | Owned transaction |
-| Reissue approval history | Audit & Compliance | Read projection / audit command integration |
-| Replacement generation | Certificate | Owned command, pending cardinality resolution |
-| Revocation | Certificate | Owned behavior; ER metadata gap noted |
-| Notification delivery | Communication | Certificate requests delivery; no provider-send endpoint here |
-| Dashboard/report transaction facts | Reporting consumes | Certificate may expose query/read model but reporting does not mutate Certificate |
-| Branch access | IAM | Certificate service consumes resolved scope and re-enforces resource ownership |
+| API Capability                     | Owner                                                  | Contract Rule                                                                     |
+| ---------------------------------- | ------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| Certificate readiness composition  | Certificate application layer consuming upstream truth | May compose; must not own completion/payment facts                                |
+| Completion approval                | Exam, Result & Completion                              | No Certificate mutation endpoint exists for completion                            |
+| Payment validation                 | Finance & Receivables                                  | Certificate consumes gate decision only                                           |
+| Course completion rule             | Course Catalog                                         | Read dependency; Certificate does not edit rule                                   |
+| Certificate generation             | Certificate                                            | Owned command                                                                     |
+| Certificate issue                  | Certificate                                            | Owned command                                                                     |
+| Public verification                | Certificate                                            | Owned query + verification-attempt record                                         |
+| Reissue request                    | Certificate                                            | Owned transaction                                                                 |
+| Reissue approval history           | Audit & Compliance                                     | Read projection / audit command integration                                       |
+| Replacement generation             | Certificate                                            | Owned command, pending cardinality resolution                                     |
+| Revocation                         | Certificate                                            | Owned behavior; ER metadata gap noted                                             |
+| Notification delivery              | Communication                                          | Certificate requests delivery; no provider-send endpoint here                     |
+| Dashboard/report transaction facts | Reporting consumes                                     | Certificate may expose query/read model but reporting does not mutate Certificate |
+| Branch access                      | IAM                                                    | Certificate service consumes resolved scope and re-enforces resource ownership    |
 
 ### 37.1 Endpoints Explicitly Not Allowed in Certificate Management
 
@@ -1695,29 +1760,29 @@ These would violate bounded-context ownership, aggregate invariants, or soft-del
 
 ## 38. Traceability to Screens and Use Cases
 
-| API ID | Primary Screen(s) | Primary Use Case |
-|---|---|---|
-| API-CERT-001 | SCR-CERT-A02 | UC-CERT-001 |
-| API-CERT-002 | SCR-CERT-A03, A04 | UC-CERT-001 |
-| API-CERT-003 | SCR-CERT-A04, A05 | UC-CERT-002 |
-| API-CERT-004 | SCR-CERT-A06 | Registry query supporting UC-CERT-003/008 operations |
-| API-CERT-005 | SCR-CERT-A07 | Certificate detail query |
-| API-CERT-006 | SCR-CERT-A08 | Artifact access |
-| API-CERT-007 | SCR-CERT-A09 | UC-CERT-003 |
-| API-CERT-008 | SCR-CERT-A13 | UC-CERT-008 |
-| API-CERT-009 | SCR-CERT-A14 | Verification activity query |
-| API-CERT-010 | SCR-CERT-A15 | Lifecycle/audit query |
-| API-CERT-011 | Internal request flow | UC-CERT-005 |
-| API-CERT-012/013 | SCR-CERT-A10/A11 | UC-CERT-006 |
-| API-CERT-014/015 | SCR-CERT-A11 | UC-CERT-006 |
-| API-CERT-016 | SCR-CERT-A12 | UC-CERT-007 |
-| API-CERT-017/018 | SCR-CERT-P01 | UC-CERT-004 |
-| API-CERT-019/020/021 | SCR-CERT-S01/S02 | Student self-service stories |
-| API-CERT-022/023 | SCR-CERT-S03/S04 | UC-CERT-005 |
-| API-CERT-024 | SCR-CERT-T01 | Trainer read-only status flow |
-| API-CERT-025 | SCR-CERT-A01 | Dashboard query |
-| API-CERT-026/027 | Reporting surfaces | Reporting requirements |
-| API-CERT-028 | Issue/detail actions | FR-CERT-031 |
+| API ID               | Primary Screen(s)     | Primary Use Case                                     |
+| -------------------- | --------------------- | ---------------------------------------------------- |
+| API-CERT-001         | SCR-CERT-A02          | UC-CERT-001                                          |
+| API-CERT-002         | SCR-CERT-A03, A04     | UC-CERT-001                                          |
+| API-CERT-003         | SCR-CERT-A04, A05     | UC-CERT-002                                          |
+| API-CERT-004         | SCR-CERT-A06          | Registry query supporting UC-CERT-003/008 operations |
+| API-CERT-005         | SCR-CERT-A07          | Certificate detail query                             |
+| API-CERT-006         | SCR-CERT-A08          | Artifact access                                      |
+| API-CERT-007         | SCR-CERT-A09          | UC-CERT-003                                          |
+| API-CERT-008         | SCR-CERT-A13          | UC-CERT-008                                          |
+| API-CERT-009         | SCR-CERT-A14          | Verification activity query                          |
+| API-CERT-010         | SCR-CERT-A15          | Lifecycle/audit query                                |
+| API-CERT-011         | Internal request flow | UC-CERT-005                                          |
+| API-CERT-012/013     | SCR-CERT-A10/A11      | UC-CERT-006                                          |
+| API-CERT-014/015     | SCR-CERT-A11          | UC-CERT-006                                          |
+| API-CERT-016         | SCR-CERT-A12          | UC-CERT-007                                          |
+| API-CERT-017/018     | SCR-CERT-P01          | UC-CERT-004                                          |
+| API-CERT-019/020/021 | SCR-CERT-S01/S02      | Student self-service stories                         |
+| API-CERT-022/023     | SCR-CERT-S03/S04      | UC-CERT-005                                          |
+| API-CERT-024         | SCR-CERT-T01          | Trainer read-only status flow                        |
+| API-CERT-025         | SCR-CERT-A01          | Dashboard query                                      |
+| API-CERT-026/027     | Reporting surfaces    | Reporting requirements                               |
+| API-CERT-028         | Issue/detail actions  | FR-CERT-031                                          |
 
 ---
 

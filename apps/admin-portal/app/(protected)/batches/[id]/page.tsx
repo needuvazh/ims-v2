@@ -108,17 +108,19 @@ export default async function BatchDetailPage(props: {
   }));
 
   // Fetch active branch-scoped students via query service (enforcing PII masking)
-  const { branchScopeResolver, studentQueryService } = await import('@/lib/runtime');
+  const { branchScopeResolver, studentQueryService } =
+    await import('@/lib/runtime');
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
     session.userId as any,
-    session.activeBranchId as any
+    session.activeBranchId as any,
   );
 
-  const scopedStudentsResult = await studentQueryService.searchBranchScopedStudents(
-    '',
-    allowedBranchIds as string[],
-    { page: 1, limit: 1000, studentStatus: 'Active' }
-  );
+  const scopedStudentsResult =
+    await studentQueryService.searchBranchScopedStudents(
+      '',
+      allowedBranchIds as string[],
+      { page: 1, limit: 1000, studentStatus: 'Active' },
+    );
 
   const studentsList = scopedStudentsResult.items.map((student) => ({
     id: student.id,
@@ -155,7 +157,9 @@ export default async function BatchDetailPage(props: {
     where: {
       batchId: id,
       isDeleted: false,
-      enrollmentStatus: { in: ['Approved', 'Confirmed', 'Active', 'Completed'] },
+      enrollmentStatus: {
+        in: ['Approved', 'Confirmed', 'Active', 'Completed'],
+      },
     },
     include: {
       studentProfile: {
@@ -208,9 +212,20 @@ export default async function BatchDetailPage(props: {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5" /> },
-              { label: 'Batches', href: '/batches', icon: <Layers className="h-3.5 w-3.5" /> },
-              { label: batch.batchCode, icon: <Layers className="h-3.5 w-3.5" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5" />,
+              },
+              {
+                label: 'Batches',
+                href: '/batches',
+                icon: <Layers className="h-3.5 w-3.5" />,
+              },
+              {
+                label: batch.batchCode,
+                icon: <Layers className="h-3.5 w-3.5" />,
+              },
             ]}
           />
         }
@@ -229,7 +244,9 @@ export default async function BatchDetailPage(props: {
         {/* Left Hand Details & Transitions */}
         <div className="space-y-6 lg:col-span-1">
           <Card className="p-4 space-y-4">
-            <h3 className="text-sm font-semibold border-b border-[color:var(--ims-border)] pb-2 uppercase">Batch Information</h3>
+            <h3 className="text-sm font-semibold border-b border-[color:var(--ims-border)] pb-2 uppercase">
+              Batch Information
+            </h3>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-[color:var(--ims-muted)]">Course:</span>
@@ -244,28 +261,48 @@ export default async function BatchDetailPage(props: {
                 <span className="font-medium">{batch.capacity} seats</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[color:var(--ims-muted)]">Enrolled Count:</span>
-                <span className="font-medium">{batch.currentEnrollmentCount} enrolled</span>
+                <span className="text-[color:var(--ims-muted)]">
+                  Enrolled Count:
+                </span>
+                <span className="font-medium">
+                  {batch.currentEnrollmentCount} enrolled
+                </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[color:var(--ims-muted)]">Start Date:</span>
-                <span className="font-medium">{new Date(batch.startDate).toLocaleDateString()}</span>
+                <span className="text-[color:var(--ims-muted)]">
+                  Start Date:
+                </span>
+                <span className="font-medium">
+                  {new Date(batch.startDate).toLocaleDateString()}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-[color:var(--ims-muted)]">End Date:</span>
-                <span className="font-medium">{new Date(batch.endDate).toLocaleDateString()}</span>
+                <span className="font-medium">
+                  {new Date(batch.endDate).toLocaleDateString()}
+                </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[color:var(--ims-muted)]">Walk-in Batch:</span>
-                <span className="font-medium">{batch.isWalkIn ? 'Yes' : 'No'}</span>
+                <span className="text-[color:var(--ims-muted)]">
+                  Walk-in Batch:
+                </span>
+                <span className="font-medium">
+                  {batch.isWalkIn ? 'Yes' : 'No'}
+                </span>
               </div>
             </div>
 
             {/* State transitions buttons */}
             {isCoordinator && (
               <div className="pt-4 border-t border-[color:var(--ims-border)] space-y-2">
-                <span className="block text-xs font-semibold text-[color:var(--ims-muted)] uppercase mb-1">State Actions</span>
-                <TransitionButtons batchId={batch.id} status={batch.status} version={batch.version} />
+                <span className="block text-xs font-semibold text-[color:var(--ims-muted)] uppercase mb-1">
+                  State Actions
+                </span>
+                <TransitionButtons
+                  batchId={batch.id}
+                  status={batch.status}
+                  version={batch.version}
+                />
               </div>
             )}
           </Card>

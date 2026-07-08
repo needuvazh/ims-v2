@@ -1,1 +1,191 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_10_exam_result_completion_specs_result_correction_spec_md", "label": "spec.md", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L1"}, {"id": "result_correction_spec_added_requirements", "label": "ADDED Requirements", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L1"}, {"id": "result_correction_spec_requirement_correct_finalized_result_fr_exc_015", "label": "Requirement: Correct Finalized Result (FR-EXC-015)", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L3"}, {"id": "result_correction_spec_scenario_correct_finalized_result_successfully", "label": "Scenario: Correct finalized Result successfully", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L6"}, {"id": "result_correction_spec_scenario_reject_correction_without_reason", "label": "Scenario: Reject correction without reason", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L14"}, {"id": "result_correction_spec_scenario_reject_unchanged_corrected_marks", "label": "Scenario: Reject unchanged corrected marks", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L18"}, {"id": "result_correction_spec_scenario_reject_correction_without_restricted_permission", "label": "Scenario: Reject correction without restricted permission", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L22"}, {"id": "result_correction_spec_scenario_preserve_result_correction_audit_atomically", "label": "Scenario: Preserve Result correction audit atomically", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L26"}, {"id": "result_correction_spec_requirement_result_correction_branch_isolation_fr_exc_016", "label": "Requirement: Result Correction Branch Isolation (FR-EXC-016)", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L31"}, {"id": "result_correction_spec_scenario_reject_cross_branch_result_correction", "label": "Scenario: Reject cross-branch Result correction", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L34"}, {"id": "result_correction_spec_requirement_result_correction_concurrency_fr_exc_017", "label": "Requirement: Result Correction Concurrency (FR-EXC-017)", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L38"}, {"id": "result_correction_spec_scenario_reject_stale_result_correction", "label": "Scenario: Reject stale Result correction", "file_type": "document", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L41"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_10_exam_result_completion_specs_result_correction_spec_md", "target": "result_correction_spec_added_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L1", "weight": 1.0}, {"source": "result_correction_spec_added_requirements", "target": "result_correction_spec_requirement_correct_finalized_result_fr_exc_015", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L3", "weight": 1.0}, {"source": "result_correction_spec_requirement_correct_finalized_result_fr_exc_015", "target": "result_correction_spec_scenario_correct_finalized_result_successfully", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L6", "weight": 1.0}, {"source": "result_correction_spec_requirement_correct_finalized_result_fr_exc_015", "target": "result_correction_spec_scenario_reject_correction_without_reason", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L14", "weight": 1.0}, {"source": "result_correction_spec_requirement_correct_finalized_result_fr_exc_015", "target": "result_correction_spec_scenario_reject_unchanged_corrected_marks", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L18", "weight": 1.0}, {"source": "result_correction_spec_requirement_correct_finalized_result_fr_exc_015", "target": "result_correction_spec_scenario_reject_correction_without_restricted_permission", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L22", "weight": 1.0}, {"source": "result_correction_spec_requirement_correct_finalized_result_fr_exc_015", "target": "result_correction_spec_scenario_preserve_result_correction_audit_atomically", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L26", "weight": 1.0}, {"source": "result_correction_spec_added_requirements", "target": "result_correction_spec_requirement_result_correction_branch_isolation_fr_exc_016", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L31", "weight": 1.0}, {"source": "result_correction_spec_requirement_result_correction_branch_isolation_fr_exc_016", "target": "result_correction_spec_scenario_reject_cross_branch_result_correction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L34", "weight": 1.0}, {"source": "result_correction_spec_added_requirements", "target": "result_correction_spec_requirement_result_correction_concurrency_fr_exc_017", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L38", "weight": 1.0}, {"source": "result_correction_spec_requirement_result_correction_concurrency_fr_exc_017", "target": "result_correction_spec_scenario_reject_stale_result_correction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md", "source_location": "L41", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_10_exam_result_completion_specs_result_correction_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "result_correction_spec_added_requirements",
+      "label": "ADDED Requirements",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "result_correction_spec_requirement_correct_finalized_result_fr_exc_015",
+      "label": "Requirement: Correct Finalized Result (FR-EXC-015)",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "result_correction_spec_scenario_correct_finalized_result_successfully",
+      "label": "Scenario: Correct finalized Result successfully",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L6"
+    },
+    {
+      "id": "result_correction_spec_scenario_reject_correction_without_reason",
+      "label": "Scenario: Reject correction without reason",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L14"
+    },
+    {
+      "id": "result_correction_spec_scenario_reject_unchanged_corrected_marks",
+      "label": "Scenario: Reject unchanged corrected marks",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L18"
+    },
+    {
+      "id": "result_correction_spec_scenario_reject_correction_without_restricted_permission",
+      "label": "Scenario: Reject correction without restricted permission",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L22"
+    },
+    {
+      "id": "result_correction_spec_scenario_preserve_result_correction_audit_atomically",
+      "label": "Scenario: Preserve Result correction audit atomically",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L26"
+    },
+    {
+      "id": "result_correction_spec_requirement_result_correction_branch_isolation_fr_exc_016",
+      "label": "Requirement: Result Correction Branch Isolation (FR-EXC-016)",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L31"
+    },
+    {
+      "id": "result_correction_spec_scenario_reject_cross_branch_result_correction",
+      "label": "Scenario: Reject cross-branch Result correction",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L34"
+    },
+    {
+      "id": "result_correction_spec_requirement_result_correction_concurrency_fr_exc_017",
+      "label": "Requirement: Result Correction Concurrency (FR-EXC-017)",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L38"
+    },
+    {
+      "id": "result_correction_spec_scenario_reject_stale_result_correction",
+      "label": "Scenario: Reject stale Result correction",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L41"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_module_10_exam_result_completion_specs_result_correction_spec_md",
+      "target": "result_correction_spec_added_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "result_correction_spec_added_requirements",
+      "target": "result_correction_spec_requirement_correct_finalized_result_fr_exc_015",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "result_correction_spec_requirement_correct_finalized_result_fr_exc_015",
+      "target": "result_correction_spec_scenario_correct_finalized_result_successfully",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "result_correction_spec_requirement_correct_finalized_result_fr_exc_015",
+      "target": "result_correction_spec_scenario_reject_correction_without_reason",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "result_correction_spec_requirement_correct_finalized_result_fr_exc_015",
+      "target": "result_correction_spec_scenario_reject_unchanged_corrected_marks",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "result_correction_spec_requirement_correct_finalized_result_fr_exc_015",
+      "target": "result_correction_spec_scenario_reject_correction_without_restricted_permission",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "result_correction_spec_requirement_correct_finalized_result_fr_exc_015",
+      "target": "result_correction_spec_scenario_preserve_result_correction_audit_atomically",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "result_correction_spec_added_requirements",
+      "target": "result_correction_spec_requirement_result_correction_branch_isolation_fr_exc_016",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "result_correction_spec_requirement_result_correction_branch_isolation_fr_exc_016",
+      "target": "result_correction_spec_scenario_reject_cross_branch_result_correction",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "result_correction_spec_added_requirements",
+      "target": "result_correction_spec_requirement_result_correction_concurrency_fr_exc_017",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "result_correction_spec_requirement_result_correction_concurrency_fr_exc_017",
+      "target": "result_correction_spec_scenario_reject_stale_result_correction",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-module-10-exam-result-completion/specs/result-correction/spec.md",
+      "source_location": "L41",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

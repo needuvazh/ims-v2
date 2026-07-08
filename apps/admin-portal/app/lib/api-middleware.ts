@@ -1,5 +1,9 @@
 import { NextResponse } from 'next/server';
-import { decodeSession, sessionCookieName, type Session } from '@ims/shared-auth';
+import {
+  decodeSession,
+  sessionCookieName,
+  type Session,
+} from '@ims/shared-auth';
 import { JwtService, type TokenPayload } from '@ims/shared-auth/jwt';
 import { createRequestContext, type RequestContext } from '@ims/observability';
 import { DomainError } from '@ims/shared-kernel';
@@ -20,7 +24,10 @@ type AuthenticatedRequestContext = {
 const rateLimitBuckets = new Map<string, RateLimitBucket>();
 let rateLimitSweepAt = 0;
 
-function getCookieValue(headerValue: string | null, name: string): string | null {
+function getCookieValue(
+  headerValue: string | null,
+  name: string,
+): string | null {
   if (!headerValue) return null;
   const match = headerValue
     .split(';')
@@ -35,14 +42,20 @@ function getPublicKey(): string {
 
   const fallbackSecret = process.env.SESSION_SECRET;
   if (!fallbackSecret) {
-    throw new Error('JWT_PUBLIC_KEY or SESSION_SECRET environment variable is required.');
+    throw new Error(
+      'JWT_PUBLIC_KEY or SESSION_SECRET environment variable is required.',
+    );
   }
 
   return fallbackSecret;
 }
 
 function getClientIp(headers: Headers): string | null {
-  return headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? headers.get('x-real-ip') ?? null;
+  return (
+    headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
+    headers.get('x-real-ip') ??
+    null
+  );
 }
 
 function getDeviceFingerprint(headers: Headers): string {
@@ -71,7 +84,10 @@ function buildRateLimitKey(request: Request, scope: string): string {
   return `${scope}:${ip}:${fingerprint}`;
 }
 
-export function withCorrelation(source: Headers, overrides: Partial<RequestContext> = {}): {
+export function withCorrelation(
+  source: Headers,
+  overrides: Partial<RequestContext> = {},
+): {
   requestContext: RequestContext;
   responseHeaders: Headers;
 } {
@@ -85,13 +101,16 @@ export function withCorrelation(source: Headers, overrides: Partial<RequestConte
   return { requestContext, responseHeaders };
 }
 
-export async function withAuth(request: Request): Promise<AuthenticatedRequestContext> {
+export async function withAuth(
+  request: Request,
+): Promise<AuthenticatedRequestContext> {
   const headers = request.headers;
   const authHeader = headers.get('authorization');
   const cookieHeader = headers.get('cookie');
   const accessToken =
-    (authHeader?.toLowerCase().startsWith('bearer ') ? authHeader.slice(7).trim() : null) ??
-    getCookieValue(cookieHeader, 'ims_access_token');
+    (authHeader?.toLowerCase().startsWith('bearer ')
+      ? authHeader.slice(7).trim()
+      : null) ?? getCookieValue(cookieHeader, 'ims_access_token');
   const sessionToken = getCookieValue(cookieHeader, sessionCookieName);
 
   if (!accessToken && !sessionToken) {
@@ -101,7 +120,10 @@ export async function withAuth(request: Request): Promise<AuthenticatedRequestCo
   let tokenPayload: TokenPayload | null = null;
   if (accessToken) {
     try {
-      tokenPayload = await JwtService.verifyAccessToken(accessToken, getPublicKey());
+      tokenPayload = await JwtService.verifyAccessToken(
+        accessToken,
+        getPublicKey(),
+      );
     } catch {
       tokenPayload = null;
     }
@@ -111,23 +133,33 @@ export async function withAuth(request: Request): Promise<AuthenticatedRequestCo
   const sessionJti = decodedSession?.accessTokenJti ?? tokenPayload?.jti ?? '';
   const session = await sessionRepository.findByAccessTokenJti(sessionJti);
 
-  const resolvedTokenPayload = tokenPayload ?? (decodedSession
-    ? {
-        userId: decodedSession.userId,
-        email: decodedSession.displayName,
-        roles: decodedSession.roles,
-        activeBranchId: decodedSession.activeBranchId,
-        jti: decodedSession.accessTokenJti,
-      }
-    : null);
+  const resolvedTokenPayload =
+    tokenPayload ??
+    (decodedSession
+      ? {
+          userId: decodedSession.userId,
+          email: decodedSession.displayName,
+          roles: decodedSession.roles,
+          activeBranchId: decodedSession.activeBranchId,
+          jti: decodedSession.accessTokenJti,
+        }
+      : null);
 
-  if (!session || session.status !== 'Active' || !resolvedTokenPayload || session.userId !== resolvedTokenPayload.userId) {
+  if (
+    !session ||
+    session.status !== 'Active' ||
+    !resolvedTokenPayload ||
+    session.userId !== resolvedTokenPayload.userId
+  ) {
     throw createIamError('IAM-AUTH-002');
   }
 
   const requestContext = createRequestContext(headers, {
     userId: decodedSession?.userId ?? resolvedTokenPayload.userId,
-    branchId: decodedSession?.activeBranchId ?? resolvedTokenPayload.activeBranchId ?? null,
+    branchId:
+      decodedSession?.activeBranchId ??
+      resolvedTokenPayload.activeBranchId ??
+      null,
     route: request.url,
     method: request.method,
   });
@@ -135,7 +167,10 @@ export async function withAuth(request: Request): Promise<AuthenticatedRequestCo
   const { effectivePermissionsService } = await import('./runtime');
 
   if (decodedSession) {
-    decodedSession.permissions = await effectivePermissionsService.getPermissionsForRoles(decodedSession.roles);
+    decodedSession.permissions =
+      await effectivePermissionsService.getPermissionsForRoles(
+        decodedSession.roles,
+      );
     return {
       session: decodedSession,
       tokenPayload: resolvedTokenPayload,
@@ -143,7 +178,9 @@ export async function withAuth(request: Request): Promise<AuthenticatedRequestCo
     };
   }
 
-  const permissions = await effectivePermissionsService.getPermissionsForRoles(resolvedTokenPayload.roles ?? []);
+  const permissions = await effectivePermissionsService.getPermissionsForRoles(
+    resolvedTokenPayload.roles ?? [],
+  );
 
   return {
     session: {
@@ -172,7 +209,11 @@ export async function withPermission(
   try {
     const context = await withAuth(request);
     const { authorizationGuard } = await import('./runtime');
-    await authorizationGuard.verifyPermission(context.session.userId, permissionCode, context.session.activeBranchId ?? null);
+    await authorizationGuard.verifyPermission(
+      context.session.userId,
+      permissionCode,
+      context.session.activeBranchId ?? null,
+    );
     return await work(context);
   } catch (error) {
     return errorHandler(error, {
@@ -190,7 +231,10 @@ export async function withBranchScope<T>(
 ): Promise<T> {
   const context = await withAuth(request);
   const { branchScopeResolver } = await import('./runtime');
-   const allowedBranches = (await branchScopeResolver.resolveAllowedBranches(context.session.userId, context.session.activeBranchId ?? null)) as string[];
+  const allowedBranches = (await branchScopeResolver.resolveAllowedBranches(
+    context.session.userId,
+    context.session.activeBranchId ?? null,
+  )) as string[];
 
   if (branchId && !allowedBranches.includes(branchId)) {
     throw createIamError('IAM-AUTHZ-002');
@@ -199,7 +243,12 @@ export async function withBranchScope<T>(
   return work(context);
 }
 
-export function withRateLimit(request: Request, limit: number, windowMs: number, scope = request.url): { allowed: boolean; response?: NextResponse } {
+export function withRateLimit(
+  request: Request,
+  limit: number,
+  windowMs: number,
+  scope = request.url,
+): { allowed: boolean; response?: NextResponse } {
   const now = Date.now();
   sweepRateLimitBuckets(now);
 
@@ -212,7 +261,10 @@ export function withRateLimit(request: Request, limit: number, windowMs: number,
   }
 
   if (bucket.count >= limit) {
-    const retryAfterSeconds = Math.max(1, Math.ceil((bucket.resetAt - now) / 1000));
+    const retryAfterSeconds = Math.max(
+      1,
+      Math.ceil((bucket.resetAt - now) / 1000),
+    );
     const response = NextResponse.json(
       {
         type: 'https://ims.local/problems/rate-limit',
@@ -265,14 +317,14 @@ export function errorHandler(
   }
 
   return NextResponse.json(
-      {
-        type: 'https://ims.local/problems/iam',
-        title: fallback.title,
-        status: 500,
-        detail: fallback.detail,
-        errorCode: fallback.errorCode,
-        correlationId,
-      },
-      { status: 500 },
-    );
-  }
+    {
+      type: 'https://ims.local/problems/iam',
+      title: fallback.title,
+      status: 500,
+      detail: fallback.detail,
+      errorCode: fallback.errorCode,
+      correlationId,
+    },
+    { status: 500 },
+  );
+}

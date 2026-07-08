@@ -63,18 +63,18 @@ Certificate Management operations are responsible for the runtime health and rec
 
 The module depends on, but does not operationally own, the following authoritative capabilities:
 
-| Dependency | Owning Context | Certificate Dependency | Failure Policy |
-|---|---|---|---|
-| Authentication and session validation | Identity & Access | authenticated principal | Fail closed |
-| Permission and branch scope | Identity & Access | permission decision and effective branch set | Fail closed |
-| Enrollment identity/course/batch link | Admission & Enrollment | central lifecycle reference | Fail closed for generation; degrade read views only if cached projection exists and is clearly marked stale |
-| Completion approval | Exam, Result & Completion | eligibility decision | Fail closed for generation/issue where required |
-| Payment validation | Fee, Billing & Receivables | payment gate where configured | Fail closed for generation/issue where required |
-| Number allocation | Configuration / Master Data | certificate number | Fail closed for new generation; never synthesize a number locally |
-| Audit persistence | Audit & Compliance | mandatory sensitive-action record | Fail closed for configured mandatory-audit commands |
-| Notification request | Communication & Notification | post-commit notification request | Do not roll back committed lifecycle state; retry/reconcile request |
-| Reporting projection | Reporting & Dashboards | read-only projection update | Do not roll back transaction; monitor lag and reconcile |
-| Private artifact storage | Infrastructure storage capability | PDF/object persistence and retrieval | Fail generation before commit if durable artifact is mandatory |
+| Dependency                            | Owning Context                    | Certificate Dependency                       | Failure Policy                                                                                              |
+| ------------------------------------- | --------------------------------- | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| Authentication and session validation | Identity & Access                 | authenticated principal                      | Fail closed                                                                                                 |
+| Permission and branch scope           | Identity & Access                 | permission decision and effective branch set | Fail closed                                                                                                 |
+| Enrollment identity/course/batch link | Admission & Enrollment            | central lifecycle reference                  | Fail closed for generation; degrade read views only if cached projection exists and is clearly marked stale |
+| Completion approval                   | Exam, Result & Completion         | eligibility decision                         | Fail closed for generation/issue where required                                                             |
+| Payment validation                    | Fee, Billing & Receivables        | payment gate where configured                | Fail closed for generation/issue where required                                                             |
+| Number allocation                     | Configuration / Master Data       | certificate number                           | Fail closed for new generation; never synthesize a number locally                                           |
+| Audit persistence                     | Audit & Compliance                | mandatory sensitive-action record            | Fail closed for configured mandatory-audit commands                                                         |
+| Notification request                  | Communication & Notification      | post-commit notification request             | Do not roll back committed lifecycle state; retry/reconcile request                                         |
+| Reporting projection                  | Reporting & Dashboards            | read-only projection update                  | Do not roll back transaction; monitor lag and reconcile                                                     |
+| Private artifact storage              | Infrastructure storage capability | PDF/object persistence and retrieval         | Fail generation before commit if durable artifact is mandatory                                              |
 
 Certificate operations must not recover another context's authoritative table by writing directly into that context. Recovery across multiple contexts requires coordinated, owner-specific recovery procedures.
 
@@ -121,14 +121,14 @@ Operational rules:
 
 ## 3.2 Runtime Components
 
-| Runtime Component | Responsibility | Scale Unit |
-|---|---|---|
-| Next.js web/runtime instances | Portal pages, Server Actions, Route Handlers | Horizontal application instances |
-| Certificate application module | Commands and queries | Same runtime as application |
-| Database | Certificate-owned transactional tables plus other IMS schemas | Database platform capacity |
-| Private object storage | Certificate artifacts and generated QR assets where applicable | Object storage capacity |
+| Runtime Component                | Responsibility                                                            | Scale Unit                                          |
+| -------------------------------- | ------------------------------------------------------------------------- | --------------------------------------------------- |
+| Next.js web/runtime instances    | Portal pages, Server Actions, Route Handlers                              | Horizontal application instances                    |
+| Certificate application module   | Commands and queries                                                      | Same runtime as application                         |
+| Database                         | Certificate-owned transactional tables plus other IMS schemas             | Database platform capacity                          |
+| Private object storage           | Certificate artifacts and generated QR assets where applicable            | Object storage capacity                             |
 | In-process/background job runner | retries, reconciliation, projection repair, non-blocking post-commit work | Job worker concurrency within approved architecture |
-| Reporting database/views | read-only dashboards and analytics | Read workload / materialized-view refresh capacity |
+| Reporting database/views         | read-only dashboards and analytics                                        | Read workload / materialized-view refresh capacity  |
 
 ## 3.3 Environment Separation
 
@@ -152,23 +152,23 @@ Production requirements:
 
 ## 3.4 Required Runtime Configuration
 
-| Configuration | Purpose | Validation |
-|---|---|---|
-| `APP_ENV` | environment label | Required; approved enum |
-| `APP_VERSION` | deployment/version correlation | Required; immutable per deployment |
-| `DATABASE_URL` or platform equivalent | database connectivity | Secret; startup validation |
-| `CERTIFICATE_ARTIFACT_BUCKET` | private artifact storage target | Required in environments with generation enabled |
-| `CERTIFICATE_PUBLIC_VERIFY_BASE_URL` | QR/deep-link origin | Must be HTTPS in production |
-| `CERTIFICATE_SIGNED_URL_TTL_SECONDS` | authenticated artifact access TTL | Bounded secure value |
-| `CERTIFICATE_RENDER_TIMEOUT_MS` | renderer timeout | Positive bounded integer |
-| `CERTIFICATE_RENDER_MAX_CONCURRENCY` | renderer concurrency protection | Positive bounded integer |
-| `CERTIFICATE_VERIFY_RATE_LIMIT` | public verification abuse control | Required in production |
-| `CERTIFICATE_VERIFY_WINDOW_SECONDS` | rate-limit window | Required in production |
-| `CERTIFICATE_AUDIT_REQUIRED` | enforce mandatory audit behavior | Must be true for production sensitive commands |
-| `OTEL_SERVICE_NAME` or equivalent | trace source identity | Required when telemetry enabled |
-| `LOG_LEVEL` | structured-log threshold | Production default `info`; temporary elevation controlled |
-| `METRICS_ENABLED` | metric emission | Required true in production |
-| `TRACE_SAMPLING_POLICY` | trace volume policy | Must preserve error traces and critical command traces |
+| Configuration                         | Purpose                           | Validation                                                |
+| ------------------------------------- | --------------------------------- | --------------------------------------------------------- |
+| `APP_ENV`                             | environment label                 | Required; approved enum                                   |
+| `APP_VERSION`                         | deployment/version correlation    | Required; immutable per deployment                        |
+| `DATABASE_URL` or platform equivalent | database connectivity             | Secret; startup validation                                |
+| `CERTIFICATE_ARTIFACT_BUCKET`         | private artifact storage target   | Required in environments with generation enabled          |
+| `CERTIFICATE_PUBLIC_VERIFY_BASE_URL`  | QR/deep-link origin               | Must be HTTPS in production                               |
+| `CERTIFICATE_SIGNED_URL_TTL_SECONDS`  | authenticated artifact access TTL | Bounded secure value                                      |
+| `CERTIFICATE_RENDER_TIMEOUT_MS`       | renderer timeout                  | Positive bounded integer                                  |
+| `CERTIFICATE_RENDER_MAX_CONCURRENCY`  | renderer concurrency protection   | Positive bounded integer                                  |
+| `CERTIFICATE_VERIFY_RATE_LIMIT`       | public verification abuse control | Required in production                                    |
+| `CERTIFICATE_VERIFY_WINDOW_SECONDS`   | rate-limit window                 | Required in production                                    |
+| `CERTIFICATE_AUDIT_REQUIRED`          | enforce mandatory audit behavior  | Must be true for production sensitive commands            |
+| `OTEL_SERVICE_NAME` or equivalent     | trace source identity             | Required when telemetry enabled                           |
+| `LOG_LEVEL`                           | structured-log threshold          | Production default `info`; temporary elevation controlled |
+| `METRICS_ENABLED`                     | metric emission                   | Required true in production                               |
+| `TRACE_SAMPLING_POLICY`               | trace volume policy               | Must preserve error traces and critical command traces    |
 
 Configuration must be validated during startup. An invalid security-sensitive configuration makes the application unready rather than silently falling back to an insecure default.
 
@@ -230,15 +230,15 @@ Recommended modular-monolith deployment sequence:
 
 Mandatory smoke checks:
 
-| ID | Smoke Test | Expected Result |
-|---|---|---|
-| SMK-CERT-001 | authenticated registry query | returns only effective branch scope |
-| SMK-CERT-002 | readiness detail for known test enrollment | response includes authoritative completion/payment decisions |
-| SMK-CERT-003 | public verification using known non-production/staging code | privacy-minimized valid response |
-| SMK-CERT-004 | invalid verification code | uniform invalid response without record enumeration |
-| SMK-CERT-005 | certificate artifact authorized access | short-lived/private access only |
-| SMK-CERT-006 | audit-sensitive command in staging | Certificate action and Audit record share correlation ID |
-| SMK-CERT-007 | report query | read-only result and permission scope enforced |
+| ID           | Smoke Test                                                  | Expected Result                                              |
+| ------------ | ----------------------------------------------------------- | ------------------------------------------------------------ |
+| SMK-CERT-001 | authenticated registry query                                | returns only effective branch scope                          |
+| SMK-CERT-002 | readiness detail for known test enrollment                  | response includes authoritative completion/payment decisions |
+| SMK-CERT-003 | public verification using known non-production/staging code | privacy-minimized valid response                             |
+| SMK-CERT-004 | invalid verification code                                   | uniform invalid response without record enumeration          |
+| SMK-CERT-005 | certificate artifact authorized access                      | short-lived/private access only                              |
+| SMK-CERT-006 | audit-sensitive command in staging                          | Certificate action and Audit record share correlation ID     |
+| SMK-CERT-007 | report query                                                | read-only result and permission scope enforced               |
 
 Production smoke tests must avoid creating unnecessary live certificates. Where a production-safe synthetic tenant is not available, use read-only checks and approved operational probes.
 
@@ -295,27 +295,27 @@ Every Certificate module log event must use a structured schema similar to:
 
 ## 6.2 Required Log Fields
 
-| Field | Required | Notes |
-|---|---|---|
-| `timestamp` | Yes | UTC ISO-8601 |
-| `level` | Yes | debug/info/warn/error/fatal |
-| `environment` | Yes | deployment environment |
-| `service` | Yes | modular monolith service name |
-| `module` | Yes | `certificate-management` |
-| `appVersion` | Yes | release correlation |
-| `eventName` | Yes | stable event taxonomy |
-| `traceId` | When tracing present | cross-boundary correlation |
-| `correlationId` | Yes for request/command | end-to-end incident correlation |
-| `actorType` | For user/system action | USER, SYSTEM, PUBLIC |
-| `actorId` | For authenticated/system action | internal identifier only |
-| `effectiveBranchId` or scope summary | For scoped internal access | do not log unauthorized requested branch as trusted scope |
-| `entityType` | For entity operation | Certificate/ReissueRequest/etc. |
-| `entityId` | When known | internal identifier |
-| `command` or `query` | Yes | application operation |
-| `outcome` | Yes | SUCCESS, REJECTED, FAILED, RETRIED |
-| `durationMs` | For measured operations | integer |
-| `errorCode` | On rejection/failure | structured Part 7 error code |
-| `dependency` | Dependency failure only | completion, finance, audit, storage, etc. |
+| Field                                | Required                        | Notes                                                     |
+| ------------------------------------ | ------------------------------- | --------------------------------------------------------- |
+| `timestamp`                          | Yes                             | UTC ISO-8601                                              |
+| `level`                              | Yes                             | debug/info/warn/error/fatal                               |
+| `environment`                        | Yes                             | deployment environment                                    |
+| `service`                            | Yes                             | modular monolith service name                             |
+| `module`                             | Yes                             | `certificate-management`                                  |
+| `appVersion`                         | Yes                             | release correlation                                       |
+| `eventName`                          | Yes                             | stable event taxonomy                                     |
+| `traceId`                            | When tracing present            | cross-boundary correlation                                |
+| `correlationId`                      | Yes for request/command         | end-to-end incident correlation                           |
+| `actorType`                          | For user/system action          | USER, SYSTEM, PUBLIC                                      |
+| `actorId`                            | For authenticated/system action | internal identifier only                                  |
+| `effectiveBranchId` or scope summary | For scoped internal access      | do not log unauthorized requested branch as trusted scope |
+| `entityType`                         | For entity operation            | Certificate/ReissueRequest/etc.                           |
+| `entityId`                           | When known                      | internal identifier                                       |
+| `command` or `query`                 | Yes                             | application operation                                     |
+| `outcome`                            | Yes                             | SUCCESS, REJECTED, FAILED, RETRIED                        |
+| `durationMs`                         | For measured operations         | integer                                                   |
+| `errorCode`                          | On rejection/failure            | structured Part 7 error code                              |
+| `dependency`                         | Dependency failure only         | completion, finance, audit, storage, etc.                 |
 
 ## 6.3 Log Event Taxonomy
 
@@ -508,38 +508,38 @@ Do not use certificate ID, student ID, verification code, or user ID as metric l
 
 ## 8.2 Golden Signal Metrics
 
-| Metric | Type | Labels | Purpose |
-|---|---|---|---|
-| `ims_certificate_http_requests_total` | Counter | route class, method, status class | traffic/error rate |
-| `ims_certificate_http_request_duration_seconds` | Histogram | route class, method | latency |
-| `ims_certificate_commands_total` | Counter | command, outcome | domain command throughput |
-| `ims_certificate_command_duration_seconds` | Histogram | command | lifecycle command latency |
-| `ims_certificate_dependency_calls_total` | Counter | dependency, operation, outcome | dependency health |
-| `ims_certificate_dependency_duration_seconds` | Histogram | dependency, operation | dependency latency |
-| `ims_certificate_db_query_duration_seconds` | Histogram | query class | database latency |
-| `ims_certificate_storage_operations_total` | Counter | operation, outcome | artifact storage health |
-| `ims_certificate_storage_duration_seconds` | Histogram | operation | artifact latency |
+| Metric                                          | Type      | Labels                            | Purpose                   |
+| ----------------------------------------------- | --------- | --------------------------------- | ------------------------- |
+| `ims_certificate_http_requests_total`           | Counter   | route class, method, status class | traffic/error rate        |
+| `ims_certificate_http_request_duration_seconds` | Histogram | route class, method               | latency                   |
+| `ims_certificate_commands_total`                | Counter   | command, outcome                  | domain command throughput |
+| `ims_certificate_command_duration_seconds`      | Histogram | command                           | lifecycle command latency |
+| `ims_certificate_dependency_calls_total`        | Counter   | dependency, operation, outcome    | dependency health         |
+| `ims_certificate_dependency_duration_seconds`   | Histogram | dependency, operation             | dependency latency        |
+| `ims_certificate_db_query_duration_seconds`     | Histogram | query class                       | database latency          |
+| `ims_certificate_storage_operations_total`      | Counter   | operation, outcome                | artifact storage health   |
+| `ims_certificate_storage_duration_seconds`      | Histogram | operation                         | artifact latency          |
 
 ## 8.3 Domain Operational Metrics
 
-| Metric | Type | Purpose |
-|---|---|---|
-| `ims_certificate_generated_total` | Counter | successful new generations |
-| `ims_certificate_issued_total` | Counter | issuance throughput |
-| `ims_certificate_revoked_total` | Counter | revocations |
-| `ims_certificate_reissue_requested_total` | Counter | reissue demand |
-| `ims_certificate_reissue_approved_total` | Counter | approvals |
-| `ims_certificate_reissue_rejected_total` | Counter | rejections |
-| `ims_certificate_replacement_generated_total` | Counter | successful replacements |
-| `ims_certificate_generation_rejected_total` | Counter | business rejection by bounded reason class |
-| `ims_certificate_duplicate_prevented_total` | Counter | idempotency/unique-guard prevention |
-| `ims_certificate_concurrency_conflict_total` | Counter | optimistic locking conflicts |
-| `ims_certificate_verification_total` | Counter | verification outcome volume |
-| `ims_certificate_verification_rate_limited_total` | Counter | abuse-control action |
-| `ims_certificate_artifact_missing_total` | Counter | metadata/artifact inconsistency |
-| `ims_certificate_notification_retry_backlog` | Gauge | pending communication-request retries |
-| `ims_certificate_projection_lag_seconds` | Gauge | reporting freshness lag |
-| `ims_certificate_reconciliation_discrepancies` | Gauge | unresolved consistency issues |
+| Metric                                            | Type    | Purpose                                    |
+| ------------------------------------------------- | ------- | ------------------------------------------ |
+| `ims_certificate_generated_total`                 | Counter | successful new generations                 |
+| `ims_certificate_issued_total`                    | Counter | issuance throughput                        |
+| `ims_certificate_revoked_total`                   | Counter | revocations                                |
+| `ims_certificate_reissue_requested_total`         | Counter | reissue demand                             |
+| `ims_certificate_reissue_approved_total`          | Counter | approvals                                  |
+| `ims_certificate_reissue_rejected_total`          | Counter | rejections                                 |
+| `ims_certificate_replacement_generated_total`     | Counter | successful replacements                    |
+| `ims_certificate_generation_rejected_total`       | Counter | business rejection by bounded reason class |
+| `ims_certificate_duplicate_prevented_total`       | Counter | idempotency/unique-guard prevention        |
+| `ims_certificate_concurrency_conflict_total`      | Counter | optimistic locking conflicts               |
+| `ims_certificate_verification_total`              | Counter | verification outcome volume                |
+| `ims_certificate_verification_rate_limited_total` | Counter | abuse-control action                       |
+| `ims_certificate_artifact_missing_total`          | Counter | metadata/artifact inconsistency            |
+| `ims_certificate_notification_retry_backlog`      | Gauge   | pending communication-request retries      |
+| `ims_certificate_projection_lag_seconds`          | Gauge   | reporting freshness lag                    |
+| `ims_certificate_reconciliation_discrepancies`    | Gauge   | unresolved consistency issues              |
 
 ## 8.4 Database Integrity Metrics
 
@@ -616,34 +616,34 @@ Metric dashboards are operational telemetry. Business reports and official KPI o
 
 ## 10.1 Alert Severity
 
-| Severity | Definition | Example |
-|---|---|---|
-| SEV-1 | widespread critical service loss, integrity risk, or security breach | invalid mass issuance, database corruption, public verification unavailable beyond tolerance |
-| SEV-2 | major feature impaired with significant user impact | certificate generation unavailable, artifact storage unavailable, audit mandatory-write failures |
-| SEV-3 | degraded service or growing backlog | notification retry backlog, projection lag, increased dependency latency |
-| SEV-4 | informational/operator follow-up | isolated reconciliation discrepancy, non-urgent capacity warning |
+| Severity | Definition                                                           | Example                                                                                          |
+| -------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| SEV-1    | widespread critical service loss, integrity risk, or security breach | invalid mass issuance, database corruption, public verification unavailable beyond tolerance     |
+| SEV-2    | major feature impaired with significant user impact                  | certificate generation unavailable, artifact storage unavailable, audit mandatory-write failures |
+| SEV-3    | degraded service or growing backlog                                  | notification retry backlog, projection lag, increased dependency latency                         |
+| SEV-4    | informational/operator follow-up                                     | isolated reconciliation discrepancy, non-urgent capacity warning                                 |
 
 ## 10.2 Recommended Alert Conditions
 
 Exact thresholds must be tuned from production baselines, but initial operational targets are:
 
-| Alert | Initial Condition | Severity | Runbook |
-|---|---|---|---|
-| High certificate API 5xx rate | >2% for 5 min with minimum traffic floor | SEV-2 | RB-CERT-001 |
-| Generation failure spike | technical failure >2% for 10 min | SEV-2 | RB-CERT-002 |
-| Completion dependency unavailable | sustained failures for 5 min | SEV-2 | RB-CERT-003 |
-| Finance dependency unavailable | sustained failures for 5 min | SEV-2 | RB-CERT-004 |
-| Numbering allocation failure | >3 consecutive failures or sustained errors | SEV-2 | RB-CERT-005 |
-| Artifact storage failure | >1% failure for 5 min | SEV-2 | RB-CERT-006 |
-| Missing artifact discrepancy | any newly detected issued/active certificate without required artifact | SEV-2 | RB-CERT-007 |
-| Audit mandatory write failure | any repeated failure or >1 occurrence after retry policy | SEV-2 | RB-CERT-008 |
-| Public verification 5xx rate | >1% for 5 min | SEV-2 | RB-CERT-009 |
-| Verification abuse spike | rate-limit actions exceed baseline by configured multiplier | SEV-3/2 | RB-CERT-010 |
-| Notification retry backlog | backlog age/size exceeds threshold | SEV-3 | RB-CERT-011 |
-| Reporting projection lag | lag >15 min operational / approved SLA | SEV-3 | RB-CERT-012 |
-| DB integrity discrepancy | any FK/uniqueness/lineage inconsistency | SEV-2 | RB-CERT-013 |
-| Concurrency conflicts spike | >baseline multiplier for 10 min | SEV-3 | RB-CERT-014 |
-| Reissue workflow backlog aging | approved request waiting replacement beyond SLA | SEV-3 | RB-CERT-015 |
+| Alert                             | Initial Condition                                                      | Severity | Runbook     |
+| --------------------------------- | ---------------------------------------------------------------------- | -------- | ----------- |
+| High certificate API 5xx rate     | >2% for 5 min with minimum traffic floor                               | SEV-2    | RB-CERT-001 |
+| Generation failure spike          | technical failure >2% for 10 min                                       | SEV-2    | RB-CERT-002 |
+| Completion dependency unavailable | sustained failures for 5 min                                           | SEV-2    | RB-CERT-003 |
+| Finance dependency unavailable    | sustained failures for 5 min                                           | SEV-2    | RB-CERT-004 |
+| Numbering allocation failure      | >3 consecutive failures or sustained errors                            | SEV-2    | RB-CERT-005 |
+| Artifact storage failure          | >1% failure for 5 min                                                  | SEV-2    | RB-CERT-006 |
+| Missing artifact discrepancy      | any newly detected issued/active certificate without required artifact | SEV-2    | RB-CERT-007 |
+| Audit mandatory write failure     | any repeated failure or >1 occurrence after retry policy               | SEV-2    | RB-CERT-008 |
+| Public verification 5xx rate      | >1% for 5 min                                                          | SEV-2    | RB-CERT-009 |
+| Verification abuse spike          | rate-limit actions exceed baseline by configured multiplier            | SEV-3/2  | RB-CERT-010 |
+| Notification retry backlog        | backlog age/size exceeds threshold                                     | SEV-3    | RB-CERT-011 |
+| Reporting projection lag          | lag >15 min operational / approved SLA                                 | SEV-3    | RB-CERT-012 |
+| DB integrity discrepancy          | any FK/uniqueness/lineage inconsistency                                | SEV-2    | RB-CERT-013 |
+| Concurrency conflicts spike       | >baseline multiplier for 10 min                                        | SEV-3    | RB-CERT-014 |
+| Reissue workflow backlog aging    | approved request waiting replacement beyond SLA                        | SEV-3    | RB-CERT-015 |
 
 Every alert must contain:
 
@@ -701,15 +701,15 @@ A deployment may expose capability-specific degradation separately instead of ma
 
 Recommended internal health view:
 
-| Capability | Check | Result |
-|---|---|---|
-| Registry reads | DB/read model query | UP/DEGRADED/DOWN |
-| Generation | DB + Completion + Finance where required + Numbering + Storage + mandatory Audit | UP/DEGRADED/DOWN |
-| Issuance | DB + required gates + mandatory Audit | UP/DEGRADED/DOWN |
-| Public verification | DB/read path + abuse-control capability | UP/DEGRADED/DOWN |
-| Reissue | DB + IAM + Audit | UP/DEGRADED/DOWN |
-| Notifications | Communication request capability | UP/DEGRADED; does not block committed state |
-| Reporting | projection/read-model freshness | UP/DEGRADED |
+| Capability          | Check                                                                            | Result                                      |
+| ------------------- | -------------------------------------------------------------------------------- | ------------------------------------------- |
+| Registry reads      | DB/read model query                                                              | UP/DEGRADED/DOWN                            |
+| Generation          | DB + Completion + Finance where required + Numbering + Storage + mandatory Audit | UP/DEGRADED/DOWN                            |
+| Issuance            | DB + required gates + mandatory Audit                                            | UP/DEGRADED/DOWN                            |
+| Public verification | DB/read path + abuse-control capability                                          | UP/DEGRADED/DOWN                            |
+| Reissue             | DB + IAM + Audit                                                                 | UP/DEGRADED/DOWN                            |
+| Notifications       | Communication request capability                                                 | UP/DEGRADED; does not block committed state |
+| Reporting           | projection/read-model freshness                                                  | UP/DEGRADED                                 |
 
 Health responses exposed to unauthenticated users must not disclose internal dependency names, hostnames, credentials, table names, or stack traces.
 
@@ -1569,14 +1569,14 @@ Capacity review should track:
 
 # 18. Backup and Recovery Test Schedule
 
-| Exercise | Minimum Frequency | Evidence |
-|---|---|---|
-| Backup success review | Daily automated monitoring | backup status and age |
-| Certificate-owned logical restore test | Quarterly | restored row counts, integrity checks |
-| Artifact restore/version recovery test | Quarterly | object recovery evidence |
-| Full platform disaster recovery exercise | According to platform DR policy, at least annually recommended | RPO/RTO measurement |
-| Read-model rebuild test | Quarterly or after schema change | rebuild duration and reconciliation result |
-| Notification reconciliation drill | Semiannual | missing-request replay evidence |
+| Exercise                                 | Minimum Frequency                                              | Evidence                                   |
+| ---------------------------------------- | -------------------------------------------------------------- | ------------------------------------------ |
+| Backup success review                    | Daily automated monitoring                                     | backup status and age                      |
+| Certificate-owned logical restore test   | Quarterly                                                      | restored row counts, integrity checks      |
+| Artifact restore/version recovery test   | Quarterly                                                      | object recovery evidence                   |
+| Full platform disaster recovery exercise | According to platform DR policy, at least annually recommended | RPO/RTO measurement                        |
+| Read-model rebuild test                  | Quarterly or after schema change                               | rebuild duration and reconciliation result |
+| Notification reconciliation drill        | Semiannual                                                     | missing-request replay evidence            |
 
 The exact legal backup retention duration remains an open compliance input and must not be invented by the Certificate module.
 
@@ -1617,18 +1617,18 @@ This section validates Module 11 after Parts 1–11 against the DDD Context Map 
 
 ## 20.1 DDD Ownership Consistency
 
-| Concern | DDD Owner | FRD Treatment | Result |
-|---|---|---|---|
-| Certificate lifecycle | Certificate Management | generate, issue, verify, reissue, replacement, revoke | Aligned |
-| Completion rule definition | Course Catalog | referenced, never redefined by Certificate module | Aligned |
-| Completion evaluation/approval | Exam, Result & Completion | consumed as authoritative decision | Aligned |
-| Payment truth | Finance & Receivables | consumed as authoritative validation | Aligned |
-| Enrollment lifecycle | Admission & Enrollment | central reference; Certificate does not create/modify learning lifecycle | Aligned |
-| Permission and branch access | Identity & Access | server-side delegated authorization and scope resolution | Aligned |
-| Numbering policy | Configuration / Master Data | delegated certificate-number allocation | Aligned |
-| Notification templates/delivery | Communication | Certificate requests notification; does not own delivery log | Aligned |
-| Audit history | Audit & Compliance | mandatory sensitive-action audit integration | Aligned |
-| Reporting | Reporting & Dashboards | explicitly read-only read models and snapshots | Aligned |
+| Concern                         | DDD Owner                   | FRD Treatment                                                            | Result  |
+| ------------------------------- | --------------------------- | ------------------------------------------------------------------------ | ------- |
+| Certificate lifecycle           | Certificate Management      | generate, issue, verify, reissue, replacement, revoke                    | Aligned |
+| Completion rule definition      | Course Catalog              | referenced, never redefined by Certificate module                        | Aligned |
+| Completion evaluation/approval  | Exam, Result & Completion   | consumed as authoritative decision                                       | Aligned |
+| Payment truth                   | Finance & Receivables       | consumed as authoritative validation                                     | Aligned |
+| Enrollment lifecycle            | Admission & Enrollment      | central reference; Certificate does not create/modify learning lifecycle | Aligned |
+| Permission and branch access    | Identity & Access           | server-side delegated authorization and scope resolution                 | Aligned |
+| Numbering policy                | Configuration / Master Data | delegated certificate-number allocation                                  | Aligned |
+| Notification templates/delivery | Communication               | Certificate requests notification; does not own delivery log             | Aligned |
+| Audit history                   | Audit & Compliance          | mandatory sensitive-action audit integration                             | Aligned |
+| Reporting                       | Reporting & Dashboards      | explicitly read-only read models and snapshots                           | Aligned |
 
 ## 20.2 Core Aggregate Ownership Proof
 
@@ -1664,20 +1664,20 @@ Result: **DDD ownership remains aligned across Parts 1–11.**
 
 ## 20.3 ER Entity Consistency
 
-| ER Entity | FRD Classification | Operational Treatment | Result |
-|---|---|---|---|
-| `Certificate` | Owned | transactional backup, integrity check, lifecycle telemetry | Aligned |
-| `CertificateVerification` | Owned | verification logging, backup, scale monitoring | Aligned |
-| `CertificateReissueRequest` | Owned | workflow backup, lineage checks, backlog monitoring | Aligned |
-| `Enrollment` | Referenced | read dependency only; owner-coordinated summary repair | Aligned |
-| `CourseCompletion` | Referenced | eligibility read only | Aligned |
-| `CompletionApproval` | Referenced | approval read only | Aligned |
-| Finance entities | Referenced | payment validation only | Aligned |
-| `NumberingSeries` | Referenced | number allocation through owner interface | Aligned |
-| IAM entities | Referenced | auth and scope only | Aligned |
-| Audit entities | External owner | Audit port and reconciliation, no direct writes | Aligned |
-| Communication entities | External owner | request/retry via owner interface | Aligned |
-| Reporting entities | External owner/read-only | projection refresh/rebuild only | Aligned |
+| ER Entity                   | FRD Classification       | Operational Treatment                                      | Result  |
+| --------------------------- | ------------------------ | ---------------------------------------------------------- | ------- |
+| `Certificate`               | Owned                    | transactional backup, integrity check, lifecycle telemetry | Aligned |
+| `CertificateVerification`   | Owned                    | verification logging, backup, scale monitoring             | Aligned |
+| `CertificateReissueRequest` | Owned                    | workflow backup, lineage checks, backlog monitoring        | Aligned |
+| `Enrollment`                | Referenced               | read dependency only; owner-coordinated summary repair     | Aligned |
+| `CourseCompletion`          | Referenced               | eligibility read only                                      | Aligned |
+| `CompletionApproval`        | Referenced               | approval read only                                         | Aligned |
+| Finance entities            | Referenced               | payment validation only                                    | Aligned |
+| `NumberingSeries`           | Referenced               | number allocation through owner interface                  | Aligned |
+| IAM entities                | Referenced               | auth and scope only                                        | Aligned |
+| Audit entities              | External owner           | Audit port and reconciliation, no direct writes            | Aligned |
+| Communication entities      | External owner           | request/retry via owner interface                          | Aligned |
+| Reporting entities          | External owner/read-only | projection refresh/rebuild only                            | Aligned |
 
 ## 20.4 Enrollment-Centric Consistency
 
@@ -1746,19 +1746,19 @@ Result: **Aligned.**
 
 The final consistency check confirms that the FRD remains aligned by explicitly preserving, rather than silently resolving, these source-model gaps.
 
-| Gap ID | Gap | Impact | Required Decision Owner |
-|---|---|---|---|
-| GAP-CERT-001 | DDD names `CertificateIssueLog`, ER has no corresponding entity | detailed issuance-event persistence model unresolved | DDD/ER architecture decision |
-| GAP-CERT-002 | DDD conceptual `CertificateQRCode`; ER stores `qrCodeUrl` on Certificate | QR persistence strategy must remain ER-compatible unless model changed | Architecture/data model |
-| GAP-CERT-003 | Revocation is a DDD responsibility, but ER lacks `revokedAt`, `revokedBy`, `revocationReason` | compliance reporting and recovery evidence incomplete | ER/schema amendment |
-| GAP-CERT-004 | Certificate status enum values are not explicitly enumerated in ER | state machine must be mapped to approved physical enum | Domain/data model |
-| GAP-CERT-005 | Reissue request status enum values are not explicitly enumerated | workflow persistence mapping pending | Domain/data model |
-| GAP-CERT-006 | ER cardinality says Enrollment 1:1 Certificate, while reissue has `newCertificateId` | replacement lineage/uniqueness constraint unresolved | DDD/ER architecture decision |
-| GAP-CERT-007 | Reissue rejection metadata is not fully represented in ER | rejection reason/history relies on Audit/Approval representation | Data model/Audit design |
-| GAP-CERT-008 | DDD event catalog does not explicitly list `CertificateRevoked` | notification/integration event contract needs formal approval | DDD event catalog |
-| GAP-CERT-009 | Artifact checksum/version metadata is not explicit in ER | integrity implementation may require infrastructure metadata or schema extension | Security/data model |
-| GAP-CERT-010 | Exact legal retention duration is not defined | backup/artifact lifecycle duration cannot be finalized | Compliance/business |
-| GAP-CERT-011 | Prisma schema was not supplied for validation | physical constraints, enum names, indexes, delete actions not yet verified | Implementation/schema review |
+| Gap ID       | Gap                                                                                           | Impact                                                                           | Required Decision Owner      |
+| ------------ | --------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ---------------------------- |
+| GAP-CERT-001 | DDD names `CertificateIssueLog`, ER has no corresponding entity                               | detailed issuance-event persistence model unresolved                             | DDD/ER architecture decision |
+| GAP-CERT-002 | DDD conceptual `CertificateQRCode`; ER stores `qrCodeUrl` on Certificate                      | QR persistence strategy must remain ER-compatible unless model changed           | Architecture/data model      |
+| GAP-CERT-003 | Revocation is a DDD responsibility, but ER lacks `revokedAt`, `revokedBy`, `revocationReason` | compliance reporting and recovery evidence incomplete                            | ER/schema amendment          |
+| GAP-CERT-004 | Certificate status enum values are not explicitly enumerated in ER                            | state machine must be mapped to approved physical enum                           | Domain/data model            |
+| GAP-CERT-005 | Reissue request status enum values are not explicitly enumerated                              | workflow persistence mapping pending                                             | Domain/data model            |
+| GAP-CERT-006 | ER cardinality says Enrollment 1:1 Certificate, while reissue has `newCertificateId`          | replacement lineage/uniqueness constraint unresolved                             | DDD/ER architecture decision |
+| GAP-CERT-007 | Reissue rejection metadata is not fully represented in ER                                     | rejection reason/history relies on Audit/Approval representation                 | Data model/Audit design      |
+| GAP-CERT-008 | DDD event catalog does not explicitly list `CertificateRevoked`                               | notification/integration event contract needs formal approval                    | DDD event catalog            |
+| GAP-CERT-009 | Artifact checksum/version metadata is not explicit in ER                                      | integrity implementation may require infrastructure metadata or schema extension | Security/data model          |
+| GAP-CERT-010 | Exact legal retention duration is not defined                                                 | backup/artifact lifecycle duration cannot be finalized                           | Compliance/business          |
+| GAP-CERT-011 | Prisma schema was not supplied for validation                                                 | physical constraints, enum names, indexes, delete actions not yet verified       | Implementation/schema review |
 
 No production schema migration should silently resolve these gaps without updating the authoritative architecture/data-model decision records.
 

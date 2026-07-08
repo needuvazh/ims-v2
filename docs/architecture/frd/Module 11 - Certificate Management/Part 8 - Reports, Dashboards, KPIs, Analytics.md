@@ -23,16 +23,16 @@ The design follows these principles:
 
 ## 2. Reporting Objectives
 
-| Objective ID | Objective | Outcome |
-|---|---|---|
-| RO-CERT-001 | Provide timely visibility into certificate readiness and operational backlogs. | Operators can identify eligible, blocked, generated, and pending-issue work without manually reconciling multiple systems. |
-| RO-CERT-002 | Measure certificate issuance throughput and turnaround time. | Management can assess operational efficiency from completion approval to issue. |
-| RO-CERT-003 | Monitor certificate lifecycle quality and exception rates. | Reissue, replacement, and revocation trends can be investigated early. |
-| RO-CERT-004 | Monitor public verification usage and invalid verification attempts. | Operations and compliance can understand verification demand and suspicious activity patterns without exposing unrestricted personal data. |
-| RO-CERT-005 | Support branch, course, batch, and period comparisons. | Authorized users can analyze certificate performance at relevant operational dimensions. |
-| RO-CERT-006 | Support executive visibility without granting transactional permissions. | Management consumes consolidated read models only. |
-| RO-CERT-007 | Preserve traceability to authoritative source entities. | Every metric can be reconciled back to source records and reporting lineage. |
-| RO-CERT-008 | Support CSV, XLSX, and PDF exports according to permission and report suitability. | Users can perform approved offline analysis and formal operational reporting. |
+| Objective ID | Objective                                                                          | Outcome                                                                                                                                    |
+| ------------ | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| RO-CERT-001  | Provide timely visibility into certificate readiness and operational backlogs.     | Operators can identify eligible, blocked, generated, and pending-issue work without manually reconciling multiple systems.                 |
+| RO-CERT-002  | Measure certificate issuance throughput and turnaround time.                       | Management can assess operational efficiency from completion approval to issue.                                                            |
+| RO-CERT-003  | Monitor certificate lifecycle quality and exception rates.                         | Reissue, replacement, and revocation trends can be investigated early.                                                                     |
+| RO-CERT-004  | Monitor public verification usage and invalid verification attempts.               | Operations and compliance can understand verification demand and suspicious activity patterns without exposing unrestricted personal data. |
+| RO-CERT-005  | Support branch, course, batch, and period comparisons.                             | Authorized users can analyze certificate performance at relevant operational dimensions.                                                   |
+| RO-CERT-006  | Support executive visibility without granting transactional permissions.           | Management consumes consolidated read models only.                                                                                         |
+| RO-CERT-007  | Preserve traceability to authoritative source entities.                            | Every metric can be reconciled back to source records and reporting lineage.                                                               |
+| RO-CERT-008  | Support CSV, XLSX, and PDF exports according to permission and report suitability. | Users can perform approved offline analysis and formal operational reporting.                                                              |
 
 ---
 
@@ -106,34 +106,34 @@ Where a source timestamp is not available directly in the current ER entity, the
 
 ## 4.2 Operational KPIs
 
-| KPI ID | KPI | Definition / Formula | Authoritative Facts | Grain | Scope | Target/Threshold Behavior |
-|---|---|---|---|---|---|---|
-| KPI-CERT-001 | Ready for Certificate Count | Count of enrollments whose authoritative completion outcome is approved, payment gate passes where required, and no active/current certificate already satisfies issuance policy. | Enrollment ref + Completion outcome + Finance payment gate + Certificate existence/state | Enrollment | B/C | Operational queue; no universal target. |
-| KPI-CERT-002 | Blocked by Completion Count | Count of in-scope enrollments where certificate readiness is blocked by authoritative completion status/rule outcome. | Completion read contract | Enrollment | B/C | Investigate sustained backlog trend. |
-| KPI-CERT-003 | Blocked by Payment Count | Count of otherwise completion-eligible enrollments whose authoritative payment validation has not passed where payment is required. | Completion + Finance payment validation outcome | Enrollment | B/C | Operational indicator only; Finance remains owner. |
-| KPI-CERT-004 | Generated Certificates | Count of Certificate records generated in period according to authoritative generation timestamp/event. | Certificate + lifecycle/audit read projection | Certificate | B/C | Trend KPI. |
-| KPI-CERT-005 | Issued Certificates | Count of certificates transitioned to issued state in period. | Certificate.issuedDate/status + lifecycle event | Certificate | B/C | Core DDD mandatory report area contribution. |
-| KPI-CERT-006 | Pending Issue Count | Count of generated but not issued, revoked, replaced, or otherwise terminal certificates eligible for issue. | Certificate state | Certificate | B/C | Alert when aging exceeds SLA. |
-| KPI-CERT-007 | Median Completion-to-Issue Time | Median duration from authoritative completion approval timestamp to certificate issue timestamp. | Completion approvedAt + Certificate issuedDate | Enrollment/Certificate | B/C | Prefer percentile statistics over average alone. |
-| KPI-CERT-008 | P90 Completion-to-Issue Time | 90th percentile of completion approval to issue duration for certificates issued in period. | Completion + Certificate | Certificate | B/C | SLA monitoring. |
-| KPI-CERT-009 | On-Time Issuance Rate | Issued within configured reporting SLA ÷ certificates issued in period × 100. SLA configuration is a reporting/NFR parameter, not a Certificate aggregate rule. | Completion + Certificate | Certificate | B/C | Threshold configurable by operations. |
-| KPI-CERT-010 | Reissue Request Count | Count of reissue requests submitted in period. | CertificateReissueRequest created timestamp/common audit columns | Reissue Request | B/C/G | Trend KPI. |
-| KPI-CERT-011 | Reissue Approval Rate | Approved reissue requests ÷ decided reissue requests × 100. Pending requests excluded from denominator. | CertificateReissueRequest.status | Reissue Request | B/C/G | Monitor policy consistency. |
-| KPI-CERT-012 | Reissue Rejection Rate | Rejected reissue requests ÷ decided reissue requests × 100. | CertificateReissueRequest.status | Reissue Request | B/C/G | Investigate spikes by reason category when structured reason taxonomy exists. |
-| KPI-CERT-013 | Open Reissue Backlog | Count of requests in non-terminal, actionable states. | CertificateReissueRequest.status | Reissue Request | B/C/G | Work queue KPI. |
-| KPI-CERT-014 | Reissue Backlog Aging P90 | P90 age of open reissue requests from request creation to current time. | Reissue request createdAt/common audit fields | Reissue Request | B/C/G | SLA monitoring. |
-| KPI-CERT-015 | Replacement Completion Rate | Approved reissue requests with `newCertificateId` populated ÷ approved requests eligible for replacement generation × 100. | CertificateReissueRequest | Reissue Request | B/C/G | Detect approved-but-not-generated backlog. |
-| KPI-CERT-016 | Revoked Certificate Count | Count of certificates revoked in period using authoritative lifecycle/audit event time. | Certificate state + Audit read projection | Certificate | B/C/G | Compliance KPI. |
-| KPI-CERT-017 | Revocation Rate | Certificates revoked in period ÷ certificates issued in comparable cohort/period × 100. Cohort definition must be explicit in report metadata. | Certificate + Audit lifecycle | Certificate | B/C/G | Investigate material increases. |
-| KPI-CERT-018 | Verification Attempts | Count of CertificateVerification attempts in period. | CertificateVerification | Verification attempt | B/C/G | Usage KPI. |
-| KPI-CERT-019 | Successful Verification Rate | Successful verification attempts ÷ total verification attempts × 100. | CertificateVerification.verificationStatus | Verification attempt | B/C/G | Security/quality indicator. |
-| KPI-CERT-020 | Invalid Verification Attempts | Count of unsuccessful/invalid verification outcomes in period. | CertificateVerification.verificationStatus | Verification attempt | B/C/G | Security monitoring; IP details restricted. |
-| KPI-CERT-021 | Unique Certificates Verified | Count distinct certificateId with at least one verification attempt in period. | CertificateVerification | Certificate | B/C/G | Adoption/use KPI. |
-| KPI-CERT-022 | Verification Attempts per Issued Certificate | Verification attempts ÷ issued certificates in selected population/period. | Verification + Certificate | Period | B/C/G | Contextual usage KPI; not a performance score. |
-| KPI-CERT-023 | Bilingual Certificate Distribution | Percentage split of issued certificates by `Certificate.language`. | Certificate.language/status | Certificate | B/C | Localization monitoring. |
-| KPI-CERT-024 | Certificate Artifact Availability Rate | Certificates expected to have an artifact and having a valid artifact reference ÷ eligible certificates × 100. This checks reference presence/availability through storage health integration, not artifact business validity. | Certificate.certificateUrl + storage health read | Certificate | B/C | Operational quality KPI. |
-| KPI-CERT-025 | Duplicate Generation Conflict Count | Count of prevented duplicate-generation/idempotency conflict outcomes in period from structured application metrics/logs. | Application metrics/audit signal | Command attempt | B/C | Reliability indicator. |
-| KPI-CERT-026 | Certificate Lifecycle Exception Count | Count of failed sensitive lifecycle commands grouped by validation/error category, excluding ordinary authorization denials from business-performance KPIs. | Structured error/telemetry projection | Command attempt | B/C/G | Operations and quality monitoring. |
+| KPI ID       | KPI                                          | Definition / Formula                                                                                                                                                                                                           | Authoritative Facts                                                                      | Grain                  | Scope | Target/Threshold Behavior                                                     |
+| ------------ | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- | ---------------------- | ----- | ----------------------------------------------------------------------------- |
+| KPI-CERT-001 | Ready for Certificate Count                  | Count of enrollments whose authoritative completion outcome is approved, payment gate passes where required, and no active/current certificate already satisfies issuance policy.                                              | Enrollment ref + Completion outcome + Finance payment gate + Certificate existence/state | Enrollment             | B/C   | Operational queue; no universal target.                                       |
+| KPI-CERT-002 | Blocked by Completion Count                  | Count of in-scope enrollments where certificate readiness is blocked by authoritative completion status/rule outcome.                                                                                                          | Completion read contract                                                                 | Enrollment             | B/C   | Investigate sustained backlog trend.                                          |
+| KPI-CERT-003 | Blocked by Payment Count                     | Count of otherwise completion-eligible enrollments whose authoritative payment validation has not passed where payment is required.                                                                                            | Completion + Finance payment validation outcome                                          | Enrollment             | B/C   | Operational indicator only; Finance remains owner.                            |
+| KPI-CERT-004 | Generated Certificates                       | Count of Certificate records generated in period according to authoritative generation timestamp/event.                                                                                                                        | Certificate + lifecycle/audit read projection                                            | Certificate            | B/C   | Trend KPI.                                                                    |
+| KPI-CERT-005 | Issued Certificates                          | Count of certificates transitioned to issued state in period.                                                                                                                                                                  | Certificate.issuedDate/status + lifecycle event                                          | Certificate            | B/C   | Core DDD mandatory report area contribution.                                  |
+| KPI-CERT-006 | Pending Issue Count                          | Count of generated but not issued, revoked, replaced, or otherwise terminal certificates eligible for issue.                                                                                                                   | Certificate state                                                                        | Certificate            | B/C   | Alert when aging exceeds SLA.                                                 |
+| KPI-CERT-007 | Median Completion-to-Issue Time              | Median duration from authoritative completion approval timestamp to certificate issue timestamp.                                                                                                                               | Completion approvedAt + Certificate issuedDate                                           | Enrollment/Certificate | B/C   | Prefer percentile statistics over average alone.                              |
+| KPI-CERT-008 | P90 Completion-to-Issue Time                 | 90th percentile of completion approval to issue duration for certificates issued in period.                                                                                                                                    | Completion + Certificate                                                                 | Certificate            | B/C   | SLA monitoring.                                                               |
+| KPI-CERT-009 | On-Time Issuance Rate                        | Issued within configured reporting SLA ÷ certificates issued in period × 100. SLA configuration is a reporting/NFR parameter, not a Certificate aggregate rule.                                                                | Completion + Certificate                                                                 | Certificate            | B/C   | Threshold configurable by operations.                                         |
+| KPI-CERT-010 | Reissue Request Count                        | Count of reissue requests submitted in period.                                                                                                                                                                                 | CertificateReissueRequest created timestamp/common audit columns                         | Reissue Request        | B/C/G | Trend KPI.                                                                    |
+| KPI-CERT-011 | Reissue Approval Rate                        | Approved reissue requests ÷ decided reissue requests × 100. Pending requests excluded from denominator.                                                                                                                        | CertificateReissueRequest.status                                                         | Reissue Request        | B/C/G | Monitor policy consistency.                                                   |
+| KPI-CERT-012 | Reissue Rejection Rate                       | Rejected reissue requests ÷ decided reissue requests × 100.                                                                                                                                                                    | CertificateReissueRequest.status                                                         | Reissue Request        | B/C/G | Investigate spikes by reason category when structured reason taxonomy exists. |
+| KPI-CERT-013 | Open Reissue Backlog                         | Count of requests in non-terminal, actionable states.                                                                                                                                                                          | CertificateReissueRequest.status                                                         | Reissue Request        | B/C/G | Work queue KPI.                                                               |
+| KPI-CERT-014 | Reissue Backlog Aging P90                    | P90 age of open reissue requests from request creation to current time.                                                                                                                                                        | Reissue request createdAt/common audit fields                                            | Reissue Request        | B/C/G | SLA monitoring.                                                               |
+| KPI-CERT-015 | Replacement Completion Rate                  | Approved reissue requests with `newCertificateId` populated ÷ approved requests eligible for replacement generation × 100.                                                                                                     | CertificateReissueRequest                                                                | Reissue Request        | B/C/G | Detect approved-but-not-generated backlog.                                    |
+| KPI-CERT-016 | Revoked Certificate Count                    | Count of certificates revoked in period using authoritative lifecycle/audit event time.                                                                                                                                        | Certificate state + Audit read projection                                                | Certificate            | B/C/G | Compliance KPI.                                                               |
+| KPI-CERT-017 | Revocation Rate                              | Certificates revoked in period ÷ certificates issued in comparable cohort/period × 100. Cohort definition must be explicit in report metadata.                                                                                 | Certificate + Audit lifecycle                                                            | Certificate            | B/C/G | Investigate material increases.                                               |
+| KPI-CERT-018 | Verification Attempts                        | Count of CertificateVerification attempts in period.                                                                                                                                                                           | CertificateVerification                                                                  | Verification attempt   | B/C/G | Usage KPI.                                                                    |
+| KPI-CERT-019 | Successful Verification Rate                 | Successful verification attempts ÷ total verification attempts × 100.                                                                                                                                                          | CertificateVerification.verificationStatus                                               | Verification attempt   | B/C/G | Security/quality indicator.                                                   |
+| KPI-CERT-020 | Invalid Verification Attempts                | Count of unsuccessful/invalid verification outcomes in period.                                                                                                                                                                 | CertificateVerification.verificationStatus                                               | Verification attempt   | B/C/G | Security monitoring; IP details restricted.                                   |
+| KPI-CERT-021 | Unique Certificates Verified                 | Count distinct certificateId with at least one verification attempt in period.                                                                                                                                                 | CertificateVerification                                                                  | Certificate            | B/C/G | Adoption/use KPI.                                                             |
+| KPI-CERT-022 | Verification Attempts per Issued Certificate | Verification attempts ÷ issued certificates in selected population/period.                                                                                                                                                     | Verification + Certificate                                                               | Period                 | B/C/G | Contextual usage KPI; not a performance score.                                |
+| KPI-CERT-023 | Bilingual Certificate Distribution           | Percentage split of issued certificates by `Certificate.language`.                                                                                                                                                             | Certificate.language/status                                                              | Certificate            | B/C   | Localization monitoring.                                                      |
+| KPI-CERT-024 | Certificate Artifact Availability Rate       | Certificates expected to have an artifact and having a valid artifact reference ÷ eligible certificates × 100. This checks reference presence/availability through storage health integration, not artifact business validity. | Certificate.certificateUrl + storage health read                                         | Certificate            | B/C   | Operational quality KPI.                                                      |
+| KPI-CERT-025 | Duplicate Generation Conflict Count          | Count of prevented duplicate-generation/idempotency conflict outcomes in period from structured application metrics/logs.                                                                                                      | Application metrics/audit signal                                                         | Command attempt        | B/C   | Reliability indicator.                                                        |
+| KPI-CERT-026 | Certificate Lifecycle Exception Count        | Count of failed sensitive lifecycle commands grouped by validation/error category, excluding ordinary authorization denials from business-performance KPIs.                                                                    | Structured error/telemetry projection                                                    | Command attempt        | B/C/G | Operations and quality monitoring.                                            |
 
 ### 4.2.1 KPI Calculation Notes
 
@@ -175,14 +175,14 @@ Widget-specific data may require additional report permissions as described belo
 
 ### 5.2.1 Global Dashboard Filters
 
-| Filter | Type | Behavior |
-|---|---|---|
-| Date Range | date range | Required for trend widgets; default current month or approved operational default. Maximum interactive range should be bounded by NFR configuration. |
-| Branch | single/multi-select | Server-populated from effective IAM scope. Multi-branch selection requires consolidated entitlement where aggregation is requested. |
-| Course | searchable select | Read-only reference from Course Catalog. |
-| Batch | searchable select | Constrained by selected course/branch and Training Delivery read scope. |
-| Certificate Language | enum | `en`, `ar`, or all according to supported persisted values. |
-| Certificate Status | enum/multi-select | Uses authoritative configured/persisted statuses; UI must not invent unsupported status values. |
+| Filter               | Type                | Behavior                                                                                                                                             |
+| -------------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Date Range           | date range          | Required for trend widgets; default current month or approved operational default. Maximum interactive range should be bounded by NFR configuration. |
+| Branch               | single/multi-select | Server-populated from effective IAM scope. Multi-branch selection requires consolidated entitlement where aggregation is requested.                  |
+| Course               | searchable select   | Read-only reference from Course Catalog.                                                                                                             |
+| Batch                | searchable select   | Constrained by selected course/branch and Training Delivery read scope.                                                                              |
+| Certificate Language | enum                | `en`, `ar`, or all according to supported persisted values.                                                                                          |
+| Certificate Status   | enum/multi-select   | Uses authoritative configured/persisted statuses; UI must not invent unsupported status values.                                                      |
 
 Filters must be encoded in query state for shareable internal URLs where security policy allows, but the server must re-resolve scope on every request.
 
@@ -190,28 +190,28 @@ Filters must be encoded in query state for shareable internal URLs where securit
 
 ## 5.3 Operational Widget Catalog
 
-| Widget ID | Widget | Type | Primary KPI / Query | Permission | Scope | Interaction |
-|---|---|---|---|---|---|---|
-| W-CERT-001 | Ready for Certificate | Metric card | KPI-CERT-001 | `certificate.read` | B/C | Opens readiness report filtered to `READY`. |
-| W-CERT-002 | Blocked by Completion | Metric card | KPI-CERT-002 | `certificate.report.readiness` | B/C | Opens blocked readiness report. |
-| W-CERT-003 | Blocked by Payment | Metric card | KPI-CERT-003 | `certificate.report.readiness` | B/C | Opens blocked readiness report; no Finance mutation action. |
-| W-CERT-004 | Generated This Period | Metric card | KPI-CERT-004 | `certificate.report.issuance` | B/C | Opens issuance trend/report with generated filter. |
-| W-CERT-005 | Issued This Period | Metric card | KPI-CERT-005 | `certificate.report.issuance` | B/C | Opens issuance report. |
-| W-CERT-006 | Pending Issue | Metric card + aging badge | KPI-CERT-006 | `certificate.read` | B/C | Opens registry filtered to pending issue. |
-| W-CERT-007 | Completion-to-Issue Time | KPI card | KPI-CERT-007/008 | `certificate.report.issuance` | B/C | Opens turnaround report. |
-| W-CERT-008 | Issuance Trend | Line/column chart | KPI-CERT-005 by date bucket | `certificate.report.issuance` | B/C | Drill to period/branch/course. |
-| W-CERT-009 | Issuance by Course | Horizontal bar chart | Issued count by course | `certificate.report.issuance` | B/C | Select course to narrow dashboard. |
-| W-CERT-010 | Issuance by Branch | Bar chart | Issued count by branch | `certificate.report.issuance` | C | Visible only with consolidated entitlement. |
-| W-CERT-011 | Open Reissue Backlog | Metric card | KPI-CERT-013 | `certificate.report.reissue` | B/C | Opens reissue report filtered open. |
-| W-CERT-012 | Reissue Aging Buckets | Stacked bar/table | KPI-CERT-014 distribution | `certificate.report.reissue` | B/C | Drill to request list. |
-| W-CERT-013 | Reissue Outcomes | Donut/bar chart | KPI-CERT-011/012 | `certificate.report.reissue` | B/C/G | Drill by status. |
-| W-CERT-014 | Revocations This Period | Metric card | KPI-CERT-016 | `certificate.report.revocation` | B/C/G | Opens revocation report. |
-| W-CERT-015 | Verification Attempts | Metric card | KPI-CERT-018 | `certificate.report.verification` | B/C/G | Opens verification report. |
-| W-CERT-016 | Verification Outcome Trend | Stacked line/bar | KPI-CERT-019/020 | `certificate.report.verification` | B/C/G | Drill by date/status. |
-| W-CERT-017 | Language Distribution | Donut/bar | KPI-CERT-023 | `certificate.report.issuance` | B/C | Filters report by language. |
-| W-CERT-018 | Operational Work Queue | Table | Ready, pending issue, open reissue counts | `certificate.read` + applicable permissions | B | Links to work queues; no inline lifecycle mutation. |
-| W-CERT-019 | Recent Lifecycle Exceptions | Table | KPI-CERT-026 | `certificate.audit.read` | B/G | Links to read-only lifecycle/audit view. |
-| W-CERT-020 | Data Freshness | Status tile | Projection refresh metadata | `certificate.read` | B/C/G | Shows `dataAsOf`, lag, and degraded source state. |
+| Widget ID  | Widget                      | Type                      | Primary KPI / Query                       | Permission                                  | Scope | Interaction                                                 |
+| ---------- | --------------------------- | ------------------------- | ----------------------------------------- | ------------------------------------------- | ----- | ----------------------------------------------------------- |
+| W-CERT-001 | Ready for Certificate       | Metric card               | KPI-CERT-001                              | `certificate.read`                          | B/C   | Opens readiness report filtered to `READY`.                 |
+| W-CERT-002 | Blocked by Completion       | Metric card               | KPI-CERT-002                              | `certificate.report.readiness`              | B/C   | Opens blocked readiness report.                             |
+| W-CERT-003 | Blocked by Payment          | Metric card               | KPI-CERT-003                              | `certificate.report.readiness`              | B/C   | Opens blocked readiness report; no Finance mutation action. |
+| W-CERT-004 | Generated This Period       | Metric card               | KPI-CERT-004                              | `certificate.report.issuance`               | B/C   | Opens issuance trend/report with generated filter.          |
+| W-CERT-005 | Issued This Period          | Metric card               | KPI-CERT-005                              | `certificate.report.issuance`               | B/C   | Opens issuance report.                                      |
+| W-CERT-006 | Pending Issue               | Metric card + aging badge | KPI-CERT-006                              | `certificate.read`                          | B/C   | Opens registry filtered to pending issue.                   |
+| W-CERT-007 | Completion-to-Issue Time    | KPI card                  | KPI-CERT-007/008                          | `certificate.report.issuance`               | B/C   | Opens turnaround report.                                    |
+| W-CERT-008 | Issuance Trend              | Line/column chart         | KPI-CERT-005 by date bucket               | `certificate.report.issuance`               | B/C   | Drill to period/branch/course.                              |
+| W-CERT-009 | Issuance by Course          | Horizontal bar chart      | Issued count by course                    | `certificate.report.issuance`               | B/C   | Select course to narrow dashboard.                          |
+| W-CERT-010 | Issuance by Branch          | Bar chart                 | Issued count by branch                    | `certificate.report.issuance`               | C     | Visible only with consolidated entitlement.                 |
+| W-CERT-011 | Open Reissue Backlog        | Metric card               | KPI-CERT-013                              | `certificate.report.reissue`                | B/C   | Opens reissue report filtered open.                         |
+| W-CERT-012 | Reissue Aging Buckets       | Stacked bar/table         | KPI-CERT-014 distribution                 | `certificate.report.reissue`                | B/C   | Drill to request list.                                      |
+| W-CERT-013 | Reissue Outcomes            | Donut/bar chart           | KPI-CERT-011/012                          | `certificate.report.reissue`                | B/C/G | Drill by status.                                            |
+| W-CERT-014 | Revocations This Period     | Metric card               | KPI-CERT-016                              | `certificate.report.revocation`             | B/C/G | Opens revocation report.                                    |
+| W-CERT-015 | Verification Attempts       | Metric card               | KPI-CERT-018                              | `certificate.report.verification`           | B/C/G | Opens verification report.                                  |
+| W-CERT-016 | Verification Outcome Trend  | Stacked line/bar          | KPI-CERT-019/020                          | `certificate.report.verification`           | B/C/G | Drill by date/status.                                       |
+| W-CERT-017 | Language Distribution       | Donut/bar                 | KPI-CERT-023                              | `certificate.report.issuance`               | B/C   | Filters report by language.                                 |
+| W-CERT-018 | Operational Work Queue      | Table                     | Ready, pending issue, open reissue counts | `certificate.read` + applicable permissions | B     | Links to work queues; no inline lifecycle mutation.         |
+| W-CERT-019 | Recent Lifecycle Exceptions | Table                     | KPI-CERT-026                              | `certificate.audit.read`                    | B/G   | Links to read-only lifecycle/audit view.                    |
+| W-CERT-020 | Data Freshness              | Status tile               | Projection refresh metadata               | `certificate.read`                          | B/C/G | Shows `dataAsOf`, lag, and degraded source state.           |
 
 ### 5.3.1 Widget Permission Hiding
 
@@ -244,18 +244,18 @@ AND canViewConsolidated = true
 
 The executive summary is read-only and may include:
 
-| Widget ID | Executive Widget | Definition | Scope |
-|---|---|---|---|
-| W-CERT-E01 | Certificates Issued | Issued certificates in selected period, with prior-period comparison | C |
-| W-CERT-E02 | On-Time Issuance Rate | KPI-CERT-009 | C |
-| W-CERT-E03 | P90 Completion-to-Issue | KPI-CERT-008 | C |
-| W-CERT-E04 | Open Readiness Backlog | KPI-CERT-001 + blocked counts summarized | C |
-| W-CERT-E05 | Reissue Rate | Reissue requests ÷ issued certificate population under explicitly labeled cohort definition | C |
-| W-CERT-E06 | Revocation Rate | KPI-CERT-017 | C |
-| W-CERT-E07 | Verification Success Rate | KPI-CERT-019 | C |
-| W-CERT-E08 | Branch Issuance Comparison | Issued count and turnaround metrics by authorized branch | C |
-| W-CERT-E09 | Course Certificate Volume | Top courses by certificates issued | C |
-| W-CERT-E10 | Trend Overview | Monthly issued, reissue, revocation, and verification trend | C |
+| Widget ID  | Executive Widget           | Definition                                                                                  | Scope |
+| ---------- | -------------------------- | ------------------------------------------------------------------------------------------- | ----- |
+| W-CERT-E01 | Certificates Issued        | Issued certificates in selected period, with prior-period comparison                        | C     |
+| W-CERT-E02 | On-Time Issuance Rate      | KPI-CERT-009                                                                                | C     |
+| W-CERT-E03 | P90 Completion-to-Issue    | KPI-CERT-008                                                                                | C     |
+| W-CERT-E04 | Open Readiness Backlog     | KPI-CERT-001 + blocked counts summarized                                                    | C     |
+| W-CERT-E05 | Reissue Rate               | Reissue requests ÷ issued certificate population under explicitly labeled cohort definition | C     |
+| W-CERT-E06 | Revocation Rate            | KPI-CERT-017                                                                                | C     |
+| W-CERT-E07 | Verification Success Rate  | KPI-CERT-019                                                                                | C     |
+| W-CERT-E08 | Branch Issuance Comparison | Issued count and turnaround metrics by authorized branch                                    | C     |
+| W-CERT-E09 | Course Certificate Volume  | Top courses by certificates issued                                                          | C     |
+| W-CERT-E10 | Trend Overview             | Monthly issued, reissue, revocation, and verification trend                                 | C     |
 
 Executive widgets must not expose:
 
@@ -287,11 +287,11 @@ All operational reports must support:
 
 ### 6.1.1 Common Export Options
 
-| Format | Usage | Requirements |
-|---|---|---|
-| CSV | Large tabular extraction | UTF-8; bilingual text preserved; ISO dates in machine-oriented export or configured localized display columns. |
-| XLSX | Business analysis | Header row, frozen panes, typed date/number cells, filter summary worksheet or header block. |
-| PDF | Formal summary/print report | Best for bounded row counts and summarized reports; includes title, period, branch scope, generated timestamp, and page numbering. |
+| Format | Usage                       | Requirements                                                                                                                       |
+| ------ | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| CSV    | Large tabular extraction    | UTF-8; bilingual text preserved; ISO dates in machine-oriented export or configured localized display columns.                     |
+| XLSX   | Business analysis           | Header row, frozen panes, typed date/number cells, filter summary worksheet or header block.                                       |
+| PDF    | Formal summary/print report | Best for bounded row counts and summarized reports; includes title, period, branch scope, generated timestamp, and page numbering. |
 
 Reports with sensitive verification network metadata must apply field-level permission masking even in exports.
 
@@ -321,24 +321,24 @@ Reports with sensitive verification network metadata must apply field-level perm
 
 ### Columns
 
-| Column | Source / Rule |
-|---|---|
-| Certificate Number | Certificate.certificateNumber |
-| Student Number | StudentProfile reference, read-only |
-| Student Name | Person/Student read projection |
-| Enrollment Number | Enrollment reference |
-| Course Code | Course Catalog reference |
-| Course Name | Course localized display projection |
-| Batch Code | Training Delivery reference |
-| Branch | Enrollment/Batch branch read projection |
-| Certificate Language | Certificate.language |
-| Certificate Status | Certificate.certificateStatus |
-| Issued Date | Certificate.issuedDate |
-| Issued By | user display projection from issuedBy |
-| Verification Enabled | derived from presence/validity of verificationCode under Certificate rules |
-| Has Reissue | exists reissue request/replacement lineage |
-| Replacement Certificate Number | joined through approved lineage where unambiguous |
-| Data As Of | report metadata, not row column by default |
+| Column                         | Source / Rule                                                              |
+| ------------------------------ | -------------------------------------------------------------------------- |
+| Certificate Number             | Certificate.certificateNumber                                              |
+| Student Number                 | StudentProfile reference, read-only                                        |
+| Student Name                   | Person/Student read projection                                             |
+| Enrollment Number              | Enrollment reference                                                       |
+| Course Code                    | Course Catalog reference                                                   |
+| Course Name                    | Course localized display projection                                        |
+| Batch Code                     | Training Delivery reference                                                |
+| Branch                         | Enrollment/Batch branch read projection                                    |
+| Certificate Language           | Certificate.language                                                       |
+| Certificate Status             | Certificate.certificateStatus                                              |
+| Issued Date                    | Certificate.issuedDate                                                     |
+| Issued By                      | user display projection from issuedBy                                      |
+| Verification Enabled           | derived from presence/validity of verificationCode under Certificate rules |
+| Has Reissue                    | exists reissue request/replacement lineage                                 |
+| Replacement Certificate Number | joined through approved lineage where unambiguous                          |
+| Data As Of                     | report metadata, not row column by default                                 |
 
 ### Sorting
 
@@ -820,18 +820,18 @@ For branch/course tables:
 
 # 7. Report Permission and Scope Matrix
 
-| Report | Permission | Branch Scope | Consolidated | Global | Export |
-|---|---|---:|---:|---:|---|
-| RPT-CERT-001 Registry | `certificate.report.registry` | Yes | Yes with entitlement | No by default | CSV/XLSX/PDF |
-| RPT-CERT-002 Issuance Trend | `certificate.report.issuance` | Yes | Yes with entitlement | No by default | CSV/XLSX/PDF |
-| RPT-CERT-003 Readiness/Blocked | `certificate.report.readiness` | Yes | Yes with entitlement | No | CSV/XLSX/PDF |
-| RPT-CERT-004 Pending Issuance Aging | `certificate.report.issuance` | Yes | Yes with entitlement | No | CSV/XLSX/PDF |
-| RPT-CERT-005 Turnaround | `certificate.report.issuance` | Yes | Yes with entitlement | No | CSV/XLSX/PDF |
-| RPT-CERT-006 Reissue/Replacement | `certificate.report.reissue` | Yes | Yes with entitlement | Policy-based for auditor | CSV/XLSX/PDF |
-| RPT-CERT-007 Revocation | `certificate.report.revocation` | Yes | Yes with entitlement | Explicit compliance only | CSV/XLSX/PDF |
-| RPT-CERT-008 Verification Activity | `certificate.report.verification` | Yes | Yes with entitlement | Explicit compliance only | Masked CSV/XLSX/PDF |
-| RPT-CERT-009 Lifecycle Audit | `certificate.report.audit` + `certificate.audit.read` | Yes | Yes with entitlement | Explicit auditor only | CSV/XLSX/PDF |
-| RPT-CERT-010 Executive KPI | `certificate.report.executive` | No single branch requirement | Required | No | CSV/XLSX/PDF |
+| Report                              | Permission                                            |                 Branch Scope |         Consolidated |                   Global | Export              |
+| ----------------------------------- | ----------------------------------------------------- | ---------------------------: | -------------------: | -----------------------: | ------------------- |
+| RPT-CERT-001 Registry               | `certificate.report.registry`                         |                          Yes | Yes with entitlement |            No by default | CSV/XLSX/PDF        |
+| RPT-CERT-002 Issuance Trend         | `certificate.report.issuance`                         |                          Yes | Yes with entitlement |            No by default | CSV/XLSX/PDF        |
+| RPT-CERT-003 Readiness/Blocked      | `certificate.report.readiness`                        |                          Yes | Yes with entitlement |                       No | CSV/XLSX/PDF        |
+| RPT-CERT-004 Pending Issuance Aging | `certificate.report.issuance`                         |                          Yes | Yes with entitlement |                       No | CSV/XLSX/PDF        |
+| RPT-CERT-005 Turnaround             | `certificate.report.issuance`                         |                          Yes | Yes with entitlement |                       No | CSV/XLSX/PDF        |
+| RPT-CERT-006 Reissue/Replacement    | `certificate.report.reissue`                          |                          Yes | Yes with entitlement | Policy-based for auditor | CSV/XLSX/PDF        |
+| RPT-CERT-007 Revocation             | `certificate.report.revocation`                       |                          Yes | Yes with entitlement | Explicit compliance only | CSV/XLSX/PDF        |
+| RPT-CERT-008 Verification Activity  | `certificate.report.verification`                     |                          Yes | Yes with entitlement | Explicit compliance only | Masked CSV/XLSX/PDF |
+| RPT-CERT-009 Lifecycle Audit        | `certificate.report.audit` + `certificate.audit.read` |                          Yes | Yes with entitlement |    Explicit auditor only | CSV/XLSX/PDF        |
+| RPT-CERT-010 Executive KPI          | `certificate.report.executive`                        | No single branch requirement |             Required |                       No | CSV/XLSX/PDF        |
 
 All rows also require `certificate.report.read`. Export additionally requires `certificate.report.export`.
 
@@ -1173,16 +1173,16 @@ createdAt
 
 ## 8.3 Read Model Ownership Matrix
 
-| Read Model | Physical Owner | Source Contexts | Consumer | Can Replace Transactional Table? |
-|---|---|---|---|---|
-| RM-CERT-001 Registry | Reporting/read layer | Certificate + Enrollment + Course + Batch + Organization | Certificate UI/Reports | **No** |
-| RM-CERT-002 Readiness | Reporting/read composition | Enrollment + Completion + Finance + Certificate | Certificate operations | **No** |
-| RM-CERT-003 Issuance Fact | Reporting/read layer | Certificate + Completion + Audit timestamps | Dashboard/Reports | **No** |
-| RM-CERT-004 Reissue | Reporting/read layer | Certificate + Reissue + IAM display refs | Dashboard/Reports | **No** |
-| RM-CERT-005 Verification Fact | Reporting/read layer | CertificateVerification + Certificate dimensions | Operations/Compliance | **No** |
-| RM-CERT-006 Revocation | Reporting/read composition | Certificate + Audit | Compliance | **No** |
-| RM-CERT-007 Lifecycle Audit | Audit/Reporting read composition | Audit + Certificate references | Audit report/UI | **No** |
-| RM-CERT-008 KPI Daily | Reporting & Dashboards | Reporting facts/read models | Dashboards | **No** |
+| Read Model                    | Physical Owner                   | Source Contexts                                          | Consumer               | Can Replace Transactional Table? |
+| ----------------------------- | -------------------------------- | -------------------------------------------------------- | ---------------------- | -------------------------------- |
+| RM-CERT-001 Registry          | Reporting/read layer             | Certificate + Enrollment + Course + Batch + Organization | Certificate UI/Reports | **No**                           |
+| RM-CERT-002 Readiness         | Reporting/read composition       | Enrollment + Completion + Finance + Certificate          | Certificate operations | **No**                           |
+| RM-CERT-003 Issuance Fact     | Reporting/read layer             | Certificate + Completion + Audit timestamps              | Dashboard/Reports      | **No**                           |
+| RM-CERT-004 Reissue           | Reporting/read layer             | Certificate + Reissue + IAM display refs                 | Dashboard/Reports      | **No**                           |
+| RM-CERT-005 Verification Fact | Reporting/read layer             | CertificateVerification + Certificate dimensions         | Operations/Compliance  | **No**                           |
+| RM-CERT-006 Revocation        | Reporting/read composition       | Certificate + Audit                                      | Compliance             | **No**                           |
+| RM-CERT-007 Lifecycle Audit   | Audit/Reporting read composition | Audit + Certificate references                           | Audit report/UI        | **No**                           |
+| RM-CERT-008 KPI Daily         | Reporting & Dashboards           | Reporting facts/read models                              | Dashboards             | **No**                           |
 
 ---
 
@@ -1190,14 +1190,14 @@ createdAt
 
 ## 9.1 Freshness Classes
 
-| Data Class | Example | Recommended Freshness | Consistency Expectation |
-|---|---|---|---|
-| Operational queue | readiness, pending issue, open reissue | Near-real-time or short interval | Must not permit commands from stale state without command-time revalidation. |
-| Operational dashboard | daily counts, workload | ≤ 5 minutes target unless architecture/NFR specifies stricter | Display `dataAsOf`. |
-| Management trend | issuance trends, turnaround | ≤ 15 minutes or scheduled incremental refresh | Eventual consistency acceptable. |
-| Executive KPI | daily/period summary | Hourly or daily snapshot depending KPI | Display snapshot period and refresh time. |
-| Audit/compliance | lifecycle audit | Near-real-time read path preferred | Audit source remains authoritative. |
-| Public verification | verification result | Transactional/authoritative lookup, not stale BI cache | Must reflect current certificate validity according to application rules. |
+| Data Class            | Example                                | Recommended Freshness                                         | Consistency Expectation                                                      |
+| --------------------- | -------------------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Operational queue     | readiness, pending issue, open reissue | Near-real-time or short interval                              | Must not permit commands from stale state without command-time revalidation. |
+| Operational dashboard | daily counts, workload                 | ≤ 5 minutes target unless architecture/NFR specifies stricter | Display `dataAsOf`.                                                          |
+| Management trend      | issuance trends, turnaround            | ≤ 15 minutes or scheduled incremental refresh                 | Eventual consistency acceptable.                                             |
+| Executive KPI         | daily/period summary                   | Hourly or daily snapshot depending KPI                        | Display snapshot period and refresh time.                                    |
+| Audit/compliance      | lifecycle audit                        | Near-real-time read path preferred                            | Audit source remains authoritative.                                          |
+| Public verification   | verification result                    | Transactional/authoritative lookup, not stale BI cache        | Must reflect current certificate validity according to application rules.    |
 
 These are FRD reporting expectations. Exact infrastructure mechanisms belong in architecture/NFR design.
 
@@ -1241,17 +1241,17 @@ Large exports should be generated by server-side/reporting infrastructure using 
 
 ## 11.1 Standard Dimensions
 
-| Dimension | Owner | Usage |
-|---|---|---|
-| Time | Shared reporting convention | Daily/weekly/monthly/quarterly trends |
-| Branch | Organization/IAM scope | Branch comparison and isolation |
-| Course | Course Catalog | Course volume and turnaround |
-| Batch | Training Delivery | Batch-level operational analysis |
-| Certificate Status | Certificate | Lifecycle analysis |
-| Certificate Language | Certificate | Localization distribution |
-| Readiness State | Read projection from authoritative source outcomes | Ready/blocked workload |
-| Reissue Status | Certificate | Request outcome and aging |
-| Verification Status | CertificateVerification | Verification success/failure analysis |
+| Dimension            | Owner                                              | Usage                                 |
+| -------------------- | -------------------------------------------------- | ------------------------------------- |
+| Time                 | Shared reporting convention                        | Daily/weekly/monthly/quarterly trends |
+| Branch               | Organization/IAM scope                             | Branch comparison and isolation       |
+| Course               | Course Catalog                                     | Course volume and turnaround          |
+| Batch                | Training Delivery                                  | Batch-level operational analysis      |
+| Certificate Status   | Certificate                                        | Lifecycle analysis                    |
+| Certificate Language | Certificate                                        | Localization distribution             |
+| Readiness State      | Read projection from authoritative source outcomes | Ready/blocked workload                |
+| Reissue Status       | Certificate                                        | Request outcome and aging             |
+| Verification Status  | CertificateVerification                            | Verification success/failure analysis |
 
 ## 11.2 Drill Paths
 
@@ -1341,59 +1341,59 @@ When freshness threshold is exceeded:
 
 # 14. KPI and Report Traceability
 
-| KPI / Report | Certificate Source | Cross-Context Source | Permission |
-|---|---|---|---|
-| KPI-CERT-001 Ready Count | Certificate existence/state | Enrollment + Completion + Finance | `certificate.report.readiness` |
-| KPI-CERT-005 Issued Certificates | Certificate issued state/date | Branch/course/batch dimensions | `certificate.report.issuance` |
-| KPI-CERT-007 Turnaround | Certificate issuedDate | Completion approvedAt | `certificate.report.issuance` |
-| KPI-CERT-010 Reissue Count | CertificateReissueRequest | Identity display refs | `certificate.report.reissue` |
-| KPI-CERT-016 Revoked Count | Certificate status | Audit lifecycle timestamp/reason | `certificate.report.revocation` |
-| KPI-CERT-018 Verification Attempts | CertificateVerification | Certificate dimensions | `certificate.report.verification` |
-| RPT-CERT-001 Registry | Certificate | Enrollment, Student, Course, Batch, Branch | `certificate.report.registry` |
-| RPT-CERT-003 Readiness | Certificate | Enrollment, Completion, Finance | `certificate.report.readiness` |
-| RPT-CERT-006 Reissue | CertificateReissueRequest | Identity display refs | `certificate.report.reissue` |
-| RPT-CERT-009 Lifecycle Audit | Certificate reference | AuditLog/ApprovalHistory | `certificate.report.audit` + `certificate.audit.read` |
-| RPT-CERT-010 Executive KPI | Certificate facts | Reporting aggregate dimensions | `certificate.report.executive` + consolidated entitlement |
+| KPI / Report                       | Certificate Source            | Cross-Context Source                       | Permission                                                |
+| ---------------------------------- | ----------------------------- | ------------------------------------------ | --------------------------------------------------------- |
+| KPI-CERT-001 Ready Count           | Certificate existence/state   | Enrollment + Completion + Finance          | `certificate.report.readiness`                            |
+| KPI-CERT-005 Issued Certificates   | Certificate issued state/date | Branch/course/batch dimensions             | `certificate.report.issuance`                             |
+| KPI-CERT-007 Turnaround            | Certificate issuedDate        | Completion approvedAt                      | `certificate.report.issuance`                             |
+| KPI-CERT-010 Reissue Count         | CertificateReissueRequest     | Identity display refs                      | `certificate.report.reissue`                              |
+| KPI-CERT-016 Revoked Count         | Certificate status            | Audit lifecycle timestamp/reason           | `certificate.report.revocation`                           |
+| KPI-CERT-018 Verification Attempts | CertificateVerification       | Certificate dimensions                     | `certificate.report.verification`                         |
+| RPT-CERT-001 Registry              | Certificate                   | Enrollment, Student, Course, Batch, Branch | `certificate.report.registry`                             |
+| RPT-CERT-003 Readiness             | Certificate                   | Enrollment, Completion, Finance            | `certificate.report.readiness`                            |
+| RPT-CERT-006 Reissue               | CertificateReissueRequest     | Identity display refs                      | `certificate.report.reissue`                              |
+| RPT-CERT-009 Lifecycle Audit       | Certificate reference         | AuditLog/ApprovalHistory                   | `certificate.report.audit` + `certificate.audit.read`     |
+| RPT-CERT-010 Executive KPI         | Certificate facts             | Reporting aggregate dimensions             | `certificate.report.executive` + consolidated entitlement |
 
 ---
 
 # 15. DDD Ownership Fit Check
 
-| Reporting Requirement | Owning Context | Certificate Module Use | Fit Result |
-|---|---|---|---|
-| Certificate generation/issue facts | Certificate Management | Source facts for reports | Aligned |
-| Verification activity | Certificate Management | Source fact from CertificateVerification | Aligned |
-| Reissue request/replacement facts | Certificate Management | Source facts for workflow analytics | Aligned |
-| Completion approval | Exam, Result & Completion | Read-only input to readiness and turnaround | Aligned; no recomputation |
-| Payment validation | Finance & Receivables | Read-only gate outcome in readiness report | Aligned; no Finance mutation |
-| Branch scope | IAM + Organization | Authorization/filter dimensions | Aligned; server-side enforcement |
-| Audit history | Audit & Compliance | Read-only lifecycle composition | Aligned; Audit remains owner |
-| Dashboard widgets/KPI snapshots | Reporting & Executive Dashboards | Read optimization and presentation | Aligned; no transaction ownership |
-| Course names/categories | Course Catalog | Reporting dimensions | Aligned; read-only reference |
-| Batch dimensions | Training Delivery | Reporting dimensions | Aligned; read-only reference |
+| Reporting Requirement              | Owning Context                   | Certificate Module Use                      | Fit Result                        |
+| ---------------------------------- | -------------------------------- | ------------------------------------------- | --------------------------------- |
+| Certificate generation/issue facts | Certificate Management           | Source facts for reports                    | Aligned                           |
+| Verification activity              | Certificate Management           | Source fact from CertificateVerification    | Aligned                           |
+| Reissue request/replacement facts  | Certificate Management           | Source facts for workflow analytics         | Aligned                           |
+| Completion approval                | Exam, Result & Completion        | Read-only input to readiness and turnaround | Aligned; no recomputation         |
+| Payment validation                 | Finance & Receivables            | Read-only gate outcome in readiness report  | Aligned; no Finance mutation      |
+| Branch scope                       | IAM + Organization               | Authorization/filter dimensions             | Aligned; server-side enforcement  |
+| Audit history                      | Audit & Compliance               | Read-only lifecycle composition             | Aligned; Audit remains owner      |
+| Dashboard widgets/KPI snapshots    | Reporting & Executive Dashboards | Read optimization and presentation          | Aligned; no transaction ownership |
+| Course names/categories            | Course Catalog                   | Reporting dimensions                        | Aligned; read-only reference      |
+| Batch dimensions                   | Training Delivery                | Reporting dimensions                        | Aligned; read-only reference      |
 
 ---
 
 # 16. ER Model Alignment Check
 
-| ER Entity / Field | Reporting Use | Ownership Treatment |
-|---|---|---|
-| Certificate | Registry, issuance, status, language, artifact presence | Certificate-owned authoritative source |
-| CertificateVerification | Verification volume/outcome analytics | Certificate-owned authoritative source |
-| CertificateReissueRequest | Reissue backlog/outcome/replacement lineage | Certificate-owned authoritative source |
-| Enrollment | Enrollment number and certificate lifecycle linkage | Referenced read-only |
-| StudentProfile / Person | Display identity dimensions | Referenced read-only; minimize PII |
-| Course | Course reporting dimension | Referenced read-only |
-| Batch | Batch reporting dimension | Referenced read-only |
-| Branch | Branch reporting dimension | Referenced read-only |
-| CourseCompletion | Completion status/approved timing input | Referenced read-only |
-| CompletionApproval | Approval workflow timing where required | Referenced read-only |
-| Invoice/Payment/Receivable | Payment-validation truth input | Finance-owned; report consumes outcome, not raw recalculation by default |
-| DashboardDefinition | Dashboard metadata | Reporting-owned |
-| DashboardWidget | Widget metadata | Reporting-owned |
-| MetricSnapshot | Read-optimized KPI storage | Reporting-owned; never transactional truth |
-| AuditLog | Revocation/lifecycle evidence | Audit-owned read dependency |
-| ApprovalRequest / ApprovalHistory | Reissue approval evidence where used | Audit-owned read dependency |
+| ER Entity / Field                 | Reporting Use                                           | Ownership Treatment                                                      |
+| --------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------ |
+| Certificate                       | Registry, issuance, status, language, artifact presence | Certificate-owned authoritative source                                   |
+| CertificateVerification           | Verification volume/outcome analytics                   | Certificate-owned authoritative source                                   |
+| CertificateReissueRequest         | Reissue backlog/outcome/replacement lineage             | Certificate-owned authoritative source                                   |
+| Enrollment                        | Enrollment number and certificate lifecycle linkage     | Referenced read-only                                                     |
+| StudentProfile / Person           | Display identity dimensions                             | Referenced read-only; minimize PII                                       |
+| Course                            | Course reporting dimension                              | Referenced read-only                                                     |
+| Batch                             | Batch reporting dimension                               | Referenced read-only                                                     |
+| Branch                            | Branch reporting dimension                              | Referenced read-only                                                     |
+| CourseCompletion                  | Completion status/approved timing input                 | Referenced read-only                                                     |
+| CompletionApproval                | Approval workflow timing where required                 | Referenced read-only                                                     |
+| Invoice/Payment/Receivable        | Payment-validation truth input                          | Finance-owned; report consumes outcome, not raw recalculation by default |
+| DashboardDefinition               | Dashboard metadata                                      | Reporting-owned                                                          |
+| DashboardWidget                   | Widget metadata                                         | Reporting-owned                                                          |
+| MetricSnapshot                    | Read-optimized KPI storage                              | Reporting-owned; never transactional truth                               |
+| AuditLog                          | Revocation/lifecycle evidence                           | Audit-owned read dependency                                              |
+| ApprovalRequest / ApprovalHistory | Reissue approval evidence where used                    | Audit-owned read dependency                                              |
 
 ---
 
@@ -1456,4 +1456,3 @@ The reporting design is consistent with the Module 11 FRD parts generated so far
 6. It preserves branch isolation and consolidated reporting rules.
 7. It does not introduce CQRS/Event Sourcing as a required architecture pattern; the term read model here means a read-only projection/view optimized for reporting, compatible with the modular-monolith architecture.
 8. It explicitly marks known DDD/ER inconsistencies rather than inventing transactional entities or fields.
-

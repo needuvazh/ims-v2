@@ -663,21 +663,25 @@ Feature: Export and audit academic outcomes
 ### Alternative Flows
 
 **A1 – Course and Batch mismatch**
+
 1. Batch does not belong to selected Course.
 2. System rejects the command.
 3. No Exam is created.
 
 **A2 – Invalid marks thresholds**
+
 1. `maxMarks <= 0`, `passMarks < 0`, or `passMarks > maxMarks`.
 2. System returns field-level validation errors.
 3. No Exam is created.
 
 **A3 – Unauthorized branch**
+
 1. Actor selects or submits a Batch outside mutation scope.
 2. Server denies the request.
 3. No cross-branch data is disclosed beyond safe error handling.
 
 **A4 – Concurrent duplicate**
+
 1. A semantically duplicate exam is created by another request before commit.
 2. Database/application uniqueness policy rejects duplication.
 3. Actor receives a conflict response.
@@ -946,24 +950,29 @@ Feature: Export and audit academic outcomes
 ### Alternative Flows
 
 **A1 – Trainer does not recommend**
+
 - Record negative recommendation/remarks.
 - Workflow does not advance.
 
 **A2 – Coordinator rejects**
+
 - Remarks mandatory.
 - Workflow enters rejected outcome.
 - Final approval does not become available.
 
 **A3 – Branch Manager rejects**
+
 - Remarks mandatory.
 - Completion becomes rejected outcome.
 - No eligibility is exposed.
 
 **A4 – Actor attempts stage skipping**
+
 - Reject transition.
 - No approval row/action is created.
 
 **A5 – Evidence changed before final decision**
+
 - Re-evaluate current evidence.
 - Prevent approval based on stale truth.
 - Route to appropriate re-review state.
@@ -1248,16 +1257,16 @@ sequenceDiagram
 
 ### Evaluation Decision Table
 
-| Attendance Requirement | Exam Requirement | Payment Requirement | Evidence Outcome | Manual Approval | Functional Outcome |
-|---|---|---|---|---|---|
-| Not configured | Not required | Not required | No mandatory criterion fails | No | Approved/Completed using implementation enum mapping |
-| Pass | Pass | Pass | All required criteria pass | Yes | Awaiting Trainer Recommendation |
-| Fail | Any | Any | Required attendance fails | Any | Not Eligible |
-| Missing | Any | Any | Required attendance evidence missing | Any | Evidence Incomplete / Pending Evaluation |
-| Pass | Fail | Any | Required exam fails | Any | Not Eligible |
-| Pass | Missing | Any | Required exam result missing | Any | Evidence Incomplete / Not Eligible according to final policy mapping |
-| Pass | Pass | Fail | Required payment fails | Any | Not Eligible |
-| Pass | Pass | Unavailable | Required Finance validation unavailable | Any | Evaluation Pending/Error; never false-approved |
+| Attendance Requirement | Exam Requirement | Payment Requirement | Evidence Outcome                        | Manual Approval | Functional Outcome                                                   |
+| ---------------------- | ---------------- | ------------------- | --------------------------------------- | --------------- | -------------------------------------------------------------------- |
+| Not configured         | Not required     | Not required        | No mandatory criterion fails            | No              | Approved/Completed using implementation enum mapping                 |
+| Pass                   | Pass             | Pass                | All required criteria pass              | Yes             | Awaiting Trainer Recommendation                                      |
+| Fail                   | Any              | Any                 | Required attendance fails               | Any             | Not Eligible                                                         |
+| Missing                | Any              | Any                 | Required attendance evidence missing    | Any             | Evidence Incomplete / Pending Evaluation                             |
+| Pass                   | Fail             | Any                 | Required exam fails                     | Any             | Not Eligible                                                         |
+| Pass                   | Missing          | Any                 | Required exam result missing            | Any             | Evidence Incomplete / Not Eligible according to final policy mapping |
+| Pass                   | Pass             | Fail                | Required payment fails                  | Any             | Not Eligible                                                         |
+| Pass                   | Pass             | Unavailable         | Required Finance validation unavailable | Any             | Evaluation Pending/Error; never false-approved                       |
 
 **Schema note:** The exact persisted `completionStatus` enum values must be mapped to the actual Prisma schema. The table defines required functional behavior, not a new persistence enum.
 
@@ -1491,18 +1500,18 @@ stateDiagram-v2
 
 ### Exam Transition Rules Matrix
 
-| From | To | Trigger | Required Permission | Additional Guards |
-|---|---|---|---|---|
-| New | Draft | Create | `exam.create` | Valid Course, Batch, branch, marks thresholds |
-| Draft | Scheduled | Schedule | `exam.schedule` or `exam.update` per final permission design | Valid exam date and branch mutation access |
-| Draft | Cancelled | Cancel | `exam.cancel` | Reason required according to policy |
-| Scheduled | Draft | Return for Edit | `exam.update` | No incompatible finalized evidence |
-| Scheduled | OpenForResultEntry | Activate/Open | `exam.activate` | Exam ready for result entry |
-| Scheduled | Cancelled | Cancel | `exam.cancel` | Reason required; preserve audit |
-| OpenForResultEntry | Closed | Close | `exam.close` | Finalization/completeness policy satisfied as applicable |
-| OpenForResultEntry | Cancelled | Cancel | `exam.cancel` | Must not silently invalidate finalized evidence; exception handling may be required |
-| Closed | OpenForResultEntry | Reopen | Restricted action; exact permission must be defined in IAM permission catalog | Mandatory reason, audit, no unsafe evidence invalidation |
-| Draft/Scheduled/Closed/Cancelled | Archived | Archive/deactivate | Repository-defined administration permission; no new permission invented here | Soft delete/deactivation only; no hard delete |
+| From                             | To                 | Trigger            | Required Permission                                                           | Additional Guards                                                                   |
+| -------------------------------- | ------------------ | ------------------ | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| New                              | Draft              | Create             | `exam.create`                                                                 | Valid Course, Batch, branch, marks thresholds                                       |
+| Draft                            | Scheduled          | Schedule           | `exam.schedule` or `exam.update` per final permission design                  | Valid exam date and branch mutation access                                          |
+| Draft                            | Cancelled          | Cancel             | `exam.cancel`                                                                 | Reason required according to policy                                                 |
+| Scheduled                        | Draft              | Return for Edit    | `exam.update`                                                                 | No incompatible finalized evidence                                                  |
+| Scheduled                        | OpenForResultEntry | Activate/Open      | `exam.activate`                                                               | Exam ready for result entry                                                         |
+| Scheduled                        | Cancelled          | Cancel             | `exam.cancel`                                                                 | Reason required; preserve audit                                                     |
+| OpenForResultEntry               | Closed             | Close              | `exam.close`                                                                  | Finalization/completeness policy satisfied as applicable                            |
+| OpenForResultEntry               | Cancelled          | Cancel             | `exam.cancel`                                                                 | Must not silently invalidate finalized evidence; exception handling may be required |
+| Closed                           | OpenForResultEntry | Reopen             | Restricted action; exact permission must be defined in IAM permission catalog | Mandatory reason, audit, no unsafe evidence invalidation                            |
+| Draft/Scheduled/Closed/Cancelled | Archived           | Archive/deactivate | Repository-defined administration permission; no new permission invented here | Soft delete/deactivation only; no hard delete                                       |
 
 **Gap note:** `exam.reopen` and an archive-specific permission are not present in Part 1's recommended permission list. If reopening/archive is required in implementation, either map it to an existing restricted capability or amend the permission catalog explicitly. It must not be granted implicitly by role name.
 
@@ -1528,12 +1537,12 @@ stateDiagram-v2
     Passed --> Failed: Authorized correction changes marks
 ```
 
-| From | To | Trigger | Required Permission | Guards |
-|---|---|---|---|---|
-| NotRecorded | Passed | Record valid marks | `result.record` or `result.bulk-record` | Enrollment matches Exam Course/Batch; marks within range |
-| NotRecorded | Failed | Record valid marks | `result.record` or `result.bulk-record` | Same guards |
-| Failed | Passed | Correct finalized result | `result.correct` | Mandatory reason, version match, audit, completion re-evaluation |
-| Passed | Failed | Correct finalized result | `result.correct` | Mandatory reason, version match, audit, completion re-evaluation |
+| From        | To     | Trigger                  | Required Permission                     | Guards                                                           |
+| ----------- | ------ | ------------------------ | --------------------------------------- | ---------------------------------------------------------------- |
+| NotRecorded | Passed | Record valid marks       | `result.record` or `result.bulk-record` | Enrollment matches Exam Course/Batch; marks within range         |
+| NotRecorded | Failed | Record valid marks       | `result.record` or `result.bulk-record` | Same guards                                                      |
+| Failed      | Passed | Correct finalized result | `result.correct`                        | Mandatory reason, version match, audit, completion re-evaluation |
+| Passed      | Failed | Correct finalized result | `result.correct`                        | Mandatory reason, version match, audit, completion re-evaluation |
 
 ### B. Edit Lifecycle State
 
@@ -1547,13 +1556,13 @@ stateDiagram-v2
     CorrectedFinal --> CorrectedFinal: Further authorized correction
 ```
 
-| From | To | Trigger | Required Permission | Guards |
-|---|---|---|---|---|
-| NotRecorded | Recorded | Save Result | `result.record` / `result.bulk-record` | Exam open; valid roster member |
-| Recorded | Recorded | Edit | `result.record` | Exam open; not finalized; version valid |
-| Recorded | Finalized | Finalize | `result.finalize` | Valid result; finalization policy satisfied |
-| Finalized | CorrectedFinal | Correct | `result.correct` | Reason mandatory; audit; version check |
-| CorrectedFinal | CorrectedFinal | Correct again | `result.correct` | Same restricted correction controls |
+| From           | To             | Trigger       | Required Permission                    | Guards                                      |
+| -------------- | -------------- | ------------- | -------------------------------------- | ------------------------------------------- |
+| NotRecorded    | Recorded       | Save Result   | `result.record` / `result.bulk-record` | Exam open; valid roster member              |
+| Recorded       | Recorded       | Edit          | `result.record`                        | Exam open; not finalized; version valid     |
+| Recorded       | Finalized      | Finalize      | `result.finalize`                      | Valid result; finalization policy satisfied |
+| Finalized      | CorrectedFinal | Correct       | `result.correct`                       | Reason mandatory; audit; version check      |
+| CorrectedFinal | CorrectedFinal | Correct again | `result.correct`                       | Same restricted correction controls         |
 
 **Model gap:** The ER definition shown in the source material does not include a dedicated `isFinalized`, `finalizedAt`, `finalizedBy`, or correction-history entity. Finalization and correction behavior therefore requires validation against the actual Prisma schema and repository audit convention. Do not overload pass/fail semantics with lifecycle semantics without an explicit design decision.
 
@@ -1615,28 +1624,28 @@ stateDiagram-v2
 
 ### CourseCompletion Transition Rules Matrix
 
-| From | To | Trigger | Required Permission / Authority | Guards |
-|---|---|---|---|---|
-| NotEvaluated | EvaluationInProgress | Start evaluation | `completion.evaluate` or authorized system workflow | Enrollment valid; Course/Batch present; branch scope |
-| EvidenceIncomplete | EvaluationInProgress | Retry | `completion.evaluate` / `completion.reevaluate` | Missing dependency/evidence now available |
-| NotEligible | EvaluationInProgress | Re-evaluate | `completion.reevaluate` | Authoritative evidence changed or remediation completed |
-| EvaluationInProgress | EvidenceIncomplete | Evaluation outcome | System domain logic | Required evidence missing/unavailable; must not false-approve |
-| EvaluationInProgress | NotEligible | Evaluation outcome | System domain logic | At least one mandatory criterion fails |
-| EvaluationInProgress | AwaitingTrainerRecommendation | Evaluation outcome | System domain logic | All criteria pass and manual approval required |
-| EvaluationInProgress | Approved | Evaluation outcome | System domain logic | All criteria pass and manual approval not required |
-| AwaitingTrainerRecommendation | AwaitingCoordinatorReview | Recommend | `completion.recommend` | Assigned/authorized trainer; evidence valid; version current |
-| AwaitingTrainerRecommendation | Rejected | Do not recommend | `completion.recommend` | Remarks where policy requires; audit |
-| AwaitingCoordinatorReview | AwaitingFinalApproval | Approve review | `completion.coordinator-review` | Valid trainer recommendation; branch access |
-| AwaitingCoordinatorReview | Rejected | Reject review | `completion.coordinator-review` or `completion.reject` according to command design | Mandatory rejection remarks |
-| AwaitingFinalApproval | Approved | Final approve | `completion.final-approve` | Coordinator approved; evidence revalidated; branch access |
-| AwaitingFinalApproval | Rejected | Reject | `completion.reject` | Mandatory rejection remarks |
-| Approved | ReevaluationRequired | Evidence change trigger | Authorized system workflow / `completion.reevaluate` | Traceable authoritative change |
-| ReevaluationRequired | EvaluationInProgress | Start re-evaluation | `completion.reevaluate` / system | Current rule and evidence reloaded |
-| EvaluationInProgress after prior approval | ExceptionReview | Current evidence invalidates approval | System + restricted review process | Preserve prior approval history |
-| ExceptionReview | AwaitingTrainerRecommendation | Restart manual workflow | `completion.reevaluate` plus stage permissions for later actions | Manual approval still required |
-| ExceptionReview | Approved | Re-evaluation completes | Authorized system outcome | Manual approval not required and all criteria pass |
-| ExceptionReview | NotEligible | Re-evaluation completes | System domain logic | Mandatory criteria fail |
-| Rejected | EvaluationInProgress | Retry after remediation | `completion.reevaluate` | Business policy allows retry; no history deletion |
+| From                                      | To                            | Trigger                               | Required Permission / Authority                                                    | Guards                                                        |
+| ----------------------------------------- | ----------------------------- | ------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| NotEvaluated                              | EvaluationInProgress          | Start evaluation                      | `completion.evaluate` or authorized system workflow                                | Enrollment valid; Course/Batch present; branch scope          |
+| EvidenceIncomplete                        | EvaluationInProgress          | Retry                                 | `completion.evaluate` / `completion.reevaluate`                                    | Missing dependency/evidence now available                     |
+| NotEligible                               | EvaluationInProgress          | Re-evaluate                           | `completion.reevaluate`                                                            | Authoritative evidence changed or remediation completed       |
+| EvaluationInProgress                      | EvidenceIncomplete            | Evaluation outcome                    | System domain logic                                                                | Required evidence missing/unavailable; must not false-approve |
+| EvaluationInProgress                      | NotEligible                   | Evaluation outcome                    | System domain logic                                                                | At least one mandatory criterion fails                        |
+| EvaluationInProgress                      | AwaitingTrainerRecommendation | Evaluation outcome                    | System domain logic                                                                | All criteria pass and manual approval required                |
+| EvaluationInProgress                      | Approved                      | Evaluation outcome                    | System domain logic                                                                | All criteria pass and manual approval not required            |
+| AwaitingTrainerRecommendation             | AwaitingCoordinatorReview     | Recommend                             | `completion.recommend`                                                             | Assigned/authorized trainer; evidence valid; version current  |
+| AwaitingTrainerRecommendation             | Rejected                      | Do not recommend                      | `completion.recommend`                                                             | Remarks where policy requires; audit                          |
+| AwaitingCoordinatorReview                 | AwaitingFinalApproval         | Approve review                        | `completion.coordinator-review`                                                    | Valid trainer recommendation; branch access                   |
+| AwaitingCoordinatorReview                 | Rejected                      | Reject review                         | `completion.coordinator-review` or `completion.reject` according to command design | Mandatory rejection remarks                                   |
+| AwaitingFinalApproval                     | Approved                      | Final approve                         | `completion.final-approve`                                                         | Coordinator approved; evidence revalidated; branch access     |
+| AwaitingFinalApproval                     | Rejected                      | Reject                                | `completion.reject`                                                                | Mandatory rejection remarks                                   |
+| Approved                                  | ReevaluationRequired          | Evidence change trigger               | Authorized system workflow / `completion.reevaluate`                               | Traceable authoritative change                                |
+| ReevaluationRequired                      | EvaluationInProgress          | Start re-evaluation                   | `completion.reevaluate` / system                                                   | Current rule and evidence reloaded                            |
+| EvaluationInProgress after prior approval | ExceptionReview               | Current evidence invalidates approval | System + restricted review process                                                 | Preserve prior approval history                               |
+| ExceptionReview                           | AwaitingTrainerRecommendation | Restart manual workflow               | `completion.reevaluate` plus stage permissions for later actions                   | Manual approval still required                                |
+| ExceptionReview                           | Approved                      | Re-evaluation completes               | Authorized system outcome                                                          | Manual approval not required and all criteria pass            |
+| ExceptionReview                           | NotEligible                   | Re-evaluation completes               | System domain logic                                                                | Mandatory criteria fail                                       |
+| Rejected                                  | EvaluationInProgress          | Retry after remediation               | `completion.reevaluate`                                                            | Business policy allows retry; no history deletion             |
 
 ---
 
@@ -1680,28 +1689,28 @@ stateDiagram-v2
 
 ### CompletionApproval Transition Rules Matrix
 
-| Approval Level | From | To | Trigger | Required Permission | Guards |
-|---|---|---|---|---|---|
-| Trainer Recommendation | Pending | Approved | Recommend | `completion.recommend` | Actor is assigned/authorized trainer; evidence ready |
-| Trainer Recommendation | Pending | Rejected | Do not recommend | `completion.recommend` | Reason/remarks as required |
-| Coordinator Review | Pending | Approved | Approve | `completion.coordinator-review` | Trainer recommendation approved |
-| Coordinator Review | Pending | Rejected | Reject | `completion.coordinator-review` or mapped reject command | Mandatory remarks |
-| Final Approval | Pending | Approved | Final approve | `completion.final-approve` | Coordinator approval exists; evidence still valid |
-| Final Approval | Pending | Rejected | Final reject | `completion.reject` | Mandatory remarks |
-| Any completed level | Approved/Rejected | Superseded | Controlled re-evaluation invalidates workflow basis | System authority plus auditable re-evaluation process | Old history preserved; never hard-deleted |
+| Approval Level         | From              | To         | Trigger                                             | Required Permission                                      | Guards                                               |
+| ---------------------- | ----------------- | ---------- | --------------------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------- |
+| Trainer Recommendation | Pending           | Approved   | Recommend                                           | `completion.recommend`                                   | Actor is assigned/authorized trainer; evidence ready |
+| Trainer Recommendation | Pending           | Rejected   | Do not recommend                                    | `completion.recommend`                                   | Reason/remarks as required                           |
+| Coordinator Review     | Pending           | Approved   | Approve                                             | `completion.coordinator-review`                          | Trainer recommendation approved                      |
+| Coordinator Review     | Pending           | Rejected   | Reject                                              | `completion.coordinator-review` or mapped reject command | Mandatory remarks                                    |
+| Final Approval         | Pending           | Approved   | Final approve                                       | `completion.final-approve`                               | Coordinator approval exists; evidence still valid    |
+| Final Approval         | Pending           | Rejected   | Final reject                                        | `completion.reject`                                      | Mandatory remarks                                    |
+| Any completed level    | Approved/Rejected | Superseded | Controlled re-evaluation invalidates workflow basis | System authority plus auditable re-evaluation process    | Old history preserved; never hard-deleted            |
 
 ---
 
 # 6. Actor-to-Workflow Responsibility Matrix
 
-| Actor | Create/Manage Exam | Record Result | Finalize Result | Correct Finalized Result | Evaluate Completion | Recommend | Coordinator Review | Final Approve/Reject | Export/Audit |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Trainer | No by default | Yes when permitted | No by default | No | Read outcome as permitted | Yes when assigned and permitted | No | No | Limited/read only as permitted |
-| Academic Coordinator | Yes | Yes when permitted | Yes | Only if separately granted | Yes | Not as substitute for trainer stage | Yes | No by default | Yes when permitted |
-| Academic Administrator | Yes | Yes | Yes | Yes when separately granted | Yes | Only if domain policy explicitly delegates | May review if granted | Only if final permission explicitly granted | Yes |
-| Branch Manager | Read/manage only when permission granted | No by default | No by default | No by default | Read | No | No by default | Yes | Yes when permitted |
-| Auditor | No mutation | Read | Read | No | Read | Read history | Read history | Read history | Audit read/export when granted |
-| System Workflow | No human exam authoring | No manual marks invention | No | No autonomous correction | May run authorized re-evaluation | No | No | No | Operational metrics only |
+| Actor                  |                       Create/Manage Exam |             Record Result | Finalize Result |    Correct Finalized Result |              Evaluate Completion |                                  Recommend |    Coordinator Review |                        Final Approve/Reject |                   Export/Audit |
+| ---------------------- | ---------------------------------------: | ------------------------: | --------------: | --------------------------: | -------------------------------: | -----------------------------------------: | --------------------: | ------------------------------------------: | -----------------------------: |
+| Trainer                |                            No by default |        Yes when permitted |   No by default |                          No |        Read outcome as permitted |            Yes when assigned and permitted |                    No |                                          No | Limited/read only as permitted |
+| Academic Coordinator   |                                      Yes |        Yes when permitted |             Yes |  Only if separately granted |                              Yes |        Not as substitute for trainer stage |                   Yes |                               No by default |             Yes when permitted |
+| Academic Administrator |                                      Yes |                       Yes |             Yes | Yes when separately granted |                              Yes | Only if domain policy explicitly delegates | May review if granted | Only if final permission explicitly granted |                            Yes |
+| Branch Manager         | Read/manage only when permission granted |             No by default |   No by default |               No by default |                             Read |                                         No |         No by default |                                         Yes |             Yes when permitted |
+| Auditor                |                              No mutation |                      Read |            Read |                          No |                             Read |                               Read history |          Read history |                                Read history | Audit read/export when granted |
+| System Workflow        |                  No human exam authoring | No manual marks invention |              No |    No autonomous correction | May run authorized re-evaluation |                                         No |                    No |                                          No |       Operational metrics only |
 
 **Authorization rule:** This table describes expected business usage, not hardcoded roles. Server authorization must use permission codes, branch policy, domain eligibility, entity state, and concurrency checks.
 
@@ -1709,21 +1718,21 @@ stateDiagram-v2
 
 # 7. Cross-Context Workflow Contract Summary
 
-| Workflow Step | Data/Decision | Owner | Module 10 Usage | Prohibited Behavior |
-|---|---|---|---|---|
-| Resolve user permission | User permissions | IAM | Authorize command/query | Hardcode role-name checks |
-| Resolve branch access | UserBranchAccess / branch policy | IAM | Filter and authorize resources | Trust client branchId alone |
-| Resolve Course rule | CourseCompletionRule | Course Catalog | Read active rule and evaluate | Copy or edit rule in Module 10 |
-| Resolve batch roster | Enrollment + Batch relationship | Admission & Enrollment / Training Delivery | Build result-entry roster | Create parallel student-course record |
-| Resolve trainer assignment | BatchTrainer / TrainerProfile | Training Delivery / Trainer Management | Validate recommendation actor | Duplicate trainer identity |
-| Resolve attendance | Attendance evidence | Attendance | Consume percentage/outcome | Own or directly mutate attendance |
-| Resolve payment validation | Finance evidence | Finance & Receivables | Consume pass/fail validation | Recompute from copied payment data |
-| Persist exam result | Exam, Result | Module 10 | Own create/update/finalization/correction behavior | Store result in Enrollment context |
-| Persist completion decision | CourseCompletion, CompletionApproval | Module 10 | Own evaluation and ordered approval | Let Certificate recompute eligibility |
-| Sync completion status | Enrollment lifecycle outcome | Admission & Enrollment | Publish/call boundary | Direct cross-package repository mutation |
-| Expose eligibility | Certificate-ready decision | Module 10 | Publish/query idempotent eligibility | Create Certificate |
-| Issue/revoke certificate | Certificate aggregate | Certificate Management | Consume outcome only | Revoke Certificate from Module 10 |
-| Preserve sensitive history | AuditLog / shared conventions | Audit & Compliance | Emit/write according to convention | Unaudited override path |
+| Workflow Step               | Data/Decision                        | Owner                                      | Module 10 Usage                                    | Prohibited Behavior                      |
+| --------------------------- | ------------------------------------ | ------------------------------------------ | -------------------------------------------------- | ---------------------------------------- |
+| Resolve user permission     | User permissions                     | IAM                                        | Authorize command/query                            | Hardcode role-name checks                |
+| Resolve branch access       | UserBranchAccess / branch policy     | IAM                                        | Filter and authorize resources                     | Trust client branchId alone              |
+| Resolve Course rule         | CourseCompletionRule                 | Course Catalog                             | Read active rule and evaluate                      | Copy or edit rule in Module 10           |
+| Resolve batch roster        | Enrollment + Batch relationship      | Admission & Enrollment / Training Delivery | Build result-entry roster                          | Create parallel student-course record    |
+| Resolve trainer assignment  | BatchTrainer / TrainerProfile        | Training Delivery / Trainer Management     | Validate recommendation actor                      | Duplicate trainer identity               |
+| Resolve attendance          | Attendance evidence                  | Attendance                                 | Consume percentage/outcome                         | Own or directly mutate attendance        |
+| Resolve payment validation  | Finance evidence                     | Finance & Receivables                      | Consume pass/fail validation                       | Recompute from copied payment data       |
+| Persist exam result         | Exam, Result                         | Module 10                                  | Own create/update/finalization/correction behavior | Store result in Enrollment context       |
+| Persist completion decision | CourseCompletion, CompletionApproval | Module 10                                  | Own evaluation and ordered approval                | Let Certificate recompute eligibility    |
+| Sync completion status      | Enrollment lifecycle outcome         | Admission & Enrollment                     | Publish/call boundary                              | Direct cross-package repository mutation |
+| Expose eligibility          | Certificate-ready decision           | Module 10                                  | Publish/query idempotent eligibility               | Create Certificate                       |
+| Issue/revoke certificate    | Certificate aggregate                | Certificate Management                     | Consume outcome only                               | Revoke Certificate from Module 10        |
+| Preserve sensitive history  | AuditLog / shared conventions        | Audit & Compliance                         | Emit/write according to convention                 | Unaudited override path                  |
 
 ---
 
@@ -1731,35 +1740,35 @@ stateDiagram-v2
 
 ## 8.1 User Story to Functional Requirement Mapping
 
-| User Story | Main FR Coverage |
-|---|---|
+| User Story | Main FR Coverage          |
+| ---------- | ------------------------- |
 | US-EXC-001 | FR-EXC-001, 018, 019, 022 |
-| US-EXC-002 | FR-EXC-002, 023 |
-| US-EXC-003 | FR-EXC-004, 005 |
-| US-EXC-004 | FR-EXC-004, 006 |
+| US-EXC-002 | FR-EXC-002, 023           |
+| US-EXC-003 | FR-EXC-004, 005           |
+| US-EXC-004 | FR-EXC-004, 006           |
 | US-EXC-005 | FR-EXC-007, 008, 015, 022 |
-| US-EXC-006 | FR-EXC-009, 010, 011 |
-| US-EXC-007 | FR-EXC-012 |
-| US-EXC-008 | FR-EXC-013 |
-| US-EXC-009 | FR-EXC-014, 016, 017 |
+| US-EXC-006 | FR-EXC-009, 010, 011      |
+| US-EXC-007 | FR-EXC-012                |
+| US-EXC-008 | FR-EXC-013                |
+| US-EXC-009 | FR-EXC-014, 016, 017      |
 | US-EXC-010 | FR-EXC-008, 015, 016, 017 |
-| US-EXC-011 | FR-EXC-009, 020 |
-| US-EXC-012 | FR-EXC-021, 022, 024 |
+| US-EXC-011 | FR-EXC-009, 020           |
+| US-EXC-012 | FR-EXC-021, 022, 024      |
 
 ## 8.2 Use Case to Aggregate Mapping
 
-| Use Case | Aggregate / Entity Ownership |
-|---|---|
-| UC-EXC-001 Create Exam | `Exam` |
-| UC-EXC-002 Manage Exam Lifecycle | `Exam` |
-| UC-EXC-003 Record Results | `Exam`, `Result` |
-| UC-EXC-004 Finalize Result Set | `Result` lifecycle behavior; persistence mapping requires Prisma validation |
-| UC-EXC-005 Correct Finalized Result | `Result` + Audit evidence + re-evaluation trigger |
-| UC-EXC-006 Evaluate Completion | `CourseCompletion` using external evidence contracts |
-| UC-EXC-007 Manual Completion Approval | `CourseCompletion`, `CompletionApproval` |
-| UC-EXC-008 Re-evaluate Completion | `CourseCompletion`, preserved `CompletionApproval` history |
-| UC-EXC-009 Pending Work Queue | Module-owned query/read model; Reporting may consume read-only |
-| UC-EXC-010 Export Data | Read-only query/export behavior |
+| Use Case                              | Aggregate / Entity Ownership                                                |
+| ------------------------------------- | --------------------------------------------------------------------------- |
+| UC-EXC-001 Create Exam                | `Exam`                                                                      |
+| UC-EXC-002 Manage Exam Lifecycle      | `Exam`                                                                      |
+| UC-EXC-003 Record Results             | `Exam`, `Result`                                                            |
+| UC-EXC-004 Finalize Result Set        | `Result` lifecycle behavior; persistence mapping requires Prisma validation |
+| UC-EXC-005 Correct Finalized Result   | `Result` + Audit evidence + re-evaluation trigger                           |
+| UC-EXC-006 Evaluate Completion        | `CourseCompletion` using external evidence contracts                        |
+| UC-EXC-007 Manual Completion Approval | `CourseCompletion`, `CompletionApproval`                                    |
+| UC-EXC-008 Re-evaluate Completion     | `CourseCompletion`, preserved `CompletionApproval` history                  |
+| UC-EXC-009 Pending Work Queue         | Module-owned query/read model; Reporting may consume read-only              |
+| UC-EXC-010 Export Data                | Read-only query/export behavior                                             |
 
 ---
 

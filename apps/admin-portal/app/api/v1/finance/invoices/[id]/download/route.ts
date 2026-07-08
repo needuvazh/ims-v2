@@ -4,7 +4,7 @@ import { prisma } from '@ims/database';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   const session = await getSession();
   if (!session?.userId) {
@@ -17,7 +17,7 @@ export async function GET(
     where: { id, isDeleted: false },
     include: {
       studentProfile: {
-        include: { person: true }
+        include: { person: true },
       },
       corporateAccount: true,
       branch: true,
@@ -25,12 +25,12 @@ export async function GET(
       payments: {
         where: { isDeleted: false },
         orderBy: { paymentDate: 'desc' },
-        include: { receipt: true }
+        include: { receipt: true },
       },
       refunds: {
-        where: { isDeleted: false, status: { in: ['Approved', 'Executed'] } }
-      }
-    }
+        where: { isDeleted: false, status: { in: ['Approved', 'Executed'] } },
+      },
+    },
   });
 
   if (!invoice) {
@@ -41,7 +41,10 @@ export async function GET(
     ? `${invoice.studentProfile.person.firstName} ${invoice.studentProfile.person.lastName}`
     : invoice.corporateAccount?.accountName || 'N/A';
 
-  const totalRefunded = invoice.refunds.reduce((s, r) => s + Number(r.amount), 0);
+  const totalRefunded = invoice.refunds.reduce(
+    (s, r) => s + Number(r.amount),
+    0,
+  );
   const totalPaid = Number(invoice.paidAmount);
   const totalAmount = Number(invoice.totalAmount);
   const outstanding = Number(invoice.outstandingAmount);
@@ -49,27 +52,44 @@ export async function GET(
 
   const formatAmt = (n: number) => n.toFixed(3);
   const formatDate = (d: Date | string | null) =>
-    d ? new Date(d).toLocaleDateString('en-OM', { day: '2-digit', month: 'short', year: 'numeric' }) : '—';
+    d
+      ? new Date(d).toLocaleDateString('en-OM', {
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric',
+        })
+      : '—';
 
-  const lineItemsHtml = invoice.lineItems.map((li, i) => `
+  const lineItemsHtml = invoice.lineItems
+    .map(
+      (li, i) => `
     <tr style="border-bottom:1px solid #f1f5f9;">
       <td style="padding:10px 8px;font-size:12px;color:#374151;">${i + 1}</td>
       <td style="padding:10px 8px;font-size:12px;color:#374151;">${li.descriptionEnglish}</td>
       <td style="padding:10px 8px;font-size:12px;color:#374151;text-align:right;">${li.quantity}</td>
       <td style="padding:10px 8px;font-size:12px;color:#374151;text-align:right;">${formatAmt(Number(li.unitPrice))}</td>
       <td style="padding:10px 8px;font-size:12px;color:#e74c3c;text-align:right;">${li.discountAmount ? `(${formatAmt(Number(li.discountAmount))})` : '—'}</td>
-      <td style="padding:10px 8px;font-size:12px;font-weight:600;color:#111827;text-align:right;">${formatAmt(Number(li.lineTotal ?? (Number(li.unitPrice) * Number(li.quantity) - Number(li.discountAmount ?? 0))))}</td>
+      <td style="padding:10px 8px;font-size:12px;font-weight:600;color:#111827;text-align:right;">${formatAmt(Number(li.lineTotal ?? Number(li.unitPrice) * Number(li.quantity) - Number(li.discountAmount ?? 0)))}</td>
     </tr>
-  `).join('');
+  `,
+    )
+    .join('');
 
-  const paymentsHtml = invoice.payments.length > 0 ? invoice.payments.map(p => `
+  const paymentsHtml =
+    invoice.payments.length > 0
+      ? invoice.payments
+          .map(
+            (p) => `
     <tr style="border-bottom:1px solid #f1f5f9;">
       <td style="padding:8px;font-size:11px;color:#374151;">${formatDate(p.paymentDate)}</td>
       <td style="padding:8px;font-size:11px;color:#374151;">${p.paymentMethod}</td>
       <td style="padding:8px;font-size:11px;color:#374151;">${p.referenceNumber || '—'}</td>
       <td style="padding:8px;font-size:11px;font-weight:600;color:#059669;text-align:right;">${formatAmt(Number(p.amount))} ${invoice.currency}</td>
     </tr>
-  `).join('') : '<tr><td colspan="4" style="padding:12px 8px;font-size:12px;color:#9ca3af;text-align:center;">No payments recorded</td></tr>';
+  `,
+          )
+          .join('')
+      : '<tr><td colspan="4" style="padding:12px 8px;font-size:12px;color:#9ca3af;text-align:center;">No payments recorded</td></tr>';
 
   const statusColor: Record<string, string> = {
     Paid: '#059669',

@@ -10,51 +10,56 @@ export default async function RequestRefundPage() {
   const { prisma, branchScopeResolver } = await import('@/lib/runtime');
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
     session.userId as any,
-    session.activeBranchId as any
+    session.activeBranchId as any,
   );
 
   const rawPayments = await prisma.payment.findMany({
     where: {
       branchId: { in: allowedBranchIds },
       status: { in: ['Posted', 'PartiallyRefunded'] },
-      isDeleted: false
+      isDeleted: false,
     },
     include: {
       studentProfile: {
         include: {
-          person: true
-        }
+          person: true,
+        },
       },
       corporateAccount: true,
       refunds: {
-        where: { isDeleted: false, status: { not: 'Rejected' } }
-      }
+        where: { isDeleted: false, status: { not: 'Rejected' } },
+      },
     },
-    orderBy: { paymentDate: 'desc' }
+    orderBy: { paymentDate: 'desc' },
   });
 
-  const payments = rawPayments.map((p) => {
-    const totalRefunded = p.refunds.reduce((sum, r) => sum + Number(r.amount), 0);
-    const available = Number(p.amount) - totalRefunded;
+  const payments = rawPayments
+    .map((p) => {
+      const totalRefunded = p.refunds.reduce(
+        (sum, r) => sum + Number(r.amount),
+        0,
+      );
+      const available = Number(p.amount) - totalRefunded;
 
-    let payerName = 'Unknown Payer';
-    if (p.studentProfile?.person) {
-      payerName = `${p.studentProfile.person.firstName} ${p.studentProfile.person.lastName}`;
-    } else if (p.corporateAccount) {
-      payerName = p.corporateAccount.accountName;
-    }
+      let payerName = 'Unknown Payer';
+      if (p.studentProfile?.person) {
+        payerName = `${p.studentProfile.person.firstName} ${p.studentProfile.person.lastName}`;
+      } else if (p.corporateAccount) {
+        payerName = p.corporateAccount.accountName;
+      }
 
-    return {
-      id: p.id,
-      paymentNumber: p.paymentNumber,
-      invoiceId: p.invoiceId,
-      branchId: p.branchId,
-      paidAmount: Number(p.amount),
-      alreadyRefunded: totalRefunded,
-      availableAmount: available,
-      payerName
-    };
-  }).filter(p => p.availableAmount > 0);
+      return {
+        id: p.id,
+        paymentNumber: p.paymentNumber,
+        invoiceId: p.invoiceId,
+        branchId: p.branchId,
+        paidAmount: Number(p.amount),
+        alreadyRefunded: totalRefunded,
+        availableAmount: available,
+        payerName,
+      };
+    })
+    .filter((p) => p.availableAmount > 0);
 
   return (
     <AdminListPageLayout>

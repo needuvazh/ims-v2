@@ -1,1 +1,175 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_document_management_design_md", "label": "design.md", "file_type": "document", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L1"}, {"id": "implement_document_management_design_context", "label": "Context", "file_type": "document", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L1"}, {"id": "implement_document_management_design_goals_non_goals", "label": "Goals / Non-Goals", "file_type": "document", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L7"}, {"id": "implement_document_management_design_decisions", "label": "Decisions", "file_type": "document", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L22"}, {"id": "implement_document_management_design_1_database_schema_migration", "label": "1. Database Schema Migration", "file_type": "document", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L24"}, {"id": "implement_document_management_design_2_bounded_context_isolation_owner_resolvers", "label": "2. Bounded Context Isolation (Owner Resolvers)", "file_type": "document", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L36"}, {"id": "implement_document_management_design_3_verification_state_machine_field_mapping", "label": "3. Verification State Machine & Field Mapping", "file_type": "document", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L46"}, {"id": "implement_document_management_design_4_branch_isolation_security", "label": "4. Branch Isolation & Security", "file_type": "document", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L54"}, {"id": "implement_document_management_design_5_vendor_anti_corruption_layer_vercel_blob", "label": "5. Vendor Anti-Corruption Layer (Vercel Blob)", "file_type": "document", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L60"}, {"id": "implement_document_management_design_6_audit_domain_events", "label": "6. Audit & Domain Events", "file_type": "document", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L70"}, {"id": "implement_document_management_design_risks_trade_offs", "label": "Risks / Trade-offs", "file_type": "document", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L75"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_document_management_design_md", "target": "implement_document_management_design_context", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L1", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_document_management_design_md", "target": "implement_document_management_design_goals_non_goals", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L7", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_document_management_design_md", "target": "implement_document_management_design_decisions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L22", "weight": 1.0}, {"source": "implement_document_management_design_decisions", "target": "implement_document_management_design_1_database_schema_migration", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L24", "weight": 1.0}, {"source": "implement_document_management_design_decisions", "target": "implement_document_management_design_2_bounded_context_isolation_owner_resolvers", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L36", "weight": 1.0}, {"source": "implement_document_management_design_decisions", "target": "implement_document_management_design_3_verification_state_machine_field_mapping", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L46", "weight": 1.0}, {"source": "implement_document_management_design_decisions", "target": "implement_document_management_design_4_branch_isolation_security", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L54", "weight": 1.0}, {"source": "implement_document_management_design_decisions", "target": "implement_document_management_design_5_vendor_anti_corruption_layer_vercel_blob", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L60", "weight": 1.0}, {"source": "implement_document_management_design_decisions", "target": "implement_document_management_design_6_audit_domain_events", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L70", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_document_management_design_md", "target": "implement_document_management_design_risks_trade_offs", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/implement-document-management/design.md", "source_location": "L75", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_document_management_design_md",
+      "label": "design.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "implement_document_management_design_context",
+      "label": "Context",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "implement_document_management_design_goals_non_goals",
+      "label": "Goals / Non-Goals",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "implement_document_management_design_decisions",
+      "label": "Decisions",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L22"
+    },
+    {
+      "id": "implement_document_management_design_1_database_schema_migration",
+      "label": "1. Database Schema Migration",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L24"
+    },
+    {
+      "id": "implement_document_management_design_2_bounded_context_isolation_owner_resolvers",
+      "label": "2. Bounded Context Isolation (Owner Resolvers)",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L36"
+    },
+    {
+      "id": "implement_document_management_design_3_verification_state_machine_field_mapping",
+      "label": "3. Verification State Machine & Field Mapping",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L46"
+    },
+    {
+      "id": "implement_document_management_design_4_branch_isolation_security",
+      "label": "4. Branch Isolation & Security",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L54"
+    },
+    {
+      "id": "implement_document_management_design_5_vendor_anti_corruption_layer_vercel_blob",
+      "label": "5. Vendor Anti-Corruption Layer (Vercel Blob)",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L60"
+    },
+    {
+      "id": "implement_document_management_design_6_audit_domain_events",
+      "label": "6. Audit & Domain Events",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L70"
+    },
+    {
+      "id": "implement_document_management_design_risks_trade_offs",
+      "label": "Risks / Trade-offs",
+      "file_type": "document",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L75"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_document_management_design_md",
+      "target": "implement_document_management_design_context",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_document_management_design_md",
+      "target": "implement_document_management_design_goals_non_goals",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_document_management_design_md",
+      "target": "implement_document_management_design_decisions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "implement_document_management_design_decisions",
+      "target": "implement_document_management_design_1_database_schema_migration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "implement_document_management_design_decisions",
+      "target": "implement_document_management_design_2_bounded_context_isolation_owner_resolvers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "implement_document_management_design_decisions",
+      "target": "implement_document_management_design_3_verification_state_machine_field_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "implement_document_management_design_decisions",
+      "target": "implement_document_management_design_4_branch_isolation_security",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "implement_document_management_design_decisions",
+      "target": "implement_document_management_design_5_vendor_anti_corruption_layer_vercel_blob",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "implement_document_management_design_decisions",
+      "target": "implement_document_management_design_6_audit_domain_events",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_implement_document_management_design_md",
+      "target": "implement_document_management_design_risks_trade_offs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/implement-document-management/design.md",
+      "source_location": "L75",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

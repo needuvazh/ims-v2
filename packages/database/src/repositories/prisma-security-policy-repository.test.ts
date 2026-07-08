@@ -42,7 +42,15 @@ describe('PrismaSecurityPolicyRepository', () => {
   });
 
   it('creates the default policy when none exists', async () => {
-    const create = vi.fn().mockImplementation(async ({ data }: { data: ReturnType<typeof createDefaultSecurityPolicy> }) => data);
+    const create = vi
+      .fn()
+      .mockImplementation(
+        async ({
+          data,
+        }: {
+          data: ReturnType<typeof createDefaultSecurityPolicy>;
+        }) => data,
+      );
     const prisma = {
       securityPolicy: {
         findFirst: vi.fn().mockResolvedValue(null),
@@ -53,7 +61,9 @@ describe('PrismaSecurityPolicyRepository', () => {
     const repository = new PrismaSecurityPolicyRepository(prisma);
     const policy = await repository.get();
 
-    expect(create).toHaveBeenCalledWith({ data: createDefaultSecurityPolicy() });
+    expect(create).toHaveBeenCalledWith({
+      data: createDefaultSecurityPolicy(),
+    });
     expect(policy).toEqual(createDefaultSecurityPolicy());
   });
 });

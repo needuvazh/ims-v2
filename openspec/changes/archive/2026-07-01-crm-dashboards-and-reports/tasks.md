@@ -19,7 +19,6 @@
 - [x] 3.6 Integrate `DashboardAccessed` and `ReportExecuted` audit event emission into the `reporting-dashboards` services.
 - [x] 3.7 Add comprehensive unit tests verifying that `LeadAnalyticsReadService` correctly applies branch scoping and `CrmDashboardQueryService` respects widget configurations.
 
-
 ## 4. UI Implementation (Admin Portal)
 
 - [x] 4.1 Create the CRM Dashboard Server Component at `apps/admin-portal/app/(protected)/dashboards/crm/page.tsx`.

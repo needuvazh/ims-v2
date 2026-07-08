@@ -1,7 +1,11 @@
 import { PrismaClient, Prisma } from '@prisma/client';
 import { RequirementsResolver } from './requirements-resolver';
 import { DocumentsService } from '@ims/documents';
-import { CoursePricingService, CoursePricingRepository, CourseDiscountRepository } from '@ims/course-catalog';
+import {
+  CoursePricingService,
+  CoursePricingRepository,
+  CourseDiscountRepository,
+} from '@ims/course-catalog';
 import { BatchService, BatchRepository } from '@ims/training-delivery';
 import { StudentQueryService } from './student-query-service';
 import { StudentStatusService } from './student-status-service';
@@ -14,12 +18,9 @@ export class EnrollmentService {
     this.pricingService = new CoursePricingService(
       prisma,
       new CoursePricingRepository(prisma),
-      new CourseDiscountRepository(prisma)
+      new CourseDiscountRepository(prisma),
     );
-    this.batchService = new BatchService(
-      prisma,
-      new BatchRepository(prisma)
-    );
+    this.batchService = new BatchService(prisma, new BatchRepository(prisma));
   }
 
   async createEnrollment(data: any, tx?: Prisma.TransactionClient) {
@@ -33,13 +34,17 @@ export class EnrollmentService {
       if (data.enrollmentType === 'Corporate' && data.corporateParticipantId) {
         // Find existing StudentProfile
         let studentProfile = await client.studentProfile.findFirst({
-          where: { personId: data.corporateParticipantId, isDeleted: false }
+          where: { personId: data.corporateParticipantId, isDeleted: false },
         });
 
         if (!studentProfile) {
           // Create StudentProfile
-          const nextvalResult = await client.$queryRawUnsafe<{ nextval: string }[]>("SELECT nextval('student_number_seq')::text as nextval");
-          const seq = nextvalResult[0]?.nextval || Math.floor(Math.random() * 100000).toString();
+          const nextvalResult = await client.$queryRawUnsafe<
+            { nextval: string }[]
+          >("SELECT nextval('student_number_seq')::text as nextval");
+          const seq =
+            nextvalResult[0]?.nextval ||
+            Math.floor(Math.random() * 100000).toString();
           const studentNumber = `STU-2026-${seq.padStart(5, '0')}`;
 
           studentProfile = await client.studentProfile.create({
@@ -48,7 +53,7 @@ export class EnrollmentService {
               studentNumber,
               branchId: data.branchId,
               studentStatus: 'Pending',
-            }
+            },
           });
 
           // Record Pending → Active transition with history + audit
@@ -63,12 +68,20 @@ export class EnrollmentService {
 
         // Find or create Admission
         let admission = await client.admission.findFirst({
-          where: { studentProfileId: studentProfile.id, branchId: data.branchId, isDeleted: false }
+          where: {
+            studentProfileId: studentProfile.id,
+            branchId: data.branchId,
+            isDeleted: false,
+          },
         });
 
         if (!admission) {
-          const admSeqResult = await client.$queryRawUnsafe<{ nextval: string }[]>("SELECT nextval('admission_number_seq')::text as nextval");
-          const admSeq = admSeqResult[0]?.nextval || Math.floor(Math.random() * 100000).toString();
+          const admSeqResult = await client.$queryRawUnsafe<
+            { nextval: string }[]
+          >("SELECT nextval('admission_number_seq')::text as nextval");
+          const admSeq =
+            admSeqResult[0]?.nextval ||
+            Math.floor(Math.random() * 100000).toString();
           const admissionNumber = `ADM-2026-${admSeq.padStart(5, '0')}`;
 
           admission = await client.admission.create({
@@ -79,7 +92,7 @@ export class EnrollmentService {
               branchId: data.branchId,
               admissionStatus: 'Approved',
               approvedAt: new Date(),
-            }
+            },
           });
         }
 
@@ -91,32 +104,54 @@ export class EnrollmentService {
             where: { id: admissionId },
           });
 
-          if (!admission || admission.admissionStatus !== 'Approved' || admission.isDeleted) {
+          if (
+            !admission ||
+            admission.admissionStatus !== 'Approved' ||
+            admission.isDeleted
+          ) {
             throw new Error('ERR_ENR_MISSING_ADMISSION');
           }
         }
       }
 
       // Enforce student branch scope check
-      if (data.enrollmentType !== 'WalkIn' && data.enrollmentType !== 'Corporate') {
+      if (
+        data.enrollmentType !== 'WalkIn' &&
+        data.enrollmentType !== 'Corporate'
+      ) {
         const studentQueryService = new StudentQueryService(this.prisma);
-        await studentQueryService.verifyBranchScope(studentProfileId, data.branchId);
+        await studentQueryService.verifyBranchScope(
+          studentProfileId,
+          data.branchId,
+        );
       }
 
       // Resolve course pricing & snapshot it
-      const pricing = await this.pricingService.resolveCoursePricing({
-        courseId: data.courseId,
-        customerType: data.enrollmentType === 'Corporate' ? 'Corporate' : 'Individual',
-        branchId: data.branchId,
-        batchId: data.batchId,
-        asOfDate: new Date(),
-      }, client);
+      const pricing = await this.pricingService.resolveCoursePricing(
+        {
+          courseId: data.courseId,
+          customerType:
+            data.enrollmentType === 'Corporate' ? 'Corporate' : 'Individual',
+          branchId: data.branchId,
+          batchId: data.batchId,
+          asOfDate: new Date(),
+        },
+        client,
+      );
 
       const resolvedPrice = new Prisma.Decimal(pricing.basePrice);
-      const resolvedDiscount = new Prisma.Decimal(pricing.applicableDiscounts.reduce((sum: number, d: any) => sum + d.discountValue, 0));
+      const resolvedDiscount = new Prisma.Decimal(
+        pricing.applicableDiscounts.reduce(
+          (sum: number, d: any) => sum + d.discountValue,
+          0,
+        ),
+      );
       // Price snapshot consumes the canonical totalPrice from pricing service (implements basePrice + tax percentage)
       const totalPrice = new Prisma.Decimal(pricing.totalPrice);
-      const finalAmount = Prisma.Decimal.max(new Prisma.Decimal(0), totalPrice.minus(resolvedDiscount));
+      const finalAmount = Prisma.Decimal.max(
+        new Prisma.Decimal(0),
+        totalPrice.minus(resolvedDiscount),
+      );
       const pricingSource = pricing.pricingSource || 'GlobalDefault';
       const priceEvaluationTimestamp = new Date();
 
@@ -157,8 +192,8 @@ export class EnrollmentService {
             enrollmentNumber,
             studentProfileId,
             batchId: data.batchId,
-          }
-        }
+          },
+        },
       });
 
       return enrollment;
@@ -167,10 +202,14 @@ export class EnrollmentService {
     return tx ? run(tx) : this.prisma.$transaction(run);
   }
 
-  async submitEnrollment(enrollmentId: string, actorId: string, tx?: Prisma.TransactionClient) {
+  async submitEnrollment(
+    enrollmentId: string,
+    actorId: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const run = async (client: Prisma.TransactionClient) => {
       const enrollment = await client.enrollment.findUnique({
-        where: { id: enrollmentId }
+        where: { id: enrollmentId },
       });
 
       if (!enrollment) {
@@ -183,7 +222,7 @@ export class EnrollmentService {
 
       await client.enrollment.update({
         where: { id: enrollmentId },
-        data: { enrollmentStatus: 'Submitted' }
+        data: { enrollmentStatus: 'Submitted' },
       });
 
       await client.auditLog.create({
@@ -196,18 +235,22 @@ export class EnrollmentService {
           performedAt: new Date(),
           module: 'AdmissionsEnrollment',
           oldValue: { status: 'Draft' },
-          newValue: { status: 'Submitted' }
-        }
+          newValue: { status: 'Submitted' },
+        },
       });
     };
 
     return tx ? run(tx) : this.prisma.$transaction(run);
   }
 
-  async approveEnrollment(enrollmentId: string, actorId: string, tx?: Prisma.TransactionClient) {
+  async approveEnrollment(
+    enrollmentId: string,
+    actorId: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const run = async (activeClient: Prisma.TransactionClient) => {
       const enrollment = await activeClient.enrollment.findUnique({
-        where: { id: enrollmentId }
+        where: { id: enrollmentId },
       });
 
       if (!enrollment) {
@@ -232,7 +275,7 @@ export class EnrollmentService {
       try {
         const batches = await activeClient.$queryRawUnsafe<any[]>(
           'SELECT * FROM "batches" WHERE "id" = $1::uuid AND "isDeleted" = false FOR UPDATE',
-          enrollment.batchId
+          enrollment.batchId,
         );
         if (batches && batches.length > 0) {
           batch = batches[0];
@@ -243,7 +286,7 @@ export class EnrollmentService {
 
       if (!batch) {
         batch = await activeClient.batch.findUnique({
-          where: { id: enrollment.batchId }
+          where: { id: enrollment.batchId },
         });
       }
 
@@ -257,9 +300,11 @@ export class EnrollmentService {
           studentProfileId: enrollment.studentProfileId,
           batchId: enrollment.batchId,
           id: { not: enrollmentId },
-          enrollmentStatus: { in: ['Draft', 'Submitted', 'Approved', 'Confirmed', 'Active'] },
-          isDeleted: false
-        }
+          enrollmentStatus: {
+            in: ['Draft', 'Submitted', 'Approved', 'Confirmed', 'Active'],
+          },
+          isDeleted: false,
+        },
       });
       if (duplicateEnrollment) {
         throw new Error('ERR_ENR_DUPLICATE_ENROLLMENT');
@@ -271,8 +316,8 @@ export class EnrollmentService {
           batchId: enrollment.batchId,
           studentProfileId: enrollment.studentProfileId,
           status: 'Promoted',
-          isDeleted: false
-        }
+          isDeleted: false,
+        },
       });
       const hasReservation = !!promotedWaitlistEntry;
 
@@ -280,8 +325,8 @@ export class EnrollmentService {
         where: {
           batchId: enrollment.batchId,
           enrollmentStatus: { in: ['Approved', 'Confirmed', 'Active'] },
-          isDeleted: false
-        }
+          isDeleted: false,
+        },
       });
 
       const maxCapacity = batch.capacity || 0;
@@ -290,78 +335,84 @@ export class EnrollmentService {
           where: {
             batchId: enrollment.batchId,
             status: 'Promoted',
-            isDeleted: false
-          }
+            isDeleted: false,
+          },
         });
         const totalReserved = activeCount + promotedCount;
 
         if (totalReserved >= maxCapacity) {
           if (batch.waitingListEnabled) {
             // Add to waitlist (passing enrollmentId to command)
-            await this.batchService.enqueueWaitlist({
-              batchId: enrollment.batchId,
-              studentProfileId: enrollment.studentProfileId,
-              leadId: null,
-              enrollmentId,
-              actorId,
-            }, activeClient);
-
-          // Publish StudentAddedToWaitingList
-          await activeClient.outboxEvent.create({
-            data: {
-              eventType: 'StudentAddedToWaitingList',
-              aggregateType: 'Enrollment',
-              aggregateId: enrollmentId,
-              payload: {
-                enrollmentId,
+            await this.batchService.enqueueWaitlist(
+              {
+                batchId: enrollment.batchId,
                 studentProfileId: enrollment.studentProfileId,
-                batchId: enrollment.batchId
+                leadId: null,
+                enrollmentId,
+                actorId,
               },
-              availableAt: new Date()
-            }
-          });
+              activeClient,
+            );
 
-          await activeClient.auditLog.create({
-            data: {
-              action: 'EnrollmentWaitlisted',
-              entityType: 'Enrollment',
-              entityId: enrollmentId,
-              performedBy: actorId,
-              branchId: enrollment.branchId,
-              performedAt: new Date(),
-              module: 'AdmissionsEnrollment',
-              oldValue: { status: 'Submitted' },
-              newValue: { status: 'Submitted', waitlisted: true }
-            }
-          });
+            // Publish StudentAddedToWaitingList
+            await activeClient.outboxEvent.create({
+              data: {
+                eventType: 'StudentAddedToWaitingList',
+                aggregateType: 'Enrollment',
+                aggregateId: enrollmentId,
+                payload: {
+                  enrollmentId,
+                  studentProfileId: enrollment.studentProfileId,
+                  batchId: enrollment.batchId,
+                },
+                availableAt: new Date(),
+              },
+            });
 
-          return; // Remain in Submitted status
-        } else {
-          throw new Error('ERR_ENR_BATCH_FULL');
+            await activeClient.auditLog.create({
+              data: {
+                action: 'EnrollmentWaitlisted',
+                entityType: 'Enrollment',
+                entityId: enrollmentId,
+                performedBy: actorId,
+                branchId: enrollment.branchId,
+                performedAt: new Date(),
+                module: 'AdmissionsEnrollment',
+                oldValue: { status: 'Submitted' },
+                newValue: { status: 'Submitted', waitlisted: true },
+              },
+            });
+
+            return; // Remain in Submitted status
+          } else {
+            throw new Error('ERR_ENR_BATCH_FULL');
+          }
         }
       }
-    }
 
       // Corporate credit limit validation
-      if (enrollment.enrollmentType === 'Corporate' && enrollment.corporateParticipantId) {
+      if (
+        enrollment.enrollmentType === 'Corporate' &&
+        enrollment.corporateParticipantId
+      ) {
         await this.validateCorporateCredit(
           enrollment.batchId,
           Number(enrollment.finalAmount),
-          activeClient
+          activeClient,
         );
       }
 
       // Transition to Approved
       await activeClient.enrollment.update({
         where: { id: enrollmentId },
-        data: { enrollmentStatus: 'Approved' }
+        data: { enrollmentStatus: 'Approved' },
       });
 
       // Synchronize currentEnrollmentCount on Batch only if no waitlist reservation was held
       if (!hasReservation) {
         await activeClient.batch.update({
           where: { id: enrollment.batchId },
-          data: { currentEnrollmentCount: activeCount + 1 }
+          data: { currentEnrollmentCount: activeCount + 1 },
         });
       }
 
@@ -370,7 +421,7 @@ export class EnrollmentService {
         await this.batchService.resolveWaitlistEntry(
           enrollment.studentProfileId,
           enrollment.batchId,
-          activeClient
+          activeClient,
         );
       }
 
@@ -385,8 +436,8 @@ export class EnrollmentService {
           performedAt: new Date(),
           module: 'AdmissionsEnrollment',
           oldValue: { status: 'Submitted' },
-          newValue: { status: 'Approved' }
-        }
+          newValue: { status: 'Approved' },
+        },
       });
 
       // Publish EnrollmentApproved outbox event
@@ -399,10 +450,10 @@ export class EnrollmentService {
             enrollmentId,
             enrollmentNumber: enrollment.enrollmentNumber,
             finalAmount: Number(enrollment.finalAmount),
-            studentProfileId: enrollment.studentProfileId
+            studentProfileId: enrollment.studentProfileId,
           },
-          availableAt: new Date()
-        }
+          availableAt: new Date(),
+        },
       });
     };
 
@@ -410,12 +461,16 @@ export class EnrollmentService {
       await run(tx);
     } else {
       await this.prisma.$transaction(run, {
-        isolationLevel: Prisma.TransactionIsolationLevel.Serializable
+        isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
       });
     }
   }
 
-  private async validateCorporateCredit(batchId: string, enrollmentCost: number, tx: Prisma.TransactionClient): Promise<void> {
+  private async validateCorporateCredit(
+    batchId: string,
+    enrollmentCost: number,
+    tx: Prisma.TransactionClient,
+  ): Promise<void> {
     const batch = await tx.batch.findUnique({
       where: { id: batchId },
       select: { corporateAccountId: true },
@@ -437,21 +492,33 @@ export class EnrollmentService {
       },
     });
 
-    if (!corporateAccount || corporateAccount.isDeleted || corporateAccount.status !== 'Active') {
+    if (
+      !corporateAccount ||
+      corporateAccount.isDeleted ||
+      corporateAccount.status !== 'Active'
+    ) {
       throw new Error('ERR_ENR_CREDIT_RULE_NOT_FOUND');
     }
 
-    const projectedOutstanding = Number(corporateAccount.currentOutstanding) + enrollmentCost;
-    if (projectedOutstanding > Number(corporateAccount.creditLimit) && corporateAccount.blockOnCreditLimit) {
+    const projectedOutstanding =
+      Number(corporateAccount.currentOutstanding) + enrollmentCost;
+    if (
+      projectedOutstanding > Number(corporateAccount.creditLimit) &&
+      corporateAccount.blockOnCreditLimit
+    ) {
       throw new Error('ERR_ENR_CREDIT_EXCEEDED');
     }
   }
 
-  async confirmEnrollment(enrollmentId: string, actorId: string, tx?: Prisma.TransactionClient) {
+  async confirmEnrollment(
+    enrollmentId: string,
+    actorId: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const run = async (client: Prisma.TransactionClient) => {
       const enrollment = await client.enrollment.findUnique({
         where: { id: enrollmentId },
-        include: { admission: true }
+        include: { admission: true },
       });
 
       if (!enrollment) {
@@ -495,8 +562,8 @@ export class EnrollmentService {
           performedAt: new Date(),
           module: 'AdmissionsEnrollment',
           oldValue: { status: 'Approved' },
-          newValue: { status: 'Confirmed' }
-        }
+          newValue: { status: 'Confirmed' },
+        },
       });
 
       // Publish EnrollmentConfirmed outbox event
@@ -509,30 +576,33 @@ export class EnrollmentService {
             enrollmentId,
             enrollmentNumber: enrollment.enrollmentNumber,
             studentProfileId: enrollment.studentProfileId,
-            batchId: enrollment.batchId
+            batchId: enrollment.batchId,
           },
-          availableAt: new Date()
-        }
+          availableAt: new Date(),
+        },
       });
     };
 
     return tx ? run(tx) : this.prisma.$transaction(run);
   }
 
-  async activateEnrollmentsByBatch(batchId: string, tx?: Prisma.TransactionClient) {
+  async activateEnrollmentsByBatch(
+    batchId: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const run = async (client: Prisma.TransactionClient) => {
       const enrollments = await client.enrollment.findMany({
         where: {
           batchId,
           enrollmentStatus: 'Confirmed',
-          isDeleted: false
-        }
+          isDeleted: false,
+        },
       });
 
       for (const enrollment of enrollments) {
         await client.enrollment.update({
           where: { id: enrollment.id },
-          data: { enrollmentStatus: 'Active' }
+          data: { enrollmentStatus: 'Active' },
         });
 
         await client.auditLog.create({
@@ -545,8 +615,8 @@ export class EnrollmentService {
             performedAt: new Date(),
             module: 'AdmissionsEnrollment',
             oldValue: { status: 'Confirmed' },
-            newValue: { status: 'Active' }
-          }
+            newValue: { status: 'Active' },
+          },
         });
       }
     };
@@ -554,17 +624,25 @@ export class EnrollmentService {
     return tx ? run(tx) : this.prisma.$transaction(run);
   }
 
-  async dropEnrollment(enrollmentId: string, reasonCode: string, actorId: string, tx?: Prisma.TransactionClient) {
+  async dropEnrollment(
+    enrollmentId: string,
+    reasonCode: string,
+    actorId: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const run = async (client: Prisma.TransactionClient) => {
       const enrollment = await client.enrollment.findUnique({
-        where: { id: enrollmentId }
+        where: { id: enrollmentId },
       });
 
       if (!enrollment) {
         throw new Error('ERR_ENROLLMENT_NOT_FOUND');
       }
 
-      if (enrollment.enrollmentStatus !== 'Confirmed' && enrollment.enrollmentStatus !== 'Active') {
+      if (
+        enrollment.enrollmentStatus !== 'Confirmed' &&
+        enrollment.enrollmentStatus !== 'Active'
+      ) {
         throw new Error('ERR_ENR_INVALID_STATE');
       }
 
@@ -572,7 +650,7 @@ export class EnrollmentService {
 
       await client.enrollment.update({
         where: { id: enrollmentId },
-        data: { enrollmentStatus: 'Dropped' }
+        data: { enrollmentStatus: 'Dropped' },
       });
 
       // Decrement currentEnrollmentCount on Batch
@@ -580,13 +658,13 @@ export class EnrollmentService {
         where: {
           batchId: enrollment.batchId,
           enrollmentStatus: { in: ['Approved', 'Confirmed', 'Active'] },
-          isDeleted: false
-        }
+          isDeleted: false,
+        },
       });
 
       await client.batch.update({
         where: { id: enrollment.batchId },
-        data: { currentEnrollmentCount: activeCount }
+        data: { currentEnrollmentCount: activeCount },
       });
 
       await client.auditLog.create({
@@ -599,8 +677,8 @@ export class EnrollmentService {
           performedAt: new Date(),
           module: 'AdmissionsEnrollment',
           oldValue: { status: oldStatus },
-          newValue: { status: 'Dropped', reasonCode }
-        }
+          newValue: { status: 'Dropped', reasonCode },
+        },
       });
 
       await client.outboxEvent.create({
@@ -612,20 +690,24 @@ export class EnrollmentService {
             enrollmentId,
             enrollmentNumber: enrollment.enrollmentNumber,
             batchId: enrollment.batchId,
-            reasonCode
+            reasonCode,
           },
-          availableAt: new Date()
-        }
+          availableAt: new Date(),
+        },
       });
     };
 
     return tx ? run(tx) : this.prisma.$transaction(run);
   }
 
-  async cancelEnrollment(enrollmentId: string, actorId: string, tx?: Prisma.TransactionClient) {
+  async cancelEnrollment(
+    enrollmentId: string,
+    actorId: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const run = async (client: Prisma.TransactionClient) => {
       const enrollment = await client.enrollment.findUnique({
-        where: { id: enrollmentId }
+        where: { id: enrollmentId },
       });
 
       if (!enrollment) {
@@ -641,7 +723,7 @@ export class EnrollmentService {
 
       await client.enrollment.update({
         where: { id: enrollmentId },
-        data: { enrollmentStatus: 'Cancelled' }
+        data: { enrollmentStatus: 'Cancelled' },
       });
 
       if (oldStatus === 'Approved') {
@@ -649,13 +731,13 @@ export class EnrollmentService {
           where: {
             batchId: enrollment.batchId,
             enrollmentStatus: { in: ['Approved', 'Confirmed', 'Active'] },
-            isDeleted: false
-          }
+            isDeleted: false,
+          },
         });
 
         await client.batch.update({
           where: { id: enrollment.batchId },
-          data: { currentEnrollmentCount: activeCount }
+          data: { currentEnrollmentCount: activeCount },
         });
       }
 
@@ -669,8 +751,8 @@ export class EnrollmentService {
           performedAt: new Date(),
           module: 'AdmissionsEnrollment',
           oldValue: { status: oldStatus },
-          newValue: { status: 'Cancelled' }
-        }
+          newValue: { status: 'Cancelled' },
+        },
       });
 
       await client.outboxEvent.create({
@@ -681,17 +763,20 @@ export class EnrollmentService {
           payload: {
             enrollmentId,
             enrollmentNumber: enrollment.enrollmentNumber,
-            batchId: enrollment.batchId
+            batchId: enrollment.batchId,
           },
-          availableAt: new Date()
-        }
+          availableAt: new Date(),
+        },
       });
     };
 
     return tx ? run(tx) : this.prisma.$transaction(run);
   }
 
-  async verifyEnrollmentDocumentsGate(enrollmentId: string, tx?: Prisma.TransactionClient) {
+  async verifyEnrollmentDocumentsGate(
+    enrollmentId: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const client = tx || this.prisma;
 
     const enrollment = await client.enrollment.findUnique({
@@ -707,7 +792,11 @@ export class EnrollmentService {
 
     // Resolve requirements
     const resolver = new RequirementsResolver(this.prisma);
-    const requiredTypes = await resolver.getRequiredDocuments(enrollment.courseId, enrollment.branchId, client);
+    const requiredTypes = await resolver.getRequiredDocuments(
+      enrollment.courseId,
+      enrollment.branchId,
+      client,
+    );
 
     if (requiredTypes.length === 0) {
       return;
@@ -721,7 +810,10 @@ export class EnrollmentService {
       { ownerId: enrollment.admissionId, ownerType: 'Admission' },
       { ownerId: enrollment.id, ownerType: 'Enrollment' },
     ];
-    const documents = await documentsService.getDocumentsByOwners(owners, client);
+    const documents = await documentsService.getDocumentsByOwners(
+      owners,
+      client,
+    );
 
     const missingTypes: string[] = [];
 
@@ -740,7 +832,9 @@ export class EnrollmentService {
     }
 
     if (missingTypes.length > 0) {
-      throw new Error(`ERR_DOCUMENTS_VERIFICATION_GATE_FAILED: Missing or unverified documents: ${missingTypes.join(', ')}`);
+      throw new Error(
+        `ERR_DOCUMENTS_VERIFICATION_GATE_FAILED: Missing or unverified documents: ${missingTypes.join(', ')}`,
+      );
     }
   }
 
@@ -757,7 +851,7 @@ export class EnrollmentService {
       actorId: string;
       remarks?: string;
     },
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
     const run = async (client: Prisma.TransactionClient) => {
       // 1. Verify Course designation
@@ -825,10 +919,12 @@ export class EnrollmentService {
       let isNewProfile = false;
       if (!studentProfile) {
         isNewProfile = true;
-        const nextvalResult = await client.$queryRawUnsafe<{ nextval: string }[]>(
-          "SELECT nextval('student_number_seq')::text as nextval"
-        );
-        const seq = nextvalResult[0]?.nextval || Math.floor(Math.random() * 100000).toString();
+        const nextvalResult = await client.$queryRawUnsafe<
+          { nextval: string }[]
+        >("SELECT nextval('student_number_seq')::text as nextval");
+        const seq =
+          nextvalResult[0]?.nextval ||
+          Math.floor(Math.random() * 100000).toString();
         const studentNumber = `STU-2026-${seq.padStart(5, '0')}`;
 
         studentProfile = await client.studentProfile.create({
@@ -866,9 +962,11 @@ export class EnrollmentService {
       }
 
       const admSeqResult = await client.$queryRawUnsafe<{ nextval: string }[]>(
-        "SELECT nextval('admission_number_seq')::text as nextval"
+        "SELECT nextval('admission_number_seq')::text as nextval",
       );
-      const admSeq = admSeqResult[0]?.nextval || Math.floor(Math.random() * 100000).toString();
+      const admSeq =
+        admSeqResult[0]?.nextval ||
+        Math.floor(Math.random() * 100000).toString();
       const admissionNumber = `ADM-2026-${admSeq.padStart(5, '0')}`;
 
       const admission = await client.admission.create({
@@ -892,7 +990,7 @@ export class EnrollmentService {
           batchId: data.batchId,
           asOfDate: new Date(),
         },
-        client
+        client,
       );
 
       const resolvedPrice = new Prisma.Decimal(pricing.totalPrice);
@@ -993,9 +1091,9 @@ export class EnrollmentService {
     actorId: string,
     remarks?: string,
     paymentMethod: string = 'Cash',
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
-      const run = async (client: Prisma.TransactionClient) => {
+    const run = async (client: Prisma.TransactionClient) => {
       const enrollment = await client.enrollment.findUnique({
         where: { id: enrollmentId },
         include: {
@@ -1005,7 +1103,12 @@ export class EnrollmentService {
         },
       });
 
-      if (!enrollment || enrollment.isDeleted || enrollment.enrollmentType !== 'WalkIn' || !enrollment.walkInEnrollment) {
+      if (
+        !enrollment ||
+        enrollment.isDeleted ||
+        enrollment.enrollmentType !== 'WalkIn' ||
+        !enrollment.walkInEnrollment
+      ) {
         throw new Error('ERR_ENROLLMENT_NOT_FOUND');
       }
 
@@ -1015,19 +1118,21 @@ export class EnrollmentService {
         enrollment.enrollmentStatus === 'Completed' ||
         enrollment.enrollmentStatus === 'CertificateIssued'
       ) {
-        const payment = enrollment.walkInPayment || await this.ensureWalkInPayment(
-          client,
-          enrollment.walkInEnrollment.id,
-          enrollment.id,
-          paymentAmount,
-          paymentMethod,
-          actorId,
-          remarks
-        );
+        const payment =
+          enrollment.walkInPayment ||
+          (await this.ensureWalkInPayment(
+            client,
+            enrollment.walkInEnrollment.id,
+            enrollment.id,
+            paymentAmount,
+            paymentMethod,
+            actorId,
+            remarks,
+          ));
         const confirmation = await this.ensureWalkInConfirmation(
           client,
           enrollment.walkInEnrollment.id,
-          actorId
+          actorId,
         );
 
         return {
@@ -1059,7 +1164,7 @@ export class EnrollmentService {
         paymentAmount,
         paymentMethod,
         actorId,
-        remarks
+        remarks,
       );
 
       // Update WalkInEnrollment summary
@@ -1084,7 +1189,11 @@ export class EnrollmentService {
 
       await this.confirmEnrollment(enrollmentId, actorId, client);
 
-      const confirmation = await this.ensureWalkInConfirmation(client, walkInEnrollment.id, actorId);
+      const confirmation = await this.ensureWalkInConfirmation(
+        client,
+        walkInEnrollment.id,
+        actorId,
+      );
 
       const updatedEnrollment = await client.enrollment.findUnique({
         where: { id: enrollmentId },
@@ -1104,8 +1213,8 @@ export class EnrollmentService {
           performedAt: new Date(),
           module: 'AdmissionsEnrollment',
           oldValue: { paymentCollected: 0.0, status: 'Approved' },
-          newValue: { paymentCollected: paymentAmount, status: 'Confirmed' }
-        }
+          newValue: { paymentCollected: paymentAmount, status: 'Confirmed' },
+        },
       });
 
       // Publish Outbox Events
@@ -1165,7 +1274,7 @@ export class EnrollmentService {
   private async ensureWalkInConfirmation(
     client: Prisma.TransactionClient,
     walkInEnrollmentId: string,
-    actorId: string
+    actorId: string,
   ) {
     const existingConfirmation = await client.walkInConfirmation.findUnique({
       where: { walkInEnrollmentId },
@@ -1176,15 +1285,18 @@ export class EnrollmentService {
     }
 
     try {
-      await client.$executeRawUnsafe("CREATE SEQUENCE IF NOT EXISTS walkin_confirmation_seq START 10000;");
+      await client.$executeRawUnsafe(
+        'CREATE SEQUENCE IF NOT EXISTS walkin_confirmation_seq START 10000;',
+      );
     } catch (err) {
       // Ignore sequence create errors
     }
 
     const seqResult = await client.$queryRawUnsafe<{ nextval: string }[]>(
-      "SELECT nextval('walkin_confirmation_seq')::text as nextval"
+      "SELECT nextval('walkin_confirmation_seq')::text as nextval",
     );
-    const seq = seqResult[0]?.nextval || Math.floor(Math.random() * 100000).toString();
+    const seq =
+      seqResult[0]?.nextval || Math.floor(Math.random() * 100000).toString();
     const confirmationNumber = `WIC-2026-${seq.padStart(5, '0')}`;
 
     return client.walkInConfirmation.create({
@@ -1205,7 +1317,7 @@ export class EnrollmentService {
     paymentAmount: number,
     paymentMethod: string,
     actorId: string,
-    remarks?: string
+    remarks?: string,
   ) {
     const existingPayment = await client.walkInPayment.findUnique({
       where: { walkInEnrollmentId },

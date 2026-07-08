@@ -6,7 +6,11 @@ type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
 export const metadata = { title: 'Mandatory Password Change | IMS Admin' };
 
-export default async function MandatoryPasswordChangePage({ searchParams }: { searchParams: SearchParams }) {
+export default async function MandatoryPasswordChangePage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
   const resolved = await searchParams;
   const token = typeof resolved.token === 'string' ? resolved.token : '';
 
@@ -19,7 +23,13 @@ export default async function MandatoryPasswordChangePage({ searchParams }: { se
       />
       <ResetPasswordForm token={token} />
       <div className="text-center text-sm text-slate-500">
-        Need a fresh link? <Link href="/forgot-password" className="font-semibold text-accent-700 hover:underline">Request a password reset</Link>
+        Need a fresh link?{' '}
+        <Link
+          href="/forgot-password"
+          className="font-semibold text-accent-700 hover:underline"
+        >
+          Request a password reset
+        </Link>
       </div>
     </div>
   );

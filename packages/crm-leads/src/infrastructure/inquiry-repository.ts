@@ -6,8 +6,13 @@ export class InquiryRepository implements IInquiryRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
   async create(
-    data: IngestInquiryInput & { inquiryNumber: string; isDuplicate?: boolean; duplicateRefId?: string | null; counselorId?: string | null },
-    tx?: Prisma.TransactionClient
+    data: IngestInquiryInput & {
+      inquiryNumber: string;
+      isDuplicate?: boolean;
+      duplicateRefId?: string | null;
+      counselorId?: string | null;
+    },
+    tx?: Prisma.TransactionClient,
   ): Promise<{
     id: string;
     inquiryNumber: string;
@@ -50,7 +55,8 @@ export class InquiryRepository implements IInquiryRepository {
   }
 
   async findById(id: string, tx?: Prisma.TransactionClient): Promise<any> {
-    const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    const UUID_REGEX =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     if (!UUID_REGEX.test(id)) {
       return null;
     }
@@ -70,7 +76,7 @@ export class InquiryRepository implements IInquiryRepository {
     mobile: string,
     email: string | null | undefined,
     since: Date,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<any> {
     const client = tx || this.prisma;
     const conditions: Prisma.InquiryWhereInput[] = [{ mobile }];
@@ -89,7 +95,11 @@ export class InquiryRepository implements IInquiryRepository {
     });
   }
 
-  async updateStatus(id: string, status: string, tx?: Prisma.TransactionClient): Promise<void> {
+  async updateStatus(
+    id: string,
+    status: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<void> {
     const client = tx || this.prisma;
     await client.inquiry.update({
       where: { id },
@@ -98,9 +108,15 @@ export class InquiryRepository implements IInquiryRepository {
   }
 
   async findAll(
-    filters: { branchId?: string; status?: string; search?: string; counselorId?: string; branchIds?: string[] },
+    filters: {
+      branchId?: string;
+      status?: string;
+      search?: string;
+      counselorId?: string;
+      branchIds?: string[];
+    },
     pagination: { page: number; limit: number },
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<{ items: any[]; total: number }> {
     const client = tx || this.prisma;
     const where: Prisma.InquiryWhereInput = { isDeleted: false };

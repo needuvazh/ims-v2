@@ -26,7 +26,9 @@ export function extractFormValues(formData: FormData): Record<string, string> {
   return values;
 }
 
-function getPrismaTargetFields(error: Prisma.PrismaClientKnownRequestError): string[] {
+function getPrismaTargetFields(
+  error: Prisma.PrismaClientKnownRequestError,
+): string[] {
   const target = error.meta?.target;
 
   if (Array.isArray(target)) {
@@ -40,7 +42,10 @@ function getPrismaTargetFields(error: Prisma.PrismaClientKnownRequestError): str
   return [];
 }
 
-function getFieldErrorFromDomainError(error: any, maps?: ErrorFieldMaps): Record<string, string> {
+function getFieldErrorFromDomainError(
+  error: any,
+  maps?: ErrorFieldMaps,
+): Record<string, string> {
   if (!maps?.domain) {
     return {};
   }
@@ -69,8 +74,9 @@ function getFieldErrorFromPrismaError(
   for (const targetField of getPrismaTargetFields(error)) {
     const mappedField = maps.prisma[targetField];
     if (mappedField) {
-      const message = maps.prismaMessages?.[targetField]
-        ?? 'This value already exists. Please use a different value.';
+      const message =
+        maps.prismaMessages?.[targetField] ??
+        'This value already exists. Please use a different value.';
       return { [mappedField]: message };
     }
   }
@@ -122,11 +128,15 @@ export function buildIdentityActionFailure(
     }
   }
 
-  if (error instanceof DomainError || (error instanceof Error && ('errorCode' in error || 'code' in error))) {
+  if (
+    error instanceof DomainError ||
+    (error instanceof Error && ('errorCode' in error || 'code' in error))
+  ) {
     const fieldErrors = getFieldErrorFromDomainError(error, maps);
     return {
       error: error.message,
-      fieldErrors: Object.keys(fieldErrors).length > 0 ? fieldErrors : undefined,
+      fieldErrors:
+        Object.keys(fieldErrors).length > 0 ? fieldErrors : undefined,
       values,
     };
   }

@@ -17,7 +17,7 @@ export default async function EnrollmentDetailPage(props: {
 
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
     session.userId as any,
-    session.activeBranchId as any
+    session.activeBranchId as any,
   );
 
   const enrollment = await prisma.enrollment.findUnique({
@@ -44,13 +44,26 @@ export default async function EnrollmentDetailPage(props: {
     return (
       <div className="flex flex-col items-center justify-center min-h-[400px] p-6 text-center">
         <div className="rounded-full bg-rose-50 p-3 text-rose-600 mb-4 border border-rose-100">
-          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          <svg
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+            />
           </svg>
         </div>
-        <h2 className="text-xl font-semibold text-slate-800 mb-2">Access Denied</h2>
+        <h2 className="text-xl font-semibold text-slate-800 mb-2">
+          Access Denied
+        </h2>
         <p className="text-sm text-slate-600 max-w-md">
-          You do not have permission to view this enrollment record because it belongs to another branch.
+          You do not have permission to view this enrollment record because it
+          belongs to another branch.
         </p>
       </div>
     );
@@ -86,8 +99,10 @@ export default async function EnrollmentDetailPage(props: {
       resolvedDiscount: enrollment.resolvedDiscount.toString(),
       finalAmount: enrollment.finalAmount.toString(),
       paymentValidationRequired: enrollment.paymentValidationRequired,
-      priceEvaluationTimestamp: enrollment.priceEvaluationTimestamp?.toISOString() || null,
-      paymentCollected: enrollment.walkInEnrollment?.paymentCollected?.toString() || '0.00',
+      priceEvaluationTimestamp:
+        enrollment.priceEvaluationTimestamp?.toISOString() || null,
+      paymentCollected:
+        enrollment.walkInEnrollment?.paymentCollected?.toString() || '0.00',
       enrollmentType: enrollment.enrollmentType,
     },
     history: auditLogs.map((log) => ({

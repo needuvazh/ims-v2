@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { toast } from 'sonner';
 import {
   Bookmark,
@@ -17,6 +18,7 @@ import {
   XCircle,
   Clock,
   CreditCard,
+  GraduationCap,
 } from 'lucide-react';
 import {
   Button,
@@ -85,6 +87,15 @@ interface AdmissionDetail {
       verifiedBy: string | null;
       remarks: string | null;
     }>;
+    enrollments?: Array<{
+      id: string;
+      enrollmentNumber: string;
+      courseName: string;
+      batchCode: string;
+      branchName: string;
+      enrollmentStatus: string;
+      enrolledAt: string;
+    }>;
   };
   history: AuditLogItem[];
 }
@@ -95,12 +106,16 @@ interface AdmissionDetailsClientProps {
   sessionPermissions: string[];
 }
 
-export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissions }: AdmissionDetailsClientProps) {
+export function AdmissionDetailsClient({
+  detail,
+  sessionUserId,
+  sessionPermissions,
+}: AdmissionDetailsClientProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isRejectOpen, setIsRejectOpen] = useState(false);
   const [remarks, setRemarks] = useState('');
-  
+
   const [uploadKeys, setUploadKeys] = useState<Record<string, string>>({});
   const [remarksByDoc, setRemarksByDoc] = useState<Record<string, string>>({});
   const [isRegenerating, setIsRegenerating] = useState(false);
@@ -108,15 +123,21 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
 
   const handleDownloadIdCard = async () => {
     toast.success('Downloading student ID card PDF...');
-    window.open(`/api/v1/admissions/${detail.admission.id}/id-card/download`, '_blank');
+    window.open(
+      `/api/v1/admissions/${detail.admission.id}/id-card/download`,
+      '_blank',
+    );
   };
 
   const handleRegenerateIdCard = async () => {
     setIsRegenerating(true);
     try {
-      const res = await fetch(`/api/v1/admissions/${detail.admission.id}/id-card/reissue`, {
-        method: 'POST',
-      });
+      const res = await fetch(
+        `/api/v1/admissions/${detail.admission.id}/id-card/reissue`,
+        {
+          method: 'POST',
+        },
+      );
       const result = await res.json();
       if (!res.ok) {
         throw new Error(result.messageEnglish || 'Failed to reissue ID card');
@@ -144,10 +165,13 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
       formData.append('file', file);
       formData.append('documentType', docType);
 
-      const res = await fetch(`/api/v1/admissions/${detail.admission.id}/documents`, {
-        method: 'POST',
-        body: formData,
-      });
+      const res = await fetch(
+        `/api/v1/admissions/${detail.admission.id}/documents`,
+        {
+          method: 'POST',
+          body: formData,
+        },
+      );
 
       const result = await res.json();
       if (!res.ok) {
@@ -169,7 +193,12 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
   };
 
   const handleDeleteDocument = async (docId: string) => {
-    if (!confirm('Are you sure you want to delete this document? The entire document will be deleted.')) return;
+    if (
+      !confirm(
+        'Are you sure you want to delete this document? The entire document will be deleted.',
+      )
+    )
+      return;
     setIsSubmitting(true);
     try {
       const res = await fetch(`/api/v1/documents/${docId}`, {
@@ -188,16 +217,22 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
     }
   };
 
-  const handleVerifyDocument = async (docId: string, outcome: 'Verified' | 'Rejected') => {
+  const handleVerifyDocument = async (
+    docId: string,
+    outcome: 'Verified' | 'Rejected',
+  ) => {
     setIsSubmitting(true);
     try {
-      const res = await fetch(`/api/v1/admissions/${detail.admission.id}/documents/${docId}/verify`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const res = await fetch(
+        `/api/v1/admissions/${detail.admission.id}/documents/${docId}/verify`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ outcome, remarks: remarksByDoc[docId] || '' }),
         },
-        body: JSON.stringify({ outcome, remarks: remarksByDoc[docId] || '' }),
-      });
+      );
 
       const result = await res.json();
       if (!res.ok) {
@@ -214,7 +249,9 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
     }
   };
 
-  const handleAction = async (action: 'submit' | 'approve' | 'cancel' | 'reject') => {
+  const handleAction = async (
+    action: 'submit' | 'approve' | 'cancel' | 'reject',
+  ) => {
     setIsSubmitting(true);
     try {
       let body = undefined;
@@ -222,17 +259,22 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
         body = JSON.stringify({ remarks });
       }
 
-      const res = await fetch(`/api/v1/admissions/${detail.admission.id}/${action}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const res = await fetch(
+        `/api/v1/admissions/${detail.admission.id}/${action}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body,
         },
-        body,
-      });
+      );
 
       const result = await res.json();
       if (!res.ok) {
-        throw new Error(result.messageEnglish || `Failed to ${action} admission`);
+        throw new Error(
+          result.messageEnglish || `Failed to ${action} admission`,
+        );
       }
 
       toast.success(`Admission ${action}ed successfully!`);
@@ -267,25 +309,26 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
 
   const headerActions = (
     <div className="flex items-center gap-2">
-      {admission.admissionStatus === 'Draft' && hasPermission('admission.create') && (
-        <>
-          <Button
-            onClick={() => handleAction('submit')}
-            disabled={isSubmitting}
-            className="bg-green-600 text-white hover:bg-green-700"
-          >
-            {isSubmitting ? 'Submitting...' : 'Submit for Review'}
-          </Button>
-          <Button
-            onClick={() => handleAction('cancel')}
-            disabled={isSubmitting}
-            variant="outline"
-            className="text-rose-600 border-rose-200 hover:bg-rose-50"
-          >
-            Cancel Application
-          </Button>
-        </>
-      )}
+      {admission.admissionStatus === 'Draft' &&
+        hasPermission('admission.create') && (
+          <>
+            <Button
+              onClick={() => handleAction('submit')}
+              disabled={isSubmitting}
+              className="bg-green-600 text-white hover:bg-green-700"
+            >
+              {isSubmitting ? 'Submitting...' : 'Submit for Review'}
+            </Button>
+            <Button
+              onClick={() => handleAction('cancel')}
+              disabled={isSubmitting}
+              variant="outline"
+              className="text-rose-600 border-rose-200 hover:bg-rose-50"
+            >
+              Cancel Application
+            </Button>
+          </>
+        )}
 
       {admission.admissionStatus === 'Submitted' && (
         <>
@@ -333,8 +376,16 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5" /> },
-              { label: 'Admissions', href: '/admissions', icon: <ClipboardList className="h-3.5 w-3.5" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5" />,
+              },
+              {
+                label: 'Admissions',
+                href: '/admissions',
+                icon: <ClipboardList className="h-3.5 w-3.5" />,
+              },
               { label: 'Details', icon: <Eye className="h-3.5 w-3.5" /> },
             ]}
           />
@@ -352,63 +403,170 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
                   <Bookmark className="h-4 w-4 text-indigo-600" />
                   Application Information
                 </h3>
-                <Badge variant={getStatusBadgeVariant(admission.admissionStatus)} className="text-[10px] px-1.5 py-0.5">
+                <Badge
+                  variant={getStatusBadgeVariant(admission.admissionStatus)}
+                  className="text-[10px] px-1.5 py-0.5"
+                >
                   {admission.admissionStatus}
                 </Badge>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                 <div>
-                  <span className="text-[color:var(--ims-muted)] block">Interested Course</span>
-                  <span className="font-semibold text-[color:var(--ims-ink)]">{admission.courseName || 'N/A'}</span>
+                  <span className="text-[color:var(--ims-muted)] block">
+                    Interested Course
+                  </span>
+                  <span className="font-semibold text-[color:var(--ims-ink)]">
+                    {admission.courseName || 'N/A'}
+                  </span>
                 </div>
                 <div>
-                  <span className="text-[color:var(--ims-muted)] block">Target Campus / Branch</span>
-                  <span className="font-semibold text-[color:var(--ims-ink)]">{admission.branchName || 'N/A'}</span>
+                  <span className="text-[color:var(--ims-muted)] block">
+                    Target Campus / Branch
+                  </span>
+                  <span className="font-semibold text-[color:var(--ims-ink)]">
+                    {admission.branchName || 'N/A'}
+                  </span>
                 </div>
                 {admission.studentProfile?.studentNumber && (
                   <div className="md:col-span-2">
-                    <span className="text-[color:var(--ims-muted)] block">Student Profile Reference</span>
-                    <span className="font-semibold text-emerald-700">{admission.studentProfile.studentNumber}</span>
+                    <span className="text-[color:var(--ims-muted)] block">
+                      Student Profile Reference
+                    </span>
+                    <span className="font-semibold text-emerald-700">
+                      {admission.studentProfile.studentNumber}
+                    </span>
                   </div>
                 )}
               </div>
 
               {/* Rejection remarks */}
-              {admission.admissionStatus === 'Rejected' && admission.remarks && (
-                <div className="rounded-lg border border-rose-200 bg-rose-50/50 p-3 text-sm text-rose-800">
-                  <div className="flex items-center gap-1.5 font-semibold mb-1">
-                    <AlertCircle className="h-4 w-4" />
-                    Rejection Remarks
+              {admission.admissionStatus === 'Rejected' &&
+                admission.remarks && (
+                  <div className="rounded-lg border border-rose-200 bg-rose-50/50 p-3 text-sm text-rose-800">
+                    <div className="flex items-center gap-1.5 font-semibold mb-1">
+                      <AlertCircle className="h-4 w-4" />
+                      Rejection Remarks
+                    </div>
+                    <p className="whitespace-pre-wrap">{admission.remarks}</p>
                   </div>
-                  <p className="whitespace-pre-wrap">{admission.remarks}</p>
-                </div>
-              )}
+                )}
             </div>
 
             {/* Learner Profile */}
             <div className="border border-[color:var(--ims-border)] p-6 rounded-2xl space-y-4 bg-white/80 shadow-sm">
-              <h3 className="text-sm font-semibold flex items-center gap-2 text-[color:var(--ims-ink)] border-b border-slate-100 pb-2 font-display">
-                <User className="h-4 w-4 text-indigo-600" />
-                Learner Profile
-              </h3>
+              <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                <h3 className="text-sm font-semibold flex items-center gap-2 text-[color:var(--ims-ink)] font-display">
+                  <User className="h-4 w-4 text-indigo-600" />
+                  Learner Profile
+                </h3>
+                {admission.studentProfile?.id && (
+                  <Link href={`/students/${admission.studentProfile.id}`}>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-7 text-[11px] gap-1 px-3"
+                    >
+                      <User className="h-3 w-3" /> View Student Profile
+                    </Button>
+                  </Link>
+                )}
+              </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
                 <div>
-                  <span className="text-[color:var(--ims-muted)] block">Full Name</span>
+                  <span className="text-[color:var(--ims-muted)] block">
+                    Full Name
+                  </span>
                   <span className="font-semibold text-[color:var(--ims-ink)]">
                     {admission.person.firstName} {admission.person.lastName}
                   </span>
                 </div>
                 <div>
-                  <span className="text-[color:var(--ims-muted)] block">Email Address</span>
-                  <span className="font-semibold text-[color:var(--ims-ink)] break-all">{admission.person.email || 'N/A'}</span>
+                  <span className="text-[color:var(--ims-muted)] block">
+                    Email Address
+                  </span>
+                  <span className="font-semibold text-[color:var(--ims-ink)] break-all">
+                    {admission.person.email || 'N/A'}
+                  </span>
                 </div>
                 <div>
-                  <span className="text-[color:var(--ims-muted)] block">Mobile Number</span>
-                  <span className="font-semibold text-[color:var(--ims-ink)]">{admission.person.mobile || 'N/A'}</span>
+                  <span className="text-[color:var(--ims-muted)] block">
+                    Mobile Number
+                  </span>
+                  <span className="font-semibold text-[color:var(--ims-ink)]">
+                    {admission.person.mobile || 'N/A'}
+                  </span>
                 </div>
               </div>
+            </div>
+
+            {/* Enrolled Courses */}
+            <div className="border border-[color:var(--ims-border)] p-6 rounded-2xl space-y-4 bg-white/80 shadow-sm">
+              <h3 className="text-sm font-semibold flex items-center gap-2 text-[color:var(--ims-ink)] border-b border-slate-100 pb-2 font-display">
+                <GraduationCap className="h-4 w-4 text-indigo-600" />
+                Enrolled Courses{' '}
+                <span className="text-xs font-normal text-[color:var(--ims-muted)]">
+                  ({admission.enrollments?.length || 0})
+                </span>
+              </h3>
+
+              {!admission.enrollments || admission.enrollments.length === 0 ? (
+                <div className="text-xs text-[color:var(--ims-muted)] py-2">
+                  No courses enrolled yet.
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {admission.enrollments.map((enr) => (
+                    <div
+                      key={enr.id}
+                      className="border border-slate-100 rounded-xl p-4 bg-slate-50/50 space-y-3"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="space-y-1">
+                          <p className="text-xs font-bold text-slate-800">
+                            {enr.courseName}
+                          </p>
+                          <p className="text-[10px] font-mono text-[color:var(--ims-muted)]">
+                            Enrollment Num: {enr.enrollmentNumber || 'N/A'}
+                          </p>
+                        </div>
+                        <span
+                          className={`inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-semibold ${
+                            ['Confirmed', 'Active'].includes(
+                              enr.enrollmentStatus,
+                            )
+                              ? 'bg-green-50 text-green-700 border border-green-100'
+                              : enr.enrollmentStatus === 'Pending'
+                                ? 'bg-amber-50 text-amber-700 border border-amber-100'
+                                : 'bg-slate-100 text-slate-700'
+                          }`}
+                        >
+                          {enr.enrollmentStatus}
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 text-[10px] text-slate-600 border-t border-slate-100/60 pt-2.5">
+                        <div>
+                          <span className="block text-[9px] text-[color:var(--ims-muted)]">
+                            BATCH
+                          </span>
+                          <span className="font-semibold font-mono">
+                            {enr.batchCode}
+                          </span>
+                        </div>
+                        <div>
+                          <span className="block text-[9px] text-[color:var(--ims-muted)]">
+                            BRANCH
+                          </span>
+                          <span className="font-semibold">
+                            {enr.branchName}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Required Documents checklist */}
@@ -427,7 +585,7 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
                   admission.documents?.map((doc) => {
                     const isUploaded = doc.id !== null;
                     const outcome = doc.verificationOutcome;
-                    
+
                     return (
                       <div
                         key={doc.documentType}
@@ -437,24 +595,50 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
                           <div className="font-semibold text-slate-800 flex items-center gap-1.5">
                             {doc.documentType.replace(/_/g, ' ')}
                             {outcome === 'Verified' && (
-                              <Badge variant="success" className="text-[9px] px-1 py-0.2">Verified</Badge>
+                              <Badge
+                                variant="success"
+                                className="text-[9px] px-1 py-0.2"
+                              >
+                                Verified
+                              </Badge>
                             )}
                             {outcome === 'Rejected' && (
-                              <Badge variant="error" className="text-[9px] px-1 py-0.2">Rejected</Badge>
+                              <Badge
+                                variant="error"
+                                className="text-[9px] px-1 py-0.2"
+                              >
+                                Rejected
+                              </Badge>
                             )}
                             {outcome === 'Pending' && (
-                              <Badge variant="info" className="text-[9px] px-1 py-0.2">Pending Verification</Badge>
+                              <Badge
+                                variant="info"
+                                className="text-[9px] px-1 py-0.2"
+                              >
+                                Pending Verification
+                              </Badge>
                             )}
                             {outcome === 'NotUploaded' && (
-                              <Badge variant="outline" className="text-[9px] px-1 py-0.2">Missing</Badge>
+                              <Badge
+                                variant="outline"
+                                className="text-[9px] px-1 py-0.2"
+                              >
+                                Missing
+                              </Badge>
                             )}
                           </div>
                           {isUploaded ? (
                             <div className="text-[11px] text-slate-600 break-all space-y-0.5">
-                              <div>File Name: <span className="font-mono">{doc.fileName}</span></div>
-                              <div>File Link: <a href={doc.fileKey || '#'} target="_blank" rel="noreferrer" className="text-blue-600 underline hover:text-blue-800">{doc.fileKey}</a></div>
+                              <div>
+                                File Name:{' '}
+                                <span className="font-mono">
+                                  {doc.fileName}
+                                </span>
+                              </div>
                               {doc.remarks && (
-                                <div className="text-rose-600 mt-1 italic">Remarks: {doc.remarks}</div>
+                                <div className="text-rose-600 mt-1 italic">
+                                  Remarks: {doc.remarks}
+                                </div>
                               )}
                             </div>
                           ) : (
@@ -473,14 +657,22 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
                                 onChange={(e) => {
                                   const file = e.target.files?.[0];
                                   if (file) {
-                                    setSelectedFiles((prev) => ({ ...prev, [doc.documentType]: file }));
+                                    setSelectedFiles((prev) => ({
+                                      ...prev,
+                                      [doc.documentType]: file,
+                                    }));
                                   }
                                 }}
                                 className="block w-48 text-xs text-slate-500 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[11px] file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200"
                               />
                               <Button
-                                onClick={() => handleUploadDocument(doc.documentType)}
-                                disabled={isSubmitting || !selectedFiles[doc.documentType]}
+                                onClick={() =>
+                                  handleUploadDocument(doc.documentType)
+                                }
+                                disabled={
+                                  isSubmitting ||
+                                  !selectedFiles[doc.documentType]
+                                }
                                 size="sm"
                                 className="bg-indigo-600 text-white hover:bg-indigo-700 h-8 flex items-center gap-1 text-[11px]"
                               >
@@ -490,14 +682,19 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
                           ) : (
                             <div className="flex items-center gap-2">
                               <a
-                                href={doc.id ? `/api/v1/documents/${doc.id}/download` : (doc.fileKey || '#')}
+                                href={
+                                  doc.id
+                                    ? `/api/v1/documents/${doc.id}/download`
+                                    : doc.fileKey || '#'
+                                }
                                 target="_blank"
                                 rel="noreferrer"
                                 className="inline-flex items-center gap-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg px-2.5 py-1.5 text-[10px] font-medium border border-slate-200 transition-colors"
                               >
                                 View / Download
                               </a>
-                              {(hasPermission('document.retire') || hasPermission('admission.create')) && (
+                              {(hasPermission('document.retire') ||
+                                hasPermission('admission.create')) && (
                                 <Button
                                   onClick={() => handleDeleteDocument(doc.id!)}
                                   disabled={isSubmitting}
@@ -511,39 +708,48 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
                             </div>
                           )}
 
-                          {isUploaded && outcome === 'Pending' && hasPermission('admission.approve') && (
-                            <div className="space-y-2 mt-2 w-full">
-                              <input
-                                type="text"
-                                placeholder="Add optional verification notes..."
-                                disabled={isSubmitting}
-                                value={remarksByDoc[doc.id!] || ''}
-                                onChange={(e) =>
-                                  setRemarksByDoc((prev) => ({ ...prev, [doc.id!]: e.target.value }))
-                                }
-                                className="block w-full md:w-60 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-xs placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 disabled:opacity-50"
-                              />
-                              <div className="flex items-center gap-2 justify-end">
-                                <Button
-                                  onClick={() => handleVerifyDocument(doc.id!, 'Verified')}
+                          {isUploaded &&
+                            outcome === 'Pending' &&
+                            hasPermission('admission.approve') && (
+                              <div className="space-y-2 mt-2 w-full">
+                                <input
+                                  type="text"
+                                  placeholder="Add optional verification notes..."
                                   disabled={isSubmitting}
-                                  size="sm"
-                                  className="bg-emerald-600 text-white hover:bg-emerald-700 h-7 text-[10px] px-2.5"
-                                >
-                                  Verify
-                                </Button>
-                                <Button
-                                  onClick={() => handleVerifyDocument(doc.id!, 'Rejected')}
-                                  disabled={isSubmitting}
-                                  size="sm"
-                                  variant="outline"
-                                  className="text-rose-600 border-rose-200 hover:bg-rose-50 h-7 text-[10px] px-2.5"
-                                >
-                                  Reject
-                                </Button>
+                                  value={remarksByDoc[doc.id!] || ''}
+                                  onChange={(e) =>
+                                    setRemarksByDoc((prev) => ({
+                                      ...prev,
+                                      [doc.id!]: e.target.value,
+                                    }))
+                                  }
+                                  className="block w-full md:w-60 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-xs placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 disabled:opacity-50"
+                                />
+                                <div className="flex items-center gap-2 justify-end">
+                                  <Button
+                                    onClick={() =>
+                                      handleVerifyDocument(doc.id!, 'Verified')
+                                    }
+                                    disabled={isSubmitting}
+                                    size="sm"
+                                    className="bg-emerald-600 text-white hover:bg-emerald-700 h-7 text-[10px] px-2.5"
+                                  >
+                                    Verify
+                                  </Button>
+                                  <Button
+                                    onClick={() =>
+                                      handleVerifyDocument(doc.id!, 'Rejected')
+                                    }
+                                    disabled={isSubmitting}
+                                    size="sm"
+                                    variant="outline"
+                                    className="text-rose-600 border-rose-200 hover:bg-rose-50 h-7 text-[10px] px-2.5"
+                                  >
+                                    Reject
+                                  </Button>
+                                </div>
                               </div>
-                            </div>
-                          )}
+                            )}
                         </div>
                       </div>
                     );
@@ -566,11 +772,15 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
                     <div className="absolute right-0 bottom-0 opacity-10 pointer-events-none">
                       <CreditCard className="h-48 w-48 -mr-10 -mb-10" />
                     </div>
-                    
+
                     <div className="flex justify-between items-start">
                       <div>
-                        <span className="text-[10px] tracking-widest text-indigo-200 block uppercase font-bold">AL SAUD TRAINING INST.</span>
-                        <span className="text-[8px] text-indigo-300 block">ASTI Institute Management System</span>
+                        <span className="text-[10px] tracking-widest text-indigo-200 block uppercase font-bold">
+                          AL SAUD TRAINING INST.
+                        </span>
+                        <span className="text-[8px] text-indigo-300 block">
+                          ASTI Institute Management System
+                        </span>
                       </div>
                       <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/30 text-[8px] hover:bg-emerald-500/20">
                         ACTIVE
@@ -582,9 +792,18 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
                         PHOTO
                       </div>
                       <div className="space-y-0.5 text-left">
-                        <span className="text-xs font-semibold block">{admission.person.firstName} {admission.person.lastName}</span>
-                        <span className="text-[10px] text-indigo-200 block font-mono">ID: {admission.studentProfile.idCardNumber || admission.studentProfile.studentNumber}</span>
-                        <span className="text-[8px] text-indigo-300 block">Course: {admission.courseName}</span>
+                        <span className="text-xs font-semibold block">
+                          {admission.person.firstName}{' '}
+                          {admission.person.lastName}
+                        </span>
+                        <span className="text-[10px] text-indigo-200 block font-mono">
+                          ID:{' '}
+                          {admission.studentProfile.idCardNumber ||
+                            admission.studentProfile.studentNumber}
+                        </span>
+                        <span className="text-[8px] text-indigo-300 block">
+                          Course: {admission.courseName}
+                        </span>
                       </div>
                     </div>
 
@@ -604,21 +823,25 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
                         ID Card Status:{' '}
                         <span
                           className={`font-semibold ${
-                            admission.studentProfile.idCardIssued ? 'text-emerald-600' : 'text-amber-500'
+                            admission.studentProfile.idCardIssued
+                              ? 'text-emerald-600'
+                              : 'text-amber-500'
                           }`}
                         >
                           {admission.studentProfile.idCardIssued
-                            ? (admission.studentProfile.idCardNumber &&
-                              admission.studentProfile.idCardNumber !== admission.studentProfile.studentNumber
-                                ? 'Reissued & Valid'
-                                : 'Generated & Valid')
+                            ? admission.studentProfile.idCardNumber &&
+                              admission.studentProfile.idCardNumber !==
+                                admission.studentProfile.studentNumber
+                              ? 'Reissued & Valid'
+                              : 'Generated & Valid'
                             : 'Pending Generation'}
                         </span>
                       </div>
                       <div className="text-slate-500">
                         Card Number:{' '}
                         <span className="font-mono">
-                          {admission.studentProfile.idCardNumber || admission.studentProfile.studentNumber}
+                          {admission.studentProfile.idCardNumber ||
+                            admission.studentProfile.studentNumber}
                         </span>
                       </div>
                     </div>
@@ -659,17 +882,24 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
                 {history.map((log) => (
                   <div key={log.id} className="relative">
                     <span className="absolute -left-[20.5px] top-1.5 flex h-2.5 w-2.5 rounded-full bg-slate-300 ring-4 ring-white" />
-                    <div className="font-semibold text-slate-800">{log.action}</div>
+                    <div className="font-semibold text-slate-800">
+                      {log.action}
+                    </div>
                     <div className="text-[9px] text-[color:var(--ims-muted)]">
                       {new Date(log.performedAt).toLocaleString()}
                     </div>
                     {log.newValue && (
                       <div className="mt-1 text-[10px] text-slate-600 bg-slate-50 rounded p-1.5 border border-slate-100/50">
                         {JSON.parse(log.newValue).status && (
-                          <span>Status changed to: <strong>{JSON.parse(log.newValue).status}</strong></span>
+                          <span>
+                            Status changed to:{' '}
+                            <strong>{JSON.parse(log.newValue).status}</strong>
+                          </span>
                         )}
                         {JSON.parse(log.newValue).remarks && (
-                          <div className="mt-0.5">Remarks: <em>{JSON.parse(log.newValue).remarks}</em></div>
+                          <div className="mt-0.5">
+                            Remarks: <em>{JSON.parse(log.newValue).remarks}</em>
+                          </div>
                         )}
                       </div>
                     )}
@@ -687,7 +917,9 @@ export function AdmissionDetailsClient({ detail, sessionUserId, sessionPermissio
           <DialogHeader>
             <DialogTitle>Reject Admission Application</DialogTitle>
             <DialogDescription>
-              Please enter the mandatory remarks explaining why this application is rejected. This will be stored on the record and shown to other coordinators.
+              Please enter the mandatory remarks explaining why this application
+              is rejected. This will be stored on the record and shown to other
+              coordinators.
             </DialogDescription>
           </DialogHeader>
 

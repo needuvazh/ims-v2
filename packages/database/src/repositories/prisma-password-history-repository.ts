@@ -1,5 +1,8 @@
 import type { PrismaClient } from '@prisma/client';
-import type { IPasswordHistoryRepository, PasswordHistoryDto } from '@ims/identity-access';
+import type {
+  IPasswordHistoryRepository,
+  PasswordHistoryDto,
+} from '@ims/identity-access';
 import type { Uuid } from '@ims/shared-kernel';
 
 export class PrismaPasswordHistoryRepository implements IPasswordHistoryRepository {
@@ -16,7 +19,10 @@ export class PrismaPasswordHistoryRepository implements IPasswordHistoryReposito
     });
   }
 
-  async findRecentN(userId: Uuid, limit: number): Promise<PasswordHistoryDto[]> {
+  async findRecentN(
+    userId: Uuid,
+    limit: number,
+  ): Promise<PasswordHistoryDto[]> {
     const rows = await this.prisma.passwordHistory.findMany({
       where: { userId },
       orderBy: { createdAt: 'desc' },

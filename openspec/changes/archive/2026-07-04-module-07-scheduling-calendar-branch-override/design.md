@@ -7,6 +7,7 @@ This change sits in the Scheduling bounded context and affects Organization only
 ## Goals / Non-Goals
 
 **Goals:**
+
 - Establish one canonical institute business calendar as the default scheduling source.
 - Support sparse branch/year overrides without duplicating the full calendar.
 - Preserve branch-scoped authorization, auditability, and optimistic locking.
@@ -14,6 +15,7 @@ This change sits in the Scheduling bounded context and affects Organization only
 - Keep timezone normalization fixed to `Asia/Muscat`.
 
 **Non-Goals:**
+
 - Rebuilding organization branch management.
 - Adding external calendar providers, brokers, CQRS, or event sourcing.
 - Supporting arbitrary timezone overrides at branch level.
@@ -22,59 +24,75 @@ This change sits in the Scheduling bounded context and affects Organization only
 ## Decisions
 
 ### 1. Calendar ownership stays in Scheduling
+
 The institute business calendar and branch overrides are owned by the Scheduling context, not Organization.
 
 Why:
+
 - The calendar controls session validation, holiday blocking, and timetable behavior.
 - Keeping ownership in Scheduling prevents Organization from becoming a dumping ground for workflow rules.
 
 Alternatives considered:
+
 - Put the calendar under Organization as branch metadata. Rejected because it mixes structural branch data with scheduling policy and makes validation rules harder to evolve.
 - Keep branch-owned calendars. Rejected because it duplicates calendars per branch/year and creates drift.
 
 ### 2. Use a base calendar plus sparse override records
+
 Model the calendar as:
+
 - a canonical institute calendar
 - a branch/year override record containing only changed fields
 
 Why:
+
 - Minimal duplication.
 - Easy to explain precedence.
 - Branch exceptions stay local while the institute default remains authoritative.
 
 Alternatives considered:
+
 - Full branch/year snapshot copy. Rejected because it multiplies update burden and audit noise.
 - Pure inheritance without stored overrides. Rejected because scheduling needs explicit auditable exceptions.
 
 ### 3. Resolve calendar rules in application services, not in route handlers
+
 Add a calendar resolution service in Scheduling that returns a resolved view for a given institute, branch, and year.
 
 Why:
+
 - Route handlers should stay thin.
 - The resolution rule is domain behavior and must be testable independently.
 - Session validation, holiday checks, and reporting should use the same resolved view.
 
 Alternatives considered:
+
 - Recompute precedence inline in each API. Rejected because it would scatter business rules.
 
 ### 4. Keep branch/year overrides narrow
+
 Allow overrides for operating days, working hours, and branch-specific closure/holiday entries. Do not allow branch-level timezone changes.
 
 Why:
+
 - Timezone is an institute-level normalization rule for the whole product.
 - Narrow overrides reduce the risk of accidental policy divergence across branches.
 
 Alternatives considered:
+
 - Allow any field override. Rejected because it weakens guarantees and complicates validation.
 
 ### 5. Migrate the existing `workingCalendar` branch setting into the new model
+
 Treat the current Organization `workingCalendar` string as a legacy placeholder, not the long-term source of truth.
 
 Why:
+
 - The current field cannot express lifecycle, holidays, or per-year override behavior.
 - Leaving it as the primary driver would preserve the wrong abstraction.
 
 Alternatives considered:
+
 - Keep the field and add more branch settings around it. Rejected because it would still be opaque and insufficient for validation.
 
 ## Risks / Trade-offs
@@ -93,6 +111,7 @@ Alternatives considered:
 5. Once scheduling reads are fully migrated, deprecate and remove any UI or service dependency on the legacy placeholder.
 
 Rollback strategy:
+
 - If the new model creates issues, revert validation reads to the legacy placeholder temporarily while preserving the new tables and audit history.
 - Do not delete migrated calendar records unless the migration is proven safe.
 

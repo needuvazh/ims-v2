@@ -1,4 +1,9 @@
-import { InvalidStateTransition, BatchFull, WaitlistDisabled, BatchNotFull } from './errors';
+import {
+  InvalidStateTransition,
+  BatchFull,
+  WaitlistDisabled,
+  BatchNotFull,
+} from './errors';
 
 export interface Batch {
   id: string;
@@ -92,18 +97,30 @@ export const BATCH_STATUSES = {
   OPEN: 'OpenForEnrollment',
   IN_PROGRESS: 'InProgress',
   COMPLETED: 'Completed',
-  CANCELLED: 'Cancelled'
+  CANCELLED: 'Cancelled',
 } as const;
 
 export class BatchAggregate {
   constructor(public readonly state: Batch) {}
 
-  allocateSeat(requestedSeats: number = 1, forceOverbook: boolean = false): { status: 'SUCCESS' | 'SUCCESS_OVERBOOKED' | 'WAITLIST_REDIRECT'; updatedCount: number } {
+  allocateSeat(
+    requestedSeats: number = 1,
+    forceOverbook: boolean = false,
+  ): {
+    status: 'SUCCESS' | 'SUCCESS_OVERBOOKED' | 'WAITLIST_REDIRECT';
+    updatedCount: number;
+  } {
     const status = this.state.status;
-    
+
     // Seat allocation is strictly blocked in Draft, Completed, or Cancelled
-    if (status === BATCH_STATUSES.DRAFT || status === BATCH_STATUSES.COMPLETED || status === BATCH_STATUSES.CANCELLED) {
-      throw new InvalidStateTransition(`Cannot allocate seats in ${status} status.`);
+    if (
+      status === BATCH_STATUSES.DRAFT ||
+      status === BATCH_STATUSES.COMPLETED ||
+      status === BATCH_STATUSES.CANCELLED
+    ) {
+      throw new InvalidStateTransition(
+        `Cannot allocate seats in ${status} status.`,
+      );
     }
 
     const newCount = this.state.currentEnrollmentCount + requestedSeats;
@@ -114,7 +131,10 @@ export class BatchAggregate {
         return { status: 'SUCCESS_OVERBOOKED', updatedCount: newCount };
       }
       if (this.state.waitingListEnabled) {
-        return { status: 'WAITLIST_REDIRECT', updatedCount: this.state.currentEnrollmentCount };
+        return {
+          status: 'WAITLIST_REDIRECT',
+          updatedCount: this.state.currentEnrollmentCount,
+        };
       }
       throw new BatchFull();
     }
@@ -123,39 +143,63 @@ export class BatchAggregate {
   }
 
   releaseSeat(releasedSeats: number = 1): number {
-    const newCount = Math.max(0, this.state.currentEnrollmentCount - releasedSeats);
+    const newCount = Math.max(
+      0,
+      this.state.currentEnrollmentCount - releasedSeats,
+    );
     return newCount;
   }
 
-  validateTransition(targetStatus: string, context: { primaryTrainerExists: boolean; allSessionsPast: boolean; currentDate: Date }) {
+  validateTransition(
+    targetStatus: string,
+    context: {
+      primaryTrainerExists: boolean;
+      allSessionsPast: boolean;
+      currentDate: Date;
+    },
+  ) {
     const current = this.state.status;
 
     if (current === targetStatus) return;
 
     if (current === BATCH_STATUSES.CANCELLED) {
-      throw new InvalidStateTransition('Cannot transition from Cancelled status.');
+      throw new InvalidStateTransition(
+        'Cannot transition from Cancelled status.',
+      );
     }
 
     if (targetStatus === BATCH_STATUSES.OPEN) {
       if (current !== BATCH_STATUSES.DRAFT) {
-        throw new InvalidStateTransition(`Cannot transition from ${current} to OpenForEnrollment.`);
+        throw new InvalidStateTransition(
+          `Cannot transition from ${current} to OpenForEnrollment.`,
+        );
       }
       if (!context.primaryTrainerExists) {
-        throw new InvalidStateTransition('An open batch requires at least one Primary Trainer.');
+        throw new InvalidStateTransition(
+          'An open batch requires at least one Primary Trainer.',
+        );
       }
     } else if (targetStatus === BATCH_STATUSES.IN_PROGRESS) {
       if (current !== BATCH_STATUSES.OPEN) {
-        throw new InvalidStateTransition(`Cannot transition from ${current} to InProgress.`);
+        throw new InvalidStateTransition(
+          `Cannot transition from ${current} to InProgress.`,
+        );
       }
       if (context.currentDate < new Date(this.state.startDate)) {
-        throw new InvalidStateTransition('Cannot start batch before its start date.');
+        throw new InvalidStateTransition(
+          'Cannot start batch before its start date.',
+        );
       }
     } else if (targetStatus === BATCH_STATUSES.COMPLETED) {
       if (current !== BATCH_STATUSES.IN_PROGRESS) {
-        throw new InvalidStateTransition(`Cannot transition from ${current} to Completed.`);
+        throw new InvalidStateTransition(
+          `Cannot transition from ${current} to Completed.`,
+        );
       }
       if (!context.allSessionsPast) {
-        throw new InvalidStateTransition('Cannot complete batch while sessions are still in the future.');
+        throw new InvalidStateTransition(
+          'Cannot complete batch while sessions are still in the future.',
+        );
       }
     } else if (targetStatus === BATCH_STATUSES.CANCELLED) {
       // Allowed from any state except Completed
@@ -170,8 +214,13 @@ export class BatchAggregate {
   // Enqueue validation
   validateWaitlistEnqueue() {
     const status = this.state.status;
-    if (status !== BATCH_STATUSES.OPEN && status !== BATCH_STATUSES.IN_PROGRESS) {
-      throw new InvalidStateTransition(`Cannot enqueue candidate when batch is in ${status} status.`);
+    if (
+      status !== BATCH_STATUSES.OPEN &&
+      status !== BATCH_STATUSES.IN_PROGRESS
+    ) {
+      throw new InvalidStateTransition(
+        `Cannot enqueue candidate when batch is in ${status} status.`,
+      );
     }
     if (!this.state.waitingListEnabled) {
       throw new WaitlistDisabled();
@@ -185,11 +234,16 @@ export class BatchAggregate {
   promoteWaitlistEntry(
     entry: WaitingList,
     correlationId: string,
-    options?: { force?: boolean }
+    options?: { force?: boolean },
   ): { updatedEntry: WaitingList; updatedCount: number } {
     const status = this.state.status;
-    if (status !== BATCH_STATUSES.OPEN && status !== BATCH_STATUSES.IN_PROGRESS) {
-      throw new InvalidStateTransition(`Cannot promote candidate when batch is in ${status} status.`);
+    if (
+      status !== BATCH_STATUSES.OPEN &&
+      status !== BATCH_STATUSES.IN_PROGRESS
+    ) {
+      throw new InvalidStateTransition(
+        `Cannot promote candidate when batch is in ${status} status.`,
+      );
     }
 
     if (entry.status !== 'Waiting') {
@@ -218,7 +272,7 @@ export class BatchAggregate {
   revertPromotion(
     entry: WaitingList,
     correlationId?: string | null,
-    reason?: string | null
+    reason?: string | null,
   ): { updatedEntry: WaitingList; updatedCount: number } {
     if (entry.status !== 'Promoted') {
       throw new Error('ERR_CRS_INVALID_WAITLIST_STATUS');

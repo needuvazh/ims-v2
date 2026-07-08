@@ -17,7 +17,12 @@ interface UserControlsProps {
   isGlobal: boolean;
 }
 
-export function UserControls({ userName, activeBranchId, branches, isGlobal }: UserControlsProps) {
+export function UserControls({
+  userName,
+  activeBranchId,
+  branches,
+  isGlobal,
+}: UserControlsProps) {
   const [isPending, startTransition] = useTransition();
   const [selectedBranch, setSelectedBranch] = useState(activeBranchId ?? 'All');
   const [error, setError] = useState<string | null>(null);
@@ -67,13 +72,19 @@ export function UserControls({ userName, activeBranchId, branches, isGlobal }: U
               {isPending ? (
                 <RefreshCw className="h-3.5 w-3.5 animate-spin text-[color:var(--ims-muted)]" />
               ) : (
-                <span className="text-[10px] text-[color:var(--ims-muted)] font-black">▼</span>
+                <span className="text-[10px] text-[color:var(--ims-muted)] font-black">
+                  ▼
+                </span>
               )}
             </div>
           </div>
         )}
 
-        {showSwitcher && error && <p className="text-[10px] font-semibold text-rose-600 ml-1">{error}</p>}
+        {showSwitcher && error && (
+          <p className="text-[10px] font-semibold text-rose-600 ml-1">
+            {error}
+          </p>
+        )}
 
         <div className="space-y-2 rounded-2xl border border-border-light bg-muted-50 p-2 shadow-sm">
           <Link

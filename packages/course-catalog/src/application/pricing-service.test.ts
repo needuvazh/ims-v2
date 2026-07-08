@@ -1,8 +1,15 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { CoursePricingService, parseDateOnly, getGstDateAtMidnight } from './pricing-service';
+import {
+  CoursePricingService,
+  parseDateOnly,
+  getGstDateAtMidnight,
+} from './pricing-service';
 import { Decimal } from '@prisma/client/runtime/library';
 import type { Prisma, PrismaClient } from '@prisma/client';
-import type { ICoursePricingRepository, ICourseDiscountRepository } from '../domain/repositories';
+import type {
+  ICoursePricingRepository,
+  ICourseDiscountRepository,
+} from '../domain/repositories';
 
 describe('Course Pricing Timezone Normalizations', () => {
   it('should parse date-only strings exactly as UTC midnight dates', () => {
@@ -59,7 +66,9 @@ describe('CoursePricingService rules & logic', () => {
     mockPrisma = {
       $transaction: vi.fn((cb) => cb(mockPrisma)),
       course: {
-        findFirst: vi.fn().mockResolvedValue({ id: 'course-1', status: 'Draft' }),
+        findFirst: vi
+          .fn()
+          .mockResolvedValue({ id: 'course-1', status: 'Draft' }),
       },
       auditLog: {
         create: vi.fn().mockResolvedValue({}),
@@ -89,7 +98,7 @@ describe('CoursePricingService rules & logic', () => {
     service = new CoursePricingService(
       mockPrisma as unknown as PrismaClient,
       mockPricingRepo as unknown as ICoursePricingRepository,
-      mockDiscountRepo as unknown as ICourseDiscountRepository
+      mockDiscountRepo as unknown as ICourseDiscountRepository,
     );
   });
 
@@ -103,9 +112,13 @@ describe('CoursePricingService rules & logic', () => {
       effectiveStartDate: '2026-07-10',
     };
 
-    await expect(service.createPricingRule(input, 'user-1', mockPrisma as unknown as Prisma.TransactionClient)).rejects.toThrow(
-      'ERR_CRS_TAX_EXEMPTION_METADATA_REQUIRED'
-    );
+    await expect(
+      service.createPricingRule(
+        input,
+        'user-1',
+        mockPrisma as unknown as Prisma.TransactionClient,
+      ),
+    ).rejects.toThrow('ERR_CRS_TAX_EXEMPTION_METADATA_REQUIRED');
   });
 
   it('should throw collision error if new pricing date is before or equal to existing start date', async () => {
@@ -125,9 +138,13 @@ describe('CoursePricingService rules & logic', () => {
       effectiveStartDate: '2026-07-10', // Collision (same date)
     };
 
-    await expect(service.createPricingRule(input, 'user-1', mockPrisma as unknown as Prisma.TransactionClient)).rejects.toThrow(
-      'ERR_CRS_MULTIPLE_ACTIVE_PRICING'
-    );
+    await expect(
+      service.createPricingRule(
+        input,
+        'user-1',
+        mockPrisma as unknown as Prisma.TransactionClient,
+      ),
+    ).rejects.toThrow('ERR_CRS_MULTIPLE_ACTIVE_PRICING');
   });
 
   it('should supersede existing record if new pricing date is strictly after existing start date', async () => {
@@ -147,9 +164,16 @@ describe('CoursePricingService rules & logic', () => {
       effectiveStartDate: '2026-07-15', // Starts July 15, after July 10
     };
 
-    mockPricingRepo.create.mockResolvedValue({ id: 'pricing-2', basePrice: 150 });
+    mockPricingRepo.create.mockResolvedValue({
+      id: 'pricing-2',
+      basePrice: 150,
+    });
 
-    const result = await service.createPricingRule(input, 'user-1', mockPrisma as unknown as Prisma.TransactionClient);
+    const result = await service.createPricingRule(
+      input,
+      'user-1',
+      mockPrisma as unknown as Prisma.TransactionClient,
+    );
     expect(result).toBeDefined();
 
     // The existing pricing should be updated with a superseded end date of July 14 (one day prior)
@@ -159,7 +183,7 @@ describe('CoursePricingService rules & logic', () => {
         status: 'Superseded',
         effectiveEndDate: new Date(Date.UTC(2026, 6, 14)),
       },
-      mockPrisma
+      mockPrisma,
     );
   });
 
@@ -167,7 +191,13 @@ describe('CoursePricingService rules & logic', () => {
     it('should resolve P1 (Batch) over P2 (Branch) over P3 (Global Default) pricing and discounts', async () => {
       // Setup batch record resolver
       mockPrisma.batch = {
-        findUnique: vi.fn().mockResolvedValue({ id: 'batch-1', branchId: 'branch-1', batchType: 'Regular' }),
+        findUnique: vi
+          .fn()
+          .mockResolvedValue({
+            id: 'batch-1',
+            branchId: 'branch-1',
+            batchType: 'Regular',
+          }),
       };
 
       // Mock database pricing lists (P1 Batch, P2 Branch, P3 Global all active at once)
@@ -239,31 +269,40 @@ describe('CoursePricingService rules & logic', () => {
       ]);
 
       // 1. Resolve for Batch-1 -> Should match P1 (Batch level override)
-      const resBatch = await service.resolveCoursePricing({
-        courseId: 'course-1',
-        customerType: 'Individual',
-        batchId: 'batch-1',
-        asOfDate: '2026-07-10',
-      }, mockPrisma as unknown as Prisma.TransactionClient);
+      const resBatch = await service.resolveCoursePricing(
+        {
+          courseId: 'course-1',
+          customerType: 'Individual',
+          batchId: 'batch-1',
+          asOfDate: '2026-07-10',
+        },
+        mockPrisma as unknown as Prisma.TransactionClient,
+      );
       expect(resBatch.basePrice).toBe(150);
       expect(resBatch.applicableDiscounts[0].discountValue).toBe(20);
 
       // 2. Resolve for Branch-1 with no batchId -> Should match P2 (Branch level override)
-      const resBranch = await service.resolveCoursePricing({
-        courseId: 'course-1',
-        customerType: 'Individual',
-        branchId: 'branch-1',
-        asOfDate: '2026-07-10',
-      }, mockPrisma as unknown as Prisma.TransactionClient);
+      const resBranch = await service.resolveCoursePricing(
+        {
+          courseId: 'course-1',
+          customerType: 'Individual',
+          branchId: 'branch-1',
+          asOfDate: '2026-07-10',
+        },
+        mockPrisma as unknown as Prisma.TransactionClient,
+      );
       expect(resBranch.basePrice).toBe(120);
       expect(resBranch.applicableDiscounts[0].discountValue).toBe(15);
 
       // 3. Resolve for Global (no batch, no branch) -> Should match P3 (Global default fallback)
-      const resGlobal = await service.resolveCoursePricing({
-        courseId: 'course-1',
-        customerType: 'Individual',
-        asOfDate: '2026-07-10',
-      }, mockPrisma as unknown as Prisma.TransactionClient);
+      const resGlobal = await service.resolveCoursePricing(
+        {
+          courseId: 'course-1',
+          customerType: 'Individual',
+          asOfDate: '2026-07-10',
+        },
+        mockPrisma as unknown as Prisma.TransactionClient,
+      );
       expect(resGlobal.basePrice).toBe(100);
       expect(resGlobal.applicableDiscounts[0].discountValue).toBe(10);
     });

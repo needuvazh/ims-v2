@@ -1,26 +1,43 @@
 import { Prisma, PrismaClient } from '@prisma/client';
-import { IAdmissionRepository, CreateStudentProfileAdmissionInput, CreateAdmissionInput } from '../domain/admission';
+import {
+  IAdmissionRepository,
+  CreateStudentProfileAdmissionInput,
+  CreateAdmissionInput,
+} from '../domain/admission';
 import { RequirementsResolver } from './requirements-resolver';
 import { DocumentsService } from '@ims/documents';
 
 export class AdmissionService {
   constructor(
     private readonly admissionRepository: IAdmissionRepository,
-    private readonly prisma: PrismaClient
+    private readonly prisma: PrismaClient,
   ) {}
 
-  async createStudentAdmission(input: CreateStudentProfileAdmissionInput, actorId: string | null = null, tx?: Prisma.TransactionClient) {
+  async createStudentAdmission(
+    input: CreateStudentProfileAdmissionInput,
+    actorId: string | null = null,
+    tx?: Prisma.TransactionClient,
+  ) {
     const run = async (activeClient: Prisma.TransactionClient) => {
-            // 1. Resolve existing person and profile to check for duplicate active admission
-      const existingPerson = await this.admissionRepository.findPersonByUniqueKeys(input.email || null, input.phone || null, input.nationalId || null, activeClient);
-      
+      // 1. Resolve existing person and profile to check for duplicate active admission
+      const existingPerson =
+        await this.admissionRepository.findPersonByUniqueKeys(
+          input.email || null,
+          input.phone || null,
+          input.nationalId || null,
+          activeClient,
+        );
+
       const dob = input.dateOfBirth || existingPerson?.dateOfBirth;
       if (dob) {
         const anchorDate = input.admissionDate || new Date();
         const birthDate = new Date(dob);
         let age = anchorDate.getFullYear() - birthDate.getFullYear();
         const monthDiff = anchorDate.getMonth() - birthDate.getMonth();
-        if (monthDiff < 0 || (monthDiff === 0 && anchorDate.getDate() < birthDate.getDate())) {
+        if (
+          monthDiff < 0 ||
+          (monthDiff === 0 && anchorDate.getDate() < birthDate.getDate())
+        ) {
           age--;
         }
         if (age < 12) {
@@ -30,7 +47,11 @@ export class AdmissionService {
 
       let existingProfile = null;
       if (existingPerson) {
-        existingProfile = await this.admissionRepository.findStudentProfileByPersonId(existingPerson.id, activeClient);
+        existingProfile =
+          await this.admissionRepository.findStudentProfileByPersonId(
+            existingPerson.id,
+            activeClient,
+          );
       }
 
       let isNewProfile = false;
@@ -40,19 +61,29 @@ export class AdmissionService {
       if (existingProfile) {
         studentProfileId = existingProfile.id;
         studentNumber = existingProfile.studentNumber;
-        
+
         // Check for active admission in target branch
-        const hasActive = await this.admissionRepository.hasActiveAdmission(studentProfileId, input.branchId, activeClient);
+        const hasActive = await this.admissionRepository.hasActiveAdmission(
+          studentProfileId,
+          input.branchId,
+          activeClient,
+        );
         if (hasActive) {
           throw new Error('ERR_ADM_ACTIVE_ADMISSION_EXISTS');
         }
       } else {
-        studentNumber = await this.admissionRepository.getNextStudentNumber(activeClient);
+        studentNumber =
+          await this.admissionRepository.getNextStudentNumber(activeClient);
         isNewProfile = true;
       }
 
       // 2. Create records
-      const result = await this.admissionRepository.createStudentProfileAndAdmission(input, studentNumber, activeClient);
+      const result =
+        await this.admissionRepository.createStudentProfileAndAdmission(
+          input,
+          studentNumber,
+          activeClient,
+        );
 
       // 3. Publish outbox events in same transaction
       await activeClient.outboxEvent.create({
@@ -70,7 +101,7 @@ export class AdmissionService {
             courseId: input.courseId || null,
           },
           availableAt: new Date(),
-        }
+        },
       });
 
       if (isNewProfile) {
@@ -87,7 +118,7 @@ export class AdmissionService {
               joinedAt: new Date(),
             },
             availableAt: new Date(),
-          }
+          },
         });
       }
 
@@ -105,8 +136,8 @@ export class AdmissionService {
             status: 'Draft',
             studentProfileId: result.studentProfileId,
             branchId: input.branchId,
-          }
-        }
+          },
+        },
       });
 
       return result;
@@ -119,24 +150,36 @@ export class AdmissionService {
     }
   }
 
-  async createAdmissionDraftDirect(input: CreateAdmissionInput, branchId: string, actorId: string | null = null, tx?: Prisma.TransactionClient) {
+  async createAdmissionDraftDirect(
+    input: CreateAdmissionInput,
+    branchId: string,
+    actorId: string | null = null,
+    tx?: Prisma.TransactionClient,
+  ) {
     const run = async (activeClient: Prisma.TransactionClient) => {
       // Verify student profile exists, is active, and is not deleted
       const studentProfile = await activeClient.studentProfile.findUnique({
         where: { id: input.studentProfileId },
-        include: { person: true }
+        include: { person: true },
       });
 
       if (!studentProfile || studentProfile.isDeleted) {
         throw new Error('ERR_STUDENT_PROFILE_NOT_FOUND');
       }
 
-      if (studentProfile.status !== 'Active' || studentProfile.person.isDeleted) {
+      if (
+        studentProfile.status !== 'Active' ||
+        studentProfile.person.isDeleted
+      ) {
         throw new Error('ERR_STU_PROFILE_INACTIVE');
       }
 
       // Check for active admission in target branch
-      const hasActive = await this.admissionRepository.hasActiveAdmission(input.studentProfileId, branchId, activeClient);
+      const hasActive = await this.admissionRepository.hasActiveAdmission(
+        input.studentProfileId,
+        branchId,
+        activeClient,
+      );
       if (hasActive) {
         throw new Error('ERR_ADM_ACTIVE_ADMISSION_EXISTS');
       }
@@ -148,7 +191,10 @@ export class AdmissionService {
         const birthDate = new Date(person.dateOfBirth);
         let age = today.getFullYear() - birthDate.getFullYear();
         const monthDiff = today.getMonth() - birthDate.getMonth();
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        if (
+          monthDiff < 0 ||
+          (monthDiff === 0 && today.getDate() < birthDate.getDate())
+        ) {
           age--;
         }
         if (age < 12) {
@@ -156,18 +202,19 @@ export class AdmissionService {
         }
       }
 
-      const admissionNumber = await this.admissionRepository.getNextAdmissionNumber(activeClient);
+      const admissionNumber =
+        await this.admissionRepository.getNextAdmissionNumber(activeClient);
       const result = await this.admissionRepository.createAdmissionDraft(
         input.studentProfileId,
         branchId,
         admissionNumber,
         input.courseId,
         input.leadId,
-        activeClient
+        activeClient,
       );
 
       const admission = await activeClient.admission.findUnique({
-        where: { id: result.admissionId }
+        where: { id: result.admissionId },
       });
 
       // Write transactional outbox event
@@ -186,7 +233,7 @@ export class AdmissionService {
             courseId: input.courseId || null,
           },
           availableAt: new Date(),
-        }
+        },
       });
 
       // Write audit log
@@ -204,8 +251,8 @@ export class AdmissionService {
             admissionNumber,
             studentProfileId: input.studentProfileId,
             branchId,
-          }
-        }
+          },
+        },
       });
 
       return result;
@@ -218,10 +265,14 @@ export class AdmissionService {
     }
   }
 
-  async submitAdmission(admissionId: string, actorId: string, tx?: Prisma.TransactionClient) {
+  async submitAdmission(
+    admissionId: string,
+    actorId: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const run = async (activeClient: Prisma.TransactionClient) => {
       const admission = await activeClient.admission.findUnique({
-        where: { id: admissionId }
+        where: { id: admissionId },
       });
 
       if (!admission) {
@@ -237,7 +288,7 @@ export class AdmissionService {
         data: {
           admissionStatus: 'Submitted',
           submittedAt: new Date(),
-        }
+        },
       });
 
       // Audit Log
@@ -251,8 +302,8 @@ export class AdmissionService {
           performedAt: new Date(),
           module: 'AdmissionsEnrollment',
           oldValue: { status: 'Draft' },
-          newValue: { status: 'Submitted' }
-        }
+          newValue: { status: 'Submitted' },
+        },
       });
     };
 
@@ -263,7 +314,11 @@ export class AdmissionService {
     }
   }
 
-  async approveAdmission(admissionId: string, actorId: string, tx?: Prisma.TransactionClient) {
+  async approveAdmission(
+    admissionId: string,
+    actorId: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const run = async (activeClient: Prisma.TransactionClient) => {
       const admission = await activeClient.admission.findUnique({
         where: { id: admissionId },
@@ -301,8 +356,8 @@ export class AdmissionService {
           performedAt: new Date(),
           module: 'AdmissionsEnrollment',
           oldValue: { status: 'Submitted' },
-          newValue: { status: 'Approved' }
-        }
+          newValue: { status: 'Approved' },
+        },
       });
 
       await activeClient.outboxEvent.create({
@@ -317,7 +372,7 @@ export class AdmissionService {
             personId: admission.personId,
           },
           availableAt: new Date(),
-        }
+        },
       });
     };
 
@@ -328,14 +383,19 @@ export class AdmissionService {
     }
   }
 
-  async rejectAdmission(admissionId: string, remarks: string, actorId: string, tx?: Prisma.TransactionClient) {
+  async rejectAdmission(
+    admissionId: string,
+    remarks: string,
+    actorId: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     if (!remarks || remarks.trim() === '') {
       throw new Error('ERR_ADMISSION_REJECTION_REMARKS_REQUIRED');
     }
 
     const run = async (activeClient: Prisma.TransactionClient) => {
       const admission = await activeClient.admission.findUnique({
-        where: { id: admissionId }
+        where: { id: admissionId },
       });
 
       if (!admission) {
@@ -353,7 +413,7 @@ export class AdmissionService {
           rejectedAt: new Date(),
           rejectedBy: actorId,
           remarks,
-        }
+        },
       });
 
       // Audit Log
@@ -367,8 +427,8 @@ export class AdmissionService {
           performedAt: new Date(),
           module: 'AdmissionsEnrollment',
           oldValue: { status: 'Submitted' },
-          newValue: { status: 'Rejected', remarks }
-        }
+          newValue: { status: 'Rejected', remarks },
+        },
       });
     };
 
@@ -379,17 +439,24 @@ export class AdmissionService {
     }
   }
 
-  async cancelAdmission(admissionId: string, actorId: string, tx?: Prisma.TransactionClient) {
+  async cancelAdmission(
+    admissionId: string,
+    actorId: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const run = async (activeClient: Prisma.TransactionClient) => {
       const admission = await activeClient.admission.findUnique({
-        where: { id: admissionId }
+        where: { id: admissionId },
       });
 
       if (!admission) {
         throw new Error('ERR_ADMISSION_NOT_FOUND');
       }
 
-      if (admission.admissionStatus !== 'Draft' && admission.admissionStatus !== 'Submitted') {
+      if (
+        admission.admissionStatus !== 'Draft' &&
+        admission.admissionStatus !== 'Submitted'
+      ) {
         throw new Error('ERR_ADMISSION_INVALID_STATUS_TRANSITION');
       }
 
@@ -399,7 +466,7 @@ export class AdmissionService {
           admissionStatus: 'Cancelled',
           cancelledAt: new Date(),
           cancelledBy: actorId,
-        }
+        },
       });
 
       // Audit Log
@@ -413,8 +480,8 @@ export class AdmissionService {
           performedAt: new Date(),
           module: 'AdmissionsEnrollment',
           oldValue: { status: admission.admissionStatus },
-          newValue: { status: 'Cancelled' }
-        }
+          newValue: { status: 'Cancelled' },
+        },
       });
     };
 
@@ -425,7 +492,10 @@ export class AdmissionService {
     }
   }
 
-  async verifyAdmissionDocumentsGate(admissionId: string, tx?: Prisma.TransactionClient) {
+  async verifyAdmissionDocumentsGate(
+    admissionId: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const client = tx || this.prisma;
 
     const admission = await client.admission.findUnique({
@@ -439,14 +509,19 @@ export class AdmissionService {
       throw new Error('ERR_ADMISSION_NOT_FOUND');
     }
 
-    const courseId = admission.courseId || admission.lead?.interestedCourseId || '';
+    const courseId =
+      admission.courseId || admission.lead?.interestedCourseId || '';
     if (!courseId) {
       return;
     }
 
     // Resolve requirements
     const resolver = new RequirementsResolver(this.prisma);
-    const requiredTypes = await resolver.getRequiredDocuments(courseId, admission.branchId, client);
+    const requiredTypes = await resolver.getRequiredDocuments(
+      courseId,
+      admission.branchId,
+      client,
+    );
 
     if (requiredTypes.length === 0) {
       return;
@@ -454,7 +529,11 @@ export class AdmissionService {
 
     // Fetch person's documents
     const documentsService = new DocumentsService(this.prisma);
-    const documents = await documentsService.getDocumentsByOwner(admission.personId, 'Person', client);
+    const documents = await documentsService.getDocumentsByOwner(
+      admission.personId,
+      'Person',
+      client,
+    );
 
     const missingTypes: string[] = [];
 
@@ -473,7 +552,9 @@ export class AdmissionService {
     }
 
     if (missingTypes.length > 0) {
-      throw new Error(`ERR_DOCUMENTS_VERIFICATION_GATE_FAILED: Missing or unverified documents: ${missingTypes.join(', ')}`);
+      throw new Error(
+        `ERR_DOCUMENTS_VERIFICATION_GATE_FAILED: Missing or unverified documents: ${missingTypes.join(', ')}`,
+      );
     }
   }
 }

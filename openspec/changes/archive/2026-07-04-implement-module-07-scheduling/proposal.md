@@ -15,6 +15,7 @@ The Institute currently lacks a centralized scheduling engine to prevent operati
 ## Capabilities
 
 ### New Capabilities
+
 - `business-calendar`: Management of institute operating days, working hours, and branch-specific yearly overrides.
 - `holiday-management`: Definition and lifecycle of public and special holidays that block training activity.
 - `venue-blocking`: Operational time-blocking for specific classrooms or entire branches (Maintenance, Private Bookings).
@@ -22,6 +23,7 @@ The Institute currently lacks a centralized scheduling engine to prevent operati
 - `conflict-dashboard`: Orchestration of conflict resolution for sessions invalidated by external calendar changes.
 
 ### Modified Capabilities
+
 - `batch-delivery`: Integrate with the Scheduling Service to replace local trainer overlap checks with a comprehensive multi-constraint validation.
 
 ## Impact

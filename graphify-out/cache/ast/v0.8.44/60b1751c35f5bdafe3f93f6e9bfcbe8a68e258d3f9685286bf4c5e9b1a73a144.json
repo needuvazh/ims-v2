@@ -1,1 +1,703 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_part_5_api_contracts_md", "label": "Part 5 \u2013 API Contracts.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "label": "Part 5 \u2013 API Contracts", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_module_07_scheduling_calendar_holiday_management", "label": "Module 07 \u2013 Scheduling, Calendar & Holiday Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L3"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_1_document_control", "label": "1. Document Control", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L5"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_2_api_design_principles", "label": "2. API Design Principles", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L23"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_3_common_request_context", "label": "3. Common Request Context", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L38"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_3_1_branch_scope_resolution_algorithm", "label": "3.1 Branch Scope Resolution Algorithm", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L57"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_common_dto_standards", "label": "4. Common DTO Standards", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L76"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_1_localized_text_dto", "label": "4.1 Localized Text DTO", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L78"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_2_api_success_envelope", "label": "4.2 API Success Envelope", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L96"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_3_api_error_envelope", "label": "4.3 API Error Envelope", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L110"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_4_pagination_query_schema", "label": "4.4 Pagination Query Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L131"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_5_endpoint_summary", "label": "5. Endpoint Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L144"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_6_detailed_api_contracts", "label": "6. Detailed API Contracts", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L194"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_001_search_business_calendars", "label": "API-SCH-001 \u2013 Search Business Calendars", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L196"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_002_create_business_calendar", "label": "API-SCH-002 \u2013 Create Business Calendar", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L256"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_003_read_business_calendar_detail", "label": "API-SCH-003 \u2013 Read Business Calendar Detail", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L310"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_004_update_business_calendar_header", "label": "API-SCH-004 \u2013 Update Business Calendar Header", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L353"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_005_replace_operating_days_and_working_hours", "label": "API-SCH-005 \u2013 Replace Operating Days and Working Hours", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L402"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_006_change_calendar_status", "label": "API-SCH-006 \u2013 Change Calendar Status", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L451"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_007_soft_delete_calendar", "label": "API-SCH-007 \u2013 Soft Delete Calendar", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L487"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_008_search_holidays", "label": "API-SCH-008 \u2013 Search Holidays", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L521"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_009_create_holiday", "label": "API-SCH-009 \u2013 Create Holiday", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L574"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_010_to_api_sch_013_holiday_detail_update_status_delete", "label": "API-SCH-010 to API-SCH-013 \u2013 Holiday Detail, Update, Status, Delete", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L617"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_014_search_venue_blocks", "label": "API-SCH-014 \u2013 Search Venue Blocks", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L642"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_015_create_venue_block", "label": "API-SCH-015 \u2013 Create Venue Block", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L668"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_016_to_api_sch_019_venue_block_detail_update_status_delete", "label": "API-SCH-016 to API-SCH-019 \u2013 Venue Block Detail, Update, Status, Delete", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L719"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_020_search_schedule_sessions", "label": "API-SCH-020 \u2013 Search Schedule Sessions", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L728"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_021_create_schedule_session", "label": "API-SCH-021 \u2013 Create Schedule Session", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L790"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_022_to_api_sch_027_schedule_session_detail_update_publish_cancel_reschedule_delete", "label": "API-SCH-022 to API-SCH-027 \u2013 Schedule Session Detail, Update, Publish, Cancel, Reschedule, Delete", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L869"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_028_check_conflicts_without_saving", "label": "API-SCH-028 \u2013 Check Conflicts Without Saving", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L917"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_029_create_recurrence_pattern_and_generate_sessions", "label": "API-SCH-029 \u2013 Create Recurrence Pattern and Generate Sessions", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L975"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_030_read_schedule_generation_run", "label": "API-SCH-030 \u2013 Read Schedule Generation Run", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1029"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_031_to_api_sch_036_timetable_views", "label": "API-SCH-031 to API-SCH-036 \u2013 Timetable Views", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1041"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_037_export_schedule_data", "label": "API-SCH-037 \u2013 Export Schedule Data", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1100"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_038_utilization_report", "label": "API-SCH-038 \u2013 Utilization Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1140"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_039_conflict_report", "label": "API-SCH-039 \u2013 Conflict Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1184"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_7_server_action_contracts", "label": "7. Server Action Contracts", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1207"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_8_error_response_catalog", "label": "8. Error Response Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1230"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_9_api_to_audit_mapping", "label": "9. API-to-Audit Mapping", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1272"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_10_public_and_portal_read_contracts", "label": "10. Public and Portal Read Contracts", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1288"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_student_portal_schedule_read", "label": "Student Portal Schedule Read", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1290"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_trainer_portal_schedule_read", "label": "Trainer Portal Schedule Read", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1307"}, {"id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_public_website_course_schedule_read", "label": "Public Website Course Schedule Read", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1313"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_part_5_api_contracts_md", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_module_07_scheduling_calendar_holiday_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L3", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_1_document_control", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L5", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_2_api_design_principles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L23", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_3_common_request_context", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L38", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_3_common_request_context", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_3_1_branch_scope_resolution_algorithm", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L57", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_common_dto_standards", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L76", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_common_dto_standards", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_1_localized_text_dto", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L78", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_common_dto_standards", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_2_api_success_envelope", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L96", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_common_dto_standards", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_3_api_error_envelope", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L110", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_common_dto_standards", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_4_pagination_query_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L131", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_5_endpoint_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L144", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_6_detailed_api_contracts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L194", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_001_search_business_calendars", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L196", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_002_create_business_calendar", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L256", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_003_read_business_calendar_detail", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L310", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_004_update_business_calendar_header", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L353", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_005_replace_operating_days_and_working_hours", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L402", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_006_change_calendar_status", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L451", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_007_soft_delete_calendar", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L487", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_008_search_holidays", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L521", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_009_create_holiday", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L574", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_010_to_api_sch_013_holiday_detail_update_status_delete", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L617", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_014_search_venue_blocks", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L642", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_015_create_venue_block", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L668", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_016_to_api_sch_019_venue_block_detail_update_status_delete", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L719", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_020_search_schedule_sessions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L728", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_021_create_schedule_session", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L790", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_022_to_api_sch_027_schedule_session_detail_update_publish_cancel_reschedule_delete", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L869", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_028_check_conflicts_without_saving", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L917", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_029_create_recurrence_pattern_and_generate_sessions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L975", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_030_read_schedule_generation_run", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1029", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_031_to_api_sch_036_timetable_views", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1041", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_037_export_schedule_data", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1100", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_038_utilization_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1140", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_039_conflict_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1184", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_7_server_action_contracts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1207", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_8_error_response_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1230", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_9_api_to_audit_mapping", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1272", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_10_public_and_portal_read_contracts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1288", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_10_public_and_portal_read_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_student_portal_schedule_read", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1290", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_10_public_and_portal_read_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_trainer_portal_schedule_read", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1307", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_10_public_and_portal_read_contracts", "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_public_website_course_schedule_read", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md", "source_location": "L1313", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_part_5_api_contracts_md",
+      "label": "Part 5 \u2013 API Contracts.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "label": "Part 5 \u2013 API Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_module_07_scheduling_calendar_holiday_management",
+      "label": "Module 07 \u2013 Scheduling, Calendar & Holiday Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_1_document_control",
+      "label": "1. Document Control",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_2_api_design_principles",
+      "label": "2. API Design Principles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L23"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_3_common_request_context",
+      "label": "3. Common Request Context",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L38"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_3_1_branch_scope_resolution_algorithm",
+      "label": "3.1 Branch Scope Resolution Algorithm",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L57"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_common_dto_standards",
+      "label": "4. Common DTO Standards",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L76"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_1_localized_text_dto",
+      "label": "4.1 Localized Text DTO",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L78"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_2_api_success_envelope",
+      "label": "4.2 API Success Envelope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L96"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_3_api_error_envelope",
+      "label": "4.3 API Error Envelope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L110"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_4_pagination_query_schema",
+      "label": "4.4 Pagination Query Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L131"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_5_endpoint_summary",
+      "label": "5. Endpoint Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L144"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_6_detailed_api_contracts",
+      "label": "6. Detailed API Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L194"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_001_search_business_calendars",
+      "label": "API-SCH-001 \u2013 Search Business Calendars",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L196"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_002_create_business_calendar",
+      "label": "API-SCH-002 \u2013 Create Business Calendar",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L256"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_003_read_business_calendar_detail",
+      "label": "API-SCH-003 \u2013 Read Business Calendar Detail",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L310"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_004_update_business_calendar_header",
+      "label": "API-SCH-004 \u2013 Update Business Calendar Header",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L353"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_005_replace_operating_days_and_working_hours",
+      "label": "API-SCH-005 \u2013 Replace Operating Days and Working Hours",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L402"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_006_change_calendar_status",
+      "label": "API-SCH-006 \u2013 Change Calendar Status",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L451"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_007_soft_delete_calendar",
+      "label": "API-SCH-007 \u2013 Soft Delete Calendar",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L487"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_008_search_holidays",
+      "label": "API-SCH-008 \u2013 Search Holidays",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L521"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_009_create_holiday",
+      "label": "API-SCH-009 \u2013 Create Holiday",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L574"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_010_to_api_sch_013_holiday_detail_update_status_delete",
+      "label": "API-SCH-010 to API-SCH-013 \u2013 Holiday Detail, Update, Status, Delete",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L617"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_014_search_venue_blocks",
+      "label": "API-SCH-014 \u2013 Search Venue Blocks",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L642"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_015_create_venue_block",
+      "label": "API-SCH-015 \u2013 Create Venue Block",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L668"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_016_to_api_sch_019_venue_block_detail_update_status_delete",
+      "label": "API-SCH-016 to API-SCH-019 \u2013 Venue Block Detail, Update, Status, Delete",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L719"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_020_search_schedule_sessions",
+      "label": "API-SCH-020 \u2013 Search Schedule Sessions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L728"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_021_create_schedule_session",
+      "label": "API-SCH-021 \u2013 Create Schedule Session",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L790"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_022_to_api_sch_027_schedule_session_detail_update_publish_cancel_reschedule_delete",
+      "label": "API-SCH-022 to API-SCH-027 \u2013 Schedule Session Detail, Update, Publish, Cancel, Reschedule, Delete",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L869"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_028_check_conflicts_without_saving",
+      "label": "API-SCH-028 \u2013 Check Conflicts Without Saving",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L917"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_029_create_recurrence_pattern_and_generate_sessions",
+      "label": "API-SCH-029 \u2013 Create Recurrence Pattern and Generate Sessions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L975"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_030_read_schedule_generation_run",
+      "label": "API-SCH-030 \u2013 Read Schedule Generation Run",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1029"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_031_to_api_sch_036_timetable_views",
+      "label": "API-SCH-031 to API-SCH-036 \u2013 Timetable Views",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1041"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_037_export_schedule_data",
+      "label": "API-SCH-037 \u2013 Export Schedule Data",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1100"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_038_utilization_report",
+      "label": "API-SCH-038 \u2013 Utilization Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1140"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_039_conflict_report",
+      "label": "API-SCH-039 \u2013 Conflict Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1184"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_7_server_action_contracts",
+      "label": "7. Server Action Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1207"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_8_error_response_catalog",
+      "label": "8. Error Response Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1230"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_9_api_to_audit_mapping",
+      "label": "9. API-to-Audit Mapping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1272"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_10_public_and_portal_read_contracts",
+      "label": "10. Public and Portal Read Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1288"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_student_portal_schedule_read",
+      "label": "Student Portal Schedule Read",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1290"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_trainer_portal_schedule_read",
+      "label": "Trainer Portal Schedule Read",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1307"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_public_website_course_schedule_read",
+      "label": "Public Website Course Schedule Read",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1313"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_part_5_api_contracts_md",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_module_07_scheduling_calendar_holiday_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_1_document_control",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_2_api_design_principles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_3_common_request_context",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_3_common_request_context",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_3_1_branch_scope_resolution_algorithm",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_common_dto_standards",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L76",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_common_dto_standards",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_1_localized_text_dto",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L78",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_common_dto_standards",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_2_api_success_envelope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L96",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_common_dto_standards",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_3_api_error_envelope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L110",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_common_dto_standards",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_4_4_pagination_query_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L131",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_5_endpoint_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L144",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_6_detailed_api_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L194",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_001_search_business_calendars",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L196",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_002_create_business_calendar",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L256",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_003_read_business_calendar_detail",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L310",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_004_update_business_calendar_header",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L353",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_005_replace_operating_days_and_working_hours",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L402",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_006_change_calendar_status",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L451",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_007_soft_delete_calendar",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L487",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_008_search_holidays",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L521",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_009_create_holiday",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L574",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_010_to_api_sch_013_holiday_detail_update_status_delete",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L617",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_014_search_venue_blocks",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L642",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_015_create_venue_block",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L668",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_016_to_api_sch_019_venue_block_detail_update_status_delete",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L719",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_020_search_schedule_sessions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L728",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_021_create_schedule_session",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L790",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_022_to_api_sch_027_schedule_session_detail_update_publish_cancel_reschedule_delete",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L869",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_028_check_conflicts_without_saving",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L917",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_029_create_recurrence_pattern_and_generate_sessions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L975",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_030_read_schedule_generation_run",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1029",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_031_to_api_sch_036_timetable_views",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1041",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_037_export_schedule_data",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1100",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_038_utilization_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1140",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_api_sch_039_conflict_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1184",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_7_server_action_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1207",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_8_error_response_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1230",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_9_api_to_audit_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1272",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_10_public_and_portal_read_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1288",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_10_public_and_portal_read_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_student_portal_schedule_read",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1290",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_10_public_and_portal_read_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_trainer_portal_schedule_read",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1307",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_10_public_and_portal_read_contracts",
+      "target": "module_07_scheduling_calendar_holiday_management_part_5_api_contracts_public_website_course_schedule_read",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1313",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

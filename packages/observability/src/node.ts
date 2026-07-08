@@ -1,7 +1,18 @@
-import { context as otelContext, trace, SpanStatusCode } from '@opentelemetry/api';
+import {
+  context as otelContext,
+  trace,
+  SpanStatusCode,
+} from '@opentelemetry/api';
 import { AsyncLocalStorage } from 'node:async_hooks';
-import type { HeaderBag, RequestContext, RequestContextInput } from './request-context';
-import { applyRequestContextHeaders, createRequestContext } from './request-context';
+import type {
+  HeaderBag,
+  RequestContext,
+  RequestContextInput,
+} from './request-context';
+import {
+  applyRequestContextHeaders,
+  createRequestContext,
+} from './request-context';
 import { createStructuredLogger } from './logger';
 
 type AsyncWork<T> = () => T | Promise<T>;
@@ -10,7 +21,10 @@ type RequestErrorContext = {
   routerKind: 'Pages Router' | 'App Router';
   routePath: string;
   routeType: 'render' | 'route' | 'action' | 'proxy';
-  renderSource?: 'react-server-components' | 'react-server-components-payload' | 'server-rendering';
+  renderSource?:
+    | 'react-server-components'
+    | 'react-server-components-payload'
+    | 'server-rendering';
   revalidateReason?: 'on-demand' | 'stale' | undefined;
   renderType?: 'dynamic' | 'dynamic-resume';
 };
@@ -21,8 +35,8 @@ const requestContextStore = new AsyncLocalStorage<RequestContext>();
 function hasExporterConfiguration(): boolean {
   return Boolean(
     process.env.OTEL_EXPORTER_OTLP_ENDPOINT ||
-      process.env.OTEL_EXPORTER_OTLP_TRACES_ENDPOINT ||
-      process.env.OTEL_EXPORTER_OTLP_METRICS_ENDPOINT,
+    process.env.OTEL_EXPORTER_OTLP_TRACES_ENDPOINT ||
+    process.env.OTEL_EXPORTER_OTLP_METRICS_ENDPOINT,
   );
 }
 
@@ -36,7 +50,10 @@ function resolveActiveTraceId(): string | null {
   return traceId;
 }
 
-export function createCurrentRequestContext(source?: HeaderBag, overrides: RequestContextInput = {}): RequestContext {
+export function createCurrentRequestContext(
+  source?: HeaderBag,
+  overrides: RequestContextInput = {},
+): RequestContext {
   const context = createRequestContext(source, overrides);
   return {
     ...context,
@@ -52,7 +69,10 @@ export function getCurrentRequestLogger() {
   return createStructuredLogger(getCurrentRequestContext() ?? {});
 }
 
-export function runWithRequestContext<T>(context: RequestContext, work: AsyncWork<T>): T | Promise<T> {
+export function runWithRequestContext<T>(
+  context: RequestContext,
+  work: AsyncWork<T>,
+): T | Promise<T> {
   return requestContextStore.run(context, work);
 }
 
@@ -61,18 +81,26 @@ export function withRequestContextFromHeaders<T>(
   work: AsyncWork<T>,
   overrides: RequestContextInput = {},
 ): T | Promise<T> {
-  return runWithRequestContext(createCurrentRequestContext(source, overrides), work);
+  return runWithRequestContext(
+    createCurrentRequestContext(source, overrides),
+    work,
+  );
 }
 
 async function createTelemetrySdk() {
-  const [{ NodeSDK }, { OTLPTraceExporter }, { OTLPMetricExporter }, { PeriodicExportingMetricReader }, { getNodeAutoInstrumentations }] =
-    await Promise.all([
-      import('@opentelemetry/sdk-node'),
-      import('@opentelemetry/exporter-trace-otlp-http'),
-      import('@opentelemetry/exporter-metrics-otlp-http'),
-      import('@opentelemetry/sdk-metrics'),
-      import('@opentelemetry/auto-instrumentations-node'),
-    ]);
+  const [
+    { NodeSDK },
+    { OTLPTraceExporter },
+    { OTLPMetricExporter },
+    { PeriodicExportingMetricReader },
+    { getNodeAutoInstrumentations },
+  ] = await Promise.all([
+    import('@opentelemetry/sdk-node'),
+    import('@opentelemetry/exporter-trace-otlp-http'),
+    import('@opentelemetry/exporter-metrics-otlp-http'),
+    import('@opentelemetry/sdk-metrics'),
+    import('@opentelemetry/auto-instrumentations-node'),
+  ]);
 
   const traceExporter = new OTLPTraceExporter();
   const metricReader = new PeriodicExportingMetricReader({
@@ -141,5 +169,9 @@ export async function reportRequestError(
   logRequestError(error, request, context);
 }
 
-export { applyRequestContextHeaders, createStructuredLogger, createRequestContext };
+export {
+  applyRequestContextHeaders,
+  createStructuredLogger,
+  createRequestContext,
+};
 export type { HeaderBag, RequestContext, RequestContextInput };

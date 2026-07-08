@@ -27,8 +27,16 @@ export default async function CreateCoursePage() {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5" /> },
-              { label: 'Courses', href: '/courses-catalog', icon: <BookOpen className="h-3.5 w-3.5" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5" />,
+              },
+              {
+                label: 'Courses',
+                href: '/courses-catalog',
+                icon: <BookOpen className="h-3.5 w-3.5" />,
+              },
               { label: 'Create', icon: <PlusCircle className="h-3.5 w-3.5" /> },
             ]}
           />

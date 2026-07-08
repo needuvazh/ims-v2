@@ -41,14 +41,14 @@ The matrix is divided into:
 
 # 3. Scope Classification Legend
 
-| Code | Scope Type | Meaning |
-|---|---|---|
-| **B** | Branch-scoped | Permission applies only to records whose resolved owner scope intersects the user's effective IAM branch scope. |
-| **B+** | Branch hierarchy scoped | Branch-scoped, with child branches included only when IAM grants `canViewChildBranches`. |
-| **G** | Global | Permission may operate across all branches and owners, but only when explicitly assigned by IAM policy. This is exceptional. |
-| **C** | Consolidated-report only | Read-only multi-branch reporting scope. Requires report permission plus IAM `canViewConsolidated = true`. No mutation rights are implied. |
-| **SELF** | Identity-bound self-service | Access only to documents belonging to the authenticated Student or Trainer identity. Future/conditional portal scope. |
-| **SYS** | System service scope | Non-human service operation. Must use a trusted server-side application service identity and remain limited to the declared job purpose. |
+| Code     | Scope Type                  | Meaning                                                                                                                                   |
+| -------- | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| **B**    | Branch-scoped               | Permission applies only to records whose resolved owner scope intersects the user's effective IAM branch scope.                           |
+| **B+**   | Branch hierarchy scoped     | Branch-scoped, with child branches included only when IAM grants `canViewChildBranches`.                                                  |
+| **G**    | Global                      | Permission may operate across all branches and owners, but only when explicitly assigned by IAM policy. This is exceptional.              |
+| **C**    | Consolidated-report only    | Read-only multi-branch reporting scope. Requires report permission plus IAM `canViewConsolidated = true`. No mutation rights are implied. |
+| **SELF** | Identity-bound self-service | Access only to documents belonging to the authenticated Student or Trainer identity. Future/conditional portal scope.                     |
+| **SYS**  | System service scope        | Non-human service operation. Must use a trusted server-side application service identity and remain limited to the declared job purpose.  |
 
 ---
 
@@ -56,22 +56,22 @@ The matrix is divided into:
 
 ## 4.1 Action-Level Permissions
 
-| Permission Code | Scope | Purpose | Primary Application Service / API Mapping |
-|---|---|---|---|
-| `document.read` | B/B+ | Read document metadata, registry entries, and document detail within authorized owner scope. | List documents; get document detail. |
-| `document.create` | B/B+ | Initiate controlled upload and register document metadata for an authorized owner. | Upload intent; register document. |
-| `document.update` | B/B+ | Edit permitted document metadata subject to lifecycle and optimistic-lock rules. | Update metadata. |
-| `document.verify.submit` | B/B+ | Submit an eligible document for verification. | Submit for verification. |
-| `document.verify.read` | B/B+ | Read pending-verification work queues and verification review context. | Verification queue. |
-| `document.verify.approve` | B/B+ or explicit G | Approve a `PendingVerification` document. | Approve document. |
-| `document.verify.reject` | B/B+ or explicit G | Reject a `PendingVerification` document with required remarks. | Reject document. |
-| `document.history.read` | B/B+ | Read immutable verification history for an authorized document. | Verification history endpoint. |
-| `document.file.read` | B/B+ | Request controlled preview/download access for the document file. | File-access endpoint. |
-| `document.expiry.read` | B/B+ | Read expired and expiring-soon operational work queues. | Expiry workbench endpoint. |
-| `document.retire` | B/B+ or explicit G | Soft-retire a document through the approved command. Never hard delete. | Retire document. |
-| `document.operations.reconcile` | G or SYS | Read and retry approved Blob/database reconciliation operations. | Reconciliation list and retry. |
-| `document.owner.search` | B/B+ | Search eligible document owners through owning-context read adapters. | Owner search endpoint. |
-| `document.audit.read` | B/B+/C subject to Audit policy | Read document-related audit evidence exposed through the Audit & Compliance boundary. | Audit/history screen integration. |
+| Permission Code                 | Scope                          | Purpose                                                                                      | Primary Application Service / API Mapping |
+| ------------------------------- | ------------------------------ | -------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| `document.read`                 | B/B+                           | Read document metadata, registry entries, and document detail within authorized owner scope. | List documents; get document detail.      |
+| `document.create`               | B/B+                           | Initiate controlled upload and register document metadata for an authorized owner.           | Upload intent; register document.         |
+| `document.update`               | B/B+                           | Edit permitted document metadata subject to lifecycle and optimistic-lock rules.             | Update metadata.                          |
+| `document.verify.submit`        | B/B+                           | Submit an eligible document for verification.                                                | Submit for verification.                  |
+| `document.verify.read`          | B/B+                           | Read pending-verification work queues and verification review context.                       | Verification queue.                       |
+| `document.verify.approve`       | B/B+ or explicit G             | Approve a `PendingVerification` document.                                                    | Approve document.                         |
+| `document.verify.reject`        | B/B+ or explicit G             | Reject a `PendingVerification` document with required remarks.                               | Reject document.                          |
+| `document.history.read`         | B/B+                           | Read immutable verification history for an authorized document.                              | Verification history endpoint.            |
+| `document.file.read`            | B/B+                           | Request controlled preview/download access for the document file.                            | File-access endpoint.                     |
+| `document.expiry.read`          | B/B+                           | Read expired and expiring-soon operational work queues.                                      | Expiry workbench endpoint.                |
+| `document.retire`               | B/B+ or explicit G             | Soft-retire a document through the approved command. Never hard delete.                      | Retire document.                          |
+| `document.operations.reconcile` | G or SYS                       | Read and retry approved Blob/database reconciliation operations.                             | Reconciliation list and retry.            |
+| `document.owner.search`         | B/B+                           | Search eligible document owners through owning-context read adapters.                        | Owner search endpoint.                    |
+| `document.audit.read`           | B/B+/C subject to Audit policy | Read document-related audit evidence exposed through the Audit & Compliance boundary.        | Audit/history screen integration.         |
 
 ### Canonical naming decision
 
@@ -87,16 +87,16 @@ The legacy alias `document.submit_verification` must not be seeded as a second i
 
 ## 4.2 Menu-Level Permissions
 
-| Permission Code | Scope | Navigation / Screen Access |
-|---|---|---|
-| `document.menu.view` | B/B+/G | Show the Document Management module entry in Admin navigation. |
-| `document.menu.registry` | B/B+/G | Show Document Registry route. |
-| `document.menu.upload` | B/B+/G | Show Upload Document route. |
-| `document.menu.verification` | B/B+/G | Show Verification Queue route. |
-| `document.menu.expiry` | B/B+/G | Show Expiry Workbench route. |
-| `document.menu.operations` | G | Show restricted Blob Reconciliation operations route. |
-| `document.menu.reports` | B/B+/C/G | Show Document Reports navigation group. |
-| `document.menu.audit` | B/B+/C/G subject to Audit policy | Show Document Audit/History route where the user also has the underlying audit/history read capability. |
+| Permission Code              | Scope                            | Navigation / Screen Access                                                                              |
+| ---------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `document.menu.view`         | B/B+/G                           | Show the Document Management module entry in Admin navigation.                                          |
+| `document.menu.registry`     | B/B+/G                           | Show Document Registry route.                                                                           |
+| `document.menu.upload`       | B/B+/G                           | Show Upload Document route.                                                                             |
+| `document.menu.verification` | B/B+/G                           | Show Verification Queue route.                                                                          |
+| `document.menu.expiry`       | B/B+/G                           | Show Expiry Workbench route.                                                                            |
+| `document.menu.operations`   | G                                | Show restricted Blob Reconciliation operations route.                                                   |
+| `document.menu.reports`      | B/B+/C/G                         | Show Document Reports navigation group.                                                                 |
+| `document.menu.audit`        | B/B+/C/G subject to Audit policy | Show Document Audit/History route where the user also has the underlying audit/history read capability. |
 
 ### Menu implication rules
 
@@ -109,17 +109,17 @@ The legacy alias `document.submit_verification` must not be seeded as a second i
 
 ## 4.3 Report-Level Permissions
 
-| Permission Code | Scope | Report / Analytics Capability |
-|---|---|---|
-| `document.report.operational.view` | B/B+ | View branch-scoped operational document summary. |
-| `document.report.verification.view` | B/B+ | View verification throughput, backlog, approval, rejection, and turnaround metrics. |
-| `document.report.expiry.view` | B/B+ | View expiry and expiring-soon reports. |
-| `document.report.compliance.view` | B/B+ | View document compliance coverage and status distribution within authorized scope. |
-| `document.report.owner.view` | B/B+ | View owner-type/document-type coverage reports. |
-| `document.report.export` | B/B+ | Export an already-authorized branch-scoped report result. Does not independently grant report visibility. |
-| `document.report.consolidated` | C | View approved consolidated multi-branch Document Management reports. Requires IAM `canViewConsolidated`. |
-| `document.report.consolidated.export` | C | Export an already-authorized consolidated report result. Requires both consolidated view access and IAM consolidated scope. |
-| `document.report.audit.view` | B/B+/C subject to Audit policy | View audit-oriented document reports through approved Audit/Reporting read models. |
+| Permission Code                       | Scope                          | Report / Analytics Capability                                                                                               |
+| ------------------------------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| `document.report.operational.view`    | B/B+                           | View branch-scoped operational document summary.                                                                            |
+| `document.report.verification.view`   | B/B+                           | View verification throughput, backlog, approval, rejection, and turnaround metrics.                                         |
+| `document.report.expiry.view`         | B/B+                           | View expiry and expiring-soon reports.                                                                                      |
+| `document.report.compliance.view`     | B/B+                           | View document compliance coverage and status distribution within authorized scope.                                          |
+| `document.report.owner.view`          | B/B+                           | View owner-type/document-type coverage reports.                                                                             |
+| `document.report.export`              | B/B+                           | Export an already-authorized branch-scoped report result. Does not independently grant report visibility.                   |
+| `document.report.consolidated`        | C                              | View approved consolidated multi-branch Document Management reports. Requires IAM `canViewConsolidated`.                    |
+| `document.report.consolidated.export` | C                              | Export an already-authorized consolidated report result. Requires both consolidated view access and IAM consolidated scope. |
+| `document.report.audit.view`          | B/B+/C subject to Audit policy | View audit-oriented document reports through approved Audit/Reporting read models.                                          |
 
 ### Report permission composition
 
@@ -146,22 +146,22 @@ A consolidated report permission never allows update, approval, rejection, retir
 
 The following roles represent expected ASTI business responsibilities. IAM may use different role names or compose equivalent permissions dynamically.
 
-| Role | Business Responsibility |
-|---|---|
-| System Administrator | Configures IAM access and platform operations. Does not automatically receive unrestricted document business access. |
-| Document Administrator | Manages document registration, metadata, operational queues, and permitted retirement actions. |
-| Admission Officer | Manages Student/Person documents required during admission and enrollment workflows. |
-| Trainer Coordinator | Manages Trainer-owned qualification and compliance evidence. |
-| Corporate Account Coordinator | Manages Corporate-owned documents permitted by Corporate Training visibility rules. |
-| Document Verifier | Reviews pending documents and records approval/rejection decisions. |
-| Compliance Officer | Oversees verification quality, expiry risk, compliance reporting, and audit evidence. |
-| Branch Manager | Oversees branch operations and may receive selected approval/reporting capabilities. |
-| Head Office Operations Manager | Oversees multiple authorized branches and may receive branch-hierarchy or consolidated visibility. |
-| Auditor / Compliance Reviewer | Read-only review of metadata, verification history, and approved audit evidence. |
-| Reporting / MIS Analyst | Uses approved reporting read models; no transaction mutation rights by default. |
-| Student Self-Service User | Future/conditional portal role restricted to own documents. |
-| Trainer Self-Service User | Future/conditional portal role restricted to own Trainer documents. |
-| Reconciliation Operator | Highly restricted operational role for Blob/database inconsistency investigation and retry. |
+| Role                           | Business Responsibility                                                                                              |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| System Administrator           | Configures IAM access and platform operations. Does not automatically receive unrestricted document business access. |
+| Document Administrator         | Manages document registration, metadata, operational queues, and permitted retirement actions.                       |
+| Admission Officer              | Manages Student/Person documents required during admission and enrollment workflows.                                 |
+| Trainer Coordinator            | Manages Trainer-owned qualification and compliance evidence.                                                         |
+| Corporate Account Coordinator  | Manages Corporate-owned documents permitted by Corporate Training visibility rules.                                  |
+| Document Verifier              | Reviews pending documents and records approval/rejection decisions.                                                  |
+| Compliance Officer             | Oversees verification quality, expiry risk, compliance reporting, and audit evidence.                                |
+| Branch Manager                 | Oversees branch operations and may receive selected approval/reporting capabilities.                                 |
+| Head Office Operations Manager | Oversees multiple authorized branches and may receive branch-hierarchy or consolidated visibility.                   |
+| Auditor / Compliance Reviewer  | Read-only review of metadata, verification history, and approved audit evidence.                                     |
+| Reporting / MIS Analyst        | Uses approved reporting read models; no transaction mutation rights by default.                                      |
+| Student Self-Service User      | Future/conditional portal role restricted to own documents.                                                          |
+| Trainer Self-Service User      | Future/conditional portal role restricted to own Trainer documents.                                                  |
+| Reconciliation Operator        | Highly restricted operational role for Blob/database inconsistency investigation and retry.                          |
 
 ---
 
@@ -169,22 +169,22 @@ The following roles represent expected ASTI business responsibilities. IAM may u
 
 Legend: **✓** default recommended grant, **O** optional by business policy, **—** not recommended, **SELF** self-owned only, **G** global restricted operational capability.
 
-| Action Permission | System Admin | Document Admin | Admission Officer | Trainer Coordinator | Corporate Coordinator | Document Verifier | Compliance Officer | Branch Manager | HO Ops Manager | Auditor | MIS Analyst | Student | Trainer | Reconciliation Operator |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| `document.read` | O | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | SELF | SELF | O |
-| `document.create` | O | ✓ | ✓ | ✓ | ✓ | — | O | O | O | — | — | SELF | SELF | — |
-| `document.update` | O | ✓ | ✓ | ✓ | ✓ | — | O | O | O | — | — | SELF* | SELF* | — |
-| `document.verify.submit` | O | ✓ | ✓ | ✓ | ✓ | — | O | O | O | — | — | SELF* | SELF* | — |
-| `document.verify.read` | O | O | — | — | — | ✓ | ✓ | O | ✓ | O | — | — | — | — |
-| `document.verify.approve` | — | O | — | — | — | ✓ | O | O | O | — | — | — | — | — |
-| `document.verify.reject` | — | O | — | — | — | ✓ | O | O | O | — | — | — | — | — |
-| `document.history.read` | O | ✓ | O | O | O | ✓ | ✓ | O | ✓ | ✓ | — | SELF** | SELF** | — |
-| `document.file.read` | O | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | O | — | SELF | SELF | O*** |
-| `document.expiry.read` | O | ✓ | O | O | O | O | ✓ | ✓ | ✓ | O | — | SELF | SELF | — |
-| `document.retire` | — | ✓ | — | — | — | — | O | O | O | — | — | — | — | — |
-| `document.operations.reconcile` | — | — | — | — | — | — | — | — | O | — | — | — | — | G |
-| `document.owner.search` | O | ✓ | ✓ | ✓ | ✓ | — | O | O | O | — | — | — | — | — |
-| `document.audit.read` | O | O | — | — | — | O | ✓ | O | ✓ | ✓ | — | — | — | — |
+| Action Permission               | System Admin | Document Admin | Admission Officer | Trainer Coordinator | Corporate Coordinator | Document Verifier | Compliance Officer | Branch Manager | HO Ops Manager | Auditor | MIS Analyst |  Student |  Trainer | Reconciliation Operator |
+| ------------------------------- | -----------: | -------------: | ----------------: | ------------------: | --------------------: | ----------------: | -----------------: | -------------: | -------------: | ------: | ----------: | -------: | -------: | ----------------------: |
+| `document.read`                 |            O |              ✓ |                 ✓ |                   ✓ |                     ✓ |                 ✓ |                  ✓ |              ✓ |              ✓ |       ✓ |           — |     SELF |     SELF |                       O |
+| `document.create`               |            O |              ✓ |                 ✓ |                   ✓ |                     ✓ |                 — |                  O |              O |              O |       — |           — |     SELF |     SELF |                       — |
+| `document.update`               |            O |              ✓ |                 ✓ |                   ✓ |                     ✓ |                 — |                  O |              O |              O |       — |           — |   SELF\* |   SELF\* |                       — |
+| `document.verify.submit`        |            O |              ✓ |                 ✓ |                   ✓ |                     ✓ |                 — |                  O |              O |              O |       — |           — |   SELF\* |   SELF\* |                       — |
+| `document.verify.read`          |            O |              O |                 — |                   — |                     — |                 ✓ |                  ✓ |              O |              ✓ |       O |           — |        — |        — |                       — |
+| `document.verify.approve`       |            — |              O |                 — |                   — |                     — |                 ✓ |                  O |              O |              O |       — |           — |        — |        — |                       — |
+| `document.verify.reject`        |            — |              O |                 — |                   — |                     — |                 ✓ |                  O |              O |              O |       — |           — |        — |        — |                       — |
+| `document.history.read`         |            O |              ✓ |                 O |                   O |                     O |                 ✓ |                  ✓ |              O |              ✓ |       ✓ |           — | SELF\*\* | SELF\*\* |                       — |
+| `document.file.read`            |            O |              ✓ |                 ✓ |                   ✓ |                     ✓ |                 ✓ |                  ✓ |              ✓ |              ✓ |       O |           — |     SELF |     SELF |                 O\*\*\* |
+| `document.expiry.read`          |            O |              ✓ |                 O |                   O |                     O |                 O |                  ✓ |              ✓ |              ✓ |       O |           — |     SELF |     SELF |                       — |
+| `document.retire`               |            — |              ✓ |                 — |                   — |                     — |                 — |                  O |              O |              O |       — |           — |        — |        — |                       — |
+| `document.operations.reconcile` |            — |              — |                 — |                   — |                     — |                 — |                  — |              — |              O |       — |           — |        — |        — |                       G |
+| `document.owner.search`         |            O |              ✓ |                 ✓ |                   ✓ |                     ✓ |                 — |                  O |              O |              O |       — |           — |        — |        — |                       — |
+| `document.audit.read`           |            O |              O |                 — |                   — |                     — |                 O |                  ✓ |              O |              ✓ |       ✓ |           — |        — |        — |                       — |
 
 Notes:
 
@@ -197,16 +197,16 @@ Notes:
 
 # 7. Menu-Level Business Role Matrix
 
-| Menu Permission | System Admin | Document Admin | Admission Officer | Trainer Coordinator | Corporate Coordinator | Document Verifier | Compliance Officer | Branch Manager | HO Ops Manager | Auditor | MIS Analyst | Student | Trainer | Reconciliation Operator |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| `document.menu.view` | O | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | O | O | — | — | O |
-| `document.menu.registry` | O | ✓ | ✓ | ✓ | ✓ | O | ✓ | ✓ | ✓ | O | — | — | — | — |
-| `document.menu.upload` | O | ✓ | ✓ | ✓ | ✓ | — | O | O | O | — | — | — | — | — |
-| `document.menu.verification` | O | O | — | — | — | ✓ | ✓ | O | ✓ | O | — | — | — | — |
-| `document.menu.expiry` | O | ✓ | O | O | O | O | ✓ | ✓ | ✓ | O | — | — | — | — |
-| `document.menu.operations` | — | — | — | — | — | — | — | — | O | — | — | — | — | ✓ |
-| `document.menu.reports` | O | O | O | O | O | O | ✓ | ✓ | ✓ | O | ✓ | — | — | — |
-| `document.menu.audit` | O | O | — | — | — | O | ✓ | O | ✓ | ✓ | — | — | — | — |
+| Menu Permission              | System Admin | Document Admin | Admission Officer | Trainer Coordinator | Corporate Coordinator | Document Verifier | Compliance Officer | Branch Manager | HO Ops Manager | Auditor | MIS Analyst | Student | Trainer | Reconciliation Operator |
+| ---------------------------- | -----------: | -------------: | ----------------: | ------------------: | --------------------: | ----------------: | -----------------: | -------------: | -------------: | ------: | ----------: | ------: | ------: | ----------------------: |
+| `document.menu.view`         |            O |              ✓ |                 ✓ |                   ✓ |                     ✓ |                 ✓ |                  ✓ |              ✓ |              ✓ |       O |           O |       — |       — |                       O |
+| `document.menu.registry`     |            O |              ✓ |                 ✓ |                   ✓ |                     ✓ |                 O |                  ✓ |              ✓ |              ✓ |       O |           — |       — |       — |                       — |
+| `document.menu.upload`       |            O |              ✓ |                 ✓ |                   ✓ |                     ✓ |                 — |                  O |              O |              O |       — |           — |       — |       — |                       — |
+| `document.menu.verification` |            O |              O |                 — |                   — |                     — |                 ✓ |                  ✓ |              O |              ✓ |       O |           — |       — |       — |                       — |
+| `document.menu.expiry`       |            O |              ✓ |                 O |                   O |                     O |                 O |                  ✓ |              ✓ |              ✓ |       O |           — |       — |       — |                       — |
+| `document.menu.operations`   |            — |              — |                 — |                   — |                     — |                 — |                  — |              — |              O |       — |           — |       — |       — |                       ✓ |
+| `document.menu.reports`      |            O |              O |                 O |                   O |                     O |                 O |                  ✓ |              ✓ |              ✓ |       O |           ✓ |       — |       — |                       — |
+| `document.menu.audit`        |            O |              O |                 — |                   — |                     — |                 O |                  ✓ |              O |              ✓ |       ✓ |           — |       — |       — |                       — |
 
 ### Portal navigation note
 
@@ -216,17 +216,17 @@ Student and Trainer portals are future/conditional channels. Their self-service 
 
 # 8. Report-Level Business Role Matrix
 
-| Report Permission | System Admin | Document Admin | Admission Officer | Trainer Coordinator | Corporate Coordinator | Document Verifier | Compliance Officer | Branch Manager | HO Ops Manager | Auditor | MIS Analyst |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| `document.report.operational.view` | O | ✓ | O | O | O | O | ✓ | ✓ | ✓ | O | ✓ |
-| `document.report.verification.view` | O | O | — | — | — | ✓ | ✓ | O | ✓ | O | ✓ |
-| `document.report.expiry.view` | O | ✓ | O | O | O | O | ✓ | ✓ | ✓ | O | ✓ |
-| `document.report.compliance.view` | O | O | — | — | — | O | ✓ | ✓ | ✓ | ✓ | ✓ |
-| `document.report.owner.view` | O | ✓ | O | O | O | — | ✓ | O | ✓ | O | ✓ |
-| `document.report.export` | O | O | O | O | O | O | ✓ | O | ✓ | O | ✓ |
-| `document.report.consolidated` | O | — | — | — | — | — | O | — | ✓ | O | O |
-| `document.report.consolidated.export` | O | — | — | — | — | — | O | — | ✓ | O | O |
-| `document.report.audit.view` | O | — | — | — | — | O | ✓ | O | ✓ | ✓ | O |
+| Report Permission                     | System Admin | Document Admin | Admission Officer | Trainer Coordinator | Corporate Coordinator | Document Verifier | Compliance Officer | Branch Manager | HO Ops Manager | Auditor | MIS Analyst |
+| ------------------------------------- | -----------: | -------------: | ----------------: | ------------------: | --------------------: | ----------------: | -----------------: | -------------: | -------------: | ------: | ----------: |
+| `document.report.operational.view`    |            O |              ✓ |                 O |                   O |                     O |                 O |                  ✓ |              ✓ |              ✓ |       O |           ✓ |
+| `document.report.verification.view`   |            O |              O |                 — |                   — |                     — |                 ✓ |                  ✓ |              O |              ✓ |       O |           ✓ |
+| `document.report.expiry.view`         |            O |              ✓ |                 O |                   O |                     O |                 O |                  ✓ |              ✓ |              ✓ |       O |           ✓ |
+| `document.report.compliance.view`     |            O |              O |                 — |                   — |                     — |                 O |                  ✓ |              ✓ |              ✓ |       ✓ |           ✓ |
+| `document.report.owner.view`          |            O |              ✓ |                 O |                   O |                     O |                 — |                  ✓ |              O |              ✓ |       O |           ✓ |
+| `document.report.export`              |            O |              O |                 O |                   O |                     O |                 O |                  ✓ |              O |              ✓ |       O |           ✓ |
+| `document.report.consolidated`        |            O |              — |                 — |                   — |                     — |                 — |                  O |              — |              ✓ |       O |           O |
+| `document.report.consolidated.export` |            O |              — |                 — |                   — |                     — |                 — |                  O |              — |              ✓ |       O |           O |
+| `document.report.audit.view`          |            O |              — |                 — |                   — |                     — |                 O |                  ✓ |              O |              ✓ |       ✓ |           O |
 
 ### Consolidated report rule
 
@@ -392,12 +392,12 @@ This role must not receive business verification, retirement, or reporting permi
 
 # 10. Branch-Scoping Rules by Owner Type
 
-| `ownerType` | Owning Context / Resolver | Branch Scope Rule |
-|---|---|---|
-| `Student` | Admission & Enrollment | Resolve StudentProfile/Enrollment-linked branch through the approved read boundary; intersect with IAM effective branches. |
-| `Trainer` | Faculty / Trainer Management | Resolve `TrainerProfile.branchId`; intersect with IAM effective branches. |
-| `Corporate` | Corporate Training | Apply Corporate Account visibility and branch/account policy from Corporate Training; intersect with IAM access. |
-| `Person` | Shared Person/Party plus contextual resolver | No direct branch exists in current ER baseline. Deny access when scope cannot be deterministically resolved, unless an explicitly approved global policy applies. |
+| `ownerType` | Owning Context / Resolver                    | Branch Scope Rule                                                                                                                                                 |
+| ----------- | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Student`   | Admission & Enrollment                       | Resolve StudentProfile/Enrollment-linked branch through the approved read boundary; intersect with IAM effective branches.                                        |
+| `Trainer`   | Faculty / Trainer Management                 | Resolve `TrainerProfile.branchId`; intersect with IAM effective branches.                                                                                         |
+| `Corporate` | Corporate Training                           | Apply Corporate Account visibility and branch/account policy from Corporate Training; intersect with IAM access.                                                  |
+| `Person`    | Shared Person/Party plus contextual resolver | No direct branch exists in current ER baseline. Deny access when scope cannot be deterministically resolved, unless an explicitly approved global policy applies. |
 
 ### Branch hierarchy evaluation
 
@@ -426,43 +426,43 @@ The following are forbidden:
 
 # 11. Permission-to-API Enforcement Matrix
 
-| API / Use Case | Required Permission | Scope |
-|---|---|---|
-| Create upload intent | `document.create` | B/B+ |
-| Register document | `document.create` | B/B+ |
-| List documents | `document.read` | B/B+ |
-| Read document detail | `document.read` | B/B+ |
-| Update metadata | `document.update` | B/B+ |
-| Submit for verification | `document.verify.submit` | B/B+ |
-| Read verification queue | `document.verify.read` | B/B+ |
-| Approve document | `document.verify.approve` | B/B+ or explicit G |
-| Reject document | `document.verify.reject` | B/B+ or explicit G |
-| Read verification history | `document.history.read` | B/B+ |
-| Preview/download file | `document.file.read` | B/B+ |
-| Read expiry workbench | `document.expiry.read` | B/B+ |
-| Soft-retire document | `document.retire` | B/B+ or explicit G |
-| Read reconciliation queue | `document.operations.reconcile` | G/SYS |
-| Retry reconciliation action | `document.operations.reconcile` | G/SYS |
-| Search owners | `document.owner.search` plus calling-use-case capability | B/B+ |
-| Read audit evidence | `document.audit.read` plus Audit-context policy | B/B+/C |
+| API / Use Case              | Required Permission                                      | Scope              |
+| --------------------------- | -------------------------------------------------------- | ------------------ |
+| Create upload intent        | `document.create`                                        | B/B+               |
+| Register document           | `document.create`                                        | B/B+               |
+| List documents              | `document.read`                                          | B/B+               |
+| Read document detail        | `document.read`                                          | B/B+               |
+| Update metadata             | `document.update`                                        | B/B+               |
+| Submit for verification     | `document.verify.submit`                                 | B/B+               |
+| Read verification queue     | `document.verify.read`                                   | B/B+               |
+| Approve document            | `document.verify.approve`                                | B/B+ or explicit G |
+| Reject document             | `document.verify.reject`                                 | B/B+ or explicit G |
+| Read verification history   | `document.history.read`                                  | B/B+               |
+| Preview/download file       | `document.file.read`                                     | B/B+               |
+| Read expiry workbench       | `document.expiry.read`                                   | B/B+               |
+| Soft-retire document        | `document.retire`                                        | B/B+ or explicit G |
+| Read reconciliation queue   | `document.operations.reconcile`                          | G/SYS              |
+| Retry reconciliation action | `document.operations.reconcile`                          | G/SYS              |
+| Search owners               | `document.owner.search` plus calling-use-case capability | B/B+               |
+| Read audit evidence         | `document.audit.read` plus Audit-context policy          | B/B+/C             |
 
 ---
 
 # 12. Permission-to-Screen Enforcement Matrix
 
-| Screen | Menu Permission | Minimum Functional Permission | Scope |
-|---|---|---|---|
-| Document Registry | `document.menu.registry` | `document.read` | B/B+/G |
-| Upload Document | `document.menu.upload` | `document.create` | B/B+/G |
-| Document Detail | Registry navigation or contextual link | `document.read` | B/B+/G |
-| Edit Metadata | No separate menu required | `document.update` | B/B+/G |
-| Verification Queue | `document.menu.verification` | `document.verify.read` | B/B+/G |
-| Verification Review | Queue/contextual route | `document.verify.read` plus approve/reject capability for actions | B/B+/G |
-| Expiry Workbench | `document.menu.expiry` | `document.expiry.read` | B/B+/G |
-| Verification History | Contextual route | `document.history.read` | B/B+/G |
-| Audit View | `document.menu.audit` | `document.audit.read` and Audit-context access | B/B+/C/G |
-| Blob Reconciliation | `document.menu.operations` | `document.operations.reconcile` | G/SYS |
-| Reports | `document.menu.reports` | At least one `document.report.*.view` permission | B/B+/C/G |
+| Screen               | Menu Permission                        | Minimum Functional Permission                                     | Scope    |
+| -------------------- | -------------------------------------- | ----------------------------------------------------------------- | -------- |
+| Document Registry    | `document.menu.registry`               | `document.read`                                                   | B/B+/G   |
+| Upload Document      | `document.menu.upload`                 | `document.create`                                                 | B/B+/G   |
+| Document Detail      | Registry navigation or contextual link | `document.read`                                                   | B/B+/G   |
+| Edit Metadata        | No separate menu required              | `document.update`                                                 | B/B+/G   |
+| Verification Queue   | `document.menu.verification`           | `document.verify.read`                                            | B/B+/G   |
+| Verification Review  | Queue/contextual route                 | `document.verify.read` plus approve/reject capability for actions | B/B+/G   |
+| Expiry Workbench     | `document.menu.expiry`                 | `document.expiry.read`                                            | B/B+/G   |
+| Verification History | Contextual route                       | `document.history.read`                                           | B/B+/G   |
+| Audit View           | `document.menu.audit`                  | `document.audit.read` and Audit-context access                    | B/B+/C/G |
+| Blob Reconciliation  | `document.menu.operations`             | `document.operations.reconcile`                                   | G/SYS    |
+| Reports              | `document.menu.reports`                | At least one `document.report.*.view` permission                  | B/B+/C/G |
 
 ---
 
@@ -470,13 +470,13 @@ The following are forbidden:
 
 The following combinations require explicit business approval because they concentrate sensitive powers:
 
-| Combination | Risk | Recommended Control |
-|---|---|---|
-| `document.create` + `document.verify.approve` | User can upload and approve own evidence. | Prefer separate creator and verifier roles; log exception assignments. |
-| `document.update` + `document.verify.approve` | User may alter metadata and approve it. | Restrict post-submission edit fields and require re-evaluation after material change. |
-| `document.verify.approve` + `document.retire` | User can approve and then remove document from operational visibility. | Limit retirement to Document Admin/Manager; audit all retirements. |
-| `document.operations.reconcile` + broad business mutation rights | Operational troubleshooting role could alter both storage state and business state. | Keep reconciliation role isolated from normal document mutation rights. |
-| `document.audit.read` + broad mutation rights | Reviewer may audit their own actions. | Use independent audit/compliance reviewer for high-risk investigations. |
+| Combination                                                      | Risk                                                                                | Recommended Control                                                                   |
+| ---------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `document.create` + `document.verify.approve`                    | User can upload and approve own evidence.                                           | Prefer separate creator and verifier roles; log exception assignments.                |
+| `document.update` + `document.verify.approve`                    | User may alter metadata and approve it.                                             | Restrict post-submission edit fields and require re-evaluation after material change. |
+| `document.verify.approve` + `document.retire`                    | User can approve and then remove document from operational visibility.              | Limit retirement to Document Admin/Manager; audit all retirements.                    |
+| `document.operations.reconcile` + broad business mutation rights | Operational troubleshooting role could alter both storage state and business state. | Keep reconciliation role isolated from normal document mutation rights.               |
+| `document.audit.read` + broad mutation rights                    | Reviewer may audit their own actions.                                               | Use independent audit/compliance reviewer for high-risk investigations.               |
 
 ---
 
@@ -484,16 +484,16 @@ The following combinations require explicit business approval because they conce
 
 A permission grant does not override lifecycle guards.
 
-| Current State | Requested Action | Permission | Result Rule |
-|---|---|---|---|
-| `Uploaded` | Submit | `document.verify.submit` | Allowed only when file, metadata, owner, and scope validations pass. |
-| `Uploaded` | Approve | `document.verify.approve` | Denied; invalid state transition. |
-| `PendingVerification` | Approve | `document.verify.approve` | Allowed when branch scope and optimistic-lock checks pass. |
-| `PendingVerification` | Reject | `document.verify.reject` | Allowed with mandatory remarks and transaction guarantees. |
-| `Approved` | Approve again | `document.verify.approve` | Denied; duplicate approval prohibited. |
-| `Rejected` | Resubmit | `document.verify.submit` | Conditional gap: allowed only after approved resubmission policy is finalized. |
-| Any active state | Retire | `document.retire` | Allowed only when retirement business guards pass; soft delete only. |
-| Soft-deleted | Normal read | `document.read` | Excluded from operational results. Audit/admin restoration behavior is not defined in current scope. |
+| Current State         | Requested Action | Permission                | Result Rule                                                                                          |
+| --------------------- | ---------------- | ------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `Uploaded`            | Submit           | `document.verify.submit`  | Allowed only when file, metadata, owner, and scope validations pass.                                 |
+| `Uploaded`            | Approve          | `document.verify.approve` | Denied; invalid state transition.                                                                    |
+| `PendingVerification` | Approve          | `document.verify.approve` | Allowed when branch scope and optimistic-lock checks pass.                                           |
+| `PendingVerification` | Reject           | `document.verify.reject`  | Allowed with mandatory remarks and transaction guarantees.                                           |
+| `Approved`            | Approve again    | `document.verify.approve` | Denied; duplicate approval prohibited.                                                               |
+| `Rejected`            | Resubmit         | `document.verify.submit`  | Conditional gap: allowed only after approved resubmission policy is finalized.                       |
+| Any active state      | Retire           | `document.retire`         | Allowed only when retirement business guards pass; soft delete only.                                 |
+| Soft-deleted          | Normal read      | `document.read`           | Excluded from operational results. Audit/admin restoration behavior is not defined in current scope. |
 
 ---
 
@@ -514,35 +514,35 @@ A permission grant does not override lifecycle guards.
 
 The following actions require audit evidence according to module and Audit & Compliance policy:
 
-| Action | Required Audit Content |
-|---|---|
-| Document create | actor, owner type/id, document type, file metadata reference, timestamp, branch context |
-| Metadata update | actor, old/new values, reason where required, version, timestamp |
-| Submit for verification | actor, prior/new state, timestamp |
-| Approve | verifier, prior/new state, decision, remarks if present, timestamp |
-| Reject | verifier, prior/new state, mandatory remarks/reason, timestamp |
-| File access | actor, document id, access mode where sensitive-access policy requires logging, timestamp |
-| Retirement | actor, reason, prior state, timestamp |
-| Reconciliation retry | operator, reconciliation item, action attempted, result, timestamp |
-| Permission assignment change | Owned by IAM; role/user, permission added/removed, actor, timestamp |
+| Action                       | Required Audit Content                                                                    |
+| ---------------------------- | ----------------------------------------------------------------------------------------- |
+| Document create              | actor, owner type/id, document type, file metadata reference, timestamp, branch context   |
+| Metadata update              | actor, old/new values, reason where required, version, timestamp                          |
+| Submit for verification      | actor, prior/new state, timestamp                                                         |
+| Approve                      | verifier, prior/new state, decision, remarks if present, timestamp                        |
+| Reject                       | verifier, prior/new state, mandatory remarks/reason, timestamp                            |
+| File access                  | actor, document id, access mode where sensitive-access policy requires logging, timestamp |
+| Retirement                   | actor, reason, prior state, timestamp                                                     |
+| Reconciliation retry         | operator, reconciliation item, action attempted, result, timestamp                        |
+| Permission assignment change | Owned by IAM; role/user, permission added/removed, actor, timestamp                       |
 
 ---
 
 # 17. DDD Ownership Check
 
-| Authorization Concern | Owner | Document Management Responsibility |
-|---|---|---|
-| User authentication | IAM | Consume authenticated principal only. |
-| Role creation | IAM | None. |
-| Permission catalog persistence | IAM | Declare required permission codes; IAM stores assignments. |
-| Role-permission mapping | IAM | None. |
-| User-role mapping | IAM | None. |
-| User branch access | IAM | Consume effective branch access. |
-| Branch hierarchy | Organization/IAM access rules | Consume approved hierarchy visibility. |
-| Document owner existence | Owning context of Student/Trainer/Corporate/Person | Validate through approved read boundary. |
-| Document lifecycle authorization | Document Management | Enforce permission + scope + state guards in application services. |
-| Audit log persistence | Audit & Compliance | Emit/record required facts through approved boundary. |
-| Report definitions and dashboards | Reporting & Dashboards | Expose read data; reporting owns report composition, not document transactions. |
+| Authorization Concern             | Owner                                              | Document Management Responsibility                                              |
+| --------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------- |
+| User authentication               | IAM                                                | Consume authenticated principal only.                                           |
+| Role creation                     | IAM                                                | None.                                                                           |
+| Permission catalog persistence    | IAM                                                | Declare required permission codes; IAM stores assignments.                      |
+| Role-permission mapping           | IAM                                                | None.                                                                           |
+| User-role mapping                 | IAM                                                | None.                                                                           |
+| User branch access                | IAM                                                | Consume effective branch access.                                                |
+| Branch hierarchy                  | Organization/IAM access rules                      | Consume approved hierarchy visibility.                                          |
+| Document owner existence          | Owning context of Student/Trainer/Corporate/Person | Validate through approved read boundary.                                        |
+| Document lifecycle authorization  | Document Management                                | Enforce permission + scope + state guards in application services.              |
+| Audit log persistence             | Audit & Compliance                                 | Emit/record required facts through approved boundary.                           |
+| Report definitions and dashboards | Reporting & Dashboards                             | Expose read data; reporting owns report composition, not document transactions. |
 
 Document Management must not create local copies of `User`, `Role`, `Permission`, `UserRole`, `RolePermission`, `UserBranchAccess`, `Branch`, `StudentProfile`, `TrainerProfile`, or `CorporateAccount` merely to enforce authorization.
 
@@ -562,15 +562,15 @@ Document Management must not create local copies of `User`, `Role`, `Permission`
 
 # 19. Open Permission Decisions / Gaps
 
-| Gap ID | Decision Required | Current Safe Behavior |
-|---|---|---|
-| GAP-PERM-001 | Final IAM permission seed naming normalization | Use canonical codes in this Part, especially `document.verify.submit`; do not create duplicate aliases. |
-| GAP-PERM-002 | Person-owned document branch resolver | Fail closed where branch scope cannot be deterministically resolved. |
-| GAP-PERM-003 | Whether approval and rejection require different business role bundles or can coexist on one verifier role | Keep permissions separate even when both are assigned to the same role. |
-| GAP-PERM-004 | Whether Document Administrator may verify documents they created | Prefer segregation of duties; require explicit exception policy. |
-| GAP-PERM-005 | Final definition of global operational user access | Do not grant global business access by role name; require explicit IAM policy. |
-| GAP-PERM-006 | Student/Trainer portal activation and self-service permission names | Keep Admin Portal permissions separate; define portal-specific menu permissions when portals are activated. |
-| GAP-PERM-007 | Report inventory finalization in Part 8 | Preserve report permission families here and refine exact report-to-permission mapping in Part 8 without broadening ownership. |
+| Gap ID       | Decision Required                                                                                          | Current Safe Behavior                                                                                                          |
+| ------------ | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| GAP-PERM-001 | Final IAM permission seed naming normalization                                                             | Use canonical codes in this Part, especially `document.verify.submit`; do not create duplicate aliases.                        |
+| GAP-PERM-002 | Person-owned document branch resolver                                                                      | Fail closed where branch scope cannot be deterministically resolved.                                                           |
+| GAP-PERM-003 | Whether approval and rejection require different business role bundles or can coexist on one verifier role | Keep permissions separate even when both are assigned to the same role.                                                        |
+| GAP-PERM-004 | Whether Document Administrator may verify documents they created                                           | Prefer segregation of duties; require explicit exception policy.                                                               |
+| GAP-PERM-005 | Final definition of global operational user access                                                         | Do not grant global business access by role name; require explicit IAM policy.                                                 |
+| GAP-PERM-006 | Student/Trainer portal activation and self-service permission names                                        | Keep Admin Portal permissions separate; define portal-specific menu permissions when portals are activated.                    |
+| GAP-PERM-007 | Report inventory finalization in Part 8                                                                    | Preserve report permission families here and refine exact report-to-permission mapping in Part 8 without broadening ownership. |
 
 ---
 

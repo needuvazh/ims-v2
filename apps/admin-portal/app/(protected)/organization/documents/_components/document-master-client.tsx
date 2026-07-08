@@ -72,10 +72,23 @@ const STATUS_OPTIONS = [
   { value: 'Inactive', label: 'Inactive' },
 ];
 
-const SORT_FIELDS = new Set(['targetEntity', 'documentType', 'isMandatory', 'branchName', 'courseName', 'status']);
-const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+const SORT_FIELDS = new Set([
+  'targetEntity',
+  'documentType',
+  'isMandatory',
+  'branchName',
+  'courseName',
+  'status',
+]);
+const collator = new Intl.Collator(undefined, {
+  numeric: true,
+  sensitivity: 'base',
+});
 
-function compareNullableText(a: string | null | undefined, b: string | null | undefined) {
+function compareNullableText(
+  a: string | null | undefined,
+  b: string | null | undefined,
+) {
   return collator.compare(a ?? '', b ?? '');
 }
 
@@ -99,17 +112,30 @@ export function DocumentMasterClient({
   const [searchValue, setSearchValue] = useState(initialSearch);
 
   // Read URL Params State
-  const currentSortBy = searchParams.get('sortBy') ?? initialSortBy ?? 'targetEntity';
-  const currentSortOrder = (searchParams.get('sortOrder') as 'asc' | 'desc' | null) ?? initialSortOrder;
+  const currentSortBy =
+    searchParams.get('sortBy') ?? initialSortBy ?? 'targetEntity';
+  const currentSortOrder =
+    (searchParams.get('sortOrder') as 'asc' | 'desc' | null) ??
+    initialSortOrder;
   const currentTarget = searchParams.get('target') ?? initialTarget ?? '';
   const currentStatus = searchParams.get('status') ?? initialStatus ?? '';
-  const currentPage = Math.max(parseInt(searchParams.get('page') ?? String(initialPage), 10) || 1, 1);
-  const currentLimit = Math.max(parseInt(searchParams.get('limit') ?? String(initialLimit), 10) || initialLimit || 10, 1);
+  const currentPage = Math.max(
+    parseInt(searchParams.get('page') ?? String(initialPage), 10) || 1,
+    1,
+  );
+  const currentLimit = Math.max(
+    parseInt(searchParams.get('limit') ?? String(initialLimit), 10) ||
+      initialLimit ||
+      10,
+    1,
+  );
 
   // Dialog & Form State
   const [isOpen, setIsOpen] = useState(false);
   const [editingRule, setEditingRule] = useState<RequirementDto | null>(null);
-  const [formTargetEntity, setFormTargetEntity] = useState<'STUDENT' | 'TRAINER'>('STUDENT');
+  const [formTargetEntity, setFormTargetEntity] = useState<
+    'STUDENT' | 'TRAINER'
+  >('STUDENT');
   const [formDocumentType, setFormDocumentType] = useState('CIVIL_ID_FRONT');
   const [formIsMandatory, setFormIsMandatory] = useState(true);
   const [formBranchId, setFormBranchId] = useState('');
@@ -139,21 +165,26 @@ export function DocumentMasterClient({
     fetchRequirements();
   }, []);
 
-  const updateParams = useCallback((updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === '') {
-        params.delete(key);
-      } else {
-        params.set(key, value);
-      }
-    });
-    router.push(`${pathname}?${params.toString()}`);
-  }, [pathname, router, searchParams]);
+  const updateParams = useCallback(
+    (updates: Record<string, string | null>) => {
+      const params = new URLSearchParams(searchParams.toString());
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value === null || value === '') {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      });
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [pathname, router, searchParams],
+  );
 
   useEffect(() => {
     const nextSearch = searchParams.get('q') || '';
-    setSearchValue((current) => (current === nextSearch ? current : nextSearch));
+    setSearchValue((current) =>
+      current === nextSearch ? current : nextSearch,
+    );
   }, [searchParams]);
 
   useEffect(() => {
@@ -168,7 +199,8 @@ export function DocumentMasterClient({
   }, [searchParams, searchValue, updateParams]);
 
   const handleSort = (field: string) => {
-    const nextOrder = currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
+    const nextOrder =
+      currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
     updateParams({ sortBy: field, sortOrder: nextOrder, page: '1' });
   };
 
@@ -221,10 +253,16 @@ export function DocumentMasterClient({
 
       const result = await res.json();
       if (!res.ok) {
-        throw new Error(result.messageEnglish || 'Failed to save configuration rule');
+        throw new Error(
+          result.messageEnglish || 'Failed to save configuration rule',
+        );
       }
 
-      toast.success(editingRule ? 'Rule updated successfully!' : 'New requirement rule created!');
+      toast.success(
+        editingRule
+          ? 'Rule updated successfully!'
+          : 'New requirement rule created!',
+      );
       setIsOpen(false);
       fetchRequirements();
       router.refresh();
@@ -236,7 +274,11 @@ export function DocumentMasterClient({
   };
 
   const handleDeleteRule = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this requirement rule? This will remove validation checks for new enrollments.')) {
+    if (
+      !confirm(
+        'Are you sure you want to delete this requirement rule? This will remove validation checks for new enrollments.',
+      )
+    ) {
       return;
     }
 
@@ -277,23 +319,48 @@ export function DocumentMasterClient({
       .sort((left, right) => {
         const direction = currentSortOrder === 'asc' ? 1 : -1;
         if (!SORT_FIELDS.has(currentSortBy)) {
-          return compareNullableText(left.targetEntity, right.targetEntity) * direction;
+          return (
+            compareNullableText(left.targetEntity, right.targetEntity) *
+            direction
+          );
         }
 
         switch (currentSortBy) {
           case 'documentType':
-            return compareNullableText(left.documentType, right.documentType) * direction;
+            return (
+              compareNullableText(left.documentType, right.documentType) *
+              direction
+            );
           case 'isMandatory':
-            return (left.isMandatory === right.isMandatory ? 0 : left.isMandatory ? 1 : -1) * direction;
+            return (
+              (left.isMandatory === right.isMandatory
+                ? 0
+                : left.isMandatory
+                  ? 1
+                  : -1) * direction
+            );
           case 'branchName':
-            return compareNullableText(left.branch?.branchName, right.branch?.branchName) * direction;
+            return (
+              compareNullableText(
+                left.branch?.branchName,
+                right.branch?.branchName,
+              ) * direction
+            );
           case 'courseName':
-            return compareNullableText(left.course?.nameEnglish, right.course?.nameEnglish) * direction;
+            return (
+              compareNullableText(
+                left.course?.nameEnglish,
+                right.course?.nameEnglish,
+              ) * direction
+            );
           case 'status':
             return compareNullableText(left.status, right.status) * direction;
           case 'targetEntity':
           default:
-            return compareNullableText(left.targetEntity, right.targetEntity) * direction;
+            return (
+              compareNullableText(left.targetEntity, right.targetEntity) *
+              direction
+            );
         }
       });
   }, [currentSortBy, currentSortOrder, requirements, searchParams]);
@@ -301,7 +368,10 @@ export function DocumentMasterClient({
   const total = filteredRequirements.length;
   const totalPages = Math.max(Math.ceil(total / currentLimit), 1);
   const safePage = Math.min(currentPage, totalPages);
-  const paginatedRequirements = filteredRequirements.slice((safePage - 1) * currentLimit, safePage * currentLimit);
+  const paginatedRequirements = filteredRequirements.slice(
+    (safePage - 1) * currentLimit,
+    safePage * currentLimit,
+  );
 
   const columns = [
     {
@@ -309,7 +379,9 @@ export function DocumentMasterClient({
       sortable: true,
       sortDirection: currentSortBy === 'targetEntity' ? currentSortOrder : null,
       onSort: () => handleSort('targetEntity'),
-      render: (req: RequirementDto) => <span className="font-semibold text-slate-800">{req.targetEntity}</span>,
+      render: (req: RequirementDto) => (
+        <span className="font-semibold text-slate-800">{req.targetEntity}</span>
+      ),
       headerClassName: 'w-[140px]',
     },
     {
@@ -317,14 +389,18 @@ export function DocumentMasterClient({
       sortable: true,
       sortDirection: currentSortBy === 'documentType' ? currentSortOrder : null,
       onSort: () => handleSort('documentType'),
-      render: (req: RequirementDto) => <code className="font-mono text-xs text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded">{req.documentType}</code>,
+      render: (req: RequirementDto) => (
+        <code className="font-mono text-xs text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded">
+          {req.documentType}
+        </code>
+      ),
     },
     {
       header: 'Enforcement',
       sortable: true,
       sortDirection: currentSortBy === 'isMandatory' ? currentSortOrder : null,
       onSort: () => handleSort('isMandatory'),
-      render: (req: RequirementDto) => (
+      render: (req: RequirementDto) =>
         req.isMandatory ? (
           <span className="inline-flex items-center rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-700 ring-1 ring-inset ring-red-600/10">
             Mandatory
@@ -333,8 +409,7 @@ export function DocumentMasterClient({
           <span className="inline-flex items-center rounded-full bg-slate-50 px-2 py-1 text-xs font-semibold text-slate-600 ring-1 ring-inset ring-slate-500/10">
             Optional
           </span>
-        )
-      ),
+        ),
       headerClassName: 'w-[130px]',
     },
     {
@@ -342,27 +417,34 @@ export function DocumentMasterClient({
       sortable: true,
       sortDirection: currentSortBy === 'branchName' ? currentSortOrder : null,
       onSort: () => handleSort('branchName'),
-      render: (req: RequirementDto) => <span className="text-sm text-slate-600">{req.branch?.branchName || 'Global (All)'}</span>,
+      render: (req: RequirementDto) => (
+        <span className="text-sm text-slate-600">
+          {req.branch?.branchName || 'Global (All)'}
+        </span>
+      ),
     },
     {
       header: 'Course Scope',
       sortable: true,
       sortDirection: currentSortBy === 'courseName' ? currentSortOrder : null,
       onSort: () => handleSort('courseName'),
-      render: (req: RequirementDto) => <span className="text-sm text-slate-600">{req.course?.nameEnglish || 'Global (All)'}</span>,
+      render: (req: RequirementDto) => (
+        <span className="text-sm text-slate-600">
+          {req.course?.nameEnglish || 'Global (All)'}
+        </span>
+      ),
     },
     {
       header: 'Status',
       sortable: true,
       sortDirection: currentSortBy === 'status' ? currentSortOrder : null,
       onSort: () => handleSort('status'),
-      render: (req: RequirementDto) => (
+      render: (req: RequirementDto) =>
         req.status === 'Active' ? (
           <Badge variant="success">Active</Badge>
         ) : (
           <Badge variant="muted">Inactive</Badge>
-        )
-      ),
+        ),
       headerClassName: 'w-[110px]',
     },
     {
@@ -401,8 +483,12 @@ export function DocumentMasterClient({
       <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 space-y-1">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">{req.targetEntity}</p>
-            <p className="text-sm font-semibold text-[var(--ims-ink)] font-mono">{req.documentType}</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">
+              {req.targetEntity}
+            </p>
+            <p className="text-sm font-semibold text-[var(--ims-ink)] font-mono">
+              {req.documentType}
+            </p>
           </div>
           {req.isMandatory ? (
             <Badge variant="error">Mandatory</Badge>
@@ -414,12 +500,20 @@ export function DocumentMasterClient({
       <CardContent className="space-y-3 p-card-p text-xs">
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <p className="font-semibold text-[var(--ims-muted)]">Branch Scope</p>
-            <p className="truncate">{req.branch?.branchName || 'Global (All)'}</p>
+            <p className="font-semibold text-[var(--ims-muted)]">
+              Branch Scope
+            </p>
+            <p className="truncate">
+              {req.branch?.branchName || 'Global (All)'}
+            </p>
           </div>
           <div>
-            <p className="font-semibold text-[var(--ims-muted)]">Course Scope</p>
-            <p className="truncate">{req.course?.nameEnglish || 'Global (All)'}</p>
+            <p className="font-semibold text-[var(--ims-muted)]">
+              Course Scope
+            </p>
+            <p className="truncate">
+              {req.course?.nameEnglish || 'Global (All)'}
+            </p>
           </div>
           <div>
             <p className="font-semibold text-[var(--ims-muted)]">Status</p>
@@ -429,10 +523,20 @@ export function DocumentMasterClient({
       </CardContent>
       <CardFooter className="p-card-p pt-0">
         <div className="flex w-full gap-2">
-          <Button variant="outline" size="sm" onClick={() => handleOpenEdit(req)} className="flex-1 text-[11px]">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handleOpenEdit(req)}
+            className="flex-1 text-[11px]"
+          >
             <Pencil className="mr-1.5 h-3.5 w-3.5" /> Edit
           </Button>
-          <Button variant="outline" size="sm" onClick={() => handleDeleteRule(req.id)} className="flex-1 text-[11px] text-rose-600 hover:bg-rose-50">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handleDeleteRule(req.id)}
+            className="flex-1 text-[11px] text-rose-600 hover:bg-rose-50"
+          >
             <Trash2 className="mr-1.5 h-3.5 w-3.5" /> Delete
           </Button>
         </div>
@@ -458,11 +562,15 @@ export function DocumentMasterClient({
             Document Master
           </h1>
           <p className="max-w-2xl text-sm text-[var(--ims-muted)]">
-            Manage required identity and academic document requirement parameters dynamically.
+            Manage required identity and academic document requirement
+            parameters dynamically.
           </p>
         </div>
 
-        <Button onClick={handleOpenAdd} className="h-10 w-full gap-1.5 bg-indigo-600 hover:bg-indigo-700 sm:w-auto sm:px-4">
+        <Button
+          onClick={handleOpenAdd}
+          className="h-10 w-full gap-1.5 bg-indigo-600 hover:bg-indigo-700 sm:w-auto sm:px-4"
+        >
           <Plus className="h-4 w-4" />
           Add Requirement
         </Button>
@@ -558,10 +666,13 @@ export function DocumentMasterClient({
           <form onSubmit={handleFormSubmit} className="flex h-full flex-col">
             <DialogHeader className="border-b border-[color:var(--ims-border)] p-6">
               <DialogTitle>
-                {editingRule ? 'Edit Dynamic Requirement Rule' : 'Add New Document Requirement'}
+                {editingRule
+                  ? 'Edit Dynamic Requirement Rule'
+                  : 'Add New Document Requirement'}
               </DialogTitle>
               <DialogDescription>
-                Configure checklists dynamically based on target entity, branch, or course scope.
+                Configure checklists dynamically based on target entity, branch,
+                or course scope.
               </DialogDescription>
             </DialogHeader>
 
@@ -601,7 +712,10 @@ export function DocumentMasterClient({
                     onValueChange={setFormBranchId}
                     options={[
                       { value: '', label: 'Global (All Branches)' },
-                      ...branches.map((b) => ({ value: b.id, label: b.branchName })),
+                      ...branches.map((b) => ({
+                        value: b.id,
+                        label: b.branchName,
+                      })),
                     ]}
                     disabled={isSubmitting}
                   />
@@ -616,7 +730,10 @@ export function DocumentMasterClient({
                     onValueChange={setFormCourseId}
                     options={[
                       { value: '', label: 'Global (All Courses)' },
-                      ...courses.map((c) => ({ value: c.id, label: c.nameEnglish })),
+                      ...courses.map((c) => ({
+                        value: c.id,
+                        label: c.nameEnglish,
+                      })),
                     ]}
                     disabled={isSubmitting || formTargetEntity === 'TRAINER'}
                   />
@@ -629,7 +746,9 @@ export function DocumentMasterClient({
                   <FormControl>
                     <Select
                       value={formIsMandatory ? 'true' : 'false'}
-                      onValueChange={(val) => setFormIsMandatory(val === 'true')}
+                      onValueChange={(val) =>
+                        setFormIsMandatory(val === 'true')
+                      }
                       options={[
                         { value: 'true', label: 'Mandatory' },
                         { value: 'false', label: 'Optional' },

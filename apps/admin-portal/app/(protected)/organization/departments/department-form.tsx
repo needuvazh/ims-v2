@@ -1,6 +1,12 @@
 'use client';
 
-import { useActionState, useEffect, useState, type ChangeEvent, type InvalidEvent } from 'react';
+import {
+  useActionState,
+  useEffect,
+  useState,
+  type ChangeEvent,
+  type InvalidEvent,
+} from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Card,
@@ -14,8 +20,15 @@ import {
   Alert,
 } from '@ims/shared-ui';
 import type { Department, Branch } from '@ims/organization';
-import { createDepartmentAction, updateDepartmentAction, type ActionResult } from '@/app/(protected)/organization/actions';
-import { clearErrorField, getFieldValidationMessage } from '@/app/(protected)/organization/validation';
+import {
+  createDepartmentAction,
+  updateDepartmentAction,
+  type ActionResult,
+} from '@/app/(protected)/organization/actions';
+import {
+  clearErrorField,
+  getFieldValidationMessage,
+} from '@/app/(protected)/organization/validation';
 
 export interface DepartmentFormProps {
   mode: 'create' | 'edit' | 'view';
@@ -55,9 +68,16 @@ function buildDepartmentValues(initialData?: Department): DepartmentFormValues {
   };
 }
 
-export function DepartmentForm({ mode, initialData, branches, users }: DepartmentFormProps) {
+export function DepartmentForm({
+  mode,
+  initialData,
+  branches,
+  users,
+}: DepartmentFormProps) {
   const router = useRouter();
-  const [values, setValues] = useState<DepartmentFormValues>(() => buildDepartmentValues(initialData));
+  const [values, setValues] = useState<DepartmentFormValues>(() =>
+    buildDepartmentValues(initialData),
+  );
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const [state, formAction, isPending] = useActionState(
@@ -99,39 +119,55 @@ export function DepartmentForm({ mode, initialData, branches, users }: Departmen
     }
   }, [state.values]);
 
-  const updateField = (field: keyof DepartmentFormValues) => (value: string) => {
-    setValues((prev) => ({ ...prev, [field]: value }));
-    clearErrorField(setFieldErrors, field);
-  };
+  const updateField =
+    (field: keyof DepartmentFormValues) => (value: string) => {
+      setValues((prev) => ({ ...prev, [field]: value }));
+      clearErrorField(setFieldErrors, field);
+    };
 
-  const handleTextChange = (field: keyof DepartmentFormValues) => (
-    e: ChangeEvent<HTMLInputElement>,
-  ) => updateField(field)(e.target.value);
+  const handleTextChange =
+    (field: keyof DepartmentFormValues) => (e: ChangeEvent<HTMLInputElement>) =>
+      updateField(field)(e.target.value);
 
-  const handleSelectChange = (field: keyof DepartmentFormValues) => (
-    e: ChangeEvent<HTMLSelectElement>,
-  ) => updateField(field)(e.target.value);
+  const handleSelectChange =
+    (field: keyof DepartmentFormValues) =>
+    (e: ChangeEvent<HTMLSelectElement>) =>
+      updateField(field)(e.target.value);
 
-  const handleInvalid = (field: keyof DepartmentFormValues, label: string) => (
-    e: InvalidEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
-    const target = e.currentTarget;
-    setFieldErrors((prev) => ({
-      ...prev,
-      [field]: getFieldValidationMessage(target, label, 'type' in target ? target.type : undefined),
-    }));
-  };
+  const handleInvalid =
+    (field: keyof DepartmentFormValues, label: string) =>
+    (e: InvalidEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const target = e.currentTarget;
+      setFieldErrors((prev) => ({
+        ...prev,
+        [field]: getFieldValidationMessage(
+          target,
+          label,
+          'type' in target ? target.type : undefined,
+        ),
+      }));
+    };
 
   const isView = mode === 'view';
   const isEdit = mode === 'edit';
-  const branchOptions = branches.map((b) => ({ value: b.id, label: b.branchName }));
-  const userOptions = users.map((u) => ({ value: u.id, label: `${u.fullName} (${u.email})` }));
+  const branchOptions = branches.map((b) => ({
+    value: b.id,
+    label: b.branchName,
+  }));
+  const userOptions = users.map((u) => ({
+    value: u.id,
+    label: `${u.fullName} (${u.email})`,
+  }));
 
   return (
     <Card className="w-full">
       <CardHeader>
         <CardTitle>
-          {mode === 'create' ? 'Add New Department' : mode === 'edit' ? 'Edit Department' : 'Department Details'}
+          {mode === 'create'
+            ? 'Add New Department'
+            : mode === 'edit'
+              ? 'Edit Department'
+              : 'Department Details'}
         </CardTitle>
       </CardHeader>
       <form action={formAction} noValidate>
@@ -160,20 +196,28 @@ export function DepartmentForm({ mode, initialData, branches, users }: Departmen
                   disabled={isView || isEdit}
                   required
                   onChange={handleTextChange('departmentCode')}
-                  onInvalidCapture={handleInvalid('departmentCode', 'Department Code')}
+                  onInvalidCapture={handleInvalid(
+                    'departmentCode',
+                    'Department Code',
+                  )}
                   errorText={fieldErrors.departmentCode}
                 />
               </>
             ) : (
               <>
                 <div className="space-y-2">
-                  <label className="text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider">Branch</label>
+                  <label className="text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider">
+                    Branch
+                  </label>
                   <div className="text-sm font-medium p-2 bg-[color:var(--ims-surface-hover)] border border-[color:var(--ims-border)] rounded-md opacity-80">
-                    {branches.find((b) => b.id === values.branchId)?.branchName || values.branchId}
+                    {branches.find((b) => b.id === values.branchId)
+                      ?.branchName || values.branchId}
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider">Department Code</label>
+                  <label className="text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider">
+                    Department Code
+                  </label>
                   <div className="text-sm font-mono font-medium p-2 bg-[color:var(--ims-surface-hover)] border border-[color:var(--ims-border)] rounded-md opacity-80">
                     {values.departmentCode}
                   </div>
@@ -190,7 +234,10 @@ export function DepartmentForm({ mode, initialData, branches, users }: Departmen
               disabled={isView}
               required
               onChange={handleTextChange('departmentName')}
-              onInvalidCapture={handleInvalid('departmentName', 'Department Name')}
+              onInvalidCapture={handleInvalid(
+                'departmentName',
+                'Department Name',
+              )}
               errorText={fieldErrors.departmentName}
             />
             <Select
@@ -201,7 +248,10 @@ export function DepartmentForm({ mode, initialData, branches, users }: Departmen
               placeholder="Select Head (Optional)"
               disabled={isView}
               onChange={handleSelectChange('departmentHeadId')}
-              onInvalidCapture={handleInvalid('departmentHeadId', 'Department Head')}
+              onInvalidCapture={handleInvalid(
+                'departmentHeadId',
+                'Department Head',
+              )}
               errorText={fieldErrors.departmentHeadId}
             />
             <div className="md:col-span-2">
@@ -266,7 +316,9 @@ export function DepartmentForm({ mode, initialData, branches, users }: Departmen
           {isView ? (
             <Button
               type="button"
-              onClick={() => router.push(`/organization/departments/${initialData?.id}/edit`)}
+              onClick={() =>
+                router.push(`/organization/departments/${initialData?.id}/edit`)
+              }
             >
               Edit Department
             </Button>

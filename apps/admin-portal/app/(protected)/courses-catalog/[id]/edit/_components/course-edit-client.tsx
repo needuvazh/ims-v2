@@ -5,12 +5,11 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { CourseForm } from '../../../_components/course-form';
 import { CourseConfigsPanel } from './course-configs-panel';
-import { updateCourseAction, transitionCourseStatusAction } from '../../../actions';
 import {
-  Button,
-  Badge,
-  Alert,
-} from '@ims/shared-ui';
+  updateCourseAction,
+  transitionCourseStatusAction,
+} from '../../../actions';
+import { Button, Badge, Alert } from '@ims/shared-ui';
 import {
   ShieldAlert,
   ArrowRightLeft,
@@ -49,7 +48,11 @@ export function CourseEditClient({
   const handleTransition = async (targetStatus: string) => {
     try {
       setIsTransitioning(true);
-      const res = await transitionCourseStatusAction(course.id, targetStatus, course.version);
+      const res = await transitionCourseStatusAction(
+        course.id,
+        targetStatus,
+        course.version,
+      );
       if (!res.success) {
         toast.error(res.error || 'Failed to transition status.');
       } else {
@@ -87,9 +90,13 @@ export function CourseEditClient({
         <div className="flex items-center gap-3">
           <ArrowRightLeft className="h-5 w-5 text-slate-500" />
           <div>
-            <span className="text-xs font-semibold text-slate-500 block">Current Catalog Status</span>
+            <span className="text-xs font-semibold text-slate-500 block">
+              Current Catalog Status
+            </span>
             <div className="flex items-center gap-2 mt-0.5">
-              <span className="font-bold text-slate-800 text-sm">{course.courseCode}</span>
+              <span className="font-bold text-slate-800 text-sm">
+                {course.courseCode}
+              </span>
               {getStatusBadge(course.status)}
             </div>
           </div>
@@ -105,7 +112,11 @@ export function CourseEditClient({
               disabled={isTransitioning}
               className="flex items-center gap-1"
             >
-              {isTransitioning ? <Loader2 className="h-3 w-3 animate-spin" /> : <FileCheck className="h-3.5 w-3.5" />}
+              {isTransitioning ? (
+                <Loader2 className="h-3 w-3 animate-spin" />
+              ) : (
+                <FileCheck className="h-3.5 w-3.5" />
+              )}
               Submit for Review
             </Button>
           )}
@@ -128,7 +139,11 @@ export function CourseEditClient({
                 disabled={isTransitioning}
                 className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white border-none"
               >
-                {isTransitioning ? <Loader2 className="h-3 w-3 animate-spin" /> : <CheckCircle className="h-3.5 w-3.5" />}
+                {isTransitioning ? (
+                  <Loader2 className="h-3 w-3 animate-spin" />
+                ) : (
+                  <CheckCircle className="h-3.5 w-3.5" />
+                )}
                 Approve Template
               </Button>
             </>
@@ -151,7 +166,11 @@ export function CourseEditClient({
                 disabled={isTransitioning}
                 className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white"
               >
-                {isTransitioning ? <Loader2 className="h-3 w-3 animate-spin" /> : <Sparkles className="h-3.5 w-3.5" />}
+                {isTransitioning ? (
+                  <Loader2 className="h-3 w-3 animate-spin" />
+                ) : (
+                  <Sparkles className="h-3.5 w-3.5" />
+                )}
                 Publish Catalog Template
               </Button>
             </>
@@ -165,7 +184,11 @@ export function CourseEditClient({
               disabled={isTransitioning}
               className="flex items-center gap-1"
             >
-              {isTransitioning ? <Loader2 className="h-3 w-3 animate-spin" /> : <Archive className="h-3.5 w-3.5" />}
+              {isTransitioning ? (
+                <Loader2 className="h-3 w-3 animate-spin" />
+              ) : (
+                <Archive className="h-3.5 w-3.5" />
+              )}
               Archive Course
             </Button>
           )}
@@ -182,7 +205,8 @@ export function CourseEditClient({
       {/* Warning if Archived */}
       {course.status === 'Archived' && (
         <Alert variant="error" title="Archived Template Locked">
-          This course template is logically deleted and archived. Re-publishing or modifications require administrative overrides.
+          This course template is logically deleted and archived. Re-publishing
+          or modifications require administrative overrides.
         </Alert>
       )}
 
@@ -219,7 +243,9 @@ export function CourseEditClient({
             initialData={course}
             categories={categories}
             departments={departments}
-            onSubmitAction={(data) => updateCourseAction(course.id, course.version, data)}
+            onSubmitAction={(data) =>
+              updateCourseAction(course.id, course.version, data)
+            }
           />
         )
       ) : (

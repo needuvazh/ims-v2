@@ -43,38 +43,38 @@ Such display data is not edited through Document Management screens.
 
 ## 2.1 Admin Portal Screen Inventory
 
-| Screen ID | Screen | Route Pattern | Purpose | Primary Use Case(s) | Main FR Traceability | Scope |
-|---|---|---|---|---|---|---|
-| SCR-DOC-ADM-001 | Document Registry | `/documents` | Search, filter, sort, and inspect accessible documents | UC-DOC-002, UC-DOC-003 | FR-DOC-007, 008, 009, 018, 019, 031 | Current |
-| SCR-DOC-ADM-002 | Upload Document | `/documents/new` | Register document metadata and upload binary | UC-DOC-001 | FR-DOC-001 to 006, 018, 019, 022, 023, 029, 030, 033, 035 | Current |
-| SCR-DOC-ADM-003 | Document Detail | `/documents/{documentId}` | View metadata, owner summary, current state, file access, and history | UC-DOC-003 | FR-DOC-009, 010, 014, 018, 019, 021, 031 | Current |
-| SCR-DOC-ADM-004 | Edit Document Metadata | `/documents/{documentId}/edit` | Correct permitted metadata while preserving history | UC-DOC-008 | FR-DOC-005, 006, 018, 019, 021, 028, 032, 033 | Current |
-| SCR-DOC-ADM-005 | Verification Queue | `/documents/verification` | Review branch-scoped pending verification work | UC-DOC-005, UC-DOC-006 | FR-DOC-024, 018, 019 | Current |
-| SCR-DOC-ADM-006 | Verification Review | `/documents/{documentId}/verify` | Inspect evidence and approve/reject an eligible pending document | UC-DOC-005, UC-DOC-006 | FR-DOC-012, 013, 014, 017, 018, 019, 021, 032 | Current |
-| SCR-DOC-ADM-007 | Expiry Workbench | `/documents/expiry` | Find expired and expiring-soon documents | UC-DOC-007 | FR-DOC-015, 016, 018, 019, 025, 027, 033 | Current |
-| SCR-DOC-ADM-008 | Document Audit and Verification History | `/documents/{documentId}/history` | Review immutable verification decisions and linked audit facts | UC-DOC-003 | FR-DOC-014, 021, 028 | Current |
-| SCR-DOC-ADM-009 | Blob Reconciliation Operations | `/documents/operations/reconciliation` | Operationally inspect unresolved Blob/database inconsistencies | UC-DOC-010 | FR-DOC-022, 023 | Restricted operations screen |
-| SCR-DOC-ADM-010 | Owner Document Drawer/Tab | Embedded under owner-detail screens | View documents belonging to a Student, Trainer, Corporate, or Person owner | UC-DOC-002, UC-DOC-001 | FR-DOC-001, 003, 007, 008, 018, 019, 031 | Cross-context composition |
+| Screen ID       | Screen                                  | Route Pattern                          | Purpose                                                                    | Primary Use Case(s)    | Main FR Traceability                                      | Scope                        |
+| --------------- | --------------------------------------- | -------------------------------------- | -------------------------------------------------------------------------- | ---------------------- | --------------------------------------------------------- | ---------------------------- |
+| SCR-DOC-ADM-001 | Document Registry                       | `/documents`                           | Search, filter, sort, and inspect accessible documents                     | UC-DOC-002, UC-DOC-003 | FR-DOC-007, 008, 009, 018, 019, 031                       | Current                      |
+| SCR-DOC-ADM-002 | Upload Document                         | `/documents/new`                       | Register document metadata and upload binary                               | UC-DOC-001             | FR-DOC-001 to 006, 018, 019, 022, 023, 029, 030, 033, 035 | Current                      |
+| SCR-DOC-ADM-003 | Document Detail                         | `/documents/{documentId}`              | View metadata, owner summary, current state, file access, and history      | UC-DOC-003             | FR-DOC-009, 010, 014, 018, 019, 021, 031                  | Current                      |
+| SCR-DOC-ADM-004 | Edit Document Metadata                  | `/documents/{documentId}/edit`         | Correct permitted metadata while preserving history                        | UC-DOC-008             | FR-DOC-005, 006, 018, 019, 021, 028, 032, 033             | Current                      |
+| SCR-DOC-ADM-005 | Verification Queue                      | `/documents/verification`              | Review branch-scoped pending verification work                             | UC-DOC-005, UC-DOC-006 | FR-DOC-024, 018, 019                                      | Current                      |
+| SCR-DOC-ADM-006 | Verification Review                     | `/documents/{documentId}/verify`       | Inspect evidence and approve/reject an eligible pending document           | UC-DOC-005, UC-DOC-006 | FR-DOC-012, 013, 014, 017, 018, 019, 021, 032             | Current                      |
+| SCR-DOC-ADM-007 | Expiry Workbench                        | `/documents/expiry`                    | Find expired and expiring-soon documents                                   | UC-DOC-007             | FR-DOC-015, 016, 018, 019, 025, 027, 033                  | Current                      |
+| SCR-DOC-ADM-008 | Document Audit and Verification History | `/documents/{documentId}/history`      | Review immutable verification decisions and linked audit facts             | UC-DOC-003             | FR-DOC-014, 021, 028                                      | Current                      |
+| SCR-DOC-ADM-009 | Blob Reconciliation Operations          | `/documents/operations/reconciliation` | Operationally inspect unresolved Blob/database inconsistencies             | UC-DOC-010             | FR-DOC-022, 023                                           | Restricted operations screen |
+| SCR-DOC-ADM-010 | Owner Document Drawer/Tab               | Embedded under owner-detail screens    | View documents belonging to a Student, Trainer, Corporate, or Person owner | UC-DOC-002, UC-DOC-001 | FR-DOC-001, 003, 007, 008, 018, 019, 031                  | Cross-context composition    |
 
 ## 2.2 Student Portal Screen Inventory
 
 > These screens are **future/conditional channel specifications**. They must not be treated as part of the currently committed single Admin Portal unless the Student Portal phase is activated.
 
-| Screen ID | Screen | Route Pattern | Purpose | Use Case Mapping | Scope |
-|---|---|---|---|---|---|
-| SCR-DOC-STU-001 | My Documents | `/my/documents` | List only documents linked to the authenticated student's permitted owner identity | UC-DOC-002, UC-DOC-003 | Future/conditional |
-| SCR-DOC-STU-002 | Upload My Document | `/my/documents/new` | Upload permitted self-service document types | UC-DOC-001 | Future/conditional |
-| SCR-DOC-STU-003 | My Document Detail | `/my/documents/{documentId}` | View own document metadata, status, permitted remarks, and file | UC-DOC-003 | Future/conditional |
+| Screen ID       | Screen             | Route Pattern                | Purpose                                                                            | Use Case Mapping       | Scope              |
+| --------------- | ------------------ | ---------------------------- | ---------------------------------------------------------------------------------- | ---------------------- | ------------------ |
+| SCR-DOC-STU-001 | My Documents       | `/my/documents`              | List only documents linked to the authenticated student's permitted owner identity | UC-DOC-002, UC-DOC-003 | Future/conditional |
+| SCR-DOC-STU-002 | Upload My Document | `/my/documents/new`          | Upload permitted self-service document types                                       | UC-DOC-001             | Future/conditional |
+| SCR-DOC-STU-003 | My Document Detail | `/my/documents/{documentId}` | View own document metadata, status, permitted remarks, and file                    | UC-DOC-003             | Future/conditional |
 
 ## 2.3 Trainer Portal Screen Inventory
 
 > These screens are **future/conditional channel specifications**. Trainer Management remains the owner of TrainerProfile and qualification/business authorization data.
 
-| Screen ID | Screen | Route Pattern | Purpose | Use Case Mapping | Scope |
-|---|---|---|---|---|---|
-| SCR-DOC-TRN-001 | My Documents | `/trainer/documents` | List documents associated with the authenticated trainer's owner identity | UC-DOC-002, UC-DOC-003 | Future/conditional |
-| SCR-DOC-TRN-002 | Upload Trainer Document | `/trainer/documents/new` | Upload self-service evidence types allowed for trainers | UC-DOC-001 | Future/conditional |
-| SCR-DOC-TRN-003 | Trainer Document Detail | `/trainer/documents/{documentId}` | View own document details and lifecycle status | UC-DOC-003 | Future/conditional |
+| Screen ID       | Screen                  | Route Pattern                     | Purpose                                                                   | Use Case Mapping       | Scope              |
+| --------------- | ----------------------- | --------------------------------- | ------------------------------------------------------------------------- | ---------------------- | ------------------ |
+| SCR-DOC-TRN-001 | My Documents            | `/trainer/documents`              | List documents associated with the authenticated trainer's owner identity | UC-DOC-002, UC-DOC-003 | Future/conditional |
+| SCR-DOC-TRN-002 | Upload Trainer Document | `/trainer/documents/new`          | Upload self-service evidence types allowed for trainers                   | UC-DOC-001             | Future/conditional |
+| SCR-DOC-TRN-003 | Trainer Document Detail | `/trainer/documents/{documentId}` | View own document details and lifecycle status                            | UC-DOC-003             | Future/conditional |
 
 ## 2.4 Deliberately Excluded Screens
 
@@ -169,12 +169,12 @@ Read-only presentation of owner data resolved from owning context/read model.
 
 Fields vary by owner type, for example:
 
-| Owner Type | Typical Display Fields |
-|---|---|
-| Student | Student number, full name, branch, status summary |
-| Trainer | Trainer code, full name, branch, trainer status summary |
-| Corporate | Account code, account name, primary branch/relationship summary when available |
-| Person | Full name, masked identity/contact summary where allowed |
+| Owner Type | Typical Display Fields                                                         |
+| ---------- | ------------------------------------------------------------------------------ |
+| Student    | Student number, full name, branch, status summary                              |
+| Trainer    | Trainer code, full name, branch, trainer status summary                        |
+| Corporate  | Account code, account name, primary branch/relationship summary when available |
+| Person     | Full name, masked identity/contact summary where allowed                       |
 
 Rules:
 
@@ -347,18 +347,18 @@ Provide a branch-scoped operational registry for finding and inspecting document
 
 ### Table columns
 
-| Column | Behavior |
-|---|---|
-| Document Type | Localized display label; sortable where query service supports it |
-| Owner | Read-model display name; link only if user may access owner page |
-| Owner Reference | Student number, trainer code, account code, or safe person reference as applicable |
-| Owner Type | Localized enum label |
-| Verification Status | Status badge |
-| Issue Date | Date-only localized display |
-| Expiry Date | Date-only display plus expiry indicator |
-| Uploaded At | Oman timezone date/time |
-| Uploaded By | Display name when authorized |
-| Actions | View, secure preview/download where authorized; no unauthorized menu placeholders |
+| Column              | Behavior                                                                           |
+| ------------------- | ---------------------------------------------------------------------------------- |
+| Document Type       | Localized display label; sortable where query service supports it                  |
+| Owner               | Read-model display name; link only if user may access owner page                   |
+| Owner Reference     | Student number, trainer code, account code, or safe person reference as applicable |
+| Owner Type          | Localized enum label                                                               |
+| Verification Status | Status badge                                                                       |
+| Issue Date          | Date-only localized display                                                        |
+| Expiry Date         | Date-only display plus expiry indicator                                            |
+| Uploaded At         | Oman timezone date/time                                                            |
+| Uploaded By         | Display name when authorized                                                       |
+| Actions             | View, secure preview/download where authorized; no unauthorized menu placeholders  |
 
 ### Table behaviors
 
@@ -437,14 +437,14 @@ Register a `Document` for exactly one valid supported owner and store its file b
 
 ### Inputs
 
-| Field | Required | UI Control | Validation |
-|---|---:|---|---|
-| Owner Type | Yes | Select/cards | Student, Trainer, Corporate, Person only in current phase |
-| Owner | Yes | Async searchable selector | Canonical owner ID required; server validates existence, active state, and branch access |
-| Document Type | Yes | Searchable select | Must be active/valid in Configuration or approved schema relation |
-| Issue Date | Conditional/Optional | Date picker | Date-only semantics; policy-defined optionality by type may be applied from configuration |
-| Expiry Date | Conditional/Optional | Date picker | Cannot be earlier than issue date when both present |
-| File | Yes | Dropzone/file picker | Size/type rules from approved configuration/architecture; no invented values |
+| Field         |             Required | UI Control                | Validation                                                                                |
+| ------------- | -------------------: | ------------------------- | ----------------------------------------------------------------------------------------- |
+| Owner Type    |                  Yes | Select/cards              | Student, Trainer, Corporate, Person only in current phase                                 |
+| Owner         |                  Yes | Async searchable selector | Canonical owner ID required; server validates existence, active state, and branch access  |
+| Document Type |                  Yes | Searchable select         | Must be active/valid in Configuration or approved schema relation                         |
+| Issue Date    | Conditional/Optional | Date picker               | Date-only semantics; policy-defined optionality by type may be applied from configuration |
+| Expiry Date   | Conditional/Optional | Date picker               | Cannot be earlier than issue date when both present                                       |
+| File          |                  Yes | Dropzone/file picker      | Size/type rules from approved configuration/architecture; no invented values              |
 
 ### Processing interaction
 
@@ -535,13 +535,13 @@ Provide the authoritative operational view of one accessible Document, its curre
 
 ### Action-state rules
 
-| Current State | Submit | Approve/Reject | Edit Metadata | Retire |
-|---|---|---|---|---|
-| Uploaded | Eligible with permission | No | Yes, subject to policy | Yes |
-| PendingVerification | No | Via Verification Review for authorized verifier | Limited/policy controlled | Yes, subject to policy |
-| Approved | No | No | Allowed metadata only; file evidence replacement cannot silently preserve approval | Yes |
-| Rejected | Resubmission action only if approved policy exists; otherwise absent | No | Metadata correction may be allowed | Yes |
-| Expired | No automatic verification action inferred | No | Metadata correction subject to policy | Yes |
+| Current State       | Submit                                                               | Approve/Reject                                  | Edit Metadata                                                                      | Retire                 |
+| ------------------- | -------------------------------------------------------------------- | ----------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------- |
+| Uploaded            | Eligible with permission                                             | No                                              | Yes, subject to policy                                                             | Yes                    |
+| PendingVerification | No                                                                   | Via Verification Review for authorized verifier | Limited/policy controlled                                                          | Yes, subject to policy |
+| Approved            | No                                                                   | No                                              | Allowed metadata only; file evidence replacement cannot silently preserve approval | Yes                    |
+| Rejected            | Resubmission action only if approved policy exists; otherwise absent | No                                              | Metadata correction may be allowed                                                 | Yes                    |
+| Expired             | No automatic verification action inferred                            | No                                              | Metadata correction subject to policy                                              | Yes                    |
 
 ### Dynamic states
 
@@ -1176,20 +1176,20 @@ Read-only Document Management view with secure file access.
 
 ## 8.1 Validation Error Taxonomy
 
-| Error Type | Example | UI Behavior |
-|---|---|---|
-| Required field | No Document Type | Inline error and focus summary |
-| Invalid owner | Owner deleted/not found | Clear selected owner; generic validation error without leaked details |
-| Unauthorized owner | Owner outside branch scope | Access/validation error; do not reveal owner details |
-| Invalid date range | Expiry before issue date | Inline expiry-date error |
-| Invalid document type | Inactive or unsupported type | Inline type error; refresh options |
-| Invalid state transition | Approve Uploaded document | State error and reload latest state |
-| Missing rejection reason | Empty rejection remarks | Inline textarea error |
-| Concurrency conflict | Another verifier already decided | Conflict banner, disable stale actions, Reload |
-| File policy violation | Unsupported type/size | Inline file error based on approved configuration |
-| Blob upload failure | Storage operation fails | Retain recoverable form metadata locally where safe; show retry |
-| Metadata persistence failure | Blob success/database failure | Controlled error with correlation reference; no false success message |
-| Session/auth failure | Session expired | Redirect/re-auth according to IAM pattern; do not continue upload silently |
+| Error Type                   | Example                          | UI Behavior                                                                |
+| ---------------------------- | -------------------------------- | -------------------------------------------------------------------------- |
+| Required field               | No Document Type                 | Inline error and focus summary                                             |
+| Invalid owner                | Owner deleted/not found          | Clear selected owner; generic validation error without leaked details      |
+| Unauthorized owner           | Owner outside branch scope       | Access/validation error; do not reveal owner details                       |
+| Invalid date range           | Expiry before issue date         | Inline expiry-date error                                                   |
+| Invalid document type        | Inactive or unsupported type     | Inline type error; refresh options                                         |
+| Invalid state transition     | Approve Uploaded document        | State error and reload latest state                                        |
+| Missing rejection reason     | Empty rejection remarks          | Inline textarea error                                                      |
+| Concurrency conflict         | Another verifier already decided | Conflict banner, disable stale actions, Reload                             |
+| File policy violation        | Unsupported type/size            | Inline file error based on approved configuration                          |
+| Blob upload failure          | Storage operation fails          | Retain recoverable form metadata locally where safe; show retry            |
+| Metadata persistence failure | Blob success/database failure    | Controlled error with correlation reference; no false success message      |
+| Session/auth failure         | Session expired                  | Redirect/re-auth according to IAM pattern; do not continue upload silently |
 
 ## 8.2 Loading Skeleton Standards
 
@@ -1220,16 +1220,16 @@ This permits partial rendering without blocking all content on slow file preview
 
 ## 8.3 Empty State Catalogue
 
-| Screen | Empty State | CTA Rule |
-|---|---|---|
-| Registry | No accessible documents | Upload shown only with create permission |
-| Registry filtered | No matching results | Reset Filters |
-| Verification Queue | No pending documents | No create CTA |
-| Expiry Workbench | No expired/expiring documents | Informational; no mutation CTA |
-| Verification History | No decisions yet | No CTA unless current status allows submit and user has permission |
-| Student My Documents | No documents yet | Upload only if self-service create is enabled |
-| Trainer My Documents | No documents yet | Upload only if trainer self-service create is enabled |
-| Reconciliation | No unresolved inconsistencies | Operational success state |
+| Screen               | Empty State                   | CTA Rule                                                           |
+| -------------------- | ----------------------------- | ------------------------------------------------------------------ |
+| Registry             | No accessible documents       | Upload shown only with create permission                           |
+| Registry filtered    | No matching results           | Reset Filters                                                      |
+| Verification Queue   | No pending documents          | No create CTA                                                      |
+| Expiry Workbench     | No expired/expiring documents | Informational; no mutation CTA                                     |
+| Verification History | No decisions yet              | No CTA unless current status allows submit and user has permission |
+| Student My Documents | No documents yet              | Upload only if self-service create is enabled                      |
+| Trainer My Documents | No documents yet              | Upload only if trainer self-service create is enabled              |
+| Reconciliation       | No unresolved inconsistencies | Operational success state                                          |
 
 ## 8.4 Error States
 
@@ -1370,16 +1370,16 @@ Typical sortable fields:
 
 ## 11.1 General Direction Rules
 
-| Concern | English | Arabic |
-|---|---|---|
-| Page direction | `ltr` | `rtl` |
-| Primary navigation flow | Left-to-right | Right-to-left |
-| Breadcrumb progression | Left to right | Right to left |
-| Form label alignment | Product design standard for LTR | Mirrored/aligned for RTL readability |
-| Leading icons | Left of label | Right of label where icon is directional/leading |
-| Drawer origin | Product LTR standard | Mirrored for RTL where appropriate |
-| Table reading order | First key column on left | First key column on right |
-| Pagination arrows | Normal LTR semantic direction | Mirrored semantic direction |
+| Concern                 | English                         | Arabic                                           |
+| ----------------------- | ------------------------------- | ------------------------------------------------ |
+| Page direction          | `ltr`                           | `rtl`                                            |
+| Primary navigation flow | Left-to-right                   | Right-to-left                                    |
+| Breadcrumb progression  | Left to right                   | Right to left                                    |
+| Form label alignment    | Product design standard for LTR | Mirrored/aligned for RTL readability             |
+| Leading icons           | Left of label                   | Right of label where icon is directional/leading |
+| Drawer origin           | Product LTR standard            | Mirrored for RTL where appropriate               |
+| Table reading order     | First key column on left        | First key column on right                        |
+| Pagination arrows       | Normal LTR semantic direction   | Mirrored semantic direction                      |
 
 ## 11.2 Text and Data Direction
 
@@ -1424,13 +1424,13 @@ Status labels require localized display values while preserving canonical server
 
 Example:
 
-| Canonical Value | English Display | Arabic Display Requirement |
-|---|---|---|
-| Uploaded | Uploaded | Localized configured Arabic label |
+| Canonical Value     | English Display      | Arabic Display Requirement        |
+| ------------------- | -------------------- | --------------------------------- |
+| Uploaded            | Uploaded             | Localized configured Arabic label |
 | PendingVerification | Pending Verification | Localized configured Arabic label |
-| Approved | Approved | Localized configured Arabic label |
-| Rejected | Rejected | Localized configured Arabic label |
-| Expired | Expired | Localized configured Arabic label |
+| Approved            | Approved             | Localized configured Arabic label |
+| Rejected            | Rejected             | Localized configured Arabic label |
+| Expired             | Expired              | Localized configured Arabic label |
 
 This document does not invent Arabic translations as domain data unless approved localization values are supplied by Configuration/Master Data.
 
@@ -1470,20 +1470,20 @@ This document does not invent Arabic translations as domain data unless approved
 
 > Permission codes below are capability-oriented conceptual mappings consistent with Part 1 and Part 2. Final exact permission catalog must match the IAM Permission records and Part 6 Permission Matrix when generated.
 
-| UI Capability | Conceptual Permission | UI Effect |
-|---|---|---|
-| Open Document Registry | `document.read` | Show Documents menu and registry route |
-| Create/Upload | `document.create` | Show Upload CTA and route |
-| Edit Metadata | `document.update` | Show Edit action |
-| Submit for Verification | `document.verify.submit` | Show Submit action only in eligible state |
-| Read Verification Queue | `document.verify.read` | Show queue menu/route |
-| Approve | `document.verify.approve` | Show Approve action |
-| Reject | `document.verify.reject` | Show Reject action |
-| Secure File Access | `document.file.read` | Show preview/download actions |
-| Expiry Queue | `document.expiry.read` | Show Expiry Workbench |
-| Retire | `document.retire` | Show Retire action |
-| Read History | `document.history.read` | Show detailed history view |
-| Reconciliation Ops | `document.operations.reconcile` | Show restricted operations route |
+| UI Capability           | Conceptual Permission           | UI Effect                                 |
+| ----------------------- | ------------------------------- | ----------------------------------------- |
+| Open Document Registry  | `document.read`                 | Show Documents menu and registry route    |
+| Create/Upload           | `document.create`               | Show Upload CTA and route                 |
+| Edit Metadata           | `document.update`               | Show Edit action                          |
+| Submit for Verification | `document.verify.submit`        | Show Submit action only in eligible state |
+| Read Verification Queue | `document.verify.read`          | Show queue menu/route                     |
+| Approve                 | `document.verify.approve`       | Show Approve action                       |
+| Reject                  | `document.verify.reject`        | Show Reject action                        |
+| Secure File Access      | `document.file.read`            | Show preview/download actions             |
+| Expiry Queue            | `document.expiry.read`          | Show Expiry Workbench                     |
+| Retire                  | `document.retire`               | Show Retire action                        |
+| Read History            | `document.history.read`         | Show detailed history view                |
+| Reconciliation Ops      | `document.operations.reconcile` | Show restricted operations route          |
 
 Rules:
 
@@ -1496,22 +1496,22 @@ Rules:
 
 # 14. Screen-to-Use-Case and Application-Service Traceability
 
-| Screen | Use Case | Application Service Responsibility | DDD Owner |
-|---|---|---|---|
-| Document Registry | UC-DOC-002 | Query accessible documents with filters/sort/paging | Document Management |
-| Upload Document | UC-DOC-001 | Validate owner reference, metadata, permission, scope; orchestrate Blob + metadata persistence | Document Management + infrastructure adapter |
-| Document Detail | UC-DOC-003 | Fetch accessible document detail/history and authorize file access entry | Document Management |
-| Edit Metadata | UC-DOC-008 | Validate permitted changes, dates, concurrency, audit fact | Document Management |
-| Verification Queue | UC-DOC-005/006 | Query PendingVerification work | Document Management |
-| Verification Review | UC-DOC-005/006 | Authorize and execute approve/reject transition | Document Management |
-| Expiry Workbench | UC-DOC-007 | Evaluate/query expiry condition | Document Management |
-| History Screen | UC-DOC-003 | Read verification history; compose permitted audit data | Document Management + Audit read integration |
-| Reconciliation Ops | UC-DOC-010 | Inspect/retry approved reconciliation operations | Infrastructure/Application Operations |
-| Owner Document Tab | UC-DOC-002/001 | Query documents by canonical owner reference | Document Management |
-| Student My Documents | UC-DOC-002/003 | Resolve self identity, query own docs | IAM + Admission/Enrollment identity mapping + Document query |
-| Student Upload | UC-DOC-001 | Resolve self owner and create document | Document Management |
-| Trainer My Documents | UC-DOC-002/003 | Resolve trainer identity and query own docs | IAM + Trainer Management identity mapping + Document query |
-| Trainer Upload | UC-DOC-001 | Resolve trainer owner and create document | Document Management |
+| Screen               | Use Case       | Application Service Responsibility                                                             | DDD Owner                                                    |
+| -------------------- | -------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| Document Registry    | UC-DOC-002     | Query accessible documents with filters/sort/paging                                            | Document Management                                          |
+| Upload Document      | UC-DOC-001     | Validate owner reference, metadata, permission, scope; orchestrate Blob + metadata persistence | Document Management + infrastructure adapter                 |
+| Document Detail      | UC-DOC-003     | Fetch accessible document detail/history and authorize file access entry                       | Document Management                                          |
+| Edit Metadata        | UC-DOC-008     | Validate permitted changes, dates, concurrency, audit fact                                     | Document Management                                          |
+| Verification Queue   | UC-DOC-005/006 | Query PendingVerification work                                                                 | Document Management                                          |
+| Verification Review  | UC-DOC-005/006 | Authorize and execute approve/reject transition                                                | Document Management                                          |
+| Expiry Workbench     | UC-DOC-007     | Evaluate/query expiry condition                                                                | Document Management                                          |
+| History Screen       | UC-DOC-003     | Read verification history; compose permitted audit data                                        | Document Management + Audit read integration                 |
+| Reconciliation Ops   | UC-DOC-010     | Inspect/retry approved reconciliation operations                                               | Infrastructure/Application Operations                        |
+| Owner Document Tab   | UC-DOC-002/001 | Query documents by canonical owner reference                                                   | Document Management                                          |
+| Student My Documents | UC-DOC-002/003 | Resolve self identity, query own docs                                                          | IAM + Admission/Enrollment identity mapping + Document query |
+| Student Upload       | UC-DOC-001     | Resolve self owner and create document                                                         | Document Management                                          |
+| Trainer My Documents | UC-DOC-002/003 | Resolve trainer identity and query own docs                                                    | IAM + Trainer Management identity mapping + Document query   |
+| Trainer Upload       | UC-DOC-001     | Resolve trainer owner and create document                                                      | Document Management                                          |
 
 ---
 
@@ -1557,19 +1557,19 @@ Rules:
 
 # 16. Cross-Context UI Dependency Mapping
 
-| Dependency Context | UI Need | Allowed Interaction | Prohibited UI Assumption |
-|---|---|---|---|
-| IAM | Permissions, branch scope, self identity | Session/access service, server guards | Hardcoded role names or client-only access control |
-| Configuration / Master Data | Document type labels/options | Read active localized values | Free-text type ownership in UI |
-| Admission & Enrollment | Student owner identity/display | Owner search/read model and self identity resolution | Editing StudentProfile from Document screen |
-| Trainer Management | Trainer owner identity/display | Owner search/read model and self identity resolution | Changing qualification/course authorization from Document screen |
-| Corporate Training | Corporate owner identity/display | Owner search/read model | Editing corporate account/contract from Document screen |
-| Party / Person | Person owner identity/display | Read canonical person summary | Creating duplicate person data |
-| Audit & Compliance | Audit activity display | Read composition; application integration for audit facts | Browser writes AuditLog |
-| Communication | Future expiry alert delivery | Display alert-request outcome only if API contract exists | Treating notification delivery as Document lifecycle state |
-| Reporting | Aggregated document metrics | Navigate/read reports where authorized | Reporting mutations of Document state |
-| Certificate | Separate certificate files/status | Navigation only if authorized | Managing certificates as generic Document records |
-| Finance | Separate receipt/invoice file concerns | Navigation/read composition only if defined | Mutating Invoice/Receipt lifecycle from Document UI |
+| Dependency Context          | UI Need                                  | Allowed Interaction                                       | Prohibited UI Assumption                                         |
+| --------------------------- | ---------------------------------------- | --------------------------------------------------------- | ---------------------------------------------------------------- |
+| IAM                         | Permissions, branch scope, self identity | Session/access service, server guards                     | Hardcoded role names or client-only access control               |
+| Configuration / Master Data | Document type labels/options             | Read active localized values                              | Free-text type ownership in UI                                   |
+| Admission & Enrollment      | Student owner identity/display           | Owner search/read model and self identity resolution      | Editing StudentProfile from Document screen                      |
+| Trainer Management          | Trainer owner identity/display           | Owner search/read model and self identity resolution      | Changing qualification/course authorization from Document screen |
+| Corporate Training          | Corporate owner identity/display         | Owner search/read model                                   | Editing corporate account/contract from Document screen          |
+| Party / Person              | Person owner identity/display            | Read canonical person summary                             | Creating duplicate person data                                   |
+| Audit & Compliance          | Audit activity display                   | Read composition; application integration for audit facts | Browser writes AuditLog                                          |
+| Communication               | Future expiry alert delivery             | Display alert-request outcome only if API contract exists | Treating notification delivery as Document lifecycle state       |
+| Reporting                   | Aggregated document metrics              | Navigate/read reports where authorized                    | Reporting mutations of Document state                            |
+| Certificate                 | Separate certificate files/status        | Navigation only if authorized                             | Managing certificates as generic Document records                |
+| Finance                     | Separate receipt/invoice file concerns   | Navigation/read composition only if defined               | Mutating Invoice/Receipt lifecycle from Document UI              |
 
 ---
 
@@ -1691,24 +1691,24 @@ The Prisma schema was listed as an input but was not available in the supplied p
 
 ## 21.1 Alignment Summary
 
-| Area | Alignment Result |
-|---|---|
-| Document ownership | Aligned: screens mutate only Document Management-owned lifecycle data |
-| Person/Party reuse | Aligned: owner summaries are referenced/resolved, not duplicated |
-| Supported owners | Aligned: Student, Trainer, Corporate, Person current; Employee deferred |
+| Area                   | Alignment Result                                                                           |
+| ---------------------- | ------------------------------------------------------------------------------------------ |
+| Document ownership     | Aligned: screens mutate only Document Management-owned lifecycle data                      |
+| Person/Party reuse     | Aligned: owner summaries are referenced/resolved, not duplicated                           |
+| Supported owners       | Aligned: Student, Trainer, Corporate, Person current; Employee deferred                    |
 | Verification lifecycle | Aligned: Uploaded, PendingVerification, Approved, Rejected, Expired presentation supported |
-| Verification history | Aligned: immutable decision timeline; no edit/delete UI |
-| Soft delete | Aligned: Retire action, no hard-delete UI |
-| Branch isolation | Aligned conceptually through server-side owner-derived scope; data-model gap retained |
-| IAM | Aligned: dynamic capability permissions, no hardcoded roles |
-| Vercel Blob | Aligned: storage infrastructure only; business metadata remains IMS-owned |
-| Audit | Aligned: read composition/application integration, no browser-owned AuditLog writes |
-| Communication | Aligned: delivery remains Communication-owned |
-| Reporting | Aligned: reporting/read-only dependency, no state mutation |
-| Certificate | Aligned: certificate operations excluded from generic Document UI |
-| Finance | Aligned: invoice/receipt/refund lifecycle excluded |
-| Completion | Aligned: no completion approval logic in Document screens |
-| Portal phase | Aligned: Admin current, Student/Trainer future/conditional |
+| Verification history   | Aligned: immutable decision timeline; no edit/delete UI                                    |
+| Soft delete            | Aligned: Retire action, no hard-delete UI                                                  |
+| Branch isolation       | Aligned conceptually through server-side owner-derived scope; data-model gap retained      |
+| IAM                    | Aligned: dynamic capability permissions, no hardcoded roles                                |
+| Vercel Blob            | Aligned: storage infrastructure only; business metadata remains IMS-owned                  |
+| Audit                  | Aligned: read composition/application integration, no browser-owned AuditLog writes        |
+| Communication          | Aligned: delivery remains Communication-owned                                              |
+| Reporting              | Aligned: reporting/read-only dependency, no state mutation                                 |
+| Certificate            | Aligned: certificate operations excluded from generic Document UI                          |
+| Finance                | Aligned: invoice/receipt/refund lifecycle excluded                                         |
+| Completion             | Aligned: no completion approval logic in Document screens                                  |
+| Portal phase           | Aligned: Admin current, Student/Trainer future/conditional                                 |
 
 ## 21.2 Part 1 Consistency
 

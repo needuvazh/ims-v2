@@ -8,10 +8,15 @@ type JsonResponse<T> = {
 };
 
 function toCookieHeader(headers: Headers): string {
-  const responseHeaders = headers as Headers & { getSetCookie?: () => string[] };
-  const cookies = typeof responseHeaders.getSetCookie === 'function'
-    ? responseHeaders.getSetCookie()
-    : (headers.get('set-cookie') ? [headers.get('set-cookie') as string] : []);
+  const responseHeaders = headers as Headers & {
+    getSetCookie?: () => string[];
+  };
+  const cookies =
+    typeof responseHeaders.getSetCookie === 'function'
+      ? responseHeaders.getSetCookie()
+      : headers.get('set-cookie')
+        ? [headers.get('set-cookie') as string]
+        : [];
 
   return cookies
     .map((cookie) => cookie.split(';', 1)[0])
@@ -43,37 +48,58 @@ async function main(): Promise<void> {
     },
   });
   await assertOk('documents list should succeed', docListResponse.ok);
-  const docListBody = await docListResponse.json() as JsonResponse<any>;
-  await assertOk('document request is successful', docListBody.success === true);
+  const docListBody = (await docListResponse.json()) as JsonResponse<any>;
+  await assertOk(
+    'document request is successful',
+    docListBody.success === true,
+  );
 
   // 3. Try invalid ID detail lookup (should fail with 404 DOC_NOT_FOUND)
   const invalidId = '00000000-0000-0000-0000-000000000000';
-  const detailResponse = await fetch(`${baseUrl}/api/v1/documents/${invalidId}`, {
-    headers: {
-      cookie: cookieHeader,
+  const detailResponse = await fetch(
+    `${baseUrl}/api/v1/documents/${invalidId}`,
+    {
+      headers: {
+        cookie: cookieHeader,
+      },
     },
-  });
-  await assertOk('accessing invalid document id should fail with 404', detailResponse.status === 404);
+  );
+  await assertOk(
+    'accessing invalid document id should fail with 404',
+    detailResponse.status === 404,
+  );
 
   // 4. Try verification decision for invalid ID (should fail with 404 DOC_NOT_FOUND)
-  const verifyResponse = await fetch(`${baseUrl}/api/v1/documents/${invalidId}/verify`, {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      cookie: cookieHeader,
+  const verifyResponse = await fetch(
+    `${baseUrl}/api/v1/documents/${invalidId}/verify`,
+    {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        cookie: cookieHeader,
+      },
+      body: JSON.stringify({ outcome: 'Verified' }),
     },
-    body: JSON.stringify({ outcome: 'Verified' }),
-  });
-  await assertOk('verifying invalid document id should fail with 404', verifyResponse.status === 404);
+  );
+  await assertOk(
+    'verifying invalid document id should fail with 404',
+    verifyResponse.status === 404,
+  );
 
   // 5. Try deletion for invalid ID (should fail with 404 DOC_NOT_FOUND)
-  const deleteResponse = await fetch(`${baseUrl}/api/v1/documents/${invalidId}`, {
-    method: 'DELETE',
-    headers: {
-      cookie: cookieHeader,
+  const deleteResponse = await fetch(
+    `${baseUrl}/api/v1/documents/${invalidId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        cookie: cookieHeader,
+      },
     },
-  });
-  await assertOk('deleting invalid document id should fail with 404', deleteResponse.status === 404);
+  );
+  await assertOk(
+    'deleting invalid document id should fail with 404',
+    deleteResponse.status === 404,
+  );
 }
 
 main().catch((error: unknown) => {
@@ -82,4 +108,3 @@ main().catch((error: unknown) => {
 });
 
 export {};
-

@@ -1,6 +1,12 @@
 'use client';
 
-import { useActionState, useEffect, useState, type ChangeEvent, type InvalidEvent } from 'react';
+import {
+  useActionState,
+  useEffect,
+  useState,
+  type ChangeEvent,
+  type InvalidEvent,
+} from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Card,
@@ -14,8 +20,15 @@ import {
   Alert,
 } from '@ims/shared-ui';
 import type { Branch, Institute } from '@ims/organization';
-import { createBranchAction, updateBranchAction, type ActionResult } from '@/app/(protected)/organization/actions';
-import { clearErrorField, getFieldValidationMessage } from '@/app/(protected)/organization/validation';
+import {
+  createBranchAction,
+  updateBranchAction,
+  type ActionResult,
+} from '@/app/(protected)/organization/actions';
+import {
+  clearErrorField,
+  getFieldValidationMessage,
+} from '@/app/(protected)/organization/validation';
 
 export interface BranchFormProps {
   mode: 'create' | 'edit' | 'view';
@@ -61,9 +74,16 @@ function formatDateForInput(date: Date | string | null | undefined) {
   return d.toISOString().split('T')[0];
 }
 
-export function BranchForm({ mode, initialData, institutes, users }: BranchFormProps) {
+export function BranchForm({
+  mode,
+  initialData,
+  institutes,
+  users,
+}: BranchFormProps) {
   const router = useRouter();
-  const [values, setValues] = useState<BranchFormValues>(() => buildBranchValues(initialData));
+  const [values, setValues] = useState<BranchFormValues>(() =>
+    buildBranchValues(initialData),
+  );
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const [state, formAction, isPending] = useActionState(
@@ -110,34 +130,48 @@ export function BranchForm({ mode, initialData, institutes, users }: BranchFormP
     clearErrorField(setFieldErrors, field);
   };
 
-  const handleTextChange = (field: keyof BranchFormValues) => (
-    e: ChangeEvent<HTMLInputElement>,
-  ) => updateField(field)(e.target.value);
+  const handleTextChange =
+    (field: keyof BranchFormValues) => (e: ChangeEvent<HTMLInputElement>) =>
+      updateField(field)(e.target.value);
 
-  const handleSelectChange = (field: keyof BranchFormValues) => (
-    e: ChangeEvent<HTMLSelectElement>,
-  ) => updateField(field)(e.target.value);
+  const handleSelectChange =
+    (field: keyof BranchFormValues) => (e: ChangeEvent<HTMLSelectElement>) =>
+      updateField(field)(e.target.value);
 
-  const handleInvalid = (field: keyof BranchFormValues, label: string) => (
-    e: InvalidEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
-    const target = e.currentTarget;
-    setFieldErrors((prev) => ({
-      ...prev,
-      [field]: getFieldValidationMessage(target, label, 'type' in target ? target.type : undefined),
-    }));
-  };
+  const handleInvalid =
+    (field: keyof BranchFormValues, label: string) =>
+    (e: InvalidEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const target = e.currentTarget;
+      setFieldErrors((prev) => ({
+        ...prev,
+        [field]: getFieldValidationMessage(
+          target,
+          label,
+          'type' in target ? target.type : undefined,
+        ),
+      }));
+    };
 
   const isView = mode === 'view';
   const isEdit = mode === 'edit';
-  const instituteOptions = institutes.map((i) => ({ value: i.id, label: i.instituteName }));
-  const userOptions = users.map((u) => ({ value: u.id, label: `${u.fullName} (${u.email})` }));
+  const instituteOptions = institutes.map((i) => ({
+    value: i.id,
+    label: i.instituteName,
+  }));
+  const userOptions = users.map((u) => ({
+    value: u.id,
+    label: `${u.fullName} (${u.email})`,
+  }));
 
   return (
     <Card className="w-full">
       <CardHeader>
         <CardTitle>
-          {mode === 'create' ? 'Add New Branch' : mode === 'edit' ? 'Edit Branch' : 'Branch Details'}
+          {mode === 'create'
+            ? 'Add New Branch'
+            : mode === 'edit'
+              ? 'Edit Branch'
+              : 'Branch Details'}
         </CardTitle>
       </CardHeader>
       <form action={formAction} noValidate>
@@ -192,7 +226,10 @@ export function BranchForm({ mode, initialData, institutes, users }: BranchFormP
               placeholder="Select Manager (Optional)"
               disabled={isView}
               onChange={handleSelectChange('branchManagerId')}
-              onInvalidCapture={handleInvalid('branchManagerId', 'Branch Manager')}
+              onInvalidCapture={handleInvalid(
+                'branchManagerId',
+                'Branch Manager',
+              )}
               errorText={fieldErrors.branchManagerId}
             />
             <Input
@@ -287,13 +324,19 @@ export function BranchForm({ mode, initialData, institutes, users }: BranchFormP
           {isView ? (
             <Button
               type="button"
-              onClick={() => router.push(`/organization/branches/${initialData?.id}/edit`)}
+              onClick={() =>
+                router.push(`/organization/branches/${initialData?.id}/edit`)
+              }
               className="w-full sm:w-auto"
             >
               Edit Branch
             </Button>
           ) : (
-            <Button type="submit" loading={isPending} className="w-full sm:w-auto">
+            <Button
+              type="submit"
+              loading={isPending}
+              className="w-full sm:w-auto"
+            >
               {mode === 'create' ? 'Create Branch' : 'Save Changes'}
             </Button>
           )}

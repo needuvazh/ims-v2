@@ -2,7 +2,20 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { Badge, Button, Card, CardContent, CardFooter, CardHeader, EmptyState, FormLabel, Input, Pagination, ResponsiveDataTable, Select } from '@ims/shared-ui';
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  EmptyState,
+  FormLabel,
+  Input,
+  Pagination,
+  ResponsiveDataTable,
+  Select,
+} from '@ims/shared-ui';
 import { Eye, GraduationCap, Search, Users, X } from 'lucide-react';
 import Link from 'next/link';
 
@@ -23,8 +36,16 @@ interface StudentItem {
     mobile?: string | null;
     email?: string | null;
   };
-  admissions?: Array<{ id: string; admissionNumber: string; admissionStatus: string }>;
-  enrollments?: Array<{ id: string; enrollmentStatus: string; course: { nameEnglish: string } }>;
+  admissions?: Array<{
+    id: string;
+    admissionNumber: string;
+    admissionStatus: string;
+  }>;
+  enrollments?: Array<{
+    id: string;
+    enrollmentStatus: string;
+    course: { nameEnglish: string };
+  }>;
 }
 
 interface StudentsClientListProps {
@@ -62,26 +83,33 @@ export function StudentsClientList({
 
   const [searchValue, setSearchValue] = useState(defaultSearch);
 
-  const currentSortBy = searchParams.get('sortBy') ?? defaultSortBy ?? 'joinedAt';
-  const currentSortOrder = (searchParams.get('sortOrder') as SortOrder | null) ?? defaultSortOrder;
+  const currentSortBy =
+    searchParams.get('sortBy') ?? defaultSortBy ?? 'joinedAt';
+  const currentSortOrder =
+    (searchParams.get('sortOrder') as SortOrder | null) ?? defaultSortOrder;
 
-  const updateParams = useCallback((updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
+  const updateParams = useCallback(
+    (updates: Record<string, string | null>) => {
+      const params = new URLSearchParams(searchParams.toString());
 
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === '') {
-        params.delete(key);
-      } else {
-        params.set(key, value);
-      }
-    });
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value === null || value === '') {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      });
 
-    router.push(`${pathname}?${params.toString()}`);
-  }, [pathname, router, searchParams]);
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [pathname, router, searchParams],
+  );
 
   useEffect(() => {
     const nextSearch = searchParams.get('q') || '';
-    setSearchValue((current) => (current === nextSearch ? current : nextSearch));
+    setSearchValue((current) =>
+      current === nextSearch ? current : nextSearch,
+    );
   }, [searchParams]);
 
   useEffect(() => {
@@ -98,33 +126,47 @@ export function StudentsClientList({
   }, [searchParams, searchValue, updateParams]);
 
   const handleSort = (field: string) => {
-    const nextOrder: SortOrder = currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
+    const nextOrder: SortOrder =
+      currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
     updateParams({ sortBy: field, sortOrder: nextOrder, page: '1' });
   };
 
-  const activeCount = students.filter((student) => student.status === 'Active').length;
+  const activeCount = students.filter(
+    (student) => student.status === 'Active',
+  ).length;
 
   const columns = [
     {
       header: 'Student ID',
       sortable: true,
-      sortDirection: currentSortBy === 'studentNumber' ? currentSortOrder : null,
+      sortDirection:
+        currentSortBy === 'studentNumber' ? currentSortOrder : null,
       onSort: () => handleSort('studentNumber'),
-      render: (s: StudentItem) => <span className="font-mono text-xs font-bold text-slate-600">{s.studentNumber}</span>,
+      render: (s: StudentItem) => (
+        <span className="font-mono text-xs font-bold text-slate-600">
+          {s.studentNumber}
+        </span>
+      ),
     },
     {
       header: 'Full Name',
       sortable: true,
       sortDirection: currentSortBy === 'fullName' ? currentSortOrder : null,
       onSort: () => handleSort('fullName'),
-      render: (s: StudentItem) => <div className="font-bold text-slate-800">{s.person.firstName} {s.person.lastName}</div>,
+      render: (s: StudentItem) => (
+        <div className="font-bold text-slate-800">
+          {s.person.firstName} {s.person.lastName}
+        </div>
+      ),
     },
     {
       header: 'Contact',
       render: (s: StudentItem) => (
         <div className="space-y-0.5 text-xs text-slate-500">
           <div>{s.person.mobile || 'N/A'}</div>
-          <div className="text-[10px] text-slate-400">{s.person.email || 'N/A'}</div>
+          <div className="text-[10px] text-slate-400">
+            {s.person.email || 'N/A'}
+          </div>
         </div>
       ),
     },
@@ -133,7 +175,10 @@ export function StudentsClientList({
       sortable: true,
       sortDirection: currentSortBy === 'branch' ? currentSortOrder : null,
       onSort: () => handleSort('branch'),
-      render: (s: StudentItem) => s.branch ? `${s.branch.branchName}${s.branch.branchCode ? ` (${s.branch.branchCode})` : ''}` : 'N/A',
+      render: (s: StudentItem) =>
+        s.branch
+          ? `${s.branch.branchName}${s.branch.branchCode ? ` (${s.branch.branchCode})` : ''}`
+          : 'N/A',
     },
     {
       header: 'Admissions',
@@ -141,10 +186,18 @@ export function StudentsClientList({
         <div className="space-y-1">
           {s.admissions?.map((adm) => (
             <div key={adm.id} className="flex items-center gap-1.5">
-              <Badge variant={adm.admissionStatus === 'Approved' ? 'success' : 'outline'} className="px-1.5 py-0 text-[10px]">
+              <Badge
+                variant={
+                  adm.admissionStatus === 'Approved' ? 'success' : 'outline'
+                }
+                className="px-1.5 py-0 text-[10px]"
+              >
                 {adm.admissionStatus}
               </Badge>
-              <Link href={`/admissions/${adm.id}`} className="font-mono text-[11px] text-[var(--ims-primary)] hover:underline">
+              <Link
+                href={`/admissions/${adm.id}`}
+                className="font-mono text-[11px] text-[var(--ims-primary)] hover:underline"
+              >
                 {adm.admissionNumber}
               </Link>
             </div>
@@ -155,17 +208,30 @@ export function StudentsClientList({
     {
       header: 'Courses',
       render: (s: StudentItem) => {
-        const active = s.enrollments?.filter((e) => ['Confirmed', 'Active'].includes(e.enrollmentStatus)) || [];
+        const active =
+          s.enrollments?.filter((e) =>
+            ['Confirmed', 'Active'].includes(e.enrollmentStatus),
+          ) || [];
         return (
           <div className="max-w-[200px] space-y-1">
-            {active.length === 0 ? <span className="text-xs text-slate-400">No active course</span> : active.map((enr) => (
-              <div key={enr.id} className="flex items-center gap-1 truncate text-xs">
-                <GraduationCap className="h-3 w-3 shrink-0 text-slate-400" />
-                <Link href={`/enrollments/${enr.id}`} className="truncate text-[var(--ims-primary)] hover:underline">
-                  {enr.course.nameEnglish}
-                </Link>
-              </div>
-            ))}
+            {active.length === 0 ? (
+              <span className="text-xs text-slate-400">No active course</span>
+            ) : (
+              active.map((enr) => (
+                <div
+                  key={enr.id}
+                  className="flex items-center gap-1 truncate text-xs"
+                >
+                  <GraduationCap className="h-3 w-3 shrink-0 text-slate-400" />
+                  <Link
+                    href={`/enrollments/${enr.id}`}
+                    className="truncate text-[var(--ims-primary)] hover:underline"
+                  >
+                    {enr.course.nameEnglish}
+                  </Link>
+                </div>
+              ))
+            )}
           </div>
         );
       },
@@ -175,7 +241,11 @@ export function StudentsClientList({
       sortable: true,
       sortDirection: currentSortBy === 'status' ? currentSortOrder : null,
       onSort: () => handleSort('status'),
-      render: (s: StudentItem) => <Badge variant={s.status === 'Active' ? 'success' : 'outline'}>{s.status}</Badge>,
+      render: (s: StudentItem) => (
+        <Badge variant={s.status === 'Active' ? 'success' : 'outline'}>
+          {s.status}
+        </Badge>
+      ),
     },
     {
       header: 'Actions',
@@ -193,17 +263,26 @@ export function StudentsClientList({
   ];
 
   const renderCard = (s: StudentItem) => {
-    const active = s.enrollments?.filter((e) => ['Confirmed', 'Active'].includes(e.enrollmentStatus)) || [];
+    const active =
+      s.enrollments?.filter((e) =>
+        ['Confirmed', 'Active'].includes(e.enrollmentStatus),
+      ) || [];
 
     return (
       <Card className="transition-colors hover:border-[var(--ims-brass)]">
         <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p">
           <div className="flex items-start justify-between">
             <div className="space-y-1">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">{s.studentNumber}</p>
-              <p className="text-sm font-bold text-[var(--ims-ink)]">{s.person.firstName} {s.person.lastName}</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">
+                {s.studentNumber}
+              </p>
+              <p className="text-sm font-bold text-[var(--ims-ink)]">
+                {s.person.firstName} {s.person.lastName}
+              </p>
             </div>
-            <Badge variant={s.status === 'Active' ? 'success' : 'outline'}>{s.status}</Badge>
+            <Badge variant={s.status === 'Active' ? 'success' : 'outline'}>
+              {s.status}
+            </Badge>
           </div>
         </CardHeader>
         <CardContent className="space-y-3 p-card-p">
@@ -214,11 +293,19 @@ export function StudentsClientList({
             </div>
             <div className="space-y-1">
               <p className="font-semibold text-[var(--ims-muted)]">Branch</p>
-              <p className="truncate text-[var(--ims-brass)] font-medium">{s.branch ? `${s.branch.branchName}${s.branch.branchCode ? ` (${s.branch.branchCode})` : ''}` : 'N/A'}</p>
+              <p className="truncate text-[var(--ims-brass)] font-medium">
+                {s.branch
+                  ? `${s.branch.branchName}${s.branch.branchCode ? ` (${s.branch.branchCode})` : ''}`
+                  : 'N/A'}
+              </p>
             </div>
             <div className="col-span-2 space-y-1">
-              <p className="font-semibold text-[var(--ims-muted)]">Active Course</p>
-              <p className="truncate font-medium text-[var(--ims-brass)]">{active[0]?.course.nameEnglish || 'None'}</p>
+              <p className="font-semibold text-[var(--ims-muted)]">
+                Active Course
+              </p>
+              <p className="truncate font-medium text-[var(--ims-brass)]">
+                {active[0]?.course.nameEnglish || 'None'}
+              </p>
             </div>
           </div>
         </CardContent>
@@ -230,7 +317,13 @@ export function StudentsClientList({
           </Link>
           {canReadAdmissions && s.admissions?.[0] && (
             <Link href={`/admissions/${s.admissions[0].id}`} className="flex-1">
-              <Button variant="outline" size="sm" className="w-full text-[11px]">Admissions</Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full text-[11px]"
+              >
+                Admissions
+              </Button>
             </Link>
           )}
         </CardFooter>
@@ -242,7 +335,9 @@ export function StudentsClientList({
     <div className="space-y-4 sm:space-y-5 lg:space-y-6">
       <div className="grid gap-4 lg:grid-cols-[minmax(0,2.2fr)_repeat(3,minmax(0,1fr))]">
         <div className="min-w-0">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Search</FormLabel>
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Search
+          </FormLabel>
           <div className="relative">
             <Input
               value={searchValue}
@@ -268,13 +363,20 @@ export function StudentsClientList({
         </div>
 
         <div className="min-w-0">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Branch</FormLabel>
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Branch
+          </FormLabel>
           <Select
             value={defaultBranchId}
-            onChange={(e) => updateParams({ branchId: e.target.value, page: '1' })}
+            onChange={(e) =>
+              updateParams({ branchId: e.target.value, page: '1' })
+            }
             options={[
               { value: '', label: 'All Branches' },
-              ...branches.map((b) => ({ value: b.id, label: b.code ? `${b.name} (${b.code})` : b.name })),
+              ...branches.map((b) => ({
+                value: b.id,
+                label: b.code ? `${b.name} (${b.code})` : b.name,
+              })),
             ]}
             className="h-12"
             placeholder="All Branches"
@@ -282,10 +384,14 @@ export function StudentsClientList({
         </div>
 
         <div className="min-w-0">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Student Status</FormLabel>
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Student Status
+          </FormLabel>
           <Select
             value={defaultStatus}
-            onChange={(e) => updateParams({ status: e.target.value, page: '1' })}
+            onChange={(e) =>
+              updateParams({ status: e.target.value, page: '1' })
+            }
             options={[
               { value: '', label: 'All Statuses' },
               { value: 'Active', label: 'Active' },
@@ -298,10 +404,14 @@ export function StudentsClientList({
         </div>
 
         <div className="min-w-0">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Admission Status</FormLabel>
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Admission Status
+          </FormLabel>
           <Select
             value={defaultAdmissionStatus}
-            onChange={(e) => updateParams({ admissionStatus: e.target.value, page: '1' })}
+            onChange={(e) =>
+              updateParams({ admissionStatus: e.target.value, page: '1' })
+            }
             options={[
               { value: '', label: 'All Admissions' },
               { value: 'Draft', label: 'Draft' },
@@ -318,7 +428,8 @@ export function StudentsClientList({
 
       <div className="flex items-center justify-between pt-1">
         <h3 className="flex items-center gap-2 text-sm font-semibold uppercase">
-          <Users className="h-4 w-4 text-[color:var(--ims-primary)]" /> Student Records ({total})
+          <Users className="h-4 w-4 text-[color:var(--ims-primary)]" /> Student
+          Records ({total})
         </h3>
       </div>
 
@@ -336,7 +447,14 @@ export function StudentsClientList({
         }
       />
 
-      {totalPages > 1 && <Pagination page={currentPage} totalPages={totalPages} totalCount={total} limit={limit} />}
+      {totalPages > 1 && (
+        <Pagination
+          page={currentPage}
+          totalPages={totalPages}
+          totalCount={total}
+          limit={limit}
+        />
+      )}
     </div>
   );
 }

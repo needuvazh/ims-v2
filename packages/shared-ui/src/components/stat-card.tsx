@@ -9,7 +9,15 @@ export interface StatCardProps extends HTMLAttributes<HTMLDivElement> {
   trend?: { value: number; label?: string };
   icon?: ReactNode;
   loading?: boolean;
-  tone?: 'indigo' | 'emerald' | 'amber' | 'sky' | 'orange' | 'rose' | 'teal' | 'violet';
+  tone?:
+    | 'indigo'
+    | 'emerald'
+    | 'amber'
+    | 'sky'
+    | 'orange'
+    | 'rose'
+    | 'teal'
+    | 'violet';
 }
 
 const dashboardStatTones = {
@@ -120,10 +128,20 @@ export function StatCard({
         )}
         {...props}
       >
-        <div className={cn('pointer-events-none absolute inset-x-6 top-0 h-px', toneData.glow)} />
+        <div
+          className={cn(
+            'pointer-events-none absolute inset-x-6 top-0 h-px',
+            toneData.glow,
+          )}
+        />
         <div className="relative flex items-start justify-between gap-4">
           <div className="flex-1">
-            <p className={cn('text-[10px] font-black uppercase tracking-[0.28em]', toneData.eyebrow)}>
+            <p
+              className={cn(
+                'text-[10px] font-black uppercase tracking-[0.28em]',
+                toneData.eyebrow,
+              )}
+            >
               {title}
             </p>
             <p className="mt-3 text-card-value font-black tracking-tight text-slate-900">
@@ -133,7 +151,8 @@ export function StatCard({
               <div className={cn('mt-2 text-xs font-semibold', toneData.note)}>
                 {trend && (
                   <span className="mr-1.5">
-                    {isPositive ? '+' : ''}{trend.value}%
+                    {isPositive ? '+' : ''}
+                    {trend.value}%
                   </span>
                 )}
                 {description && <span>{description}</span>}
@@ -141,8 +160,18 @@ export function StatCard({
             )}
           </div>
           {icon && (
-            <div className={cn('rounded-xl border p-3 shadow-sm shadow-white/40 flex items-center justify-center shrink-0', toneData.badge)}>
-              <div className={cn('h-5 w-5 flex items-center justify-center', toneData.icon)}>
+            <div
+              className={cn(
+                'rounded-xl border p-3 shadow-sm shadow-white/40 flex items-center justify-center shrink-0',
+                toneData.badge,
+              )}
+            >
+              <div
+                className={cn(
+                  'h-5 w-5 flex items-center justify-center',
+                  toneData.icon,
+                )}
+              >
                 {icon}
               </div>
             </div>
@@ -179,7 +208,8 @@ export function StatCard({
                       : 'text-[color:var(--ims-error)]',
                   )}
                 >
-                  {isPositive ? '+' : ''}{trend.value}%
+                  {isPositive ? '+' : ''}
+                  {trend.value}%
                   {trend.label && (
                     <span className="ml-1 font-normal text-[color:var(--ims-muted)]">
                       {trend.label}
@@ -188,7 +218,9 @@ export function StatCard({
                 </span>
               )}
               {description && (
-                <p className="text-xs text-[color:var(--ims-muted)]">{description}</p>
+                <p className="text-xs text-[color:var(--ims-muted)]">
+                  {description}
+                </p>
               )}
             </div>
           )}

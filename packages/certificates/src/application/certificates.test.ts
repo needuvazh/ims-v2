@@ -89,7 +89,9 @@ test('GenerateCertificateService - generates certificate successfully when eligi
   });
   mockCompletionReadPort.isCompletionApproved.mockResolvedValue(true);
   mockFinanceValidationPort.isPaymentValidationPassed.mockResolvedValue(true);
-  mockNumberingPort.allocateCertificateNumber.mockResolvedValue('CERT-BR1-999999');
+  mockNumberingPort.allocateCertificateNumber.mockResolvedValue(
+    'CERT-BR1-999999',
+  );
 
   vi.mocked(prisma.certificate.findFirst).mockResolvedValue(null);
   vi.mocked(prisma.certificate.create).mockResolvedValue({
@@ -102,7 +104,7 @@ test('GenerateCertificateService - generates certificate successfully when eligi
     mockCompletionReadPort as any,
     mockFinanceValidationPort as any,
     mockNumberingPort as any,
-    mockAuditPort as any
+    mockAuditPort as any,
   );
 
   const certId = await service.execute(
@@ -111,15 +113,26 @@ test('GenerateCertificateService - generates certificate successfully when eligi
       language: 'en',
       idempotencyKey: 'idempotency-1234567890',
     },
-    '11111111-2222-3333-4444-555555555555'
+    '11111111-2222-3333-4444-555555555555',
   );
 
   expect(certId).toBe(VALID_CERTIFICATE_ID);
-  expect(mockEnrollmentReadPort.getEnrollmentContext).toHaveBeenCalledWith(VALID_ENROLLMENT_ID);
-  expect(mockCompletionReadPort.isCompletionApproved).toHaveBeenCalledWith(VALID_ENROLLMENT_ID);
-  expect(mockFinanceValidationPort.isPaymentValidationPassed).toHaveBeenCalledWith(VALID_ENROLLMENT_ID);
+  expect(mockEnrollmentReadPort.getEnrollmentContext).toHaveBeenCalledWith(
+    VALID_ENROLLMENT_ID,
+  );
+  expect(mockCompletionReadPort.isCompletionApproved).toHaveBeenCalledWith(
+    VALID_ENROLLMENT_ID,
+  );
+  expect(
+    mockFinanceValidationPort.isPaymentValidationPassed,
+  ).toHaveBeenCalledWith(VALID_ENROLLMENT_ID);
   expect(prisma.certificate.create).toHaveBeenCalled();
-  expect(mockAuditPort.logAction).toHaveBeenCalledWith('CERTIFICATE_GENERATED', '11111111-2222-3333-4444-555555555555', VALID_CERTIFICATE_ID, expect.any(Object));
+  expect(mockAuditPort.logAction).toHaveBeenCalledWith(
+    'CERTIFICATE_GENERATED',
+    '11111111-2222-3333-4444-555555555555',
+    VALID_CERTIFICATE_ID,
+    expect.any(Object),
+  );
 });
 
 test('GenerateCertificateService - throws error when completion is not approved', async () => {
@@ -138,7 +151,7 @@ test('GenerateCertificateService - throws error when completion is not approved'
     mockCompletionReadPort as any,
     mockFinanceValidationPort as any,
     mockNumberingPort as any,
-    mockAuditPort as any
+    mockAuditPort as any,
   );
 
   await expect(
@@ -148,8 +161,8 @@ test('GenerateCertificateService - throws error when completion is not approved'
         language: 'en',
         idempotencyKey: 'idempotency-1234567890',
       },
-      '11111111-2222-3333-4444-555555555555'
-    )
+      '11111111-2222-3333-4444-555555555555',
+    ),
   ).rejects.toThrow(DomainError);
 });
 
@@ -168,7 +181,10 @@ test('IssueCertificateService - transitions state and requests notification succ
     personId: '33333333-4444-5555-6666-777777777777',
   } as any);
 
-  const service = new IssueCertificateService(mockAuditPort as any, mockNotificationPort as any);
+  const service = new IssueCertificateService(
+    mockAuditPort as any,
+    mockNotificationPort as any,
+  );
 
   await service.execute(
     {
@@ -176,7 +192,7 @@ test('IssueCertificateService - transitions state and requests notification succ
       expectedVersion: 1,
       idempotencyKey: 'idempotency-1234567890',
     },
-    '11111111-2222-3333-4444-555555555555'
+    '11111111-2222-3333-4444-555555555555',
   );
 
   expect(prisma.certificate.update).toHaveBeenCalledWith({
@@ -188,8 +204,17 @@ test('IssueCertificateService - transitions state and requests notification succ
       version: { increment: 1 },
     },
   });
-  expect(mockAuditPort.logAction).toHaveBeenCalledWith('CERTIFICATE_ISSUED', '11111111-2222-3333-4444-555555555555', VALID_CERTIFICATE_ID, expect.any(Object));
-  expect(mockNotificationPort.requestNotification).toHaveBeenCalledWith('CERTIFICATE_ISSUED', '33333333-4444-5555-6666-777777777777', expect.any(Object));
+  expect(mockAuditPort.logAction).toHaveBeenCalledWith(
+    'CERTIFICATE_ISSUED',
+    '11111111-2222-3333-4444-555555555555',
+    VALID_CERTIFICATE_ID,
+    expect.any(Object),
+  );
+  expect(mockNotificationPort.requestNotification).toHaveBeenCalledWith(
+    'CERTIFICATE_ISSUED',
+    '33333333-4444-5555-6666-777777777777',
+    expect.any(Object),
+  );
 });
 
 test('RevocationService - revokes certificate and records revocation info', async () => {
@@ -208,7 +233,7 @@ test('RevocationService - revokes certificate and records revocation info', asyn
       reason: 'Student name was spelled wrong',
       expectedVersion: 2,
     },
-    '11111111-2222-3333-4444-555555555555'
+    '11111111-2222-3333-4444-555555555555',
   );
 
   expect(prisma.certificate.update).toHaveBeenCalledWith({
@@ -233,14 +258,18 @@ test('ReissueService - submits reissue request successfully', async () => {
     id: VALID_REISSUE_REQUEST_ID,
   } as any);
 
-  const service = new ReissueService(mockAuditPort as any, mockNumberingPort as any, mockEnrollmentReadPort as any);
+  const service = new ReissueService(
+    mockAuditPort as any,
+    mockNumberingPort as any,
+    mockEnrollmentReadPort as any,
+  );
 
   const reqId = await service.submitRequest(
     {
       certificateId: VALID_CERTIFICATE_ID,
       reason: 'Name was mis-spelled on certificate print',
     },
-    '11111111-2222-3333-4444-555555555555'
+    '11111111-2222-3333-4444-555555555555',
   );
 
   expect(reqId).toBe(VALID_REISSUE_REQUEST_ID);
@@ -269,7 +298,10 @@ test('VerificationService - returns Valid status for authentic issued certificat
   } as any);
 
   const service = new VerificationService();
-  const verifyResult = await service.verify({ verificationCode: 'VER-CODE-123' }, '127.0.0.1');
+  const verifyResult = await service.verify(
+    { verificationCode: 'VER-CODE-123' },
+    '127.0.0.1',
+  );
 
   expect(verifyResult.status).toBe('VALID');
   expect(verifyResult.studentDisplayName).toBe('Fatima Al-Balushi');

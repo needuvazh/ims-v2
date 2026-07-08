@@ -21,7 +21,14 @@ import {
 } from '@ims/shared-ui';
 
 type SortOrder = 'asc' | 'desc';
-type SortField = 'createdAt' | 'attemptedEmail' | 'status' | 'failureReason' | 'browser' | 'ipAddress' | 'branchId';
+type SortField =
+  | 'createdAt'
+  | 'attemptedEmail'
+  | 'status'
+  | 'failureReason'
+  | 'browser'
+  | 'ipAddress'
+  | 'branchId';
 
 type LoginHistoryRow = {
   id: string;
@@ -54,7 +61,15 @@ const STATUS_OPTIONS = [
   { value: 'Failure', label: 'Failure' },
 ];
 
-const SORT_FIELDS = new Set<SortField>(['createdAt', 'attemptedEmail', 'status', 'failureReason', 'browser', 'ipAddress', 'branchId']);
+const SORT_FIELDS = new Set<SortField>([
+  'createdAt',
+  'attemptedEmail',
+  'status',
+  'failureReason',
+  'browser',
+  'ipAddress',
+  'branchId',
+]);
 
 function getStatusVariant(status: string) {
   switch (status) {
@@ -67,11 +82,21 @@ function getStatusVariant(status: string) {
   }
 }
 
-function compareNullableText(left: string | null | undefined, right: string | null | undefined) {
-  return new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' }).compare(left ?? '', right ?? '');
+function compareNullableText(
+  left: string | null | undefined,
+  right: string | null | undefined,
+) {
+  return new Intl.Collator(undefined, {
+    numeric: true,
+    sensitivity: 'base',
+  }).compare(left ?? '', right ?? '');
 }
 
-function getBrowserString(browser: string | null, os: string | null, device: string | null) {
+function getBrowserString(
+  browser: string | null,
+  os: string | null,
+  device: string | null,
+) {
   return [browser, os, device].filter(Boolean).join(' / ') || '—';
 }
 
@@ -90,29 +115,47 @@ export function LoginHistoryClientList({
   const searchParams = useSearchParams();
   const [searchValue, setSearchValue] = useState(initialSearch);
 
-  const currentSortBy = (searchParams.get('sortBy') as SortField | null) ?? (SORT_FIELDS.has(initialSortBy as SortField) ? (initialSortBy as SortField) : 'createdAt');
-  const currentSortOrder = (searchParams.get('sortOrder') as SortOrder | null) ?? initialSortOrder;
+  const currentSortBy =
+    (searchParams.get('sortBy') as SortField | null) ??
+    (SORT_FIELDS.has(initialSortBy as SortField)
+      ? (initialSortBy as SortField)
+      : 'createdAt');
+  const currentSortOrder =
+    (searchParams.get('sortOrder') as SortOrder | null) ?? initialSortOrder;
   const currentStatus = searchParams.get('status') ?? initialStatus ?? '';
-  const currentPage = Math.max(parseInt(searchParams.get('page') ?? String(initialPage), 10) || 1, 1);
-  const currentLimit = Math.max(parseInt(searchParams.get('limit') ?? String(initialLimit), 10) || initialLimit || 20, 1);
+  const currentPage = Math.max(
+    parseInt(searchParams.get('page') ?? String(initialPage), 10) || 1,
+    1,
+  );
+  const currentLimit = Math.max(
+    parseInt(searchParams.get('limit') ?? String(initialLimit), 10) ||
+      initialLimit ||
+      20,
+    1,
+  );
 
-  const updateParams = useCallback((updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
+  const updateParams = useCallback(
+    (updates: Record<string, string | null>) => {
+      const params = new URLSearchParams(searchParams.toString());
 
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === '') {
-        params.delete(key);
-      } else {
-        params.set(key, value);
-      }
-    });
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value === null || value === '') {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      });
 
-    router.push(`${pathname}?${params.toString()}`);
-  }, [pathname, router, searchParams]);
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [pathname, router, searchParams],
+  );
 
   useEffect(() => {
     const nextSearch = searchParams.get('q') || '';
-    setSearchValue((current) => (current === nextSearch ? current : nextSearch));
+    setSearchValue((current) =>
+      current === nextSearch ? current : nextSearch,
+    );
   }, [searchParams]);
 
   useEffect(() => {
@@ -129,7 +172,8 @@ export function LoginHistoryClientList({
   }, [searchParams, searchValue, updateParams]);
 
   const handleSort = (field: SortField) => {
-    const nextOrder: SortOrder = currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
+    const nextOrder: SortOrder =
+      currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
     updateParams({ sortBy: field, sortOrder: nextOrder, page: '1' });
   };
 
@@ -146,7 +190,14 @@ export function LoginHistoryClientList({
           return true;
         }
 
-        return [row.attemptedEmail, row.failureReason, row.browser, row.os, row.device, row.ipAddress]
+        return [
+          row.attemptedEmail,
+          row.failureReason,
+          row.browser,
+          row.os,
+          row.device,
+          row.ipAddress,
+        ]
           .filter(Boolean)
           .some((value) => String(value).toLowerCase().includes(q));
       })
@@ -154,26 +205,47 @@ export function LoginHistoryClientList({
         const direction = currentSortOrder === 'asc' ? 1 : -1;
 
         if (!SORT_FIELDS.has(currentSortBy)) {
-          return compareNullableText(left.createdAt, right.createdAt) * direction;
+          return (
+            compareNullableText(left.createdAt, right.createdAt) * direction
+          );
         }
 
         switch (currentSortBy) {
           case 'createdAt':
-            return compareNullableText(left.createdAt, right.createdAt) * direction;
+            return (
+              compareNullableText(left.createdAt, right.createdAt) * direction
+            );
           case 'attemptedEmail':
-            return compareNullableText(left.attemptedEmail, right.attemptedEmail) * direction;
+            return (
+              compareNullableText(left.attemptedEmail, right.attemptedEmail) *
+              direction
+            );
           case 'status':
             return compareNullableText(left.status, right.status) * direction;
           case 'failureReason':
-            return compareNullableText(left.failureReason, right.failureReason) * direction;
+            return (
+              compareNullableText(left.failureReason, right.failureReason) *
+              direction
+            );
           case 'browser':
-            return compareNullableText(getBrowserString(left.browser, left.os, left.device), getBrowserString(right.browser, right.os, right.device)) * direction;
+            return (
+              compareNullableText(
+                getBrowserString(left.browser, left.os, left.device),
+                getBrowserString(right.browser, right.os, right.device),
+              ) * direction
+            );
           case 'ipAddress':
-            return compareNullableText(left.ipAddress, right.ipAddress) * direction;
+            return (
+              compareNullableText(left.ipAddress, right.ipAddress) * direction
+            );
           case 'branchId':
-            return compareNullableText(left.branchId, right.branchId) * direction;
+            return (
+              compareNullableText(left.branchId, right.branchId) * direction
+            );
           default:
-            return compareNullableText(left.createdAt, right.createdAt) * direction;
+            return (
+              compareNullableText(left.createdAt, right.createdAt) * direction
+            );
         }
       });
   }, [rows, currentSortBy, currentSortOrder, currentStatus, searchParams]);
@@ -181,7 +253,10 @@ export function LoginHistoryClientList({
   const displayTotal = filteredRows.length;
   const totalPages = Math.max(Math.ceil(displayTotal / currentLimit), 1);
   const safePage = Math.min(currentPage, totalPages);
-  const paginatedRows = filteredRows.slice((safePage - 1) * currentLimit, safePage * currentLimit);
+  const paginatedRows = filteredRows.slice(
+    (safePage - 1) * currentLimit,
+    safePage * currentLimit,
+  );
 
   const stats = {
     total: rows.length,
@@ -211,38 +286,56 @@ export function LoginHistoryClientList({
     {
       header: 'Email',
       sortable: true,
-      sortDirection: currentSortBy === 'attemptedEmail' ? currentSortOrder : null,
+      sortDirection:
+        currentSortBy === 'attemptedEmail' ? currentSortOrder : null,
       onSort: () => handleSort('attemptedEmail'),
-      render: (row: LoginHistoryRow) => <span className="font-medium text-slate-800">{row.attemptedEmail}</span>,
+      render: (row: LoginHistoryRow) => (
+        <span className="font-medium text-slate-800">{row.attemptedEmail}</span>
+      ),
     },
     {
       header: 'Status',
       sortable: true,
       sortDirection: currentSortBy === 'status' ? currentSortOrder : null,
       onSort: () => handleSort('status'),
-      render: (row: LoginHistoryRow) => <Badge variant={getStatusVariant(row.status)}>{row.status}</Badge>,
+      render: (row: LoginHistoryRow) => (
+        <Badge variant={getStatusVariant(row.status)}>{row.status}</Badge>
+      ),
       headerClassName: 'w-[110px]',
     },
     {
       header: 'Reason',
       sortable: true,
-      sortDirection: currentSortBy === 'failureReason' ? currentSortOrder : null,
+      sortDirection:
+        currentSortBy === 'failureReason' ? currentSortOrder : null,
       onSort: () => handleSort('failureReason'),
-      render: (row: LoginHistoryRow) => <span className="text-sm text-[color:var(--ims-muted)]">{row.failureReason ?? '—'}</span>,
+      render: (row: LoginHistoryRow) => (
+        <span className="text-sm text-[color:var(--ims-muted)]">
+          {row.failureReason ?? '—'}
+        </span>
+      ),
     },
     {
       header: 'Browser',
       sortable: true,
       sortDirection: currentSortBy === 'browser' ? currentSortOrder : null,
       onSort: () => handleSort('browser'),
-      render: (row: LoginHistoryRow) => <span className="text-sm text-[color:var(--ims-muted)]">{getBrowserString(row.browser, row.os, row.device)}</span>,
+      render: (row: LoginHistoryRow) => (
+        <span className="text-sm text-[color:var(--ims-muted)]">
+          {getBrowserString(row.browser, row.os, row.device)}
+        </span>
+      ),
     },
     {
       header: 'IP',
       sortable: true,
       sortDirection: currentSortBy === 'ipAddress' ? currentSortOrder : null,
       onSort: () => handleSort('ipAddress'),
-      render: (row: LoginHistoryRow) => <span className="text-sm text-[color:var(--ims-muted)]">{row.ipAddress ?? '—'}</span>,
+      render: (row: LoginHistoryRow) => (
+        <span className="text-sm text-[color:var(--ims-muted)]">
+          {row.ipAddress ?? '—'}
+        </span>
+      ),
       headerClassName: 'w-[130px]',
     },
     {
@@ -250,7 +343,11 @@ export function LoginHistoryClientList({
       sortable: true,
       sortDirection: currentSortBy === 'branchId' ? currentSortOrder : null,
       onSort: () => handleSort('branchId'),
-      render: (row: LoginHistoryRow) => <span className="text-sm text-[color:var(--ims-muted)]">{row.branchId ?? '—'}</span>,
+      render: (row: LoginHistoryRow) => (
+        <span className="text-sm text-[color:var(--ims-muted)]">
+          {row.branchId ?? '—'}
+        </span>
+      ),
       headerClassName: 'w-[130px]',
     },
     {
@@ -258,7 +355,10 @@ export function LoginHistoryClientList({
       className: 'text-right',
       render: (row: LoginHistoryRow) =>
         row.userId ? (
-          <Link href={`/iam/users/${row.userId}`} className="font-semibold text-[color:var(--ims-brass)] hover:underline">
+          <Link
+            href={`/iam/users/${row.userId}`}
+            className="font-semibold text-[color:var(--ims-brass)] hover:underline"
+          >
             User
           </Link>
         ) : (
@@ -282,7 +382,9 @@ export function LoginHistoryClientList({
                 minute: '2-digit',
               })}
             </p>
-            <p className="text-sm font-bold text-[var(--ims-ink)]">{row.attemptedEmail}</p>
+            <p className="text-sm font-bold text-[var(--ims-ink)]">
+              {row.attemptedEmail}
+            </p>
           </div>
           <Badge variant={getStatusVariant(row.status)}>{row.status}</Badge>
         </div>
@@ -295,7 +397,9 @@ export function LoginHistoryClientList({
           </div>
           <div className="col-span-2">
             <p className="font-semibold text-[var(--ims-muted)]">Browser</p>
-            <p className="truncate">{getBrowserString(row.browser, row.os, row.device)}</p>
+            <p className="truncate">
+              {getBrowserString(row.browser, row.os, row.device)}
+            </p>
           </div>
           <div>
             <p className="font-semibold text-[var(--ims-muted)]">IP</p>
@@ -309,7 +413,10 @@ export function LoginHistoryClientList({
       </CardContent>
       <CardFooter className="p-card-p pt-0">
         {row.userId ? (
-          <Link href={`/iam/users/${row.userId}`} className="text-sm font-semibold text-[color:var(--ims-brass)] hover:underline">
+          <Link
+            href={`/iam/users/${row.userId}`}
+            className="text-sm font-semibold text-[color:var(--ims-brass)] hover:underline"
+          >
             Open user
           </Link>
         ) : (
@@ -329,20 +436,48 @@ export function LoginHistoryClientList({
             <History className="h-6 w-6 shrink-0 text-indigo-600 sm:h-8 sm:w-8" />
             Login History
           </h1>
-          <p className="mt-1 text-sm text-[var(--ims-muted)]">Track authentication attempts and security events.</p>
+          <p className="mt-1 text-sm text-[var(--ims-muted)]">
+            Track authentication attempts and security events.
+          </p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 sm:gap-5">
-        <StatCard title="Total Attempts" value={stats.total} description="Visible login events" icon={<History className="h-5 w-5" />} tone="indigo" />
-        <StatCard title="Successful" value={stats.success} description="Authenticated sessions" icon={<ShieldCheck className="h-5 w-5" />} tone="emerald" />
-        <StatCard title="Failed" value={stats.failure} description="Blocked attempts" icon={<Clock3 className="h-5 w-5" />} tone="rose" />
-        <StatCard title="Unique Users" value={new Set(rows.map((r) => r.userId).filter(Boolean)).size} description="Distinct accounts" icon={<Users className="h-5 w-5" />} tone="amber" />
+        <StatCard
+          title="Total Attempts"
+          value={stats.total}
+          description="Visible login events"
+          icon={<History className="h-5 w-5" />}
+          tone="indigo"
+        />
+        <StatCard
+          title="Successful"
+          value={stats.success}
+          description="Authenticated sessions"
+          icon={<ShieldCheck className="h-5 w-5" />}
+          tone="emerald"
+        />
+        <StatCard
+          title="Failed"
+          value={stats.failure}
+          description="Blocked attempts"
+          icon={<Clock3 className="h-5 w-5" />}
+          tone="rose"
+        />
+        <StatCard
+          title="Unique Users"
+          value={new Set(rows.map((r) => r.userId).filter(Boolean)).size}
+          description="Distinct accounts"
+          icon={<Users className="h-5 w-5" />}
+          tone="amber"
+        />
       </div>
 
       <div className="grid gap-4 xl:grid-cols-6">
         <div className="min-w-0 xl:col-span-2">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Search</FormLabel>
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Search
+          </FormLabel>
           <div className="relative">
             <Input
               value={searchValue}
@@ -368,10 +503,14 @@ export function LoginHistoryClientList({
         </div>
 
         <div className="min-w-0">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Status</FormLabel>
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Status
+          </FormLabel>
           <Select
             value={currentStatus}
-            onChange={(event) => updateParams({ status: event.target.value, page: '1' })}
+            onChange={(event) =>
+              updateParams({ status: event.target.value, page: '1' })
+            }
             options={STATUS_OPTIONS}
             className="h-12"
             placeholder="All Statuses"
@@ -379,10 +518,14 @@ export function LoginHistoryClientList({
         </div>
 
         <div className="min-w-0 xl:col-span-1">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Sort</FormLabel>
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Sort
+          </FormLabel>
           <Select
             value={currentSortBy}
-            onChange={(event) => updateParams({ sortBy: event.target.value, page: '1' })}
+            onChange={(event) =>
+              updateParams({ sortBy: event.target.value, page: '1' })
+            }
             options={[
               { value: 'createdAt', label: 'Time' },
               { value: 'attemptedEmail', label: 'Email' },
@@ -398,10 +541,14 @@ export function LoginHistoryClientList({
         </div>
 
         <div className="min-w-0 xl:col-span-1">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Order</FormLabel>
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Order
+          </FormLabel>
           <Select
             value={currentSortOrder}
-            onChange={(event) => updateParams({ sortOrder: event.target.value, page: '1' })}
+            onChange={(event) =>
+              updateParams({ sortOrder: event.target.value, page: '1' })
+            }
             options={[
               { value: 'asc', label: 'Ascending' },
               { value: 'desc', label: 'Descending' },
@@ -414,17 +561,28 @@ export function LoginHistoryClientList({
 
       {hasVisibleFilters && (
         <div className="flex flex-wrap items-center gap-2 text-xs text-[color:var(--ims-muted)]">
-          <span className="font-semibold uppercase tracking-[0.18em]">Active filters</span>
+          <span className="font-semibold uppercase tracking-[0.18em]">
+            Active filters
+          </span>
           {searchValue && <Badge variant="muted">Search</Badge>}
           {currentStatus && <Badge variant="muted">Status</Badge>}
-          <Button variant="ghost" size="sm" className="h-7 px-2 text-xs" onClick={() => updateParams({ q: null, status: null, page: '1' })}>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="h-7 px-2 text-xs"
+            onClick={() => updateParams({ q: null, status: null, page: '1' })}
+          >
             Clear all
           </Button>
         </div>
       )}
 
       {userNotFound ? (
-        <EmptyState icon={<History className="h-6 w-6" />} title="User not found" description="The specified user ID or email does not exist." />
+        <EmptyState
+          icon={<History className="h-6 w-6" />}
+          title="User not found"
+          description="The specified user ID or email does not exist."
+        />
       ) : (
         <>
           <ResponsiveDataTable
@@ -441,7 +599,14 @@ export function LoginHistoryClientList({
             }
           />
 
-          {totalPages > 1 && <Pagination page={safePage} totalPages={totalPages} totalCount={displayTotal} limit={currentLimit} />}
+          {totalPages > 1 && (
+            <Pagination
+              page={safePage}
+              totalPages={totalPages}
+              totalCount={displayTotal}
+              limit={currentLimit}
+            />
+          )}
         </>
       )}
     </div>

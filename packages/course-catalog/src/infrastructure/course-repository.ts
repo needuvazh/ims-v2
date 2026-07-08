@@ -5,7 +5,10 @@ import { Course } from '../domain/course';
 export class CourseRepository implements ICourseRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create(data: Prisma.CourseUncheckedCreateInput, tx?: Prisma.TransactionClient): Promise<Course> {
+  async create(
+    data: Prisma.CourseUncheckedCreateInput,
+    tx?: Prisma.TransactionClient,
+  ): Promise<Course> {
     const client = tx || this.prisma;
     const course = await client.course.create({
       data: {
@@ -40,9 +43,14 @@ export class CourseRepository implements ICourseRepository {
     return course as Course;
   }
 
-  async update(id: string, data: Prisma.CourseUncheckedUpdateInput, version: number, tx?: Prisma.TransactionClient): Promise<Course> {
+  async update(
+    id: string,
+    data: Prisma.CourseUncheckedUpdateInput,
+    version: number,
+    tx?: Prisma.TransactionClient,
+  ): Promise<Course> {
     const client = tx || this.prisma;
-    
+
     // Optimistic concurrency check using updateMany
     const result = await client.course.updateMany({
       where: { id, version, isDeleted: false },
@@ -65,8 +73,12 @@ export class CourseRepository implements ICourseRepository {
     return updated as Course;
   }
 
-  async findById(id: string, tx?: Prisma.TransactionClient): Promise<Course | null> {
-    const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  async findById(
+    id: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<Course | null> {
+    const UUID_REGEX =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     if (!UUID_REGEX.test(id)) {
       return null;
     }
@@ -77,10 +89,16 @@ export class CourseRepository implements ICourseRepository {
     return course as Course | null;
   }
 
-  async findByCode(code: string, tx?: Prisma.TransactionClient): Promise<Course | null> {
+  async findByCode(
+    code: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<Course | null> {
     const client = tx || this.prisma;
     const course = await client.course.findFirst({
-      where: { courseCode: { equals: code, mode: 'insensitive' }, isDeleted: false },
+      where: {
+        courseCode: { equals: code, mode: 'insensitive' },
+        isDeleted: false,
+      },
     });
     return course as Course | null;
   }
@@ -89,7 +107,7 @@ export class CourseRepository implements ICourseRepository {
     nameEnglish: string,
     nameArabic: string,
     departmentId: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<Course | null> {
     const client = tx || this.prisma;
     const course = await client.course.findFirst({
@@ -106,9 +124,15 @@ export class CourseRepository implements ICourseRepository {
   }
 
   async findAll(
-    filters: { categoryId?: string; status?: string; search?: string; sortBy?: string; sortOrder?: 'asc' | 'desc' },
+    filters: {
+      categoryId?: string;
+      status?: string;
+      search?: string;
+      sortBy?: string;
+      sortOrder?: 'asc' | 'desc';
+    },
     pagination: { page: number; limit: number },
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<{ items: Course[]; total: number }> {
     const client = tx || this.prisma;
     const where: Prisma.CourseWhereInput = { isDeleted: false };
@@ -156,7 +180,11 @@ export class CourseRepository implements ICourseRepository {
     return { items: items as Course[], total };
   }
 
-  async delete(id: string, deletedBy: string, tx?: Prisma.TransactionClient): Promise<void> {
+  async delete(
+    id: string,
+    deletedBy: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<void> {
     const client = tx || this.prisma;
     await client.course.update({
       where: { id },
@@ -169,7 +197,10 @@ export class CourseRepository implements ICourseRepository {
     });
   }
 
-  async hasActiveBatches(id: string, tx?: Prisma.TransactionClient): Promise<boolean> {
+  async hasActiveBatches(
+    id: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<boolean> {
     const client = tx || this.prisma;
     // Query dynamic model 'batch' if it gets added in subsequent phases
     const activeBatchesCount = await client.batch.count({

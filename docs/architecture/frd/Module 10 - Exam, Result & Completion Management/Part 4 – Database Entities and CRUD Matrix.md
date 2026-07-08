@@ -48,14 +48,14 @@ CompletionRuleEvaluation
 
 Current persistence interpretation:
 
-| DDD Concept | Current Persistence Treatment | Decision |
-|---|---|---|
-| Assessment | Represented by `Exam` for current scope | Do not add a separate table |
-| Grade | Stored in `Result.grade` | Do not add a separate Grade table |
-| CompletionRuleEvaluation | Domain/application behavior materialized into `CourseCompletion` | Do not add a separate table |
-| Retake / Attempt | Not modeled | Do not invent table |
-| Weighted Assessment Component | Not modeled | Do not invent table |
-| Result Revision | Audit convention required; no dedicated ER entity | Do not invent without model amendment |
+| DDD Concept                   | Current Persistence Treatment                                    | Decision                              |
+| ----------------------------- | ---------------------------------------------------------------- | ------------------------------------- |
+| Assessment                    | Represented by `Exam` for current scope                          | Do not add a separate table           |
+| Grade                         | Stored in `Result.grade`                                         | Do not add a separate Grade table     |
+| CompletionRuleEvaluation      | Domain/application behavior materialized into `CourseCompletion` | Do not add a separate table           |
+| Retake / Attempt              | Not modeled                                                      | Do not invent table                   |
+| Weighted Assessment Component | Not modeled                                                      | Do not invent table                   |
+| Result Revision               | Audit convention required; no dedicated ER entity                | Do not invent without model amendment |
 
 ---
 
@@ -65,17 +65,17 @@ This specification uses PostgreSQL-oriented physical types and Prisma-compatible
 
 Type conventions:
 
-| Logical Type | PostgreSQL Type | Prisma-Oriented Mapping |
-|---|---|---|
-| Identifier | `uuid` or repository-standard CUID storage | `String @id` with repository ID generator |
-| Short text | `varchar(n)` | `String` with DB length annotation where used |
-| Long text | `text` | `String @db.Text` |
-| Date only | `date` | `DateTime @db.Date` |
-| Timestamp | `timestamptz` | `DateTime` |
-| Decimal percentage | `decimal(5,2)` | `Decimal @db.Decimal(5,2)` |
-| Marks | `decimal(10,2)` | `Decimal @db.Decimal(10,2)` |
-| Boolean | `boolean` | `Boolean` |
-| Enum | PostgreSQL enum or repository enum convention | Prisma `enum` |
+| Logical Type       | PostgreSQL Type                               | Prisma-Oriented Mapping                       |
+| ------------------ | --------------------------------------------- | --------------------------------------------- |
+| Identifier         | `uuid` or repository-standard CUID storage    | `String @id` with repository ID generator     |
+| Short text         | `varchar(n)`                                  | `String` with DB length annotation where used |
+| Long text          | `text`                                        | `String @db.Text`                             |
+| Date only          | `date`                                        | `DateTime @db.Date`                           |
+| Timestamp          | `timestamptz`                                 | `DateTime`                                    |
+| Decimal percentage | `decimal(5,2)`                                | `Decimal @db.Decimal(5,2)`                    |
+| Marks              | `decimal(10,2)`                               | `Decimal @db.Decimal(10,2)`                   |
+| Boolean            | `boolean`                                     | `Boolean`                                     |
+| Enum               | PostgreSQL enum or repository enum convention | Prisma `enum`                                 |
 
 Important implementation rule:
 
@@ -100,16 +100,16 @@ version
 
 For Module 10, the following physical convention is required unless the repository already uses an equivalent naming or audit convention.
 
-| Field | Type | Nullable | Default | Purpose |
-|---|---|---:|---|---|
-| `id` | UUID/CUID repository ID | No | generated | Primary key |
-| `createdAt` | `timestamptz` | No | current timestamp | Creation timestamp |
-| `createdBy` | FK-compatible user ID | No for human commands; system principal allowed | none | Creator principal |
-| `updatedAt` | `timestamptz` | No | current timestamp | Last update timestamp |
-| `updatedBy` | FK-compatible user ID | No for mutable operational records; system principal allowed | none | Last updater |
-| `deletedAt` | `timestamptz` | Yes | null | Soft-delete timestamp |
-| `isActive` | `boolean` | No | true | Active/deactivated flag |
-| `version` | `integer` | No | 1 | Optimistic concurrency token |
+| Field       | Type                    |                                                     Nullable | Default           | Purpose                      |
+| ----------- | ----------------------- | -----------------------------------------------------------: | ----------------- | ---------------------------- |
+| `id`        | UUID/CUID repository ID |                                                           No | generated         | Primary key                  |
+| `createdAt` | `timestamptz`           |                                                           No | current timestamp | Creation timestamp           |
+| `createdBy` | FK-compatible user ID   |              No for human commands; system principal allowed | none              | Creator principal            |
+| `updatedAt` | `timestamptz`           |                                                           No | current timestamp | Last update timestamp        |
+| `updatedBy` | FK-compatible user ID   | No for mutable operational records; system principal allowed | none              | Last updater                 |
+| `deletedAt` | `timestamptz`           |                                                          Yes | null              | Soft-delete timestamp        |
+| `isActive`  | `boolean`               |                                                           No | true              | Active/deactivated flag      |
+| `version`   | `integer`               |                                                           No | 1                 | Optimistic concurrency token |
 
 ## 4.1 Audit Column Rule
 
@@ -168,15 +168,15 @@ If zero rows are affected, return a concurrency conflict rather than silently ov
 
 ## 5.1 Ownership
 
-| Attribute | Value |
-|---|---|
-| Context | Exam, Result & Completion Management |
-| Ownership | Owned |
-| Aggregate Role | Aggregate root for exam definition and result-entry lifecycle |
-| Branch Scope Derivation | `Exam.batchId → Batch.branchId` |
-| Soft Delete | Required |
-| Effective Dating | Not applicable in current ER model |
-| Auditing | Required |
+| Attribute               | Value                                                         |
+| ----------------------- | ------------------------------------------------------------- |
+| Context                 | Exam, Result & Completion Management                          |
+| Ownership               | Owned                                                         |
+| Aggregate Role          | Aggregate root for exam definition and result-entry lifecycle |
+| Branch Scope Derivation | `Exam.batchId → Batch.branchId`                               |
+| Soft Delete             | Required                                                      |
+| Effective Dating        | Not applicable in current ER model                            |
+| Auditing                | Required                                                      |
 
 ## 5.2 Table Name
 
@@ -190,23 +190,23 @@ Repository naming convention may use plural table mappings, but only one physica
 
 ## 5.3 Field Specification
 
-| Field | PostgreSQL Type | Nullable | Key | Default | Description |
-|---|---|---:|---|---|---|
-| `id` | `uuid` / repository ID type | No | PK | generated | Exam identifier |
-| `courseId` | FK ID type | No | FK | none | References Course Catalog `Course` |
-| `batchId` | FK ID type | No | FK | none | References Training Delivery `Batch` |
-| `examName` | `varchar(200)` | No | — | none | Human-readable exam name |
-| `examDate` | `date` | No | — | none | Exam calendar date |
-| `maxMarks` | `decimal(10,2)` | No | — | none | Maximum marks |
-| `passMarks` | `decimal(10,2)` | No | — | none | Passing threshold |
-| `status` | enum | No | — | initial functional state | Exam lifecycle status |
-| `createdAt` | `timestamptz` | No | — | current timestamp | Audit |
-| `createdBy` | FK-compatible user ID | No | logical FK/reference | none | Creator |
-| `updatedAt` | `timestamptz` | No | — | current timestamp | Audit |
-| `updatedBy` | FK-compatible user ID | No | logical FK/reference | none | Last updater |
-| `deletedAt` | `timestamptz` | Yes | — | null | Soft-delete timestamp |
-| `isActive` | `boolean` | No | — | true | Active flag |
-| `version` | `integer` | No | — | 1 | Optimistic lock |
+| Field       | PostgreSQL Type             | Nullable | Key                  | Default                  | Description                          |
+| ----------- | --------------------------- | -------: | -------------------- | ------------------------ | ------------------------------------ |
+| `id`        | `uuid` / repository ID type |       No | PK                   | generated                | Exam identifier                      |
+| `courseId`  | FK ID type                  |       No | FK                   | none                     | References Course Catalog `Course`   |
+| `batchId`   | FK ID type                  |       No | FK                   | none                     | References Training Delivery `Batch` |
+| `examName`  | `varchar(200)`              |       No | —                    | none                     | Human-readable exam name             |
+| `examDate`  | `date`                      |       No | —                    | none                     | Exam calendar date                   |
+| `maxMarks`  | `decimal(10,2)`             |       No | —                    | none                     | Maximum marks                        |
+| `passMarks` | `decimal(10,2)`             |       No | —                    | none                     | Passing threshold                    |
+| `status`    | enum                        |       No | —                    | initial functional state | Exam lifecycle status                |
+| `createdAt` | `timestamptz`               |       No | —                    | current timestamp        | Audit                                |
+| `createdBy` | FK-compatible user ID       |       No | logical FK/reference | none                     | Creator                              |
+| `updatedAt` | `timestamptz`               |       No | —                    | current timestamp        | Audit                                |
+| `updatedBy` | FK-compatible user ID       |       No | logical FK/reference | none                     | Last updater                         |
+| `deletedAt` | `timestamptz`               |      Yes | —                    | null                     | Soft-delete timestamp                |
+| `isActive`  | `boolean`                   |       No | —                    | true                     | Active flag                          |
+| `version`   | `integer`                   |       No | —                    | 1                        | Optimistic lock                      |
 
 ## 5.4 Required Constraints
 
@@ -331,15 +331,15 @@ Finalized evidence:
 
 ## 6.1 Ownership
 
-| Attribute | Value |
-|---|---|
-| Context | Exam, Result & Completion Management |
-| Ownership | Owned |
-| Aggregate Relationship | Child/result evidence associated with Exam and Enrollment |
+| Attribute               | Value                                                                                     |
+| ----------------------- | ----------------------------------------------------------------------------------------- |
+| Context                 | Exam, Result & Completion Management                                                      |
+| Ownership               | Owned                                                                                     |
+| Aggregate Relationship  | Child/result evidence associated with Exam and Enrollment                                 |
 | Branch Scope Derivation | `Result.examId → Exam.batchId → Batch.branchId` and must agree with `Enrollment.branchId` |
-| Soft Delete | Required; normal delete prohibited |
-| Effective Dating | Not applicable |
-| Auditing | Required, especially correction audit |
+| Soft Delete             | Required; normal delete prohibited                                                        |
+| Effective Dating        | Not applicable                                                                            |
+| Auditing                | Required, especially correction audit                                                     |
 
 ## 6.2 Table Name
 
@@ -349,23 +349,23 @@ result
 
 ## 6.3 Field Specification
 
-| Field | PostgreSQL Type | Nullable | Key | Default | Description |
-|---|---|---:|---|---|---|
-| `id` | repository ID type | No | PK | generated | Result identifier |
-| `examId` | FK ID type | No | FK | none | References owned Exam |
-| `enrollmentId` | FK ID type | No | FK | none | References Enrollment aggregate |
-| `marksObtained` | `decimal(10,2)` | No | — | none | Recorded marks |
-| `grade` | `varchar(50)` | Yes | — | null | Grade display/code where current policy uses it |
-| `resultStatus` | enum | No | — | derived | Academic result status |
-| `recordedBy` | FK-compatible user ID | No | reference | none | User who recorded current result |
-| `recordedAt` | `timestamptz` | No | — | current timestamp | Recording time |
-| `createdAt` | `timestamptz` | No | — | current timestamp | Audit |
-| `createdBy` | FK-compatible user ID | No | reference | none | Creator |
-| `updatedAt` | `timestamptz` | No | — | current timestamp | Audit |
-| `updatedBy` | FK-compatible user ID | No | reference | none | Last updater/corrector |
-| `deletedAt` | `timestamptz` | Yes | — | null | Soft delete; restricted use |
-| `isActive` | `boolean` | No | — | true | Active flag |
-| `version` | `integer` | No | — | 1 | Optimistic lock |
+| Field           | PostgreSQL Type       | Nullable | Key       | Default           | Description                                     |
+| --------------- | --------------------- | -------: | --------- | ----------------- | ----------------------------------------------- |
+| `id`            | repository ID type    |       No | PK        | generated         | Result identifier                               |
+| `examId`        | FK ID type            |       No | FK        | none              | References owned Exam                           |
+| `enrollmentId`  | FK ID type            |       No | FK        | none              | References Enrollment aggregate                 |
+| `marksObtained` | `decimal(10,2)`       |       No | —         | none              | Recorded marks                                  |
+| `grade`         | `varchar(50)`         |      Yes | —         | null              | Grade display/code where current policy uses it |
+| `resultStatus`  | enum                  |       No | —         | derived           | Academic result status                          |
+| `recordedBy`    | FK-compatible user ID |       No | reference | none              | User who recorded current result                |
+| `recordedAt`    | `timestamptz`         |       No | —         | current timestamp | Recording time                                  |
+| `createdAt`     | `timestamptz`         |       No | —         | current timestamp | Audit                                           |
+| `createdBy`     | FK-compatible user ID |       No | reference | none              | Creator                                         |
+| `updatedAt`     | `timestamptz`         |       No | —         | current timestamp | Audit                                           |
+| `updatedBy`     | FK-compatible user ID |       No | reference | none              | Last updater/corrector                          |
+| `deletedAt`     | `timestamptz`         |      Yes | —         | null              | Soft delete; restricted use                     |
+| `isActive`      | `boolean`             |       No | —         | true              | Active flag                                     |
+| `version`       | `integer`             |       No | —         | 1                 | Optimistic lock                                 |
 
 ## 6.4 Result Lifecycle Persistence Gap
 
@@ -522,16 +522,16 @@ An Exam cannot hard-delete a Result through cascading delete.
 
 ## 7.1 Ownership
 
-| Attribute | Value |
-|---|---|
-| Context | Exam, Result & Completion Management |
-| Ownership | Owned |
-| Aggregate Role | Completion decision/evaluation record for Enrollment |
-| Cardinality | One current CourseCompletion per Enrollment |
+| Attribute               | Value                                                 |
+| ----------------------- | ----------------------------------------------------- |
+| Context                 | Exam, Result & Completion Management                  |
+| Ownership               | Owned                                                 |
+| Aggregate Role          | Completion decision/evaluation record for Enrollment  |
+| Cardinality             | One current CourseCompletion per Enrollment           |
 | Branch Scope Derivation | `CourseCompletion.enrollmentId → Enrollment.branchId` |
-| Soft Delete | Required |
-| Effective Dating | Not applicable in current ER |
-| Auditing | Required |
+| Soft Delete             | Required                                              |
+| Effective Dating        | Not applicable in current ER                          |
+| Auditing                | Required                                              |
 
 ## 7.2 Table Name
 
@@ -541,25 +541,25 @@ course_completion
 
 ## 7.3 Field Specification
 
-| Field | PostgreSQL Type | Nullable | Key | Default | Description |
-|---|---|---:|---|---|---|
-| `id` | repository ID type | No | PK | generated | Completion identifier |
-| `enrollmentId` | FK ID type | No | FK + Unique | none | Enrollment being evaluated |
-| `completionStatus` | enum | No | — | initial state | Current completion workflow/outcome status |
-| `attendancePercentage` | `decimal(5,2)` | Yes | — | null | Materialized authoritative attendance percentage |
-| `examPassed` | `boolean` | Yes | — | null | Materialized exam criterion outcome |
-| `paymentCompleted` | `boolean` | Yes | — | null | Materialized payment validation outcome |
-| `recommendedByTrainerId` | FK ID type | Yes | FK/reference | null | TrainerProfile that recommended completion |
-| `approvedBy` | FK-compatible user ID | Yes | reference | null | Final approving User |
-| `approvedAt` | `timestamptz` | Yes | — | null | Final approval timestamp |
-| `remarks` | `text` | Yes | — | null | Current completion remarks |
-| `createdAt` | `timestamptz` | No | — | current timestamp | Audit |
-| `createdBy` | FK-compatible user ID | No | reference | none | Creator/system principal |
-| `updatedAt` | `timestamptz` | No | — | current timestamp | Audit |
-| `updatedBy` | FK-compatible user ID | No | reference | none | Last updater |
-| `deletedAt` | `timestamptz` | Yes | — | null | Soft delete |
-| `isActive` | `boolean` | No | — | true | Active flag |
-| `version` | `integer` | No | — | 1 | Optimistic lock |
+| Field                    | PostgreSQL Type       | Nullable | Key          | Default           | Description                                      |
+| ------------------------ | --------------------- | -------: | ------------ | ----------------- | ------------------------------------------------ |
+| `id`                     | repository ID type    |       No | PK           | generated         | Completion identifier                            |
+| `enrollmentId`           | FK ID type            |       No | FK + Unique  | none              | Enrollment being evaluated                       |
+| `completionStatus`       | enum                  |       No | —            | initial state     | Current completion workflow/outcome status       |
+| `attendancePercentage`   | `decimal(5,2)`        |      Yes | —            | null              | Materialized authoritative attendance percentage |
+| `examPassed`             | `boolean`             |      Yes | —            | null              | Materialized exam criterion outcome              |
+| `paymentCompleted`       | `boolean`             |      Yes | —            | null              | Materialized payment validation outcome          |
+| `recommendedByTrainerId` | FK ID type            |      Yes | FK/reference | null              | TrainerProfile that recommended completion       |
+| `approvedBy`             | FK-compatible user ID |      Yes | reference    | null              | Final approving User                             |
+| `approvedAt`             | `timestamptz`         |      Yes | —            | null              | Final approval timestamp                         |
+| `remarks`                | `text`                |      Yes | —            | null              | Current completion remarks                       |
+| `createdAt`              | `timestamptz`         |       No | —            | current timestamp | Audit                                            |
+| `createdBy`              | FK-compatible user ID |       No | reference    | none              | Creator/system principal                         |
+| `updatedAt`              | `timestamptz`         |       No | —            | current timestamp | Audit                                            |
+| `updatedBy`              | FK-compatible user ID |       No | reference    | none              | Last updater                                     |
+| `deletedAt`              | `timestamptz`         |      Yes | —            | null              | Soft delete                                      |
+| `isActive`               | `boolean`             |       No | —            | true              | Active flag                                      |
+| `version`                | `integer`             |       No | —            | 1                 | Optimistic lock                                  |
 
 ## 7.4 Nullability Semantics
 
@@ -693,14 +693,14 @@ CHECK (version >= 1)
 
 Authoritative sources:
 
-| Materialized Field | Authoritative Owner |
-|---|---|
-| `attendancePercentage` | Attendance Management |
-| `examPassed` | Module 10 Result evidence |
-| `paymentCompleted` | Finance & Receivables |
-| rule thresholds | Course Catalog |
-| Enrollment Course/Batch | Admission & Enrollment |
-| certificate issue state | Certificate Management |
+| Materialized Field      | Authoritative Owner       |
+| ----------------------- | ------------------------- |
+| `attendancePercentage`  | Attendance Management     |
+| `examPassed`            | Module 10 Result evidence |
+| `paymentCompleted`      | Finance & Receivables     |
+| rule thresholds         | Course Catalog            |
+| Enrollment Course/Batch | Admission & Enrollment    |
+| certificate issue state | Certificate Management    |
 
 ## 7.7 Recommended Indexes
 
@@ -762,16 +762,16 @@ Enrollment deleted → CourseCompletion physically deleted
 
 ## 8.1 Ownership
 
-| Attribute | Value |
-|---|---|
-| Context | Exam, Result & Completion Management for workflow record |
-| Ownership | Owned transactional approval-stage record |
+| Attribute                 | Value                                                               |
+| ------------------------- | ------------------------------------------------------------------- |
+| Context                   | Exam, Result & Completion Management for workflow record            |
+| Ownership                 | Owned transactional approval-stage record                           |
 | Shared Audit Relationship | Audit & Compliance owns platform approval history/audit conventions |
-| Parent | CourseCompletion |
-| Branch Scope Derivation | `CompletionApproval → CourseCompletion → Enrollment.branchId` |
-| Soft Delete | Required |
-| Effective Dating | Not applicable |
-| Auditing | Mandatory |
+| Parent                    | CourseCompletion                                                    |
+| Branch Scope Derivation   | `CompletionApproval → CourseCompletion → Enrollment.branchId`       |
+| Soft Delete               | Required                                                            |
+| Effective Dating          | Not applicable                                                      |
+| Auditing                  | Mandatory                                                           |
 
 ## 8.2 Table Name
 
@@ -781,22 +781,22 @@ completion_approval
 
 ## 8.3 Field Specification
 
-| Field | PostgreSQL Type | Nullable | Key | Default | Description |
-|---|---|---:|---|---|---|
-| `id` | repository ID type | No | PK | generated | Approval-stage identifier |
-| `courseCompletionId` | FK ID type | No | FK | none | Parent CourseCompletion |
-| `approvalLevel` | enum | No | composite business key | none | Trainer, Coordinator, Final stage |
-| `approverUserId` | FK-compatible user ID | Yes while pending | FK/reference | null | Human approver User |
-| `status` | enum | No | — | Pending | Stage status |
-| `remarks` | `text` | Yes conditionally | — | null | Decision remarks |
-| `approvedAt` | `timestamptz` | Yes | — | null | Approval timestamp |
-| `createdAt` | `timestamptz` | No | — | current timestamp | Audit |
-| `createdBy` | FK-compatible user ID | No | reference | none | Stage creator/system principal |
-| `updatedAt` | `timestamptz` | No | — | current timestamp | Audit |
-| `updatedBy` | FK-compatible user ID | No | reference | none | Last updater |
-| `deletedAt` | `timestamptz` | Yes | — | null | Soft-delete field; normal workflow must not use it |
-| `isActive` | `boolean` | No | — | true | Current active stage record |
-| `version` | `integer` | No | — | 1 | Optimistic lock |
+| Field                | PostgreSQL Type       |          Nullable | Key                    | Default           | Description                                        |
+| -------------------- | --------------------- | ----------------: | ---------------------- | ----------------- | -------------------------------------------------- |
+| `id`                 | repository ID type    |                No | PK                     | generated         | Approval-stage identifier                          |
+| `courseCompletionId` | FK ID type            |                No | FK                     | none              | Parent CourseCompletion                            |
+| `approvalLevel`      | enum                  |                No | composite business key | none              | Trainer, Coordinator, Final stage                  |
+| `approverUserId`     | FK-compatible user ID | Yes while pending | FK/reference           | null              | Human approver User                                |
+| `status`             | enum                  |                No | —                      | Pending           | Stage status                                       |
+| `remarks`            | `text`                | Yes conditionally | —                      | null              | Decision remarks                                   |
+| `approvedAt`         | `timestamptz`         |               Yes | —                      | null              | Approval timestamp                                 |
+| `createdAt`          | `timestamptz`         |                No | —                      | current timestamp | Audit                                              |
+| `createdBy`          | FK-compatible user ID |                No | reference              | none              | Stage creator/system principal                     |
+| `updatedAt`          | `timestamptz`         |                No | —                      | current timestamp | Audit                                              |
+| `updatedBy`          | FK-compatible user ID |                No | reference              | none              | Last updater                                       |
+| `deletedAt`          | `timestamptz`         |               Yes | —                      | null              | Soft-delete field; normal workflow must not use it |
+| `isActive`           | `boolean`             |                No | —                      | true              | Current active stage record                        |
+| `version`            | `integer`             |                No | —                      | 1                 | Optimistic lock                                    |
 
 ## 8.4 Approval Level Semantics
 
@@ -968,18 +968,18 @@ User 1 ─────── 0..N CourseCompletion
 
 # 10. Detailed Relationship and Referential Action Matrix
 
-| Parent | Child | Cardinality | FK | On Update | On Delete | Reason |
-|---|---|---|---|---|---|---|
-| Course | Exam | 1:N | `Exam.courseId` | RESTRICT | RESTRICT | Course is externally owned and historic Exam must remain traceable |
-| Batch | Exam | 1:N | `Exam.batchId` | RESTRICT | RESTRICT | Exam is tied to delivery context |
-| Exam | Result | 1:N | `Result.examId` | RESTRICT | RESTRICT | Academic evidence must not cascade-delete |
-| Enrollment | Result | 1:N across different Exams | `Result.enrollmentId` | RESTRICT | RESTRICT | Enrollment is central lifecycle reference |
-| Enrollment | CourseCompletion | 1:0..1 | `CourseCompletion.enrollmentId` | RESTRICT | RESTRICT | Preserve completion history |
-| CourseCompletion | CompletionApproval | 1:N | `CompletionApproval.courseCompletionId` | RESTRICT | RESTRICT | Preserve ordered approval evidence |
-| TrainerProfile | CourseCompletion | 1:N optional | `recommendedByTrainerId` | RESTRICT | RESTRICT | Do not lose trainer recommendation provenance |
-| User | CourseCompletion | 1:N optional | `approvedBy` | RESTRICT | RESTRICT | Preserve final approver provenance |
-| User | CompletionApproval | 1:N optional/pending | `approverUserId` | RESTRICT | RESTRICT | Preserve decision actor |
-| User | common audit columns | 1:N | `createdBy`, `updatedBy`, `recordedBy` | RESTRICT | RESTRICT | Preserve audit actor |
+| Parent           | Child                | Cardinality                | FK                                      | On Update | On Delete | Reason                                                             |
+| ---------------- | -------------------- | -------------------------- | --------------------------------------- | --------- | --------- | ------------------------------------------------------------------ |
+| Course           | Exam                 | 1:N                        | `Exam.courseId`                         | RESTRICT  | RESTRICT  | Course is externally owned and historic Exam must remain traceable |
+| Batch            | Exam                 | 1:N                        | `Exam.batchId`                          | RESTRICT  | RESTRICT  | Exam is tied to delivery context                                   |
+| Exam             | Result               | 1:N                        | `Result.examId`                         | RESTRICT  | RESTRICT  | Academic evidence must not cascade-delete                          |
+| Enrollment       | Result               | 1:N across different Exams | `Result.enrollmentId`                   | RESTRICT  | RESTRICT  | Enrollment is central lifecycle reference                          |
+| Enrollment       | CourseCompletion     | 1:0..1                     | `CourseCompletion.enrollmentId`         | RESTRICT  | RESTRICT  | Preserve completion history                                        |
+| CourseCompletion | CompletionApproval   | 1:N                        | `CompletionApproval.courseCompletionId` | RESTRICT  | RESTRICT  | Preserve ordered approval evidence                                 |
+| TrainerProfile   | CourseCompletion     | 1:N optional               | `recommendedByTrainerId`                | RESTRICT  | RESTRICT  | Do not lose trainer recommendation provenance                      |
+| User             | CourseCompletion     | 1:N optional               | `approvedBy`                            | RESTRICT  | RESTRICT  | Preserve final approver provenance                                 |
+| User             | CompletionApproval   | 1:N optional/pending       | `approverUserId`                        | RESTRICT  | RESTRICT  | Preserve decision actor                                            |
+| User             | common audit columns | 1:N                        | `createdBy`, `updatedBy`, `recordedBy`  | RESTRICT  | RESTRICT  | Preserve audit actor                                               |
 
 ## 10.1 No Cascade Delete Rule
 
@@ -1147,13 +1147,13 @@ CRUD in this module does not mean unrestricted generic database operations.
 
 Definitions:
 
-| CRUD Symbol | Meaning in this FRD |
-|---|---|
-| C | Create through domain command |
-| R | Read through authorized query |
-| U | Update through state-valid application command |
-| D | Soft delete/archive/deactivate only; never physical delete |
-| — | No allowed direct action |
+| CRUD Symbol | Meaning in this FRD                                        |
+| ----------- | ---------------------------------------------------------- |
+| C           | Create through domain command                              |
+| R           | Read through authorized query                              |
+| U           | Update through state-valid application command             |
+| D           | Soft delete/archive/deactivate only; never physical delete |
+| —           | No allowed direct action                                   |
 
 For sensitive entities:
 
@@ -1178,32 +1178,32 @@ A = Approval-stage action
 — = No direct access
 ```
 
-| Human Actor | Exam | Result | CourseCompletion | CompletionApproval | Branch Logic |
-|---|---|---|---|---|---|
-| Trainer | R | C/R/U before finalization when permitted | R | C/R/U for Trainer Recommendation stage only | Assigned/authorized Batch plus branch access |
-| Academic Coordinator | C/R/U/D* | C/R/U; finalize when permitted | C/R/U evaluate | C/R/U for Coordinator Review stage | Authorized mutation branches |
-| Academic Administrator | C/R/U/D* | C/R/U/RC with separate permissions | C/R/U/reevaluate | R/U according to explicit stage permission | Authorized branches; consolidated read separate |
-| Branch Manager | R | R | R/U final decision outcome via command | C/R/U for Final Approval/Reject stage | Entity branch must be inside manager mutation scope |
-| Auditor / Compliance Reader | R | R | R | R | Read-only authorized branches; audit permission required |
-| Read-Only Academic User | R | R | R | R where permitted | Effective read branches only |
-| Unauthorized User | — | — | — | — | No data leakage |
+| Human Actor                 | Exam      | Result                                   | CourseCompletion                       | CompletionApproval                          | Branch Logic                                             |
+| --------------------------- | --------- | ---------------------------------------- | -------------------------------------- | ------------------------------------------- | -------------------------------------------------------- |
+| Trainer                     | R         | C/R/U before finalization when permitted | R                                      | C/R/U for Trainer Recommendation stage only | Assigned/authorized Batch plus branch access             |
+| Academic Coordinator        | C/R/U/D\* | C/R/U; finalize when permitted           | C/R/U evaluate                         | C/R/U for Coordinator Review stage          | Authorized mutation branches                             |
+| Academic Administrator      | C/R/U/D\* | C/R/U/RC with separate permissions       | C/R/U/reevaluate                       | R/U according to explicit stage permission  | Authorized branches; consolidated read separate          |
+| Branch Manager              | R         | R                                        | R/U final decision outcome via command | C/R/U for Final Approval/Reject stage       | Entity branch must be inside manager mutation scope      |
+| Auditor / Compliance Reader | R         | R                                        | R                                      | R                                           | Read-only authorized branches; audit permission required |
+| Read-Only Academic User     | R         | R                                        | R                                      | R where permitted                           | Effective read branches only                             |
+| Unauthorized User           | —         | —                                        | —                                      | —                                           | No data leakage                                          |
 
 ---
 
 # 15. System Actor CRUD Matrix
 
-| System Actor / Application Process | Exam | Result | CourseCompletion | CompletionApproval | Scope Rule |
-|---|---|---|---|---|---|
-| Completion Evaluation Service | R | R | C/R/U | R | Enrollment-derived branch and application-service authority |
-| Completion Re-evaluation Process | R | R | R/U | R/U only for supersession/restart mechanics | Trigger must identify affected Enrollment and preserve history |
-| Result Correction Workflow | R | R/U | R/U or mark reevaluation required | R | Same branch as Result; dedicated command authority |
-| Pending Work Queue Query | R | R | R | R | Read scope intersection only |
-| Export Service | R | R | R | R | Export permission + effective read branches |
-| Reporting Read Model Projector | R | R | R | R | Read-only consumption; no transactional ownership |
-| Certificate Eligibility Handoff | R | R | R | R | Read/consume approved eligibility only; no Certificate creation here |
-| Audit Writer | event/metadata consume | event/metadata consume | event/metadata consume | event/metadata consume | Audit context owns AuditLog |
-| Notification Process | R summary only | R summary only | R summary only | R summary only | Communication context receives approved event payload |
-| Generic Background Job | — unless explicitly authorized | — | — | — | No implicit elevated access |
+| System Actor / Application Process | Exam                           | Result                 | CourseCompletion                  | CompletionApproval                          | Scope Rule                                                           |
+| ---------------------------------- | ------------------------------ | ---------------------- | --------------------------------- | ------------------------------------------- | -------------------------------------------------------------------- |
+| Completion Evaluation Service      | R                              | R                      | C/R/U                             | R                                           | Enrollment-derived branch and application-service authority          |
+| Completion Re-evaluation Process   | R                              | R                      | R/U                               | R/U only for supersession/restart mechanics | Trigger must identify affected Enrollment and preserve history       |
+| Result Correction Workflow         | R                              | R/U                    | R/U or mark reevaluation required | R                                           | Same branch as Result; dedicated command authority                   |
+| Pending Work Queue Query           | R                              | R                      | R                                 | R                                           | Read scope intersection only                                         |
+| Export Service                     | R                              | R                      | R                                 | R                                           | Export permission + effective read branches                          |
+| Reporting Read Model Projector     | R                              | R                      | R                                 | R                                           | Read-only consumption; no transactional ownership                    |
+| Certificate Eligibility Handoff    | R                              | R                      | R                                 | R                                           | Read/consume approved eligibility only; no Certificate creation here |
+| Audit Writer                       | event/metadata consume         | event/metadata consume | event/metadata consume            | event/metadata consume                      | Audit context owns AuditLog                                          |
+| Notification Process               | R summary only                 | R summary only         | R summary only                    | R summary only                              | Communication context receives approved event payload                |
+| Generic Background Job             | — unless explicitly authorized | —                      | —                                 | —                                           | No implicit elevated access                                          |
 
 ---
 
@@ -1211,40 +1211,40 @@ A = Approval-stage action
 
 ## 16.1 Exam Permissions
 
-| Permission | Entity | Allowed Operation | Conditions |
-|---|---|---|---|
-| `exam.read` | Exam | R | Read branch scope |
-| `exam.create` | Exam | C | Batch branch in mutation scope; Course-Batch match |
-| `exam.update` | Exam | U | Mutable state; version match |
-| `exam.schedule` | Exam | U | Valid state and date |
-| `exam.activate` | Exam | U | Scheduled state and ready for result entry |
-| `exam.close` | Exam | U | Open state; server close guards pass |
-| `exam.cancel` | Exam | U | Cancellable state; reason required where policy mandates |
-| repository admin archive capability | Exam | D* | Soft-delete/archive only and safe-state checks |
+| Permission                          | Entity | Allowed Operation | Conditions                                               |
+| ----------------------------------- | ------ | ----------------- | -------------------------------------------------------- |
+| `exam.read`                         | Exam   | R                 | Read branch scope                                        |
+| `exam.create`                       | Exam   | C                 | Batch branch in mutation scope; Course-Batch match       |
+| `exam.update`                       | Exam   | U                 | Mutable state; version match                             |
+| `exam.schedule`                     | Exam   | U                 | Valid state and date                                     |
+| `exam.activate`                     | Exam   | U                 | Scheduled state and ready for result entry               |
+| `exam.close`                        | Exam   | U                 | Open state; server close guards pass                     |
+| `exam.cancel`                       | Exam   | U                 | Cancellable state; reason required where policy mandates |
+| repository admin archive capability | Exam   | D\*               | Soft-delete/archive only and safe-state checks           |
 
 ## 16.2 Result Permissions
 
-| Permission | Entity | Allowed Operation | Conditions |
-|---|---|---|---|
-| `result.read` | Result | R | Branch scope |
-| `result.record` | Result | C/U | Exam open; Enrollment match; non-finalized |
-| `result.bulk-record` | Result | C/U | Same as record plus row validation and transaction policy |
-| `result.finalize` | Result | U | Finalizable state; version valid |
-| `result.correct` | Result | RC | Finalized/current protected result; mandatory reason; audit; reevaluation |
+| Permission           | Entity | Allowed Operation | Conditions                                                                |
+| -------------------- | ------ | ----------------- | ------------------------------------------------------------------------- |
+| `result.read`        | Result | R                 | Branch scope                                                              |
+| `result.record`      | Result | C/U               | Exam open; Enrollment match; non-finalized                                |
+| `result.bulk-record` | Result | C/U               | Same as record plus row validation and transaction policy                 |
+| `result.finalize`    | Result | U                 | Finalizable state; version valid                                          |
+| `result.correct`     | Result | RC                | Finalized/current protected result; mandatory reason; audit; reevaluation |
 
 ## 16.3 Completion Permissions
 
-| Permission | Entity | Allowed Operation | Conditions |
-|---|---|---|---|
-| `completion.read` | CourseCompletion | R | Read branch |
-| `completion.evaluate` | CourseCompletion | C/U | Valid Enrollment and authoritative dependencies |
-| `completion.reevaluate` | CourseCompletion | U | Traceable evidence change or authorized remediation |
-| `completion.recommend` | CourseCompletion + CompletionApproval | U/A | Assigned/authorized Trainer and correct stage |
-| `completion.coordinator-review` | CompletionApproval | A | Trainer stage complete |
-| `completion.final-approve` | CourseCompletion + CompletionApproval | U/A | Coordinator stage complete; current evidence valid |
-| `completion.reject` | CompletionApproval + CourseCompletion outcome | U/A | Correct stage; reason required |
-| `completion.export` | Read models/entities | R/export | Export branch scope |
-| `completion.audit.read` | Audit projection | R | Audit permission and entity branch scope |
+| Permission                      | Entity                                        | Allowed Operation | Conditions                                          |
+| ------------------------------- | --------------------------------------------- | ----------------- | --------------------------------------------------- |
+| `completion.read`               | CourseCompletion                              | R                 | Read branch                                         |
+| `completion.evaluate`           | CourseCompletion                              | C/U               | Valid Enrollment and authoritative dependencies     |
+| `completion.reevaluate`         | CourseCompletion                              | U                 | Traceable evidence change or authorized remediation |
+| `completion.recommend`          | CourseCompletion + CompletionApproval         | U/A               | Assigned/authorized Trainer and correct stage       |
+| `completion.coordinator-review` | CompletionApproval                            | A                 | Trainer stage complete                              |
+| `completion.final-approve`      | CourseCompletion + CompletionApproval         | U/A               | Coordinator stage complete; current evidence valid  |
+| `completion.reject`             | CompletionApproval + CourseCompletion outcome | U/A               | Correct stage; reason required                      |
+| `completion.export`             | Read models/entities                          | R/export          | Export branch scope                                 |
+| `completion.audit.read`         | Audit projection                              | R                 | Audit permission and entity branch scope            |
 
 ---
 
@@ -1338,24 +1338,24 @@ Certificate context consumes eligibility outcome
 
 # 18. Cross-Context Reference Matrix
 
-| Referenced Entity | Owning Context | Used By Owned Entity | Relationship Purpose | Module 10 CRUD |
-|---|---|---|---|---|
-| Course | Course Catalog | Exam | Exam course context | R only |
-| CourseCompletionRule | Course Catalog | Completion evaluator | Completion thresholds/rules | R only |
-| Batch | Training Delivery | Exam | Delivery context and branch derivation | R only |
-| BatchTrainer | Training Delivery | Recommendation validator | Validate Trainer assignment | R only |
-| Enrollment | Admission & Enrollment | Result, CourseCompletion | Central learner lifecycle | R; outcome sync through application boundary only |
-| StudentProfile | Admission & Enrollment | Query/read projection | Learner display | R only |
-| Person | Shared Party model | Query/read projection | Display identity | R only |
-| AttendanceRecord / attendance projection | Attendance | Completion evaluator | Attendance criterion | R only |
-| Invoice/Payment/Receivable validation projection | Finance & Receivables | Completion evaluator | Payment criterion | R only |
-| TrainerProfile | Faculty / Trainer | CourseCompletion recommendation reference | Recommendation provenance | R/reference only |
-| User | IAM | Audit actor and approver references | Actor identity | R/reference only |
-| UserBranchAccess | IAM | Authorization | Branch scope | R through policy |
-| Certificate | Certificate Management | downstream | Issue/verify/revoke | No CRUD |
-| AuditLog | Audit & Compliance | all sensitive actions | Immutable audit evidence | Write through audit boundary; not owned |
-| ApprovalRequest/ApprovalHistory | Audit & Compliance | shared approval governance where used | Platform approval trace | Do not duplicate without explicit integration design |
-| DashboardWidget/MetricSnapshot | Reporting | reporting | KPI/read consumption | No transactional CRUD |
+| Referenced Entity                                | Owning Context         | Used By Owned Entity                      | Relationship Purpose                   | Module 10 CRUD                                       |
+| ------------------------------------------------ | ---------------------- | ----------------------------------------- | -------------------------------------- | ---------------------------------------------------- |
+| Course                                           | Course Catalog         | Exam                                      | Exam course context                    | R only                                               |
+| CourseCompletionRule                             | Course Catalog         | Completion evaluator                      | Completion thresholds/rules            | R only                                               |
+| Batch                                            | Training Delivery      | Exam                                      | Delivery context and branch derivation | R only                                               |
+| BatchTrainer                                     | Training Delivery      | Recommendation validator                  | Validate Trainer assignment            | R only                                               |
+| Enrollment                                       | Admission & Enrollment | Result, CourseCompletion                  | Central learner lifecycle              | R; outcome sync through application boundary only    |
+| StudentProfile                                   | Admission & Enrollment | Query/read projection                     | Learner display                        | R only                                               |
+| Person                                           | Shared Party model     | Query/read projection                     | Display identity                       | R only                                               |
+| AttendanceRecord / attendance projection         | Attendance             | Completion evaluator                      | Attendance criterion                   | R only                                               |
+| Invoice/Payment/Receivable validation projection | Finance & Receivables  | Completion evaluator                      | Payment criterion                      | R only                                               |
+| TrainerProfile                                   | Faculty / Trainer      | CourseCompletion recommendation reference | Recommendation provenance              | R/reference only                                     |
+| User                                             | IAM                    | Audit actor and approver references       | Actor identity                         | R/reference only                                     |
+| UserBranchAccess                                 | IAM                    | Authorization                             | Branch scope                           | R through policy                                     |
+| Certificate                                      | Certificate Management | downstream                                | Issue/verify/revoke                    | No CRUD                                              |
+| AuditLog                                         | Audit & Compliance     | all sensitive actions                     | Immutable audit evidence               | Write through audit boundary; not owned              |
+| ApprovalRequest/ApprovalHistory                  | Audit & Compliance     | shared approval governance where used     | Platform approval trace                | Do not duplicate without explicit integration design |
+| DashboardWidget/MetricSnapshot                   | Reporting              | reporting                                 | KPI/read consumption                   | No transactional CRUD                                |
 
 ---
 
@@ -1371,49 +1371,49 @@ PROHIBITED-DUPLICATE
 FUTURE/OUT-OF-SCOPE
 ```
 
-| Entity / Concept | Status | Owning Context | Module 10 Treatment |
-|---|---|---|---|
-| Exam | OWNED | Exam & Completion | Persist and manage |
-| Result | OWNED | Exam & Completion | Persist and manage |
-| CourseCompletion | OWNED | Exam & Completion | Persist evaluation/current outcome |
-| CompletionApproval | OWNED | Exam & Completion transactional workflow | Persist stage decision; integrate with Audit conventions |
-| Assessment | CONCEPTUAL-NOT-SEPARATE | Exam & Completion | Current scope uses Exam |
-| Grade | CONCEPTUAL-NOT-SEPARATE | Exam & Completion concept | Store `Result.grade`; no Grade table |
-| CompletionRuleEvaluation | CONCEPTUAL-NOT-SEPARATE | Exam & Completion behavior | Evaluate in domain/application service; materialize outcome in CourseCompletion |
-| ResultAttempt | PROHIBITED-DUPLICATE until model amendment | Not defined | Do not create |
-| ResultRevision | PROHIBITED-DUPLICATE until model amendment | Not defined; audit handles history | Do not create |
-| Course | REFERENCED | Course Catalog | FK/read only |
-| CourseCompletionRule | REFERENCED | Course Catalog | Read authoritative rule |
-| CoursePricing | PROHIBITED-DUPLICATE | Course Catalog | Not part of Module 10 |
-| Batch | REFERENCED | Training Delivery | FK/read only |
-| Session | REFERENCED only if future assessment scheduling requires it | Training Delivery | Do not copy |
-| BatchTrainer | REFERENCED | Training Delivery | Validate assigned Trainer |
-| Enrollment | REFERENCED | Admission & Enrollment | Central lifecycle FK/read |
-| StudentProfile | REFERENCED | Admission & Enrollment | Display/reference |
-| Person | REFERENCED | Party model | Display identity |
-| AttendanceSession | REFERENCED | Attendance | No ownership |
-| AttendanceRecord | REFERENCED | Attendance | Read authoritative outcome |
-| AttendanceCorrection | REFERENCED | Attendance | Evidence-change trigger only |
-| Invoice | REFERENCED | Finance | Do not copy |
-| Payment | REFERENCED | Finance | Do not copy |
-| Receivable | REFERENCED | Finance | Do not copy |
-| PaymentValidation | CONCEPTUAL READ CONTRACT | Finance | Consume authoritative validation response |
-| TrainerProfile | REFERENCED | Faculty / Trainer | Recommendation reference |
-| User | REFERENCED | IAM | Actor reference |
-| Role | PROHIBITED-DUPLICATE | IAM | No Module 10 role table |
-| Permission | PROHIBITED-DUPLICATE | IAM | No Module 10 permission table |
-| UserBranchAccess | REFERENCED | IAM | Authorization policy input |
-| Certificate | PROHIBITED-DUPLICATE | Certificate Management | No create/update here |
-| CertificateVerification | PROHIBITED-DUPLICATE | Certificate Management | No ownership |
-| AuditLog | REFERENCED/WRITTEN THROUGH BOUNDARY | Audit & Compliance | Sensitive action audit |
-| ApprovalRequest | REFERENCED where shared governance is integrated | Audit & Compliance | Do not duplicate workflow engine |
-| ApprovalHistory | REFERENCED | Audit & Compliance | Shared history; Module 10 keeps CompletionApproval transactional stages |
-| NotificationRequest | REFERENCED EVENT CONSUMER | Communication | Module 10 emits outcome; does not own request table |
-| MetricSnapshot | REFERENCED/PROJECTION | Reporting | Reporting consumes Module 10 data |
-| Retake | FUTURE/OUT-OF-SCOPE | Undefined | Requires DDD/ER change |
-| Weighted Assessment | FUTURE/OUT-OF-SCOPE | Undefined | Requires DDD/ER change |
-| Exam Question Bank | FUTURE/OUT-OF-SCOPE | Undefined | Do not create |
-| Online Proctoring | FUTURE/OUT-OF-SCOPE | Undefined | Do not create |
+| Entity / Concept         | Status                                                      | Owning Context                           | Module 10 Treatment                                                             |
+| ------------------------ | ----------------------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------- |
+| Exam                     | OWNED                                                       | Exam & Completion                        | Persist and manage                                                              |
+| Result                   | OWNED                                                       | Exam & Completion                        | Persist and manage                                                              |
+| CourseCompletion         | OWNED                                                       | Exam & Completion                        | Persist evaluation/current outcome                                              |
+| CompletionApproval       | OWNED                                                       | Exam & Completion transactional workflow | Persist stage decision; integrate with Audit conventions                        |
+| Assessment               | CONCEPTUAL-NOT-SEPARATE                                     | Exam & Completion                        | Current scope uses Exam                                                         |
+| Grade                    | CONCEPTUAL-NOT-SEPARATE                                     | Exam & Completion concept                | Store `Result.grade`; no Grade table                                            |
+| CompletionRuleEvaluation | CONCEPTUAL-NOT-SEPARATE                                     | Exam & Completion behavior               | Evaluate in domain/application service; materialize outcome in CourseCompletion |
+| ResultAttempt            | PROHIBITED-DUPLICATE until model amendment                  | Not defined                              | Do not create                                                                   |
+| ResultRevision           | PROHIBITED-DUPLICATE until model amendment                  | Not defined; audit handles history       | Do not create                                                                   |
+| Course                   | REFERENCED                                                  | Course Catalog                           | FK/read only                                                                    |
+| CourseCompletionRule     | REFERENCED                                                  | Course Catalog                           | Read authoritative rule                                                         |
+| CoursePricing            | PROHIBITED-DUPLICATE                                        | Course Catalog                           | Not part of Module 10                                                           |
+| Batch                    | REFERENCED                                                  | Training Delivery                        | FK/read only                                                                    |
+| Session                  | REFERENCED only if future assessment scheduling requires it | Training Delivery                        | Do not copy                                                                     |
+| BatchTrainer             | REFERENCED                                                  | Training Delivery                        | Validate assigned Trainer                                                       |
+| Enrollment               | REFERENCED                                                  | Admission & Enrollment                   | Central lifecycle FK/read                                                       |
+| StudentProfile           | REFERENCED                                                  | Admission & Enrollment                   | Display/reference                                                               |
+| Person                   | REFERENCED                                                  | Party model                              | Display identity                                                                |
+| AttendanceSession        | REFERENCED                                                  | Attendance                               | No ownership                                                                    |
+| AttendanceRecord         | REFERENCED                                                  | Attendance                               | Read authoritative outcome                                                      |
+| AttendanceCorrection     | REFERENCED                                                  | Attendance                               | Evidence-change trigger only                                                    |
+| Invoice                  | REFERENCED                                                  | Finance                                  | Do not copy                                                                     |
+| Payment                  | REFERENCED                                                  | Finance                                  | Do not copy                                                                     |
+| Receivable               | REFERENCED                                                  | Finance                                  | Do not copy                                                                     |
+| PaymentValidation        | CONCEPTUAL READ CONTRACT                                    | Finance                                  | Consume authoritative validation response                                       |
+| TrainerProfile           | REFERENCED                                                  | Faculty / Trainer                        | Recommendation reference                                                        |
+| User                     | REFERENCED                                                  | IAM                                      | Actor reference                                                                 |
+| Role                     | PROHIBITED-DUPLICATE                                        | IAM                                      | No Module 10 role table                                                         |
+| Permission               | PROHIBITED-DUPLICATE                                        | IAM                                      | No Module 10 permission table                                                   |
+| UserBranchAccess         | REFERENCED                                                  | IAM                                      | Authorization policy input                                                      |
+| Certificate              | PROHIBITED-DUPLICATE                                        | Certificate Management                   | No create/update here                                                           |
+| CertificateVerification  | PROHIBITED-DUPLICATE                                        | Certificate Management                   | No ownership                                                                    |
+| AuditLog                 | REFERENCED/WRITTEN THROUGH BOUNDARY                         | Audit & Compliance                       | Sensitive action audit                                                          |
+| ApprovalRequest          | REFERENCED where shared governance is integrated            | Audit & Compliance                       | Do not duplicate workflow engine                                                |
+| ApprovalHistory          | REFERENCED                                                  | Audit & Compliance                       | Shared history; Module 10 keeps CompletionApproval transactional stages         |
+| NotificationRequest      | REFERENCED EVENT CONSUMER                                   | Communication                            | Module 10 emits outcome; does not own request table                             |
+| MetricSnapshot           | REFERENCED/PROJECTION                                       | Reporting                                | Reporting consumes Module 10 data                                               |
+| Retake                   | FUTURE/OUT-OF-SCOPE                                         | Undefined                                | Requires DDD/ER change                                                          |
+| Weighted Assessment      | FUTURE/OUT-OF-SCOPE                                         | Undefined                                | Requires DDD/ER change                                                          |
+| Exam Question Bank       | FUTURE/OUT-OF-SCOPE                                         | Undefined                                | Do not create                                                                   |
+| Online Proctoring        | FUTURE/OUT-OF-SCOPE                                         | Undefined                                | Do not create                                                                   |
 
 ---
 
@@ -1571,33 +1571,33 @@ Downstream Enrollment/Certificate integration occurs through defined application
 
 # 22. Data Integrity Rules
 
-| ID | Integrity Rule |
-|---|---|
-| DI-EXC-001 | Exam must reference an existing Course |
-| DI-EXC-002 | Exam must reference an existing Batch |
-| DI-EXC-003 | Exam Course must equal Batch Course |
-| DI-EXC-004 | Exam `maxMarks > 0` |
-| DI-EXC-005 | Exam `passMarks >= 0` |
-| DI-EXC-006 | Exam `passMarks <= maxMarks` |
-| DI-EXC-007 | Result must reference existing Exam |
-| DI-EXC-008 | Result must reference existing Enrollment |
-| DI-EXC-009 | One active Result per Exam + Enrollment |
-| DI-EXC-010 | Result Enrollment Course and Batch must match Exam |
-| DI-EXC-011 | `marksObtained >= 0` |
-| DI-EXC-012 | `marksObtained <= Exam.maxMarks` |
-| DI-EXC-013 | Result outcome derived from marks and pass threshold |
-| DI-EXC-014 | One active CourseCompletion per Enrollment |
-| DI-EXC-015 | Attendance percentage, when present, is 0..100 |
-| DI-EXC-016 | Approved completion has both `approvedBy` and `approvedAt` |
+| ID         | Integrity Rule                                                |
+| ---------- | ------------------------------------------------------------- |
+| DI-EXC-001 | Exam must reference an existing Course                        |
+| DI-EXC-002 | Exam must reference an existing Batch                         |
+| DI-EXC-003 | Exam Course must equal Batch Course                           |
+| DI-EXC-004 | Exam `maxMarks > 0`                                           |
+| DI-EXC-005 | Exam `passMarks >= 0`                                         |
+| DI-EXC-006 | Exam `passMarks <= maxMarks`                                  |
+| DI-EXC-007 | Result must reference existing Exam                           |
+| DI-EXC-008 | Result must reference existing Enrollment                     |
+| DI-EXC-009 | One active Result per Exam + Enrollment                       |
+| DI-EXC-010 | Result Enrollment Course and Batch must match Exam            |
+| DI-EXC-011 | `marksObtained >= 0`                                          |
+| DI-EXC-012 | `marksObtained <= Exam.maxMarks`                              |
+| DI-EXC-013 | Result outcome derived from marks and pass threshold          |
+| DI-EXC-014 | One active CourseCompletion per Enrollment                    |
+| DI-EXC-015 | Attendance percentage, when present, is 0..100                |
+| DI-EXC-016 | Approved completion has both `approvedBy` and `approvedAt`    |
 | DI-EXC-017 | Trainer recommendation reference must point to TrainerProfile |
-| DI-EXC-018 | CompletionApproval must reference CourseCompletion |
-| DI-EXC-019 | Approval stage order cannot be skipped |
-| DI-EXC-020 | Rejection requires remarks |
-| DI-EXC-021 | No hard delete of academic evidence |
-| DI-EXC-022 | All mutations enforce optimistic version |
-| DI-EXC-023 | All reads/mutations apply server-side branch scope |
-| DI-EXC-024 | Cross-context source data is not duplicated as owned truth |
-| DI-EXC-025 | Certificate creation does not occur in Module 10 |
+| DI-EXC-018 | CompletionApproval must reference CourseCompletion            |
+| DI-EXC-019 | Approval stage order cannot be skipped                        |
+| DI-EXC-020 | Rejection requires remarks                                    |
+| DI-EXC-021 | No hard delete of academic evidence                           |
+| DI-EXC-022 | All mutations enforce optimistic version                      |
+| DI-EXC-023 | All reads/mutations apply server-side branch scope            |
+| DI-EXC-024 | Cross-context source data is not duplicated as owned truth    |
+| DI-EXC-025 | Certificate creation does not occur in Module 10              |
 
 ---
 

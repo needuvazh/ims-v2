@@ -38,8 +38,12 @@ test('createStudentAdmission should check duplicates, generate STU/ADM numbers a
 
   expect(result.admissionId).toBe('admission-1');
   expect(mockRepo.getNextStudentNumber).toHaveBeenCalled();
-  expect(mockRepo.createStudentProfileAndAdmission).toHaveBeenCalledWith(input, 'STU-2026-10001', mockPrisma);
-  
+  expect(mockRepo.createStudentProfileAndAdmission).toHaveBeenCalledWith(
+    input,
+    'STU-2026-10001',
+    mockPrisma,
+  );
+
   // Verify Outbox events
   expect(mockPrisma.outboxEvent.create).toHaveBeenCalledTimes(2); // AdmissionCreated & StudentProfileCreated (isNewProfile = true)
   expect(mockPrisma.auditLog.create).toHaveBeenCalled();
@@ -48,7 +52,9 @@ test('createStudentAdmission should check duplicates, generate STU/ADM numbers a
 test('createStudentAdmission should block draft creation if active admission already exists in target branch', async () => {
   const mockRepo = {
     findPersonByUniqueKeys: vi.fn().mockResolvedValue({ id: 'person-1' }),
-    findStudentProfileByPersonId: vi.fn().mockResolvedValue({ id: 'profile-1', studentNumber: 'STU-123' }),
+    findStudentProfileByPersonId: vi
+      .fn()
+      .mockResolvedValue({ id: 'profile-1', studentNumber: 'STU-123' }),
     hasActiveAdmission: vi.fn().mockResolvedValue(true),
   } as any;
 
@@ -66,9 +72,9 @@ test('createStudentAdmission should block draft creation if active admission alr
     branchId: 'branch-1',
   };
 
-  await expect(service.createStudentAdmission(input))
-    .rejects
-    .toThrow('ERR_ADM_ACTIVE_ADMISSION_EXISTS');
+  await expect(service.createStudentAdmission(input)).rejects.toThrow(
+    'ERR_ADM_ACTIVE_ADMISSION_EXISTS',
+  );
 });
 
 test('approveAdmission should fail if current status is Draft (blocking bypass)', async () => {
@@ -86,9 +92,9 @@ test('approveAdmission should fail if current status is Draft (blocking bypass)'
   const mockRepo = {} as any;
   const service = new AdmissionService(mockRepo, mockPrisma);
 
-  await expect(service.approveAdmission('adm-1', 'actor-1'))
-    .rejects
-    .toThrow('ERR_ADMISSION_INVALID_STATUS_TRANSITION');
+  await expect(service.approveAdmission('adm-1', 'actor-1')).rejects.toThrow(
+    'ERR_ADMISSION_INVALID_STATUS_TRANSITION',
+  );
 });
 
 test('submitAdmission and approveAdmission lifecycle flow should succeed sequentially', async () => {
@@ -104,7 +110,9 @@ test('submitAdmission and approveAdmission lifecycle flow should succeed sequent
   const mockPrisma = {
     $transaction: vi.fn((callback) => callback(mockPrisma)),
     admission: {
-      findUnique: vi.fn().mockImplementation(() => Promise.resolve(mockAdmission)),
+      findUnique: vi
+        .fn()
+        .mockImplementation(() => Promise.resolve(mockAdmission)),
       update: vi.fn().mockImplementation(({ data }) => {
         if (data.admissionStatus) {
           mockAdmission.admissionStatus = data.admissionStatus;
@@ -135,7 +143,7 @@ test('submitAdmission and approveAdmission lifecycle flow should succeed sequent
         eventType: 'AdmissionApproved',
         aggregateId: 'adm-1',
       }),
-    })
+    }),
   );
 });
 
@@ -164,9 +172,9 @@ test('rejectAdmission should transition Submitted to Rejected and cancelAdmissio
   const service = new AdmissionService(mockRepo, mockPrisma);
 
   // 1. Reject requires remarks
-  await expect(service.rejectAdmission('adm-1', '', 'actor-1'))
-    .rejects
-    .toThrow('ERR_ADMISSION_REJECTION_REMARKS_REQUIRED');
+  await expect(service.rejectAdmission('adm-1', '', 'actor-1')).rejects.toThrow(
+    'ERR_ADMISSION_REJECTION_REMARKS_REQUIRED',
+  );
 
   // 2. Successful Rejection
   await service.rejectAdmission('adm-1', 'Incorrect details', 'actor-1');
@@ -205,9 +213,9 @@ test('createStudentAdmission should block draft creation if student is under 12 
     dateOfBirth: birthDateUnder12,
   };
 
-  await expect(service.createStudentAdmission(input))
-    .rejects
-    .toThrow('ERR_ADM_AGE_LIMIT');
+  await expect(service.createStudentAdmission(input)).rejects.toThrow(
+    'ERR_ADM_AGE_LIMIT',
+  );
 });
 
 test('createStudentAdmission should succeed if student is at least 12 years old', async () => {
@@ -284,9 +292,9 @@ test('createStudentAdmission should calculate age relative to admissionDate if p
     admissionDate: new Date('2020-01-01'),
   };
 
-  await expect(service.createStudentAdmission(inputUnder12))
-    .rejects
-    .toThrow('ERR_ADM_AGE_LIMIT');
+  await expect(service.createStudentAdmission(inputUnder12)).rejects.toThrow(
+    'ERR_ADM_AGE_LIMIT',
+  );
 
   // Test 2: Admission date is 2025-01-01 (student is 15, should succeed)
   const inputOver12 = {
@@ -301,4 +309,3 @@ test('createStudentAdmission should calculate age relative to admissionDate if p
   const result = await service.createStudentAdmission(inputOver12);
   expect(result.admissionId).toBe('admission-1');
 });
-

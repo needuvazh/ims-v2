@@ -20,7 +20,10 @@ export interface DataTableFilterProps {
   filters?: FilterOptionConfig[];
 }
 
-export function DataTableFilter({ searchPlaceholder = 'Search...', filters = [] }: DataTableFilterProps) {
+export function DataTableFilter({
+  searchPlaceholder = 'Search...',
+  filters = [],
+}: DataTableFilterProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -29,17 +32,20 @@ export function DataTableFilter({ searchPlaceholder = 'Search...', filters = [] 
   const currentQ = searchParams.get('q') || '';
   const [searchValue, setSearchValue] = useState(currentQ);
 
-  const updateParams = useCallback((updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === '') {
-        params.delete(key);
-      } else {
-        params.set(key, value);
-      }
-    });
-    router.push(`${pathname}?${params.toString()}`);
-  }, [pathname, router, searchParams]);
+  const updateParams = useCallback(
+    (updates: Record<string, string | null>) => {
+      const params = new URLSearchParams(searchParams.toString());
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value === null || value === '') {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      });
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [pathname, router, searchParams],
+  );
 
   // Debounced update to URL
   useEffect(() => {
@@ -71,32 +77,39 @@ export function DataTableFilter({ searchPlaceholder = 'Search...', filters = [] 
             <Button
               variant="secondary"
               className={cn(
-                "md:hidden flex-1 justify-center",
-                isExpanded && "bg-[var(--ims-brass-soft)] text-[var(--ims-brass)] border-[var(--ims-brass)]"
+                'md:hidden flex-1 justify-center',
+                isExpanded &&
+                  'bg-[var(--ims-brass-soft)] text-[var(--ims-brass)] border-[var(--ims-brass)]',
               )}
               onClick={() => setIsExpanded(!isExpanded)}
             >
-              {isExpanded ? <X className="h-4 w-4 mr-2" /> : <SlidersHorizontal className="h-4 w-4 mr-2" />}
+              {isExpanded ? (
+                <X className="h-4 w-4 mr-2" />
+              ) : (
+                <SlidersHorizontal className="h-4 w-4 mr-2" />
+              )}
               {isExpanded ? 'Hide Filters' : 'Filters'}
             </Button>
           )}
-          
+
           <div className="hidden md:flex flex-row flex-wrap gap-4 items-end md:flex-1 md:justify-end">
             {filters.map((filter) => {
               const currentValue = searchParams.get(filter.key) || '';
               return (
-                <div key={filter.key} className="flex flex-col gap-1 w-full sm:w-auto">
+                <div
+                  key={filter.key}
+                  className="flex flex-col gap-1 w-full sm:w-auto"
+                >
                   <span className="text-[10px] font-bold text-[var(--ims-muted)] uppercase tracking-wider whitespace-nowrap">
                     {filter.label}
                   </span>
                   <Select
                     className="w-full sm:w-40 h-10"
                     value={currentValue}
-                    onChange={(e) => updateParams({ [filter.key]: e.target.value, page: '1' })}
-                    options={[
-                      { value: '', label: 'All' },
-                      ...filter.options
-                    ]}
+                    onChange={(e) =>
+                      updateParams({ [filter.key]: e.target.value, page: '1' })
+                    }
+                    options={[{ value: '', label: 'All' }, ...filter.options]}
                   />
                 </div>
               );
@@ -118,11 +131,10 @@ export function DataTableFilter({ searchPlaceholder = 'Search...', filters = [] 
                 <Select
                   className="w-full h-11"
                   value={currentValue}
-                  onChange={(e) => updateParams({ [filter.key]: e.target.value, page: '1' })}
-                  options={[
-                    { value: '', label: 'All' },
-                    ...filter.options
-                  ]}
+                  onChange={(e) =>
+                    updateParams({ [filter.key]: e.target.value, page: '1' })
+                  }
+                  options={[{ value: '', label: 'All' }, ...filter.options]}
                 />
               </div>
             );

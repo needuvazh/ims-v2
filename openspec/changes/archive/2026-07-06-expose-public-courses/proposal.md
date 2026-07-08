@@ -17,6 +17,7 @@ Currently, all published courses are returned in the course catalog query, but w
 ### New Capabilities
 
 ### Modified Capabilities
+
 - course-catalog: Add public exposition controls, dynamic category hierarchy traversal, pricing display toggles, practical training indicators, practical testing details, and SEO metadata configuration for courses.
 
 ## Impact

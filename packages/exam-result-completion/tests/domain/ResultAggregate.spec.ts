@@ -1,11 +1,20 @@
 import { describe, it, expect } from 'vitest';
-import { ResultAggregate, RecordResultCommand, RESULT_STATUSES } from '../../src/domain/aggregates/Result';
-import { ResultInvalidStateError, ResultMarksValidationError } from '../../src/domain/errors';
+import {
+  ResultAggregate,
+  RecordResultCommand,
+  RESULT_STATUSES,
+} from '../../src/domain/aggregates/Result';
+import {
+  ResultInvalidStateError,
+  ResultMarksValidationError,
+} from '../../src/domain/errors';
 
 describe('ResultAggregate', () => {
   const EXAM_MAX_MARKS = 100;
 
-  const createCommand = (overrides?: Partial<RecordResultCommand>): RecordResultCommand => ({
+  const createCommand = (
+    overrides?: Partial<RecordResultCommand>,
+  ): RecordResultCommand => ({
     examId: 'exam-1',
     enrollmentId: 'enrollment-1',
     marksObtained: 75,
@@ -22,20 +31,36 @@ describe('ResultAggregate', () => {
     });
 
     it('throws when marksObtained < 0', () => {
-      expect(() => ResultAggregate.create(createCommand({ marksObtained: -1 }), EXAM_MAX_MARKS)).toThrow(ResultMarksValidationError);
+      expect(() =>
+        ResultAggregate.create(
+          createCommand({ marksObtained: -1 }),
+          EXAM_MAX_MARKS,
+        ),
+      ).toThrow(ResultMarksValidationError);
     });
 
     it('throws when marksObtained > maxMarks', () => {
-      expect(() => ResultAggregate.create(createCommand({ marksObtained: 101 }), EXAM_MAX_MARKS)).toThrow(ResultMarksValidationError);
+      expect(() =>
+        ResultAggregate.create(
+          createCommand({ marksObtained: 101 }),
+          EXAM_MAX_MARKS,
+        ),
+      ).toThrow(ResultMarksValidationError);
     });
 
     it('allows marksObtained equal to maxMarks', () => {
-      const aggregate = ResultAggregate.create(createCommand({ marksObtained: 100 }), EXAM_MAX_MARKS);
+      const aggregate = ResultAggregate.create(
+        createCommand({ marksObtained: 100 }),
+        EXAM_MAX_MARKS,
+      );
       expect(aggregate.state.resultStatus).toBe(RESULT_STATUSES.RECORDED);
     });
 
     it('allows marksObtained equal to 0', () => {
-      const aggregate = ResultAggregate.create(createCommand({ marksObtained: 0 }), EXAM_MAX_MARKS);
+      const aggregate = ResultAggregate.create(
+        createCommand({ marksObtained: 0 }),
+        EXAM_MAX_MARKS,
+      );
       expect(aggregate.state.resultStatus).toBe(RESULT_STATUSES.RECORDED);
     });
   });
@@ -71,7 +96,9 @@ describe('ResultAggregate', () => {
         isDeleted: false,
       };
       const aggregate = new ResultAggregate(result);
-      expect(() => aggregate.record(85, EXAM_MAX_MARKS)).toThrow(ResultInvalidStateError);
+      expect(() => aggregate.record(85, EXAM_MAX_MARKS)).toThrow(
+        ResultInvalidStateError,
+      );
     });
   });
 
@@ -172,7 +199,9 @@ describe('ResultAggregate', () => {
         isDeleted: false,
       };
       const aggregate = new ResultAggregate(result);
-      expect(() => aggregate.correct(85, EXAM_MAX_MARKS)).toThrow(ResultInvalidStateError);
+      expect(() => aggregate.correct(85, EXAM_MAX_MARKS)).toThrow(
+        ResultInvalidStateError,
+      );
     });
 
     it('validates marks on correction', () => {
@@ -187,7 +216,9 @@ describe('ResultAggregate', () => {
         isDeleted: false,
       };
       const aggregate = new ResultAggregate(result);
-      expect(() => aggregate.correct(101, EXAM_MAX_MARKS)).toThrow(ResultMarksValidationError);
+      expect(() => aggregate.correct(101, EXAM_MAX_MARKS)).toThrow(
+        ResultMarksValidationError,
+      );
     });
   });
 

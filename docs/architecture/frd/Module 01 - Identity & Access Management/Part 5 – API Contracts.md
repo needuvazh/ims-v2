@@ -18,15 +18,15 @@ The IAM APIs shall follow consistent RESTful principles across the entire ASTI I
 
 ## Standards
 
-* REST API
-* JSON payloads
-* HTTPS only
-* JWT Authentication
-* OAuth2-ready architecture
-* Versioned APIs
-* OpenAPI 3.1 specification
-* RFC7807 Problem Details for error responses
-* Idempotent operations where applicable
+- REST API
+- JSON payloads
+- HTTPS only
+- JWT Authentication
+- OAuth2-ready architecture
+- Versioned APIs
+- OpenAPI 3.1 specification
+- RFC7807 Problem Details for error responses
+- Idempotent operations where applicable
 
 ---
 
@@ -105,9 +105,9 @@ X-Branch-Id: BR001
 
 ### Notes
 
-* **Accept-Language** controls localized responses (`en`, `ar`).
-* **X-Correlation-Id** is propagated across services for tracing.
-* **X-Branch-Id** indicates the active branch context for users assigned to multiple branches.
+- **Accept-Language** controls localized responses (`en`, `ar`).
+- **X-Correlation-Id** is propagated across services for tracing.
+- **X-Branch-Id** indicates the active branch context for users assigned to multiple branches.
 
 ---
 
@@ -187,12 +187,12 @@ POST /api/v1/auth/login
 
 ### Business Rules
 
-* Email must exist.
-* Account must be active.
-* Account must not be locked.
-* Password must be valid.
-* User must have at least one role.
-* User must have at least one active branch.
+- Email must exist.
+- Account must be active.
+- Account must not be locked.
+- Password must be valid.
+- User must have at least one role.
+- User must have at least one active branch.
 
 ---
 
@@ -289,12 +289,8 @@ POST /api/v1/users
   "lastName": "Smith",
   "email": "john@asti.om",
   "mobile": "+96890000000",
-  "branchIds": [
-    "branch-1"
-  ],
-  "roleIds": [
-    "role-admin"
-  ]
+  "branchIds": ["branch-1"],
+  "roleIds": ["role-admin"]
 }
 ```
 
@@ -679,16 +675,16 @@ These events can later be consumed by Notification, Audit, Analytics, or HR modu
 
 Every endpoint must include:
 
-* OpenAPI 3.1 definition
-* Request schema
-* Response schema
-* Validation constraints
-* Example requests/responses
-* Required permissions
-* Error codes
-* Rate limits
-* Audit behavior
-* Domain events raised
+- OpenAPI 3.1 definition
+- Request schema
+- Response schema
+- Validation constraints
+- Example requests/responses
+- Required permissions
+- Error codes
+- Rate limits
+- Audit behavior
+- Domain events raised
 
 ---
 
@@ -696,17 +692,17 @@ Every endpoint must include:
 
 The IAM specification now defines:
 
-* Enterprise REST API standards
-* Authentication contract
-* CRUD APIs for users, roles, permissions, sessions, and security policies
-* Request/response conventions
-* Pagination, filtering, and sorting standards
-* API versioning and idempotency rules
-* Rate limiting strategy
-* Security enforcement model
-* Domain event publication
-* Performance targets
-* Documentation requirements
+- Enterprise REST API standards
+- Authentication contract
+- CRUD APIs for users, roles, permissions, sessions, and security policies
+- Request/response conventions
+- Pagination, filtering, and sorting standards
+- API versioning and idempotency rules
+- Rate limiting strategy
+- Security enforcement model
+- Domain event publication
+- Performance targets
+- Documentation requirements
 
 ## Recommended Improvements
 
@@ -715,7 +711,7 @@ Since we're designing this as an **enterprise-grade system**, I recommend two en
 1. **Adopt JSON:API or a consistent response contract** across the entire IMS. This avoids inconsistencies as more modules are added.
 2. **Introduce a Command/Query separation** in the API design. For example:
 
-   * Commands: `POST /users`, `PUT /users/{id}`, `POST /users/{id}/activate`
-   * Queries: `GET /users`, `GET /users/{id}`, `GET /users/{id}/sessions`
+   - Commands: `POST /users`, `PUT /users/{id}`, `POST /users/{id}/activate`
+   - Queries: `GET /users`, `GET /users/{id}`, `GET /users/{id}/sessions`
 
 This aligns well with your DDD architecture and will make future evolution toward CQRS (if needed) much smoother without forcing that complexity into the initial implementation.

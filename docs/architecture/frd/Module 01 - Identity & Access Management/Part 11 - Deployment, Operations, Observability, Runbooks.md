@@ -17,12 +17,12 @@ This section defines how the IAM module should be deployed, operated, monitored,
 
 It is intended for:
 
-* Solution architects
-* DevOps engineers
-* SRE teams
-* Backend engineers
-* Security teams
-* Production support teams
+- Solution architects
+- DevOps engineers
+- SRE teams
+- Backend engineers
+- Security teams
+- Production support teams
 
 ---
 
@@ -30,16 +30,16 @@ It is intended for:
 
 The IAM deployment must support:
 
-* Secure production deployment
-* High availability
-* Zero or near-zero downtime releases
-* Reliable authentication
-* Fast rollback
-* Centralized logging
-* Metrics and alerting
-* Disaster recovery
-* Secure secret handling
-* Operational support
+- Secure production deployment
+- High availability
+- Zero or near-zero downtime releases
+- Reliable authentication
+- Fast rollback
+- Centralized logging
+- Metrics and alerting
+- Disaster recovery
+- Secure secret handling
+- Operational support
 
 ---
 
@@ -60,11 +60,11 @@ The IAM deployment must support:
 
 ## 3.2 Environment Rules
 
-* Production data must not be copied to lower environments without masking.
-* Secrets must be environment-specific.
-* UAT should mirror production roles, permissions, and branch structure.
-* Staging should mirror production infrastructure as closely as possible.
-* All environments should use HTTPS where practical.
+- Production data must not be copied to lower environments without masking.
+- Secrets must be environment-specific.
+- UAT should mirror production roles, permissions, and branch structure.
+- Staging should mirror production infrastructure as closely as possible.
+- All environments should use HTTPS where practical.
 
 ---
 
@@ -144,11 +144,11 @@ Rolling Deployment
 
 ## 6.1 Migration Principles
 
-* Migrations must be version-controlled.
-* Migrations must be backward-compatible when possible.
-* Destructive migrations are prohibited without approval.
-* Migration rollback plan must exist.
-* Schema changes must be tested in staging.
+- Migrations must be version-controlled.
+- Migrations must be backward-compatible when possible.
+- Destructive migrations are prohibited without approval.
+- Migration rollback plan must exist.
+- Schema changes must be tested in staging.
 
 ---
 
@@ -156,12 +156,12 @@ Rolling Deployment
 
 Before production migration:
 
-* Backup completed.
-* Migration tested in staging.
-* Rollback script available.
-* Downtime impact understood.
-* Data integrity checks prepared.
-* Approval received.
+- Backup completed.
+- Migration tested in staging.
+- Rollback script available.
+- Downtime impact understood.
+- Data integrity checks prepared.
+- Approval received.
 
 ---
 
@@ -211,17 +211,17 @@ Secrets must be stored outside application code.
 
 Allowed:
 
-* Cloud Secrets Manager
-* HashiCorp Vault
-* Kubernetes Secrets with encryption
-* CI/CD secret vault
+- Cloud Secrets Manager
+- HashiCorp Vault
+- Kubernetes Secrets with encryption
+- CI/CD secret vault
 
 Disallowed:
 
-* Git repository
-* `.env` committed to source control
-* Docker images
-* Frontend public environment variables
+- Git repository
+- `.env` committed to source control
+- Docker images
+- Frontend public environment variables
 
 ---
 
@@ -284,13 +284,13 @@ Example:
 
 Never log:
 
-* Passwords
-* Tokens
-* Reset links
-* OTPs
-* API keys
-* Private keys
-* SMTP passwords
+- Passwords
+- Tokens
+- Reset links
+- OTPs
+- API keys
+- Private keys
+- SMTP passwords
 
 ---
 
@@ -386,11 +386,11 @@ GET /health/ready
 
 Checks:
 
-* Database connectivity
-* Redis connectivity
-* JWT key availability
-* Email provider availability, optional
-* Migration state
+- Database connectivity
+- Redis connectivity
+- JWT key availability
+- Email provider availability, optional
+- Migration state
 
 ---
 
@@ -427,16 +427,16 @@ Checks application bootstrapping.
 
 Widgets:
 
-* Login success rate
-* Login failure rate
-* Active sessions
-* Locked accounts
-* Authentication latency P95/P99
-* API error rate
-* Audit event volume
-* Redis health
-* Database health
-* Email provider status
+- Login success rate
+- Login failure rate
+- Active sessions
+- Locked accounts
+- Authentication latency P95/P99
+- API error rate
+- Audit event volume
+- Redis health
+- Database health
+- Email provider status
 
 ---
 
@@ -444,13 +444,13 @@ Widgets:
 
 Widgets:
 
-* Failed logins by IP
-* Failed logins by user
-* Permission denied events
-* Account lockouts
-* Password reset spikes
-* Suspicious session patterns
-* Branch access denial events
+- Failed logins by IP
+- Failed logins by user
+- Permission denied events
+- Account lockouts
+- Password reset spikes
+- Suspicious session patterns
+- Branch access denial events
 
 ---
 
@@ -477,11 +477,11 @@ Monthly
 
 Minimum validation:
 
-* User table restored
-* Role/permission mapping restored
-* Audit logs restored
-* Login works after restore
-* Permission evaluation works after restore
+- User table restored
+- Role/permission mapping restored
+- Audit logs restored
+- Login works after restore
+- Permission evaluation works after restore
 
 ---
 
@@ -617,14 +617,14 @@ Steps:
 
 Each incident should include:
 
-* Summary
-* Impact
-* Start time
-* Current status
-* Next update time
-* Owner
-* Resolution
-* Preventive action
+- Summary
+- Impact
+- Start time
+- Current status
+- Next update time
+- Owner
+- Resolution
+- Preventive action
 
 ---
 
@@ -653,15 +653,15 @@ Post-Deploy Verification
 
 After every deployment, verify:
 
-* Login page loads.
-* Valid login works.
-* Invalid login fails.
-* User list loads.
-* Role list loads.
-* Permission evaluation works.
-* Branch switch works.
-* Audit log is written.
-* Logout works.
+- Login page loads.
+- Valid login works.
+- Invalid login fails.
+- User list loads.
+- Role list loads.
+- Permission evaluation works.
+- Branch switch works.
+- Audit log is written.
+- Logout works.
 
 ---
 
@@ -669,11 +669,11 @@ After every deployment, verify:
 
 Rollback triggers:
 
-* Login failures spike.
-* API error rate exceeds threshold.
-* Database migration fails.
-* Permission evaluation broken.
-* Audit logging fails.
+- Login failures spike.
+- API error rate exceeds threshold.
+- Database migration fails.
+- Permission evaluation broken.
+- Audit logging fails.
 
 Rollback steps:
 
@@ -690,35 +690,35 @@ Rollback steps:
 
 ## Deployment
 
-* Environment variables configured
-* Secrets configured
-* Database migrations tested
-* Rollback tested
-* Health checks active
+- Environment variables configured
+- Secrets configured
+- Database migrations tested
+- Rollback tested
+- Health checks active
 
 ## Security
 
-* HTTPS enabled
-* Password hashing verified
-* JWT keys configured
-* Rate limiting enabled
-* Secrets externalized
+- HTTPS enabled
+- Password hashing verified
+- JWT keys configured
+- Rate limiting enabled
+- Secrets externalized
 
 ## Observability
 
-* Logs visible
-* Metrics visible
-* Traces visible
-* Alerts configured
-* Dashboards configured
+- Logs visible
+- Metrics visible
+- Traces visible
+- Alerts configured
+- Dashboards configured
 
 ## Operations
 
-* Runbooks approved
-* Support team trained
-* Escalation contacts defined
-* Backup tested
-* DR tested
+- Runbooks approved
+- Support team trained
+- Escalation contacts defined
+- Backup tested
+- DR tested
 
 ---
 
@@ -726,26 +726,26 @@ Rollback steps:
 
 With Part 11 complete, the IAM SDS now covers:
 
-* Business overview
-* Functional requirements
-* User stories
-* Use cases
-* Workflows
-* State machines
-* Screen specifications
-* UI/UX requirements
-* Database design
-* CRUD matrix
-* API contracts
-* Authorization model
-* Permission catalogue
-* Validation rules
-* Notifications
-* Reports and dashboards
-* BDD test scenarios
-* Security architecture
-* Non-functional requirements
-* Deployment and operations
-* Observability and runbooks
+- Business overview
+- Functional requirements
+- User stories
+- Use cases
+- Workflows
+- State machines
+- Screen specifications
+- UI/UX requirements
+- Database design
+- CRUD matrix
+- API contracts
+- Authorization model
+- Permission catalogue
+- Validation rules
+- Notifications
+- Reports and dashboards
+- BDD test scenarios
+- Security architecture
+- Non-functional requirements
+- Deployment and operations
+- Observability and runbooks
 
 This makes IAM the reference module template for the rest of ASTI IMS.

@@ -1,17 +1,22 @@
 import { Prisma, PrismaClient, VerificationOutcome } from '@prisma/client';
-import { IDocumentsService, type DocumentCaptureInput, type DocumentWithLatestVerification, type OwnerType } from '../domain/document';
+import {
+  IDocumentsService,
+  type DocumentCaptureInput,
+  type DocumentWithLatestVerification,
+  type OwnerType,
+} from '../domain/document';
 import { type StorageProvider, type OwnerResolver } from '../domain/ports';
 
 export class DocumentsService implements IDocumentsService {
   constructor(
     private readonly prisma: PrismaClient,
     private readonly storageProvider?: StorageProvider,
-    private readonly ownerResolver?: OwnerResolver
+    private readonly ownerResolver?: OwnerResolver,
   ) {}
 
   async generateUploadUrl(
     fileName: string,
-    mimeType: string
+    mimeType: string,
   ): Promise<{ url: string; fileKey: string }> {
     if (!this.storageProvider) {
       throw new Error('STORAGE_PROVIDER_NOT_CONFIGURED');
@@ -25,16 +30,22 @@ export class DocumentsService implements IDocumentsService {
     branchId: string,
     inputs: DocumentCaptureInput[],
     tx: Prisma.TransactionClient,
-    actorId?: string
+    actorId?: string,
   ): Promise<void> {
     const client = tx || this.prisma;
 
     if (this.ownerResolver) {
-      const exists = await this.ownerResolver.validateOwnerExists(ownerId, ownerType);
+      const exists = await this.ownerResolver.validateOwnerExists(
+        ownerId,
+        ownerType,
+      );
       if (!exists) {
         throw new Error('DOC_OWNER_NOT_FOUND');
       }
-      const ownerBranch = await this.ownerResolver.resolveOwnerBranch(ownerId, ownerType);
+      const ownerBranch = await this.ownerResolver.resolveOwnerBranch(
+        ownerId,
+        ownerType,
+      );
       if (ownerBranch !== branchId) {
         throw new Error('DOC_BRANCH_MISMATCH');
       }
@@ -118,7 +129,7 @@ export class DocumentsService implements IDocumentsService {
   async verifyDocumentAccess(
     userId: string,
     documentId: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<boolean> {
     const client = tx || this.prisma;
 
@@ -144,7 +155,7 @@ export class DocumentsService implements IDocumentsService {
   async verifyBranchAccess(
     userId: string,
     branchId: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<boolean> {
     const client = tx || this.prisma;
 
@@ -161,18 +172,18 @@ export class DocumentsService implements IDocumentsService {
   async getDocumentsByOwner(
     ownerId: string,
     ownerType: OwnerType,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<DocumentWithLatestVerification[]> {
     const client = tx || this.prisma;
 
     return client.document.findMany({
       where: {
         owners: {
-            some: {
-              ownerId,
-              ownerType,
-            },
+          some: {
+            ownerId,
+            ownerType,
           },
+        },
         isDeleted: false,
       },
       include: {
@@ -186,7 +197,7 @@ export class DocumentsService implements IDocumentsService {
 
   async getDocumentsByOwners(
     ownerRefs: { ownerId: string; ownerType: OwnerType }[],
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<DocumentWithLatestVerification[]> {
     const client = tx || this.prisma;
 
@@ -220,7 +231,7 @@ export class DocumentsService implements IDocumentsService {
     outcome: VerificationOutcome,
     remarks?: string,
     actorId?: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<void> {
     const client = tx || this.prisma;
 
@@ -256,7 +267,8 @@ export class DocumentsService implements IDocumentsService {
     // Publish Outbox Event
     await client.outboxEvent.create({
       data: {
-        eventType: outcome === 'Verified' ? 'DocumentVerified' : 'DocumentRejected',
+        eventType:
+          outcome === 'Verified' ? 'DocumentVerified' : 'DocumentRejected',
         aggregateType: 'Document',
         aggregateId: documentId,
         payload: {
@@ -271,7 +283,8 @@ export class DocumentsService implements IDocumentsService {
     // Create Audit Log
     await client.auditLog.create({
       data: {
-        action: outcome === 'Verified' ? 'DocumentVerified' : 'DocumentRejected',
+        action:
+          outcome === 'Verified' ? 'DocumentVerified' : 'DocumentRejected',
         entityType: 'Document',
         entityId: documentId,
         performedBy: actorId || null,
@@ -289,7 +302,7 @@ export class DocumentsService implements IDocumentsService {
   async retireDocument(
     documentId: string,
     actorId?: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<void> {
     const client = tx || this.prisma;
 

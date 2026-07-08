@@ -4,7 +4,18 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Award, ArrowLeft, CheckCircle, Search, ShieldCheck, FileText, Sparkles, XCircle, AlertTriangle, RotateCcw } from 'lucide-react';
+import {
+  Award,
+  ArrowLeft,
+  CheckCircle,
+  Search,
+  ShieldCheck,
+  FileText,
+  Sparkles,
+  XCircle,
+  AlertTriangle,
+  RotateCcw,
+} from 'lucide-react';
 
 export default function PublicVerificationPage() {
   const [code, setCode] = useState('');
@@ -41,15 +52,26 @@ export default function PublicVerificationPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans overflow-hidden text-slate-900">
-      
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-lg border-b border-slate-200/50 py-4">
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3 group">
-            <Image src="/alsaud/logo.png" alt="Al-Saud Training Institute" width={156} height={52} className="h-10 w-auto" priority />
-            <span className="font-black text-lg tracking-tight">Certificate<span className="text-amber-500">Verify</span></span>
+            <Image
+              src="/alsaud/logo.png"
+              alt="Al-Saud Training Institute"
+              width={156}
+              height={52}
+              className="h-10 w-auto"
+              priority
+            />
+            <span className="font-black text-lg tracking-tight">
+              Certificate<span className="text-amber-500">Verify</span>
+            </span>
           </Link>
-          <Link href="/" className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-amber-600 transition-colors">
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-amber-600 transition-colors"
+          >
             <ArrowLeft className="w-4 h-4" /> Back to Home
           </Link>
         </div>
@@ -57,34 +79,41 @@ export default function PublicVerificationPage() {
 
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 px-6 min-h-screen flex items-center justify-center">
         {/* Animated Background Elements */}
-        <motion.div 
-          animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }} 
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          className="absolute top-1/4 left-[10%] w-[500px] h-[500px] bg-amber-300/20 blur-[100px] rounded-full pointer-events-none -z-10" 
+        <motion.div
+          animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
+          transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+          className="absolute top-1/4 left-[10%] w-[500px] h-[500px] bg-amber-300/20 blur-[100px] rounded-full pointer-events-none -z-10"
         />
-        <motion.div 
-          animate={{ scale: [1, 1.5, 1], rotate: [0, -90, 0] }} 
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-1/4 right-[10%] w-[600px] h-[600px] bg-emerald-400/10 blur-[100px] rounded-full pointer-events-none -z-10" 
+        <motion.div
+          animate={{ scale: [1, 1.5, 1], rotate: [0, -90, 0] }}
+          transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+          className="absolute bottom-1/4 right-[10%] w-[600px] h-[600px] bg-emerald-400/10 blur-[100px] rounded-full pointer-events-none -z-10"
         />
 
         <div className="max-w-3xl mx-auto w-full relative z-10">
-          <motion.div className="text-center mb-12" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-50 border border-amber-100 text-amber-700 text-xs font-bold uppercase tracking-widest mb-6">
               <Sparkles className="w-4 h-4" /> Official Institute Verification
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-4 text-slate-900">
               Verify Certificate <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-500">Authenticity.</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-500">
+                Authenticity.
+              </span>
             </h1>
             <p className="text-lg text-slate-500 max-w-xl mx-auto">
-              Enter the unique certificate verification code to instantly verify its validity.
+              Enter the unique certificate verification code to instantly verify
+              its validity.
             </p>
           </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }} 
-            animate={{ opacity: 1, scale: 1 }} 
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
             className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl shadow-amber-900/5 border border-slate-100 relative overflow-hidden"
           >
@@ -122,7 +151,11 @@ export default function PublicVerificationPage() {
 
             {/* Error Message */}
             {error && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-8 p-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl flex items-center gap-3 font-semibold text-sm">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="mt-8 p-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl flex items-center gap-3 font-semibold text-sm"
+              >
                 <XCircle className="h-5 w-5 text-red-500 shrink-0" />
                 {error}
               </motion.div>
@@ -130,8 +163,8 @@ export default function PublicVerificationPage() {
 
             {/* Results Area */}
             {result && (
-              <motion.div 
-                initial={{ opacity: 0, height: 0 }} 
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 className="mt-8 pt-8 border-t border-slate-100"
               >
@@ -140,35 +173,54 @@ export default function PublicVerificationPage() {
                     <div className="absolute -right-4 -bottom-4 opacity-10">
                       <Award className="w-48 h-48 text-emerald-600" />
                     </div>
-                    
+
                     <div className="bg-emerald-500 text-white p-4 rounded-2xl shadow-lg shadow-emerald-500/30 shrink-0">
                       <CheckCircle className="w-10 h-10" />
                     </div>
-                    
+
                     <div className="relative z-10 text-center md:text-left w-full">
                       <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold uppercase tracking-widest mb-3">
-                        <ShieldCheck className="w-3.5 h-3.5" /> Valid Certificate
+                        <ShieldCheck className="w-3.5 h-3.5" /> Valid
+                        Certificate
                       </div>
-                      <h3 className="text-2xl font-black text-slate-900 mb-4">Certificate is Authentic</h3>
-                      
+                      <h3 className="text-2xl font-black text-slate-900 mb-4">
+                        Certificate is Authentic
+                      </h3>
+
                       <div className="grid sm:grid-cols-2 gap-4 bg-white/60 p-4 rounded-2xl text-left">
                         <div>
-                          <p className="text-[10px] font-bold uppercase text-slate-500">Student Name</p>
-                          <p className="font-bold text-slate-900">{result.studentDisplayName}</p>
-                        </div>
-                        <div>
-                          <p className="text-[10px] font-bold uppercase text-slate-500">Program</p>
-                          <p className="font-bold text-slate-900">{result.courseName}</p>
-                        </div>
-                        <div>
-                          <p className="text-[10px] font-bold uppercase text-slate-500">Issue Date</p>
+                          <p className="text-[10px] font-bold uppercase text-slate-500">
+                            Student Name
+                          </p>
                           <p className="font-bold text-slate-900">
-                            {result.issuedDate ? new Date(result.issuedDate).toLocaleDateString() : '—'}
+                            {result.studentDisplayName}
                           </p>
                         </div>
                         <div>
-                          <p className="text-[10px] font-bold uppercase text-slate-500">Certificate No</p>
-                          <p className="font-bold text-slate-900 font-mono">{result.certificateNumber}</p>
+                          <p className="text-[10px] font-bold uppercase text-slate-500">
+                            Program
+                          </p>
+                          <p className="font-bold text-slate-900">
+                            {result.courseName}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-bold uppercase text-slate-500">
+                            Issue Date
+                          </p>
+                          <p className="font-bold text-slate-900">
+                            {result.issuedDate
+                              ? new Date(result.issuedDate).toLocaleDateString()
+                              : '—'}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-bold uppercase text-slate-500">
+                            Certificate No
+                          </p>
+                          <p className="font-bold text-slate-900 font-mono">
+                            {result.certificateNumber}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -180,19 +232,28 @@ export default function PublicVerificationPage() {
                     <div className="bg-red-500 text-white p-4 rounded-2xl shadow-lg shadow-red-500/30 shrink-0">
                       <XCircle className="w-10 h-10" />
                     </div>
-                    
+
                     <div className="relative z-10 text-center md:text-left w-full">
                       <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-bold uppercase tracking-widest mb-3">
-                        <AlertTriangle className="w-3.5 h-3.5" /> Revoked Certificate
+                        <AlertTriangle className="w-3.5 h-3.5" /> Revoked
+                        Certificate
                       </div>
-                      <h3 className="text-2xl font-black text-slate-900 mb-4">Certificate Has Been Revoked</h3>
-                      
+                      <h3 className="text-2xl font-black text-slate-900 mb-4">
+                        Certificate Has Been Revoked
+                      </h3>
+
                       <div className="p-4 bg-white/60 rounded-2xl text-left space-y-3">
                         <p className="text-sm font-semibold text-slate-700">
-                          This certificate was revoked on <span className="font-bold text-slate-900">{new Date(result.revokedAt).toLocaleDateString()}</span>.
+                          This certificate was revoked on{' '}
+                          <span className="font-bold text-slate-900">
+                            {new Date(result.revokedAt).toLocaleDateString()}
+                          </span>
+                          .
                         </p>
                         <div className="bg-red-50 p-3 rounded-xl border border-red-100 text-xs text-red-800">
-                          <p className="font-bold uppercase tracking-wider text-[10px] text-red-500 mb-1">Reason for Revocation</p>
+                          <p className="font-bold uppercase tracking-wider text-[10px] text-red-500 mb-1">
+                            Reason for Revocation
+                          </p>
                           {result.revocationReason}
                         </div>
                       </div>
@@ -205,16 +266,21 @@ export default function PublicVerificationPage() {
                     <div className="bg-amber-500 text-white p-4 rounded-2xl shadow-lg shadow-amber-500/30 shrink-0">
                       <RotateCcw className="w-10 h-10" />
                     </div>
-                    
+
                     <div className="relative z-10 text-center md:text-left w-full">
                       <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-700 text-xs font-bold uppercase tracking-widest mb-3">
-                        <AlertTriangle className="w-3.5 h-3.5" /> Superseded Certificate
+                        <AlertTriangle className="w-3.5 h-3.5" /> Superseded
+                        Certificate
                       </div>
-                      <h3 className="text-2xl font-black text-slate-900 mb-4">Certificate Has Been Replaced</h3>
-                      
+                      <h3 className="text-2xl font-black text-slate-900 mb-4">
+                        Certificate Has Been Replaced
+                      </h3>
+
                       <div className="p-4 bg-white/60 rounded-2xl text-left">
                         <p className="text-sm font-medium text-slate-700">
-                          This credential was replaced by a newer version. Please contact Al Saud Training Institute for the active verification code.
+                          This credential was replaced by a newer version.
+                          Please contact Al Saud Training Institute for the
+                          active verification code.
                         </p>
                       </div>
                     </div>
@@ -230,19 +296,24 @@ export default function PublicVerificationPage() {
             )}
           </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
             className="mt-12 flex flex-wrap justify-center gap-6 text-sm font-bold text-slate-400"
           >
-            <div className="flex items-center gap-2"><Award className="w-5 h-5 text-amber-500" /> ISO 9001 Certified</div>
-            <div className="flex items-center gap-2"><FileText className="w-5 h-5 text-amber-500" /> Blockchain Backed</div>
-            <div className="flex items-center gap-2"><ShieldCheck className="w-5 h-5 text-amber-500" /> Tamper Proof</div>
+            <div className="flex items-center gap-2">
+              <Award className="w-5 h-5 text-amber-500" /> ISO 9001 Certified
+            </div>
+            <div className="flex items-center gap-2">
+              <FileText className="w-5 h-5 text-amber-500" /> Blockchain Backed
+            </div>
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-5 h-5 text-amber-500" /> Tamper Proof
+            </div>
           </motion.div>
         </div>
       </section>
-
     </div>
   );
 }

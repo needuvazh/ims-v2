@@ -194,6 +194,7 @@ Provides deterministic server-side monetary validation for all invoice creation 
 **Inputs**
 
 For each line:
+
 - quantity
 - unitPrice
 - discountAmount
@@ -201,6 +202,7 @@ For each line:
 - tax rate or authoritative tax amount input as approved by ASTI policy
 
 Invoice-level inputs:
+
 - currency
 - approved invoice-level discount, when permitted
 
@@ -281,6 +283,7 @@ Allows authorized users to search and inspect invoices under branch scope. Actor
 **Inputs**
 
 Optional filters:
+
 - invoiceNumber
 - invoiceType
 - status
@@ -1060,6 +1063,7 @@ Makes significant finance state changes observable to other modules within the m
 **Inputs**
 
 Event data appropriate to:
+
 - InvoiceGenerated
 - PaymentRecorded
 - ReceiptGenerated
@@ -1301,100 +1305,100 @@ Supported functional lifecycle:
 
 ## 4. Comprehensive Business Rules
 
-| Rule ID | Rule | Enforcement |
-|---|---|---|
-| BR-FBR-001 | Finance is invoice-centric; every ordinary payment must settle an invoice obligation or an explicitly modeled advance flow. | Application and domain service validation. |
-| BR-FBR-002 | Enrollment remains the central learning transaction; Finance must not create a separate learner lifecycle for Walk-In, Online, Regular, or Corporate journeys. | Domain boundary and data model review. |
-| BR-FBR-003 | Student invoice line items must preserve enrollmentId and courseId traceability. | Persistence constraint and service validation. |
-| BR-FBR-004 | Course Catalog owns pricing and discount rules; Finance applies resolved values and validates arithmetic but must not independently redefine the hierarchy. | Context boundary enforcement. |
-| BR-FBR-005 | Pricing and discount source precedence is Batch, then Branch, then Global Course when higher-priority values are missing. | Upstream resolution contract validation. |
-| BR-FBR-006 | Invoice subtotal, discount, tax, total, paid, and outstanding values must be computed with fixed-precision decimal arithmetic. | Domain Money/Decimal implementation. |
-| BR-FBR-007 | `totalAmount = subtotal - discountAmount + taxAmount`. | Domain invariant. |
-| BR-FBR-008 | `outstandingAmount = totalAmount - effectivePaidAmount`, where effectivePaidAmount is successful payments minus executed refunds applicable to the obligation. | Transactional balance service. |
-| BR-FBR-009 | Ordinary invoice payment amount must be greater than zero and must not exceed current outstanding amount. | Payment validation. |
-| BR-FBR-010 | Payment must reference a valid invoice; installment allocation is additional traceability and does not remove invoice linkage. | FK and service validation. |
-| BR-FBR-011 | Payment method must be active and from controlled configuration. | Configuration lookup validation. |
-| BR-FBR-012 | Bank Transfer, Card, and Cheque payments require reference information unless an approved configuration defines a replacement control. | Method-specific validation. |
-| BR-FBR-013 | A successful payment posting must be idempotent and must not create duplicate Payment or Receipt records on retry. | Idempotency control and unique constraints. |
-| BR-FBR-014 | Exactly one authoritative Receipt exists per successful Payment. Re-rendering does not create another receipt number. | Unique paymentId relationship. |
-| BR-FBR-015 | Receipt amount must equal its Payment amount. | Domain invariant. |
-| BR-FBR-016 | Issued invoice numbers are unique and generated from controlled NumberingSeries. | Transactional numbering and unique constraint. |
-| BR-FBR-017 | Posted Invoice, Payment, Receipt, Refund, and Receivable records cannot be hard-deleted. | Repository policy and database privileges. |
-| BR-FBR-018 | A paid invoice cannot be cancelled to remove settlement history. | State machine. |
-| BR-FBR-019 | Refund must reference a valid invoice and payment. | FK and service validation. |
-| BR-FBR-020 | Refund amount must be greater than zero and cannot exceed remaining refundable payment balance. | Refund domain invariant. |
-| BR-FBR-021 | Refunds require approval before financial execution. | Refund state machine and permission check. |
-| BR-FBR-022 | Original Payment amount and identity remain unchanged after refund. | Immutable transaction policy. |
-| BR-FBR-023 | Executed refund recalculates invoice paid and outstanding balances and may reopen Receivable. | Transactional refund execution. |
-| BR-FBR-024 | Installment-plan schedule amount must equal the obligation governed by the plan. | Installment plan validation. |
-| BR-FBR-025 | Installment sequence numbers are unique and contiguous starting at 1. | Validation and unique constraint. |
-| BR-FBR-026 | Installment amounts must be positive. | Domain validation. |
-| BR-FBR-027 | Installment due dates must be non-decreasing by sequence. | Domain validation. |
-| BR-FBR-028 | Payment allocation to installments cannot exceed either payment unallocated balance or installment remaining balance. | Allocation algorithm. |
-| BR-FBR-029 | Receivable outstandingAmount must reconcile to Invoice outstandingAmount. | Transactional invariant and reconciliation check. |
-| BR-FBR-030 | Receivable aging is calculated from invoice due date using Oman GST business date. | Aging service. |
-| BR-FBR-031 | Current bucket applies when daysPastDue <= 0. | Aging algorithm. |
-| BR-FBR-032 | 30 Days bucket applies for 1–30 days past due. | Aging algorithm. |
-| BR-FBR-033 | 60 Days bucket applies for 31–60 days past due. | Aging algorithm. |
-| BR-FBR-034 | 90 Days bucket applies for 61–90 days past due. | Aging algorithm. |
-| BR-FBR-035 | The ER enum label `120+ Days` is used for daysPastDue >= 91 until an approved model revision introduces an additional aging bucket; reporting documentation must disclose this mapping. | Compatibility rule and reporting documentation. |
-| BR-FBR-036 | Corporate currentOutstanding is the sum of open corporate receivable outstanding amounts. | Credit exposure calculation. |
-| BR-FBR-037 | Committed amount must include eligible uninvoiced corporate obligations exactly once and exclude cancelled/dropped obligations. | Credit exposure service. |
-| BR-FBR-038 | `availableCredit = creditLimit - currentOutstanding - committedAmount`. | Credit invariant. |
-| BR-FBR-039 | For a proposed enrollment, `projectedExposure = currentOutstanding + committedAmount + proposedEnrollmentValue`. | Credit validation algorithm. |
-| BR-FBR-040 | If projectedExposure exceeds creditLimit and blockOnCreditLimit is true, corporate enrollment must be blocked. | Cross-module credit validation. |
-| BR-FBR-041 | If projectedExposure exceeds creditLimit and blockOnCreditLimit is false, enrollment may continue with warning and audit evidence. | Cross-module credit validation. |
-| BR-FBR-042 | Effective-dated credit rules for one corporate account must not overlap. | Effective-date validation. |
-| BR-FBR-043 | Credit-rule changes preserve historical versions and audit old/new values. | Versioning and audit. |
-| BR-FBR-044 | A user can query only assigned branch data unless explicitly authorized for consolidated reporting and branch hierarchy access. | Server-side scope predicate. |
-| BR-FBR-045 | Client-provided branchId is never accepted as proof of authorization. | Security architecture. |
-| BR-FBR-046 | Consolidated cross-branch queries require `finance.report.consolidated` and valid branch access. | IAM authorization. |
-| BR-FBR-047 | Read permission does not imply export permission. | RBAC. |
-| BR-FBR-048 | Refund request permission does not imply refund approval permission. | Separation of duties. |
-| BR-FBR-049 | Finance documents and UI may render English or Arabic without creating duplicate financial transactions. | Localization design. |
-| BR-FBR-050 | Business dates and aging boundaries use Oman GST (UTC+4). | Date service. |
-| BR-FBR-051 | Monetary values from different currencies cannot be summed in reports unless an approved exchange-rate policy is introduced; current reporting must group by currency. | Reporting validation. |
-| BR-FBR-052 | Completion and Certificate modules must consume authoritative payment-validation status and must not calculate it from receipt presence. | Context integration contract. |
-| BR-FBR-053 | Payment validation returns NotRequired when enrollment paymentValidationRequired is false. | Payment validation service. |
-| BR-FBR-054 | Payment validation returns Passed only when required valid obligations have zero outstanding balance. | Payment validation service. |
-| BR-FBR-055 | Payment validation returns Failed when required obligations retain positive outstanding balance. | Payment validation service. |
-| BR-FBR-056 | Invoice issue, payment posting, refund execution, and corporate credit validation must use concurrency controls appropriate to balance-sensitive operations. | Versioning/transaction control. |
-| BR-FBR-057 | A stale expected version causes a conflict response; the module must not silently overwrite concurrent changes. | Optimistic locking. |
-| BR-FBR-058 | Payment, balance update, receivable update, installment allocation, receipt creation, and audit persistence are committed atomically for a successful payment posting. | Database transaction. |
-| BR-FBR-059 | Invoice state transitions outside the approved lifecycle are rejected. | State machine. |
-| BR-FBR-060 | Draft can transition to Issued or Cancelled. | State machine. |
-| BR-FBR-061 | Issued can transition to PartiallyPaid, Paid, Overdue, or authorized Cancelled when no effective payment exists. | State machine. |
-| BR-FBR-062 | PartiallyPaid can transition to Paid or Overdue based on balance and due date. | State machine. |
-| BR-FBR-063 | Overdue can transition to Paid after full settlement and may reflect partial settlement according to selected API status model. | State machine. |
-| BR-FBR-064 | Executed refund may move a previously Paid invoice back to an open-balance state according to balance and due date. | Refund/invoice integration. |
-| BR-FBR-065 | Sensitive finance actions record who, what, when, old value, new value, branch context, and reason where applicable. | Audit policy. |
-| BR-FBR-066 | Export operations are audit logged with actor, dataset, filters, branch scope, timestamp, and row count. | Export audit. |
-| BR-FBR-067 | Online payment gateway processing is excluded from the current phase; manual payment flows must not pretend to provide gateway authorization. | Scope guardrail. |
-| BR-FBR-068 | Tally integration is excluded from the current phase and Finance remains the source owner of financial transactions. | Scope and ownership guardrail. |
-| BR-FBR-069 | Corporate invoice consolidation must preserve line-level enrollment traceability and source branch attribution. | Corporate billing invariant. |
-| BR-FBR-070 | An enrollment billing obligation must not be invoiced twice unless an explicitly authorized additional-charge or correction flow exists. | Duplicate billing prevention. |
+| Rule ID    | Rule                                                                                                                                                                                    | Enforcement                                       |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| BR-FBR-001 | Finance is invoice-centric; every ordinary payment must settle an invoice obligation or an explicitly modeled advance flow.                                                             | Application and domain service validation.        |
+| BR-FBR-002 | Enrollment remains the central learning transaction; Finance must not create a separate learner lifecycle for Walk-In, Online, Regular, or Corporate journeys.                          | Domain boundary and data model review.            |
+| BR-FBR-003 | Student invoice line items must preserve enrollmentId and courseId traceability.                                                                                                        | Persistence constraint and service validation.    |
+| BR-FBR-004 | Course Catalog owns pricing and discount rules; Finance applies resolved values and validates arithmetic but must not independently redefine the hierarchy.                             | Context boundary enforcement.                     |
+| BR-FBR-005 | Pricing and discount source precedence is Batch, then Branch, then Global Course when higher-priority values are missing.                                                               | Upstream resolution contract validation.          |
+| BR-FBR-006 | Invoice subtotal, discount, tax, total, paid, and outstanding values must be computed with fixed-precision decimal arithmetic.                                                          | Domain Money/Decimal implementation.              |
+| BR-FBR-007 | `totalAmount = subtotal - discountAmount + taxAmount`.                                                                                                                                  | Domain invariant.                                 |
+| BR-FBR-008 | `outstandingAmount = totalAmount - effectivePaidAmount`, where effectivePaidAmount is successful payments minus executed refunds applicable to the obligation.                          | Transactional balance service.                    |
+| BR-FBR-009 | Ordinary invoice payment amount must be greater than zero and must not exceed current outstanding amount.                                                                               | Payment validation.                               |
+| BR-FBR-010 | Payment must reference a valid invoice; installment allocation is additional traceability and does not remove invoice linkage.                                                          | FK and service validation.                        |
+| BR-FBR-011 | Payment method must be active and from controlled configuration.                                                                                                                        | Configuration lookup validation.                  |
+| BR-FBR-012 | Bank Transfer, Card, and Cheque payments require reference information unless an approved configuration defines a replacement control.                                                  | Method-specific validation.                       |
+| BR-FBR-013 | A successful payment posting must be idempotent and must not create duplicate Payment or Receipt records on retry.                                                                      | Idempotency control and unique constraints.       |
+| BR-FBR-014 | Exactly one authoritative Receipt exists per successful Payment. Re-rendering does not create another receipt number.                                                                   | Unique paymentId relationship.                    |
+| BR-FBR-015 | Receipt amount must equal its Payment amount.                                                                                                                                           | Domain invariant.                                 |
+| BR-FBR-016 | Issued invoice numbers are unique and generated from controlled NumberingSeries.                                                                                                        | Transactional numbering and unique constraint.    |
+| BR-FBR-017 | Posted Invoice, Payment, Receipt, Refund, and Receivable records cannot be hard-deleted.                                                                                                | Repository policy and database privileges.        |
+| BR-FBR-018 | A paid invoice cannot be cancelled to remove settlement history.                                                                                                                        | State machine.                                    |
+| BR-FBR-019 | Refund must reference a valid invoice and payment.                                                                                                                                      | FK and service validation.                        |
+| BR-FBR-020 | Refund amount must be greater than zero and cannot exceed remaining refundable payment balance.                                                                                         | Refund domain invariant.                          |
+| BR-FBR-021 | Refunds require approval before financial execution.                                                                                                                                    | Refund state machine and permission check.        |
+| BR-FBR-022 | Original Payment amount and identity remain unchanged after refund.                                                                                                                     | Immutable transaction policy.                     |
+| BR-FBR-023 | Executed refund recalculates invoice paid and outstanding balances and may reopen Receivable.                                                                                           | Transactional refund execution.                   |
+| BR-FBR-024 | Installment-plan schedule amount must equal the obligation governed by the plan.                                                                                                        | Installment plan validation.                      |
+| BR-FBR-025 | Installment sequence numbers are unique and contiguous starting at 1.                                                                                                                   | Validation and unique constraint.                 |
+| BR-FBR-026 | Installment amounts must be positive.                                                                                                                                                   | Domain validation.                                |
+| BR-FBR-027 | Installment due dates must be non-decreasing by sequence.                                                                                                                               | Domain validation.                                |
+| BR-FBR-028 | Payment allocation to installments cannot exceed either payment unallocated balance or installment remaining balance.                                                                   | Allocation algorithm.                             |
+| BR-FBR-029 | Receivable outstandingAmount must reconcile to Invoice outstandingAmount.                                                                                                               | Transactional invariant and reconciliation check. |
+| BR-FBR-030 | Receivable aging is calculated from invoice due date using Oman GST business date.                                                                                                      | Aging service.                                    |
+| BR-FBR-031 | Current bucket applies when daysPastDue <= 0.                                                                                                                                           | Aging algorithm.                                  |
+| BR-FBR-032 | 30 Days bucket applies for 1–30 days past due.                                                                                                                                          | Aging algorithm.                                  |
+| BR-FBR-033 | 60 Days bucket applies for 31–60 days past due.                                                                                                                                         | Aging algorithm.                                  |
+| BR-FBR-034 | 90 Days bucket applies for 61–90 days past due.                                                                                                                                         | Aging algorithm.                                  |
+| BR-FBR-035 | The ER enum label `120+ Days` is used for daysPastDue >= 91 until an approved model revision introduces an additional aging bucket; reporting documentation must disclose this mapping. | Compatibility rule and reporting documentation.   |
+| BR-FBR-036 | Corporate currentOutstanding is the sum of open corporate receivable outstanding amounts.                                                                                               | Credit exposure calculation.                      |
+| BR-FBR-037 | Committed amount must include eligible uninvoiced corporate obligations exactly once and exclude cancelled/dropped obligations.                                                         | Credit exposure service.                          |
+| BR-FBR-038 | `availableCredit = creditLimit - currentOutstanding - committedAmount`.                                                                                                                 | Credit invariant.                                 |
+| BR-FBR-039 | For a proposed enrollment, `projectedExposure = currentOutstanding + committedAmount + proposedEnrollmentValue`.                                                                        | Credit validation algorithm.                      |
+| BR-FBR-040 | If projectedExposure exceeds creditLimit and blockOnCreditLimit is true, corporate enrollment must be blocked.                                                                          | Cross-module credit validation.                   |
+| BR-FBR-041 | If projectedExposure exceeds creditLimit and blockOnCreditLimit is false, enrollment may continue with warning and audit evidence.                                                      | Cross-module credit validation.                   |
+| BR-FBR-042 | Effective-dated credit rules for one corporate account must not overlap.                                                                                                                | Effective-date validation.                        |
+| BR-FBR-043 | Credit-rule changes preserve historical versions and audit old/new values.                                                                                                              | Versioning and audit.                             |
+| BR-FBR-044 | A user can query only assigned branch data unless explicitly authorized for consolidated reporting and branch hierarchy access.                                                         | Server-side scope predicate.                      |
+| BR-FBR-045 | Client-provided branchId is never accepted as proof of authorization.                                                                                                                   | Security architecture.                            |
+| BR-FBR-046 | Consolidated cross-branch queries require `finance.report.consolidated` and valid branch access.                                                                                        | IAM authorization.                                |
+| BR-FBR-047 | Read permission does not imply export permission.                                                                                                                                       | RBAC.                                             |
+| BR-FBR-048 | Refund request permission does not imply refund approval permission.                                                                                                                    | Separation of duties.                             |
+| BR-FBR-049 | Finance documents and UI may render English or Arabic without creating duplicate financial transactions.                                                                                | Localization design.                              |
+| BR-FBR-050 | Business dates and aging boundaries use Oman GST (UTC+4).                                                                                                                               | Date service.                                     |
+| BR-FBR-051 | Monetary values from different currencies cannot be summed in reports unless an approved exchange-rate policy is introduced; current reporting must group by currency.                  | Reporting validation.                             |
+| BR-FBR-052 | Completion and Certificate modules must consume authoritative payment-validation status and must not calculate it from receipt presence.                                                | Context integration contract.                     |
+| BR-FBR-053 | Payment validation returns NotRequired when enrollment paymentValidationRequired is false.                                                                                              | Payment validation service.                       |
+| BR-FBR-054 | Payment validation returns Passed only when required valid obligations have zero outstanding balance.                                                                                   | Payment validation service.                       |
+| BR-FBR-055 | Payment validation returns Failed when required obligations retain positive outstanding balance.                                                                                        | Payment validation service.                       |
+| BR-FBR-056 | Invoice issue, payment posting, refund execution, and corporate credit validation must use concurrency controls appropriate to balance-sensitive operations.                            | Versioning/transaction control.                   |
+| BR-FBR-057 | A stale expected version causes a conflict response; the module must not silently overwrite concurrent changes.                                                                         | Optimistic locking.                               |
+| BR-FBR-058 | Payment, balance update, receivable update, installment allocation, receipt creation, and audit persistence are committed atomically for a successful payment posting.                  | Database transaction.                             |
+| BR-FBR-059 | Invoice state transitions outside the approved lifecycle are rejected.                                                                                                                  | State machine.                                    |
+| BR-FBR-060 | Draft can transition to Issued or Cancelled.                                                                                                                                            | State machine.                                    |
+| BR-FBR-061 | Issued can transition to PartiallyPaid, Paid, Overdue, or authorized Cancelled when no effective payment exists.                                                                        | State machine.                                    |
+| BR-FBR-062 | PartiallyPaid can transition to Paid or Overdue based on balance and due date.                                                                                                          | State machine.                                    |
+| BR-FBR-063 | Overdue can transition to Paid after full settlement and may reflect partial settlement according to selected API status model.                                                         | State machine.                                    |
+| BR-FBR-064 | Executed refund may move a previously Paid invoice back to an open-balance state according to balance and due date.                                                                     | Refund/invoice integration.                       |
+| BR-FBR-065 | Sensitive finance actions record who, what, when, old value, new value, branch context, and reason where applicable.                                                                    | Audit policy.                                     |
+| BR-FBR-066 | Export operations are audit logged with actor, dataset, filters, branch scope, timestamp, and row count.                                                                                | Export audit.                                     |
+| BR-FBR-067 | Online payment gateway processing is excluded from the current phase; manual payment flows must not pretend to provide gateway authorization.                                           | Scope guardrail.                                  |
+| BR-FBR-068 | Tally integration is excluded from the current phase and Finance remains the source owner of financial transactions.                                                                    | Scope and ownership guardrail.                    |
+| BR-FBR-069 | Corporate invoice consolidation must preserve line-level enrollment traceability and source branch attribution.                                                                         | Corporate billing invariant.                      |
+| BR-FBR-070 | An enrollment billing obligation must not be invoiced twice unless an explicitly authorized additional-charge or correction flow exists.                                                | Duplicate billing prevention.                     |
 
 ## 5. Cross-Module Dependencies Mapping
 
-| Module / Context | Direction | Data / Capability | Contract and Rule |
-|---|---|---|---|
-| Identity & Access Management | Module 12 consumes | authenticated user, permissions, UserBranchAccess, consolidated-view permission | Every finance query and mutation resolves authorization server-side. Module 12 never trusts UI-only route protection. |
-| Organization Management | Module 12 consumes | Institute, Branch, parent/child branch hierarchy | Used for branch scoping, consolidated scope resolution, invoice/receipt issuer identity, and reporting dimensions. |
-| Configuration / Master Data | Module 12 consumes | NumberingSeries, Payment Method, currency, localized labels | Module 12 uses configured values and does not hardcode business-critical reference lists beyond domain enums fixed by approved model. |
-| Admission & Enrollment | Bidirectional application integration | Enrollment identifiers, studentProfileId, courseId, batchId, branchId, enrollmentType, status, resolvedPrice, resolvedDiscount, finalAmount, paymentValidationRequired | Enrollment confirmation can trigger invoice creation. Finance supplies payment status but does not mutate enrollment lifecycle directly. |
-| Course Catalog | Module 12 consumes | course identity, authoritative pricing/discount source metadata, course commercial description | Course Catalog owns pricing hierarchy and discount hierarchy. Finance validates and applies the resolved snapshot. |
-| Training Delivery | Module 12 consumes indirectly | Batch identity, batch-course relationship, branch association | Used to validate traceability and source branch. Finance does not own Batch. |
-| Walk-In Fast Track | Bidirectional workflow integration | walk-in enrollment reference and payment-confirmation result | Walk-In still uses central Enrollment. Payment is recorded through Finance, not a duplicate walk-in payment ledger. |
-| Corporate Training | Bidirectional application integration | CorporateAccount, CorporateParticipant, contract/billing-cycle linkage, corporate enrollment references | Module 12 creates corporate invoices and validates credit; Corporate Training owns account, participant, contract, and delivery linkage. |
-| Corporate Sales & Quotation | Module 12 consumes trace references | approved quotation, sales order, commercial traceability | Approved commercial documents may support corporate invoice traceability. Finance owns invoice; Sales context owns quotation/order. |
-| Exam, Result & Completion | Module 12 provides | payment validation result by enrollment | Completion consumes NotRequired/Passed/Failed result. It does not inspect payment tables directly as business authority. |
-| Certificate Management | Module 12 provides | payment validation result | Certificate issuance uses Finance validation where payment is required, alongside completion eligibility from Completion context. |
-| Communication & Notification | Module 12 produces notification requests or internal events | receipt issued, installment due, invoice overdue, refund decision | Communication owns templates and delivery logs; Finance owns source transaction state. |
-| Reporting & Executive Dashboards | Module 12 provides read models/metrics | invoicing, collection, refund, outstanding, aging, corporate exposure, branch performance inputs | Reporting consumes finance data and does not mutate or own transactions. Permissions and branch filters remain enforced. |
-| Audit & Compliance | Module 12 produces audit records/approval interactions | sensitive finance actions, Refund Approval, credit-rule change, export audit | Audit context preserves cross-domain compliance evidence; Finance remains owner of finance state. |
-| Website & Digital Experience | No direct finance ownership interaction in current admin scope | future presentation or registration references only through Enrollment workflows | Website must not create or own Finance transactions. |
-| Future Tally Integration | Future outbound synchronization | invoice, receipt, payment, refund/credit-note related finance events | Explicitly future phase. Tally synchronization must not become the owner of Finance records. |
-| Future Online Payment Gateway | Future inbound integration | authorization/capture result, provider reference, idempotent settlement confirmation | Explicitly deferred. Gateway integration must call Finance posting contracts rather than write Payment directly. |
+| Module / Context                 | Direction                                                      | Data / Capability                                                                                                                                                      | Contract and Rule                                                                                                                        |
+| -------------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Identity & Access Management     | Module 12 consumes                                             | authenticated user, permissions, UserBranchAccess, consolidated-view permission                                                                                        | Every finance query and mutation resolves authorization server-side. Module 12 never trusts UI-only route protection.                    |
+| Organization Management          | Module 12 consumes                                             | Institute, Branch, parent/child branch hierarchy                                                                                                                       | Used for branch scoping, consolidated scope resolution, invoice/receipt issuer identity, and reporting dimensions.                       |
+| Configuration / Master Data      | Module 12 consumes                                             | NumberingSeries, Payment Method, currency, localized labels                                                                                                            | Module 12 uses configured values and does not hardcode business-critical reference lists beyond domain enums fixed by approved model.    |
+| Admission & Enrollment           | Bidirectional application integration                          | Enrollment identifiers, studentProfileId, courseId, batchId, branchId, enrollmentType, status, resolvedPrice, resolvedDiscount, finalAmount, paymentValidationRequired | Enrollment confirmation can trigger invoice creation. Finance supplies payment status but does not mutate enrollment lifecycle directly. |
+| Course Catalog                   | Module 12 consumes                                             | course identity, authoritative pricing/discount source metadata, course commercial description                                                                         | Course Catalog owns pricing hierarchy and discount hierarchy. Finance validates and applies the resolved snapshot.                       |
+| Training Delivery                | Module 12 consumes indirectly                                  | Batch identity, batch-course relationship, branch association                                                                                                          | Used to validate traceability and source branch. Finance does not own Batch.                                                             |
+| Walk-In Fast Track               | Bidirectional workflow integration                             | walk-in enrollment reference and payment-confirmation result                                                                                                           | Walk-In still uses central Enrollment. Payment is recorded through Finance, not a duplicate walk-in payment ledger.                      |
+| Corporate Training               | Bidirectional application integration                          | CorporateAccount, CorporateParticipant, contract/billing-cycle linkage, corporate enrollment references                                                                | Module 12 creates corporate invoices and validates credit; Corporate Training owns account, participant, contract, and delivery linkage. |
+| Corporate Sales & Quotation      | Module 12 consumes trace references                            | approved quotation, sales order, commercial traceability                                                                                                               | Approved commercial documents may support corporate invoice traceability. Finance owns invoice; Sales context owns quotation/order.      |
+| Exam, Result & Completion        | Module 12 provides                                             | payment validation result by enrollment                                                                                                                                | Completion consumes NotRequired/Passed/Failed result. It does not inspect payment tables directly as business authority.                 |
+| Certificate Management           | Module 12 provides                                             | payment validation result                                                                                                                                              | Certificate issuance uses Finance validation where payment is required, alongside completion eligibility from Completion context.        |
+| Communication & Notification     | Module 12 produces notification requests or internal events    | receipt issued, installment due, invoice overdue, refund decision                                                                                                      | Communication owns templates and delivery logs; Finance owns source transaction state.                                                   |
+| Reporting & Executive Dashboards | Module 12 provides read models/metrics                         | invoicing, collection, refund, outstanding, aging, corporate exposure, branch performance inputs                                                                       | Reporting consumes finance data and does not mutate or own transactions. Permissions and branch filters remain enforced.                 |
+| Audit & Compliance               | Module 12 produces audit records/approval interactions         | sensitive finance actions, Refund Approval, credit-rule change, export audit                                                                                           | Audit context preserves cross-domain compliance evidence; Finance remains owner of finance state.                                        |
+| Website & Digital Experience     | No direct finance ownership interaction in current admin scope | future presentation or registration references only through Enrollment workflows                                                                                       | Website must not create or own Finance transactions.                                                                                     |
+| Future Tally Integration         | Future outbound synchronization                                | invoice, receipt, payment, refund/credit-note related finance events                                                                                                   | Explicitly future phase. Tally synchronization must not become the owner of Finance records.                                             |
+| Future Online Payment Gateway    | Future inbound integration                                     | authorization/capture result, provider reference, idempotent settlement confirmation                                                                                   | Explicitly deferred. Gateway integration must call Finance posting contracts rather than write Payment directly.                         |
 
 ## 6. Key Cross-Context Sequences
 

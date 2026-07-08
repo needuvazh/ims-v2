@@ -21,17 +21,28 @@ const avatarVariants = cva(
 );
 
 export interface AvatarProps
-  extends HTMLAttributes<HTMLSpanElement>,
-    VariantProps<typeof avatarVariants> {
+  extends HTMLAttributes<HTMLSpanElement>, VariantProps<typeof avatarVariants> {
   src?: string;
   alt?: string;
   fallback?: string;
 }
 
 /** Server-compatible Avatar. Uses img tag for simplicity (not Next.js Image). */
-export function Avatar({ src, alt, fallback, size, className, ...props }: AvatarProps) {
+export function Avatar({
+  src,
+  alt,
+  fallback,
+  size,
+  className,
+  ...props
+}: AvatarProps) {
   const initials = fallback
-    ? fallback.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2)
+    ? fallback
+        .split(' ')
+        .map((n) => n[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2)
     : '?';
 
   return (

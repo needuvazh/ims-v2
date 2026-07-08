@@ -4,7 +4,9 @@ import { Archive, CheckCircle2, Clock3, Plus, Users } from 'lucide-react';
 import Link from 'next/link';
 import { StudentsClientList } from './_components/students-client-list';
 
-export const metadata = { title: 'Student Directory - Admin Portal | ASTI IMS' };
+export const metadata = {
+  title: 'Student Directory - Admin Portal | ASTI IMS',
+};
 
 export default async function StudentLookupPage(props: {
   searchParams: Promise<{
@@ -26,14 +28,20 @@ export default async function StudentLookupPage(props: {
   const admissionFilter = searchParams.admissionStatus || '';
   const currentPage = searchParams.page ? parseInt(searchParams.page, 10) : 1;
   const currentSortBy = searchParams.sortBy || 'joinedAt';
-  const currentSortOrder = (searchParams.sortOrder as 'asc' | 'desc' | undefined) || 'desc';
-  const canCreateStudent = session.permissions.includes('student.create') || session.permissions.includes('student.write');
-  const canReadAdmissions = session.permissions.includes('student.related.admission.read');
+  const currentSortOrder =
+    (searchParams.sortOrder as 'asc' | 'desc' | undefined) || 'desc';
+  const canCreateStudent =
+    session.permissions.includes('student.create') ||
+    session.permissions.includes('student.write');
+  const canReadAdmissions = session.permissions.includes(
+    'student.related.admission.read',
+  );
 
-  const { branchScopeResolver, studentQueryService, prisma } = await import('@/lib/runtime');
+  const { branchScopeResolver, studentQueryService, prisma } =
+    await import('@/lib/runtime');
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
     session.userId as any,
-    session.activeBranchId as any
+    session.activeBranchId as any,
   );
 
   const branches = await prisma.branch.findMany({
@@ -52,13 +60,19 @@ export default async function StudentLookupPage(props: {
       admissionStatus: admissionFilter || undefined,
       sortBy: currentSortBy as any,
       sortOrder: currentSortOrder,
-    }
+    },
   );
 
   const visibleStudents = result.items;
-  const activeCount = visibleStudents.filter((student: any) => student.status === 'Active').length;
-  const suspendedCount = visibleStudents.filter((student: any) => student.status === 'Suspended').length;
-  const archivedCount = visibleStudents.filter((student: any) => student.status === 'Archived').length;
+  const activeCount = visibleStudents.filter(
+    (student: any) => student.status === 'Active',
+  ).length;
+  const suspendedCount = visibleStudents.filter(
+    (student: any) => student.status === 'Suspended',
+  ).length;
+  const archivedCount = visibleStudents.filter(
+    (student: any) => student.status === 'Archived',
+  ).length;
 
   return (
     <AdminListPageLayout>
@@ -112,7 +126,11 @@ export default async function StudentLookupPage(props: {
 
       <StudentsClientList
         students={result.items}
-        branches={branches.map((b) => ({ id: b.id, name: b.branchName, code: b.branchCode }))}
+        branches={branches.map((b) => ({
+          id: b.id,
+          name: b.branchName,
+          code: b.branchCode,
+        }))}
         total={result.total}
         currentPage={currentPage}
         canReadAdmissions={canReadAdmissions}

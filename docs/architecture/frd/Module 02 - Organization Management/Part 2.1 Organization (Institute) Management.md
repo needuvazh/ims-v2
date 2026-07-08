@@ -13,7 +13,6 @@ Module 02 – Organization Management
 
 ---
 
-
 # Module 02.1 — Organization (Institute) Management
 
 **Module Code:** `ORG-001`
@@ -42,14 +41,14 @@ This module serves as the single source of truth for institute-level information
 
 The system shall enable administrators to:
 
-* Register the institute
-* Configure institute profile
-* Configure legal information
-* Configure operational defaults
-* Configure localization settings
-* Configure fiscal information
-* Configure contact information
-* Configure institute-wide policies
+- Register the institute
+- Configure institute profile
+- Configure legal information
+- Configure operational defaults
+- Configure localization settings
+- Configure fiscal information
+- Configure contact information
+- Configure institute-wide policies
 
 ---
 
@@ -57,24 +56,24 @@ The system shall enable administrators to:
 
 ### Included
 
-* Institute profile
-* Legal information
-* Contact information
-* Address information
-* Operational settings
-* Localization
-* Fiscal settings
-* Status management
+- Institute profile
+- Legal information
+- Contact information
+- Address information
+- Operational settings
+- Localization
+- Fiscal settings
+- Status management
 
 ### Excluded
 
-* Branches
-* Departments
-* Buildings
-* Users
-* Courses
-* Students
-* Finance
+- Branches
+- Departments
+- Buildings
+- Users
+- Courses
+- Students
+- Finance
 
 These are managed by separate modules.
 
@@ -182,33 +181,33 @@ The system shall allow an authorized administrator to create a new organization.
 
 #### Input Fields
 
-* Organization Code
-* Legal Name (English)
-* Legal Name (Arabic)
-* Trade Name
-* Short Name
-* Registration Number
-* Registration Date
-* Tax Registration Number
-* Country
-* Time Zone
-* Default Currency
-* Default Language
+- Organization Code
+- Legal Name (English)
+- Legal Name (Arabic)
+- Trade Name
+- Short Name
+- Registration Number
+- Registration Date
+- Tax Registration Number
+- Country
+- Time Zone
+- Default Currency
+- Default Language
 
 #### Business Rules
 
-* Organization Code must be unique.
-* Legal Name is mandatory.
-* Country is mandatory.
-* Time Zone is mandatory.
-* Default Currency is mandatory.
-* Default Language is mandatory.
+- Organization Code must be unique.
+- Legal Name is mandatory.
+- Country is mandatory.
+- Time Zone is mandatory.
+- Default Currency is mandatory.
+- Default Language is mandatory.
 
 #### Acceptance Criteria
 
-* Organization is successfully created.
-* Audit log is generated.
-* Status becomes **Draft**.
+- Organization is successfully created.
+- Audit log is generated.
+- Status becomes **Draft**.
 
 ---
 
@@ -220,12 +219,12 @@ The system shall allow administrators to update organization information.
 
 Editable fields include:
 
-* Trade Name
-* Contact Information
-* Address
-* Website
-* Description
-* Operational Settings
+- Trade Name
+- Contact Information
+- Address
+- Website
+- Description
+- Operational Settings
 
 Legal registration fields may be locked after activation unless the user has elevated permissions.
 
@@ -239,11 +238,11 @@ The organization can only be activated when mandatory information is completed.
 
 #### Validation Checklist
 
-* Legal profile completed
-* Address completed
-* Primary contact defined
-* Localization configured
-* Fiscal year configured
+- Legal profile completed
+- Address completed
+- Primary contact defined
+- Localization configured
+- Fiscal year configured
 
 If any required information is missing, activation is blocked with validation messages.
 
@@ -257,11 +256,11 @@ The system shall allow suspension of an organization.
 
 Effects:
 
-* No new admissions
-* No new enrollments
-* No new invoices
-* Existing data remains accessible
-* Read-only access for operational users
+- No new admissions
+- No new enrollments
+- No new invoices
+- Existing data remains accessible
+- Read-only access for operational users
 
 ---
 
@@ -271,10 +270,10 @@ Effects:
 
 An organization may be archived only when:
 
-* No active branches exist
-* No active students exist
-* No active batches exist
-* No pending financial transactions exist
+- No active branches exist
+- No active students exist
+- No active batches exist
+- No pending financial transactions exist
 
 Physical deletion is not permitted.
 
@@ -309,21 +308,21 @@ Display all organizations.
 
 ### Columns
 
-* Code
-* Legal Name
-* Country
-* Currency
-* Time Zone
-* Status
-* Last Updated
+- Code
+- Legal Name
+- Country
+- Currency
+- Time Zone
+- Status
+- Last Updated
 
 ### Actions
 
-* View
-* Edit
-* Activate
-* Suspend
-* Archive
+- View
+- Edit
+- Activate
+- Suspend
+- Archive
 
 ---
 
@@ -331,25 +330,25 @@ Display all organizations.
 
 Sections:
 
-* General Information
-* Legal Information
-* Address
-* Contacts
-* Localization
-* Operational Settings
-* Audit History
+- General Information
+- Legal Information
+- Address
+- Contacts
+- Localization
+- Operational Settings
+- Audit History
 
 ---
 
 # 12. Validation Rules
 
-* Organization Code must be unique.
-* Registration Number must be unique.
-* Email must be valid.
-* Website must be a valid URL.
-* Phone number must follow country format.
-* Currency must exist in master data.
-* Time Zone must exist in master data.
+- Organization Code must be unique.
+- Registration Number must be unique.
+- Email must be valid.
+- Website must be a valid URL.
+- Phone number must follow country format.
+- Currency must exist in master data.
+- Time Zone must exist in master data.
 
 ---
 
@@ -370,31 +369,31 @@ Sections:
 
 The system shall record:
 
-* Organization created
-* Organization updated
-* Organization activated
-* Organization suspended
-* Organization archived
+- Organization created
+- Organization updated
+- Organization activated
+- Organization suspended
+- Organization archived
 
 Each audit record shall include:
 
-* User
-* Date & Time
-* Previous Value
-* New Value
-* IP Address
-* Device Information
-* Reason (where applicable)
+- User
+- Date & Time
+- Previous Value
+- New Value
+- IP Address
+- Device Information
+- Reason (where applicable)
 
 ---
 
 # 15. Domain Events
 
-* `OrganizationCreated`
-* `OrganizationUpdated`
-* `OrganizationActivated`
-* `OrganizationSuspended`
-* `OrganizationArchived`
+- `OrganizationCreated`
+- `OrganizationUpdated`
+- `OrganizationActivated`
+- `OrganizationSuspended`
+- `OrganizationArchived`
 
 ---
 
@@ -402,37 +401,37 @@ Each audit record shall include:
 
 ### Aggregate Root
 
-* Organization
+- Organization
 
 ### Entities
 
-* Organization
-* OrganizationProfile
-* OrganizationContact
-* OrganizationAddress
-* OrganizationLocalization
-* OrganizationSettings
-* OrganizationAudit
+- Organization
+- OrganizationProfile
+- OrganizationContact
+- OrganizationAddress
+- OrganizationLocalization
+- OrganizationSettings
+- OrganizationAudit
 
 ---
 
 # 17. API Summary
 
-* `POST /organizations`
-* `GET /organizations`
-* `GET /organizations/{id}`
-* `PUT /organizations/{id}`
-* `PATCH /organizations/{id}/activate`
-* `PATCH /organizations/{id}/suspend`
-* `PATCH /organizations/{id}/archive`
+- `POST /organizations`
+- `GET /organizations`
+- `GET /organizations/{id}`
+- `PUT /organizations/{id}`
+- `PATCH /organizations/{id}/activate`
+- `PATCH /organizations/{id}/suspend`
+- `PATCH /organizations/{id}/archive`
 
 ---
 
 # 18. Reports
 
-* Organization Profile Report
-* Organization Configuration Report
-* Organization Audit Report
+- Organization Profile Report
+- Organization Configuration Report
+- Organization Audit Report
 
 ---
 

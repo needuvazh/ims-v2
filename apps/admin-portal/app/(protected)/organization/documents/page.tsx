@@ -7,7 +7,15 @@ export const metadata = { title: 'Document Master - Organization | ASTI IMS' };
 export const dynamic = 'force-dynamic';
 
 export default async function DocumentMasterPage(props: {
-  searchParams: Promise<{ page?: string; limit?: string; q?: string; target?: string; status?: string; sortBy?: string; sortOrder?: string }>;
+  searchParams: Promise<{
+    page?: string;
+    limit?: string;
+    q?: string;
+    target?: string;
+    status?: string;
+    sortBy?: string;
+    sortOrder?: string;
+  }>;
 }) {
   await assertPermission('document.requirement.manage');
 

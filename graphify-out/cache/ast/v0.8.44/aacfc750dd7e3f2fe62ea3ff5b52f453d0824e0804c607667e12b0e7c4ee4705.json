@@ -1,1 +1,143 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_operations_product_setup_md", "label": "product-setup.md", "file_type": "document", "source_file": "docs/operations/product-setup.md", "source_location": "L1"}, {"id": "operations_product_setup_ims_product_setup", "label": "IMS Product Setup", "file_type": "document", "source_file": "docs/operations/product-setup.md", "source_location": "L1"}, {"id": "operations_product_setup_purpose", "label": "Purpose", "file_type": "document", "source_file": "docs/operations/product-setup.md", "source_location": "L3"}, {"id": "operations_product_setup_what_must_be_configured", "label": "What Must Be Configured", "file_type": "document", "source_file": "docs/operations/product-setup.md", "source_location": "L7"}, {"id": "operations_product_setup_required_environment_variables", "label": "Required Environment Variables", "file_type": "document", "source_file": "docs/operations/product-setup.md", "source_location": "L14"}, {"id": "operations_product_setup_setup_flow", "label": "Setup Flow", "file_type": "document", "source_file": "docs/operations/product-setup.md", "source_location": "L23"}, {"id": "operations_product_setup_auth_rules", "label": "Auth Rules", "file_type": "document", "source_file": "docs/operations/product-setup.md", "source_location": "L32"}, {"id": "operations_product_setup_production_checklist", "label": "Production Checklist", "file_type": "document", "source_file": "docs/operations/product-setup.md", "source_location": "L39"}, {"id": "operations_product_setup_smoke_test", "label": "Smoke Test", "file_type": "document", "source_file": "docs/operations/product-setup.md", "source_location": "L46"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_operations_product_setup_md", "target": "operations_product_setup_ims_product_setup", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/operations/product-setup.md", "source_location": "L1", "weight": 1.0}, {"source": "operations_product_setup_ims_product_setup", "target": "operations_product_setup_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/operations/product-setup.md", "source_location": "L3", "weight": 1.0}, {"source": "operations_product_setup_ims_product_setup", "target": "operations_product_setup_what_must_be_configured", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/operations/product-setup.md", "source_location": "L7", "weight": 1.0}, {"source": "operations_product_setup_ims_product_setup", "target": "operations_product_setup_required_environment_variables", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/operations/product-setup.md", "source_location": "L14", "weight": 1.0}, {"source": "operations_product_setup_ims_product_setup", "target": "operations_product_setup_setup_flow", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/operations/product-setup.md", "source_location": "L23", "weight": 1.0}, {"source": "operations_product_setup_ims_product_setup", "target": "operations_product_setup_auth_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/operations/product-setup.md", "source_location": "L32", "weight": 1.0}, {"source": "operations_product_setup_ims_product_setup", "target": "operations_product_setup_production_checklist", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/operations/product-setup.md", "source_location": "L39", "weight": 1.0}, {"source": "operations_product_setup_ims_product_setup", "target": "operations_product_setup_smoke_test", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/operations/product-setup.md", "source_location": "L46", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_operations_product_setup_md",
+      "label": "product-setup.md",
+      "file_type": "document",
+      "source_file": "docs/operations/product-setup.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "operations_product_setup_ims_product_setup",
+      "label": "IMS Product Setup",
+      "file_type": "document",
+      "source_file": "docs/operations/product-setup.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "operations_product_setup_purpose",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/operations/product-setup.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "operations_product_setup_what_must_be_configured",
+      "label": "What Must Be Configured",
+      "file_type": "document",
+      "source_file": "docs/operations/product-setup.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "operations_product_setup_required_environment_variables",
+      "label": "Required Environment Variables",
+      "file_type": "document",
+      "source_file": "docs/operations/product-setup.md",
+      "source_location": "L14"
+    },
+    {
+      "id": "operations_product_setup_setup_flow",
+      "label": "Setup Flow",
+      "file_type": "document",
+      "source_file": "docs/operations/product-setup.md",
+      "source_location": "L23"
+    },
+    {
+      "id": "operations_product_setup_auth_rules",
+      "label": "Auth Rules",
+      "file_type": "document",
+      "source_file": "docs/operations/product-setup.md",
+      "source_location": "L32"
+    },
+    {
+      "id": "operations_product_setup_production_checklist",
+      "label": "Production Checklist",
+      "file_type": "document",
+      "source_file": "docs/operations/product-setup.md",
+      "source_location": "L39"
+    },
+    {
+      "id": "operations_product_setup_smoke_test",
+      "label": "Smoke Test",
+      "file_type": "document",
+      "source_file": "docs/operations/product-setup.md",
+      "source_location": "L46"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_operations_product_setup_md",
+      "target": "operations_product_setup_ims_product_setup",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/operations/product-setup.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "operations_product_setup_ims_product_setup",
+      "target": "operations_product_setup_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/operations/product-setup.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "operations_product_setup_ims_product_setup",
+      "target": "operations_product_setup_what_must_be_configured",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/operations/product-setup.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "operations_product_setup_ims_product_setup",
+      "target": "operations_product_setup_required_environment_variables",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/operations/product-setup.md",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "operations_product_setup_ims_product_setup",
+      "target": "operations_product_setup_setup_flow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/operations/product-setup.md",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "operations_product_setup_ims_product_setup",
+      "target": "operations_product_setup_auth_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/operations/product-setup.md",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "operations_product_setup_ims_product_setup",
+      "target": "operations_product_setup_production_checklist",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/operations/product-setup.md",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "operations_product_setup_ims_product_setup",
+      "target": "operations_product_setup_smoke_test",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/operations/product-setup.md",
+      "source_location": "L46",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

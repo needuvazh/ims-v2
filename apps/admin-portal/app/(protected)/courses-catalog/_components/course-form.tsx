@@ -25,7 +25,7 @@ import {
   PlusCircle,
   Settings,
   ShieldCheck,
-  FileText
+  FileText,
 } from 'lucide-react';
 
 interface CourseFormProps {
@@ -99,7 +99,8 @@ export function CourseForm({
         categoryId: values.categoryId === '' ? null : values.categoryId,
         descriptionEnglish: values.descriptionEnglish || null,
         descriptionArabic: values.descriptionArabic || null,
-        effectiveEndDate: values.effectiveEndDate === '' ? null : values.effectiveEndDate,
+        effectiveEndDate:
+          values.effectiveEndDate === '' ? null : values.effectiveEndDate,
         bannerImage: values.bannerImage || null,
         metaTitle: values.metaTitle || null,
         metaDescription: values.metaDescription || null,
@@ -119,10 +120,17 @@ export function CourseForm({
             });
           });
         } else {
-          setErrorState(response.error || 'Submission failed. Please check your parameters.');
+          setErrorState(
+            response.error ||
+              'Submission failed. Please check your parameters.',
+          );
         }
       } else {
-        toast.success(isEditMode ? 'Course updated successfully!' : 'Course created successfully!');
+        toast.success(
+          isEditMode
+            ? 'Course updated successfully!'
+            : 'Course created successfully!',
+        );
         router.push('/courses-catalog');
         router.refresh();
       }
@@ -132,7 +140,10 @@ export function CourseForm({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 max-w-7xl mx-auto">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-8 max-w-7xl mx-auto"
+    >
       {errorState && (
         <Alert variant="error" title="Submission Error">
           {errorState}
@@ -141,7 +152,6 @@ export function CourseForm({
 
       {/* Row 1: Core Settings & Logistics side-by-side */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        
         {/* Card 1: Core Settings & Taxonomy */}
         <div className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6 space-y-6">
           <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
@@ -149,8 +159,13 @@ export function CourseForm({
               <Settings className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="font-bold text-slate-800 text-base">Core Settings & Taxonomy</h3>
-              <p className="text-xs text-slate-500">Define course code, owner department, and taxonomy classification</p>
+              <h3 className="font-bold text-slate-800 text-base">
+                Core Settings & Taxonomy
+              </h3>
+              <p className="text-xs text-slate-500">
+                Define course code, owner department, and taxonomy
+                classification
+              </p>
             </div>
           </div>
 
@@ -165,7 +180,9 @@ export function CourseForm({
                   className="font-mono uppercase tracking-wider"
                 />
               </FormControl>
-              {errors.courseCode && <FormError>{errors.courseCode.message}</FormError>}
+              {errors.courseCode && (
+                <FormError>{errors.courseCode.message}</FormError>
+              )}
             </FormField>
 
             <FormField>
@@ -179,12 +196,17 @@ export function CourseForm({
                       placeholder="Select department"
                       value={field.value}
                       onChange={(e) => field.onChange(e.target.value)}
-                      options={departments.map((d) => ({ value: d.id, label: d.departmentName }))}
+                      options={departments.map((d) => ({
+                        value: d.id,
+                        label: d.departmentName,
+                      }))}
                     />
                   )}
                 />
               </FormControl>
-              {errors.departmentId && <FormError>{errors.departmentId.message}</FormError>}
+              {errors.departmentId && (
+                <FormError>{errors.departmentId.message}</FormError>
+              )}
             </FormField>
           </div>
 
@@ -200,12 +222,17 @@ export function CourseForm({
                       placeholder="Select category (Optional)"
                       value={field.value || ''}
                       onChange={(e) => field.onChange(e.target.value)}
-                      options={categories.map((c) => ({ value: c.id, label: `${c.nameEnglish} / ${c.nameArabic}` }))}
+                      options={categories.map((c) => ({
+                        value: c.id,
+                        label: `${c.nameEnglish} / ${c.nameArabic}`,
+                      }))}
                     />
                   )}
                 />
               </FormControl>
-              {errors.categoryId && <FormError>{errors.categoryId.message}</FormError>}
+              {errors.categoryId && (
+                <FormError>{errors.categoryId.message}</FormError>
+              )}
             </FormField>
 
             <FormField>
@@ -221,13 +248,18 @@ export function CourseForm({
                       onChange={(e) => field.onChange(e.target.value)}
                       options={[
                         { value: 'Regular', label: 'Regular (Open Batches)' },
-                        { value: 'Corporate', label: 'Corporate (Contract Programs)' },
+                        {
+                          value: 'Corporate',
+                          label: 'Corporate (Contract Programs)',
+                        },
                       ]}
                     />
                   )}
                 />
               </FormControl>
-              {errors.courseClassification && <FormError>{errors.courseClassification.message}</FormError>}
+              {errors.courseClassification && (
+                <FormError>{errors.courseClassification.message}</FormError>
+              )}
             </FormField>
           </div>
         </div>
@@ -239,8 +271,13 @@ export function CourseForm({
               <Calendar className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="font-bold text-slate-800 text-base">Logistics, Durations & Validity</h3>
-              <p className="text-xs text-slate-500">Configure validity ranges, duration periods, and completion limits</p>
+              <h3 className="font-bold text-slate-800 text-base">
+                Logistics, Durations & Validity
+              </h3>
+              <p className="text-xs text-slate-500">
+                Configure validity ranges, duration periods, and completion
+                limits
+              </p>
             </div>
           </div>
 
@@ -266,7 +303,9 @@ export function CourseForm({
                   )}
                 />
               </FormControl>
-              {errors.durationType && <FormError>{errors.durationType.message}</FormError>}
+              {errors.durationType && (
+                <FormError>{errors.durationType.message}</FormError>
+              )}
             </FormField>
 
             <FormField>
@@ -278,7 +317,9 @@ export function CourseForm({
                   placeholder="e.g. 12"
                 />
               </FormControl>
-              {errors.durationValue && <FormError>{errors.durationValue.message}</FormError>}
+              {errors.durationValue && (
+                <FormError>{errors.durationValue.message}</FormError>
+              )}
             </FormField>
           </div>
 
@@ -288,7 +329,9 @@ export function CourseForm({
               <FormControl>
                 <Input type="date" {...register('effectiveStartDate')} />
               </FormControl>
-              {errors.effectiveStartDate && <FormError>{errors.effectiveStartDate.message}</FormError>}
+              {errors.effectiveStartDate && (
+                <FormError>{errors.effectiveStartDate.message}</FormError>
+              )}
             </FormField>
 
             <FormField>
@@ -296,15 +339,22 @@ export function CourseForm({
               <FormControl>
                 <Input type="date" {...register('effectiveEndDate')} />
               </FormControl>
-              {errors.effectiveEndDate && <FormError>{errors.effectiveEndDate.message}</FormError>}
+              {errors.effectiveEndDate && (
+                <FormError>{errors.effectiveEndDate.message}</FormError>
+              )}
             </FormField>
           </div>
 
           {/* Toggle Switches */}
           <div className="flex items-center justify-between bg-slate-50/50 border border-slate-100 p-4 rounded-xl">
             <div>
-              <span className="text-sm font-semibold text-slate-800 block">Allow Walk-In Fast-Track Completion</span>
-              <span className="text-[11px] text-slate-500 mt-0.5">Enables same-day completions and certificates bypassing standard timetables.</span>
+              <span className="text-sm font-semibold text-slate-800 block">
+                Allow Walk-In Fast-Track Completion
+              </span>
+              <span className="text-[11px] text-slate-500 mt-0.5">
+                Enables same-day completions and certificates bypassing standard
+                timetables.
+              </span>
             </div>
             <Controller
               control={control}
@@ -323,7 +373,6 @@ export function CourseForm({
             />
           </div>
         </div>
-
       </div>
 
       {/* Row 2: Bilingual Content Card (English & Arabic Side-by-Side) */}
@@ -333,8 +382,13 @@ export function CourseForm({
             <BookOpen className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="font-bold text-slate-800 text-base">Bilingual Titles & Descriptions</h3>
-            <p className="text-xs text-slate-500">Provide official template content in both English and Arabic script</p>
+            <h3 className="font-bold text-slate-800 text-base">
+              Bilingual Titles & Descriptions
+            </h3>
+            <p className="text-xs text-slate-500">
+              Provide official template content in both English and Arabic
+              script
+            </p>
           </div>
         </div>
 
@@ -344,9 +398,14 @@ export function CourseForm({
             <FormField>
               <FormLabel required>Course Title (English)</FormLabel>
               <FormControl>
-                <Input {...register('nameEnglish')} placeholder="e.g. Full Stack Web Development" />
+                <Input
+                  {...register('nameEnglish')}
+                  placeholder="e.g. Full Stack Web Development"
+                />
               </FormControl>
-              {errors.nameEnglish && <FormError>{errors.nameEnglish.message}</FormError>}
+              {errors.nameEnglish && (
+                <FormError>{errors.nameEnglish.message}</FormError>
+              )}
             </FormField>
 
             <FormField>
@@ -359,7 +418,9 @@ export function CourseForm({
                   className="w-full rounded-xl border border-[color:var(--ims-border)] p-3 text-sm focus:outline-none focus:ring-1 focus:ring-slate-900 bg-slate-50/50 focus:bg-white transition-all resize-none"
                 />
               </FormControl>
-              {errors.descriptionEnglish && <FormError>{errors.descriptionEnglish.message}</FormError>}
+              {errors.descriptionEnglish && (
+                <FormError>{errors.descriptionEnglish.message}</FormError>
+              )}
             </FormField>
           </div>
 
@@ -375,7 +436,9 @@ export function CourseForm({
                   dir="rtl"
                 />
               </FormControl>
-              {errors.nameArabic && <FormError>{errors.nameArabic.message}</FormError>}
+              {errors.nameArabic && (
+                <FormError>{errors.nameArabic.message}</FormError>
+              )}
             </FormField>
 
             <FormField>
@@ -389,7 +452,9 @@ export function CourseForm({
                   dir="rtl"
                 />
               </FormControl>
-              {errors.descriptionArabic && <FormError>{errors.descriptionArabic.message}</FormError>}
+              {errors.descriptionArabic && (
+                <FormError>{errors.descriptionArabic.message}</FormError>
+              )}
             </FormField>
           </div>
         </div>
@@ -402,18 +467,26 @@ export function CourseForm({
             <Globe className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="font-bold text-slate-800 text-base">Public Exposition, Practical Details & SEO</h3>
-            <p className="text-xs text-slate-500">Configure visual imagery, toggles for price/practical visibility, syllabus and SEO tags</p>
+            <h3 className="font-bold text-slate-800 text-base">
+              Public Exposition, Practical Details & SEO
+            </h3>
+            <p className="text-xs text-slate-500">
+              Configure visual imagery, toggles for price/practical visibility,
+              syllabus and SEO tags
+            </p>
           </div>
         </div>
 
         {/* Visibility Toggles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50/50 border border-slate-100 p-4 rounded-xl">
-          
           <div className="flex items-center justify-between gap-4">
             <div>
-              <span className="text-sm font-semibold text-slate-800 block">Expose Publicly</span>
-              <span className="text-[11px] text-slate-500">Publish this course template to the public directory listings.</span>
+              <span className="text-sm font-semibold text-slate-800 block">
+                Expose Publicly
+              </span>
+              <span className="text-[11px] text-slate-500">
+                Publish this course template to the public directory listings.
+              </span>
             </div>
             <Controller
               control={control}
@@ -434,8 +507,12 @@ export function CourseForm({
 
           <div className="flex items-center justify-between gap-4 border-t md:border-t-0 md:border-l border-slate-200/60 pt-4 md:pt-0 md:pl-6">
             <div>
-              <span className="text-sm font-semibold text-slate-800 block">Show Pricing Publicly</span>
-              <span className="text-[11px] text-slate-500">Allow pricing information to be visible in public listings.</span>
+              <span className="text-sm font-semibold text-slate-800 block">
+                Show Pricing Publicly
+              </span>
+              <span className="text-[11px] text-slate-500">
+                Allow pricing information to be visible in public listings.
+              </span>
             </div>
             <Controller
               control={control}
@@ -456,8 +533,12 @@ export function CourseForm({
 
           <div className="flex items-center justify-between gap-4 border-t md:border-t-0 md:border-l border-slate-200/60 pt-4 md:pt-0 md:pl-6">
             <div>
-              <span className="text-sm font-semibold text-slate-800 block">Has Practical Instruction</span>
-              <span className="text-[11px] text-slate-500">Flag this course as containing practical training and testing.</span>
+              <span className="text-sm font-semibold text-slate-800 block">
+                Has Practical Instruction
+              </span>
+              <span className="text-[11px] text-slate-500">
+                Flag this course as containing practical training and testing.
+              </span>
             </div>
             <Controller
               control={control}
@@ -488,7 +569,9 @@ export function CourseForm({
                   placeholder="e.g. /images/courses/web-dev-banner.jpg"
                 />
               </FormControl>
-              {errors.bannerImage && <FormError>{errors.bannerImage.message}</FormError>}
+              {errors.bannerImage && (
+                <FormError>{errors.bannerImage.message}</FormError>
+              )}
             </FormField>
           </div>
 
@@ -496,9 +579,14 @@ export function CourseForm({
             <FormField>
               <FormLabel>SEO Meta Title</FormLabel>
               <FormControl>
-                <Input {...register('metaTitle')} placeholder="e.g. Learn Full Stack Web Development | ASTI" />
+                <Input
+                  {...register('metaTitle')}
+                  placeholder="e.g. Learn Full Stack Web Development | ASTI"
+                />
               </FormControl>
-              {errors.metaTitle && <FormError>{errors.metaTitle.message}</FormError>}
+              {errors.metaTitle && (
+                <FormError>{errors.metaTitle.message}</FormError>
+              )}
             </FormField>
           </div>
 
@@ -506,9 +594,14 @@ export function CourseForm({
             <FormField>
               <FormLabel>SEO Meta Keywords</FormLabel>
               <FormControl>
-                <Input {...register('metaKeywords')} placeholder="e.g. programming, coding, nextjs" />
+                <Input
+                  {...register('metaKeywords')}
+                  placeholder="e.g. programming, coding, nextjs"
+                />
               </FormControl>
-              {errors.metaKeywords && <FormError>{errors.metaKeywords.message}</FormError>}
+              {errors.metaKeywords && (
+                <FormError>{errors.metaKeywords.message}</FormError>
+              )}
             </FormField>
           </div>
         </div>
@@ -524,7 +617,9 @@ export function CourseForm({
                 className="w-full rounded-xl border border-[color:var(--ims-border)] p-3 text-sm focus:outline-none focus:ring-1 focus:ring-slate-900 bg-slate-50/50 focus:bg-white transition-all resize-none"
               />
             </FormControl>
-            {errors.metaDescription && <FormError>{errors.metaDescription.message}</FormError>}
+            {errors.metaDescription && (
+              <FormError>{errors.metaDescription.message}</FormError>
+            )}
           </FormField>
 
           <FormField>
@@ -537,7 +632,11 @@ export function CourseForm({
                 className="w-full rounded-xl border border-[color:var(--ims-border)] p-3 text-sm focus:outline-none focus:ring-1 focus:ring-slate-900 bg-slate-50/50 focus:bg-white transition-all resize-none"
               />
             </FormControl>
-            {errors.practicalTestingDescription && <FormError>{errors.practicalTestingDescription.message}</FormError>}
+            {errors.practicalTestingDescription && (
+              <FormError>
+                {errors.practicalTestingDescription.message}
+              </FormError>
+            )}
           </FormField>
         </div>
 
@@ -551,27 +650,39 @@ export function CourseForm({
               className="w-full rounded-xl border border-[color:var(--ims-border)] p-3 text-sm focus:outline-none focus:ring-1 focus:ring-slate-900 bg-slate-50/50 focus:bg-white transition-all resize-none font-mono"
             />
           </FormControl>
-          {errors.syllabusOutline && <FormError>{errors.syllabusOutline.message}</FormError>}
+          {errors.syllabusOutline && (
+            <FormError>{errors.syllabusOutline.message}</FormError>
+          )}
         </FormField>
       </div>
 
       {/* Button Group */}
       <div className="flex justify-end gap-3 pt-6 border-t border-slate-100">
-        <Button type="button" variant="outline" onClick={() => router.push('/courses-catalog')} disabled={isSubmitting}>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => router.push('/courses-catalog')}
+          disabled={isSubmitting}
+        >
           Cancel
         </Button>
-        <Button type="submit" disabled={isSubmitting} className="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-6">
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-6"
+        >
           {isSubmitting ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               Saving Template...
             </>
+          ) : isEditMode ? (
+            'Update Course Template'
           ) : (
-            isEditMode ? 'Update Course Template' : 'Create Course Template'
+            'Create Course Template'
           )}
         </Button>
       </div>
-
     </form>
   );
 }

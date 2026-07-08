@@ -17,17 +17,17 @@ This module owns operational scheduling data and controls timetable visibility f
 
 ### 1.1 Owned Runtime Capabilities
 
-| Capability | Operational Importance |
-|---|---|
-| Schedule session creation and rescheduling | Core academic delivery continuity. |
-| Conflict validation | Prevents trainer, classroom, batch, holiday, and venue allocation errors. |
-| Calendar and holiday management | Controls valid training days and branch operating calendars. |
-| Venue blocking | Prevents scheduling during maintenance, events, or room unavailability. |
-| Trainer availability management | Supports conflict-free trainer allocation. |
-| Schedule publishing | Controls what students and trainers can see. |
-| Bulk import | Enables high-volume timetable setup with validation. |
-| Operational reports and dashboards | Supports branch operations and management oversight. |
-| Audit trail | Supports accountability and compliance. |
+| Capability                                 | Operational Importance                                                    |
+| ------------------------------------------ | ------------------------------------------------------------------------- |
+| Schedule session creation and rescheduling | Core academic delivery continuity.                                        |
+| Conflict validation                        | Prevents trainer, classroom, batch, holiday, and venue allocation errors. |
+| Calendar and holiday management            | Controls valid training days and branch operating calendars.              |
+| Venue blocking                             | Prevents scheduling during maintenance, events, or room unavailability.   |
+| Trainer availability management            | Supports conflict-free trainer allocation.                                |
+| Schedule publishing                        | Controls what students and trainers can see.                              |
+| Bulk import                                | Enables high-volume timetable setup with validation.                      |
+| Operational reports and dashboards         | Supports branch operations and management oversight.                      |
+| Audit trail                                | Supports accountability and compliance.                                   |
 
 ---
 
@@ -61,14 +61,14 @@ asti-ims
 
 ### 2.2 Deployable Units
 
-| Unit | Description |
-|---|---|
-| Admin portal scheduling routes | Calendar, session planner, holiday calendar, venue block, trainer availability, reports. |
-| Trainer portal schedule routes | Trainer read-only and limited acknowledgement views. |
-| Student portal timetable routes | Student read-only timetable views for active enrollments. |
-| Prisma migration | Tables, indexes, constraints, reporting views. |
-| Seed data | Permission codes, menu entries, report definitions, notification templates. |
-| Scheduled jobs | Optional internal jobs for reminder generation, read model refresh, stale import cleanup. |
+| Unit                            | Description                                                                               |
+| ------------------------------- | ----------------------------------------------------------------------------------------- |
+| Admin portal scheduling routes  | Calendar, session planner, holiday calendar, venue block, trainer availability, reports.  |
+| Trainer portal schedule routes  | Trainer read-only and limited acknowledgement views.                                      |
+| Student portal timetable routes | Student read-only timetable views for active enrollments.                                 |
+| Prisma migration                | Tables, indexes, constraints, reporting views.                                            |
+| Seed data                       | Permission codes, menu entries, report definitions, notification templates.               |
+| Scheduled jobs                  | Optional internal jobs for reminder generation, read model refresh, stale import cleanup. |
 
 No separate microservice deployment is required.
 
@@ -76,20 +76,20 @@ No separate microservice deployment is required.
 
 ## 3. Environment Configuration
 
-| Variable | Required | Example | Purpose |
-|---|---:|---|---|
-| `APP_TIMEZONE` | Yes | `Asia/Muscat` | Default Oman timezone for date/time rendering and calculations. |
-| `DATABASE_URL` | Yes | Managed secret | PostgreSQL connection string. |
-| `SCH_MAX_IMPORT_ROWS` | Yes | `1000` | Maximum accepted rows per schedule import. |
-| `SCH_EXPORT_MAX_SYNC_ROWS` | Yes | `10000` | Maximum rows before export must use async file generation. |
-| `SCH_CONFLICT_LOOKAHEAD_MONTHS` | Yes | `12` | Maximum admin calendar query range. |
-| `SCH_STUDENT_LOOKAHEAD_MONTHS` | Yes | `3` | Maximum student timetable query range. |
-| `SCH_AUDIT_RETENTION_YEARS` | Yes | `7` | Minimum retention target for scheduling audit records. |
-| `SCH_ENABLE_BULK_IMPORT` | Yes | `true` | Feature flag for bulk import. |
-| `SCH_ENABLE_CONFLICT_OVERRIDE` | Yes | `true` | Feature flag for soft conflict override flow. |
-| `SCH_NOTIFICATION_ENABLED` | Yes | `true` | Controls schedule notification request creation. |
-| `LOG_LEVEL` | Yes | `info` | Structured logging verbosity. |
-| `OTEL_SERVICE_NAME` | Recommended | `asti-ims-admin-portal` | OpenTelemetry service name. |
+| Variable                        |    Required | Example                 | Purpose                                                         |
+| ------------------------------- | ----------: | ----------------------- | --------------------------------------------------------------- |
+| `APP_TIMEZONE`                  |         Yes | `Asia/Muscat`           | Default Oman timezone for date/time rendering and calculations. |
+| `DATABASE_URL`                  |         Yes | Managed secret          | PostgreSQL connection string.                                   |
+| `SCH_MAX_IMPORT_ROWS`           |         Yes | `1000`                  | Maximum accepted rows per schedule import.                      |
+| `SCH_EXPORT_MAX_SYNC_ROWS`      |         Yes | `10000`                 | Maximum rows before export must use async file generation.      |
+| `SCH_CONFLICT_LOOKAHEAD_MONTHS` |         Yes | `12`                    | Maximum admin calendar query range.                             |
+| `SCH_STUDENT_LOOKAHEAD_MONTHS`  |         Yes | `3`                     | Maximum student timetable query range.                          |
+| `SCH_AUDIT_RETENTION_YEARS`     |         Yes | `7`                     | Minimum retention target for scheduling audit records.          |
+| `SCH_ENABLE_BULK_IMPORT`        |         Yes | `true`                  | Feature flag for bulk import.                                   |
+| `SCH_ENABLE_CONFLICT_OVERRIDE`  |         Yes | `true`                  | Feature flag for soft conflict override flow.                   |
+| `SCH_NOTIFICATION_ENABLED`      |         Yes | `true`                  | Controls schedule notification request creation.                |
+| `LOG_LEVEL`                     |         Yes | `info`                  | Structured logging verbosity.                                   |
+| `OTEL_SERVICE_NAME`             | Recommended | `asti-ims-admin-portal` | OpenTelemetry service name.                                     |
 
 ---
 
@@ -97,18 +97,18 @@ No separate microservice deployment is required.
 
 ### 4.1 Owned Tables
 
-| Table | Backup Required | PITR Required | Notes |
-|---|---:|---:|---|
-| `business_calendars` | Yes | Yes | Branch calendar definitions. |
-| `holidays` | Yes | Yes | Holiday dates and localized labels. |
-| `schedule_sessions` | Yes | Yes | Core timetable records. |
-| `venue_blocks` | Yes | Yes | Classroom/branch blocking records. |
-| `trainer_availabilities` | Yes | Yes | Trainer availability effective-dated records. |
-| `schedule_conflict_checks` | Recommended | No | Optional persisted validation trace. |
-| `scheduling_import_batches` | Yes | Yes | Bulk import metadata and validation result. |
-| `scheduling_import_rows` | Yes | Yes | Row-level import validation results. |
-| `schedule_publication_logs` | Yes | Yes | Publish/unpublish trace. |
-| `audit_logs` scheduling rows | Yes | Yes | Owned by Audit context but critical dependency. |
+| Table                        | Backup Required | PITR Required | Notes                                           |
+| ---------------------------- | --------------: | ------------: | ----------------------------------------------- |
+| `business_calendars`         |             Yes |           Yes | Branch calendar definitions.                    |
+| `holidays`                   |             Yes |           Yes | Holiday dates and localized labels.             |
+| `schedule_sessions`          |             Yes |           Yes | Core timetable records.                         |
+| `venue_blocks`               |             Yes |           Yes | Classroom/branch blocking records.              |
+| `trainer_availabilities`     |             Yes |           Yes | Trainer availability effective-dated records.   |
+| `schedule_conflict_checks`   |     Recommended |            No | Optional persisted validation trace.            |
+| `scheduling_import_batches`  |             Yes |           Yes | Bulk import metadata and validation result.     |
+| `scheduling_import_rows`     |             Yes |           Yes | Row-level import validation results.            |
+| `schedule_publication_logs`  |             Yes |           Yes | Publish/unpublish trace.                        |
+| `audit_logs` scheduling rows |             Yes |           Yes | Owned by Audit context but critical dependency. |
 
 ### 4.2 Migration Safety Rules
 
@@ -123,18 +123,18 @@ No separate microservice deployment is required.
 
 ### 4.3 Required Indexes
 
-| Table | Index | Purpose |
-|---|---|---|
-| `schedule_sessions` | `(branch_id, scheduled_date, start_time, end_time)` | Calendar date range lookups. |
-| `schedule_sessions` | `(trainer_id, scheduled_date, start_time, end_time, status)` | Trainer conflict detection. |
-| `schedule_sessions` | `(classroom_id, scheduled_date, start_time, end_time, status)` | Classroom conflict detection. |
-| `schedule_sessions` | `(batch_id, scheduled_date, start_time, end_time, status)` | Batch overlap detection. |
-| `schedule_sessions` | `(branch_id, status, is_deleted)` | Admin list and dashboard filters. |
-| `holidays` | `(calendar_id, holiday_date, is_deleted)` | Holiday conflict validation. |
-| `venue_blocks` | `(branch_id, classroom_id, block_date, start_time, end_time, status)` | Venue block conflict validation. |
-| `trainer_availabilities` | `(trainer_id, branch_id, day_of_week, effective_start_date, effective_end_date)` | Availability lookup. |
-| `scheduling_import_batches` | `(branch_id, import_type, status, created_at)` | Import monitoring. |
-| `audit_logs` | `(module_code, entity_type, entity_id, performed_at)` | Audit lookup. |
+| Table                       | Index                                                                            | Purpose                           |
+| --------------------------- | -------------------------------------------------------------------------------- | --------------------------------- |
+| `schedule_sessions`         | `(branch_id, scheduled_date, start_time, end_time)`                              | Calendar date range lookups.      |
+| `schedule_sessions`         | `(trainer_id, scheduled_date, start_time, end_time, status)`                     | Trainer conflict detection.       |
+| `schedule_sessions`         | `(classroom_id, scheduled_date, start_time, end_time, status)`                   | Classroom conflict detection.     |
+| `schedule_sessions`         | `(batch_id, scheduled_date, start_time, end_time, status)`                       | Batch overlap detection.          |
+| `schedule_sessions`         | `(branch_id, status, is_deleted)`                                                | Admin list and dashboard filters. |
+| `holidays`                  | `(calendar_id, holiday_date, is_deleted)`                                        | Holiday conflict validation.      |
+| `venue_blocks`              | `(branch_id, classroom_id, block_date, start_time, end_time, status)`            | Venue block conflict validation.  |
+| `trainer_availabilities`    | `(trainer_id, branch_id, day_of_week, effective_start_date, effective_end_date)` | Availability lookup.              |
+| `scheduling_import_batches` | `(branch_id, import_type, status, created_at)`                                   | Import monitoring.                |
+| `audit_logs`                | `(module_code, entity_type, entity_id, performed_at)`                            | Audit lookup.                     |
 
 ---
 
@@ -173,18 +173,18 @@ All module logs must be structured JSON. Logs must never include password hashes
 
 ### 5.3 Required Log Events
 
-| Event | Level | Required Fields |
-|---|---|---|
-| Schedule session created | info | correlationId, userId, branchId, sessionId, batchId, trainerId, classroomId, durationMs |
-| Conflict detected | warn | correlationId, conflictType, branchId, entityId, requestedDate, requestedStartTime, requestedEndTime |
-| Conflict override used | warn | correlationId, userId, branchId, conflictType, overrideReason |
-| Permission denied | warn | correlationId, userId, permission, branchId, route |
-| Branch scope denied | warn | correlationId, userId, requestedBranchId, assignedBranchIds hash/summary |
-| Bulk import validation failed | warn | correlationId, importBatchId, branchId, failedRowCount, errorCodes |
-| Bulk import committed | info | correlationId, importBatchId, acceptedRows, rejectedRows, durationMs |
-| Export generated | info | correlationId, userId, branchScope, format, rowCount, durationMs |
-| Database error | error | correlationId, operation, sanitized error code, durationMs |
-| Unexpected exception | error | correlationId, operation, sanitized stack reference, durationMs |
+| Event                         | Level | Required Fields                                                                                      |
+| ----------------------------- | ----- | ---------------------------------------------------------------------------------------------------- |
+| Schedule session created      | info  | correlationId, userId, branchId, sessionId, batchId, trainerId, classroomId, durationMs              |
+| Conflict detected             | warn  | correlationId, conflictType, branchId, entityId, requestedDate, requestedStartTime, requestedEndTime |
+| Conflict override used        | warn  | correlationId, userId, branchId, conflictType, overrideReason                                        |
+| Permission denied             | warn  | correlationId, userId, permission, branchId, route                                                   |
+| Branch scope denied           | warn  | correlationId, userId, requestedBranchId, assignedBranchIds hash/summary                             |
+| Bulk import validation failed | warn  | correlationId, importBatchId, branchId, failedRowCount, errorCodes                                   |
+| Bulk import committed         | info  | correlationId, importBatchId, acceptedRows, rejectedRows, durationMs                                 |
+| Export generated              | info  | correlationId, userId, branchScope, format, rowCount, durationMs                                     |
+| Database error                | error | correlationId, operation, sanitized error code, durationMs                                           |
+| Unexpected exception          | error | correlationId, operation, sanitized stack reference, durationMs                                      |
 
 ---
 
@@ -194,30 +194,30 @@ Even within a modular monolith, tracing must identify module boundaries and down
 
 ### 6.1 Trace Spans
 
-| Span Name | Trigger | Attributes |
-|---|---|---|
-| `SCH.api.calendar.list` | Calendar list endpoint/server action | branchId, dateFrom, dateTo, userId, permission |
-| `SCH.command.session.create` | Create session command | branchId, batchId, trainerId, classroomId |
-| `SCH.command.session.reschedule` | Reschedule command | branchId, sessionId, oldVersion, newVersion |
-| `SCH.validation.conflictCheck` | Conflict validation | branchId, trainerId, classroomId, batchId, conflictCount |
-| `SCH.query.trainerAvailability` | Availability lookup | trainerId, branchId, dayOfWeek |
-| `SCH.query.holidayConflict` | Holiday lookup | calendarId, date |
-| `SCH.audit.write` | Audit log write | entityType, entityId, action |
-| `SCH.notification.request` | Notification request creation | eventType, recipientCount |
-| `SCH.import.validate` | Import validation | importBatchId, rowCount |
-| `SCH.report.query` | Report query | reportCode, branchScope, rowCount |
+| Span Name                        | Trigger                              | Attributes                                               |
+| -------------------------------- | ------------------------------------ | -------------------------------------------------------- |
+| `SCH.api.calendar.list`          | Calendar list endpoint/server action | branchId, dateFrom, dateTo, userId, permission           |
+| `SCH.command.session.create`     | Create session command               | branchId, batchId, trainerId, classroomId                |
+| `SCH.command.session.reschedule` | Reschedule command                   | branchId, sessionId, oldVersion, newVersion              |
+| `SCH.validation.conflictCheck`   | Conflict validation                  | branchId, trainerId, classroomId, batchId, conflictCount |
+| `SCH.query.trainerAvailability`  | Availability lookup                  | trainerId, branchId, dayOfWeek                           |
+| `SCH.query.holidayConflict`      | Holiday lookup                       | calendarId, date                                         |
+| `SCH.audit.write`                | Audit log write                      | entityType, entityId, action                             |
+| `SCH.notification.request`       | Notification request creation        | eventType, recipientCount                                |
+| `SCH.import.validate`            | Import validation                    | importBatchId, rowCount                                  |
+| `SCH.report.query`               | Report query                         | reportCode, branchScope, rowCount                        |
 
 ### 6.2 Cross-Module Trace Boundaries
 
-| Dependency | Trace Boundary |
-|---|---|
-| Organization Management | Branch, classroom, calendar ownership checks. |
-| Training Delivery | Batch and session dependency validation. |
-| Trainer Management | Trainer status and availability lookup. |
-| Attendance | Prevent deletion or unsafe change of attendance-linked sessions. |
-| Communication | Notification request creation after publish/reschedule/cancel. |
-| Audit & Compliance | Audit log persistence for sensitive actions. |
-| Reporting & Dashboards | Read model/view refresh and dashboard query. |
+| Dependency              | Trace Boundary                                                   |
+| ----------------------- | ---------------------------------------------------------------- |
+| Organization Management | Branch, classroom, calendar ownership checks.                    |
+| Training Delivery       | Batch and session dependency validation.                         |
+| Trainer Management      | Trainer status and availability lookup.                          |
+| Attendance              | Prevent deletion or unsafe change of attendance-linked sessions. |
+| Communication           | Notification request creation after publish/reschedule/cancel.   |
+| Audit & Compliance      | Audit log persistence for sensitive actions.                     |
+| Reporting & Dashboards  | Read model/view refresh and dashboard query.                     |
 
 ---
 
@@ -225,51 +225,51 @@ Even within a modular monolith, tracing must identify module boundaries and down
 
 ### 7.1 Application Metrics
 
-| Metric Name | Type | Labels | Purpose |
-|---|---|---|---|
-| `sch_api_request_total` | Counter | route, method, status, branchScope | API volume. |
-| `sch_api_request_duration_ms` | Histogram | route, method, status | Latency monitoring. |
-| `sch_conflict_check_total` | Counter | conflictType, result, branchId | Conflict trend monitoring. |
-| `sch_conflict_check_duration_ms` | Histogram | conflictType | Conflict validation performance. |
-| `sch_session_mutation_total` | Counter | action, status, branchId | Create/update/reschedule/cancel volume. |
-| `sch_session_publish_total` | Counter | status, branchId | Publication operation success/failure. |
-| `sch_bulk_import_total` | Counter | importType, status, branchId | Import success/failure. |
-| `sch_bulk_import_row_total` | Counter | importType, result, errorCode | Row-level import quality. |
-| `sch_export_total` | Counter | reportCode, format, status, branchScope | Export usage and failure tracking. |
-| `sch_notification_request_total` | Counter | eventType, channel, status | Notification request generation. |
-| `sch_branch_scope_denied_total` | Counter | route, permission | Branch isolation failure monitoring. |
-| `sch_permission_denied_total` | Counter | route, permission | Authorization monitoring. |
+| Metric Name                      | Type      | Labels                                  | Purpose                                 |
+| -------------------------------- | --------- | --------------------------------------- | --------------------------------------- |
+| `sch_api_request_total`          | Counter   | route, method, status, branchScope      | API volume.                             |
+| `sch_api_request_duration_ms`    | Histogram | route, method, status                   | Latency monitoring.                     |
+| `sch_conflict_check_total`       | Counter   | conflictType, result, branchId          | Conflict trend monitoring.              |
+| `sch_conflict_check_duration_ms` | Histogram | conflictType                            | Conflict validation performance.        |
+| `sch_session_mutation_total`     | Counter   | action, status, branchId                | Create/update/reschedule/cancel volume. |
+| `sch_session_publish_total`      | Counter   | status, branchId                        | Publication operation success/failure.  |
+| `sch_bulk_import_total`          | Counter   | importType, status, branchId            | Import success/failure.                 |
+| `sch_bulk_import_row_total`      | Counter   | importType, result, errorCode           | Row-level import quality.               |
+| `sch_export_total`               | Counter   | reportCode, format, status, branchScope | Export usage and failure tracking.      |
+| `sch_notification_request_total` | Counter   | eventType, channel, status              | Notification request generation.        |
+| `sch_branch_scope_denied_total`  | Counter   | route, permission                       | Branch isolation failure monitoring.    |
+| `sch_permission_denied_total`    | Counter   | route, permission                       | Authorization monitoring.               |
 
 ### 7.2 Business Metrics
 
-| Metric Name | Definition |
-|---|---|
-| `scheduled_sessions_count` | Number of active sessions scheduled in selected period. |
-| `published_sessions_count` | Number of sessions visible to student/trainer portals. |
-| `cancelled_sessions_count` | Number of cancelled sessions in selected period. |
-| `rescheduled_sessions_count` | Number of rescheduled sessions in selected period. |
-| `trainer_utilization_percentage` | Scheduled trainer hours divided by available trainer hours. |
+| Metric Name                        | Definition                                                      |
+| ---------------------------------- | --------------------------------------------------------------- |
+| `scheduled_sessions_count`         | Number of active sessions scheduled in selected period.         |
+| `published_sessions_count`         | Number of sessions visible to student/trainer portals.          |
+| `cancelled_sessions_count`         | Number of cancelled sessions in selected period.                |
+| `rescheduled_sessions_count`       | Number of rescheduled sessions in selected period.              |
+| `trainer_utilization_percentage`   | Scheduled trainer hours divided by available trainer hours.     |
 | `classroom_utilization_percentage` | Scheduled classroom hours divided by available classroom hours. |
-| `conflict_rate_percentage` | Conflict validation failures divided by scheduling attempts. |
-| `holiday_conflict_count` | Schedule attempts blocked by holiday rules. |
-| `venue_block_conflict_count` | Schedule attempts blocked by venue block rules. |
-| `import_rejection_rate_percentage` | Rejected import rows divided by total import rows. |
+| `conflict_rate_percentage`         | Conflict validation failures divided by scheduling attempts.    |
+| `holiday_conflict_count`           | Schedule attempts blocked by holiday rules.                     |
+| `venue_block_conflict_count`       | Schedule attempts blocked by venue block rules.                 |
+| `import_rejection_rate_percentage` | Rejected import rows divided by total import rows.              |
 
 ---
 
 ## 8. Alerts and Thresholds
 
-| Alert | Severity | Threshold | Action |
-|---|---|---:|---|
-| Calendar API high latency | Warning | P95 > 2 seconds for 10 minutes | Check DB indexes and query plans. |
-| Conflict check high latency | Warning | P95 > 1 second for 10 minutes | Inspect conflict queries and table bloat. |
-| Schedule mutation failure spike | Critical | Failure rate > 10% for 5 minutes | Check database, permissions, recent deployment. |
-| Branch scope denied spike | Warning | > 50 denials in 10 minutes | Investigate misconfigured roles or suspicious access. |
-| Import failure spike | Warning | Rejection rate > 30% for 3 imports | Review import template or master data mismatch. |
-| Export failures | Warning | > 5 failed exports in 30 minutes | Check file generation/storage. |
-| Audit write failure | Critical | Any confirmed failure | Stop sensitive mutation if audit cannot be written. |
-| Database deadlocks | Critical | > 3 in 10 minutes | Investigate concurrent update patterns. |
-| Published sessions missing notifications | Warning | Notification request failure > 5% | Check communication integration. |
+| Alert                                    | Severity |                          Threshold | Action                                                |
+| ---------------------------------------- | -------- | ---------------------------------: | ----------------------------------------------------- |
+| Calendar API high latency                | Warning  |     P95 > 2 seconds for 10 minutes | Check DB indexes and query plans.                     |
+| Conflict check high latency              | Warning  |      P95 > 1 second for 10 minutes | Inspect conflict queries and table bloat.             |
+| Schedule mutation failure spike          | Critical |   Failure rate > 10% for 5 minutes | Check database, permissions, recent deployment.       |
+| Branch scope denied spike                | Warning  |         > 50 denials in 10 minutes | Investigate misconfigured roles or suspicious access. |
+| Import failure spike                     | Warning  | Rejection rate > 30% for 3 imports | Review import template or master data mismatch.       |
+| Export failures                          | Warning  |   > 5 failed exports in 30 minutes | Check file generation/storage.                        |
+| Audit write failure                      | Critical |              Any confirmed failure | Stop sensitive mutation if audit cannot be written.   |
+| Database deadlocks                       | Critical |                  > 3 in 10 minutes | Investigate concurrent update patterns.               |
+| Published sessions missing notifications | Warning  |  Notification request failure > 5% | Check communication integration.                      |
 
 ---
 
@@ -317,11 +317,11 @@ GET /api/admin/scheduling/health
 
 ### 9.3 Health Status Rules
 
-| Status | Rule |
-|---|---|
-| `healthy` | Database, conflict check, and audit dependency are reachable within latency thresholds. |
-| `degraded` | Read operations work but optional dependencies such as notification processing or export storage are delayed. |
-| `unhealthy` | Database unavailable, conflict checks fail, or audit writes cannot be guaranteed. |
+| Status      | Rule                                                                                                          |
+| ----------- | ------------------------------------------------------------------------------------------------------------- |
+| `healthy`   | Database, conflict check, and audit dependency are reachable within latency thresholds.                       |
+| `degraded`  | Read operations work but optional dependencies such as notification processing or export storage are delayed. |
+| `unhealthy` | Database unavailable, conflict checks fail, or audit writes cannot be guaranteed.                             |
 
 Sensitive mutations must be disabled when audit persistence is unhealthy.
 
@@ -331,25 +331,25 @@ Sensitive mutations must be disabled when audit persistence is unhealthy.
 
 ### 10.1 Backup Requirements
 
-| Backup Type | Frequency | Scope |
-|---|---|---|
-| PostgreSQL full backup | Daily | Entire database including scheduling tables. |
-| Point-in-time recovery | Continuous where infrastructure supports it | All transactional schedule data. |
-| Exported report files | Temporary; not primary backup | Regenerable from database. |
-| Import source files | Retain according to ASTI import audit policy | Used for reconciliation and troubleshooting. |
-| Audit logs | Daily backup and long retention | Sensitive action trace. |
+| Backup Type            | Frequency                                    | Scope                                        |
+| ---------------------- | -------------------------------------------- | -------------------------------------------- |
+| PostgreSQL full backup | Daily                                        | Entire database including scheduling tables. |
+| Point-in-time recovery | Continuous where infrastructure supports it  | All transactional schedule data.             |
+| Exported report files  | Temporary; not primary backup                | Regenerable from database.                   |
+| Import source files    | Retain according to ASTI import audit policy | Used for reconciliation and troubleshooting. |
+| Audit logs             | Daily backup and long retention              | Sensitive action trace.                      |
 
 ### 10.2 Recovery Point and Time Objectives
 
-| Data Area | RPO | RTO |
-|---|---:|---:|
-| Schedule sessions | 15 minutes | 4 hours |
-| Business calendars and holidays | 15 minutes | 4 hours |
-| Venue blocks | 15 minutes | 4 hours |
-| Trainer availability | 15 minutes | 4 hours |
-| Import batches | 1 hour | 8 hours |
-| Audit logs | 15 minutes | 4 hours |
-| Reporting views | Rebuildable | 2 hours after DB recovery |
+| Data Area                       |         RPO |                       RTO |
+| ------------------------------- | ----------: | ------------------------: |
+| Schedule sessions               |  15 minutes |                   4 hours |
+| Business calendars and holidays |  15 minutes |                   4 hours |
+| Venue blocks                    |  15 minutes |                   4 hours |
+| Trainer availability            |  15 minutes |                   4 hours |
+| Import batches                  |      1 hour |                   8 hours |
+| Audit logs                      |  15 minutes |                   4 hours |
+| Reporting views                 | Rebuildable | 2 hours after DB recovery |
 
 ### 10.3 Recovery Validation
 
@@ -371,21 +371,21 @@ After restoring scheduling data:
 
 ### 11.1 Pre-Deployment
 
-| Check | Required |
-|---|---:|
-| Prisma migration reviewed | Yes |
-| Migration tested on staging copy | Yes |
-| Index creation impact assessed | Yes |
-| Permission seed data prepared | Yes |
-| Menu seed data prepared | Yes |
-| Report definitions seeded | Yes |
-| Notification templates seeded | Yes |
-| Role-permission mapping reviewed | Yes |
-| Branch-scope tests passing | Yes |
-| Conflict-detection tests passing | Yes |
-| Import validation tests passing | Yes |
-| Export audit tests passing | Yes |
-| Backup completed before production migration | Yes |
+| Check                                        | Required |
+| -------------------------------------------- | -------: |
+| Prisma migration reviewed                    |      Yes |
+| Migration tested on staging copy             |      Yes |
+| Index creation impact assessed               |      Yes |
+| Permission seed data prepared                |      Yes |
+| Menu seed data prepared                      |      Yes |
+| Report definitions seeded                    |      Yes |
+| Notification templates seeded                |      Yes |
+| Role-permission mapping reviewed             |      Yes |
+| Branch-scope tests passing                   |      Yes |
+| Conflict-detection tests passing             |      Yes |
+| Import validation tests passing              |      Yes |
+| Export audit tests passing                   |      Yes |
+| Backup completed before production migration |      Yes |
 
 ### 11.2 Deployment
 
@@ -406,16 +406,16 @@ After restoring scheduling data:
 
 ### 11.3 Post-Deployment Smoke Tests
 
-| Test | Expected Result |
-|---|---|
-| Branch Admin opens scheduling dashboard | Only assigned branch data appears. |
-| Scheduling Coordinator creates draft session | Session created, audit written. |
-| Coordinator attempts trainer double booking | Request rejected with conflict error. |
-| Coordinator publishes session | Status changes to published, publication audit written. |
-| Trainer opens trainer schedule | Trainer sees only assigned sessions. |
-| Student opens timetable | Student sees only enrolled batch sessions. |
-| Export schedule report | Export generated and audit record written. |
-| Unauthorized user opens scheduling menu | Access denied or menu hidden. |
+| Test                                         | Expected Result                                         |
+| -------------------------------------------- | ------------------------------------------------------- |
+| Branch Admin opens scheduling dashboard      | Only assigned branch data appears.                      |
+| Scheduling Coordinator creates draft session | Session created, audit written.                         |
+| Coordinator attempts trainer double booking  | Request rejected with conflict error.                   |
+| Coordinator publishes session                | Status changes to published, publication audit written. |
+| Trainer opens trainer schedule               | Trainer sees only assigned sessions.                    |
+| Student opens timetable                      | Student sees only enrolled batch sessions.              |
+| Export schedule report                       | Export generated and audit record written.              |
+| Unauthorized user opens scheduling menu      | Access denied or menu hidden.                           |
 
 ---
 
@@ -738,42 +738,42 @@ Direct database repair is discouraged. Prefer business workflows that write audi
 
 ### 23.1 Technical Dashboard Widgets
 
-| Widget | Metric | Owner |
-|---|---|---|
-| Scheduling API latency | `sch_api_request_duration_ms` | Engineering/Ops |
-| Conflict check latency | `sch_conflict_check_duration_ms` | Engineering/Ops |
-| Schedule mutation error rate | `sch_session_mutation_total` | Engineering/Ops |
-| Import success/failure | `sch_bulk_import_total` | Operations |
-| Export success/failure | `sch_export_total` | Operations |
-| Branch scope denials | `sch_branch_scope_denied_total` | Security/Ops |
-| Permission denials | `sch_permission_denied_total` | Security/Ops |
-| Audit write health | audit write success/failure | Compliance/Ops |
+| Widget                       | Metric                           | Owner           |
+| ---------------------------- | -------------------------------- | --------------- |
+| Scheduling API latency       | `sch_api_request_duration_ms`    | Engineering/Ops |
+| Conflict check latency       | `sch_conflict_check_duration_ms` | Engineering/Ops |
+| Schedule mutation error rate | `sch_session_mutation_total`     | Engineering/Ops |
+| Import success/failure       | `sch_bulk_import_total`          | Operations      |
+| Export success/failure       | `sch_export_total`               | Operations      |
+| Branch scope denials         | `sch_branch_scope_denied_total`  | Security/Ops    |
+| Permission denials           | `sch_permission_denied_total`    | Security/Ops    |
+| Audit write health           | audit write success/failure      | Compliance/Ops  |
 
 ### 23.2 Business Operations Dashboard Widgets
 
-| Widget | Purpose |
-|---|---|
-| Today’s sessions by branch | Operational readiness. |
-| Sessions needing publication | Prevent unpublished timetables. |
-| Upcoming trainer conflicts | Proactive conflict resolution. |
-| Upcoming classroom conflicts | Proactive venue allocation correction. |
-| Sessions affected by holidays | Calendar compliance. |
-| Venue blocks this week | Classroom planning. |
-| Cancelled/rescheduled sessions | Delivery disruption monitoring. |
-| Import rejection trend | Master data quality monitoring. |
+| Widget                         | Purpose                                |
+| ------------------------------ | -------------------------------------- |
+| Today’s sessions by branch     | Operational readiness.                 |
+| Sessions needing publication   | Prevent unpublished timetables.        |
+| Upcoming trainer conflicts     | Proactive conflict resolution.         |
+| Upcoming classroom conflicts   | Proactive venue allocation correction. |
+| Sessions affected by holidays  | Calendar compliance.                   |
+| Venue blocks this week         | Classroom planning.                    |
+| Cancelled/rescheduled sessions | Delivery disruption monitoring.        |
+| Import rejection trend         | Master data quality monitoring.        |
 
 ---
 
 ## 24. Scheduled Maintenance Jobs
 
-| Job | Frequency | Purpose |
-|---|---|---|
-| `SCH_REFRESH_REPORTING_VIEWS` | Every 15 minutes or on demand | Refresh schedule dashboard read models if materialized. |
-| `SCH_DETECT_UPCOMING_CONFLICTS` | Daily at 02:00 Oman time | Identify future conflicts caused by data changes. |
-| `SCH_GENERATE_SESSION_REMINDERS` | Daily or hourly based on notification policy | Create notification requests for upcoming sessions. |
-| `SCH_CLEAN_EXPIRED_EXPORT_FILES` | Daily | Remove expired temporary export files. |
-| `SCH_ARCHIVE_IMPORT_FILES` | Daily | Archive or remove import files according to retention policy. |
-| `SCH_MARK_STALE_IMPORTS_FAILED` | Hourly | Close imports stuck in validating/processing state beyond timeout. |
+| Job                              | Frequency                                    | Purpose                                                            |
+| -------------------------------- | -------------------------------------------- | ------------------------------------------------------------------ |
+| `SCH_REFRESH_REPORTING_VIEWS`    | Every 15 minutes or on demand                | Refresh schedule dashboard read models if materialized.            |
+| `SCH_DETECT_UPCOMING_CONFLICTS`  | Daily at 02:00 Oman time                     | Identify future conflicts caused by data changes.                  |
+| `SCH_GENERATE_SESSION_REMINDERS` | Daily or hourly based on notification policy | Create notification requests for upcoming sessions.                |
+| `SCH_CLEAN_EXPIRED_EXPORT_FILES` | Daily                                        | Remove expired temporary export files.                             |
+| `SCH_ARCHIVE_IMPORT_FILES`       | Daily                                        | Archive or remove import files according to retention policy.      |
+| `SCH_MARK_STALE_IMPORTS_FAILED`  | Hourly                                       | Close imports stuck in validating/processing state beyond timeout. |
 
 Jobs must run inside the modular monolith infrastructure without requiring external brokers.
 
@@ -781,12 +781,12 @@ Jobs must run inside the modular monolith infrastructure without requiring exter
 
 ## 25. Incident Severity Matrix
 
-| Severity | Examples | Response Expectation |
-|---|---|---|
+| Severity       | Examples                                                                                             | Response Expectation                                       |
+| -------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | SEV-1 Critical | Branch data exposure, audit write failure allowing unaudited mutations, widespread scheduling outage | Immediate incident response and mutation freeze if needed. |
-| SEV-2 High | Conflict detection failure, trainer/student timetable unavailable, failed deployment | Same business day resolution target. |
-| SEV-3 Medium | Bulk import failures, export failures, slow calendar views | Prioritized operational fix. |
-| SEV-4 Low | Minor UI layout issue, isolated validation message problem | Normal backlog handling. |
+| SEV-2 High     | Conflict detection failure, trainer/student timetable unavailable, failed deployment                 | Same business day resolution target.                       |
+| SEV-3 Medium   | Bulk import failures, export failures, slow calendar views                                           | Prioritized operational fix.                               |
+| SEV-4 Low      | Minor UI layout issue, isolated validation message problem                                           | Normal backlog handling.                                   |
 
 ---
 
@@ -794,19 +794,19 @@ Jobs must run inside the modular monolith infrastructure without requiring exter
 
 Every support escalation must include:
 
-| Field | Required |
-|---|---:|
-| User ID or username | Yes |
-| Role and permission summary | Yes |
-| Active branch | Yes |
-| Affected branch | Yes |
+| Field                                     |            Required |
+| ----------------------------------------- | ------------------: |
+| User ID or username                       |                 Yes |
+| Role and permission summary               |                 Yes |
+| Active branch                             |                 Yes |
+| Affected branch                           |                 Yes |
 | Affected session/calendar/venue/import ID | Yes when applicable |
-| Date and time of issue in Oman timezone | Yes |
-| Screenshot or error message | Yes if UI issue |
-| Correlation ID | Yes if available |
-| Expected behavior | Yes |
-| Actual behavior | Yes |
-| Business impact | Yes |
+| Date and time of issue in Oman timezone   |                 Yes |
+| Screenshot or error message               |     Yes if UI issue |
+| Correlation ID                            |    Yes if available |
+| Expected behavior                         |                 Yes |
+| Actual behavior                           |                 Yes |
+| Business impact                           |                 Yes |
 
 ---
 
@@ -845,18 +845,18 @@ Feature: Scheduling operations readiness
 
 ## 28. Final Operations Checklist
 
-| Item | Status Requirement |
-|---|---|
-| Health endpoint implemented | Required |
-| Structured logs include correlationId | Required |
-| Metrics emitted for API, conflict, import, export, mutation | Required |
-| Trace spans configured for major commands and queries | Required |
-| Audit write failure blocks sensitive mutations | Required |
-| Backup and recovery procedure tested | Required |
-| Branch isolation incident runbook documented | Required |
-| Conflict detection incident runbook documented | Required |
-| Bulk import troubleshooting documented | Required |
-| Export troubleshooting documented | Required |
-| Operational dashboards configured | Required |
-| Alert thresholds configured | Required |
-| Support escalation template available | Required |
+| Item                                                        | Status Requirement |
+| ----------------------------------------------------------- | ------------------ |
+| Health endpoint implemented                                 | Required           |
+| Structured logs include correlationId                       | Required           |
+| Metrics emitted for API, conflict, import, export, mutation | Required           |
+| Trace spans configured for major commands and queries       | Required           |
+| Audit write failure blocks sensitive mutations              | Required           |
+| Backup and recovery procedure tested                        | Required           |
+| Branch isolation incident runbook documented                | Required           |
+| Conflict detection incident runbook documented              | Required           |
+| Bulk import troubleshooting documented                      | Required           |
+| Export troubleshooting documented                           | Required           |
+| Operational dashboards configured                           | Required           |
+| Alert thresholds configured                                 | Required           |
+| Support escalation template available                       | Required           |

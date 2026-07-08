@@ -13,10 +13,25 @@ export default function CreateRolePage() {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Roles', href: '/iam/roles', icon: <ShieldIcon className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Create', icon: <Plus className="h-3.5 w-3.5 text-slate-500" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'IAM',
+                href: '/iam',
+                icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Roles',
+                href: '/iam/roles',
+                icon: <ShieldIcon className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Create',
+                icon: <Plus className="h-3.5 w-3.5 text-slate-500" />,
+              },
             ]}
           />
         }

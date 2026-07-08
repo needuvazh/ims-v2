@@ -19,7 +19,11 @@ type SearchParams = Promise<{
   sortOrder?: string;
 }>;
 
-export default async function IamAuditPage({ searchParams }: { searchParams: SearchParams }) {
+export default async function IamAuditPage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
   const resolved = await searchParams;
   const session = await getSession();
 
@@ -30,7 +34,8 @@ export default async function IamAuditPage({ searchParams }: { searchParams: Sea
   const entityType = resolved.entityType?.trim() ?? '';
   const entityId = resolved.entityId?.trim() ?? '';
   const performerId = resolved.performerId?.trim() ?? '';
-  const moduleParam = resolved.module !== undefined ? resolved.module.trim() : 'iam';
+  const moduleParam =
+    resolved.module !== undefined ? resolved.module.trim() : 'iam';
   const startDateStr = resolved.startDate?.trim() ?? '';
   const endDateStr = resolved.endDate?.trim() ?? '';
 
@@ -61,7 +66,7 @@ export default async function IamAuditPage({ searchParams }: { searchParams: Sea
       actorId: session.userId as never,
       actorPermissions: session.permissions,
       activeBranchId: session.activeBranchId as never,
-    }
+    },
   );
 
   const totalPages = Math.max(1, Math.ceil(result.total / pageSize));

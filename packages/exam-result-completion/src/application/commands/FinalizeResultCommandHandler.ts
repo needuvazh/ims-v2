@@ -1,5 +1,8 @@
 import { ResultRepository } from '../../domain/interfaces/ResultRepository';
-import { ResultAggregate, RESULT_STATUSES } from '../../domain/aggregates/Result';
+import {
+  ResultAggregate,
+  RESULT_STATUSES,
+} from '../../domain/aggregates/Result';
 import { ResultInvalidStateError } from '../../domain/errors';
 
 export interface FinalizeResultInput {

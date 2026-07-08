@@ -1,1 +1,143 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_certificate_verification_spec_md", "label": "spec.md", "file_type": "document", "source_file": "openspec/specs/certificate-verification/spec.md", "source_location": "L1"}, {"id": "certificate_verification_spec_certificate_verification_specification", "label": "certificate-verification Specification", "file_type": "document", "source_file": "openspec/specs/certificate-verification/spec.md", "source_location": "L1"}, {"id": "certificate_verification_spec_purpose", "label": "Purpose", "file_type": "document", "source_file": "openspec/specs/certificate-verification/spec.md", "source_location": "L3"}, {"id": "certificate_verification_spec_requirements", "label": "Requirements", "file_type": "document", "source_file": "openspec/specs/certificate-verification/spec.md", "source_location": "L5"}, {"id": "certificate_verification_spec_requirement_public_verification", "label": "Requirement: Public Verification", "file_type": "document", "source_file": "openspec/specs/certificate-verification/spec.md", "source_location": "L6"}, {"id": "certificate_verification_spec_scenario_verify_active_certificate_successfully", "label": "Scenario: Verify active certificate successfully", "file_type": "document", "source_file": "openspec/specs/certificate-verification/spec.md", "source_location": "L9"}, {"id": "certificate_verification_spec_scenario_query_invalid_code", "label": "Scenario: Query invalid code", "file_type": "document", "source_file": "openspec/specs/certificate-verification/spec.md", "source_location": "L13"}, {"id": "certificate_verification_spec_requirement_record_verification_activity", "label": "Requirement: Record Verification Activity", "file_type": "document", "source_file": "openspec/specs/certificate-verification/spec.md", "source_location": "L19"}, {"id": "certificate_verification_spec_scenario_log_successful_verification", "label": "Scenario: Log successful verification", "file_type": "document", "source_file": "openspec/specs/certificate-verification/spec.md", "source_location": "L22"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_certificate_verification_spec_md", "target": "certificate_verification_spec_certificate_verification_specification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/certificate-verification/spec.md", "source_location": "L1", "weight": 1.0}, {"source": "certificate_verification_spec_certificate_verification_specification", "target": "certificate_verification_spec_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/certificate-verification/spec.md", "source_location": "L3", "weight": 1.0}, {"source": "certificate_verification_spec_certificate_verification_specification", "target": "certificate_verification_spec_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/certificate-verification/spec.md", "source_location": "L5", "weight": 1.0}, {"source": "certificate_verification_spec_requirements", "target": "certificate_verification_spec_requirement_public_verification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/certificate-verification/spec.md", "source_location": "L6", "weight": 1.0}, {"source": "certificate_verification_spec_requirement_public_verification", "target": "certificate_verification_spec_scenario_verify_active_certificate_successfully", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/certificate-verification/spec.md", "source_location": "L9", "weight": 1.0}, {"source": "certificate_verification_spec_requirement_public_verification", "target": "certificate_verification_spec_scenario_query_invalid_code", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/certificate-verification/spec.md", "source_location": "L13", "weight": 1.0}, {"source": "certificate_verification_spec_requirements", "target": "certificate_verification_spec_requirement_record_verification_activity", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/certificate-verification/spec.md", "source_location": "L19", "weight": 1.0}, {"source": "certificate_verification_spec_requirement_record_verification_activity", "target": "certificate_verification_spec_scenario_log_successful_verification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/certificate-verification/spec.md", "source_location": "L22", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_certificate_verification_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-verification/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "certificate_verification_spec_certificate_verification_specification",
+      "label": "certificate-verification Specification",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-verification/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "certificate_verification_spec_purpose",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-verification/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "certificate_verification_spec_requirements",
+      "label": "Requirements",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-verification/spec.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "certificate_verification_spec_requirement_public_verification",
+      "label": "Requirement: Public Verification",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-verification/spec.md",
+      "source_location": "L6"
+    },
+    {
+      "id": "certificate_verification_spec_scenario_verify_active_certificate_successfully",
+      "label": "Scenario: Verify active certificate successfully",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-verification/spec.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "certificate_verification_spec_scenario_query_invalid_code",
+      "label": "Scenario: Query invalid code",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-verification/spec.md",
+      "source_location": "L13"
+    },
+    {
+      "id": "certificate_verification_spec_requirement_record_verification_activity",
+      "label": "Requirement: Record Verification Activity",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-verification/spec.md",
+      "source_location": "L19"
+    },
+    {
+      "id": "certificate_verification_spec_scenario_log_successful_verification",
+      "label": "Scenario: Log successful verification",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-verification/spec.md",
+      "source_location": "L22"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_certificate_verification_spec_md",
+      "target": "certificate_verification_spec_certificate_verification_specification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/certificate-verification/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "certificate_verification_spec_certificate_verification_specification",
+      "target": "certificate_verification_spec_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/certificate-verification/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "certificate_verification_spec_certificate_verification_specification",
+      "target": "certificate_verification_spec_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/certificate-verification/spec.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "certificate_verification_spec_requirements",
+      "target": "certificate_verification_spec_requirement_public_verification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/certificate-verification/spec.md",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "certificate_verification_spec_requirement_public_verification",
+      "target": "certificate_verification_spec_scenario_verify_active_certificate_successfully",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/certificate-verification/spec.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "certificate_verification_spec_requirement_public_verification",
+      "target": "certificate_verification_spec_scenario_query_invalid_code",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/certificate-verification/spec.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "certificate_verification_spec_requirements",
+      "target": "certificate_verification_spec_requirement_record_verification_activity",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/certificate-verification/spec.md",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "certificate_verification_spec_requirement_record_verification_activity",
+      "target": "certificate_verification_spec_scenario_log_successful_verification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/certificate-verification/spec.md",
+      "source_location": "L22",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

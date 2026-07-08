@@ -66,7 +66,9 @@ export function ExportButton({ reportType, filters }: ExportButtonProps) {
         )}
         {loading ? 'Exporting...' : 'Export to Excel'}
       </Button>
-      {error && <span className="text-xs text-red-500 font-semibold mt-1">{error}</span>}
+      {error && (
+        <span className="text-xs text-red-500 font-semibold mt-1">{error}</span>
+      )}
     </div>
   );
 }

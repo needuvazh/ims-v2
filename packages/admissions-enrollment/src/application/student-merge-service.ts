@@ -10,7 +10,13 @@ export class StudentMergeService {
     mergeReason: string;
     mergedBy: string;
   }) {
-    const { survivorStudentProfileId, sourceStudentProfileId, duplicateCaseId, mergeReason, mergedBy } = params;
+    const {
+      survivorStudentProfileId,
+      sourceStudentProfileId,
+      duplicateCaseId,
+      mergeReason,
+      mergedBy,
+    } = params;
 
     if (survivorStudentProfileId === sourceStudentProfileId) {
       throw new Error('ERR_STU_MERGE_SELF_FORBIDDEN');
@@ -37,8 +43,12 @@ export class StudentMergeService {
       const sourcePersonId = source.personId;
       const now = new Date();
 
-      const survivorUser = await tx.user.findUnique({ where: { personId: survivorPersonId } });
-      const sourceUser = await tx.user.findUnique({ where: { personId: sourcePersonId } });
+      const survivorUser = await tx.user.findUnique({
+        where: { personId: survivorPersonId },
+      });
+      const sourceUser = await tx.user.findUnique({
+        where: { personId: sourcePersonId },
+      });
 
       if (survivorUser && sourceUser) {
         throw new Error('ERR_STU_MERGE_USER_CONFLICT');
@@ -140,7 +150,8 @@ export class StudentMergeService {
           mergedBy,
           reassignedAdmissionsCount: remappedAdmissions.count,
           reassignedEnrollmentsCount: remappedEnrollments.count,
-          reassignedDocumentsCount: remappedProfileDocs.count + remappedPersonDocs.count,
+          reassignedDocumentsCount:
+            remappedProfileDocs.count + remappedPersonDocs.count,
           reassignedOtherRefsCount: remappedLeadRefs.count,
           mergePayload: {
             sourcePersonId,
@@ -149,7 +160,8 @@ export class StudentMergeService {
             survivorStudentNumber: survivor.studentNumber,
             remappedAdmissions: remappedAdmissions.count,
             remappedEnrollments: remappedEnrollments.count,
-            remappedDocuments: remappedProfileDocs.count + remappedPersonDocs.count,
+            remappedDocuments:
+              remappedProfileDocs.count + remappedPersonDocs.count,
             remappedLeads: remappedLeadRefs.count,
             userAccountMoved: !!sourceUser && !survivorUser,
           },
@@ -162,7 +174,8 @@ export class StudentMergeService {
         mergeLogId: mergeLog.id,
         reassignedAdmissionsCount: remappedAdmissions.count,
         reassignedEnrollmentsCount: remappedEnrollments.count,
-        reassignedDocumentsCount: remappedProfileDocs.count + remappedPersonDocs.count,
+        reassignedDocumentsCount:
+          remappedProfileDocs.count + remappedPersonDocs.count,
         reassignedOtherRefsCount: remappedLeadRefs.count,
       };
     });

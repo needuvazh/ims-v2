@@ -41,7 +41,9 @@ export function RadioGroup({
       aria-describedby={hasError ? errorId : undefined}
     >
       {label && (
-        <legend className="mb-1 text-sm font-medium text-[color:var(--ims-ink)]">{label}</legend>
+        <legend className="mb-1 text-sm font-medium text-[color:var(--ims-ink)]">
+          {label}
+        </legend>
       )}
       {options.map((option) => {
         const optionId = `${groupId}-${option.value}`;
@@ -51,8 +53,10 @@ export function RadioGroup({
             htmlFor={optionId}
             className={cn(
               'flex cursor-pointer items-start gap-3 rounded-xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-3 transition-all hover:border-[color:var(--ims-brass)] hover:bg-[color:var(--ims-accent-soft)]',
-              value === option.value && 'border-[color:var(--ims-brass)] bg-[color:var(--ims-accent-soft)]',
-              (disabled || option.disabled) && 'cursor-not-allowed opacity-50 hover:border-[color:var(--ims-border)] hover:bg-[color:var(--ims-surface)]',
+              value === option.value &&
+                'border-[color:var(--ims-brass)] bg-[color:var(--ims-accent-soft)]',
+              (disabled || option.disabled) &&
+                'cursor-not-allowed opacity-50 hover:border-[color:var(--ims-border)] hover:bg-[color:var(--ims-surface)]',
             )}
           >
             <input
@@ -66,16 +70,24 @@ export function RadioGroup({
               className="mt-0.5 h-4 w-4 cursor-pointer accent-[color:var(--ims-brass)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2 disabled:cursor-not-allowed"
             />
             <div className="flex flex-col gap-0.5">
-              <span className="text-sm font-medium text-[color:var(--ims-ink)]">{option.label}</span>
+              <span className="text-sm font-medium text-[color:var(--ims-ink)]">
+                {option.label}
+              </span>
               {option.description && (
-                <span className="text-xs text-[color:var(--ims-muted)]">{option.description}</span>
+                <span className="text-xs text-[color:var(--ims-muted)]">
+                  {option.description}
+                </span>
               )}
             </div>
           </label>
         );
       })}
       {hasError && (
-        <p id={errorId} role="alert" className="text-xs text-[color:var(--ims-error)]">
+        <p
+          id={errorId}
+          role="alert"
+          className="text-xs text-[color:var(--ims-error)]"
+        >
           {errorText}
         </p>
       )}

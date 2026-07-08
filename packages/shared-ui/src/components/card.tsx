@@ -16,16 +16,25 @@ export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   );
 }
 
-export function CardHeader({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+export function CardHeader({
+  className,
+  ...props
+}: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn('flex flex-col gap-1.5 border-b border-[color:var(--ims-border)] p-card-p', className)}
+      className={cn(
+        'flex flex-col gap-1.5 border-b border-[color:var(--ims-border)] p-card-p',
+        className,
+      )}
       {...props}
     />
   );
 }
 
-export function CardTitle({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) {
+export function CardTitle({
+  className,
+  ...props
+}: HTMLAttributes<HTMLHeadingElement>) {
   return (
     <h3
       className={cn(
@@ -37,7 +46,10 @@ export function CardTitle({ className, ...props }: HTMLAttributes<HTMLHeadingEle
   );
 }
 
-export function CardDescription({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) {
+export function CardDescription({
+  className,
+  ...props
+}: HTMLAttributes<HTMLParagraphElement>) {
   return (
     <p
       className={cn('text-sm text-[color:var(--ims-muted)]', className)}
@@ -46,11 +58,17 @@ export function CardDescription({ className, ...props }: HTMLAttributes<HTMLPara
   );
 }
 
-export function CardContent({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+export function CardContent({
+  className,
+  ...props
+}: HTMLAttributes<HTMLDivElement>) {
   return <div className={cn('p-card-p', className)} {...props} />;
 }
 
-export function CardFooter({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+export function CardFooter({
+  className,
+  ...props
+}: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(

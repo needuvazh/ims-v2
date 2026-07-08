@@ -1095,24 +1095,24 @@ A future replacement or renewal document should be represented according to the 
 
 ## 5.2 Document Transition Rules Matrix
 
-| From State | To State | Trigger | Required Permission / Capability | Additional Guards | Audit Requirement | Allowed? |
-|---|---|---|---|---|---|---|
-| New / none | Uploaded | Successful registration after storage and metadata persistence | `document.create` | Valid supported owner; owner exists; branch access; active document type; valid file/date metadata; Blob success; DB persistence success | Create audit event | Yes |
-| Uploaded | PendingVerification | Submit for verification | `document.verify.submit` or repository-equivalent capability | Active record; owner branch scope; current version/state | Audit transition | Yes |
-| PendingVerification | Approved | Approve verification | `document.verify.approve` | Branch scope; current state; current version; decision history and current-state update remain consistent | Approval audit + immutable DocumentVerification record | Yes |
-| PendingVerification | Rejected | Reject verification | `document.verify.reject` | Branch scope; current state; current version; mandatory meaningful remarks | Rejection audit + immutable DocumentVerification record | Yes |
-| Uploaded | Approved | Direct approval attempt | Any | Baseline workflow requires PendingVerification first | Rejected action may be security/audit logged per convention | No |
-| Uploaded | Rejected | Direct rejection attempt | Any | Baseline workflow requires PendingVerification first | Rejected action may be security/audit logged per convention | No |
-| Approved | PendingVerification | Resubmission | Not defined | Requires an explicit evidence replacement/resubmission policy not present in DDD/ER baseline | N/A until gap resolved | Not defined / gap |
-| Rejected | PendingVerification | Resubmission | Not defined | Requires explicit resubmission semantics; must not overwrite prior history | N/A until gap resolved | Not defined / gap |
-| Uploaded | Expired | Expiry evaluation | System capability; read permission for interactive visibility | `expiryDate` non-null and before effective business date; only a state transition if persisted-expiry policy is approved | Audit if persisted as a critical state change | Conditional |
-| PendingVerification | Expired | Expiry evaluation | System capability | Same as above; preserve pending/decision history facts | Audit if persisted | Conditional |
-| Approved | Expired | Expiry evaluation | System capability | Same as above; preserve approval history | Audit if persisted | Conditional |
-| Rejected | Expired | Expiry evaluation | System capability | Same as above; preserve rejection history | Audit if persisted | Conditional |
-| Expired | Uploaded | Renewal/reset | Not defined | No current DDD/ER rule authorizes reuse/reset of an expired record | N/A | No / gap |
-| Expired | PendingVerification | Renewal submission | Not defined | Requires explicit renewal/replacement model | N/A | No / gap |
-| Any active state | Soft Deleted / Retired | Authorized retirement | `document.retire` or repository-equivalent | Branch scope; active record; reason if policy requires | Mandatory retirement audit | Yes, orthogonal soft-delete lifecycle |
-| Soft Deleted | Any operational state | Restore | Not defined | Restore semantics are not defined in current DDD/ER baseline | N/A | Not defined / gap |
+| From State          | To State               | Trigger                                                        | Required Permission / Capability                              | Additional Guards                                                                                                                        | Audit Requirement                                           | Allowed?                              |
+| ------------------- | ---------------------- | -------------------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------- |
+| New / none          | Uploaded               | Successful registration after storage and metadata persistence | `document.create`                                             | Valid supported owner; owner exists; branch access; active document type; valid file/date metadata; Blob success; DB persistence success | Create audit event                                          | Yes                                   |
+| Uploaded            | PendingVerification    | Submit for verification                                        | `document.verify.submit` or repository-equivalent capability  | Active record; owner branch scope; current version/state                                                                                 | Audit transition                                            | Yes                                   |
+| PendingVerification | Approved               | Approve verification                                           | `document.verify.approve`                                     | Branch scope; current state; current version; decision history and current-state update remain consistent                                | Approval audit + immutable DocumentVerification record      | Yes                                   |
+| PendingVerification | Rejected               | Reject verification                                            | `document.verify.reject`                                      | Branch scope; current state; current version; mandatory meaningful remarks                                                               | Rejection audit + immutable DocumentVerification record     | Yes                                   |
+| Uploaded            | Approved               | Direct approval attempt                                        | Any                                                           | Baseline workflow requires PendingVerification first                                                                                     | Rejected action may be security/audit logged per convention | No                                    |
+| Uploaded            | Rejected               | Direct rejection attempt                                       | Any                                                           | Baseline workflow requires PendingVerification first                                                                                     | Rejected action may be security/audit logged per convention | No                                    |
+| Approved            | PendingVerification    | Resubmission                                                   | Not defined                                                   | Requires an explicit evidence replacement/resubmission policy not present in DDD/ER baseline                                             | N/A until gap resolved                                      | Not defined / gap                     |
+| Rejected            | PendingVerification    | Resubmission                                                   | Not defined                                                   | Requires explicit resubmission semantics; must not overwrite prior history                                                               | N/A until gap resolved                                      | Not defined / gap                     |
+| Uploaded            | Expired                | Expiry evaluation                                              | System capability; read permission for interactive visibility | `expiryDate` non-null and before effective business date; only a state transition if persisted-expiry policy is approved                 | Audit if persisted as a critical state change               | Conditional                           |
+| PendingVerification | Expired                | Expiry evaluation                                              | System capability                                             | Same as above; preserve pending/decision history facts                                                                                   | Audit if persisted                                          | Conditional                           |
+| Approved            | Expired                | Expiry evaluation                                              | System capability                                             | Same as above; preserve approval history                                                                                                 | Audit if persisted                                          | Conditional                           |
+| Rejected            | Expired                | Expiry evaluation                                              | System capability                                             | Same as above; preserve rejection history                                                                                                | Audit if persisted                                          | Conditional                           |
+| Expired             | Uploaded               | Renewal/reset                                                  | Not defined                                                   | No current DDD/ER rule authorizes reuse/reset of an expired record                                                                       | N/A                                                         | No / gap                              |
+| Expired             | PendingVerification    | Renewal submission                                             | Not defined                                                   | Requires explicit renewal/replacement model                                                                                              | N/A                                                         | No / gap                              |
+| Any active state    | Soft Deleted / Retired | Authorized retirement                                          | `document.retire` or repository-equivalent                    | Branch scope; active record; reason if policy requires                                                                                   | Mandatory retirement audit                                  | Yes, orthogonal soft-delete lifecycle |
+| Soft Deleted        | Any operational state  | Restore                                                        | Not defined                                                   | Restore semantics are not defined in current DDD/ER baseline                                                                             | N/A                                                         | Not defined / gap                     |
 
 > Permission codes in this matrix are capability-oriented names. Exact seed codes must match the IAM permission catalog and Prisma implementation. Role names must not be embedded in domain transition logic.
 
@@ -1156,35 +1156,35 @@ stateDiagram-v2
 
 ### Soft-delete transition matrix
 
-| From | To | Trigger | Required Permission | Rules |
-|---|---|---|---|---|
-| Active | SoftDeleted | Retire document | `document.retire` or equivalent | Server-side branch check; audit; `deletedAt` set; exclude from normal queries; do not automatically destroy Blob evidence |
-| SoftDeleted | Active | Restore | Not defined | Requires an explicit business rule/API contract before implementation |
-| SoftDeleted | HardDeleted | Permanent delete | None | Prohibited by current project principles |
+| From        | To          | Trigger          | Required Permission             | Rules                                                                                                                     |
+| ----------- | ----------- | ---------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Active      | SoftDeleted | Retire document  | `document.retire` or equivalent | Server-side branch check; audit; `deletedAt` set; exclude from normal queries; do not automatically destroy Blob evidence |
+| SoftDeleted | Active      | Restore          | Not defined                     | Requires an explicit business rule/API contract before implementation                                                     |
+| SoftDeleted | HardDeleted | Permanent delete | None                            | Prohibited by current project principles                                                                                  |
 
 ---
 
 # 6. Cross-Context Workflow Boundaries
 
-| Workflow Step | Owning Context | Document Management Responsibility | Boundary Rule |
-|---|---|---|---|
-| Authenticate user | Identity & Access | Consume authenticated identity | Document module does not own credentials. |
-| Evaluate action permission | Identity & Access | Enforce capability result server-side | Menu visibility is not authorization. |
-| Resolve branch access | Identity & Access + owner context facts | Apply owner-derived scope | Do not invent independent document branch hierarchy. |
-| Resolve Student owner | Admission & Enrollment | Reference valid StudentProfile owner | Do not duplicate Student master data. |
-| Resolve Trainer owner | Faculty / Trainer Management | Reference valid TrainerProfile owner | Do not duplicate trainer profile data. |
-| Resolve Corporate owner | Corporate Training | Reference valid CorporateAccount owner | Do not own corporate master lifecycle. |
-| Resolve Person owner | Shared Party / Person model | Reference canonical Person | Do not create parallel identity record. |
-| Validate document type | Configuration / Master Data | Consume configured type | Do not hardcode business-critical types where configuration owns them. |
-| Store binary | Infrastructure / Vercel Blob adapter | Invoke adapter and persist reference | Blob does not own Document lifecycle. |
-| Verify document | Document Management | Own current verification state and history | Audit receives action facts; it does not decide document verification. |
-| Track expiry | Document Management | Own expiry date/fact and work queues | Communication only owns notification delivery. |
-| Send expiry alert | Communication & Notification | Request notification when integration enabled | Do not store message delivery status in Document. |
-| Record critical audit | Audit & Compliance | Supply entity/action/change facts | AuditLog remains Audit context-owned. |
-| Produce reports | Reporting & Dashboards | Expose read data/projection | Reporting cannot mutate Document state. |
-| Generate/verify certificates | Certificate Management | No ownership | Document module must not absorb certificate lifecycle. |
-| Invoice/receipt/refund lifecycle | Finance & Receivables | No ownership | File URLs on finance records do not transfer finance ownership. |
-| Completion approval | Exam, Result & Completion | No ownership | Document evidence may be referenced but completion decision remains external. |
+| Workflow Step                    | Owning Context                          | Document Management Responsibility            | Boundary Rule                                                                 |
+| -------------------------------- | --------------------------------------- | --------------------------------------------- | ----------------------------------------------------------------------------- |
+| Authenticate user                | Identity & Access                       | Consume authenticated identity                | Document module does not own credentials.                                     |
+| Evaluate action permission       | Identity & Access                       | Enforce capability result server-side         | Menu visibility is not authorization.                                         |
+| Resolve branch access            | Identity & Access + owner context facts | Apply owner-derived scope                     | Do not invent independent document branch hierarchy.                          |
+| Resolve Student owner            | Admission & Enrollment                  | Reference valid StudentProfile owner          | Do not duplicate Student master data.                                         |
+| Resolve Trainer owner            | Faculty / Trainer Management            | Reference valid TrainerProfile owner          | Do not duplicate trainer profile data.                                        |
+| Resolve Corporate owner          | Corporate Training                      | Reference valid CorporateAccount owner        | Do not own corporate master lifecycle.                                        |
+| Resolve Person owner             | Shared Party / Person model             | Reference canonical Person                    | Do not create parallel identity record.                                       |
+| Validate document type           | Configuration / Master Data             | Consume configured type                       | Do not hardcode business-critical types where configuration owns them.        |
+| Store binary                     | Infrastructure / Vercel Blob adapter    | Invoke adapter and persist reference          | Blob does not own Document lifecycle.                                         |
+| Verify document                  | Document Management                     | Own current verification state and history    | Audit receives action facts; it does not decide document verification.        |
+| Track expiry                     | Document Management                     | Own expiry date/fact and work queues          | Communication only owns notification delivery.                                |
+| Send expiry alert                | Communication & Notification            | Request notification when integration enabled | Do not store message delivery status in Document.                             |
+| Record critical audit            | Audit & Compliance                      | Supply entity/action/change facts             | AuditLog remains Audit context-owned.                                         |
+| Produce reports                  | Reporting & Dashboards                  | Expose read data/projection                   | Reporting cannot mutate Document state.                                       |
+| Generate/verify certificates     | Certificate Management                  | No ownership                                  | Document module must not absorb certificate lifecycle.                        |
+| Invoice/receipt/refund lifecycle | Finance & Receivables                   | No ownership                                  | File URLs on finance records do not transfer finance ownership.               |
+| Completion approval              | Exam, Result & Completion               | No ownership                                  | Document evidence may be referenced but completion decision remains external. |
 
 ---
 
@@ -1245,20 +1245,20 @@ Expired
 
 ## 7.3 Consistency with Module Overview and Part 1
 
-| Area | Part 2 Decision | Consistency Result |
-|---|---|---|
-| Storage | Vercel Blob binary + IMS metadata | Consistent |
-| Owner types | Student, Trainer, Corporate, Person; Employee deferred | Consistent |
-| Verification flow | Uploaded -> PendingVerification -> Approved/Rejected | Consistent |
-| Rejection remarks | Mandatory | Consistent |
-| Verification history | Immutable | Consistent |
-| Branch isolation | Owner-derived, server-side | Consistent |
-| Expiry | ER `Expired` recognized; derived-vs-persisted policy remains explicit gap | Consistent; gap preserved |
-| Soft delete | Orthogonal lifecycle; no hard delete | Consistent |
-| Reporting | Read-only consumer | Consistent |
-| Notifications | Delivery owned by Communication | Consistent |
-| Resubmission after rejection | Not invented | Consistent; gap preserved |
-| Restore after soft delete | Not invented | Consistent; gap preserved |
+| Area                         | Part 2 Decision                                                           | Consistency Result        |
+| ---------------------------- | ------------------------------------------------------------------------- | ------------------------- |
+| Storage                      | Vercel Blob binary + IMS metadata                                         | Consistent                |
+| Owner types                  | Student, Trainer, Corporate, Person; Employee deferred                    | Consistent                |
+| Verification flow            | Uploaded -> PendingVerification -> Approved/Rejected                      | Consistent                |
+| Rejection remarks            | Mandatory                                                                 | Consistent                |
+| Verification history         | Immutable                                                                 | Consistent                |
+| Branch isolation             | Owner-derived, server-side                                                | Consistent                |
+| Expiry                       | ER `Expired` recognized; derived-vs-persisted policy remains explicit gap | Consistent; gap preserved |
+| Soft delete                  | Orthogonal lifecycle; no hard delete                                      | Consistent                |
+| Reporting                    | Read-only consumer                                                        | Consistent                |
+| Notifications                | Delivery owned by Communication                                           | Consistent                |
+| Resubmission after rejection | Not invented                                                              | Consistent; gap preserved |
+| Restore after soft delete    | Not invented                                                              | Consistent; gap preserved |
 
 ---
 

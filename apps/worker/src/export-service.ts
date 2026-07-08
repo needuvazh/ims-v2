@@ -39,7 +39,9 @@ function buildCsv(rows: ExportRow[]): string {
   const headers = Object.keys(rows[0] ?? {});
   const lines = [headers.join(',')];
   for (const row of rows) {
-    lines.push(headers.map((header) => toCsvValue(row[header] ?? null)).join(','));
+    lines.push(
+      headers.map((header) => toCsvValue(row[header] ?? null)).join(','),
+    );
   }
   return `${lines.join('\n')}\n`;
 }
@@ -56,7 +58,10 @@ async function readRows(job: ExportJobRecord): Promise<ExportRow[]> {
       const users = await prisma.user.findMany({
         where: branchId
           ? {
-              OR: [{ defaultBranchId: branchId }, { branchAccess: { some: { branchId, status: 'Active' } } }],
+              OR: [
+                { defaultBranchId: branchId },
+                { branchAccess: { some: { branchId, status: 'Active' } } },
+              ],
             }
           : undefined,
         include: {
@@ -180,7 +185,14 @@ async function readRows(job: ExportJobRecord): Promise<ExportRow[]> {
       }));
     }
     default:
-      return [{ reportType: job.reportType, requestedBy: job.requestedBy, branchId: job.branchId, status: 'unsupported-report-type' }];
+      return [
+        {
+          reportType: job.reportType,
+          requestedBy: job.requestedBy,
+          branchId: job.branchId,
+          status: 'unsupported-report-type',
+        },
+      ];
   }
 }
 
@@ -206,7 +218,12 @@ export class ExportService {
     try {
       await access(filePath);
     } catch (error) {
-      logger.error('export.file.missing', { status: 'failed', error: error as Error, entityId: job.id, entityType: job.reportType });
+      logger.error('export.file.missing', {
+        status: 'failed',
+        error: error as Error,
+        entityId: job.id,
+        entityType: job.reportType,
+      });
       throw error;
     }
 

@@ -4,7 +4,7 @@ export class IamError extends Error {
     public readonly statusCode: number,
     public readonly messageEn: string,
     public readonly messageAr: string,
-    public readonly details?: any
+    public readonly details?: any,
   ) {
     super(messageEn);
     this.name = 'IamError';
@@ -171,6 +171,6 @@ export function createIamError(code: IamErrorCode, details?: any): IamError {
     errorMeta.statusCode,
     errorMeta.messageEn,
     errorMeta.messageAr,
-    details
+    details,
   );
 }

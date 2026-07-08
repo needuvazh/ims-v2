@@ -21,55 +21,64 @@ describe('LeadService - Query Filters', () => {
 
     leadRepository = new LeadRepository(prismaMock as unknown as PrismaClient);
     followUpRepositoryMock = {} as any;
-    
+
     leadService = new LeadService(
       prismaMock as unknown as PrismaClient,
       leadRepository,
-      followUpRepositoryMock
+      followUpRepositoryMock,
     );
   });
 
   it('should apply branchId filter', async () => {
     await leadService.findAll({ branchId: 'branch-1' }, { page: 1, limit: 10 });
-    
+
     expect(prismaMock.lead.findMany).toHaveBeenCalledWith(
       expect.objectContaining({
         where: expect.objectContaining({
           branchId: 'branch-1',
-          isDeleted: false
-        })
-      })
+          isDeleted: false,
+        }),
+      }),
     );
   });
 
   it('should apply branchIds filter', async () => {
-    await leadService.findAll({ branchIds: ['branch-1', 'branch-2'] }, { page: 1, limit: 10 });
-    
+    await leadService.findAll(
+      { branchIds: ['branch-1', 'branch-2'] },
+      { page: 1, limit: 10 },
+    );
+
     expect(prismaMock.lead.findMany).toHaveBeenCalledWith(
       expect.objectContaining({
         where: expect.objectContaining({
           branchId: { in: ['branch-1', 'branch-2'] },
-          isDeleted: false
-        })
-      })
+          isDeleted: false,
+        }),
+      }),
     );
   });
 
   it('should apply counselorId filter', async () => {
-    await leadService.findAll({ counselorId: 'counselor-1' }, { page: 1, limit: 10 });
-    
+    await leadService.findAll(
+      { counselorId: 'counselor-1' },
+      { page: 1, limit: 10 },
+    );
+
     expect(prismaMock.lead.findMany).toHaveBeenCalledWith(
       expect.objectContaining({
         where: expect.objectContaining({
           counselorId: 'counselor-1',
-          isDeleted: false
-        })
-      })
+          isDeleted: false,
+        }),
+      }),
     );
   });
 
   it('should apply sort order for name ascending', async () => {
-    await leadService.findAll({ sortBy: 'name', sortOrder: 'asc' }, { page: 1, limit: 10 });
+    await leadService.findAll(
+      { sortBy: 'name', sortOrder: 'asc' },
+      { page: 1, limit: 10 },
+    );
 
     expect(prismaMock.lead.findMany).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -78,7 +87,7 @@ describe('LeadService - Query Filters', () => {
           { lastName: 'asc' },
           { createdAt: 'desc' },
         ],
-      })
+      }),
     );
   });
 
@@ -90,7 +99,7 @@ describe('LeadService - Query Filters', () => {
         where: expect.objectContaining({
           source: 'Campaign',
         }),
-      })
+      }),
     );
   });
 
@@ -108,8 +117,8 @@ describe('LeadService - Query Filters', () => {
     expect(result).toEqual({ id: validUuid });
     expect(prismaMock.lead.findUnique).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: { id: validUuid, isDeleted: false }
-      })
+        where: { id: validUuid, isDeleted: false },
+      }),
     );
   });
 });

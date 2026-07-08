@@ -50,7 +50,11 @@ const statusTransitionSchema = z.object({
 const qualificationSchema = z.object({
   qualificationName: z.string().trim().min(2).max(200),
   institution: z.string().trim().min(2).max(200),
-  yearCompleted: z.coerce.number().int().min(1900).max(new Date().getFullYear() + 1),
+  yearCompleted: z.coerce
+    .number()
+    .int()
+    .min(1900)
+    .max(new Date().getFullYear() + 1),
   documentId: z.string().uuid().optional().nullable(),
   status: z.enum(['Active', 'Inactive']),
   effectiveStartDate: z.coerce.date(),
@@ -60,7 +64,15 @@ const qualificationSchema = z.object({
 
 const availabilitySchema = z.object({
   branchId: z.string().uuid(),
-  dayOfWeek: z.enum(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']),
+  dayOfWeek: z.enum([
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ]),
   startTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),
   endTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),
   status: z.enum(['Active', 'Inactive']),
@@ -91,7 +103,13 @@ const compensationSchema = z.object({
   version: z.coerce.number().int().optional(),
 });
 
-function problem(status: number, title: string, detail: string, errorCode: string, invalidFields?: Array<{ field: string; message: string }>) {
+function problem(
+  status: number,
+  title: string,
+  detail: string,
+  errorCode: string,
+  invalidFields?: Array<{ field: string; message: string }>,
+) {
   return NextResponse.json(
     {
       success: false,
@@ -110,12 +128,19 @@ async function readPayload(request: Request) {
     return request.json();
   }
 
-  if (contentType.includes('application/x-www-form-urlencoded') || contentType.includes('multipart/form-data')) {
+  if (
+    contentType.includes('application/x-www-form-urlencoded') ||
+    contentType.includes('multipart/form-data')
+  ) {
     const form = await request.formData();
     return Object.fromEntries(form.entries());
   }
 
-  return request.json().catch(async () => Object.fromEntries((await request.formData()).entries()));
+  return request
+    .json()
+    .catch(async () =>
+      Object.fromEntries((await request.formData()).entries()),
+    );
 }
 
 function parseQuery(request: Request) {
@@ -138,22 +163,49 @@ function parseQuery(request: Request) {
   });
 }
 
-async function ensureBranchAccess(session: { userId: string; activeBranchId: string | null }, branchId: string) {
+async function ensureBranchAccess(
+  session: { userId: string; activeBranchId: string | null },
+  branchId: string,
+) {
   const { branchScopeResolver } = await import('../../../../lib/runtime');
-  const allowedBranches = await branchScopeResolver.resolveAllowedBranches(createUuid(session.userId), session.activeBranchId ? createUuid(session.activeBranchId) : null);
+  const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
+    createUuid(session.userId),
+    session.activeBranchId ? createUuid(session.activeBranchId) : null,
+  );
   if (!allowedBranches.includes(branchId as any)) {
-    throw new DomainError('branch_scope_violation', 'Access denied: branch is outside allowed scope.');
+    throw new DomainError(
+      'branch_scope_violation',
+      'Access denied: branch is outside allowed scope.',
+    );
   }
 }
 
-async function requirePermission(session: { userId: string; activeBranchId: string | null; permissions: string[] }, permission: string) {
+async function requirePermission(
+  session: {
+    userId: string;
+    activeBranchId: string | null;
+    permissions: string[];
+  },
+  permission: string,
+) {
   const { authorizationGuard } = await import('../../../../lib/runtime');
-  await authorizationGuard.verifyPermission(createUuid(session.userId), permission, session.activeBranchId ? createUuid(session.activeBranchId) : null);
+  await authorizationGuard.verifyPermission(
+    createUuid(session.userId),
+    permission,
+    session.activeBranchId ? createUuid(session.activeBranchId) : null,
+  );
 }
 
-async function buildTrainerAuthContext(session: { userId: string; activeBranchId: string | null; permissions: string[] }) {
+async function buildTrainerAuthContext(session: {
+  userId: string;
+  activeBranchId: string | null;
+  permissions: string[];
+}) {
   const { branchScopeResolver } = await import('../../../../lib/runtime');
-  const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(createUuid(session.userId), session.activeBranchId ? createUuid(session.activeBranchId) : null);
+  const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
+    createUuid(session.userId),
+    session.activeBranchId ? createUuid(session.activeBranchId) : null,
+  );
   return {
     actorId: session.userId,
     branchId: session.activeBranchId,
@@ -162,13 +214,29 @@ async function buildTrainerAuthContext(session: { userId: string; activeBranchId
   };
 }
 
-function success(data: Record<string, unknown>, request: Request, route: string, status = 200) {
+function success(
+  data: Record<string, unknown>,
+  request: Request,
+  route: string,
+  status = 200,
+) {
   const response = NextResponse.json({ success: true, data }, { status });
-  applyObservabilityResponseHeaders(response.headers, request.headers, { route, method: request.method, status: 'success' });
+  applyObservabilityResponseHeaders(response.headers, request.headers, {
+    route,
+    method: request.method,
+    status: 'success',
+  });
   return response;
 }
 
-async function handleTrainerCollection(request: Request, session: { userId: string; activeBranchId: string | null; permissions: string[] }) {
+async function handleTrainerCollection(
+  request: Request,
+  session: {
+    userId: string;
+    activeBranchId: string | null;
+    permissions: string[];
+  },
+) {
   const { trainerManagementService } = await import('../../../../lib/runtime');
   const authContext = await buildTrainerAuthContext(session);
   if (request.method === 'GET') {
@@ -187,28 +255,61 @@ async function handleTrainerCollection(request: Request, session: { userId: stri
       { page: query.page, pageSize: query.pageSize },
       authContext,
     );
-    return success({ items: result.items, total: result.total, page: query.page, pageSize: query.pageSize }, request, '/api/v1/faculty/trainers');
+    return success(
+      {
+        items: result.items,
+        total: result.total,
+        page: query.page,
+        pageSize: query.pageSize,
+      },
+      request,
+      '/api/v1/faculty/trainers',
+    );
   }
 
   if (request.method === 'POST') {
     await requirePermission(session, 'trainer.create');
     const payload = trainerUpsertSchema.parse(await readPayload(request));
     await ensureBranchAccess(session, payload.branchId);
-    const trainer = await trainerManagementService.createTrainerProfile(payload, authContext);
+    const trainer = await trainerManagementService.createTrainerProfile(
+      payload,
+      authContext,
+    );
     return success({ trainer }, request, '/api/v1/faculty/trainers', 201);
   }
 
-  return problem(405, 'Method not allowed', 'Unsupported method for trainer collection.', 'FACULTY-405');
+  return problem(
+    405,
+    'Method not allowed',
+    'Unsupported method for trainer collection.',
+    'FACULTY-405',
+  );
 }
 
-async function handleTrainerResource(request: Request, session: { userId: string; activeBranchId: string | null; permissions: string[] }, trainerId: string, tail: string[]) {
+async function handleTrainerResource(
+  request: Request,
+  session: {
+    userId: string;
+    activeBranchId: string | null;
+    permissions: string[];
+  },
+  trainerId: string,
+  tail: string[],
+) {
   const { trainerManagementService } = await import('../../../../lib/runtime');
   const authContext = await buildTrainerAuthContext(session);
   if (tail.length === 0) {
     if (request.method === 'GET') {
       await requirePermission(session, 'trainer.read');
-      const trainer = await trainerManagementService.getTrainer(trainerId, authContext);
-      return success({ trainer }, request, `/api/v1/faculty/trainers/${trainerId}`);
+      const trainer = await trainerManagementService.getTrainer(
+        trainerId,
+        authContext,
+      );
+      return success(
+        { trainer },
+        request,
+        `/api/v1/faculty/trainers/${trainerId}`,
+      );
     }
 
     if (request.method === 'PATCH' || request.method === 'POST') {
@@ -217,36 +318,81 @@ async function handleTrainerResource(request: Request, session: { userId: string
       if (payload.branchId) {
         await ensureBranchAccess(session, payload.branchId);
       }
-      const trainer = await trainerManagementService.updateTrainerProfile(trainerId, payload, authContext);
-      return success({ trainer }, request, `/api/v1/faculty/trainers/${trainerId}`);
+      const trainer = await trainerManagementService.updateTrainerProfile(
+        trainerId,
+        payload,
+        authContext,
+      );
+      return success(
+        { trainer },
+        request,
+        `/api/v1/faculty/trainers/${trainerId}`,
+      );
     }
   }
 
   if (tail[0] === 'status' && request.method === 'POST') {
     const payload = statusTransitionSchema.parse(await readPayload(request));
     await requirePermission(session, 'trainer.status.manage');
-    const trainer = await trainerManagementService.transitionTrainerStatus(trainerId, payload, authContext);
-    return success({ trainer }, request, `/api/v1/faculty/trainers/${trainerId}/status`);
+    const trainer = await trainerManagementService.transitionTrainerStatus(
+      trainerId,
+      payload,
+      authContext,
+    );
+    return success(
+      { trainer },
+      request,
+      `/api/v1/faculty/trainers/${trainerId}/status`,
+    );
   }
 
   if (tail[0] === 'qualifications') {
     if (request.method === 'GET') {
       await requirePermission(session, 'trainer.qualification.read');
       const query = parseQuery(request);
-      const result = await trainerManagementService.listQualifications(trainerId, { page: query.page, pageSize: query.pageSize }, authContext);
-      return success({ items: result.items, total: result.total }, request, `/api/v1/faculty/trainers/${trainerId}/qualifications`);
+      const result = await trainerManagementService.listQualifications(
+        trainerId,
+        { page: query.page, pageSize: query.pageSize },
+        authContext,
+      );
+      return success(
+        { items: result.items, total: result.total },
+        request,
+        `/api/v1/faculty/trainers/${trainerId}/qualifications`,
+      );
     }
     if (request.method === 'POST') {
       await requirePermission(session, 'trainer.qualification.manage');
       const payload = qualificationSchema.parse(await readPayload(request));
-      const qualification = await trainerManagementService.createQualification(trainerId, payload, authContext);
-      return success({ qualification }, request, `/api/v1/faculty/trainers/${trainerId}/qualifications`, 201);
+      const qualification = await trainerManagementService.createQualification(
+        trainerId,
+        payload,
+        authContext,
+      );
+      return success(
+        { qualification },
+        request,
+        `/api/v1/faculty/trainers/${trainerId}/qualifications`,
+        201,
+      );
     }
     if (tail.length === 2 && request.method === 'PATCH') {
       await requirePermission(session, 'trainer.qualification.manage');
-      const payload = qualificationSchema.partial().extend({ version: z.coerce.number().int() }).parse(await readPayload(request));
-      const qualification = await trainerManagementService.updateQualification(trainerId, tail[1], payload, authContext);
-      return success({ qualification }, request, `/api/v1/faculty/trainers/${trainerId}/qualifications/${tail[1]}`);
+      const payload = qualificationSchema
+        .partial()
+        .extend({ version: z.coerce.number().int() })
+        .parse(await readPayload(request));
+      const qualification = await trainerManagementService.updateQualification(
+        trainerId,
+        tail[1],
+        payload,
+        authContext,
+      );
+      return success(
+        { qualification },
+        request,
+        `/api/v1/faculty/trainers/${trainerId}/qualifications/${tail[1]}`,
+      );
     }
   }
 
@@ -254,30 +400,74 @@ async function handleTrainerResource(request: Request, session: { userId: string
     if (request.method === 'GET') {
       await requirePermission(session, 'trainer.availability.read');
       const query = parseQuery(request);
-      const result = await trainerManagementService.listAvailability(trainerId, { page: query.page, pageSize: query.pageSize }, authContext);
-      return success({ items: result.items, total: result.total }, request, `/api/v1/faculty/trainers/${trainerId}/availability`);
+      const result = await trainerManagementService.listAvailability(
+        trainerId,
+        { page: query.page, pageSize: query.pageSize },
+        authContext,
+      );
+      return success(
+        { items: result.items, total: result.total },
+        request,
+        `/api/v1/faculty/trainers/${trainerId}/availability`,
+      );
     }
     if (request.method === 'POST') {
       await requirePermission(session, 'trainer.availability.manage');
       const payload = availabilitySchema.parse(await readPayload(request));
       await ensureBranchAccess(session, payload.branchId);
-      const availability = await trainerManagementService.createAvailability(trainerId, payload, authContext);
-      return success({ availability }, request, `/api/v1/faculty/trainers/${trainerId}/availability`, 201);
+      const availability = await trainerManagementService.createAvailability(
+        trainerId,
+        payload,
+        authContext,
+      );
+      return success(
+        { availability },
+        request,
+        `/api/v1/faculty/trainers/${trainerId}/availability`,
+        201,
+      );
     }
     if (tail.length === 2 && request.method === 'PATCH') {
       await requirePermission(session, 'trainer.availability.manage');
-      const payload = availabilitySchema.partial().extend({ version: z.coerce.number().int() }).parse(await readPayload(request));
+      const payload = availabilitySchema
+        .partial()
+        .extend({ version: z.coerce.number().int() })
+        .parse(await readPayload(request));
       if (payload.branchId) {
         await ensureBranchAccess(session, payload.branchId);
       }
-      const availability = await trainerManagementService.updateAvailability(trainerId, tail[1], payload, authContext);
-      return success({ availability }, request, `/api/v1/faculty/trainers/${trainerId}/availability/${tail[1]}`);
+      const availability = await trainerManagementService.updateAvailability(
+        trainerId,
+        tail[1],
+        payload,
+        authContext,
+      );
+      return success(
+        { availability },
+        request,
+        `/api/v1/faculty/trainers/${trainerId}/availability/${tail[1]}`,
+      );
     }
     if (tail.length === 2 && request.method === 'DELETE') {
       await requirePermission(session, 'trainer.availability.manage');
-      const payload = z.object({ reason: z.string().trim().min(1), version: z.coerce.number().int() }).parse(await readPayload(request));
-      await trainerManagementService.deleteAvailability(trainerId, tail[1], payload.reason, payload.version, authContext);
-      return success({ deleted: true }, request, `/api/v1/faculty/trainers/${trainerId}/availability/${tail[1]}`);
+      const payload = z
+        .object({
+          reason: z.string().trim().min(1),
+          version: z.coerce.number().int(),
+        })
+        .parse(await readPayload(request));
+      await trainerManagementService.deleteAvailability(
+        trainerId,
+        tail[1],
+        payload.reason,
+        payload.version,
+        authContext,
+      );
+      return success(
+        { deleted: true },
+        request,
+        `/api/v1/faculty/trainers/${trainerId}/availability/${tail[1]}`,
+      );
     }
   }
 
@@ -285,30 +475,55 @@ async function handleTrainerResource(request: Request, session: { userId: string
     if (request.method === 'GET') {
       await requirePermission(session, 'trainer.authorization.read');
       const query = parseQuery(request);
-      const result = await trainerManagementService.listAuthorizations(trainerId, { page: query.page, pageSize: query.pageSize }, authContext);
-      return success({ items: result.items, total: result.total }, request, `/api/v1/faculty/trainers/${trainerId}/authorizations`);
+      const result = await trainerManagementService.listAuthorizations(
+        trainerId,
+        { page: query.page, pageSize: query.pageSize },
+        authContext,
+      );
+      return success(
+        { items: result.items, total: result.total },
+        request,
+        `/api/v1/faculty/trainers/${trainerId}/authorizations`,
+      );
     }
     if (request.method === 'POST') {
       await requirePermission(session, 'trainer.authorization.manage');
       const payload = authorizationSchema.parse(await readPayload(request));
-      const authorization = await trainerManagementService.createAuthorization(trainerId, payload, authContext);
-      return success({ authorization }, request, `/api/v1/faculty/trainers/${trainerId}/authorizations`, 201);
+      const authorization = await trainerManagementService.createAuthorization(
+        trainerId,
+        payload,
+        authContext,
+      );
+      return success(
+        { authorization },
+        request,
+        `/api/v1/faculty/trainers/${trainerId}/authorizations`,
+        201,
+      );
     }
     if (tail.length === 2 && request.method === 'PATCH') {
       await requirePermission(session, 'trainer.authorization.manage');
-      const payload = authorizationSchema.partial().extend({ version: z.coerce.number().int() }).parse(await readPayload(request));
-      const authorization = await trainerManagementService.transitionAuthorization(
-        trainerId,
-        tail[1],
-        {
-          toStatus: payload.status ?? 'Active',
-          effectiveAt: payload.effectiveStartDate ?? new Date(),
-          reason: payload.reason ?? '',
-          version: payload.version,
-        },
-        authContext,
+      const payload = authorizationSchema
+        .partial()
+        .extend({ version: z.coerce.number().int() })
+        .parse(await readPayload(request));
+      const authorization =
+        await trainerManagementService.transitionAuthorization(
+          trainerId,
+          tail[1],
+          {
+            toStatus: payload.status ?? 'Active',
+            effectiveAt: payload.effectiveStartDate ?? new Date(),
+            reason: payload.reason ?? '',
+            version: payload.version,
+          },
+          authContext,
+        );
+      return success(
+        { authorization },
+        request,
+        `/api/v1/faculty/trainers/${trainerId}/authorizations/${tail[1]}`,
       );
-      return success({ authorization }, request, `/api/v1/faculty/trainers/${trainerId}/authorizations/${tail[1]}`);
     }
   }
 
@@ -325,24 +540,54 @@ async function handleTrainerResource(request: Request, session: { userId: string
           },
           authContext,
         );
-        return success({ rate }, request, `/api/v1/faculty/trainers/${trainerId}/compensation`);
+        return success(
+          { rate },
+          request,
+          `/api/v1/faculty/trainers/${trainerId}/compensation`,
+        );
       }
-      const result = await trainerManagementService.listCompensationRates(trainerId, { page: query.page, pageSize: query.pageSize }, authContext);
-      return success({ items: result.items, total: result.total }, request, `/api/v1/faculty/trainers/${trainerId}/compensation`);
+      const result = await trainerManagementService.listCompensationRates(
+        trainerId,
+        { page: query.page, pageSize: query.pageSize },
+        authContext,
+      );
+      return success(
+        { items: result.items, total: result.total },
+        request,
+        `/api/v1/faculty/trainers/${trainerId}/compensation`,
+      );
     }
     if (request.method === 'POST') {
       await requirePermission(session, 'trainer.compensation.manage');
       const payload = compensationSchema.parse(await readPayload(request));
-      const compensation = await trainerManagementService.createCompensationRate(trainerId, payload, authContext);
-      return success({ compensation }, request, `/api/v1/faculty/trainers/${trainerId}/compensation`, 201);
+      const compensation =
+        await trainerManagementService.createCompensationRate(
+          trainerId,
+          payload,
+          authContext,
+        );
+      return success(
+        { compensation },
+        request,
+        `/api/v1/faculty/trainers/${trainerId}/compensation`,
+        201,
+      );
     }
   }
 
   if (tail[0] === 'assignments' && request.method === 'GET') {
     await requirePermission(session, 'trainer.read');
     const query = parseQuery(request);
-    const result = await trainerManagementService.listAssignmentReferences(trainerId, { page: query.page, pageSize: query.pageSize, kind: query.kind }, authContext);
-    return success({ items: result.items, total: result.total }, request, `/api/v1/faculty/trainers/${trainerId}/assignments`);
+    const result = await trainerManagementService.listAssignmentReferences(
+      trainerId,
+      { page: query.page, pageSize: query.pageSize, kind: query.kind },
+      authContext,
+    );
+    return success(
+      { items: result.items, total: result.total },
+      request,
+      `/api/v1/faculty/trainers/${trainerId}/assignments`,
+    );
   }
 
   if (tail[0] === 'audit-history' && request.method === 'GET') {
@@ -353,88 +598,150 @@ async function handleTrainerResource(request: Request, session: { userId: string
       { page: query.page, pageSize: query.pageSize },
       authContext,
     );
-    return success({ items: result.items, total: result.total }, request, `/api/v1/faculty/trainers/${trainerId}/audit-history`);
+    return success(
+      { items: result.items, total: result.total },
+      request,
+      `/api/v1/faculty/trainers/${trainerId}/audit-history`,
+    );
   }
 
-  return problem(404, 'Not found', 'The requested trainer resource was not found.', 'FACULTY-404');
+  return problem(
+    404,
+    'Not found',
+    'The requested trainer resource was not found.',
+    'FACULTY-404',
+  );
 }
 
-export async function GET(request: Request, { params }: { params: Promise<{ segments: string[] }> }) {
-  return withRouteObservability(request.headers, async () => {
-    const { session } = await withAuth(request);
-    const segments = (await params).segments ?? [];
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ segments: string[] }> },
+) {
+  return withRouteObservability(
+    request.headers,
+    async () => {
+      const { session } = await withAuth(request);
+      const segments = (await params).segments ?? [];
 
-    try {
-      if (segments.length === 1 && segments[0] === 'eligible-trainers') {
-        await requirePermission(session, 'trainer.eligibility.read');
-        const query = parseQuery(request);
-        const { trainerManagementService } = await import('../../../../lib/runtime');
-        const authContext = await buildTrainerAuthContext(session);
-        const result = await trainerManagementService.findEligibleTrainers(
-          {
-            courseId: query.courseId ?? '',
-            branchId: query.branchId ?? session.activeBranchId ?? '',
-            targetDate: query.targetDate ?? new Date(),
-            startTime: query.startTime,
-            endTime: query.endTime,
-            trainerType: query.trainerType,
-            q: query.q,
-          },
-          { page: query.page, pageSize: query.pageSize },
-          authContext,
+      try {
+        if (segments.length === 1 && segments[0] === 'eligible-trainers') {
+          await requirePermission(session, 'trainer.eligibility.read');
+          const query = parseQuery(request);
+          const { trainerManagementService } =
+            await import('../../../../lib/runtime');
+          const authContext = await buildTrainerAuthContext(session);
+          const result = await trainerManagementService.findEligibleTrainers(
+            {
+              courseId: query.courseId ?? '',
+              branchId: query.branchId ?? session.activeBranchId ?? '',
+              targetDate: query.targetDate ?? new Date(),
+              startTime: query.startTime,
+              endTime: query.endTime,
+              trainerType: query.trainerType,
+              q: query.q,
+            },
+            { page: query.page, pageSize: query.pageSize },
+            authContext,
+          );
+          return success(
+            { items: result.items, total: result.total },
+            request,
+            '/api/v1/faculty/eligible-trainers',
+          );
+        }
+
+        if (segments.length === 1 && segments[0] === 'reports') {
+          await requirePermission(session, 'trainer.report.view');
+          const query = parseQuery(request);
+          const { trainerManagementService } =
+            await import('../../../../lib/runtime');
+          const authContext = await buildTrainerAuthContext(session);
+          const result = await trainerManagementService.listReports(
+            query.reportCode ?? 'trainer.roster',
+            {
+              branchId: query.branchId,
+              trainerType: query.trainerType,
+              status: query.status,
+            },
+            { page: query.page, pageSize: query.pageSize },
+            authContext,
+          );
+          return success(
+            { items: result.items, total: result.total },
+            request,
+            '/api/v1/faculty/reports',
+          );
+        }
+
+        if (segments[0] === 'trainers' && segments.length === 1) {
+          return handleTrainerCollection(request, session);
+        }
+
+        if (segments[0] === 'trainers' && segments.length >= 2) {
+          return handleTrainerResource(
+            request,
+            session,
+            segments[1],
+            segments.slice(2),
+          );
+        }
+
+        return problem(
+          404,
+          'Not found',
+          'The requested faculty endpoint was not found.',
+          'FACULTY-404',
         );
-        return success({ items: result.items, total: result.total }, request, '/api/v1/faculty/eligible-trainers');
+      } catch (error) {
+        if (error instanceof DomainError) {
+          const status =
+            error.code === 'unauthorized'
+              ? 401
+              : error.code === 'forbidden' ||
+                  error.code === 'branch_scope_violation'
+                ? 403
+                : error.code === 'not_found'
+                  ? 404
+                  : error.code === 'conflict'
+                    ? 409
+                    : error.code === 'precondition_failed'
+                      ? 412
+                      : 400;
+          return problem(
+            status,
+            'Faculty request failed',
+            error.message,
+            error.code.toUpperCase(),
+          );
+        }
+        return errorHandler(error, {
+          title: 'Faculty request failed',
+          detail: 'Unable to process the faculty request at this time.',
+          errorCode: 'FACULTY-500',
+        });
       }
-
-      if (segments.length === 1 && segments[0] === 'reports') {
-        await requirePermission(session, 'trainer.report.view');
-        const query = parseQuery(request);
-        const { trainerManagementService } = await import('../../../../lib/runtime');
-        const authContext = await buildTrainerAuthContext(session);
-        const result = await trainerManagementService.listReports(
-          query.reportCode ?? 'trainer.roster',
-          {
-            branchId: query.branchId,
-            trainerType: query.trainerType,
-            status: query.status,
-          },
-          { page: query.page, pageSize: query.pageSize },
-          authContext,
-        );
-        return success({ items: result.items, total: result.total }, request, '/api/v1/faculty/reports');
-      }
-
-      if (segments[0] === 'trainers' && segments.length === 1) {
-        return handleTrainerCollection(request, session);
-      }
-
-      if (segments[0] === 'trainers' && segments.length >= 2) {
-        return handleTrainerResource(request, session, segments[1], segments.slice(2));
-      }
-
-      return problem(404, 'Not found', 'The requested faculty endpoint was not found.', 'FACULTY-404');
-    } catch (error) {
-      if (error instanceof DomainError) {
-        const status = error.code === 'unauthorized' ? 401 : error.code === 'forbidden' || error.code === 'branch_scope_violation' ? 403 : error.code === 'not_found' ? 404 : error.code === 'conflict' ? 409 : error.code === 'precondition_failed' ? 412 : 400;
-        return problem(status, 'Faculty request failed', error.message, error.code.toUpperCase());
-      }
-      return errorHandler(error, {
-        title: 'Faculty request failed',
-        detail: 'Unable to process the faculty request at this time.',
-        errorCode: 'FACULTY-500',
-      });
-    }
-  }, { route: '/api/v1/faculty' });
+    },
+    { route: '/api/v1/faculty' },
+  );
 }
 
-export async function POST(request: Request, ctx: { params: Promise<{ segments: string[] }> }) {
+export async function POST(
+  request: Request,
+  ctx: { params: Promise<{ segments: string[] }> },
+) {
   return GET(request, ctx);
 }
 
-export async function PATCH(request: Request, ctx: { params: Promise<{ segments: string[] }> }) {
+export async function PATCH(
+  request: Request,
+  ctx: { params: Promise<{ segments: string[] }> },
+) {
   return GET(request, ctx);
 }
 
-export async function DELETE(request: Request, ctx: { params: Promise<{ segments: string[] }> }) {
+export async function DELETE(
+  request: Request,
+  ctx: { params: Promise<{ segments: string[] }> },
+) {
   return GET(request, ctx);
 }

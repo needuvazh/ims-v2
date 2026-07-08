@@ -6,12 +6,23 @@ export const metadata = { title: 'Classrooms - Organization | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
 export default async function ClassroomsPage(props: {
-  searchParams: Promise<{ page?: string; limit?: string; q?: string; status?: string; branchId?: string; sortBy?: string; sortOrder?: string }>;
+  searchParams: Promise<{
+    page?: string;
+    limit?: string;
+    q?: string;
+    status?: string;
+    branchId?: string;
+    sortBy?: string;
+    sortOrder?: string;
+  }>;
 }) {
   const searchParams = await props.searchParams;
   const data = await loadOrganizationData();
 
-  const branchOptions = data.branches.map((b) => ({ id: b.id, name: b.branchName }));
+  const branchOptions = data.branches.map((b) => ({
+    id: b.id,
+    name: b.branchName,
+  }));
 
   return (
     <AdminListPageLayout className="pt-1 sm:pt-0">
@@ -25,8 +36,14 @@ export default async function ClassroomsPage(props: {
             branchName: branch ? branch.branchName : '—',
             capacity: c.capacity,
             location: c.location,
-            effectiveStartDate: c.effectiveStartDate instanceof Date ? c.effectiveStartDate.toISOString() : String(c.effectiveStartDate ?? ''),
-            effectiveEndDate: c.effectiveEndDate instanceof Date ? c.effectiveEndDate.toISOString() : String(c.effectiveEndDate ?? ''),
+            effectiveStartDate:
+              c.effectiveStartDate instanceof Date
+                ? c.effectiveStartDate.toISOString()
+                : String(c.effectiveStartDate ?? ''),
+            effectiveEndDate:
+              c.effectiveEndDate instanceof Date
+                ? c.effectiveEndDate.toISOString()
+                : String(c.effectiveEndDate ?? ''),
             status: c.status,
           };
         })}

@@ -13,14 +13,22 @@ interface TransitionButtonsProps {
   version: number;
 }
 
-export function TransitionButtons({ batchId, status, version }: TransitionButtonsProps) {
+export function TransitionButtons({
+  batchId,
+  status,
+  version,
+}: TransitionButtonsProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
   const handleTransition = (targetStatus: string, actionLabel: string) => {
     startTransition(async () => {
       try {
-        const res = await transitionBatchStatusAction(batchId, targetStatus, version);
+        const res = await transitionBatchStatusAction(
+          batchId,
+          targetStatus,
+          version,
+        );
         if (res && !res.success) {
           toast.error(res.error || `Failed to transition state.`);
         } else {
@@ -42,7 +50,11 @@ export function TransitionButtons({ batchId, status, version }: TransitionButton
           variant="primary"
           className="w-full text-xs py-1.5 flex justify-center items-center gap-1.5"
         >
-          {isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : 'Open Batch'}
+          {isPending ? (
+            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+          ) : (
+            'Open Batch'
+          )}
         </Button>
       )}
       {status === 'OpenForEnrollment' && (
@@ -52,7 +64,11 @@ export function TransitionButtons({ batchId, status, version }: TransitionButton
           variant="primary"
           className="w-full text-xs py-1.5 flex justify-center items-center gap-1.5"
         >
-          {isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : 'Start Class'}
+          {isPending ? (
+            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+          ) : (
+            'Start Class'
+          )}
         </Button>
       )}
       {status === 'InProgress' && (
@@ -62,7 +78,11 @@ export function TransitionButtons({ batchId, status, version }: TransitionButton
           variant="primary"
           className="w-full text-xs py-1.5 flex justify-center items-center gap-1.5"
         >
-          {isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : 'Complete'}
+          {isPending ? (
+            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+          ) : (
+            'Complete'
+          )}
         </Button>
       )}
       {status !== 'Completed' && status !== 'Cancelled' && (
@@ -72,7 +92,11 @@ export function TransitionButtons({ batchId, status, version }: TransitionButton
           variant="outline"
           className="w-full text-xs py-1.5 text-red-500 border-red-200 hover:bg-red-50 flex justify-center items-center gap-1.5"
         >
-          {isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : 'Cancel Batch'}
+          {isPending ? (
+            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+          ) : (
+            'Cancel Batch'
+          )}
         </Button>
       )}
     </div>

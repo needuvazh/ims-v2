@@ -3,7 +3,11 @@ import { AppShell } from '@ims/shared-ui';
 import { trainerNavigation } from '@ims/identity-access';
 import { LayoutDashboard, Calendar, ClipboardCheck } from 'lucide-react';
 
-export default function TrainerProtectedLayout({ children }: { children: ReactNode }) {
+export default function TrainerProtectedLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   const nav = trainerNavigation.map((item) => {
     if (item.href === '/dashboard') {
       return { ...item, icon: <LayoutDashboard className="h-4.5 w-4.5" /> };
@@ -18,7 +22,12 @@ export default function TrainerProtectedLayout({ children }: { children: ReactNo
   });
 
   return (
-    <AppShell appName="IMS Trainer" branchName="Teaching scope" userName="Trainer" items={nav}>
+    <AppShell
+      appName="IMS Trainer"
+      branchName="Teaching scope"
+      userName="Trainer"
+      items={nav}
+    >
       {children}
     </AppShell>
   );

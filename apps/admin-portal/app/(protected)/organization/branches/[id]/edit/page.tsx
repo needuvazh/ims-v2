@@ -7,7 +7,9 @@ import { Home, Building2, MapPin, Edit2 } from 'lucide-react';
 export const metadata = { title: 'Edit Branch | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
-export default async function EditBranchPage(props: { params: Promise<{ id: string }> }) {
+export default async function EditBranchPage(props: {
+  params: Promise<{ id: string }>;
+}) {
   const params = await props.params;
   const data = await loadOrganizationData();
   const branch = data.branches.find((b) => b.id === params.id);
@@ -25,15 +27,35 @@ export default async function EditBranchPage(props: { params: Promise<{ id: stri
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Organization', href: '/organization', icon: <Building2 className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Branches', href: '/organization/branches', icon: <MapPin className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Edit', icon: <Edit2 className="h-3.5 w-3.5 text-slate-500" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Organization',
+                href: '/organization',
+                icon: <Building2 className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Branches',
+                href: '/organization/branches',
+                icon: <MapPin className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Edit',
+                icon: <Edit2 className="h-3.5 w-3.5 text-slate-500" />,
+              },
             ]}
           />
         }
       />
-      <BranchForm mode="edit" initialData={branch} institutes={data.institutes} users={data.users} />
+      <BranchForm
+        mode="edit"
+        initialData={branch}
+        institutes={data.institutes}
+        users={data.users}
+      />
     </div>
   );
 }

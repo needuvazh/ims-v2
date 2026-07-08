@@ -53,18 +53,18 @@ Review the entire module as one cohesive specification.
 
 Determine whether Module 12 is:
 
-* aligned with the ASTI DDD Context Map;
-* aligned with the ER Model;
-* compatible with the Prisma schema;
-* consistent across all FRD parts;
-* suitable for implementation in the existing Next.js TypeScript modular monolith;
-* free from aggregate ownership violations;
-* free from duplicate business logic;
-* branch-safe;
-* audit-safe;
-* financially consistent;
-* testable;
-* implementable without hidden requirements.
+- aligned with the ASTI DDD Context Map;
+- aligned with the ER Model;
+- compatible with the Prisma schema;
+- consistent across all FRD parts;
+- suitable for implementation in the existing Next.js TypeScript modular monolith;
+- free from aggregate ownership violations;
+- free from duplicate business logic;
+- branch-safe;
+- audit-safe;
+- financially consistent;
+- testable;
+- implementable without hidden requirements.
 
 Do not perform a superficial wording review.
 
@@ -82,13 +82,13 @@ The system is a modular monolith.
 
 Do not recommend:
 
-* microservices;
-* RabbitMQ;
-* Kafka;
-* external message brokers;
-* distributed transactions;
-* CQRS;
-* Event Sourcing;
+- microservices;
+- RabbitMQ;
+- Kafka;
+- external message brokers;
+- distributed transactions;
+- CQRS;
+- Event Sourcing;
 
 unless one of the authoritative documents explicitly requires them.
 
@@ -102,13 +102,13 @@ All learner journeys must converge into the central `Enrollment` aggregate.
 
 Validate that Finance:
 
-* does not create alternative learner lifecycle models;
-* does not duplicate Enrollment;
-* references Enrollment using supported context boundaries;
-* does not own course assignment;
-* does not own batch assignment;
-* does not own student lifecycle state;
-* does not directly mutate Enrollment-owned tables.
+- does not create alternative learner lifecycle models;
+- does not duplicate Enrollment;
+- references Enrollment using supported context boundaries;
+- does not own course assignment;
+- does not own batch assignment;
+- does not own student lifecycle state;
+- does not directly mutate Enrollment-owned tables.
 
 Expected high-level flow:
 
@@ -147,9 +147,9 @@ CorporateCreditRule
 
 Validate whether every owned entity in Part 4 is justified by:
 
-* DDD;
-* ER Model;
-* existing Module 12 business requirements.
+- DDD;
+- ER Model;
+- existing Module 12 business requirements.
 
 Flag any invented aggregate or unnecessary duplication.
 
@@ -178,23 +178,23 @@ At minimum validate the following boundaries.
 
 Course Catalog owns:
 
-* Course;
-* CoursePricing;
-* CourseDiscount;
-* CourseCompletionRule;
-* pricing hierarchy;
-* discount hierarchy.
+- Course;
+- CoursePricing;
+- CourseDiscount;
+- CourseCompletionRule;
+- pricing hierarchy;
+- discount hierarchy.
 
 Finance may consume resolved commercial values for invoice creation.
 
 Validate that Module 12 does not:
 
-* own CoursePricing;
-* own CourseDiscount;
-* define conflicting pricing hierarchy;
-* change Course completion rules;
-* duplicate Course Catalog tables;
-* directly mutate pricing configuration.
+- own CoursePricing;
+- own CourseDiscount;
+- define conflicting pricing hierarchy;
+- change Course completion rules;
+- duplicate Course Catalog tables;
+- directly mutate pricing configuration.
 
 Expected pricing precedence:
 
@@ -214,19 +214,19 @@ Validate whether Finance records a pricing snapshot at invoice creation so histo
 
 Enrollment owns:
 
-* Enrollment creation;
-* course assignment;
-* batch assignment;
-* enrollment lifecycle.
+- Enrollment creation;
+- course assignment;
+- batch assignment;
+- enrollment lifecycle.
 
 Finance owns:
 
-* invoice generation;
-* payment;
-* receipt;
-* refund;
-* receivables;
-* payment validation.
+- invoice generation;
+- payment;
+- receipt;
+- refund;
+- receivables;
+- payment validation.
 
 Validate:
 
@@ -248,17 +248,17 @@ Identify any place where Finance incorrectly changes Enrollment state directly.
 
 Corporate Training owns:
 
-* CorporateAccount;
-* CorporateContract;
-* CorporateParticipant;
-* CorporateEnrollment.
+- CorporateAccount;
+- CorporateContract;
+- CorporateParticipant;
+- CorporateEnrollment.
 
 Finance owns:
 
-* corporate invoice;
-* corporate receivable;
-* credit exposure;
-* credit validation.
+- corporate invoice;
+- corporate receivable;
+- credit exposure;
+- credit validation.
 
 Validate that Module 12 does not duplicate corporate master data.
 
@@ -276,12 +276,12 @@ projectedExposure
 
 Verify the exact formula used by the FRD and identify inconsistencies across:
 
-* Part 1;
-* Part 2;
-* Part 5;
-* Part 7;
-* Part 8;
-* Part 9.
+- Part 1;
+- Part 2;
+- Part 5;
+- Part 7;
+- Part 8;
+- Part 9.
 
 Validate blocking behavior:
 
@@ -299,17 +299,17 @@ Validate warning behavior when blocking is disabled.
 
 Completion context owns:
 
-* completion rule evaluation;
-* attendance evaluation;
-* exam/result evaluation;
-* completion approval.
+- completion rule evaluation;
+- attendance evaluation;
+- exam/result evaluation;
+- completion approval.
 
 Certificate context owns:
 
-* certificate generation;
-* verification;
-* reissue;
-* revocation.
+- certificate generation;
+- verification;
+- reissue;
+- revocation.
 
 Finance should only provide authoritative payment validation.
 
@@ -323,10 +323,10 @@ or an equivalent internal application service.
 
 Flag any Finance logic that:
 
-* computes completion eligibility;
-* issues certificates;
-* changes certificate status;
-* changes completion status directly.
+- computes completion eligibility;
+- issues certificates;
+- changes certificate status;
+- changes completion status directly.
 
 ---
 
@@ -336,12 +336,12 @@ Reporting and Dashboards consume data from Finance.
 
 Validate that:
 
-* reporting views do not become transactional sources of truth;
-* corporate credit validation does not use stale reporting projections;
-* payment validation does not use materialized views;
-* refund execution does not depend on reporting read models;
-* dashboards may use views/materialized views;
-* transactional commands use authoritative Finance tables.
+- reporting views do not become transactional sources of truth;
+- corporate credit validation does not use stale reporting projections;
+- payment validation does not use materialized views;
+- refund execution does not depend on reporting read models;
+- dashboards may use views/materialized views;
+- transactional commands use authoritative Finance tables.
 
 Explicitly verify this rule:
 
@@ -372,12 +372,12 @@ Finance consumes authorization context but must not own IAM entities.
 
 Validate that:
 
-* roles are not hardcoded in authorization logic;
-* permissions are fine-grained;
-* UI visibility does not replace server authorization;
-* repository queries enforce branch scope;
-* consolidated reporting requires explicit permission;
-* branch filters cannot be manipulated to access unauthorized data.
+- roles are not hardcoded in authorization logic;
+- permissions are fine-grained;
+- UI visibility does not replace server authorization;
+- repository queries enforce branch scope;
+- consolidated reporting requires explicit permission;
+- branch filters cannot be manipulated to access unauthorized data.
 
 ---
 
@@ -407,23 +407,23 @@ Do not assume all listed entities must be one database transaction boundary.
 
 Evaluate the actual FRD rules and identify:
 
-* aggregate root;
-* transaction boundaries;
-* consistency boundaries;
-* concurrency risks;
-* cross-aggregate references.
+- aggregate root;
+- transaction boundaries;
+- consistency boundaries;
+- concurrency risks;
+- cross-aggregate references.
 
 Check the following invariants:
 
-* invoice totals are internally consistent;
-* paid amount never exceeds allowed financial bounds;
-* outstanding amount cannot be negative;
-* payment allocations equal the allocated payment amount;
-* receipt generation does not create duplicate receipts;
-* refunds never exceed refundable amount;
-* executed refunds affect balances exactly once;
-* invoice lifecycle transitions are valid;
-* financial documents are immutable after posting/issuance except through controlled corrective workflows.
+- invoice totals are internally consistent;
+- paid amount never exceeds allowed financial bounds;
+- outstanding amount cannot be negative;
+- payment allocations equal the allocated payment amount;
+- receipt generation does not create duplicate receipts;
+- refunds never exceed refundable amount;
+- executed refunds affect balances exactly once;
+- invoice lifecycle transitions are valid;
+- financial documents are immutable after posting/issuance except through controlled corrective workflows.
 
 ---
 
@@ -500,22 +500,22 @@ Flag inconsistencies.
 
 For Oman localization, verify:
 
-* OMR handling;
-* decimal precision;
-* database numeric precision;
-* API numeric format;
-* UI format;
-* rounding mode;
-* aggregation behavior.
+- OMR handling;
+- decimal precision;
+- database numeric precision;
+- API numeric format;
+- UI format;
+- rounding mode;
+- aggregation behavior.
 
 Check for conflicts between:
 
-* PostgreSQL numeric fields;
-* Prisma Decimal;
-* Zod schemas;
-* JSON DTOs;
-* UI inputs;
-* KPI formulas.
+- PostgreSQL numeric fields;
+- Prisma Decimal;
+- Zod schemas;
+- JSON DTOs;
+- UI inputs;
+- KPI formulas.
 
 Flag unsafe use of JavaScript floating-point arithmetic for financial calculation.
 
@@ -527,12 +527,12 @@ Extract every Invoice status defined anywhere in the module.
 
 Compare statuses from:
 
-* Part 1 business rules;
-* Part 2 state machines;
-* Part 3 UI;
-* Part 5 API contracts;
-* Part 7 validations;
-* Part 9 tests.
+- Part 1 business rules;
+- Part 2 state machines;
+- Part 3 UI;
+- Part 5 API contracts;
+- Part 7 validations;
+- Part 9 tests.
 
 Create:
 
@@ -549,13 +549,13 @@ Consistency Result
 
 Identify:
 
-* missing statuses;
-* conflicting names;
-* unreachable statuses;
-* states without exit transitions;
-* API actions without state-machine transitions;
-* UI actions that violate transition rules;
-* BDD tests that contradict the lifecycle.
+- missing statuses;
+- conflicting names;
+- unreachable statuses;
+- states without exit transitions;
+- API actions without state-machine transitions;
+- UI actions that violate transition rules;
+- BDD tests that contradict the lifecycle.
 
 ---
 
@@ -563,27 +563,27 @@ Identify:
 
 Review:
 
-* installment plan creation;
-* sequence numbering;
-* total plan amount;
-* due dates;
-* paid amounts;
-* overdue calculation;
-* partial payment;
-* allocation behavior;
-* installment status transitions.
+- installment plan creation;
+- sequence numbering;
+- total plan amount;
+- due dates;
+- paid amounts;
+- overdue calculation;
+- partial payment;
+- allocation behavior;
+- installment status transitions.
 
 Check boundary cases:
 
-* installment amount totals differ from invoice total;
-* duplicate sequence numbers;
-* payment allocated beyond installment outstanding;
-* payment larger than current installment;
-* payment across multiple installments;
-* payment transaction rollback;
-* overdue installment later paid;
-* refund after installment payment;
-* deleted or cancelled invoice with installments.
+- installment amount totals differ from invoice total;
+- duplicate sequence numbers;
+- payment allocated beyond installment outstanding;
+- payment larger than current installment;
+- payment across multiple installments;
+- payment transaction rollback;
+- overdue installment later paid;
+- refund after installment payment;
+- deleted or cancelled invoice with installments.
 
 ---
 
@@ -593,17 +593,17 @@ Review the Payment lifecycle and immutability model.
 
 Validate:
 
-* idempotency;
-* duplicate submission handling;
-* payment number uniqueness;
-* reference validation;
-* branch context;
-* payer context;
-* amount validation;
-* payment method validation;
-* successful transaction atomicity;
-* receipt generation behavior;
-* payment allocation.
+- idempotency;
+- duplicate submission handling;
+- payment number uniqueness;
+- reference validation;
+- branch context;
+- payer context;
+- amount validation;
+- payment method validation;
+- successful transaction atomicity;
+- receipt generation behavior;
+- payment allocation.
 
 Check whether:
 
@@ -619,12 +619,12 @@ are coordinated consistently.
 
 Flag any scenario that can create:
 
-* recorded payment without allocation;
-* allocation without payment;
-* duplicate receipt;
-* paid amount mismatch;
-* stale receivable;
-* inconsistent invoice outstanding.
+- recorded payment without allocation;
+- allocation without payment;
+- duplicate receipt;
+- paid amount mismatch;
+- stale receivable;
+- inconsistent invoice outstanding.
 
 ---
 
@@ -646,19 +646,19 @@ Use the FRD's actual states as the authoritative Module 12 design and compare th
 
 Validate:
 
-* requester permission;
-* approver permission;
-* executor permission;
-* maker-checker separation;
-* requester cannot self-approve;
-* amount does not exceed refundable balance;
-* Full vs Partial refund validation;
-* reason requirement;
-* rejection reason;
-* execution idempotency;
-* financial balance adjustment;
-* audit logging;
-* notifications.
+- requester permission;
+- approver permission;
+- executor permission;
+- maker-checker separation;
+- requester cannot self-approve;
+- amount does not exceed refundable balance;
+- Full vs Partial refund validation;
+- reason requirement;
+- rejection reason;
+- execution idempotency;
+- financial balance adjustment;
+- audit logging;
+- notifications.
 
 Create a state consistency report.
 
@@ -668,12 +668,12 @@ Create a state consistency report.
 
 Validate:
 
-* source of receivable;
-* due date;
-* outstanding amount;
-* reconciliation behavior;
-* aging calculation;
-* timezone behavior.
+- source of receivable;
+- due date;
+- outstanding amount;
+- reconciliation behavior;
+- aging calculation;
+- timezone behavior.
 
 Pay special attention to the existing source-model bucket definitions:
 
@@ -706,25 +706,25 @@ Provide a recommendation.
 
 Validate `CorporateCreditRule` for:
 
-* creditLimit;
-* currentOutstanding;
-* committedAmount;
-* availableCredit;
-* blockOnCreditLimit;
-* effectiveStartDate;
-* effectiveEndDate;
-* status;
-* branch scope if applicable.
+- creditLimit;
+- currentOutstanding;
+- committedAmount;
+- availableCredit;
+- blockOnCreditLimit;
+- effectiveStartDate;
+- effectiveEndDate;
+- status;
+- branch scope if applicable.
 
 Check:
 
-* overlapping active rules;
-* date boundaries;
-* no active rule;
-* expired rule;
-* future rule;
-* race conditions during concurrent enrollment creation;
-* consistency between enrollment check and final exposure reservation.
+- overlapping active rules;
+- date boundaries;
+- no active rule;
+- expired rule;
+- future rule;
+- race conditions during concurrent enrollment creation;
+- consistency between enrollment check and final exposure reservation.
 
 Identify TOCTOU risks:
 
@@ -774,21 +774,21 @@ CorporateCreditRule
 
 For every field validate:
 
-* PostgreSQL type;
-* Prisma type;
-* nullability;
-* PK;
-* FK;
-* unique constraints;
-* composite unique constraints;
-* indexes;
-* enum mappings;
-* decimals;
-* dates;
-* soft delete fields;
-* audit fields;
-* version field;
-* effective dating.
+- PostgreSQL type;
+- Prisma type;
+- nullability;
+- PK;
+- FK;
+- unique constraints;
+- composite unique constraints;
+- indexes;
+- enum mappings;
+- decimals;
+- dates;
+- soft delete fields;
+- audit fields;
+- version field;
+- effective dating.
 
 Do not assume the FRD is correct.
 
@@ -839,21 +839,21 @@ Sensitive Finance actions must be auditable.
 
 Validate audit coverage for:
 
-* invoice creation;
-* invoice modification;
-* invoice issue;
-* invoice cancellation;
-* payment posting;
-* payment allocation;
-* receipt generation;
-* refund request;
-* refund approval;
-* refund rejection;
-* refund execution;
-* corporate credit-rule changes;
-* manual aging corrections if supported;
-* export actions;
-* consolidated report access.
+- invoice creation;
+- invoice modification;
+- invoice issue;
+- invoice cancellation;
+- payment posting;
+- payment allocation;
+- receipt generation;
+- refund request;
+- refund approval;
+- refund rejection;
+- refund execution;
+- corporate credit-rule changes;
+- manual aging corrections if supported;
+- export actions;
+- consolidated report access.
 
 For each action verify that the FRD can capture:
 
@@ -878,11 +878,11 @@ Flag gaps.
 
 Extract all Finance permission codes from:
 
-* Part 3;
-* Part 5;
-* Part 6;
-* Part 8;
-* Part 9.
+- Part 3;
+- Part 5;
+- Part 6;
+- Part 8;
+- Part 9.
 
 Create one canonical table:
 
@@ -898,14 +898,14 @@ Status
 
 Identify:
 
-* permission referenced but never defined;
-* permission defined but never used;
-* inconsistent permission names;
-* UI-only authorization;
-* API missing authorization;
-* reports missing report permission;
-* exports using ordinary read permission;
-* excessive access granted to roles.
+- permission referenced but never defined;
+- permission defined but never used;
+- inconsistent permission names;
+- UI-only authorization;
+- API missing authorization;
+- reports missing report permission;
+- exports using ordinary read permission;
+- excessive access granted to roles.
 
 Specifically review:
 
@@ -948,18 +948,18 @@ Execute operation
 
 Check:
 
-* list APIs;
-* detail APIs;
-* create APIs;
-* update APIs;
-* payment posting;
-* refunds;
-* receivable aging;
-* corporate credit validation;
-* dashboards;
-* reports;
-* exports;
-* audit queries.
+- list APIs;
+- detail APIs;
+- create APIs;
+- update APIs;
+- payment posting;
+- refunds;
+- receivable aging;
+- corporate credit validation;
+- dashboards;
+- reports;
+- exports;
+- audit queries.
 
 Test mentally for:
 
@@ -1003,15 +1003,15 @@ Audit Requirement
 
 Flag:
 
-* missing permission;
-* missing branch scope;
-* missing Zod schema;
-* inconsistent error code;
-* incorrect HTTP status;
-* missing optimistic locking;
-* unsafe financial mutation;
-* business logic placed in route handler instead of application service;
-* direct cross-context database write.
+- missing permission;
+- missing branch scope;
+- missing Zod schema;
+- inconsistent error code;
+- incorrect HTTP status;
+- missing optimistic locking;
+- unsafe financial mutation;
+- business logic placed in route handler instead of application service;
+- direct cross-context database write.
 
 Validate that REST routes and Server Actions call the same application services rather than implementing duplicate business logic.
 
@@ -1032,12 +1032,12 @@ Status
 
 Check for:
 
-* duplicate error codes;
-* inconsistent meanings;
-* API errors not cataloged;
-* cataloged errors never used;
-* wrong HTTP mapping;
-* sensitive internal details exposed to clients.
+- duplicate error codes;
+- inconsistent meanings;
+- API errors not cataloged;
+- cataloged errors never used;
+- wrong HTTP mapping;
+- sensitive internal details exposed to clients.
 
 Error responses should be structured consistently.
 
@@ -1057,18 +1057,18 @@ Review every Module 12 domain event that triggers notification.
 
 At minimum inspect events related to:
 
-* invoice issued;
-* payment recorded;
-* receipt generated;
-* installment due;
-* invoice overdue;
-* refund requested;
-* refund approved;
-* refund rejected;
-* refund executed;
-* credit limit warning;
-* credit validation blocked;
-* aging threshold crossing.
+- invoice issued;
+- payment recorded;
+- receipt generated;
+- installment due;
+- invoice overdue;
+- refund requested;
+- refund approved;
+- refund rejected;
+- refund executed;
+- credit limit warning;
+- credit validation blocked;
+- aging threshold crossing.
 
 For each validate:
 
@@ -1120,21 +1120,21 @@ BDD Coverage
 
 Check:
 
-* buttons shown only for valid states;
-* forbidden actions not merely disabled but server-blocked;
-* form validation matches Part 7;
-* UI regex matches API Zod regex;
-* Arabic RTL behavior;
-* OMR precision;
-* GST timezone;
-* pagination;
-* filters;
-* sorting;
-* error states;
-* concurrency conflict handling;
-* loading states;
-* empty states;
-* access denied states.
+- buttons shown only for valid states;
+- forbidden actions not merely disabled but server-blocked;
+- form validation matches Part 7;
+- UI regex matches API Zod regex;
+- Arabic RTL behavior;
+- OMR precision;
+- GST timezone;
+- pagination;
+- filters;
+- sorting;
+- error states;
+- concurrency conflict handling;
+- loading states;
+- empty states;
+- access denied states.
 
 ---
 
@@ -1164,11 +1164,11 @@ Status
 
 Identify requirements lacking:
 
-* positive coverage;
-* negative coverage;
-* boundary coverage;
-* authorization coverage;
-* branch isolation coverage.
+- positive coverage;
+- negative coverage;
+- boundary coverage;
+- authorization coverage;
+- branch isolation coverage.
 
 Also verify that BDD tests do not encode behavior that contradicts the business rules or APIs.
 
@@ -1192,16 +1192,16 @@ Read Model
 
 Check for errors in:
 
-* collection efficiency;
-* outstanding receivables;
-* overdue amount;
-* refund rate;
-* installment delinquency rate;
-* credit utilization;
-* aging distribution;
-* average collection period;
-* payment method mix;
-* branch comparison.
+- collection efficiency;
+- outstanding receivables;
+- overdue amount;
+- refund rate;
+- installment delinquency rate;
+- credit utilization;
+- aging distribution;
+- average collection period;
+- payment method mix;
+- branch comparison.
 
 Verify that multi-currency values are not incorrectly aggregated without conversion logic.
 
@@ -1228,14 +1228,14 @@ vw_fin_reconciliation_exceptions
 
 For each determine:
 
-* source tables;
-* refresh mechanism;
-* transactional vs analytical use;
-* branch-scoping mechanism;
-* stale-data behavior;
-* rebuild procedure;
-* indexes;
-* ownership.
+- source tables;
+- refresh mechanism;
+- transactional vs analytical use;
+- branch-scoping mechanism;
+- stale-data behavior;
+- rebuild procedure;
+- indexes;
+- ownership.
 
 Flag any view used incorrectly for transactional decisions.
 
@@ -1247,20 +1247,20 @@ Compare Part 10 against Parts 5, 8, 9, and 11.
 
 Validate:
 
-* API p95 targets;
-* dashboard targets;
-* report targets;
-* concurrent user targets;
-* concurrent payment transaction targets;
-* availability;
-* RPO;
-* RTO;
-* reporting rebuild target;
-* encryption;
-* log redaction;
-* PII handling;
-* document access;
-* export controls.
+- API p95 targets;
+- dashboard targets;
+- report targets;
+- concurrent user targets;
+- concurrent payment transaction targets;
+- availability;
+- RPO;
+- RTO;
+- reporting rebuild target;
+- encryption;
+- log redaction;
+- PII handling;
+- document access;
+- export controls.
 
 Identify contradictions such as:
 
@@ -1279,26 +1279,26 @@ Review Part 11 against the actual failure modes implied by the FRD.
 
 Confirm runbook coverage for:
 
-* unknown payment outcome;
-* transaction rollback;
-* duplicate payment;
-* duplicate receipt;
-* idempotency conflict;
-* allocation mismatch;
-* invoice balance mismatch;
-* receivable mismatch;
-* refund execution failure;
-* numbering-series failure;
-* corporate credit timeout;
-* stale reporting projection;
-* database deadlock;
-* pool exhaustion;
-* backup failure;
-* PITR recovery;
-* branch authorization anomaly;
-* document rendering failure;
-* notification failure;
-* bulk Finance import failure.
+- unknown payment outcome;
+- transaction rollback;
+- duplicate payment;
+- duplicate receipt;
+- idempotency conflict;
+- allocation mismatch;
+- invoice balance mismatch;
+- receivable mismatch;
+- refund execution failure;
+- numbering-series failure;
+- corporate credit timeout;
+- stale reporting projection;
+- database deadlock;
+- pool exhaustion;
+- backup failure;
+- PITR recovery;
+- branch authorization anomaly;
+- document rendering failure;
+- notification failure;
+- bulk Finance import failure.
 
 For each runbook verify:
 
@@ -1315,10 +1315,10 @@ Prevention
 
 Flag any runbook that recommends:
 
-* direct destructive SQL;
-* deleting financial records;
-* changing posted financial data without audit;
-* marking a transaction successful without reconciliation.
+- direct destructive SQL;
+- deleting financial records;
+- changing posted financial data without audit;
+- marking a transaction successful without reconciliation.
 
 ---
 
@@ -1371,40 +1371,40 @@ Classify every finding.
 
 Examples:
 
-* financial data corruption risk;
-* branch data leakage;
-* duplicate payment risk;
-* refund overpayment;
-* cross-context ownership violation causing conflicting source of truth;
-* missing server-side authorization;
-* certificate/completion using stale reporting data.
+- financial data corruption risk;
+- branch data leakage;
+- duplicate payment risk;
+- refund overpayment;
+- cross-context ownership violation causing conflicting source of truth;
+- missing server-side authorization;
+- certificate/completion using stale reporting data.
 
 ## HIGH
 
 Examples:
 
-* contradictory state transitions;
-* missing audit trail;
-* inconsistent API validation;
-* credit check race condition;
-* missing idempotency.
+- contradictory state transitions;
+- missing audit trail;
+- inconsistent API validation;
+- credit check race condition;
+- missing idempotency.
 
 ## MEDIUM
 
 Examples:
 
-* missing indexes;
-* incomplete negative test;
-* unclear error mapping;
-* report formula ambiguity.
+- missing indexes;
+- incomplete negative test;
+- unclear error mapping;
+- report formula ambiguity.
 
 ## LOW
 
 Examples:
 
-* naming inconsistency;
-* documentation clarity;
-* minor traceability issue.
+- naming inconsistency;
+- documentation clarity;
+- minor traceability issue.
 
 ---
 
@@ -1444,8 +1444,8 @@ NOT READY FOR IMPLEMENTATION
 
 Table:
 
-| ID | Severity | Area | Finding | Evidence | Risk | Required Fix |
-| -- | -------- | ---- | ------- | -------- | ---- | ------------ |
+| ID  | Severity | Area | Finding | Evidence | Risk | Required Fix |
+| --- | -------- | ---- | ------- | -------- | ---- | ------------ |
 
 ---
 
@@ -1493,13 +1493,13 @@ Provide corrected Mermaid diagrams where inconsistencies exist.
 
 Include:
 
-* missing permission enforcement;
-* role over-permission;
-* branch leakage risks;
-* consolidated access issues;
-* report/export leakage;
-* Student isolation;
-* Corporate Account Manager isolation.
+- missing permission enforcement;
+- role over-permission;
+- branch leakage risks;
+- consolidated access issues;
+- report/export leakage;
+- Student isolation;
+- Corporate Account Manager isolation.
 
 ---
 
@@ -1507,15 +1507,15 @@ Include:
 
 Review:
 
-* calculations;
-* Decimal usage;
-* invoice balance consistency;
-* payment allocation;
-* refunds;
-* receivables;
-* credit exposure;
-* concurrency;
-* idempotency.
+- calculations;
+- Decimal usage;
+- invoice balance consistency;
+- payment allocation;
+- refunds;
+- receivables;
+- credit exposure;
+- concurrency;
+- idempotency.
 
 ---
 
@@ -1523,13 +1523,13 @@ Review:
 
 List:
 
-* missing endpoints;
-* duplicated endpoints;
-* missing Zod checks;
-* invalid HTTP mapping;
-* uncataloged errors;
-* missing branch scope;
-* missing idempotency.
+- missing endpoints;
+- duplicated endpoints;
+- missing Zod checks;
+- invalid HTTP mapping;
+- uncataloged errors;
+- missing branch scope;
+- missing idempotency.
 
 ---
 
@@ -1537,16 +1537,16 @@ List:
 
 Review:
 
-* KPI formulas;
-* dashboard widgets;
-* report columns;
-* filters;
-* sorting;
-* exports;
-* read views;
-* materialized views;
-* refresh strategy;
-* stale data handling.
+- KPI formulas;
+- dashboard widgets;
+- report columns;
+- filters;
+- sorting;
+- exports;
+- read views;
+- materialized views;
+- refresh strategy;
+- stale data handling.
 
 ---
 
@@ -1562,16 +1562,16 @@ Provide new Gherkin scenarios for every critical or high-risk uncovered path.
 
 Review:
 
-* logging;
-* tracing;
-* metrics;
-* alerts;
-* health checks;
-* backups;
-* PITR;
-* reconciliation;
-* runbooks;
-* NFR consistency.
+- logging;
+- tracing;
+- metrics;
+- alerts;
+- health checks;
+- backups;
+- PITR;
+- reconciliation;
+- runbooks;
+- NFR consistency.
 
 ---
 
@@ -1615,22 +1615,25 @@ Make the patch plan concrete enough that another AI coding/documentation agent c
 4. Do not invent business requirements that do not exist in the DDD or ER model.
 5. Distinguish between:
 
-   * confirmed mismatch;
-   * probable issue;
-   * open architecture decision;
-   * implementation recommendation.
+   - confirmed mismatch;
+   - probable issue;
+   - open architecture decision;
+   - implementation recommendation.
+
 6. Quote exact file names and requirement IDs.
 7. Give exact entity, field, endpoint, permission, and state names.
 8. Do not write generic findings such as:
 
-   * “Improve security”
-   * “Add validation”
-   * “Optimize database”
+   - “Improve security”
+   - “Add validation”
+   - “Optimize database”
+
 9. Every finding must include:
 
-   * evidence;
-   * impact;
-   * concrete fix.
+   - evidence;
+   - impact;
+   - concrete fix.
+
 10. Review all Module 12 parts before concluding.
 11. Do not recommend microservices.
 12. Do not recommend an external broker.
