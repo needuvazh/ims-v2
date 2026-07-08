@@ -78,6 +78,63 @@ export default async function EnrollmentDetailPage(props: {
     orderBy: { createdAt: 'desc' },
   });
 
+  // Fetch branches
+  const rawBranches = await prisma.branch.findMany({
+    where: { id: { in: allowedBranchIds }, isDeleted: false },
+    select: { id: true, branchName: true },
+  });
+  const branches = rawBranches.map((b) => ({ id: b.id, name: b.branchName }));
+
+  // Fetch courses
+  const rawCourses = await prisma.course.findMany({
+    where: { isDeleted: false },
+    select: { id: true, nameEnglish: true },
+  });
+  const courses = rawCourses.map((c) => ({ id: c.id, name: c.nameEnglish }));
+
+  // Fetch invoices for this enrollment
+  const invoices = await prisma.invoice.findMany({
+    where: { enrollmentId, isDeleted: false },
+    include: {
+      lineItems: true,
+      payments: {
+        where: { isDeleted: false },
+      },
+    },
+    orderBy: { createdAt: 'desc' },
+  });
+
+  const serializedInvoices = invoices.map((inv) => ({
+    id: inv.id,
+    invoiceNumber: inv.invoiceNumber,
+    status: inv.status,
+    subCategory: inv.subCategory,
+    invoiceDate: inv.invoiceDate.toISOString(),
+    dueDate: inv.dueDate.toISOString(),
+    totalAmount: Number(inv.totalAmount),
+    paidAmount: Number(inv.paidAmount),
+    outstandingAmount: Number(inv.outstandingAmount),
+    lineItems: inv.lineItems.map((li) => ({
+      id: li.id,
+      descriptionEnglish: li.descriptionEnglish,
+      quantity: Number(li.quantity),
+      unitPrice: Number(li.unitPrice),
+      discountAmount: Number(li.discountAmount),
+      taxRate: Number(li.taxRate),
+      taxAmount: Number(li.taxAmount),
+      lineTotal: Number(li.lineTotal),
+    })),
+    payments: inv.payments.map((p) => ({
+      id: p.id,
+      paymentNumber: p.paymentNumber,
+      amount: Number(p.amount),
+      paymentMethod: p.paymentMethod,
+      paymentDate: p.paymentDate.toISOString(),
+      referenceNumber: p.referenceNumber || '',
+      remarks: p.remarks || '',
+    })),
+  }));
+
   // Map values for client component
   const mappedDetail = {
     enrollment: {
@@ -104,6 +161,7 @@ export default async function EnrollmentDetailPage(props: {
       paymentCollected:
         enrollment.walkInEnrollment?.paymentCollected?.toString() || '0.00',
       enrollmentType: enrollment.enrollmentType,
+      studentProfileId: enrollment.studentProfileId,
     },
     history: auditLogs.map((log) => ({
       id: log.id,
@@ -120,6 +178,9 @@ export default async function EnrollmentDetailPage(props: {
         detail={mappedDetail}
         sessionUserId={session.userId}
         sessionPermissions={session.permissions}
+        invoices={serializedInvoices}
+        branches={branches}
+        courses={courses}
       />
     </div>
   );
